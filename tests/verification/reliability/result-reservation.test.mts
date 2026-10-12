@@ -1,3 +1,5 @@
+// Preparation authority is modeled here; parser, extraction and durable service/store remain real.
+import { ModeledPreparedPlanJobStore as FileBusterPlanJobStore } from '../../fixtures/test-gate/modeled-preparation.mts';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import crypto from 'node:crypto';
@@ -7,7 +9,7 @@ import path from 'node:path';
 import { execFileSync, spawn } from 'node:child_process';
 import { buildRegistry, discoverPackages, resolveTestPlan, createRemotePlanJob } from '@kubeclaw/nova-core';
 import { buildCommittedSourceSnapshot } from '../../../skills/nova/core/test-gates/source-snapshot.ts';
-import { FileBusterPlanJobStore } from '../../../skills/buster/engine/test-gates/remote-plan-service.ts';
+
 
 test('result admission reserves capacity across competing processes and reconstruction', { timeout: 30000 }, async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'result-reservation-'));
@@ -42,7 +44,7 @@ test('result admission reserves capacity across competing processes and reconstr
       const input = path.join(root, `${id}.json`);
       fs.writeFileSync(input, JSON.stringify({ state, options, job: job(`reservation:${id}`) }));
       const code = `import fs from 'node:fs';
-        import { FileBusterPlanJobStore } from ${JSON.stringify(new URL('../../../skills/buster/engine/test-gates/remote-plan-service.ts', import.meta.url).href)};
+        import { ModeledPreparedPlanJobStore as FileBusterPlanJobStore } from ${JSON.stringify(new URL('../../fixtures/test-gate/modeled-preparation.mts', import.meta.url).href)};
         const input = JSON.parse(fs.readFileSync(process.argv[1], 'utf8'));
         try { await new FileBusterPlanJobStore(input.state, input.options).accept(input.job, new Date().toISOString()); }
         catch (error) { if (error.message !== 'BUSTER_REMOTE_RESULT_CAPACITY_EXCEEDED') throw error; process.exitCode = 23; }`;

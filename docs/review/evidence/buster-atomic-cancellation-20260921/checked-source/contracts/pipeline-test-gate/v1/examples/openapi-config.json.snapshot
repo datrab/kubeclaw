@@ -1,0 +1,9 @@
+{
+  "specFile": ".swarm/modules/api/openapi.json",
+  "endpointName": "web",
+  "operations": [
+    { "operationId": "health", "expectedStatuses": [200] }
+  ],
+  "requestTimeoutMs": 10000,
+  "maximumResponseBytes": 1048576
+}

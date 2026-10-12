@@ -1,0 +1,115 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-worker-local-runtime.mts"
+    ],
+    "exitCode": 0,
+    "name": "original-core",
+    "seconds": 0.41460433893371373
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-deadline.test.mts"
+    ],
+    "exitCode": 0,
+    "name": "original-deadlines",
+    "seconds": 2.1740967839723453
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    ],
+    "exitCode": 1,
+    "name": "original-runner",
+    "seconds": 34.12571670592297
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts"
+    ],
+    "exitCode": 1,
+    "name": "original-real-provider",
+    "seconds": 6.816478466964327
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+    ],
+    "exitCode": 0,
+    "name": "original-config",
+    "seconds": 3.5207240449963138
+  },
+  {
+    "command": [
+      "/usr/local/bin/npm",
+      "run",
+      "verify:config:components"
+    ],
+    "exitCode": 0,
+    "name": "components",
+    "seconds": 82.12140003789682
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "scripts/updates/release-configuration.mjs",
+      "skills/buster/engine/remote-plan-cli.ts",
+      "skills/buster/engine/test-gates/production.ts",
+      "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "skills/buster/engine/test-gates/runner.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "skills/worker/core/src/index.ts",
+      "skills/worker/core/worker/local-runtime.ts",
+      "tests/fixtures/config/swarm-bundle.mjs",
+      "tests/fixtures/test-gate/buster-admission.mts",
+      "tests/verification/contracts/check-pipeline-a11y-implementation.mts",
+      "tests/verification/contracts/check-pipeline-api-implementation.mts",
+      "tests/verification/contracts/check-pipeline-container-build-production.mts",
+      "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-http-implementation.mts",
+      "tests/verification/contracts/check-pipeline-http-live.mts",
+      "tests/verification/contracts/check-pipeline-http-parity.mts",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "tests/verification/contracts/check-pipeline-lighthouse-implementation.mts",
+      "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+      "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+      "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-policy.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-runtime.mts",
+      "tests/verification/contracts/check-provider-semantics-remediation.mts",
+      "tests/verification/deployment/config-component-packaging.test.mjs",
+      "tests/verification/deployment/release-configuration.test.mjs",
+      "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+      "tests/verification/reliability/buster-job-compaction.test.mts",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "tests/verification/reliability/coverage-remote.test.mts",
+      "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "tests/verification/reliability/worker-deadline.test.mts"
+    ],
+    "exitCode": 1,
+    "name": "canonical-lint",
+    "seconds": 6.75706843403168
+  }
+]

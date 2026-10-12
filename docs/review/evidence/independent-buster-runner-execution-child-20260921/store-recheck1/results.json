@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/contracts/buster-default-store-policy.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "store-module",
+    "seconds": 8.63218934298493
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint-config.mjs",
+      "tests/verification/contracts/buster-default-store-policy.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "store-lint",
+    "seconds": 1.266183190047741
+  }
+]

@@ -1,0 +1,81 @@
+{
+  "capturedAt": "2026-09-21T17:13:36.381516+00:00",
+  "scope": "Read-only design checkpoint, not runtime or complete transitive identity proof",
+  "files": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+      "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e",
+      "bytes": 2982
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58",
+      "bytes": 3167
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4",
+      "bytes": 1051
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+      "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+      "bytes": 5825
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+      "bytes": 4047
+    },
+    {
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+      "bytes": 11515
+    },
+    {
+      "path": "skills/common/plugins/wait-store/schemas/config.schema.json",
+      "sha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+      "bytes": 379
+    },
+    {
+      "path": "skills/common/plugins/wait-store/plugin.json",
+      "sha256": "f7564d3bb167b2aebe69bba54ab7ba2d59cf588475ea21c8c4cb4ab658a210ed",
+      "bytes": 400
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+      "bytes": 8372
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+      "bytes": 12185
+    },
+    {
+      "path": "skills/nova/core/state/wait-projection-reader.ts",
+      "sha256": "89975c862444e0ef55ba641afab5289243c0313cdbf392c7372ab3cda61e7dd7",
+      "bytes": 6323
+    },
+    {
+      "path": "scripts/observability-retirement/operator-authority.mjs",
+      "sha256": "1f04c622c015a860a81c5727b71b538ed00dd104aa05540072ef6bb09ce55586",
+      "bytes": 12719
+    },
+    {
+      "path": "docs/review/remediation/decisions.md",
+      "sha256": "02529859f4848939c03efd38ed50149c9cea978229d7d2e3da2ff812d0e5386e",
+      "bytes": 17093
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-plugin-settings-inventory-20260921.md",
+      "sha256": "d5e194683fd5877b5838e8907637549423cf026e9f4c35918ad03b83c277fcb7",
+      "bytes": 19491
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-wait-history-design-20260921.md",
+      "sha256": "f776b534b107230ae51e11846ff5abbd2d4d58686848d9091ebbf876dbb9fe86",
+      "bytes": 11657
+    }
+  ]
+}

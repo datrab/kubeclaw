@@ -1,0 +1,52 @@
+{
+  "kind": "source-inventory",
+  "independentlyReviewed": false,
+  "runtimeTestsExecuted": false,
+  "files": [
+    {
+      "path": "skills/common/plugins/artifact-store/plugin.json",
+      "sha256": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f",
+      "bytes": 443
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/schemas/config.schema.json",
+      "sha256": "dd34d3f97c673d7c011e989d98c11f68bb06c65cda50361bf5913b915bd90de5",
+      "bytes": 452
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "bytes": 8486
+    },
+    {
+      "path": "skills/common/plugins/state-store/plugin.json",
+      "sha256": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb",
+      "bytes": 424
+    },
+    {
+      "path": "skills/common/plugins/state-store/schemas/config.schema.json",
+      "sha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+      "bytes": 379
+    },
+    {
+      "path": "skills/common/plugins/state-store/src/adapter.ts",
+      "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+      "bytes": 4151
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "bytes": 13630
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "bytes": 4631
+    },
+    {
+      "path": "docs/review/evidence/config-plugin-settings-inventory-20260921/registrations.json",
+      "sha256": "5e1a141bc8564c6669c37d8962b521ae235b8b4aa9e501692bc83c4a036797c1",
+      "bytes": 21661
+    }
+  ]
+}

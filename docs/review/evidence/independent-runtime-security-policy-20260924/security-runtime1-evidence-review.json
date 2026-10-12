@@ -1,0 +1,494 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "Bounded positive evidence accepted for61 RuntimeSecurity helper/consumer tests and complete13 original cluster commands at V3 recorded stand. Entire security-runtime1 remains failed; no overall package acceptance.",
+  "executedManifest": "cumulative-runtime-security-v3-checkpoint.json",
+  "boundFileCount": 73,
+  "beforeAfterIdentityErrors": [],
+  "unexpectedDrift": [],
+  "protection": {
+    "violationRecorded": false
+  },
+  "results": [
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-1",
+      "seconds": 6.529078194056638
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:test-gate:security-cutover"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 0,
+      "name": "runtime-2",
+      "seconds": 3.4709545710356906
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:buster:cluster-policy"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-3",
+      "seconds": 61.50965119700413
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-process-input-callers.test.mjs",
+        "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+        "tests/verification/deployment/buster-admission-render.test.mjs",
+        "tests/verification/deployment/buster-process-input-parity.test.mjs",
+        "tests/verification/deployment/buster-readiness-config.test.mjs",
+        "tests/verification/deployment/config-component-packaging.test.mjs",
+        "tests/verification/deployment/prism-swarm-config.test.mjs",
+        "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+        "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+        "tests/verification/reliability/tailscale-generation.test.mjs"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-4",
+      "seconds": 66.38745431194548
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-5",
+      "seconds": 8.353457522927783
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-6",
+      "seconds": 2.148228395031765
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-7",
+      "seconds": 5.597905335016549
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-8",
+      "seconds": 1.2159726419486105
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-9",
+      "seconds": 5.6233525179559365
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:buster:kubernetes-cleanup"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-10",
+      "seconds": 36.65206078195479
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:buster:scheduler-drain"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-11",
+      "seconds": 125.99288260692265
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:buster:execution-config"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-12",
+      "seconds": 94.10107675392646
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:config:components"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-13",
+      "seconds": 109.70159469405189
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:buster:readiness-config"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-14",
+      "seconds": 31.84416317997966
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:test-gate:tailscale-exposure-cutover"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "runtime-15",
+      "seconds": 41.5018970600795
+    }
+  ],
+  "logs": {
+    "runtime-1.txt": {
+      "sha256": "78f54f35e3e82d7393ac013e4fa90689dba238ced2d3bdb89d9530436c7a4c78",
+      "counts": {
+        "tests": [
+          "61"
+        ],
+        "pass": [
+          "61"
+        ],
+        "fail": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    "runtime-2.txt": {
+      "sha256": "ca3dae47b8abcf0c075cf40d7fb3cee485845113a372caaa7a8949bb131371ef",
+      "counts": {
+        "tests": [
+          "2"
+        ],
+        "pass": [
+          "0"
+        ],
+        "fail": [
+          "2"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    "runtime-3.txt": {
+      "sha256": "5c3da09eb26d002170b0b0b9064f746aaa960b47c17abe73a86970c71b3c7077",
+      "counts": {
+        "tests": [
+          "46"
+        ],
+        "pass": [
+          "46"
+        ],
+        "fail": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    "runtime-4.txt": {
+      "sha256": "ad48d1cfd9605c61f811c6abdee84dd0a9e45c8c7f10bf0c7cde7cff8171b4e0",
+      "counts": {
+        "tests": [
+          "376"
+        ],
+        "pass": [
+          "376"
+        ],
+        "fail": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    "runtime-5.txt": {
+      "sha256": "74f627f91f9a16277b8bb030372d6f70ced884a2741c0d83b8c7881136194ab0",
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "skipped": [],
+        "cancelled": [],
+        "todo": []
+      }
+    },
+    "runtime-6.txt": {
+      "sha256": "15db3588c998f7bd394b6f27dcb507e0588bbfe2787282d1e0894983259250f9",
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "skipped": [],
+        "cancelled": [],
+        "todo": []
+      }
+    },
+    "runtime-7.txt": {
+      "sha256": "7dc7517ae2ea1a1ba9577264af74303fbbbd2de31974e9a14f75b71d663bf1a1",
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "skipped": [],
+        "cancelled": [],
+        "todo": []
+      }
+    },
+    "runtime-8.txt": {
+      "sha256": "500a71126867a3c9bf29bc97e296390a68949786471c447bc119d6b889c8fb8e",
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "skipped": [],
+        "cancelled": [],
+        "todo": []
+      }
+    },
+    "runtime-9.txt": {
+      "sha256": "6655781fbc343aee136d4d931cdd2c43db9a36c6007c272a5da174f2eb93b46f",
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "skipped": [],
+        "cancelled": [],
+        "todo": []
+      }
+    },
+    "runtime-10.txt": {
+      "sha256": "b164b85a5eb54c2d69522cec07f14c7946472179c5475c259bfbdd26abfb6d07",
+      "counts": {
+        "tests": [
+          "53"
+        ],
+        "pass": [
+          "53"
+        ],
+        "fail": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    "runtime-11.txt": {
+      "sha256": "0d31bee399398a04cc04bc8a9dc12d6507a4695f7ef43f89e76b22aef529922f",
+      "counts": {
+        "tests": [
+          "6"
+        ],
+        "pass": [
+          "6"
+        ],
+        "fail": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    "runtime-12.txt": {
+      "sha256": "76a38028c3860eb4c3fa820c26e89c85c310b52160bcb8c85be5bbdc01afd612",
+      "counts": {
+        "tests": [
+          "193"
+        ],
+        "pass": [
+          "193"
+        ],
+        "fail": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    "runtime-13.txt": {
+      "sha256": "d75af298638897eb2a0e928bba07e1abda56ae53212cffa4e1cd278fc38a44da",
+      "counts": {
+        "tests": [
+          "649"
+        ],
+        "pass": [
+          "649"
+        ],
+        "fail": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    "runtime-14.txt": {
+      "sha256": "0629f9a0b318feede0756fc0c350907285c8e8ec2a793cd2db0322d696b950b3",
+      "counts": {
+        "tests": [
+          "16"
+        ],
+        "pass": [
+          "16"
+        ],
+        "fail": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    "runtime-15.txt": {
+      "sha256": "96c25296dfeda75b41d46d3951df84c570607370be1e3f6de62d429e2a0f7886",
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "skipped": [],
+        "cancelled": [],
+        "todo": []
+      }
+    }
+  },
+  "securityFailure": {
+    "command": "runtime-2 verify:test-gate:security-cutover",
+    "cause": "Original plugin database-freshness module fails ENOENT default /home/node/.cache/trivy; live-function module throws SECURITY_TEST_TRIVY_DATABASE_MISSING. Both test modules fail before tests.",
+    "unexecutedDownstream": "The && chain never reached security implementation script, remote vertical, Go controller, provider registry/type/docs commands, parity ledger/script, cutover or progress-scaffold. No passing claim for those from this run."
+  },
+  "currentIntegratedDelta": {
+    "manifest": "cumulative-security-service-v4.json",
+    "files": 81,
+    "identityErrors": [],
+    "changedOrAddedSinceExecutedV3": [
+      "charts/kubeclaw/files/config/eslint-config.mjs",
+      "docs/architecture/buster-cluster-configuration.md",
+      "package.json",
+      "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "docs/architecture/buster-runtime-security-configuration.md",
+      "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "skills/buster/engine/test-gates/kubernetes-command-environment.ts",
+      "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
+      "tests/fixtures/test-gate/cluster-command-api.mjs",
+      "tests/fixtures/test-gate/cluster-command-program.cjs",
+      "tests/fixtures/test-gate/cluster-route-provider.mjs",
+      "tests/fixtures/test-gate/cluster-test-ownership.mjs",
+      "tests/verification/contracts/buster-cluster-capture.test.mjs",
+      "tests/verification/contracts/buster-cluster-production-route.test.mjs"
+    ],
+    "status": "Current source identities checked only. LintV2+CI2V2+RS2V4 source-reviewed deltas are not covered by earlier runtime1 execution."
+  },
+  "remaining": [
+    "Complete new fast/runtime/security chain at corrected tool setup and integrated source; preserve failed first run.",
+    "Security and CI2/RS2 service controls with raw semantic causes.",
+    "Ownership lifecycle failure gate.",
+    "Final exact-source DOC/evidence review. No original issue, full CONFIG, live or native acceptance."
+  ],
+  "manifestClarification": "Actual handoff-verified manifest is V3-checkpoint, with pre-run implementation status documentation SHA4db289..., unchanged before/after. Production/test bytes match V3. Original V3 doc SHA466cd... is historical, not executed checkpoint."
+}

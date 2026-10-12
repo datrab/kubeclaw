@@ -1,0 +1,59 @@
+{
+  "status": "handoff command inventory; final combined source binding and rerun required",
+  "maintained": "tsc --noEmit -p tests/verification/reliability/tsconfig.config-components.json && node --test --test-concurrency=1 tests/verification/reliability/config-component-bundle.test.mts tests/verification/reliability/config-component-generation.test.mjs tests/verification/deployment/config-component-packaging.test.mjs tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/buster-admission-render.test.mjs skills/prism/tests/swarm-*.test.mts skills/prism/tests/studio-config.test.mts skills/prism/tests/studio-service.test.mts",
+  "prismOriginalModules": [
+    "skills/prism/tests/swarm-control-policy.test.mts",
+    "skills/prism/tests/swarm-input-limit.test.mts",
+    "skills/prism/tests/swarm-native-settings.test.mts",
+    "skills/prism/tests/swarm-resource-operation.test.mts",
+    "skills/prism/tests/swarm-resource-policy.test.mts",
+    "skills/prism/tests/swarm-result-journal.test.mts",
+    "skills/prism/tests/swarm-supervisor-config.test.mts",
+    "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "skills/prism/tests/swarm-worker-behavior.test.mts",
+    "skills/prism/tests/swarm-worker-config.test.mts",
+    "skills/prism/tests/studio-config.test.mts",
+    "skills/prism/tests/studio-service.test.mts"
+  ],
+  "busterOriginal18": [
+    "tests/verification/reliability/buster-admission-config.test.mts",
+    "tests/verification/reliability/buster-preparation-identities.test.mts",
+    "tests/verification/reliability/buster-preparation-ledger.test.mts",
+    "tests/verification/e2e/swarm-author-profile.test.mjs"
+  ],
+  "releaseOriginalModules": [
+    "tests/verification/deployment/release-configuration.test.mjs",
+    "tests/verification/deployment/code-release.test.mjs",
+    "tests/verification/deployment/deployment-release.test.mjs",
+    "tests/verification/deployment/gitops-release.test.mjs"
+  ],
+  "deploymentTruth": [
+    "node",
+    "tests/verification/deployment/check-deployment-truth.mjs"
+  ],
+  "typeProjects": [
+    "tests/verification/reliability/tsconfig.config-components.json",
+    "skills/prism/tsconfig.json",
+    "skills/common/plugin-runtime/tsconfig.json",
+    "tests/verification/e2e/tsconfig.json"
+  ],
+  "lintCanonicalConfig": "charts/kubeclaw/files/config/eslint.config.mjs",
+  "lintFileListSource": "integration9/run.py: integration1/identities.json all existing JS/TS plus observer/generation/process consumer",
+  "toolContract": {
+    "proot": "node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "binds": [
+      "node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!"
+    ],
+    "LD_LIBRARY_PATH": [
+      "node_modules/.cache/native-host-tools/root/usr/lib",
+      "node_modules/.cache/native-host-tools/root/lib"
+    ]
+  },
+  "mutants": {
+    "six": "mutants/run.py + mutation-loader.mjs",
+    "owner": "CONFIG_MUTANT=owner node --import mutants/owner-loader.mjs --test tests/verification/reliability/config-component-bundle.test.mts",
+    "delivery": "maintained config-component-packaging.test.mjs contains actual isolated omitted-owner Helm checksum, missing real archive component/render, structural DockerCOPY loss controls"
+  },
+  "originalAssertions": "original-assertion-inventory.json: syntactic calls before/after for36 original files; not dynamic test count or semantic equivalence assertion"
+}

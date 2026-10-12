@@ -1,0 +1,18 @@
+[
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+    "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2"
+  },
+  {
+    "path": "charts/kubeclaw/templates/_buster-native.tpl",
+    "sha256": "e12d651294c5dc9e98a409f3fb5ab24fc0dc44a6869d1980a534d93af640de55"
+  },
+  {
+    "path": "charts/kubeclaw/values.yaml",
+    "sha256": "6f3860e7ac7719f8530a67631828af83f098a298250ce007e3b5911c8f4df796"
+  },
+  {
+    "path": "my-values/buster-values.yaml",
+    "sha256": "cf9afa2f8340c53b50e98e4bbdb0109bec5b3ce2530c42fd2519c86f350fd2c8"
+  }
+]

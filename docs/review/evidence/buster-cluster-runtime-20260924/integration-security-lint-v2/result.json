@@ -1,0 +1,39 @@
+{
+  "manifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-runtime-20260924/security-lint-v2-integration-manifest.json",
+  "manifestSha256": "5222637a831869b071ec3f29126c811c8d3d359836012b3f5ff1a0181f6571d0",
+  "review": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-runtime-security-policy-20260924/lint-correction-v2-source-review.json",
+  "reviewSha256": "68e780ee177136afaf303992906b6ff914115c29820417513a3cae0a60483ca5",
+  "status": "integrated; verification pending",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+      "kind": "file",
+      "beforeSha256": "8a59464fa85d16b6d7cecda632413b3b0c59eb015b17f8dc8034a61e5b5181d2",
+      "sha256": "a042f53e55ca8438e2d2e1af7766c73063b5d34bfaa9c68ab8d21d0fdf4111f8"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-command-environment.ts",
+      "kind": "file",
+      "beforeSha256": null,
+      "sha256": "8e4ac7b78cd9248aa14981bcc84c0c20b0334c1cae93385d6bd03d156fa7188f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "kind": "file",
+      "beforeSha256": "d940cbaed6bf4f86cd1b03d3654b2483464d9e187caf04383a39398f283496fc",
+      "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "kind": "file",
+      "beforeSha256": "d877da689ad67653723eebab1c57bf5972ea9928430a652b7e57881e49f880a2",
+      "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+    },
+    {
+      "path": "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
+      "kind": "file",
+      "beforeSha256": "54bb3a32574fb06d835bd3ac04614c6cc18d2286949003dd5ea3b97f27dcf714",
+      "sha256": "09bdcf2ade20b9e19cd87eb0357cf606ebec349252d851dcfa5df070497db72d"
+    }
+  ]
+}

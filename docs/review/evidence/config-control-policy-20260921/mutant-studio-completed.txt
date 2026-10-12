@@ -1,0 +1,52 @@
+✖ CC3 real Control service profile 1 selects history, artifact root and Studio URL (3976.224068ms)
+✖ CC3 real Control service profile 2 selects history, artifact root and Studio URL (2167.81556ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6734.250303
+
+✖ failing tests:
+
+test at skills/prism/tests/control-generation-http.test.mts:111:30
+✖ CC3 real Control service profile 1 selects history, artifact root and Studio URL (3976.224068ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'https://wrong.example.invalid?project=a67983ef-9ab9-4e7f-a96c-9bd080bb2791&document=fbfa8d42-7cef-4cbd-884b-35fc1b31ae8c'
+  - 'https://studio-1.example.test/design?project=a67983ef-9ab9-4e7f-a96c-9bd080bb2791&document=fbfa8d42-7cef-4cbd-884b-35fc1b31ae8c'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-generation-http.test.mts:124:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'https://wrong.example.invalid?project=a67983ef-9ab9-4e7f-a96c-9bd080bb2791&document=fbfa8d42-7cef-4cbd-884b-35fc1b31ae8c',
+    expected: 'https://studio-1.example.test/design?project=a67983ef-9ab9-4e7f-a96c-9bd080bb2791&document=fbfa8d42-7cef-4cbd-884b-35fc1b31ae8c',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/control-generation-http.test.mts:111:30
+✖ CC3 real Control service profile 2 selects history, artifact root and Studio URL (2167.81556ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'https://wrong.example.invalid?project=96618d7a-dbdc-4be3-948c-bef4da6fc159&document=72a9952f-ec14-4c0b-b62a-1c8be92177e9'
+  - 'https://studio-2.example.test/design?project=96618d7a-dbdc-4be3-948c-bef4da6fc159&document=72a9952f-ec14-4c0b-b62a-1c8be92177e9'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-generation-http.test.mts:124:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'https://wrong.example.invalid?project=96618d7a-dbdc-4be3-948c-bef4da6fc159&document=72a9952f-ec14-4c0b-b62a-1c8be92177e9',
+    expected: 'https://studio-2.example.test/design?project=96618d7a-dbdc-4be3-948c-bef4da6fc159&document=72a9952f-ec14-4c0b-b62a-1c8be92177e9',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

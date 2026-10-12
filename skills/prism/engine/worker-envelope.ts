@@ -1,10 +1,11 @@
+import type { PrismResourcePolicy } from '../../common/plugin-runtime/foundation/config/swarm.ts';
 import { randomUUID } from "node:crypto";
 import type { WorkerArtifactRefV1, WorkerAttemptEnvelopeV1 } from "@kubeclaw/pipeline-worker-core-contract";
 import { canonicalJson, sha256Digest, workerAttemptSpecDigest, workerProfileDigest } from "@kubeclaw/worker-core";
 import { engineRequestSchema } from "@kubeclaw/prism-contracts-v1/digest";
 import type { EngineOperation } from "./index.ts";
 import type { WorkerAttemptEnvelopeV3, WorkerProfileV3 } from '@kubeclaw/pipeline-worker-core-contract';
-import { prismNativePolicy, prismEngineContentDigest } from '../config/native-worker.ts';
+import { prismEngineContentDigest } from '../config/native-worker.ts';
 
 const engineContentDigest = prismEngineContentDigest()
   || sha256Digest({ engineId: "prism-design-engine", engineVersion: "1.0.0", development: true });
@@ -30,10 +31,9 @@ export function prismRequestDigest(operation: WorkerAttemptEnvelopeV1['operation
   return sha256Digest(JSON.stringify({ operation: ordered, inputDigest }));
 }
 
-export function prismNativeAttempt(operation: EngineOperation, inputArtifact: WorkerArtifactRefV1, idempotencyKey: string): WorkerAttemptEnvelopeV3 {
+export function prismNativeAttempt(operation: EngineOperation, inputArtifact: WorkerArtifactRefV1, idempotencyKey: string, policy: PrismResourcePolicy): WorkerAttemptEnvelopeV3 {
   const now = new Date(); const expires = new Date(now.getTime() + 10 * 60_000); const attemptId = `attempt-${randomUUID()}`;
   const request = engineRequestSchema(operation);
-  const policy = prismNativePolicy();
   const unsigned = {
     schemaVersion: "worker-attempt-envelope.v3" as const, protocolVersion: "worker-protocol.v1" as const,
     pipelineRunId: `prism-${idempotencyKey}`.slice(0, 128), moduleId: null, gateId: null, planId: `plan-${idempotencyKey}`.slice(0, 128),

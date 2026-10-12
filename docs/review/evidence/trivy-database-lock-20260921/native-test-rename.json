@@ -1,0 +1,7 @@
+{
+  "oldPath": "scripts/tests/trivy-database-lock.native.mjs",
+  "newPath": "scripts/tests/trivy-database-lock-native.test.mjs",
+  "sha256": "3d3a7f868306466b3a87f35dd12df55d61da234e7becfa4d0f62d0c1929278aa",
+  "contentUnchanged": true,
+  "reason": "canonical discipline/filename-case requires kebab-case; no rule exemption"
+}

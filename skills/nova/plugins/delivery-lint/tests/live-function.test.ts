@@ -59,7 +59,7 @@ async function run(id, input, options = {}) {
         artifactRoot: options.artifactRoot ?? artifacts,
       }],
     ]),
-    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${id}-effects.jsonl`)), undefined, undefined, new core.MemoryResourceLockManager()),
+    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${id}-effects.jsonl`)), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
     shutdownTimeoutMs: 1000,
     async emitDomainEvent() {},
   });

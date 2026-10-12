@@ -1,0 +1,18 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"planId":"plan:http:live","runId":"run:http:live","attempts":[{"schemaVersion":"attempt-result.v1","planId":"plan:http:live","runId":"run:http:live","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"health","executionId":"plan:http:live:health","testIdentity":"test:8e1f0a502989cb365e44d6ae95b09062669bc2450f4658a72bd1b37614ac22b2","nodeKind":"test","attemptId":"attempt:d26e9ffd1525adf26b05080bda783bd28f81b556c2cae5487957b85d0722a90f","attemptNumber":1,"provider":{"packageId":"kubeclaw.http","packageVersion":"1.0.0","contentDigest":"sha256:92c8588cec754427a00d1d0963e0863302a8cd975e2574230daedb4c6182140b","registrationId":"request","contractId":"kubeclaw.http@1"},"mode":"blocking","executionState":"errored","outcome":null,"startedAt":"2026-09-21T06:53:04.792Z","completedAt":"2026-09-21T06:53:04.955Z","durationMs":163,"summary":"OBSERVABILITY_STORE_LOCK_FAILED:/tmp/kubeclaw-http-implementation-dMbKBc/observability/attempts/attempt-store.json:OBSERVABILITY_STORE_LOCKED:1:/usr/bin/flock: unrecognized option: timeout\nBusyBox v1.37.0 (2026-01-10 15:38:28 UTC) multi-call binary.\n\nUsage: flock [-sxun] FD | { FILE [-c] PROG ARGS }\n\n[Un]lock file descriptor, or lock FILE, run PROG\n\n\t-s\tShared lock\n\t-x\tExclusive lock (default)\n\t-u\tUnlock FD\n\t-n\tFail rather than wait","counts":{"total":0,"passed":0,"failed":0,"skipped":0},"findings":[],"metrics":[],"reports":[],"evidence":[{"evidenceId":"runner-log","type":"log","artifact":{"artifactId":"artifact:34fbe055c85dd862813d2144f0e235c2938852a000af251db4b0febfc9c5a9d6","type":"log","mediaType":"text/plain; charset=utf-8","contentDigest":"sha256:1178e51a04a40cb9fbed69eba1aaf33567e3242abc9892dce6cceb5d98060bb0","sizeBytes":55,"storageUrl":"file:///tmp/kubeclaw-http-implementation-dMbKBc/artifacts/attempt_d26e9ffd1525adf26b05080bda783bd28f81b556c2cae5487957b85d0722a90f/runner-log-provider.log"}}],"outputs":[],"resources":{"cpuTimeMs":50,"maximumMemoryBytes":59604992,"logBytes":55,"artifactBytes":55},"exitCode":null,"signal":null,"providerDetails":null,"resultDigest":"sha256:4b83b7bd8b946311b726e3d137eef1a1ed73d06391f956cf7bc584f2942485c5","receipt":{"receiptId":"receipt:0428e5db995444c6d129f3f7bb569b895b38a3ec73e6ee8c70a447e84beb3c4e","receiptDigest":"sha256:88bba6a1382c2d6f23c510a0ff7fac9f9b2c1fd293501049bd2f0fffe6413e45"}}],"nodes":[{"schemaVersion":"node-result.v1","planId":"plan:http:live","runId":"run:http:live","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"health","executionId":"plan:http:live:health","testIdentity":"test:8e1f0a502989cb365e44d6ae95b09062669bc2450f4658a72bd1b37614ac22b2","nodeKind":"test","mode":"blocking","state":"errored","outcome":null,"attemptIds":["attempt:d26e9ffd1525adf26b05080bda783bd28f81b556c2cae5487957b85d0722a90f"],"finalAttemptId":"attempt:d26e9ffd1525adf26b05080bda783bd28f81b556c2cae5487957b85d0722a90f","unstable":false,"skipReason":null,"resultDigest":"sha256:074982f2a2c8aade1e908361160e9cd52d8ffe8944168349f284e2a84571ebab","receipt":{"receiptId":"receipt:b7c24c09c02998c20469a974fe534a650fefba03c33f80f032b5f90d7e39dca7","receiptDigest":"sha256:8875cdb932a3150ebeed0216515021e45a28f51f8a002e2d9b55ac1417d4fdfb"}}],"cleanupErrors":[]}
+
+null !== 'passed'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-http-implementation.mts:65:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: 'passed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

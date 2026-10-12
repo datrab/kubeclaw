@@ -1,0 +1,46 @@
+{
+  "at": "2026-09-21T19:29:17.171692+00:00",
+  "runtimeExecuted": false,
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+      "sha256": "5fe7ac0657744ce6039b702a2d435fd870916e6e32b78fb90addb3e75606611a",
+      "matchesManifest": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/discipline-eslint-plugin.mjs",
+      "sha256": "a16377f89b37d78f46e5dfad8108264a8858a17ca991ea2b984cc1b9f729516e",
+      "matchesManifest": true
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/eslint-discipline.test.mjs",
+      "sha256": "7c0d58c5c3893334450c3cdbc5b86456ab4791f23b5107f82955d654cef2790a",
+      "matchesManifest": true
+    },
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "cb4aca9459d3eb545425da701f0abb20196ff54bb00101287e4e9cf53e6bd729",
+      "matchesManifest": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875",
+      "matchesManifest": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041",
+      "matchesManifest": true
+    },
+    {
+      "path": "skills/nova/plugins/lint/README.md",
+      "sha256": "dcee7f5e346f1334379b0cd99a6c83f1beb1c87239bbe85592cd6b07eb0f3925",
+      "matchesManifest": true
+    },
+    {
+      "path": "tests/verification/deployment/eslint-policy-delivery.test.mjs",
+      "sha256": "2893c6c37f7101e24b5decb72f90310895a346df30767d0ef5fb86e116cf86a7",
+      "matchesManifest": true
+    }
+  ]
+}

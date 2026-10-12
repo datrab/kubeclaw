@@ -1,0 +1,8 @@
+
+> docs:inventory
+> node scripts/docs-inventory.mjs
+
+wrote docs/generated/inventory/deploy-script.json
+wrote docs/generated/inventory/secret-setup.json
+wrote docs/generated/inventory/helm-values.json
+wrote docs/generated/inventory/workflows.json

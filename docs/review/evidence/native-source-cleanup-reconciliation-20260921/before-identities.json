@@ -1,0 +1,17 @@
+[
+  {
+    "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+    "sha256": "fc55712ec3a5237e0131969d4aa190fcf994541525521210e8598ec63c950769",
+    "snapshot": "docs/review/evidence/native-source-cleanup-reconciliation-20260921/before/skills/worker/core/worker/native-attempt-recovery.ts.snapshot"
+  },
+  {
+    "path": "skills/worker/core/src/index.ts",
+    "sha256": "2e17c3e33d5c47c2c7e8f4a03c8eda3120dfd123e7c0145e5685741efe28c00e",
+    "snapshot": "docs/review/evidence/native-source-cleanup-reconciliation-20260921/before/skills/worker/core/src/index.ts.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/native-source-cleanup-reconciliation-20260921.md",
+    "sha256": "abf60af940c18e4721f5f73d39ade7453fbd9a6edb82937e9007002b4c8c4933",
+    "snapshot": "docs/review/evidence/native-source-cleanup-reconciliation-20260921/before/docs/review/remediation/implementation/native-source-cleanup-reconciliation-20260921.md.snapshot"
+  }
+]

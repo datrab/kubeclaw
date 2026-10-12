@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "test-suite-template.v1",
+  "contractId": "kubeclaw.api-suite@1",
+  "tests": {
+    "http": {
+      "uses": "kubeclaw.http@1", "mode": "blocking", "retries": 1,
+      "concurrencyGroup": "http", "config": { "path": "/health" }
+    },
+    "flow": {
+      "uses": "kubeclaw.api-flow@1", "mode": "blocking", "retries": 0,
+      "concurrencyGroup": "api-flow", "config": { "flowFile": ".swarm/api-flow.json" }
+    },
+    "openapi": {
+      "uses": "kubeclaw.openapi@1", "mode": "blocking", "retries": 0,
+      "concurrencyGroup": "api-flow", "config": { "specFile": ".swarm/openapi.json", "operations": [{ "operationId": "health" }] }
+    }
+  },
+  "fixtures": {}, "concurrencyLimits": { "api-flow": 4, "http": 8 }
+}

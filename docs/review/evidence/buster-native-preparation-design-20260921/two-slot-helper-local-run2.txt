@@ -1,0 +1,13 @@
+✔ subordinate identities normalize inherited builder aliases and reject unsafe authority (3.135601ms)
+✔ subordinate file validation rejects both before altering either original (37.077776ms)
+✔ actual restricted helper rejects identity requests before touching cgroup sentinels (14.832923ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 131.857551
+Both actual launch redirections preserve parent lock; inherited-FD negative controls unlock it.
+Fresh generic-build negative control rejected by identity-policy oracle.

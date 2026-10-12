@@ -1,0 +1,26 @@
+✖ actual parent process sampling consumes 10ms (700.520678ms)
+✔ actual parent process sampling consumes 60000ms (516.698536ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3964.17958
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-process-sampling.test.mjs:21:3
+✖ actual parent process sampling consumes 10ms (700.520678ms)
+  AssertionError [ERR_ASSERTION]: actual scans=0
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-sampling.test.mjs:50:43)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

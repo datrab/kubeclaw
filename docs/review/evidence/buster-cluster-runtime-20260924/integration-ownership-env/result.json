@@ -1,0 +1,15 @@
+{
+  "manifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-runtime-20260924/ownership-env-integration-manifest.json",
+  "manifestSha256": "c8a3001c577cf2260a22b1849063788d729646bf9ed512d2cad47aaf5e449b2c",
+  "review": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-runtime-security-policy-20260924/ownership-runner-environment-source-review.json",
+  "reviewSha256": "7512a93423552f76edd7db016ec1c5e2ecf02e3981016d8aad004e7b531f764c",
+  "status": "integrated; verification pending",
+  "files": [
+    {
+      "path": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "kind": "file",
+      "beforeSha256": "9a72278e4ef15a5a19c718f893ecca04d8263d1d66ab27059291c20bfea1d7ca",
+      "sha256": "d71fb8decddcff431f4e67750516ad8886dad335cba63051d79fb1880149611d"
+    }
+  ]
+}

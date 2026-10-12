@@ -1,0 +1,15 @@
+✔ BA01 lock requires complete architecture and archive identities (4.902585ms)
+✔ BA02 installed package and registry drift rejected before download (2.3499ms)
+✔ BA03 corrupt size fails before extraction or publication (9.644106ms)
+✔ BA03 corrupt sha256 fails before extraction or publication (1.624232ms)
+✔ BA04 existing destinations and dangling symlinks preserved (1.036167ms)
+✔ BA04 only one concurrent installer may publish (5.707075ms)
+✔ BA05 prism publishes three verified directories with permissions and original markers (3.787366ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 117.961203

@@ -1,0 +1,342 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+    "sha256": "57f5f68231777a113c01773a33c350cbbb2746e97ad8aad4538b455427585ff4"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-control.config.json",
+    "sha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-execution.config.json",
+    "sha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-studio.config.json",
+    "sha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+    "sha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "sha256": "ab3ee0545ef7d04897523efcfe3a7c93acf036025e92a4142b044a530e0d0634"
+  },
+  {
+    "path": "charts/kubeclaw/templates/_buster-native.tpl",
+    "sha256": "e12d651294c5dc9e98a409f3fb5ab24fc0dc44a6869d1980a534d93af640de55"
+  },
+  {
+    "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+    "sha256": "1769fccb43906ac862216274e36c7d78574d977c736a49e3c4b199b1752cc29b"
+  },
+  {
+    "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+    "sha256": "2bacf41f7a19cf66267cd8dfd70b4e87b565943f258955efd7200cd6c473d03d"
+  },
+  {
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "sha256": "90ac3b592d6e1ae3b5b535251af3540cdfeeb311dc237d6cd2760b0f1b430bd4"
+  },
+  {
+    "path": "charts/kubeclaw/values.yaml",
+    "sha256": "6f3860e7ac7719f8530a67631828af83f098a298250ce007e3b5911c8f4df796"
+  },
+  {
+    "path": "charts/prism/templates/_swarm-config.tpl",
+    "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+  },
+  {
+    "path": "charts/prism/templates/configmap-swarm-config.yaml",
+    "sha256": "75886e7ddea3625d4fa3af7eb866cd63c46ede89d89ca3718d4a022d7304e5e6"
+  },
+  {
+    "path": "charts/prism/templates/workloads.yaml",
+    "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+  },
+  {
+    "path": "docker/Dockerfile.buster-runtime",
+    "sha256": "68846c882e9b0e20ebf83ccc20d753b2e8cde3ed7bb0714a3e47863a1a61d6f8"
+  },
+  {
+    "path": "docker/Dockerfile.prism-studio",
+    "sha256": "a2acdc718f9becd23c4f90bfc361c26115f67363677665248cc96647e7180d2f"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "sha256": "606b462f6e88e7e58f393e17d936353376a4095a89a93690f47a299b54c8e7ea"
+  },
+  {
+    "path": "package.json",
+    "sha256": "58ca667a1bb6c02195363146f89f863d0e25a9e1cd9e9c86d1c3dde813c1e5d8"
+  },
+  {
+    "path": "scripts/check-built-runtime-image.sh",
+    "sha256": "c508667b9d280ba10e4bacd04e2727ebc0830b8843d3c1acdc1e95e4a44e81d4"
+  },
+  {
+    "path": "scripts/deploy.sh",
+    "sha256": "c491e53677694183566a30c182fe7d1595468bb3a8f3477bb248148819b0ad2f"
+  },
+  {
+    "path": "scripts/updates/release-configuration.mjs",
+    "sha256": "a93ca420d8753a6958625d4196e85866adf2a4ee11acdbe3ca836bc270bc858b"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "sha256": "a68d76958c5bbe28d145ab9a410cae3bf0be33cd87dedf2752824ced5666bcc9"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "sha256": "75b10b25550b0622948bd8334df660a5d526988a37abe29263e406dfddd688ae"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "sha256": "cc3ca68d2c90b3e2f36eecdbd43348f409cff5bf6cbbf33a230e6d19201870c4"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "484de1f0d6b7b7a4c069204495ddd31816e546b40ba41284a21c95cc51f6633e"
+  },
+  {
+    "path": "skills/prism/tests/fixtures/control-policy.mts",
+    "sha256": "cf58dcbf260395a68fa626aa27c0f33bf74ace98d3744222c00a7b431501f3e4"
+  },
+  {
+    "path": "skills/prism/tests/fixtures/native-process-boundary.mts",
+    "sha256": "4ac57e08951743f01ee83f66b04dfadd90570e746288d73b660d18af2fdc035f"
+  },
+  {
+    "path": "skills/prism/tests/fixtures/studio-service.mts",
+    "sha256": "22530150225a94063bebe147f61e5a7052fe5c40359b6be5a9ce1bcb529dc32a"
+  },
+  {
+    "path": "skills/prism/tests/native/operation-journal.mts",
+    "sha256": "ac0820646e49f29a131d6f73eee0f5afc26dbc414d73e3009f2fed576c5161a3"
+  },
+  {
+    "path": "skills/prism/tests/studio-canonical-image.mts",
+    "sha256": "3b2856474e3bcafb11817acc1a89a059fbce2cf966793c63a8e25c6cf6eb5ff3"
+  },
+  {
+    "path": "skills/prism/tests/studio-config.test.mts",
+    "sha256": "bcb33758664540f73a5b5028dc3781b1660981c05e5f4ca35612e1bcdebc614b"
+  },
+  {
+    "path": "skills/prism/tests/swarm-control-policy.test.mts",
+    "sha256": "af27549cc35a0ce1e5579f4f93fc66891ae338093df31ac27fde375274dcfb3d"
+  },
+  {
+    "path": "skills/prism/tests/swarm-input-limit.test.mts",
+    "sha256": "cd38beff9fad8f6415a79771afc391a0ac513b51998fc333572cbb6b599a5d11"
+  },
+  {
+    "path": "skills/prism/tests/swarm-native-settings.test.mts",
+    "sha256": "c0e88c3c4c7943fdfcc18256bdcc4155e4206df9ecd7931a9197936b417c22cd"
+  },
+  {
+    "path": "skills/prism/tests/swarm-resource-operation.test.mts",
+    "sha256": "bd34024e50a7ef69d80ebf3dad838f8762457c7a1bb650333ce67775d6a4cf7a"
+  },
+  {
+    "path": "skills/prism/tests/swarm-resource-policy.test.mts",
+    "sha256": "92b1291dbf27c1e348e223e755ec961fccb0cd247acef8db9636af64286d2ad3"
+  },
+  {
+    "path": "skills/prism/tests/swarm-result-journal.test.mts",
+    "sha256": "3d9cacabb68160ac91320d55fdf5af7c8d36b5de4db877a01f71d3c945e98155"
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-config.test.mts",
+    "sha256": "e783cab724af3eb138a9fdae9e9473f34ee76f3134fe42ceb55acedd71cbe1e1"
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "sha256": "dae31cc06d429c61ccf361c931ba531734065f1ae4937efec20111989c6e47c1"
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-behavior.test.mts",
+    "sha256": "0800cac913c08b28871933ccf7bd1aced30bcbe98dc5302399f72b4f05975ea0"
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "sha256": "e17586a73f9df4a305d9f714eb07ef81367f0fd4f71188c15292baecdd4db8ee"
+  },
+  {
+    "path": "skills/prism/tests/worker-ingress-capacity.test.mts",
+    "sha256": "ca93e5054cad264da8abd27db2e4d1aa0032ab021ef5bf4508a5809eeedbf9a0"
+  },
+  {
+    "path": "skills/prism/tests/worker-process-shutdown-native.mts",
+    "sha256": "3daca7922a7edf8e21d146d165159454bf5504bc47c248fc82c3f65065e252af"
+  },
+  {
+    "path": "skills/prism/tests/worker-shutdown-boundaries.test.mts",
+    "sha256": "b28e949b4993e746ff78f4e9f00ff5acdc65c5454672e589ee6d60579759c495"
+  },
+  {
+    "path": "tests/fixtures/config/swarm-bundle.d.mts",
+    "sha256": "1cd73b4cef7a1f17a99dd9230d54c53b05351c55cbb9e2bd81d5cffb4987b4dc"
+  },
+  {
+    "path": "tests/fixtures/config/swarm-bundle.mjs",
+    "sha256": "08cc278569ff299b04690e53d212ae9b44dccedbd3098a6bf3e594dc391f4e90"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-admission.mts",
+    "sha256": "2c4f38463969666c75f2a99515363672c6b6380d493be1a721c80e11c232fe3d"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+    "sha256": "31184df6adbd40d072cc4ebd24cdb80c434e287369105aa0f82fe1b52e3012e8"
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "sha256": "b66faf6d4ceccf9326e2739dbcd517702d15f4d6ff454e21a1091b98584ecdfe"
+  },
+  {
+    "path": "tests/verification/contracts/infra-private-access.test.mjs",
+    "sha256": "d05372c2fad91a4d6df0ab9a0fac1410e3dfa08e7dfe11a99212b3b3dd1a6ff5"
+  },
+  {
+    "path": "tests/verification/deployment/buster-admission-render.test.mjs",
+    "sha256": "6d15c495edc1b7d6b4c615c9373fa9f72cc7dbf665a7da7dd260e4ed7df7a91b"
+  },
+  {
+    "path": "tests/verification/deployment/check-deployment-truth.mjs",
+    "sha256": "d570b287d52b5485dfc7973c5c5320084262774b63808d2f666ea13796dbb4a1"
+  },
+  {
+    "path": "tests/verification/deployment/config-component-packaging.test.mjs",
+    "sha256": "6d611cfbeaacdbb09b56aec3e458c6be37b924759a86803db9a8501820398166"
+  },
+  {
+    "path": "tests/verification/deployment/prism-native-runtime.test.mjs",
+    "sha256": "9a0cc37bc273e71c95adf37d810cd0c75f9fadd8bece024c4e26c18402a857ba"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "sha256": "f3f9beff6c16ea0dbe1d969b3aa0f7f59fc2379aa19441596d813eb37a7439a4"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-image.mjs",
+    "sha256": "d3bc60f07bdd4ace771d3e868cfae6418813ca786d4570b804afdd0fdadef7dd"
+  },
+  {
+    "path": "tests/verification/e2e/real-run-workspace.mjs",
+    "sha256": "b46e9b7068cb1784f0f059820dd8ed47f9a0230bb067ed253b9fc96d569e48b6"
+  },
+  {
+    "path": "tests/verification/e2e/support/platform-config.ts",
+    "sha256": "f55fa4f7543d04f00bfe0343f0278f33f4b6b5acd21e447e316bebf02e05ae23"
+  },
+  {
+    "path": "tests/verification/e2e/swarm-author-profile.test.mjs",
+    "sha256": "3599774a05d71c34414c25f1b67793a5a336cd5211c91578ddf8b687ad5955e8"
+  },
+  {
+    "path": "tests/verification/reliability/buster-admission-config.test.mts",
+    "sha256": "cdea7b696e368a64ed972d1bb7e00b96a43ff24829a865cf713465898a51bdbf"
+  },
+  {
+    "path": "tests/verification/reliability/buster-extraction-concurrency.test.mts",
+    "sha256": "d4a209c12c95cb710a8d4dcd266c5cf39a21c4ab05020e6458e8327f146bfa2b"
+  },
+  {
+    "path": "tests/verification/reliability/buster-historical-import.test.mts",
+    "sha256": "c40110774d150be2c7f997b48b05bc82b9d2062e72a519c6d8ff8303f1396c7b"
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-identities.test.mts",
+    "sha256": "82bc6c720984fdc00c1edc85ff497b17985c11b52ec5209344bea9c4b741aac2"
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-ledger.test.mts",
+    "sha256": "0a0f1c2b85666cd7a772cd4431aaca102fcd5b9465ead5d31f14d96f5c8d8083"
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "sha256": "3a21f7565ce3eb94daf15593886ddb50c5386be1564f53dfc7a274ad0a5c5c5e"
+  },
+  {
+    "path": "tests/verification/reliability/config-component-bundle.test.mts",
+    "sha256": "046fdc125294e2148332a601ea790f80342c6dece415e67a6b5436c5dd1c45fe"
+  },
+  {
+    "path": "tests/verification/reliability/config-component-generation.test.mjs",
+    "sha256": "5f659ba6a9fdfffc6ce43a12efa766d4f0e1673ca98d3d29bd2c07192348c7ac"
+  },
+  {
+    "path": "tests/verification/reliability/tsconfig.config-components.json",
+    "sha256": "fa46ad27401011b17db0c547e358d94f0129c0db22db9392df94f94a20157706"
+  },
+  {
+    "path": "charts/prism/templates/configmap-worker-trust.yaml",
+    "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+  },
+  {
+    "path": "charts/prism/templates/networkpolicy.yaml",
+    "sha256": "75d2770a9d4a008cc10f6e506717ba8832e52d27ac2bd583bfee57dbd76eaa9f"
+  },
+  {
+    "path": "charts/prism/templates/services.yaml",
+    "sha256": "abae201f362dacc4e4422c8867d57113483eb443d5cf964e2a65996bf9683a85"
+  },
+  {
+    "path": "docker/Dockerfile.prism-worker",
+    "sha256": "820d8c1b9cb0784113fbd4c2ceb206b40cb0e2381d3fad3df647d7dcc784bb80"
+  },
+  {
+    "path": "docs/operations/operator-configuration.md",
+    "sha256": "f795518f3371f3235da779e1aac89420f0552e06d1a3b4258d8ed6b228c02238"
+  },
+  {
+    "path": "docs/operations/prism-operator-guide.md",
+    "sha256": "2c5ea4a201ac3969328a55872cc33d5bc6177f9fcfa466b97e664ba31b6e09fc"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "sha256": "816f867443f71c0fe908b188b1aa1e67956735b26c70ea51a6ab2dcbdf4b31c3"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "sha256": "a2f88fff4701f78a694a7fa1a0ff8ad5e59c54357384cb2c2fa6cea4ee10ff54"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-worker-listener-20260921.md",
+    "sha256": "dc356d3a9e081f4855fc9507c1464170ec81ab4193ffddd38f5885c40c6ba41b"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/README.md",
+    "sha256": "d42218741c4ccd57c753379e0f08cc16696fc4a903141c710fe042486e9a78ba"
+  },
+  {
+    "path": "skills/prism/server/worker-config.ts",
+    "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+  },
+  {
+    "path": "skills/prism/server/worker.ts",
+    "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+  },
+  {
+    "path": "skills/prism/tests/control-image-environment.test.mts",
+    "sha256": "72caacee4bd355a89206afbe8314502736d7beb151f4e1010bc6cbd890d59d1a"
+  },
+  {
+    "path": "skills/prism/tests/control-listener.test.mts",
+    "sha256": "9de211954528ea017cd032e6abddd677f336adf1580e442b1dbfad305bbd1af5"
+  },
+  {
+    "path": "skills/prism/tests/worker-listener-config.test.mts",
+    "sha256": "9b6b890ac766b34309fa617c79343d8436b24e5b269f8ff3d77679fb8c1b61de"
+  },
+  {
+    "path": "skills/prism/tests/worker-readiness-chart.test.mts",
+    "sha256": "dead10f13e0ac89fc199c82612541c0ddd9de014531b325c57481b0617a6fa43"
+  },
+  {
+    "path": "skills/prism/tsconfig.json",
+    "sha256": "7b695f390b5dfac86bd90faaae8e94bc98507407360663c846404b394c6f53ae"
+  }
+]

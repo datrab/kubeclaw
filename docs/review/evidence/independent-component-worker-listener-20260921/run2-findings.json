@@ -1,0 +1,35 @@
+{
+  "session": 35409,
+  "exitCode": 1,
+  "sourceDrift": [],
+  "componentCases": {
+    "pass": 562,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "busterCases": {
+    "pass": 18,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "releaseCases": {
+    "pass": 31,
+    "fail": 1,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "finding": "Original release-images fixture copies and commits only swarm.schema.json. Actual release verifier correctly rejects missing canonical swarm-components.schema.json. This is a missed original fixture migration, not an assertion/guard bypass.",
+  "fixAuthor": "root",
+  "fixEvidence": "docs/review/evidence/config-release-images-fixture-20260921/change.patch",
+  "fixSourceSha256": "a16659c694a0e67d7ade9c5141b6be5b15aa908bbe0b8a3fe793ace5cf44cc41",
+  "independentInspection": "Only copies both real canonical schemas into the temporary fixture and commits their fixed directory; no original assertion changed.",
+  "notExecutedInRun2": [
+    "listenerAdditionalModules",
+    "four type projects",
+    "deployment truth",
+    "lint",
+    "private mutants"
+  ]
+}

@@ -1,0 +1,16 @@
+✔ actual Buster chart mounts both authored admission profiles and rejects retired ENV authors (610.266306ms)
+✔ actual service CLI rejects inherited retired ENV before opening its parent channel (10117.315055ms)
+✔ actual unprivileged CLI starts and stops with authored policy {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (4276.916054ms)
+✔ actual unprivileged CLI starts and stops with authored policy {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":5} (2546.376283ms)
+✔ canonical startup rejects missing/unknown/malformed admission and every retired ENV author (45.378825ms)
+✔ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (754.881004ms)
+✔ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (670.800285ms)
+✔ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (238.012441ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22353.969067

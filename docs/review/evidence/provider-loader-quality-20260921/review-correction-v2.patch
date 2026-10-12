@@ -1,0 +1,55 @@
+--- a/skills/buster/engine/test-gates/provider-process-session.ts
++++ b/skills/buster/engine/test-gates/provider-process-session.ts
+@@ -43,6 +43,7 @@
+   #initializeResolve: ((supportsCleanup: boolean) => void) | null = null;
+   #initializeReject: ((error: Error) => void) | null = null;
+   #initialized: boolean | null = null;
++  #initializationFailure: Error | null = null;
+   #resultResolve: ((value: ProviderResultV1) => void) | null = null;
+   #resultReject: ((error: Error) => void) | null = null;
+   #cleanupResolve: (() => void) | null = null;
+@@ -118,6 +119,7 @@
+ 
+   initialize(context: TestProviderExecutionContext): Promise<boolean> {
+     this.#setContext(context);
++    if (this.#initializationFailure) return Promise.reject(this.#initializationFailure);
+     if (this.#initialized !== null) return Promise.resolve(this.#initialized);
+     if (this.#initializeResolve) throw new Error('TEST_PROVIDER_INITIALIZE_DUPLICATE');
+     const operation = new Promise<boolean>((resolve, reject) => { this.#initializeResolve = resolve; this.#initializeReject = reject; });
+@@ -154,8 +156,8 @@
+   async #terminate(): Promise<void> {
+     this.#capabilities.abort(new Error('TEST_PROVIDER_TERMINATED'));
+     if (this.#closed) { await this.#capabilities.drain(); return; }
++    let signalFailure: Error | undefined;
+     await new Promise<void>((resolve, reject) => {
+-      let signalFailure: Error | undefined;
+       const signal = (value: NodeJS.Signals): void => {
+         try { signalProvider(this.#child, value); }
+         catch (cause) { signalFailure ??= new Error('TEST_PROVIDER_SIGNAL_FAILED', { cause }); }
+@@ -164,12 +166,15 @@
+       const bound = setTimeout(() => { signal('SIGKILL'); reject(new Error('TEST_PROVIDER_TERMINATION_TIMEOUT')); }, 1_000);
+       this.#child.once('close', () => {
+         clearTimeout(force); clearTimeout(bound);
+-        if (signalFailure) reject(signalFailure); else resolve();
++        resolve();
+       });
+       try { this.#send({ kind: 'abort', reason: 'TEST_PROVIDER_TERMINATED' }); signal('SIGTERM'); }
+       catch (cause) { signalFailure ??= new Error('TEST_PROVIDER_ABORT_SEND_FAILED', { cause }); signal('SIGKILL'); }
+     });
++    // Only confirmed process closure reaches this bounded drain. A signal
++    // failure must not discard ownership of still-settling capability calls.
+     await this.#capabilities.drain();
++    if (signalFailure) throw signalFailure;
+   }
+ 
+   resources(): ProviderProcessResources { this.#sample(); return { ...this.#resources }; }
+@@ -271,6 +276,9 @@
+   }
+ 
+   #fail(error: Error): void {
++    // The constructor samples before initialize has installed its callbacks.
++    // Preserve that failure without preventing cleanup after an execution error.
++    if (this.#initialized === null) this.#initializationFailure ??= error;
+     const initializeReject = this.#initializeReject; const resultReject = this.#resultReject; const cleanupReject = this.#cleanupReject;
+     this.#clearInitialize(); this.#clearResult(); this.#clearCleanup();
+     initializeReject?.(error); resultReject?.(error); cleanupReject?.(error);

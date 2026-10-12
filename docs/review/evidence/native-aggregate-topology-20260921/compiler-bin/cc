@@ -1,0 +1,4 @@
+#!/bin/sh
+# Actual cached Alpine GCC; supply its extracted sysroot and clear its built-in
+# fortify default before the original test's explicit -D_FORTIFY_SOURCE=3.
+exec "$PWD/node_modules/.cache/native-host-tools/root/usr/bin/gcc" --sysroot="$PWD/node_modules/.cache/native-host-tools/root" -U_FORTIFY_SOURCE "$@"

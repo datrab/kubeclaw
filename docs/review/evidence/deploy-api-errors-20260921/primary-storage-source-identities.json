@@ -1,0 +1,42 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.18.4/cmd/helm/list.go",
+    "file": "helm-v3.18.4-cmd-helm-list.go.txt",
+    "sha256": "0899939eba4b428512533f42c376a33fda771896ebc801a02330e22dcd3b12be"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.18.4/pkg/action/list.go",
+    "file": "helm-v3.18.4-pkg-action-list.go.txt",
+    "sha256": "cf99d8da1d53f544641f345937789c3038b7d86adbbd114f3270d2c930ddb255"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.22.0/cmd/helm/list.go",
+    "file": "helm-v3.22.0-cmd-helm-list.go.txt",
+    "sha256": "0899939eba4b428512533f42c376a33fda771896ebc801a02330e22dcd3b12be"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.22.0/pkg/action/list.go",
+    "file": "helm-v3.22.0-pkg-action-list.go.txt",
+    "sha256": "cf99d8da1d53f544641f345937789c3038b7d86adbbd114f3270d2c930ddb255"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.22.0/pkg/storage/driver/secrets.go",
+    "file": "helm-v3.22.0-pkg-storage-driver-secrets.go.txt",
+    "sha256": "3b6398fb39b09618d65c8a1e9be7dbfab6ab0ddee62456bf77fb9c568aa10e4d"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.22.0/pkg/storage/driver/cfgmaps.go",
+    "file": "helm-v3.22.0-pkg-storage-driver-cfgmaps.go.txt",
+    "sha256": "30e452667ddac1a1e8a5415ad4857973b4ab7e8c722506cf21e5c879803fb512"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.22.0/pkg/action/action.go",
+    "file": "helm-v3.22.0-pkg-action-action.go.txt",
+    "sha256": "f9253c25df531bbf3a25e6f4227959ee0c111f32b72f49d76fea078929d81e72"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.22.0/pkg/cli/environment.go",
+    "file": "helm-v3.22.0-pkg-cli-environment.go.txt",
+    "sha256": "91b81d7696204ff90aba577fd38727ba034591fbb0b5a1e1afe9a9e7c2ca1211"
+  }
+]

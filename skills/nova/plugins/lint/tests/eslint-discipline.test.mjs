@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = path.resolve(packageRoot, '../../../..');
-const config = path.join(repoRoot, 'charts/kubeclaw/files/config/eslint.config.mjs');
+const config = path.join(repoRoot, 'charts/kubeclaw/files/config/eslint-config.mjs');
 
 function lint(filename, source) {
   const directory = fs.mkdtempSync(path.join(packageRoot, 'src/eslint-rule-fixture-'));

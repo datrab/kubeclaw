@@ -1,0 +1,32 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "Accept V2 lint correction for integration and verification; source-only approval",
+  "manifestSha256": "a31ca598435db44e54879c15cdb575b713ff41c4f7459a16f27a31e819362d00",
+  "allFiveBeforeAfterHashesVerified": true,
+  "resolvedFinding": "RS-LINT-COUPLING-01: both invokers now import dedicated six-line transport adapter; no RuntimeSecurity dependency on complete Fixture implementation.",
+  "sourceChecks": [
+    "Adapter reads only the same HOME/KUBECONFIG/Kubernetes service host/port values, on each command. No fallback or operator policy introduced.",
+    "Each invoker preserves its own PATH and locale behavior; spread cannot overwrite them because adapter returns only four explicit credential/transport keys.",
+    "Canonical environment boundary moves from fixture implementation to dedicated adapter; both Fixture and RuntimeSecurity remain subject to no-direct-env-access. No global lint rule weakened.",
+    "Governance tests preserve no-env-default and adjacent-file denial oracles; add actual ESLint direct-read denial for both invokers; ignored files/parser errors cannot falsely pass.",
+    "Previously reviewed observation extraction remains condition-order equivalent and cohesive.",
+    "All9 updated control targets, hashes and unique anchors checked against proposed files or unchanged live targets."
+  ],
+  "controlsChecked": [
+    "restore-maximumExecutionMs",
+    "restore-maximumOutputBytes",
+    "restore-maximumObservationAgeMs",
+    "restore-poll1000",
+    "restore-future5000",
+    "restore-diagnostic1024",
+    "restore-child-path",
+    "restore-abort-before-output-cause",
+    "restore-missing-policy-defaults"
+  ],
+  "verificationStillRequired": [
+    "Wait for active runtime to terminate before live integration.",
+    "Canonical affected types/lint plus complete governance tests and applicable behavioral regressions on integrated stand.",
+    "Execute9 controls and inspect exact intended failures; no passing claim from source spec.",
+    "Full RS2 service proof and final DOC/evidence review remain open."
+  ]
+}

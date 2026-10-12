@@ -1,0 +1,34 @@
+✖ recovery requires its own sealed cleanup archive and preserves the original failed receipt (207.944353ms)
+✔ cleanup recovery fences no-hook (337.554862ms)
+✔ cleanup recovery fences declined (322.825381ms)
+✔ cleanup recovery fences missing-result (186.408516ms)
+✔ cleanup recovery fences wrong-profile (323.111669ms)
+✔ cleanup recovery fences original-live (306.963361ms)
+✔ cleanup recovery fences cleanup-live (307.072713ms)
+✔ cleanup recovery fences missing-original (312.134525ms)
+✔ cleanup recovery fences missing-cleanup (333.568568ms)
+✔ cleanup recovery fences wrong-reference (349.319015ms)
+✔ cleanup recovery fences unknown-key (305.931204ms)
+✔ cleanup recovery fences bad-output (336.35353ms)
+✔ cleanup recovery fences different-accounting (341.666807ms)
+✔ cleanup recovery fences callback-mutation (323.18543ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4894.266982
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-native-cleanup.test.mts:7:1
+✖ recovery requires its own sealed cleanup archive and preserves the original failed receipt (207.944353ms)
+  Error: WORKER_NATIVE_JOURNAL_IDENTITY_CONFLICT
+      at #lookup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-attempt-journal.ts:154:102)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async NativeAttemptJournal.readResult (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-attempt-journal.ts:82:20)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-cleanup.test.mts:10:36)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

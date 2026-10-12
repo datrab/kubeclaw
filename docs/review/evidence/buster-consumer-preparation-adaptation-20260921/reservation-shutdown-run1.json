@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "/usr/local/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/verification/reliability/result-reservation.test.mts",
+    "tests/verification/reliability/buster-shutdown-storage.test.mts"
+  ],
+  "exitCode": 1
+}

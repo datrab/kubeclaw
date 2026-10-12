@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import { ESLint } from '../../../../node_modules/eslint/lib/api.js';
+const eslint=new ESLint({overrideConfigFile:'charts/kubeclaw/files/config/eslint-config.mjs'});
+const source="console.log('probe');\nvoid import('./plugin.mjs');\n";
+const child='skills/buster/engine/test-gates/provider-child.mjs';
+const rules=async(text,filePath)=>(await eslint.lintText(text,{filePath}))[0].messages.map(m=>m.ruleId);
+const allowed=await rules(source,child);
+const ordinary=await rules(source,'skills/buster/engine/test-gates/ordinary-probe.mjs');
+assert(!allowed.includes('no-console'));
+assert(!allowed.includes('discipline/no-dynamic-module-loading'));
+assert(ordinary.includes('no-console'));
+assert(ordinary.includes('discipline/no-dynamic-module-loading'));
+assert((await rules('let state = 0;\nstate += 1;\n',child)).includes('discipline/no-top-level-mutable-state'));
+console.log(JSON.stringify({allowed,ordinary,mutableStateRejected:true}));

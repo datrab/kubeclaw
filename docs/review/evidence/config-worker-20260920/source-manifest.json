@@ -1,0 +1,33 @@
+{
+  "files": {
+    "skills/common/plugin-runtime/foundation/config/swarm.ts": "42cbbcff482125b7b1d726c5e0fd651ab0f9ade0af9055920a87fb2406c33532",
+    "skills/prism/server/worker-config.ts": "09108493fdcdcb993c83375f04667a7a92b2dbaacdf02e11f4f3f549f8817194",
+    "skills/prism/tests/swarm-worker-config.test.mts": "3b788764f6935b25a841f44d2636a0939ce8f2c51a4efe90dfc32d6c209823e0",
+    "skills/prism/tests/worker-ingress-capacity.test.mts": "bec028cb418e787bfbb730c9dc8a6a4ac663e91a66c5f19821a9290844a6320d",
+    "skills/prism/tests/worker-shutdown-boundaries.test.mts": "e4c09524176c8893d4fccb04dfae88784f5e3055ef2186fb5db7da6b9a920d14",
+    "skills/prism/tests/native/worker-harness.mts": "5fc7aad964935ce65fa62d403efafc53045b254eee763a4c538c718aa837ba81",
+    "scripts/config/inventory-settings.mjs": "0ead311638b1f9b306d71a5db3cab8dddf234b3be26faf6dd092f0670206757f",
+    "tests/verification/deployment/prism-swarm-config.test.mjs": "c955e41b63ed5bfb89263bf5ee5897c73c1e96529e6de31117614d13729d52c0",
+    "tests/verification/deployment/prism-swarm-image.mjs": "5027a83bb6f52f9a36612f754d007802511ed5d681b0888271ff91c0035fba06",
+    "tests/verification/deployment/prism-native-runtime.test.mjs": "756344db76314cba92eb020f5a3a578e2555aa0937272661a2f8d15f8b15bdac",
+    "tests/verification/deployment/argocd-chart-order.test.mjs": "af7b421debad09c516431b191406d81f97f7a60e4ea177fe627eb07d585d0520",
+    "skills/common/plugin-runtime/foundation/config/swarm.schema.json": "21c5dbe20d5e636679005b10aea762b1c9a1bd8614dada0a5173858bcdf1b21e",
+    "charts/kubeclaw/files/config/swarm.config.json": "7e2ec0c437ab8a99e3ff0537a103447750a85cd238a53086915aed6040a5ed89",
+    "charts/prism/templates/_swarm-config.tpl": "757c4f2d4dc1d21ff3c63c363c07cbfbbc33621ad389f44afe04cbdd90ea78a3",
+    "charts/prism/templates/configmap-swarm-config.yaml": "be0a7373c30283e4b46bb911d1a893d73da9c5d27267e22328cc6010e2551e4f",
+    "charts/prism/templates/workloads.yaml": "c1344e436c5be216ab7fbe11f31d66dcee79c62e49d50e7259a4e380ec9e1088",
+    "charts/prism/values.yaml": "6f93e58c799044f22316b490bbead30eea4e43e4624b5a3a0b5e674c02e02894",
+    "charts/prism/values.schema.json": "73c7e50de8a8738c4bb215d6a54801e76f386beb27489372b4a3dcfc57be3bb6",
+    "scripts/check-built-runtime-image.sh": "c3f716c922d8bb729caa9bcad53b8f2201de08ce72ff34e6e74ebc39067b1c44",
+    "skills/prism/tests/worker-process-shutdown.native.mts": "aa3a72078b492631979bba02c4cf705fc3eeaae7d810a502b403cf738b36cb34",
+    "docs/operations/operator-configuration.md": "2de91259e73add32eb4b12ecefadb4bcac33b2c77b05d2b5e8ae89f7ec76c6a3",
+    "docs/operations/prism-operator-guide.md": "6fcbad6d33291e58ec00ffe5fe6a0c23d32edec05d7885eb72220dd654dc43ca",
+    "skills/common/plugin-runtime/foundation/config/README.md": "a822e2ed85bb65312033f6019c9025fcdea91e6b5039636d9ecc964d06c93de7",
+    "docs/review/remediation/implementation/config-inventory-20260920.md": "6ceb7dae896578cafd555ce31656943e832e1cdcef1b5a4a8beffccdd8e1ceb2",
+    "docs/review/remediation/implementation/config-inventory-20260920.json": "ea5fae7ded9e5dddec02bf376b976969dfa64113746dcb01e35a5f76cecbc324"
+  },
+  "symlinks": {
+    "charts/prism/files/config/swarm.config.json": "../../../kubeclaw/files/config/swarm.config.json",
+    "charts/prism/files/config/swarm.schema.json": "../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json"
+  }
+}

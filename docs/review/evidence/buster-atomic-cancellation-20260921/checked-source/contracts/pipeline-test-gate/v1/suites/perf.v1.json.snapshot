@@ -1,0 +1,9 @@
+{
+  "schemaVersion":"test-suite-template.v1","contractId":"kubeclaw.lighthouse-suite@1",
+  "tests":{
+    "performance":{"uses":"kubeclaw.lighthouse@1","mode":"blocking","retries":0,"concurrencyGroup":"lighthouse","config":{"purpose":"performance","routes":["/"],"settingsFile":".swarm/lighthouse-settings.json","profile":"mobile-standard","budget":"release","runs":3}},
+    "seo":{"uses":"kubeclaw.lighthouse@1","mode":"advisory","retries":0,"concurrencyGroup":"lighthouse","config":{"purpose":"seo","routes":["/"],"settingsFile":".swarm/lighthouse-settings.json","profile":"desktop-standard","runs":1}},
+    "best-practices":{"uses":"kubeclaw.lighthouse@1","mode":"advisory","retries":0,"concurrencyGroup":"lighthouse","config":{"purpose":"best-practices","routes":["/"],"settingsFile":".swarm/lighthouse-settings.json","profile":"desktop-standard","runs":1}}
+  },
+  "fixtures":{},"concurrencyLimits":{"lighthouse":1}
+}

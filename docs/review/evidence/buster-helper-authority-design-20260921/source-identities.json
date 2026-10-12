@@ -1,0 +1,26 @@
+[
+  {
+    "path": "docker/Dockerfile.buster-runtime",
+    "sha256": "286741a2f5406ff08723bb39d3ba95b2f55a556b1eeb89bf16960c21a572d38a"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "sha256": "16a17c38fb41644c01c314544955c54da1f1e97f40aaa5b5463f11d7c53aa125"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+    "sha256": "2102536656c01e861f612eb18967d7881b2993629de63b6d93e0ae8b70b70376"
+  },
+  {
+    "path": "scripts/build-plugin-sandbox.mjs",
+    "sha256": "ea546fd31e572312986730c4f8c89aacf0943aeb37b560cc63281cf67a9f92ec"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+    "sha256": "20e32c52051339237e14cf1bed0da9c690ece23297bec9bb77a628e8df211917"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/direct-command-runtime.ts",
+    "sha256": "eaacae3a6c4b3110039b7134378b8eb114dc8cb2161c4bc593c405c967afa006"
+  }
+]

@@ -1,0 +1,10 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts
+   87:76   error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+   87:106  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+   88:34   error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+   89:34   error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  126:3    error  Async method 'invoke' has a complexity of 26. Maximum allowed is 15                    complexity
+
+✖ 5 problems (5 errors, 0 warnings)
+

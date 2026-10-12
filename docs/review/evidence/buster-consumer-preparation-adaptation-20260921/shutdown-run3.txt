@@ -1,0 +1,20 @@
+{"fixture":"terminal-persistence-cut","timing":"during","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: during (712.045457ms)
+{"fixture":"terminal-persistence-cut","timing":"after","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: after (623.543548ms)
+{"fixture":"terminal-persistence-cut","timing":"queued","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: queued (546.713166ms)
+{"fixture":"terminal-persistence-cut","timing":"admission","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: admission (603.2675ms)
+{"fixture":"terminal-persistence-cut","timing":"read-failure","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: read-failure (505.872914ms)
+{"fixture":"terminal-persistence-cut","timing":"healthy-terminal","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: healthy-terminal (555.834729ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6339.843708

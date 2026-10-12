@@ -1,0 +1,40 @@
+✖ CR04 real headers deadline follows short and long author budgets (333.277775ms)
+✖ CR04 real body deadline follows short and long author budgets (308.338248ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1098.56565
+
+✖ failing tests:
+
+test at ../../../../../tmp/independent-prism-transport-Ghpnkc/remove-abort.mts:69:41
+✖ CR04 real headers deadline follows short and long author budgets (333.277775ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///tmp/independent-prism-transport-Ghpnkc/remove-abort.mts:78:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/independent-prism-transport-Ghpnkc/remove-abort.mts:69:41
+✖ CR04 real body deadline follows short and long author budgets (308.338248ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///tmp/independent-prism-transport-Ghpnkc/remove-abort.mts:78:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }

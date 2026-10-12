@@ -1,0 +1,22 @@
+[
+  {
+    "path": "skills/buster/engine/test-gates/provider-loader.ts",
+    "sha256": "03c227b06bc5d6e5b967d8ddfd519816bfffce45007f0e52b50dd49347606f50"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+    "sha256": "21f71e7885deec3faedaf8ff374a27522d9ca929aa2c320de175096213ba9787"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+    "sha256": "10c02adcf2a5975eeab7759cffd9ba6d9cbf38dce76971dfe1789554197ec239"
+  },
+  {
+    "path": "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+    "sha256": "5c401ec8acd2cf6b2b8d95c9d223e82a82d0f7ab6816bd8b9bbbfc7ab5daa2f6"
+  },
+  {
+    "path": "docs/review/evidence/independent-buster-runner-execution-child-20260921/cleanup-v2-runtime1/cleanup-runtime-1.txt",
+    "sha256": "438bfc2ab1774eed8c76606b3aa219a5954c7152c644644a95fc60ab3a5bbedc"
+  }
+]

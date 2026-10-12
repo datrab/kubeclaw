@@ -193,7 +193,7 @@ async function produce() {
   const effectsFile = durabilityEffectsFile(path.join(root, 'producer-effects.jsonl'));
   const effects = new core.FileEffectJournal(effectsFile);
   instrumentKillBoundary(effects, 'write');
-  const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([['kubeclaw.artifact-store:artifact-store', { artifactRoot }]]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, 'producer-locks'))), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
+  const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([['kubeclaw.artifact-store:artifact-store', { artifactRoot }]]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, 'producer-locks')), 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   try {
     const imported = await importedFinalGate(registry);
@@ -307,7 +307,7 @@ async function consume() {
   const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([
     ['kubeclaw.artifact-store:artifact-store', { artifactRoot }],
     [evidenceId, { stateRoot: root, manifestStageId: 'project-summary', gateStageId: 'final-test' }],
-  ]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, `${phase}-locks`))), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
+  ]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, `${phase}-locks`)), 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   try {
     let ref = structuredClone(producer.storedArtifactRef);
@@ -462,7 +462,7 @@ async function replayDurableBoundary() {
   const configs = new Map([['kubeclaw.artifact-store:artifact-store', { artifactRoot }],
     [evidenceId, { stateRoot: root, manifestStageId: 'project-summary', gateStageId: 'final-test' }]]);
   const adapters = new core.AdapterRuntime({ granted, activated, configs,
-    effects: new core.EffectCoordinator(effects, undefined, auditSink, new core.FileResourceLockManager(path.join(root, `durability-${target}-${mode}-${boundary}-replay-locks`))),
+    effects: new core.EffectCoordinator(effects, undefined, auditSink, new core.FileResourceLockManager(path.join(root, `durability-${target}-${mode}-${boundary}-replay-locks`)), 300_000),
     shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   let outcome = 'completed', error;

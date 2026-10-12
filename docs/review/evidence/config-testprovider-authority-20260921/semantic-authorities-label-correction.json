@@ -1,0 +1,6 @@
+{
+  "preserved": "code-authorities-v2.json",
+  "current": "code-authorities-v3.json",
+  "sha256": "02b4706aa5d72b263d2376ddc999f6aa551a3114319b2e5b8f9ca1989a6b97c5",
+  "change": "Remove empty/function-header appended entries; label MAXIMUM_LINES as DA-record count, not byte capacity. Original source/report unchanged."
+}

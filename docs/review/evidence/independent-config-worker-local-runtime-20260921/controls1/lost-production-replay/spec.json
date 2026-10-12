@@ -1,0 +1,7 @@
+{
+  "file": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+  "from": "replayLimit: workerLocalRuntime.replayLimit",
+  "log": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-worker-local-runtime-20260921/controls1/lost-production-replay/applied.jsonl",
+  "sha256": "724d95538646558ad3f1930899ee1cd905ab8b8727d1bc84469831b55ef979fb",
+  "to": "replayLimit: 65_536"
+}

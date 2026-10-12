@@ -1,0 +1,27 @@
+Error loading shared library libtalloc.so.2: No such file or directory (needed by /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot)
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: _talloc_zero: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: _talloc_get_type_abort: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_strndup: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_strdup: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_asprintf: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_report_depth_file: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_autofree_context: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: _talloc_set_destructor: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: _talloc_memdup: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_set_name_const: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_set_log_stderr: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_check_name: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_get_name: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: _talloc_array: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_reparent: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_reference_count: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_get_size: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: _talloc_free: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_unlink: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_parent: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_enable_leak_report: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: _talloc_realloc_array: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: _talloc_zero_array: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_report_depth_cb: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: talloc_named_const: symbol not found
+Error relocating /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot: _talloc_reference_loc: symbol not found

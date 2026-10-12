@@ -1,0 +1,1700 @@
+diff --git a/charts/kubeclaw/files/config/buster-engine.config.json b/charts/kubeclaw/files/config/buster-engine.config.json
+new file mode 100644
+--- /dev/null
++++ b/charts/kubeclaw/files/config/buster-engine.config.json
+@@ -0,0 +1,44 @@
++{
++  "schemaVersion": "swarm-component.v1",
++  "owner": "buster-engine",
++  "settings": {
++    "preparation": {
++      "resourcePolicy": {
++        "cpuTimeMs": 120000,
++        "memoryBytes": 8589934592,
++        "tasks": 64
++      },
++      "timeoutMs": 300000,
++      "cleanupTimeoutMs": 10000,
++      "maximumActivePreparations": 2,
++      "maximumPendingAdmissions": 16,
++      "maximumRequestBytes": 100663296,
++      "maximumArchiveBytes": 67108864,
++      "maximumExtractedBytes": 536870912,
++      "maximumHeaderBytes": 3145728,
++      "maximumSourceBytes": 1073741824,
++      "maximumMetadataBytes": 67108864,
++      "maximumRecords": 10000,
++      "maximumOwnershipBytes": 16777216,
++      "maximumJournalBytes": 268435456,
++      "maximumInputBytes": 65536,
++      "maximumOutputBytes": 8388608,
++      "maximumResultBytes": 4194304,
++      "pollIntervalMs": 25,
++      "drainTimeoutMs": 5000,
++      "closeTimeoutMs": 10000,
++      "tarTimeoutMs": 120000,
++      "maximumArchiveEntries": 200000,
++      "maximumListingLineBytes": 1048576,
++      "maximumTarStderrBytes": 65536,
++      "maximumSourceEntries": 400014,
++      "sourceEntryReservationBytes": 256,
++      "maximumOpenFiles": 64
++    },
++    "admission": {
++      "maximumActiveJobs": 2,
++      "maximumQueuedJobs": 8,
++      "maximumConcurrentAttempts": 64
++    }
++  }
++}
+diff --git a/charts/kubeclaw/files/config/prism-control.config.json b/charts/kubeclaw/files/config/prism-control.config.json
+new file mode 100644
+--- /dev/null
++++ b/charts/kubeclaw/files/config/prism-control.config.json
+@@ -0,0 +1,11 @@
++{
++  "schemaVersion": "swarm-component.v1",
++  "owner": "prism-control",
++  "settings": {
++    "pipelinePreferenceSubject": null,
++    "artifactRoot": "/var/lib/prism/artifacts",
++    "studioPublicUrl": "https://prism-studio",
++    "port": 8080,
++    "dispatchTimeoutMs": 900000
++  }
++}
+diff --git a/charts/kubeclaw/files/config/prism-execution.config.json b/charts/kubeclaw/files/config/prism-execution.config.json
+new file mode 100644
+--- /dev/null
++++ b/charts/kubeclaw/files/config/prism-execution.config.json
+@@ -0,0 +1,12 @@
++{
++  "schemaVersion": "swarm-component.v1",
++  "owner": "prism-execution",
++  "settings": {
++    "resourcePolicy": {
++      "cpuTimeMs": 60000,
++      "memoryBytes": 8589934592,
++      "tasks": 2048
++    },
++    "maximumResultBytes": 67108864
++  }
++}
+diff --git a/charts/kubeclaw/files/config/prism-studio.config.json b/charts/kubeclaw/files/config/prism-studio.config.json
+new file mode 100644
+--- /dev/null
++++ b/charts/kubeclaw/files/config/prism-studio.config.json
+@@ -0,0 +1,9 @@
++{
++  "schemaVersion": "swarm-component.v1",
++  "owner": "prism-studio",
++  "settings": {
++    "port": 8080,
++    "controlTimeoutMs": 30000,
++    "controlUrl": "http://prism-control:8080"
++  }
++}
+diff --git a/charts/kubeclaw/files/config/prism-worker.config.json b/charts/kubeclaw/files/config/prism-worker.config.json
+new file mode 100644
+--- /dev/null
++++ b/charts/kubeclaw/files/config/prism-worker.config.json
+@@ -0,0 +1,25 @@
++{
++  "schemaVersion": "swarm-component.v1",
++  "owner": "prism-worker",
++  "settings": {
++    "ingress": {
++      "maximumActiveRequests": 16,
++      "maximumProbeRequests": 4,
++      "maximumConnections": 128,
++      "requestTimeoutMs": 120000,
++      "shutdownTimeoutMs": 120000,
++      "maximumInputBytes": 16777216
++    },
++    "supervisor": {
++      "uid": 1000,
++      "gid": 1000,
++      "maximumOwnershipRecords": 65536,
++      "maximumOwnershipBytes": 67108864,
++      "maximumOutputBytes": 33554432,
++      "maximumJournalBytes": 68719476736,
++      "pollIntervalMs": 20,
++      "drainTimeoutMs": 10000,
++      "closeTimeoutMs": 105000
++    }
++  }
++}
+diff --git a/charts/kubeclaw/files/config/swarm.config.json b/charts/kubeclaw/files/config/swarm.config.json
+--- a/charts/kubeclaw/files/config/swarm.config.json
++++ b/charts/kubeclaw/files/config/swarm.config.json
+@@ -1,5 +1,5 @@
+ {
+-  "_doc": "Single authored swarm configuration. operator.prism is consumed by production Prism startup loaders; legacy profile expansion remains separate test support.",
++  "schemaVersion": "swarm-entry.v2",
+   "profile": "standard",
+   "features": {
+     "observability": true,
+@@ -15,87 +15,11 @@
+     "determinism": "strict"
+   },
+   "overrides": {},
+-  "operator": {
+-    "prism": {
+-      "worker": {
+-        "maximumActiveRequests": 16,
+-        "maximumProbeRequests": 4,
+-        "maximumConnections": 128,
+-        "requestTimeoutMs": 120000,
+-        "shutdownTimeoutMs": 120000,
+-        "maximumInputBytes": 16777216
+-      },
+-      "native": {
+-        "maximumResultBytes": 67108864,
+-        "dispatchTimeoutMs": 900000,
+-        "resourcePolicy": {
+-          "cpuTimeMs": 60000,
+-          "memoryBytes": 8589934592,
+-          "tasks": 2048
+-        },
+-        "supervisor": {
+-          "uid": 1000,
+-          "gid": 1000,
+-          "maximumOwnershipRecords": 65536,
+-          "maximumOwnershipBytes": 67108864,
+-          "maximumOutputBytes": 33554432,
+-          "maximumJournalBytes": 68719476736,
+-          "pollIntervalMs": 20,
+-          "drainTimeoutMs": 10000,
+-          "closeTimeoutMs": 105000
+-        }
+-      },
+-      "control": {
+-        "pipelinePreferenceSubject": null,
+-        "artifactRoot": "/var/lib/prism/artifacts",
+-        "studioPublicUrl": "https://prism-studio",
+-        "port": 8080
+-      },
+-      "studio": {
+-        "port": 8080,
+-        "controlTimeoutMs": 30000,
+-        "controlUrl": "http://prism-control:8080"
+-      }
+-    },
+-    "buster": {
+-      "preparation": {
+-        "resourcePolicy": {
+-          "cpuTimeMs": 120000,
+-          "memoryBytes": 8589934592,
+-          "tasks": 64
+-        },
+-        "timeoutMs": 300000,
+-        "cleanupTimeoutMs": 10000,
+-        "maximumActivePreparations": 2,
+-        "maximumPendingAdmissions": 16,
+-        "maximumRequestBytes": 100663296,
+-        "maximumArchiveBytes": 67108864,
+-        "maximumExtractedBytes": 536870912,
+-        "maximumHeaderBytes": 3145728,
+-        "maximumSourceBytes": 1073741824,
+-        "maximumMetadataBytes": 67108864,
+-        "maximumRecords": 10000,
+-        "maximumOwnershipBytes": 16777216,
+-        "maximumJournalBytes": 268435456,
+-        "maximumInputBytes": 65536,
+-        "maximumOutputBytes": 8388608,
+-        "maximumResultBytes": 4194304,
+-        "pollIntervalMs": 25,
+-        "drainTimeoutMs": 5000,
+-        "closeTimeoutMs": 10000,
+-        "tarTimeoutMs": 120000,
+-        "maximumArchiveEntries": 200000,
+-        "maximumListingLineBytes": 1048576,
+-        "maximumTarStderrBytes": 65536,
+-        "maximumSourceEntries": 400014,
+-        "sourceEntryReservationBytes": 256,
+-        "maximumOpenFiles": 64
+-      },
+-      "admission": {
+-        "maximumActiveJobs": 2,
+-        "maximumQueuedJobs": 8,
+-        "maximumConcurrentAttempts": 64
+-      }
+-    }
++  "components": {
++    "prism-control": "prism-control.config.json",
++    "prism-studio": "prism-studio.config.json",
++    "prism-worker": "prism-worker.config.json",
++    "prism-execution": "prism-execution.config.json",
++    "buster-engine": "buster-engine.config.json"
+   }
+ }
+diff --git a/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts b/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
+new file mode 100644
+--- /dev/null
++++ b/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
+@@ -0,0 +1,111 @@
++import fs from 'node:fs';
++import path from 'node:path';
++import { createHash } from 'node:crypto';
++import Ajv2020 from 'ajv/dist/2020.js';
++
++const owners = ['prism-control', 'prism-studio', 'prism-worker', 'prism-execution', 'buster-engine'] as const;
++type Owner = typeof owners[number];
++interface Validator { (value: unknown): boolean; errors?: unknown[] | null }
++const AjvConstructor = Ajv2020 as unknown as new (options: { allErrors: boolean; strict: boolean }) => {
++  compile(schema: object): Validator;
++};
++const ajv = new AjvConstructor({ allErrors: true, strict: true });
++const entrySchema = JSON.parse(fs.readFileSync(new URL('./swarm.schema.json', import.meta.url), 'utf8')) as object;
++const componentSchema = JSON.parse(fs.readFileSync(new URL('./swarm-components.schema.json', import.meta.url), 'utf8')) as {
++  $defs: Record<string, object>;
++};
++const validateEntry = ajv.compile(entrySchema);
++const validateComponent = ajv.compile(componentSchema);
++const settingsValidators = new Map(['buster-preparation', 'buster-admission'].map(name => [name, ajv.compile({
++  $defs: componentSchema.$defs, $ref: `#/$defs/${name}`,
++})]));
++interface Component {
++  readonly schemaVersion: 'swarm-component.v1';
++  readonly owner: Owner;
++  readonly settings: Readonly<Record<string, unknown>>;
++}
++interface Observation {
++  readonly file: string;
++  readonly fd: number;
++  readonly before: fs.BigIntStats;
++  readonly sha256: string;
++}
++export interface SwarmBundleIdentity {
++  readonly entry: string;
++  readonly generationDirectory: string;
++  readonly files: readonly Readonly<{ name: string; sha256: string }>[];
++}
++
++/** Envelope validators are also used at the existing owned-host boundary. */
++export function validateComponentSettings(name: 'buster-preparation' | 'buster-admission', value: unknown, error: string): void {
++  const validate = settingsValidators.get(name);
++  if (!validate || !validate(value)) throw new Error(error);
++}
++
++function freezeJson(value: unknown): void {
++  if (value === null || typeof value !== 'object') return;
++  for (const child of Object.values(value)) freezeJson(child);
++  Object.freeze(value);
++}
++
++function unchanged(a: fs.BigIntStats, b: fs.BigIntStats): boolean {
++  return b.isFile() && a.dev === b.dev && a.ino === b.ino && a.mode === b.mode
++    && a.size === b.size && a.mtimeNs === b.mtimeNs && a.ctimeNs === b.ctimeNs;
++}
++
++function readDocument(file: string, observations: Observation[]): unknown {
++  const fd = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
++  try {
++    const before = fs.fstatSync(fd, { bigint: true });
++    if (!before.isFile()) throw new Error(`SWARM_CONFIG_INVALID:not a regular file:${file}`);
++    const bytes = fs.readFileSync(fd);
++    if (!unchanged(before, fs.fstatSync(fd, { bigint: true }))) throw new Error(`SWARM_CONFIG_CHANGED:${file}`);
++    const value: unknown = JSON.parse(bytes.toString('utf8'));
++    observations.push({ file, fd, before, sha256: createHash('sha256').update(bytes).digest('hex') });
++    return value;
++  } catch (error) {
++    fs.closeSync(fd);
++    throw error;
++  }
++}
++
++/** Resolve only the entry alias; every component stays in that physical generation. */
++export function readSwarmBundle(file: string | undefined): Readonly<{
++  components: Readonly<Record<Owner, Component>>;
++  identity: SwarmBundleIdentity;
++}> {
++  if (typeof file !== 'string' || file.length === 0 || !path.isAbsolute(file)) {
++    throw new Error('SWARM_CONFIG_PATH_REQUIRED');
++  }
++  const entry = fs.realpathSync(file);
++  const generationDirectory = path.dirname(entry);
++  const observations: Observation[] = [];
++  try {
++    const document = readDocument(entry, observations);
++    if (!validateEntry(document)) throw new Error(`SWARM_CONFIG_INVALID:${JSON.stringify(validateEntry.errors)}`);
++    const references = (document as { components: Record<Owner, string> }).components;
++    const components = {} as Record<Owner, Component>;
++    for (const owner of owners) {
++      // The strict entry schema fixes each filename; there is no include resolver.
++      const value = readDocument(path.join(generationDirectory, references[owner]), observations);
++      if (!validateComponent(value) || (value as Component).owner !== owner) {
++        throw new Error(`SWARM_CONFIG_INVALID:component:${owner}`);
++      }
++      freezeJson(value);
++      components[owner] = value as Component;
++    }
++    for (const observation of observations) {
++      if (!unchanged(observation.before, fs.fstatSync(observation.fd, { bigint: true }))
++        || !unchanged(observation.before, fs.lstatSync(observation.file, { bigint: true }))) {
++        throw new Error(`SWARM_CONFIG_CHANGED:${observation.file}`);
++      }
++    }
++    const identity: SwarmBundleIdentity = Object.freeze({
++      entry, generationDirectory,
++      files: Object.freeze(observations.map(item => Object.freeze({ name: path.basename(item.file), sha256: item.sha256 }))),
++    });
++    return Object.freeze({ components: Object.freeze(components), identity });
++  } finally {
++    for (const observation of observations) fs.closeSync(observation.fd);
++  }
++}
+diff --git a/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json b/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
+new file mode 100644
+--- /dev/null
++++ b/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
+@@ -0,0 +1,741 @@
++{
++  "$schema": "https://json-schema.org/draft/2020-12/schema",
++  "$defs": {
++    "positiveTimerInteger": {
++      "type": "integer",
++      "minimum": 1,
++      "maximum": 2147483647
++    },
++    "positiveSafeInteger": {
++      "type": "integer",
++      "minimum": 1,
++      "maximum": 9007199254740991
++    },
++    "prism-control": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "pipelinePreferenceSubject",
++        "artifactRoot",
++        "studioPublicUrl",
++        "port",
++        "dispatchTimeoutMs"
++      ],
++      "properties": {
++        "pipelinePreferenceSubject": {
++          "type": [
++            "string",
++            "null"
++          ],
++          "pattern": "^user-[a-f0-9]{24}$"
++        },
++        "artifactRoot": {
++          "type": "string",
++          "pattern": "^/[^\u0000]+$"
++        },
++        "studioPublicUrl": {
++          "type": "string",
++          "pattern": "^https?://[^/?#\\s@]+(?:/[^?#\\s]*)?$"
++        },
++        "port": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 65535
++        },
++        "dispatchTimeoutMs": {
++          "$ref": "#/$defs/positiveTimerInteger"
++        }
++      }
++    },
++    "prism-studio": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "port",
++        "controlTimeoutMs",
++        "controlUrl"
++      ],
++      "properties": {
++        "port": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 65535
++        },
++        "controlTimeoutMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 2147483647
++        },
++        "controlUrl": {
++          "type": "string",
++          "pattern": "^https?://[^/?#\\s@\\\\\\x00-\\x20\\x7f]+/?$"
++        }
++      }
++    },
++    "prism-worker": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "ingress",
++        "supervisor"
++      ],
++      "properties": {
++        "ingress": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": [
++            "maximumActiveRequests",
++            "maximumProbeRequests",
++            "maximumConnections",
++            "requestTimeoutMs",
++            "shutdownTimeoutMs",
++            "maximumInputBytes"
++          ],
++          "properties": {
++            "maximumActiveRequests": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "maximumProbeRequests": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "maximumConnections": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "requestTimeoutMs": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "shutdownTimeoutMs": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "maximumInputBytes": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            }
++          }
++        },
++        "supervisor": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": [
++            "uid",
++            "gid",
++            "maximumOwnershipRecords",
++            "maximumOwnershipBytes",
++            "maximumOutputBytes",
++            "maximumJournalBytes",
++            "pollIntervalMs",
++            "drainTimeoutMs",
++            "closeTimeoutMs"
++          ],
++          "properties": {
++            "uid": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "gid": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "maximumOwnershipRecords": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "maximumOwnershipBytes": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "maximumOutputBytes": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "maximumJournalBytes": {
++              "$ref": "#/$defs/positiveSafeInteger"
++            },
++            "pollIntervalMs": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "drainTimeoutMs": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "closeTimeoutMs": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            }
++          }
++        }
++      }
++    },
++    "prism-execution": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "resourcePolicy",
++        "maximumResultBytes"
++      ],
++      "properties": {
++        "resourcePolicy": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": [
++            "cpuTimeMs",
++            "memoryBytes",
++            "tasks"
++          ],
++          "properties": {
++            "cpuTimeMs": {
++              "$ref": "#/$defs/positiveSafeInteger"
++            },
++            "memoryBytes": {
++              "$ref": "#/$defs/positiveSafeInteger"
++            },
++            "tasks": {
++              "$ref": "#/$defs/positiveSafeInteger"
++            }
++          }
++        },
++        "maximumResultBytes": {
++          "$ref": "#/$defs/positiveTimerInteger"
++        }
++      }
++    },
++    "buster-engine": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "preparation",
++        "admission"
++      ],
++      "properties": {
++        "preparation": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": [
++            "resourcePolicy",
++            "timeoutMs",
++            "cleanupTimeoutMs",
++            "maximumActivePreparations",
++            "maximumPendingAdmissions",
++            "maximumRequestBytes",
++            "maximumArchiveBytes",
++            "maximumExtractedBytes",
++            "maximumHeaderBytes",
++            "maximumSourceBytes",
++            "maximumMetadataBytes",
++            "maximumRecords",
++            "maximumOwnershipBytes",
++            "maximumJournalBytes",
++            "maximumInputBytes",
++            "maximumOutputBytes",
++            "maximumResultBytes",
++            "pollIntervalMs",
++            "drainTimeoutMs",
++            "closeTimeoutMs",
++            "tarTimeoutMs",
++            "maximumArchiveEntries",
++            "maximumListingLineBytes",
++            "maximumTarStderrBytes",
++            "maximumSourceEntries",
++            "sourceEntryReservationBytes",
++            "maximumOpenFiles"
++          ],
++          "properties": {
++            "resourcePolicy": {
++              "type": "object",
++              "additionalProperties": false,
++              "required": [
++                "cpuTimeMs",
++                "memoryBytes",
++                "tasks"
++              ],
++              "properties": {
++                "cpuTimeMs": {
++                  "type": "integer",
++                  "minimum": 1,
++                  "maximum": 9007199254740991
++                },
++                "memoryBytes": {
++                  "type": "integer",
++                  "minimum": 1,
++                  "maximum": 9007199254740991
++                },
++                "tasks": {
++                  "type": "integer",
++                  "minimum": 1,
++                  "maximum": 9007199254740991
++                }
++              }
++            },
++            "timeoutMs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "cleanupTimeoutMs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumActivePreparations": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 2
++            },
++            "maximumPendingAdmissions": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumRequestBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumArchiveBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumExtractedBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumHeaderBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumSourceBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumMetadataBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumRecords": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumOwnershipBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumJournalBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumInputBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumOutputBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumResultBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "pollIntervalMs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "drainTimeoutMs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "closeTimeoutMs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "tarTimeoutMs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumArchiveEntries": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumListingLineBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumTarStderrBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumSourceEntries": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "sourceEntryReservationBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumOpenFiles": {
++              "type": "integer",
++              "minimum": 8,
++              "maximum": 2147483647
++            }
++          }
++        },
++        "admission": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": [
++            "maximumActiveJobs",
++            "maximumQueuedJobs",
++            "maximumConcurrentAttempts"
++          ],
++          "properties": {
++            "maximumActiveJobs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumQueuedJobs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumConcurrentAttempts": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            }
++          }
++        }
++      }
++    },
++    "buster-preparation": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "resourcePolicy",
++        "timeoutMs",
++        "cleanupTimeoutMs",
++        "maximumActivePreparations",
++        "maximumPendingAdmissions",
++        "maximumRequestBytes",
++        "maximumArchiveBytes",
++        "maximumExtractedBytes",
++        "maximumHeaderBytes",
++        "maximumSourceBytes",
++        "maximumMetadataBytes",
++        "maximumRecords",
++        "maximumOwnershipBytes",
++        "maximumJournalBytes",
++        "maximumInputBytes",
++        "maximumOutputBytes",
++        "maximumResultBytes",
++        "pollIntervalMs",
++        "drainTimeoutMs",
++        "closeTimeoutMs",
++        "tarTimeoutMs",
++        "maximumArchiveEntries",
++        "maximumListingLineBytes",
++        "maximumTarStderrBytes",
++        "maximumSourceEntries",
++        "sourceEntryReservationBytes",
++        "maximumOpenFiles"
++      ],
++      "properties": {
++        "resourcePolicy": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": [
++            "cpuTimeMs",
++            "memoryBytes",
++            "tasks"
++          ],
++          "properties": {
++            "cpuTimeMs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "memoryBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "tasks": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            }
++          }
++        },
++        "timeoutMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "cleanupTimeoutMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumActivePreparations": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 2
++        },
++        "maximumPendingAdmissions": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumRequestBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumArchiveBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumExtractedBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumHeaderBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumSourceBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumMetadataBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumRecords": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumOwnershipBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumJournalBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumInputBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumOutputBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumResultBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "pollIntervalMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "drainTimeoutMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "closeTimeoutMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "tarTimeoutMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumArchiveEntries": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumListingLineBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumTarStderrBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumSourceEntries": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "sourceEntryReservationBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumOpenFiles": {
++          "type": "integer",
++          "minimum": 8,
++          "maximum": 2147483647
++        }
++      }
++    },
++    "buster-admission": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "maximumActiveJobs",
++        "maximumQueuedJobs",
++        "maximumConcurrentAttempts"
++      ],
++      "properties": {
++        "maximumActiveJobs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumQueuedJobs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        },
++        "maximumConcurrentAttempts": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 9007199254740991
++        }
++      }
++    }
++  },
++  "oneOf": [
++    {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "schemaVersion",
++        "owner",
++        "settings"
++      ],
++      "properties": {
++        "schemaVersion": {
++          "const": "swarm-component.v1"
++        },
++        "owner": {
++          "const": "prism-control"
++        },
++        "settings": {
++          "$ref": "#/$defs/prism-control"
++        }
++      }
++    },
++    {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "schemaVersion",
++        "owner",
++        "settings"
++      ],
++      "properties": {
++        "schemaVersion": {
++          "const": "swarm-component.v1"
++        },
++        "owner": {
++          "const": "prism-studio"
++        },
++        "settings": {
++          "$ref": "#/$defs/prism-studio"
++        }
++      }
++    },
++    {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "schemaVersion",
++        "owner",
++        "settings"
++      ],
++      "properties": {
++        "schemaVersion": {
++          "const": "swarm-component.v1"
++        },
++        "owner": {
++          "const": "prism-worker"
++        },
++        "settings": {
++          "$ref": "#/$defs/prism-worker"
++        }
++      }
++    },
++    {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "schemaVersion",
++        "owner",
++        "settings"
++      ],
++      "properties": {
++        "schemaVersion": {
++          "const": "swarm-component.v1"
++        },
++        "owner": {
++          "const": "prism-execution"
++        },
++        "settings": {
++          "$ref": "#/$defs/prism-execution"
++        }
++      }
++    },
++    {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "schemaVersion",
++        "owner",
++        "settings"
++      ],
++      "properties": {
++        "schemaVersion": {
++          "const": "swarm-component.v1"
++        },
++        "owner": {
++          "const": "buster-engine"
++        },
++        "settings": {
++          "$ref": "#/$defs/buster-engine"
++        }
++      }
++    }
++  ]
++}
+diff --git a/skills/common/plugin-runtime/foundation/config/swarm.schema.json b/skills/common/plugin-runtime/foundation/config/swarm.schema.json
+--- a/skills/common/plugin-runtime/foundation/config/swarm.schema.json
++++ b/skills/common/plugin-runtime/foundation/config/swarm.schema.json
+@@ -7,7 +7,8 @@
+     "features",
+     "tuning",
+     "overrides",
+-    "operator"
++    "schemaVersion",
++    "components"
+   ],
+   "properties": {
+     "_doc": {
+@@ -37,436 +38,36 @@
+       "type": "object",
+       "additionalProperties": false
+     },
+-    "operator": {
++    "schemaVersion": {
++      "const": "swarm-entry.v2"
++    },
++    "components": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+-        "prism"
++        "prism-control",
++        "prism-studio",
++        "prism-worker",
++        "prism-execution",
++        "buster-engine"
+       ],
+       "properties": {
+-        "prism": {
+-          "type": "object",
+-          "additionalProperties": false,
+-          "required": [
+-            "worker",
+-            "native",
+-            "control",
+-            "studio"
+-          ],
+-          "properties": {
+-            "worker": {
+-              "type": "object",
+-              "additionalProperties": false,
+-              "required": [
+-                "maximumActiveRequests",
+-                "maximumProbeRequests",
+-                "maximumConnections",
+-                "requestTimeoutMs",
+-                "shutdownTimeoutMs",
+-                "maximumInputBytes"
+-              ],
+-              "properties": {
+-                "maximumActiveRequests": {
+-                  "$ref": "#/$defs/positiveTimerInteger"
+-                },
+-                "maximumProbeRequests": {
+-                  "$ref": "#/$defs/positiveTimerInteger"
+-                },
+-                "maximumConnections": {
+-                  "$ref": "#/$defs/positiveTimerInteger"
+-                },
+-                "requestTimeoutMs": {
+-                  "$ref": "#/$defs/positiveTimerInteger"
+-                },
+-                "shutdownTimeoutMs": {
+-                  "$ref": "#/$defs/positiveTimerInteger"
+-                },
+-                "maximumInputBytes": {
+-                  "$ref": "#/$defs/positiveTimerInteger"
+-                }
+-              }
+-            },
+-            "native": {
+-              "type": "object",
+-              "additionalProperties": false,
+-              "required": [
+-                "maximumResultBytes",
+-                "dispatchTimeoutMs",
+-                "resourcePolicy",
+-                "supervisor"
+-              ],
+-              "properties": {
+-                "maximumResultBytes": {
+-                  "$ref": "#/$defs/positiveTimerInteger"
+-                },
+-                "dispatchTimeoutMs": {
+-                  "$ref": "#/$defs/positiveTimerInteger"
+-                },
+-                "resourcePolicy": {
+-                  "type": "object",
+-                  "additionalProperties": false,
+-                  "required": [
+-                    "cpuTimeMs",
+-                    "memoryBytes",
+-                    "tasks"
+-                  ],
+-                  "properties": {
+-                    "cpuTimeMs": {
+-                      "$ref": "#/$defs/positiveSafeInteger"
+-                    },
+-                    "memoryBytes": {
+-                      "$ref": "#/$defs/positiveSafeInteger"
+-                    },
+-                    "tasks": {
+-                      "$ref": "#/$defs/positiveSafeInteger"
+-                    }
+-                  }
+-                },
+-                "supervisor": {
+-                  "type": "object",
+-                  "additionalProperties": false,
+-                  "required": [
+-                    "uid",
+-                    "gid",
+-                    "maximumOwnershipRecords",
+-                    "maximumOwnershipBytes",
+-                    "maximumOutputBytes",
+-                    "maximumJournalBytes",
+-                    "pollIntervalMs",
+-                    "drainTimeoutMs",
+-                    "closeTimeoutMs"
+-                  ],
+-                  "properties": {
+-                    "uid": {
+-                      "$ref": "#/$defs/positiveTimerInteger"
+-                    },
+-                    "gid": {
+-                      "$ref": "#/$defs/positiveTimerInteger"
+-                    },
+-                    "maximumOwnershipRecords": {
+-                      "$ref": "#/$defs/positiveTimerInteger"
+-                    },
+-                    "maximumOwnershipBytes": {
+-                      "$ref": "#/$defs/positiveTimerInteger"
+-                    },
+-                    "maximumOutputBytes": {
+-                      "$ref": "#/$defs/positiveTimerInteger"
+-                    },
+-                    "maximumJournalBytes": {
+-                      "$ref": "#/$defs/positiveSafeInteger"
+-                    },
+-                    "pollIntervalMs": {
+-                      "$ref": "#/$defs/positiveTimerInteger"
+-                    },
+-                    "drainTimeoutMs": {
+-                      "$ref": "#/$defs/positiveTimerInteger"
+-                    },
+-                    "closeTimeoutMs": {
+-                      "$ref": "#/$defs/positiveTimerInteger"
+-                    }
+-                  }
+-                }
+-              }
+-            },
+-            "control": {
+-              "type": "object",
+-              "additionalProperties": false,
+-              "required": [
+-                "pipelinePreferenceSubject",
+-                "artifactRoot",
+-                "studioPublicUrl",
+-                "port"
+-              ],
+-              "properties": {
+-                "pipelinePreferenceSubject": {
+-                  "type": [
+-                    "string",
+-                    "null"
+-                  ],
+-                  "pattern": "^user-[a-f0-9]{24}$"
+-                },
+-                "artifactRoot": {
+-                  "type": "string",
+-                  "pattern": "^/[^\u0000]+$"
+-                },
+-                "studioPublicUrl": {
+-                  "type": "string",
+-                  "pattern": "^https?://[^/?#\\s@]+(?:/[^?#\\s]*)?$"
+-                },
+-                "port": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 65535
+-                }
+-              }
+-            },
+-            "studio": {
+-              "type": "object",
+-              "additionalProperties": false,
+-              "required": [
+-                "port",
+-                "controlTimeoutMs",
+-                "controlUrl"
+-              ],
+-              "properties": {
+-                "port": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 65535
+-                },
+-                "controlTimeoutMs": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 2147483647
+-                },
+-                "controlUrl": {
+-                  "type": "string",
+-                  "pattern": "^https?://[^/?#\\s@\\\\\\x00-\\x20\\x7f]+/?$"
+-                }
+-              }
+-            }
+-          }
++        "prism-control": {
++          "const": "prism-control.config.json"
+         },
+-        "buster": {
+-          "type": "object",
+-          "additionalProperties": false,
+-          "required": [
+-            "preparation",
+-            "admission"
+-          ],
+-          "properties": {
+-            "preparation": {
+-              "type": "object",
+-              "additionalProperties": false,
+-              "required": [
+-                "resourcePolicy",
+-                "timeoutMs",
+-                "cleanupTimeoutMs",
+-                "maximumActivePreparations",
+-                "maximumPendingAdmissions",
+-                "maximumRequestBytes",
+-                "maximumArchiveBytes",
+-                "maximumExtractedBytes",
+-                "maximumHeaderBytes",
+-                "maximumSourceBytes",
+-                "maximumMetadataBytes",
+-                "maximumRecords",
+-                "maximumOwnershipBytes",
+-                "maximumJournalBytes",
+-                "maximumInputBytes",
+-                "maximumOutputBytes",
+-                "maximumResultBytes",
+-                "pollIntervalMs",
+-                "drainTimeoutMs",
+-                "closeTimeoutMs",
+-                "tarTimeoutMs",
+-                "maximumArchiveEntries",
+-                "maximumListingLineBytes",
+-                "maximumTarStderrBytes",
+-                "maximumSourceEntries",
+-                "sourceEntryReservationBytes",
+-                "maximumOpenFiles"
+-              ],
+-              "properties": {
+-                "resourcePolicy": {
+-                  "type": "object",
+-                  "additionalProperties": false,
+-                  "required": [
+-                    "cpuTimeMs",
+-                    "memoryBytes",
+-                    "tasks"
+-                  ],
+-                  "properties": {
+-                    "cpuTimeMs": {
+-                      "type": "integer",
+-                      "minimum": 1,
+-                      "maximum": 9007199254740991
+-                    },
+-                    "memoryBytes": {
+-                      "type": "integer",
+-                      "minimum": 1,
+-                      "maximum": 9007199254740991
+-                    },
+-                    "tasks": {
+-                      "type": "integer",
+-                      "minimum": 1,
+-                      "maximum": 9007199254740991
+-                    }
+-                  }
+-                },
+-                "timeoutMs": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "cleanupTimeoutMs": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumActivePreparations": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 2
+-                },
+-                "maximumPendingAdmissions": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumRequestBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumArchiveBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumExtractedBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumHeaderBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumSourceBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumMetadataBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumRecords": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumOwnershipBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumJournalBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumInputBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumOutputBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumResultBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "pollIntervalMs": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "drainTimeoutMs": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "closeTimeoutMs": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "tarTimeoutMs": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumArchiveEntries": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumListingLineBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumTarStderrBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumSourceEntries": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "sourceEntryReservationBytes": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumOpenFiles": {
+-                  "type": "integer",
+-                  "minimum": 8,
+-                  "maximum": 2147483647
+-                }
+-              }
+-            },
+-            "admission": {
+-              "type": "object",
+-              "additionalProperties": false,
+-              "required": [
+-                "maximumActiveJobs",
+-                "maximumQueuedJobs",
+-                "maximumConcurrentAttempts"
+-              ],
+-              "properties": {
+-                "maximumActiveJobs": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumQueuedJobs": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                },
+-                "maximumConcurrentAttempts": {
+-                  "type": "integer",
+-                  "minimum": 1,
+-                  "maximum": 9007199254740991
+-                }
+-              }
+-            }
+-          }
++        "prism-studio": {
++          "const": "prism-studio.config.json"
++        },
++        "prism-worker": {
++          "const": "prism-worker.config.json"
++        },
++        "prism-execution": {
++          "const": "prism-execution.config.json"
++        },
++        "buster-engine": {
++          "const": "buster-engine.config.json"
+         }
+       }
+     }
+-  },
+-  "$defs": {
+-    "positiveTimerInteger": {
+-      "type": "integer",
+-      "minimum": 1,
+-      "maximum": 2147483647
+-    },
+-    "positiveSafeInteger": {
+-      "type": "integer",
+-      "minimum": 1,
+-      "maximum": 9007199254740991
+-    }
+   }
+ }
+diff --git a/skills/common/plugin-runtime/foundation/config/swarm.ts b/skills/common/plugin-runtime/foundation/config/swarm.ts
+--- a/skills/common/plugin-runtime/foundation/config/swarm.ts
++++ b/skills/common/plugin-runtime/foundation/config/swarm.ts
+@@ -1,6 +1,5 @@
+-import fs from 'node:fs';
+ import path from 'node:path';
+-import Ajv2020 from 'ajv/dist/2020.js';
++import { readSwarmBundle, validateComponentSettings, type SwarmBundleIdentity } from './swarm-bundle.ts';
+ 
+ export interface BusterAdmissionSettings {
+   readonly maximumActiveJobs: number;
+@@ -92,10 +91,6 @@
+ interface SwarmConfig {
+   readonly operator: { readonly prism: PrismSettings; readonly buster?: BusterSettings };
+ }
+-interface Validator { (value: unknown): boolean; errors?: unknown[] | null }
+-const AjvConstructor = Ajv2020 as unknown as new (options: { allErrors: boolean; strict: boolean }) => { compile(schema: object): Validator };
+-const schema = JSON.parse(fs.readFileSync(new URL('./swarm.schema.json', import.meta.url), 'utf8')) as object;
+-const validate = new AjvConstructor({ allErrors: true, strict: true }).compile(schema);
+ const migratedEnvironmentKeys = [
+   'PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS', 'PRISM_WORKER_MAXIMUM_PROBE_REQUESTS',
+   'PRISM_WORKER_MAXIMUM_CONNECTIONS', 'PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS',
+@@ -112,16 +107,11 @@
+ 
+ /** Load the single authored snapshot. No legacy environment override or default. */
+ export function loadPrismSettings(environment: NodeJS.ProcessEnv): PrismSettings {
+-  for (const key of migratedEnvironmentKeys) {
+-    if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use operator.prism`);
+-  }
+-  const file = environment.SWARM_CONFIG ?? '/home/node/.openclaw/swarm.config.json';
+-  return prismSettingsFromConfig(JSON.parse(fs.readFileSync(file, 'utf8')));
++  return loadSwarmSettings(environment).prism;
+ }
+ 
+ /** Validate the authored document before selecting its operator-owned settings. */
+ function prismSettingsFromConfig(value: unknown): PrismSettings {
+-  if (!validate(value)) throw new Error(`SWARM_CONFIG_INVALID:${JSON.stringify(validate.errors ?? [])}`);
+   const control = (value as SwarmConfig).operator.prism.control;
+   if (path.resolve(control.artifactRoot) !== control.artifactRoot || control.artifactRoot === '/') {
+     throw new Error('SWARM_CONFIG_INVALID:control.artifactRoot must be a normalized absolute non-root path');
+@@ -156,30 +146,19 @@
+   return loadPrismSettings(environment).worker;
+ }
+ 
+-export function prismWorkerSettingsFromConfig(value: unknown): PrismWorkerSettings {
+-  return prismSettingsFromConfig(value).worker;
+-}
+-
+ /** Capture both Buster policies once before constructing service consumers. */
+ export function loadBusterSettings(environment: NodeJS.ProcessEnv): BusterSettings {
+-  for (const key of ['BUSTER_V2_MAX_ARCHIVE_BYTES', 'BUSTER_V2_MAX_REQUEST_BYTES', 'BUSTER_V2_MAX_EXTRACTED_BYTES',
+-    'BUSTER_V2_MAX_ACTIVE_JOBS', 'BUSTER_V2_MAX_QUEUED_JOBS', 'BUSTER_V2_MAX_CONCURRENT_ATTEMPTS']) {
+-    if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use operator.buster`);
+-  }
+-  const file = environment.SWARM_CONFIG ?? '/home/node/.openclaw/swarm.config.json';
+-  return busterSettingsFromConfig(JSON.parse(fs.readFileSync(file, 'utf8')));
+-}
+-
+-export function busterSettingsFromConfig(value: unknown): BusterSettings {
++  return loadSwarmSettings(environment).buster;
++}
++
++function busterSettingsFromConfig(value: unknown): BusterSettings {
+   const preparation = busterPreparationSettingsFromConfig(value);
+   const admission = validateBusterAdmissionSettings((value as SwarmConfig).operator.buster?.admission);
+   return Object.freeze({ preparation, admission });
+ }
+ 
+ export function validateBusterAdmissionSettings(value: unknown): BusterAdmissionSettings {
+-  const document = schema as { properties: { operator: { properties: { buster: { properties: { admission: object } } } } } };
+-  const validateSettings = new AjvConstructor({ allErrors: true, strict: true }).compile(document.properties.operator.properties.buster.properties.admission);
+-  if (!validateSettings(value)) throw new Error('SWARM_CONFIG_BUSTER_ADMISSION_INVALID');
++  validateComponentSettings('buster-admission', value, 'SWARM_CONFIG_BUSTER_ADMISSION_INVALID');
+   return Object.freeze({ ...value as BusterAdmissionSettings });
+ }
+ 
+@@ -188,8 +167,7 @@
+   return loadBusterSettings(environment).preparation;
+ }
+ 
+-export function busterPreparationSettingsFromConfig(value: unknown): BusterPreparationSettings {
+-  if (!validate(value)) throw new Error(`SWARM_CONFIG_INVALID:${JSON.stringify(validate.errors ?? [])}`);
++function busterPreparationSettingsFromConfig(value: unknown): BusterPreparationSettings {
+   const settings = (value as SwarmConfig).operator.buster?.preparation;
+   if (!settings) throw new Error('SWARM_CONFIG_BUSTER_PREPARATION_REQUIRED');
+   return validateBusterPreparationSettings(settings);
+@@ -197,9 +175,7 @@
+ 
+ /** The host validates the immutable settings carried by its accepted envelope. */
+ export function validateBusterPreparationSettings(value: unknown): BusterPreparationSettings {
+-  const document = schema as { properties: { operator: { properties: { buster: { properties: { preparation: object } } } } } };
+-  const validateSettings = new AjvConstructor({ allErrors: true, strict: true }).compile(document.properties.operator.properties.buster.properties.preparation);
+-  if (!validateSettings(value)) throw new Error('SWARM_CONFIG_BUSTER_PREPARATION_INVALID');
++  validateComponentSettings('buster-preparation', value, 'SWARM_CONFIG_BUSTER_PREPARATION_INVALID');
+   const settings = value as BusterPreparationSettings;
+   for (const bytes of [settings.maximumRequestBytes, settings.maximumArchiveBytes, settings.maximumHeaderBytes,
+     settings.maximumInputBytes, settings.maximumOutputBytes, settings.maximumResultBytes]) {
+@@ -228,3 +204,38 @@
+   if (!Number.isSafeInteger(sourceReservation) || sourceReservation > settings.maximumSourceBytes
+     || settings.maximumArchiveEntries + 7 > settings.maximumSourceEntries) throw new Error('SWARM_CONFIG_BUSTER_SOURCE_RESERVATION_INVALID');
+ }
++
++/** One fully validated startup snapshot; no inline-document or path fallback API. */
++export function loadSwarmSettings(environment: NodeJS.ProcessEnv): Readonly<{
++  prism: PrismSettings;
++  buster: BusterSettings;
++  identity: SwarmBundleIdentity;
++}> {
++  rejectLegacyAuthors(environment);
++  const bundle = readSwarmBundle(environment.SWARM_CONFIG);
++  const control = bundle.components['prism-control'].settings as unknown as PrismControlSettings & { dispatchTimeoutMs: number };
++  const worker = bundle.components['prism-worker'].settings as unknown as { ingress: PrismWorkerSettings; supervisor: PrismSupervisorSettings };
++  const execution = bundle.components['prism-execution'].settings as unknown as Pick<PrismNativeSettings, 'resourcePolicy' | 'maximumResultBytes'>;
++  const { dispatchTimeoutMs, ...controlSettings } = control;
++  const projection: SwarmConfig = { operator: {
++    prism: {
++      control: controlSettings,
++      studio: bundle.components['prism-studio'].settings as unknown as PrismStudioSettings,
++      worker: worker.ingress,
++      native: { ...execution, dispatchTimeoutMs, supervisor: worker.supervisor },
++    },
++    buster: bundle.components['buster-engine'].settings as unknown as BusterSettings,
++  } };
++  // Validate both domains before returning either: no partial bundle activation.
++  const prism = prismSettingsFromConfig(projection);
++  const buster = busterSettingsFromConfig(projection);
++  return Object.freeze({ prism, buster, identity: bundle.identity });
++}
++
++function rejectLegacyAuthors(environment: NodeJS.ProcessEnv): void {
++  for (const key of [...migratedEnvironmentKeys,
++    'BUSTER_V2_MAX_ARCHIVE_BYTES', 'BUSTER_V2_MAX_REQUEST_BYTES', 'BUSTER_V2_MAX_EXTRACTED_BYTES',
++    'BUSTER_V2_MAX_ACTIVE_JOBS', 'BUSTER_V2_MAX_QUEUED_JOBS', 'BUSTER_V2_MAX_CONCURRENT_ATTEMPTS']) {
++    if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);
++  }
++}

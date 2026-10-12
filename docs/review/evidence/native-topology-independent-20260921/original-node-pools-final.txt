@@ -1,0 +1,68 @@
+
+> verify:worker-core:node-pools
+> node --test tests/verification/reliability/worker-resource-reservations.test.mts tests/verification/reliability/worker-owned-children.test.mts tests/verification/reliability/worker-native-quiescence.test.mts tests/verification/reliability/worker-ownership-store.test.mts tests/verification/reliability/worker-native-journal.test.mts tests/verification/deployment/native-worker-node.test.mjs
+
+✔ pool service retains a process and waits for setup readiness (4.26569ms)
+✖ real generated bundle binds both role readers, selected runtime and actual systemd unit parser (93.669366ms)
+✖ actual policy files reject writable authority and symlinks without consuming their contents (1.506569ms)
+✔ capacity contract requires matching host, effective kubelet reservation and withheld allocatable capacity (2.959546ms)
+✔ quantity comparison is exact for Kubernetes CPU and memory units and rejects ambiguous precision (0.239206ms)
+✔ new-admission rejection persists no accepted work and cannot block historical receipt replay (251.11695ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (719.009671ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (854.516661ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (158.400139ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (151.495972ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (5633.250093ms)
+✔ fixed pre-admission metadata saturation still reaches modeled drain and never disposes or releases (110.5598ms)
+✔ metadata I/O failure retains failed ownership after modeled drain and can retry when storage recovers (115.446336ms)
+✔ unknown-child verification failure prevents modeled subtree mutation (75.289074ms)
+✔ child reservations are durable, CAS-fenced, immutable after binding and charged to metadata quota (139.057592ms)
+✔ strict topology decoder rejects unknown fields, names, duplicates and mismatched child identity (47.4703ms)
+✔ v1 and v2 ownership decode explicitly as drain-only legacy leaves; child admission is forbidden (64.26437ms)
+✔ mountinfo parser requires hierarchical events on the actual covering mount (0.76709ms)
+✔ concurrent durable reservations converge and survive reopening (57.070226ms)
+✔ caller mutation after reserve starts cannot change persisted identity (17.12999ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (103.53851ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (35.966343ms)
+✔ record quota fails atomically without losing existing ownership (21.570794ms)
+✔ corrupt persisted ownership fails without overwriting the record (17.856968ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (49.534382ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (570.191458ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (30.808321ms)
+✔ full pending reservations prevent concurrent memory overcommit and return capacity exactly once (2.087414ms)
+✔ Linux-task capacity and scope count independently gate admission without consuming rejected capacity (0.268617ms)
+✔ invalid and near-integer-limit budgets cannot bypass aggregate accounting (0.485092ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 28
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11729.784589
+
+✖ failing tests:
+
+test at tests/verification/deployment/native-worker-node.test.mjs:26:1
+✖ real generated bundle binds both role readers, selected runtime and actual systemd unit parser (93.669366ms)
+  Error: WORKER_NATIVE_POOL_POLICY_NOT_TRUSTED
+      at readNativeWorkerPoolPolicy (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-pool-policy.ts:25:13)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/native-worker-node.test.mjs:37:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/deployment/native-worker-node.test.mjs:50:1
+✖ actual policy files reject writable authority and symlinks without consuming their contents (1.506569ms)
+  Error: WORKER_NATIVE_POOL_POLICY_NOT_TRUSTED
+      at readNativeWorkerPoolPolicy (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-pool-policy.ts:25:13)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/native-worker-node.test.mjs:60:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

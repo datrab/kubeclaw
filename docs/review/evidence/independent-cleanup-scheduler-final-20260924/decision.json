@@ -1,0 +1,248 @@
+{
+  "reviewer": "cleanup_scheduler_final_review (fresh nonauthor)",
+  "decision": "bounded local implementation and DOC accepted",
+  "independentExecution": false,
+  "method": "Independent current-source and recorded raw runtime/control review; no runtime repeated. Root executed latest runs.",
+  "blockingFindings": [],
+  "controlsAccepted": 9,
+  "checks": [
+    "Actual close plus capability drain gates disposal",
+    "Replacement adopted before initialization; unconfirmed recovery refused",
+    "Exactly-once overlapping stop accounting",
+    "Distinct cleanup/termination causes retained publicly",
+    "Started scheduler peers settled before late-fixture cleanup",
+    "Valid profile correction retains zero requested retries",
+    "Diagnostic ownership correction awaits already-started work without changed budget",
+    "Full maintained Cleanup53/53; scheduler6/6 plus complete original Runner/provider modules",
+    "Four type projects and canonical affected lint; subsequent test edits linted",
+    "All nine controls cause intended behavioral failures; no import/setup failures accepted",
+    "Final documentation hashes and links verified; historical failures preserved"
+  ],
+  "limits": [
+    "No whole original finding or CONFIG closure",
+    "No live cluster, native isolation, historical plugin repair or durable recovery acceptance",
+    "Internal simultaneous signal/drain failure aggregation outside bounded scope"
+  ],
+  "bindings": [
+    {
+      "path": "docs/review/remediation/implementation/buster-cleanup-scheduler-verification-20260924.md",
+      "sha256": "a3074002e9b037ff4c1a1ca554bcac2aea2f5fc8e53ebdd34be2fa78d9e82f4d"
+    },
+    {
+      "path": "docs/review/remediation/implementation/provider-disposal-confirmation-20260921.md",
+      "sha256": "0d0cd3025200600a5f0c21df920291e444d14a10c6045b165ae62873a493a526"
+    },
+    {
+      "path": "docs/review/remediation/implementation/runner-scheduler-drain-20260921.md",
+      "sha256": "e545d34fc2b9d2488d7317ae292c3a85cb4c10c98c4733c051b66944eb6f902b"
+    },
+    {
+      "path": "docs/review/remediation/implementation/kubernetes-cleanup-disposition-20260921.md",
+      "sha256": "48cd122452a35e474bb2b1feb1a0409ff03397c657b761d1f938ceeabad7695b"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run1/recovery-completed.txt",
+      "sha256": "50d50f8af1277b4c039bed6a632e9de4e0cb6cf5dab94299bd598c9896cab42d"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run1/faulted-completed.txt",
+      "sha256": "337c7431eedb4db7d3e5d4ed4148cef0cca6ad21338cab86a9eba26e8cb97278"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run1/rollback-suppressed.txt",
+      "sha256": "7f6cb2a711fe3e69b0b0bf6e8ce0662b57ffdd9145dfcf9bbd2d79402e64bdf1"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run2/success-only-confirmation.txt",
+      "sha256": "dddf7d4eddb4a310122bba79a57ee2a3f4706ac0348cb8fd2cfd6b96bfda5a43"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run3/permit-unconfirmed.txt",
+      "sha256": "d97f4dffa15a8e00af82f0a6c8a3bcb9d6c298358466429419806570a1347ed5"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run2/duplicate-accounting.txt",
+      "sha256": "2238472a64309af4d5c5b51c7885fdb78e784607816ecc471f5a524debf6aead"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run2/hidden-error-details.txt",
+      "sha256": "b64c8353cdeff6da3387c28c794708b98762aa9d47f29db0db7f94525f28bcec"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run1/old-scheduler.txt",
+      "sha256": "a31d31a48863f6a8dc790f5fd69e0b4ccf3b1fe54d192a7f31751df8d1ac2ce0"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run1/retain-unconditional.txt",
+      "sha256": "901fe7f78b57cf9e6bada401f39c093e05350cbc95294314ae6952405db01073"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run1/results.json",
+      "sha256": "89f8a2f18558130676065ed1252f714a4b50fd8052520ceedd600e0e8e2689f5"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run1/before.json",
+      "sha256": "c26e6b4ef7ee9448e88c02ad7d9294485d58bb413028784baed52fc0303a2dde"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run1/after.json",
+      "sha256": "3fa31a80d8b22c26f0323d31e60136ac8386857f802e03feccd69c27aaef0b12"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run1/unexpected-drift.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run2/results.json",
+      "sha256": "0e12157759db546d60e87011920aa60b5149c660f7346ea952b229ae13730cf8"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run2/before.json",
+      "sha256": "4ced68ccd1bc25a50481544e497d0091ceed277860710ae12c8520b4a145edc1"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run2/after.json",
+      "sha256": "292205afcadf025d4480df574d468d87906e7a9c5f915b707c4d7d8a21dee925"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run2/unexpected-drift.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run3/results.json",
+      "sha256": "be9fdd3268df6f33068c3ce218d2f25bb4a860eba482b8264034d28f8a6dc219"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run3/before.json",
+      "sha256": "fae5f1b590f52cf55086d8813e37b44acc77807e9548d4bf376bb264b32b22de"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run3/after.json",
+      "sha256": "821f059283fa3146c5c704bf141d70dc87f3e49779e71ac1fab808391de3fdf7"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run3/unexpected-drift.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run4/results.json",
+      "sha256": "1974e408f02dac687ce4e90b74a75d9978ee6c829b5bdf9b8a37c950d59c7b67"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run4/before.json",
+      "sha256": "cfa03fab1e63c2676578490db17e186dd4d7e066aad2eda136733c8db1a1b8f4"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run4/after.json",
+      "sha256": "6629015d98e8b04e6b7b89824b09b745e2a6a9a00c23ac56f153eb1aa6ead1b2"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-runtime-20260924/run4/unexpected-drift.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run1/results.json",
+      "sha256": "6b53fa95149eef1aa9cbc2eb3f946822984af9c142bba63fe3c43abd0079263b"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run1/before.json",
+      "sha256": "eb5c98f18b3809784b29a353c159d245091e2c365a371d44cfa72ad36a2e720c"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run1/after.json",
+      "sha256": "eb5c98f18b3809784b29a353c159d245091e2c365a371d44cfa72ad36a2e720c"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run1/unexpected-drift.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run2/results.json",
+      "sha256": "aa16d4a9d37ddbed803d575a0dc5a657cb6bc858a367252082a5aa25f93918a5"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run2/before.json",
+      "sha256": "e163e01f4bec38925c75d19c3cff18d0773af8db71ffcc2507a4326b17679417"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run2/after.json",
+      "sha256": "e163e01f4bec38925c75d19c3cff18d0773af8db71ffcc2507a4326b17679417"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run2/unexpected-drift.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run3/results.json",
+      "sha256": "2f7c74b3e60e8234f8594d650c0dc59077f235a13343b0e255598682d69c2127"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run3/before.json",
+      "sha256": "0fb609e38b43c1a0457b09fa4ae46aa3e68388bb5c12944d31f5ae85a832c6ec"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run3/after.json",
+      "sha256": "0fb609e38b43c1a0457b09fa4ae46aa3e68388bb5c12944d31f5ae85a832c6ec"
+    },
+    {
+      "path": "docs/review/evidence/disposal-scheduler-controls-20260924/run3/unexpected-drift.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "sha256": "c8c3709acc66be25880a9e56bc4ab0df9f8eb3d3b76b19e0d3aedb3964c0705b"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "sha256": "40cd4f0fc7a84079efe2a3fe026c214ef34cd48f278db5cbac45e250e6afc9b7"
+    },
+    {
+      "path": "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs",
+      "sha256": "31234628c2266b28975407bef8c4164f673d672a75a0251ca07618f7189086ee"
+    },
+    {
+      "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+      "sha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe"
+    },
+    {
+      "path": "tests/verification/contracts/runner-scheduler-drain.test.mjs",
+      "sha256": "0164ff0f62d7dc00636a165b54ad812bdcd979c799700de75844d8232052d18e"
+    },
+    {
+      "path": "tests/verification/contracts/runner-scheduler-provider-drain.test.mjs",
+      "sha256": "7444c42a5d638da8e2ec745e64630633659f1b2193f059c8d29c10311194e1ae"
+    },
+    {
+      "path": "tests/fixtures/test-gate/scheduler-drain.mjs",
+      "sha256": "e50770fcd688b2a8fba758f5426445d74d4acc2f415f2ce790aa12e0d4039875"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+      "sha256": "989e6b8b5596938acf2a45ab0c600d3b936f2af85af60600a54852c2d415ac8d"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "sha256": "bc0a7e29e1a39e2396749d9c7882a43eb1a387c9410269c0de37517f2e45b38b"
+    },
+    {
+      "path": "docs/architecture/buster-fixture-cleanup.md",
+      "sha256": "c58168504bfda58eeffab4868ffe74f8312306b1a4e22b563823d8b58c07af96"
+    },
+    {
+      "path": "docs/architecture/buster-runner-failure-drain.md",
+      "sha256": "32f209509ec21cf87f55b754b396efde9d0ac4900ce428e07ce08afda9c83d26"
+    },
+    {
+      "path": "package.json",
+      "sha256": "a94c2d1af6d7a68a0949f3ccb6d89362cb6f7e78c14cdfb986d0f8cd59fdceca"
+    }
+  ]
+}

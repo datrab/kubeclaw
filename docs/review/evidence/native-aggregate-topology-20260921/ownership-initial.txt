@@ -1,0 +1,20 @@
+✔ child reservations are durable, CAS-fenced, immutable after binding and charged to metadata quota (114.283262ms)
+✔ strict topology decoder rejects unknown fields, names, duplicates and mismatched child identity (47.897543ms)
+✔ v1 and v2 ownership decode explicitly as drain-only legacy leaves; child admission is forbidden (65.102396ms)
+✔ concurrent durable reservations converge and survive reopening (48.407206ms)
+✔ caller mutation after reserve starts cannot change persisted identity (18.26542ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (102.420446ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (38.823269ms)
+✔ record quota fails atomically without losing existing ownership (19.699157ms)
+✔ corrupt persisted ownership fails without overwriting the record (21.952415ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (42.769521ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (611.599784ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (21.533864ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2079.411397

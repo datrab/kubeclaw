@@ -8,6 +8,9 @@ appear in Buster service logs.
 
 | Code | Cause | Effect | Correction | Retry | Evidence |
 | --- | --- | --- | --- | --- | --- |
+| `CONTAINER_BUILD_EXECUTION_ERROR` | A build-phase launch, resource or other execution operation throws; this wrapper preserves its underlying diagnostic. | The attempt errors. A completed nonzero BuildKit exit instead returns a failed build result. | Inspect the underlying BuildKit/process diagnostic and fix its cause. | After correction; do not assume an unconfirmed push failed. | Stored diagnostic and process result. |
+| `CONTAINER_BUILD_REGISTRY_ERROR` | Registry verification failed without a recognized registry error code. | No successful build result is authorized. | Check registry reachability, authentication and the returned immutable image. | After reconciliation and correction. | Registry diagnostic. |
+| `CONTAINER_BUILD_TIMEOUT` | The overall build/verification deadline expired. | The operation aborts and the attempt errors. | Inspect elapsed build and registry work; fix the cause or review the configured budget. | After checking whether a remote image was already published. | Deadline and process diagnostics. |
 | `BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED` | The capability is allowed without operator configuration. | Buster startup fails. | Add `containerBuild` or remove the capability. | Restart after correction. | Service log. |
 | `BUSTER_CONTAINER_BUILD_REGISTRY_CREDENTIALS_INCOMPLETE` | Only one credential variable has a value. | Buster startup fails. | Set both values or remove both names. | Restart after correction. | Service log. |
 | `CONTAINER_BUILD_CONFIG_INVALID` | Project configuration is not an object. | The attempt fails before BuildKit. | Use the documented JSON object. | Retry after a commit change. | Attempt result. |

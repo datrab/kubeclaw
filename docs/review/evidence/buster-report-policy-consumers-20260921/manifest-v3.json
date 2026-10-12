@@ -1,0 +1,55 @@
+{
+  "at": "2026-09-21T20:01:19.863201+00:00",
+  "status": "private unexecuted draft",
+  "test": {
+    "path": "tests/verification/contracts/buster-report-policy-consumers.test.mjs",
+    "sha256": "79b7db733f4cf1b4f55c1b6d8a660b4278069564ea6981605eaa30d9d5c50e08"
+  },
+  "baseline": [
+    {
+      "path": "tests/fixtures/test-gate/runner-contract-fixture.mts",
+      "sha256": "8a5ca1911223af5ac527bc7181a069da0ce6a4992e0656d88140f29b4c91bf36"
+    },
+    {
+      "path": "tests/fixtures/test-gate/execution-policy.mts",
+      "sha256": "940ec43a0bd64c208f54932421574d2edb8e972fa13786e2457f85015b0e1d76"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-buster-execution-policy.mts",
+      "sha256": "9d7364333f7a15b08880ea5137d4e0461b0627bf115f791c26fab733b8e70baa"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "e2960d464717d819653c1b379db904b050455d4b23be03aa93105ad7dfc7c6c1"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "sha256": "2bc8ae28f2f2e9e65616681ba2e2b430b2d3378f6119f6bdc0b0aae5fd7b2d40"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "sha256": "0c698666a99e51226b2bca2d8287ff491a7baf37dad47448c4574176ee65f569"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-child.mjs",
+      "sha256": "31a4f4435fbe9137521e8c610d6dac0905ce01fa0b2589062362270ae109c77c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-artifact-reader.ts",
+      "sha256": "d3b4f8c4fae897876c8825cae357e9740de70ebd43686eaa85efcc94ed27b872"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/types.ts",
+      "sha256": "704d87007fce75e3f6d8eafd73273478de08c0bf6b1d0ee753f3da31b9fc010c"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/validation.ts",
+      "sha256": "0932fe19bc79f5dba2a63842cf7892ac6ae0ea6885ed2efb36ac4f2e70b4b69a"
+    }
+  ],
+  "previous": "manifest-v2.json"
+}

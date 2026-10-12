@@ -1,0 +1,88 @@
+✖ original production entrypoint serves authored listener profile one (1121.401986ms)
+✖ original production entrypoint serves authored listener profile two (899.414537ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2499.286988
+
+✖ failing tests:
+
+test at skills/prism/tests/control-listener.test.mts:63:3
+✖ original production entrypoint serves authored listener profile one (1121.401986ms)
+  AssertionError [ERR_ASSERTION]: node:events:505
+      throw er; // Unhandled 'error' event
+      ^
+  
+  Error: listen EADDRINUSE: address already in use 0.0.0.0:8080
+      at Server.setupListenHandle [as _listen2] (node:net:2328:16)
+      at listenInCluster (node:net:2437:12)
+      at node:net:2666:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  Emitted 'error' event on Server instance at:
+      at emitErrorNT (node:net:2416:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EADDRINUSE',
+    errno: -98,
+    syscall: 'listen',
+    address: '0.0.0.0',
+    port: 8080
+  }
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at awaitHealth (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-listener.test.mts:53:12)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-listener.test.mts:75:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/control-listener.test.mts:63:3
+✖ original production entrypoint serves authored listener profile two (899.414537ms)
+  AssertionError [ERR_ASSERTION]: node:events:505
+      throw er; // Unhandled 'error' event
+      ^
+  
+  Error: listen EADDRINUSE: address already in use 0.0.0.0:8080
+      at Server.setupListenHandle [as _listen2] (node:net:2328:16)
+      at listenInCluster (node:net:2437:12)
+      at node:net:2666:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  Emitted 'error' event on Server instance at:
+      at emitErrorNT (node:net:2416:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EADDRINUSE',
+    errno: -98,
+    syscall: 'listen',
+    address: '0.0.0.0',
+    port: 8080
+  }
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at awaitHealth (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-listener.test.mts:53:12)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-listener.test.mts:75:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

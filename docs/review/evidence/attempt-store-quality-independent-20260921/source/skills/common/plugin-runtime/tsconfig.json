@@ -1,0 +1,14 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "include": [
+    "foundation/**/*.ts",
+    "sdk/**/*.ts",
+    "../../nova/core/**/*.ts",
+    "../../worker/core/**/*.ts",
+    "../../buster/engine/**/*.ts"
+  ],
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
+  }
+}

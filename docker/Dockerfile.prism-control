@@ -19,6 +19,6 @@ COPY --from=build /build/skills/common/plugin-runtime /app/prism/skills/common/p
 COPY --from=build /build/tests/verification/live /app/prism/tests/verification/live
 RUN install -d -o node -g node /var/lib/prism/artifacts
 USER node
-ENV NODE_ENV=production PORT=8080 ARTIFACT_ROOT=/var/lib/prism/artifacts
+ENV NODE_ENV=production
 EXPOSE 8080
 CMD ["node","--experimental-strip-types","skills/prism/server/control.ts"]

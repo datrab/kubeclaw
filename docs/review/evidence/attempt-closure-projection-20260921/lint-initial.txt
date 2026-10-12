@@ -1,0 +1,21 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/retire-attempt-closure.mjs
+  12:8  error  Function 'planAttemptClosure' has a complexity of 19. Maximum allowed is 15  complexity
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/attempt-replay.ts
+  65:8  error  Function 'assertAttemptReplay' has a complexity of 17. Maximum allowed is 15  complexity
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts
+  174:17  error  `import()` type annotations are forbidden                                            @typescript-eslint/consistent-type-imports
+  280:3   error  Async method 'storeEvidence' has too many lines (89). Maximum allowed is 60          max-lines-per-function
+  304:1   error  File has too many lines (844). Maximum allowed is 300                                max-lines
+  369:3   error  Async method 'storeResult' has too many lines (126). Maximum allowed is 60           max-lines-per-function
+  385:34  error  Async arrow function has too many lines (109). Maximum allowed is 60                 max-lines-per-function
+  385:34  error  Async arrow function has a complexity of 24. Maximum allowed is 15                   complexity
+  691:3   error  Async method 'evaluateCompleteness' has too many lines (140). Maximum allowed is 60  max-lines-per-function
+  718:34  error  Async arrow function has too many lines (112). Maximum allowed is 60                 max-lines-per-function
+  760:13  error  Blocks are nested too deeply (4). Maximum allowed is 3                               max-depth
+  764:15  error  Blocks are nested too deeply (5). Maximum allowed is 3                               max-depth
+
+✖ 12 problems (12 errors, 0 warnings)
+

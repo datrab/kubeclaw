@@ -1,0 +1,14 @@
+{
+  "name": "@kubeclaw/plugin-demo-handoff",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "cd ../../../.. && node --test skills/nova/plugins/demo-handoff/tests/*.test.mts skills/nova/plugins/demo-handoff/tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/plugin-foundation": "*",
+    "@kubeclaw/plugin-operator-messaging": "*"
+  }
+}

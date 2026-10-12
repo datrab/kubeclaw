@@ -1,0 +1,21 @@
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (18148.652401ms)
+✔ authored platform TTL 60000 reaches the real runtime and filesystem lock consumer (8330.390814ms)
+✔ authored platform TTL 120000 reaches the real runtime and filesystem lock consumer (10486.213386ms)
+✔ missing and invalid TTL reject at platform, runtime and direct coordinator boundaries (9492.979261ms)
+✔ effect releases resource after locked recheck rejects conflicting-request (112.189365ms)
+✔ effect releases resource after locked recheck rejects orphaned-receipt (73.803851ms)
+✔ effect releases resource after locked recheck rejects corrupt-journal (49.117105ms)
+✔ real artifact completion and receipt replay release once without repeating the effect (135.073663ms)
+✔ real Git resource contention release is resolved before effect acceptance (689.235639ms)
+✔ real Git resource contention cancel is resolved before effect acceptance (217.565841ms)
+✔ real Git resource contention timeout is resolved before effect acceptance (199.046467ms)
+✔ serialized real conflicting merges retain the conflict instead of treating it as lock contention (629.917048ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51817.174463

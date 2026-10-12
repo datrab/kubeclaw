@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["targets", "deliveryRoot"],
+  "properties": {
+    "deliveryRoot": { "type": "string", "minLength": 1 },
+    "maximumDeliveryRecords": { "type": "integer", "minimum": 1, "default": 100000 },
+    "maximumDeliveryBytes": { "type": "integer", "minimum": 1, "default": 268435456 },
+    "targets": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$": {
+          "type": "object",
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "properties": {
+                "endpoint": {},
+                "tokenSecret": {}
+              },
+              "required": ["endpoint", "tokenSecret"]
+            },
+            {
+              "properties": {
+                "endpointOrigin": {},
+                "endpointSecret": {}
+              },
+              "required": ["endpointOrigin", "endpointSecret"]
+            }
+          ],
+          "properties": {
+            "receiptEndpoint": { "type": "string", "format": "uri", "pattern": "^https?://" },
+            "endpoint": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https?://"
+            },
+            "endpointOrigin": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https?://[^/?#]+/?$"
+            },
+            "endpointSecret": {
+              "type": "string",
+              "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+            },
+            "tokenSecret": {
+              "type": "string",
+              "pattern": "^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$"
+            },
+            "maxPayloadBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1048576,
+              "default": 65536
+            },
+            "format": {
+              "type": "string",
+              "enum": ["json", "discord_webhook"],
+              "default": "json"
+            }
+          }
+        }
+      }
+    }
+  }
+}

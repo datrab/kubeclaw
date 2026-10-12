@@ -1,0 +1,61 @@
+{
+  "authorBindings": [
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182",
+      "matchesAuthorFreeze": true
+    },
+    {
+      "path": "tests/verification/reliability/native-process-policy.test.mts",
+      "sha256": "dbfefa729c7d013bccf0fbdfa6653c22650d6fcda8f7f25e3c151031bc26e907",
+      "matchesAuthorFreeze": true
+    },
+    {
+      "path": "tests/verification/reliability/tsconfig.native-scope.json",
+      "sha256": "af435c6af87ee48e74a8458d251411d41a1be2f3d6d53bf94c90061a55839d6e",
+      "matchesAuthorFreeze": true
+    },
+    {
+      "path": "package.json",
+      "sha256": "0e6be904cf9f5c06baf984a853586ca65704479e8e82e5148c6a0ddc5cf4dbdb",
+      "matchesAuthorFreeze": true
+    },
+    {
+      "path": "docs/operations/native-worker-host-pools.md",
+      "sha256": "4ebb2a0ae55c4d434711edca63fe62ebd9fa23a84dba4b09dd8bbe4172b40371",
+      "matchesAuthorFreeze": true
+    },
+    {
+      "path": "docs/review/remediation/implementation/native-process-scope-limits-20260921.md",
+      "sha256": "d8d088bcbaa9f7efffdca5ee583431c6bf3ad5ac62f16cc2423f92477efb5c91",
+      "matchesAuthorFreeze": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-scope-live.mts",
+      "sha256": "ee22aa32e30ed38b1658c5cbace3c7a6dc33db337d5476955a0d8cb47616f5aa",
+      "matchesAuthorFreeze": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-topology-live.mts",
+      "sha256": "61a0f8586c4e462d5ac8f2dcf0624fc4a9d19011584c352a3f8e06e294b2420a",
+      "matchesAuthorFreeze": true
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-children.ts",
+      "sha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "matchesAuthorFreeze": true
+    }
+  ],
+  "unchangedFromRun1Run2Snapshot": [
+    "skills/worker/core/worker/ownership-children.ts",
+    "tests/verification/reliability/worker-native-scope-live.mts",
+    "tests/verification/reliability/worker-native-topology-live.mts",
+    "tests/verification/reliability/worker-resource-reservations.test.mts",
+    "tests/verification/reliability/worker-owned-children.test.mts",
+    "tests/verification/reliability/worker-native-quiescence.test.mts",
+    "tests/verification/reliability/worker-terminal-capacity.test.mts",
+    "tests/verification/reliability/worker-ownership-store.test.mts",
+    "tests/verification/reliability/worker-native-journal.test.mts",
+    "tests/verification/deployment/native-worker-node.test.mjs"
+  ]
+}

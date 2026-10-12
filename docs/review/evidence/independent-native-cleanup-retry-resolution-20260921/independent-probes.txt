@@ -1,0 +1,21 @@
+✔ fresh predecessor rejects foreign envelopeDigest with coherent ownership (516.308513ms)
+✔ fresh predecessor rejects foreign attemptId with coherent ownership (397.335687ms)
+✔ fresh predecessor rejects foreign attemptSpecDigest with coherent ownership (436.933475ms)
+✔ fresh predecessor rejects foreign profileDigest with coherent ownership (676.17592ms)
+✔ fresh predecessor rejects foreign claimId with coherent ownership (783.613029ms)
+✔ fresh predecessor rejects foreign claimGeneration with coherent ownership (1022.842835ms)
+✔ fresh predecessor rejects foreign workerId with coherent ownership (825.987638ms)
+✔ fresh predecessor rejects foreign resultDigest with coherent ownership (543.894842ms)
+✔ fresh predecessor rejects foreign receiptId with coherent ownership (509.930769ms)
+✔ fresh predecessor rejects foreign receiptDigest with coherent ownership (379.894499ms)
+✔ fresh coherent retry rejects different effects rather than incidental identity failure (417.447824ms)
+✔ fresh retry checks final ownership counters against real archived process counters (413.634365ms)
+✔ fresh lookup reenters predecessor stripe and repeat keeps every existing file byte unchanged (515.093722ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8161.837314

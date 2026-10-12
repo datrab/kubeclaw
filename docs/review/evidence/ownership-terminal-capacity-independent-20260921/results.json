@@ -1,0 +1,177 @@
+[
+  {
+    "name": "maintained27",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-ownership-store.test.mts",
+      "tests/verification/reliability/worker-owned-children.test.mts",
+      "tests/verification/reliability/worker-native-quiescence.test.mts",
+      "tests/verification/reliability/worker-terminal-capacity.test.mts",
+      "skills/prism/tests/swarm-supervisor-consumers.test.mts"
+    ],
+    "environment": {},
+    "exitCode": 0,
+    "seconds": 4.672130889957771
+  },
+  {
+    "name": "independent-filesystem",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/ownership-terminal-capacity-independent-20260921/independent-filesystem.test.mjs"
+    ],
+    "environment": {},
+    "exitCode": 0,
+    "seconds": 1.58924737398047
+  },
+  {
+    "name": "mutant-admission",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/ownership-terminal-capacity-independent-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern",
+      "independent escaped-identity",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/ownership-terminal-capacity-independent-20260921/independent-filesystem.test.mjs"
+    ],
+    "environment": {
+      "OWNERSHIP_REVIEW_MUTANT": "admission"
+    },
+    "exitCode": 1,
+    "seconds": 0.5148504900280386
+  },
+  {
+    "name": "mutant-observation",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/ownership-terminal-capacity-independent-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern",
+      "independent escaped-identity",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/ownership-terminal-capacity-independent-20260921/independent-filesystem.test.mjs"
+    ],
+    "environment": {
+      "OWNERSHIP_REVIEW_MUTANT": "observation"
+    },
+    "exitCode": 1,
+    "seconds": 0.5146521549904719
+  },
+  {
+    "name": "native-scope-types",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.native-scope.json"
+    ],
+    "environment": {},
+    "exitCode": 0,
+    "seconds": 3.4236968139884993
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node_modules/.bin/eslint",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/worker/core/worker/ownership-capacity.ts",
+      "skills/worker/core/worker/ownership-state.ts",
+      "skills/worker/core/worker/ownership-store.ts",
+      "tests/verification/reliability/worker-ownership-store.test.mts",
+      "tests/verification/reliability/worker-owned-children.test.mts",
+      "tests/verification/reliability/worker-native-quiescence.test.mts",
+      "tests/verification/reliability/worker-terminal-capacity.test.mts",
+      "skills/prism/tests/swarm-supervisor-consumers.test.mts"
+    ],
+    "environment": {},
+    "exitCode": 0,
+    "seconds": 3.1860929479589686
+  },
+  {
+    "name": "independent-filesystem-formatted",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/ownership-terminal-capacity-independent-20260921/independent-filesystem.test.mjs"
+    ],
+    "environment": {},
+    "exitCode": 0,
+    "seconds": 1.6212292279815301
+  },
+  {
+    "name": "mutant-admission-formatted",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/ownership-terminal-capacity-independent-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern",
+      "independent escaped-identity",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/ownership-terminal-capacity-independent-20260921/independent-filesystem.test.mjs"
+    ],
+    "environment": {
+      "OWNERSHIP_REVIEW_MUTANT": "admission"
+    },
+    "exitCode": 1,
+    "seconds": 0.6149668799480423
+  },
+  {
+    "name": "mutant-observation-formatted",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/ownership-terminal-capacity-independent-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern",
+      "independent escaped-identity",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/ownership-terminal-capacity-independent-20260921/independent-filesystem.test.mjs"
+    ],
+    "environment": {
+      "OWNERSHIP_REVIEW_MUTANT": "observation"
+    },
+    "exitCode": 1,
+    "seconds": 0.5650665890425444
+  },
+  {
+    "name": "prism-types-after-control-freeze",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/prism/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "seconds": 8.568547702976502
+  }
+]

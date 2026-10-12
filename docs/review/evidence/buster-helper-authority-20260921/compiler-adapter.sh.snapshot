@@ -1,0 +1,3 @@
+#!/bin/sh
+export LD_LIBRARY_PATH=/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib
+exec /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot -R /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root -b /tmp:/tmp -b /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo -w "$PWD" /usr/bin/gcc -static "$@"

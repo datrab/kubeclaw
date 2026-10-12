@@ -1,0 +1,54 @@
+{
+  "rawIdentities": [
+    {
+      "source": "node_modules/.cache/native-test-vm-20260921/logs/vm-console.txt",
+      "copy": "docs/review/evidence/isolated-native-vm-independent-20260921/run1-vm-console.txt",
+      "sha256": "f90992a018e49599bda3962c9477074afbafe9cca9220272f292eb826acdeb83",
+      "bytes": 45224
+    },
+    {
+      "source": "node_modules/.cache/native-test-vm-20260921/logs/vm-result.json",
+      "copy": "docs/review/evidence/isolated-native-vm-independent-20260921/run1-vm-result.json",
+      "sha256": "c0edab067e5d77bc932993b37ae9ba99a8d87a3b7908d15942638233125aa22d",
+      "bytes": 1040
+    }
+  ],
+  "native": {
+    "tests": 12,
+    "pass": 1,
+    "fail": 11,
+    "cancelled": 0,
+    "skipped": 0,
+    "failure": "WORKER_NATIVE_NODE_IDENTITY_INVALID in all11"
+  },
+  "nodePools": {
+    "tests": 35,
+    "pass": 30,
+    "fail": 1,
+    "cancelled": 4,
+    "skipped": 0,
+    "failure": "systemd-analyze ENOENT",
+    "cancelledReasons": [
+      "journal accepted SIGKILL20s",
+      "journal sealed SIGKILL20s",
+      "journal busy contention20s",
+      "ownership supervisor SIGKILL15s"
+    ]
+  },
+  "outer": {
+    "qemuExitCode": 0,
+    "elapsedSeconds": 464.51098874304444,
+    "stoppedReason": null,
+    "passed": false,
+    "verifiedInitialArtifacts": {
+      "node_modules/.cache/native-test-vm-20260921/root/usr/bin/qemu-system-x86_64": "d0c183817a3044bc38e104f88ef56ee235c5d91a9413cba7255c1c1751c31fc1",
+      "node_modules/.cache/native-test-vm-20260921/root/boot/vmlinuz-virt": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c",
+      "node_modules/.cache/native-test-vm-20260921/initrd.cpio.gz": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2",
+      "node_modules/.cache/native-test-vm-20260921/guest-root.ext4": "6bac358fd6d0c496219d99b6a88ecedfb5e53abefa0e221189ce379f725a2cc0",
+      "node_modules/.cache/native-test-vm-20260921/repo-snapshot-manifest.json": "38f9e278cc33b49dcc0668d43c5019be36601879df07e81ad44b0b7039c11d67"
+    },
+    "initialDiskSha256": "6bac358fd6d0c496219d99b6a88ecedfb5e53abefa0e221189ce379f725a2cc0",
+    "finalMutableDiskSha256": "fcd0f6cf103018563730ed07f38e615dfc3fcfab65176b64baaca20c12852f6c"
+  },
+  "interpretation": "failed run, no watchdog stop; real low-level guest scope evidence only, no full topology/pressure proof"
+}

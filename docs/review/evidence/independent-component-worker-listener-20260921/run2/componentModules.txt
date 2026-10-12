@@ -1,0 +1,3397 @@
+TAP version 13
+# Subtest: Studio loads authored operator values and keeps installation inputs outside JSON
+ok 1 - Studio loads authored operator values and keeps installation inputs outside JSON
+  ---
+  duration_ms: 25.653583
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PORT=""
+ok 2 - Studio rejects retired PORT=""
+  ---
+  duration_ms: 4.911127
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PORT="8080"
+ok 3 - Studio rejects retired PORT="8080"
+  ---
+  duration_ms: 4.361392
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PRISM_CONTROL_URL=""
+ok 4 - Studio rejects retired PRISM_CONTROL_URL=""
+  ---
+  duration_ms: 4.281281
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PRISM_CONTROL_URL="8080"
+ok 5 - Studio rejects retired PRISM_CONTROL_URL="8080"
+  ---
+  duration_ms: 3.46182
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PRISM_CONTROL_TIMEOUT_MS=""
+ok 6 - Studio rejects retired PRISM_CONTROL_TIMEOUT_MS=""
+  ---
+  duration_ms: 3.455369
+  type: 'test'
+  ...
+# Subtest: Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080"
+ok 7 - Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080"
+  ---
+  duration_ms: 4.424074
+  type: 'test'
+  ...
+# Subtest: Studio rejects invalid port through original shared validation
+ok 8 - Studio rejects invalid port through original shared validation
+  ---
+  duration_ms: 50.134794
+  type: 'test'
+  ...
+# Subtest: Studio rejects invalid controlTimeoutMs through original shared validation
+ok 9 - Studio rejects invalid controlTimeoutMs through original shared validation
+  ---
+  duration_ms: 39.613083
+  type: 'test'
+  ...
+# Subtest: Studio rejects invalid controlUrl through original shared validation
+ok 10 - Studio rejects invalid controlUrl through original shared validation
+  ---
+  duration_ms: 72.691877
+  type: 'test'
+  ...
+# Subtest: Studio rejects unknown settings and invalid startup terminates before serving
+ok 11 - Studio rejects unknown settings and invalid startup terminates before serving
+  ---
+  duration_ms: 814.811569
+  type: 'test'
+  ...
+# Subtest: production Studio Docker environment does not reintroduce a retired author
+ok 12 - production Studio Docker environment does not reintroduce a retired author
+  ---
+  duration_ms: 8.493699
+  type: 'test'
+  ...
+# Subtest: actual Studio survives refused Control and malformed URL with explicit responses
+ok 13 - actual Studio survives refused Control and malformed URL with explicit responses
+  ---
+  duration_ms: 1532.265936
+  type: 'test'
+  ...
+# Subtest: actual Studio retains proxy bytes, cookies and upstream status
+ok 14 - actual Studio retains proxy bytes, cookies and upstream status
+  ---
+  duration_ms: 1135.148852
+  type: 'test'
+  ...
+# Subtest: actual Studio forwards direction idempotency keys and retry payloads to Control
+ok 15 - actual Studio forwards direction idempotency keys and retry payloads to Control
+  ---
+  duration_ms: 947.535508
+  type: 'test'
+  ...
+# Subtest: actual Studio bounds upstream headers wait and remains healthy
+ok 16 - actual Studio bounds upstream headers wait and remains healthy
+  ---
+  duration_ms: 1178.01581
+  type: 'test'
+  ...
+# Subtest: actual Studio bounds upstream empty-body wait and remains healthy
+ok 17 - actual Studio bounds upstream empty-body wait and remains healthy
+  ---
+  duration_ms: 1089.102354
+  type: 'test'
+  ...
+# Subtest: actual Studio bounds upstream partial-body wait and remains healthy
+ok 18 - actual Studio bounds upstream partial-body wait and remains healthy
+  ---
+  duration_ms: 1229.942862
+  type: 'test'
+  ...
+# Subtest: actual Studio cancels upstream streaming when the client disconnects
+ok 19 - actual Studio cancels upstream streaming when the client disconnects
+  ---
+  duration_ms: 1406.777879
+  type: 'test'
+  ...
+# Subtest: authored Studio timeout 150 reaches the live proxy and startup snapshot
+ok 20 - authored Studio timeout 150 reaches the live proxy and startup snapshot
+  ---
+  duration_ms: 1246.008218
+  type: 'test'
+  ...
+# Subtest: authored Studio timeout 600 reaches the live proxy and startup snapshot
+ok 21 - authored Studio timeout 600 reaches the live proxy and startup snapshot
+  ---
+  duration_ms: 1382.930095
+  type: 'test'
+  ...
+# Subtest: missing Studio ingress secret retains 503 proxy response and static availability
+ok 22 - missing Studio ingress secret retains 503 proxy response and static availability
+  ---
+  duration_ms: 997.429549
+  type: 'test'
+  ...
+# Subtest: CC1 Control pipelinePreferenceSubject rejects undefined
+ok 23 - CC1 Control pipelinePreferenceSubject rejects undefined
+  ---
+  duration_ms: 11.959849
+  type: 'test'
+  ...
+# Subtest: CC1 Control pipelinePreferenceSubject rejects ""
+ok 24 - CC1 Control pipelinePreferenceSubject rejects ""
+  ---
+  duration_ms: 4.153337
+  type: 'test'
+  ...
+# Subtest: CC1 Control pipelinePreferenceSubject rejects "operator:test"
+ok 25 - CC1 Control pipelinePreferenceSubject rejects "operator:test"
+  ---
+  duration_ms: 4.197559
+  type: 'test'
+  ...
+# Subtest: CC1 Control pipelinePreferenceSubject rejects "user-abc"
+ok 26 - CC1 Control pipelinePreferenceSubject rejects "user-abc"
+  ---
+  duration_ms: 5.363228
+  type: 'test'
+  ...
+# Subtest: CC1 Control pipelinePreferenceSubject rejects 1
+ok 27 - CC1 Control pipelinePreferenceSubject rejects 1
+  ---
+  duration_ms: 4.236869
+  type: 'test'
+  ...
+# Subtest: CC1 Control pipelinePreferenceSubject rejects false
+ok 28 - CC1 Control pipelinePreferenceSubject rejects false
+  ---
+  duration_ms: 4.071615
+  type: 'test'
+  ...
+# Subtest: CC1 Control artifactRoot rejects undefined
+ok 29 - CC1 Control artifactRoot rejects undefined
+  ---
+  duration_ms: 4.011403
+  type: 'test'
+  ...
+# Subtest: CC1 Control artifactRoot rejects null
+ok 30 - CC1 Control artifactRoot rejects null
+  ---
+  duration_ms: 3.710846
+  type: 'test'
+  ...
+# Subtest: CC1 Control artifactRoot rejects ""
+ok 31 - CC1 Control artifactRoot rejects ""
+  ---
+  duration_ms: 3.964022
+  type: 'test'
+  ...
+# Subtest: CC1 Control artifactRoot rejects "/"
+ok 32 - CC1 Control artifactRoot rejects "/"
+  ---
+  duration_ms: 4.472796
+  type: 'test'
+  ...
+# Subtest: CC1 Control artifactRoot rejects "relative"
+ok 33 - CC1 Control artifactRoot rejects "relative"
+  ---
+  duration_ms: 3.914941
+  type: 'test'
+  ...
+# Subtest: CC1 Control artifactRoot rejects "/tmp/../artifacts"
+ok 34 - CC1 Control artifactRoot rejects "/tmp/../artifacts"
+  ---
+  duration_ms: 5.252046
+  type: 'test'
+  ...
+# Subtest: CC1 Control artifactRoot rejects "/tmp/artifacts/"
+ok 35 - CC1 Control artifactRoot rejects "/tmp/artifacts/"
+  ---
+  duration_ms: 4.755083
+  type: 'test'
+  ...
+# Subtest: CC1 Control artifactRoot rejects "/tmp//artifacts"
+ok 36 - CC1 Control artifactRoot rejects "/tmp//artifacts"
+  ---
+  duration_ms: 4.445155
+  type: 'test'
+  ...
+# Subtest: CC1 Control artifactRoot rejects "/tmp/\\u0000artifacts"
+ok 37 - CC1 Control artifactRoot rejects "/tmp/\\u0000artifacts"
+  ---
+  duration_ms: 18.515948
+  type: 'test'
+  ...
+# Subtest: CC1 Control artifactRoot rejects 1
+ok 38 - CC1 Control artifactRoot rejects 1
+  ---
+  duration_ms: 4.477866
+  type: 'test'
+  ...
+# Subtest: CC1 Control studioPublicUrl rejects undefined
+ok 39 - CC1 Control studioPublicUrl rejects undefined
+  ---
+  duration_ms: 4.207979
+  type: 'test'
+  ...
+# Subtest: CC1 Control studioPublicUrl rejects null
+ok 40 - CC1 Control studioPublicUrl rejects null
+  ---
+  duration_ms: 3.87759
+  type: 'test'
+  ...
+# Subtest: CC1 Control studioPublicUrl rejects ""
+ok 41 - CC1 Control studioPublicUrl rejects ""
+  ---
+  duration_ms: 3.707996
+  type: 'test'
+  ...
+# Subtest: CC1 Control studioPublicUrl rejects "relative"
+ok 42 - CC1 Control studioPublicUrl rejects "relative"
+  ---
+  duration_ms: 4.324802
+  type: 'test'
+  ...
+# Subtest: CC1 Control studioPublicUrl rejects "file:///tmp"
+ok 43 - CC1 Control studioPublicUrl rejects "file:///tmp"
+  ---
+  duration_ms: 4.348822
+  type: 'test'
+  ...
+# Subtest: CC1 Control studioPublicUrl rejects "https://"
+ok 44 - CC1 Control studioPublicUrl rejects "https://"
+  ---
+  duration_ms: 4.437605
+  type: 'test'
+  ...
+# Subtest: CC1 Control studioPublicUrl rejects "https://user:pass@studio"
+ok 45 - CC1 Control studioPublicUrl rejects "https://user:pass@studio"
+  ---
+  duration_ms: 4.012504
+  type: 'test'
+  ...
+# Subtest: CC1 Control studioPublicUrl rejects "https://studio?query=1"
+ok 46 - CC1 Control studioPublicUrl rejects "https://studio?query=1"
+  ---
+  duration_ms: 3.49786
+  type: 'test'
+  ...
+# Subtest: CC1 Control studioPublicUrl rejects "https://studio\#fragment"
+ok 47 - CC1 Control studioPublicUrl rejects "https://studio\#fragment"
+  ---
+  duration_ms: 4.479286
+  type: 'test'
+  ...
+# Subtest: CC1 Control studioPublicUrl rejects "https://bad host"
+ok 48 - CC1 Control studioPublicUrl rejects "https://bad host"
+  ---
+  duration_ms: 4.302311
+  type: 'test'
+  ...
+# Subtest: CC1 Control studioPublicUrl rejects 1
+ok 49 - CC1 Control studioPublicUrl rejects 1
+  ---
+  duration_ms: 3.897991
+  type: 'test'
+  ...
+# Subtest: CC1 strict Control object
+ok 50 - CC1 strict Control object
+  ---
+  duration_ms: 5.586004
+  type: 'test'
+  ...
+# Subtest: CC1 strict Control object
+ok 51 - CC1 strict Control object
+  ---
+  duration_ms: 8.962411
+  type: 'test'
+  ...
+# Subtest: CC1 strict Control object
+ok 52 - CC1 strict Control object
+  ---
+  duration_ms: 6.235521
+  type: 'test'
+  ...
+# Subtest: CC1 strict Control object
+ok 53 - CC1 strict Control object
+  ---
+  duration_ms: 6.717433
+  type: 'test'
+  ...
+# Subtest: CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty
+ok 54 - CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty
+  ---
+  duration_ms: 4.346003
+  type: 'test'
+  ...
+# Subtest: CC2 retired ARTIFACT_ROOT rejects even empty
+ok 55 - CC2 retired ARTIFACT_ROOT rejects even empty
+  ---
+  duration_ms: 16.844175
+  type: 'test'
+  ...
+# Subtest: CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty
+ok 56 - CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty
+  ---
+  duration_ms: 4.224309
+  type: 'test'
+  ...
+# Subtest: CC2 authored Control snapshot survives file mutation
+ok 57 - CC2 authored Control snapshot survives file mutation
+  ---
+  duration_ms: 14.35273
+  type: 'test'
+  ...
+# Subtest: CI03 original HTTP body boundary follows authored 64 bytes
+ok 58 - CI03 original HTTP body boundary follows authored 64 bytes
+  ---
+  duration_ms: 102.141968
+  type: 'test'
+  ...
+# Subtest: CI03 original HTTP body boundary follows authored 128 bytes
+ok 59 - CI03 original HTTP body boundary follows authored 128 bytes
+  ---
+  duration_ms: 94.07914
+  type: 'test'
+  ...
+# Subtest: CI04 production command and real host parser use assigned 64 bytes
+ok 60 - CI04 production command and real host parser use assigned 64 bytes
+  ---
+  duration_ms: 2851.215548
+  type: 'test'
+  ...
+# Subtest: CI04 production command and real host parser use assigned 128 bytes
+ok 61 - CI04 production command and real host parser use assigned 128 bytes
+  ---
+  duration_ms: 3582.181791
+  type: 'test'
+  ...
+# Subtest: CR01 both startup snapshots use authored {"maximumResultBytes":64,"dispatchTimeoutMs":100}
+ok 62 - CR01 both startup snapshots use authored {"maximumResultBytes":64,"dispatchTimeoutMs":100}
+  ---
+  duration_ms: 21.201897
+  type: 'test'
+  ...
+# Subtest: CR01 both startup snapshots use authored {"maximumResultBytes":128,"dispatchTimeoutMs":2000}
+ok 63 - CR01 both startup snapshots use authored {"maximumResultBytes":128,"dispatchTimeoutMs":2000}
+  ---
+  duration_ms: 8.501139
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject maximumResultBytes=undefined
+ok 64 - CR01 both roles reject maximumResultBytes=undefined
+  ---
+  duration_ms: 5.774429
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject maximumResultBytes=null
+ok 65 - CR01 both roles reject maximumResultBytes=null
+  ---
+  duration_ms: 5.377869
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject maximumResultBytes=5
+ok 66 - CR01 both roles reject maximumResultBytes=5
+  ---
+  duration_ms: 5.442841
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject maximumResultBytes=0
+ok 67 - CR01 both roles reject maximumResultBytes=0
+  ---
+  duration_ms: 5.099422
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject maximumResultBytes=-1
+ok 68 - CR01 both roles reject maximumResultBytes=-1
+  ---
+  duration_ms: 4.887826
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject maximumResultBytes=1.5
+ok 69 - CR01 both roles reject maximumResultBytes=1.5
+  ---
+  duration_ms: 5.209195
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject maximumResultBytes=2147483648
+ok 70 - CR01 both roles reject maximumResultBytes=2147483648
+  ---
+  duration_ms: 4.902406
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject dispatchTimeoutMs=undefined
+ok 71 - CR01 both roles reject dispatchTimeoutMs=undefined
+  ---
+  duration_ms: 4.048865
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject dispatchTimeoutMs=null
+ok 72 - CR01 both roles reject dispatchTimeoutMs=null
+  ---
+  duration_ms: 3.809189
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject dispatchTimeoutMs=5
+ok 73 - CR01 both roles reject dispatchTimeoutMs=5
+  ---
+  duration_ms: 3.738086
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject dispatchTimeoutMs=0
+ok 74 - CR01 both roles reject dispatchTimeoutMs=0
+  ---
+  duration_ms: 4.321961
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject dispatchTimeoutMs=-1
+ok 75 - CR01 both roles reject dispatchTimeoutMs=-1
+  ---
+  duration_ms: 3.287094
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject dispatchTimeoutMs=1.5
+ok 76 - CR01 both roles reject dispatchTimeoutMs=1.5
+  ---
+  duration_ms: 3.725857
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject dispatchTimeoutMs=2147483648
+ok 77 - CR01 both roles reject dispatchTimeoutMs=2147483648
+  ---
+  duration_ms: 4.787843
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject missing or unsupported native section
+ok 78 - CR01 both roles reject missing or unsupported native section
+  ---
+  duration_ms: 7.795002
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject missing or unsupported native section
+ok 79 - CR01 both roles reject missing or unsupported native section
+  ---
+  duration_ms: 9.183457
+  type: 'test'
+  ...
+# Subtest: CR01 both roles reject missing or unsupported native section
+ok 80 - CR01 both roles reject missing or unsupported native section
+  ---
+  duration_ms: 6.801376
+  type: 'test'
+  ...
+# Subtest: CR02 both roles reject PRISM_NATIVE_MAXIMUM_RESULT_BYTES
+ok 81 - CR02 both roles reject PRISM_NATIVE_MAXIMUM_RESULT_BYTES
+  ---
+  duration_ms: 2.601477
+  type: 'test'
+  ...
+# Subtest: CR02 both roles reject PRISM_NATIVE_DISPATCH_TIMEOUT_MS
+ok 82 - CR02 both roles reject PRISM_NATIVE_DISPATCH_TIMEOUT_MS
+  ---
+  duration_ms: 2.419942
+  type: 'test'
+  ...
+# Subtest: CR03 original HTTP transport enforces 8 UTF-8 bytes
+ok 83 - CR03 original HTTP transport enforces 8 UTF-8 bytes
+  ---
+  duration_ms: 55.486173
+  type: 'test'
+  ...
+# Subtest: CR03 original HTTP transport enforces 9 UTF-8 bytes
+ok 84 - CR03 original HTTP transport enforces 9 UTF-8 bytes
+  ---
+  duration_ms: 12.995936
+  type: 'test'
+  ...
+# Subtest: CR04 real headers deadline follows short and long author budgets
+ok 85 - CR04 real headers deadline follows short and long author budgets
+  ---
+  duration_ms: 390.386903
+  type: 'test'
+  ...
+# Subtest: CR04 real body deadline follows short and long author budgets
+ok 86 - CR04 real body deadline follows short and long author budgets
+  ---
+  duration_ms: 394.757796
+  type: 'test'
+  ...
+# Subtest: CP03 original Control persists and dispatches startup budgets and preserves admitted retry identity
+ok 87 - CP03 original Control persists and dispatches startup budgets and preserves admitted retry identity
+  ---
+  duration_ms: 5679.951356
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject cpuTimeMs=undefined
+ok 88 - CP01 both roles reject cpuTimeMs=undefined
+  ---
+  duration_ms: 12.405851
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject cpuTimeMs=null
+ok 89 - CP01 both roles reject cpuTimeMs=null
+  ---
+  duration_ms: 3.985742
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject cpuTimeMs=5
+ok 90 - CP01 both roles reject cpuTimeMs=5
+  ---
+  duration_ms: 4.189738
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject cpuTimeMs=0
+ok 91 - CP01 both roles reject cpuTimeMs=0
+  ---
+  duration_ms: 4.27469
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject cpuTimeMs=-1
+ok 92 - CP01 both roles reject cpuTimeMs=-1
+  ---
+  duration_ms: 4.468975
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject cpuTimeMs=1.5
+ok 93 - CP01 both roles reject cpuTimeMs=1.5
+  ---
+  duration_ms: 53.169603
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject cpuTimeMs=9007199254740992
+ok 94 - CP01 both roles reject cpuTimeMs=9007199254740992
+  ---
+  duration_ms: 7.810981
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject memoryBytes=undefined
+ok 95 - CP01 both roles reject memoryBytes=undefined
+  ---
+  duration_ms: 5.385049
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject memoryBytes=null
+ok 96 - CP01 both roles reject memoryBytes=null
+  ---
+  duration_ms: 5.345788
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject memoryBytes=5
+ok 97 - CP01 both roles reject memoryBytes=5
+  ---
+  duration_ms: 5.324297
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject memoryBytes=0
+ok 98 - CP01 both roles reject memoryBytes=0
+  ---
+  duration_ms: 3.992793
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject memoryBytes=-1
+ok 99 - CP01 both roles reject memoryBytes=-1
+  ---
+  duration_ms: 4.058685
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject memoryBytes=1.5
+ok 100 - CP01 both roles reject memoryBytes=1.5
+  ---
+  duration_ms: 4.473196
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject memoryBytes=9007199254740992
+ok 101 - CP01 both roles reject memoryBytes=9007199254740992
+  ---
+  duration_ms: 4.473415
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject tasks=undefined
+ok 102 - CP01 both roles reject tasks=undefined
+  ---
+  duration_ms: 3.86528
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject tasks=null
+ok 103 - CP01 both roles reject tasks=null
+  ---
+  duration_ms: 3.594292
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject tasks=5
+ok 104 - CP01 both roles reject tasks=5
+  ---
+  duration_ms: 3.666235
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject tasks=0
+ok 105 - CP01 both roles reject tasks=0
+  ---
+  duration_ms: 5.645085
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject tasks=-1
+ok 106 - CP01 both roles reject tasks=-1
+  ---
+  duration_ms: 6.107338
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject tasks=1.5
+ok 107 - CP01 both roles reject tasks=1.5
+  ---
+  duration_ms: 6.444337
+  type: 'test'
+  ...
+# Subtest: CP01 both roles reject tasks=9007199254740992
+ok 108 - CP01 both roles reject tasks=9007199254740992
+  ---
+  duration_ms: 30.360884
+  type: 'test'
+  ...
+# Subtest: CP01 missing or competing resource policy fails
+ok 109 - CP01 missing or competing resource policy fails
+  ---
+  duration_ms: 5.627736
+  type: 'test'
+  ...
+# Subtest: CP01 missing or competing resource policy fails
+ok 110 - CP01 missing or competing resource policy fails
+  ---
+  duration_ms: 5.81422
+  type: 'test'
+  ...
+# Subtest: CP01 missing or competing resource policy fails
+ok 111 - CP01 missing or competing resource policy fails
+  ---
+  duration_ms: 6.413986
+  type: 'test'
+  ...
+# Subtest: CP02 rejects PRISM_NATIVE_CPU_TIME_MS even empty
+ok 112 - CP02 rejects PRISM_NATIVE_CPU_TIME_MS even empty
+  ---
+  duration_ms: 4.108056
+  type: 'test'
+  ...
+# Subtest: CP02 rejects PRISM_NATIVE_MEMORY_BYTES even empty
+ok 113 - CP02 rejects PRISM_NATIVE_MEMORY_BYTES even empty
+  ---
+  duration_ms: 4.053675
+  type: 'test'
+  ...
+# Subtest: CP02 rejects PRISM_NATIVE_TASKS even empty
+ok 114 - CP02 rejects PRISM_NATIVE_TASKS even empty
+  ---
+  duration_ms: 4.017724
+  type: 'test'
+  ...
+# Subtest: CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7}
+ok 115 - CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7}
+  ---
+  duration_ms: 102.024156
+  type: 'test'
+  ...
+# Subtest: CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11}
+ok 116 - CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11}
+  ---
+  duration_ms: 66.21449
+  type: 'test'
+  ...
+# Subtest: CP01 resource safe-integer ceiling is independent of transport timer ceiling
+ok 117 - CP01 resource safe-integer ceiling is independent of transport timer ceiling
+  ---
+  duration_ms: 6.027215
+  type: 'test'
+  ...
+# Subtest: CP02 a loaded producer never consults later legacy environment changes
+ok 118 - CP02 a loaded producer never consults later legacy environment changes
+  ---
+  duration_ms: 3.565442
+  type: 'test'
+  ...
+# Subtest: CR05 real journal consumes authored 2051 byte result limit
+ok 119 - CR05 real journal consumes authored 2051 byte result limit
+  ---
+  duration_ms: 147.125391
+  type: 'test'
+  ...
+# Subtest: CR05 real journal consumes authored 2052 byte result limit
+ok 120 - CR05 real journal consumes authored 2052 byte result limit
+  ---
+  duration_ms: 141.921966
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor uid rejects undefined
+ok 121 - CS1 supervisor uid rejects undefined
+  ---
+  duration_ms: 11.538828
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor uid rejects null
+ok 122 - CS1 supervisor uid rejects null
+  ---
+  duration_ms: 3.417688
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor uid rejects 1
+ok 123 - CS1 supervisor uid rejects 1
+  ---
+  duration_ms: 3.701686
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor uid rejects 0
+ok 124 - CS1 supervisor uid rejects 0
+  ---
+  duration_ms: 3.168502
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor uid rejects -1
+ok 125 - CS1 supervisor uid rejects -1
+  ---
+  duration_ms: 3.696896
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor uid rejects 1.5
+ok 126 - CS1 supervisor uid rejects 1.5
+  ---
+  duration_ms: 4.211289
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor uid rejects 2147483648
+ok 127 - CS1 supervisor uid rejects 2147483648
+  ---
+  duration_ms: 31.723039
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor gid rejects undefined
+ok 128 - CS1 supervisor gid rejects undefined
+  ---
+  duration_ms: 4.415055
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor gid rejects null
+ok 129 - CS1 supervisor gid rejects null
+  ---
+  duration_ms: 4.296851
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor gid rejects 1
+ok 130 - CS1 supervisor gid rejects 1
+  ---
+  duration_ms: 4.65378
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor gid rejects 0
+ok 131 - CS1 supervisor gid rejects 0
+  ---
+  duration_ms: 3.675585
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor gid rejects -1
+ok 132 - CS1 supervisor gid rejects -1
+  ---
+  duration_ms: 4.047795
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor gid rejects 1.5
+ok 133 - CS1 supervisor gid rejects 1.5
+  ---
+  duration_ms: 3.921431
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor gid rejects 2147483648
+ok 134 - CS1 supervisor gid rejects 2147483648
+  ---
+  duration_ms: 3.917191
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipRecords rejects undefined
+ok 135 - CS1 supervisor maximumOwnershipRecords rejects undefined
+  ---
+  duration_ms: 3.963273
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipRecords rejects null
+ok 136 - CS1 supervisor maximumOwnershipRecords rejects null
+  ---
+  duration_ms: 4.034764
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipRecords rejects 1
+ok 137 - CS1 supervisor maximumOwnershipRecords rejects 1
+  ---
+  duration_ms: 4.938078
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipRecords rejects 0
+ok 138 - CS1 supervisor maximumOwnershipRecords rejects 0
+  ---
+  duration_ms: 4.303731
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipRecords rejects -1
+ok 139 - CS1 supervisor maximumOwnershipRecords rejects -1
+  ---
+  duration_ms: 3.985103
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipRecords rejects 1.5
+ok 140 - CS1 supervisor maximumOwnershipRecords rejects 1.5
+  ---
+  duration_ms: 4.062045
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipRecords rejects 2147483648
+ok 141 - CS1 supervisor maximumOwnershipRecords rejects 2147483648
+  ---
+  duration_ms: 4.198298
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipBytes rejects undefined
+ok 142 - CS1 supervisor maximumOwnershipBytes rejects undefined
+  ---
+  duration_ms: 4.840175
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipBytes rejects null
+ok 143 - CS1 supervisor maximumOwnershipBytes rejects null
+  ---
+  duration_ms: 4.915897
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipBytes rejects 1
+ok 144 - CS1 supervisor maximumOwnershipBytes rejects 1
+  ---
+  duration_ms: 5.000899
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipBytes rejects 0
+ok 145 - CS1 supervisor maximumOwnershipBytes rejects 0
+  ---
+  duration_ms: 4.437665
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipBytes rejects -1
+ok 146 - CS1 supervisor maximumOwnershipBytes rejects -1
+  ---
+  duration_ms: 4.141997
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipBytes rejects 1.5
+ok 147 - CS1 supervisor maximumOwnershipBytes rejects 1.5
+  ---
+  duration_ms: 4.398664
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOwnershipBytes rejects 2147483648
+ok 148 - CS1 supervisor maximumOwnershipBytes rejects 2147483648
+  ---
+  duration_ms: 12.164794
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOutputBytes rejects undefined
+ok 149 - CS1 supervisor maximumOutputBytes rejects undefined
+  ---
+  duration_ms: 4.125136
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOutputBytes rejects null
+ok 150 - CS1 supervisor maximumOutputBytes rejects null
+  ---
+  duration_ms: 4.881557
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOutputBytes rejects 1
+ok 151 - CS1 supervisor maximumOutputBytes rejects 1
+  ---
+  duration_ms: 4.988578
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOutputBytes rejects 0
+ok 152 - CS1 supervisor maximumOutputBytes rejects 0
+  ---
+  duration_ms: 4.964189
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOutputBytes rejects -1
+ok 153 - CS1 supervisor maximumOutputBytes rejects -1
+  ---
+  duration_ms: 4.974348
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOutputBytes rejects 1.5
+ok 154 - CS1 supervisor maximumOutputBytes rejects 1.5
+  ---
+  duration_ms: 5.266176
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumOutputBytes rejects 2147483648
+ok 155 - CS1 supervisor maximumOutputBytes rejects 2147483648
+  ---
+  duration_ms: 4.26003
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumJournalBytes rejects undefined
+ok 156 - CS1 supervisor maximumJournalBytes rejects undefined
+  ---
+  duration_ms: 4.154687
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumJournalBytes rejects null
+ok 157 - CS1 supervisor maximumJournalBytes rejects null
+  ---
+  duration_ms: 5.02124
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumJournalBytes rejects 1
+ok 158 - CS1 supervisor maximumJournalBytes rejects 1
+  ---
+  duration_ms: 5.068941
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumJournalBytes rejects 0
+ok 159 - CS1 supervisor maximumJournalBytes rejects 0
+  ---
+  duration_ms: 5.750808
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumJournalBytes rejects -1
+ok 160 - CS1 supervisor maximumJournalBytes rejects -1
+  ---
+  duration_ms: 5.03926
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumJournalBytes rejects 1.5
+ok 161 - CS1 supervisor maximumJournalBytes rejects 1.5
+  ---
+  duration_ms: 5.192295
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor maximumJournalBytes rejects 9007199254740992
+ok 162 - CS1 supervisor maximumJournalBytes rejects 9007199254740992
+  ---
+  duration_ms: 5.077551
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor pollIntervalMs rejects undefined
+ok 163 - CS1 supervisor pollIntervalMs rejects undefined
+  ---
+  duration_ms: 5.178634
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor pollIntervalMs rejects null
+ok 164 - CS1 supervisor pollIntervalMs rejects null
+  ---
+  duration_ms: 6.157189
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor pollIntervalMs rejects 1
+ok 165 - CS1 supervisor pollIntervalMs rejects 1
+  ---
+  duration_ms: 6.245552
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor pollIntervalMs rejects 0
+ok 166 - CS1 supervisor pollIntervalMs rejects 0
+  ---
+  duration_ms: 12.993315
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor pollIntervalMs rejects -1
+ok 167 - CS1 supervisor pollIntervalMs rejects -1
+  ---
+  duration_ms: 5.387589
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor pollIntervalMs rejects 1.5
+ok 168 - CS1 supervisor pollIntervalMs rejects 1.5
+  ---
+  duration_ms: 5.40316
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor pollIntervalMs rejects 2147483648
+ok 169 - CS1 supervisor pollIntervalMs rejects 2147483648
+  ---
+  duration_ms: 5.346378
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor drainTimeoutMs rejects undefined
+ok 170 - CS1 supervisor drainTimeoutMs rejects undefined
+  ---
+  duration_ms: 5.463601
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor drainTimeoutMs rejects null
+ok 171 - CS1 supervisor drainTimeoutMs rejects null
+  ---
+  duration_ms: 5.44125
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor drainTimeoutMs rejects 1
+ok 172 - CS1 supervisor drainTimeoutMs rejects 1
+  ---
+  duration_ms: 5.887852
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor drainTimeoutMs rejects 0
+ok 173 - CS1 supervisor drainTimeoutMs rejects 0
+  ---
+  duration_ms: 6.077067
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor drainTimeoutMs rejects -1
+ok 174 - CS1 supervisor drainTimeoutMs rejects -1
+  ---
+  duration_ms: 6.449887
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor drainTimeoutMs rejects 1.5
+ok 175 - CS1 supervisor drainTimeoutMs rejects 1.5
+  ---
+  duration_ms: 4.465385
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor drainTimeoutMs rejects 2147483648
+ok 176 - CS1 supervisor drainTimeoutMs rejects 2147483648
+  ---
+  duration_ms: 4.342842
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor closeTimeoutMs rejects undefined
+ok 177 - CS1 supervisor closeTimeoutMs rejects undefined
+  ---
+  duration_ms: 4.103686
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor closeTimeoutMs rejects null
+ok 178 - CS1 supervisor closeTimeoutMs rejects null
+  ---
+  duration_ms: 3.751387
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor closeTimeoutMs rejects 1
+ok 179 - CS1 supervisor closeTimeoutMs rejects 1
+  ---
+  duration_ms: 3.193463
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor closeTimeoutMs rejects 0
+ok 180 - CS1 supervisor closeTimeoutMs rejects 0
+  ---
+  duration_ms: 3.951472
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor closeTimeoutMs rejects -1
+ok 181 - CS1 supervisor closeTimeoutMs rejects -1
+  ---
+  duration_ms: 3.746657
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor closeTimeoutMs rejects 1.5
+ok 182 - CS1 supervisor closeTimeoutMs rejects 1.5
+  ---
+  duration_ms: 4.526127
+  type: 'test'
+  ...
+# Subtest: CS1 supervisor closeTimeoutMs rejects 2147483648
+ok 183 - CS1 supervisor closeTimeoutMs rejects 2147483648
+  ---
+  duration_ms: 3.647774
+  type: 'test'
+  ...
+# Subtest: CS1 strict supervisor object
+ok 184 - CS1 strict supervisor object
+  ---
+  duration_ms: 4.028814
+  type: 'test'
+  ...
+# Subtest: CS1 strict supervisor object
+ok 185 - CS1 strict supervisor object
+  ---
+  duration_ms: 3.541432
+  type: 'test'
+  ...
+# Subtest: CS1 strict supervisor object
+ok 186 - CS1 strict supervisor object
+  ---
+  duration_ms: 9.835324
+  type: 'test'
+  ...
+# Subtest: CS2 old PRISM_NATIVE_UID is rejected even empty
+ok 187 - CS2 old PRISM_NATIVE_UID is rejected even empty
+  ---
+  duration_ms: 3.421268
+  type: 'test'
+  ...
+# Subtest: CS2 old PRISM_NATIVE_GID is rejected even empty
+ok 188 - CS2 old PRISM_NATIVE_GID is rejected even empty
+  ---
+  duration_ms: 2.909045
+  type: 'test'
+  ...
+# Subtest: CS2 old PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS is rejected even empty
+ok 189 - CS2 old PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS is rejected even empty
+  ---
+  duration_ms: 2.662589
+  type: 'test'
+  ...
+# Subtest: CS2 old PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES is rejected even empty
+ok 190 - CS2 old PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES is rejected even empty
+  ---
+  duration_ms: 2.489764
+  type: 'test'
+  ...
+# Subtest: CS2 old PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES is rejected even empty
+ok 191 - CS2 old PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES is rejected even empty
+  ---
+  duration_ms: 2.254568
+  type: 'test'
+  ...
+# Subtest: CS2 old PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES is rejected even empty
+ok 192 - CS2 old PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES is rejected even empty
+  ---
+  duration_ms: 2.433252
+  type: 'test'
+  ...
+# Subtest: CS2 old PRISM_NATIVE_POLL_INTERVAL_MS is rejected even empty
+ok 193 - CS2 old PRISM_NATIVE_POLL_INTERVAL_MS is rejected even empty
+  ---
+  duration_ms: 2.592877
+  type: 'test'
+  ...
+# Subtest: CS2 old PRISM_NATIVE_DRAIN_TIMEOUT_MS is rejected even empty
+ok 194 - CS2 old PRISM_NATIVE_DRAIN_TIMEOUT_MS is rejected even empty
+  ---
+  duration_ms: 2.644558
+  type: 'test'
+  ...
+# Subtest: CS2 old PRISM_NATIVE_CLOSE_TIMEOUT_MS is rejected even empty
+ok 195 - CS2 old PRISM_NATIVE_CLOSE_TIMEOUT_MS is rejected even empty
+  ---
+  duration_ms: 2.779022
+  type: 'test'
+  ...
+# Subtest: CS4 combined close plus drain 14999
+ok 196 - CS4 combined close plus drain 14999
+  ---
+  duration_ms: 6.081847
+  type: 'test'
+  ...
+# Subtest: CS4 combined close plus drain 15000
+ok 197 - CS4 combined close plus drain 15000
+  ---
+  duration_ms: 3.564362
+  type: 'test'
+  ...
+# Subtest: CS4 combined close plus drain 15001
+ok 198 - CS4 combined close plus drain 15001
+  ---
+  duration_ms: 3.667095
+  type: 'test'
+  ...
+# Subtest: CS3 production mapping and actual output spool profile 1
+ok 199 - CS3 production mapping and actual output spool profile 1
+  ---
+  duration_ms: 75.0859
+  type: 'test'
+  ...
+# Subtest: CS3 production mapping and actual output spool profile 2
+ok 200 - CS3 production mapping and actual output spool profile 2
+  ---
+  duration_ms: 15.90132
+  type: 'test'
+  ...
+# Subtest: CS2 startup snapshot ignores later legacy environment changes
+ok 201 - CS2 startup snapshot ignores later legacy environment changes
+  ---
+  duration_ms: 5.074511
+  type: 'test'
+  ...
+# Subtest: CS1 journal safe-integer ceiling and timer/identity integer ceilings remain distinct
+ok 202 - CS1 journal safe-integer ceiling and timer/identity integer ceilings remain distinct
+  ---
+  duration_ms: 3.85121
+  type: 'test'
+  ...
+# Subtest: CS3 real ownership store enforces 1 authored records with representation-sized capacity
+ok 203 - CS3 real ownership store enforces 1 authored records with representation-sized capacity
+  ---
+  duration_ms: 112.62575
+  type: 'test'
+  ...
+# Subtest: CS3 real ownership store enforces 2 authored records with representation-sized capacity
+ok 204 - CS3 real ownership store enforces 2 authored records with representation-sized capacity
+  ---
+  duration_ms: 92.189831
+  type: 'test'
+  ...
+# Subtest: CS3 real ownership store enforces 1 authored bytes
+ok 205 - CS3 real ownership store enforces 1 authored bytes
+  ---
+  duration_ms: 17.05496
+  type: 'test'
+  ...
+# Subtest: CS3 real ownership store enforces 8192 authored bytes
+ok 206 - CS3 real ownership store enforces 8192 authored bytes
+  ---
+  duration_ms: 16.009704
+  type: 'test'
+  ...
+# Subtest: CS3 actual execution journal admission and process boundary profile 1
+ok 207 - CS3 actual execution journal admission and process boundary profile 1
+  ---
+  duration_ms: 106.213704
+  type: 'test'
+  ...
+# Subtest: CS3 actual execution journal admission and process boundary profile 2
+ok 208 - CS3 actual execution journal admission and process boundary profile 2
+  ---
+  duration_ms: 124.230039
+  type: 'test'
+  ...
+# Subtest: CB01 real probe reservation overflows and recovers while work remains active
+ok 209 - CB01 real probe reservation overflows and recovers while work remains active
+  ---
+  duration_ms: 34.410759
+  type: 'test'
+  ...
+# Subtest: CB02 actual TCP connection limit rejects the next socket and reopens after release
+ok 210 - CB02 actual TCP connection limit rejects the next socket and reopens after release
+  ---
+  duration_ms: 11.646931
+  type: 'test'
+  ...
+# Subtest: CB03 original Node body deadline sends 408 without shortening its checking interval
+ok 211 - CB03 original Node body deadline sends 408 without shortening its checking interval
+  ---
+  duration_ms: 30038.574424
+  type: 'test'
+  ...
+# Subtest: CW01 canonical author values reach the actual production worker composition
+ok 212 - CW01 canonical author values reach the actual production worker composition
+  ---
+  duration_ms: 13.1508
+  type: 'test'
+  ...
+# Subtest: CW02 every alternate author value reaches the actual consumer
+ok 213 - CW02 every alternate author value reaches the actual consumer
+  ---
+  duration_ms: 62.158717
+  type: 'test'
+  ...
+# Subtest: CW03 unknown key at entry
+ok 214 - CW03 unknown key at entry
+  ---
+  duration_ms: 5.240756
+  type: 'test'
+  ...
+# Subtest: CW03 unknown key at prism-worker
+ok 215 - CW03 unknown key at prism-worker
+  ---
+  duration_ms: 3.388267
+  type: 'test'
+  ...
+# Subtest: CW03 unknown key at prism-worker.settings
+ok 216 - CW03 unknown key at prism-worker.settings
+  ---
+  duration_ms: 3.510811
+  type: 'test'
+  ...
+# Subtest: CW03 unknown key at prism-worker.settings.ingress
+ok 217 - CW03 unknown key at prism-worker.settings.ingress
+  ---
+  duration_ms: 4.027844
+  type: 'test'
+  ...
+# Subtest: CW04 port rejects 3
+ok 218 - CW04 port rejects 3
+  ---
+  duration_ms: 3.262174
+  type: 'test'
+  ...
+# Subtest: CW04 port rejects null
+ok 219 - CW04 port rejects null
+  ---
+  duration_ms: 2.793322
+  type: 'test'
+  ...
+# Subtest: CW04 port rejects -1
+ok 220 - CW04 port rejects -1
+  ---
+  duration_ms: 2.641938
+  type: 'test'
+  ...
+# Subtest: CW04 port rejects 0
+ok 221 - CW04 port rejects 0
+  ---
+  duration_ms: 2.628828
+  type: 'test'
+  ...
+# Subtest: CW04 port rejects 1.5
+ok 222 - CW04 port rejects 1.5
+  ---
+  duration_ms: 2.572337
+  type: 'test'
+  ...
+# Subtest: CW04 port rejects 2147483648
+ok 223 - CW04 port rejects 2147483648
+  ---
+  duration_ms: 2.607808
+  type: 'test'
+  ...
+# Subtest: CW04 port rejects undefined
+ok 224 - CW04 port rejects undefined
+  ---
+  duration_ms: 2.842893
+  type: 'test'
+  ...
+# Subtest: CW04 maximumActiveRequests rejects 3
+ok 225 - CW04 maximumActiveRequests rejects 3
+  ---
+  duration_ms: 2.772441
+  type: 'test'
+  ...
+# Subtest: CW04 maximumActiveRequests rejects null
+ok 226 - CW04 maximumActiveRequests rejects null
+  ---
+  duration_ms: 3.040359
+  type: 'test'
+  ...
+# Subtest: CW04 maximumActiveRequests rejects -1
+ok 227 - CW04 maximumActiveRequests rejects -1
+  ---
+  duration_ms: 2.997067
+  type: 'test'
+  ...
+# Subtest: CW04 maximumActiveRequests rejects 0
+ok 228 - CW04 maximumActiveRequests rejects 0
+  ---
+  duration_ms: 2.69422
+  type: 'test'
+  ...
+# Subtest: CW04 maximumActiveRequests rejects 1.5
+ok 229 - CW04 maximumActiveRequests rejects 1.5
+  ---
+  duration_ms: 2.872075
+  type: 'test'
+  ...
+# Subtest: CW04 maximumActiveRequests rejects 2147483648
+ok 230 - CW04 maximumActiveRequests rejects 2147483648
+  ---
+  duration_ms: 2.633998
+  type: 'test'
+  ...
+# Subtest: CW04 maximumActiveRequests rejects undefined
+ok 231 - CW04 maximumActiveRequests rejects undefined
+  ---
+  duration_ms: 2.603588
+  type: 'test'
+  ...
+# Subtest: CW04 maximumProbeRequests rejects 3
+ok 232 - CW04 maximumProbeRequests rejects 3
+  ---
+  duration_ms: 2.878535
+  type: 'test'
+  ...
+# Subtest: CW04 maximumProbeRequests rejects null
+ok 233 - CW04 maximumProbeRequests rejects null
+  ---
+  duration_ms: 39.279425
+  type: 'test'
+  ...
+# Subtest: CW04 maximumProbeRequests rejects -1
+ok 234 - CW04 maximumProbeRequests rejects -1
+  ---
+  duration_ms: 4.638499
+  type: 'test'
+  ...
+# Subtest: CW04 maximumProbeRequests rejects 0
+ok 235 - CW04 maximumProbeRequests rejects 0
+  ---
+  duration_ms: 4.412174
+  type: 'test'
+  ...
+# Subtest: CW04 maximumProbeRequests rejects 1.5
+ok 236 - CW04 maximumProbeRequests rejects 1.5
+  ---
+  duration_ms: 3.754247
+  type: 'test'
+  ...
+# Subtest: CW04 maximumProbeRequests rejects 2147483648
+ok 237 - CW04 maximumProbeRequests rejects 2147483648
+  ---
+  duration_ms: 3.628304
+  type: 'test'
+  ...
+# Subtest: CW04 maximumProbeRequests rejects undefined
+ok 238 - CW04 maximumProbeRequests rejects undefined
+  ---
+  duration_ms: 3.437479
+  type: 'test'
+  ...
+# Subtest: CW04 maximumConnections rejects 3
+ok 239 - CW04 maximumConnections rejects 3
+  ---
+  duration_ms: 5.378289
+  type: 'test'
+  ...
+# Subtest: CW04 maximumConnections rejects null
+ok 240 - CW04 maximumConnections rejects null
+  ---
+  duration_ms: 4.004963
+  type: 'test'
+  ...
+# Subtest: CW04 maximumConnections rejects -1
+ok 241 - CW04 maximumConnections rejects -1
+  ---
+  duration_ms: 3.595622
+  type: 'test'
+  ...
+# Subtest: CW04 maximumConnections rejects 0
+ok 242 - CW04 maximumConnections rejects 0
+  ---
+  duration_ms: 3.190313
+  type: 'test'
+  ...
+# Subtest: CW04 maximumConnections rejects 1.5
+ok 243 - CW04 maximumConnections rejects 1.5
+  ---
+  duration_ms: 3.103171
+  type: 'test'
+  ...
+# Subtest: CW04 maximumConnections rejects 2147483648
+ok 244 - CW04 maximumConnections rejects 2147483648
+  ---
+  duration_ms: 3.641935
+  type: 'test'
+  ...
+# Subtest: CW04 maximumConnections rejects undefined
+ok 245 - CW04 maximumConnections rejects undefined
+  ---
+  duration_ms: 4.248099
+  type: 'test'
+  ...
+# Subtest: CW04 requestTimeoutMs rejects 3
+ok 246 - CW04 requestTimeoutMs rejects 3
+  ---
+  duration_ms: 4.753112
+  type: 'test'
+  ...
+# Subtest: CW04 requestTimeoutMs rejects null
+ok 247 - CW04 requestTimeoutMs rejects null
+  ---
+  duration_ms: 4.214169
+  type: 'test'
+  ...
+# Subtest: CW04 requestTimeoutMs rejects -1
+ok 248 - CW04 requestTimeoutMs rejects -1
+  ---
+  duration_ms: 4.322681
+  type: 'test'
+  ...
+# Subtest: CW04 requestTimeoutMs rejects 0
+ok 249 - CW04 requestTimeoutMs rejects 0
+  ---
+  duration_ms: 4.575048
+  type: 'test'
+  ...
+# Subtest: CW04 requestTimeoutMs rejects 1.5
+ok 250 - CW04 requestTimeoutMs rejects 1.5
+  ---
+  duration_ms: 4.052285
+  type: 'test'
+  ...
+# Subtest: CW04 requestTimeoutMs rejects 2147483648
+ok 251 - CW04 requestTimeoutMs rejects 2147483648
+  ---
+  duration_ms: 31.588227
+  type: 'test'
+  ...
+# Subtest: CW04 requestTimeoutMs rejects undefined
+ok 252 - CW04 requestTimeoutMs rejects undefined
+  ---
+  duration_ms: 4.709162
+  type: 'test'
+  ...
+# Subtest: CW04 shutdownTimeoutMs rejects 3
+ok 253 - CW04 shutdownTimeoutMs rejects 3
+  ---
+  duration_ms: 4.616169
+  type: 'test'
+  ...
+# Subtest: CW04 shutdownTimeoutMs rejects null
+ok 254 - CW04 shutdownTimeoutMs rejects null
+  ---
+  duration_ms: 4.595719
+  type: 'test'
+  ...
+# Subtest: CW04 shutdownTimeoutMs rejects -1
+ok 255 - CW04 shutdownTimeoutMs rejects -1
+  ---
+  duration_ms: 4.681481
+  type: 'test'
+  ...
+# Subtest: CW04 shutdownTimeoutMs rejects 0
+ok 256 - CW04 shutdownTimeoutMs rejects 0
+  ---
+  duration_ms: 3.968753
+  type: 'test'
+  ...
+# Subtest: CW04 shutdownTimeoutMs rejects 1.5
+ok 257 - CW04 shutdownTimeoutMs rejects 1.5
+  ---
+  duration_ms: 4.546068
+  type: 'test'
+  ...
+# Subtest: CW04 shutdownTimeoutMs rejects 2147483648
+ok 258 - CW04 shutdownTimeoutMs rejects 2147483648
+  ---
+  duration_ms: 4.64465
+  type: 'test'
+  ...
+# Subtest: CW04 shutdownTimeoutMs rejects undefined
+ok 259 - CW04 shutdownTimeoutMs rejects undefined
+  ---
+  duration_ms: 4.591959
+  type: 'test'
+  ...
+# Subtest: CW04 maximumInputBytes rejects 3
+ok 260 - CW04 maximumInputBytes rejects 3
+  ---
+  duration_ms: 3.918261
+  type: 'test'
+  ...
+# Subtest: CW04 maximumInputBytes rejects null
+ok 261 - CW04 maximumInputBytes rejects null
+  ---
+  duration_ms: 4.25797
+  type: 'test'
+  ...
+# Subtest: CW04 maximumInputBytes rejects -1
+ok 262 - CW04 maximumInputBytes rejects -1
+  ---
+  duration_ms: 4.609399
+  type: 'test'
+  ...
+# Subtest: CW04 maximumInputBytes rejects 0
+ok 263 - CW04 maximumInputBytes rejects 0
+  ---
+  duration_ms: 4.461465
+  type: 'test'
+  ...
+# Subtest: CW04 maximumInputBytes rejects 1.5
+ok 264 - CW04 maximumInputBytes rejects 1.5
+  ---
+  duration_ms: 3.272875
+  type: 'test'
+  ...
+# Subtest: CW04 maximumInputBytes rejects 2147483648
+ok 265 - CW04 maximumInputBytes rejects 2147483648
+  ---
+  duration_ms: 3.763747
+  type: 'test'
+  ...
+# Subtest: CW04 maximumInputBytes rejects undefined
+ok 266 - CW04 maximumInputBytes rejects undefined
+  ---
+  duration_ms: 4.711472
+  type: 'test'
+  ...
+# Subtest: CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS
+ok 267 - CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS
+  ---
+  duration_ms: 0.328118
+  type: 'test'
+  ...
+# Subtest: CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS
+ok 268 - CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS
+  ---
+  duration_ms: 0.097652
+  type: 'test'
+  ...
+# Subtest: CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS
+ok 269 - CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS
+  ---
+  duration_ms: 0.089613
+  type: 'test'
+  ...
+# Subtest: CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS
+ok 270 - CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS
+  ---
+  duration_ms: 0.084792
+  type: 'test'
+  ...
+# Subtest: CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS
+ok 271 - CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS
+  ---
+  duration_ms: 0.082502
+  type: 'test'
+  ...
+# Subtest: CW05 rejects legacy authority PRISM_NATIVE_MAXIMUM_INPUT_BYTES
+ok 272 - CW05 rejects legacy authority PRISM_NATIVE_MAXIMUM_INPUT_BYTES
+  ---
+  duration_ms: 0.090472
+  type: 'test'
+  ...
+# Subtest: CW05 rejects legacy authority PRISM_NATIVE_ASSIGNED_INPUT_BYTES
+ok 273 - CW05 rejects legacy authority PRISM_NATIVE_ASSIGNED_INPUT_BYTES
+  ---
+  duration_ms: 0.084562
+  type: 'test'
+  ...
+# Subtest: CW06 rejects unsupported profile
+ok 274 - CW06 rejects unsupported profile
+  ---
+  duration_ms: 3.593253
+  type: 'test'
+  ...
+# Subtest: CW06 rejects unsupported features
+ok 275 - CW06 rejects unsupported features
+  ---
+  duration_ms: 3.397778
+  type: 'test'
+  ...
+# Subtest: CW06 rejects unsupported tuning
+ok 276 - CW06 rejects unsupported tuning
+  ---
+  duration_ms: 25.192571
+  type: 'test'
+  ...
+# Subtest: CW06 rejects unsupported overrides
+ok 277 - CW06 rejects unsupported overrides
+  ---
+  duration_ms: 6.628741
+  type: 'test'
+  ...
+# Subtest: CW07 missing or broken authorship never falls back to defaults
+ok 278 - CW07 missing or broken authorship never falls back to defaults
+  ---
+  duration_ms: 19.777821
+  type: 'test'
+  ...
+# Subtest: CW08 maximumActiveRequests cannot exceed connection reservation
+ok 279 - CW08 maximumActiveRequests cannot exceed connection reservation
+  ---
+  duration_ms: 6.099988
+  type: 'test'
+  ...
+# Subtest: CW08 maximumProbeRequests cannot exceed connection reservation
+ok 280 - CW08 maximumProbeRequests cannot exceed connection reservation
+  ---
+  duration_ms: 6.526939
+  type: 'test'
+  ...
+# Subtest: CW09 shutdown budget remains independent of request admission deadline
+ok 281 - CW09 shutdown budget remains independent of request admission deadline
+  ---
+  duration_ms: 8.686754
+  type: 'test'
+  ...
+# Subtest: CW10 effective settings omit secrets and original authentication still fails closed
+ok 282 - CW10 effective settings omit secrets and original authentication still fails closed
+  ---
+  duration_ms: 5.153454
+  type: 'test'
+  ...
+# Subtest: actual Buster chart mounts both authored admission profiles and rejects retired ENV authors
+ok 283 - actual Buster chart mounts both authored admission profiles and rejects retired ENV authors
+  ---
+  duration_ms: 712.206575
+  type: 'test'
+  ...
+# Subtest: actual service CLI rejects inherited retired ENV before opening its parent channel
+ok 284 - actual service CLI rejects inherited retired ENV before opening its parent channel
+  ---
+  duration_ms: 25425.243393
+  type: 'test'
+  ...
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/buster-engine.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-control.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-control.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-execution.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-execution.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-studio.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-studio.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-worker.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-worker.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+# Error: execution error at (prism/templates/workloads.yaml:1:14): swarm component missing: prism-execution
+# Use --debug flag to render out invalid YAML
+# Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): swarm component missing: prism-execution
+# Use --debug flag to render out invalid YAML
+# Subtest: prism package contains the complete canonical bundle and shared validator
+ok 285 - prism package contains the complete canonical bundle and shared validator
+  ---
+  duration_ms: 129.791435
+  type: 'test'
+  ...
+# Subtest: kubeclaw package contains the complete canonical bundle and shared validator
+ok 286 - kubeclaw package contains the complete canonical bundle and shared validator
+  ---
+  duration_ms: 168.363962
+  type: 'test'
+  ...
+# Subtest: prism: each component changes real rollout checksum; omitted checksum is detected
+ok 287 - prism: each component changes real rollout checksum; omitted checksum is detected
+  ---
+  duration_ms: 1167.919301
+  type: 'test'
+  ...
+# Subtest: kubeclaw: each component changes real rollout checksum; omitted checksum is detected
+ok 288 - kubeclaw: each component changes real rollout checksum; omitted checksum is detected
+  ---
+  duration_ms: 1673.906052
+  type: 'test'
+  ...
+# Subtest: prism: real archive missing a required component fails the complete delivery oracle
+ok 289 - prism: real archive missing a required component fails the complete delivery oracle
+  ---
+  duration_ms: 211.18112
+  type: 'test'
+  ...
+# Subtest: kubeclaw: real archive missing a required component fails the complete delivery oracle
+ok 290 - kubeclaw: real archive missing a required component fails the complete delivery oracle
+  ---
+  duration_ms: 275.371849
+  type: 'test'
+  ...
+# Subtest: Buster image COPY contains all authored files; removing one source fails the same structural oracle
+ok 291 - Buster image COPY contains all authored files; removing one source fails the same structural oracle
+  ---
+  duration_ms: 0.726298
+  type: 'test'
+  ...
+# Subtest: CD01 original chart delivers the one canonical config to the worker mount
+ok 292 - CD01 original chart delivers the one canonical config to the worker mount
+  ---
+  duration_ms: 282.034872
+  type: 'test'
+  ...
+# Subtest: CD02 real Helm output from two author profiles drives the actual production loader
+ok 293 - CD02 real Helm output from two author profiles drives the actual production loader
+  ---
+  duration_ms: 437.792288
+  type: 'test'
+  ...
+# Subtest: CD03 old Helm shutdown authority is rejected
+ok 294 - CD03 old Helm shutdown authority is rejected
+  ---
+  duration_ms: 158.895778
+  type: 'test'
+  ...
+# Subtest: CD04 port rejects 3 before rendering
+ok 295 - CD04 port rejects 3 before rendering
+  ---
+  duration_ms: 128.254965
+  type: 'test'
+  ...
+# Subtest: CD04 port rejects null before rendering
+ok 296 - CD04 port rejects null before rendering
+  ---
+  duration_ms: 217.160504
+  type: 'test'
+  ...
+# Subtest: CD04 port rejects -1 before rendering
+ok 297 - CD04 port rejects -1 before rendering
+  ---
+  duration_ms: 175.768213
+  type: 'test'
+  ...
+# Subtest: CD04 port rejects 0 before rendering
+ok 298 - CD04 port rejects 0 before rendering
+  ---
+  duration_ms: 180.857855
+  type: 'test'
+  ...
+# Subtest: CD04 port rejects 1.5 before rendering
+ok 299 - CD04 port rejects 1.5 before rendering
+  ---
+  duration_ms: 146.764094
+  type: 'test'
+  ...
+# Subtest: CD04 port rejects 2147483648 before rendering
+ok 300 - CD04 port rejects 2147483648 before rendering
+  ---
+  duration_ms: 187.670011
+  type: 'test'
+  ...
+# Subtest: CD04 port rejects undefined before rendering
+ok 301 - CD04 port rejects undefined before rendering
+  ---
+  duration_ms: 112.280712
+  type: 'test'
+  ...
+# Subtest: CD04 maximumActiveRequests rejects 3 before rendering
+ok 302 - CD04 maximumActiveRequests rejects 3 before rendering
+  ---
+  duration_ms: 157.121142
+  type: 'test'
+  ...
+# Subtest: CD04 maximumActiveRequests rejects null before rendering
+ok 303 - CD04 maximumActiveRequests rejects null before rendering
+  ---
+  duration_ms: 145.834351
+  type: 'test'
+  ...
+# Subtest: CD04 maximumActiveRequests rejects -1 before rendering
+ok 304 - CD04 maximumActiveRequests rejects -1 before rendering
+  ---
+  duration_ms: 104.516952
+  type: 'test'
+  ...
+# Subtest: CD04 maximumActiveRequests rejects 0 before rendering
+ok 305 - CD04 maximumActiveRequests rejects 0 before rendering
+  ---
+  duration_ms: 89.851423
+  type: 'test'
+  ...
+# Subtest: CD04 maximumActiveRequests rejects 1.5 before rendering
+ok 306 - CD04 maximumActiveRequests rejects 1.5 before rendering
+  ---
+  duration_ms: 85.033258
+  type: 'test'
+  ...
+# Subtest: CD04 maximumActiveRequests rejects 2147483648 before rendering
+ok 307 - CD04 maximumActiveRequests rejects 2147483648 before rendering
+  ---
+  duration_ms: 109.493271
+  type: 'test'
+  ...
+# Subtest: CD04 maximumActiveRequests rejects undefined before rendering
+ok 308 - CD04 maximumActiveRequests rejects undefined before rendering
+  ---
+  duration_ms: 111.490132
+  type: 'test'
+  ...
+# Subtest: CD04 maximumProbeRequests rejects 3 before rendering
+ok 309 - CD04 maximumProbeRequests rejects 3 before rendering
+  ---
+  duration_ms: 117.099508
+  type: 'test'
+  ...
+# Subtest: CD04 maximumProbeRequests rejects null before rendering
+ok 310 - CD04 maximumProbeRequests rejects null before rendering
+  ---
+  duration_ms: 118.356349
+  type: 'test'
+  ...
+# Subtest: CD04 maximumProbeRequests rejects -1 before rendering
+ok 311 - CD04 maximumProbeRequests rejects -1 before rendering
+  ---
+  duration_ms: 120.190747
+  type: 'test'
+  ...
+# Subtest: CD04 maximumProbeRequests rejects 0 before rendering
+ok 312 - CD04 maximumProbeRequests rejects 0 before rendering
+  ---
+  duration_ms: 113.188326
+  type: 'test'
+  ...
+# Subtest: CD04 maximumProbeRequests rejects 1.5 before rendering
+ok 313 - CD04 maximumProbeRequests rejects 1.5 before rendering
+  ---
+  duration_ms: 102.11142
+  type: 'test'
+  ...
+# Subtest: CD04 maximumProbeRequests rejects 2147483648 before rendering
+ok 314 - CD04 maximumProbeRequests rejects 2147483648 before rendering
+  ---
+  duration_ms: 92.83677
+  type: 'test'
+  ...
+# Subtest: CD04 maximumProbeRequests rejects undefined before rendering
+ok 315 - CD04 maximumProbeRequests rejects undefined before rendering
+  ---
+  duration_ms: 111.685847
+  type: 'test'
+  ...
+# Subtest: CD04 maximumConnections rejects 3 before rendering
+ok 316 - CD04 maximumConnections rejects 3 before rendering
+  ---
+  duration_ms: 115.290761
+  type: 'test'
+  ...
+# Subtest: CD04 maximumConnections rejects null before rendering
+ok 317 - CD04 maximumConnections rejects null before rendering
+  ---
+  duration_ms: 99.297347
+  type: 'test'
+  ...
+# Subtest: CD04 maximumConnections rejects -1 before rendering
+ok 318 - CD04 maximumConnections rejects -1 before rendering
+  ---
+  duration_ms: 114.984302
+  type: 'test'
+  ...
+# Subtest: CD04 maximumConnections rejects 0 before rendering
+ok 319 - CD04 maximumConnections rejects 0 before rendering
+  ---
+  duration_ms: 105.97942
+  type: 'test'
+  ...
+# Subtest: CD04 maximumConnections rejects 1.5 before rendering
+ok 320 - CD04 maximumConnections rejects 1.5 before rendering
+  ---
+  duration_ms: 103.375583
+  type: 'test'
+  ...
+# Subtest: CD04 maximumConnections rejects 2147483648 before rendering
+ok 321 - CD04 maximumConnections rejects 2147483648 before rendering
+  ---
+  duration_ms: 144.485386
+  type: 'test'
+  ...
+# Subtest: CD04 maximumConnections rejects undefined before rendering
+ok 322 - CD04 maximumConnections rejects undefined before rendering
+  ---
+  duration_ms: 142.703779
+  type: 'test'
+  ...
+# Subtest: CD04 requestTimeoutMs rejects 3 before rendering
+ok 323 - CD04 requestTimeoutMs rejects 3 before rendering
+  ---
+  duration_ms: 125.584797
+  type: 'test'
+  ...
+# Subtest: CD04 requestTimeoutMs rejects null before rendering
+ok 324 - CD04 requestTimeoutMs rejects null before rendering
+  ---
+  duration_ms: 128.063911
+  type: 'test'
+  ...
+# Subtest: CD04 requestTimeoutMs rejects -1 before rendering
+ok 325 - CD04 requestTimeoutMs rejects -1 before rendering
+  ---
+  duration_ms: 117.555269
+  type: 'test'
+  ...
+# Subtest: CD04 requestTimeoutMs rejects 0 before rendering
+ok 326 - CD04 requestTimeoutMs rejects 0 before rendering
+  ---
+  duration_ms: 114.933181
+  type: 'test'
+  ...
+# Subtest: CD04 requestTimeoutMs rejects 1.5 before rendering
+ok 327 - CD04 requestTimeoutMs rejects 1.5 before rendering
+  ---
+  duration_ms: 177.434758
+  type: 'test'
+  ...
+# Subtest: CD04 requestTimeoutMs rejects 2147483648 before rendering
+ok 328 - CD04 requestTimeoutMs rejects 2147483648 before rendering
+  ---
+  duration_ms: 219.31341
+  type: 'test'
+  ...
+# Subtest: CD04 requestTimeoutMs rejects undefined before rendering
+ok 329 - CD04 requestTimeoutMs rejects undefined before rendering
+  ---
+  duration_ms: 212.564066
+  type: 'test'
+  ...
+# Subtest: CD04 shutdownTimeoutMs rejects 3 before rendering
+ok 330 - CD04 shutdownTimeoutMs rejects 3 before rendering
+  ---
+  duration_ms: 131.230953
+  type: 'test'
+  ...
+# Subtest: CD04 shutdownTimeoutMs rejects null before rendering
+ok 331 - CD04 shutdownTimeoutMs rejects null before rendering
+  ---
+  duration_ms: 121.899602
+  type: 'test'
+  ...
+# Subtest: CD04 shutdownTimeoutMs rejects -1 before rendering
+ok 332 - CD04 shutdownTimeoutMs rejects -1 before rendering
+  ---
+  duration_ms: 120.153526
+  type: 'test'
+  ...
+# Subtest: CD04 shutdownTimeoutMs rejects 0 before rendering
+ok 333 - CD04 shutdownTimeoutMs rejects 0 before rendering
+  ---
+  duration_ms: 204.732174
+  type: 'test'
+  ...
+# Subtest: CD04 shutdownTimeoutMs rejects 1.5 before rendering
+ok 334 - CD04 shutdownTimeoutMs rejects 1.5 before rendering
+  ---
+  duration_ms: 295.344876
+  type: 'test'
+  ...
+# Subtest: CD04 shutdownTimeoutMs rejects 2147483648 before rendering
+ok 335 - CD04 shutdownTimeoutMs rejects 2147483648 before rendering
+  ---
+  duration_ms: 198.768109
+  type: 'test'
+  ...
+# Subtest: CD04 shutdownTimeoutMs rejects undefined before rendering
+ok 336 - CD04 shutdownTimeoutMs rejects undefined before rendering
+  ---
+  duration_ms: 200.444392
+  type: 'test'
+  ...
+# Subtest: CD04 maximumInputBytes rejects 3 before rendering
+ok 337 - CD04 maximumInputBytes rejects 3 before rendering
+  ---
+  duration_ms: 140.794711
+  type: 'test'
+  ...
+# Subtest: CD04 maximumInputBytes rejects null before rendering
+ok 338 - CD04 maximumInputBytes rejects null before rendering
+  ---
+  duration_ms: 163.99904
+  type: 'test'
+  ...
+# Subtest: CD04 maximumInputBytes rejects -1 before rendering
+ok 339 - CD04 maximumInputBytes rejects -1 before rendering
+  ---
+  duration_ms: 117.756064
+  type: 'test'
+  ...
+# Subtest: CD04 maximumInputBytes rejects 0 before rendering
+ok 340 - CD04 maximumInputBytes rejects 0 before rendering
+  ---
+  duration_ms: 213.971532
+  type: 'test'
+  ...
+# Subtest: CD04 maximumInputBytes rejects 1.5 before rendering
+ok 341 - CD04 maximumInputBytes rejects 1.5 before rendering
+  ---
+  duration_ms: 110.033595
+  type: 'test'
+  ...
+# Subtest: CD04 maximumInputBytes rejects 2147483648 before rendering
+ok 342 - CD04 maximumInputBytes rejects 2147483648 before rendering
+  ---
+  duration_ms: 95.733085
+  type: 'test'
+  ...
+# Subtest: CD04 maximumInputBytes rejects undefined before rendering
+ok 343 - CD04 maximumInputBytes rejects undefined before rendering
+  ---
+  duration_ms: 102.065118
+  type: 'test'
+  ...
+# Subtest: CD04 unknown key entry
+ok 344 - CD04 unknown key entry
+  ---
+  duration_ms: 84.782532
+  type: 'test'
+  ...
+# Subtest: CD04 unknown key prism-worker
+ok 345 - CD04 unknown key prism-worker
+  ---
+  duration_ms: 110.530347
+  type: 'test'
+  ...
+# Subtest: CD04 unknown key prism-worker.settings
+ok 346 - CD04 unknown key prism-worker.settings
+  ---
+  duration_ms: 110.433795
+  type: 'test'
+  ...
+# Subtest: CD04 unknown key prism-worker.settings.ingress
+ok 347 - CD04 unknown key prism-worker.settings.ingress
+  ---
+  duration_ms: 94.618007
+  type: 'test'
+  ...
+# Subtest: CD04 connection overcommit fails Helm rendering
+ok 348 - CD04 connection overcommit fails Helm rendering
+  ---
+  duration_ms: 109.529482
+  type: 'test'
+  ...
+# Subtest: CD05 shutdown 100000 violates native-close or Pod grace
+ok 349 - CD05 shutdown 100000 violates native-close or Pod grace
+  ---
+  duration_ms: 84.517395
+  type: 'test'
+  ...
+# Subtest: CD05 shutdown 150000 violates native-close or Pod grace
+ok 350 - CD05 shutdown 150000 violates native-close or Pod grace
+  ---
+  duration_ms: 90.51995
+  type: 'test'
+  ...
+# Subtest: CD06 Helm packaging dereferences the canonical author/schema without manual synchronization
+ok 351 - CD06 Helm packaging dereferences the canonical author/schema without manual synchronization
+  ---
+  duration_ms: 89.074863
+  type: 'test'
+  ...
+# Subtest: CI05 old Helm input authority worker.native.maximumInputBytes is rejected
+ok 352 - CI05 old Helm input authority worker.native.maximumInputBytes is rejected
+  ---
+  duration_ms: 57.828005
+  type: 'test'
+  ...
+# Subtest: CI05 old Helm input authority native.maximumInputBytes is rejected
+ok 353 - CI05 old Helm input authority native.maximumInputBytes is rejected
+  ---
+  duration_ms: 55.161696
+  type: 'test'
+  ...
+# Subtest: CR06 native maximumResultBytes rejects 3 before rendering
+ok 354 - CR06 native maximumResultBytes rejects 3 before rendering
+  ---
+  duration_ms: 84.669439
+  type: 'test'
+  ...
+# Subtest: CR06 native maximumResultBytes rejects null before rendering
+ok 355 - CR06 native maximumResultBytes rejects null before rendering
+  ---
+  duration_ms: 78.111799
+  type: 'test'
+  ...
+# Subtest: CR06 native maximumResultBytes rejects -1 before rendering
+ok 356 - CR06 native maximumResultBytes rejects -1 before rendering
+  ---
+  duration_ms: 80.547302
+  type: 'test'
+  ...
+# Subtest: CR06 native maximumResultBytes rejects 0 before rendering
+ok 357 - CR06 native maximumResultBytes rejects 0 before rendering
+  ---
+  duration_ms: 84.229988
+  type: 'test'
+  ...
+# Subtest: CR06 native maximumResultBytes rejects 1.5 before rendering
+ok 358 - CR06 native maximumResultBytes rejects 1.5 before rendering
+  ---
+  duration_ms: 89.563395
+  type: 'test'
+  ...
+# Subtest: CR06 native maximumResultBytes rejects 2147483648 before rendering
+ok 359 - CR06 native maximumResultBytes rejects 2147483648 before rendering
+  ---
+  duration_ms: 96.615918
+  type: 'test'
+  ...
+# Subtest: CR06 native maximumResultBytes rejects undefined before rendering
+ok 360 - CR06 native maximumResultBytes rejects undefined before rendering
+  ---
+  duration_ms: 90.671514
+  type: 'test'
+  ...
+# Subtest: CR06 native dispatchTimeoutMs rejects 3 before rendering
+ok 361 - CR06 native dispatchTimeoutMs rejects 3 before rendering
+  ---
+  duration_ms: 110.733013
+  type: 'test'
+  ...
+# Subtest: CR06 native dispatchTimeoutMs rejects null before rendering
+ok 362 - CR06 native dispatchTimeoutMs rejects null before rendering
+  ---
+  duration_ms: 107.982972
+  type: 'test'
+  ...
+# Subtest: CR06 native dispatchTimeoutMs rejects -1 before rendering
+ok 363 - CR06 native dispatchTimeoutMs rejects -1 before rendering
+  ---
+  duration_ms: 110.025735
+  type: 'test'
+  ...
+# Subtest: CR06 native dispatchTimeoutMs rejects 0 before rendering
+ok 364 - CR06 native dispatchTimeoutMs rejects 0 before rendering
+  ---
+  duration_ms: 83.566591
+  type: 'test'
+  ...
+# Subtest: CR06 native dispatchTimeoutMs rejects 1.5 before rendering
+ok 365 - CR06 native dispatchTimeoutMs rejects 1.5 before rendering
+  ---
+  duration_ms: 85.599903
+  type: 'test'
+  ...
+# Subtest: CR06 native dispatchTimeoutMs rejects 2147483648 before rendering
+ok 366 - CR06 native dispatchTimeoutMs rejects 2147483648 before rendering
+  ---
+  duration_ms: 91.460904
+  type: 'test'
+  ...
+# Subtest: CR06 native dispatchTimeoutMs rejects undefined before rendering
+ok 367 - CR06 native dispatchTimeoutMs rejects undefined before rendering
+  ---
+  duration_ms: 82.818771
+  type: 'test'
+  ...
+# Subtest: CR06 missing or unknown native section fails rendering
+ok 368 - CR06 missing or unknown native section fails rendering
+  ---
+  duration_ms: 86.104116
+  type: 'test'
+  ...
+# Subtest: CR06 missing or unknown native section fails rendering
+ok 369 - CR06 missing or unknown native section fails rendering
+  ---
+  duration_ms: 106.448382
+  type: 'test'
+  ...
+# Subtest: CR06 missing or unknown native section fails rendering
+ok 370 - CR06 missing or unknown native section fails rendering
+  ---
+  duration_ms: 114.151762
+  type: 'test'
+  ...
+# Subtest: CR06 two real authored profiles deliver identical bytes and changing checksums to both roles
+ok 371 - CR06 two real authored profiles deliver identical bytes and changing checksums to both roles
+  ---
+  duration_ms: 255.786903
+  type: 'test'
+  ...
+# Subtest: CR06 old Helm authority worker.native.maximumResultBytes rejected
+ok 372 - CR06 old Helm authority worker.native.maximumResultBytes rejected
+  ---
+  duration_ms: 67.083524
+  type: 'test'
+  ...
+# Subtest: CR06 old Helm authority control.nativeWorkerDispatchTimeoutMs rejected
+ok 373 - CR06 old Helm authority control.nativeWorkerDispatchTimeoutMs rejected
+  ---
+  duration_ms: 62.995158
+  type: 'test'
+  ...
+# Subtest: CR06 old Helm authority control.maximumWorkerResponseBytes rejected
+ok 374 - CR06 old Helm authority control.maximumWorkerResponseBytes rejected
+  ---
+  duration_ms: 64.915629
+  type: 'test'
+  ...
+# Subtest: CP01 resource cpuTimeMs rejects 3 in Helm
+ok 375 - CP01 resource cpuTimeMs rejects 3 in Helm
+  ---
+  duration_ms: 101.900705
+  type: 'test'
+  ...
+# Subtest: CP01 resource cpuTimeMs rejects null in Helm
+ok 376 - CP01 resource cpuTimeMs rejects null in Helm
+  ---
+  duration_ms: 82.39812
+  type: 'test'
+  ...
+# Subtest: CP01 resource cpuTimeMs rejects -1 in Helm
+ok 377 - CP01 resource cpuTimeMs rejects -1 in Helm
+  ---
+  duration_ms: 85.392337
+  type: 'test'
+  ...
+# Subtest: CP01 resource cpuTimeMs rejects 0 in Helm
+ok 378 - CP01 resource cpuTimeMs rejects 0 in Helm
+  ---
+  duration_ms: 108.547367
+  type: 'test'
+  ...
+# Subtest: CP01 resource cpuTimeMs rejects 1.5 in Helm
+ok 379 - CP01 resource cpuTimeMs rejects 1.5 in Helm
+  ---
+  duration_ms: 114.109941
+  type: 'test'
+  ...
+# Subtest: CP01 resource cpuTimeMs rejects 9007199254740992 in Helm
+ok 380 - CP01 resource cpuTimeMs rejects 9007199254740992 in Helm
+  ---
+  duration_ms: 94.74675
+  type: 'test'
+  ...
+# Subtest: CP01 resource cpuTimeMs rejects undefined in Helm
+ok 381 - CP01 resource cpuTimeMs rejects undefined in Helm
+  ---
+  duration_ms: 82.884443
+  type: 'test'
+  ...
+# Subtest: CP01 resource memoryBytes rejects 3 in Helm
+ok 382 - CP01 resource memoryBytes rejects 3 in Helm
+  ---
+  duration_ms: 87.141903
+  type: 'test'
+  ...
+# Subtest: CP01 resource memoryBytes rejects null in Helm
+ok 383 - CP01 resource memoryBytes rejects null in Helm
+  ---
+  duration_ms: 111.593855
+  type: 'test'
+  ...
+# Subtest: CP01 resource memoryBytes rejects -1 in Helm
+ok 384 - CP01 resource memoryBytes rejects -1 in Helm
+  ---
+  duration_ms: 103.492075
+  type: 'test'
+  ...
+# Subtest: CP01 resource memoryBytes rejects 0 in Helm
+ok 385 - CP01 resource memoryBytes rejects 0 in Helm
+  ---
+  duration_ms: 105.830787
+  type: 'test'
+  ...
+# Subtest: CP01 resource memoryBytes rejects 1.5 in Helm
+ok 386 - CP01 resource memoryBytes rejects 1.5 in Helm
+  ---
+  duration_ms: 100.697514
+  type: 'test'
+  ...
+# Subtest: CP01 resource memoryBytes rejects 9007199254740992 in Helm
+ok 387 - CP01 resource memoryBytes rejects 9007199254740992 in Helm
+  ---
+  duration_ms: 86.077476
+  type: 'test'
+  ...
+# Subtest: CP01 resource memoryBytes rejects undefined in Helm
+ok 388 - CP01 resource memoryBytes rejects undefined in Helm
+  ---
+  duration_ms: 79.057704
+  type: 'test'
+  ...
+# Subtest: CP01 resource tasks rejects 3 in Helm
+ok 389 - CP01 resource tasks rejects 3 in Helm
+  ---
+  duration_ms: 82.733199
+  type: 'test'
+  ...
+# Subtest: CP01 resource tasks rejects null in Helm
+ok 390 - CP01 resource tasks rejects null in Helm
+  ---
+  duration_ms: 82.141434
+  type: 'test'
+  ...
+# Subtest: CP01 resource tasks rejects -1 in Helm
+ok 391 - CP01 resource tasks rejects -1 in Helm
+  ---
+  duration_ms: 95.679603
+  type: 'test'
+  ...
+# Subtest: CP01 resource tasks rejects 0 in Helm
+ok 392 - CP01 resource tasks rejects 0 in Helm
+  ---
+  duration_ms: 97.652895
+  type: 'test'
+  ...
+# Subtest: CP01 resource tasks rejects 1.5 in Helm
+ok 393 - CP01 resource tasks rejects 1.5 in Helm
+  ---
+  duration_ms: 91.534387
+  type: 'test'
+  ...
+# Subtest: CP01 resource tasks rejects 9007199254740992 in Helm
+ok 394 - CP01 resource tasks rejects 9007199254740992 in Helm
+  ---
+  duration_ms: 86.900167
+  type: 'test'
+  ...
+# Subtest: CP01 resource tasks rejects undefined in Helm
+ok 395 - CP01 resource tasks rejects undefined in Helm
+  ---
+  duration_ms: 112.866528
+  type: 'test'
+  ...
+# Subtest: CP01 unsupported resource policy rejected in Helm
+ok 396 - CP01 unsupported resource policy rejected in Helm
+  ---
+  duration_ms: 113.653439
+  type: 'test'
+  ...
+# Subtest: CP01 unsupported resource policy rejected in Helm
+ok 397 - CP01 unsupported resource policy rejected in Helm
+  ---
+  duration_ms: 111.826481
+  type: 'test'
+  ...
+# Subtest: CP01 unsupported resource policy rejected in Helm
+ok 398 - CP01 unsupported resource policy rejected in Helm
+  ---
+  duration_ms: 111.677187
+  type: 'test'
+  ...
+# Subtest: CP06 competing Helm worker.native.resourcePolicy.tasks is rejected
+ok 399 - CP06 competing Helm worker.native.resourcePolicy.tasks is rejected
+  ---
+  duration_ms: 60.678289
+  type: 'test'
+  ...
+# Subtest: CP06 competing Helm control.nativeResourcePolicy.tasks is rejected
+ok 400 - CP06 competing Helm control.nativeResourcePolicy.tasks is rejected
+  ---
+  duration_ms: 69.970709
+  type: 'test'
+  ...
+# Subtest: CP06 two resource policies change both rendered snapshots and checksums
+ok 401 - CP06 two resource policies change both rendered snapshots and checksums
+  ---
+  duration_ms: 257.832476
+  type: 'test'
+  ...
+# Subtest: CP01 Helm accepts the resource safe-integer ceiling without timer coercion
+ok 402 - CP01 Helm accepts the resource safe-integer ceiling without timer coercion
+  ---
+  duration_ms: 115.737153
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor uid=undefined
+ok 403 - CS5 Helm rejects supervisor uid=undefined
+  ---
+  duration_ms: 94.037951
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor uid=null
+ok 404 - CS5 Helm rejects supervisor uid=null
+  ---
+  duration_ms: 99.358249
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor uid=1
+ok 405 - CS5 Helm rejects supervisor uid=1
+  ---
+  duration_ms: 86.25053
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor uid=0
+ok 406 - CS5 Helm rejects supervisor uid=0
+  ---
+  duration_ms: 86.188998
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor uid=-1
+ok 407 - CS5 Helm rejects supervisor uid=-1
+  ---
+  duration_ms: 113.544686
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor uid=1.5
+ok 408 - CS5 Helm rejects supervisor uid=1.5
+  ---
+  duration_ms: 105.336133
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor uid=2147483648
+ok 409 - CS5 Helm rejects supervisor uid=2147483648
+  ---
+  duration_ms: 117.279672
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor gid=undefined
+ok 410 - CS5 Helm rejects supervisor gid=undefined
+  ---
+  duration_ms: 90.451029
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor gid=null
+ok 411 - CS5 Helm rejects supervisor gid=null
+  ---
+  duration_ms: 84.149406
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor gid=1
+ok 412 - CS5 Helm rejects supervisor gid=1
+  ---
+  duration_ms: 98.296061
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor gid=0
+ok 413 - CS5 Helm rejects supervisor gid=0
+  ---
+  duration_ms: 88.608751
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor gid=-1
+ok 414 - CS5 Helm rejects supervisor gid=-1
+  ---
+  duration_ms: 90.193512
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor gid=1.5
+ok 415 - CS5 Helm rejects supervisor gid=1.5
+  ---
+  duration_ms: 90.968592
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor gid=2147483648
+ok 416 - CS5 Helm rejects supervisor gid=2147483648
+  ---
+  duration_ms: 101.068013
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipRecords=undefined
+ok 417 - CS5 Helm rejects supervisor maximumOwnershipRecords=undefined
+  ---
+  duration_ms: 83.320735
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipRecords=null
+ok 418 - CS5 Helm rejects supervisor maximumOwnershipRecords=null
+  ---
+  duration_ms: 111.138604
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipRecords=1
+ok 419 - CS5 Helm rejects supervisor maximumOwnershipRecords=1
+  ---
+  duration_ms: 111.952635
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipRecords=0
+ok 420 - CS5 Helm rejects supervisor maximumOwnershipRecords=0
+  ---
+  duration_ms: 118.847663
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipRecords=-1
+ok 421 - CS5 Helm rejects supervisor maximumOwnershipRecords=-1
+  ---
+  duration_ms: 106.541244
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipRecords=1.5
+ok 422 - CS5 Helm rejects supervisor maximumOwnershipRecords=1.5
+  ---
+  duration_ms: 103.255899
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipRecords=2147483648
+ok 423 - CS5 Helm rejects supervisor maximumOwnershipRecords=2147483648
+  ---
+  duration_ms: 94.246727
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipBytes=undefined
+ok 424 - CS5 Helm rejects supervisor maximumOwnershipBytes=undefined
+  ---
+  duration_ms: 93.243591
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipBytes=null
+ok 425 - CS5 Helm rejects supervisor maximumOwnershipBytes=null
+  ---
+  duration_ms: 93.609491
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipBytes=1
+ok 426 - CS5 Helm rejects supervisor maximumOwnershipBytes=1
+  ---
+  duration_ms: 114.256114
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipBytes=0
+ok 427 - CS5 Helm rejects supervisor maximumOwnershipBytes=0
+  ---
+  duration_ms: 105.792306
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipBytes=-1
+ok 428 - CS5 Helm rejects supervisor maximumOwnershipBytes=-1
+  ---
+  duration_ms: 86.839975
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipBytes=1.5
+ok 429 - CS5 Helm rejects supervisor maximumOwnershipBytes=1.5
+  ---
+  duration_ms: 118.179066
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOwnershipBytes=2147483648
+ok 430 - CS5 Helm rejects supervisor maximumOwnershipBytes=2147483648
+  ---
+  duration_ms: 117.683422
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOutputBytes=undefined
+ok 431 - CS5 Helm rejects supervisor maximumOutputBytes=undefined
+  ---
+  duration_ms: 103.62691
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOutputBytes=null
+ok 432 - CS5 Helm rejects supervisor maximumOutputBytes=null
+  ---
+  duration_ms: 85.187712
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOutputBytes=1
+ok 433 - CS5 Helm rejects supervisor maximumOutputBytes=1
+  ---
+  duration_ms: 110.355613
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOutputBytes=0
+ok 434 - CS5 Helm rejects supervisor maximumOutputBytes=0
+  ---
+  duration_ms: 114.550241
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOutputBytes=-1
+ok 435 - CS5 Helm rejects supervisor maximumOutputBytes=-1
+  ---
+  duration_ms: 113.107725
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOutputBytes=1.5
+ok 436 - CS5 Helm rejects supervisor maximumOutputBytes=1.5
+  ---
+  duration_ms: 96.227288
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumOutputBytes=2147483648
+ok 437 - CS5 Helm rejects supervisor maximumOutputBytes=2147483648
+  ---
+  duration_ms: 88.880638
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumJournalBytes=undefined
+ok 438 - CS5 Helm rejects supervisor maximumJournalBytes=undefined
+  ---
+  duration_ms: 98.837215
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumJournalBytes=null
+ok 439 - CS5 Helm rejects supervisor maximumJournalBytes=null
+  ---
+  duration_ms: 111.825222
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumJournalBytes=1
+ok 440 - CS5 Helm rejects supervisor maximumJournalBytes=1
+  ---
+  duration_ms: 88.840527
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumJournalBytes=0
+ok 441 - CS5 Helm rejects supervisor maximumJournalBytes=0
+  ---
+  duration_ms: 113.919875
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumJournalBytes=-1
+ok 442 - CS5 Helm rejects supervisor maximumJournalBytes=-1
+  ---
+  duration_ms: 110.165568
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumJournalBytes=1.5
+ok 443 - CS5 Helm rejects supervisor maximumJournalBytes=1.5
+  ---
+  duration_ms: 92.290286
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor maximumJournalBytes=9007199254740992
+ok 444 - CS5 Helm rejects supervisor maximumJournalBytes=9007199254740992
+  ---
+  duration_ms: 117.743425
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor pollIntervalMs=undefined
+ok 445 - CS5 Helm rejects supervisor pollIntervalMs=undefined
+  ---
+  duration_ms: 119.48953
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor pollIntervalMs=null
+ok 446 - CS5 Helm rejects supervisor pollIntervalMs=null
+  ---
+  duration_ms: 119.693214
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor pollIntervalMs=1
+ok 447 - CS5 Helm rejects supervisor pollIntervalMs=1
+  ---
+  duration_ms: 122.023365
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor pollIntervalMs=0
+ok 448 - CS5 Helm rejects supervisor pollIntervalMs=0
+  ---
+  duration_ms: 119.559891
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor pollIntervalMs=-1
+ok 449 - CS5 Helm rejects supervisor pollIntervalMs=-1
+  ---
+  duration_ms: 108.108625
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor pollIntervalMs=1.5
+ok 450 - CS5 Helm rejects supervisor pollIntervalMs=1.5
+  ---
+  duration_ms: 118.966737
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor pollIntervalMs=2147483648
+ok 451 - CS5 Helm rejects supervisor pollIntervalMs=2147483648
+  ---
+  duration_ms: 120.544227
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor drainTimeoutMs=undefined
+ok 452 - CS5 Helm rejects supervisor drainTimeoutMs=undefined
+  ---
+  duration_ms: 120.839465
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor drainTimeoutMs=null
+ok 453 - CS5 Helm rejects supervisor drainTimeoutMs=null
+  ---
+  duration_ms: 91.008803
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor drainTimeoutMs=1
+ok 454 - CS5 Helm rejects supervisor drainTimeoutMs=1
+  ---
+  duration_ms: 120.330751
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor drainTimeoutMs=0
+ok 455 - CS5 Helm rejects supervisor drainTimeoutMs=0
+  ---
+  duration_ms: 117.527858
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor drainTimeoutMs=-1
+ok 456 - CS5 Helm rejects supervisor drainTimeoutMs=-1
+  ---
+  duration_ms: 115.882776
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor drainTimeoutMs=1.5
+ok 457 - CS5 Helm rejects supervisor drainTimeoutMs=1.5
+  ---
+  duration_ms: 95.91648
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor drainTimeoutMs=2147483648
+ok 458 - CS5 Helm rejects supervisor drainTimeoutMs=2147483648
+  ---
+  duration_ms: 113.809193
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor closeTimeoutMs=undefined
+ok 459 - CS5 Helm rejects supervisor closeTimeoutMs=undefined
+  ---
+  duration_ms: 87.652996
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor closeTimeoutMs=null
+ok 460 - CS5 Helm rejects supervisor closeTimeoutMs=null
+  ---
+  duration_ms: 117.500328
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor closeTimeoutMs=1
+ok 461 - CS5 Helm rejects supervisor closeTimeoutMs=1
+  ---
+  duration_ms: 123.523814
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor closeTimeoutMs=0
+ok 462 - CS5 Helm rejects supervisor closeTimeoutMs=0
+  ---
+  duration_ms: 112.336695
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor closeTimeoutMs=-1
+ok 463 - CS5 Helm rejects supervisor closeTimeoutMs=-1
+  ---
+  duration_ms: 113.598548
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor closeTimeoutMs=1.5
+ok 464 - CS5 Helm rejects supervisor closeTimeoutMs=1.5
+  ---
+  duration_ms: 114.996823
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects supervisor closeTimeoutMs=2147483648
+ok 465 - CS5 Helm rejects supervisor closeTimeoutMs=2147483648
+  ---
+  duration_ms: 110.721123
+  type: 'test'
+  ...
+# Subtest: CS5 old Helm supervisor close author is rejected
+ok 466 - CS5 old Helm supervisor close author is rejected
+  ---
+  duration_ms: 72.173236
+  type: 'test'
+  ...
+# Subtest: CS4 Helm uses authored drain as well as close in shutdown budget
+ok 467 - CS4 Helm uses authored drain as well as close in shutdown budget
+  ---
+  duration_ms: 281.066407
+  type: 'test'
+  ...
+# Subtest: CS5 both actual mounts and checksums deliver two supervisor profiles without old environment authors
+ok 468 - CS5 both actual mounts and checksums deliver two supervisor profiles without old environment authors
+  ---
+  duration_ms: 267.157647
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects missing, null or extended supervisor object
+ok 469 - CS5 Helm rejects missing, null or extended supervisor object
+  ---
+  duration_ms: 110.481437
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects missing, null or extended supervisor object
+ok 470 - CS5 Helm rejects missing, null or extended supervisor object
+  ---
+  duration_ms: 83.068418
+  type: 'test'
+  ...
+# Subtest: CS5 Helm rejects missing, null or extended supervisor object
+ok 471 - CS5 Helm rejects missing, null or extended supervisor object
+  ---
+  duration_ms: 115.121316
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control pipelinePreferenceSubject=undefined
+ok 472 - CC4 Helm rejects Control pipelinePreferenceSubject=undefined
+  ---
+  duration_ms: 112.004666
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control pipelinePreferenceSubject=""
+ok 473 - CC4 Helm rejects Control pipelinePreferenceSubject=""
+  ---
+  duration_ms: 99.115943
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control pipelinePreferenceSubject="operator:test"
+ok 474 - CC4 Helm rejects Control pipelinePreferenceSubject="operator:test"
+  ---
+  duration_ms: 117.514778
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control pipelinePreferenceSubject=1
+ok 475 - CC4 Helm rejects Control pipelinePreferenceSubject=1
+  ---
+  duration_ms: 118.179856
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control pipelinePreferenceSubject=false
+ok 476 - CC4 Helm rejects Control pipelinePreferenceSubject=false
+  ---
+  duration_ms: 102.825729
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control artifactRoot=undefined
+ok 477 - CC4 Helm rejects Control artifactRoot=undefined
+  ---
+  duration_ms: 114.88184
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control artifactRoot=null
+ok 478 - CC4 Helm rejects Control artifactRoot=null
+  ---
+  duration_ms: 99.539834
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control artifactRoot=""
+ok 479 - CC4 Helm rejects Control artifactRoot=""
+  ---
+  duration_ms: 97.966993
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control artifactRoot="/"
+ok 480 - CC4 Helm rejects Control artifactRoot="/"
+  ---
+  duration_ms: 98.090896
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control artifactRoot="relative"
+ok 481 - CC4 Helm rejects Control artifactRoot="relative"
+  ---
+  duration_ms: 113.766732
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control artifactRoot="/tmp/../artifacts"
+ok 482 - CC4 Helm rejects Control artifactRoot="/tmp/../artifacts"
+  ---
+  duration_ms: 112.648983
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control artifactRoot="/tmp/artifacts/"
+ok 483 - CC4 Helm rejects Control artifactRoot="/tmp/artifacts/"
+  ---
+  duration_ms: 83.980202
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control artifactRoot="/tmp//artifacts"
+ok 484 - CC4 Helm rejects Control artifactRoot="/tmp//artifacts"
+  ---
+  duration_ms: 83.615232
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control artifactRoot="/tmp/\\u0000artifacts"
+ok 485 - CC4 Helm rejects Control artifactRoot="/tmp/\\u0000artifacts"
+  ---
+  duration_ms: 91.407253
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control artifactRoot=1
+ok 486 - CC4 Helm rejects Control artifactRoot=1
+  ---
+  duration_ms: 88.448887
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control studioPublicUrl=undefined
+ok 487 - CC4 Helm rejects Control studioPublicUrl=undefined
+  ---
+  duration_ms: 111.269877
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control studioPublicUrl=null
+ok 488 - CC4 Helm rejects Control studioPublicUrl=null
+  ---
+  duration_ms: 98.947949
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control studioPublicUrl=""
+ok 489 - CC4 Helm rejects Control studioPublicUrl=""
+  ---
+  duration_ms: 84.859344
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control studioPublicUrl="relative"
+ok 490 - CC4 Helm rejects Control studioPublicUrl="relative"
+  ---
+  duration_ms: 88.1808
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control studioPublicUrl="file:///tmp"
+ok 491 - CC4 Helm rejects Control studioPublicUrl="file:///tmp"
+  ---
+  duration_ms: 113.662389
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control studioPublicUrl="https://"
+ok 492 - CC4 Helm rejects Control studioPublicUrl="https://"
+  ---
+  duration_ms: 109.522572
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control studioPublicUrl="https://user:pass@studio"
+ok 493 - CC4 Helm rejects Control studioPublicUrl="https://user:pass@studio"
+  ---
+  duration_ms: 110.283362
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control studioPublicUrl="https://studio?query=1"
+ok 494 - CC4 Helm rejects Control studioPublicUrl="https://studio?query=1"
+  ---
+  duration_ms: 98.709403
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control studioPublicUrl="https://studio\#fragment"
+ok 495 - CC4 Helm rejects Control studioPublicUrl="https://studio\#fragment"
+  ---
+  duration_ms: 88.228801
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control studioPublicUrl="https://bad host"
+ok 496 - CC4 Helm rejects Control studioPublicUrl="https://bad host"
+  ---
+  duration_ms: 105.713663
+  type: 'test'
+  ...
+# Subtest: CC4 Helm rejects Control studioPublicUrl=1
+ok 497 - CC4 Helm rejects Control studioPublicUrl=1
+  ---
+  duration_ms: 115.337373
+  type: 'test'
+  ...
+# Subtest: CC4 Helm strict Control object
+ok 498 - CC4 Helm strict Control object
+  ---
+  duration_ms: 116.858612
+  type: 'test'
+  ...
+# Subtest: CC4 Helm strict Control object
+ok 499 - CC4 Helm strict Control object
+  ---
+  duration_ms: 109.658126
+  type: 'test'
+  ...
+# Subtest: CC4 Helm strict Control object
+ok 500 - CC4 Helm strict Control object
+  ---
+  duration_ms: 84.436794
+  type: 'test'
+  ...
+# Subtest: CC4 Helm strict Control object
+ok 501 - CC4 Helm strict Control object
+  ---
+  duration_ms: 114.730007
+  type: 'test'
+  ...
+# Subtest: CC4 retired Helm subject author rejects even disabled value
+ok 502 - CC4 retired Helm subject author rejects even disabled value
+  ---
+  duration_ms: 138.620164
+  type: 'test'
+  ...
+# Subtest: CC4 two real mounted Control profiles align PVC and checksum while retaining generated trust topology
+ok 503 - CC4 two real mounted Control profiles align PVC and checksum while retaining generated trust topology
+  ---
+  duration_ms: 242.626963
+  type: 'test'
+  ...
+# Subtest: CL chart listener 23456 keeps every Control destination coherent (SPIFFE true)
+ok 504 - CL chart listener 23456 keeps every Control destination coherent (SPIFFE true)
+  ---
+  duration_ms: 199.345514
+  type: 'test'
+  ...
+# Subtest: CL chart listener 23456 keeps every Control destination coherent (SPIFFE false)
+ok 505 - CL chart listener 23456 keeps every Control destination coherent (SPIFFE false)
+  ---
+  duration_ms: 173.086286
+  type: 'test'
+  ...
+# Subtest: CL chart listener 23457 keeps every Control destination coherent (SPIFFE true)
+ok 506 - CL chart listener 23457 keeps every Control destination coherent (SPIFFE true)
+  ---
+  duration_ms: 153.690024
+  type: 'test'
+  ...
+# Subtest: CL chart listener 23457 keeps every Control destination coherent (SPIFFE false)
+ok 507 - CL chart listener 23457 keeps every Control destination coherent (SPIFFE false)
+  ---
+  duration_ms: 153.346485
+  type: 'test'
+  ...
+# Subtest: CL Helm rejects invalid listener undefined
+ok 508 - CL Helm rejects invalid listener undefined
+  ---
+  duration_ms: 113.70127
+  type: 'test'
+  ...
+# Subtest: CL Helm rejects invalid listener null
+ok 509 - CL Helm rejects invalid listener null
+  ---
+  duration_ms: 125.207577
+  type: 'test'
+  ...
+# Subtest: CL Helm rejects invalid listener 8080
+ok 510 - CL Helm rejects invalid listener 8080
+  ---
+  duration_ms: 134.301583
+  type: 'test'
+  ...
+# Subtest: CL Helm rejects invalid listener 0
+ok 511 - CL Helm rejects invalid listener 0
+  ---
+  duration_ms: 100.420837
+  type: 'test'
+  ...
+# Subtest: CL Helm rejects invalid listener 65536
+ok 512 - CL Helm rejects invalid listener 65536
+  ---
+  duration_ms: 126.731817
+  type: 'test'
+  ...
+# Subtest: CL Helm rejects invalid listener 3.5
+ok 513 - CL Helm rejects invalid listener 3.5
+  ---
+  duration_ms: 112.605181
+  type: 'test'
+  ...
+# Subtest: CL Helm rejects invalid listener true
+ok 514 - CL Helm rejects invalid listener true
+  ---
+  duration_ms: 94.161594
+  type: 'test'
+  ...
+# Subtest: CL Helm rejects second listener author
+ok 515 - CL Helm rejects second listener author
+  ---
+  duration_ms: 75.01798
+  type: 'test'
+  ...
+# Subtest: Studio authored profiles bind loader and all rendered listener edges
+ok 516 - Studio authored profiles bind loader and all rendered listener edges
+  ---
+  duration_ms: 481.787048
+  type: 'test'
+  ...
+# Subtest: Studio chart rejects competing values and unsupported upstream topology
+ok 517 - Studio chart rejects competing values and unsupported upstream topology
+  ---
+  duration_ms: 1260.911456
+  type: 'test'
+  ...
+# Subtest: BA Prism chart preserves two Buster admission profiles through the mounted canonical document
+ok 518 - BA Prism chart preserves two Buster admission profiles through the mounted canonical document
+  ---
+  duration_ms: 242.672925
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumActiveJobs=undefined
+ok 519 - BA Prism chart rejects Buster admission maximumActiveJobs=undefined
+  ---
+  duration_ms: 117.114458
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumActiveJobs=null
+ok 520 - BA Prism chart rejects Buster admission maximumActiveJobs=null
+  ---
+  duration_ms: 116.599555
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumActiveJobs=2
+ok 521 - BA Prism chart rejects Buster admission maximumActiveJobs=2
+  ---
+  duration_ms: 111.220156
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumActiveJobs=0
+ok 522 - BA Prism chart rejects Buster admission maximumActiveJobs=0
+  ---
+  duration_ms: 110.374664
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumActiveJobs=-1
+ok 523 - BA Prism chart rejects Buster admission maximumActiveJobs=-1
+  ---
+  duration_ms: 109.322127
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumActiveJobs=1.5
+ok 524 - BA Prism chart rejects Buster admission maximumActiveJobs=1.5
+  ---
+  duration_ms: 98.519338
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumActiveJobs=9007199254740992
+ok 525 - BA Prism chart rejects Buster admission maximumActiveJobs=9007199254740992
+  ---
+  duration_ms: 81.043056
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumQueuedJobs=undefined
+ok 526 - BA Prism chart rejects Buster admission maximumQueuedJobs=undefined
+  ---
+  duration_ms: 89.509134
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumQueuedJobs=null
+ok 527 - BA Prism chart rejects Buster admission maximumQueuedJobs=null
+  ---
+  duration_ms: 111.515384
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumQueuedJobs=2
+ok 528 - BA Prism chart rejects Buster admission maximumQueuedJobs=2
+  ---
+  duration_ms: 109.402529
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumQueuedJobs=0
+ok 529 - BA Prism chart rejects Buster admission maximumQueuedJobs=0
+  ---
+  duration_ms: 82.630857
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumQueuedJobs=-1
+ok 530 - BA Prism chart rejects Buster admission maximumQueuedJobs=-1
+  ---
+  duration_ms: 88.519929
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumQueuedJobs=1.5
+ok 531 - BA Prism chart rejects Buster admission maximumQueuedJobs=1.5
+  ---
+  duration_ms: 98.340983
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumQueuedJobs=9007199254740992
+ok 532 - BA Prism chart rejects Buster admission maximumQueuedJobs=9007199254740992
+  ---
+  duration_ms: 87.804841
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumConcurrentAttempts=undefined
+ok 533 - BA Prism chart rejects Buster admission maximumConcurrentAttempts=undefined
+  ---
+  duration_ms: 98.956639
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumConcurrentAttempts=null
+ok 534 - BA Prism chart rejects Buster admission maximumConcurrentAttempts=null
+  ---
+  duration_ms: 110.700153
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumConcurrentAttempts=2
+ok 535 - BA Prism chart rejects Buster admission maximumConcurrentAttempts=2
+  ---
+  duration_ms: 102.495591
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumConcurrentAttempts=0
+ok 536 - BA Prism chart rejects Buster admission maximumConcurrentAttempts=0
+  ---
+  duration_ms: 90.195683
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumConcurrentAttempts=-1
+ok 537 - BA Prism chart rejects Buster admission maximumConcurrentAttempts=-1
+  ---
+  duration_ms: 95.041778
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumConcurrentAttempts=1.5
+ok 538 - BA Prism chart rejects Buster admission maximumConcurrentAttempts=1.5
+  ---
+  duration_ms: 118.31571
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects Buster admission maximumConcurrentAttempts=9007199254740992
+ok 539 - BA Prism chart rejects Buster admission maximumConcurrentAttempts=9007199254740992
+  ---
+  duration_ms: 98.644601
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects missing/malformed/unknown admission objects
+ok 540 - BA Prism chart rejects missing/malformed/unknown admission objects
+  ---
+  duration_ms: 85.474291
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects missing/malformed/unknown admission objects
+ok 541 - BA Prism chart rejects missing/malformed/unknown admission objects
+  ---
+  duration_ms: 88.770955
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects missing/malformed/unknown admission objects
+ok 542 - BA Prism chart rejects missing/malformed/unknown admission objects
+  ---
+  duration_ms: 108.27626
+  type: 'test'
+  ...
+# Subtest: BA Prism chart rejects missing/malformed/unknown admission objects
+ok 543 - BA Prism chart rejects missing/malformed/unknown admission objects
+  ---
+  duration_ms: 93.008235
+  type: 'test'
+  ...
+# Subtest: BA Prism chart retains strict Buster sibling rejection
+ok 544 - BA Prism chart retains strict Buster sibling rejection
+  ---
+  duration_ms: 86.822955
+  type: 'test'
+  ...
+# Subtest: WL Worker topology follows 23458, SPIFFE=false
+ok 545 - WL Worker topology follows 23458, SPIFFE=false
+  ---
+  duration_ms: 121.080631
+  type: 'test'
+  ...
+# Subtest: WL Worker topology follows 23458, SPIFFE=true
+ok 546 - WL Worker topology follows 23458, SPIFFE=true
+  ---
+  duration_ms: 134.628151
+  type: 'test'
+  ...
+# Subtest: WL Worker topology follows 23459, SPIFFE=false
+ok 547 - WL Worker topology follows 23459, SPIFFE=false
+  ---
+  duration_ms: 114.663805
+  type: 'test'
+  ...
+# Subtest: WL Worker topology follows 23459, SPIFFE=true
+ok 548 - WL Worker topology follows 23459, SPIFFE=true
+  ---
+  duration_ms: 141.007186
+  type: 'test'
+  ...
+# Subtest: WL legacy Worker Helm port rejects "8080"
+ok 549 - WL legacy Worker Helm port rejects "8080"
+  ---
+  duration_ms: 64.254271
+  type: 'test'
+  ...
+# Subtest: WL legacy Worker Helm port rejects ""
+ok 550 - WL legacy Worker Helm port rejects ""
+  ---
+  duration_ms: 66.356876
+  type: 'test'
+  ...
+# Subtest: explicit entry required; old inline authorship is rejected
+ok 551 - explicit entry required; old inline authorship is rejected
+  ---
+  duration_ms: 12.085052
+  type: 'test'
+  ...
+# Subtest: prism-control: missing file, wrong owner, unknown envelope and reference rejected
+ok 552 - prism-control: missing file, wrong owner, unknown envelope and reference rejected
+  ---
+  duration_ms: 22.463711
+  type: 'test'
+  ...
+# Subtest: prism-studio: missing file, wrong owner, unknown envelope and reference rejected
+ok 553 - prism-studio: missing file, wrong owner, unknown envelope and reference rejected
+  ---
+  duration_ms: 19.318769
+  type: 'test'
+  ...
+# Subtest: prism-worker: missing file, wrong owner, unknown envelope and reference rejected
+ok 554 - prism-worker: missing file, wrong owner, unknown envelope and reference rejected
+  ---
+  duration_ms: 18.660142
+  type: 'test'
+  ...
+# Subtest: prism-execution: missing file, wrong owner, unknown envelope and reference rejected
+ok 555 - prism-execution: missing file, wrong owner, unknown envelope and reference rejected
+  ---
+  duration_ms: 20.733746
+  type: 'test'
+  ...
+# Subtest: buster-engine: missing file, wrong owner, unknown envelope and reference rejected
+ok 556 - buster-engine: missing file, wrong owner, unknown envelope and reference rejected
+  ---
+  duration_ms: 21.305291
+  type: 'test'
+  ...
+# Subtest: every authored setting is required, including explicit nullable values
+ok 557 - every authored setting is required, including explicit nullable values
+  ---
+  duration_ms: 160.916442
+  type: 'test'
+  ...
+# Subtest: both domains validate before selecting either and nested snapshots stay frozen
+ok 558 - both domains validate before selecting either and nested snapshots stay frozen
+  ---
+  duration_ms: 14.469514
+  type: 'test'
+  ...
+# Subtest: real ConfigMap-style entry symlink resolves component files within its physical generation
+ok 559 - real ConfigMap-style entry symlink resolves component files within its physical generation
+  ---
+  duration_ms: 11.115048
+  type: 'test'
+  ...
+# Subtest: actual data symlink replacement after entry read retains one complete old generation
+ok 560 - actual data symlink replacement after entry read retains one complete old generation
+  ---
+  duration_ms: 61.631404
+  type: 'test'
+  ...
+# Subtest: removing a selected generation component after reading entry rejects
+ok 561 - removing a selected generation component after reading entry rejects
+  ---
+  duration_ms: 10.556683
+  type: 'test'
+  ...
+# Subtest: changing an already read component during later reads rejects the local bundle
+ok 562 - changing an already read component during later reads rejects the local bundle
+  ---
+  duration_ms: 10.145462
+  type: 'test'
+  ...
+1..562
+# tests 562
+# suites 0
+# pass 562
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 137541.120434

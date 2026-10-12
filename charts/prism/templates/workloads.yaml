@@ -1,3 +1,5 @@
+{{- $swarm := include "prism.swarmConfig" . | fromJson }}
+{{- $shutdownTimeoutMs := $swarm.operator.prism.worker.shutdownTimeoutMs }}
 {{- if ne (int .Values.control.replicas) 1 }}
 {{- fail "control.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage" }}
 {{- end }}
@@ -5,7 +7,7 @@
 {{- if or (ne (int .Values.worker.replicas) 1) (ne .Values.worker.native.namespace .Release.Namespace) (not .Values.worker.native.nodeName) (not (regexMatch "^[a-f0-9]{64}$" .Values.worker.native.policyDigest)) }}
 {{- fail "native Prism requires one worker, its selected namespace/node and generated policy digest" }}
 {{- end }}
-{{- if or (le (int .Values.worker.shutdownTimeoutMs) (add (int .Values.worker.native.closeTimeoutMs) 10000)) (le (mul (int .Values.worker.terminationGracePeriodSeconds) 1000) (int .Values.worker.shutdownTimeoutMs)) }}
+{{- if or (le (int $shutdownTimeoutMs) (add (int $swarm.operator.prism.native.supervisor.closeTimeoutMs) (int $swarm.operator.prism.native.supervisor.drainTimeoutMs))) (le (mul (int .Values.worker.terminationGracePeriodSeconds) 1000) (int $shutdownTimeoutMs)) }}
 {{- fail "worker shutdown must cover native close plus scope drain, and fit within pod termination grace" }}
 {{- end }}
 {{- range $name := list "control" "studio" "worker" }}
@@ -29,8 +31,11 @@ spec:
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
         kubeclaw.dev/worker-trust: "true"
         {{- end }}
-      {{- if or (and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker"))) (and (eq $name "control") $.Values.control.productDecisions.enabled) (eq $name "worker") }}
+      {{- if or (and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker"))) (eq $name "control") (eq $name "worker") (eq $name "studio") }}
       annotations:
+        {{- if has $name (list "control" "worker" "studio") }}
+        checksum/swarm-config: {{ include "kubeclaw.swarmBundle" $ | sha256sum }}
+        {{- end }}
         {{- if eq $name "worker" }}
         kubeclaw.dev/native-worker-role: prism
         kubeclaw.dev/native-worker-policy: {{ $.Values.worker.native.policyDigest | quote }}
@@ -79,10 +84,10 @@ spec:
           securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
           {{- end }}
           env:
-            - { name: PORT, value: "8080" }
             {{- if or (eq $name "control") (eq $name "worker") }}
             - { name: PRISM_ENGINE_CONTENT_DIGEST, value: {{ $.Values.images.worker.digest | quote }} }
             {{- end }}
+            - { name: SWARM_CONFIG, value: /etc/kubeclaw/swarm/swarm.config.json }
             {{- if and (or (eq $name "control") (eq $name "worker")) (not $.Values.workerTrust.spiffe.enabled) }}
             - name: PRISM_WORKER_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: worker-secret } }
@@ -93,10 +98,6 @@ spec:
             - { name: PRISM_WORKER_URL, value: "http://127.0.0.1:18081" }
             - { name: PRISM_CONTROL_INTERNAL_URL, value: "http://127.0.0.1:18080" }
             - { name: PRISM_AGENT_URL, value: "http://127.0.0.1:18082" }
-            {{- end }}
-            {{- with $.Values.control.pipelinePreferenceSubject }}
-            - name: PRISM_PIPELINE_PREFERENCE_SUBJECT
-              value: {{ . | quote }}
             {{- end }}
             - name: DATABASE_URL
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
@@ -113,13 +114,10 @@ spec:
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingestion-secret } }
             {{- end }}
             {{- if eq $name "studio" }}
-            - { name: PRISM_CONTROL_URL, value: "http://prism-control:8080" }
             - name: PRISM_INGRESS_SECRET
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }
             {{- end }}
             {{- if eq $name "worker" }}
-            - { name: PRISM_NATIVE_CLOSE_TIMEOUT_MS, value: {{ $.Values.worker.native.closeTimeoutMs | quote }} }
-            - { name: PRISM_WORKER_SHUTDOWN_TIMEOUT_MS, value: {{ $.Values.worker.shutdownTimeoutMs | quote }} }
             - { name: PRISM_CONTROL_INTERNAL_URL, value: {{ ternary "http://127.0.0.1:18080" "http://prism-control:8080" $.Values.workerTrust.spiffe.enabled | quote }} }
             - name: DATABASE_URL
               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
@@ -140,6 +138,9 @@ spec:
           resources: {{ toYaml (index $.Values $name).resources | nindent 12 }}
           volumeMounts:
             - { name: tmp, mountPath: /tmp }
+            {{- if has $name (list "control" "worker" "studio") }}
+            - { name: swarm-config, mountPath: /etc/kubeclaw/swarm, readOnly: true }
+            {{- end }}
             {{- if eq $name "worker" }}
             - { name: native-pool, mountPath: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism }
             - { name: native-ownership, mountPath: /var/lib/kubeclaw/native/prism }
@@ -148,7 +149,7 @@ spec:
             - { name: native-runtime-identity, mountPath: /etc/kubeclaw/native-runtime-identity.json, readOnly: true }
             {{- end }}
             {{- if eq $name "control" }}
-            - { name: artifacts, mountPath: /var/lib/prism/artifacts }
+            - { name: artifacts, mountPath: {{ $swarm.operator.prism.control.artifactRoot | quote }} }
             {{- if $.Values.control.productDecisions.enabled }}
             - { name: product-decision-signing, mountPath: /var/run/prism/product-signing, readOnly: true }
             - { name: product-decision-controller, mountPath: /var/run/prism/product-controller, readOnly: true }
@@ -158,8 +159,8 @@ spec:
           # The migration is a post-install hook. On the first install the worker
           # must become ready before that hook can create its nonce table.
           {{- end }}
-          readinessProbe: { httpGet: { path: {{ ternary "/bootstrap" "/ready" (eq $name "worker") | quote }}, port: 8080 }, initialDelaySeconds: 3 }
-          livenessProbe: { httpGet: { path: /health, port: 8080 }, initialDelaySeconds: 10 }
+          readinessProbe: { httpGet: { path: {{ ternary "/bootstrap" "/ready" (eq $name "worker") | quote }}, port: {{ ternary (int $swarm.operator.prism.control.port) (ternary (int $swarm.operator.prism.studio.port) (int $swarm.operator.prism.worker.port) (eq $name "studio")) (eq $name "control") }} }, initialDelaySeconds: 3 }
+          livenessProbe: { httpGet: { path: /health, port: {{ ternary (int $swarm.operator.prism.control.port) (ternary (int $swarm.operator.prism.studio.port) (int $swarm.operator.prism.worker.port) (eq $name "studio")) (eq $name "control") }} }, initialDelaySeconds: 10 }
         {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
         - name: worker-trust-proxy
           image: "{{ $.Values.workerTrust.spiffe.envoy.repository }}:{{ $.Values.workerTrust.spiffe.envoy.tag }}@{{ $.Values.workerTrust.spiffe.envoy.digest }}"
@@ -188,6 +189,9 @@ spec:
         {{- end }}
       volumes:
         - { name: tmp, emptyDir: { sizeLimit: 4Gi } }
+        {{- if has $name (list "control" "worker" "studio") }}
+        - { name: swarm-config, configMap: { name: prism-swarm-config, defaultMode: 0444 } }
+        {{- end }}
         {{- if eq $name "worker" }}
         - { name: native-pool, hostPath: { path: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism, type: Directory } }
         - { name: native-ownership, hostPath: { path: /var/lib/kubeclaw/native/prism, type: Directory } }

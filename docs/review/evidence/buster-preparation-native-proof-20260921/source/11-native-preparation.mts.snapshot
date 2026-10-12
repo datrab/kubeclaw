@@ -1,0 +1,140 @@
+/** Actual native guest fixture. No modeled ownership, preparation, or successful cleanup. */
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import {
+  FileWorkerOwnershipStore, NativeAttemptJournal, NativeWorkerOwnership,
+  readNativeWorkerNodeIdentity, recoverNativeWorkerAttempts,
+  type NativeWorkerPoolLimits,
+} from '@kubeclaw/worker-core';
+import { createRemotePlanJob } from '@kubeclaw/nova-core';
+import { attestSourceSnapshot } from '@kubeclaw/pipeline-test-gate-contract';
+import { loadBusterPreparationSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { buildCommittedSourceSnapshot } from '../../../skills/nova/core/test-gates/source-snapshot.ts';
+import { PreparationSourceLedger } from '../../../skills/buster/engine/test-gates/preparation-ledger.ts';
+import { PreparationIngress } from '../../../skills/buster/engine/test-gates/preparation-channel.ts';
+import { executeBusterPreparation, type PreparationExecutionOptions } from '../../../skills/buster/engine/test-gates/preparation-execution.ts';
+import { preparationCleanupReconciliation } from '../../../skills/buster/engine/test-gates/preparation-cleanup.ts';
+import { recoverPreparationLedger } from '../../../skills/buster/engine/test-gates/preparation-recovery.ts';
+import { PreparedBusterPlanJobStore } from '../../../skills/buster/engine/test-gates/prepared-plan-store.ts';
+import { plan } from './remote-plan.mts';
+
+export function requiredNativeInput(name: string): string {
+  const value = process.env[name];
+  assert.ok(value && path.isAbsolute(value), `${name} must name the existing trusted guest input; unavailable cases cannot be skipped`);
+  return value;
+}
+
+export async function requireBusterParentAuthority(): Promise<void> {
+  assert.equal(process.getuid?.(), 0, 'requires separately prepared disposable native guest');
+  assert.equal(process.getgid?.(), 0);
+  const status = await fs.readFile('/proc/self/status', 'utf8');
+  for (const field of ['CapEff', 'CapPrm', 'CapBnd']) {
+    const value = status.match(new RegExp(`^${field}:\\s+([0-9a-f]+)$`, 'mu'))?.[1];
+    assert.ok(value, field);
+    assert.equal(BigInt(`0x${value}`), 0x1e1n, `${field}: actual Buster CHOWN/KILL/SETGID/SETUID/SETPCAP only`);
+  }
+}
+
+export async function createNativeCaseRoot(name: string): Promise<string> {
+  await requireBusterParentAuthority();
+  const parent = '/var/lib/buster-native-proof';
+  const stat = await fs.lstat(parent);
+  assert.ok(stat.isDirectory() && stat.uid === 0 && (stat.mode & 0o022) === 0);
+  const root = await fs.mkdtemp(path.join(parent, `${name}-`));
+  await fs.chmod(root, 0o755);
+  return root;
+}
+
+export async function createNativePreparationJob(root: string, archiveKind: 'committed' | 'truncated-gzip' = 'committed') {
+  const repository = path.join(root, 'producer-repository');
+  await fs.mkdir(repository, { recursive: true, mode: 0o755 });
+  await fs.writeFile(path.join(repository, 'README.md'), 'owned preparation source\n');
+  await fs.writeFile(path.join(repository, 'run.sh'), '#!/bin/sh\nprintf executable\\n\n', { mode: 0o755 });
+  execFileSync('git', ['init', '-q', repository]);
+  execFileSync('git', ['-C', repository, 'add', '.']);
+  execFileSync('git', ['-C', repository, '-c', 'user.name=Native Proof', '-c', 'user.email=proof@example.invalid', 'commit', '-qm', 'source']);
+  const keys = crypto.generateKeyPairSync('ed25519');
+  const settings = loadBusterPreparationSettings({ ...process.env, SWARM_CONFIG: requiredNativeInput('SWARM_CONFIG') });
+  let snapshot = await buildCommittedSourceSnapshot({ repositoryRoot: repository, repositoryId: 'repository:native-preparation',
+    pipelineStageId: 'native-preparation', creatorAuthority: 'nova:native-preparation',
+    attestationPrivateKey: keys.privateKey.export({ type: 'pkcs8', format: 'pem' }), maximumArchiveBytes: settings.maximumArchiveBytes });
+  if (archiveKind === 'truncated-gzip') {
+    // A deliberately faulty, authenticated producer: wire digests/signature are
+    // valid, but real GNU tar must reject the truncated compressed archive.
+    const repositoryArchive = snapshot.repositoryArchive.subarray(0, 20);
+    snapshot = { repositoryArchive, sourceSnapshot: attestSourceSnapshot({ ...snapshot.sourceSnapshot,
+      archiveContentDigest: `sha256:${crypto.createHash('sha256').update(repositoryArchive).digest('hex')}`,
+      archiveSizeBytes: repositoryArchive.byteLength }, keys.privateKey.export({ type: 'pkcs8', format: 'pem' })) };
+  }
+  const job = createRemotePlanJob({ idempotencyKey: `native:${path.basename(root)}`, pipelineStageId: 'native-preparation',
+    plan: plan('blocking', null), ...snapshot, grants: new Map([['test', []]]), maximumConcurrency: 1,
+    submittedAt: '2026-09-21T00:00:00.000Z' });
+  const publicKey = keys.publicKey.export({ type: 'spki', format: 'pem' }).toString();
+  await fs.writeFile(path.join(root, 'public-key.pem'), publicKey, { mode: 0o644 });
+  await fs.writeFile(path.join(root, 'producer-wire.json'), JSON.stringify(job), { mode: 0o600 });
+  return { job, publicKey };
+}
+
+export async function withNativePreparation<T>(root: string,
+  run: (execution: PreparationExecutionOptions, store: PreparedBusterPlanJobStore) => Promise<T>,
+  beforeRecovery?: (execution: PreparationExecutionOptions) => void): Promise<T> {
+  await requireBusterParentAuthority();
+  const settings = loadBusterPreparationSettings({ ...process.env, SWARM_CONFIG: requiredNativeInput('SWARM_CONFIG') });
+  const cgroupRoot = requiredNativeInput('KUBECLAW_WORKER_TEST_CGROUP_ROOT');
+  const launcher = requiredNativeInput('KUBECLAW_WORKER_TEST_LAUNCHER');
+  const nodeIdentity = readNativeWorkerNodeIdentity(requiredNativeInput('KUBECLAW_WORKER_TEST_NODE_IDENTITY_FILE'));
+  const poolLimits = JSON.parse(await fs.readFile(requiredNativeInput('KUBECLAW_WORKER_TEST_POOL_LIMITS_FILE'), 'utf8')) as NativeWorkerPoolLimits;
+  assert.ok(poolLimits.memoryBytes >= settings.resourcePolicy.memoryBytes && poolLimits.tasks >= settings.resourcePolicy.tasks,
+    'the authored preparation profile must fit the existing actual pool; no automatic budget increase');
+  const sourceRoot = path.join(root, 'sources');
+  await fs.mkdir(sourceRoot, { recursive: true, mode: 0o755 });
+  const publicKey = await fs.readFile(path.join(root, 'public-key.pem'), 'utf8');
+  const store = new PreparedBusterPlanJobStore(path.join(root, 'jobs'), {
+    recordLimits: { maximumRecords: settings.maximumRecords, maximumBytes: settings.maximumMetadataBytes,
+      maximumRecordBytes: settings.maximumResultBytes },
+    maximumResultBytes: settings.maximumResultBytes, maximumResultStoreBytes: settings.maximumSourceBytes,
+    trustedSourceAuthority: 'nova:native-preparation', sourceAttestationPublicKey: publicKey,
+  });
+  const ownership = new FileWorkerOwnershipStore(path.join(root, 'ownership'), {
+    maximumRecords: settings.maximumRecords, maximumBytes: settings.maximumOwnershipBytes,
+  });
+  return NativeWorkerOwnership.supervise({ store: ownership, cgroupRoot, nodeIdentity,
+    drainTimeoutMs: settings.drainTimeoutMs, maximumActiveScopes: settings.maximumActivePreparations, poolLimits }, async owner => {
+    const journal = new NativeAttemptJournal(path.join(root, 'journal'), {
+      maximumRecords: settings.maximumRecords, maximumStateBytes: settings.maximumMetadataBytes,
+      maximumTotalBytes: settings.maximumJournalBytes, maximumInputBytes: settings.maximumInputBytes,
+      maximumOutputBytes: settings.maximumOutputBytes, maximumResultBytes: settings.maximumResultBytes,
+    });
+    // Fixture profile binds this actual entrypoint; the separately reviewed guest
+    // manifest must bind its full transitive source graph. This is not an image digest proof.
+    const host = await fs.readFile(new URL('../../../skills/buster/engine/test-gates/preparation-host.ts', import.meta.url));
+    const execution: PreparationExecutionOptions = { owner, journal, settings,
+      ledger: new PreparationSourceLedger(sourceRoot, settings),
+      engineContentDigest: `sha256:${crypto.createHash('sha256').update(host).digest('hex')}`,
+      command: { launcher, sourceRoot, cgroupRoot, tarExecutable: '/usr/bin/tar',
+        trustedSourceAuthority: 'nova:native-preparation', sourceAttestationPublicKey: publicKey },
+    };
+    beforeRecovery?.(execution);
+    await recoverNativeWorkerAttempts(journal, owner, preparationCleanupReconciliation(execution));
+    await recoverPreparationLedger(execution);
+    return run(execution, store);
+  });
+}
+
+export async function stageNativeWire(execution: PreparationExecutionOptions, wireFile: string,
+  signal: AbortSignal, admit: Parameters<typeof executeBusterPreparation>[3] = async () => true) {
+  const ingress = new PreparationIngress(execution.settings.maximumRequestBytes);
+  const staged = executeBusterPreparation(execution, ingress, signal, admit);
+  void staged.catch(error => ingress.fail(error));
+  const feed = (async () => {
+    for await (const bytes of createReadStream(wireFile, { highWaterMark: 65536 })) await ingress.write(bytes);
+    ingress.end();
+  })();
+  void feed.catch(error => ingress.fail(error));
+  const [result] = await Promise.all([staged, feed]);
+  return result;
+}

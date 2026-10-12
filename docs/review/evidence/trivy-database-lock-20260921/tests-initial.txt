@@ -1,0 +1,23 @@
+✔ TD01/07: exact locked files publish together without rewriting metadata or resolving tags (65.180764ms)
+✔ TD02/13: malformed inputs and scanner mismatch fail before registry access (8.424875ms)
+✔ TD04: changed vulnerability manifest is rejected without publishing either database (6.470635ms)
+✔ TD05: changed vulnerability archive is rejected before extraction (31.290059ms)
+✔ TD04: changed java manifest is rejected without publishing either database (15.796833ms)
+✔ TD05: changed java archive is rejected before extraction (12.105839ms)
+✔ TD06: correct archive with wrong locked extracted bytes fails (18.166844ms)
+✔ TD06: duplicate archive members are rejected before publication (19.109248ms)
+✔ TD06: symlink archive members are rejected before publication (60.467034ms)
+tar: removing leading '../' from member names
+tar: removing leading '../' from member names
+✔ TD06: traversal archive members are rejected before publication (48.052606ms)
+✔ TD08: registry failure has no fallback or partial cache publication (5.766028ms)
+✔ TD09/14: existing directory and dangling symlink remain untouched (5.800788ms)
+✔ TD14: two installers cannot publish or merge into the same destination (28.639081ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 413.832894

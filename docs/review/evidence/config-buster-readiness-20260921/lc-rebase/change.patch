@@ -1,0 +1,42 @@
+--- a/skills/buster/engine/test-gates/production.ts
++++ b/skills/buster/engine/test-gates/production.ts
+@@ -4,7 +4,7 @@
+ import { object, integer, validateRuntimeRoot, runtimeAuthority, runtimeRegistry } from './production-config-values.ts';
+ import { capabilitySources } from './production-capability-sources.ts';
+ import type { BusterPreparation } from './preparation-client.ts';
+-import type { BusterSettings, WorkerCoreSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
++import { validateBusterDependencyReadinessSettings, type BusterSettings, type WorkerCoreSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import { BusterRemotePlanRuntime } from './remote-plan-runtime.ts';
+@@ -32,6 +32,7 @@
+ 
+ function configuredService(value: Record<string, unknown>, directory: string, environment: NodeJS.ProcessEnv,
+   preparation: BusterPreparation, settings: { buster: BusterSettings; workerLocalRuntime: WorkerCoreSettings['localRuntime'] }, workerRevision: string, sourceAttestationPublicKey: string) {
++  const dependencyReadiness = validateBusterDependencyReadinessSettings(settings.buster.dependencyReadiness);
+   const registry = runtimeRegistry(value, directory);
+   const records = object(value.recordLimits, 'recordLimits');
+   const allowedCapabilities = new Set(Array.isArray(value.allowedCapabilities)
+@@ -54,10 +55,7 @@
+       sourceAttestationPublicKey,
+     }),
+     registry,
+-    ...(value.dependencyReadiness === undefined ? {} : { dependencyReadiness: {
+-      maximumExecutionMs: integer(object(value.dependencyReadiness, 'dependencyReadiness').maximumExecutionMs, 'dependencyReadiness.maximumExecutionMs'),
+-      maximumOutputBytes: integer(object(value.dependencyReadiness, 'dependencyReadiness').maximumOutputBytes, 'dependencyReadiness.maximumOutputBytes'),
+-    } }),
++    dependencyReadiness,
+     workerRevision,
+     runtimeRoot: path.resolve(directory, value.runtimeRoot as string),
+     admission: settings.buster.admission, workerLocalRuntime: settings.workerLocalRuntime,
+--- a/tests/verification/contracts/check-pipeline-worker-local-config.mts
++++ b/tests/verification/contracts/check-pipeline-worker-local-config.mts
+@@ -162,7 +162,7 @@
+       artifactRoot: path.join(validationRoot, 'artifacts'),
+       observabilityRoot: path.join(validationRoot, 'observability'), maximumConcurrency: 1,
+       workerLocalRuntime: snapshot.workerCore.localRuntime };
+-    const serviceOptions = { store, preparation, registry, workerRevision: 'a'.repeat(40),
++    const serviceOptions = { dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 }, store, preparation, registry, workerRevision: 'a'.repeat(40),
+       runtimeRoot: path.join(validationRoot, 'service'), admission: snapshot.buster.admission,
+       allowedCapabilities: new Set<string>(), workerLocalRuntime: snapshot.workerCore.localRuntime };
+     fs.mkdirSync(runnerOptions.repositoryRoot, { recursive: true });

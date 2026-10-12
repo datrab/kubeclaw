@@ -1,0 +1,770 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "Accept nine combined semantic controls and bounded poll correction verification; no full cluster package acceptance while CI2 remains open.",
+  "runs": {
+    "fast6": {
+      "bindingErrors": [],
+      "files": 67,
+      "unexpectedDrift": [],
+      "protection": {
+        "violationRecorded": false
+      },
+      "results": [
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/typescript/bin/tsc",
+            "--noEmit",
+            "-p",
+            "skills/buster/engine/tsconfig.json"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "types-1",
+          "seconds": 6.513878264930099
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/typescript/bin/tsc",
+            "--noEmit",
+            "-p",
+            "skills/common/plugin-runtime/tsconfig.json"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "types-2",
+          "seconds": 7.245020055910572
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/typescript/bin/tsc",
+            "--noEmit",
+            "-p",
+            "skills/nova/tsconfig.json"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "types-3",
+          "seconds": 6.647847976069897
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/typescript/bin/tsc",
+            "--noEmit",
+            "-p",
+            "scripts/tsconfig.json"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "types-4",
+          "seconds": 7.648298417916521
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/typescript/bin/tsc",
+            "--noEmit",
+            "-p",
+            "tests/verification/contracts/tsconfig.buster-cluster-policy.json"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "types-5",
+          "seconds": 6.6033294460503384
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/eslint/bin/eslint.js",
+            "--config",
+            "charts/kubeclaw/files/config/eslint-config.mjs",
+            "charts/kubeclaw/files/config/eslint-config.mjs",
+            "scripts/buster-cluster-preflight.mjs",
+            "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+            "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+            "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+            "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+            "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+            "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+            "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+            "skills/buster/engine/test-gates/production-capability-sources.ts",
+            "skills/buster/engine/test-gates/production-cluster-options.ts",
+            "skills/buster/engine/test-gates/production-config-values.ts",
+            "skills/buster/engine/test-gates/production.ts",
+            "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+            "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+            "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+            "skills/common/plugin-runtime/foundation/config/swarm.ts",
+            "tests/fixtures/test-gate/buster-cli-profile.mjs",
+            "tests/fixtures/test-gate/cluster-command.mjs",
+            "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+            "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs",
+            "tests/verification/contracts/buster-cluster-output-consumers.test.mjs",
+            "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+            "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs",
+            "tests/verification/contracts/buster-process-input-callers.test.mjs",
+            "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+            "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+            "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+            "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+            "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+            "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+            "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+            "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+            "tests/verification/deployment/buster-admission-render.test.mjs",
+            "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+            "tests/verification/deployment/buster-process-input-parity.test.mjs",
+            "tests/verification/deployment/buster-readiness-config.test.mjs",
+            "tests/verification/deployment/config-component-packaging.test.mjs",
+            "tests/verification/deployment/prism-swarm-config.test.mjs",
+            "tests/verification/reliability/buster-cluster-entrypoint.test.mjs",
+            "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+            "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+            "tests/verification/reliability/tailscale-generation.test.mjs",
+            "scripts/native-worker-node-policy.d.mts",
+            "scripts/registry-client-config.d.mts",
+            "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+            "tests/verification/e2e/registry-target.d.mts"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "canonical-lint",
+          "seconds": 7.181253228918649
+        },
+        {
+          "command": [
+            "sh",
+            "-n",
+            "docker/buster-runtime-entrypoint.sh"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "shell-syntax",
+          "seconds": 0.0015538899460807443
+        }
+      ],
+      "logs": {
+        "types-2.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "skipped": [],
+            "cancelled": [],
+            "todo": []
+          }
+        },
+        "canonical-lint.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "skipped": [],
+            "cancelled": [],
+            "todo": []
+          }
+        },
+        "types-1.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "skipped": [],
+            "cancelled": [],
+            "todo": []
+          }
+        },
+        "types-5.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "skipped": [],
+            "cancelled": [],
+            "todo": []
+          }
+        },
+        "types-4.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "skipped": [],
+            "cancelled": [],
+            "todo": []
+          }
+        },
+        "types-3.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "skipped": [],
+            "cancelled": [],
+            "todo": []
+          }
+        },
+        "shell-syntax.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "skipped": [],
+            "cancelled": [],
+            "todo": []
+          }
+        }
+      }
+    },
+    "poll-baseline1": {
+      "bindingErrors": [],
+      "files": 67,
+      "unexpectedDrift": [],
+      "protection": {
+        "violationRecorded": false
+      },
+      "results": [
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "poll-baseline",
+          "seconds": 3.1074110470945016
+        }
+      ],
+      "logs": {
+        "poll-baseline.txt": {
+          "sha256": "938a446dbd4927574b18b3afd8f7e6e395c18ee3083a8826e64a5adb08526187",
+          "counts": {
+            "tests": [
+              "4"
+            ],
+            "pass": [
+              "4"
+            ],
+            "fail": [
+              "0"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        }
+      }
+    },
+    "poll-controls1": {
+      "bindingErrors": [],
+      "files": 67,
+      "unexpectedDrift": [],
+      "protection": {
+        "violationRecorded": false
+      },
+      "results": [
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+          ],
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "name": "control-kube-poll",
+          "seconds": 4.471828166977502
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+          ],
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "name": "control-tail-poll",
+          "seconds": 6.061772209010087
+        }
+      ],
+      "logs": {
+        "control-tail-poll.txt": {
+          "sha256": "3904aab319ba9ffd738ee92fea05396b51ca01485e2cbc1832abb4c6e4efe7f9",
+          "counts": {
+            "tests": [
+              "4"
+            ],
+            "pass": [
+              "2"
+            ],
+            "fail": [
+              "2"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        },
+        "control-kube-poll.txt": {
+          "sha256": "aef9e76afc19b3049ce91e86b5ab1dd327122e868fb5d5f2903c2d13bb2bc94d",
+          "counts": {
+            "tests": [
+              "4"
+            ],
+            "pass": [
+              "2"
+            ],
+            "fail": [
+              "2"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        }
+      }
+    },
+    "controls1": {
+      "bindingErrors": [],
+      "files": 67,
+      "unexpectedDrift": [],
+      "protection": {
+        "violationRecorded": false
+      },
+      "results": [
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-output-consumers.test.mjs"
+          ],
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "name": "control-kube-output",
+          "seconds": 2.123184887925163
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-output-consumers.test.mjs"
+          ],
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "name": "control-tail-output",
+          "seconds": 2.3498325700638816
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs"
+          ],
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "name": "control-kube-short",
+          "seconds": 5.704325480968691
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs"
+          ],
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "name": "control-tail-short",
+          "seconds": 5.886770327924751
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs"
+          ],
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "name": "control-diagnostic",
+          "seconds": 2.9481839790241793
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+          ],
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "name": "control-kube-poll",
+          "seconds": 4.773008064017631
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+          ],
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "name": "control-tail-poll",
+          "seconds": 5.674221262917854
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs"
+          ],
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "name": "control-manifest-depth",
+          "seconds": 2.018030817969702
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs"
+          ],
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "name": "control-manifest-alias",
+          "seconds": 2.067924653994851
+        }
+      ],
+      "logs": {
+        "control-tail-output.txt": {
+          "sha256": "219ee3c0c934784754dd2f13e3240092eb13c89a05042033a493a0dfd51b9cca",
+          "counts": {
+            "tests": [
+              "4"
+            ],
+            "pass": [
+              "3"
+            ],
+            "fail": [
+              "1"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        },
+        "control-diagnostic.txt": {
+          "sha256": "1b82c72ca26c3958ed32a8805b11d106bbc82fb302d9a79e99689241df5e70e0",
+          "counts": {
+            "tests": [
+              "20"
+            ],
+            "pass": [
+              "18"
+            ],
+            "fail": [
+              "2"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        },
+        "control-tail-poll.txt": {
+          "sha256": "1b7d12d97e568740f69b349faf21498231033852585831fd1344a24b6b5d7f68",
+          "counts": {
+            "tests": [
+              "4"
+            ],
+            "pass": [
+              "2"
+            ],
+            "fail": [
+              "2"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        },
+        "control-kube-output.txt": {
+          "sha256": "aa70748eba4911cf848b37a8bf33cc07af4cb99ccd6a26689532b89814c4cab3",
+          "counts": {
+            "tests": [
+              "4"
+            ],
+            "pass": [
+              "3"
+            ],
+            "fail": [
+              "1"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        },
+        "control-kube-short.txt": {
+          "sha256": "ca5327f1bc0d0fd97d7a5d3a97c630ab27bff0471979d4674ca650d0d88f44b5",
+          "counts": {
+            "tests": [
+              "4"
+            ],
+            "pass": [
+              "3"
+            ],
+            "fail": [
+              "1"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        },
+        "control-manifest-alias.txt": {
+          "sha256": "bbdb8dc083e2439daeda9078726121187aa6b1dc28d2248c24b43338b4946f04",
+          "counts": {
+            "tests": [
+              "20"
+            ],
+            "pass": [
+              "19"
+            ],
+            "fail": [
+              "1"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        },
+        "control-tail-short.txt": {
+          "sha256": "bd3562c7ed2859963615f092ce82d4f0d033d5c4c78c712986796833c7d4a1ef",
+          "counts": {
+            "tests": [
+              "4"
+            ],
+            "pass": [
+              "3"
+            ],
+            "fail": [
+              "1"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        },
+        "control-kube-poll.txt": {
+          "sha256": "d7c9b3d938542ed688445a933cdf9c6bdc594e52c6e4abb6c28c3b4f53e252b8",
+          "counts": {
+            "tests": [
+              "4"
+            ],
+            "pass": [
+              "2"
+            ],
+            "fail": [
+              "2"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        },
+        "control-manifest-depth.txt": {
+          "sha256": "7a3b9ba64b77be5487662e7ea85bae32df5819fea0850be5fb6b06ea463d07b3",
+          "counts": {
+            "tests": [
+              "20"
+            ],
+            "pass": [
+              "19"
+            ],
+            "fail": [
+              "1"
+            ],
+            "skipped": [
+              "0"
+            ],
+            "cancelled": [
+              "0"
+            ],
+            "todo": [
+              "0"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "controls": [
+    {
+      "name": "kube-output",
+      "run": "controls1",
+      "logSha256": "aa70748eba4911cf848b37a8bf33cc07af4cb99ccd6a26689532b89814c4cab3",
+      "hookVerified": true,
+      "reason": "High allowed profile fails OUTPUT_LIMIT after fixed multiplier2; other profiles pass.",
+      "decision": "accepted intended semantic rejection"
+    },
+    {
+      "name": "tail-output",
+      "run": "controls1",
+      "logSha256": "219ee3c0c934784754dd2f13e3240092eb13c89a05042033a493a0dfd51b9cca",
+      "hookVerified": true,
+      "reason": "Low profile misses expected OUTPUT_LIMIT rejection after fixed1048576; others pass.",
+      "decision": "accepted intended semantic rejection"
+    },
+    {
+      "name": "kube-short",
+      "run": "controls1",
+      "logSha256": "ca5327f1bc0d0fd97d7a5d3a97c630ab27bff0471979d4674ca650d0d88f44b5",
+      "hookVerified": true,
+      "reason": "Low600ms profile gets RBAC_DENIED instead of TIMEOUT after fixed15000, proving child advanced beyond intended timeout; high/control route pass.",
+      "decision": "accepted intended semantic rejection"
+    },
+    {
+      "name": "tail-short",
+      "run": "controls1",
+      "logSha256": "bd3562c7ed2859963615f092ce82d4f0d033d5c4c78c712986796833c7d4a1ef",
+      "hookVerified": true,
+      "reason": "Low600ms profile gets RBAC_DENIED instead of TIMEOUT after fixed15000; high/control route pass.",
+      "decision": "accepted intended semantic rejection"
+    },
+    {
+      "name": "diagnostic",
+      "run": "controls1",
+      "logSha256": "1b82c72ca26c3958ed32a8805b11d106bbc82fb302d9a79e99689241df5e70e0",
+      "hookVerified": true,
+      "reason": "Both exact16/80 diagnostic assertions observe200 code units after fixed4096.",
+      "decision": "accepted intended semantic rejection"
+    },
+    {
+      "name": "kube-poll",
+      "run": "poll-controls1",
+      "logSha256": "aef9e76afc19b3049ce91e86b5ab1dd327122e868fb5d5f2903c2d13bb2bc94d",
+      "hookVerified": true,
+      "reason": "Both50/200 profiles now hit operation LEASE_TIMEOUT after fixed1000 polling; intended successful readiness assertion fails. Not harness timeout.",
+      "decision": "accepted intended semantic rejection"
+    },
+    {
+      "name": "tail-poll",
+      "run": "poll-controls1",
+      "logSha256": "3904aab319ba9ffd738ee92fea05396b51ca01485e2cbc1832abb4c6e4efe7f9",
+      "hookVerified": true,
+      "reason": "Both Tail50/200 cadence success cases now fail only TAILSCALE_EXPOSURE_READINESS_TIMEOUT after fixed1000 polling; rollback succeeds and no secondary TypeError/aggregate occurs.",
+      "decision": "accepted intended semantic rejection"
+    },
+    {
+      "name": "manifest-depth",
+      "run": "controls1",
+      "logSha256": "7a3b9ba64b77be5487662e7ea85bae32df5819fea0850be5fb6b06ea463d07b3",
+      "hookVerified": true,
+      "reason": "Missing expected COMPLEXITY_LIMIT exception on genuine parser input after fixed64.",
+      "decision": "accepted intended semantic rejection"
+    },
+    {
+      "name": "manifest-alias",
+      "run": "controls1",
+      "logSha256": "bbdb8dc083e2439daeda9078726121187aa6b1dc28d2248c24b43338b4946f04",
+      "hookVerified": true,
+      "reason": "Missing expected ALIAS_LIMIT exception on genuine YAML aliases after fixed1000.",
+      "decision": "accepted intended semantic rejection"
+    }
+  ],
+  "preservation": [
+    "Controls1 historical tail-poll secondary TypeError remains recorded; superseded only by new clean poll-controls1 evidence.",
+    "Runtime3 applies to cumulative-prism-correction; fast6 and complete poll module baseline/control verify the sole reviewed test delta at cumulative-poll-rollback. No complete runtime rerun is claimed.",
+    "Source binding checked including exact symlink target, all67 files before and after. Mutation hooks independently reconstructed from current production bytes, exact anchors/counts and resulting hashes."
+  ],
+  "remaining": [
+    "CI2-CAPTURE",
+    "CI2-PRODUCTION-ROUTE",
+    "Final package documentation/evidence acceptance after added tests."
+  ]
+}

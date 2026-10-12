@@ -95,7 +95,7 @@ export class Inventory {
       const buffer = Buffer.alloc(65536);
       let size = 0;
       for (;;) {
-        const read = fs.readSync(fd, buffer, 0, buffer.length, null);
+        const read = fs.readSync(fd, buffer, 0, Math.min(buffer.length, before.size - size), null);
         if (!read) break;
         size += read;
         if (size > before.size) throw new Error('SNAPSHOT_CHANGED');
@@ -139,7 +139,8 @@ export class Inventory {
     for (const item of this.files.values()) {
       try {
         const stat = fs.lstatSync(item.path);
-        if (!stat.isFile() || stableStat(stat) !== item.stamp) this.block('SNAPSHOT_CHANGED', item.path);
+        if (!stat.isFile() || stableStat(stat) !== item.stamp
+          || (item.hash !== null && this.hashFile(item.path, stat) !== item.hash)) this.block('SNAPSHOT_CHANGED', item.path);
       } catch { this.block('SNAPSHOT_CHANGED', item.path); }
     }
   }

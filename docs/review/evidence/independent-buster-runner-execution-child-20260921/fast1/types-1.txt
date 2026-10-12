@@ -1,0 +1,9 @@
+skills/buster/engine/test-gates/runner-attempt-envelope.ts(83,11): error TS2322: Type '{ attemptSpecDigest: string; schemaVersion: "worker-attempt-envelope.v1"; protocolVersion: "worker-protocol.v1"; pipelineRunId: string; moduleId: string | null; gateId: string | null; ... 14 more ...; queueDeadline: string; }' is not assignable to type 'WorkerAttemptEnvelopeV1'.
+  Types of property 'grantedCapabilities' are incompatible.
+    The type 'readonly string[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'.
+skills/common/plugin-runtime/foundation/config/buster-execution.ts(49,29): error TS2345: Argument of type '"buster-execution"' is not assignable to parameter of type '"buster-preparation" | "buster-admission" | "buster-dependency-readiness"'.
+skills/common/plugin-runtime/foundation/config/buster-execution.ts(67,29): error TS2345: Argument of type '"buster-execution-observation"' is not assignable to parameter of type '"buster-preparation" | "buster-admission" | "buster-dependency-readiness"'.
+tests/verification/contracts/check-pipeline-test-plan-runner.mts(224,48): error TS2339: Property 'artifact' does not exist on type 'ResolvedInputV1'.
+  Property 'artifact' does not exist on type '{ name: string; kind: "value"; schemaId: string; value: JsonValue; }'.
+tests/verification/contracts/check-pipeline-test-plan-runner.mts(1569,25): error TS2352: Conversion of type 'Awaited<T> & object & Record<"schemaVersion", unknown>' to type 'WorkerAttemptResultV1' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'Awaited<T> & object & Record<"schemaVersion", unknown>' is missing the following properties from type 'WorkerAttemptResultV1': protocolVersion, attemptId, claimId, claimGeneration, and 15 more.

@@ -1,0 +1,437 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "executionOwner": "root; independently reviewed raw evidence only",
+  "decision": "Accept all8semantic controls at bound84-file stand; lifecycle ownership gate remains separate incomplete and no global acceptance",
+  "boundFiles": 84,
+  "beforeAfterIdentityErrors": [],
+  "unexpectedDrift": [],
+  "protection": {
+    "violationRecorded": false
+  },
+  "results": [
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-cluster-production-route.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-production-shared-group-wrong",
+      "seconds": 11.18377852695994
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-cluster-production-route.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-production-runner-subject-wrong",
+      "seconds": 10.932122463011183
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-cluster-production-route.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-production-service-cluster-forwarding-dropped",
+      "seconds": 4.857281323056668
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-cluster-capture.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-capture-registry-array-retained",
+      "seconds": 13.746066394960508
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-cluster-capture.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-capture-nested-manifest-retained",
+      "seconds": 13.098573412979022
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-cluster-capture.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-capture-tail-prefix-array-retained",
+      "seconds": 13.118238872964866
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-cluster-capture.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-capture-tail-suffix-array-retained",
+      "seconds": 13.396041900035925
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-cluster-production-route.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-runtime-security-service-output-forwarding",
+      "seconds": 12.095572647056542
+    }
+  ],
+  "controls": [
+    {
+      "name": "production-shared-group-wrong",
+      "decision": "accepted intended semantic failure",
+      "reason": "Both Fixture profiles observe wrong.example.test in real auth resource rather than authored group. Other4service cases pass.",
+      "logSha256": "b41d6eb0b5a940ee84106b98e9acaba929b7cbd2e5162528e4db6aa68fa18193",
+      "hook": {
+        "mutation": "production-shared-group-wrong",
+        "pid": 167710,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-cluster-options.ts",
+        "beforeSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+        "afterSha256": "6c273dec6568948f3ca6ec44b6f5d07bc89e73f802d084ca1a03b5bd03da1556",
+        "replacements": [
+          {
+            "from": "leaseApiGroup: binding.leaseApiGroup, leaseApiVersion: binding.leaseApiVersion,",
+            "to": "leaseApiGroup: 'wrong.example.test', leaseApiVersion: binding.leaseApiVersion,",
+            "count": 1
+          }
+        ]
+      },
+      "counts": {
+        "tests": [
+          "6"
+        ],
+        "pass": [
+          "4"
+        ],
+        "fail": [
+          "2"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "production-runner-subject-wrong",
+      "decision": "accepted intended semantic failure",
+      "reason": "Both Fixture profiles observe actual lease access subject wrong-account rather than runner-first/second. Other4service cases pass.",
+      "logSha256": "19944663a7db4a548d6866e77b9e45687475966ffd37dc6ce0408885cada3d64",
+      "hook": {
+        "mutation": "production-runner-subject-wrong",
+        "pid": 169437,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-cluster-options.ts",
+        "beforeSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+        "afterSha256": "4411eda9e94a9f1a07389a93554a137619f3e8dbcc38834f935dda68e682f0da",
+        "replacements": [
+          {
+            "from": "runnerSubject: `${binding.controllerNamespace}/${runnerServiceAccount}`,",
+            "to": "runnerSubject: `${binding.controllerNamespace}/wrong-account`,",
+            "count": 1
+          }
+        ]
+      },
+      "counts": {
+        "tests": [
+          "6"
+        ],
+        "pass": [
+          "4"
+        ],
+        "fail": [
+          "2"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "production-service-cluster-forwarding-dropped",
+      "decision": "accepted intended semantic failure",
+      "reason": "All6service positive executions return execution_error with corresponding actual capability CONFIG_REQUIRED from removed production forwarding, failing passed-result assertion; not an import/setup error.",
+      "logSha256": "6a43a998c8663719e6f8c6bb55602c5951996bd6821a5f71c50c29f959fa8590",
+      "hook": {
+        "mutation": "production-service-cluster-forwarding-dropped",
+        "pid": 171159,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production.ts",
+        "beforeSha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+        "afterSha256": "349d77931cadb5acfb500248f487122141be5d55f6f49601f16b52ab95c14d00",
+        "replacements": [
+          {
+            "from": "    ...configuredClusterCapabilities(sources, policy, bindingSource),",
+            "to": "    ...{},",
+            "count": 1
+          }
+        ]
+      },
+      "counts": {
+        "tests": [
+          "6"
+        ],
+        "pass": [
+          "0"
+        ],
+        "fail": [
+          "6"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "capture-registry-array-retained",
+      "decision": "accepted intended semantic failure",
+      "reason": "Only caller registry capture case fails IMAGE_DENIED after post-capture mutation; all13other cases pass.",
+      "logSha256": "0db4f82d4de7adee1d0e1d5f0c47d4ae489a27a51a4e51d22946bb4048a84eef",
+      "hook": {
+        "mutation": "capture-registry-array-retained",
+        "pid": 171634,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+        "beforeSha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4",
+        "afterSha256": "f683f93519ebcd96b5c937e7aad1e4458e308db710f71912d4849fe59f603c34",
+        "replacements": [
+          {
+            "from": "this.registryPrefixes = [...options.allowedRegistryPrefixes];",
+            "to": "this.registryPrefixes = options.allowedRegistryPrefixes;",
+            "count": 1
+          }
+        ]
+      },
+      "counts": {
+        "tests": [
+          "14"
+        ],
+        "pass": [
+          "13"
+        ],
+        "fail": [
+          "1"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "capture-nested-manifest-retained",
+      "decision": "accepted intended semantic failure",
+      "reason": "Only caller manifest capture case fails actual parser COMPLEXITY_LIMIT after nested object mutation; all13other cases pass.",
+      "logSha256": "1d8c1e7222304e6d61e749f00a3fbd66e61290ad4b9f3b9b0101e4123be1e6d0",
+      "hook": {
+        "mutation": "capture-nested-manifest-retained",
+        "pid": 176006,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+        "beforeSha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4",
+        "afterSha256": "e8254d5f3871b6d354e4ccfe4eed2fcbe3369358541ddaf3477f2855efa9c5e2",
+        "replacements": [
+          {
+            "from": "this.manifest = Object.freeze({ ...options.manifest });",
+            "to": "this.manifest = options.manifest;",
+            "count": 1
+          }
+        ]
+      },
+      "counts": {
+        "tests": [
+          "14"
+        ],
+        "pass": [
+          "13"
+        ],
+        "fail": [
+          "1"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "capture-tail-prefix-array-retained",
+      "decision": "accepted intended semantic failure",
+      "reason": "Only caller Exposure namespace capture fails NAMESPACE_DENIED after array mutation; all13other cases pass.",
+      "logSha256": "c425d85a0e3ddd2b25ea194648d9ffeb45be6dc30ffafcf2ca81e41d8644a321",
+      "hook": {
+        "mutation": "capture-tail-prefix-array-retained",
+        "pid": 178192,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "beforeSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+        "afterSha256": "45aacf03937e955b98bca2a622f558384abacacf9b0fd356469d0a5affbe2395",
+        "replacements": [
+          {
+            "from": "this.#prefixes = [...new Set(options.allowedNamespacePrefixes)];",
+            "to": "this.#prefixes = options.allowedNamespacePrefixes;",
+            "count": 1
+          }
+        ]
+      },
+      "counts": {
+        "tests": [
+          "14"
+        ],
+        "pass": [
+          "13"
+        ],
+        "fail": [
+          "1"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "capture-tail-suffix-array-retained",
+      "decision": "accepted intended semantic failure",
+      "reason": "Only caller Exposure host capture fails HOST_DENIED after array mutation; all13other cases pass.",
+      "logSha256": "724d394f71bc3b2226a074ff546925c71ff21163cf4a6b7148d2731a4735988e",
+      "hook": {
+        "mutation": "capture-tail-suffix-array-retained",
+        "pid": 180398,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "beforeSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+        "afterSha256": "7a385070767c9ab9061b75179e92dd42ab0665eeb2e9ac74e56fd730b6955729",
+        "replacements": [
+          {
+            "from": "this.#suffixes = [...new Set(options.allowedHostSuffixes.map(suffix))];",
+            "to": "this.#suffixes = options.allowedHostSuffixes;",
+            "count": 1
+          }
+        ]
+      },
+      "counts": {
+        "tests": [
+          "14"
+        ],
+        "pass": [
+          "13"
+        ],
+        "fail": [
+          "1"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "runtime-security-service-output-forwarding",
+      "decision": "accepted intended semantic failure",
+      "reason": "Both RuntimeSecurity refusing-cap cases incorrectly return passed, failing notStrictEqual passed; original4Fixture/Exposure service cases pass.",
+      "logSha256": "bd08bf695c12e44441acf917aadea5316f2428e9c341027b4ae071cfaec194d4",
+      "hook": {
+        "mutation": "runtime-security-service-output-forwarding",
+        "pid": 182623,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-cluster-options.ts",
+        "beforeSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+        "afterSha256": "f3a2abc8a4a83f745016f42f6237d99d80c19f035abc0c03a6a8cf655f3f0c0a",
+        "replacements": [
+          {
+            "from": "...policy.runtimeSecurity, kubectlExecutable:",
+            "to": "...policy.runtimeSecurity, maximumOutputBytes: 16777216, kubectlExecutable:",
+            "count": 1
+          }
+        ]
+      },
+      "counts": {
+        "tests": [
+          "6"
+        ],
+        "pass": [
+          "4"
+        ],
+        "fail": [
+          "2"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "skipped": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    }
+  ],
+  "limits": [
+    "Baseline ci2-service2 positive20/20 is separate independently reviewed evidence; not rerun by this reviewer.",
+    "Policy mutants execute full unfiltered modules with no skipped/cancelled/todo cases. Missing-forwarding failure is intended real service construction path failure, not an infrastructure setup failure.",
+    "Owner failure/timeout guarantees and full security regression/DOC remain open gates.",
+    "No original finding, full CONFIG, native or live acceptance."
+  ]
+}

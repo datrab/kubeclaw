@@ -40,7 +40,7 @@ export async function fixture(t, options = {}) {
   const operator = 'kubeclaw.operator-messaging:operator', waits = 'kubeclaw.wait-store:waits';
   const network = 'kubeclaw.network-http:http', secrets = 'kubeclaw.secret-resolver:secrets';
   const deliveryRoot = path.join(root, 'deliveries'), waitRoot = path.join(root, 'waits');
-  const platform = { schemaVersion: 'pipeline-platform.v2', installationRoots: roots, trustedBuiltinRoots: roots,
+  const platform = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: { 'operator.request': operator, 'signal.wait': waits, 'network.http': network, 'secrets.read': secrets },
     grants: { 'kubeclaw.human-approval:approval': { 'operator.request': { allowedTargets: ['operators'] },

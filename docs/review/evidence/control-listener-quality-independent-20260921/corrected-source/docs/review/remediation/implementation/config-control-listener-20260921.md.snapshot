@@ -1,0 +1,75 @@
+# CONFIG: Control listener (2026-09-21)
+
+Status: implementation and author verification complete; fresh independent review pending. This bounded slice does not close CONFIG F1–F6.
+
+## Acceptance criteria recorded before production edits
+
+- CL1: one required `operator.prism.control.port` authored value, default 8080, strict integer TCP port. Runtime and Helm reject missing, unknown, string, fractional, zero and out-of-range values. No listener fallback.
+- CL2: production Control captures one immutable startup composition before asynchronous product-authority I/O; database credentials remain externally supplied. The actual HTTP listener uses that captured port. Two distinct authored profiles bind and serve the original health route; subsequent file/environment mutation cannot change the captured composition.
+- CL3: Control rejects even an empty legacy `PORT` override. Worker retains its existing independent PORT behavior. Remove Control Dockerfile ENV and Control-only chart ENV override; inherited image environment checks remain effective.
+- CL4: chart Control probes, Service target, Envoy local backend and all Control destination NetworkPolicies use the authored listener port. Stable service port 8080 and mTLS service/listener 8443 preserve discovery URLs and trust semantics. Worker, Studio, ingestion and agent ports remain separately owned.
+- CL5: original loader/image/Control/Helm suites remain executed. Any original assertions changed solely because the explicitly retired environment contract changed are identified; no weakened credential, trust or startup checks. Two distinct chart profiles cover SPIFFE enabled/disabled routing.
+- CL6: meaningful private source mutants fail behavioral assertions for startup listener authority and chart destination authority. Canonical changed-source lint and relevant typechecks pass; no suppression or test bypass. Local listener/Helm evidence does not claim Docker or cluster deployment.
+- DOC: update operator configuration guide and exact inventory lineage, preserving historical23settings/27reads counts and distinguishing the remaining PORT consumers. Record commands, failures, source identities and fresh nonauthor review before acceptance.
+
+## Consumer boundary
+
+Runtime: `skills/prism/server/control-config.ts`, `control.ts`, `control-server.ts`; shared strict schema/loader in `skills/common/plugin-runtime/foundation/config/`; authored `charts/kubeclaw/files/config/swarm.config.json` linked into Prism chart. Chart: `_swarm-config.tpl`, `workloads.yaml` probes/environment, `services.yaml` targetPort, `configmap-worker-trust.yaml` control-local, `networkpolicy.yaml` Control destination ports. Image: `docker/Dockerfile.prism-control`; built-image proof `tests/verification/deployment/prism-swarm-image.mjs`.
+
+Service/client URLs are discovery addresses, not the process listener author. Keeping service8080 avoids introducing another author or requiring external clients to change. The actual pod destination in NetworkPolicy must still follow the process port. Credentials, SPIFFE trust and product authority retain their existing owners.
+
+## Implementation and executed checks
+
+Required port is integer 1–65535 (not 0); host bind permissions remain runtime errors.
+The old `loadControlListenerConfig` resolver is removed. Production captures the
+service/product/listener composition once, before Pool construction and listener
+startup; the public existing HTTP factory delegates to the same configured factory.
+The shared schema/loader still permit Worker PORT because rejection is Control-only.
+
+Original assertion changes are limited to the retired listener API: the old
+listener-default/PORT28080 assertions now require canonical8080/database transport
+and reject PORT. Existing Helm CC4 preserves canonical required fields when changing
+its three policy fields; all assertions remain. The existing invalid product-opt-in
+production test removes fixture PORT0 so its unchanged product-origin rejection is
+reached. Image tests now pass the explicit role and add inheritedPORT/missingrole
+coverage. Previous cross-role built-image calls are superseded; each role runs its
+own original loader with inherited environment intact.
+
+Combined final 11 modules pass 357/357, zero skipped/cancelled, with stable production
+and test hashes in `control-route-quality-20260921/final-run.json`. The original
+75-case Control/local-listener subset also passed before final module consolidation.
+All changed-source canonical lint, Prism and foundation types, and shell syntax pass.
+The [linked route quality extraction](control-route-quality-20260921.md) resolves the
+24 inherited monolith lint violations; no thresholds or baselines were relaxed.
+
+Retained initial failures: a new Worker-port regression fixture omitted required
+DATABASE_URL; Helm CC4 omitted the new required port; an original product-invalid
+fixture still supplied retired PORT0. Each fixture was corrected without weakening
+its existing behavioral assertions. Source-mutant and independent review results
+are recorded separately. Docker/cluster networking and privileged-port availability
+were not executed; no deployment was performed. CONFIG remains open.
+
+Three private negative controls are detected by unchanged positive tests: a fixed
+unrelated listener port fails both actual-child health oracles; stale Service
+`targetPort:8080` fails the four authored chart profiles; restoring old Control
+Dockerfile `PORT=8080` fails the original image-environment loader tests. The first
+listener-mutant attempt collided with an unrelated existing8080 listener; that log
+is retained and was not accepted as the behavioral proof. The isolated rerun uses
+a separately selected free port and fails specifically because the authored port
+never serves health. Missing/unknown image roles and legitimate inherited Worker
+PORT are covered by the passing tests.
+
+The original runtime-image/release-configuration/deployment-release/GitOps-release
+suites pass24/24, zero skips/cancellations. Schema-field and error-code documentation
+checks pass. Exact source snapshots and hashes are in this slice's
+`source-identities.json`; Markdown review copies use `.snapshot` extensions.
+
+A root counterexample subsequently found a failed-stderr regression in the linked
+route extraction. Its first independent acceptance was held. The explicit Console
+fix and real HTTP child regression are recorded in the linked quality report; the
+final regression count/source identity must include that additional case. Earlier
+356-case evidence is preserved separately and is not substituted for revalidation.
+
+The post-fix author run now passes357/357 with stable source/test hashes; full
+changed-source lint and Prism typecheck pass again. Fresh review must include the
+closed-stderr HTTP regression before bounded acceptance is restored.

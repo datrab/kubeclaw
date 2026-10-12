@@ -1,3 +1,5 @@
+import { validateTailscaleOperationPolicy } from './tailscale-operation-policy.ts';
+import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
 import { runProcessInput } from './process-input.ts';
 import { assertHandoffSourceRequest,existingExposureHandoff,exposureHandoffPatch,observedExposureHandoff } from './exposure-handoff.ts';
 import { EXPOSURE_OWNER_ANNOTATION, EXPOSURE_REQUEST_ANNOTATION, EXPOSURE_PREDECESSORS_ANNOTATION, exposurePredecessors, exposureIdentity, generationObserved, assertExposureRequest, assertRequestedExposure, ownedReleaseAction } from './exposure-generation.ts';
@@ -11,12 +13,13 @@ type JsonObject = Record<string, unknown>;
 type Execute = (command: string, args: readonly string[], options: Readonly<Record<string, unknown>>)
   => Promise<{ stdout?: string; stderr?: string }>;
 
-async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>): Promise<{ stdout: string; stderr: string }> {
+async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>, processInputPolicy: BusterProcessInputSettings): Promise<{ stdout: string; stderr: string }> {
   const result = await runProcessInput(command, args, {
+    processInputPolicy,
     ...(options.env ? { env: options.env as NodeJS.ProcessEnv } : {}),
     ...(options.signal ? { signal: options.signal as AbortSignal } : {}),
     input: options.input as string | Buffer | null ?? null,
-    timeoutMs: Number(options.timeout ?? 30_000), maximumOutputBytes: Number(options.maxBuffer ?? 1024 * 1024),
+    timeoutMs: options.timeout as number, maximumOutputBytes: options.maxBuffer as number,
     prefix: 'TAILSCALE_EXPOSURE_KUBECTL',
   });
   const stdout = result.stdout.toString('utf8'); const stderr = result.stderr.toString('utf8');
@@ -25,6 +28,7 @@ async function executeProcess(command: string, args: readonly string[], options:
 }
 
 export interface TailscaleExposureCapabilityInvokerOptions {
+  readonly processInputPolicy: BusterProcessInputSettings;
   readonly kubectlExecutable: string;
   readonly controllerNamespace: string;
   readonly leaseApiGroup: string;
@@ -32,7 +36,9 @@ export interface TailscaleExposureCapabilityInvokerOptions {
   readonly allowedNamespacePrefixes: readonly string[];
   readonly allowedHostSuffixes: readonly string[];
   readonly maximumExecutionMs: number;
-  readonly pollIntervalMs?: number;
+  readonly pollIntervalMs: number;
+  readonly shortCommandTimeoutMs: number;
+  readonly maximumCommandOutputBytes: number;
   readonly execute?: Execute;
   readonly now?: () => Date;
 }
@@ -70,15 +76,19 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
   readonly #suffixes: readonly string[];
   readonly #maximumExecutionMs: number;
   readonly #pollIntervalMs: number;
+  readonly #shortCommandTimeoutMs: number;
+  readonly #maximumCommandOutputBytes: number;
   readonly #execute: Execute;
   readonly #now: () => Date;
   readonly #environment: NodeJS.ProcessEnv;
 
   constructor(options: TailscaleExposureCapabilityInvokerOptions) {
-    this.#kubectl = fs.realpathSync(options.kubectlExecutable);
-    if (!fs.statSync(this.#kubectl).isFile()) throw new Error('TAILSCALE_EXPOSURE_KUBECTL_INVALID');
+    const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);
+    validateTailscaleOperationPolicy(options);
+    this.#shortCommandTimeoutMs = options.shortCommandTimeoutMs;
+    this.#maximumCommandOutputBytes = options.maximumCommandOutputBytes;
     if (!DNS_LABEL.test(options.controllerNamespace)) throw new Error('TAILSCALE_EXPOSURE_CONTROLLER_NAMESPACE_INVALID');
-    if (!/^[a-z0-9.-]+$/u.test(options.leaseApiGroup) || !/^v[0-9]+(?:[a-z]+[0-9]+)?$/u.test(options.leaseApiVersion)) {
+    if (!/^[a-z0-9.-]+$/u.test(options.leaseApiGroup) || !/^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$/u.test(options.leaseApiVersion)) {
       throw new Error('TAILSCALE_EXPOSURE_API_INVALID');
     }
     if (!Array.isArray(options.allowedNamespacePrefixes) || options.allowedNamespacePrefixes.length < 1
@@ -92,8 +102,10 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
     this.#apiVersion = options.leaseApiVersion; this.#prefixes = [...new Set(options.allowedNamespacePrefixes)];
     this.#suffixes = [...new Set(options.allowedHostSuffixes.map(suffix))];
     this.#maximumExecutionMs = integer(options.maximumExecutionMs, 'maximumExecutionMs', 1, MAX_TIMER_MS);
-    this.#pollIntervalMs = integer(options.pollIntervalMs ?? 1000, 'pollIntervalMs', 10, this.#maximumExecutionMs);
-    this.#execute = options.execute ?? executeProcess; this.#now = options.now ?? (() => new Date());
+    this.#pollIntervalMs = integer(options.pollIntervalMs, 'pollIntervalMs', 10, this.#maximumExecutionMs);
+    this.#kubectl = fs.realpathSync(options.kubectlExecutable);
+    if (!fs.statSync(this.#kubectl).isFile()) throw new Error('TAILSCALE_EXPOSURE_KUBECTL_INVALID');
+    this.#execute = options.execute ?? ((command, args, operation) => executeProcess(command, args, operation, processInputPolicy)); this.#now = options.now ?? (() => new Date());
     this.#environment = { PATH: process.env.PATH, KUBECONFIG: process.env.KUBECONFIG,
       KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,
       KUBERNETES_SERVICE_PORT: process.env.KUBERNETES_SERVICE_PORT };
@@ -110,7 +122,7 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
     if (signal.aborted) throw new Error('TAILSCALE_EXPOSURE_CANCELLED');
     try {
       const result = await this.#execute(this.#kubectl, args, { input, signal, timeout: Math.min(timeout, this.#maximumExecutionMs),
-        maxBuffer: 1024 * 1024, env: this.#environment });
+        maxBuffer: this.#maximumCommandOutputBytes, env: this.#environment });
       return String(result.stdout ?? '');
     } catch (error) {
       if (signal.aborted) throw new Error('TAILSCALE_EXPOSURE_CANCELLED');
@@ -156,7 +168,7 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
       servicePort: integer(spec.servicePort, 'servicePort', 1, 65535), expiresAt };
   }
   async #rollbackFailedPrepare(leaseName: string, owner: string, originalError: unknown): Promise<void> {
-    const timeoutMs = Math.min(15_000, this.#maximumExecutionMs);
+    const timeoutMs = Math.min(this.#shortCommandTimeoutMs, this.#maximumExecutionMs);
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
@@ -191,7 +203,7 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
     const {leaseName,namespace,timeoutMs,path,hostname}=this.#prepareInput(payload);
     const resource = `busternamespaceleases.${this.#apiGroup}`;
     for (const verb of ['get', 'patch']) {
-      const allowed = (await this.#run(['auth', 'can-i', verb, resource, '-n', this.#controllerNamespace], null, signal, 15_000)).trim();
+      const allowed = (await this.#run(['auth', 'can-i', verb, resource, '-n', this.#controllerNamespace], null, signal, this.#shortCommandTimeoutMs)).trim();
       if (allowed !== 'yes') throw new Error(`TAILSCALE_EXPOSURE_RBAC_DENIED:${verb}`);
     }
     const before = await this.#lease(leaseName, signal); const verified = this.#verifyLease(before, payload, namespace);
@@ -217,7 +229,7 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
         serviceName: verified.serviceName, servicePort: verified.servicePort, path, hostname: hostname ?? null } } };
     try {
       if (!alreadyOwned) await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
-        '--type=merge', '-p', JSON.stringify(patch)], null, signal, 15_000);
+        '--type=merge', '-p', JSON.stringify(patch)], null, signal, this.#shortCommandTimeoutMs);
       const ready = await this.#wait(leaseName, 'Ready', owner, signal, timeoutMs);
       assertRequestedExposure(ready, payload);
       this.#verifyLease(ready, payload, namespace);
@@ -226,7 +238,7 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
       let handoff;
       if(payload.retentionMode==='await-readiness'){
         const transfer=exposureHandoffPatch(ready,identity);
-        await this.#run(['patch','busternamespacelease',leaseName,'-n',this.#controllerNamespace,'--type=merge','-p',JSON.stringify(transfer.patch)],null,signal,15_000);
+        await this.#run(['patch','busternamespacelease',leaseName,'-n',this.#controllerNamespace,'--type=merge','-p',JSON.stringify(transfer.patch)],null,signal,this.#shortCommandTimeoutMs);
         const transferred=await this.#wait(leaseName,'Ready',transfer.handoff.owner,signal,timeoutMs);
         this.#verifyLease(transferred,payload,namespace);assertRequestedExposure(transferred,payload);
         handoff=observedExposureHandoff(transferred,identity);
@@ -262,7 +274,7 @@ export class TailscaleExposureCapabilityInvoker implements TestProviderCapabilit
     const verified = this.#verifyLease(before, payload, namespace);
     const resourceVersion = text(metadata.resourceVersion, 'lease.resourceVersion', 64);
     const patch = JSON.stringify({ metadata: { resourceVersion }, spec: { purpose: 'gate', exposure: { provider: 'off' } } });
-    await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace, '--type=merge', '-p', patch], null, signal, 15_000);
+    await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace, '--type=merge', '-p', patch], null, signal, this.#shortCommandTimeoutMs);
     const released = await this.#wait(leaseName, 'Off', identity.owner, signal, this.#maximumExecutionMs);
     const status = object(released.status, 'lease.status');
     if (status.namespaceName !== namespace || status.expiresAt !== verified.expiresAt) throw new Error('TAILSCALE_EXPOSURE_LEASE_CHANGED');

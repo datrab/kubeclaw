@@ -1,0 +1,183 @@
+diff --git a/skills/buster/engine/test-gates/remote-plan-service.ts b/skills/buster/engine/test-gates/remote-plan-service.ts
+index ebb367b2..f33d8413 100644
+--- a/skills/buster/engine/test-gates/remote-plan-service.ts
++++ b/skills/buster/engine/test-gates/remote-plan-service.ts
+@@ -30,19 +30,7 @@ import {
+ import { ensureDirectoryDurable, withDurableStoreLock } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
+ import type { RegistrySnapshot } from '@kubeclaw/plugin-foundation/registry/types';
+ import { TestPlanRunner, type TestPlanRunResult } from './runner.ts';
+-import { DirectCommandCapabilityInvoker, type DirectCommandCapabilityInvokerOptions } from './direct-command-runtime.ts';
+-import { ContainerBuildCapabilityInvoker, type ContainerBuildCapabilityInvokerOptions } from './container-build-runtime.ts';
+-import { KubernetesFixtureCapabilityInvoker, type KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-runtime.ts';
+-import { TailscaleExposureCapabilityInvoker, type TailscaleExposureCapabilityInvokerOptions } from './tailscale-exposure-runtime.ts';
+-import { NetworkHttpCapabilityInvoker, type NetworkHttpCapabilityInvokerOptions } from './network-http-runtime.ts';
+-import { BrowserAxeCapabilityInvoker, type BrowserAxeCapabilityInvokerOptions } from './browser-axe-runtime.ts';
+-import { BrowserLighthouseCapabilityInvoker, type BrowserLighthouseCapabilityInvokerOptions } from './browser-lighthouse-runtime.ts';
+-import { BrowserVisualCapabilityInvoker, type BrowserVisualCapabilityInvokerOptions } from './browser-visual-runtime.ts';
+-import { BrowserPlaywrightCapabilityInvoker, type BrowserPlaywrightCapabilityInvokerOptions } from './browser-playwright-runtime.ts';
+-import { SecurityScanCapabilityInvoker, type SecurityScanCapabilityInvokerOptions } from './security-scan-runtime.ts';
+-import { KubernetesRuntimeSecurityCapabilityInvoker,
+-  type KubernetesRuntimeSecurityCapabilityInvokerOptions } from './kubernetes-runtime-security.ts';
+-import { CompositeTestProviderCapabilityInvoker } from './composite-capability-runtime.ts';
++import { createBusterCapabilityRuntime, type BusterCapabilityRuntimeOptions } from './capability-runtime.ts';
+ 
+ import {
+   assertCompactionIntent, assertCompactedPlanJobRecord, compactionDigest, readJobArtifact, resultArtifacts, verifyRetainedSource,
+@@ -334,28 +322,16 @@ export class FileBusterPlanJobStore {
+   }
+ }
+ 
+-export interface BusterRemotePlanServiceOptions {
++export interface BusterRemotePlanServiceOptions extends BusterCapabilityRuntimeOptions {
+   readonly store: FileBusterPlanJobStore;
+   readonly registry: RegistrySnapshot;
+   readonly workerRevision: string;
+   readonly runtimeRoot: string;
+   readonly tarExecutable: string;
+   readonly maximumExtractedBytes: number;
+-  readonly allowedCapabilities: ReadonlySet<string>;
+   readonly maximumActiveJobs?: number;
+   readonly maximumQueuedJobs?: number;
+   readonly maximumConcurrentAttempts?: number;
+-  readonly directCommand?: Omit<DirectCommandCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly containerBuild?: Omit<ContainerBuildCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly kubernetesFixture?: Omit<KubernetesFixtureCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly tailscaleExposure?: TailscaleExposureCapabilityInvokerOptions;
+-  readonly networkHttp?: NetworkHttpCapabilityInvokerOptions;
+-  readonly browserAxe?: BrowserAxeCapabilityInvokerOptions;
+-  readonly browserLighthouse?: BrowserLighthouseCapabilityInvokerOptions;
+-  readonly browserVisual?: BrowserVisualCapabilityInvokerOptions;
+-  readonly browserPlaywright?: Omit<BrowserPlaywrightCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly securityScan?: Omit<SecurityScanCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly kubernetesRuntimeSecurity?: Omit<KubernetesRuntimeSecurityCapabilityInvokerOptions, 'workspaceRoot'>;
+   readonly dependencyReadiness?: { readonly maximumExecutionMs: number; readonly maximumOutputBytes: number };
+   readonly now?: () => Date;
+   readonly execute?: (
+@@ -375,6 +351,7 @@ async function runTar(
+   signal: AbortSignal,
+   onLine?: (line: string) => void,
+ ): Promise<void> {
++  signal.throwIfAborted();
+   await new Promise<void>((resolve, reject) => {
+     const child = spawn(executable, [...args], { stdio: ['ignore', 'pipe', 'pipe'] });
+     let fault: Error | null = null;
+@@ -692,73 +669,8 @@ export class BusterRemotePlanService {
+         throw error;
+       } finally { fs.rmSync(archive, { force: true }); }
+       const paths = { jobRoot, repositoryRoot, workspaceRoot, artifactRoot, observabilityRoot };
+-      const directCommand = this.#options.allowedCapabilities.has('command.execute')
+-        ? new DirectCommandCapabilityInvoker({
+-          ...(this.#options.directCommand ?? (() => { throw new Error('BUSTER_DIRECT_COMMAND_CONFIG_REQUIRED'); })()),
+-          workspaceRoot,
+-        })
+-        : null;
+-      const containerBuild = this.#options.allowedCapabilities.has('container.build')
+-        ? new ContainerBuildCapabilityInvoker({
+-          ...(this.#options.containerBuild ?? (() => { throw new Error('BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED'); })()),
+-          workspaceRoot,
+-        })
+-        : null;
+-      const kubernetesFixture = this.#options.allowedCapabilities.has('kubernetes.fixture')
+-        ? new KubernetesFixtureCapabilityInvoker({
+-          ...(this.#options.kubernetesFixture ?? (() => { throw new Error('BUSTER_KUBERNETES_FIXTURE_CONFIG_REQUIRED'); })()),
+-          workspaceRoot: jobRoot,
+-        })
+-        : null;
+-      const tailscaleExposure = this.#options.allowedCapabilities.has('kubernetes.exposure')
+-        ? new TailscaleExposureCapabilityInvoker(this.#options.tailscaleExposure
+-          ?? (() => { throw new Error('BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED'); })())
+-        : null;
+-      const networkHttp = this.#options.allowedCapabilities.has('network.http')
+-        ? new NetworkHttpCapabilityInvoker(this.#options.networkHttp
+-          ?? (() => { throw new Error('BUSTER_NETWORK_HTTP_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserAxe = this.#options.allowedCapabilities.has('browser.axe')
+-        ? new BrowserAxeCapabilityInvoker(this.#options.browserAxe
+-          ?? (() => { throw new Error('BUSTER_BROWSER_AXE_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserLighthouse = this.#options.allowedCapabilities.has('browser.lighthouse')
+-        ? new BrowserLighthouseCapabilityInvoker(this.#options.browserLighthouse
+-          ?? (() => { throw new Error('BUSTER_BROWSER_LIGHTHOUSE_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserVisual = this.#options.allowedCapabilities.has('browser.visual')
+-        ? new BrowserVisualCapabilityInvoker(this.#options.browserVisual
+-          ?? (() => { throw new Error('BUSTER_BROWSER_VISUAL_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserPlaywright = this.#options.allowedCapabilities.has('browser.playwright')
+-        ? new BrowserPlaywrightCapabilityInvoker({
+-          ...(this.#options.browserPlaywright ?? (() => { throw new Error('BUSTER_BROWSER_PLAYWRIGHT_CONFIG_REQUIRED'); })()),
+-          workspaceRoot,
+-        }) : null;
+-      const securityScan = this.#options.allowedCapabilities.has('security.scan')
+-        ? new SecurityScanCapabilityInvoker({
+-          ...(this.#options.securityScan ?? (() => { throw new Error('BUSTER_SECURITY_SCAN_CONFIG_REQUIRED'); })()),
+-          workspaceRoot: jobRoot,
+-        }) : null;
+-      const kubernetesRuntimeSecurity = this.#options.allowedCapabilities.has('kubernetes.runtime-security')
+-        ? new KubernetesRuntimeSecurityCapabilityInvoker({
+-          ...(this.#options.kubernetesRuntimeSecurity
+-            ?? (() => { throw new Error('BUSTER_KUBERNETES_RUNTIME_SECURITY_CONFIG_REQUIRED'); })()),
+-          workspaceRoot: jobRoot,
+-        }) : null;
+-      const routes = new Map();
+-      if (directCommand) routes.set('command.execute', directCommand);
+-      if (containerBuild) routes.set('container.build', containerBuild);
+-      if (kubernetesFixture) routes.set('kubernetes.fixture', kubernetesFixture);
+-      if (tailscaleExposure) routes.set('kubernetes.exposure', tailscaleExposure);
+-      if (networkHttp) routes.set('network.http', networkHttp);
+-      if (browserAxe) routes.set('browser.axe', browserAxe);
+-      if (browserLighthouse) routes.set('browser.lighthouse', browserLighthouse);
+-      if (browserVisual) routes.set('browser.visual', browserVisual);
+-      if (browserPlaywright) routes.set('browser.playwright', browserPlaywright);
+-      if (securityScan) routes.set('security.scan', securityScan);
+-      if (kubernetesRuntimeSecurity) routes.set('kubernetes.runtime-security', kubernetesRuntimeSecurity);
+-      const capabilities = routes.size ? new CompositeTestProviderCapabilityInvoker(routes) : null;
++      controller.signal.throwIfAborted();
++      const capabilities = createBusterCapabilityRuntime(this.#options, paths);
+       const run = this.#options.execute
+         ? await this.#options.execute(job, paths, controller.signal)
+         : await new TestPlanRunner({
+@@ -770,9 +682,9 @@ export class BusterRemotePlanService {
+           observabilityRoot,
+           maximumConcurrency: job.maximumConcurrency,
+           grants: new Map(Object.entries(job.grants)),
+-          ...(capabilities ? { capabilityInvoker: capabilities } : {}),
++          ...(capabilities.invoker ? { capabilityInvoker: capabilities.invoker } : {}),
+           signal: controller.signal,
+-        }).run().finally(() => directCommand?.shutdown());
++        }).run().finally(() => capabilities.shutdown());
+       if (run.cleanupErrors.length === 0 && run.attempts.every((attempt) => attempt.executionState === 'completed')) {
+         await cleanupTerminalWorkspace(jobRoot);
+       }
+diff --git a/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts b/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts
+index f5bdd48a..e408bbb3 100644
+--- a/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts
++++ b/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts
+@@ -274,6 +274,27 @@ function novaStore(name: string) {
+   });
+ }
+ try {
++  // Bind cancellation to the real durable running transition, before extraction.
++  // This removes scheduling luck from the pre-aborted executor regression.
++  const earlyAbortJob = job('dispatch:early-abort');
++  const originalTransition = busterStore.transition.bind(busterStore);
++  const earlyAbortFinished = Promise.withResolvers<void>();
++  busterStore.transition = async (...args: Parameters<typeof busterStore.transition>) => {
++    const status = await originalTransition(...args);
++    if (args[0] === earlyAbortJob.jobId && args[2] === 'running') await service.cancel(earlyAbortJob.jobId);
++    if (args[0] === earlyAbortJob.jobId && args[2] === 'cancelled') earlyAbortFinished.resolve();
++    return status;
++  };
++  let earlyAbortTimer: NodeJS.Timeout | undefined;
++  try {
++    await service.submit(earlyAbortJob);
++    await Promise.race([earlyAbortFinished.promise, new Promise<never>((_resolve, reject) => {
++      earlyAbortTimer = setTimeout(() => reject(new Error('EARLY_ABORT_DID_NOT_FINISH')), 5000);
++    })]);
++    assert.equal(executionCounts.get(earlyAbortJob.jobId) ?? 0, 0,
++      'an already cancelled job must not start its executor after extraction');
++    assert.equal((await service.status(earlyAbortJob.jobId)).state, 'cancelled');
++  } finally { clearTimeout(earlyAbortTimer); busterStore.transition = originalTransition; }
+   const concurrentBase = job('dispatch:concurrent-conflict');
+   const concurrentChanged = { ...concurrentBase, maximumConcurrency: 2 };
+   const concurrentChangedJob = { ...concurrentChanged, requestDigest: remotePlanJobDigest(concurrentChanged) };

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prism-swarm-config
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+data:
+  swarm.config.json: |
+{{ include "prism.swarmConfig" . | indent 4 }}

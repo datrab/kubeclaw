@@ -1,0 +1,21 @@
+{
+  "manifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-runtime-20260924/runtime-correction-integration-manifest.json",
+  "manifestSha256": "ee8320021070bea1cd8d717693996678b8c42340e6347c334d51aa13091ba930",
+  "review": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-buster-cluster-invoker-policy-20260921/runtime-correction-review-20260924.json",
+  "reviewSha256": "b758599119f59fb5451314339bbd4031a13f0753680be1a813cdf3ee1e77f772",
+  "status": "integrated; verification pending",
+  "files": [
+    {
+      "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+      "beforeSha256": "79691f6b90dece3f267e2f693f53f926932da8d7bd2891f2e1c34956107c5bd0",
+      "sha256": "dc0f81d07a2bcc8555bb0d3f7e1555fe4e442ba05ac4a49a753051818f4221a6",
+      "kind": "file"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "beforeSha256": "8380b792ce0707c690612655db144e0a8d4adebbb35de32a9e2f17a3b4b4da17",
+      "sha256": "5cc4ec91787529dcd437e56d8cb1a22720a3b1569a32bafdc7ec9f372afba50d",
+      "kind": "file"
+    }
+  ]
+}

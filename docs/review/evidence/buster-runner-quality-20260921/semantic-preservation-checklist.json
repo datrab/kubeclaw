@@ -1,0 +1,33 @@
+{
+  "status": "private unexecuted source checklist; no runtime acceptance",
+  "scheduler": [
+    "same sorted pending traversal",
+    "skip before cancel before dependency checks",
+    "same group default counters and release finally",
+    "same Promise.race selected completion",
+    "same finally cleanup before cleanup-error projection",
+    "same sorted immutable final results"
+  ],
+  "node": [
+    "same attemptNumber order",
+    "same cancellation and cleanup retry stop",
+    "same successful fixture retention",
+    "same authority and nonce evaluation point, now grouped final argument"
+  ],
+  "grants": [
+    "node grants take precedence including empty array",
+    "registration grants only if node absent/null",
+    "absent/null both denies with empty grant list"
+  ],
+  "diagnostics": [
+    "evidenceFault then runtimeFault then worker summary",
+    "empty string retained by explicit null check"
+  ],
+  "remaining": [
+    "constructor and attempt decomposition",
+    "durable completion catch outcome handling",
+    "strict imports/type/lint verification",
+    "D17 required execution and storage policy wiring plus all callers",
+    "complete original runtime/negative verification after source-window release"
+  ]
+}

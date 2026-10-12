@@ -1,0 +1,319 @@
+{
+  "syntax": "pass",
+  "nativeSourceMatches": [
+    {
+      "path": "contracts/pipeline-worker-core/v1/README.md",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/package.json",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v2.mjs",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v3.mjs",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/digest.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/index.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-types-v3.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/tsconfig.json",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "package.json",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/BOUNDARIES.md",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/package.json",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/src/index.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/tsconfig.json",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/digest.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/log-decoder.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-executor.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-control-channel.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-hierarchy-events.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-node-identity.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-output-spool.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-owned-children.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-cancellation.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-control.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-launches.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-output.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-accounting.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-result.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-runtime-identity.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-supervisor-authority.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-capacity.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-children.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-state.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/phase-deadline.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/resource-reservations.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/resource-result-fields.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "skills/worker/core/worker/trust.ts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/deployment/native-worker-node.test.mjs",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/tsconfig.native-scope.json",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-control-channel.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-deadline-fixture.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-deadline.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-contract.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-journal.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-launcher.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-observation.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-quiescence.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-scope-live.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-topology-live.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-observation-durability.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-output-spool.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-owned-children.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-ownership-store.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-resource-reservations.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-terminal-capacity.test.mts",
+      "matchesLiveSource": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-terminal-resources.test.mts",
+      "matchesLiveSource": true
+    }
+  ],
+  "initrdEmbeddedInitMatchesReviewedScript": true,
+  "guestRootInitCopyMatches": true
+}

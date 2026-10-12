@@ -56,10 +56,11 @@ Run:
 npm test --prefix skills/nova/plugins/prism-design
 ```
 
-Package tests found: 0.
+Package tests found: 1.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/prism-design/plugin.json`
 - Package root: `skills/nova/plugins/prism-design`
 - Authored package guide: `skills/nova/plugins/prism-design/README.md`
+- Test: `skills/nova/plugins/prism-design/tests/live-function.test.ts`

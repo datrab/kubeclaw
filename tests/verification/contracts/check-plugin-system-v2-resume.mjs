@@ -11,7 +11,7 @@ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-v2-resume-'));
 try {
   const fixtureRoot = path.resolve('tests/fixtures/plugin-system-v2');
   const platform = {
-    schemaVersion: 'pipeline-platform.v2',
+    schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
     installationRoots: [fixtureRoot],
     trustedBuiltinRoots: [fixtureRoot],
     externalTrust: {

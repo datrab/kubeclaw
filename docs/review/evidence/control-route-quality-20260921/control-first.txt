@@ -1,0 +1,93 @@
+✔ direction selection rolls back on actual SQL insert failure and replays a committed response (3103.460326ms)
+✔ all feedback actions persist valid wire IDs, explicit retries deduplicate and fresh actions remain distinct (1845.081962ms)
+✔ failed rejection retains proposed state; stale and historical partial selections do not invent receipts (1724.872102ms)
+✔ wire preference IDs replay only exact owner and content while preserving internal UUIDs (1748.923051ms)
+✔ wire ID migration preserves legacy UUID/content and refuses ambiguous historical wire identities (3364.152674ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (3641.277389ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (2028.596184ms)
+✔ CC3 real Control service profile 1 selects history, artifact root and Studio URL (2062.580457ms)
+✔ CC3 real Control service profile 2 selects history, artifact root and Studio URL (2001.79986ms)
+✔ actual Control image declarations and exact image proof accept authored profile one (636.374348ms)
+✔ actual Control image declarations and exact image proof accept authored profile two (628.094379ms)
+✔ image proof requires the selected role and preserves legitimate Worker PORT (620.547728ms)
+✔ Control listener rejects invalid authored port undefined (4.265248ms)
+✔ Control listener rejects invalid authored port null (0.617805ms)
+✔ Control listener rejects invalid authored port 8080 (0.627895ms)
+✔ Control listener rejects invalid authored port 0 (0.624266ms)
+✔ Control listener rejects invalid authored port -1 (0.640196ms)
+✔ Control listener rejects invalid authored port 1.5 (0.626606ms)
+✔ Control listener rejects invalid authored port 65536 (0.610046ms)
+✔ Control listener rejects invalid authored port true (0.607536ms)
+✔ Control accepts TCP boundary 1 without promising host bind permissions (0.946254ms)
+✔ Control accepts TCP boundary 65535 without promising host bind permissions (0.704608ms)
+✔ Control snapshot owns the port before asynchronous composition; Worker keeps its PORT author (7.786768ms)
+✔ original production entrypoint serves authored listener profile one (767.027568ms)
+✔ original production entrypoint serves authored listener profile two (548.838582ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (2728.179277ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (518.995716ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (2091.240766ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (2187.884348ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (2952.238878ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (547.194694ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (2007.203737ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (2222.655629ms)
+✔ independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key (2027.911077ms)
+✔ independent original composed restart rejects prior session authority before recording and preserves fresh authorized intent (2145.237142ms)
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (4.36329ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (1.213121ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (1.374865ms)
+✔ Tailscale exchange requires the trusted ingress path (3.104429ms)
+✔ session signatures and expiry fail closed (0.41318ms)
+✔ CC1 Control pipelinePreferenceSubject rejects undefined (4.472833ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "" (0.614915ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "operator:test" (0.586075ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "user-abc" (0.680258ms)
+✔ CC1 Control pipelinePreferenceSubject rejects 1 (0.833361ms)
+✔ CC1 Control pipelinePreferenceSubject rejects false (0.699768ms)
+✔ CC1 Control artifactRoot rejects undefined (0.739549ms)
+✔ CC1 Control artifactRoot rejects null (0.566774ms)
+✔ CC1 Control artifactRoot rejects "" (0.568475ms)
+✔ CC1 Control artifactRoot rejects "/" (0.832041ms)
+✔ CC1 Control artifactRoot rejects "relative" (0.466952ms)
+✔ CC1 Control artifactRoot rejects "/tmp/../artifacts" (0.493973ms)
+✔ CC1 Control artifactRoot rejects "/tmp/artifacts/" (0.439981ms)
+✔ CC1 Control artifactRoot rejects "/tmp//artifacts" (0.441841ms)
+✔ CC1 Control artifactRoot rejects "/tmp/\u0000artifacts" (0.448511ms)
+✔ CC1 Control artifactRoot rejects 1 (0.435211ms)
+✔ CC1 Control studioPublicUrl rejects undefined (0.527453ms)
+✔ CC1 Control studioPublicUrl rejects null (0.449151ms)
+✔ CC1 Control studioPublicUrl rejects "" (0.485632ms)
+✔ CC1 Control studioPublicUrl rejects "relative" (0.468262ms)
+✔ CC1 Control studioPublicUrl rejects "file:///tmp" (0.433571ms)
+✔ CC1 Control studioPublicUrl rejects "https://" (0.497853ms)
+✔ CC1 Control studioPublicUrl rejects "https://user:pass@studio" (0.430861ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio?query=1" (0.459092ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio#fragment" (0.567334ms)
+✔ CC1 Control studioPublicUrl rejects "https://bad host" (0.439581ms)
+✔ CC1 Control studioPublicUrl rejects 1 (0.423531ms)
+✔ CC1 strict Control object (7.343386ms)
+✔ CC1 strict Control object (0.523713ms)
+✔ CC1 strict Control object (0.562954ms)
+✔ CC1 strict Control object (0.518823ms)
+✔ CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty (0.589025ms)
+✔ CC2 retired ARTIFACT_ROOT rejects even empty (0.532603ms)
+✔ CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty (0.466532ms)
+✔ CC2 authored Control snapshot survives file mutation (1.236352ms)
+ℹ tests 75
+ℹ suites 0
+ℹ pass 75
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 47662.054016

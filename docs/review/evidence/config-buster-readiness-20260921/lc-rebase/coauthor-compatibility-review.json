@@ -1,0 +1,22 @@
+{
+  "at": "2026-09-21T18:34:48.336793+00:00",
+  "scope": "BR coauthor compatibility review of two private rebases; not independent total acceptance",
+  "runtimeExecuted": false,
+  "liveEdited": false,
+  "results": [
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "currentBaselineSha256": "e2da22b17dc8e7a26d52650d46e81e30c97f42c04254f9a454c2abc957011f83",
+      "rebasedSha256": "bade10bab0cc111f8fec4e1c2166e949549b2880f0e800b8c61f455ad8885d92",
+      "criterion": "Original BR draft plus exactly LC grouped-settings adaptation; exported API unchanged; early readiness validation and policy forwarding retained.",
+      "exactComparison": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "currentBaselineSha256": "7f82532f841843d098d45122c9f1ab404e48b9077851b7d417460c31ad436b2f",
+      "rebasedSha256": "9fc8af9062b107a72c437f3e61d743b5794d96ed002b69170d3238942cae2a6a",
+      "criterion": "Current LC file restored byte-for-byte by removing only BR explicit policy insertion; evidence helper, caller and assertions retained.",
+      "exactComparison": true
+    }
+  ]
+}

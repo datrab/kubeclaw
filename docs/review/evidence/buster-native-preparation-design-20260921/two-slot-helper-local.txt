@@ -1,0 +1,22 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: /usr/local/bin/node /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/build-plugin-sandbox.mjs --buster-browser-helper /tmp/buster-helper-build-lCifLe/restricted failed: 1
+
+1 !== 0
+
+    at run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/run-buster-helper-authority.mjs:12:10)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/run-buster-helper-authority.mjs:18:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

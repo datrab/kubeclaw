@@ -1,0 +1,14 @@
+[
+  {
+    "name": "result",
+    "mutation": "settings.maximumResultBytes -> 67108864",
+    "status": 1,
+    "detected": "Original real HTTP test rejected missing expected rejection; no module/fixture error"
+  },
+  {
+    "name": "deadline",
+    "mutation": "settings.dispatchTimeoutMs -> 900000",
+    "status": 1,
+    "detected": "Original real HTTP test rejected missing expected rejection; no module/fixture error"
+  }
+]

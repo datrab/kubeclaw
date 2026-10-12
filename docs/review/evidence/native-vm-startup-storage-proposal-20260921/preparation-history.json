@@ -1,0 +1,10 @@
+{
+  "previousCheckpointExecuted": false,
+  "previousInitialDisk": {
+    "path": "node_modules/.cache/native-test-vm-startup-20260921/guest-root.ext4",
+    "bytes": 8589934592,
+    "sha256": "229742ee6a61de9e9306c757d45e78e249aa67b2df44a19056efaaeadd3613b4"
+  },
+  "retainedDiskPath": "node_modules/.cache/native-test-vm-startup-20260921/guest-root.before-readiness-token.ext4",
+  "change": "Only diagnostic readiness parsing now requires exact complete durable/locked token; stdout 16KiB and stderr128KiB bounds; original cases/deadlines/VM budgets unchanged"
+}

@@ -1,3 +1,6 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
+// Preparation authority is modeled here; parser, extraction and durable service/store remain real.
+import { ModeledBusterRemotePlanService as BusterRemotePlanService, ModeledPreparedPlanJobStore as FileBusterPlanJobStore } from '../../fixtures/test-gate/modeled-preparation.mts';
 import { verifyQualityProviderRuntime } from './quality-provider-runtime.mts';
 import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
 import assert from 'node:assert/strict';
@@ -11,11 +14,7 @@ import {
   createProductionNovaTestGate,
   discoverPackages,
 } from '@kubeclaw/nova-core';
-import {
-  BusterRemotePlanRuntime,
-  BusterRemotePlanService,
-  FileBusterPlanJobStore,
-} from '@kubeclaw/buster-engine';
+import { BusterRemotePlanRuntime } from '@kubeclaw/buster-engine';
 import {
   resolvedTestPlanDigest,
   stableTestIdentity,
@@ -112,7 +111,9 @@ export function provider() {
     trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey,
   });
   const service = new BusterRemotePlanService({
-    store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'), tarExecutable: '/usr/bin/tar',
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+    store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'), tarExecutable: process.env.KUBECLAW_TEST_TAR ?? '/usr/bin/tar',
     maximumExtractedBytes: 16 * 1024 * 1024, allowedCapabilities: new Set(),
   });
   const runtime = new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token,
@@ -149,6 +150,7 @@ export function provider() {
     assert.equal(graph?.decisionDigest, executed.remote.decision.decisionDigest);
     assert.deepEqual(graph?.attempts, storedResult.attempts);
     assert.deepEqual(graph?.results, storedResult.nodes);
+    assert.ok(executed.remote.status.result);
     assert.equal(executed.remote.status.result?.sizeBytes > 0, true);
 
     await verifyQualityProviderRuntime({ repository, stateRoot: path.join(temporary, 'quality-passed'),

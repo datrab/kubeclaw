@@ -1,0 +1,105 @@
+{
+  "reviewer": "/root/runtime_security_policy_review",
+  "decision": "accept_executed_CI2_capture_and_production_route_and_RS2_service_proof_at_recorded_run_only",
+  "run": "docs/review/evidence/buster-cluster-runtime-20260924/ci2-service2",
+  "result": [
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+        "tests/verification/contracts/buster-cluster-capture.test.mjs"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "ci2",
+      "seconds": 27.546882487018593
+    }
+  ],
+  "rawCounts": {
+    "tests": 20,
+    "passed": 20,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "binding": {
+    "objectsBeforeAfter": 35432,
+    "independentlyComputedDrift": [],
+    "handoffFilesVerified": 81,
+    "guard": {
+      "violationRecorded": false
+    },
+    "productionModuleTraces": [
+      {
+        "path": "skills/buster/engine/test-gates/production.ts",
+        "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+        "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+        "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+        "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+      },
+      {
+        "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "sha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc"
+      },
+      {
+        "path": "skills/nova/core/test-gates/production.ts",
+        "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1"
+      },
+      {
+        "path": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+        "sha256": "6a9a37a9963c6677318287fe7678fe1807a606d2b18cf857768ba94d63b44081"
+      },
+      {
+        "path": "tests/fixtures/test-gate/cluster-test-ownership.mjs",
+        "sha256": "021f3cf0f542c3de92befa39195c552ec2dad62e49fd2deb4cc4ec3287ac256d"
+      }
+    ]
+  },
+  "criteriaEvidence": {
+    "CI2-CAPTURE": "All 14 named file/caller cases pass. Reviewed exact test hash retains genuine CLI calls before/after mutation, old snapshot new-consumer positive, fresh file snapshot/caller constructor changed-policy rejection and command/no-command oracles. Arrays cover namespace, registry, secrets, storage and hosts; nested manifest maximumDepth exercised.",
+    "CI2-PRODUCTION-ROUTE": "Both profiles of KubernetesFixture and TailscaleExposure pass actual public decoder/service/discovered provider IPC/Nova HTTP route. Each iterates allowed, grant-denied, route-denied. Allowed validates real child PIDs, selected auth group/namespace; Kubernetes additionally validates lease version, runner subject and registry image; exposure provider validates returned hostname. Denials match exact error families and zero command growth.",
+    "RS2-service": "Both RuntimeSecurity profiles execute the same actual production service path with successful observed result. Each also performs grant-denied and route-denied with zero command growth and a separately reloaded lower output quota producing exactly one actual command plus KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED. Profile1 allowed2048/denied1024 and profile2 allowed8192/denied2048 bound genuine response byte size between their limits. Group-qualified command and namespace are asserted exactly.",
+    "notJustSummary": "Raw output has separate passing lines for all six profile/capability cases; each current run-bound source case necessarily awaits all applicable authority/policy modes. No conditional skip or replacement factory/forwarding. Native preparation identity/publication and local API responses remain explicitly modeled."
+  },
+  "postRunSourceDifferences": [
+    {
+      "path": "package.json",
+      "runSha256": "f8196926199327a52aea2dd050a870f9d9952182989dd00099ec19b01f23baf0",
+      "currentSha256": "63322d00421a359d4c310e2e8a59ac888dd869dd800db715612a032aa7e3d517"
+    }
+  ],
+  "preservedFailures": "ci2-service1 remains failed18/20 due missing HTTPS registry fixture credentials; this acceptance does not relabel it.",
+  "stillOpen": [
+    "Semantic CI2 forwarding/capture controls and RuntimeSecurity controls require independent intended-failure inspection.",
+    "Full affected/original regression scopes and canonical checks at final combined source.",
+    "Adversarial timeout/shutdown/lifecycle evidence is not established by this success run.",
+    "Final architecture/implementation evidence DOC update and independent final review.",
+    "RS2 chart/packaging/checksum requirements are separate from the service gap proved here.",
+    "No full CONFIG, original findings, native isolation, live Kubernetes/Tailnet/controller or production process-ownership closure."
+  ],
+  "evidenceHashes": {
+    "ci2.txt": "44a547e95fea4928cf4bc6812e4ff47c1c23680ac71646c2f824e062006e2e61",
+    "results.json": "d8dafa0f2e5f1390c7a06d5cab3a7aa13bccd352c6581dd0de9526e58325923f",
+    "before.json": "a4b19fc17f2168c7421ad4f3d9fdc3e5fd5830cc2d90a2a8a3e49018366429a5",
+    "after.json": "a4b19fc17f2168c7421ad4f3d9fdc3e5fd5830cc2d90a2a8a3e49018366429a5",
+    "handoff-verified.json": "6261d67f3f76435446f9c9e710d632714f57c4c5d0e38b7dc338e693e20846e2",
+    "protection-result.json": "05dd716546b9e586fe00c15a7f70c0935ed7201c9bdfc1d016436fd97c66f21d",
+    "unexpected-drift.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  }
+}

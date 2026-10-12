@@ -1,0 +1,51 @@
+{
+  "status": "frozen private service extension V4; source review and runtime evidence required",
+  "createdAt": "2026-09-24T14:28:19.591433+00:00",
+  "files": [
+    {
+      "path": "docs/architecture/buster-runtime-security-configuration.md",
+      "beforeSha256": "f46182c8f137ad0f8060d2386320babfb5032988ccdccf500356cb002fd18e48",
+      "afterSha256": "f8b02af9d4242a34b30d483842b13eab43c896688f075f87694283f9fa1f3537",
+      "baselineSource": "live integrated V3 document"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "beforeSha256": "4db289648abaa8d022cb653fdecc051d54f0bef47d01cc62a2516b38a0327b14",
+      "afterSha256": "eb9e26ac4a13726767d988062b24a25a85e9068046efc7fc6ba28d4ef61d2bd6",
+      "baselineSource": "live integrated V3 document"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-api.mjs",
+      "beforeSha256": "d40e348ef9372cc013391e27f4f4be20c636116fe1b6fc0fc9af83e15fa3c7f0",
+      "afterSha256": "07749cccd627419e828243f57f4f939b1430c233d7cd8e99516fe4257ea1c4d6",
+      "baselineSource": "CI2 files-v2"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-program.cjs",
+      "beforeSha256": "499dc5c951bb3fdc956205b2bd19271313abc446363da99fa1611ebf50e0c0b1",
+      "afterSha256": "502569a89a517e0f2f4f930c15d744e4e0ab9841c7d1dc7ddb394bcdcc4a88ae",
+      "baselineSource": "CI2 files-v2"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-route-provider.mjs",
+      "beforeSha256": "4a6d0c1cc263bb964a25c4a0a5fe2a8c8e940aa127990b5be4369d67c65b1888",
+      "afterSha256": "3c14e02b7b1b0865f1accf0b45e5ad5584a29a1213aa75094fa5a93a02fd33c8",
+      "baselineSource": "CI2 files-v2"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "beforeSha256": "1210ffe9c2680b584b01778643a959386d9e0d80f1cf14a79d90a39199637c4c",
+      "afterSha256": "bfa196bb803550bfee80f7a9ef90b328750ec92c2444e2322c2971e3f98b7b9c",
+      "baselineSource": "CI2 files-v2"
+    }
+  ],
+  "requires": {
+    "ci2Manifest": "docs/review/evidence/buster-cluster-ci2-proof-20260924/manifest-v2.json",
+    "ci2ManifestSha256": "53cc58e8e935f2ce19bf0db7af522aa10d8ee3396a3ea0854f8e983c3387a0fc",
+    "ownershipHelperSha256": "021f3cf0f542c3de92befa39195c552ec2dad62e49fd2deb4cc4ec3287ac256d",
+    "ci2SourceReview": "docs/review/evidence/independent-cluster-ci2-proof-20260924/source-review-v2.json"
+  },
+  "productionChanges": false,
+  "lintChanges": false,
+  "runtimeExecuted": false
+}

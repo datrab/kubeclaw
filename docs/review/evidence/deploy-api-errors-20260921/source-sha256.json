@@ -1,0 +1,7 @@
+{
+  "scripts/deploy.sh": "56eab83c31f31774d9b1166208015a0e46b836744b4ebbe15a0ea35a37fdd9f7",
+  "scripts/deploy-observation.mjs": "c098c00954423edfbd60046beb7fc1a6c58f3c57025b6d9eab772f39695f8586",
+  "scripts/tests/deploy-api-errors.test.py": "7565d6b30640ef2c02e52777aa5c2364e4418ee282bacc4cba48cb07611d74fa",
+  "docs/deployment/setup-flow.md": "7c34f354f52c31dfce3f73f997afc290c10cee6a94cb8fd3858b735837166e76",
+  "docs/deployment/tailscale-operator.md": "6c36d94514271c05325568d1e644ad2a797d221373c82244e3c2c1eebe7b8d8b"
+}

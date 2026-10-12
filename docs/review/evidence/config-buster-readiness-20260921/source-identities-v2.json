@@ -1,0 +1,20 @@
+{
+  "kind": "additive review corrections; original manifest and snapshots retained",
+  "sources": [
+    {
+      "path": "docs/review/remediation/implementation/config-buster-readiness-20260921.md",
+      "sha256": "d639d06cd36a494f668d4b580a1b40306c177227406ff942dace85f40c495723",
+      "bytes": 5789
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+      "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2",
+      "bytes": 7608
+    },
+    {
+      "path": "charts/kubeclaw/templates/_buster-native.tpl",
+      "sha256": "e12d651294c5dc9e98a409f3fb5ab24fc0dc44a6869d1980a534d93af640de55",
+      "bytes": 2653
+    }
+  ]
+}

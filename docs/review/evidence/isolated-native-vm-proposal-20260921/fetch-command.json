@@ -1,0 +1,19 @@
+[
+  "apk",
+  "fetch",
+  "--recursive",
+  "--output",
+  "node_modules/.cache/native-test-vm-20260921/packages",
+  "qemu-system-x86_64=11.0.3-r0",
+  "linux-virt=6.18.52-r0",
+  "busybox",
+  "musl",
+  "util-linux-misc",
+  "e2fsprogs",
+  "gcc",
+  "musl-dev",
+  "make",
+  "flock=2.42.3-r1",
+  "bash=5.3.9-r1",
+  "linux-headers=7.0.0-r1"
+]

@@ -1,0 +1,22 @@
+✔ CR05 real journal consumes authored 2051 byte result limit (506.753087ms)
+✔ CR05 real journal consumes authored 2052 byte result limit (696.926457ms)
+✔ CS3 real ownership store enforces 1 authored records (297.96746ms)
+✔ CS3 real ownership store enforces 2 authored records (392.608273ms)
+✔ CS3 real ownership store enforces 1 authored bytes (98.158574ms)
+✔ CS3 real ownership store enforces 8192 authored bytes (106.489038ms)
+✔ CS3 actual execution journal admission and process boundary profile 1 (800.458647ms)
+✔ CS3 actual execution journal admission and process boundary profile 2 (490.50504ms)
+✔ new-admission rejection persists no accepted work and cannot block historical receipt replay (990.581815ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (2110.915045ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (2308.75262ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (402.122588ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (386.360751ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (6908.504781ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23307.214973

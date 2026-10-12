@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/contracts/provider-loader-ownership.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "ownership-module",
+    "seconds": 2.888094595982693
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint-config.mjs",
+      "tests/verification/contracts/provider-loader-ownership.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "ownership-lint",
+    "seconds": 1.166186815011315
+  }
+]

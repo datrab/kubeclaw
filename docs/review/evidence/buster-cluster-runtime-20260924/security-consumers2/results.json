@@ -1,0 +1,14 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "ci2",
+    "seconds": 6.375682624988258
+  }
+]

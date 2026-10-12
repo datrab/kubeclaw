@@ -1,0 +1,118 @@
+TAP version 13
+# Subtest: CE01 shared authorship is centrally validated before explicit E2E-profile projection
+ok 1 - CE01 shared authorship is centrally validated before explicit E2E-profile projection
+  ---
+  duration_ms: 13.158311
+  type: 'test'
+  ...
+# Subtest: CE02 root rejects invalid central authorship before E2E derivation
+ok 2 - CE02 root rejects invalid central authorship before E2E derivation
+  ---
+  duration_ms: 4.419054
+  type: 'test'
+  ...
+# Subtest: CE02 operator rejects invalid central authorship before E2E derivation
+ok 3 - CE02 operator rejects invalid central authorship before E2E derivation
+  ---
+  duration_ms: 5.227195
+  type: 'test'
+  ...
+# Subtest: CE02 worker-value rejects invalid central authorship before E2E derivation
+ok 4 - CE02 worker-value rejects invalid central authorship before E2E derivation
+  ---
+  duration_ms: 4.855756
+  type: 'test'
+  ...
+# Subtest: CE03 run-scoped E2E overrides are added only after central validation and projection
+ok 5 - CE03 run-scoped E2E overrides are added only after central validation and projection
+  ---
+  duration_ms: 2.522725
+  type: 'test'
+  ...
+# Subtest: canonical startup rejects missing/unknown/malformed admission and every retired ENV author
+ok 6 - canonical startup rejects missing/unknown/malformed admission and every retired ENV author
+  ---
+  duration_ms: 245.832498
+  type: 'test'
+  ...
+# Subtest: actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3}
+ok 7 - actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3}
+  ---
+  duration_ms: 1463.248772
+  type: 'test'
+  ...
+# Subtest: actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3}
+ok 8 - actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3}
+  ---
+  duration_ms: 1770.642563
+  type: 'test'
+  ...
+# Subtest: startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit
+ok 9 - startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit
+  ---
+  duration_ms: 675.13611
+  type: 'test'
+  ...
+# Subtest: prepared source accepts valid identity and rejects JSON scalar coercion
+ok 10 - prepared source accepts valid identity and rejects JSON scalar coercion
+  ---
+  duration_ms: 1.706364
+  type: 'test'
+  ...
+# Subtest: staged input accepts valid identity and rejects JSON scalar coercion
+ok 11 - staged input accepts valid identity and rejects JSON scalar coercion
+  ---
+  duration_ms: 24.679149
+  type: 'test'
+  ...
+# Subtest: cleanup effects accepts valid identity and rejects JSON scalar coercion
+ok 12 - cleanup effects accepts valid identity and rejects JSON scalar coercion
+  ---
+  duration_ms: 0.668947
+  type: 'test'
+  ...
+# Subtest: cleanup gate digest cannot be coerced from a JSON array
+ok 13 - cleanup gate digest cannot be coerced from a JSON array
+  ---
+  duration_ms: 47.704774
+  type: 'test'
+  ...
+# Subtest: recovered source reference remains bound to the originally accepted extraction header
+ok 14 - recovered source reference remains bound to the originally accepted extraction header
+  ---
+  duration_ms: 45.092976
+  type: 'test'
+  ...
+# Subtest: real ledger serializes competing admissions into exactly two fixed slots
+ok 15 - real ledger serializes competing admissions into exactly two fixed slots
+  ---
+  duration_ms: 156.047836
+  type: 'test'
+  ...
+# Subtest: admission reserves a future cleanup record inside the original record quota
+ok 16 - admission reserves a future cleanup record inside the original record quota
+  ---
+  duration_ms: 80.01938
+  type: 'test'
+  ...
+# Subtest: profile, clock and settings ownership is captured before waiting on a real writer lock
+ok 17 - profile, clock and settings ownership is captured before waiting on a real writer lock
+  ---
+  duration_ms: 57.59617
+  type: 'test'
+  ...
+# Subtest: malformed persisted cleanup association is rejected without rewriting bytes
+ok 18 - malformed persisted cleanup association is rejected without rewriting bytes
+  ---
+  duration_ms: 63.321278
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15103.985396

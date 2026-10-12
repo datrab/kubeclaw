@@ -162,7 +162,7 @@ export function provider() { return { async execute(invocation, context) {
 
   const port = await freePort();
   const platform = path.join(temporary, 'platform.json');
-  fs.writeFileSync(platform, JSON.stringify({ schemaVersion: 'pipeline-platform.v2', installationRoots: [installRoot],
+  fs.writeFileSync(platform, JSON.stringify({ schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [installRoot],
     trustedBuiltinRoots: [installRoot], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: './platform-state',
     shutdownTimeoutMs: 5_000, orchestratorIssuerId: 'phase7-restart', administrativeDecisionIssuers: [] }));

@@ -1,0 +1,15 @@
+{
+  "mismatches": [],
+  "authorizedPortOverrides": [
+    "charts/kubeclaw/files/config/prism-worker.config.json",
+    "charts/kubeclaw/templates/_swarm-config.tpl",
+    "charts/prism/templates/_swarm-config.tpl",
+    "charts/prism/templates/workloads.yaml",
+    "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "skills/prism/tests/swarm-worker-config.test.mts",
+    "skills/prism/tests/worker-process-shutdown-native.mts",
+    "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "tests/verification/deployment/prism-swarm-image.mjs"
+  ]
+}

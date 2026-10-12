@@ -13,7 +13,7 @@ function inputs(root) {
   const roots = ['common', 'nova', 'buster'].map(role => path.join(repository, 'skills', role, 'plugins'));
   fs.mkdirSync(file('repository'), { recursive: true });
   fs.writeFileSync(file('platform.json'), JSON.stringify({
-    schemaVersion: 'pipeline-platform.v2', installationRoots: roots, trustedBuiltinRoots: roots,
+    schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, storageRoot: file('state'),
     shutdownTimeoutMs: 1000, orchestratorIssuerId: 'supervisor-stop-regression', administrativeDecisionIssuers: [],
     providers: { 'git.repository.read': 'kubeclaw.repository-adapter:repository', 'artifacts.write': 'kubeclaw.artifact-store:artifact-store' },

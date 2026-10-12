@@ -1,0 +1,44 @@
+{
+  "reviewer": "cleanup_scheduler_final_review",
+  "decision": "bounded verification-runner source accepted; not executed",
+  "findingsResolved": [
+    "All originalScripts run independently even after new-suite failure",
+    "Manifest regular-file rows reject symlink substitution",
+    "Shared scope plan is included in before/after bindings",
+    "Nonempty protected-write violations log causes failure regardless of command exit"
+  ],
+  "coverage": "Six new modules through maintained command; ten original modules directly; five original scripts directly; cleanup/scheduler/execution/component maintained commands preserve broader regressions. Changed source canonical lint and four distinct type projects plus shell parse. Full existing readiness-config and tailscale-exposure-cutover commands additionally cover unchanged affected runtime/profile consumers.",
+  "limits": [
+    "Execution requires separately approved source and exact integrated manifest",
+    "No runtime, chart, semantic-control or cluster implementation acceptance from this runner review",
+    "Native/live modules remain separate authorized gates",
+    "Actual results, trace, source drift and semantic controls must still be reviewed"
+  ],
+  "bindings": [
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/run.py",
+      "sha256": "448eff6cf26e890f1a3be577886566605acaed3a1c9187d37d12ecfbf3919865"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/planned-checks.json",
+      "sha256": "081b3ddb25fb49865c1d209258e6855d2a23f79f6cb5cbb0c428098412350c49"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-invoker-policy-20260921/manifest-v1.json",
+      "sha256": "a26f8790b36757b5f1d6c72620b502b4f9dd14464a9c8806a75d13c4d185b232"
+    },
+    {
+      "path": "docs/review/evidence/independent-component-worker-listener-20260921/plan.json",
+      "sha256": "2cb098201b81549fe718685c4b8883bce98a37c597906398e190e7c050d89ad4"
+    },
+    {
+      "path": "docs/review/evidence/independent-component-worker-listener-20260921/bind.py",
+      "sha256": "6aa16f442dcd963ad7cc4c4cb466714fe17be5ccc5df282d7c970ffd313b6148"
+    }
+  ],
+  "followup": {
+    "previousRunnerSha256": "1351005a23dcbaca14fff8f2aa3035c8f1b9321465873feff197204e49f54289",
+    "change": "Adds two complete maintained commands; no removed scope or weakened assertions",
+    "sourceImplementationStatus": "Separate cluster V1 source blocker remains; no integration/runtime authorization inferred"
+  }
+}

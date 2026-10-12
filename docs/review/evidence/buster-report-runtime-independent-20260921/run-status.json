@@ -1,0 +1,13 @@
+{
+  "originalAndFilesystemTests": {
+    "exit": 0,
+    "passed": 6,
+    "skipped": 0
+  },
+  "canonicalLintExit": 0,
+  "typecheckExit": 0,
+  "deadlineProbeExit": 0,
+  "preservationCheckExit": 0,
+  "readerProbeExit": 0,
+  "frozenSourceHashesStillMatch": true
+}

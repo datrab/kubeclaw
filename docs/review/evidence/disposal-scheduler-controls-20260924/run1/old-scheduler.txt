@@ -1,0 +1,105 @@
+✖ scheduler settles started peer before cleanup; late failure false (5.504244ms)
+✖ scheduler settles started peer before cleanup; late failure true (1.803538ms)
+✖ scheduler drains a started peer after synchronous reservation failure (50.18111ms)
+✖ scheduler preserves execution and cleanup errors (4.21148ms)
+✔ scheduler preserves cleanup-only error identity (0.374859ms)
+✖ actual Runner drains its active provider and cleans a late fixture after a preparation rejection (645.746752ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 1
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2991.85188
+
+✖ failing tests:
+
+test at tests/verification/contracts/runner-scheduler-drain.test.mjs:32:3
+✖ scheduler settles started peer before cleanup; late failure false (5.504244ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/runner-scheduler-drain.test.mjs:50:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/runner-scheduler-drain.test.mjs:32:3
+✖ scheduler settles started peer before cleanup; late failure true (1.803538ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/runner-scheduler-drain.test.mjs:50:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/runner-scheduler-drain.test.mjs:69:1
+✖ scheduler drains a started peer after synchronous reservation failure (50.18111ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/runner-scheduler-drain.test.mjs:77:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/runner-scheduler-drain.test.mjs:84:1
+✖ scheduler preserves execution and cleanup errors (4.21148ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(error instanceof AggregateError)
+  
+      at Object.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/runner-scheduler-drain.test.mjs:89:5)
+      at expectedException (node:assert:578:17)
+      at expectsError (node:assert:703:21)
+      at strict.rejects (node:assert:769:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/runner-scheduler-drain.test.mjs:88:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/runner-scheduler-provider-drain.test.mjs:17:1
+✖ actual Runner drains its active provider and cleans a late fixture after a preparation rejection (645.746752ms)
+  AssertionError [ERR_ASSERTION]: outer Runner must wait for its already-started peer
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/runner-scheduler-provider-drain.test.mjs:55:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

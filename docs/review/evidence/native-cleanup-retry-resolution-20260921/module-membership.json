@@ -1,0 +1,28 @@
+{
+  "before": [
+    "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+    "tests/verification/reliability/native-process-policy.test.mts",
+    "tests/verification/reliability/worker-native-cleanup.test.mts",
+    "tests/verification/reliability/worker-resource-reservations.test.mts",
+    "tests/verification/reliability/worker-owned-children.test.mts",
+    "tests/verification/reliability/worker-native-quiescence.test.mts",
+    "tests/verification/reliability/worker-terminal-capacity.test.mts",
+    "tests/verification/reliability/worker-ownership-store.test.mts",
+    "tests/verification/reliability/worker-native-journal.test.mts",
+    "tests/verification/deployment/native-worker-node.test.mjs"
+  ],
+  "after": [
+    "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+    "tests/verification/reliability/native-process-policy.test.mts",
+    "tests/verification/reliability/worker-native-cleanup.test.mts",
+    "tests/verification/reliability/worker-native-cleanup-retry.test.mts",
+    "tests/verification/reliability/worker-resource-reservations.test.mts",
+    "tests/verification/reliability/worker-owned-children.test.mts",
+    "tests/verification/reliability/worker-native-quiescence.test.mts",
+    "tests/verification/reliability/worker-terminal-capacity.test.mts",
+    "tests/verification/reliability/worker-ownership-store.test.mts",
+    "tests/verification/reliability/worker-native-journal.test.mts",
+    "tests/verification/deployment/native-worker-node.test.mjs"
+  ],
+  "preservedOriginalOrder": true
+}

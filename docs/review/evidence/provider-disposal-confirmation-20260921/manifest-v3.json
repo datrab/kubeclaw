@@ -1,0 +1,72 @@
+{
+  "status": "frozen V3 for independent source review, no execution",
+  "files": [
+    {
+      "path": "docs/architecture/buster-fixture-cleanup.md",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/docs/architecture/buster-fixture-cleanup.md",
+      "beforeSha256": "5ec0fe3c6e7997f4cd49c6c9db87b70088978db9f72f14a95db2e7d4833a578f",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v3/docs/architecture/buster-fixture-cleanup.md",
+      "sha256": "dd455285522761c5c9f26251291a7f7325d404e53b0e8b220c92c0d5484d63c4"
+    },
+    {
+      "path": "package.json",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/package.json",
+      "beforeSha256": "a85f5b8f4f77d662400a2362e790bfc9b6aed18cb9fa3ef15986a5d5b6b8d0b0",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v3/package.json",
+      "sha256": "a94c2d1af6d7a68a0949f3ccb6d89362cb6f7e78c14cdfb986d0f8cd59fdceca"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/skills/buster/engine/test-gates/provider-loader.ts",
+      "beforeSha256": "03c227b06bc5d6e5b967d8ddfd519816bfffce45007f0e52b50dd49347606f50",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v3/skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/skills/buster/engine/test-gates/provider-process-session.ts",
+      "beforeSha256": "21f71e7885deec3faedaf8ff374a27522d9ca929aa2c320de175096213ba9787",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v3/skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/skills/buster/engine/test-gates/runner-fixtures.ts",
+      "beforeSha256": "10c02adcf2a5975eeab7759cffd9ba6d9cbf38dce76971dfe1789554197ec239",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v3/skills/buster/engine/test-gates/runner-fixtures.ts",
+      "sha256": "c8c3709acc66be25880a9e56bc4ab0df9f8eb3d3b76b19e0d3aedb3964c0705b"
+    },
+    {
+      "path": "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+      "beforeSha256": "5c401ec8acd2cf6b2b8d95c9d223e82a82d0f7ab6816bd8b9bbbfc7ab5daa2f6",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v3/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+      "sha256": "c5ad3ab397057d02a52a1d26d1b23486c4c59d9988b3410ed3768223cfa9e257"
+    },
+    {
+      "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+      "before": null,
+      "beforeSha256": null,
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v3/tests/verification/contracts/provider-disposal-recovery.test.mjs",
+      "sha256": "22eb659212d4bc2f5f43b6678b4608b15e703869cbfef6d77bcfce3fd154fae6"
+    },
+    {
+      "path": "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs",
+      "before": null,
+      "beforeSha256": null,
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v3/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs",
+      "sha256": "a31ae99e4e61a71962b3017c1eaeca8227457a9891722d6616fbdcb05a062b13"
+    },
+    {
+      "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "beforeSha256": "5fb8ada78a1aacde27cd7af1c23ecc359ee783b29067734bf62766d33d676fd6",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v3/tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "sha256": "edbe313ffac1eb2b4d2435cca801ca1c9e711cfe5f23de0783f616a88460a050"
+    }
+  ],
+  "criteriaSha256": "0778836653bbb72af2be1854b5260bf74acdbb3e0b3fbfbc3baeeb4085ffd3c9",
+  "readmeSha256": "8f7cdc2d94b6d9cae2ddec04d3002164f69728dff40a6f595f693b2e1ace0b73",
+  "patchSha256": "a46bdac20a8ba22b1f9aff821f5f025b4adb79ab6208d1bdc781df188b86f6c8",
+  "liveBaselineDrift": []
+}

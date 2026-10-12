@@ -40,9 +40,13 @@ assert.match(livePreflight, /kubernetes-fixture-production-preflight\.v1/u);
 assert.match(livePreflight, /createProductionNovaTestGate/u);
 assert.match(livePreflight, /approvedSecretCopyVerified/u);
 const runtimeEntrypoint = fs.readFileSync('docker/buster-runtime-entrypoint.sh', 'utf8');
-assert.match(runtimeEntrypoint, /BUSTER_ALLOWED_SOURCE_SECRETS/u);
+assert.match(runtimeEntrypoint, /buster-cluster-preflight\.mjs/u);
+assert.match(fs.readFileSync('skills/common/plugin-runtime/foundation/config/swarm.ts', 'utf8'), /BUSTER_ALLOWED_SOURCE_SECRETS/u);
 const busterValues = fs.readFileSync('my-values/buster-values.yaml', 'utf8');
-assert.match(busterValues, /BUSTER_ALLOWED_SOURCE_SECRETS/u);
+assert.match(busterValues, /busterComponentFile: files\/config\/profiles\/buster-engine\.runtime\.config\.json/u);
+const runtimeComponent = JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json', 'utf8'));
+assert.deepEqual(runtimeComponent.settings.clusterInvokers.kubernetesFixture.allowedSecretReferences,
+  ['kubeclaw-fixture-preflight', 'prism-test-provider', 'prism-test-runtime', 'prism-test-postgresql-auth', 'prism-test-ghcr']);
 
 const scaffoldRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-scaffold-'));
 try {

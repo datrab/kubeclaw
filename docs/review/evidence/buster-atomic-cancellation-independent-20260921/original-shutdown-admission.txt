@@ -1,0 +1,27 @@
+✔ canonical startup rejects missing/unknown/malformed admission and every retired ENV author (104.448979ms)
+✔ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (1022.000625ms)
+✔ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (1013.462202ms)
+✔ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (451.016491ms)
+{"fixture":"terminal-persistence-cut","timing":"during","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"cancelled","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: during (829.526547ms)
+{"fixture":"terminal-persistence-cut","timing":"after","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"failed","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: after (594.333864ms)
+{"fixture":"terminal-persistence-cut","timing":"queued","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"failed","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: queued (651.503568ms)
+{"fixture":"terminal-persistence-cut","timing":"admission","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: admission (703.958865ms)
+{"fixture":"terminal-persistence-cut","timing":"read-failure","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: read-failure (628.900489ms)
+{"fixture":"terminal-persistence-cut","timing":"healthy-terminal","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: healthy-terminal (632.602656ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12360.158842

@@ -1,0 +1,76 @@
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:30
+      if (type !== 'blob' || !['100644', '100755'].includes(mode)) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${name}`);
+                                                                         ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:30:74
+    at Array.map (<anonymous>)
+    at verifyReleaseConfiguration (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:26:34)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✔ deploy bundle fields decode folded URLs and preserve overlay credential selection (149.125122ms)
+✔ agent changes and manifest changes do not rebuild tools; embedded service code does (1.418516ms)
+✔ code selection reuses images only across unchanged image inputs, including deleted inputs (87.492665ms)
+✔ bundle selection rejects missing hashes, mutable URLs and wrong role archives (0.519154ms)
+✔ push detector rebuilds an environment changed by an earlier unselected build (169.373377ms)
+✔ actual bootstrap checksum command rejects modified downloads before extraction (6.860444ms)
+✔ rendered code updates retain image digests and require selected URL, role, hash and revision (10.660861ms)
+✖ real materialization and Helm render enable pinned bundles for all three agents on retained images (164.715378ms)
+✔ continuous root follows the reviewed production directory without inline frozen values (2.059662ms)
+✔ child applications survive squash merges and retain immutable bundle directories and ownership (6.018684ms)
+✔ automatic deployment requires successful main provenance and explicit bootstrap (1.794046ms)
+✔ initial registration creates all children without starting workload syncs (0.887202ms)
+✔ configuration and agent code select bundles while generated deployments do not rebuild (1.149329ms)
+✔ real Helm environment rendering remains identical after the bundle commit is replaced by a merge commit (724.8009ms)
+✔ locked input installers and their locks trigger image and deployment selection (1.105948ms)
+✔ real Git input identities change for installer code and authored archive identities (208.962724ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 15
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1836.450656
+
+✖ failing tests:
+
+test at tests/verification/deployment/code-release.test.mjs:130:1
+✖ real materialization and Helm render enable pinned bundles for all three agents on retained images (164.715378ms)
+  Error: Command failed: /usr/local/bin/node /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/materialize-release.mjs --family=runtime
+  file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:30
+        if (type !== 'blob' || !['100644', '100755'].includes(mode)) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${name}`);
+                                                                           ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:30:74
+      at Array.map (<anonymous>)
+      at verifyReleaseConfiguration (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:26:34)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/code-release.test.mjs:149:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12) {
+    status: 1,
+    signal: null,
+    output: [ null, <Buffer >, <Buffer 66 69 6c 65 3a 2f 2f 2f 68 6f 6d 65 2f 6e 6f 64 65 2f 44 6f 63 75 6d 65 6e 74 73 2f 43 6f 64 65 78 2f 32 30 32 36 2d 30 39 2d 32 30 2d 68 69 2d 73 69 ... 1072 more bytes> ],
+    pid: 12113,
+    stdout: <Buffer >,
+    stderr: <Buffer 66 69 6c 65 3a 2f 2f 2f 68 6f 6d 65 2f 6e 6f 64 65 2f 44 6f 63 75 6d 65 6e 74 73 2f 43 6f 64 65 78 2f 32 30 32 36 2d 30 39 2d 32 30 2d 68 69 2d 73 69 ... 1072 more bytes>
+  }

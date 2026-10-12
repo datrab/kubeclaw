@@ -1,0 +1,19 @@
+{"ok":true,"contract":"production-receipt-attestation","algorithm":"ed25519"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"planId":"plan:http:live","runId":"run:http:live","attempts":[{"schemaVersion":"attempt-result.v1","planId":"plan:http:live","runId":"run:http:live","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"health","executionId":"plan:http:live:health","testIdentity":"test:8e1f0a502989cb365e44d6ae95b09062669bc2450f4658a72bd1b37614ac22b2","nodeKind":"test","attemptId":"attempt:0ffc64624f1d4c055bc0bbea79f83331fe77af61c483f845f45d9dca8db61cfc","attemptNumber":1,"provider":{"packageId":"kubeclaw.http","packageVersion":"1.0.0","contentDigest":"sha256:92c8588cec754427a00d1d0963e0863302a8cd975e2574230daedb4c6182140b","registrationId":"request","contractId":"kubeclaw.http@1"},"mode":"blocking","executionState":"errored","outcome":null,"startedAt":"2026-09-21T06:28:11.715Z","completedAt":"2026-09-21T06:28:11.954Z","durationMs":239,"summary":"TEST_PROVIDER_INITIALIZE_EXITED:null:SIGSEGV","counts":{"total":0,"passed":0,"failed":0,"skipped":0},"findings":[],"metrics":[],"reports":[],"evidence":[],"outputs":[],"resources":{"cpuTimeMs":0,"maximumMemoryBytes":667648,"logBytes":0,"artifactBytes":0},"exitCode":null,"signal":null,"providerDetails":null,"resultDigest":"sha256:97049393f2552afb6deda360e05e5cbba692db260486aa6672de6c038ac1979d","receipt":{"receiptId":"receipt:fb12e40a6cf74da4d28bce5ae2652f35be0be3423301888ed42b58a38b07a8ed","receiptDigest":"sha256:d56258999155216359b861cb2f9c726e637764b8c4fb78c566912cc99c96962a"}}],"nodes":[{"schemaVersion":"node-result.v1","planId":"plan:http:live","runId":"run:http:live","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"health","executionId":"plan:http:live:health","testIdentity":"test:8e1f0a502989cb365e44d6ae95b09062669bc2450f4658a72bd1b37614ac22b2","nodeKind":"test","mode":"blocking","state":"errored","outcome":null,"attemptIds":["attempt:0ffc64624f1d4c055bc0bbea79f83331fe77af61c483f845f45d9dca8db61cfc"],"finalAttemptId":"attempt:0ffc64624f1d4c055bc0bbea79f83331fe77af61c483f845f45d9dca8db61cfc","unstable":false,"skipReason":null,"resultDigest":"sha256:1ec63e1d8d34dea6b48da167dea71b50b60c98a2bc57c5b233abf3e588b15be5","receipt":{"receiptId":"receipt:45059b10c243073db1eba06ceded8697c9f3432f29c0f284b4acd0e30d8325b1","receiptDigest":"sha256:b780e866d779184edc3168c8a06805748c2f40a97ce309ba402c3f2254dfd520"}}],"cleanupErrors":[{"nodeId":"health","message":"TEST_PROVIDER_INITIALIZE_EXITED:null:SIGSEGV"}]}
+
+null !== 'passed'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-http-implementation.mts:65:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: 'passed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

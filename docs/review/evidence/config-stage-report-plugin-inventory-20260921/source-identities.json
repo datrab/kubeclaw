@@ -1,0 +1,3505 @@
+{
+  "capturedAt": "2026-09-21T18:43:04.018903+00:00",
+  "scope": "source inventory, not runtime closure or execution proof",
+  "runtimeExecuted": false,
+  "files": [
+    {
+      "path": "docs/review/remediation/implementation/config-stage-report-plugin-inventory-20260921.md",
+      "sha256": "2aec1aa52ed584d7e08f45af9939879f0abfa45cc9af1e1d14c11edf76ebc889",
+      "bytes": 16110,
+      "snapshot": "sources/docs/review/remediation/implementation/config-stage-report-plugin-inventory-20260921.md"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/artifacts.ts",
+      "sha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179",
+      "bytes": 5273,
+      "snapshot": "sources/skills/buster/engine/test-gates/artifacts.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-axe-runtime.ts",
+      "sha256": "7370bdf54556875b996cc0ac4c4219a8c9ddc11d25dfb72875f41806e82482c8",
+      "bytes": 14054,
+      "snapshot": "sources/skills/buster/engine/test-gates/browser-axe-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+      "sha256": "a7af35a6b7df314129cf9150c3d44d2017c2bf47b9e529ef1ff6962129966b75",
+      "bytes": 13633,
+      "snapshot": "sources/skills/buster/engine/test-gates/browser-lighthouse-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+      "sha256": "20e32c52051339237e14cf1bed0da9c690ece23297bec9bb77a628e8df211917",
+      "bytes": 27804,
+      "snapshot": "sources/skills/buster/engine/test-gates/browser-playwright-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+      "sha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+      "bytes": 18255,
+      "snapshot": "sources/skills/buster/engine/test-gates/browser-visual-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+      "sha256": "7f50b4c1c6c1e661319dd2f9ba1afecf27dd19a26c06ac51ef52abc0d97703f3",
+      "bytes": 1860,
+      "snapshot": "sources/skills/buster/engine/test-gates/buildkit-readiness.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/canonical-value.ts",
+      "sha256": "7158e326bb4b2622989af106ba49b664f90eccbe61df24a0d97e6400457c370e",
+      "bytes": 502,
+      "snapshot": "sources/skills/buster/engine/test-gates/canonical-value.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "sha256": "9d8c2e2fee2a13c34dc00efe3a7ed7c4eb2047a7d496baf9c4c6b7c4cafcde78",
+      "bytes": 5599,
+      "snapshot": "sources/skills/buster/engine/test-gates/capability-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/composite-capability-runtime.ts",
+      "sha256": "fbd71da7e0fe2e53801e60e36c3c13636b4fcb5be0e43503ef66571820b0810f",
+      "bytes": 877,
+      "snapshot": "sources/skills/buster/engine/test-gates/composite-capability-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+      "bytes": 16842,
+      "snapshot": "sources/skills/buster/engine/test-gates/container-build-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "sha256": "c1f305fd3281328e1cd5714b1366cb946907e2a96af2bf6c3f629c2ab4ed354b",
+      "bytes": 3681,
+      "snapshot": "sources/skills/buster/engine/test-gates/dependency-process.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/direct-command-runtime.ts",
+      "sha256": "eaacae3a6c4b3110039b7134378b8eb114dc8cb2161c4bc593c405c967afa006",
+      "bytes": 7657,
+      "snapshot": "sources/skills/buster/engine/test-gates/direct-command-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/exposure-generation.ts",
+      "sha256": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360",
+      "bytes": 3855,
+      "snapshot": "sources/skills/buster/engine/test-gates/exposure-generation.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/exposure-handoff.ts",
+      "sha256": "4e725c913e11f5eb11a4444c9a96373e423c06b2da33287e5269fbe1401b9e83",
+      "bytes": 4202,
+      "snapshot": "sources/skills/buster/engine/test-gates/exposure-handoff.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/fixture-authority.ts",
+      "sha256": "b3fac0a68c4cab2d3c1abfabf10b38848cc6917512a6684e80a030656ee0a1f5",
+      "bytes": 2410,
+      "snapshot": "sources/skills/buster/engine/test-gates/fixture-authority.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/generated-demo-credentials.ts",
+      "sha256": "0df7b344a3ccb3c27322a0381ca8f2cf891feca22140c9a5e1899fa520ae10da",
+      "bytes": 3979,
+      "snapshot": "sources/skills/buster/engine/test-gates/generated-demo-credentials.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "bytes": 16318,
+      "snapshot": "sources/skills/buster/engine/test-gates/historical-plan-store.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "sha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "bytes": 43221,
+      "snapshot": "sources/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "sha256": "42f3533feab2fcf98a60e4fe570d9980c6d008785d65df6e73e15e3f2f54dc85",
+      "bytes": 2009,
+      "snapshot": "sources/skills/buster/engine/test-gates/kubernetes-manifest.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sha256": "01da0c323776cc8f9f4778d9ed2afb198133b79f7f2afbfa0850f657dda357b0",
+      "bytes": 11451,
+      "snapshot": "sources/skills/buster/engine/test-gates/kubernetes-runtime-security.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-control.ts",
+      "sha256": "6d305ecd5509af0dc13b90e02d00339619822cb5551c17077b4503439bfd272d",
+      "bytes": 7899,
+      "snapshot": "sources/skills/buster/engine/test-gates/native-fixture-control.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "bytes": 10837,
+      "snapshot": "sources/skills/buster/engine/test-gates/native-fixture-journal.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
+      "sha256": "fb755b6a559c3eb4f34e9a6151cc26dd4a6e14ff0e4c16d9e727964547497297",
+      "bytes": 4037,
+      "snapshot": "sources/skills/buster/engine/test-gates/native-fixture-lifetime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-state.ts",
+      "sha256": "448417a808f5d630c24aba477af3fed88bc2a8f74e9a9c203c4f6f5bbd035b5e",
+      "bytes": 6113,
+      "snapshot": "sources/skills/buster/engine/test-gates/native-fixture-state.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d",
+      "bytes": 15726,
+      "snapshot": "sources/skills/buster/engine/test-gates/network-http-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/pngjs.d.ts",
+      "sha256": "cf251c5bf79b8a73db7b2c7010aa912bf4efc7448ebb06a27202be31a8664327",
+      "bytes": 244,
+      "snapshot": "sources/skills/buster/engine/test-gates/pngjs.d.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "sha256": "a3f47267addf5e371faff3896521eb3aac35b49523275a7766ed29c8d1d42f6a",
+      "bytes": 3939,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-archive.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-channel.ts",
+      "sha256": "ab1ec1c5aae3c99cb56e33d1df3029ac5e72247a1db99b5f23d590f4d961d01d",
+      "bytes": 6145,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-channel.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-binding.ts",
+      "sha256": "454c3f6a5a41e179776eddda24ff7a89e9ac959558cfb8343f6334861fc93901",
+      "bytes": 3982,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup-binding.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts",
+      "sha256": "837f2b0c6acf2ab0afb56e6a54857fefc15272f8c5c026a3c796e4fd55d9e166",
+      "bytes": 2027,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup-envelope.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "sha256": "7f68045db88cfea003fb204b06c61b5cef0d48ff0bb416fa060dceeb33249365",
+      "bytes": 2921,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup-execution.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+      "sha256": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242",
+      "bytes": 5676,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup-host.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
+      "sha256": "8cc3b8d59fb38bcb04b6549a05bb7c95f153f7f603405724f84a9385a45ce134",
+      "bytes": 4360,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup-validation.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup.ts",
+      "sha256": "192c1954407e294483ea08389220eab128052ba57e9b7a72b26fcb768d608bc1",
+      "bytes": 6796,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "sha256": "31b1bec56dc09daafb7e0ba425243009b86f7f73eb693ae0e74617c1cac6f6dd",
+      "bytes": 7371,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-client.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-command.ts",
+      "sha256": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6",
+      "bytes": 2925,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-command.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "bytes": 4936,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-config.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-envelope.ts",
+      "sha256": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+      "bytes": 4452,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-envelope.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-execution.ts",
+      "sha256": "e23033bcf78d19dfada0a25d7cffc9ba8133b97b686ffba24b362c601c8a6e93",
+      "bytes": 4399,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-execution.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-extraction.ts",
+      "sha256": "10f495344bc139291bfd127662682bd35b601d9643b915b5016e49334a3523ca",
+      "bytes": 7119,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-extraction.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-gate.ts",
+      "sha256": "7f3cb9aa8100a003713195cf3149f9097ea5f0cec18779e8deca92a0d2d894d7",
+      "bytes": 5092,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-gate.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-header.ts",
+      "sha256": "921c13b2285ce3293ec2c2c75a0e42f576bb11300d527b7dd9640a270136f167",
+      "bytes": 5705,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-header.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-batch.ts",
+      "sha256": "44e38c453e1ab5a1118e54e7a4a855a2e40fce27bb9a0557c7b42808da88ee74",
+      "bytes": 9616,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-batch.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-channel.ts",
+      "sha256": "2cb8b7a9960e5467b2bedf4bc45c55a12df26ea5c32545fa2fc42c6b5e468c1a",
+      "bytes": 4001,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-channel.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+      "sha256": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16",
+      "bytes": 5879,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-host.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-import.ts",
+      "sha256": "4f6144633592a1e2dd11cac4b82c653982cddec50930a1d6d11694a5c3c74828",
+      "bytes": 1448,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-import.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-ledger.ts",
+      "sha256": "74c8151a3a08b7e0d8c490cba83fe74ba4dfd9cc9f23417ebb59c4fa417177bb",
+      "bytes": 3617,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-ledger.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-materialize.ts",
+      "sha256": "3fa603ff06977ffdecf435981fe392cf107e90752d97cb11a7fa3d869f484ee3",
+      "bytes": 5359,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-materialize.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-publication.ts",
+      "sha256": "53147aef26b51b977f07d9ab46fcee9a356ba9acfa19e041f8c3b99d1cbc0f19",
+      "bytes": 9315,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-publication.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-reference.ts",
+      "sha256": "d034cac06fcd04b8a2583609b00a11375e404c65897c99a21a973f19d3ff7984",
+      "bytes": 8873,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-reference.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-source.ts",
+      "sha256": "fdccb2ec89cad6824df4ebf5ce9475ecfe4a94cbf4b515bc2c9549fb204bffc0",
+      "bytes": 5135,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-source.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-terminal.ts",
+      "sha256": "3ab3f547bf01134d9a2e9d14a12b919fbb4c8781c1035f3a4b21fc803cb7926a",
+      "bytes": 2988,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-terminal.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-host-channel.ts",
+      "sha256": "8383114bb82cfc3c38a7c65ebd8c2ea21fb88c7b25b1a185473b2f82c639fa08",
+      "bytes": 2521,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-host-channel.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-host.ts",
+      "sha256": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+      "bytes": 7072,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-host.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-input.ts",
+      "sha256": "b573c86f1f7b140baaae2d1cbcd3d6d381115688f30fe799a99b3999965c73c9",
+      "bytes": 5562,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-input.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+      "sha256": "e37446c62e1e9a599a525c4203935b6b43ed093c8af612bc89e95b5c321c19b1",
+      "bytes": 12577,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-ledger-state.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "bytes": 18824,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-ledger.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "sha256": "20362a6d9a4147be607c1006cd42a33465d5b56b7df5acfef04562009abba179",
+      "bytes": 3182,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-native-phase.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-parent-channel.ts",
+      "sha256": "9b6548ed266f22453044c813d31b60f1cd4bef9d85f5b0fe2cacec06fc48ada9",
+      "bytes": 5811,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-parent-channel.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-published.ts",
+      "sha256": "0fbf0c57cfbf1e93e515e3bce2c6f24b64f607fa6001e80ed79cceb37d4f5c14",
+      "bytes": 2330,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-published.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-recovery.ts",
+      "sha256": "3bc1d7f6787a1917ea471b55c4f7075618ae16459b6f9d85825493bc98ca10de",
+      "bytes": 6068,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-recovery.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "sha256": "2f079e6521872c056e44fad666efef8e38e4ba07ef9772aa4118d38c3c5df04d",
+      "bytes": 2211,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-reservations.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-result-origin.ts",
+      "sha256": "ac56f5ca81b362b406e96c1d6177419e705b769913c8bb6883cb116710e9be58",
+      "bytes": 1408,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-result-origin.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-slots.ts",
+      "sha256": "cca405b4dac32f2292483815880fb2e0d1d58c5d5134957864fd1bf65f8ed897",
+      "bytes": 410,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-slots.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-source.ts",
+      "sha256": "dd165bec2ad71b1664b7bec6c5d48a7a1b1602bd3824f8735e09292eb9b6ef22",
+      "bytes": 7266,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-source.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "bytes": 5244,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-supervisor.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-paths.ts",
+      "sha256": "7130126f30a200aaa3a24f5df63e8df82fe9c468d2bee321b16dfc63b8d52ead",
+      "bytes": 587,
+      "snapshot": "sources/skills/buster/engine/test-gates/prepared-plan-paths.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "bytes": 15520,
+      "snapshot": "sources/skills/buster/engine/test-gates/prepared-plan-store.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "sha256": "b45b50d0cfd2ae6a0aa091ba1e1edcb936b868490ae2a579f3ac561d24f8394e",
+      "bytes": 3221,
+      "snapshot": "sources/skills/buster/engine/test-gates/process-input-lifecycle.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "sha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620",
+      "bytes": 4603,
+      "snapshot": "sources/skills/buster/engine/test-gates/process-input.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-browser-options.ts",
+      "sha256": "846a6488bf66ab4a84d8fb79db7cd88ddcaf69b77707bda9a116ed567fa38cdd",
+      "bytes": 7016,
+      "snapshot": "sources/skills/buster/engine/test-gates/production-browser-options.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "c2135bd4f48030b883e6c13749991a17e2e47e8b4db7272d8fa096081136d9d4",
+      "bytes": 4735,
+      "snapshot": "sources/skills/buster/engine/test-gates/production-capability-sources.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sha256": "7808623ea1d8bb3f838254a898f84807d04c40d4ae17042440eeae2bdee1492e",
+      "bytes": 6125,
+      "snapshot": "sources/skills/buster/engine/test-gates/production-cluster-options.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-command-options.ts",
+      "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81",
+      "bytes": 6568,
+      "snapshot": "sources/skills/buster/engine/test-gates/production-command-options.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "eb4d8a252517506fdc096a017d1b807d194b88bfa21605900792ca4810efe148",
+      "bytes": 9473,
+      "snapshot": "sources/skills/buster/engine/test-gates/production-config-values.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "e2da22b17dc8e7a26d52650d46e81e30c97f42c04254f9a454c2abc957011f83",
+      "bytes": 6748,
+      "snapshot": "sources/skills/buster/engine/test-gates/production.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+      "sha256": "b7dc5260ba57dd177fcb2e1e40f85f39554bf261f3e99388a6d91d17d24879b1",
+      "bytes": 2270,
+      "snapshot": "sources/skills/buster/engine/test-gates/provider-capabilities.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "sha256": "5dd41b92245c36b8e4d1d63d8a14f95f8647fda040ba2c3c60e20a088becfa50",
+      "bytes": 4685,
+      "snapshot": "sources/skills/buster/engine/test-gates/provider-child.mjs"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+      "bytes": 22181,
+      "snapshot": "sources/skills/buster/engine/test-gates/provider-loader.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-result-validation.ts",
+      "sha256": "1e5371e0528f03a73d1d24d8e0764d501d49c9d8c22d231315db5a3af5539631",
+      "bytes": 3175,
+      "snapshot": "sources/skills/buster/engine/test-gates/provider-result-validation.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+      "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c",
+      "bytes": 2760,
+      "snapshot": "sources/skills/buster/engine/test-gates/registry-health-access.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+      "sha256": "e74b3fe2e8dca0157d22c6bd1b50f5cc69df91ec29eedbdbaef86d4ff05a42de",
+      "bytes": 9464,
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-compaction.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+      "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2",
+      "bytes": 7608,
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-http.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+      "sha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c",
+      "bytes": 2741,
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "2f4d8f0d305a1ad8f0404f03aca89b3d320d6df869c0d95833727fcae4fa9c0f",
+      "bytes": 14395,
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-service.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "sha256": "47cc40152c08273b3dae3cc4e192f7662936d9f9b16f857a020eab89e4423c3f",
+      "bytes": 5022,
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-prepared-execution.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-child.mjs",
+      "sha256": "31a4f4435fbe9137521e8c610d6dac0905ce01fa0b2589062362270ae109c77c",
+      "bytes": 1393,
+      "snapshot": "sources/skills/buster/engine/test-gates/report-adapter-child.mjs"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-package.ts",
+      "sha256": "71cc3d1906a029b8d5e06067f26bda1fe6199f93cce8f523e351ea02eb43e104",
+      "bytes": 3659,
+      "snapshot": "sources/skills/buster/engine/test-gates/report-adapter-package.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "sha256": "0c698666a99e51226b2bca2d8287ff491a7baf37dad47448c4574176ee65f569",
+      "bytes": 13195,
+      "snapshot": "sources/skills/buster/engine/test-gates/report-adapter-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-artifact-reader.ts",
+      "sha256": "d3b4f8c4fae897876c8825cae357e9740de70ebd43686eaa85efcc94ed27b872",
+      "bytes": 3374,
+      "snapshot": "sources/skills/buster/engine/test-gates/report-artifact-reader.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-finalizer.ts",
+      "sha256": "8cc0ff2562fd8b530c2a2e1b32b13aaccdec1a2ea9f398df0e7cd350b2cb9b7e",
+      "bytes": 2037,
+      "snapshot": "sources/skills/buster/engine/test-gates/report-finalizer.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "724d95538646558ad3f1930899ee1cd905ab8b8727d1bc84469831b55ef979fb",
+      "bytes": 66585,
+      "snapshot": "sources/skills/buster/engine/test-gates/runner.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+      "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9",
+      "bytes": 15184,
+      "snapshot": "sources/skills/buster/engine/test-gates/security-scan-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "sha256": "1616da65ba5dc6dfef24af3b849f3a6aadbf4761d4dc0a31e866765f632cd812",
+      "bytes": 4908,
+      "snapshot": "sources/skills/buster/engine/test-gates/specialist-report-finalization.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sha256": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d",
+      "bytes": 18863,
+      "snapshot": "sources/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
+      "sha256": "60264e4f91904b49c57225184cc86233778c5c7146039bdd783bdb86ba71a9b1",
+      "bytes": 2499,
+      "snapshot": "sources/skills/buster/engine/test-gates/terminal-workspace.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts",
+      "sha256": "55a07e1d9c1af556b0f17d94bcb3f0e48d101b85c3d8b38135c5ac8f41aeeeff",
+      "bytes": 4875,
+      "snapshot": "sources/skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/process-input.test.ts",
+      "sha256": "4da06b94873ceef22654527a6964c03a13002961884149257532de2bdecd766d",
+      "bytes": 1452,
+      "snapshot": "sources/skills/buster/engine/test-gates/tests/process-input.test.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/provider-capabilities.test.ts",
+      "sha256": "1e49ef570c2261f1339520df81e823bcd43aa2ee982532e21372e4f4c4dbab5d",
+      "bytes": 2361,
+      "snapshot": "sources/skills/buster/engine/test-gates/tests/provider-capabilities.test.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/report-adapter-package.test.ts",
+      "sha256": "161b6e39e30a95b9e084f1cd0cdf33d6d494020867d16698944dba6df63bc3fc",
+      "bytes": 3292,
+      "snapshot": "sources/skills/buster/engine/test-gates/tests/report-adapter-package.test.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/specialist-boundary.test.ts",
+      "sha256": "b4180149b128763a832b957349fa325585a72e0e33e791e27af3b044119f0444",
+      "bytes": 8467,
+      "snapshot": "sources/skills/buster/engine/test-gates/tests/specialist-boundary.test.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/terminal-workspace.test.ts",
+      "sha256": "b02702d27aedf1ec68ff08ecf6205748f23a4219eb7515f7d52ab87fb19a6b6c",
+      "bytes": 1193,
+      "snapshot": "sources/skills/buster/engine/test-gates/tests/terminal-workspace.test.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/trivy-database.ts",
+      "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+      "bytes": 7316,
+      "snapshot": "sources/skills/buster/engine/test-gates/trivy-database.ts"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/plugin.json",
+      "sha256": "d6c8f75a90ab142a4273893cd0e0bcf12a1d377432a42eb8f65127c177bbe536",
+      "bytes": 896,
+      "snapshot": "sources/skills/buster/plugins/api-flow/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/axe/plugin.json",
+      "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7",
+      "bytes": 840,
+      "snapshot": "sources/skills/buster/plugins/axe/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/plugin.json",
+      "sha256": "6a43c756b8707be3a5efb3851ed8869a17e376658a30503bf9d51697a7e9c011",
+      "bytes": 849,
+      "snapshot": "sources/skills/buster/plugins/container-build/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/plugin.json",
+      "sha256": "0f0ae38312005bf70de5b8da45dd96122be24614b05079b2ed410248e9166067",
+      "bytes": 1405,
+      "snapshot": "sources/skills/buster/plugins/coverage-budget/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "sha256": "a7dc11d0cd73886181c787be579552ed8f26eba3a4b364e87361ca6eff0db194",
+      "bytes": 1503,
+      "snapshot": "sources/skills/buster/plugins/demo-auth-smoke/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/plugin.json",
+      "sha256": "649466714d77ce1afe3a753f48e1a77481aa757fb46a325f3ea05c0c3ed2835a",
+      "bytes": 4181,
+      "snapshot": "sources/skills/buster/plugins/direct-command/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/http/plugin.json",
+      "sha256": "be8c584b93172cc05d88c547f43d351dd00a0570475bad0c2a6bfbebc6792453",
+      "bytes": 1053,
+      "snapshot": "sources/skills/buster/plugins/http/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/README.md",
+      "sha256": "012b7603d9ff50ed2299576c94031c9c69d7359bf05a40bc3811f9e3adfe5cdf",
+      "bytes": 1830,
+      "snapshot": "sources/skills/buster/plugins/junit-report-adapter/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/package.json",
+      "sha256": "e26791d42a992c8ed0262d177f2fe0301b0c3baba808a75281bcaa0b0f0b96af",
+      "bytes": 206,
+      "snapshot": "sources/skills/buster/plugins/junit-report-adapter/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+      "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77",
+      "bytes": 460,
+      "snapshot": "sources/skills/buster/plugins/junit-report-adapter/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+      "sha256": "dceb8492b6f03b31c9c57190cdff836e4d6917b33ab49480fe8001c02e247736",
+      "bytes": 14799,
+      "snapshot": "sources/skills/buster/plugins/junit-report-adapter/src/adapter.js"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs",
+      "sha256": "7eb05515a38bce0beabffb8a0a931c3a56d8f3ff7f9f0038f5a7e2e5a8d81edf",
+      "bytes": 7003,
+      "snapshot": "sources/skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts",
+      "sha256": "14d1030b8a9d68828865ef1d84d8999daff41b8241bcb27c04d540135f826ea3",
+      "bytes": 154,
+      "snapshot": "sources/skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/tsconfig.json",
+      "sha256": "3994ccda4ebd201e7b93a2fa111aafbac4ce780513732428f62c5b4769c104b4",
+      "bytes": 181,
+      "snapshot": "sources/skills/buster/plugins/junit-report-adapter/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+      "sha256": "9c658fd6807beea11340609d22483ffac429a5e9184e74233a145774ec92feea",
+      "bytes": 1607,
+      "snapshot": "sources/skills/buster/plugins/kubernetes-fixture/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/plugin.json",
+      "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1",
+      "bytes": 971,
+      "snapshot": "sources/skills/buster/plugins/lighthouse/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/plugin.json",
+      "sha256": "ea64826e4be0b75620a11de0d375abb6ef0361492488adaa5c3b839e49fbf3af",
+      "bytes": 892,
+      "snapshot": "sources/skills/buster/plugins/openapi/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/plugin.json",
+      "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9",
+      "bytes": 978,
+      "snapshot": "sources/skills/buster/plugins/playwright/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/plugin.json",
+      "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+      "bytes": 3239,
+      "snapshot": "sources/skills/buster/plugins/security-providers/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/plugin.json",
+      "sha256": "5f9a11dad63edf557454124ae8a71a6382ddac5212dbeaf064e86019fe28a737",
+      "bytes": 1532,
+      "snapshot": "sources/skills/buster/plugins/size-budget/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "sha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+      "bytes": 933,
+      "snapshot": "sources/skills/buster/plugins/tailscale-exposure/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/visual/plugin.json",
+      "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90",
+      "bytes": 991,
+      "snapshot": "sources/skills/buster/plugins/visual/plugin.json"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+      "sha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+      "bytes": 5690,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/activation.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+      "bytes": 16293,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/build.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "bytes": 9110,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/capabilities.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+      "bytes": 9371,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+      "bytes": 4047,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/configuration.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4",
+      "bytes": 1051,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/digest.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+      "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+      "bytes": 5825,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/discovery.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/errors.ts",
+      "sha256": "148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25",
+      "bytes": 1305,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/errors.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/frozen-map.ts",
+      "sha256": "b4d3f268b79917e962959420a6b7a9a598086ac5d3d87cfb5bc0f8ee2a7583f7",
+      "bytes": 878,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/frozen-map.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/frozen-set.ts",
+      "sha256": "94b7eb7f0ba2bd7ddb23d0e0dceb701395a5c2aa17bc67a14d8f53d0e9dce753",
+      "bytes": 1567,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/frozen-set.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+      "sha256": "a7a28379c6f8409576a12169c6bc23070dbb66a41e0f041fc8b95310b29eb42e",
+      "bytes": 5525,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+      "sha256": "764ca496cd9bf406a26eed400777d61b239c6130fdf3b94204c4006d132458f3",
+      "bytes": 2691,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/import-audit.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+      "bytes": 5817,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/schema.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+      "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+      "bytes": 2895,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/types.ts"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/plugin.json",
+      "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+      "bytes": 2305,
+      "snapshot": "sources/skills/common/plugins/agent-observability/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/plugin.json",
+      "sha256": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f",
+      "bytes": 443,
+      "snapshot": "sources/skills/common/plugins/artifact-store/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/plugin.json",
+      "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146",
+      "bytes": 410,
+      "snapshot": "sources/skills/common/plugins/command-runner/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/plugin.json",
+      "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802",
+      "bytes": 505,
+      "snapshot": "sources/skills/common/plugins/git-workspace/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/network-http/plugin.json",
+      "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3",
+      "bytes": 402,
+      "snapshot": "sources/skills/common/plugins/network-http/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/notification-observer/plugin.json",
+      "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+      "bytes": 1610,
+      "snapshot": "sources/skills/common/plugins/notification-observer/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+      "sha256": "16e0baa799abd2a53ef43f3ccfb0a4055d90c2129453de750992eafec9112be5",
+      "bytes": 423,
+      "snapshot": "sources/skills/common/plugins/openclaw-agent-events/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/plugin.json",
+      "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563",
+      "bytes": 498,
+      "snapshot": "sources/skills/common/plugins/operator-messaging/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/plugin.json",
+      "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843",
+      "bytes": 744,
+      "snapshot": "sources/skills/common/plugins/redis-transport/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+      "bytes": 822,
+      "snapshot": "sources/skills/common/plugins/runtime-dispatch/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/secret-resolver/plugin.json",
+      "sha256": "c36463ec4caa7adc8334d5adc6ac362d8a6fa5763e9a3b1ff03bf044024ed347",
+      "bytes": 408,
+      "snapshot": "sources/skills/common/plugins/secret-resolver/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/state-store/plugin.json",
+      "sha256": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb",
+      "bytes": 424,
+      "snapshot": "sources/skills/common/plugins/state-store/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/telemetry-observer/plugin.json",
+      "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+      "bytes": 1390,
+      "snapshot": "sources/skills/common/plugins/telemetry-observer/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/plugin.json",
+      "sha256": "77c3f887ed4068b00a3d3a3019c5257b9a9a7c397c5d94a2bc21095b5481b848",
+      "bytes": 412,
+      "snapshot": "sources/skills/common/plugins/telemetry-store/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/plugin.json",
+      "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f",
+      "bytes": 473,
+      "snapshot": "sources/skills/common/plugins/transport-publisher/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/wait-store/plugin.json",
+      "sha256": "f7564d3bb167b2aebe69bba54ab7ba2d59cf588475ea21c8c4cb4ab658a210ed",
+      "bytes": 400,
+      "snapshot": "sources/skills/common/plugins/wait-store/plugin.json"
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-invocation-phase.ts",
+      "sha256": "eaae9f5fd571a476b1b7ddbec709f1389c95e71189143ea23a87faa52847ae5f",
+      "bytes": 2283,
+      "snapshot": "sources/skills/nova/core/execution/adapter-invocation-phase.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+      "bytes": 15396,
+      "snapshot": "sources/skills/nova/core/execution/adapter-startup.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-support.ts",
+      "sha256": "2eb72fdc7d7731b105807495697647b049c00c39e84b695db29a219a2ac1156d",
+      "bytes": 2122,
+      "snapshot": "sources/skills/nova/core/execution/adapter-support.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b",
+      "bytes": 6731,
+      "snapshot": "sources/skills/nova/core/execution/adapters.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/administrative-repair.ts",
+      "sha256": "9ff829bc31a4602ecd1e52f3cc0ba8fb5db40f3e597306e4e401cf8f451fc137",
+      "bytes": 2372,
+      "snapshot": "sources/skills/nova/core/execution/administrative-repair.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/artifact-checkpoints.ts",
+      "sha256": "77272b94fa7a2c5c4968753fff902ff3ac88deb5f3ef2da4c87580fae5bc78f7",
+      "bytes": 6682,
+      "snapshot": "sources/skills/nova/core/execution/artifact-checkpoints.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/authorization.ts",
+      "sha256": "3f04309435d4fe3eebe5a73bac5247b0d3c981ffd4a9580e52974cf46cf3942d",
+      "bytes": 10287,
+      "snapshot": "sources/skills/nova/core/execution/authorization.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/context.ts",
+      "sha256": "3f61fc7b2e18d6c36bf9eaff5173a06d31dd06d14a07b05c6d8be7320098a288",
+      "bytes": 2782,
+      "snapshot": "sources/skills/nova/core/execution/context.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/effect-recovery.ts",
+      "sha256": "06ee56bce5fedf57518e39858b700278c33b81d4edb2177587007f392b0ce186",
+      "bytes": 2098,
+      "snapshot": "sources/skills/nova/core/execution/effect-recovery.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-admin.ts",
+      "sha256": "f3ba44d49baffa01ee74a4d749818e8f903feb48827eb9108f959c24c8a0a1f2",
+      "bytes": 13717,
+      "snapshot": "sources/skills/nova/core/execution/engine-admin.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+      "bytes": 11148,
+      "snapshot": "sources/skills/nova/core/execution/engine-run.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+      "bytes": 8372,
+      "snapshot": "sources/skills/nova/core/execution/engine-runtime.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+      "bytes": 12185,
+      "snapshot": "sources/skills/nova/core/execution/engine-snapshots.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/engine.ts",
+      "sha256": "a75ed99915780e157a54f684a7cb9202a13e6cdcea6229af7f2aceaf79710839",
+      "bytes": 2798,
+      "snapshot": "sources/skills/nova/core/execution/engine.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/graph-build.ts",
+      "sha256": "75ce0387330d8acc6d7217aa8539a41c7796fcfd1522c079c8585c55e765adc6",
+      "bytes": 6850,
+      "snapshot": "sources/skills/nova/core/execution/graph-build.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/graph-repair-budget.ts",
+      "sha256": "f5cd06815a0d7d631276b256fd80bcbd57e018f68326909d69b424f2e08a284e",
+      "bytes": 2150,
+      "snapshot": "sources/skills/nova/core/execution/graph-repair-budget.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/graph.ts",
+      "sha256": "680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af",
+      "bytes": 5121,
+      "snapshot": "sources/skills/nova/core/execution/graph.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/lease.ts",
+      "sha256": "1f2164d57fdfb15dd5d67f04398f1cc42366a11c862083a30eba7de1ac03e13b",
+      "bytes": 1089,
+      "snapshot": "sources/skills/nova/core/execution/lease.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+      "bytes": 10717,
+      "snapshot": "sources/skills/nova/core/execution/pipeline-loop.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/run-decisions.ts",
+      "sha256": "a509f00aa74367e90d396f338db55acff2610075ac0063d14fa8bec4ba9d1171",
+      "bytes": 9555,
+      "snapshot": "sources/skills/nova/core/execution/run-decisions.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/run-mutation.ts",
+      "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d",
+      "bytes": 1470,
+      "snapshot": "sources/skills/nova/core/execution/run-mutation.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/run-root.ts",
+      "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3",
+      "bytes": 3400,
+      "snapshot": "sources/skills/nova/core/execution/run-root.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/runner.ts",
+      "sha256": "9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6",
+      "bytes": 6254,
+      "snapshot": "sources/skills/nova/core/execution/runner.ts"
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+      "bytes": 11002,
+      "snapshot": "sources/skills/nova/core/execution/stage-executor.ts"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/README.md",
+      "sha256": "1ea6563f1ca2b809d9cc3966ab11d6098caa39beb030bd907ed1aabf73ec4cf2",
+      "bytes": 1711,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/package.json",
+      "sha256": "d933be9975abc5f69b08f2d8bb28480264cfa09e1d04e7f1206c1e69e663e3da",
+      "bytes": 341,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/plugin.json",
+      "sha256": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+      "bytes": 621,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/schemas/input.schema.json",
+      "sha256": "105defd63fd5abe3baf1993b7477e13ef16010213ec5548051908433131f9d56",
+      "bytes": 1704,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/src/output.ts",
+      "sha256": "8b6ee1fe1f98b019f0fda4eb52f4f3786863885f52c67f9db3e7d667416d93ea",
+      "bytes": 4063,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/src/output.ts"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/src/protocol.ts",
+      "sha256": "46c3f8894c19ac12c8ca5c35493ef47ace66a8d8092056e102d513c93f29b07a",
+      "bytes": 2886,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/src/protocol.ts"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+      "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+      "bytes": 3204,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+      "sha256": "272268fd60cdaa459ce2edb9bf5f77387d901450b45d75f45cde0ccdce383e03",
+      "bytes": 5465,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs",
+      "sha256": "f2c61894590da296486addd0d8135ba6b0550592d24dd2cf83ecc83b649dcf9a",
+      "bytes": 423,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts",
+      "sha256": "5c39bec23c109fdf8bc11b075ed87b7494d6bda4b463018ef94a0c3a7c45d2ff",
+      "bytes": 2438,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/README.md",
+      "sha256": "8d7826178378bd3fe2a9f368744f784e3003655eb48297e3b4782be57a94d9e4",
+      "bytes": 1001,
+      "snapshot": "sources/skills/nova/plugins/blueprint-sync/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/package.json",
+      "sha256": "c4e89b9ab2e86ba1447604272323b8b2a6488ea281fbd3396cde0ed9ef589fd9",
+      "bytes": 297,
+      "snapshot": "sources/skills/nova/plugins/blueprint-sync/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/plugin.json",
+      "sha256": "b7d85a1c195d9d5280da1c396ac1d697be9e0d3a85babe1046850c18fa47e384",
+      "bytes": 614,
+      "snapshot": "sources/skills/nova/plugins/blueprint-sync/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/schemas/config.schema.json",
+      "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+      "bytes": 104,
+      "snapshot": "sources/skills/nova/plugins/blueprint-sync/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/schemas/input.schema.json",
+      "sha256": "a32c6626b0da18a21ef666d7692f87c53f75cd582471751da650fe5a0ae773fa",
+      "bytes": 1191,
+      "snapshot": "sources/skills/nova/plugins/blueprint-sync/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "sources/skills/nova/plugins/blueprint-sync/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+      "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765",
+      "bytes": 3870,
+      "snapshot": "sources/skills/nova/plugins/blueprint-sync/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
+      "sha256": "3ccc99dc4d52e1483de3256338d0753326e2e9a4fba2fa1a52943de516d2f19f",
+      "bytes": 5080,
+      "snapshot": "sources/skills/nova/plugins/blueprint-sync/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs",
+      "sha256": "3c1a1219c344b65e0b118b54e7d175985cb009b1d20c057c2008ea1e0477ea78",
+      "bytes": 428,
+      "snapshot": "sources/skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "sources/skills/nova/plugins/blueprint-sync/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/README.md",
+      "sha256": "81f3cf942b15fc8a091eb34b9009dadb14cb4c8211febfa391b23b13a19862f6",
+      "bytes": 616,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/package.json",
+      "sha256": "ce8877431dc40bc76b3f76156eebdf531ed92a00a6b5cb0c9eb16bb38f40f5b3",
+      "bytes": 417,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/plugin.json",
+      "sha256": "19b03b5c61f4b6decbf06a650a3824db02f61ba010939246a7d1bd35ae3e6966",
+      "bytes": 613,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json",
+      "sha256": "77f3bc2d1d9a25347219cbb5f11d8580e57390abee3936a6de044b6d5cea68c5",
+      "bytes": 357,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/schemas/input.schema.json",
+      "sha256": "2d6fb0f0178d3b361d417a74303fe04c188a353114735e5809a8abd35fbd34f7",
+      "bytes": 2405,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/src/protocol.ts",
+      "sha256": "9f85b213f272e143dbc7a9736666054941b4d21c231afdbfc07b8e539c907711",
+      "bytes": 4132,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/src/protocol.ts"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+      "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76",
+      "bytes": 5052,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+      "sha256": "e44759720e880cc8b3b63348f80422be38fb2852a8ccb155fbb852bc0a48b014",
+      "bytes": 6700,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs",
+      "sha256": "ada5f1a3257ce1dd29af5f206b00ea2964c380240a8c1e8e9140220a11b77c6b",
+      "bytes": 986,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts",
+      "sha256": "e600f1fe1166e254214ee83f9e7d50152724448347cdafe6a15378699c599896",
+      "bytes": 1512,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts",
+      "sha256": "9daf9ea74dff6746ee718aabcc96e71cb496b8714927bee031519cebf6b49351",
+      "bytes": 1316,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/README.md",
+      "sha256": "d896e5e31a642289a86806abd984add82a969fd6377257ff39b864c1967aaa56",
+      "bytes": 3223,
+      "snapshot": "sources/skills/nova/plugins/case-study/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/package.json",
+      "sha256": "4c8729dfdf523befdb7dfc2551ba543780d0171bb6d3998ac387a6d50e9668a5",
+      "bytes": 325,
+      "snapshot": "sources/skills/nova/plugins/case-study/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/plugin.json",
+      "sha256": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+      "bytes": 578,
+      "snapshot": "sources/skills/nova/plugins/case-study/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/schemas/config.schema.json",
+      "sha256": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895",
+      "bytes": 180,
+      "snapshot": "sources/skills/nova/plugins/case-study/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/schemas/input.schema.json",
+      "sha256": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+      "bytes": 1335,
+      "snapshot": "sources/skills/nova/plugins/case-study/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "sources/skills/nova/plugins/case-study/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/src/protocol.ts",
+      "sha256": "3ff3c3dc70f2967d194896205cb1c7a2f7226d84de2a042f6c7bae46a25588c6",
+      "bytes": 5223,
+      "snapshot": "sources/skills/nova/plugins/case-study/src/protocol.ts"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/src/stage.ts",
+      "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+      "bytes": 2618,
+      "snapshot": "sources/skills/nova/plugins/case-study/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tests/live-function.test.ts",
+      "sha256": "034be8b74bd8a687b9732f1cd7f40784c10f9f2769a748e4f1c427792ff83ff0",
+      "bytes": 793,
+      "snapshot": "sources/skills/nova/plugins/case-study/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tests/package-boundary.test.mjs",
+      "sha256": "7121daaaddd3268395864668c065b163e94a3636ddbd5e94dc2583c805b46309",
+      "bytes": 742,
+      "snapshot": "sources/skills/nova/plugins/case-study/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tests/protocol.test.mjs",
+      "sha256": "980e6140e7c4d4f66134f49ce5ac537d65102ab0c6a498d2a2ff98d4fe13b069",
+      "bytes": 2168,
+      "snapshot": "sources/skills/nova/plugins/case-study/tests/protocol.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "sources/skills/nova/plugins/case-study/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/README.md",
+      "sha256": "3fda4b5a47bb2f5112394453467d6b6ab91e2f8977c7b518b9dd0bdef789136f",
+      "bytes": 2827,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/fixtures/passing.json",
+      "sha256": "0b6b7fdacad7d5a07e705de97e08cf0e1741f100e600698d10e1fd4ae61eeaa9",
+      "bytes": 249,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/fixtures/passing.json"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/fixtures/remediation.json",
+      "sha256": "850685a04e5864d147af02745e4b869a6ba20bfd7f9553c26f47206aad6b86cf",
+      "bytes": 316,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/fixtures/remediation.json"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/package.json",
+      "sha256": "2ea2e723d51ac50a81e051ea2866120c5fc913e196c117bb1d7dd05031707830",
+      "bytes": 296,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/plugin.json",
+      "sha256": "4d560ad2f25858a8f399097effb0f32c7a25bfbe326c3dfd61101346ee1d01d9",
+      "bytes": 551,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
+      "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+      "bytes": 117,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/schemas/input.schema.json",
+      "sha256": "57a650703fe82e66f611097bf32652425a70d4be8ee5cd6cc63788f983a65ce4",
+      "bytes": 499,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/schemas/result.schema.json",
+      "sha256": "b7cf810d6de653ae98b1caf1ed6f77ec0940495ed1392bae577c55784f3b77e5",
+      "bytes": 173,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/src/dockerfile.ts",
+      "sha256": "189011bb0e9f89f2144c1ed883a746b5937b662d39d8b484ee9f4e88d9149849",
+      "bytes": 4313,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/src/dockerfile.ts"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/src/stage.ts",
+      "sha256": "b8f849c5d228713dd73ab7a47e73ef5be9ee5fd07af39e4276c483a3555ac862",
+      "bytes": 5119,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
+      "sha256": "e45ab9c111f408b27166d86d59154b8f25b17830eb67c1b927e862a8c1729bb0",
+      "bytes": 7832,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs",
+      "sha256": "edbba38f4785f0ebca6f1cadc4259d8ed45860bbee434719f220031f4dd86639",
+      "bytes": 1054,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/README.md",
+      "sha256": "5a80c23923eecb0361cd60ae3eec9ee72560eaecc73ef4b99dc459e5448561e0",
+      "bytes": 4864,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/package.json",
+      "sha256": "0862144204d32c406fb2248b09dff87582d2a67234b2a05a8614d7393167dcf4",
+      "bytes": 440,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/plugin.json",
+      "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e",
+      "bytes": 1679,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
+      "sha256": "908e54cafb1d4edac6aeffe49ded47dc578f87e3d37952b247b7520aa4560fa4",
+      "bytes": 1338,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/schemas/adapter.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/schemas/candidate.schema.json",
+      "sha256": "20ef1065dadcf3236d091621eee86a81157f52dd9aca1b7f3535187aa09d3b13",
+      "bytes": 729,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/schemas/candidate.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/schemas/delivery.schema.json",
+      "sha256": "0c23e4a13b585c3c1acde7410fed759f034c05f90b2202664bcac9dc5e1010c9",
+      "bytes": 286,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/schemas/delivery.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+      "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+      "bytes": 117,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/schemas/empty.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/schemas/ready.schema.json",
+      "sha256": "5b61a49b5383f4d4c1b3227104e136ef0119383ec4c9d456658c20df136dcbb0",
+      "bytes": 411,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/schemas/ready.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/schemas/result.schema.json",
+      "sha256": "b7cf810d6de653ae98b1caf1ed6f77ec0940495ed1392bae577c55784f3b77e5",
+      "bytes": 173,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "bytes": 6529,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/src/adapter.ts"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/binding.ts",
+      "sha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+      "bytes": 4343,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/src/binding.ts"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/candidate.ts",
+      "sha256": "0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3",
+      "bytes": 1499,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/src/candidate.ts"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+      "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+      "bytes": 3384,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/src/controller-client.ts"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/delivery.ts",
+      "sha256": "a1dfb3d6fef144d5f11e3546039ba4a291c97ad4f5fcf7ee0279b83fdfadaff7",
+      "bytes": 1119,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/src/delivery.ts"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+      "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+      "bytes": 3683,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/src/protocol.ts"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/ready.ts",
+      "sha256": "ae78a23722ab515d539b8ad4c0950ee8d487c5ff02a4b5f851f249f2026ffb82",
+      "bytes": 1211,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/src/ready.ts"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/tests/compiler.test.mjs",
+      "sha256": "b8675dcd0a3302f093e67ec6cf13975b6ee699d2c82994840f47b5d30a66abc2",
+      "bytes": 4613,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/tests/compiler.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/tests/controller-client.test.mts",
+      "sha256": "91e19bfd0e1fd27e9facc64d3ce4f51237a2a95dfc6814a8017fdf5ab93376f8",
+      "bytes": 2782,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/tests/controller-client.test.mts"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+      "sha256": "299d952f3e7d857d5cda8de9a26cc43f3878915f8ea587680c58c38eaa761b26",
+      "bytes": 16920,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/tests/handoff.test.mts"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/README.md",
+      "sha256": "39f9c6805d61be22d45bc3d5709499dae9977e7c4dee1fb1e75ac8e3dd6e537f",
+      "bytes": 2037,
+      "snapshot": "sources/skills/nova/plugins/human-approval/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/package.json",
+      "sha256": "875c50f61b076dd058328c8b7c73bba9877bbadc9614cd2add42097418fce306",
+      "bytes": 416,
+      "snapshot": "sources/skills/nova/plugins/human-approval/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/plugin.json",
+      "sha256": "a93144f20bcd0968995844516da5221e8d77aa5c559577c7f1165f00dfd0f4b8",
+      "bytes": 1073,
+      "snapshot": "sources/skills/nova/plugins/human-approval/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/schemas/architecture-input.schema.json",
+      "sha256": "028c18b6829fba9b2acfd72e197558d87ae14e7a56e9fbf6b16add6c7c5bc3ab",
+      "bytes": 696,
+      "snapshot": "sources/skills/nova/plugins/human-approval/schemas/architecture-input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/schemas/config.schema.json",
+      "sha256": "45d20ce3dd08dcecb65fb0b0dbd76bf63b917038a968dce4d20963167b78f581",
+      "bytes": 640,
+      "snapshot": "sources/skills/nova/plugins/human-approval/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/schemas/input.schema.json",
+      "sha256": "f4c7e20a48803202f36269ff3b04d3d8b4b4cea8dfdad4816fdddd5c063b3e2f",
+      "bytes": 333,
+      "snapshot": "sources/skills/nova/plugins/human-approval/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "sources/skills/nova/plugins/human-approval/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/src/approval.ts",
+      "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d",
+      "bytes": 6813,
+      "snapshot": "sources/skills/nova/plugins/human-approval/src/approval.ts"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+      "sha256": "3a6073a7c6ef98ba417ed1b38827c15b3449e70ac89b8a126b7ad14f380e304b",
+      "bytes": 7384,
+      "snapshot": "sources/skills/nova/plugins/human-approval/src/architecture-approval.ts"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/src/stage.ts",
+      "sha256": "9e54e56d6b5acc631985cc2de9e9be943f3e8cdeaa09835dfdc1e402d67da8fd",
+      "bytes": 1845,
+      "snapshot": "sources/skills/nova/plugins/human-approval/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/tests/approval.unit.test.mjs",
+      "sha256": "6b9b891c8a7aee50398966bf51f38e81eada77ecdfe72f4220c6589ef8bf9b90",
+      "bytes": 3481,
+      "snapshot": "sources/skills/nova/plugins/human-approval/tests/approval.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/tests/live-function.test.ts",
+      "sha256": "201c8c7dbc5754184be4c69c795d7f1ea32ff82345f37c88521dd2a79dd4aa62",
+      "bytes": 9178,
+      "snapshot": "sources/skills/nova/plugins/human-approval/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/tests/package-boundary.test.mjs",
+      "sha256": "a297a933069b67a6193a874e569b6fc66f2e52121664de1ea8fa8dfc2fc3bff6",
+      "bytes": 1589,
+      "snapshot": "sources/skills/nova/plugins/human-approval/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/tsconfig.json",
+      "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+      "bytes": 137,
+      "snapshot": "sources/skills/nova/plugins/human-approval/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/README.md",
+      "sha256": "9f6b149f2994f44abeefc59e9e960f240f3c4947c1dceaf1d97806cc0255192a",
+      "bytes": 1947,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/package.json",
+      "sha256": "a2b40ca7dd4f1e3007696ef03304f80e7c31e4e8ab5834393bf69d2ca3d698cb",
+      "bytes": 334,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/plugin.json",
+      "sha256": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+      "bytes": 696,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
+      "sha256": "f2c8f956678a98cce81e8d6bd41fa444588ceb1519a9ca7a7f5db509f9478d5c",
+      "bytes": 2210,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/src/protocol.ts",
+      "sha256": "d1d2e0c5d82e37e3a3e51e89f1d002e1623a06fdcd0a4b9add816bf563b9cbe6",
+      "bytes": 7464,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/src/protocol.ts"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/src/repair-evidence.ts",
+      "sha256": "0ba38e4004d0b9c3058fdce363611beeb6170ee3cb37424da599eb3757fa5c99",
+      "bytes": 2793,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/src/repair-evidence.ts"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+      "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+      "bytes": 9062,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/src/workspace.ts",
+      "sha256": "14cdeb066a35cbb2564928ca8ff8f4fa5ce2bd95a36c3607bda011f9c0e79c34",
+      "bytes": 558,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/src/workspace.ts"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+      "sha256": "13ccae41a9d10b740a55d103fdf7deea45df597c91e949682d06652c413c7034",
+      "bytes": 13008,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs",
+      "sha256": "9c7301442eebf330bddfa1bb65e0f391ada98097553e76aafad2980266a59f50",
+      "bytes": 477,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/tests/protocol.test.ts",
+      "sha256": "d95fd3d67bba3e442c02a722378cd763e70274ecb5fde72f5765156b49db1478",
+      "bytes": 1753,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/tests/protocol.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/tsconfig.json",
+      "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+      "bytes": 137,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/lint/README.md",
+      "sha256": "95b6617ebe1ea090c7ac550f269ee82b17dfb82159eb777c6e25007fae95320c",
+      "bytes": 5513,
+      "snapshot": "sources/skills/nova/plugins/lint/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/lint/package.json",
+      "sha256": "9364645f3e17721c2df5dcf9d6047ef28d1cf735272dd12d881a9025217a07c5",
+      "bytes": 608,
+      "snapshot": "sources/skills/nova/plugins/lint/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/lint/plugin.json",
+      "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04",
+      "bytes": 1226,
+      "snapshot": "sources/skills/nova/plugins/lint/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+      "sha256": "07d9497e85246c310e93213a90ff22d7b1323302051902e6a75e3e0f6bb46b24",
+      "bytes": 523,
+      "snapshot": "sources/skills/nova/plugins/lint/schemas/adapter-config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/lint/schemas/config.schema.json",
+      "sha256": "02ee8a644c0e7ce0bfa58b0fe22582ba12e97f65c3a1e13170304231662a5bf8",
+      "bytes": 429,
+      "snapshot": "sources/skills/nova/plugins/lint/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/lint/schemas/input.schema.json",
+      "sha256": "b5d3f14f5971057c8a5a81471b857b6f92ee9ac106b9cb1947441a5c96c4a84b",
+      "bytes": 1481,
+      "snapshot": "sources/skills/nova/plugins/lint/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/lint/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "sources/skills/nova/plugins/lint/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/adapter.ts",
+      "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+      "bytes": 3275,
+      "snapshot": "sources/skills/nova/plugins/lint/src/adapter.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/candidate.ts",
+      "sha256": "cb87e62587a7bad9f2d63a305870e85bdbf439440e02e4dfed5d91475ba6560e",
+      "bytes": 1513,
+      "snapshot": "sources/skills/nova/plugins/lint/src/candidate.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/architecture-tools.ts",
+      "sha256": "42720f0013e983cf28b693f2cd709b3fec3470c45ec1637d832eff7430fd0d03",
+      "bytes": 11604,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/architecture-tools.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/constants.ts",
+      "sha256": "03e18f020b7e416463dc333c06d7ad24628e5105fa5ee10a457e364baa7bf058",
+      "bytes": 109,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/constants.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
+      "sha256": "7a97ff6e62bc9e431c7dd1c8123bad9afa36fb797f0891edf879924ea5429cbc",
+      "bytes": 7066,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/container-yaml-tools.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/discovery.ts",
+      "sha256": "ef94db8bda63eb74abe47cefabea3f3b64ef1e8848b868f61bb885059e8e4b16",
+      "bytes": 8109,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/discovery.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/evidence-file-partition.ts",
+      "sha256": "00caab4a144b1f76962249f6bc2098424540efd644686154eeeeb62e6ae8e9bb",
+      "bytes": 2040,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/evidence-file-partition.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/execution.ts",
+      "sha256": "9aa2e64b50e9a9f7bb3bf1d181860f772c70dfc9c4ce058f376e4d56f2a675f4",
+      "bytes": 3180,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/execution.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/finding-fingerprints.ts",
+      "sha256": "1a0e06f7bcb937839a43e5025e47831a173661240d9cce91125df3f3ff7ce317",
+      "bytes": 2325,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/finding-fingerprints.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/go-terraform-tools.ts",
+      "sha256": "559229928d17cd3eff2c201eae78e705eb36b4d5c9f231a15faab2b917b00a9d",
+      "bytes": 112,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/go-terraform-tools.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/go-tools.ts",
+      "sha256": "2ca058762435596a50dcddecc8e33a65d6f5638aa01bbe74140bd7d89b808d3d",
+      "bytes": 13971,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/go-tools.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/helm-render.ts",
+      "sha256": "acafef0f53da08c16d9836dea2f243999bd9fdd347220d47c68310191b0ffb2c",
+      "bytes": 705,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/helm-render.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/index.ts",
+      "sha256": "b7c408dc76e87aada6047264734c766b259a24254d7a3bb59e5fb735229c5214",
+      "bytes": 6167,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/index.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubeconform-tool.ts",
+      "sha256": "b7b24ece9566c430c480795b916f094faed7dbb372520b58da3b5a99ff56a0fc",
+      "bytes": 6632,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/kubeconform-tool.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-manifests.ts",
+      "sha256": "16709307fb3b7b954902e20d3e8c7a8485ff4cd2160ac7944b8904a9ae7e6608",
+      "bytes": 7774,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/kubernetes-manifests.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts",
+      "sha256": "c449ee445791ed4c7e3e2fde96139bb46e1407e6898d4ab698203314f0a70171",
+      "bytes": 6832,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts",
+      "sha256": "a09beb82bd8db595e9467dcfe61bfa4bdaa07a09e8828dd83fda01f72150b002",
+      "bytes": 9053,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-security-tools.ts",
+      "sha256": "70b9625b994b9d210734941fdfd6cb6b663dbd5b4dd20db9ded0a144af8dfc4e",
+      "bytes": 5123,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/kubernetes-security-tools.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/lint-governance.ts",
+      "sha256": "7904cc32edb9304644c02a705669624c224c87be0a176d1babc5cb0016bc6145",
+      "bytes": 4869,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/lint-governance.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/linux-process-group.ts",
+      "sha256": "83696b7511173f21e5af38f238758fc087afc0b3d84d8c62017aefa3527e6ea2",
+      "bytes": 2783,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/linux-process-group.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/openapi-tool.ts",
+      "sha256": "5bf93fd93ea7e29019ea77fab78eeb365715c57504013ad82526d4db32dc9c61",
+      "bytes": 3902,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/openapi-tool.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/output.ts",
+      "sha256": "cb405a9b8166ff3c6ea08d26a2eede788c0b3cbd007f06a5c09aef7340b7903c",
+      "bytes": 731,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/output.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/parsers.ts",
+      "sha256": "4948bf6d3e1ce744d436ebf9e4e3b289d7bced8782d5364bb0ea54f4580ab638",
+      "bytes": 277,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/parsers.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/paths.ts",
+      "sha256": "c84ba218c0185216e3e6eb1b4e348015e60833a761059f6388f0166eee347b83",
+      "bytes": 1964,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/paths.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy-paths.ts",
+      "sha256": "4e7723eb14813fe5d594222d8a9b69809f809abaa379fbb44041793f28aa66e3",
+      "bytes": 4839,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/policy-paths.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy-patterns.ts",
+      "sha256": "7403829fae95019d046086f596f58035dae315c1b3def61e9849565b1c06584e",
+      "bytes": 1312,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/policy-patterns.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy-validation.ts",
+      "sha256": "1c6f1e831d24a8df17557fe9919425042b995de3d28d92a0c6b8afb25293633e",
+      "bytes": 1836,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/policy-validation.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy-version.ts",
+      "sha256": "6324eb9a75f6151eaede8fae9ec4c48c61f2fe8265e4be64ec9fd6ce90db1d24",
+      "bytes": 69,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/policy-version.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy.ts",
+      "sha256": "9b48e0b8de2714bde16f58a667ac9356ec2b8a8f9ccd364673000dec076feb53",
+      "bytes": 19438,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/policy.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/process-termination.ts",
+      "sha256": "47199969a22d1415bee97247400c9dfaf33ea843a41e5b68d13646febda59ed9",
+      "bytes": 2598,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/process-termination.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/process.ts",
+      "sha256": "81320777e32a2af656cbb6f22903918d8c8a48074c0e33f47b4ae87b7bfeaca3",
+      "bytes": 3114,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/process.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/report-contract.ts",
+      "sha256": "a0acf232699b954e74e35f3c075d68f5559576eda588e48a4e36f47c51d05893",
+      "bytes": 14404,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/report-contract.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/report.ts",
+      "sha256": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b",
+      "bytes": 11216,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/report.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/terraform-tools.ts",
+      "sha256": "b189a72a067325eca719e5c3a2c863aa8b8401938b590e258dc67fcc2ef9978c",
+      "bytes": 9271,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/terraform-tools.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-core.ts",
+      "sha256": "766fba947b149d80b78789743b65d0e427804ae08e39f47d862f5163a583203d",
+      "bytes": 5174,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/tool-registry-core.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts",
+      "sha256": "4c1e54233cc2af3e0e110937433c6258923f6d15d7a991317d7a07add38ba577",
+      "bytes": 2388,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts",
+      "sha256": "85b1c25c238682acce0fcea59ceea75ba1b2d7aa91f95a8308194a0602cbd184",
+      "bytes": 10979,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts",
+      "sha256": "6148c63c63ab2b8ad4fa258790e95bb89121d4e844969b7a91020f6803527de5",
+      "bytes": 3333,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry.ts",
+      "sha256": "3e49b2dfecee85df614db7d2e89e9f1087ef31c412cf0dfecc7959c220d2fa28",
+      "bytes": 947,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/tool-registry.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-summary.ts",
+      "sha256": "e53ec5b5468aecffbe2ca0efd366c00e1eb585b7d1d8b0d34e9c7e13fd893904",
+      "bytes": 767,
+      "snapshot": "sources/skills/nova/plugins/lint/src/engine/tool-summary.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/request.ts",
+      "sha256": "68d31dbdfb0a48764b436307be6998cd21700091f9f06f306bdef34532fb2453",
+      "bytes": 2289,
+      "snapshot": "sources/skills/nova/plugins/lint/src/request.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/stage.ts",
+      "sha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+      "bytes": 4003,
+      "snapshot": "sources/skills/nova/plugins/lint/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/support/optional-absence.ts",
+      "sha256": "09944ef955b43f0d1bd2e33ceed7d1655c1fc0bff100fc9c7e8053651b84a7d4",
+      "bytes": 113,
+      "snapshot": "sources/skills/nova/plugins/lint/src/support/optional-absence.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/support/value-boundary.ts",
+      "sha256": "d5982b5b79fce71aa8c61bfabbf5fc233c1afc3b73414f9df6f316c6439a16e0",
+      "bytes": 125,
+      "snapshot": "sources/skills/nova/plugins/lint/src/support/value-boundary.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/adapter-boundary.test.mjs",
+      "sha256": "b5ff8cbe85cab7a87cde828267cd80b01683948bca228fcfdd9c94a1f999d2dd",
+      "bytes": 2255,
+      "snapshot": "sources/skills/nova/plugins/lint/tests/adapter-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/discovery.test.mjs",
+      "sha256": "c78712b87fcbb959021cfe9e56614c306b8e3b4b5e6e8bf0e61ba1315272d12d",
+      "bytes": 6250,
+      "snapshot": "sources/skills/nova/plugins/lint/tests/discovery.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/eslint-discipline.test.mjs",
+      "sha256": "a81828e20d0bc2729d00687acef72a4e5196dace43c110e44b88a77de8cc58de",
+      "bytes": 2202,
+      "snapshot": "sources/skills/nova/plugins/lint/tests/eslint-discipline.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs",
+      "sha256": "16aaffd8f30a9f8943b9073aca5155380bf423ab468b69b235816e46bc792e67",
+      "bytes": 9901,
+      "snapshot": "sources/skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/live-function.test.ts",
+      "sha256": "0b591b57b98379b29be99177f9a655185b6cdef2d64f9166abeffba7b5629c08",
+      "bytes": 9499,
+      "snapshot": "sources/skills/nova/plugins/lint/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+      "sha256": "b15e5073539353d15a1e3afe678476762e6e30edd069e8721457acc0330bbd1a",
+      "bytes": 1846,
+      "snapshot": "sources/skills/nova/plugins/lint/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/remediation.test.mjs",
+      "sha256": "3e38a082a6500bee30a282c8ada2157111f2ae6572b6bd04e6197356a399b6c6",
+      "bytes": 12488,
+      "snapshot": "sources/skills/nova/plugins/lint/tests/remediation.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/stage.unit.test.mjs",
+      "sha256": "f6c28380b4932eda7668ba99adc9a82e91705f99802cfbdf8ac18145883bbcff",
+      "bytes": 981,
+      "snapshot": "sources/skills/nova/plugins/lint/tests/stage.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "sources/skills/nova/plugins/lint/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/README.md",
+      "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141",
+      "bytes": 3229,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/package.json",
+      "sha256": "1f587ae529db6a8c3ede69be6ca14651d989a80e884d111888469bd5b30da888",
+      "bytes": 412,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/plugin.json",
+      "sha256": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+      "bytes": 892,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+      "sha256": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+      "bytes": 224,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+      "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530",
+      "bytes": 682,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/input.schema.json",
+      "sha256": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+      "bytes": 1335,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+      "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "bytes": 3858,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/src/evidence-adapter.ts"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+      "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "bytes": 5615,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/src/evidence-bundle.ts"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/protocol.ts",
+      "sha256": "df3e02fd4c7a13aa38ce93292a55da9cb6c712799e813cbe0c8a283fd769081f",
+      "bytes": 5871,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/src/protocol.ts"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+      "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+      "bytes": 2662,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tests/live-function.test.ts",
+      "sha256": "eb56fbcf5a026359aad4351423c92ebfd1f76e72843f646bc7e50953cb6e60ef",
+      "bytes": 817,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs",
+      "sha256": "b4a91a91ec99a62813f2c2e8cf35642add682c1cfb699d0e8930ae2230453af6",
+      "bytes": 752,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tests/protocol.test.mjs",
+      "sha256": "e6041312773df12596b7b695b7b86b35c5839e97d371dae81edceddad1ac0709",
+      "bytes": 2181,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/tests/protocol.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/README.md",
+      "sha256": "59edb208e51d04f8c675d23583aab236c1ecd2d7e23938acb99424d4d6c48da6",
+      "bytes": 3233,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/package.json",
+      "sha256": "0b771a4c4f650e72534ab1a43bb45d96d881ea6366d1c528da6acafe85bf8337",
+      "bytes": 342,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/plugin.json",
+      "sha256": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c",
+      "bytes": 976,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
+      "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+      "bytes": 104,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/schemas/input.schema.json",
+      "sha256": "eaf263b43e77b55cdeadf0d009e89186f28d4a50672e7f358a9106d0561758dc",
+      "bytes": 824,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/schemas/source-input.schema.json",
+      "sha256": "f1f1be9585ad9a70d3a2b9fdb43b3a56179f1bf230440c109878d6749271bb44",
+      "bytes": 3486,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/schemas/source-input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+      "sha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309",
+      "bytes": 3315,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/src/declarations.ts"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+      "sha256": "9f7e566f15813cb4b096dbd5dcd84f9d4925e09da29075ef8a85dc1f352bb1c6",
+      "bytes": 2775,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/src/source-stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/src/stage.ts",
+      "sha256": "75da42cf49cb7a655e9edb4e4928bd3e708ece30f592cb5a14aa2627ce3fc4ef",
+      "bytes": 3920,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs",
+      "sha256": "966947bb35b46a1922880b223346dfb86cc379f8322960ee70122c20cc3cd853",
+      "bytes": 1519,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
+      "sha256": "cde73b99098167be3ab186969ca3a8a7b901a1f2d1f210f024bd1f000a6a86ab",
+      "bytes": 6858,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs",
+      "sha256": "141cf54aec3c84dc6f51ff4619df093d72576552bc173a3173b0c707b6609801",
+      "bytes": 661,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/README.md",
+      "sha256": "578e856a2dc1bec26227012406c610bca1ed9ce569778347b9d90355ed4f96ac",
+      "bytes": 1374,
+      "snapshot": "sources/skills/nova/plugins/prism-design/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/package.json",
+      "sha256": "54c0031ee6ce2b8bed687d805cadb90ea40c405df36cde653f99fab30303972d",
+      "bytes": 441,
+      "snapshot": "sources/skills/nova/plugins/prism-design/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/plugin.json",
+      "sha256": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+      "bytes": 482,
+      "snapshot": "sources/skills/nova/plugins/prism-design/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/schemas/config.schema.json",
+      "sha256": "15fc34fb28e0afe96ad1e248c32e6d9a9bb173bb731226fb52ccb78a8afcc61e",
+      "bytes": 352,
+      "snapshot": "sources/skills/nova/plugins/prism-design/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/schemas/input.schema.json",
+      "sha256": "0c636654897e05d3a4981009c4676e3a7fec517ff6c59822edd49259590fb66d",
+      "bytes": 605,
+      "snapshot": "sources/skills/nova/plugins/prism-design/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/schemas/result.schema.json",
+      "sha256": "3e80e0c6d65754ee88072b0d08c1780b6d196358d25f45175a7d2c8ff7d45fea",
+      "bytes": 344,
+      "snapshot": "sources/skills/nova/plugins/prism-design/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/src/architecture.ts",
+      "sha256": "bb4fab2431b51d68a787fefdaec95649678e86ede9961bc2fb1ad168b7eed10f",
+      "bytes": 1868,
+      "snapshot": "sources/skills/nova/plugins/prism-design/src/architecture.ts"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/src/archive.ts",
+      "sha256": "8875fcaa4c6efafa2f231c8e3fcc522dcd1ae1f23850a4d8941a89358726383e",
+      "bytes": 6220,
+      "snapshot": "sources/skills/nova/plugins/prism-design/src/archive.ts"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/src/stage.ts",
+      "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88",
+      "bytes": 6162,
+      "snapshot": "sources/skills/nova/plugins/prism-design/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/tests/live-function.test.ts",
+      "sha256": "f2e6610df9c42ec53a110c10cf1c4a4d37f54ee16bcafcc120b2943fd43f0d3d",
+      "bytes": 699,
+      "snapshot": "sources/skills/nova/plugins/prism-design/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/tsconfig.json",
+      "sha256": "6fcce9b8c2807131e39d8aaed282eb5f03906dc757d09d8b4fe54c6460cab2f1",
+      "bytes": 105,
+      "snapshot": "sources/skills/nova/plugins/prism-design/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/README.md",
+      "sha256": "0e88232cfbabf90d094ca6f8de77c3828de288b81109f2d6239087f52dbe4ee9",
+      "bytes": 2210,
+      "snapshot": "sources/skills/nova/plugins/project-summary/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/package.json",
+      "sha256": "5d55bac5f34dbb15dc796f54e09e4069e2b23b668461b12f5dcf6c3ee0508f8e",
+      "bytes": 473,
+      "snapshot": "sources/skills/nova/plugins/project-summary/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/plugin.json",
+      "sha256": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454",
+      "bytes": 551,
+      "snapshot": "sources/skills/nova/plugins/project-summary/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/schemas/config.schema.json",
+      "sha256": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9",
+      "bytes": 229,
+      "snapshot": "sources/skills/nova/plugins/project-summary/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/schemas/input.schema.json",
+      "sha256": "451591d9b115aa5aae88c4a08301845316f1207cdd24ed9baf7639adc83439cf",
+      "bytes": 2210,
+      "snapshot": "sources/skills/nova/plugins/project-summary/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "sources/skills/nova/plugins/project-summary/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/src/review-semantics.ts",
+      "sha256": "a14a5e8039d481063d2439a8c1060ca414012f7ba55b73ee153d2317effc2104",
+      "bytes": 2988,
+      "snapshot": "sources/skills/nova/plugins/project-summary/src/review-semantics.ts"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/src/stage.ts",
+      "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee",
+      "bytes": 1731,
+      "snapshot": "sources/skills/nova/plugins/project-summary/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/src/summary.ts",
+      "sha256": "bb82063929e9100dd42c3dff541eca77be2cfa624f8b5fd8733e773acb7ce7c5",
+      "bytes": 11669,
+      "snapshot": "sources/skills/nova/plugins/project-summary/src/summary.ts"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+      "sha256": "9fbc900913cdebd86ea447193f3dedb6ddab231321279df6263be910496c7197",
+      "bytes": 4771,
+      "snapshot": "sources/skills/nova/plugins/project-summary/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tests/package-boundary.test.mjs",
+      "sha256": "451c143e3fe713a8bd919789b2ad0a8c5b5758853059b20f3bee33c23029c495",
+      "bytes": 745,
+      "snapshot": "sources/skills/nova/plugins/project-summary/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tsconfig.json",
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+      "bytes": 215,
+      "snapshot": "sources/skills/nova/plugins/project-summary/tsconfig.json"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "sha256": "7c42888270bb814bfeb9c47b2bc1daa4a858e649890866c9abb0f6b3c4b8d35e",
+      "bytes": 745,
+      "snapshot": "sources/skills/nova/plugins/remote-test-gate/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/plugin.json",
+      "sha256": "91fe75d56133722d51c62bb2b06f729cdf3ee35735f471857fb324aab34501bd",
+      "bytes": 421,
+      "snapshot": "sources/skills/nova/plugins/repository-adapter/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/README.md",
+      "sha256": "643e1eb16117035d97d8856a89de766d10f39de3cc61f944e6ebd92eb1902f67",
+      "bytes": 16012,
+      "snapshot": "sources/skills/nova/plugins/review/README.md"
+    },
+    {
+      "path": "skills/nova/plugins/review/package.json",
+      "sha256": "fda551ec6184d135e5ef64de90ba3117889fb627ff467c9eaf3c86fa97b414d9",
+      "bytes": 4100,
+      "snapshot": "sources/skills/nova/plugins/review/package.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/plugin.json",
+      "sha256": "5ced42bfc8ca0851739ed6bbd668085345dea0e1caa391c5f1520e7f919be8f1",
+      "bytes": 1684,
+      "snapshot": "sources/skills/nova/plugins/review/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/config.schema.json",
+      "sha256": "c03f8eee6b49a316a3bd61a9a33b02fec50eed7473c020fd0f503c047de410d3",
+      "bytes": 15917,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/echo-review-verification.v1.schema.json",
+      "sha256": "af9b378497f3767feea7c073f6135b7a6ba522f8d900dc94e7c3d187cbab7466",
+      "bytes": 2937,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/echo-review-verification.v1.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/input.schema.json",
+      "sha256": "178399b3b8e27d28082b415c4101ef9213aad0e0b486238e0ef2348e9a52c71c",
+      "bytes": 2672,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+      "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+      "bytes": 15784,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/repository-audit-config.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/repository-audit-input.schema.json",
+      "sha256": "f95e29e1e8dc9d9116f0be4b4713cdaf70826b455f4e3f9dd69d9055e4e02f8a",
+      "bytes": 4863,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/repository-audit-input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json",
+      "sha256": "a27a9d28800f6b7ec185603422885a1c68d0c24bfae447d5c0a426d97ec185e1",
+      "bytes": 1696,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/result.schema.json",
+      "sha256": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+      "bytes": 164,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/result.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/review-bundle.v1.schema.json",
+      "sha256": "54a7aece36f7f2336dae2b395b5fbe329bd3f03e4c5d9d88f75ea794b8d469a7",
+      "bytes": 11269,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/review-bundle.v1.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/review-bundle.v2.schema.json",
+      "sha256": "21ed8d2186fa9cfcc112edbd4a37306bf3d13cee92e0d74fefef67b47f492c3f",
+      "bytes": 11269,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/review-bundle.v2.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/review-policy.v1.schema.json",
+      "sha256": "4cfb503e7a6b5a41d0cd6abfb5b6915b2898768c4cd99a965a057975c3af040e",
+      "bytes": 11863,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/review-policy.v1.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/review-policy.v2.schema.json",
+      "sha256": "d143ded923151da7f3174083b819cb8eefec0c5ef787b9b2ab593a259699a491",
+      "bytes": 12815,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/review-policy.v2.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/review-report.v1.schema.json",
+      "sha256": "434a420494ed0e04b91a6eb9fa642f819aebf74397faa17f7a15fac7500ddfd0",
+      "bytes": 4892,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/review-report.v1.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/review-report.v2.schema.json",
+      "sha256": "4ce40c81ab1e80bcf95195898509532ecfb2b40db97d2d16809b79dd5a13980b",
+      "bytes": 6581,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/review-report.v2.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/review-report.v3.schema.json",
+      "sha256": "81406f36efb1cb45393b61059c32e800429c9cbc5b19c6709a9e470c54cb87b2",
+      "bytes": 10867,
+      "snapshot": "sources/skills/nova/plugins/review/schemas/review-report.v3.schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/scripts/evaluate-review-quality.mts",
+      "sha256": "b0f3eb3e2631fb07c0deced7bf56335acc8365c946d9ac226bc438e84f018251",
+      "bytes": 16580,
+      "snapshot": "sources/skills/nova/plugins/review/scripts/evaluate-review-quality.mts"
+    },
+    {
+      "path": "skills/nova/plugins/review/scripts/evaluate-scalable-review.mts",
+      "sha256": "351afea71198e6107ad9e88359a59e4e58c74ae0ba2bc197049cc56f33cdb5c9",
+      "bytes": 3237,
+      "snapshot": "sources/skills/nova/plugins/review/scripts/evaluate-scalable-review.mts"
+    },
+    {
+      "path": "skills/nova/plugins/review/scripts/generate-bundle-schema.mjs",
+      "sha256": "672c9b2e8551e6a6962f975f7efdce8e2e69e329aa4d671aa6a9b5371e227d02",
+      "bytes": 1907,
+      "snapshot": "sources/skills/nova/plugins/review/scripts/generate-bundle-schema.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+      "sha256": "7947d71484910e3433bc8eabac6ba00d79b37ce8f2f35643ac0b37a171a38c64",
+      "bytes": 2680,
+      "snapshot": "sources/skills/nova/plugins/review/scripts/generate-policy-schema.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/scripts/generate-verification-schema.mjs",
+      "sha256": "2d84b5dcaf2de81800e715d80b3b6047679ec98845e394a6ea3b6bf1ce2b0ffe",
+      "bytes": 867,
+      "snapshot": "sources/skills/nova/plugins/review/scripts/generate-verification-schema.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/echo-context-request-parser.ts",
+      "sha256": "694d0ead231697dbe8a000233148cd4957493fc34963e4f91b0efbf403339a7d",
+      "bytes": 3369,
+      "snapshot": "sources/skills/nova/plugins/review/src/echo-context-request-parser.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/echo-evidence-verification.ts",
+      "sha256": "e3320cb9d930bc08618206458181fb67d12c2dfd0ddf521cf6912eb46a9de435",
+      "bytes": 1009,
+      "snapshot": "sources/skills/nova/plugins/review/src/echo-evidence-verification.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/echo-review-contract.ts",
+      "sha256": "67193f1308ba53eab12c8f280cc4a03a7897289c54147921fe61561b09a684e6",
+      "bytes": 9139,
+      "snapshot": "sources/skills/nova/plugins/review/src/echo-review-contract.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/echo-review-parser.ts",
+      "sha256": "c950a64aa12b6bcf24503a63a4dbed3dc8d128d105d26eb83f7cc311987d0cda",
+      "bytes": 11875,
+      "snapshot": "sources/skills/nova/plugins/review/src/echo-review-parser.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/echo-review-verification-contract.ts",
+      "sha256": "3cb15e75b870e32689e10ee6dee92efa2fb2d0c2cf76f4b4a896d2258afd0802",
+      "bytes": 3575,
+      "snapshot": "sources/skills/nova/plugins/review/src/echo-review-verification-contract.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/echo-review-verification-parser.ts",
+      "sha256": "bd6d4e3f6e6274e0767a22fe72b7ad32703fb4d5e4edb840712c8be34d7b3341",
+      "bytes": 5816,
+      "snapshot": "sources/skills/nova/plugins/review/src/echo-review-verification-parser.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/protocol.ts",
+      "sha256": "3daf94d3d8f68696311299e6e005186f6adbf21c808e74410dbf9eea333c5bf7",
+      "bytes": 4249,
+      "snapshot": "sources/skills/nova/plugins/review/src/protocol.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-audit-cache.ts",
+      "sha256": "36b4b8fd50e520cc3e1f7a9b5ace2f230fb77811c386cce1261dc7ee10441ef5",
+      "bytes": 6920,
+      "snapshot": "sources/skills/nova/plugins/review/src/repository-audit-cache.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-audit-results.ts",
+      "sha256": "4ffacf9710170425772503821d2d90d69da2e44d2e03212cb40fd2566efe1db9",
+      "bytes": 11263,
+      "snapshot": "sources/skills/nova/plugins/review/src/repository-audit-results.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-audit-stage.ts",
+      "sha256": "da35c9701be5169975fb4a71b9462e32e6cea61ef46d2211989413d8c6a28f64",
+      "bytes": 45917,
+      "snapshot": "sources/skills/nova/plugins/review/src/repository-audit-stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-revalidation-contract.ts",
+      "sha256": "a502528b1f5e703d408de0f5233f9eef9ca5da7fe6f9e9b449892192f5c19b32",
+      "bytes": 8295,
+      "snapshot": "sources/skills/nova/plugins/review/src/repository-revalidation-contract.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+      "sha256": "6f8071ea095b3f912fc91e4c812bc7bd5c9cfd4077b48422e6eb4de1e0c70be7",
+      "bytes": 24044,
+      "snapshot": "sources/skills/nova/plugins/review/src/repository-revalidation-stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b",
+      "bytes": 19954,
+      "snapshot": "sources/skills/nova/plugins/review/src/repository-review-profile.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-bounds.ts",
+      "sha256": "5f295ba96fd54b113a368c587ed72e507f13b04d87cc338313b3db9069e250af",
+      "bytes": 4086,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-bundle-bounds.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-contract.ts",
+      "sha256": "c3c8ecf218f696e0b1f1336ac5741b66d57f4f80cd36df8da9e9bb901c0ed580",
+      "bytes": 6817,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-bundle-contract.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-parser.ts",
+      "sha256": "0a86087762ed1b8596ab8d6b98ce268df2904a57bd8759f275754a7a31229024",
+      "bytes": 10402,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-bundle-parser.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-snapshot.ts",
+      "sha256": "2dd6e61e53aa9d49f254b277727f7bed17fcfab286ff614b22a2ed3ea6f4586e",
+      "bytes": 1190,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-bundle-snapshot.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-values.ts",
+      "sha256": "27940d8d993c6d6f4eac2d2cc1e97ec8a6c2c40ba4da62f7e9e8b3f220c93426",
+      "bytes": 3969,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-bundle-values.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-cluster-contract.ts",
+      "sha256": "b54db562320062abe8ec681378bfbe596f210c69070d6cd99dfe4668c19cda6d",
+      "bytes": 1526,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-cluster-contract.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-cluster-identity.ts",
+      "sha256": "493ce9b17bf529debacd38044efe775ce93416746b939ea6cf2fd15966da5497",
+      "bytes": 1082,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-cluster-identity.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-cluster-ranking.ts",
+      "sha256": "22161b2e623c2168deecd632adc91f62028ce349703f1b952159d387dae38a26",
+      "bytes": 2736,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-cluster-ranking.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-clustering.ts",
+      "sha256": "e04f41b6f18cef3cd4e6f1b701a36642e473a40177ec50030de5715fce1b2749",
+      "bytes": 2855,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-clustering.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-completion.ts",
+      "sha256": "97e8c27f88068ac95535225afbdaaf95549571f0b5824699e987d6a1d9379781",
+      "bytes": 904,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-completion.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-content-cache.ts",
+      "sha256": "aa4adcf19847251cc4b108ff0d3c3c299ce5f9c03a9843726cde4c0ad733a73a",
+      "bytes": 10274,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-content-cache.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-context-authority.ts",
+      "sha256": "fb2d7041de70b18beb8e094cb26bc33b9ba5a1cd9fba202fcc5d40e62b57ff8b",
+      "bytes": 2222,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-context-authority.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-context-candidates.ts",
+      "sha256": "27ed8d2b310a7e2f4684f916afe1a6aa8afaf8518cab7fadb9d506037c66a9c5",
+      "bytes": 12210,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-context-candidates.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-context-production.ts",
+      "sha256": "0dce14f6fdfc22978cfc22d55527cdd0babf84baa54757ada507b089ecd98717",
+      "bytes": 12317,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-context-production.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-context-selection.ts",
+      "sha256": "087aef0af489f28cfe3166401e48458405584e47362e0c6c3baeade940c87b38",
+      "bytes": 14451,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-context-selection.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-coverage.ts",
+      "sha256": "0c2e95eba29dc2760ad91285feddca5224444ab95337947129403098e1c07e5b",
+      "bytes": 1330,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-coverage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-evaluation-metadata.ts",
+      "sha256": "0dc381b467b0949e6f5c48b8274a5997292c9825ded0b834bea677cb1901086c",
+      "bytes": 3594,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-evaluation-metadata.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-evidence-authority.ts",
+      "sha256": "96e4749b53b38ed4f54d46df102182bacd177a54953e85672ec13e5e444cfa63",
+      "bytes": 918,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-evidence-authority.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-evidence-encoding.ts",
+      "sha256": "cf706b3f25bd4293e3b7b7f7a0f41b427024d31f1689d6d536b7ec149dec2e93",
+      "bytes": 614,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-evidence-encoding.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-execution-settings.ts",
+      "sha256": "77eea575842e24901db60b4fa38e2239b00110df4e599ac0e76acc9a88ea8678",
+      "bytes": 2348,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-execution-settings.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-fact-extractors.ts",
+      "sha256": "dc63fb5f67948db547c255b66dcf20374b306bcbae3c58521d6aaaa27ed470a1",
+      "bytes": 19262,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-fact-extractors.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-finding-governance.ts",
+      "sha256": "2467daabc95ab9ad8f089857f4fbb09dd0a7945c122be20f6bfa8a57bc2f62e0",
+      "bytes": 1926,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-finding-governance.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-governor-decision.ts",
+      "sha256": "e24ce83007525a05ce698cd311cd018d03d3553915673b0bff47eb2173c58508",
+      "bytes": 1755,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-governor-decision.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-governor-history.ts",
+      "sha256": "c4d57e25b8c73b97c79adb7a0d5b446d3e226ff0a62af19da0c2b5b93f39a292",
+      "bytes": 4210,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-governor-history.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-governor.ts",
+      "sha256": "9c34eb3615facd279f4da2661a5f15018b60ef20c8367f25d7390a4204344f7f",
+      "bytes": 10166,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-governor.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-graph.ts",
+      "sha256": "ee492bcafb667f304607a39b9e90eb57da69ff92e9512880d7ab8c593b9ff2f9",
+      "bytes": 7816,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-graph.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-hard-limits.ts",
+      "sha256": "93009f0054d57f2f02aef50a146aa3d146595640d2ee5f07220d1889ef0ea04d",
+      "bytes": 1680,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-hard-limits.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-import-scanner.ts",
+      "sha256": "dca02be0f29d4b8eed478e6910b5431fdaea4b93da11b7232355c13354bb134a",
+      "bytes": 7318,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-import-scanner.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-import-syntax.ts",
+      "sha256": "514fc3b02d15c902293778ecf077d02eb428e8784d1677e6cf35ea3ed58135bd",
+      "bytes": 1243,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-import-syntax.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-invariants.ts",
+      "sha256": "7a63e531e4c8ecb7b531194b743718492bfdc4ebaa363ce8043a6a16a06b2d05",
+      "bytes": 1278,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-invariants.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-inventory-lookup.ts",
+      "sha256": "abd77f489bb6e5e4ecad801995ce9d0cf88b852f96626d0d2c731a72c1ee6670",
+      "bytes": 2617,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-inventory-lookup.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-json.ts",
+      "sha256": "fd24726bdb4733caccd6092715ebff91c507b4865d2de843eee6d0ec1df9e1d6",
+      "bytes": 3714,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-json.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-local-aliases.ts",
+      "sha256": "bd4958b47307905920bc7182795badc499885e493f459c74f113dd68fa776bc6",
+      "bytes": 8410,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-local-aliases.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-map-artifacts.ts",
+      "sha256": "88e55c81174ea25ab19f789728c8c9d617fb5f2fe71c5e0cb4fa890b9ae3911a",
+      "bytes": 4833,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-map-artifacts.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-ordering.ts",
+      "sha256": "61bc8cf0f2a44527ad18559827794c72e3d0dc589b82499a78a9f38e728c4e10",
+      "bytes": 125,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-ordering.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-phase-admission.ts",
+      "sha256": "5f57c09d10ffc77d11b7cf7c853951cbf936423b73490c4f75e0fdef17332ad7",
+      "bytes": 647,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-phase-admission.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-contract.ts",
+      "sha256": "3dd3337e85c6e27f0b8ad1cf953448468bc67c22b927c4f09f7cdf008b6e70a2",
+      "bytes": 10109,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-policy-contract.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-parser.ts",
+      "sha256": "24c402161c2cf73a99969cd61c9f040d7598f9243327cd61325213f2b13bcbfb",
+      "bytes": 14040,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-policy-parser.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-profiles.ts",
+      "sha256": "ee0adf218857f0be3c6b9bfae54e204dfeb73384cb1c5f9c78bad0b29c94df67",
+      "bytes": 5284,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-policy-profiles.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-policy-resolver.ts",
+      "sha256": "c05b626889142e5cf8bd8b9c30446c9bef87b3a7ac5d9dd10799ff769c9dc0ad",
+      "bytes": 5759,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-policy-resolver.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-preparation.ts",
+      "sha256": "1977321e91e90e628ac149ef93704038bf4a728103ce27d6458fa82b60a691f2",
+      "bytes": 8050,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-preparation.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-prompt-budget.ts",
+      "sha256": "44b89cda9e7d2fa5269621841a8e1395f0c8bcaa9b77efbcaa7a12e66384613a",
+      "bytes": 10587,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-prompt-budget.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-proposal-preflight.ts",
+      "sha256": "3acc5aa16a2ea8b95507916bfb0bf8db5966481d40c0e21a4269bbc401b02a2d",
+      "bytes": 14916,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-proposal-preflight.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-reducer.ts",
+      "sha256": "75f9fdb7d97894886e26dd54d6b245c16744116888fcbf2e99aed41dcabb3392",
+      "bytes": 10298,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-reducer.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-reduction-state.ts",
+      "sha256": "60d43dd3513e2c9770ed262a5e87d91316081983f00487557403cbcc18c3d46c",
+      "bytes": 12379,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-reduction-state.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-repair-batch.ts",
+      "sha256": "e79f7b2eb9308eb433cb33f60b13540c6c16a1611b523eddc5b3ed63e5a61059",
+      "bytes": 3977,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-repair-batch.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-report-builder.ts",
+      "sha256": "9dfc7a524561c9d02da6d3fa85985d03834a34560807950cabcfab4d27fc10d8",
+      "bytes": 10299,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-report-builder.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-report-contract.ts",
+      "sha256": "28a76f5eb111741263ab88438a2fc7f9ca0e60e77ccc1f3b7f0bff081fd6f522",
+      "bytes": 11913,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-report-contract.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-report-encoding.ts",
+      "sha256": "64b604ae4f25b3825e68527b30ad9093b9f6eda7b72fe1b227a914f0b0acae5f",
+      "bytes": 829,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-report-encoding.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-report-flow.ts",
+      "sha256": "0769c1c76b65f88c6647adabcb5fc965e89980d431db30dfce2bf263063be6b4",
+      "bytes": 4179,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-report-flow.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-report-storage.ts",
+      "sha256": "2ac682bb07057feeec977c9b1446339f65555bf14977a2dbe1644cbaff72c4e5",
+      "bytes": 8185,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-report-storage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-repository.ts",
+      "sha256": "02725152678d2b150d4e44dee7182b1b767e52d7cec4272d71c0f66c740e4169",
+      "bytes": 7750,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-repository.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-runtime-attestation.ts",
+      "sha256": "1154397de55d1e27dcb291d060e36fcc7ce95cc0ae8d79c9b755f1ed4157f43d",
+      "bytes": 2610,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-runtime-attestation.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-scale-slicing.ts",
+      "sha256": "2c3926caebaa29cff3044486cd5f56415bcd0c54127b9b65857d888a86c63262",
+      "bytes": 8408,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-scale-slicing.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-semantic-flow.ts",
+      "sha256": "1bfd35614a35c1063eda4c44f6b7256d5bf38ae3141f67348276baf6d7b07452",
+      "bytes": 6056,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-semantic-flow.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-semantics.ts",
+      "sha256": "653f853d511c6955e3c44cc0db3ddf62e6e12321f791d0d427f4137747b75008",
+      "bytes": 2832,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-semantics.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-slicing.ts",
+      "sha256": "4a3bc2bceb55c0a05774f2d07d05813a010e6280eea9a4c9ad0750e58188bfae",
+      "bytes": 9958,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-slicing.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-snapshot-inventory.ts",
+      "sha256": "0198ab891853c1dbe061bd2ef081d2c6625b02447de90296d8d7cccbb82164c4",
+      "bytes": 6412,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-snapshot-inventory.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-stage-input.ts",
+      "sha256": "e68ca5e004df3567de6a84e5486791a435f4c7ccd1756a6ed79365f81aca564c",
+      "bytes": 9749,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-stage-input.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-stage-result.ts",
+      "sha256": "f1e97b73fffcc52ad783fa77b1d5a0e6907bf33869dd659f34bd969fba089ac0",
+      "bytes": 903,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-stage-result.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-stage-verification.ts",
+      "sha256": "d88dc67ae2c703d10057467064a7d56bf12c6ffc3b6b7bd629ee2e2c247994cd",
+      "bytes": 14445,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-stage-verification.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-test-relations.ts",
+      "sha256": "62c9e6db1171d4a28b6f88119362f57a1154633ae5b2ad014506e429459b5426",
+      "bytes": 1603,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-test-relations.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-verdict-policy.ts",
+      "sha256": "a999675b9e6bf2d704f07aa8df339250a86d04b166b1a1b5d9cd65a376f2d5b3",
+      "bytes": 2762,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-verdict-policy.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-verification-reconciliation.ts",
+      "sha256": "b2d8f81a7dfb695abfa03253142b3829aa1f8ca1009597343c1abfa6f822bb00",
+      "bytes": 6182,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-verification-reconciliation.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-verified-findings.ts",
+      "sha256": "f02530f3acf50325854eaac7b77790177364e255770e9eee4457859a4226587a",
+      "bytes": 7337,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-verified-findings.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-verifier.ts",
+      "sha256": "673c969e165888d52d90068fb227c0330d70527c7ea574b20385f4db81bf1f20",
+      "bytes": 1848,
+      "snapshot": "sources/skills/nova/plugins/review/src/review-verifier.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-compiler.ts",
+      "sha256": "9ab253c3605ac971385e4d4787da26669f9623ff50dcc30b6fe0a250301329a9",
+      "bytes": 14567,
+      "snapshot": "sources/skills/nova/plugins/review/src/scalable-review-compiler.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-execution.ts",
+      "sha256": "cefa01d1a541ea1d56eb939fa3785d478a81f7b58c740742d26aec07800f3e88",
+      "bytes": 4725,
+      "snapshot": "sources/skills/nova/plugins/review/src/scalable-review-execution.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-jobs.ts",
+      "sha256": "727d9042c598be9920c15c11e7c1aab20ca4bdfcb2f0a41f4b30860296fc9c90",
+      "bytes": 27843,
+      "snapshot": "sources/skills/nova/plugins/review/src/scalable-review-jobs.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-topology.ts",
+      "sha256": "e8bdf3721245ef58ae25891dc90c776b580973355f9d9946bd71eaf4956b4c0e",
+      "bytes": 13829,
+      "snapshot": "sources/skills/nova/plugins/review/src/scalable-review-topology.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-types.ts",
+      "sha256": "075703db30e3ae27a53b306a8a7916a10dc6ab0e29d460b0631c2ebce97e8f96",
+      "bytes": 1140,
+      "snapshot": "sources/skills/nova/plugins/review/src/scalable-review-types.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-verification-evidence.ts",
+      "sha256": "23e712559f40c75beaa25cdb95cd8fea1bbd8b59e157bcfbf60f9ae038581d23",
+      "bytes": 1100,
+      "snapshot": "sources/skills/nova/plugins/review/src/scalable-review-verification-evidence.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/scalable-review-verification.ts",
+      "sha256": "d06f9d7524d75b61ac8cd6493418f4689d0fd5883d10a93390393f7df320034d",
+      "bytes": 20734,
+      "snapshot": "sources/skills/nova/plugins/review/src/scalable-review-verification.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-contract.ts",
+      "sha256": "02b979eb33a1af0018dc592975e155ac1ab3fd90c1c91d6e54ba6fd4bfa1ca62",
+      "bytes": 6797,
+      "snapshot": "sources/skills/nova/plugins/review/src/simplification-contract.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-fact-producer.ts",
+      "sha256": "8b50db4716f53cd4cca472d0c52ff1da2d49d7d1921ebf2751f57801831a207f",
+      "bytes": 3746,
+      "snapshot": "sources/skills/nova/plugins/review/src/simplification-fact-producer.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-manifest.ts",
+      "sha256": "332141613dbcdc22d945d610de83553475a72b2524f7abe87398ff8b7761f7ae",
+      "bytes": 3166,
+      "snapshot": "sources/skills/nova/plugins/review/src/simplification-manifest.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-miner.ts",
+      "sha256": "9859a85740834da159dc21caa1fef2f96460a389d46f599b86f57a439ed9b635",
+      "bytes": 7205,
+      "snapshot": "sources/skills/nova/plugins/review/src/simplification-miner.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-parser.ts",
+      "sha256": "e6d8edeb8bb90c75c6b99dbfec47025ced51b139555bf8f5ee27724d46e92850",
+      "bytes": 9710,
+      "snapshot": "sources/skills/nova/plugins/review/src/simplification-parser.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/simplification-registry.ts",
+      "sha256": "04e1049839f794cdddc7836fa1f6b8dde35d008cbd1abffc5612268d41e40026",
+      "bytes": 1261,
+      "snapshot": "sources/skills/nova/plugins/review/src/simplification-registry.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/stage.ts",
+      "sha256": "24edd137f6742ed10cdec57f43fc29ac6a270fd25019ca6b9ba2c348cdcb372c",
+      "bytes": 16278,
+      "snapshot": "sources/skills/nova/plugins/review/src/stage.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/verification-protocol.ts",
+      "sha256": "e348f736e76125c89d10b0ac6b2d1d86f0ace2109ca94f8d3dce3c98aabe4185",
+      "bytes": 3813,
+      "snapshot": "sources/skills/nova/plugins/review/src/verification-protocol.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/echo-review-output.unit.test.mjs",
+      "sha256": "1fae1e7309dbca0b79f09197b0c59355f90514a577468649f88bae32be862f92",
+      "bytes": 5592,
+      "snapshot": "sources/skills/nova/plugins/review/tests/echo-review-output.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/echo-review-verification.unit.test.mjs",
+      "sha256": "0c57da2779d8f55a876b84be72249ef2e09317cf88141d16ec79ec10e2c53459",
+      "bytes": 2529,
+      "snapshot": "sources/skills/nova/plugins/review/tests/echo-review-verification.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/fixtures/legacy-changed-path-schema.json",
+      "sha256": "cc001c1a9c108ddd7e7baec68845c491ef895d199a4b47bbd3db3926e293f76a",
+      "bytes": 1867,
+      "snapshot": "sources/skills/nova/plugins/review/tests/fixtures/legacy-changed-path-schema.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/fixtures/legacy-evidence-encoding.json",
+      "sha256": "e568d88870178a962793d012d45173e2c9e7dcf5e74697249ace1c4df3bf1a61",
+      "bytes": 3314,
+      "snapshot": "sources/skills/nova/plugins/review/tests/fixtures/legacy-evidence-encoding.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/fixtures/review-governor.mjs",
+      "sha256": "749e51ac262f3cf0757906cccae8f8898ce086c20c3deaf6d3199dc1188054ad",
+      "bytes": 834,
+      "snapshot": "sources/skills/nova/plugins/review/tests/fixtures/review-governor.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/fixtures/review-policy.mjs",
+      "sha256": "9218039b9c5b4d2c38e4c7131f62f273756f56bd2e7f3e56481c5c9cbc43ff3f",
+      "bytes": 1768,
+      "snapshot": "sources/skills/nova/plugins/review/tests/fixtures/review-policy.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/fixtures/scalable-review-quality-baseline.json",
+      "sha256": "60db14fc9bcb1900aa7258b00cbd57c906547435563a15af009570753b8040f7",
+      "bytes": 1212,
+      "snapshot": "sources/skills/nova/plugins/review/tests/fixtures/scalable-review-quality-baseline.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/fixtures/scalable-review-quality-corpus.json",
+      "sha256": "dfcb3ac295c65c3fb8d77198217d9705db94826cdd8e66d70d4b226844fafff8",
+      "bytes": 5494,
+      "snapshot": "sources/skills/nova/plugins/review/tests/fixtures/scalable-review-quality-corpus.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/live-function.test.ts",
+      "sha256": "181ede16e4cadd8c8dc7af730dc2408e5337eef6f6f01cc2357086dd824a4a2d",
+      "bytes": 24789,
+      "snapshot": "sources/skills/nova/plugins/review/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/package-boundary.test.mjs",
+      "sha256": "57dce10ef853bd9f6bf7d6594b9b21ba5f3ffa4bb21cf96d86060a4e88026b6d",
+      "bytes": 2062,
+      "snapshot": "sources/skills/nova/plugins/review/tests/package-boundary.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/protocol.unit.test.mjs",
+      "sha256": "a1adce04221c728da9c3b58eba21dbf5821786934ddc4ffebb5d58e1a2a3898e",
+      "bytes": 4405,
+      "snapshot": "sources/skills/nova/plugins/review/tests/protocol.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/remediation.test.mjs",
+      "sha256": "14713ccb7343b766337d44d2c9aefc9e82549bb6a99258d3c3418f6bc2cbfe6a",
+      "bytes": 8851,
+      "snapshot": "sources/skills/nova/plugins/review/tests/remediation.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs",
+      "sha256": "7aae977f6c7cedb7a177699fd059097b1382c34761165b6456de5c5d9ef9a9a1",
+      "bytes": 17021,
+      "snapshot": "sources/skills/nova/plugins/review/tests/repository-audit-stage.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs",
+      "sha256": "e66005235188a9063b99da97e55ad42261f6c3f9273bc3c74a0ed6970f50cb3f",
+      "bytes": 13052,
+      "snapshot": "sources/skills/nova/plugins/review/tests/repository-revalidation.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+      "sha256": "9cb2789e42560f95948b0714fd5ee0fe92d21db8946b8b08432c04330850abb8",
+      "bytes": 12447,
+      "snapshot": "sources/skills/nova/plugins/review/tests/repository-review-io.test.ts"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs",
+      "sha256": "74b3f8fe4f7d7d2e2b5a076a38446e960a1b0a9d583ab02d306d19680425ec68",
+      "bytes": 5028,
+      "snapshot": "sources/skills/nova/plugins/review/tests/repository-review-profile.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs",
+      "sha256": "e7a599f4ad4d09efdd28b2f26c3284bb0b27049b57ba622b9e3d3091a27ac9ab",
+      "bytes": 1921,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-bundle-contract.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs",
+      "sha256": "a4cc513bb95c8e530d8390c32c5c04afc2c1a7954b42d6bb354eac4e2c7f0fdc",
+      "bytes": 3062,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-bundle-snapshot.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-cluster-contract.unit.test.mjs",
+      "sha256": "5fe62d58b6e9f923683ddcf3bb5f7720541d4a1a79bc450e608cd1ac760a8611",
+      "bytes": 953,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-cluster-contract.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-cluster-identity.unit.test.mjs",
+      "sha256": "4a82b4c61990c4a483fd3235d7d906ba00750d9a553930b51b8cdf19cfcf8b7d",
+      "bytes": 886,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-cluster-identity.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-content-cache.unit.test.mjs",
+      "sha256": "a3b1b7ed7d96b8e310429d8ac780d0b01fb05b45c56980dbb9aaad28bf4f74e2",
+      "bytes": 4499,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-content-cache.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-context-production.unit.test.mjs",
+      "sha256": "bfee1f8b0e993975b4158b0993f85ad9e9915efc3e04076e535fb971ef7d013e",
+      "bytes": 4578,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-context-production.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-context-selection.unit.test.mjs",
+      "sha256": "b1e2f44ae2e6116ed4df58986cfadb35dc776716b168a4f92c86259a804cda0c",
+      "bytes": 7126,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-context-selection.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-contract-parity.unit.test.mjs",
+      "sha256": "f9a32def54b695521960884f840e2b3dc0ed9936a2bf0a03c90bb76729b2ba3c",
+      "bytes": 9355,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-contract-parity.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-coverage.test.mts",
+      "sha256": "d14fbcd56f18162e629084043db07fd23b494bbef72f052b5e28c70964f434a1",
+      "bytes": 4343,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-coverage.test.mts"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-decision-matrix.unit.test.mjs",
+      "sha256": "1669eb9961c8d2b8ec29af53cba84200f031beb554b5b52f9c5466bca5909c8a",
+      "bytes": 7969,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-decision-matrix.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-evaluation-metadata.unit.test.mjs",
+      "sha256": "f5d0ed07fbf7608c2ff1ea2e677436d104420219d67ca86d3f158ebdc554a3af",
+      "bytes": 4221,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-evaluation-metadata.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-evidence-authority.unit.test.mjs",
+      "sha256": "f0777587492f1a87f76a348f3b4684a143c784b8266187a178b04e94af22fbee",
+      "bytes": 768,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-evidence-authority.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs",
+      "sha256": "0163bacb3d25943a713d3382e832952a6819ddb73f4e012ca3624123b2216eed",
+      "bytes": 8035,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs",
+      "sha256": "f4ec1300d85a0fadb238c1c53834fe03e3b33b45686414fd46ee336152f5ca35",
+      "bytes": 1647,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs",
+      "sha256": "5c6e72f679c525d459b8056c1393fc7cc412e785098847ac614db0fc40fbde93",
+      "bytes": 2339,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-fact-extractors.unit.test.mjs",
+      "sha256": "d764e827e64a3cef724938a3f86f5504d3ae24abeee130eb608d5daecf35a3e6",
+      "bytes": 15729,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-fact-extractors.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-governor.unit.test.mjs",
+      "sha256": "400b21f67d961f57749f3b56d944a7068ba70df615ce9fdbd1922502cb775f0a",
+      "bytes": 4837,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-governor.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-graph.unit.test.mjs",
+      "sha256": "c3c0af8aee64f2a6c2867d132ed38fbae15603b7a5f786300e4dc45031921ef3",
+      "bytes": 2580,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-graph.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-invariants.unit.test.mjs",
+      "sha256": "b9e8e4d7380faacb1e9c883ff43f7758d42672335b48e3490302139ca5cac070",
+      "bytes": 2084,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-invariants.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-map-artifacts.unit.test.mjs",
+      "sha256": "ff2990d178f98503514e3cef1ebd05c1818b877155ed16c922827db30534071e",
+      "bytes": 1601,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-map-artifacts.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-policy-contract.unit.test.mjs",
+      "sha256": "f8c5ba4c826d1dc79ca1a4d862326eaf52bdb37b6095b05a660ad87a109d9f50",
+      "bytes": 1856,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-policy-contract.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-policy-profiles.unit.test.mjs",
+      "sha256": "31e51041d4c49ff5016b5af68c969b9afea2ce9d7490407dcb809d2f67321c14",
+      "bytes": 2516,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-policy-profiles.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs",
+      "sha256": "99227e2906a31f6537eff098ff9e08332d3a54e3b386e0dfdb0be37ae35d324a",
+      "bytes": 3533,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-policy-resolver.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-prompt-budget.unit.test.mjs",
+      "sha256": "5187463777e959e1172da912f2007a9850823d57d2dcd69f9965d8846f6c32d8",
+      "bytes": 7104,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-prompt-budget.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs",
+      "sha256": "1bd488811840461ef555b0eb9f5a5c4f7b3a0c6ae6fdc0c5849e95fd5727ac17",
+      "bytes": 9730,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-proposal-preflight.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-quality-corpus.unit.test.mjs",
+      "sha256": "3a3a11258d81d0ad76cf2bcb21f2f8883d437d41fbf73bdd1ff110375d0e1ee3",
+      "bytes": 1842,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-quality-corpus.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-reducer.unit.test.mjs",
+      "sha256": "d039864fcf18cb654064dce26950556f6f3a7f0c77d2f6bd66c61391b9a2eca3",
+      "bytes": 3849,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-reducer.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs",
+      "sha256": "09aa3b65477ab5aee18977c942c01e15d12bec54215787662d03fd631f097624",
+      "bytes": 6018,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs",
+      "sha256": "dc5226cf0c4e2e374f4b9184ad580917c0a8ffc8bbe7c12186517b6a1b263914",
+      "bytes": 3556,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-report-encoding.test.mjs",
+      "sha256": "2bee03c354936f706a6606dd628ec83a69fa87c64ac085aa704a0ac581bf2606",
+      "bytes": 930,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-report-encoding.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-scale-slicing.unit.test.mjs",
+      "sha256": "061b2b2ce0866f91dc8fa3ed556432c87cc6c0d64d5409f5dd5eb836c66dd567",
+      "bytes": 2125,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-scale-slicing.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-slicing.unit.test.mjs",
+      "sha256": "83624506449c42715ad4ed2dff3ab9c748d9aec23a174a7a368388cbad2fdaf0",
+      "bytes": 5338,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-slicing.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-snapshot-inventory.unit.test.mjs",
+      "sha256": "7793ad4d6d79c3cdbe952ed9cbae25fd19dc7331ee70eb77f530b33b089eea5c",
+      "bytes": 2968,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-snapshot-inventory.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-stage-input.unit.test.mjs",
+      "sha256": "feef7864fe741f187bddccb2d01df017d50c13c4a14d271e93182b5d06901890",
+      "bytes": 2737,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-stage-input.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-stage-verification.unit.test.mjs",
+      "sha256": "8bccaa80bc2017bc333aa473f104d3491f6671e3254ca718ec50559c15cd3321",
+      "bytes": 4086,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-stage-verification.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-verdict-policy.unit.test.mjs",
+      "sha256": "52740fd10d779637db963705c60e900cbd2dfc57d2db112be5f9f02dca51c22e",
+      "bytes": 4104,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-verdict-policy.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-verification-reconciliation.unit.test.mjs",
+      "sha256": "5b3b35b43a1bad18af80cb6abfe52fcdfc1ea45e03d9b510a2c3de468354818f",
+      "bytes": 7113,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-verification-reconciliation.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/review-verified-findings.unit.test.mjs",
+      "sha256": "f4b6c9952587804f521462c5604ae1958f0740d5b356eb574fae7902c798f2a8",
+      "bytes": 13973,
+      "snapshot": "sources/skills/nova/plugins/review/tests/review-verified-findings.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/scalable-review-compiler.unit.test.mjs",
+      "sha256": "c60a426870cf8f3897a6e8d6539b90b38e41191cc4fcb35c1cfe55ccc6f085fa",
+      "bytes": 6404,
+      "snapshot": "sources/skills/nova/plugins/review/tests/scalable-review-compiler.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/scalable-review-jobs.unit.test.mjs",
+      "sha256": "b7b79fff7de9f49128e0eb8ed9f4377c9f228e04fbf19ff066f307e15af86e02",
+      "bytes": 15289,
+      "snapshot": "sources/skills/nova/plugins/review/tests/scalable-review-jobs.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/scalable-review-topology.unit.test.mjs",
+      "sha256": "38fbf0df5a62277f53f705fc1f7e94b4a64d2fddb074d56670d7df785c1eda8e",
+      "bytes": 4048,
+      "snapshot": "sources/skills/nova/plugins/review/tests/scalable-review-topology.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/scalable-review-verification.unit.test.mjs",
+      "sha256": "9b43f351f885a568bd096e2a1880114759f340811a9e8b33f22782a956d84401",
+      "bytes": 13410,
+      "snapshot": "sources/skills/nova/plugins/review/tests/scalable-review-verification.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/simplification-contract.unit.test.mjs",
+      "sha256": "94bf9071a81a02ba9d625b348457b45bc68cef7d9d475ef9f3770f93a06ad09d",
+      "bytes": 2481,
+      "snapshot": "sources/skills/nova/plugins/review/tests/simplification-contract.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/simplification-fact-producer.unit.test.mjs",
+      "sha256": "6a6954e7b09676426d09e228e9a03922cb19f9560400846d0957361d55349e16",
+      "bytes": 850,
+      "snapshot": "sources/skills/nova/plugins/review/tests/simplification-fact-producer.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs",
+      "sha256": "f3e793bea024c87ffdc22fa516b4fbfccf1d889993ea0c03f9ced180b46bae56",
+      "bytes": 2111,
+      "snapshot": "sources/skills/nova/plugins/review/tests/simplification-manifest.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/simplification-miner.unit.test.mjs",
+      "sha256": "a60799b8fd12b5be67dbce9ff53b4707fb1b86a0c3822e5a10cc72d8573160a2",
+      "bytes": 3903,
+      "snapshot": "sources/skills/nova/plugins/review/tests/simplification-miner.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/stage.unit.test.mjs",
+      "sha256": "cb7047d90dceef45bf96d10724563ecf574fd44dd8f312af57c25a50ac0244b1",
+      "bytes": 25912,
+      "snapshot": "sources/skills/nova/plugins/review/tests/stage.unit.test.mjs"
+    },
+    {
+      "path": "skills/nova/plugins/review/tsconfig.json",
+      "sha256": "f0378a639eedbcb5aba4cd4d27751c03865b983a1c9b7973c5c7bbe05355d81b",
+      "bytes": 237,
+      "snapshot": "sources/skills/nova/plugins/review/tsconfig.json"
+    }
+  ]
+}

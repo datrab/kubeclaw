@@ -1,0 +1,6 @@
+{
+  "path": "docs/review/remediation/implementation/config-final-four-adapter-inventory-20260921.md",
+  "sha256": "6df65c08d46b277bb8f018dbc22c40910a6b2fc026244945b25dbaaf71f98179",
+  "change": "Only separates invocation caller+shutdown+timeout from receipt recovery shutdown+timeout. Original88Snapshots unchanged.",
+  "runtimeExecuted": false
+}

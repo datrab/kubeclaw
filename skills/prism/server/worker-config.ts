@@ -1,6 +1,9 @@
+import { loadPrismSettings, loadPrismWorkerSettings, type PrismWorkerSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
+
 /** Platform-owned configuration is captured once before starting the worker. */
 
 export function loadWorkerConfig(environment: NodeJS.ProcessEnv = process.env) {
+  if (environment.PORT !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PORT moved to prism-worker.config.json settings.ingress.port');
   const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';
   const workerSecret = environment.PRISM_WORKER_SECRET ?? '';
   if (!spiffeEnabled && !workerSecret) throw new Error('PRISM_WORKER_SECRET is required');
@@ -8,31 +11,24 @@ export function loadWorkerConfig(environment: NodeJS.ProcessEnv = process.env) {
   if (spiffeEnabled && !trustedControlSpiffeId) throw new Error('Prism worker SPIFFE trust policy is incomplete');
   const databaseUrl = environment.DATABASE_URL ?? '';
   if (!spiffeEnabled && !databaseUrl) throw new Error('DATABASE_URL is required');
-  return Object.freeze({ spiffeEnabled, workerSecret, trustedControlSpiffeId, databaseUrl, shutdownTimeoutMs: shutdownTimeout(environment),
+  const snapshot = loadPrismSettings(environment);
+  const settings = snapshot.worker;
+  return Object.freeze({ spiffeEnabled, workerSecret, trustedControlSpiffeId, databaseUrl, shutdownTimeoutMs: settings.shutdownTimeoutMs,
     controlInternalUrl: new URL(environment.PRISM_CONTROL_INTERNAL_URL ?? 'http://prism-control:8080'),
-    port: Number(environment.PORT ?? 8080), ingress: workerIngressLimits(environment),
+    native: snapshot.native, port: settings.port, ingress: ingressLimits(settings),
   });
 }
 
 export function workerIngressLimits(environment: NodeJS.ProcessEnv = process.env) {
-  const read = (name: string, fallback: number) => {
-    const value = Number(environment[name] ?? fallback);
-    if (!Number.isSafeInteger(value) || value < 1 || value > 2_147_483_647) throw new Error(`PRISM_WORKER_INGRESS_INVALID:${name}`);
-    return value;
-  };
-  return Object.freeze({
-    maximumActiveRequests: read('PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS', 16),
-    maximumProbeRequests: read('PRISM_WORKER_MAXIMUM_PROBE_REQUESTS', 4),
-    maximumConnections: read('PRISM_WORKER_MAXIMUM_CONNECTIONS', 128),
-    maximumInputBytes: read('PRISM_NATIVE_MAXIMUM_INPUT_BYTES', 16777216),
-    requestTimeoutMs: read('PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS', 120000),
-  });
+  return ingressLimits(loadPrismWorkerSettings(environment));
 }
 
-function shutdownTimeout(environment: NodeJS.ProcessEnv): number {
-  const shutdownTimeoutMs = Number(environment.PRISM_WORKER_SHUTDOWN_TIMEOUT_MS ?? 120_000);
-  if (!Number.isSafeInteger(shutdownTimeoutMs) || shutdownTimeoutMs < 1 || shutdownTimeoutMs > 2_147_483_647) {
-    throw new Error('PRISM_WORKER_SHUTDOWN_TIMEOUT_MS must be a positive timer-safe integer');
-  }
-  return shutdownTimeoutMs;
+function ingressLimits(settings: PrismWorkerSettings) {
+  return Object.freeze({
+    maximumActiveRequests: settings.maximumActiveRequests,
+    maximumProbeRequests: settings.maximumProbeRequests,
+    maximumConnections: settings.maximumConnections,
+    maximumInputBytes: settings.maximumInputBytes,
+    requestTimeoutMs: settings.requestTimeoutMs,
+  });
 }

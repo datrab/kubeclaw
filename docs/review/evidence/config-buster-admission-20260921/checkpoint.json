@@ -1,0 +1,114 @@
+{
+  "completed": {
+    "types-final": {
+      "command": [
+        "node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "tests/verification/reliability/tsconfig.buster-admission.json"
+      ],
+      "exitCode": 0
+    },
+    "lint-final": {
+      "command": [
+        "node_modules/.bin/eslint",
+        "--config",
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        "skills/buster/engine/test-gates/production.ts",
+        "skills/buster/engine/test-gates/production-config-values.ts",
+        "skills/buster/engine/test-gates/production-capability-sources.ts",
+        "skills/buster/engine/test-gates/production-command-options.ts",
+        "skills/buster/engine/test-gates/production-browser-options.ts",
+        "skills/buster/engine/test-gates/production-cluster-options.ts",
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "skills/buster/engine/remote-plan-cli.ts",
+        "skills/common/plugin-runtime/foundation/config/swarm.ts",
+        "tests/fixtures/test-gate/buster-admission.mts",
+        "tests/fixtures/test-gate/modeled-preparation.mts",
+        "tests/verification/reliability/buster-admission-config.test.mts",
+        "tests/verification/reliability/buster-shutdown-storage.test.mts",
+        "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+        "tests/verification/deployment/buster-admission-render.test.mjs"
+      ],
+      "exitCode": 0
+    },
+    "preservation": {
+      "command": [
+        "node",
+        "docs/review/evidence/config-buster-admission-20260921/check-preservation.mjs"
+      ],
+      "exitCode": 0
+    },
+    "admission-run3": {
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/reliability/buster-admission-config.test.mts"
+      ],
+      "exitCode": 0
+    },
+    "runtime-config-original": {
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+      ],
+      "exitCode": 0
+    },
+    "chart-cli-final": {
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/deployment/buster-admission-render.test.mjs"
+      ],
+      "exitCode": 0
+    },
+    "original-consumers": {
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/reliability/buster-shutdown-storage.test.mts",
+        "tests/verification/reliability/result-reservation.test.mts",
+        "skills/prism/tests/swarm-worker-config.test.mts",
+        "skills/prism/tests/swarm-supervisor-config.test.mts",
+        "skills/prism/tests/control-server-config.test.mts",
+        "skills/prism/tests/studio-config.test.mts"
+      ],
+      "exitCode": 0
+    },
+    "prism-helm-final": {
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/deployment/prism-swarm-config.test.mjs"
+      ],
+      "exitCode": 0
+    }
+  },
+  "pending": [
+    "actual positive CLI startup profiles",
+    "original check-pipeline-remote-plan-runtime.mts",
+    "baseline plus two private semantic mutants",
+    "full engine typecheck",
+    "final lint of added CLI/Prism cases",
+    "fresh independent review"
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "manifestSha256": "85528f2c0b13e77221b989408ff1383f9e93a69c6b2df4ba2ec5bb8c1ede2369",
+  "mode": "source-only; no runtime",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "matches": true
+    },
+    {
+      "path": "docs/architecture/buster-execution-configuration.md",
+      "matches": true
+    },
+    {
+      "path": "package.json",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/process-input.test.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-process-input-callers.test.mjs",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-process-input-policy.test.mjs",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-report-runtime-policy.test.mjs",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/buster-process-input-parity.test.mjs",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/http-authority.test.mts",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/tailscale-generation.test.mjs",
+      "matches": true
+    }
+  ],
+  "helpers": [
+    {
+      "path": "extensions-v2/mutate-forwarding.mjs",
+      "matches": true
+    },
+    {
+      "path": "extensions-v2/mutate-lifecycle.mjs",
+      "matches": true
+    }
+  ],
+  "decision": "V2 additive source scope suitable for coordinated integration and real verification; no concrete new blocker found",
+  "runtimeAcceptance": false,
+  "delta": [
+    "package append",
+    "both-chart parity module",
+    "four real factory/invoker child cases",
+    "six loader-based mutant recipes"
+  ],
+  "limitations": [
+    "private executable is a local real command lifecycle fixture, not kubectl/server behavior",
+    "new caller profiles distinguish only grace; other timing values covered at public ProcessInput",
+    "report forwarding mutant removes argument and needs real report original positive baseline",
+    "wrapper fallback reinstatement not semantically reachable from valid callers; source/API requirement"
+  ]
+}

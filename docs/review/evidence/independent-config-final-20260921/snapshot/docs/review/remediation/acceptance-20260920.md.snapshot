@@ -1,0 +1,517 @@
+# Abnahmekriterien für die verbleibenden Arbeiten
+
+Stand: 2026-09-20. Grundlage: `main` bei
+`cd9f235345f5fd8736a2ffe75d806288e4d538db`,
+[Neubewertung](assessment-20260920.md), [Register](register.json),
+[Zielentscheidungen D01–D16](decisions.md) und [Roadmap](../../ROADMAP.md).
+
+Dies definiert Schritt 2 des aktuellen Auftrags. Die folgenden Kriterien sind
+noch nicht erfüllt oder neu getestet. Das Dokument autorisiert keine Implementierung,
+Deploymentänderung oder Ausführung von Ausfalltests.
+
+## Gemeinsamer Abschlussmaßstab
+
+- **Lokal abgeschlossen:** notwendiger Code, Integration und Betriebsanleitung
+  sind vollständig; die zum jeweiligen Verhalten passenden echten lokalen
+  Prüfungen bestehen. Das entspricht D12. Ein nur vorbereiteter Baustein ohne
+  Produktionsaufrufer ist nicht vollständig integriert.
+- **Live bestätigt:** die separat genannten Fälle bestehen im ausgewiesenen
+  realen System. Bei rein externen Betriebsfragen lässt sich die tatsächliche
+  Problemlösung nicht durch lokale Manifestprüfungen behaupten. Ein lokal fertiges
+  Runbook erhält einen eigenen Dokumentationsstatus, keinen fiktiven Live-Pass.
+- Jeder Nachweis enthält Finding-/Kriterium-ID, Sourcecommit, relevante
+  Image-/Konfigurationsidentitäten, Umgebung, tatsächlich ausgeführten Befehl,
+  erwartetes und beobachtetes Ergebnis sowie Log-/Artefaktverweise. Skips,
+  Fixtures und fehlende Voraussetzungen sind explizit ausgewiesen.
+- Historische Belege bleiben erhalten. Ein anderer Source-/Konfigurationsstand
+  braucht eine nachvollziehbare Zuordnung und passende erneute Prüfung.
+- Zeit-, Kapazitäts- und Recoverygrenzen werden vor dem zugehörigen Versuch
+  numerisch in der Prüfumgebung festgelegt. Unbekannte Betreiberwerte werden
+  als ausstehende Eingaben geführt, nicht nachträglich passend zum Ergebnis gewählt.
+
+### Regeln gegen falsche Abschlussmeldungen
+
+Diese Regeln sind verpflichtende Nachweisbedingungen, keine Behauptung bereits
+implementierter automatischer Kontrolle. Ein Dokument kann vorsätzliche Fälschung
+nicht ausschließen; unabhängige Wiederholung und überprüfbare Rohbelege sind nötig.
+
+- A1 — Vollständigkeit: Vor Umsetzung wird jede Aussage der Originalbefunde,
+  gültigen Zielentscheidungen und dieser Kriterien einer expliziten Pflichtfallmatrix
+  zugeordnet. Die Matrix nennt stabile Fall-ID, Produktionspfad, Eingaben, Vorzustand,
+  erwartetes Ergebnis, Messmethode, Prüfumgebung und Beleg. Mehrteilige Kriterien
+  werden aufgeteilt. Alle Live-Absätze gehören dazu, auch ohne eigene Kurz-ID.
+  Fehlende Zuordnung blockiert den betroffenen Abschluss. „Nicht anwendbar“ benötigt
+  einen überprüften Grund; eine Änderung des Zielumfangs benötigt die Entscheidung
+  des Auftraggebers. Der Implementierende darf die Sollmenge nicht selbst verkleinern.
+- A2 — Exakter Prüfstand: Belege binden Anwendung UND Tests an Commit/Tree, bei
+  uncommitteter Arbeit zusätzlich an gespeicherten Patch und Inhaltsdigests neuer
+  Dateien. Images, aktive Bundles, effektive Konfiguration und Toolversionen werden
+  festgehalten. Ein Commitname allein beweist keine Übereinstimmung der ausgeführten
+  Bytes. Relevante Änderungen nach dem Lauf machen betroffene Nachweise ungültig.
+- A3 — Echte Wirkung: Positive Fälle müssen den echten Vorgang bis zum prüfbaren
+  Ergebnis ausführen. Negative Fälle müssen die zu prüfende Grenze tatsächlich
+  erreichen und genau dort scheitern. Nicht gestartetes Tool, Syntaxfehler,
+  fehlende Berechtigung zum Testaufbau oder unerreichbarer Dienst sind kein
+  Sicherheits-Pass. Eine passende Positivkontrolle belegt die Funktionsfähigkeit
+  des Aufbaus. Wo möglich prüft ein separater Beobachter die Wirkung, etwa Kernel-
+  Zähler, fremder Client, gespeicherte Bytes oder echte Datenbankreferenzen.
+- A4 — Aussagegrenze: Mocks/Fixtures dürfen einen ausdrücklich engeren Unitvertrag
+  prüfen, aber niemals den dort ersetzten Produktions-, Kernel-, Datenbank-,
+  Netzwerk- oder Recoveryvorgang belegen. Testeigene nachgebaute Implementierungen,
+  bloße Quelltextsuche, erfolgreiche Imports und generierte PASS-Dateien ersetzen
+  keinen Verhaltenstest. Der echte Produktionsaufrufer muss Teil des Nachweises sein.
+- A5 — Keine grünen Lücken: Pflichtfälle haben die Zustände bestanden,
+  fehlgeschlagen, blockiert oder nicht ausgeführt. Skip, Timeout, Testabbruch,
+  leerer Testlauf und unbekanntes Ergebnis sind kein Bestanden. Fehlversuche bleiben
+  sichtbar; ein erfolgreicher Wiederholungslauf ohne geklärte Fehlerursache löst
+  eine flakende Pflichtprüfung nicht. Erwartete und ausgeführte Fallmenge werden
+  abgeglichen, nicht nur Exitcode und Testanzahl.
+- A6 — Feste Sollwerte: Grenzwerte, zulässige Abweichungen, Testlast und Dauer
+  müssen aus dem vereinbarten Betriebs-/Produktvertrag oder nachvollziehbar
+  erhobenen Anforderungen stammen. Ein beliebig großzügiger vorab gewählter Wert
+  genügt nicht. Fehlende Vorgaben bleiben offen. Limits erhöhen, Tests löschen,
+  Fehler als Warnungen behandeln oder Assertions abschwächen ist keine Behebung.
+- A7 — Unabhängige Gegenprüfung: Vor Neueinstufung prüft ein anderer Reviewer
+  Sollmatrix, Produktionsverdrahtung, Teständerungen und Rohbelege. Er wiederholt
+  die entscheidenden Fehler-/Erfolgsfälle am selben Stand oder dokumentiert,
+  welche unabhängige Beobachtung dieselbe Wirkung belegt. Ein belegter Vorher-
+  Fehlschlag oder gezielt gebrochener Schutz im isolierten Test zeigt, dass der
+  Test den Defekt erkennt; keine Manipulation des produktiven Systems hierfür.
+  Ein bloßes zweites Lesen der Abschlusszusammenfassung reicht nicht.
+- A8 — Getrennte Abschlusszustände: Pro Finding werden Implementierung,
+  lokale Prüfung, vorbereitete Betriebsprüfung und tatsächlich ausgeführte
+  Live-Prüfung separat bewertet. D12 erlaubt vollständigen lokalen Abschluss
+  trotz ausstehender Live-Abnahme, aber keine fehlende Implementierung und keine
+  Bezeichnung als produktionsbestätigt. Dokumentations-/Prüfvorbereitung für rein
+  externe Betriebsfragen löst deren unbeobachteten externen Zustand nicht.
+  Ein Registergenerator darf keine Belegqualität durch einen Statuswert ersetzen.
+
+### Dokumentation als Pflicht zum Abschluss
+
+Für jeden der folgenden Punkte ist das jeweilige DOC-Kriterium Teil der
+Abnahme. Ein technischer Fix allein genügt nicht. Betroffene gepflegte Benutzer-,
+Entwickler- und Betriebsdokumentation einschließlich Konfigurationsreferenzen,
+Beispielen, Runbooks, Fehler-/Recoveryhinweisen und Statusübersichten wird auf
+den tatsächlich geprüften Stand gebracht. Widersprüchliche aktuelle Anleitungen
+werden korrigiert oder eindeutig abgelöst; historische Belege bleiben historisch.
+
+Der Abschlussnachweis nennt die geprüften Dokumente und ihre Änderungen samt
+Commit/Dateistand. Links, Beispiele und Befehle werden mit passenden lokalen
+Dokumentations-/Renderprüfungen validiert; nicht ausgeführte Livebefehle bleiben
+als solche gekennzeichnet. Geplantes Verhalten darf nicht als bereits vorhanden
+beschrieben werden. Falls nach Prüfung keine Dokuänderung erforderlich ist,
+werden die geprüften Dokumente und der konkrete Grund pro Punkt festgehalten;
+ein unbegründetes „nicht nötig“ besteht das DOC-Kriterium nicht. Fehlende notwendige
+Doku oder unbelegte Aktualität blockiert den Abschluss des betroffenen Punkts.
+
+## PCR-BUSTER-ENGINE-001 — gemeinsames Ressourcenbudget
+
+**Lokal:**
+
+- B1: Der echte Produktionsaufruf führt Provider, lokale Capabilityhelfer,
+  parallele RPCs und Report-/Abschlussarbeit innerhalb der zugeordneten nativen
+  Ressourcengrenze aus. Keine ungemessene lokale Arbeit im vertrauenswürdigen
+  Parent und kein stiller Rückfall auf Sampling bei fehlender Cgroup-Unterstützung.
+  Externe BuildKitarbeit ist getrennt als externe Ressource budgetiert und ausgewiesen.
+- B2: Echte CPU-, Speicher- und Tasklast in Provider und Capabilityhelfern löst
+  die jeweils konfigurierte Grenze aus; kurzlebige Kinder werden mitgezählt.
+  Zwei parallele Attempts haben getrennte Messungen; gemeinsame Rollenreserve
+  und Admission verhindern Überbuchung. CPU, RAM und Tasks bleiben eigene Größen.
+- B3: Timeout, Abbruch und Supervisorverlust lassen keine unzugeordnete
+  ausführende Restarbeit zurück. Berechtigt retained Fixtures behalten ihre
+  eigene gebundene Lebensdauer gemäß B4; sie werden nicht pauschal mit dem
+  Setupattempt beendet. Abschlussergebnis enthält die tatsächliche Gesamtabrechnung. Core
+  bleibt generisch und importiert keine Buster-/Prism-Fachlogik.
+- B4: Retained Fixtures behalten nach D14 ihre eigene dauerhafte Lebensdauer
+  samt physischer Ressourcenbindung, Bereitschaft und Cleanup-Abschlussbeleg.
+  Neustart zwischen diesen Phasen verliert weder Besitz noch Budget. Tasklimits
+  werden explizit versioniert; historische Prozessreceipts bleiben lesbar.
+- B5: Echte abhängige Nodes starten erst nach dauerhafter Fixturebereitschaft.
+  Setupfehler, Cancel, Restart und Cleanupfehler werden mit tatsächlichen
+  Consumern geprüft: kein vorzeitiger Start, keine vorzeitige Fixturebeendigung,
+  keine Freigabe von Besitz/Budget vor bestätigtem Cleanup. Ein Setupresultat
+  gilt nicht als Cleanupabschluss. Prism behält seine normale Attemptlebensdauer.
+
+**Live:** B1–B5 mit realem Nova→Buster-Dispatch, Produktionsimages und delegierten
+Hostrollen ausführen; Host-/Podkapazität darf nicht doppelt vergeben werden.
+Fehlende Delegation muss vor Arbeitsannahme scheitern. Abhängig von IFR-16-001.
+
+**B-DOC — Dokumentationsabschluss:** Ressourcenvertrag, Task-Einheiten, Fixture-Lebensdauer, Rollenbindung und Fehlerdiagnose sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## PCR-BUSTER-ENGINE-004 — Recovery und Quellenbereinigung
+
+**Lokal:**
+
+- W1: Reale Jobs mit Erfolg, fachlichem Fehlschlag, Ausführungsfehler und Abbruch
+  entfernen ihre ausschließlich temporären Quellen nach belegtem Prozessende;
+  auch Fehler während Extraktion hinterlassen keine unzugeordneten Archive.
+- W2: Neustart/SIGKILL vor und nach Terminalschreibung sowie während Cleanup
+  führt zu wiederholbarer Besitzprüfung. PID-Wiederverwendung, unbekannter
+  Cgroupbesitz und aktive Fixtures erlauben keine Löschung. Unsichere Fälle
+  bleiben erhalten und melden einen konkreten nächsten Diagnoseschritt.
+- W3: Wiederholtes Cleanup ist idempotent; Symlinks/Pfadwechsel führen nicht
+  außerhalb des Jobroots. Fremde Jobs, Logs, Ergebnisse und gültige Evidence
+  bleiben lesbar. Wiederholte abgeschlossene Jobs geben messbar Quotenplatz frei.
+- W4: Positive Restartfälle mit nachweisbar beendetem, eindeutig zugeordnetem
+  Prozess-/Cgroupbesitz müssen ihre temporären Quellen tatsächlich freigeben,
+  innerhalb einer vorab begründeten endlichen Recoveryfrist. Mehrere Crash-/Restart-
+  Zyklen geben belegbar Platz frei. Pauschales unbegrenztes Zurückhalten aller
+  Restartjobs besteht diese Prüfung nicht; unbekannter Besitz bleibt gemäß W2 geschützt.
+  Zusätzlich werden noch lebende, eindeutig eigene Orphans kontrolliert beendet
+  oder gemäß Recoveryvertrag übernommen; nach ihrem nachgewiesenen Ende wird
+  tatsächlich bereinigt. Nur schon vor Restart tote Prozesse zu prüfen reicht nicht.
+- W5: Das Inventar umfasst auch eingebettete Sourcearchive in terminalen
+  Jobrecords und den gesamten runtimeRoot. Bestehende Completed-Archive-Compaction
+  wird mit Originalconsumer-/Replaytests nachgewiesen; für Fehler-/Abbruchfälle
+  ist die Retentionsentscheidung explizit. Gemeldete Dateifreigabe darf weiterhin
+  belegte Metadata-/Result-/Recordquoten nicht verdecken. Überschneidung mit R1–R4
+  wird durch dieselben Belege aufgelöst, nicht durch Auslassen dieser Ressourcenklasse.
+
+**Live:** Worker-/Podneustart mit realen Jobs und persistenten Volumes; originale
+Receipts bleiben abrufbar. Abhängig vom dauerhaften Besitz aus B1–B5.
+
+**W-DOC — Dokumentationsabschluss:** Quellenretention, Besitzprüfung, Restart-/Orphanbereinigung und geschützte Daten sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## PCR-OBS-002 — sichere Kapazitätsfreigabe
+
+**Lokal:**
+
+- R1: Eine vollständige Store-/Consumerliste ordnet jeder Ressourcenklasse
+  Eigentümer, Quote, Referenzen und erlaubte Bereinigung zu. Bereits gelöste
+  Projektionen werden mit ihren bestehenden Tests übernommen, nicht neu gebaut.
+- R2: Für jede verbliebene freigebbare Klasse gibt es einen expliziten manuellen
+  Plan-/Ausführungspfad. Er prüft dieselben Identitäten/Digests unter Writerlocks
+  erneut und berichtet tatsächlich freigegebene Bytes/Slots. Kein automatisches
+  Log-TTL; D07-geschützte Projektmaterialien bleiben bis Projektlöschung erhalten.
+- R3: Kleine echte Quoten mit abgeschlossenen, aktiven, wartenden und ungewissen
+  Runs beweisen Freigabe nur der ausgewählten Daten. Gemeinsame Artefakte bleiben
+  für andere Consumer verfügbar. Unbekannte Referenzen stoppen die Freigabe.
+- R4: Crash an jeder Zustandsänderungsgrenze, paralleler Writer und verspätete
+  Zustellung erhalten Recovery und Idempotenz. Gelöschte Nutzlasten lassen keine
+  bereits ausgeführte externe Aktion erneut entstehen. Nicht freigebbare
+  Kapazität endet mit ausdrücklichem Backpressure statt stillem Datenverlust.
+
+**Live:** Auf einer isolierten Kopie realer Storestrukturen mit dokumentierten
+Quoten durchführen. Kein Test darf produktive Historie ohne eigenen Auftrag löschen.
+
+**R-DOC — Dokumentationsabschluss:** Storeinventar, Quoten, manuelle Freigabebefehle, Aufbewahrung und Recoverygrenzen sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## IFR-21-001 — reproduzierbare Imageinputs
+
+**Lokal:**
+
+- I1: Alle Runtimeimages einschließlich der ursprünglich erfassten Opsimages
+  besitzen ein Inputinventar: Source, Basen, Paketlocks,
+  OS-Snapshots, Tool-/Browserarchive und Scanner-DBs. Jeder veränderliche Download
+  ist an unabhängig geprüfte Inhaltsidentität gebunden; falsche Hashes scheitern.
+- I2: Zwei vollständige isolierte Builds je beanspruchter Zielarchitektur mit
+  identischen Inputs werden auf Paketliste, SBOM, Nutzdateien und Imageidentität
+  verglichen. Jede Differenz wird zugeordnet. Ohne gleiche Digests darf kein
+  bitidentischer Build behauptet werden; zulässige reine Buildmetadatenunterschiede
+  sind vorab festgelegt, keine ungeklärten Inhaltsunterschiede erlaubt.
+- I3: Browser und installierte Werkzeuge starten und arbeiten in den fertigen
+  Images. Ein Download-/Locktest allein ersetzt diesen Test nicht. Scanner-DB-
+  Updates erhalten neue explizite Identitäten und aktuelle Scanbelege; eine
+  unveränderliche alte DB ist kein Nachweis aktueller Sicherheit.
+
+**Live:** Genau die geprüften Outputdigests deployen und Tool-/Browserarbeit
+ausführen. Nicht ausgeführte ARM64-Tests bleiben als fehlend ausgewiesen.
+
+**I-DOC — Dokumentationsabschluss:** Imageinputs, Lock-/Updateverfahren, Rebuildumfang und Grenzen der Reproduzierbarkeit sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## IFR-29-001 — portable Beispiele und Betreiberprofile
+
+**Lokal:**
+
+- P1: Jede konkrete Host-, Routing-, Repository-, Namespace- und Identitätsangabe
+  ist als portabler Default, fiktives Beispiel oder bewusstes Betreiberprofil
+  eingeordnet. Private Werte werden ausschließlich extern referenziert.
+- P2: Ein frischer Clone lässt sich mit fiktiven Betreiberidentitäten über den
+  normalen Konfigurations-/Renderpfad erzeugen. Manifest und effektive Runtime-
+  Konfiguration enthalten keine ungewollt übernommenen AX41-/Betreiberwerte.
+- P3: Eine dokumentierte Prüfung des aktuellen Trees, der erreichbaren Git-Historie,
+  Buildkontexte und erzeugten Artefakte protokolliert Werkzeug, Umfang und
+  redigierte Ergebnisse. Verdächtige Treffer werden bewertet; keine unbewiesene
+  Aussage „secretfrei“. Tatsächliche Credentialfunde würden separat behandelt;
+  das Kriterium verlangt weder pauschale Löschung öffentlicher Profile noch History-Rewrite.
+
+**Live:** Fremdes Betreiberprofil ohne Quellcodeänderung installieren; keine
+fremde Dienst-/Benutzeridentität kontaktieren. Mit CONFIG gemeinsam bearbeiten.
+
+**P-DOC — Dokumentationsabschluss:** portable Beispiele, Betreiberprofile, Konfigurations- und Secret-Schnittstellen sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## IFR-04-001 — Tailscale-Zugriffsvertrag
+
+**Lokal/Dokumentation:**
+
+- T1: Jeder private Ingress ist mit Zweck, erlaubten Identitäten, Tags,
+  TagOwnern, ACLs/Grants und Credentialverantwortung einem redigierten aktuellen
+  externen Regelstand zugeordnet. Dynamische Previews und Ops-Sidecar sind erfasst.
+- T2: Die Testmatrix benennt pro Zugang mindestens einen erlaubten und einen
+  verbotenen echten Client sowie erwartete Netzwerk- und Anwendungsentscheidung.
+  Referenzen und lokale Render prüfen Tags und Endpunkte ohne Secrets auszugeben.
+
+**Live:** Alle T2-Fälle vor und nach Proxyneustart und OAuth-/Zertifikatrotation
+ausführen. Unerlaubte Clients erreichen den geschützten Dienst nicht; erlaubte
+führen den vorgesehenen Vorgang aus. Benötigt echten Tailnet-Regelstand/Clients.
+Ohne diese ist nur der vorbereitete Dokumentations-/Testteil abschließbar.
+
+**T-DOC — Dokumentationsabschluss:** Zugriffsregeln, Identitäts-/Tagzuordnung, Rotation und Zugangsdiagnose sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## IFR-10-001 — BuildKit-Isolation
+
+**Lokal auf passender realer Linux-Runtime:**
+
+- K1: Die gewählte Produktionsarchitektur führt nicht vertrauenswürdige Builds
+  in einer eigenen kurzlebigen Sicherheits-/Prozessgrenze aus; langlebige Steuer-
+  und Credentialprozesse gehören nicht zum Buildkontext. Ein gemeinsamer ungeschützter Daemon-
+  Prozessraum ist kein akzeptabler Ersatz. Fehlende Isolation stoppt Jobannahme.
+- K2: Ein realer Build kann Daemon und andere Builds weder signalisieren noch
+  per ptrace beeinflussen oder deren private Dateien/Caches/Credentials lesen.
+  Auch unerlaubte Prozesssicht einschließlich Prozessargumenten, Umgebung und
+  Dateideskriptoren anderer Builds/Daemon wird mit realen Zugriffen geprüft.
+  Deklariert gemeinsam genutzte Caches besitzen einen expliziten Trustvertrag;
+  private Builddaten dürfen diesen nicht unbeabsichtigt passieren.
+- K3: Erfolg, Fehler, Timeout und Cancel beenden Hintergrundprozesse. Zwei
+  parallele Builds, ein bösartiger Prüfbuild und Daemonrestart erhalten fremde
+  Arbeit/Ergebnisse. Egress folgt der ausgewiesenen Buildpolicy; gesperrte Ziele
+  scheitern. Regulärer Build/Push/Scan/Pull funktioniert weiter.
+
+**Live:** K1–K3 mit den ausgewählten Buster-/BuildKitimages und der echten
+Hostkonfiguration wiederholen. Kein Pass allein aus entfernten CLI-Flags.
+
+**K-DOC — Dokumentationsabschluss:** Build-Isolation, Trust-/Cache-/Egressgrenzen, Voraussetzungen und Fehlerbehandlung sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## IFR-01-001 — Bootstrap und Wiederaufbau
+
+**Lokal/Dokumentation:**
+
+- H1: Unterstützte Ausgangsumgebung, Versionen, APIrechte, Storage, Host-/Cgroup-
+  Vorbereitung, Sicherungen und Zuständigkeiten sind explizit. APIfehler werden
+  nicht als „kein Cluster vorhanden“ interpretiert und lösen keine Neuinstallation aus.
+- H2: Der Controlnodepfad führt Vorbereitung/Prüfung rollenbezogen aus. Frischer
+  kompatibler Cluster, unveränderter Wiederholungslauf und Fortsetzung nach
+  Unterbrechung haben dokumentierte Zustandsübergänge und Rollbackgrenzen.
+  Manuelles Kompilieren auf jedem Host ist kein fertiger Installerpfad.
+- H3: Reale isolierte Hosttests belegen H1/H2, zusätzlich Nodeaufnahme ohne
+  unbeabsichtigten Neustart fremder Workloads oder Verschieben lokaler PVCdaten.
+  Wiederaufbau nach Hostverlust prüft API, Storage und eine echte Arbeitslast.
+  Bestehenden Cluster unterstützen und neue Clustererzeugung getrennt ausweisen.
+
+**Live:** Ausgewählte Host-/Storageumgebung über denselben dokumentierten Pfad
+wiederherstellen. Mit IFR-26-001/IFR-28-001 koordinieren; keine „one-click“-Behauptung
+vor Fresh-install-, Rerun-, Recovery- und Nodeaufnahme-Nachweisen.
+
+**H-DOC — Dokumentationsabschluss:** Installationsvoraussetzungen, Controlnodeablauf, Wiederholung, Nodeaufnahme und Wiederaufbau sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## IFR-02-001 — Cilium-Cutover
+
+**Lokal/Dokumentation:**
+
+- C1: Alle Skriptreferenzen führen zu vorhandenen Anleitungen. Aktuelle Pods,
+  Namespaces, DaemonSets und Abhängigkeiten sämtlicher Anwendungen sind erfasst;
+  Paperless/HomeOS wird nach tatsächlichem Bestand eingeordnet.
+- C2: Runbook benennt Wartungsfenster, Offlineartefakte, unabhängigen Hostzugang,
+  phasenweisen Rollback und Abbruchbedingungen. Render-/Guardtests weisen
+  unzulässige Ausgangszustände ab und setzen keinen Erfolgsmarker vor Abnahme.
+
+**Live:** Nach separat geplanter späterer Migration jeden Pod einem wirksamen
+Endpoint zuordnen; Pipeline, Ops, Trustdienste und alle bestehenden Anwendungen
+prüfen, einschließlich Upload/OCR/Abruf soweit Paperless betrieben wird.
+Erlaubte/verbotene Verbindungen, Policycleanup, Wiederanlauf und unabhängigen
+Rollback testen. Erst danach Cutovermarker. Roadmapreihenfolge bleibt erhalten.
+
+**C-DOC — Dokumentationsabschluss:** Migrationsrunbook, Applikationsinventar, Wartung, Rollback und tatsächlicher Cutoverstatus sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## IFR-05-001 — bereits lokal geschlossenes GitOps-Finding
+
+Kein erneuter Implementierungsauftrag. Historischen lokalen Abschluss erhalten;
+Änderungen an diesem Pfad benötigen passende Regressionen.
+
+**Separate Live-Gates:** Erstsync/Readiness, klare Ressourceneigentümer,
+blockierende fehlgeschlagene Migration, Driftkorrektur, Git-/Registryausfall und
+kompatibler Rollback erhalten PVC-UIDs und Testdaten. Codeänderung und Änderung
+von Imageinputs durchlaufen jeweils Veröffentlichung, Auswahl und Rollout des
+geprüften Stands. Infrastruktur-/Ops-Childsync bleibt manuell, Runtimeautosync
+folgt der vereinbarten Policy. Registrierte Applications allein sind kein Pass.
+
+**J-DOC — Dokumentationsabschluss:** GitOps-Eigentümerschaft, Sync-/Releaseverfahren, Rollback und getrennte lokale/Live-Nachweise sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## IFR-06-001 — SPIRE-Recovery
+
+**Lokal/Dokumentation:**
+
+- S1: Gepinntes Chart rendern und effektive Server-PVC-, CA-, TTL-/Erneuerungs-
+  und Peerbedingungen dokumentieren. Backup/Restore umfasst tatsächlichen
+  Serverzustand und erforderliches Schlüsselmaterial über geschützte Referenzen.
+- S2: Vorgehen für Server-/Agentausfall, CA-Verlust und Rotation nennt überprüfbare
+  Grenzen für neue Handshakes und vorhandene Verbindungen. Kein sofortiger
+  Widerruf oder garantierter Ausfallzeitraum ohne entsprechenden Mechanismus/Nachweis.
+
+**Live:** Erlaubte und falsche Identität, SVID-Erneuerung unter aktiver Arbeit,
+Server-/Agentausfall über Zertifikatsablauf, Neustart und CA-/Serverrestore
+durchlaufen. Gegenseitige Authentifizierung kehrt zurück; kein Plaintext-/Fail-open-
+Fallback. Gemessene Unterbrechung mit vorab definiertem Recoveryziel vergleichen.
+
+**S-DOC — Dokumentationsabschluss:** CA-/Serverbackup, Zertifikatslaufzeiten, Rotation, Restore und Ausfallgrenzen sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## IFR-16-001 — Gesamtlast und Storagekapazität
+
+**Lokal:**
+
+- D1: Inventar enthält Node-Allocatable, native Reserven, alle Podrequests,
+  Nebenanwendungen und gleichzeitige Joblast. CPU-/RAM-/Taskbudgets schließen
+  Doppelvergabe aus; Linux-Tasks werden gemäß D13 gezählt.
+  Buster UND Prism verwenden nach D16 eigene feste hostverwaltete native
+  Rollenpools. Produktionsverdrahtung, vollständige Pending-/Active-Admission
+  einschließlich Fixtures und konfigurierte schedulerwirksame Hostreservierung
+  sind mit den Originalpfaden zu prüfen. Fehlende/falsche Reservierung oder
+  Runtimebindung verhindert Aktivierung; geringe Testlast ersetzt diese Negativfälle nicht.
+- D2: Für jedes reale Dateisystem/PVC sind nutzbare Kapazität, Inodes, bestehende
+  Belegung, erwartetes Wachstum und Reserve erfasst. Gemeinsam belegter Speicher
+  wird einmal budgetiert; PVCgrößen werden nicht als zusätzliche physische Disks addiert.
+- D3: Reale isolierte Last mit Build, Browser, Backup und Restore gleichzeitig
+  hält die vorab ausgewiesenen Budgets ein. Disk-/Inodegrenzen führen zu sichtbarem
+  Backpressure; fremde Daten bleiben erhalten. Cleanup gibt nachweisbar Kapazität
+  frei. Reserven werden gemessen begründet, nicht automatisch nach Fehlern erhöht.
+
+**Live:** Scheduling und repräsentative Gesamtlast auf dem ausgewählten Host;
+Latenz/Wiederanlauf bestehender Anwendungen gegen vorher festgelegte Ziele prüfen.
+Für beide Rollen echte Node-/Kubelet-/Poolwerte und konkurrierende Podadmission
+beobachten: Kubernetes darf die reservierte native Kapazität nicht erneut vergeben.
+Bloßes Ausbleiben von Überlast beweist keine wirksame Reservierung.
+Diskerschöpfung ausschließlich in isolierter Umgebung testen.
+
+**D-DOC — Dokumentationsabschluss:** Ressourcen-/Storageinventar, Reservierungen, gemessene Kapazitätsgrenzen und Überlastdiagnose sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## IFR-26-001 — konsistente Disaster Recovery
+
+**Lokal mit echter DB/Artefaktspeicherung:**
+
+- Q1: Backupgruppe bindet DB, alle referenzierten Artefaktdigests sowie benötigte
+  Schlüssel, Journale und Software-/Schemastände an einen dokumentierten
+  konsistenten Sicherungspunkt. Parallelwrites erzeugen keine fehlenden Referenzen.
+- Q2: Fehler, Abbruch und volle Backupspeicher veröffentlichen keine halbe Gruppe
+  als erfolgreich. Vorhandene Gruppen bleiben erhalten. Manipulierte/missing
+  Artefakte und falsche Schlüssel werden vor Nutzungsfreigabe erkannt.
+- Q3: Eine neue Umgebung ohne Originalvolumes stellt echte PostgreSQL-Daten und
+  Objekte wieder her. Ein aus dem vollständigen Sicherungsstand abgeleitetes
+  Referenzinventar wird unabhängig mit DB und Objektspeicher abgeglichen; alle
+  erforderlichen Referenzen sind vorhanden und digestgültig. Eine selbst gewählte
+  Teilmenge reicht nicht. Die echte Anwendung setzt gespeicherte Sessions/Jobs
+  gemäß ihrem Zustand fort und führt den Prism-/Pipelinepfad aus. Ungewisse externe
+  Aufträge werden abgeglichen statt blind wiederholt. SQLfixtures reichen hierfür nicht.
+  Der gesicherte Datenbestand enthält abgeschlossene, wartende, laufende und
+  extern ungewisse Jobs/Sessions; für jede Klasse wird die erlaubte Fortsetzung
+  oder explizite Blockierung beobachtet. Ein ausschließlich neu gestarteter Job
+  ersetzt diese Wiederaufnahmeprüfung nicht.
+- Q4: Der Backup-Aufbewahrungsvertrag benennt Kapazität, externe Kopien,
+  geschützte Sicherungsgruppen und manuelle Freigabe. Wiederholte Sicherung,
+  Quotenerreichen und autorisierte Freigabe werden mit echten Gruppen geprüft:
+  letzte erforderliche wiederherstellbare Stände bleiben erhalten, unabhängige
+  Kopien werden überprüft und anschließende Sicherungen funktionieren wieder.
+  Nur bei voller Quote zu stoppen erfüllt die Retention nicht. Keine automatische
+  Löschfrist entgegen D07; notwendige Recoverydaten bleiben geschützt.
+  Unvollständige zurückgebliebene Gruppen gehören ausdrücklich zum Vertrag.
+  Crash während Freigabe darf geschützte Gruppen nicht beschädigen. Nach der
+  Freigabe muss nicht nur ein neues Backup, sondern dessen echter Restore gelingen.
+
+**Live:** Dieselbe Wiederherstellung ausschließlich aus einer geprüften Kopie
+in einem unabhängigen Ausfallbereich durchführen. Gemessener Datenverlust und
+Wiederanlauf erfüllen vorher bestimmte RPO/RTO. Backupziel, Schlüsselverwahrung
+und RPO/RTO sind noch zu erhebende Betreiberangaben, keine bereits zugesicherte Garantie.
+
+**Q-DOC — Dokumentationsabschluss:** Backupgruppen, Schlüssel-/Journalbindung, Aufbewahrung, Restore und belegte Recoveryziele sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## IFR-28-001 — unabhängiger Managementzugang
+
+**Lokal/Dokumentation:**
+
+- O1: Zugangswege und Abhängigkeiten sind vollständig getrennt beschrieben:
+  Ops-Pod/Tailscale im Cluster versus externes Host-/KVM-Management. Betreiber,
+  Zugangsvoraussetzungen und geschützte Credentialaufbewahrung sind benannt.
+- O2: Die Wiederherstellungsanleitung ist außerhalb des ausgefallenen Clusters
+  verfügbar und benötigt weder dessen DNS/CNI noch dessen Ops-PVC als einzigen Zugang.
+
+**Live:** In kontrollierter Umgebung Argo, Tailscale und CNI separat ausfallen
+lassen. Über den unabhängigen Pfad Host erreichen, Zustand diagnostizieren und
+Konfiguration wiederherstellen. Remote-Pairing und ein zweiter Pod gelten nicht
+als Nachweis. Benötigt tatsächlichen externen Zugang; mit H3/Q3 bündeln.
+
+**O-DOC — Dokumentationsabschluss:** unabhängige Zugangswege, externe Voraussetzungen und außerhalb des Clusters verfügbare Recoveryanleitung sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## REGISTER — konsistente Befundführung
+
+**Lokal:**
+
+- G1: Alle 154 historischen IDs und zusätzlichen Integrationsbefunde bleiben
+  identifizierbar erhalten. Status, Evidenz und Live-Grenzen werden aus einer
+  gepflegten Quelle dargestellt. Kein Zählerwechsel ohne belegte Einzelentscheidung.
+- G2: JSON, Markdown und aktuelle Zusammenfassungen stimmen je ID und Summe
+  überein. Die vier festgestellten Abweichungen sind nachvollziehbar aufgelöst;
+  historische Audit-/Zwischenstände bleiben als historisch erkennbar erhalten.
+- G3: Eine automatisierte Konsistenzprüfung erkennt absichtlich erzeugte
+  Statusabweichung, fehlende/doppelte ID, falsche Summe und fehlenden Belegverweis.
+  Generierung repariert nicht stillschweigend den fachlichen Abschlussstatus.
+
+Keine Live-Prüfung erforderlich. Die vollständige erneute Regression aller 141
+geschlossenen Findings ist kein Ersatz für diese Registerprüfung und war nicht
+Gegenstand der aktuellen Triage.
+
+**G-DOC — Dokumentationsabschluss:** Registerquelle, Statusbedeutung, Generierung, Zähler und aktuelle Fortschritts-/Übergabeübersichten sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## CONFIG — zentrale Operator-Konfiguration
+
+**Lokal:**
+
+- F1: Ein Inventar deckt sämtliche Produktionssettings in Nova, Buster, Prism,
+  gemeinsamen Komponenten, Hostprofilen, Environmentloadern und Deploymenttemplates
+  ab: Autorenquelle, Default, Typ/Einheit, Override, Consumer und Klassifizierung
+  als Operatorsetting, Protokollinvariante, Version oder externe Secretreferenz.
+- F2: `swarm.config.json` ist die einzige editierbare Autorenquelle für diese
+  Operatorsettings. `versions.json` bleibt Versionsquelle; Secrets bleiben extern.
+  Benötigte nachgelagerte Dateien/Envwerte werden regulär daraus erzeugt oder
+  aufgelöst. Kein paralleles manuell gepflegtes `kubeclaw.yaml`/Hostprofil.
+- F3: Unbekannte Keys, falsche Typen/Einheiten, konkurrierende Autoritäten und
+  unvereinbare Einzel-/Parallel-/Hostbudgets scheitern vor Aktivierung. Defaults
+  und zulässige Overrides haben eine einzige dokumentierte Präzedenz. Historische
+  Prozesslimits werden nicht als Tasks umgedeutet; Sicherheitsinvarianten bleiben fest.
+- F4: Tests verändern über den echten Produktionslade-/Renderpfad die inventarisierten
+  Settings und beobachten die entsprechenden Consumer einschließlich Buster und
+  Prism. Dynamische verhaltensrelevante Settings haben Verhaltenstests, deklarative
+  Deploymentsettings entsprechende Render-/Ladeprüfungen. Ein Testexpander ohne
+  Produktionsaufrufer zählt nicht. Keine zusätzlichen manuellen Syncschritte.
+- F5: Driftprüfung erkennt wieder eingeführte lokale Defaults/Hardcodierungen und
+  abweichende erzeugte Dateien. Zwei unterschiedliche Betreiber-/Nodeprofile
+  benötigen keine Codeänderung. Effektive Konfiguration und Herkunft sind für
+  den Operator nachvollziehbar, ohne Secretwerte auszugeben.
+- F6: Gemessene Taskreserve, Attemptlimits, Parallelität und Host-/Containerkapazität
+  sind abgestimmt. Fehlgeschlagene Arbeit erhöht Limits nicht selbstständig.
+  Bedienungsdoku beschreibt Defaults, Overrides, Fehler und Änderungsauswirkung
+  an einer Stelle; ersetzte Konfigurationswege sind entfernt oder ausdrücklich
+  migrationsbedingt abgewiesen, nicht dauerhaft konkurrierend unterstützt.
+
+**Live:** Zwei kontrolliert unterschiedliche gültige Settingsstände über den
+normalen Git-/Argo-Weg ausrollen und Auswirkungen in den echten Rollen beobachten.
+Ungültige Änderung darf keine teilweise neue Konfiguration aktivieren. Eine
+wirksame Configdatei allein ist kein Beweis für Ressourcenisolation (B1–B5).
+
+**F-DOC — Dokumentationsabschluss:** Settingsinventar, Defaults, Einheiten, Overrides, Produktionsauflösung, Migration und Fehlerdiagnose sind gemäß der gemeinsamen Dokumentationspflicht geprüft und, wo nötig, aktualisiert. Geänderte Dokumente oder eine begründete Nichtänderung sind im Abschlussnachweis dieses Punkts belegt.
+
+## Abhängigkeiten und noch zu erhebende Daten
+
+Zuerst aktuellen Argo-/Podbetrieb entsprechend Roadmap behandeln. Innerhalb der
+Befundarbeit Buster-Ressourcenbesitz vor Orphanbereinigung bearbeiten; BuildKit-
+Isolation separat mit demselben Hostmodell abstimmen. Store-/Storagearbeit und
+Backup/Bootstrap/Management-Recovery jeweils gemeinsam planen. CONFIG baut auf
+den geklärten Ressourcenverträgen auf und bündelt die portable Konfiguration.
+Cilium bleibt im späteren Wartungsschritt; Redis-/Registry-mTLS bleibt eigenständige
+Roadmaparbeit. Der bekannte HTTP-Registry-Scannerpfad darf dabei nicht als gelöst
+behauptet werden; er ist kein zusätzlicher historischer Registerbefund dieser Liste.
+
+Für spätere Betriebsnachweise fehlen im aktuellen Auftrag insbesondere der
+aktuelle Tailnet-Regelstand samt Testclients, reale Host-/Storagebelegung,
+unabhängiger Managementzugang, externes Backupziel und Recovery-/Latenzziele.
+Diese fehlenden Angaben verhindern nicht die Definition der Kriterien, aber
+ihre betreffenden Live-Passes. Alle hier definierten Kriterien stehen zunächst
+auf **nicht neu ausgeführt**.

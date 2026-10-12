@@ -1,0 +1,250 @@
+import { resolveWaitValue } from '@kubeclaw/plugin-foundation/observability/wait-projection';
+import type { DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';
+import type { RetainedWaitResolver } from '@kubeclaw/plugin-sdk';
+import crypto from 'node:crypto';
+import {
+  canonicalJson,
+  type AdapterActivationContext,
+  type AdapterInstance,
+  type WaitRequest,
+} from '@kubeclaw/plugin-sdk';
+import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';
+
+interface WaitRecord {
+  readonly schemaVersion: 'wait-record.v2';
+  readonly idempotencyKey: string;
+  readonly createdAt: string;
+  readonly wait: WaitRequest;
+}
+interface StoredWait {
+  readonly schemaVersion: 'wait-value.v1';
+  readonly wait: WaitRequest;
+}
+
+const NAMESPACED_ID = /^[a-z0-9]+(?:[._-][a-z0-9]+)+$/;
+const OPAQUE_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,191}$/;
+const IDEMPOTENCY_ID = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$/;
+const ISSUER_TYPES = new Set(['orchestrator', 'operator', 'adapter']);
+const RFC3339_DATE_TIME = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d+)?)(Z|([+-])(\d{2}):(\d{2}))$/i;
+const DAYS_IN_MONTH = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+function exactKeys(
+  value: Record<string, unknown>,
+  required: readonly string[],
+  optional: readonly string[] = [],
+): boolean {
+  const allowed = new Set([...required, ...optional]);
+  return required.every((key) => Object.hasOwn(value, key))
+    && Object.keys(value).every((key) => allowed.has(key));
+}
+
+function isJson(value: unknown, depth = 0): boolean {
+  if (depth > 64) return false;
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') return true;
+  if (typeof value === 'number') return Number.isFinite(value);
+  if (Array.isArray(value)) return value.every((entry) => isJson(entry, depth + 1));
+  if (!value || typeof value !== 'object') return false;
+  return Object.entries(value as Record<string, unknown>)
+    .every(([key, entry]) => key.length > 0 && isJson(entry, depth + 1));
+}
+
+function validCalendarDate(match: RegExpExecArray): boolean {
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const maximumDay = month === 2 && leapYear ? 29 : (DAYS_IN_MONTH[month] ?? 0);
+  return month >= 1 && month <= 12 && day >= 1 && day <= maximumDay;
+}
+
+function validClockTime(match: RegExpExecArray): boolean {
+  const hour = Number(match[4]);
+  const minute = Number(match[5]);
+  const second = Number(match[6]);
+  const offsetSign = match[8] === '-' ? -1 : 1;
+  const offsetHour = Number(match[9] ?? 0);
+  const offsetMinute = Number(match[10] ?? 0);
+  if (offsetHour > 23 || offsetMinute > 59) return false;
+  if (hour <= 23 && minute <= 59 && second < 60) return true;
+  const utcMinute = minute - offsetMinute * offsetSign;
+  const utcHour = hour - offsetHour * offsetSign - (utcMinute < 0 ? 1 : 0);
+  return (utcHour === 23 || utcHour === -1)
+    && (utcMinute === 59 || utcMinute === -1)
+    && second < 61;
+}
+
+function isDateTime(value: unknown): value is string {
+  if (typeof value !== 'string') return false;
+  const match = RFC3339_DATE_TIME.exec(value);
+  if (!match) return false;
+  return validCalendarDate(match) && validClockTime(match);
+}
+
+function assertWaitIdentity(payload: Record<string, unknown>, requireIdentity: boolean): void {
+  if (!requireIdentity) return;
+  if (
+    payload.schemaVersion !== 'wait-request.v2'
+    || typeof payload.waitId !== 'string'
+    || !OPAQUE_ID.test(payload.waitId)
+  ) throw new Error('WAIT_REQUEST_INVALID');
+}
+
+function parseIssuer(value: unknown): WaitRequest['authorizedIssuer'] {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('WAIT_REQUEST_INVALID');
+  const issuer = value as Record<string, unknown>;
+  if (
+    !exactKeys(issuer, ['type', 'id'])
+    || typeof issuer.type !== 'string'
+    || !ISSUER_TYPES.has(issuer.type)
+    || typeof issuer.id !== 'string'
+    || !OPAQUE_ID.test(issuer.id)
+  ) throw new Error('WAIT_REQUEST_INVALID');
+  return issuer as WaitRequest['authorizedIssuer'];
+}
+
+function assertWaitFields(payload: Record<string, unknown>): void {
+  if (payload.kind !== 'signal' && payload.kind !== 'orchestrator') throw new Error('WAIT_REQUEST_INVALID');
+  if (
+    typeof payload.signalType !== 'string'
+    || payload.signalType.length > 160
+    || !NAMESPACED_ID.test(payload.signalType)
+  ) throw new Error('WAIT_REQUEST_INVALID');
+  if (payload.expiresAt !== null && !isDateTime(payload.expiresAt)) throw new Error('WAIT_EXPIRY_INVALID');
+  if (Object.hasOwn(payload, 'request') && (
+    !payload.request
+    || typeof payload.request !== 'object'
+    || Array.isArray(payload.request)
+    || !isJson(payload.request)
+  )) throw new Error('WAIT_REQUEST_INVALID');
+}
+
+function parseWait(value: unknown, requireIdentity: boolean): WaitRequest | Omit<WaitRequest, 'schemaVersion' | 'waitId'> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('WAIT_REQUEST_INVALID');
+  const payload = value as Record<string, unknown>;
+  const required = requireIdentity
+    ? ['schemaVersion', 'waitId', 'kind', 'signalType', 'authorizedIssuer', 'expiresAt']
+    : ['kind', 'signalType', 'authorizedIssuer', 'expiresAt'];
+  if (!exactKeys(payload, required, ['request'])) throw new Error('WAIT_REQUEST_INVALID');
+  assertWaitIdentity(payload, requireIdentity);
+  assertWaitFields(payload);
+  const issuer = parseIssuer(payload.authorizedIssuer);
+  const parsed = {
+    kind: payload.kind,
+    signalType: payload.signalType,
+    authorizedIssuer: { type: issuer.type, id: issuer.id },
+    expiresAt: payload.expiresAt,
+    ...(Object.hasOwn(payload, 'request') ? { request: payload.request as Record<string, unknown> } : {}),
+  } as Omit<WaitRequest, 'schemaVersion' | 'waitId'>;
+  return requireIdentity
+    ? { schemaVersion: 'wait-request.v2', waitId: payload.waitId as string, ...parsed }
+    : parsed;
+}
+
+function validateRecord(record: WaitRecord): WaitRecord {
+  if (
+    !record
+    || typeof record !== 'object'
+    || Array.isArray(record)
+    || !exactKeys(record as unknown as Record<string, unknown>, [
+      'schemaVersion', 'idempotencyKey', 'createdAt', 'wait',
+    ])
+    || record.schemaVersion !== 'wait-record.v2'
+    || typeof record.idempotencyKey !== 'string'
+    || !IDEMPOTENCY_ID.test(record.idempotencyKey)
+    || !isDateTime(record.createdAt)
+  ) throw new Error('WAIT_RECORD_INVALID');
+  try { return { ...record, wait: parseWait(record.wait, true) as WaitRequest }; }
+  catch { throw new Error('WAIT_RECORD_INVALID'); }
+}
+
+function storedRecord(record: DurableRecord<unknown>, resolve?: RetainedWaitResolver): WaitRecord {
+  const schema = (record.payload as { schemaVersion?: unknown })?.schemaVersion;
+  if (schema !== 'wait-value.v1' && schema !== 'wait-value-projected.v1') throw new Error('WAIT_RECORD_INVALID');
+  const payload = resolveWaitValue(record as DurableRecord<Readonly<Record<string, unknown>>>, resolve);
+  return validateRecord({
+    schemaVersion: 'wait-record.v2',
+    idempotencyKey: record.idempotencyKey,
+    createdAt: record.committedAt,
+    wait: payload.wait,
+  });
+}
+
+function parsePayload(payload: Record<string, unknown>): Omit<WaitRequest, 'schemaVersion' | 'waitId'> {
+  return parseWait(payload, false) as Omit<WaitRequest, 'schemaVersion' | 'waitId'>;
+}
+
+function assertAuthorized(
+  confidential: boolean | undefined,
+  fence: { assertCurrent(): void } | undefined,
+  signal: AbortSignal,
+): void {
+  if (!confidential) {
+    if (!fence) throw new Error('RESOURCE_FENCE_REQUIRED');
+    fence.assertCurrent();
+  }
+  if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+}
+
+export function activate(context: AdapterActivationContext): AdapterInstance {
+  const root = context.config.root;
+  if (typeof root !== 'string' || root.length === 0) throw new Error('root is required');
+  const maxEntryBytes = Number(context.config.maxEntryBytes ?? 1_048_576);
+  const maximumRecords = Number(context.config.maximumRecords ?? 100_000);
+  const maximumStoreBytes = Number(context.config.maximumStoreBytes ?? 256 * 1024 * 1024);
+  if (!Number.isSafeInteger(maxEntryBytes) || maxEntryBytes < 1) throw new Error('maxEntryBytes is invalid');
+  if (!Number.isSafeInteger(maximumRecords) || maximumRecords < 1) throw new Error('maximumRecords is invalid');
+  if (!Number.isSafeInteger(maximumStoreBytes) || maximumStoreBytes < 1) throw new Error('maximumStoreBytes is invalid');
+  const store = new FileDurableRecordStore(root, {
+    maximumRecords,
+    maximumBytes: maximumStoreBytes,
+    maximumRecordBytes: maxEntryBytes,
+  });
+  const waitStream = 'waits/all';
+  return {
+    async ready() { await store.read<StoredWait>(waitStream); },
+    async invoke({ request, signal, confidential, fence }) {
+      assertAuthorized(confidential, fence, signal);
+      if (request.capability !== 'signal.wait') throw new Error('WAIT_OPERATION_UNSUPPORTED');
+      const existing = (await store.read<StoredWait>(waitStream)).map(record => storedRecord(record, context.resolveRetainedWait));
+      assertAuthorized(confidential, fence, signal);
+      if (request.operation === 'read') {
+        return { waits: existing.map((record) => record.wait) };
+      }
+      if (request.operation !== 'create') throw new Error('WAIT_OPERATION_UNSUPPORTED');
+      const parsed = parsePayload(request.payload);
+      const duplicate = existing.find((record) => record.idempotencyKey === request.idempotencyKey);
+      if (duplicate) {
+        const expected = { ...parsed, waitId: duplicate.wait.waitId, schemaVersion: 'wait-request.v2' };
+        if (canonicalJson(duplicate.wait) !== canonicalJson(expected)) throw new Error('WAIT_IDEMPOTENCY_CONFLICT');
+        return { created: false, wait: duplicate.wait };
+      }
+      const wait: WaitRequest = {
+        schemaVersion: 'wait-request.v2',
+        waitId: `wait:${crypto.createHash('sha256').update(request.idempotencyKey).digest('hex')}`,
+        ...parsed,
+      };
+      const value: StoredWait = {
+        schemaVersion: 'wait-value.v1',
+        wait,
+      };
+      try {
+        const committed = await store.append(waitStream, request.idempotencyKey, value);
+        return { created: committed.appended, wait: storedRecord(committed.record, context.resolveRetainedWait).wait };
+      } catch (error) {
+        if (error instanceof Error && error.message === 'DURABLE_RECORD_SIZE_EXCEEDED') throw new Error('WAIT_ENTRY_SIZE_EXCEEDED');
+        if (error instanceof Error && error.message === 'DURABLE_RECORD_IDEMPOTENCY_CONFLICT') {
+          // A concurrent retirement can replace a newly observed duplicate's
+          // physical payload while preserving its original logical identity.
+          const current = (await store.read(waitStream)).find(record => record.idempotencyKey === request.idempotencyKey);
+          assertAuthorized(confidential, fence, signal);
+          if (current && canonicalJson(storedRecord(current, context.resolveRetainedWait).wait) === canonicalJson(wait)) {
+            return { created: false, wait };
+          }
+          throw new Error('WAIT_IDEMPOTENCY_CONFLICT');
+        }
+        throw error;
+      }
+    },
+    async shutdown() {},
+  };
+}

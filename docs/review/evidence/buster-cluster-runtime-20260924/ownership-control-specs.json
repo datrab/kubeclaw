@@ -1,0 +1,23 @@
+{
+  "originalSpecs": "docs/review/evidence/buster-runtime-security-policy-20260924/ownership-gate-v2/controls.json",
+  "controls": [
+    {
+      "name": "premature-root-removal",
+      "path": "tests/fixtures/test-gate/cluster-test-ownership.mjs",
+      "sourceSha256": "021f3cf0f542c3de92befa39195c552ec2dad62e49fd2deb4cc4ec3287ac256d",
+      "old": "  t.after(async () => {\n    abort();",
+      "new": "  t.after(async () => {\n    abort(); fs.rmSync(root, { recursive: true, force: true });",
+      "test": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "expected": "Held body/stop/child phases must retain root; first case fails real filesystem oracle."
+    },
+    {
+      "name": "late-inner-removal",
+      "path": "tests/fixtures/test-gate/cluster-test-ownership.mjs",
+      "sourceSha256": "021f3cf0f542c3de92befa39195c552ec2dad62e49fd2deb4cc4ec3287ac256d",
+      "old": "          await Promise.all(children.map(({ closed }) => closed));",
+      "new": "          await Promise.all(children.map(({ closed }) => closed));\n          fs.rmSync(root, { recursive: true, force: true });",
+      "test": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "expected": "After disposal deadline failure, late genuine child close must not delete retained root; third case fails after-close filesystem oracle."
+    }
+  ]
+}

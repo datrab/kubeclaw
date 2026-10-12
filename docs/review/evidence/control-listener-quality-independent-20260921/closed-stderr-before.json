@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node",
+    "docs/review/evidence/control-listener-quality-independent-20260921/closed-stderr-child.mts"
+  ],
+  "sourceHash": "3bc3a44ca957fff36741235c01607e762b3e6438ed181e32f043e14bbb2117c2",
+  "exitCode": 0,
+  "stdout": "{\"closedStderr\":true,\"statuses\":[422,400,200],\"alive\":true}\n",
+  "stderr": "review logger stream initialized\n"
+}

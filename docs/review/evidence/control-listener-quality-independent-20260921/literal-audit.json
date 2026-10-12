@@ -1,0 +1,26 @@
+{
+  "scope": "AST string-literal inventory; not semantic equivalence or execution proof",
+  "files": [
+    "skills/prism/server/agent-job-routes.ts",
+    "skills/prism/server/agent-routes.ts",
+    "skills/prism/server/approval-route.ts",
+    "skills/prism/server/artifact-route.ts",
+    "skills/prism/server/baseline-archive.ts",
+    "skills/prism/server/baseline-route.ts",
+    "skills/prism/server/baseline-validation.ts",
+    "skills/prism/server/control-context.ts",
+    "skills/prism/server/control-http.ts",
+    "skills/prism/server/control-server.ts",
+    "skills/prism/server/corpus-routes.ts",
+    "skills/prism/server/direction-routes.ts",
+    "skills/prism/server/dispatch-route.ts",
+    "skills/prism/server/document-routes.ts",
+    "skills/prism/server/engine-route.ts",
+    "skills/prism/server/preference-routes.ts",
+    "skills/prism/server/project-routes.ts",
+    "skills/prism/server/session-routes.ts"
+  ],
+  "originalSql": 27,
+  "currentSql": 27,
+  "missing": []
+}

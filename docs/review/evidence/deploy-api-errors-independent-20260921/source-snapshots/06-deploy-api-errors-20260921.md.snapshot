@@ -1,0 +1,76 @@
+# Deployment API absence handling — follow-up acceptance matrix
+
+Recorded before implementation. This extends the bounded namespace guard to the
+remaining text-based `is_not_found_error` callers in `scripts/deploy.sh`.
+No behavior change or passing result is claimed by this matrix.
+
+| Case | Production path | Required observation |
+| --- | --- | --- |
+| DA1 | `require_helm_release_idle` | Successful structured release observation distinguishes absent, idle and pending releases; failed lookup or malformed/ambiguous identity never admits Helm mutation. |
+| DA2 | `ensure_tailscale_oauth_secret` | Existing secret remains untouched; only a successful, exact absent-resource observation permits the existing creation flow. Failed credentials/API/discovery, including misleading `not found` text, never trigger secret apply. |
+| DA3 | Namespaced, cluster and manifested resource deletion helpers | Successful exact absence is idempotent; successful presence admits the intended existing deletion. Failed or invalid lookup stops rather than claiming absence or completion. |
+| DA4 | `uninstall_helm_release_if_present` | Successful exact absence is idempotent; presence admits uninstall; lookup failure cannot claim removal. |
+| DA5 | Optional status tables | Nonzero API results are reported as incomplete observations, never as a confirmed empty collection. |
+| DA6 | All migrated callers | Remove the generic error-text classifier and competing interpretation paths. Validate command status before interpreting stdout, including nonzero commands that emit plausible valid JSON. |
+| DA7 | Actual script entrypoints | Positive, empty, malformed, duplicate/wrong identity, pending and nonzero cases exercise the original orchestration with explicit CLI fixtures; meaningful mutations expose weakened guards. Any actual client/local HTTP probe remains identified as such, not a real cluster proof. |
+| DA-DOC | Setup, deployment and cleanup instructions | Document required read/list permissions, exact absence/error behavior, rerun semantics and residual host/live requirements. Record changed docs and independent review. |
+
+Inspect supported Helm/kubectl output before defining accepted structured shapes.
+Do not suppress server-side errors with `--ignore-not-found` to manufacture an
+empty result. Preserve existing ownership checks and deletion scope; this change
+does not authorize running deployment, secret writes or deletion against a live
+system. Real host preparation, installation and recovery remain separate H1–H3
+obligations.
+
+## Implementation and validation
+
+All remaining generic `is_not_found_error` callers were replaced and the function
+removed. Two small shell observation functions check command exit status before
+passing stdout to `scripts/deploy-observation.mjs`. The parser recognizes only
+the existing six resource kinds and exact object identity/API/namespace, or a
+zero/one-entry Helm release list with known status. It emits a state token and
+never prints response bodies, including malformed Secret responses.
+
+Helm observation uses `list --all`, a validated, anchored exact-name filter and
+`--max 2 -o json`; two entries are rejected rather than selecting the first.
+Primary source for both configured Helm versions, 3.18.4 and 3.22.0, confirms the
+JSON fields, empty array, latest-release handling and filtering before result
+limits. Source URLs, snapshots and hashes are in
+`docs/review/evidence/deploy-api-errors-20260921/primary-source-identities.json`.
+Busy deployment includes uninstall-in-progress; unknown state is not admitted.
+The existing GitOps ownership check still runs first.
+
+Resource deletion scope and existing manifest/selector fallback remain unchanged.
+OAuth creation now explicitly propagates pipeline failure because this function
+is invoked inside an `if`, where Bash otherwise disables implicit `errexit`.
+Optional status remains nonfatal but reports failed lookup as incomplete. This
+slice does not change every other API call in the large deploy script or its
+separate ownership module; no general claim of complete API-failure remediation
+is made.
+
+Validation runs the original deploy entrypoints `agent nova`, `tailscale`,
+`teardown`, `teardown-agents` and `status`. The kubectl/Helm peers are explicit
+synthetic fixtures. Only release rendering/selection and infrastructure archive
+acquisition are replaced at the Node CLI boundary to avoid unrelated release or
+network work; the real observation parser and GitOps ownership module execute.
+No cluster or Secret was touched. This is orchestration evidence, not proof of
+actual authorization, persistence, deployment, deletion or host recovery.
+
+`python3 scripts/tests/deploy-api-errors.test.py` passed **6/6 test methods,
+51 entrypoint scenarios**, with no skips (`tests-final.txt`). The namespace
+bootstrap suite passed **14/14** (`bootstrap-regression.txt`). Bash syntax,
+changed-file whitespace checking and canonical ESLint for the new parser passed
+(`lint.txt`). The first five-method run is retained as `tests-initial.txt`;
+the final run adds explicit rejection without leaking a Secret-body marker.
+
+Two isolated negative controls each produce one assertion failure and zero setup
+errors: ignore the Helm command exit status; omit resource namespace validation.
+Their script copies, transformation harness and raw results are recorded in
+`run-mutants.py`, `mutants.txt` and the named logs in the evidence directory.
+Production source was not changed by mutation testing.
+
+DA-DOC: `docs/deployment/setup-flow.md` and
+`docs/deployment/tailscale-operator.md` now explain added list permissions,
+exact absence versus failed observation, non-atomic reruns, preceding mutations,
+Secret preservation and remaining live obligations. Fresh independent review is
+still required. No H1–H3 or finding-register closure is claimed.

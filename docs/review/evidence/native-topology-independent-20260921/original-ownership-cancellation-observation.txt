@@ -1,0 +1,55 @@
+✖ compiled original launcher refuses ordinary filesystems and cannot execute the requested program (359.928123ms)
+✔ original kernel observations preserve task units and cumulative CPU (6.455676ms)
+✔ ordinary directories cannot substitute for a kernel cgroup (1.872578ms)
+✔ host root and invalid limits are rejected before scope allocation (0.588965ms)
+✔ real kernel observation is validated without replacing absent counters with samples (2.912235ms)
+✔ fsynced terminal metadata survives a real writer SIGKILL and cannot be resealed with different counters (489.669381ms)
+✔ legacy ownership remains readable without fabricating missing historical observations (28.675465ms)
+✔ a moved ownership store cannot turn another host into a reboot proof (25.421532ms)
+✔ unbound legacy records from a different boot cannot be silently assigned to this host (27.891476ms)
+✖ host identity reader uses a real root-owned file and rejects mutable or redirected files (0.694988ms)
+✔ concurrent durable reservations converge and survive reopening (43.609999ms)
+✔ caller mutation after reserve starts cannot change persisted identity (37.358638ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (115.621086ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (33.634133ms)
+✔ record quota fails atomically without losing existing ownership (20.451235ms)
+✔ corrupt persisted ownership fails without overwriting the record (15.639461ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (47.496268ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (559.4077ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (22.576519ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 17
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3221.858189
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-native-launcher.test.mts:10:1
+✖ compiled original launcher refuses ordinary filesystems and cannot execute the requested program (359.928123ms)
+  Error: WORKER_NATIVE_LAUNCHER_NOT_TRUSTED
+      at requireNativeWorkerLauncher (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-supervisor-authority.ts:19:13)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-launcher.test.mts:17:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/reliability/worker-observation-durability.test.mts:108:1
+✖ host identity reader uses a real root-owned file and rejects mutable or redirected files (0.694988ms)
+  Error: ENOENT: no such file or directory, open '/etc/machine-id'
+      at Object.openSync (node:fs:621:18)
+      at readNativeWorkerNodeIdentity (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-node-identity.ts:7:17)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-observation-durability.test.mts:109:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/etc/machine-id'
+  }

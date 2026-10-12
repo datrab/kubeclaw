@@ -1,3 +1,4 @@
+import { nativeResourcePolicy } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
@@ -71,7 +72,7 @@ async function setup(t: { after(callback: () => Promise<void>): void }, stall: '
   const origin = new URL(`http://127.0.0.1:${address.port}`);
   const ref = await store.put(Buffer.from(JSON.stringify(request('input').input)));
   const envelope = structuredClone(prismNativeAttempt('render', { artifactId: ref.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
-    contentDigest: ref.digest, sizeBytes: ref.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${ref.digest}`, origin).href }, 'cancel-test')) as WorkerAttemptEnvelopeV3;
+    contentDigest: ref.digest, sizeBytes: ref.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${ref.digest}`, origin).href }, 'cancel-test', nativeResourcePolicy)) as WorkerAttemptEnvelopeV3;
   return { store, envelope, client: new WorkerArtifactClient(origin, 'local', false), engine: new PrismEngine(new DeterministicDesignProvider()),
     contact, uploadClosed: () => uploadClosed, storedUpload: () => storedUpload };
 }

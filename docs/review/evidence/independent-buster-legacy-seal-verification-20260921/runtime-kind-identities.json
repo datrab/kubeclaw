@@ -1,0 +1,14 @@
+[
+  {
+    "path": "scripts/buster-legacy-store-verify.py",
+    "sha256": "e792fca4cadb5fa5170621aba4c1d10cfb8949c8dfda6cb7d6ad548e1396336d"
+  },
+  {
+    "path": "docs/review/remediation/implementation/buster-legacy-seal-verification-20260921.md",
+    "sha256": "62dc076105f81dbcecf15a5225e24f8dc39980a37014fe77e9161fab8f1ba91b"
+  },
+  {
+    "path": "docs/review/remediation/implementation/independent-buster-legacy-seal-verification-20260921.md",
+    "sha256": "52bdf620ff5e938e1743d4cd7513a1c3478fd05952ab33282f1837af11197c5b"
+  }
+]

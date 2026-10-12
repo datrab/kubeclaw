@@ -1,0 +1,55 @@
+[
+  {
+    "name": "tests",
+    "argv": [
+      "node",
+      "--test",
+      "skills/prism/tests/control-image-environment.test.mts",
+      "skills/prism/tests/swarm-control-policy.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "typecheck",
+    "argv": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "skills/prism"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "lint",
+    "argv": [
+      "node_modules/.bin/eslint",
+      "skills/prism/tests/control-image-environment.test.mts",
+      "skills/prism/tests/fixtures/image-source-loader.mjs",
+      "tests/verification/deployment/prism-swarm-image.mjs"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "exact-five",
+    "argv": [
+      "node",
+      "--test",
+      "skills/prism/tests/control-image-environment.test.mts",
+      "skills/prism/tests/control-server-config.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "canonical-lint",
+    "argv": [
+      "node_modules/.bin/eslint",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/prism/tests/control-image-environment.test.mts",
+      "skills/prism/tests/fixtures/image-source-loader.mjs",
+      "tests/verification/deployment/prism-swarm-image.mjs"
+    ],
+    "exitCode": 0
+  }
+]

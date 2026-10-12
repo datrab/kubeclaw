@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "node",
+      "scripts/docs-check.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "node",
+      "scripts/docs-check-refs.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "node",
+      "scripts/review/remediation-register.mjs",
+      "--check"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0
+  }
+]

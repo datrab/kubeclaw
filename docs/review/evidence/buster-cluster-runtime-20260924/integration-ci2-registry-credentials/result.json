@@ -1,0 +1,15 @@
+{
+  "manifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-runtime-20260924/ci2-registry-credentials/manifest.json",
+  "manifestSha256": "1788508391c0ff56b0342782c898c473f5eb8b21cd9b0f9a2312ed2594979b98",
+  "review": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-cluster-ci2-proof-20260924/registry-credentials-source-review.json",
+  "reviewSha256": "56f7416cbffb4c67b5b9ba6728f6e4c5d1206682bf396b65dbcabf9489ee45d2",
+  "status": "integrated; verification pending",
+  "files": [
+    {
+      "path": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "kind": "file",
+      "beforeSha256": "bfa196bb803550bfee80f7a9ef90b328750ec92c2444e2322c2971e3f98b7b9c",
+      "sha256": "6a9a37a9963c6677318287fe7678fe1807a606d2b18cf857768ba94d63b44081"
+    }
+  ]
+}

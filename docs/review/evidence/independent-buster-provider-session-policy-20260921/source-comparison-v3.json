@@ -1,0 +1,91 @@
+{
+  "at": "2026-09-21T19:46:15.374313+00:00",
+  "runtimeExecuted": false,
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "a8ed6c31613a155caba92792bbe4763fcb0eacf093dc8f41695a238105a8bdb7",
+      "matchesV3": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "b5bfa426d007e86b6bd2e0d9c0135a22b1b3e04886cf6e0a9890aac7f585dc1c",
+      "matchesV3": true
+    },
+    {
+      "path": "docs/architecture/buster-execution-configuration.md",
+      "sha256": "978aa2a5feb68e3cf5b9c94aa4077207e71c6a2cef804d063d40d8781b786d53",
+      "matchesV3": true
+    },
+    {
+      "path": "skills/buster/engine/BOUNDARIES.md",
+      "sha256": "eaee99c11a7e10c93099ed52ca2d54c0bc745c9d78e3b7d9f3aea8b52b42f7dd",
+      "matchesV3": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+      "sha256": "ab4b341f3d52181ff6b6fa33aaaa70d617616f33a1f40b0ec147db0ec2f0df06",
+      "matchesV3": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "24ffa41ad944b28b7c40bfe5509548017623e488206f9f0db0005b8485fb3b84",
+      "matchesV3": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "b782a61956a40df3828de74e71c4ac01656b84c098f23704cf88f3e9c1ac95bf",
+      "matchesV3": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "e2960d464717d819653c1b379db904b050455d4b23be03aa93105ad7dfc7c6c1",
+      "matchesV3": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/provider-capabilities.test.ts",
+      "sha256": "1504796cdad4715c9333cb491187434c84ca47cbc5078063c582bf28718311f1",
+      "matchesV3": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "sha256": "47a8f9dfe764a207a41dea94873ac67c474de3cc428f0ecc06237222b54a6bd8",
+      "matchesV3": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "sha256": "8cf8391f4e77b6522e8ea9a37859732168e171c228ff31fc152799d0ea205990",
+      "matchesV3": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "2460dd23e97cae74194d4c72255fea3e77a9b711a2de413a9d07893362646711",
+      "matchesV3": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/session-policy.mjs",
+      "sha256": "d833fd66b4974c39844f0473da21671c6fe421ba9296bec0724fdc887c56389e",
+      "matchesV3": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-provider-session-policy.test.mjs",
+      "sha256": "dabba72ada46cfbf9e342c3d95a70926aa6cc0adfeb171c6da9cd7881359923a",
+      "matchesV3": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-session-capabilities.test.mjs",
+      "sha256": "c5ef11d07a19b516716f762f987fdcd880c81b4d700c926ebe9f80f2feeb8b85",
+      "matchesV3": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+      "sha256": "989e6b8b5596938acf2a45ab0c600d3b936f2af85af60600a54852c2d415ac8d",
+      "matchesV3": true
+    },
+    {
+      "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "sha256": "13dc87d6ddb859e93df0843e798c6633b4f8424f006951925f69aee198aec58d",
+      "matchesV3": true
+    }
+  ]
+}

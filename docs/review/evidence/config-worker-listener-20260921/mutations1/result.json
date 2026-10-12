@@ -1,0 +1,72 @@
+[
+  {
+    "mode": "fallback",
+    "command": [
+      "node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-listener-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=WL",
+      "skills/prism/tests/worker-listener-config.test.mts"
+    ],
+    "exitCode": 1,
+    "detectedAssertion": true
+  },
+  {
+    "mode": "service",
+    "command": [
+      "node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-listener-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=WL",
+      "tests/verification/deployment/prism-swarm-config.test.mjs"
+    ],
+    "exitCode": 1,
+    "detectedAssertion": true
+  },
+  {
+    "mode": "probe",
+    "command": [
+      "node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-listener-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=WL",
+      "tests/verification/deployment/prism-swarm-config.test.mjs"
+    ],
+    "exitCode": 1,
+    "detectedAssertion": true
+  },
+  {
+    "mode": "envoy",
+    "command": [
+      "node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-listener-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=WL",
+      "tests/verification/deployment/prism-swarm-config.test.mjs"
+    ],
+    "exitCode": 1,
+    "detectedAssertion": true
+  },
+  {
+    "mode": "policy",
+    "command": [
+      "node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-listener-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=WL",
+      "tests/verification/deployment/prism-swarm-config.test.mjs"
+    ],
+    "exitCode": 1,
+    "detectedAssertion": true
+  }
+]

@@ -1,8 +1,10 @@
+// Preparation authority is modeled here; parser, extraction and durable service/store remain real.
+import { type ModeledBusterRemotePlanService as BusterRemotePlanService } from '../../fixtures/test-gate/modeled-preparation.mts';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import path from 'node:path';
 import { once } from 'node:events';
-import type { BusterRemotePlanService } from '@kubeclaw/buster-engine';
+
 import type { RemotePlanJobV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import { FileNovaRemotePlanStore, HttpRemotePlanTransport, NovaRemotePlanDispatcher,
   FileNovaGateImportStore, NovaRemoteGateImporter, NovaRemoteTestGate, RemotePlanTransportError } from '@kubeclaw/nova-core';
@@ -11,6 +13,8 @@ import { FileNovaRemotePlanStore, HttpRemotePlanTransport, NovaRemotePlanDispatc
 export async function checkRemoteFaults(fixture: { port: number; token: string; temporary: string;
   service: BusterRemotePlanService; job: (key: string) => RemotePlanJobV1; novaStore: (name: string) => FileNovaRemotePlanStore }) {
   let mode = 'lost-submit'; let deletes = 0; let posts = 0; let held = 0; let closed = 0;
+  const lateSubmission = Promise.withResolvers<void>();
+  void lateSubmission.promise.catch(() => {});
   const proxy = http.createServer((request, response) => {
     if (request.method === 'DELETE') deletes++;
     if (request.method === 'POST') posts++;
@@ -18,8 +22,14 @@ export async function checkRemoteFaults(fixture: { port: number; token: string; 
       const chunks: Buffer[] = []; request.on('data', chunk => chunks.push(chunk));
       request.on('end', () => setTimeout(() => {
         const delayed = http.request({ hostname: '127.0.0.1', port: fixture.port, method: 'POST',
-          path: request.url, headers: request.headers }, incoming => incoming.resume());
-        delayed.on('error', () => response.destroy()); delayed.end(Buffer.concat(chunks));
+          path: request.url, headers: request.headers }, incoming => {
+          incoming.once('end', () => {
+            if (incoming.statusCode === 202) lateSubmission.resolve();
+            else lateSubmission.reject(new Error(`LATE_SUBMIT_STATUS:${incoming.statusCode}`));
+          });
+          incoming.once('error', error => lateSubmission.reject(error)); incoming.resume();
+        });
+        delayed.on('error', error => { lateSubmission.reject(error); response.destroy(); }); delayed.end(Buffer.concat(chunks));
       }, 750));
       return;
     }
@@ -73,6 +83,14 @@ export async function checkRemoteFaults(fixture: { port: number; token: string; 
     const lateJob = fixture.job('dispatch:cancel:deadline:late-submit');
     await assert.rejects(dispatcher(fixture.novaStore('deadline-late')).dispatch(lateJob, { timeoutMs: 600 }), /TIMEOUT:REMOTE_STATE_UNKNOWN/u);
     assert.equal(deletes, 1); assert.equal(posts, 1);
+    // The dispatch deadline does not prove delivery of the intentionally late
+    // request. Observe its actual durable HTTP acceptance before reading state.
+    let acceptanceTimer: NodeJS.Timeout | undefined;
+    try {
+      await Promise.race([lateSubmission.promise, new Promise<never>((_resolve, reject) => {
+        acceptanceTimer = setTimeout(() => reject(new Error('LATE_SUBMIT_NOT_ACCEPTED')), 5000);
+      })]);
+    } finally { clearTimeout(acceptanceTimer); }
     assert.ok(['accepted', 'running'].includes((await fixture.service.status(lateJob.jobId)).state));
     assert.equal((await fixture.novaStore('deadline-late').interruptions()).at(-1)!.remoteState, 'unknown');
     await fixture.service.cancel(lateJob.jobId);

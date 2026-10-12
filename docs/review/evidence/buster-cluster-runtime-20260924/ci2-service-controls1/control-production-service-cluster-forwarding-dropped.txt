@@ -1,0 +1,125 @@
+CI2_MUTATION_APPLIED {"mutation":"production-service-cluster-forwarding-dropped","pid":171159,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production.ts","beforeSha256":"73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005","afterSha256":"349d77931cadb5acfb500248f487122141be5d55f6f49601f16b52ab95c14d00","replacements":[{"from":"    ...configuredClusterCapabilities(sources, policy, bindingSource),","to":"    ...{},","count":1}]}
+✖ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (542.425032ms)
+✖ production decoder/service/IPC first kubernetes.exposure, allowed and grant/route denied (353.04563ms)
+✖ production decoder/service/IPC first kubernetes.runtime-security, allowed and grant/route denied (351.947452ms)
+✖ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (333.568651ms)
+✖ production decoder/service/IPC second kubernetes.exposure, allowed and grant/route denied (386.600518ms)
+✖ production decoder/service/IPC second kubernetes.runtime-security, allowed and grant/route denied (413.50154ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 0
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4764.57366
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (542.425032ms)
+  AssertionError [ERR_ASSERTION]: {"remote":{"status":{"error":"BUSTER_KUBERNETES_FIXTURE_CONFIG_REQUIRED","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","requestDigest":"sha256:2930871d35ba24c1209a851b06a45bd9552d6ed27eee890084b37bc3252625ec","result":null,"schemaVersion":"buster-plan-status.v1","state":"failed","submittedAt":"2026-09-24T00:00:00.000Z","updatedAt":"2026-09-24T14:46:09.662Z"},"decision":{"decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","nodes":[],"planId":"plan:ci2","resultDigest":null,"reviews":[],"runId":"run:ci2","schemaVersion":"test-gate-decision.v1","state":"execution_error"},"stageResult":{"schemaVersion":"stage-result.v2","outcome":"blocked","artifacts":[],"reason":{"code":"test_gate.execution_error","message":"The remote test gate did not complete safely.","details":{"jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","planId":"plan:ci2","decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","failedNodes":[],"advisoryFailures":[]}}}}}
+  + actual - expected
+  
+  + 'execution_error'
+  - 'passed'
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:187:16
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'execution_error',
+    expected: 'passed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC first kubernetes.exposure, allowed and grant/route denied (353.04563ms)
+  AssertionError [ERR_ASSERTION]: {"remote":{"status":{"error":"BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","requestDigest":"sha256:2a6e336e5cc244ef0e0689ec89e46cbf56619b55629c075a7586e447976d9ad7","result":null,"schemaVersion":"buster-plan-status.v1","state":"failed","submittedAt":"2026-09-24T00:00:00.000Z","updatedAt":"2026-09-24T14:46:10.015Z"},"decision":{"decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","nodes":[],"planId":"plan:ci2","resultDigest":null,"reviews":[],"runId":"run:ci2","schemaVersion":"test-gate-decision.v1","state":"execution_error"},"stageResult":{"schemaVersion":"stage-result.v2","outcome":"blocked","artifacts":[],"reason":{"code":"test_gate.execution_error","message":"The remote test gate did not complete safely.","details":{"jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","planId":"plan:ci2","decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","failedNodes":[],"advisoryFailures":[]}}}}}
+  + actual - expected
+  
+  + 'execution_error'
+  - 'passed'
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:187:16
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'execution_error',
+    expected: 'passed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC first kubernetes.runtime-security, allowed and grant/route denied (351.947452ms)
+  AssertionError [ERR_ASSERTION]: {"remote":{"status":{"error":"BUSTER_KUBERNETES_RUNTIME_SECURITY_CONFIG_REQUIRED","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","requestDigest":"sha256:f4b805b895f075a51abfc9d105e456dc490d216ebaf3330c4c9369f1fd3f052d","result":null,"schemaVersion":"buster-plan-status.v1","state":"failed","submittedAt":"2026-09-24T00:00:00.000Z","updatedAt":"2026-09-24T14:46:10.377Z"},"decision":{"decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","nodes":[],"planId":"plan:ci2","resultDigest":null,"reviews":[],"runId":"run:ci2","schemaVersion":"test-gate-decision.v1","state":"execution_error"},"stageResult":{"schemaVersion":"stage-result.v2","outcome":"blocked","artifacts":[],"reason":{"code":"test_gate.execution_error","message":"The remote test gate did not complete safely.","details":{"jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","planId":"plan:ci2","decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","failedNodes":[],"advisoryFailures":[]}}}}}
+  + actual - expected
+  
+  + 'execution_error'
+  - 'passed'
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:187:16
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'execution_error',
+    expected: 'passed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (333.568651ms)
+  AssertionError [ERR_ASSERTION]: {"remote":{"status":{"error":"BUSTER_KUBERNETES_FIXTURE_CONFIG_REQUIRED","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","requestDigest":"sha256:fd0d44012a401387ac9e5a9212c46a5c1b21e43ab7d63696f4aab28915afcb52","result":null,"schemaVersion":"buster-plan-status.v1","state":"failed","submittedAt":"2026-09-24T00:00:00.000Z","updatedAt":"2026-09-24T14:46:10.709Z"},"decision":{"decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","nodes":[],"planId":"plan:ci2","resultDigest":null,"reviews":[],"runId":"run:ci2","schemaVersion":"test-gate-decision.v1","state":"execution_error"},"stageResult":{"schemaVersion":"stage-result.v2","outcome":"blocked","artifacts":[],"reason":{"code":"test_gate.execution_error","message":"The remote test gate did not complete safely.","details":{"jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","planId":"plan:ci2","decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","failedNodes":[],"advisoryFailures":[]}}}}}
+  + actual - expected
+  
+  + 'execution_error'
+  - 'passed'
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:187:16
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'execution_error',
+    expected: 'passed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC second kubernetes.exposure, allowed and grant/route denied (386.600518ms)
+  AssertionError [ERR_ASSERTION]: {"remote":{"status":{"error":"BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","requestDigest":"sha256:d7e550a4aeca7962e61c05ca6303fc3740910cf5eca5616990b4ad98a47c83a8","result":null,"schemaVersion":"buster-plan-status.v1","state":"failed","submittedAt":"2026-09-24T00:00:00.000Z","updatedAt":"2026-09-24T14:46:11.094Z"},"decision":{"decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","nodes":[],"planId":"plan:ci2","resultDigest":null,"reviews":[],"runId":"run:ci2","schemaVersion":"test-gate-decision.v1","state":"execution_error"},"stageResult":{"schemaVersion":"stage-result.v2","outcome":"blocked","artifacts":[],"reason":{"code":"test_gate.execution_error","message":"The remote test gate did not complete safely.","details":{"jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","planId":"plan:ci2","decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","failedNodes":[],"advisoryFailures":[]}}}}}
+  + actual - expected
+  
+  + 'execution_error'
+  - 'passed'
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:187:16
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'execution_error',
+    expected: 'passed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC second kubernetes.runtime-security, allowed and grant/route denied (413.50154ms)
+  AssertionError [ERR_ASSERTION]: {"remote":{"status":{"error":"BUSTER_KUBERNETES_RUNTIME_SECURITY_CONFIG_REQUIRED","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","requestDigest":"sha256:ece022edcdb9e539b1f82e07db560391e311a17346d26604716a0d967b2f67b7","result":null,"schemaVersion":"buster-plan-status.v1","state":"failed","submittedAt":"2026-09-24T00:00:00.000Z","updatedAt":"2026-09-24T14:46:11.500Z"},"decision":{"decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","nodes":[],"planId":"plan:ci2","resultDigest":null,"reviews":[],"runId":"run:ci2","schemaVersion":"test-gate-decision.v1","state":"execution_error"},"stageResult":{"schemaVersion":"stage-result.v2","outcome":"blocked","artifacts":[],"reason":{"code":"test_gate.execution_error","message":"The remote test gate did not complete safely.","details":{"jobId":"job:99f8c797d1e4072b79ec4373bc4b297f724aca2b80ada8c7364cb68a589e339e","planId":"plan:ci2","decisionDigest":"sha256:4f406ea4c583a3f487ce10d4d6452b300fa62c9952e0fcd8e714cc902f22d2de","failedNodes":[],"advisoryFailures":[]}}}}}
+  + actual - expected
+  
+  + 'execution_error'
+  - 'passed'
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:187:16
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'execution_error',
+    expected: 'passed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

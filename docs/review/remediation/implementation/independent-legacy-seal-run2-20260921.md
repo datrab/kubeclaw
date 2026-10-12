@@ -1,0 +1,17 @@
+# Independent legacy seal Run 2 execution review
+
+**Overall result: failed, 26/27 cases passed.** The actual guest returned `VM_REVIEW_EXIT=1`; QEMU powered off with exit zero. The wrapper correctly reported failure after 78.011 seconds, with no watchdog, output-limit or post-verification error. This is not full LIS acceptance or a production stop/migration receipt.
+
+The [independent audit](../../evidence/buster-legacy-run2-independent-20260921/result.json) parses the original console and nested child outputs, rather than trusting only the author's summary. It verifies all 27 distinct cases, exact terminal pass markers for the 26 successful cases, copied-log equality, all nonmutable artifact hashes, the exact source export, the complete tool closure and both final disk hashes. The source remains the reviewed Generation 2 snapshot; no drift or changed deadline explains the outcome. This reviewer performed no VM or privileged host action.
+
+The failed `tmpfs-root` case actually received `BUSTER_LEGACY_SEAL_AUTHORITY_INVALID`, whereas its unchanged oracle requires `EXT4_REQUIRED`. The child ran with the intended root identity and capability mask, so this is not evidence that the expected filesystem rejection ran. The fixture's mounted-root authority must be diagnosed before changing it; neither accepting an arbitrary rejection nor weakening the expected code would establish the missing property. The fixture author is investigating. The full suite remains red.
+
+The following narrower kernel observations are supported by successful original cases:
+
+- Complete and exact-quota trees are accepted; one-byte and one-entry short quotas produce their specific failures. Mutable files/directories, plan links, hardlinks, special files, nested mounts, invalid authority and missing store are rejected by their specific oracles.
+- Root with permitted/effective/bounding mask 481 cannot append, truncate, create, unlink, rename, chmod, chown or clear immutable flags on the sealed fixture. All eight explicit controls succeed under their intended control conditions. UID/GID 1000 with zero effective/permitted capabilities reads the expected retained content digest.
+- Extra bounding capabilities and retained `CAP_SYS_ADMIN` in effective/permitted sets are both rejected. The latter has bounding mask 481 but effective/permitted mask 2,097,633; checking bounding alone would miss this observed condition.
+- Runtime inventory accepts preserved link metadata. Actual syscall traces show O_PATH-only opens of the tested special/link inodes, including the FIFO link; the separate data-open controls remain present in the nested evidence. The first independent trace selector omitted some runtime link names and conservatively failed; that checker-only mistake is retained and corrected without guest changes.
+- Two simultaneously alive mount namespaces (`4026532236` and `4026532235`) produce different mount IDs (56 and 48) but the same filesystem UUID, inode, inventory digest and counts. A distinct ext4 disk produces its distinct UUID/device and inventory while retaining equal store bytes/digest. These are actual observations, not equality inferred from sequential reused namespace IDs.
+
+Run 1's 27 setup failures remain historical failures. Run 2 provides substantial bounded kernel evidence for the 26 named successful cases, but does not prove tmpfs filesystem rejection, real K3s writer exclusion, immutable receipt publication, importer authorization or a completed migration. No additional verifier defect was established by this review.

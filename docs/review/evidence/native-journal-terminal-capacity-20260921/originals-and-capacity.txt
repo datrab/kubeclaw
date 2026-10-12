@@ -1,0 +1,17 @@
+✔ exact future metadata fit completes valid maximal diagnostics; one byte short admits no blob (406.193073ms)
+✔ all pending rows reserve metadata and concurrent independent journals cannot over-admit (442.334979ms)
+✔ historical pending overcommit remains readable and replayable while growth fails closed (145.628623ms)
+✔ new-admission rejection persists no accepted work and cannot block historical receipt replay (281.77922ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (726.826768ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (968.1818ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (146.166537ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (134.575916ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (5560.374227ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10000.773306

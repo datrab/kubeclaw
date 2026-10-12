@@ -1,0 +1,32 @@
+{
+  "reviewer": "bootstrap_guard_fresh_review",
+  "status": "V2 four-file source package suitable for coordinated verification; no concrete remaining blocker; no runtime acceptance",
+  "manifestSha256": "fdeee4e47f65a739a1feba74bac48a84553bce2ce86762b4e342c3e108967566",
+  "afterIdentities": [
+    {
+      "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "sha256": "40cd4f0fc7a84079efe2a3fe026c214ef34cd48f278db5cbac45e250e6afc9b7"
+    },
+    {
+      "path": "tests/fixtures/test-gate/scheduler-drain.mjs",
+      "sha256": "98f591efdf707cc712b363de7b0d7687f455ea3b83eca756afe4abd519e598fd"
+    },
+    {
+      "path": "tests/verification/contracts/runner-scheduler-drain.test.mjs",
+      "sha256": "0164ff0f62d7dc00636a165b54ad812bdcd979c799700de75844d8232052d18e"
+    },
+    {
+      "path": "tests/verification/contracts/runner-scheduler-provider-drain.test.mjs",
+      "sha256": "7444c42a5d638da8e2ec745e64630633659f1b2193f059c8d29c10311194e1ae"
+    }
+  ],
+  "v1Preserved": true,
+  "exactCorrection": "One added peerStarted.resolve() in real Runner test finally before releasePeer.resolve(); all other bytes across four files unchanged.",
+  "findingResolved": "Both private host barrier promises settle on teardown, including prerequisite failure before b reaches its barrier.",
+  "scope": "Previous source/test review findings and limits preserved; normal Runner identity/IPC/late fixture/cpSync rejection oracles retained.",
+  "pending": [
+    "No integration/runtime/type/lint performed",
+    "DC coordination first; rebind shared owned-child helper if it changes",
+    "Full original and added suites, old-source semantic control, final DOC still required"
+  ]
+}

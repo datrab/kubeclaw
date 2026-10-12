@@ -34,6 +34,7 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
  && npm prune --omit=dev --ignore-scripts
 
 FROM ${NODE_BASE}
+ARG TARGETARCH
 USER root
 COPY --from=native-launcher /etc/apt/sources.list.d/debian.sources /etc/apt/sources.list.d/debian.sources
 COPY --from=native-launcher /etc/apt/apt.conf.d/99snapshot /etc/apt/apt.conf.d/99snapshot
@@ -46,12 +47,16 @@ COPY --from=build /build/skills/common/plugin-runtime /app/prism/skills/common/p
 COPY --from=native-launcher /native-worker-launcher /usr/local/libexec/kubeclaw-native-worker-launcher
 ENV PRISM_NATIVE_LAUNCHER=/usr/local/libexec/kubeclaw-native-worker-launcher \
     PRISM_NATIVE_POOL_POLICY_FILE=/etc/kubeclaw/prism-pool.json
+COPY package-lock.json versions.json /app/prism/
+COPY docker/browser-archives.lock.json /app/prism/docker/browser-archives.lock.json
+COPY scripts/browser-archive-lock.mjs /app/prism/scripts/browser-archive-lock.mjs
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 RUN rm -f /etc/apt/sources.list \
- && node ./node_modules/playwright/cli.js install --with-deps chromium \
+ && node ./node_modules/playwright/cli.js install-deps chromium \
+ && node scripts/browser-archive-lock.mjs --install "$TARGETARCH" prism /ms-playwright \
  && test -d /ms-playwright \
  && chown -R node:node /app/prism /ms-playwright
 USER node
-ENV NODE_ENV=production PORT=8080
+ENV NODE_ENV=production
 EXPOSE 8080
 CMD ["node","--experimental-strip-types","skills/prism/server/worker.ts"]

@@ -72,9 +72,26 @@ try {
     'skills/common/plugins/operator-messaging/src/adapter.ts',
     'skills/common/plugins/transport-publisher/src/adapter.ts',
   ]) {
-    const source = fs.readFileSync(path.join(repository, file), 'utf8');
+    const adapter = fs.readFileSync(path.join(repository, file), 'utf8');
+    let source = adapter;
+    if (file.includes('/operator-messaging/')) {
+      const directory = path.dirname(path.join(repository, file));
+      const records = fs.readFileSync(path.join(directory, 'delivery-records.ts'), 'utf8');
+      const projection = fs.readFileSync(path.join(directory, 'delivery-projection.ts'), 'utf8');
+      assert.match(adapter, /import \{[^}]*\breserveDelivery\b[^}]*\} from '\.\/delivery-records\.ts';/su);
+      assert.match(adapter, /await reserveDelivery\(records, request, transportPayload,/u);
+      assert.match(records, /import \{ projectedDeliveryReceipt \} from '\.\/delivery-projection\.ts';/u);
+      assert.match(records, /projectedDeliveryReceipt\(await records\.read\(stream\), request, payload\)/u);
+      // Same attempt-bound key contract; the internal helper name changed in
+      // the earlier modular split. Keep each plugin's actual source closure separate.
+      assert.match(records, /const terminalKey = key\(deliveryId, `attempt-\$\{request\.attempt\.attemptNumber\}-\$\{hash\(request\.attempt\.attemptId\)\.slice\(0, 16\)\}`\);/u);
+      assert.match(records, /records\.append<Payload>\(stream, terminalKey,/u);
+      assert.match(records, /return \{ stream, key: terminalKey, digest: reserved\.payloadDigest \};/u);
+      source = [adapter, records, projection].join('\n');
+    } else {
+      assert.match(source, /terminalRecordKey/);
+    }
     assert.match(source, /notification-delivery-request|transport-publication-request/);
-    assert.match(source, /terminalRecordKey/);
     assert.match(source, /records\.transition/);
     assert.match(source, /delivery-reservation|publication-reservation/);
     assert.match(source, /delivery-receipt|publication-receipt/);

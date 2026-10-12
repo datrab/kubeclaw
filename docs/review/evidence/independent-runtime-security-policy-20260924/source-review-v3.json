@@ -1,0 +1,187 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "scope": "Fresh nonauthor independent V3 source review only; no runtime, builds, types, lint, Helm or live source writes",
+  "manifest": "private-v1/manifest-v3.json",
+  "manifestSha256": "e1d2760afc4dea1adfc1ee6debb67e6f07afbbc6ac295ab6a1ee051ed158f9ff",
+  "decision": "bounded source acceptance for integration and verification only; RS2 full service evidence remains open",
+  "all23SnapshotAndBeforeHashesVerified": true,
+  "liveBaselineDrift": [],
+  "changedFromV2": [
+    "charts/kubeclaw/templates/_swarm-config.tpl",
+    "docs/architecture/buster-runtime-security-configuration.md",
+    "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+    "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+    "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs"
+  ],
+  "findingsResolved": [
+    {
+      "id": "RS-SOURCE-01",
+      "reason": "RuntimeSecurity schema now requires nonempty array/nonempty strings without generated-name length, DNS suffix or32-entry limit. Real matching remains startsWith(prefix + hyphen), request text limit remains63. Tests include actual52-character namespace and trailing-hyphen prefix; both charts test35 entries. Shared Helm maxItems condition preserves explicitly declared maxima for other arrays."
+    },
+    {
+      "id": "RS-EVIDENCE-03",
+      "reason": "Source adds old-consumer success, actual file reload into second loader/factory/consumer, changed PATH exact40-code-unit failure, old-consumer success again; actual child log observes original/changed/original PATH,3children and close. This is a sufficient planned counterpart at this helper-factory boundary; execution is still unproven."
+    }
+  ],
+  "positiveFindings": [
+    "All eight configurable settings are explicitly authored in both complete Buster profiles, required by closed schema, typed and passed without default. Shared kubectl/group and installation namespace are forwarded rather than duplicated.",
+    "Direct constructor validates schema and binding before realpath/access; copies and freezes both arrays. Complete bundle preflight includes required policy while route disabled.",
+    "Retired runtime object rejects by presence in root validation before registry/store effects; entrypoint old object removed; capability enabled flag stays independent of policy presence.",
+    "Output overflow settles exact OUTPUT_LIMIT cause before synchronous abort can relabel it. Production child-close/process-group limitation remains disclosed; fixture waits do not claim to fix it.",
+    "Original freshness assertions explicitly retain5000ms parameter; original security CRD/RBAC checks remain, render prerequisites are explicit and not native acceptance.",
+    "DOC enumerates fields, bounds, binding, old-author rejection, intended output-cause correction, prefix contract and lifecycle/allocation/provider/controller/live limitations. Implementation report explicitly leaves RS2 incomplete."
+  ],
+  "openFindings": [
+    {
+      "id": "RS-EVIDENCE-02",
+      "required": "Execute two profiles plus denied route/grant through actual loadProductionBusterRemotePlanRuntime and service before final RS2 acceptance; helper composition and empty service start/stop are insufficient."
+    }
+  ],
+  "verificationStillRequired": [
+    "Integrate reviewed exact stand and preserve unrelated changes.",
+    "All planned types/lint/full original and new suites; raw before/after/tool/guard/drift evidence.",
+    "Nine proposed semantic controls require actual intended assertion causes, not exit codes alone.",
+    "Fresh final review of exact integrated source, raw runtime and updated DOC; no full CONFIG/original finding/live closure."
+  ],
+  "boundFiles": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "beforeSha256": "f65d34e681f541f27b8b15d88cc5c2550325638118e45df5e71da0df9d78264d",
+      "afterSha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "new": false
+    },
+    {
+      "path": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+      "beforeSha256": "0aaf28d95a6922eba26888a6a0471fbe3a1cb3518a792b35e00c9d3b8f8f5ce7",
+      "afterSha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b",
+      "new": false
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "beforeSha256": "1f597fc57f3cf5dc7d39d317f7009fdcb8c5cbc73f6191907ac01df67b0ecade",
+      "afterSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "new": false
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "beforeSha256": "0b725285b971344b45ac4d0cba933679e6ca432d78e1b0249d7e310f10bc9280",
+      "afterSha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+      "new": false
+    },
+    {
+      "path": "docs/architecture/buster-cluster-configuration.md",
+      "beforeSha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4",
+      "afterSha256": "0f7707aa744d175433d9fdcae6ea558f9f86eb0e18b56f31f30b5de5ecd8cf48",
+      "new": false
+    },
+    {
+      "path": "docs/architecture/buster-runtime-security-configuration.md",
+      "beforeSha256": null,
+      "afterSha256": "f46182c8f137ad0f8060d2386320babfb5032988ccdccf500356cb002fd18e48",
+      "new": true
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "beforeSha256": "42acf722288e98cf3e3db7e90d46541b7e41981199323432c359f48b008bd577",
+      "afterSha256": "2b2f88102906e784e9038168ee8f8ad5b1866f04e8aeea255db1da0c65f10863",
+      "new": false
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "beforeSha256": null,
+      "afterSha256": "466cd14ad86a59eb602f8844e57d62579d594e2c611b09e2ddaf306b3108813c",
+      "new": true
+    },
+    {
+      "path": "package.json",
+      "beforeSha256": "8ed84f5a8eb007801c9e24e3c6aa18484a1ad81c3199f990ae66b4d0951f5d0b",
+      "afterSha256": "c74f7d27125a467724456d795cebb99a1f7b3b199fc663847b765c7af388d568",
+      "new": false
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "beforeSha256": "01da0c323776cc8f9f4778d9ed2afb198133b79f7f2afbfa0850f657dda357b0",
+      "afterSha256": "d877da689ad67653723eebab1c57bf5972ea9928430a652b7e57881e49f880a2",
+      "new": false
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "beforeSha256": "457bc4de3ee01804091f576efa6963dcccda53fd89f39d19b3e235cfd35e179a",
+      "afterSha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c",
+      "new": false
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "beforeSha256": "dc7ce158497dddbda0d814d35d2d5297d31706fcbdec08950a0d12e31e0ca5b7",
+      "afterSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+      "new": false
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "beforeSha256": "f386f4f5edf80c54e3679bbfa6f4fc4df6bfaea3793640c8cbd871a44827af61",
+      "afterSha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f",
+      "new": false
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "beforeSha256": "94b3d29e9f1b3a238d9cf3015ed8d5a364231f1aa3a47690419967931b2e6c46",
+      "afterSha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+      "new": false
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "beforeSha256": "adb3a2a5cad33278860f8c45e1b104157e81deda9834cf7e95ffd7fabe2fbfbd",
+      "afterSha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+      "new": false
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "beforeSha256": "9f494597de1af2b55ec912e53f21f34de779ccdfa94142a893133d0d7ed50d63",
+      "afterSha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "new": false
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "beforeSha256": "115c19a963ae45e1ca2be1e30dcd9b4f1cba7e73a38a8c700777c64f89f8b4b9",
+      "afterSha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "new": false
+    },
+    {
+      "path": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "fa7ef952e620fce3549c525bce1639e0605fd99f3d9a1fd8d7626c5e8183ba88",
+      "new": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "beforeSha256": "606c566c00541111a4f76544bea70b79aa794fd7f3502fa901e1a1428c135ebd",
+      "afterSha256": "caa32846ed52fb2143c05aa0d5b1d9afda11f03c0ca7c7542bca5c8377ca0858",
+      "new": false
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-implementation.mts",
+      "beforeSha256": "ab51c9a424d0381026a2bf7a876c748f1b091f41d773375d827d03fe7f3eaacc",
+      "afterSha256": "a8b4cabada3ed10e3b67a37509e15b1c6f8d590b3e6f515149950b9c140a7a3a",
+      "new": false
+    },
+    {
+      "path": "tests/verification/contracts/tsconfig.buster-cluster-policy.json",
+      "beforeSha256": "b7201417f2d5ab073a703a2ce66dafaf50bcb7ca2587a94bcc9054660c773077",
+      "afterSha256": "f7bba3d38694195f14c5b8021852fb7485d7e78f981c1eaae3043e97fa8f1e86",
+      "new": false
+    },
+    {
+      "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+      "beforeSha256": "49dcf0f3942fb5bc5c5ac3b3345f7afb6a269fde0a066652424d22a00fe0be15",
+      "afterSha256": "2a281e5ced819cb8c0290a0e9e95cc9b2ed19633666e411fbde132c06b07c632",
+      "new": false
+    },
+    {
+      "path": "tests/verification/reliability/buster-cluster-entrypoint.test.mjs",
+      "beforeSha256": "c9bbbaf745bb975ac3445bd034f28934621da1db5716ed6f861eb1c379488469",
+      "afterSha256": "8d16efe7a4a17d8edfa0ccee8a762788924a6f42430e8cc784666f2eee9e5f0e",
+      "new": false
+    }
+  ]
+}

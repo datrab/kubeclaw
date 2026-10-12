@@ -1,0 +1,5 @@
+{
+  "path": "tests/verification/deployment/release-images.test.mjs",
+  "sha256": "9afd3f5e826b015a998c1969416b5622c444e9dfacfdc8db7054b69a032447dc",
+  "reason": "Independent combined review found missing canonical component schema in temporary release fixture; no product change."
+}

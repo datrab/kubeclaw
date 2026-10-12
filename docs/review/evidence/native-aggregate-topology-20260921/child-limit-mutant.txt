@@ -1,0 +1,28 @@
+✔ child reservations are durable, CAS-fenced, immutable after binding and charged to metadata quota (200.116639ms)
+✖ strict topology decoder rejects unknown fields, names, duplicates and mismatched child identity (85.862529ms)
+✔ v1 and v2 ownership decode explicitly as drain-only legacy leaves; child admission is forbidden (108.511302ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1233.039326
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-owned-children.test.mts:48:1
+✖ strict topology decoder rejects unknown fields, names, duplicates and mismatched child identity (85.862529ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-owned-children.test.mts:64:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /WORKER_(OWNERSHIP|NATIVE)_/,
+    operator: 'throws',
+    diff: 'simple'
+  }

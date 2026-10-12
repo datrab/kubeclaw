@@ -1,0 +1,24 @@
+[
+  {
+    "argv": [
+      "node",
+      "--test",
+      "scripts/config/tests/environment-readers.test.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "node",
+      "scripts/docs-check.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "node",
+      "scripts/docs-check-refs.mjs"
+    ],
+    "exitCode": 0
+  }
+]

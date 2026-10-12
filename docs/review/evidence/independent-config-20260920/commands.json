@@ -1,0 +1,73 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "skills/prism/tests/swarm-worker-config.test.mts",
+      "skills/prism/tests/worker-ingress-capacity.test.mts",
+      "skills/prism/tests/worker-shutdown-boundaries.test.mts"
+    ],
+    "SWARM_CONFIG": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json",
+    "exitCode": 0,
+    "log": "runtime.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "tests/verification/deployment/argocd-chart-order.test.mjs",
+      "tests/verification/deployment/worker-trust-readiness.test.mjs"
+    ],
+    "SWARM_CONFIG": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json",
+    "exitCode": 0,
+    "log": "deployment.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/http-authority.test.mts"
+    ],
+    "SWARM_CONFIG": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json",
+    "exitCode": 0,
+    "log": "http.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/prism/tsconfig.json"
+    ],
+    "LD_LIBRARY_PATH": "/tmp/prism-native-tools/root/usr/lib:/tmp/prism-native-tools/root/lib",
+    "exitCode": 0,
+    "log": "prism-types.txt"
+  },
+  {
+    "command": [
+      "./node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/buster/engine/tsconfig.json"
+    ],
+    "LD_LIBRARY_PATH": "/tmp/prism-native-tools/root/usr/lib:/tmp/prism-native-tools/root/lib",
+    "exitCode": 0,
+    "log": "buster-types.txt"
+  },
+  {
+    "command": [
+      "/tmp/prism-native-tools/root/usr/bin/proot",
+      "-b",
+      "/tmp/prism-native-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/tmp/prism-native-tools/root/bin/tar:/usr/bin/tar!",
+      "node",
+      "--test",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+    ],
+    "LD_LIBRARY_PATH": "/tmp/prism-native-tools/root/usr/lib:/tmp/prism-native-tools/root/lib",
+    "exitCode": 1,
+    "log": "buster-service.txt"
+  }
+]

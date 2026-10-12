@@ -1,0 +1,15 @@
+{
+  "manifestSha256": "187c9d08952c937e99b3f51094fa0bdfeb60d102e62ddc669ab6cac634b3ea6a",
+  "beforeSha256": "864828548885cf4199dab8d85c3bb4e101abafc4fc0c97c4a92653ab794de1e4",
+  "afterSha256": "3aa382dd6b81e8ac3736eee06a0ecfb8951e06e339c771367789f332921f5987",
+  "liveMatchesBefore": true,
+  "originalAssertionsAndRuntimeSuffixByteIdentical": true,
+  "decision": "source accepted for integration after coordinated freeze release; runtime render remains pending",
+  "checked": [
+    "Native binding derives via actual nativePoolPolicy from maintained host profile; namespace kubeclaw matches Helm namespace",
+    "Maintained Buster values supplied explicitly; existing registry args unchanged",
+    "Digest-pinned image is explicitly a render fixture, not built-image evidence",
+    "Only in-memory parsed policy edited; no alias writes or live deployment introduced"
+  ],
+  "runtime": "none"
+}

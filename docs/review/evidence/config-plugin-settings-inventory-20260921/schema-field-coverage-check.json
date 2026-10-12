@@ -1,0 +1,69 @@
+[
+  {
+    "plugin": "kubeclaw.operator-messaging",
+    "allSchemaTopLevelFieldsClassified": true,
+    "schemaFields": [
+      "deliveryRoot",
+      "maximumDeliveryRecords",
+      "maximumDeliveryBytes",
+      "targets"
+    ],
+    "allTargetFieldsClassified": true
+  },
+  {
+    "plugin": "kubeclaw.wait-store",
+    "allSchemaTopLevelFieldsClassified": true,
+    "schemaFields": [
+      "root",
+      "maxEntryBytes",
+      "maximumRecords",
+      "maximumStoreBytes"
+    ]
+  },
+  {
+    "plugin": "kubeclaw.notification-observer",
+    "allSchemaTopLevelFieldsClassified": true,
+    "schemaFields": [
+      "target",
+      "pipelineLabel",
+      "modelLabel",
+      "stageLabels",
+      "maxMessageChars",
+      "suppressEventTypes"
+    ]
+  },
+  {
+    "plugin": "kubeclaw.telemetry-observer",
+    "allSchemaTopLevelFieldsClassified": true,
+    "schemaFields": []
+  },
+  {
+    "plugin": "kubeclaw.network-http",
+    "allSchemaTopLevelFieldsClassified": true,
+    "schemaFields": [
+      "allowedOrigins",
+      "allowedMethods",
+      "allowedHeaders",
+      "maxRequestBytes",
+      "maxResponseBytes",
+      "timeoutMs"
+    ]
+  },
+  {
+    "plugin": "kubeclaw.secret-resolver",
+    "allSchemaTopLevelFieldsClassified": true,
+    "schemaFields": [
+      "environment"
+    ]
+  },
+  {
+    "plugin": "kubeclaw.telemetry-store",
+    "allSchemaTopLevelFieldsClassified": true,
+    "schemaFields": [
+      "root",
+      "maxRecordBytes",
+      "maximumRecords",
+      "maximumStoreBytes"
+    ]
+  }
+]

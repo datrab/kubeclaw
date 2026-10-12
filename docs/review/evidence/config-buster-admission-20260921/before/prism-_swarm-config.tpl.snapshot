@@ -1,0 +1,137 @@
+{{/* Migrated operator settings come only from the authored swarm file. */}}
+{{- define "prism.swarmConfig" -}}
+{{- if hasKey .Values.control "port" -}}{{- fail "control.port moved to swarm.config.json operator.prism.control.port" -}}{{- end -}}
+{{- if hasKey .Values.control "pipelinePreferenceSubject" -}}{{- fail "control.pipelinePreferenceSubject moved to swarm.config.json operator.prism.control" -}}{{- end -}}
+{{- if or (hasKey .Values.control "maximumWorkerResponseBytes") (hasKey .Values.control "nativeWorkerDispatchTimeoutMs") -}}
+{{- fail "Control result and dispatch limits must be authored under swarm.config.json operator.prism.native" -}}
+{{- end -}}
+{{- if hasKey .Values.control "nativeResourcePolicy" -}}
+{{- fail "Control resource policy must be authored under swarm.config.json operator.prism.native.resourcePolicy" -}}
+{{- end -}}
+{{- if hasKey .Values.worker "shutdownTimeoutMs" -}}
+{{- fail "worker.shutdownTimeoutMs moved to swarm.config.json operator.prism.worker.shutdownTimeoutMs" -}}
+{{- end -}}
+{{- if hasKey .Values.worker.native "closeTimeoutMs" -}}{{- fail "worker.native.closeTimeoutMs moved to swarm.config.json operator.prism.native.supervisor" -}}{{- end -}}
+{{- $raw := required "canonical swarm.config.json is required" (.Files.Get "files/config/swarm.config.json") -}}
+{{- $config := mustFromJson $raw -}}
+{{- $schema := mustFromJson (.Files.Get "files/config/swarm.schema.json") -}}
+{{- range $key, $value := $config -}}
+{{- if not (hasKey $schema.properties $key) -}}{{- fail (printf "unsupported swarm key %s" $key) -}}{{- end -}}
+{{- end -}}
+{{- range $key := $schema.required -}}
+{{- if not (hasKey $config $key) -}}{{- fail (printf "required swarm key %s" $key) -}}{{- end -}}
+{{- end -}}
+{{- range $key := list "profile" "features" "tuning" -}}
+{{- if ne (toJson (index $config $key)) (toJson (index $schema.properties $key).const) -}}{{- fail (printf "unsupported swarm %s" $key) -}}{{- end -}}
+{{- end -}}
+{{- if and (hasKey $config "_doc") (not (kindIs "string" $config._doc)) -}}{{- fail "swarm _doc must be a string" -}}{{- end -}}
+{{- if not (kindIs "map" $config.overrides) -}}{{- fail "swarm overrides must be an empty object" -}}{{- end -}}
+{{- if ne (len $config.overrides) 0 -}}{{- fail "swarm overrides must be an empty object" -}}{{- end -}}
+{{- if not (kindIs "map" $config.operator) -}}{{- fail "swarm operator must be an object" -}}{{- end -}}
+{{- if not (hasKey $config.operator "prism") -}}{{- fail "swarm operator requires prism" -}}{{- end -}}
+{{- range $key, $value := $config.operator -}}
+{{- if not (has $key (list "prism" "buster")) -}}{{- fail (printf "unsupported swarm operator %s" $key) -}}{{- end -}}
+{{- end -}}
+{{- if hasKey $config.operator "buster" -}}
+{{- $buster := $config.operator.buster -}}
+{{- if not (kindIs "map" $buster) -}}{{- fail "swarm buster must be an object" -}}{{- end -}}
+{{- if or (ne (len $buster) 1) (not (hasKey $buster "preparation")) -}}{{- fail "swarm buster requires preparation only" -}}{{- end -}}
+{{- $preparation := $buster.preparation -}}
+{{- $definition := $schema.properties.operator.properties.buster.properties.preparation -}}
+{{- if not (kindIs "map" $preparation) -}}{{- fail "swarm buster preparation must be an object" -}}{{- end -}}
+{{- if ne (len $preparation) (len $definition.required) -}}{{- fail "swarm buster preparation requires exactly supported keys" -}}{{- end -}}
+{{- range $key := $definition.required -}}
+{{- if not (hasKey $preparation $key) -}}{{- fail (printf "required buster preparation key %s" $key) -}}{{- end -}}
+{{- if ne $key "resourcePolicy" -}}
+{{- $value := index $preparation $key -}}
+{{- if not (kindIs "float64" $value) -}}{{- fail (printf "buster preparation %s must be an integer" $key) -}}{{- end -}}
+{{- $limit := index $definition.properties $key -}}
+{{- if or (lt $value (float64 $limit.minimum)) (gt $value (float64 $limit.maximum)) (ne $value (floor $value)) -}}{{- fail (printf "buster preparation %s is outside its integer bounds" $key) -}}{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- $policy := $preparation.resourcePolicy -}}
+{{- if not (kindIs "map" $policy) -}}{{- fail "buster preparation resourcePolicy must be an object" -}}{{- end -}}
+{{- if ne (len $policy) 3 -}}{{- fail "buster preparation resourcePolicy requires exactly three limits" -}}{{- end -}}
+{{- range $key := list "cpuTimeMs" "memoryBytes" "tasks" -}}
+{{- $value := index $policy $key -}}
+{{- if not (kindIs "float64" $value) -}}{{- fail (printf "buster preparation %s must be an integer" $key) -}}{{- end -}}
+{{- if or (lt $value (float64 1)) (gt $value (float64 9007199254740991)) (ne $value (floor $value)) -}}{{- fail (printf "buster preparation %s must be a positive safe integer" $key) -}}{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- if not (kindIs "map" $config.operator.prism) -}}{{- fail "swarm prism must be an object" -}}{{- end -}}
+{{- if or (ne (len $config.operator.prism) 4) (not (hasKey $config.operator.prism "worker")) (not (hasKey $config.operator.prism "native")) (not (hasKey $config.operator.prism "control")) (not (hasKey $config.operator.prism "studio")) -}}{{- fail "swarm prism requires worker, native, control and studio only" -}}{{- end -}}
+{{- range $key := list "port" "controlTimeoutMs" "controlUrl" -}}
+{{- if hasKey $.Values.studio $key -}}{{- fail (printf "studio.%s moved to swarm.config.json operator.prism.studio" $key) -}}{{- end -}}
+{{- end -}}
+{{- $studio := $config.operator.prism.studio -}}
+{{- if not (kindIs "map" $studio) -}}{{- fail "swarm studio must be an object" -}}{{- end -}}
+{{- if ne (len $studio) 3 -}}{{- fail "swarm studio requires exactly the supported keys" -}}{{- end -}}
+{{- range $key, $maximum := dict "port" 65535 "controlTimeoutMs" 2147483647 -}}
+{{- $value := index $studio $key -}}
+{{- if not (kindIs "float64" $value) -}}{{- fail (printf "swarm studio %s must be an integer" $key) -}}{{- end -}}
+{{- if or (lt $value (float64 1)) (gt $value (float64 $maximum)) (ne $value (floor $value)) -}}{{- fail (printf "swarm studio %s is outside its integer bounds" $key) -}}{{- end -}}
+{{- end -}}
+{{- if not (kindIs "string" $studio.controlUrl) -}}{{- fail "swarm studio controlUrl must be a string" -}}{{- end -}}
+{{- $origins := list "http://prism-control:8080" (printf "http://prism-control.%s.svc:8080" .Release.Namespace) (printf "http://prism-control.%s.svc.cluster.local:8080" .Release.Namespace) -}}
+{{- if not (has (trimSuffix "/" $studio.controlUrl) $origins) -}}{{- fail "Studio Helm topology requires the in-cluster prism-control HTTP service on port 8080" -}}{{- end -}}
+{{- $control := $config.operator.prism.control -}}
+{{- if not (kindIs "map" $control) -}}{{- fail "swarm control must be an object" -}}{{- end -}}
+{{- if or (ne (len $control) 4) (not (hasKey $control "pipelinePreferenceSubject")) (not (hasKey $control "artifactRoot")) (not (hasKey $control "studioPublicUrl")) (not (hasKey $control "port")) -}}{{- fail "swarm control requires exactly the supported keys" -}}{{- end -}}
+{{- if not (kindIs "float64" $control.port) -}}{{- fail "swarm control port must be an integer" -}}{{- end -}}
+{{- if or (lt $control.port (float64 1)) (gt $control.port (float64 65535)) (ne $control.port (floor $control.port)) -}}{{- fail "swarm control port must be an integer from 1 to 65535" -}}{{- end -}}
+{{- if ne $control.pipelinePreferenceSubject nil -}}
+{{- if not (kindIs "string" $control.pipelinePreferenceSubject) -}}{{- fail "swarm control pipelinePreferenceSubject must be null or a user ID" -}}{{- end -}}
+{{- if not (regexMatch "^user-[a-f0-9]{24}$" $control.pipelinePreferenceSubject) -}}{{- fail "swarm control pipelinePreferenceSubject is invalid" -}}{{- end -}}
+{{- end -}}
+{{- if not (kindIs "string" $control.artifactRoot) -}}{{- fail "swarm control artifactRoot must be a path" -}}{{- end -}}
+{{- if or (not (regexMatch "^/[^\\x00]+$" $control.artifactRoot)) (ne (clean $control.artifactRoot) $control.artifactRoot) -}}{{- fail "swarm control artifactRoot must be a normalized absolute non-root path" -}}{{- end -}}
+{{- if not (kindIs "string" $control.studioPublicUrl) -}}{{- fail "swarm control studioPublicUrl must be an HTTP(S) URL" -}}{{- end -}}
+{{- if not (regexMatch "^https?://[^/?#\\s@]+(?:/[^?#\\s]*)?$" $control.studioPublicUrl) -}}{{- fail "swarm control studioPublicUrl is invalid" -}}{{- end -}}
+{{- $_ := urlParse $control.studioPublicUrl -}}
+{{- if not (kindIs "map" $config.operator.prism.worker) -}}{{- fail "swarm worker must be an object" -}}{{- end -}}
+{{- $worker := dig "operator" "prism" "worker" (dict) $config -}}
+{{- $keys := list "maximumActiveRequests" "maximumProbeRequests" "maximumConnections" "requestTimeoutMs" "shutdownTimeoutMs" "maximumInputBytes" -}}
+{{- if ne (len $worker) (len $keys) -}}{{- fail "swarm worker settings must contain exactly the supported keys" -}}{{- end -}}
+{{- range $key := $keys -}}
+{{- $value := index $worker $key -}}
+{{- if not (kindIs "float64" $value) -}}{{- fail (printf "swarm worker %s must be an integer" $key) -}}{{- end -}}
+{{- if or (lt $value (float64 1)) (gt $value (float64 2147483647)) (ne $value (floor $value)) -}}
+{{- fail (printf "swarm worker %s must be a positive timer-safe integer" $key) -}}
+{{- end -}}
+{{- end -}}
+{{- $native := $config.operator.prism.native -}}
+{{- if not (kindIs "map" $native) -}}{{- fail "swarm native must be an object" -}}{{- end -}}
+{{- if ne (len $native) 4 -}}{{- fail "swarm native settings must contain exactly the supported keys" -}}{{- end -}}
+{{- range $key := list "maximumResultBytes" "dispatchTimeoutMs" -}}
+{{- $value := index $native $key -}}
+{{- if not (kindIs "float64" $value) -}}{{- fail (printf "swarm native %s must be an integer" $key) -}}{{- end -}}
+{{- if or (lt $value (float64 1)) (gt $value (float64 2147483647)) (ne $value (floor $value)) -}}
+{{- fail (printf "swarm native %s must be a positive timer-safe integer" $key) -}}
+{{- end -}}
+{{- end -}}
+{{- $supervisor := $native.supervisor -}}
+{{- if not (kindIs "map" $supervisor) -}}{{- fail "swarm supervisor must be an object" -}}{{- end -}}
+{{- $supervisorKeys := list "uid" "gid" "maximumOwnershipRecords" "maximumOwnershipBytes" "maximumOutputBytes" "maximumJournalBytes" "pollIntervalMs" "drainTimeoutMs" "closeTimeoutMs" -}}
+{{- if ne (len $supervisor) (len $supervisorKeys) -}}{{- fail "swarm supervisor requires exactly the supported keys" -}}{{- end -}}
+{{- range $key := $supervisorKeys -}}
+{{- $value := index $supervisor $key -}}
+{{- $maximum := ternary (float64 9007199254740991) (float64 2147483647) (eq $key "maximumJournalBytes") -}}
+{{- if not (kindIs "float64" $value) -}}{{- fail (printf "swarm supervisor %s must be an integer" $key) -}}{{- end -}}
+{{- if or (lt $value (float64 1)) (gt $value $maximum) (ne $value (floor $value)) -}}{{- fail (printf "swarm supervisor %s exceeds its positive integer bound" $key) -}}{{- end -}}
+{{- end -}}
+{{- if le (int $worker.shutdownTimeoutMs) (add (int $supervisor.closeTimeoutMs) (int $supervisor.drainTimeoutMs)) -}}{{- fail "swarm worker shutdown must cover native close plus drain" -}}{{- end -}}
+{{- $policy := $native.resourcePolicy -}}
+{{- if not (kindIs "map" $policy) -}}{{- fail "swarm resourcePolicy must be an object" -}}{{- end -}}
+{{- if ne (len $policy) 3 -}}{{- fail "swarm resourcePolicy requires exactly cpuTimeMs, memoryBytes and tasks" -}}{{- end -}}
+{{- range $key := list "cpuTimeMs" "memoryBytes" "tasks" -}}
+{{- $value := index $policy $key -}}
+{{- if not (kindIs "float64" $value) -}}{{- fail (printf "swarm resourcePolicy %s must be an integer" $key) -}}{{- end -}}
+{{- if or (lt $value (float64 1)) (gt $value (float64 9007199254740991)) (ne $value (floor $value)) -}}
+{{- fail (printf "swarm resourcePolicy %s must be a positive safe integer" $key) -}}
+{{- end -}}
+{{- end -}}
+{{- if gt (add (int $worker.maximumActiveRequests) (int $worker.maximumProbeRequests)) (int $worker.maximumConnections) -}}
+{{- fail "swarm worker connection budget is too small" -}}
+{{- end -}}
+{{- $raw -}}
+{{- end -}}

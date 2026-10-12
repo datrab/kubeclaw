@@ -1,0 +1,809 @@
+{
+  "scope": "native production, original tests/fixtures, foundation, relevant contracts and Prism producer/config entry points; not a whole-repository equality claim",
+  "checks": [
+    {
+      "path": "charts/kubeclaw/files/config/swarm.config.json",
+      "snapshotSha256": "cdbcba913f26b7ceadccb5bbd0181e8bb05cc1bce0a00ade719dc9c300b90355",
+      "currentSha256": "ea571d3ea0f4a99075b3376effe020572122d673b9254e3014963e2cfb0ea92b",
+      "matches": false
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/README.md",
+      "snapshotSha256": "b868b465b656dc846b60849a971955fa1f028c172b46a4567013d6780e6a7bed",
+      "currentSha256": "b868b465b656dc846b60849a971955fa1f028c172b46a4567013d6780e6a7bed",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/package.json",
+      "snapshotSha256": "40d234e5ba169853c0c1ca4dcab3590373163c6b7189461157ff569a7aa42df5",
+      "currentSha256": "40d234e5ba169853c0c1ca4dcab3590373163c6b7189461157ff569a7aa42df5",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "snapshotSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "currentSha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json",
+      "snapshotSha256": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c",
+      "currentSha256": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json",
+      "snapshotSha256": "debb2e5ca9ade4c30f5081d56b4596af4b295e282e2c099a6d1623b4b15c5cf3",
+      "currentSha256": "debb2e5ca9ade4c30f5081d56b4596af4b295e282e2c099a6d1623b4b15c5cf3",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v2.mjs",
+      "snapshotSha256": "6c3c5720647cc3b74394d0ca7d3dd2fdd42728dd3b9217f31e033ca20518d56a",
+      "currentSha256": "6c3c5720647cc3b74394d0ca7d3dd2fdd42728dd3b9217f31e033ca20518d56a",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v3.mjs",
+      "snapshotSha256": "38ccfa7b89a2f759cb600308309357337ed22be14f48398a1761517889d327c6",
+      "currentSha256": "38ccfa7b89a2f759cb600308309357337ed22be14f48398a1761517889d327c6",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/digest.ts",
+      "snapshotSha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "currentSha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/index.ts",
+      "snapshotSha256": "013609ae51e836644640820de878378c0cbc797d6c299f06d926925790676c72",
+      "currentSha256": "013609ae51e836644640820de878378c0cbc797d6c299f06d926925790676c72",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
+      "snapshotSha256": "e75e058344978e1a94856c05caf03cfcff92ccb67e6fefe5c91249d4bc3e5fc8",
+      "currentSha256": "e75e058344978e1a94856c05caf03cfcff92ccb67e6fefe5c91249d4bc3e5fc8",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-types-v3.ts",
+      "snapshotSha256": "37133709e46db3c537178b2ce4ec0666317e9b461360f25b4c349e71f5adab36",
+      "currentSha256": "37133709e46db3c537178b2ce4ec0666317e9b461360f25b4c349e71f5adab36",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "snapshotSha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "currentSha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "snapshotSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "currentSha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "snapshotSha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+      "currentSha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+      "snapshotSha256": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43",
+      "currentSha256": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "snapshotSha256": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+      "currentSha256": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+      "matches": true
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/tsconfig.json",
+      "snapshotSha256": "6f4a5fde664d67c451337d4f62c8df33e5ea4fde18367801845b2fb951d578d1",
+      "currentSha256": "6f4a5fde664d67c451337d4f62c8df33e5ea4fde18367801845b2fb951d578d1",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/BOUNDARIES.md",
+      "snapshotSha256": "da357e033faebf3bdbb77834313ce8efc38b4e49a3b18c26ff6e596c8e8c76d2",
+      "currentSha256": "da357e033faebf3bdbb77834313ce8efc38b4e49a3b18c26ff6e596c8e8c76d2",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/artifacts/README.md",
+      "snapshotSha256": "877aac11f144e7c59ff32a1c135ab6ea0b5dc19eb7d5b0a1cf67bc1a16fc4109",
+      "currentSha256": "877aac11f144e7c59ff32a1c135ab6ea0b5dc19eb7d5b0a1cf67bc1a16fc4109",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/README.md",
+      "snapshotSha256": "60811bf451041ce10fb28e1f1dbb954a96866e3f06d34b676c817b2cd21770f1",
+      "currentSha256": "60811bf451041ce10fb28e1f1dbb954a96866e3f06d34b676c817b2cd21770f1",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "snapshotSha256": "4b4814b370a035668309df52af51dd138bc4c92ae3ec596393fb87b959dae605",
+      "currentSha256": "4b4814b370a035668309df52af51dd138bc4c92ae3ec596393fb87b959dae605",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+      "snapshotSha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8",
+      "currentSha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "snapshotSha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+      "currentSha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "snapshotSha256": "1aaccbf8f550c953772fc26755470c521733e0aeef81f6a00af15650b66c64ed",
+      "currentSha256": "9ed63a94a30345d68b0ac7726aae68217554c37befad803db12b0f0d3d91b364",
+      "matches": false
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "snapshotSha256": "3bf2b64274f32e765aac2412d45fdcd626eab8b568dd9c3395dcb84df5f3f292",
+      "currentSha256": "2c81b161a48eef915ba1a6196abca83518935029dc4c14a2066b3309b2c22fdc",
+      "matches": false
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+      "snapshotSha256": "054104fb7041d0712721b94da5985a0f93540c0457bfe06ce601ce985a450737",
+      "currentSha256": "054104fb7041d0712721b94da5985a0f93540c0457bfe06ce601ce985a450737",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+      "snapshotSha256": "2851d7491792b3c4831386346c8eac79abfe79c1e3f1f9f2d415a834aad59d8c",
+      "currentSha256": "2851d7491792b3c4831386346c8eac79abfe79c1e3f1f9f2d415a834aad59d8c",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/memory-limit.ts",
+      "snapshotSha256": "2ee1b41fa611fcecd63b69e0d21c899644982e37fc4eac897f86e8b9bed09165",
+      "currentSha256": "2ee1b41fa611fcecd63b69e0d21c899644982e37fc4eac897f86e8b9bed09165",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+      "snapshotSha256": "48563d1740ff46022fc85132706e20c9a418bc185891704fca08b417df42e820",
+      "currentSha256": "48563d1740ff46022fc85132706e20c9a418bc185891704fca08b417df42e820",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+      "snapshotSha256": "36c9c5e668f4599f46524f5599898037bdb0600d4fdca7527985ef809af7587b",
+      "currentSha256": "36c9c5e668f4599f46524f5599898037bdb0600d4fdca7527985ef809af7587b",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "snapshotSha256": "2102536656c01e861f612eb18967d7881b2993629de63b6d93e0ae8b70b70376",
+      "currentSha256": "2102536656c01e861f612eb18967d7881b2993629de63b6d93e0ae8b70b70376",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/session.ts",
+      "snapshotSha256": "79bc9adc0cacb9fe00e27a567142377db46af92049abb685d5b2a61f6ba4cc7c",
+      "currentSha256": "79bc9adc0cacb9fe00e27a567142377db46af92049abb685d5b2a61f6ba4cc7c",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/README.md",
+      "snapshotSha256": "1cdfd80981f000c9e92ff1d35e2d2e7a2585543fdc31e4f5e986d80e1783a41d",
+      "currentSha256": "1cdfd80981f000c9e92ff1d35e2d2e7a2585543fdc31e4f5e986d80e1783a41d",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "snapshotSha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12",
+      "currentSha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "snapshotSha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+      "currentSha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "snapshotSha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+      "currentSha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "snapshotSha256": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793",
+      "currentSha256": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "snapshotSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "currentSha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "snapshotSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "currentSha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "snapshotSha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+      "currentSha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "snapshotSha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+      "currentSha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+      "snapshotSha256": "51264741ac619877d2154668d83aeedbb666d1dfeb524685936b2d90d3322c41",
+      "currentSha256": "51264741ac619877d2154668d83aeedbb666d1dfeb524685936b2d90d3322c41",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/closure-projection.ts",
+      "snapshotSha256": "0c76760e141a63472111d2e930e8215b8336a3a9ed9bac1533dd2cd2c0cae69a",
+      "currentSha256": "0c76760e141a63472111d2e930e8215b8336a3a9ed9bac1533dd2cd2c0cae69a",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "snapshotSha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+      "currentSha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "snapshotSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+      "currentSha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "snapshotSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "currentSha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "snapshotSha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd",
+      "currentSha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+      "snapshotSha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a",
+      "currentSha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "snapshotSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "currentSha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "snapshotSha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+      "currentSha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/package.json",
+      "snapshotSha256": "d2639c87351035eb4ed0d34569934d18151b4024ec81a7604680ad3a6ae71ae2",
+      "currentSha256": "d2639c87351035eb4ed0d34569934d18151b4024ec81a7604680ad3a6ae71ae2",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/packages/README.md",
+      "snapshotSha256": "1752de94912e25046c02b02c259db340fd404e62deea9c7f7e2d1aeceb4f3443",
+      "currentSha256": "1752de94912e25046c02b02c259db340fd404e62deea9c7f7e2d1aeceb4f3443",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/packages/install.ts",
+      "snapshotSha256": "72e2212a2421f7738104c870fee746a64a8b12527d9662d409ca5c6048d4efc2",
+      "currentSha256": "72e2212a2421f7738104c870fee746a64a8b12527d9662d409ca5c6048d4efc2",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+      "snapshotSha256": "4dd81ccecacfc3b71848d2cca20c4e83e31f14223d4320ba30c83c4650592388",
+      "currentSha256": "4dd81ccecacfc3b71848d2cca20c4e83e31f14223d4320ba30c83c4650592388",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/README.md",
+      "snapshotSha256": "747cf98d6bfc8040238f18482ad9c3e7ef5175f6419e6051ecf1842fc5131894",
+      "currentSha256": "747cf98d6bfc8040238f18482ad9c3e7ef5175f6419e6051ecf1842fc5131894",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+      "snapshotSha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+      "currentSha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "snapshotSha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+      "currentSha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "snapshotSha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "currentSha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "snapshotSha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+      "currentSha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "snapshotSha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+      "currentSha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "snapshotSha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4",
+      "currentSha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+      "snapshotSha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+      "currentSha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/errors.ts",
+      "snapshotSha256": "148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25",
+      "currentSha256": "148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/frozen-map.ts",
+      "snapshotSha256": "b4d3f268b79917e962959420a6b7a9a598086ac5d3d87cfb5bc0f8ee2a7583f7",
+      "currentSha256": "b4d3f268b79917e962959420a6b7a9a598086ac5d3d87cfb5bc0f8ee2a7583f7",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/frozen-set.ts",
+      "snapshotSha256": "94b7eb7f0ba2bd7ddb23d0e0dceb701395a5c2aa17bc67a14d8f53d0e9dce753",
+      "currentSha256": "94b7eb7f0ba2bd7ddb23d0e0dceb701395a5c2aa17bc67a14d8f53d0e9dce753",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+      "snapshotSha256": "a7a28379c6f8409576a12169c6bc23070dbb66a41e0f041fc8b95310b29eb42e",
+      "currentSha256": "a7a28379c6f8409576a12169c6bc23070dbb66a41e0f041fc8b95310b29eb42e",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+      "snapshotSha256": "764ca496cd9bf406a26eed400777d61b239c6130fdf3b94204c4006d132458f3",
+      "currentSha256": "764ca496cd9bf406a26eed400777d61b239c6130fdf3b94204c4006d132458f3",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "snapshotSha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+      "currentSha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+      "snapshotSha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+      "currentSha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+      "matches": true
+    },
+    {
+      "path": "skills/prism/engine/worker-envelope.ts",
+      "snapshotSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "currentSha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941",
+      "matches": true
+    },
+    {
+      "path": "skills/prism/tests/native/resource-policy.mts",
+      "snapshotSha256": "87a51b65935045a98f9992ed8b6360f45100760d8cb4d9a8c05c123e2a718d1b",
+      "currentSha256": "87a51b65935045a98f9992ed8b6360f45100760d8cb4d9a8c05c123e2a718d1b",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/BOUNDARIES.md",
+      "snapshotSha256": "7f65a0ef5f813473bc427a18f18dda996e05c4cefca473bda401d3ad73454b02",
+      "currentSha256": "7f65a0ef5f813473bc427a18f18dda996e05c4cefca473bda401d3ad73454b02",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/package.json",
+      "snapshotSha256": "115273bab79eb997cff67343773f542c33924227ef9e172c742a807843fe34ac",
+      "currentSha256": "115273bab79eb997cff67343773f542c33924227ef9e172c742a807843fe34ac",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/src/index.ts",
+      "snapshotSha256": "2e17c3e33d5c47c2c7e8f4a03c8eda3120dfd123e7c0145e5685741efe28c00e",
+      "currentSha256": "2e17c3e33d5c47c2c7e8f4a03c8eda3120dfd123e7c0145e5685741efe28c00e",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/tsconfig.json",
+      "snapshotSha256": "f490060d51c95b693cff19cf26d7193026ec5a436c2e57c61c153e52f95c498e",
+      "currentSha256": "f490060d51c95b693cff19cf26d7193026ec5a436c2e57c61c153e52f95c498e",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "snapshotSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "currentSha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/digest.ts",
+      "snapshotSha256": "d8c005287076f3ca2a6e84daf386c17ff77858ba5dc22cfebd3b9063d48ef402",
+      "currentSha256": "d8c005287076f3ca2a6e84daf386c17ff77858ba5dc22cfebd3b9063d48ef402",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "snapshotSha256": "02876cafd08f35c84b67d3c8972e45167074c226c928c53a81b190bd67071435",
+      "currentSha256": "02876cafd08f35c84b67d3c8972e45167074c226c928c53a81b190bd67071435",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/log-decoder.ts",
+      "snapshotSha256": "7f777b5cd5f9544c6eb2f5933613d8d8379633742edf45cd235428805e7dea88",
+      "currentSha256": "7f777b5cd5f9544c6eb2f5933613d8d8379633742edf45cd235428805e7dea88",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-executor.ts",
+      "snapshotSha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3",
+      "currentSha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "snapshotSha256": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4",
+      "currentSha256": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+      "snapshotSha256": "fc55712ec3a5237e0131969d4aa190fcf994541525521210e8598ec63c950769",
+      "currentSha256": "fc55712ec3a5237e0131969d4aa190fcf994541525521210e8598ec63c950769",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-control-channel.ts",
+      "snapshotSha256": "253ecc17f153e13e6e00aad3f842565ad17a01e85cac15db910d9b4b2ea9edc8",
+      "currentSha256": "253ecc17f153e13e6e00aad3f842565ad17a01e85cac15db910d9b4b2ea9edc8",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-hierarchy-events.ts",
+      "snapshotSha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "currentSha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "snapshotSha256": "caca74b468a134faf29da1f74d0a69443f495e63fbbf8fb39692ff9de0ba8111",
+      "currentSha256": "caca74b468a134faf29da1f74d0a69443f495e63fbbf8fb39692ff9de0ba8111",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-node-identity.ts",
+      "snapshotSha256": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "currentSha256": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-output-spool.ts",
+      "snapshotSha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+      "currentSha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-owned-children.ts",
+      "snapshotSha256": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+      "currentSha256": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "snapshotSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "currentSha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-cancellation.ts",
+      "snapshotSha256": "1a3295c2220b82b3c06047151df0a6ca4e126f747f5eaabb57ddb5a753cd1bf5",
+      "currentSha256": "1a3295c2220b82b3c06047151df0a6ca4e126f747f5eaabb57ddb5a753cd1bf5",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-control.ts",
+      "snapshotSha256": "3cfd56d48a2f70fb80072692a133fb0c8490bd94ec79d5270b771dd2e2717d2e",
+      "currentSha256": "3cfd56d48a2f70fb80072692a133fb0c8490bd94ec79d5270b771dd2e2717d2e",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-launches.ts",
+      "snapshotSha256": "4b4ea9b64584e43f2f791d97872430f0d2dcf917d5ada11c0a8bb2ecd4456155",
+      "currentSha256": "4b4ea9b64584e43f2f791d97872430f0d2dcf917d5ada11c0a8bb2ecd4456155",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-output.ts",
+      "snapshotSha256": "5f7a4e1cdd9424fefe249775886a34019da38f7a76c486b38005c5d727f14350",
+      "currentSha256": "5f7a4e1cdd9424fefe249775886a34019da38f7a76c486b38005c5d727f14350",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-accounting.ts",
+      "snapshotSha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448",
+      "currentSha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "snapshotSha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "currentSha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "snapshotSha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "currentSha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "snapshotSha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "currentSha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-result.ts",
+      "snapshotSha256": "11c8074a973fec8f764e64668e29c7d4907a5b9e605b6bad04cbfa0454d318bd",
+      "currentSha256": "11c8074a973fec8f764e64668e29c7d4907a5b9e605b6bad04cbfa0454d318bd",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-runtime-identity.ts",
+      "snapshotSha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "currentSha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-supervisor-authority.ts",
+      "snapshotSha256": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650",
+      "currentSha256": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "snapshotSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "currentSha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "snapshotSha256": "b13dcae622c5aef5a533d659e0671ef923ae7138fbfbcaa827af8bed24a700f8",
+      "currentSha256": "b13dcae622c5aef5a533d659e0671ef923ae7138fbfbcaa827af8bed24a700f8",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "snapshotSha256": "d43bc3ce05976d77579dbc624cae8be1d3209732b023124e3eb6f0a8fd9860da",
+      "currentSha256": "d43bc3ce05976d77579dbc624cae8be1d3209732b023124e3eb6f0a8fd9860da",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-capacity.ts",
+      "snapshotSha256": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+      "currentSha256": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-children.ts",
+      "snapshotSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "currentSha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-state.ts",
+      "snapshotSha256": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+      "currentSha256": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "snapshotSha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "currentSha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/phase-deadline.ts",
+      "snapshotSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "currentSha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "snapshotSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "currentSha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/resource-reservations.ts",
+      "snapshotSha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "currentSha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/resource-result-fields.ts",
+      "snapshotSha256": "d109f3aedf33fca9a84eab376d96ae714ea4134af5cfebf7c495cb7db89e218f",
+      "currentSha256": "d109f3aedf33fca9a84eab376d96ae714ea4134af5cfebf7c495cb7db89e218f",
+      "matches": true
+    },
+    {
+      "path": "skills/worker/core/worker/trust.ts",
+      "snapshotSha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+      "currentSha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe",
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/worker-native-process-child.mjs",
+      "snapshotSha256": "7799da5e00786d89be39576521b09c1c100bf80a945c35988c80da88af6fd7df",
+      "currentSha256": "7799da5e00786d89be39576521b09c1c100bf80a945c35988c80da88af6fd7df",
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/worker-native-scope-child.mjs",
+      "snapshotSha256": "476653b2d1e1667894035b7dad43fd5c6c3533c3c3a1b4c7115a6a02b3a92930",
+      "currentSha256": "476653b2d1e1667894035b7dad43fd5c6c3533c3c3a1b4c7115a6a02b3a92930",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/native-worker-node.test.mjs",
+      "snapshotSha256": "cc44b880bf366f9ac0153c80a41054379967946bee7d215fedf07644821fc6da",
+      "currentSha256": "cc44b880bf366f9ac0153c80a41054379967946bee7d215fedf07644821fc6da",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/tsconfig.native-scope.json",
+      "snapshotSha256": "b11f6af094bcb0a80e46607ccca68c426ef4ce9754efca52804af11ef7b11e2b",
+      "currentSha256": "b11f6af094bcb0a80e46607ccca68c426ef4ce9754efca52804af11ef7b11e2b",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-control-channel.test.mts",
+      "snapshotSha256": "1fa24c5fe79210abda3e6a22044558a1ef255037da5285297ba67c31ad981fad",
+      "currentSha256": "1fa24c5fe79210abda3e6a22044558a1ef255037da5285297ba67c31ad981fad",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-deadline-fixture.mts",
+      "snapshotSha256": "5f8459f66c4563120a749a94d933b02b9f8f1069cebff7d39cfa94e89d108cec",
+      "currentSha256": "5f8459f66c4563120a749a94d933b02b9f8f1069cebff7d39cfa94e89d108cec",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-deadline.test.mts",
+      "snapshotSha256": "410108ac2048d3d9ab1e949a7e8f387e53d0eb17b95b42fe1d0abcb15a372163",
+      "currentSha256": "410108ac2048d3d9ab1e949a7e8f387e53d0eb17b95b42fe1d0abcb15a372163",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-contract.test.mts",
+      "snapshotSha256": "06ae7e8015b6b4675b595817bbe889f37643cb36fe93fb1797c0f1a8230ce05e",
+      "currentSha256": "06ae7e8015b6b4675b595817bbe889f37643cb36fe93fb1797c0f1a8230ce05e",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-journal.test.mts",
+      "snapshotSha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a",
+      "currentSha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-launcher.test.mts",
+      "snapshotSha256": "d5df450656ada0af9fb709ecc7e326f54c8c892ff2181fc1d1ac0c5f423b21a5",
+      "currentSha256": "d5df450656ada0af9fb709ecc7e326f54c8c892ff2181fc1d1ac0c5f423b21a5",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-observation.test.mts",
+      "snapshotSha256": "aec9daa4872aa4e13dbae6e16c69fb383d731b7082b17abd81681d2cf722ff95",
+      "currentSha256": "aec9daa4872aa4e13dbae6e16c69fb383d731b7082b17abd81681d2cf722ff95",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-quiescence.test.mts",
+      "snapshotSha256": "00cab46da97b3985e4117e5c49577dc12a25d1bdf134d498005ff87915d4c958",
+      "currentSha256": "00cab46da97b3985e4117e5c49577dc12a25d1bdf134d498005ff87915d4c958",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-scope-live.mts",
+      "snapshotSha256": "ee22aa32e30ed38b1658c5cbace3c7a6dc33db337d5476955a0d8cb47616f5aa",
+      "currentSha256": "ee22aa32e30ed38b1658c5cbace3c7a6dc33db337d5476955a0d8cb47616f5aa",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-topology-live.mts",
+      "snapshotSha256": "61a0f8586c4e462d5ac8f2dcf0624fc4a9d19011584c352a3f8e06e294b2420a",
+      "currentSha256": "61a0f8586c4e462d5ac8f2dcf0624fc4a9d19011584c352a3f8e06e294b2420a",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-observation-durability.test.mts",
+      "snapshotSha256": "70c9ca353545d6b2c58dc56f47e85be5eebb1c96a3ef19303a5a011aec51d6a4",
+      "currentSha256": "70c9ca353545d6b2c58dc56f47e85be5eebb1c96a3ef19303a5a011aec51d6a4",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-output-spool.test.mts",
+      "snapshotSha256": "234771e90d94efa22e81f985901d7ac41b1078ba779c7e3af9651f910a9daded",
+      "currentSha256": "234771e90d94efa22e81f985901d7ac41b1078ba779c7e3af9651f910a9daded",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-owned-children.test.mts",
+      "snapshotSha256": "30a0f743173532480016e0db32a02fd90cbd3115d5ad366b7f1fe95ca8f0d797",
+      "currentSha256": "30a0f743173532480016e0db32a02fd90cbd3115d5ad366b7f1fe95ca8f0d797",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-ownership-store.test.mts",
+      "snapshotSha256": "af2319b4a8c90b71b58cd6a3d46e7349fde0593151d4130af7d9c09a8765787b",
+      "currentSha256": "af2319b4a8c90b71b58cd6a3d46e7349fde0593151d4130af7d9c09a8765787b",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-resource-reservations.test.mts",
+      "snapshotSha256": "78842d63696955e1129ae20cf8ee71c3ba3faa64a4d3ef098316e656446c07be",
+      "currentSha256": "78842d63696955e1129ae20cf8ee71c3ba3faa64a4d3ef098316e656446c07be",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-terminal-capacity.test.mts",
+      "snapshotSha256": "f320d615c3e354d2f66d91f743f9bde189d0b2ca346867c8e5e38a27d640bf3d",
+      "currentSha256": "f320d615c3e354d2f66d91f743f9bde189d0b2ca346867c8e5e38a27d640bf3d",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/worker-terminal-resources.test.mts",
+      "snapshotSha256": "0d4e0f8b5a15a954eb73d4330211af75871656fd73b65668045c4eed392832dc",
+      "currentSha256": "0d4e0f8b5a15a954eb73d4330211af75871656fd73b65668045c4eed392832dc",
+      "matches": true
+    }
+  ]
+}

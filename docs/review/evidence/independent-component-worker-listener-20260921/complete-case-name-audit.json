@@ -1,0 +1,28 @@
+[
+  {
+    "originalLog": "docs/review/evidence/config-component-layout-20260921/integration3/maintained.txt",
+    "logSha256": "9d6833931c68649b255800ecbb524d55d72f1ece11727480e3712a7939c5435b",
+    "parsedCaseCount": 537,
+    "distinctCases": 516,
+    "missingNames": [
+      "CC1 Control artifactRoot rejects \"/tmp/\\u0000artifacts\"",
+      "CC1 Control studioPublicUrl rejects \"https://studio#fragment\"",
+      "CC4 Helm rejects Control artifactRoot=\"/tmp/\\u0000artifacts\"",
+      "CC4 Helm rejects Control studioPublicUrl=\"https://studio#fragment\""
+    ],
+    "missingNamesAfterTapEscaping": [],
+    "note": "TAP escapes hash and literal backslash in names. Original logs may repeat a failed case in the error summary; unique names are metadata coverage, not reused pass evidence."
+  },
+  {
+    "originalLog": "docs/review/evidence/config-worker-listener-20260921/checks2/tests.txt",
+    "logSha256": "fc45b27e2a4e1b95b2946955b42b58e7771dcebabdca1499fe67a3829a242d4a",
+    "parsedCaseCount": 358,
+    "distinctCases": 345,
+    "missingNames": [
+      "CC4 Helm rejects Control artifactRoot=\"/tmp/\\u0000artifacts\"",
+      "CC4 Helm rejects Control studioPublicUrl=\"https://studio#fragment\""
+    ],
+    "missingNamesAfterTapEscaping": [],
+    "note": "TAP escapes hash and literal backslash in names. Original logs may repeat a failed case in the error summary; unique names are metadata coverage, not reused pass evidence."
+  }
+]

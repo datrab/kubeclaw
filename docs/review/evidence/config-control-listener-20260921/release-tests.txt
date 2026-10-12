@@ -1,0 +1,33 @@
+✔ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (6754.094612ms)
+✔ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (2569.818725ms)
+✔ private operational overlays survive while replaced or removed runtime slots fail (3030.916547ms)
+✔ Prism and Ops reject image overrides even when another value could conceal them (5177.738301ms)
+✔ source configuration and materialized values are rechecked by actual deployment entrypoints (1015.576032ms)
+✔ private bundle URL and authentication survive while the selected revision stays fixed (1547.305313ms)
+✔ private extraEnv cannot shadow reserved runtime bundle controls (5278.580952ms)
+✔ noncanonical alias and indirect controls cannot stand in for bundle consumers (3954.033858ms)
+✔ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (5118.686479ms)
+✔ imperative ownership guard fails closed and permits only other namespaces (0.511723ms)
+✔ committed bundle corruption, switched selection and hidden image changes fail before activation (4725.571305ms)
+✔ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (4517.63965ms)
+✔ root claim and retained workload tracking block imperative adoption after partial GitOps transitions (0.767449ms)
+✔ original runtime teardown commands stop before any Helm mutation when Argo owns the namespace (272.795004ms)
+fatal: not a tree object
+✔ unchanged release configuration survives unrelated later commits, but new chart or values cannot qualify old images (105.329316ms)
+✔ deleted, added, symlinked, and unavailable source configurations fail explicitly (38.368699ms)
+✔ ops chart has its own source binding, independent of runtime-only changes (55.823263ms)
+✔ canonical aliases bind both target bytes to the image source commit, including schema outside charts (220.980423ms)
+✔ canonical alias cannot be retargeted or replaced with an identical regular copy (137.736571ms)
+✔ source commit cannot introduce arbitrary or retargeted aliases (73.318749ms)
+✔ canonical schema cannot escape through a directory symlink or leaf symlink (85.196982ms)
+✔ each runtime is built once per event and PR builds cannot publish (1.936059ms)
+✔ immutable candidate checks precede release receipts and share PR acceptance (0.249186ms)
+✔ bundle publication rejects failed or cancelled image proofs while allowing code-only changes (0.38937ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 45167.531689

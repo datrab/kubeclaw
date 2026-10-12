@@ -1,0 +1,32 @@
+✔ deploy bundle fields decode folded URLs and preserve overlay credential selection (145.769356ms)
+✔ agent changes and manifest changes do not rebuild tools; embedded service code does (1.055327ms)
+✔ code selection reuses images only across unchanged image inputs, including deleted inputs (85.420552ms)
+✔ bundle selection rejects missing hashes, mutable URLs and wrong role archives (0.640507ms)
+✔ push detector rebuilds an environment changed by an earlier unselected build (162.144852ms)
+✔ actual bootstrap checksum command rejects modified downloads before extraction (7.053999ms)
+✔ rendered code updates retain image digests and require selected URL, role, hash and revision (12.124818ms)
+✔ real materialization and Helm render enable pinned bundles for all three agents on retained images (1317.80234ms)
+✔ continuous root follows the reviewed production directory without inline frozen values (2.067502ms)
+✔ child applications survive squash merges and retain immutable bundle directories and ownership (5.799797ms)
+✔ automatic deployment requires successful main provenance and explicit bootstrap (1.490008ms)
+✔ initial registration creates all children without starting workload syncs (0.7857ms)
+✔ configuration and agent code select bundles while generated deployments do not rebuild (0.978735ms)
+✔ real Helm environment rendering remains identical after the bundle commit is replaced by a merge commit (684.551492ms)
+fatal: not a tree object
+✔ unchanged release configuration survives unrelated later commits, but new chart or values cannot qualify old images (123.856388ms)
+✔ deleted, added, symlinked, and unavailable source configurations fail explicitly (50.894554ms)
+✔ ops chart has its own source binding, independent of runtime-only changes (48.317788ms)
+✔ canonical aliases bind both target bytes to the image source commit, including schema outside charts (252.359415ms)
+✔ canonical alias cannot be retargeted or replaced with an identical regular copy (140.474261ms)
+✔ source commit cannot introduce arbitrary or retargeted aliases (87.903795ms)
+✔ canonical schema cannot escape through a directory symlink or leaf symlink (88.352126ms)
+✔ locked input installers and their locks trigger image and deployment selection (1.109548ms)
+✔ real Git input identities change for installer code and authored archive identities (214.565965ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3828.879574

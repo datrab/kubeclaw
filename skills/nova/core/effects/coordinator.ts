@@ -12,9 +12,10 @@ export class EffectCoordinator {
   readonly #journal: EffectJournal; readonly #now: () => Date; readonly #audit: EffectModeAuditSink | undefined;
   readonly #locks: EffectLockManager; readonly #lockTtlMs: number;
 
-  constructor(journal: EffectJournal, now: () => Date = () => new Date(), audit?: EffectModeAuditSink, locks?: EffectLockManager, lockTtlMs = 300_000) {
+  constructor(journal: EffectJournal, now: (() => Date) | undefined, audit: EffectModeAuditSink | undefined, locks: EffectLockManager | undefined, lockTtlMs: number) {
     if (!locks) throw new Error('EFFECT_RESOURCE_LOCK_MANAGER_REQUIRED');
-    this.#journal = journal; this.#now = now; this.#audit = audit; this.#locks = locks; this.#lockTtlMs = lockTtlMs;
+    if (!Number.isSafeInteger(lockTtlMs) || lockTtlMs <= 0) throw new Error('EFFECT_LOCK_TTL_INVALID');
+    this.#journal = journal; this.#now = now === undefined ? () => new Date() : now; this.#audit = audit; this.#locks = locks; this.#lockTtlMs = lockTtlMs;
   }
 
   async invoke(adapter: AdapterInstance, adapterOwner: PackageResolution, invocation: EffectInvocation, signal: AbortSignal): Promise<EffectReceipt> {

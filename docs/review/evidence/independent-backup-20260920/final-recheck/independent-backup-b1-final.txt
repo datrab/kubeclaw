@@ -1,0 +1,20 @@
+(node:733144) ExperimentalWarning: Transform Types is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ DB/object group preserves original artifact IDs on a fresh directory and retains old backups (266.431801ms)
+✔ verification catches modified DB, missing/extra/corrupt objects, and symlinks (359.274873ms)
+✔ failures and capacity limits keep previous groups and never publish partial copies (245.20475ms)
+✔ corrupt or symlinked sources cannot produce a completed group (86.209944ms)
+✔ native lock prevents overlap and whole-operation deadline kills blocked dump (1024.104273ms)
+✔ actual Helm render runs the group script and verification has no database credentials (93.024357ms)
+✔ SQL proof uses only its newly created DB and never drops a failed creation (391.067042ms)
+✔ manual retirement requires pinned verified copy, preserves latest/protected groups and releases quota (747.885284ms)
+✔ interrupted retirement resumes only selected tombstone and revalidates copy (955.926968ms)
+✔ incomplete cleanup rejects published groups, traversal and symlinks (176.098121ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4646.445823

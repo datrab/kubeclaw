@@ -1,0 +1,875 @@
+{
+  "passed": 26,
+  "failed": [
+    "tmpfs-root"
+  ],
+  "elapsedSeconds": 78.01138902199455,
+  "postArtifactsAndSourceStable": true,
+  "finalDisksMatch": true,
+  "cases": [
+    {
+      "case": "complete",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [
+        {
+          "bytes": 55,
+          "device": 64768,
+          "entries": 5,
+          "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+          "inode": 1530,
+          "inventoryDigest": "sha256:657ba7f108bf73794b87b98b222f553862670acabdaef0c7659a4652d4bf2f1d",
+          "mountId": 35,
+          "resultBytes": 22,
+          "resultEntries": 1,
+          "schemaVersion": "buster-legacy-immutable-tree.v1",
+          "store": {
+            "bytes": 33,
+            "device": 64768,
+            "digest": "sha256:d6916cb44d9de696ac0443650b106807e55047eeb5e8ecece2c19506aa00da46",
+            "inode": 1534
+          }
+        }
+      ],
+      "errors": [],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "quota-exact",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [
+        {
+          "bytes": 55,
+          "device": 64768,
+          "entries": 5,
+          "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+          "inode": 1530,
+          "inventoryDigest": "sha256:657ba7f108bf73794b87b98b222f553862670acabdaef0c7659a4652d4bf2f1d",
+          "mountId": 35,
+          "resultBytes": 22,
+          "resultEntries": 1,
+          "schemaVersion": "buster-legacy-immutable-tree.v1",
+          "store": {
+            "bytes": 33,
+            "device": 64768,
+            "digest": "sha256:d6916cb44d9de696ac0443650b106807e55047eeb5e8ecece2c19506aa00da46",
+            "inode": 1534
+          }
+        }
+      ],
+      "errors": [],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "quota-byte-short",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_BYTE_LIMIT"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "quota-entry-short",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_ENTRY_LIMIT"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "mutable-file",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_IMMUTABLE_REQUIRED"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "mutable-directory",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_IMMUTABLE_REQUIRED"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "plan-link",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [],
+      "traceTargets": [
+        "openat(3</var/lib/legacy-seal-tests/tree>, \"link\", O_RDONLY|O_LARGEFILE|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4</var/lib/legacy-seal-tests/tree/link>"
+      ],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "hardlink",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_ENTRY_INVALID"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "device",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [],
+      "traceTargets": [
+        "openat(3</var/lib/legacy-seal-tests/tree>, \"special\", O_RDONLY|O_LARGEFILE|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4</var/lib/legacy-seal-tests/tree/special<char 1:3>>"
+      ],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "fifo",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [],
+      "traceTargets": [
+        "openat(3</var/lib/legacy-seal-tests/tree>, \"special\", O_RDONLY|O_LARGEFILE|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4</var/lib/legacy-seal-tests/tree/special>"
+      ],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "bind-mount",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_MOUNT_CHANGED"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "different-device",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_MOUNT_CHANGED"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "tmpfs-root",
+      "exitCode": 1,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_AUTHORITY_INVALID"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "extra-bounding",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 2199023255551,
+          "CapEff": 2199023255551,
+          "CapInh": 0,
+          "CapPrm": 2199023255551
+        }
+      ],
+      "observations": [],
+      "errors": [],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "retained-extra",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 2097633,
+          "CapInh": 0,
+          "CapPrm": 2097633
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_CAPABILITY_BOUND_INVALID"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "foreign-ancestor",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_AUTHORITY_INVALID"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "writable-ancestor",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_AUTHORITY_INVALID"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "missing-store",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_STORE_REQUIRED"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "interrupted",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_IMMUTABLE_REQUIRED"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "mutation-denial",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [],
+      "traceTargets": [],
+      "controls": [
+        {
+          "denied": 1,
+          "operation": "append"
+        },
+        {
+          "denied": 1,
+          "operation": "truncate"
+        },
+        {
+          "denied": 1,
+          "operation": "create"
+        },
+        {
+          "denied": 1,
+          "operation": "unlink"
+        },
+        {
+          "denied": 1,
+          "operation": "rename"
+        },
+        {
+          "denied": 1,
+          "operation": "chmod"
+        },
+        {
+          "denied": 1,
+          "operation": "chown"
+        },
+        {
+          "denied": 1,
+          "operation": "clear-flags"
+        },
+        {
+          "control": "append",
+          "succeeded": true
+        },
+        {
+          "control": "truncate",
+          "succeeded": true
+        },
+        {
+          "control": "create",
+          "succeeded": true
+        },
+        {
+          "control": "unlink",
+          "succeeded": true
+        },
+        {
+          "control": "rename",
+          "succeeded": true
+        },
+        {
+          "control": "chmod",
+          "succeeded": true
+        },
+        {
+          "control": "chown",
+          "succeeded": true
+        },
+        {
+          "control": "clear-flags",
+          "succeeded": true
+        }
+      ],
+      "namespace": []
+    },
+    {
+      "case": "uid1000-read",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "runtime",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [
+        {
+          "bytes": 22,
+          "device": 64768,
+          "entries": 3,
+          "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+          "inode": 1530,
+          "inventoryDigest": "sha256:bcaf7f072d7ace52234aa2fb250e0c39f57fe17ef7ede6daa79575a5d849e9ba",
+          "mountId": 35,
+          "schemaVersion": "buster-legacy-immutable-runtime.v1"
+        }
+      ],
+      "errors": [],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "runtime-plan-reject",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_STORE_REQUIRED"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "runtime-links",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        },
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        },
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [
+        {
+          "bytes": 82,
+          "device": 64768,
+          "entries": 6,
+          "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+          "inode": 1530,
+          "inventoryDigest": "sha256:0e6216f10f903dfb86a5aa8f1a49debce8bd9fc9957bd9c2b13a200275db2c3f",
+          "mountId": 35,
+          "schemaVersion": "buster-legacy-immutable-runtime.v1"
+        },
+        {
+          "bytes": 82,
+          "device": 64768,
+          "entries": 6,
+          "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+          "inode": 1530,
+          "inventoryDigest": "sha256:0e6216f10f903dfb86a5aa8f1a49debce8bd9fc9957bd9c2b13a200275db2c3f",
+          "mountId": 35,
+          "schemaVersion": "buster-legacy-immutable-runtime.v1"
+        }
+      ],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_ENTRY_INVALID"
+      ],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "runtime-link-fifo",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        },
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        },
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        },
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [
+        {
+          "bytes": 120,
+          "device": 64768,
+          "entries": 7,
+          "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+          "inode": 1530,
+          "inventoryDigest": "sha256:d6f7c1c72116bc6d80de8af43328aa56a434019d4c1932e1e04ef9ad87a8e6b4",
+          "mountId": 35,
+          "schemaVersion": "buster-legacy-immutable-runtime.v1"
+        },
+        {
+          "bytes": 120,
+          "device": 64768,
+          "entries": 7,
+          "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+          "inode": 1530,
+          "inventoryDigest": "sha256:d6f7c1c72116bc6d80de8af43328aa56a434019d4c1932e1e04ef9ad87a8e6b4",
+          "mountId": 35,
+          "schemaVersion": "buster-legacy-immutable-runtime.v1"
+        },
+        {
+          "bytes": 120,
+          "device": 64768,
+          "entries": 7,
+          "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+          "inode": 1530,
+          "inventoryDigest": "sha256:d6f7c1c72116bc6d80de8af43328aa56a434019d4c1932e1e04ef9ad87a8e6b4",
+          "mountId": 35,
+          "schemaVersion": "buster-legacy-immutable-runtime.v1"
+        }
+      ],
+      "errors": [
+        "ValueError: BUSTER_LEGACY_SEAL_ENTRY_INVALID"
+      ],
+      "traceTargets": [
+        "openat(3</var/lib/legacy-seal-tests/tree>, \"absolute\", O_RDONLY|O_LARGEFILE|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4</var/lib/legacy-seal-tests/tree/absolute>",
+        "openat(3</var/lib/legacy-seal-tests/tree>, \"dangling\", O_RDONLY|O_LARGEFILE|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4</var/lib/legacy-seal-tests/tree/dangling>",
+        "openat(3</var/lib/legacy-seal-tests/tree>, \"fifo-link\", O_RDONLY|O_LARGEFILE|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4</var/lib/legacy-seal-tests/tree/fifo-link>",
+        "openat(3</var/lib/legacy-seal-tests/tree>, \"relative\", O_RDONLY|O_LARGEFILE|O_NOFOLLOW|O_CLOEXEC|O_PATH) = 4</var/lib/legacy-seal-tests/tree/relative>"
+      ],
+      "controls": [],
+      "namespace": []
+    },
+    {
+      "case": "namespace-stable",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        },
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [
+        {
+          "bytes": 55,
+          "device": 64768,
+          "entries": 5,
+          "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+          "inode": 1530,
+          "inventoryDigest": "sha256:0e38a7ca72082f3a53bb5d15ddd43b7e260d09d5e0c197e6f736c56871f8903a",
+          "mountId": 56,
+          "resultBytes": 22,
+          "resultEntries": 1,
+          "schemaVersion": "buster-legacy-immutable-tree.v1",
+          "store": {
+            "bytes": 33,
+            "device": 64768,
+            "digest": "sha256:d6916cb44d9de696ac0443650b106807e55047eeb5e8ecece2c19506aa00da46",
+            "inode": 1534
+          }
+        },
+        {
+          "bytes": 55,
+          "device": 64768,
+          "entries": 5,
+          "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+          "inode": 1530,
+          "inventoryDigest": "sha256:0e38a7ca72082f3a53bb5d15ddd43b7e260d09d5e0c197e6f736c56871f8903a",
+          "mountId": 48,
+          "resultBytes": 22,
+          "resultEntries": 1,
+          "schemaVersion": "buster-legacy-immutable-tree.v1",
+          "store": {
+            "bytes": 33,
+            "device": 64768,
+            "digest": "sha256:d6916cb44d9de696ac0443650b106807e55047eeb5e8ecece2c19506aa00da46",
+            "inode": 1534
+          }
+        }
+      ],
+      "errors": [],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": [
+        {
+          "namespaces": [
+            "mnt:[4026532236]",
+            "mnt:[4026532235]"
+          ],
+          "observations": [
+            {
+              "bytes": 55,
+              "device": 64768,
+              "entries": 5,
+              "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+              "inode": 1530,
+              "inventoryDigest": "sha256:0e38a7ca72082f3a53bb5d15ddd43b7e260d09d5e0c197e6f736c56871f8903a",
+              "mountId": 56,
+              "resultBytes": 22,
+              "resultEntries": 1,
+              "schemaVersion": "buster-legacy-immutable-tree.v1",
+              "store": {
+                "bytes": 33,
+                "device": 64768,
+                "digest": "sha256:d6916cb44d9de696ac0443650b106807e55047eeb5e8ecece2c19506aa00da46",
+                "inode": 1534
+              }
+            },
+            {
+              "bytes": 55,
+              "device": 64768,
+              "entries": 5,
+              "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+              "inode": 1530,
+              "inventoryDigest": "sha256:0e38a7ca72082f3a53bb5d15ddd43b7e260d09d5e0c197e6f736c56871f8903a",
+              "mountId": 48,
+              "resultBytes": 22,
+              "resultEntries": 1,
+              "schemaVersion": "buster-legacy-immutable-tree.v1",
+              "store": {
+                "bytes": 33,
+                "device": 64768,
+                "digest": "sha256:d6916cb44d9de696ac0443650b106807e55047eeb5e8ecece2c19506aa00da46",
+                "inode": 1534
+              }
+            }
+          ],
+          "phase": "live-namespace-comparison"
+        }
+      ]
+    },
+    {
+      "case": "different-uuid",
+      "exitCode": 0,
+      "capabilities": [
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        },
+        {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        }
+      ],
+      "observations": [
+        {
+          "bytes": 55,
+          "device": 64768,
+          "entries": 5,
+          "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+          "inode": 1530,
+          "inventoryDigest": "sha256:0e38a7ca72082f3a53bb5d15ddd43b7e260d09d5e0c197e6f736c56871f8903a",
+          "mountId": 35,
+          "resultBytes": 22,
+          "resultEntries": 1,
+          "schemaVersion": "buster-legacy-immutable-tree.v1",
+          "store": {
+            "bytes": 33,
+            "device": 64768,
+            "digest": "sha256:d6916cb44d9de696ac0443650b106807e55047eeb5e8ecece2c19506aa00da46",
+            "inode": 1534
+          }
+        },
+        {
+          "bytes": 55,
+          "device": 64784,
+          "entries": 5,
+          "filesystemUuid": "509e0c59-9725-4ca8-a083-22e5275158db",
+          "inode": 13,
+          "inventoryDigest": "sha256:5b767ff4747458f7ebde5eb48a7bba01273d79f8c2839ef4e8b971a6fa8cf529",
+          "mountId": 41,
+          "resultBytes": 22,
+          "resultEntries": 1,
+          "schemaVersion": "buster-legacy-immutable-tree.v1",
+          "store": {
+            "bytes": 33,
+            "device": 64784,
+            "digest": "sha256:d6916cb44d9de696ac0443650b106807e55047eeb5e8ecece2c19506aa00da46",
+            "inode": 17
+          }
+        }
+      ],
+      "errors": [],
+      "traceTargets": [],
+      "controls": [],
+      "namespace": []
+    }
+  ]
+}

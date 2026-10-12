@@ -1,0 +1,2 @@
+import {registerHooks} from 'node:module';
+registerHooks({load(url,context,nextLoad){const result=nextLoad(url,context);if(!url.endsWith('/skills/prism/server/control-server.ts'))return result;const source=String(result.source);const target='const actor = authenticated(context, request);';if(source.split(target).length!==2)throw new Error('MUTATION_TARGET_MISMATCH');return {...result,source:source.replace(target,'const actor = {user: "forged", roles: [], csrf: ""};')};}});

@@ -3,6 +3,15 @@
 Nova owns the pipeline graph, lifecycle journal, effects, waits, and final stage
 transitions. Buster owns deterministic test execution and Buster agent sessions.
 
+The [execution configuration reference](buster-execution-configuration.md)
+describes the central Buster policy, required fields, durable-store capacities
+and ownership boundary with Worker Core.
+The [fixture cleanup contract](buster-fixture-cleanup.md) explains the host's
+explicit cleanup authority, retained fixtures, replacement provider sessions
+and the remaining historical recovery boundary.
+The [parallel failure contract](buster-runner-failure-drain.md) describes settling
+already-started nodes before fixture cleanup after an unexpected rejection.
+
 All suites use `test.plan.execute` on port 18891. Buster verifies the
 signed source archive, resolves installed providers, runs granted capabilities,
 and stores the typed result.
@@ -19,6 +28,15 @@ protocol:
    provider graph with exact grants and isolated attempt directories.
 6. Nova polls the durable plan receipt and commits the typed result into the
    normal v2 effect and lifecycle journals.
+
+Nova owns the Git archive process until native close and process-group cleanup
+are acknowledged, or its cleanup deadline fails. A TERM or timed KILL error is
+retained even if the child subsequently closes. Failed group observation is
+recorded immediately while the native-close wait continues under the same bound.
+Unconfirmed cleanup reaches the caller as `NOVA_SOURCE_CLEANUP_UNCONFIRMED`;
+destroyed pipes alone are not evidence that the child terminated. Nova's current
+cleanup, grace and polling values are still local policies; Buster's central
+`execution.processInput` configuration does not configure this Nova path.
 
 The Buster judgment stages compose two independently routed capabilities in a
 strict order:
@@ -58,3 +76,44 @@ contract.
 
 There is no Redis task queue, local Nova suite execution, shared cross-pod
 filesystem, legacy suite-worker contract, or compatibility fallback in this path.
+
+## Provider-result and report boundary
+
+`TestPlanRunner` validates each provider result through
+`skills/buster/engine/test-gates/provider-result-validation.ts` before freezing
+and staging it. The boundary checks serialized size, the provider-result schema,
+count consistency, provider-specific details, evidence declarations and report
+references in that order. Report finalization lives in
+`specialist-report-finalization.ts`: it consumes retained evidence and resolves
+the exact registered adapter/package before adapting reports within the existing
+shared report budget. For direct commands it derives the final verdict and counts
+from the reports and the configured result mode.
+
+The report adapter's total deadline covers source preparation, package snapshot
+and child execution. An expired internal deadline is reported as
+`REPORT_ADAPTER_TIMEOUT`, including when child shutdown first reports a wrapped
+signal cancellation. Only the exact internal deadline cause is translated;
+caller cancellation retains its own meaning, even with identical error text.
+An unconfirmed process cleanup remains `REPORT_ADAPTER_CLEANUP_FAILED` and keeps
+the package snapshot for diagnosis. The deadline correction does not override
+that failure or claim that external effects were rolled back.
+
+The finalizer receives contract data separately from its registry, adapter
+executor and cancellation signal. This makes the phase independently testable;
+it does not create a native process boundary. These internal inputs are not an
+independently admitted wire request. The production runner still uses its V1
+attempt operation; complete native attempt ownership, retained fixture lifetime,
+and capability/helper accounting remain open work in the
+[native integration design](../review/remediation/implementation/buster-native-integration-seam-20260921.md).
+The [extraction record](../review/remediation/implementation/buster-specialist-extraction-20260921.md)
+records the exact slice and its validation limits, including original tests that
+could not pass in the current workspace.
+
+Within the adapter runtime, `report-adapter-package.ts` owns bounded package
+snapshot reading/writing and `report-artifact-reader.ts` owns file artifact
+verification. `report-adapter-runtime.ts` continues to expose the reader API and
+owns deadlines, process execution, authoritative result binding and snapshot
+cleanup after confirmed process disposal. The
+[report runtime extraction record](../review/remediation/implementation/buster-report-runtime-extraction-20260921.md)
+records the unchanged limits and tests; this module split adds no native
+whole-attempt ownership guarantee.

@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/k3s-io/k3s/v1.36.4%2Bk3s1/pkg/agent/containerd/command.go",
+    "path": "docs/review/evidence/buster-legacy-stop-producer-20260921/k3s-lifecycle/pkg-agent-containerd-command.go.snapshot",
+    "sha256": "59e50dcadae50d98b7470b87d35aabbd9a7e1a6350710a3d7c2e4988316ff0ce"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/k3s-io/k3s/v1.36.4%2Bk3s1/pkg/agent/containerd/containerd.go",
+    "path": "docs/review/evidence/buster-legacy-stop-producer-20260921/k3s-lifecycle/pkg-agent-containerd-containerd.go.snapshot",
+    "sha256": "7f4058e7bc39e42194ad5f4eca6ab232855425eb48c47073bcb80ac60b7f91db"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/k3s-io/k3s/v1.36.4%2Bk3s1/install.sh",
+    "path": "docs/review/evidence/buster-legacy-stop-producer-20260921/k3s-lifecycle/install.sh.snapshot",
+    "sha256": "46177d4c99440b4c0311b67233823a8e8a2fc09693f6c89af1a7161e152fbfad"
+  }
+]

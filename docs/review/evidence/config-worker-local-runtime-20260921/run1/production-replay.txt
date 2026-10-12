@@ -1,0 +1,34 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Got unwanted exception.
+Actual message: "ENOENT: no such file or directory, lstat '/tmp/worker-local-config-cePeKI/replay-1/constructor-boundary/workspace/repository'"
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-worker-local-config.mts:164:12
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: Error: ENOENT: no such file or directory, lstat '/tmp/worker-local-config-cePeKI/replay-1/constructor-boundary/workspace/repository'
+      at Object.realpathSync (node:fs:2862:29)
+      at containedRelative (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts:191:20)
+      at new TestPlanRunner (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts:632:5)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-worker-local-config.mts:164:31
+      at getActual (node:assert:611:5)
+      at strict.doesNotThrow (node:assert:779:32)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-worker-local-config.mts:164:12
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'lstat',
+    path: '/tmp/worker-local-config-cePeKI/replay-1/constructor-boundary/workspace/repository'
+  },
+  expected: undefined,
+  operator: 'doesNotThrow',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

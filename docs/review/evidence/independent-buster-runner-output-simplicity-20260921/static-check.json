@@ -1,0 +1,25 @@
+{
+  "scope": "Independent static private-draft review only; no integration/runtime/type/lint execution",
+  "identities": [
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "beforeMatches": true,
+      "draftMatches": true,
+      "liveEqualsBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-result-validation.ts",
+      "beforeMatches": true,
+      "draftMatches": true,
+      "liveEqualsBefore": true
+    }
+  ],
+  "mappingRestoredByteEqual": true,
+  "requiredLoopExact": true,
+  "directReexport": true,
+  "findings": [],
+  "remaining": [
+    "Original output contract and complete Runner tests",
+    "Types and canonical lint; no acceptance of other Runner findings"
+  ]
+}

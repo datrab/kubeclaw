@@ -15,7 +15,7 @@ const coordinator = new EffectCoordinator(
   new FileEffectJournal(path.join(root, `history-${phase}.jsonl`)),
   undefined,
   undefined,
-  new FileResourceLockManager(path.join(root, `history-${phase}-locks`)),
+  new FileResourceLockManager(path.join(root, `history-${phase}-locks`)), 300_000,
 );
 const adapterOwner = {
   pluginId: 'kubeclaw.artifact-store',

@@ -1,0 +1,81 @@
+suite migration all check failed:
+- docs/architecture/pipeline-test-gate-unit-cutover-inventory.json: cutover proof failed: tests/verification/contracts/check-pipeline-phase10-vertical.mts
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-phase10-vertical.mts:109
+      reference.contentDigest, reference.sizeBytes)).toString('utf8'));
+                ^
+
+TypeError: Cannot read properties of null (reading 'contentDigest')
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-phase10-vertical.mts:109:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+- docs/architecture/pipeline-test-gate-manifest-lint-cutover-inventory.json: cutover proof failed: tests/verification/contracts/check-pipeline-manifest-lint-production.mts
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/lint/src/engine/policy-validation.ts:13
+  throw new LintPolicyError(`${field}: ${message}`);
+        ^
+
+LintPolicyError: policy project kubernetes schema_location: local schema directory does not exist: /opt/kubeclaw-kubernetes-schemas/v1.35.6-standalone-strict
+    at fail (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/lint/src/engine/policy-validation.ts:13:9)
+    at validateKubernetesPaths (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/lint/src/engine/policy-paths.ts:12:94)
+    at validatePolicyTargetPaths (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/lint/src/engine/policy-paths.ts:68:3)
+    at executeLintReport (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/lint/src/engine/index.ts:87:3)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-manifest-lint-production.mts:28:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  code: 'LINT_POLICY_INVALID'
+}
+
+Node.js v24.21.0
+- docs/architecture/pipeline-test-gate-size-budget-cutover-inventory.json: cutover proof failed: tests/verification/contracts/check-pipeline-size-budget-cutover.mts
+node:fs:2862
+      const stats = binding.lstat(base, true, undefined, true /* throwIfNoEntry */);
+                            ^
+
+Error: ENOENT: no such file or directory, lstat '/usr/lib/x86_64-linux-gnu'
+    at Object.realpathSync (node:fs:2862:29)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/direct-command-runtime.ts:90:28
+    at Array.map (<anonymous>)
+    at new DirectCommandCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/direct-command-runtime.ts:89:48)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-size-budget-implementation.mts:63:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-size-budget-cutover.mts:34:1 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: '/usr/lib/x86_64-linux-gnu'
+}
+
+Node.js v24.21.0
+- docs/architecture/pipeline-test-gate-size-budget-cutover-inventory.json: cutover proof failed: tests/verification/contracts/check-pipeline-size-budget-production.mts
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-size-budget-production.mts:87
+  const firstResult = JSON.parse((await service.result(firstStatus.jobId, firstResultRef.contentDigest,
+                                                                                         ^
+
+TypeError: Cannot read properties of null (reading 'contentDigest')
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-size-budget-production.mts:87:90
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0
+- docs/architecture/pipeline-test-gate-http-cutover-inventory.json: cutover proof failed: tests/verification/contracts/check-pipeline-http-cutover.mts
+{"ok":true,"contract":"production-receipt-attestation","algorithm":"ed25519"}
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"planId":"plan:http:live","runId":"run:http:live","attempts":[{"schemaVersion":"attempt-result.v1","planId":"plan:http:live","runId":"run:http:live","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"health","executionId":"plan:http:live:health","testIdentity":"test:8e1f0a502989cb365e44d6ae95b09062669bc2450f4658a72bd1b37614ac22b2","nodeKind":"test","attemptId":"attempt:e2eb2f4ce1416bd4c733e3d457574a8b039dcd4d40256965a4c170b9fcfbce8c","attemptNumber":1,"provider":{"packageId":"kubeclaw.http","packageVersion":"1.0.0","contentDigest":"sha256:92c8588cec754427a00d1d0963e0863302a8cd975e2574230daedb4c6182140b","registrationId":"request","contractId":"kubeclaw.http@1"},"mode":"blocking","executionState":"errored","outcome":null,"startedAt":"2026-09-21T06:24:47.406Z","completedAt":"2026-09-21T06:24:47.417Z","durationMs":11,"summary":"TEST_PROVIDER_SANDBOX_NOT_BUILT","counts":{"total":0,"passed":0,"failed":0,"skipped":0},"findings":[],"metrics":[],"reports":[],"evidence":[],"outputs":[],"resources":{"cpuTimeMs":0,"maximumMemoryBytes":0,"logBytes":0,"artifactBytes":0},"exitCode":null,"signal":null,"providerDetails":null,"resultDigest":"sha256:13d7d2f3b2c141b64c38853a08508bf90e5c6361e6a2aac3840c043b29179498","receipt":{"receiptId":"receipt:fe277a4033b5195f0ec9c93de64df13d4b9f9ad22c203d3c9a0f76375b2ec0a6","receiptDigest":"sha256:04b3c4190be52be42d2456cc6f2ee0b32793d5be076ccd143fbc79f68d875cc4"}}],"nodes":[{"schemaVersion":"node-result.v1","planId":"plan:http:live","runId":"run:http:live","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"health","executionId":"plan:http:live:health","testIdentity":"test:8e1f0a502989cb365e44d6ae95b09062669bc2450f4658a72bd1b37614ac22b2","nodeKind":"test","mode":"blocking","state":"errored","outcome":null,"attemptIds":["attempt:e2eb2f4ce1416bd4c733e3d457574a8b039dcd4d40256965a4c170b9fcfbce8c"],"finalAttemptId":"attempt:e2eb2f4ce1416bd4c733e3d457574a8b039dcd4d40256965a4c170b9fcfbce8c","unstable":false,"skipReason":null,"resultDigest":"sha256:08c2740666cc71d24ac9c140d60a2cca66e1a516a7f3abdecf69269c5da01770","receipt":{"receiptId":"receipt:78bd920455b7f645925d65c2b19c292262493d3407e26238931f57dfbd47405b","receiptDigest":"sha256:55ddc722527431d648d4f970e910b1e7d85d54a510ee5bf573d4f6120b9df7be"}}],"cleanupErrors":[]}
+
+null !== 'passed'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-http-implementation.mts:65:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: 'passed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

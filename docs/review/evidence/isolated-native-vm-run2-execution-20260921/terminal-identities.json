@@ -1,0 +1,48 @@
+{
+  "finalMutableDisk": {
+    "path": "node_modules/.cache/native-test-vm-run2-20260921/guest-root.ext4",
+    "sha256": "b1c3805885814fb8669cdb7a947b350edf64c5b4957c99b485aea959be33a83c"
+  },
+  "files": [
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run2-execution-20260921/prepared-artifact-manifest.json",
+      "sha256": "d60f86c99b25654ff4b1952c36fc8da2041b35147e1e99db1454c3bd9df13ae0"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run2-execution-20260921/prepared-checkpoint-identities.json",
+      "sha256": "5d0fefbdc2b05d5bc312484ae1a4f280462d6f5415d80486db6bf0223cfe1c4c"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run2-execution-20260921/prepared-guest-identity.json",
+      "sha256": "7ab20801678429f8eaa9ca8ae52af39b4b0f7c06c1c6a234364a4d0301df38c5"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run2-execution-20260921/prepared-image-build.json",
+      "sha256": "51f41eb8c4b2fbc5728580e132b5606ee0fa5fe7de5944b9e73f8cb1367d6a06"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run2-execution-20260921/prepared-launch-command.json",
+      "sha256": "8624614be9f28c2861d2fd989bb86317263c1514b741f2eea8299fec4b8b36f9"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run2-execution-20260921/prepared-native-snapshot-current.json",
+      "sha256": "6dfe8e078bfb7dbbad3c0085f9dc821f2146ff0792e757f92fcd7aa0f5a14211"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run2-execution-20260921/prepared-verification-only.txt",
+      "sha256": "49c7a6f3bc4818ca693cf5dc1f2d893ee533669da4d1e47849971186b795031e"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run2-execution-20260921/summary-lines.txt",
+      "sha256": "f7413757dab2056c95d22329ea9a7497f3dacab5c8024aa4bfc179e0ec8c3fa7"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run2-execution-20260921/vm-console.txt",
+      "sha256": "755491696ddcac59b6053bf535ba0150c12dfc87e55b88ac2784a8c950d6758e"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run2-execution-20260921/vm-result.json",
+      "sha256": "357226d8e893e94c761d5331ac21f4dbd0b887e9df2e50fc9a1a78ae33d446d8"
+    }
+  ]
+}

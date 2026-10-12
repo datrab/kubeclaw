@@ -1,0 +1,32 @@
+[
+  {
+    "path": "scripts/observability-retirement/dispatch.mjs",
+    "sha256": "0b397716a3d255f146121631aa6d6a83a265870590f043ef40e3403f1066a94f",
+    "bytes": 15837
+  },
+  {
+    "path": "skills/nova/core/execution/engine-runtime.ts",
+    "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+    "bytes": 8372
+  },
+  {
+    "path": "skills/nova/core/execution/engine-snapshots.ts",
+    "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+    "bytes": 12185
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+    "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+    "bytes": 5817
+  },
+  {
+    "path": "skills/nova/core/test-gates/source-git.ts",
+    "sha256": "869044fecd888a1e4ded10059c8f6a5ec4510d1ca9c277507de545538f1fb90c",
+    "bytes": 2712
+  },
+  {
+    "path": "skills/nova/core/test-gates/source-process-lifecycle.ts",
+    "sha256": "5924d42b6b5140cd8148aba4d69e54eca84ba8883e0a2739420019f5b48f778b",
+    "bytes": 2981
+  }
+]

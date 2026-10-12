@@ -1,0 +1,211 @@
+{
+  "$id": "summary.completed.payload.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/agent_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "$ref": "../envelope.schema.json#/properties/attempt"
+    },
+    "case_study_base_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "data_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dispatch_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/dispatch_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "extensions": {
+      "$ref": "../envelope.schema.json#/properties/extensions"
+    },
+    "gate_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "gate_type": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_type"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "gateway_label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "latest_json_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "markdown_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_call_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/model_call_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "module_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/module_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "output": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "output_dir": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "output_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pipeline_summary_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reason_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "runtime": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "summary_json_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "summary_type": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "terminal_decision": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "terminal_status": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tool_call_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/tool_call_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    }
+  },
+  "required": [
+    "summary_type"
+  ],
+  "type": "object"
+}

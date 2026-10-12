@@ -1,0 +1,167 @@
+[
+  {
+    "file": "skills/prism/tests/worker-service.test.mts",
+    "line": 43,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/worker-service.test.mts",
+    "line": 134,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/swarm-result-journal.test.mts",
+    "line": 14,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/native/operation-journal.mts",
+    "line": 48,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/native/operation-journal.mts",
+    "line": 58,
+    "policy": "changedPolicy"
+  },
+  {
+    "file": "skills/prism/tests/native/operation-journal.mts",
+    "line": 64,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/native/operation-journal.mts",
+    "line": 77,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/native/operation-journal.mts",
+    "line": 88,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/native/operation-journal.mts",
+    "line": 91,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/native/operation-journal.mts",
+    "line": 102,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/native/operation-journal.mts",
+    "line": 113,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/native/operation-journal.mts",
+    "line": 118,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/swarm-resource-policy.test.mts",
+    "line": 45,
+    "policy": "control.nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/swarm-resource-policy.test.mts",
+    "line": 66,
+    "policy": "control.nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/swarm-resource-policy.test.mts",
+    "line": 74,
+    "policy": "config.nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/worker-cancellation.test.mts",
+    "line": 74,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/worker-http-cancellation.native.mts",
+    "line": 56,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/worker-process-shutdown.native.mts",
+    "line": 80,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/swarm-native-settings.test.mts",
+    "line": 19,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/tests/engine.test.mts",
+    "line": 158,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "tests/verification/reliability/worker-native-journal.test.mts",
+    "line": 24,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "tests/verification/reliability/worker-native-journal.test.mts",
+    "line": 44,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "tests/verification/reliability/worker-native-journal.test.mts",
+    "line": 86,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "tests/verification/reliability/worker-native-journal.test.mts",
+    "line": 97,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "tests/verification/reliability/worker-native-journal.test.mts",
+    "line": 107,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "tests/verification/reliability/worker-native-journal.test.mts",
+    "line": 135,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "tests/verification/reliability/worker-native-contract.test.mts",
+    "line": 22,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "tests/verification/reliability/worker-native-contract.test.mts",
+    "line": 32,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "tests/verification/reliability/worker-native-contract.test.mts",
+    "line": 48,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "tests/verification/reliability/worker-native-scope-live.mts",
+    "line": 156,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/integration/worker-concurrent-resource-attribution.mts",
+    "line": 65,
+    "policy": "nativeResourcePolicy"
+  },
+  {
+    "file": "skills/prism/control/native-operation.ts",
+    "line": 15,
+    "policy": "config.nativeResourcePolicy"
+  },
+  {
+    "file": "tests/fixtures/buster-fixture-protocol.mts",
+    "line": 9,
+    "policy": "nativeResourcePolicy"
+  }
+]

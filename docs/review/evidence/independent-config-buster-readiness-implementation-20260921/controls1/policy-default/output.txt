@@ -1,0 +1,62 @@
+TAP version 13
+# {"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_TIMEOUT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":307}
+# Subtest: real factory/service/process honors execution policy {"maximumExecutionMs":300,"maximumOutputBytes":4096}
+ok 1 - real factory/service/process honors execution policy {"maximumExecutionMs":300,"maximumOutputBytes":4096}
+  ---
+  duration_ms: 638.804272
+  type: 'test'
+  ...
+# {"event":"buster.dependency-readiness","dependency":"buildkit","ok":true,"code":"DEPENDENCY_OK","exitCode":0,"signal":null,"errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":1238}
+# Subtest: real factory/service/process honors execution policy {"maximumExecutionMs":2500,"maximumOutputBytes":4096}
+ok 2 - real factory/service/process honors execution policy {"maximumExecutionMs":2500,"maximumOutputBytes":4096}
+  ---
+  duration_ms: 1472.973873
+  type: 'test'
+  ...
+# {"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_OUTPUT_LIMIT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":256,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":35}
+# Subtest: real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":64}
+ok 3 - real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":64}
+  ---
+  duration_ms: 196.641741
+  type: 'test'
+  ...
+# {"event":"buster.dependency-readiness","dependency":"buildkit","ok":true,"code":"DEPENDENCY_OK","exitCode":0,"signal":null,"errno":null,"outputBytes":256,"outputDigest":"sha256:85e62acd750c4eb56b7b6a1d66dca5bfaac5f062608a1a893410d0288936c09a","durationMs":37}
+# Subtest: real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":1024}
+ok 4 - real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":1024}
+  ---
+  duration_ms: 157.837703
+  type: 'test'
+  ...
+# Subtest: factory disabled capability does not execute configured dependency and rejects retired runtime authors
+ok 5 - factory disabled capability does not execute configured dependency and rejects retired runtime authors
+  ---
+  duration_ms: 117.947846
+  type: 'test'
+  ...
+# Subtest: real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay
+not ok 6 - real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay
+  ---
+  duration_ms: 279.034632
+  type: 'test'
+  location: '/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-readiness-consumer.test.mts:73:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-readiness-consumer.test.mts:94:14)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 5
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4769.714714

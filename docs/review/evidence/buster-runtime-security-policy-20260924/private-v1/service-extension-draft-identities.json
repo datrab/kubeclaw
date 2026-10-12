@@ -1,0 +1,25 @@
+{
+  "status": "draft; not frozen; await CI2 teardown review and rebase before integration",
+  "files": [
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-api.mjs",
+      "ci2DraftBaselineSha256": "d40e348ef9372cc013391e27f4f4be20c636116fe1b6fc0fc9af83e15fa3c7f0",
+      "proposedSha256": "07749cccd627419e828243f57f4f939b1430c233d7cd8e99516fe4257ea1c4d6"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-program.cjs",
+      "ci2DraftBaselineSha256": "499dc5c951bb3fdc956205b2bd19271313abc446363da99fa1611ebf50e0c0b1",
+      "proposedSha256": "502569a89a517e0f2f4f930c15d744e4e0ab9841c7d1dc7ddb394bcdcc4a88ae"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-route-provider.mjs",
+      "ci2DraftBaselineSha256": "4a6d0c1cc263bb964a25c4a0a5fe2a8c8e940aa127990b5be4369d67c65b1888",
+      "proposedSha256": "3c14e02b7b1b0865f1accf0b45e5ad5584a29a1213aa75094fa5a93a02fd33c8"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "ci2DraftBaselineSha256": "c1e24d7cbb18514f960e6f0339c39854aa33fb2b142b80abb6cfdff3057a192b",
+      "proposedSha256": "5c8e0711330fe4bd071d3c373a043023b2fc408107e7d7197bc8d3268fcb2bf9"
+    }
+  ]
+}

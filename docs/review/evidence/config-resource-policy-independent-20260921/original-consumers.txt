@@ -1,0 +1,25 @@
+✔ engine generates, renders, evaluates and publishes idempotently (14.220297ms)
+✔ the generic worker carries an opaque Prism operation (3.008198ms)
+✔ the worker binding rejects unknown operations (0.279877ms)
+✔ concurrent retries share one provider execution (1.218472ms)
+✔ the live provider accepts internal LiteLLM without requiring embeddings (0.624426ms)
+✔ an idempotency key cannot identify different requests (0.882062ms)
+✔ Prism creates a valid neutral worker envelope (50.439798ms)
+✔ only the admitted owner can cancel a pending original render; callers without cancellation still coalesce (63.178117ms)
+✔ real full-log upload aborts a stalled response body; persisted receiver bytes are not claimed rolled back (124.961647ms)
+✔ terminate aborts and drains the original artifact read before any engine operation starts (37.239589ms)
+✔ owner cancellation before retention rejects every coalesced original-render caller (2.666768ms)
+✔ current specialist renders through the original authenticated artifact service (93.664902ms)
+✔ original artifact service rejects actual full-log storage corruption (15.454018ms)
+✔ captured historical receipts and evidence retain their original validated digests (93.509158ms)
+✔ Control shared boundary rejects other real attempts and modified results before evidence I/O (34.214071ms)
+✔ historical real receipts remain readable and cannot be reinterpreted as native task receipts (70.30029ms)
+✔ actual Control artifact handler rejects unauthenticated reads and verifies upload URL digest (22.673933ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4127.497934

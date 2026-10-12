@@ -1,0 +1,13 @@
+{
+  "names": [
+    "buster-preparation",
+    "buster-admission",
+    "buster-dependency-readiness",
+    "buster-execution",
+    "buster-execution-observation"
+  ],
+  "allActualSchemaDefinitionsExist": true,
+  "sharedNamesDriveRuntimeMap": true,
+  "sourceSha256": "24ad306968220642c2ef63d46b9a304404c30556ef91f535fd43a131196b0fa2",
+  "scope": "Source registration check only; Runtime2 required."
+}

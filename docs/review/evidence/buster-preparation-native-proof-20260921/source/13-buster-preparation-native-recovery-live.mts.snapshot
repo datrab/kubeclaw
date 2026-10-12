@@ -1,0 +1,138 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { spawn } from 'node:child_process';
+import { once } from 'node:events';
+import { fileURLToPath } from 'node:url';
+import test from 'node:test';
+import { createNativeCaseRoot, createNativePreparationJob, requiredNativeInput, stageNativeWire,
+  withNativePreparation } from '../../fixtures/test-gate/native-preparation.mts';
+import { extractBusterPreparation } from '../../../skills/buster/engine/test-gates/preparation-extraction.ts';
+
+type CrashBoundary = 'before-release' | 'after-release' | 'after-delete';
+
+async function killAtRelease(root: string, boundary: CrashBoundary): Promise<string> {
+  const fixture = fileURLToPath(new URL('../../fixtures/test-gate/native-preparation-release-crash.mts', import.meta.url));
+  const environment = { ...process.env };
+  delete environment.NODE_TEST_CONTEXT;
+  const loader = fileURLToPath(new URL('../../fixtures/test-gate/native-preparation-delete-loader.mjs', import.meta.url));
+  const instrumentation = boundary === 'after-delete' ? ['--import', loader] : [];
+  const child = spawn(process.execPath, [...instrumentation, fixture, root, boundary], { env: environment,
+    stdio: ['ignore', 'inherit', 'inherit', 'ipc'] });
+  const exited = once(child, 'exit');
+  try {
+    const message = await Promise.race([
+      once(child, 'message').then(([value]) => value as { kind: string; admissionId: string }),
+      exited.then(([code, signal]) => { throw new Error(`release child exited before barrier: ${code}/${signal}`); }),
+    ]);
+    assert.equal(message.kind, boundary);
+    assert.ok(child.kill('SIGKILL'));
+    assert.deepEqual(await exited, [null, 'SIGKILL']);
+    return message.admissionId;
+  } finally {
+    if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
+    await exited;
+  }
+}
+
+for (const boundary of ['before-release', 'after-release', 'after-delete'] as const) {
+  test(`actual ${boundary} SIGKILL recovers one new extraction generation without rewriting failure`,
+    { timeout: 600_000 }, async () => {
+      const root = await createNativeCaseRoot(boundary);
+      const { job } = await createNativePreparationJob(root);
+      let failedAdmission = '';
+      let failedResult = '';
+      await withNativePreparation(root, async (execution, store) => {
+        const staged = await stageNativeWire(execution, path.join(root, 'producer-wire.json'), new AbortController().signal);
+        assert.ok(staged);
+        await store.accept(staged, new Date().toISOString());
+        // Deliberately fail a real launched helper. This is not a malformed tar
+        // proof; the retry below uses the unchanged production GNU tar path.
+        await assert.rejects(extractBusterPreparation({ ...execution,
+          command: { ...execution.command, tarExecutable: '/usr/bin/false' } }, staged, new AbortController().signal));
+        const failed = (await execution.ledger.reservations()).find(row => row.parentInputId !== null);
+        assert.ok(failed && !failed.slotReleased);
+        const result = await execution.journal.readResult(failed.envelope);
+        assert.ok(result && result.state !== 'completed');
+        assert.equal(result.cleanup.state, 'failed', 'partial owned source remains an unresolved effect');
+        failedAdmission = failed.admissionId;
+        failedResult = JSON.stringify(result);
+      });
+      assert.equal(await killAtRelease(root, boundary), failedAdmission);
+      await withNativePreparation(root, async (execution, store) => {
+        const before = await execution.ledger.reservations();
+        const original = before.find(row => row.admissionId === failedAdmission);
+        assert.ok(original && original.phase === 'released' && original.slotReleased);
+        assert.equal(JSON.stringify(await execution.journal.readResult(original.envelope)), failedResult);
+        assert.equal(original.cleanup.length, boundary === 'after-delete' ? 2 : 1,
+          'unsealed cleanup gets one bound retry; sealed successful cleanup is reused');
+        const { payload } = await store.get(job.jobId);
+        assert.ok(payload.input?.schemaVersion === 'buster-staged-input.v1');
+        const prepared = await extractBusterPreparation(execution,
+          { job: payload.job, input: payload.input }, new AbortController().signal);
+        await store.attachSource(prepared);
+        const generations = (await execution.ledger.reservations()).filter(row => row.parentInputId !== null);
+        assert.equal(generations.length, 2);
+        const current = generations.find(row => row.phase === 'published');
+        assert.ok(current && current.slotReleased);
+        assert.equal(current.extractionGeneration, original.extractionGeneration + 1);
+        assert.equal(current.parentInputId, original.parentInputId);
+        assert.equal(current.envelope.operation.values.preparationUid, prepared.source.preparationUid);
+        assert.equal(JSON.stringify(await execution.journal.readResult(original.envelope)), failedResult);
+        const stagedWire = path.join(execution.command.sourceRoot, payload.input.admissionId, 'data', 'request.json');
+        assert.deepEqual(await fs.readFile(stagedWire), await fs.readFile(path.join(root, 'producer-wire.json')));
+      });
+    });
+}
+
+test('competing actual extraction requests retain exactly one accepted generation and source identity',
+  { timeout: 600_000 }, async () => {
+    const root = await createNativeCaseRoot('competing-extraction');
+    await createNativePreparationJob(root);
+    await withNativePreparation(root, async (execution, store) => {
+      const staged = await stageNativeWire(execution, path.join(root, 'producer-wire.json'), new AbortController().signal);
+      assert.ok(staged);
+      await store.accept(staged, new Date().toISOString());
+      const competing = await Promise.allSettled([0, 1].map(() =>
+        extractBusterPreparation(execution, staged, new AbortController().signal)));
+      const successes = competing.filter(result => result.status === 'fulfilled').map(result => result.value);
+      assert.ok(successes[0], 'one real extraction must make progress');
+      for (const prepared of successes) assert.deepEqual(prepared, successes[0]);
+      for (const result of competing) {
+        if (result.status === 'rejected') {
+          assert.match(String(result.reason), /WORKER_NATIVE_ATTEMPT_BUSY|BUSTER_PREPARATION_/u);
+        }
+      }
+      const extraction = (await execution.ledger.reservations()).filter(row => row.parentInputId !== null);
+      assert.equal(extraction.length, 1);
+      assert.equal(extraction[0]!.phase, 'published');
+      assert.ok(extraction[0]!.slotReleased);
+      assert.equal(extraction[0]!.source?.admissionId, successes[0].source.admissionId);
+      let journalCount = 0;
+      for await (const envelope of execution.journal.acceptedEnvelopes()) {
+        assert.equal((await execution.journal.readResult(envelope))?.state, 'completed');
+        journalCount += 1;
+      }
+      assert.equal(journalCount, 2, 'one staging attempt plus one extraction attempt');
+    });
+  });
+
+test('centrally authored two-record quota retains the real input and rejects extraction before native allocation',
+  { timeout: 600_000 }, async () => {
+    const root = await createNativeCaseRoot('record-quota');
+    await createNativePreparationJob(root);
+    const document = JSON.parse(await fs.readFile(requiredNativeInput('SWARM_CONFIG'), 'utf8'));
+    document.operator.buster.preparation.maximumRecords = 2;
+    const config = path.join(root, 'small-record-profile.json');
+    await fs.writeFile(config, JSON.stringify(document), { mode: 0o644 });
+    const environment: NodeJS.ProcessEnv = { ...process.env, SWARM_CONFIG: config };
+    delete environment.NODE_TEST_CONTEXT;
+    const fixture = fileURLToPath(new URL('../../fixtures/test-gate/native-preparation-quota.mts', import.meta.url));
+    const child = spawn(process.execPath, [fixture, root], { env: environment, stdio: ['ignore', 'inherit', 'inherit'] });
+    const exited = once(child, 'exit');
+    try { assert.deepEqual(await exited, [0, null]); }
+    finally {
+      if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
+      await exited;
+    }
+  });

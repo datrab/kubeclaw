@@ -1,0 +1,10 @@
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/e2e/real-run-workspace.mjs:1497
+  return result.stdout.trim();
+                       ^
+
+TypeError: Cannot read properties of undefined (reading 'trim')
+    at currentBranch (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/e2e/real-run-workspace.mjs:1497:24)
+    at async createRealE2ERunWorkspace (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/e2e/real-run-workspace.mjs:1551:24)
+    at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts:102:19
+
+Node.js v24.21.0

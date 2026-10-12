@@ -1,0 +1,52 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+    "beforeSha256": null,
+    "stagedSha256": "57f5f68231777a113c01773a33c350cbbb2746e97ad8aad4538b455427585ff4"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-control.config.json",
+    "beforeSha256": null,
+    "stagedSha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-execution.config.json",
+    "beforeSha256": null,
+    "stagedSha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-studio.config.json",
+    "beforeSha256": null,
+    "stagedSha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+    "beforeSha256": null,
+    "stagedSha256": "a2ae24efb4777b5018041c58a790025435308afa6efb5e9598d2980c0544ee69"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "beforeSha256": "b9f7ca208263a45c39c67fb21c864a83a33a04144dcade051fa24a0719d72451",
+    "stagedSha256": "ab3ee0545ef7d04897523efcfe3a7c93acf036025e92a4142b044a530e0d0634"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "beforeSha256": null,
+    "stagedSha256": "cf0559119369f8244412c174e6e20cc5a9e6dd98fd579a4792c0738699f489e6"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "beforeSha256": null,
+    "stagedSha256": "6d8ee7a3628cf3952e9f2838777f1926578c57bb193b7a809eef2a2143a3e922"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "beforeSha256": "6529733c4220ded5ef9b1482793ceadaf7f23d1a855bb9bd13de6454ec3c1a5a",
+    "stagedSha256": "cc3ca68d2c90b3e2f36eecdbd43348f409cff5bf6cbbf33a230e6d19201870c4"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "beforeSha256": "1ab81d8acff9b7b87d193964780c08f39350086bf60aee51771e312ad6ae8e6e",
+    "stagedSha256": "1c3a1368f29ab63e3c4809dbc9da1d79bb7a244b4ec3f83612ed1d8f096c4141"
+  }
+]

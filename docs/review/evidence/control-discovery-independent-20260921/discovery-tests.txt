@@ -1,0 +1,13 @@
+✔ computed literal environment reads are candidates without evaluating values (9.909285ms)
+✔ local environment helper parameter order identifies the actual name argument (4.65714ms)
+✔ unrelated and nested helper bodies do not authorize argument discovery (0.916804ms)
+✔ actual Control required credentials omitted by first-argument discovery are found (13.546168ms)
+✔ discovery never executes source or reads the named secret value (0.729369ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 384.352692

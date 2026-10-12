@@ -1,0 +1,32 @@
+{
+  "status": "source-only; integration corrections requested; no runtime",
+  "files": [
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/next-consumers/tests/verification/contracts/buster-process-sampling.test.mjs",
+      "sha256": "8b242a0318a4e9191142f7d9ab46928c22052d4bb89e5e2df53ce94864590ea1"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/next-consumers/tests/verification/contracts/buster-default-store-policy.test.mjs",
+      "sha256": "ac653f25ca380a054cf77f2b708d3160f58ae1455ea58191f9de0f3fd28be97f"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/next-consumers/identities.json",
+      "sha256": "37e2b92694e275af133ce4eddd2559a2327c323ac4b5e14e4c3ae861229967c6"
+    },
+    {
+      "path": "tests/fixtures/test-gate/runner-contract-fixture.mts",
+      "sha256": "8a5ca1911223af5ac527bc7181a069da0ce6a4992e0656d88140f29b4c91bf36"
+    }
+  ],
+  "findings": [
+    "No temporary tree cleanup in either module or imported fixture. Register before work; run after actual runner settlement.",
+    "High-ingress rejection accepts any non-size error; assert actual decoder/quarantine reason."
+  ],
+  "boundaries": [
+    "Real default TestPlanRunner, prototype receiver hooks delegate unchanged operations; no execute/runtime/provider substitution.",
+    "Store probes after real run are direct public operations on actual default-owned receivers, not proof that valid completion emits malformed input.",
+    "Sampling observes delegated real /proc scans, not exact timing or comprehensive RSS peak accounting.",
+    "Low ingress explicitly requires one real valid admitted completion; lower metadata fixture expects actual errored result/message. Quota feasibility remains unexecuted.",
+    "Original recovery/count/full runner scope remains required."
+  ]
+}

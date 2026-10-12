@@ -1,0 +1,51 @@
+✖ completion winning the real writer fence is returned without stale cancellation or abort (813.076033ms)
+✖ cancellation winning the real writer fence prevents a later completion (503.885595ms)
+(node:507525) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 27)
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ concurrent queued cancellation converges and repeated terminal cancellation leaves bytes unchanged (778.490389ms)
+✔ parallel active cancellation converges and preserves terminal bytes (565.852694ms)
+✔ invalid persisted status and record shape remain rejected without writes (384.864686ms)
+✔ source attachment and cancellation share the durable admission fence (131.624559ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6723.936384
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-atomic-cancellation.test.mts:57:1
+✖ completion winning the real writer fence is returned without stale cancellation or abort (813.076033ms)
+  Error [PipelineTestGateContractError]: Invalid pipeline test-gate remotePlanResult: /nodes must NOT have fewer than 1 items
+      at validatePipelineTestGateContract (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/contracts/pipeline-test-gate/v1/src/validation.ts:276:25)
+      at ModeledPreparedPlanJobStore.complete (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/prepared-plan-store.ts:237:5)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-atomic-cancellation.test.mts:67:32)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    definition: 'remotePlanResult',
+    errors: [ '/nodes must NOT have fewer than 1 items' ]
+  }
+
+test at tests/verification/reliability/buster-atomic-cancellation.test.mts:97:1
+✖ cancellation winning the real writer fence prevents a later completion (503.885595ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /BUSTER_REMOTE_JOB_STATE_CONFLICT:(?:cancelling|cancelled)/u. Input:
+  
+  'PipelineTestGateContractError: Invalid pipeline test-gate remotePlanResult: /nodes must NOT have fewer than 1 items'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: PipelineTestGateContractError: Invalid pipeline test-gate remotePlanResult: /nodes must NOT have fewer than 1 items
+        at validatePipelineTestGateContract (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/contracts/pipeline-test-gate/v1/src/validation.ts:276:25)
+        at ModeledPreparedPlanJobStore.complete (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/prepared-plan-store.ts:237:5)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-atomic-cancellation.test.mts:107:15)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /BUSTER_REMOTE_JOB_STATE_CONFLICT:(?:cancelling|cancelled)/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }

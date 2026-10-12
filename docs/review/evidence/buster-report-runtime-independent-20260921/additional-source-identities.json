@@ -1,0 +1,42 @@
+[
+  {
+    "path": "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+    "sha256": "8756a9643c5439696b7355dbbf90d5f9c05af1908183b25dfaa5a5921fe627c4",
+    "snapshot": "docs/review/evidence/buster-report-runtime-independent-20260921/sources/extra-00-check-pipeline-report-adapter-runtime.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+    "sha256": "c95fedf0775d6c5c7089386256c40253c23613dde6c00d7e02c3ebdad410b358",
+    "snapshot": "docs/review/evidence/buster-report-runtime-independent-20260921/sources/extra-01-check-pipeline-junit-report-adapter.mts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/process-input.ts",
+    "sha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620",
+    "snapshot": "docs/review/evidence/buster-report-runtime-independent-20260921/sources/extra-02-process-input.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+    "sha256": "b45b50d0cfd2ae6a0aa091ba1e1edcb936b868490ae2a579f3ac561d24f8394e",
+    "snapshot": "docs/review/evidence/buster-report-runtime-independent-20260921/sources/extra-03-process-input-lifecycle.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-child.mjs",
+    "sha256": "31a4f4435fbe9137521e8c610d6dac0905ce01fa0b2589062362270ae109c77c",
+    "snapshot": "docs/review/evidence/buster-report-runtime-independent-20260921/sources/extra-04-report-adapter-child.mjs.snapshot"
+  },
+  {
+    "path": "docs/review/evidence/buster-report-runtime-extraction-20260921/report-adapter-runtime.before.txt",
+    "sha256": "f5418b326fb8bdbb5f0a42640e5f647d2eec534c02c791ed212a6cfd1bcb8cee",
+    "snapshot": "docs/review/evidence/buster-report-runtime-independent-20260921/sources/extra-05-report-adapter-runtime.before.txt.snapshot"
+  },
+  {
+    "path": "docs/review/evidence/buster-report-runtime-extraction-20260921/check-preserved.mjs",
+    "sha256": "394b228a76b547aa1d2ce212ad7f025bcebd2df282f568196a3d6bcb676ead11",
+    "snapshot": "docs/review/evidence/buster-report-runtime-independent-20260921/sources/extra-06-check-preserved.mjs.snapshot"
+  },
+  {
+    "path": "docs/review/evidence/report-adapter-deadline-independent-20260921/probe.mjs",
+    "sha256": "5a4c813b9e28196f71e9d8d976f6ccea51e4d457fe495aefdb153f305630bcf6",
+    "snapshot": "docs/review/evidence/buster-report-runtime-independent-20260921/sources/extra-07-probe.mjs.snapshot"
+  }
+]

@@ -1,0 +1,250 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /notification-delivery-request|transport-publication-request/. Input:
+
+"import { discordWebhookPayload } from './discord-payload.ts';\n" +
+  "import crypto from 'node:crypto';\n" +
+  "import type { AdapterActivationContext, AdapterInstance, AdapterInvocation, EffectRequest } from '@kubeclaw/plugin-sdk';\n" +
+  "import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';\n" +
+  "import { completeDelivery, lookupDelivery, deliveryIdentity, deliveryReceipt, failDelivery, reserveDelivery, type Reservation } from './delivery-records.ts';\n" +
+  "import { discordEndpoint, discordReceipt, validateDiscordReceipt } from './discord-receipt.ts';\n" +
+  "import { receiverReceipt } from './receiver.ts';\n" +
+  "import { isTargetId, parseConfig, type TargetConfig } from './config.ts';\n" +
+  "import { assertRequest, parsePayload, responseMessageId, secretValue } from './payload.ts';\n" +
+  '\n' +
+  '// One exact JSON transport body is stored as a JSON string: escaping can at most\n' +
+  '// double its admitted 1 MiB bytes. Metadata allowance and aggregate quotas stay unchanged.\n' +
+  'const DELIVERY_RECORD_MAX_BYTES = 2 * 1_048_576 + 65_536;\n' +
+  '\n' +
+  'function resolveSecretEndpoint(secret: string, target: TargetConfig): string {\n' +
+  '  if (!target.endpointSecret) {\n' +
+  "    if (!target.endpoint) throw new Error('OPERATOR_ENDPOINT_UNAVAILABLE');\n" +
+  '    return target.endpoint;\n' +
+  '  }\n' +
+  '  let endpoint: URL;\n' +
+  "  try { endpoint = new URL(secret); } catch { throw new Error('OPERATOR_SECRET_ENDPOINT_INVALID'); }\n" +
+  '  if (endpoint.origin !== target.endpointOrigin || endpoint.username || endpoint.password || endpoint.hash) {\n' +
+  "    throw new Error('OPERATOR_SECRET_ENDPOINT_DENIED');\n" +
+  '  }\n' +
+  '  return endpoint.href;\n' +
+  '}\n' +
+  '\n' +
+  'function transportReceipt(invocation: AdapterInvocation, target: TargetConfig, payload: Readonly<Record<string, unknown>>, response: Readonly<Record<string, unknown>>): Readonly<Record<string, unknown>> {\n' +
+  "  if (!Number.isSafeInteger(response.status) || Number(response.status) < 200 || Number(response.status) > 299) throw new Error('OPERATOR_DELIVERY_INVALID_RESPONSE');\n" +
+  "  if (target.format === 'discord_webhook') return discordReceipt(invocation.request, payload, response);\n" +
+  '  const messageId = responseMessageId(response);\n' +
+  '  return { accepted: true, target: invocation.request.resource.canonicalId, status: Number(response.status), ...(messageId ? { messageId } : {}) };\n' +
+  '}\n' +
+  '\n' +
+  'async function deliver(context: AdapterActivationContext, invocation: AdapterInvocation, target: TargetConfig, records: FileDurableRecordStore): Promise<Readonly<Record<string, unknown>>> {\n' +
+  '  const { request, signal } = invocation;\n' +
+  '  const payload = parsePayload(request.payload, target.maxPayloadBytes);\n' +
+  "  const transportPayload = target.format === 'discord_webhook' ? discordWebhookPayload(payload) : payload;\n" +
+  "  const reserved = await reserveDelivery(records, request, transportPayload, target.format === 'json' && Boolean(target.receiptEndpoint));\n" +
+  "  if ('accepted' in reserved) return target.format === 'discord_webhook' ? validateDiscordReceipt(reserved, request, transportPayload) : reserved;\n" +
+  '  const reservation = reserved as Reservation;\n' +
+  '  let sent = false;\n' +
+  '  try {\n' +
+  '    const secretName = target.endpointSecret ?? target.tokenSecret;\n' +
+  "    if (!secretName) throw new Error('OPERATOR_SECRET_UNAVAILABLE');\n" +
+  "    const resolved = await context.invoke('secrets.read', { operation: 'resolve', resource: { type: 'secret.name', canonicalId: secretName }, payload: {} });\n" +
+  "    if (signal.aborted) throw new Error('ADAPTER_CANCELLED');\n" +
+  '    const secret = secretValue(resolved), deliveryId = deliveryIdentity(request), body = JSON.stringify(transportPayload);\n' +
+  '    const resolvedEndpoint = resolveSecretEndpoint(secret, target);\n' +
+  "    const endpoint = target.format === 'discord_webhook' ? discordEndpoint(resolvedEndpoint) : resolvedEndpoint;\n" +
+  "    if (target.format === 'json' && target.receiptEndpoint) {\n" +
+  '      const accepted = await receiverReceipt(context, target.receiptEndpoint, deliveryId, body, secret);\n' +
+  '      if (accepted) return completeDelivery(records, request, reservation, { accepted: true, target: request.resource.canonicalId, status: 200, ...accepted });\n' +
+  '    }\n' +
+  "    const signature = crypto.createHmac('sha256', secret).update(`${deliveryId}.${body}`, 'utf8').digest('hex');\n" +
+  "    const networkRequest = { operation: 'request', resource: { type: 'network.url', canonicalId: endpoint }, payload: {\n" +
+  "      method: 'POST', headers: { 'content-type': 'application/json', 'idempotency-key': deliveryId, 'x-kubeclaw-signature': `v1=${signature}` }, body: transportPayload,\n" +
+  '    } };\n' +
+  '    sent = true;\n' +
+  "    const response = target.endpointSecret ? await context.invokeConfidential('network.http', networkRequest) : await context.invoke('network.http', networkRequest);\n" +
+  "    if (signal.aborted) throw new Error('ADAPTER_CANCELLED');\n" +
+  '    return await completeDelivery(records, request, reservation, transportReceipt(invocation, target, transportPayload, response));\n' +
+  '  } catch (error) { return failDelivery(records, request, reservation, sent, error); }\n' +
+  '}\n' +
+  '\n' +
+  'export function activate(context: AdapterActivationContext): AdapterInstance {\n' +
+  '  const config = parseConfig(context.config);\n' +
+  '  const targets = config.targets;\n' +
+  '  const records = new FileDurableRecordStore(config.deliveryRoot, {\n' +
+  '    maximumRecords: config.maximumDeliveryRecords,\n' +
+  '    maximumBytes: config.maximumDeliveryBytes,\n' +
+  '    maximumRecordBytes: DELIVERY_RECORD_MAX_BYTES,\n' +
+  '  });\n' +
+  '  let shuttingDown = false;\n' +
+  '  return {\n' +
+  "    async ready() { if (shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN'); },\n" +
+  '    async invoke(invocation) {\n' +
+  '      const { request, signal, confidential, fence } = invocation;\n' +
+  '      if (!confidential) fence.assertCurrent();\n' +
+  "      if (shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN');\n" +
+  "      if (signal.aborted) throw new Error('ADAPTER_CANCELLED');\n" +
+  "      if (request.capability === 'operator.receipt') {\n" +
+  '        const receipt = await lookupReceipt(records, request, targets.get(request.resource.canonicalId));\n' +
+  '        signal.throwIfAborted();\n' +
+  '        return receipt;\n' +
+  '      }\n' +
+  '      assertRequest(request, isTargetId);\n' +
+  '      const target = targets.get(request.resource.canonicalId);\n' +
+  '      if (!target) throw new Error(`OPERATOR_TARGET_DENIED:${request.resource.canonicalId}`);\n' +
+  '      return deliver(context, invocation, target, records);\n' +
+  '    },\n' +
+  '    async receipt(request) {\n' +
+  "      if (request.capability === 'operator.receipt') return lookupReceipt(records, request, targets.get(request.resource.canonicalId));\n" +
+  '      assertRequest(request, isTargetId);\n' +
+  '      const target = targets.get(request.resource.canonicalId);\n' +
+  '      if (!target) throw new Error(`OPERATOR_TARGET_DENIED:${request.resource.canonicalId}`);\n' +
+  '      const payload = parsePayload(request.payload, target.maxPayloadBytes);\n' +
+  "      const transportPayload = target.format === 'discord_webhook' ? discordWebhookPayload(payload) : payload;\n" +
+  '      const receipt = await deliveryReceipt(records, request, transportPayload);\n' +
+  "      return receipt && target.format === 'discord_webhook'\n" +
+  '        ? validateDiscordReceipt(receipt, request, transportPayload) : receipt;\n' +
+  '    },\n' +
+  '    async shutdown() { shuttingDown = true; },\n' +
+  '  };\n' +
+  '}\n' +
+  '\n' +
+  'async function lookupReceipt(records:FileDurableRecordStore,request:EffectRequest,target:TargetConfig|undefined) {\n' +
+  "  if (request.operation !== 'lookup' || request.resource.type !== 'operator.target' || !isTargetId(request.resource.canonicalId)) throw new Error('OPERATOR_RECEIPT_OPERATION_INVALID');\n" +
+  "  if (!target || target.format !== 'discord_webhook') throw new Error('OPERATOR_RECEIPT_TARGET_DENIED');\n" +
+  '  const { deliveryId, stageId, payload } = request.payload;\n' +
+  "  if (Object.keys(request.payload).some(key => !['deliveryId', 'stageId', 'payload'].includes(key))\n" +
+  "    || typeof deliveryId !== 'string' || !deliveryId || deliveryId.length > 512 || typeof stageId !== 'string' || !stageId\n" +
+  "    || !payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('OPERATOR_RECEIPT_QUERY_INVALID');\n" +
+  '  const transport = discordWebhookPayload(parsePayload(payload as Readonly<Record<string, unknown>>, target.maxPayloadBytes));\n' +
+  '  const receipt = await lookupDelivery(records, request, deliveryId, stageId, transport);\n' +
+  '  return validateDiscordReceipt(receipt, { ...request, deliveryId }, transport);\n' +
+  '}\n'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs:76:12 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: "import { discordWebhookPayload } from './discord-payload.ts';\n" +
+    "import crypto from 'node:crypto';\n" +
+    "import type { AdapterActivationContext, AdapterInstance, AdapterInvocation, EffectRequest } from '@kubeclaw/plugin-sdk';\n" +
+    "import { FileDurableRecordStore } from '@kubeclaw/plugin-foundation/observability/durable-records';\n" +
+    "import { completeDelivery, lookupDelivery, deliveryIdentity, deliveryReceipt, failDelivery, reserveDelivery, type Reservation } from './delivery-records.ts';\n" +
+    "import { discordEndpoint, discordReceipt, validateDiscordReceipt } from './discord-receipt.ts';\n" +
+    "import { receiverReceipt } from './receiver.ts';\n" +
+    "import { isTargetId, parseConfig, type TargetConfig } from './config.ts';\n" +
+    "import { assertRequest, parsePayload, responseMessageId, secretValue } from './payload.ts';\n" +
+    '\n' +
+    '// One exact JSON transport body is stored as a JSON string: escaping can at most\n' +
+    '// double its admitted 1 MiB bytes. Metadata allowance and aggregate quotas stay unchanged.\n' +
+    'const DELIVERY_RECORD_MAX_BYTES = 2 * 1_048_576 + 65_536;\n' +
+    '\n' +
+    'function resolveSecretEndpoint(secret: string, target: TargetConfig): string {\n' +
+    '  if (!target.endpointSecret) {\n' +
+    "    if (!target.endpoint) throw new Error('OPERATOR_ENDPOINT_UNAVAILABLE');\n" +
+    '    return target.endpoint;\n' +
+    '  }\n' +
+    '  let endpoint: URL;\n' +
+    "  try { endpoint = new URL(secret); } catch { throw new Error('OPERATOR_SECRET_ENDPOINT_INVALID'); }\n" +
+    '  if (endpoint.origin !== target.endpointOrigin || endpoint.username || endpoint.password || endpoint.hash) {\n' +
+    "    throw new Error('OPERATOR_SECRET_ENDPOINT_DENIED');\n" +
+    '  }\n' +
+    '  return endpoint.href;\n' +
+    '}\n' +
+    '\n' +
+    'function transportReceipt(invocation: AdapterInvocation, target: TargetConfig, payload: Readonly<Record<string, unknown>>, response: Readonly<Record<string, unknown>>): Readonly<Record<string, unknown>> {\n' +
+    "  if (!Number.isSafeInteger(response.status) || Number(response.status) < 200 || Number(response.status) > 299) throw new Error('OPERATOR_DELIVERY_INVALID_RESPONSE');\n" +
+    "  if (target.format === 'discord_webhook') return discordReceipt(invocation.request, payload, response);\n" +
+    '  const messageId = responseMessageId(response);\n' +
+    '  return { accepted: true, target: invocation.request.resource.canonicalId, status: Number(response.status), ...(messageId ? { messageId } : {}) };\n' +
+    '}\n' +
+    '\n' +
+    'async function deliver(context: AdapterActivationContext, invocation: AdapterInvocation, target: TargetConfig, records: FileDurableRecordStore): Promise<Readonly<Record<string, unknown>>> {\n' +
+    '  const { request, signal } = invocation;\n' +
+    '  const payload = parsePayload(request.payload, target.maxPayloadBytes);\n' +
+    "  const transportPayload = target.format === 'discord_webhook' ? discordWebhookPayload(payload) : payload;\n" +
+    "  const reserved = await reserveDelivery(records, request, transportPayload, target.format === 'json' && Boolean(target.receiptEndpoint));\n" +
+    "  if ('accepted' in reserved) return target.format === 'discord_webhook' ? validateDiscordReceipt(reserved, request, transportPayload) : reserved;\n" +
+    '  const reservation = reserved as Reservation;\n' +
+    '  let sent = false;\n' +
+    '  try {\n' +
+    '    const secretName = target.endpointSecret ?? target.tokenSecret;\n' +
+    "    if (!secretName) throw new Error('OPERATOR_SECRET_UNAVAILABLE');\n" +
+    "    const resolved = await context.invoke('secrets.read', { operation: 'resolve', resource: { type: 'secret.name', canonicalId: secretName }, payload: {} });\n" +
+    "    if (signal.aborted) throw new Error('ADAPTER_CANCELLED');\n" +
+    '    const secret = secretValue(resolved), deliveryId = deliveryIdentity(request), body = JSON.stringify(transportPayload);\n' +
+    '    const resolvedEndpoint = resolveSecretEndpoint(secret, target);\n' +
+    "    const endpoint = target.format === 'discord_webhook' ? discordEndpoint(resolvedEndpoint) : resolvedEndpoint;\n" +
+    "    if (target.format === 'json' && target.receiptEndpoint) {\n" +
+    '      const accepted = await receiverReceipt(context, target.receiptEndpoint, deliveryId, body, secret);\n' +
+    '      if (accepted) return completeDelivery(records, request, reservation, { accepted: true, target: request.resource.canonicalId, status: 200, ...accepted });\n' +
+    '    }\n' +
+    "    const signature = crypto.createHmac('sha256', secret).update(`${deliveryId}.${body}`, 'utf8').digest('hex');\n" +
+    "    const networkRequest = { operation: 'request', resource: { type: 'network.url', canonicalId: endpoint }, payload: {\n" +
+    "      method: 'POST', headers: { 'content-type': 'application/json', 'idempotency-key': deliveryId, 'x-kubeclaw-signature': `v1=${signature}` }, body: transportPayload,\n" +
+    '    } };\n' +
+    '    sent = true;\n' +
+    "    const response = target.endpointSecret ? await context.invokeConfidential('network.http', networkRequest) : await context.invoke('network.http', networkRequest);\n" +
+    "    if (signal.aborted) throw new Error('ADAPTER_CANCELLED');\n" +
+    '    return await completeDelivery(records, request, reservation, transportReceipt(invocation, target, transportPayload, response));\n' +
+    '  } catch (error) { return failDelivery(records, request, reservation, sent, error); }\n' +
+    '}\n' +
+    '\n' +
+    'export function activate(context: AdapterActivationContext): AdapterInstance {\n' +
+    '  const config = parseConfig(context.config);\n' +
+    '  const targets = config.targets;\n' +
+    '  const records = new FileDurableRecordStore(config.deliveryRoot, {\n' +
+    '    maximumRecords: config.maximumDeliveryRecords,\n' +
+    '    maximumBytes: config.maximumDeliveryBytes,\n' +
+    '    maximumRecordBytes: DELIVERY_RECORD_MAX_BYTES,\n' +
+    '  });\n' +
+    '  let shuttingDown = false;\n' +
+    '  return {\n' +
+    "    async ready() { if (shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN'); },\n" +
+    '    async invoke(invocation) {\n' +
+    '      const { request, signal, confidential, fence } = invocation;\n' +
+    '      if (!confidential) fence.assertCurrent();\n' +
+    "      if (shuttingDown) throw new Error('ADAPTER_SHUTTING_DOWN');\n" +
+    "      if (signal.aborted) throw new Error('ADAPTER_CANCELLED');\n" +
+    "      if (request.capability === 'operator.receipt') {\n" +
+    '        const receipt = await lookupReceipt(records, request, targets.get(request.resource.canonicalId));\n' +
+    '        signal.throwIfAborted();\n' +
+    '        return receipt;\n' +
+    '      }\n' +
+    '      assertRequest(request, isTargetId);\n' +
+    '      const target = targets.get(request.resource.canonicalId);\n' +
+    '      if (!target) throw new Error(`OPERATOR_TARGET_DENIED:${request.resource.canonicalId}`);\n' +
+    '      return deliver(context, invocation, target, records);\n' +
+    '    },\n' +
+    '    async receipt(request) {\n' +
+    "      if (request.capability === 'operator.receipt') return lookupReceipt(records, request, targets.get(request.resource.canonicalId));\n" +
+    '      assertRequest(request, isTargetId);\n' +
+    '      const target = targets.get(request.resource.canonicalId);\n' +
+    '      if (!target) throw new Error(`OPERATOR_TARGET_DENIED:${request.resource.canonicalId}`);\n' +
+    '      const payload = parsePayload(request.payload, target.maxPayloadBytes);\n' +
+    "      const transportPayload = target.format === 'discord_webhook' ? discordWebhookPayload(payload) : payload;\n" +
+    '      const receipt = await deliveryReceipt(records, request, transportPayload);\n' +
+    "      return receipt && target.format === 'discord_webhook'\n" +
+    '        ? validateDiscordReceipt(receipt, request, transportPayload) : receipt;\n' +
+    '    },\n' +
+    '    async shutdown() { shuttingDown = true; },\n' +
+    '  };\n' +
+    '}\n' +
+    '\n' +
+    'async function lookupReceipt(records:FileDurableRecordStore,request:EffectRequest,target:TargetConfig|undefined) {\n' +
+    "  if (request.operation !== 'lookup' || request.resource.type !== 'operator.target' || !isTargetId(request.resource.canonicalId)) throw new Error('OPERATOR_RECEIPT_OPERATION_INVALID');\n" +
+    "  if (!target || target.format !== 'discord_webhook') throw new Error('OPERATOR_RECEIPT_TARGET_DENIED');\n" +
+    '  const { deliveryId, stageId, payload } = request.payload;\n' +
+    "  if (Object.keys(request.payload).some(key => !['deliveryId', 'stageId', 'payload'].includes(key))\n" +
+    "    || typeof deliveryId !== 'string' || !deliveryId || deliveryId.length > 512 || typeof stageId !== 'string' || !stageId\n" +
+    "    || !payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('OPERATOR_RECEIPT_QUERY_INVALID');\n" +
+    '  const transport = discordWebhookPayload(parsePayload(payload as Readonly<Record<string, unknown>>, target.maxPayloadBytes));\n' +
+    '  const receipt = await lookupDelivery(records, request, deliveryId, stageId, transport);\n' +
+    '  return validateDiscordReceipt(receipt, { ...request, deliveryId }, transport);\n' +
+    '}\n',
+  expected: /notification-delivery-request|transport-publication-request/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

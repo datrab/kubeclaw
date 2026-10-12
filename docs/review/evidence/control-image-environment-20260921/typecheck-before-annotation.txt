@@ -1,0 +1,1 @@
+skills/prism/tests/control-image-environment.test.mts(44,29): error TS2339: Property 'NODE_TEST_CONTEXT' does not exist on type '{ SWARM_CONFIG: string; PRISM_SESSION_SECRET: string; PRISM_INGRESS_SECRET: string; PRISM_INGESTION_SECRET: string; PRISM_DISPATCH_SECRET: string; PRISM_WORKER_SECRET: string; }'.

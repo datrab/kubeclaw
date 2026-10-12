@@ -1,0 +1,6 @@
+{
+  "source": "scripts/updates/release-configuration.mjs",
+  "before": "docs/review/evidence/config-component-layout-20260921/integration1/before/scripts/updates/release-configuration.mjs",
+  "functionBodyIdentical": true,
+  "sha256": "d9d554763e8d9d9094edc5ad82390cd671715110a23c29e002f46edd94134e3d"
+}

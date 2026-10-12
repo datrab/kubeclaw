@@ -1,0 +1,15 @@
+{
+  "change": "Replace repeated ternary construction with a typed lazy add helper and explicit required options; all eleven routes remain explicit.",
+  "limits": "No native isolation claim. Service still constructs capabilities in its own process. No tests or lint rules changed.",
+  "serviceBaseline": {
+    "headFileLines": 768,
+    "currentFileLines": 678,
+    "headExecuteLines": 142,
+    "currentExecuteLines": 76,
+    "headExecuteComplexity": 47,
+    "currentComplexityViolation": false,
+    "existingDepth": 4
+  },
+  "scope": "Only capability-runtime.ts modified during this lint follow-up. Existing service violations retained and recorded separately.",
+  "priorEvidence": "../buster-boundaries-20260920 represents the earlier factory bytes and is preserved; this folder supersedes its factory verification."
+}

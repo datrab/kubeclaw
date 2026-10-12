@@ -3,6 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateInfrastructureChartLock } from './infrastructure-chart-lock.mjs';
 import { checkRuntimeToolLocks } from './runtime-tool-locks.mjs';
+import { browserLock } from './browser-archive-lock.mjs';
+import { databaseLock } from './trivy-database-lock.mjs';
 
 function validateVersionEntries(entries) {
     for (const [key, value] of Object.entries(entries)) {
@@ -30,7 +32,6 @@ function dockerfileVersions(name, source, args, overrides, used) {
     const usedOverrides = new Set();
     const content = source.replace(/^ARG ([A-Z0-9_]+)=(\S+)$/gm, (line, key) => {
       if (['KUBECLAW_BUILD_REVISION', 'TARGETARCH'].includes(key)) return line;
-      if (name === 'docker/Dockerfile.buster-runtime' && key === 'TRIVY_DATABASE_REFRESH') return line;
       if (!Object.hasOwn(args, key)) throw new Error(`${name}: unmanaged version argument ${key}`);
       used.add(key);
       if (Object.hasOwn(overrides, key)) usedOverrides.add(key);
@@ -164,12 +165,14 @@ export function versionOutputs(root) {
   bindInfrastructureVersions(manifest, replaceOne);
   bindApplicationVersions(manifest, args, replaceOne);
   bindRuntimeToolInputs(manifest, args, outputs);
+  outputs.set('docker/trivy-databases.lock.json', JSON.stringify(databaseLock(manifest), null, 2) + '\n');
+  outputs.set('docker/browser-archives.lock.json', JSON.stringify(browserLock(manifest, JSON.parse(read('package-lock.json'))), null, 2) + '\n');
   return outputs;
 }
 
 export function syncVersions(root, check = true) {
   const outputs = versionOutputs(root);
-  const changed = [...outputs].filter(([file, content]) => fs.readFileSync(path.join(root, file), 'utf8') !== content);
+  const changed = [...outputs].filter(([file, content]) => (!fs.existsSync(path.join(root, file)) || fs.readFileSync(path.join(root, file), 'utf8') !== content));
   if (check && changed.length) throw new Error(`Version drift; run npm run versions:sync:\n${changed.map(([file]) => file).join('\n')}`);
   if (!check) for (const [file, content] of changed) fs.writeFileSync(path.join(root, file), content);
   return { checked: outputs.size, changed: changed.map(([file]) => file) };

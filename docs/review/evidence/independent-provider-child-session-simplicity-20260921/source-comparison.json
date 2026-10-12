@@ -1,0 +1,29 @@
+{
+  "at": "2026-09-21T18:46:25.972321+00:00",
+  "sources": [
+    {
+      "path": "docs/review/evidence/provider-child-session-simplicity-20260921/before/skills/buster/engine/test-gates/provider-child.mjs",
+      "sha256": "5dd41b92245c36b8e4d1d63d8a14f95f8647fda040ba2c3c60e20a088becfa50",
+      "expectedMatch": true
+    },
+    {
+      "path": "docs/review/evidence/provider-child-session-simplicity-20260921/files/skills/buster/engine/test-gates/provider-child.mjs",
+      "sha256": "da937f52ae501a769e5a59ad67dc5a1ea96ce45352556815e2789e1bd14341e9",
+      "expectedMatch": true
+    },
+    {
+      "path": "docs/review/evidence/provider-child-session-simplicity-20260921/README.md",
+      "sha256": "b757e9165c15744a04768b03a88433a493644463278fc263037608d8f15a91b3"
+    },
+    {
+      "path": "docs/review/evidence/provider-child-session-simplicity-20260921/change.patch",
+      "sha256": "7e0a2fac3197100b2f50850cf36f4fee5604007334d5e655ceacaa61d21ff4de"
+    },
+    {
+      "path": "docs/review/evidence/provider-child-session-simplicity-20260921/identities.json",
+      "sha256": "10000039b5ae4844cf22ad13b7bdf065c7bc16f9c7be186cb71570b3d8a054d5"
+    }
+  ],
+  "runtimeExecuted": false,
+  "productionEdited": false
+}

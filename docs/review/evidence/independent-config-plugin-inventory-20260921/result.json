@@ -1,0 +1,85 @@
+{
+  "kind": "independent bounded source inventory review; no runtime acceptance",
+  "rows": 31,
+  "schemaChecks": [
+    {
+      "plugin": "operator-messaging",
+      "topLevelFields": [
+        "deliveryRoot",
+        "maximumDeliveryBytes",
+        "maximumDeliveryRecords",
+        "targets"
+      ],
+      "sha256": "4054963cbfc17820e7f11be45ed3bf087d09d16ffc9f2dd14953358637f7ebd4"
+    },
+    {
+      "plugin": "wait-store",
+      "topLevelFields": [
+        "maxEntryBytes",
+        "maximumRecords",
+        "maximumStoreBytes",
+        "root"
+      ],
+      "sha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944"
+    },
+    {
+      "plugin": "notification-observer",
+      "topLevelFields": [
+        "maxMessageChars",
+        "modelLabel",
+        "pipelineLabel",
+        "stageLabels",
+        "suppressEventTypes",
+        "target"
+      ],
+      "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3"
+    },
+    {
+      "plugin": "telemetry-observer",
+      "topLevelFields": [],
+      "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+    },
+    {
+      "plugin": "network-http",
+      "topLevelFields": [
+        "allowedHeaders",
+        "allowedMethods",
+        "allowedOrigins",
+        "maxRequestBytes",
+        "maxResponseBytes",
+        "timeoutMs"
+      ],
+      "sha256": "a064ffe2b856d9a11ff45b51bc24cfb2506f321f66a54ea0707a17de59fa6219"
+    },
+    {
+      "plugin": "secret-resolver",
+      "topLevelFields": [
+        "environment"
+      ],
+      "sha256": "572ebe9929ea533da85909fc65c3a6e8ba4a14a62ee941500bd8b246092d6629"
+    },
+    {
+      "plugin": "telemetry-store",
+      "topLevelFields": [
+        "maxRecordBytes",
+        "maximumRecords",
+        "maximumStoreBytes",
+        "root"
+      ],
+      "sha256": "2b0186fbdf59b80a4c247cfd9622e88c8d3d2bec986e75647e1a178e777bf3c8"
+    }
+  ],
+  "preservedSources": 135,
+  "snapshotErrors": [],
+  "currentSharedOrFixtureDrift": [
+    "docker/buster-runtime-entrypoint.sh",
+    "docs/review/remediation/implementation/config-platform-inventory-20260921.md",
+    "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+    "skills/common/plugin-runtime/foundation/config/platform.ts",
+    "skills/common/plugins/notification-observer/tests/live-function.test.ts",
+    "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+    "skills/nova/core/execution/engine-runtime.ts"
+  ],
+  "inspectedPluginProductionDrift": [],
+  "inventoryDocumentSha256": "415c996fdb48f1e4cb198277f38255469ccf4e4c205814151d857f6bce5fd6c0"
+}

@@ -58,7 +58,7 @@ test('legacy ownership remains readable without fabricating missing historical o
     const store = new FileWorkerOwnershipStore(root, limits);
     const record = await store.reserve({ workerId: 'old-worker', attemptId: 'old-attempt', claimId: 'old-claim', generation: 1,
       profileDigest: `sha256:${'a'.repeat(64)}`, attemptSpecDigest: `sha256:${'b'.repeat(64)}` });
-    const { finalObservation: _observation, ...legacy } = record;
+    const { finalObservation: _observation, topology: _topology, ...legacy } = record;
     const file = path.join(root, 'owners.json');
     const oldBytes = JSON.stringify({ schemaVersion: 'worker-ownership-store.v1', records: [legacy] });
     await fs.writeFile(file, oldBytes);
@@ -66,7 +66,7 @@ test('legacy ownership remains readable without fabricating missing historical o
     assert.equal(reopened?.finalObservation, null);
     assert.equal(await fs.readFile(file, 'utf8'), oldBytes, 'reading does not rewrite a historical store');
     await store.transition(reopened!, 'abandoned', { diagnosis: 'reservation was never launched' });
-    assert.equal(JSON.parse(await fs.readFile(file, 'utf8')).schemaVersion, 'worker-ownership-store.v2');
+    assert.equal(JSON.parse(await fs.readFile(file, 'utf8')).schemaVersion, 'worker-ownership-store.v3');
   } finally { await fs.rm(root, { recursive: true, force: true }); }
 });
 
@@ -95,7 +95,7 @@ test('unbound legacy records from a different boot cannot be silently assigned t
     const stat = await fs.stat(root);
     const allocated = await store.transition(record, 'allocated', { binding: { scopeName: record.scopeName,
       bootId: '00000000-0000-4000-8000-000000000000', device: stat.dev, inode: stat.ino } });
-    const { finalObservation: _observation, ...legacy } = allocated;
+    const { finalObservation: _observation, topology: _topology, ...legacy } = allocated;
     const file = path.join(root, 'owners.json');
     const bytes = JSON.stringify({ schemaVersion: 'worker-ownership-store.v1', records: [legacy] });
     await fs.writeFile(file, bytes);

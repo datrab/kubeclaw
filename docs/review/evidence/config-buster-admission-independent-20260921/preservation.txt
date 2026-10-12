@@ -1,0 +1,4 @@
+{"file":"tests/verification/contracts/check-pipeline-remote-runtime-config.mts","originalAssertionsPreserved":21,"addedAssertions":1}
+{"file":"tests/verification/reliability/buster-shutdown-storage.test.mts","originalAssertionsPreserved":27,"addedAssertions":0}
+{"file":"tests/verification/deployment/prism-swarm-config.test.mjs","originalAssertionsPreserved":101,"addedAssertions":7}
+{"originalProviderScalarBindingsPreserved":109}

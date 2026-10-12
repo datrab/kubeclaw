@@ -10,16 +10,31 @@ import {
 
 const MAX_TIMER_MS = 2_147_483_647;
 
-export interface LocalWorkerRuntimeOptions {
+export interface LocalWorkerRuntimePolicy {
+  readonly drainTimeoutMs: number;
+  readonly cancellationTimeoutMs: number;
+  readonly replayLimit: number;
+}
+
+export function validateLocalWorkerRuntimePolicy(options: LocalWorkerRuntimePolicy): Readonly<LocalWorkerRuntimePolicy> {
+  if (options === null || typeof options !== 'object') throw new Error('WORKER_LOCAL_POLICY_REQUIRED');
+  const drainTimeoutMs = positiveTimer(options.drainTimeoutMs, 'WORKER_LOCAL_DRAIN_TIMEOUT_INVALID');
+  const cancellationTimeoutMs = positiveTimer(options.cancellationTimeoutMs,
+    'WORKER_LOCAL_CANCELLATION_TIMEOUT_INVALID');
+  const replayLimit = options.replayLimit;
+  if (!Number.isSafeInteger(replayLimit) || replayLimit < 1 || replayLimit > 1_000_000) {
+    throw new Error('WORKER_LOCAL_REPLAY_LIMIT_INVALID');
+  }
+  return Object.freeze({ drainTimeoutMs, cancellationTimeoutMs, replayLimit });
+}
+
+export interface LocalWorkerRuntimeOptions extends LocalWorkerRuntimePolicy {
   readonly workerId: string;
   readonly workerType: string;
   readonly coreVersion: string;
   readonly protocolVersions: readonly WorkerProtocolVersion[];
   readonly profiles: readonly WorkerProfileV1[];
   readonly capacity: number;
-  readonly drainTimeoutMs?: number;
-  readonly cancellationTimeoutMs?: number;
-  readonly replayLimit?: number;
   readonly now?: () => Date;
 }
 
@@ -90,13 +105,7 @@ export class LocalWorkerRuntime {
     if (!Number.isSafeInteger(options.capacity) || options.capacity < 1 || options.capacity > 4096) {
       throw new Error('WORKER_LOCAL_CAPACITY_INVALID');
     }
-    const drainTimeoutMs = positiveTimer(options.drainTimeoutMs ?? 300_000, 'WORKER_LOCAL_DRAIN_TIMEOUT_INVALID');
-    const cancellationTimeoutMs = positiveTimer(options.cancellationTimeoutMs ?? 30_000,
-      'WORKER_LOCAL_CANCELLATION_TIMEOUT_INVALID');
-    const replayLimit = options.replayLimit ?? 65_536;
-    if (!Number.isSafeInteger(replayLimit) || replayLimit < 1 || replayLimit > 1_000_000) {
-      throw new Error('WORKER_LOCAL_REPLAY_LIMIT_INVALID');
-    }
+    const { drainTimeoutMs, cancellationTimeoutMs, replayLimit } = validateLocalWorkerRuntimePolicy(options);
     this.#profiles = freeze(structuredClone([...options.profiles]));
     this.#protocolVersions = freeze([...new Set(options.protocolVersions)].sort());
     this.#profileDigests = new Set(this.#profiles.map((profile) => profile.profileDigest));
@@ -163,9 +172,7 @@ export class LocalWorkerRuntime {
     if (now >= Date.parse(envelope.claim.expiresAt)) throw new Error('WORKER_LOCAL_CLAIM_EXPIRED');
     if (!this.#protocolVersions.includes(envelope.protocolVersion)) throw new Error('WORKER_LOCAL_PROTOCOL_UNSUPPORTED');
     if (!this.#profileDigests.has(envelope.profile.profileDigest)) throw new Error('WORKER_LOCAL_PROFILE_UNSUPPORTED');
-    for (const [attemptId, expiresAt] of this.#acceptedAttemptIds) {
-      if (expiresAt <= now && !this.#active.has(attemptId)) this.#acceptedAttemptIds.delete(attemptId);
-    }
+    this.#reclaimExpiredAttempts(now);
     if (this.#acceptedAttemptIds.has(envelope.attemptId)) throw new Error('WORKER_LOCAL_ATTEMPT_DUPLICATE');
     if (this.#acceptedAttemptIds.size >= this.#options.replayLimit) {
       throw new Error('WORKER_LOCAL_REPLAY_CAPACITY_EXHAUSTED');
@@ -213,6 +220,12 @@ export class LocalWorkerRuntime {
     if (this.#active.size > 0) throw new Error('WORKER_LOCAL_ACTIVE_ATTEMPTS');
     this.#state = 'stopped';
     return this.health();
+  }
+
+  #reclaimExpiredAttempts(now: number): void {
+    for (const [attemptId, expiresAt] of this.#acceptedAttemptIds) {
+      if (expiresAt <= now && !this.#active.has(attemptId)) this.#acceptedAttemptIds.delete(attemptId);
+    }
   }
 
   #capacity() {

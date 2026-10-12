@@ -1,0 +1,9 @@
+{
+  "count": 501,
+  "initialRunChanges": [
+    "tests/verification/reliability/buster-atomic-cancellation.test.mts"
+  ],
+  "reason": "Correct invalid empty-nodes test fixture using existing completed fixture; no production changes after initial capture",
+  "originalRemoteScriptUnchanged": true,
+  "originalRemoteFaultsUnchanged": true
+}

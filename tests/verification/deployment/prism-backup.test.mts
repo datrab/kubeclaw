@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { execFile, spawn } from 'node:child_process';
 import { promisify } from 'node:util';
-import { mkdtemp, mkdir, writeFile, readFile, readdir, rm, cp, symlink } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, readFile, readdir, rm, cp, symlink, rename } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -156,4 +156,91 @@ test('SQL proof uses only its newly created DB and never drops a failed creation
   await assert.rejects(fixture.run('database-proof', { PROOF_LOG: log, FAIL_TOOL: 'dropdb' }), (error: any) => {
     assert(!error.stdout.includes('PASSED')); return error.code !== 0;
   });
+});
+
+
+test('manual retirement requires pinned verified copy, preserves latest/protected groups and releases quota', async t => {
+  const fixture = await setup(t);
+  await fixture.put(Buffer.alloc(1_200_000, 71));
+  const first = path.join(fixture.backups, 'backup-001');
+  await rename(await fixture.run('backup'), first);
+  const copies = path.join(fixture.root, 'copies'); await mkdir(copies);
+  await cp(first, path.join(copies, 'backup-001'), { recursive: true });
+  const selected = { BACKUP_RETIRE_GROUP: 'backup-001', BACKUP_COPY_ROOT: copies,
+    BACKUP_RETIRE_SHA256: hash(await readFile(path.join(first, 'SHA256SUMS'))) };
+  await assert.rejects(fixture.run('retire', selected), /LATEST_GROUP_PROTECTED/);
+  const second = path.join(fixture.backups, 'backup-002');
+  await rename(await fixture.run('backup'), second);
+  await writeFile(path.join(fixture.backups, '.protect-backup-001'), 'retain for recovery');
+  await assert.rejects(fixture.run('retire', selected), /GROUP_PROTECTED/);
+  await rm(path.join(fixture.backups, '.protect-backup-001'));
+  await assert.rejects(fixture.run('retire', { ...selected, BACKUP_RETIRE_SHA256: '0'.repeat(64) }), /COPY_DIGEST_MISMATCH/);
+  await assert.rejects(fixture.run('retire', { ...selected, BACKUP_COPY_ROOT: fixture.backups }), /COPY_ROOT_OVERLAP/);
+  const copyDump = path.join(copies, 'backup-001', 'database.dump'); const dump = await readFile(copyDump);
+  await writeFile(copyDump, 'corrupt'); await assert.rejects(fixture.run('retire', selected), /CHECKSUM_MISMATCH/);
+  await writeFile(copyDump, dump);
+  await assert.rejects(fixture.run('backup', { BACKUP_MAXIMUM_RETAINED_BYTES: '5000000' }), /GROUP_SIZE_EXCEEDED_INCOMPLETE_RETAINED/);
+  assert.equal(await fixture.run('retire', selected), 'PRISM_BACKUP_RETIRED:backup-001');
+  assert(!(await readdir(fixture.backups)).includes('backup-001'));
+  assert.deepEqual(await readFile(path.join(second, 'database.dump')), dump);
+  // The failed attempt is explicitly owned and selected, never removed by age.
+  for (const name of (await readdir(fixture.backups)).filter(name => name.startsWith('.incomplete-'))) {
+    await fixture.run('discard-incomplete', { BACKUP_DISCARD_INCOMPLETE: name });
+  }
+  assert.match(await fixture.run('backup', { BACKUP_MAXIMUM_RETAINED_BYTES: '5000000' }), /backup-/);
+  assert.deepEqual(await readFile(copyDump), dump, 'The verified copy remains intact');
+});
+
+test('interrupted retirement resumes only selected tombstone and revalidates copy', async t => {
+  const fixture = await setup(t); await fixture.put(Buffer.from('retirement object'));
+  const first = path.join(fixture.backups, 'backup-001'); await rename(await fixture.run('backup'), first);
+  await fixture.put(Buffer.from('later group must have a distinct manifest'));
+  const second = path.join(fixture.backups, 'backup-002'); await rename(await fixture.run('backup'), second);
+  const copies = path.join(fixture.root, 'copies'); await mkdir(copies);
+  await cp(first, path.join(copies, 'backup-001'), { recursive: true });
+  const selected = { BACKUP_RETIRE_GROUP: 'backup-001', BACKUP_COPY_ROOT: copies,
+    BACKUP_RETIRE_SHA256: hash(await readFile(path.join(first, 'SHA256SUMS'))) };
+  // Kill the actual backup shell in the deletion command after production rename/sync.
+  // No test-only crash branch exists in the implementation.
+  await writeFile(path.join(fixture.binaries, 'rm'), '#!/usr/bin/env bash\nif [[ $1 == -rf ]]; then kill -KILL "$PPID"; exit 71; fi\nexec /bin/rm \"$@\"\n', { mode: 0o755 });
+  await assert.rejects(fixture.run('retire', selected));
+  assert((await readdir(fixture.backups)).includes('.retiring-backup-001'));
+  assert(!(await readdir(fixture.backups)).includes('backup-001'));
+  await rm(path.join(fixture.binaries, 'rm'));
+  const copied = path.join(copies, 'backup-001'), saved = path.join(fixture.root, 'original-copy');
+  await rename(copied, saved);
+  await cp(second, copied, { recursive: true });
+  const replacementDigest = hash(await readFile(path.join(copied, 'SHA256SUMS')));
+  assert.notEqual(replacementDigest, selected.BACKUP_RETIRE_SHA256);
+  await assert.rejects(fixture.run('retire', { ...selected, BACKUP_RETIRE_SHA256: replacementDigest }), /RETIRE_AUTHORIZATION_MISMATCH/);
+  assert((await readdir(fixture.backups)).includes('.retiring-backup-001'));
+  await rm(copied, { recursive: true }); await rename(saved, copied);
+  const authorization = path.join(fixture.backups, '.retire-authorization-backup-001');
+  const authorizationBytes = await readFile(authorization);
+  await rm(authorization);
+  await assert.rejects(fixture.run('retire', selected), /RETIRE_AUTHORIZATION_MISSING/);
+  await writeFile(path.join(fixture.root, 'foreign-authorization'), authorizationBytes);
+  await symlink(path.join(fixture.root, 'foreign-authorization'), authorization);
+  await assert.rejects(fixture.run('retire', selected), /FILE_INVALID/);
+  await rm(authorization); await writeFile(authorization, authorizationBytes);
+  await rm(path.join(fixture.backups, '.retiring-backup-001', 'database.dump'));
+  await assert.rejects(fixture.run('retire', { ...selected, BACKUP_RETIRE_SHA256: '0'.repeat(64) }), /COPY_DIGEST_MISMATCH/);
+  assert.equal(await fixture.run('retire', selected), 'PRISM_BACKUP_RETIRED:backup-001');
+  assert(!(await readdir(fixture.backups)).includes('.retire-authorization-backup-001'));
+  // Reproduce interruption after successful tombstone deletion, before authorization removal.
+  await writeFile(authorization, authorizationBytes);
+  assert.equal(await fixture.run('retire', selected), 'PRISM_BACKUP_RETIRED:backup-001');
+  assert(!(await readdir(fixture.backups)).includes('.retire-authorization-backup-001'));
+  assert.equal(await fixture.run('verify'), second);
+});
+
+test('incomplete cleanup rejects published groups, traversal and symlinks', async t => {
+  const fixture = await setup(t);
+  const group = await fixture.run('backup');
+  for (const name of [path.basename(group), '../outside', '.incomplete-../outside']) {
+    await assert.rejects(fixture.run('discard-incomplete', { BACKUP_DISCARD_INCOMPLETE: name }), /INCOMPLETE_NAME_INVALID/);
+  }
+  await symlink(group, path.join(fixture.backups, '.incomplete-linked'));
+  await assert.rejects(fixture.run('discard-incomplete', { BACKUP_DISCARD_INCOMPLETE: '.incomplete-linked' }), /INCOMPLETE_INVALID/);
+  assert.equal(await fixture.run('verify'), group);
 });

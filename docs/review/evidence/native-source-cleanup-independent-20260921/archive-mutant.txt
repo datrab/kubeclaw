@@ -1,0 +1,42 @@
+✖ cleanup recovery handles bad-output (427.057758ms)
+✖ cleanup recovery handles different-accounting (331.53756ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1330.567435
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-native-cleanup.test.mts:28:3
+✖ cleanup recovery handles bad-output (427.057758ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-cleanup.test.mts:53:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /RECONCILIATION/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/worker-native-cleanup.test.mts:28:3
+✖ cleanup recovery handles different-accounting (331.53756ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-cleanup.test.mts:53:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /RECONCILIATION/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

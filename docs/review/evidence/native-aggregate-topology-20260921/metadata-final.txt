@@ -1,0 +1,24 @@
+✔ fixed pre-admission metadata saturation still reaches modeled drain and never disposes or releases (157.170718ms)
+✔ metadata I/O failure retains failed ownership after modeled drain and can retry when storage recovers (115.895457ms)
+✔ unknown-child verification failure prevents modeled subtree mutation (80.861798ms)
+✔ child reservations are durable, CAS-fenced, immutable after binding and charged to metadata quota (117.013476ms)
+✔ strict topology decoder rejects unknown fields, names, duplicates and mismatched child identity (46.440073ms)
+✔ v1 and v2 ownership decode explicitly as drain-only legacy leaves; child admission is forbidden (57.472386ms)
+✔ mountinfo parser requires hierarchical events on the actual covering mount (0.77067ms)
+✔ concurrent durable reservations converge and survive reopening (41.958788ms)
+✔ caller mutation after reserve starts cannot change persisted identity (16.174536ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (109.477533ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (35.630765ms)
+✔ record quota fails atomically without losing existing ownership (19.06944ms)
+✔ corrupt persisted ownership fails without overwriting the record (15.916209ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (46.367671ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (519.592848ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (28.693627ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2728.970295

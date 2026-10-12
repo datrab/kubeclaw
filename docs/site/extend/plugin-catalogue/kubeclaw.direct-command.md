@@ -75,10 +75,11 @@ Run:
 npm test --prefix skills/buster/plugins/direct-command
 ```
 
-Package tests found: 0.
+Package tests found: 1.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/direct-command/plugin.json`
 - Package root: `skills/buster/plugins/direct-command`
 - Authored package guide: `skills/buster/plugins/direct-command/README.md`
+- Test: `skills/buster/plugins/direct-command/tests/live-function.test.ts`

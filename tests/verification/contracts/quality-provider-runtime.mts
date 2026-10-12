@@ -78,21 +78,21 @@ export async function verifyQualityProviderRuntime(options: {
       ['artifacts.write', 'kubeclaw.artifact-store:artifact-store'],
     ]),
     grants: new Map([
-      ['kubeclaw.preflight-contract:validate', new Map([
+      ['kubeclaw.preflight-contract:validate', new Map<string, Record<string, string[]>>([
         ['git.repository.read', { allowedPrefixes: ['module/'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.preflight-contract'] }],
       ])],
-      ['kubeclaw.buster-quality-gate:quality', new Map([
+      ['kubeclaw.buster-quality-gate:quality', new Map<string, Record<string, string[]>>([
         ['test.plan.execute', { allowedRoots: [temporary] }],
         ['artifacts.read', { allowedNamespaces: ['kubeclaw.implementation-agent'] }],
         ['runtime.dispatch', { allowedAgents: ['gate'] }],
         ['artifacts.write', { allowedNamespaces: ['kubeclaw.buster-quality-gate'] }],
       ])],
-      ['kubeclaw.runtime-dispatch:runtime', new Map([
+      ['kubeclaw.runtime-dispatch:runtime', new Map<string, Record<string, string[]>>([
         ['network.http', { allowedOrigins: [origin] }],
         ['secrets.read', { allowedNames: ['gate.agent'] }],
       ])],
-      ['kubeclaw.remote-test-gate:plan', new Map([
+      ['kubeclaw.remote-test-gate:plan', new Map<string, Record<string, string[]>>([
         ['secrets.read', { allowedNames: ['buster.worker', 'buster.source-private-key'] }],
       ])],
     ]),
@@ -138,7 +138,7 @@ export async function verifyQualityProviderRuntime(options: {
       new core.FileEffectJournal(effectsPath),
       undefined,
       undefined,
-      new core.MemoryResourceLockManager(),
+      new core.MemoryResourceLockManager(), 300_000,
     ),
     shutdownTimeoutMs: 1_000,
     async emitDomainEvent() {},

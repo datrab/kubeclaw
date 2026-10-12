@@ -1,0 +1,27 @@
+{
+  "head": "cd9f235345f5fd8736a2ffe75d806288e4d538db",
+  "node": "v24.21.0",
+  "command": [
+    "/tmp/prism-native-tools/root/usr/bin/proot",
+    "-b",
+    "/tmp/prism-native-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "-b",
+    "/tmp/prism-native-tools/root/bin/tar:/usr/bin/tar!",
+    "node",
+    "--test",
+    "tests/verification/reliability/buster-terminal-workspace-native.test.mts",
+    "skills/buster/engine/test-gates/tests/terminal-workspace.test.ts",
+    "tests/verification/reliability/http-authority.test.mts",
+    "tests/verification/reliability/buster-fixture-control.test.mts",
+    "tests/verification/reliability/buster-fixture-journal.test.mts",
+    "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+  ],
+  "files": {
+    "skills/buster/engine/test-gates/capability-runtime.ts": "9d8c2e2fee2a13c34dc00efe3a7ed7c4eb2047a7d496baf9c4c6b7c4cafcde78",
+    "skills/buster/engine/test-gates/remote-plan-service.ts": "ee9026f1eb58900fcf3c3124ec4df0c9f39c261c26c7488499327bf91633521a",
+    "tests/verification/reliability/http-authority.test.mts": "50b7bb580ae081d451efdf62a1445a2367200a3968b81a6856bcbb44a3a74cbd",
+    "skills/buster/engine/test-gates/terminal-workspace.ts": "60264e4f91904b49c57225184cc86233778c5c7146039bdd783bdb86ba71a9b1",
+    "tests/verification/reliability/buster-terminal-workspace-native.test.mts": "57872985a8be236d6d0006c5808a3344bbfaa97485fe68f2f5abaeecb1fe373d"
+  },
+  "LD_LIBRARY_PATH": "/tmp/prism-native-tools/root/usr/lib:/tmp/prism-native-tools/root/lib"
+}

@@ -132,7 +132,7 @@ try {
   const artifact = (namespace: string) => ({ allowedNamespaces: [namespace] });
   const origins = ['http://127.0.0.1:9'];
   const platform = {
-    schemaVersion: 'pipeline-platform.v2', installationRoots: pluginRoots, trustedBuiltinRoots: pluginRoots,
+    schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: pluginRoots, trustedBuiltinRoots: pluginRoots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: {
       'runtime.dispatch': 'kubeclaw.runtime-dispatch:runtime', 'network.http': 'kubeclaw.network-http:http',

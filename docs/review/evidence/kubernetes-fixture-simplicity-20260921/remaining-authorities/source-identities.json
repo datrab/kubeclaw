@@ -1,0 +1,122 @@
+{
+  "capturedAt": "2026-09-21T20:44:59.969837+00:00",
+  "scope": "Source inventory only; no runtime, cluster or tailnet actions",
+  "files": [
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "d2e81938db163ec92bd021a047f30aa5bec06549f01f15f794ff360ecec58820"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "sha256": "2709b1a75b62d219b1c3771ee5698134e690343cb1d9df8063b3eaeea8881aec"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "sha256": "ea8247a2d440f65726372a71dcdc629be9dbcdf682a4b874c0d6288329cbc18e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-pods.ts",
+      "sha256": "676752f55ed5a52830067897f6199746a0808a2a1e4e66ccc41f6250b284b5bd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "sha256": "b2a8cb4442d3243dec435a480f04506ab7e79438150169efb85d9ea01c3095ee"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "sha256": "5881e8bc25800a80f18a3377fc3fe66b11853a6e5aea51630dbd86e44c19d439"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "sha256": "1572e13ce4ce41070867e8e0ff64a8b28772623fd1f693d2e25d0a43dede4288"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "sha256": "f1ce10ddd4574b8e735dd89e34b16dbb7401283e7f158cc24ffabf1af3ea4616"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "sha256": "b0fc410563b99da53603cca363dee4e8dd3552893ff13e96317ecdb4ee8570bf"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "sha256": "42f3533feab2fcf98a60e4fe570d9980c6d008785d65df6e73e15e3f2f54dc85"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "sha256": "ff1279f5ca4af3364b0e04cf977803717b6884329f75b9c5461be3b5455797bd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "sha256": "4215ff0c2849dba12fe36887aed1ba771a0c77c8475274176807ea472b66856d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "c2135bd4f48030b883e6c13749991a17e2e47e8b4db7272d8fa096081136d9d4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sha256": "7808623ea1d8bb3f838254a898f84807d04c40d4ae17042440eeae2bdee1492e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "b18d1684d25bae992b70c9e99910dc36a3015dbcef0ea72a6c0ee19dfdc27792"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "dd3b06c92a726cb2bcd68b61f8bc819e2b51101b10362bd043e92313f10fbc2a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sha256": "916fbe54e491c216e50fc3b20c81f0e114c918724ca327908a8fbd51cdbd8d86"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+      "sha256": "9c658fd6807beea11340609d22483ffac429a5e9184e74233a145774ec92feea"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+      "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "sha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "sha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+      "sha256": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+      "sha256": "4dd81ccecacfc3b71848d2cca20c4e83e31f14223d4320ba30c83c4650592388"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "df566aa6c12fda5943c736ec0babd4dff62113cc99e74128c488a551bb3efeef"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "999649fb834be3763eecda6735a2fc65b610c0e47ed8e4b66477771bdd5894c6"
+    }
+  ]
+}

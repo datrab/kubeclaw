@@ -1,0 +1,519 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$defs": {
+    "image": {
+      "type": "object",
+      "required": [
+        "repository",
+        "digest",
+        "pullPolicy"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "pullPolicy": {
+          "enum": [
+            "IfNotPresent",
+            "Never"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "resourceQuantity": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^([0-9]*[1-9][0-9]*(\\.[0-9]+)?|[0-9]*\\.[0-9]*[1-9][0-9]*)([numkMGTPE]|[KMGTPE]i|[eE][+-]?[0-9]+)?$"
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      ]
+    },
+    "ingestionResourcePair": {
+      "type": "object",
+      "required": [
+        "cpu",
+        "memory"
+      ],
+      "properties": {
+        "cpu": {
+          "$ref": "#/$defs/resourceQuantity"
+        },
+        "memory": {
+          "$ref": "#/$defs/resourceQuantity"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "images",
+    "imagePullSecrets",
+    "control",
+    "studio",
+    "worker",
+    "postgresql",
+    "secrets",
+    "artifactStorage"
+  ],
+  "properties": {
+    "images": {
+      "type": "object",
+      "required": [
+        "control",
+        "studio",
+        "worker",
+        "ingestion"
+      ],
+      "properties": {
+        "control": {
+          "$ref": "#/$defs/image"
+        },
+        "studio": {
+          "$ref": "#/$defs/image"
+        },
+        "worker": {
+          "$ref": "#/$defs/image"
+        },
+        "ingestion": {
+          "$ref": "#/$defs/image"
+        }
+      },
+      "additionalProperties": false
+    },
+    "imagePullSecrets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "control": {
+      "type": "object",
+      "properties": {
+        "pipelinePreferenceSubject": {
+          "type": "string",
+          "pattern": "^$|^user-[a-f0-9]{24}$"
+        },
+        "productDecisions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled",
+            "operators",
+            "tokenExpirationSeconds",
+            "issuer",
+            "origin",
+            "authorityRevision",
+            "signingSecretName",
+            "signingSecretKey",
+            "controllerUrl",
+            "controllerNamespace",
+            "controllerRelease",
+            "controllerCaSecretName",
+            "controllerCaSecretKey",
+            "tokenAudience"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "operators": {
+              "type": "array",
+              "uniqueItems": true,
+              "maxItems": 100,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512,
+                "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+              }
+            },
+            "tokenExpirationSeconds": {
+              "type": "integer",
+              "minimum": 600,
+              "maximum": 3600
+            },
+            "issuer": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "origin": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "authorityRevision": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "signingSecretName": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "signingSecretKey": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "controllerUrl": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "controllerNamespace": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "controllerRelease": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "controllerCaSecretName": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "controllerCaSecretKey": {
+              "type": "string",
+              "maxLength": 2048
+            },
+            "tokenAudience": {
+              "type": "string",
+              "maxLength": 2048
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "enabled": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "issuer": {
+                    "minLength": 1
+                  },
+                  "origin": {
+                    "minLength": 1,
+                    "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?(?::[0-9]{1,5})?/?$"
+                  },
+                  "authorityRevision": {
+                    "minLength": 1
+                  },
+                  "signingSecretName": {
+                    "minLength": 1,
+                    "pattern": "^[a-z0-9](?:[-a-z0-9.]*[a-z0-9])?$"
+                  },
+                  "signingSecretKey": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9._-]+$"
+                  },
+                  "controllerUrl": {
+                    "minLength": 1,
+                    "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?:8443/?$"
+                  },
+                  "controllerNamespace": {
+                    "minLength": 1,
+                    "pattern": "^[a-z0-9](?:[-a-z0-9.]*[a-z0-9])?$"
+                  },
+                  "controllerRelease": {
+                    "minLength": 1
+                  },
+                  "controllerCaSecretName": {
+                    "minLength": 1,
+                    "pattern": "^[a-z0-9](?:[-a-z0-9.]*[a-z0-9])?$"
+                  },
+                  "controllerCaSecretKey": {
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9._-]+$"
+                  },
+                  "tokenAudience": {
+                    "minLength": 1
+                  },
+                  "operators": {
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "studio": {
+      "type": "object"
+    },
+    "worker": {
+      "type": "object",
+      "required": [
+        "native",
+        "replicas",
+        "terminationGracePeriodSeconds"
+      ],
+      "properties": {
+        "replicas": {
+          "const": 1
+        },
+        "native": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "nodeName",
+            "namespace",
+            "policyDigest"
+          ],
+          "properties": {
+            "nodeName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "namespace": {
+              "type": "string",
+              "minLength": 1
+            },
+            "policyDigest": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "terminationGracePeriodSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483
+        }
+      }
+    },
+    "ingestion": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "replicas",
+        "quarantineTtlMs"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "replicas": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "quarantineTtlMs": {
+          "type": "integer",
+          "minimum": 60000,
+          "maximum": 86400000
+        },
+        "resources": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "resources"
+            ],
+            "properties": {
+              "resources": {
+                "type": "object",
+                "required": [
+                  "requests",
+                  "limits"
+                ],
+                "properties": {
+                  "requests": {
+                    "$ref": "#/$defs/ingestionResourcePair"
+                  },
+                  "limits": {
+                    "$ref": "#/$defs/ingestionResourcePair"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "postgresql": {
+      "type": "object"
+    },
+    "secrets": {
+      "type": "object"
+    },
+    "artifactStorage": {
+      "type": "object"
+    },
+    "workerTrust": {
+      "type": "object",
+      "required": [
+        "spiffe"
+      ],
+      "properties": {
+        "spiffe": {
+          "type": "object",
+          "required": [
+            "enabled",
+            "trustDomain",
+            "novaNamespace",
+            "novaServiceAccount",
+            "agentNamespace",
+            "agentServiceAccount",
+            "socketPath",
+            "csiDriver",
+            "envoy"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "trustDomain": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+$"
+            },
+            "novaNamespace": {
+              "type": "string",
+              "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+            },
+            "novaServiceAccount": {
+              "type": "string",
+              "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+            },
+            "agentNamespace": {
+              "type": "string",
+              "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+            },
+            "agentServiceAccount": {
+              "type": "string",
+              "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+            },
+            "socketPath": {
+              "type": "string",
+              "pattern": "^/"
+            },
+            "csiDriver": {
+              "type": "string",
+              "minLength": 1
+            },
+            "envoy": {
+              "type": "object",
+              "required": [
+                "repository",
+                "tag",
+                "pullPolicy",
+                "resources",
+                "digest"
+              ],
+              "properties": {
+                "repository": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tag": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "pullPolicy": {
+                  "enum": [
+                    "Always",
+                    "IfNotPresent",
+                    "Never"
+                  ]
+                },
+                "resources": {
+                  "type": "object"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "tailscale": {
+      "type": "object"
+    },
+    "backup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schedule",
+        "verificationSchedule",
+        "maximumBytes",
+        "maximumRetainedBytes",
+        "maximumDurationSeconds",
+        "resources",
+        "databaseProofSchedule"
+      ],
+      "properties": {
+        "schedule": {
+          "type": "string",
+          "minLength": 9,
+          "maxLength": 128
+        },
+        "verificationSchedule": {
+          "type": "string",
+          "minLength": 9,
+          "maxLength": 128
+        },
+        "maximumBytes": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,12}$"
+        },
+        "maximumRetainedBytes": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{0,12}$"
+        },
+        "maximumDurationSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        },
+        "resources": {
+          "type": "object"
+        },
+        "databaseProofSchedule": {
+          "type": "string",
+          "minLength": 9,
+          "maxLength": 128
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

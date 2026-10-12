@@ -1,0 +1,33 @@
+{
+  "capturedAt": "2026-09-21T06:40:28.010737+00:00",
+  "scope": "independent input-limit review; exact working-tree identities; no native isolation claim",
+  "sha256": {
+    "charts/kubeclaw/files/config/swarm.config.json": "f1e8a93c372b100dfb94afe7557637982303c9015cb03dc88d1643d237ef5198",
+    "charts/prism/templates/_swarm-config.tpl": "8ea722841ca4760f713b33a0f7ec9f7563c4dd083e652b256fedffc47624de27",
+    "charts/prism/values.schema.json": "73c7e50de8a8738c4bb215d6a54801e76f386beb27489372b4a3dcfc57be3bb6",
+    "docs/operations/operator-configuration.md": "cd22dae7bbbd3e59695cebb31b8d743738950114e5a70f7c96a81df7038600ce",
+    "docs/operations/prism-operator-guide.md": "0c181730a93d79940c92b6fd0050362ae7e1b8d22fe71690a1313a0e3a7a187e",
+    "docs/review/evidence/independent-prism-input-20260921/mutant-http.txt": "12235e614d8d6368b45e29a52094c4ff4a1804dc4360e99c1d81c8bc1d93b406",
+    "docs/review/evidence/independent-prism-input-20260921/mutant-result.json": "6cdf6af4d1191bb86fff52c25854750daff96c0d9edcd0e4e576476b525f0d0c",
+    "docs/review/evidence/independent-prism-input-20260921/runtime-helm.txt": "b712827fab61822cea9612d9cc560984d10ff4fce1de0891b1d8cee5cf37e686",
+    "docs/review/evidence/independent-prism-input-20260921/utf8-probe.mjs": "80e0e394625a44dfa32e613d58ea007687ebc80ba6ac97dea182c49078fed4f8",
+    "docs/review/evidence/independent-prism-input-20260921/utf8-probe.txt": "4e88a867ffa4f76bd4773357cd09b5e0baf1a9b7ce7ff8bc810193ef5c92d11a",
+    "docs/review/remediation/implementation/config-input-limit-20260921.md": "d052d11caf62b5af893155a01c289f0cb340e562a81020292eb83fdafc75879d",
+    "docs/review/remediation/implementation/independent-prism-input-review-20260921.md": "89927d471b940012806e1b31b653190e78ec937e5a459bdb3b9ad227c324c49f",
+    "skills/common/plugin-runtime/foundation/config/swarm.schema.json": "c40d510aca7668aa008f93e587067e69763878d7ebdd2bad3dcd1d249275ba35",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts": "eed0853b85b3a6207525fd0928560ad594e745463c02e2a1dbbbeb9a01c8aa2e",
+    "skills/prism/config/native-worker.ts": "33c34845144b25e3e28759a8f87be3d8ddac63216f598e3aa2ce8aa6daff070a",
+    "skills/prism/server/native-worker-execution.ts": "bd783ea7ea618e9d0560b2f50f39c7e5973b6355307dfa34a0524846cbddc9ad",
+    "skills/prism/server/native-worker-host.ts": "485118712479bd2991724c4787acb4bf111ddd56866d0d584f608482a3b4ba34",
+    "skills/prism/server/worker-config.ts": "e934de7d1df79359210483be234379882da9ec14602445f36c96171c2080c93e",
+    "skills/prism/server/worker-service.ts": "90174f5edf19c85ef1642da95a51aac46854f9a1ce7172d876045a5bac1595e4",
+    "skills/prism/server/worker.ts": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+    "skills/prism/tests/native/worker-harness.mts": "775395538cc6ea32574947a7e67402069f7071f8fbffce7756716d830be99b42",
+    "skills/prism/tests/swarm-input-limit.test.mts": "27ce3b61eba3b022f43540f763a052f52856a3eb071099acaf40da5f110d2620",
+    "skills/prism/tests/swarm-worker-config.test.mts": "a6cb00a31f5d26ee70df290d03ba2a5e5681e0b4325d614e58038f6c57ba39d5",
+    "skills/worker/core/worker/native-attempt-journal.ts": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4",
+    "skills/worker/core/worker/native-worker-process.ts": "d43bc3ce05976d77579dbc624cae8be1d3209732b023124e3eb6f0a8fd9860da",
+    "tests/verification/deployment/prism-swarm-config.test.mjs": "aaed0dea06eb7e7738bb140900d88e4621640c426859386f372e8f75aaa7f5f6",
+    "tests/verification/deployment/prism-swarm-image.mjs": "9aa3910aa723ce4d70e04c9729e4da55bfabf92146bc24c4afa3fd6b3324bc40"
+  }
+}

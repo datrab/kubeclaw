@@ -1,0 +1,20 @@
+[
+  {
+    "source": "scripts/config/inventory-settings.mjs",
+    "sha256": "7426f4a340adb61fc63dbb5b42ce02de3f61ea5d0521a041a3836b302ef19de9",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "scripts/config/environment-readers.mjs",
+    "sha256": "825cd8e956e670c4d39ce7fbe684da34a125f7caba8289db69043afbf98cab43",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "scripts/config/tests/environment-readers.test.mjs",
+    "sha256": "cd458cf01b3ed14273d01ac0e24151a8be754c66816b73651fbe9b61e4397fe8",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  }
+]

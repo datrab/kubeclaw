@@ -168,3 +168,141 @@ eine getrennte Reserve. Konkrete verfügbare Kapazität wird geprüft, nicht erf
 D13/D14 bleiben unverändert. Die Entscheidung autorisiert die Implementierung in
 PR #6, keinen Hosteingriff, Deployment oder Kauf zusätzlicher Ressourcen. Die
 Node-/Runtime-Anbindung muss fehlende Voraussetzungen vor Aktivierung abweisen.
+
+## D17 — Config als alleinige Autorität, klare Komponentengrenzen
+
+Der Auftraggeber präzisiert den laufenden CONFIG-Auftrag: Code und Konfiguration
+müssen klar getrennt sein. Für konfigurierbare Werte dürfen keine hardcodierten
+Fallbacks, lokalen Ersatzdefaults oder konkurrierenden Autoren im Code verbleiben.
+Fehlende erforderliche oder ungültige Konfiguration muss vor Aktivierung abgewiesen
+werden. Auch Loader, Schemas, Environment, Entrypoints und Charts dürfen keinen
+versteckten zweiten Defaultpfad bereitstellen. Gewünschte Standardwerte stehen
+ausdrücklich in der gepflegten Konfiguration.
+
+Gewünschte Struktur sind klar zugeordnete zentrale Config-Dateien pro Plugin und
+entsprechend für Worker Core, Engine, Orchestrator Core und weitere Komponenten.
+Jede Einstellung hat genau eine editierbare Autorenquelle. Ein gemeinsamer
+Einstiegspunkt darf diese Komponentenreferenzen zusammenführen und validieren;
+er darf ihre Werte nicht parallel pflegen oder durch lokale Defaults ersetzen.
+Die bisherige zentrale swarm-Autorität ist bei dieser Aufteilung nachvollziehbar
+zu migrieren, nicht durch zusätzliche konkurrierende Dateien zu ergänzen.
+Externe Secretwerte und die getrennte Softwareversionsautorität bleiben erhalten;
+ihre erforderlichen Referenzen und Zuständigkeiten müssen eindeutig sein.
+
+F1–F6 und F-DOC bleiben verpflichtend. Die Inventur muss jede konfigurierbare
+Einstellung, ihren einzigen Autor und alle tatsächlichen Consumer zuordnen.
+Positive Profile müssen den echten Consumer verändern; fehlende Werte und
+wieder eingeführte Fallbacks müssen durch passende Negativ-/Mutationstests
+auffallen. Ersetzte Ladepfade und widersprüchliche Anleitungen sind zu entfernen
+oder ausdrücklich als historische Belege zu kennzeichnen. Die Entscheidung
+beschreibt das Ziel, keinen bereits abgeschlossenen Implementierungsstand.
+
+## D18 — Kubernetes-Ausführung statt eigener nativer Hostpools
+
+Am 2026-10-12 hat der Auftraggeber den Zielwechsel und die fünf vorgeschlagenen
+Vertragsanpassungen ausdrücklich akzeptiert, **sofern die Lösung wesentlich
+weniger komplex und einfacher skalierbar wird**. Einsatzprofil ist generell
+eigener generierter Code. Die [detaillierte Architektur- und Migrationsbeschreibung](worker-execution-simplification-20261012.md)
+und der [beschlossene Arbeitsplan](implementation-order-20261012.md) konkretisieren
+Umfang, Gründe, Grenzen und Abnahme.
+
+- Prism führt jeweils einen Auftrag/Attempt in einem Kubernetes-Job aus.
+- Buster führt zunächst einen ganzen Testplan mit lokalen Fixtures in einem
+  Job aus. Seine harte Ausführungsgrenze ist zunächst der Plan, nicht jeder
+  einzelne Testnode. Nodefristen, Outputgrenzen und fachliche Ergebniszuordnung
+  bleiben erhalten. Ein fehlerhafter Test kann den ganzen Plan beeinträchtigen.
+- Kubernetes/Runtime verwalten die Cgroups und schedulbaren Containerressourcen.
+  Eigene hostverwaltete Buster-/Prism-Rollenpools, deren NRI-Anpassung und die
+  ausschließlich dafür nötigen Sonderpfade werden nach geprüftem Cutover entfernt.
+  Allgemeiner Host-/Kubeletschutz bleibt bestehen. Dies **ersetzt D16 als
+  zukünftige Zielarchitektur**; D16 und historische Belege bleiben unverändert lesbar.
+- Für die neue Ausführung gelten CPU-Rate plus endliche Laufzeit statt eines
+  identischen kumulativen CPU-Zeitbudgets, einheitlicher Podtaskschutz mit
+  nachgewiesenem aggregiertem Node-/Hostschutz statt frei unterschiedlicher
+  harter Attempttasklimits und Busters Planbudget statt isolierter Nodebudgets.
+  Linux-Tasksemantik aus D13 bleibt; historische Einheiten werden nicht umgedeutet.
+- Bei Crash/Nodeverlust nicht zuverlässig erfasste finale Kernelwerte werden
+  ausdrücklich als unbekannt ausgewiesen. Keine erfundenen Nullwerte, keine
+  Behauptung einer vollständigen Endabrechnung aus periodischen Metriken.
+- Bei Controllerneustart wird lebende Job-/Fixturearbeit übernommen. Bei Verlust
+  des Planpods erlischt lokale Fixturebereitschaft; erst nach sicherer
+  Zustandsklärung rekonstruieren oder blockieren. D14/B4 werden insoweit angepasst:
+  kein Versprechen physisch weiterlebender lokaler Fixtures über Podverlust hinweg.
+  Bereitschaft, eigene ausgewiesene Ressourcen und bestätigtes Cleanup bleiben Pflicht.
+
+Erhalten bleiben dauerhafte Auftragsidentität, Claims, Deduplizierung, Resultate,
+externes Effekt-Reconciliation, D08, Plugin-/Capability-/Credentialgrenzen,
+Retention nach D01/D07 und separate Live-Abnahme nach D12. Ein Job garantiert
+keine Exactly-once-Ausführung und ein unerreichbarer Node kein Prozessende.
+Die innere Buster-Berechtigungsgrenze, Storagezugriff und BuildKit-Isolation
+sind vor ihrer jeweiligen Umsetzung konkret zu lösen und echt nachzuweisen.
+
+Die Anpassungen benötigen versionierte Contracts und explizit aktualisierte
+Abnahmematrizen; ursprüngliche Befunde dürfen daraus nicht automatisch geschlossen
+werden. Ist eine wesentliche Vereinfachung nur durch neue große Sonderinfrastruktur
+erreichbar, wird der Zielkonflikt erneut vorgelegt. Diese Zielentscheidung ist
+keine Behauptung bereits migrierter oder abgenommener Ausführung und autorisiert
+keinen vorzeitigen Hosteingriff oder Deployment.
+
+## D19 — Reihenfolge und Test-Refactoring vor Ausführungsmigration
+
+Am 2026-10-12 hat der Auftraggeber folgende Priorität vorgegeben:
+
+1. **CONFIG-Zentralisierung** gemäß D17.
+2. **Test-Refactoring**, dessen genaue Vorgaben in einer anderen Session geplant werden.
+3. **Cgroup-/Worker-Ausführungsrefactoring** gemäß D18.
+4. **Die zwölf weiterhin offenen historischen Findings** mit erneuter Bewertung
+   nach den vorangehenden Änderungen.
+
+Das Test-Refactoring ist als eigener Arbeitspunkt aufgenommen. Es soll vermeiden,
+dass Tests späterer Implementierungen erst nachträglich neu kategorisiert werden
+müssen. Kategorien, Verzeichnisse, Runner-/CI-Verträge und weitere Testvorgaben
+werden aus dem tatsächlich freigegebenen Ergebnis dieser anderen Session übernommen,
+nicht in diesem Dokument erfunden. Bis dahin bleiben bestehende echte Tests Pflicht,
+auch für die vorgelagerte CONFIG-Arbeit. Diese vorhandenen Tests werden in Phase 2
+in den neuen Standard überführt; Phase 3/4 erstellen neue Tests nach diesem Standard.
+
+Die Reihenfolge ersetzt die frühere vorgeschlagene Reihenfolge in der
+Bestandsaufnahme. Sie ist keine Statuspromotion und kein Grund, vorhandene
+Änderungen zu verwerfen. Überschneidungen, insbesondere ENGINE001/ENGINE004/
+IFR10/IFR16 und CONFIG/IFR29, erhalten genau eine Zuordnung und gemeinsame Belege.
+Eine Teilbehebung in Phase 1 oder 3 zählt in Phase 4 erst nach vollständiger
+Findingabnahme; keine doppelte Umsetzung oder automatische Schließung.
+
+Der unmittelbare Auftrag ist die dauerhafte Dokumentation dieser Entscheidungen
+und des detaillierten Umfangs. Beginn und konkreter Umfang einzelner
+Implementierungspakete werden im gemeinsamen Entscheidungsmodus anhand ihrer
+Abnahmekriterien festgelegt; diese Nachricht startet noch keine Codeumsetzung.
+
+## D20 — Zentraler Systemeinstieg und dynamische Modulprofile
+
+Am 2026-10-12 hat der Auftraggeber die CONFIG-Definition anhand des tatsächlichen
+Codes beauftragt und folgende Präzisierungen bestätigt:
+
+- `pipeline.json` ist der gemeinsame Systemeinstieg mit Referenzen auf
+  Komponenten, Pipelineabläufe und Profile. Konkrete Settings liegen in der
+  jeweils zuständigen Engine-/Plugin-/Core-/Worker-Core-Konfiguration;
+  keine zweite Kopie dieser Settings im Einstieg.
+- Möglichst alle sinnvoll anpassbaren Komponentenparameter sollen ohne
+  Quellcodeänderung konfigurierbar und für spätere Komponentenevals nutzbar sein.
+  Dazu gehören geeignete Agent-/Modell-/Prompt-/Providerprofile, nicht nur Limits.
+- Geeignete Tuningänderungen gelten ab dem **nächsten Modulstart**, einschließlich
+  noch nicht gestarteter Module einer laufenden Pipeline. Die bereits gestartete
+  fachliche Moduleinheit behält ihren dokumentierten Stand. Graph-/Berechtigungs-/
+  Recoverygrundlagen bleiben stabil. Evals verwenden eine feste Generation.
+- Profile bleiben validiert, vollständig und in ihren Zuständigkeiten eindeutig.
+  Neue Generationen resetten keine verbrauchten Reparaturbudgets, beseitigen
+  keine ungewissen Seiteneffekte und setzen historische Abnahmen nicht außer Kraft.
+
+Die [codegestützte CONFIG-Definition](config-definition-20261012.md) beschreibt
+den vorgeschlagenen vollständigen Scope, Änderungen, Bedienung und Abnahme;
+die [Inventuranlage](config-scope-inventory-20261012.json) erfasst die heutigen
+48 deklarierten Plugins und ihre 57 Configschemas. Sie ist keine fertige
+semantische F1-Feld-/Consumerabnahme. Die physische Autorenwurzel, exakte
+Scopezuordnung und konkreten Migrationspakete werden daraus gemeinsam festgelegt.
+
+D17 bleibt maßgeblich. Der derzeitige `--pipeline`-Eingang für konkrete Graphen
+ist vom neuen Systemeinstieg ausdrücklich zu unterscheiden und zu migrieren.
+Kein generisches Hotreload laufender Arbeit, keine stillen Fallbacks und keine
+neue große Configserverinfrastruktur aus dieser Entscheidung ableiten.
+Dieser Auftrag definiert CONFIG; noch keine neue Codebehebung integriert.

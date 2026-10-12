@@ -1,0 +1,282 @@
+{
+  "at": "2026-09-21T18:09:11.415959+00:00",
+  "runtimeExecuted": false,
+  "scope": "Named inventory sources and all four plugin trees; not a full transitive executable closure",
+  "files": [
+    {
+      "path": "docs/review/remediation/implementation/config-transport-observers-plugin-inventory-20260921.md",
+      "bytes": 14925,
+      "sha256": "8fbc319f39e3d1f2ed7e69b98c4424807bf3207e6f1342487c543e42bd5e1393"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "bytes": 30682,
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "bytes": 13630,
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "bytes": 9110,
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "bytes": 9371,
+      "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "bytes": 4047,
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "bytes": 5817,
+      "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+      "bytes": 5155,
+      "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/README.md",
+      "bytes": 429,
+      "sha256": "587baf990dd55b551e27ea93cc923b5365445f6a38f306f9cb0fb0a7abbb365a"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/package.json",
+      "bytes": 369,
+      "sha256": "42f723467024f5e13f7d9389d4288dbbc88b47ab2ea4a6ebad2a226ffebea432"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/plugin.json",
+      "bytes": 2305,
+      "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json",
+      "bytes": 232,
+      "sha256": "c6d66f56cbb0c5cd0b277a1def6ce910dfbbd1707a6feaf5ef17674cfcf29759"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/schemas/config.schema.json",
+      "bytes": 104,
+      "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/src/observers.ts",
+      "bytes": 1353,
+      "sha256": "b52a00959c3ba7c122faf4fe364ce9ab5baf530e590df89b8f3ddc5e764b111c"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/tests/live-function.test.ts",
+      "bytes": 4140,
+      "sha256": "c0dfc4de79849e724f90626b5819b1cf2082141d4ee31eecd62c053d07fcf8ff"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/tests/observers.unit.test.mjs",
+      "bytes": 1000,
+      "sha256": "fbb1786649d8b135c29070a277b4fd0b0b15ecc2d0e0b436c38887308a7d82a6"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/tests/package-boundary.test.mjs",
+      "bytes": 425,
+      "sha256": "7cf13a0c277360cfa50f9bffd2e38eabeb043ec0a331f7a584269a50a54f8dce"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/tests/parity.test.ts",
+      "bytes": 1644,
+      "sha256": "34b2f2e1d4c501a3ef88a793ea44ff8fd6d90b0665c8aa9b1600dadefac567bf"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/tsconfig.json",
+      "bytes": 215,
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b"
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "bytes": 6527,
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/README.md",
+      "bytes": 1569,
+      "sha256": "72403574cdae0eedc8995e2ba75af81ca940effcd34a16e73425a60dbe45fb48"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/package.json",
+      "bytes": 304,
+      "sha256": "36874aa1869d66d952a68f736f299835d70c87c019337337250b2f8a09f66945"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+      "bytes": 423,
+      "sha256": "16e0baa799abd2a53ef43f3ccfb0a4055d90c2129453de750992eafec9112be5"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+      "bytes": 1026,
+      "sha256": "d3e3295509aaa3d9c1c13fe1fca014058b36ae860621140025cd64734c5834fe"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+      "bytes": 5856,
+      "sha256": "665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+      "bytes": 3150,
+      "sha256": "7bbab8b7083c08c77b801f1a90ad439c9c166d1dc3734a0a8b4bf82ff64af7fa"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
+      "bytes": 5044,
+      "sha256": "45b37bb50e08a92ac1349492166a823c45abbcea52071f32ae91862962812205"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs",
+      "bytes": 471,
+      "sha256": "5ab9de678f8b3b52b8418642fdb050614d2a2c4d25c33c91948c072cb21f71bb"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/tsconfig.json",
+      "bytes": 215,
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/README.md",
+      "bytes": 1981,
+      "sha256": "6522f6dc211b28863facf7296a42e50cf8607e36c418e65e013e94a5b667bcc0"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/package.json",
+      "bytes": 297,
+      "sha256": "e2b56447b265da259a73dae21d60d1e758bdfc8467afb97ea7c6610f0827edfc"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/plugin.json",
+      "bytes": 744,
+      "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+      "bytes": 614,
+      "sha256": "eecab538d12754deef07c9e1ff456f7fb9e27612dda944ed671877e80a021875"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+      "bytes": 4404,
+      "sha256": "15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/exchange.ts",
+      "bytes": 2131,
+      "sha256": "c7ef23ecf720650c8c7415a0aee11120a8972406df7e1ef4a0886f9e2e804569"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/resp.ts",
+      "bytes": 3544,
+      "sha256": "2f5af011407659a9e3af4d21b6f9b5ec8042f63cc5f8be7b4a423fbbe108d7ea"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/stream-identity.ts",
+      "bytes": 496,
+      "sha256": "a2657ab33a2833771bda44c8b2ef1904900a26c6773f7ba839f36a35da571167"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/tests/live-function.test.ts",
+      "bytes": 2515,
+      "sha256": "d7ee743577ce0d49d403f7a4df3d6265d110a46149d2b7e9e1be4668d70a0be0"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/tests/package-boundary.test.ts",
+      "bytes": 647,
+      "sha256": "017922285ed4cd0e90f5dba92bf9f1532b67b1cc268438be120f8b5761a0834f"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/tsconfig.json",
+      "bytes": 215,
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/README.md",
+      "bytes": 1529,
+      "sha256": "92a62894d0171bc3ea702f18fd4d7ae16d0842e8e7e8353401b6b4333a70b839"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/package.json",
+      "bytes": 383,
+      "sha256": "25d741c9719087d43c5af51c05b96f3ce1056c96e32dbd6b3c0d3b60ab3cbf6c"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/plugin.json",
+      "bytes": 473,
+      "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+      "bytes": 1175,
+      "sha256": "31dccf98f7921ed10af125417de5e913a899ad39eca6efc6386d28c7d64fdc8e"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/schemas/publish.schema.json",
+      "bytes": 213,
+      "sha256": "8e8b5ae0b5d434ca945fd1b0ed6365934d67c00e045c61bccbc5f35df8d4fd73"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/schemas/receipt.schema.json",
+      "bytes": 541,
+      "sha256": "8795863128e337e4c0cce3c64cc9122bbbb245ade722e387a6ace77ec45da36f"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "bytes": 14846,
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/tests/config-validation.test.mjs",
+      "bytes": 1766,
+      "sha256": "63dad0c6cf8589cd4a48b5819671981d22253149168d502af0288f0a261310ed"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
+      "bytes": 15645,
+      "sha256": "0adfb9e673b3c2d66dfb76fd2886732701ae34031214d6fc37224e6812da5e07"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs",
+      "bytes": 534,
+      "sha256": "646fe0da00e39b6ead3836746bf6f1e0f2855e3df3d091866d40a6f7eba5dd33"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/tsconfig.json",
+      "bytes": 215,
+      "sha256": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b"
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "bytes": 15396,
+      "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0"
+    },
+    {
+      "path": "skills/nova/core/execution/authorization.ts",
+      "bytes": 10287,
+      "sha256": "3f04309435d4fe3eebe5a73bac5247b0d3c981ffd4a9580e52974cf46cf3942d"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observer-delivery.ts",
+      "bytes": 4097,
+      "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observers.ts",
+      "bytes": 8491,
+      "sha256": "b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd"
+    }
+  ]
+}

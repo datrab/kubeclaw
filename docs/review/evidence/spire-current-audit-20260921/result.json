@@ -1,0 +1,41 @@
+{
+  "historicalSixIdentitiesUnchanged": true,
+  "renderByteIdentical": true,
+  "effectiveConfigurationAssertions": "passed",
+  "currentPeerTemplateChecks": "passed (source only)",
+  "liveExecuted": false,
+  "identities": [
+    {
+      "path": "node_modules/.cache/spire-effective-20260921/spire-0.30.0.tgz",
+      "sha256": "8e133a142915f4938328e2524f6262607e41f61e06f15cb06dc3d94f018be341"
+    },
+    {
+      "path": "my-values/infra/spire-values.yaml",
+      "sha256": "dad3b9a5f3815773de1c49acfe1ea982f97bb076fcd312fb99155a5a083a06fd"
+    },
+    {
+      "path": "docs/operations/spire-recovery.md",
+      "sha256": "8b614af9c1a31e356b8c2923b273dacf124ae7d6786ba229b997fe3389b6e13f"
+    },
+    {
+      "path": "docs/operations/worker-trust-runbook.md",
+      "sha256": "7fd30f671c14503da1ab25488eed007816e71e76f9ebeb52ddd1a71c502a0637"
+    },
+    {
+      "path": "docs/review/infrastructure/spire.md",
+      "sha256": "515b3fca30e9acd83c486d17a6247316b98882ec81c1fa672cf9a7e64908708a"
+    },
+    {
+      "path": "docs/review/remediation/implementation/spire-recovery-matrix-20260921.md",
+      "sha256": "b75823f50829c8862d4d65ef69ba8204991f82e365cea53704ea4dd1cd49acd9"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "sha256": "f84c715b0ffd6088dc996221a83987bc1711086785da5e5e0bb1f70c0a274f7c"
+    }
+  ]
+}

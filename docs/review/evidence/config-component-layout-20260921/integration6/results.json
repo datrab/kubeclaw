@@ -1,0 +1,99 @@
+[
+  {
+    "name": "delivery-controls",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/deployment/config-component-packaging.test.mjs",
+      "tests/verification/reliability/config-component-bundle.test.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 7.788
+  },
+  {
+    "name": "deployment-originals",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/deployment/deployment-release.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 92.129
+  },
+  {
+    "name": "deployment-truth",
+    "command": [
+      "node",
+      "tests/verification/deployment/check-deployment-truth.mjs"
+    ],
+    "exitCode": 1,
+    "seconds": 0.164
+  },
+  {
+    "name": "canonical-lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "scripts/updates/release-configuration.mjs",
+      "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "skills/prism/tests/fixtures/control-policy.mts",
+      "skills/prism/tests/fixtures/studio-service.mts",
+      "skills/prism/tests/native/operation-journal.mts",
+      "skills/prism/tests/studio-canonical-image.mts",
+      "skills/prism/tests/studio-config.test.mts",
+      "skills/prism/tests/swarm-control-policy.test.mts",
+      "skills/prism/tests/swarm-input-limit.test.mts",
+      "skills/prism/tests/swarm-native-settings.test.mts",
+      "skills/prism/tests/swarm-resource-operation.test.mts",
+      "skills/prism/tests/swarm-resource-policy.test.mts",
+      "skills/prism/tests/swarm-result-journal.test.mts",
+      "skills/prism/tests/swarm-supervisor-config.test.mts",
+      "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+      "skills/prism/tests/swarm-worker-behavior.test.mts",
+      "skills/prism/tests/swarm-worker-config.test.mts",
+      "skills/prism/tests/worker-ingress-capacity.test.mts",
+      "skills/prism/tests/worker-process-shutdown-native.mts",
+      "skills/prism/tests/worker-shutdown-boundaries.test.mts",
+      "tests/fixtures/config/swarm-bundle.mjs",
+      "tests/fixtures/test-gate/buster-admission.mts",
+      "tests/fixtures/test-gate/buster-cli-profile.mjs",
+      "tests/fixtures/test-gate/modeled-preparation.mts",
+      "tests/verification/contracts/infra-private-access.test.mjs",
+      "tests/verification/deployment/buster-admission-render.test.mjs",
+      "tests/verification/deployment/check-deployment-truth.mjs",
+      "tests/verification/deployment/config-component-packaging.test.mjs",
+      "tests/verification/deployment/prism-native-runtime.test.mjs",
+      "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "tests/verification/deployment/prism-swarm-image.mjs",
+      "tests/verification/e2e/real-run-workspace.mjs",
+      "tests/verification/e2e/support/platform-config.ts",
+      "tests/verification/e2e/swarm-author-profile.test.mjs",
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/verification/reliability/buster-extraction-concurrency.test.mts",
+      "tests/verification/reliability/buster-historical-import.test.mts",
+      "tests/verification/reliability/buster-preparation-identities.test.mts",
+      "tests/verification/reliability/buster-preparation-ledger.test.mts",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "tests/verification/reliability/config-component-bundle.test.mts",
+      "skills/prism/tests/fixtures/native-process-boundary.mts",
+      "tests/verification/reliability/config-component-generation.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 5.957
+  }
+]

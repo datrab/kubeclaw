@@ -1,0 +1,12 @@
+{
+  "source": "docs/review/evidence/config-buster-admission-20260921/before/5.snapshot",
+  "sha256": "982331e977de58db067eba433501e0b201760946690f6787c0302e5503e85577",
+  "directConstructorPriorDefaults": {
+    "maximumActiveJobs": 2,
+    "maximumQueuedJobs": 16,
+    "maximumConcurrentAttempts": 64
+  },
+  "notImageDefaults": true,
+  "insertions": 2,
+  "originalBodyPreserved": true
+}

@@ -1,0 +1,15 @@
+{
+  "decision": "source accepted; integrate only after active runtime postbinding/HOLD",
+  "manifestSha256": "bca85b47a4d1a89014082565f6bc04288dd0d0562cbbc6345169717222c81f8c",
+  "identityErrors": [],
+  "scope": "two test files only",
+  "findingsResolved": [
+    "Original inactive-profile test called writeTestBundle, reserializing all seven canonical bundle files; checksums compare raw bytes, so unchanged selected semantics did not imply unchanged active bytes. Correction mutates only inactive author after realpath/regular-file/inode guard; snapshots every active bundle input plus selected profile, compares exact bytes and complete delivered ConfigMap data, retains original checksum equality, and restores exact inactive bytes in finally.",
+    "Original structural oracle hardcoded 15000 against real migrated readiness code. Correction asserts actual imported readiness module settings.shortCommandTimeoutMs with both Math.min deadline remainder and Math.max(1) clamp. All other source assertions and runtime test bodies remain unchanged. This structural check is not itself runtime timing proof."
+  ],
+  "rawEvidence": [
+    "docs/review/evidence/buster-cluster-runtime-20260924/runtime1/runtime-1.txt",
+    "docs/review/evidence/buster-cluster-runtime-20260924/runtime1/runtime-4.txt"
+  ],
+  "execution": "none; failed original evidence preserved; no retroactive green or live source writes"
+}

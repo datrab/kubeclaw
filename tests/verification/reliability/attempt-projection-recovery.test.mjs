@@ -10,7 +10,7 @@ import { FileJournal } from '../../../skills/nova/core/state/journal.ts';
 
 function platform(root, production = false) {
   const roots = [path.resolve('tests/fixtures/plugin-system-v2'), ...(production ? [path.resolve('skills/common/plugins'), path.resolve('skills/nova/plugins')] : [])];
-  return { schemaVersion: 'pipeline-platform.v2', installationRoots: roots, trustedBuiltinRoots: roots,
+  return { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {},
     activeAdapters: [], observers: {}, storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 5000,
     orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [] };

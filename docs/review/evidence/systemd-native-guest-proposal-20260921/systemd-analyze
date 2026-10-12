@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /opt/systemd-parser/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 --library-path /opt/systemd-parser/usr/lib/x86_64-linux-gnu:/opt/systemd-parser/usr/lib/x86_64-linux-gnu/systemd /opt/systemd-parser/usr/bin/systemd-analyze "$@"

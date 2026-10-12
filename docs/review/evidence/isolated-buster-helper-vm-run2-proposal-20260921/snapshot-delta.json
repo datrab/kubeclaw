@@ -1,0 +1,36 @@
+{
+  "baselineManifestSha256": "ad55e2b1b8e8ae54b25d341212964e3fa2577ac0a7b7a8940993e6b84b6901b8",
+  "snapshotSha256": "7d75b0ba49eb18744bd63d2f741c60d65329f73251f38f4c5716780c25d0aaad",
+  "independentRegularInodes": 35451,
+  "changedPaths": [
+    "scripts/tests/buster-helper-authority-root.test.mjs",
+    "scripts/tests/fixtures/buster-unprivileged-caller.mjs"
+  ],
+  "changes": [
+    {
+      "path": "scripts/tests/buster-helper-authority-root.test.mjs",
+      "before": {
+        "path": "scripts/tests/buster-helper-authority-root.test.mjs",
+        "type": "file",
+        "bytes": 4968,
+        "sha256": "f8c3c3dcc76912c36525d6d0b8287f34c7bd44e952336e8f26c5ad7b09adbfb5"
+      },
+      "after": {
+        "path": "scripts/tests/buster-helper-authority-root.test.mjs",
+        "type": "file",
+        "bytes": 5668,
+        "sha256": "454cd7bda952ca1c341214b2cb7ac5d92ac79e0dda1fad7e665c410563660297"
+      }
+    },
+    {
+      "path": "scripts/tests/fixtures/buster-unprivileged-caller.mjs",
+      "before": null,
+      "after": {
+        "path": "scripts/tests/fixtures/buster-unprivileged-caller.mjs",
+        "type": "file",
+        "bytes": 524,
+        "sha256": "31ca2583b1d9c332b9dd54f1fcf7013ca33cf89bf43f3fa03d0114a5f56002d7"
+      }
+    }
+  ]
+}

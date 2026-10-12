@@ -1,0 +1,37 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'artifact:fake'
+- 'artifact:report'
+            ^
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-report-runtime-independent-20260921/mutant-pnohh5m8/mutant.test.mts:214:8
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'artifact:fake',
+  expected: 'artifact:report',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+✖ /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-report-runtime-independent-20260921/mutant-pnohh5m8/mutant.test.mts (1118.268317ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1130.571453
+
+✖ failing tests:
+
+test at docs/review/evidence/buster-report-runtime-independent-20260921/mutant-pnohh5m8/mutant.test.mts:1:1
+✖ /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-report-runtime-independent-20260921/mutant-pnohh5m8/mutant.test.mts (1118.268317ms)
+  'test failed'

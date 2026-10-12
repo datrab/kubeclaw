@@ -1,0 +1,45 @@
+[
+  {
+    "assertionDetected": true,
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/contracts/check-pipeline-worker-local-policy.mts"
+    ],
+    "exitCode": 1,
+    "name": "drainTimeoutMs-fallback",
+    "seconds": 0.5150364079745486
+  },
+  {
+    "assertionDetected": true,
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/contracts/check-pipeline-worker-local-policy.mts"
+    ],
+    "exitCode": 1,
+    "name": "cancellationTimeoutMs-fallback",
+    "seconds": 0.5653648370644078
+  },
+  {
+    "assertionDetected": true,
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/contracts/check-pipeline-worker-local-policy.mts"
+    ],
+    "exitCode": 1,
+    "name": "replayLimit-fallback",
+    "seconds": 0.5169461079640314
+  },
+  {
+    "assertionDetected": true,
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+    ],
+    "exitCode": 1,
+    "name": "lost-production-replay",
+    "seconds": 3.0719209949020296
+  }
+]

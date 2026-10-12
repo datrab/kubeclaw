@@ -1,0 +1,10 @@
+{
+  "files": [
+    {
+      "path": "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+      "kind": "file",
+      "beforeSha256": "49ecf52423dd615c241cddcf4fa241131704831026b334b4b7328de80f070021",
+      "sha256": "1679d4e5fda07cf0832f2c42c558093332b6e8e5fd1077bc9436841229031622"
+    }
+  ]
+}

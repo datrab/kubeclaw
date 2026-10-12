@@ -1,0 +1,20 @@
+✔ independent final verification reads no more than original bytes when real file grows after descriptor check (5.956913ms)
+ℹ {"originalBytes":8,"actualBytesAfterGrowth":65544,"bytesRead":8,"largestRequest":8}
+✔ independent empty inventoried file remains valid with exact-size reader (3.554142ms)
+✔ final inventory verification rejects changed real bytes despite colliding metadata (12.069051ms)
+✔ repeated verification of unchanged bytes fits the original scan quota (2.519185ms)
+✔ final inventory verification rejects grow (1.18144ms)
+✔ final inventory verification rejects shrink (0.992136ms)
+✔ final inventory verification rejects remove (1.17258ms)
+✔ final inventory verification rejects replace (2.31726ms)
+✔ final inventory verification rejects symlink (77.311867ms)
+✔ insufficient initial hash quota never becomes an executable clean inventory (1.096788ms)
+✔ growth by a real competing process cannot exceed the inventoried read size (112.483411ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 736.186193

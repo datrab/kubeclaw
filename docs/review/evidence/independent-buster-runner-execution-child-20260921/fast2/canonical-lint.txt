@@ -1,0 +1,7 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/eslint.config.mjs
+    3:1  error  Use a lowercase kebab-case filename                    discipline/filename-case
+  327:1  error  File has too many lines (325). Maximum allowed is 300  max-lines
+
+✖ 2 problems (2 errors, 0 warnings)
+

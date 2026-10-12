@@ -1,0 +1,29 @@
+✖ independent seven-way admission admits only one slot and retains exact winner replay (560.245316ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1096.828119
+
+✖ failing tests:
+
+test at docs/review/evidence/native-journal-terminal-capacity-independent-20260921/probes.mts:12:1
+✖ independent seven-way admission admits only one slot and retains exact winner replay (560.245316ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  7 !== 1
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-journal-terminal-capacity-independent-20260921/probes.mts:21:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 7,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

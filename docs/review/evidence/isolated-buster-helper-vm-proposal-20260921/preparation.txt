@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/prepare.py", line 8, in <module>
+    subprocess.run(['apk','extract','--no-chown','--destination',str(cache/'guest-root'),str(apk)],stdout=log,stderr=subprocess.STDOUT,check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['apk', 'extract', '--no-chown', '--destination', '/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root', '/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/packages/musl-1.2.6-r2.apk']' returned non-zero exit status 99.

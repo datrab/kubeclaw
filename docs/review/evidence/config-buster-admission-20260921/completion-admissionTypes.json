@@ -1,0 +1,9 @@
+{
+  "command": [
+    "node_modules/.bin/tsc",
+    "--noEmit",
+    "-p",
+    "tests/verification/reliability/tsconfig.buster-admission.json"
+  ],
+  "exitCode": 0
+}

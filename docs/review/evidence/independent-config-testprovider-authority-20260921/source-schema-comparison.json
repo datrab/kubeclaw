@@ -1,0 +1,124 @@
+{
+  "sourceFiles": 284,
+  "sourceDrift": [],
+  "exactRoster": true,
+  "manifestCount": 48,
+  "registrations": [
+    {
+      "manifest": "skills/buster/plugins/api-flow/plugin.json",
+      "registrationId": "flow",
+      "topLevelFields": 6,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/axe/plugin.json",
+      "registrationId": "axe",
+      "topLevelFields": 9,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/container-build/plugin.json",
+      "registrationId": "buildkit",
+      "topLevelFields": 4,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/coverage-budget/plugin.json",
+      "registrationId": "lcov",
+      "topLevelFields": 2,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "registrationId": "session",
+      "topLevelFields": 8,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/direct-command/plugin.json",
+      "registrationId": "command",
+      "topLevelFields": 8,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/http/plugin.json",
+      "registrationId": "request",
+      "topLevelFields": 10,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+      "registrationId": "deployment",
+      "topLevelFields": 9,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/lighthouse/plugin.json",
+      "registrationId": "lighthouse",
+      "topLevelFields": 10,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/openapi/plugin.json",
+      "registrationId": "operations",
+      "topLevelFields": 7,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/playwright/plugin.json",
+      "registrationId": "playwright",
+      "topLevelFields": 8,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/security-providers/plugin.json",
+      "registrationId": "headers",
+      "topLevelFields": 5,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/security-providers/plugin.json",
+      "registrationId": "dependency-trivy",
+      "topLevelFields": 3,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/security-providers/plugin.json",
+      "registrationId": "image-trivy",
+      "topLevelFields": 2,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/security-providers/plugin.json",
+      "registrationId": "kubernetes-policy",
+      "topLevelFields": 2,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/security-providers/plugin.json",
+      "registrationId": "kubernetes-runtime",
+      "topLevelFields": 2,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/size-budget/plugin.json",
+      "registrationId": "artifact",
+      "topLevelFields": 7,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "registrationId": "exposure",
+      "topLevelFields": 5,
+      "exactRawSchema": true
+    },
+    {
+      "manifest": "skills/buster/plugins/visual/plugin.json",
+      "registrationId": "visual",
+      "topLevelFields": 9,
+      "exactRawSchema": true
+    }
+  ],
+  "topLevelFields": 116,
+  "scope": "Source bytes, complete manifest roster, exact full raw schemas and registration identities only. Nested field projection and semantic consumer review pending. No runtime or migration acceptance."
+}

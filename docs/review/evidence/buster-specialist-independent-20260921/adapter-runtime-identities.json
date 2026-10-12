@@ -1,0 +1,34 @@
+[
+  {
+    "source": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+    "sha256": "0675902bcfebf7842d10eade9965c1b49d21e2083acaa9a7b7e6f03c248e24a9",
+    "matchesCurrentAtCapture": false,
+    "snapshot": "comparison-runtime-00-report-adapter-runtime.ts.snapshot",
+    "origin": "preceding reviewer PostgreSQL retained source archive"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/process-input.ts",
+    "sha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620",
+    "matchesCurrentAtCapture": true,
+    "snapshot": "comparison-runtime-01-process-input.ts.snapshot",
+    "origin": "preceding reviewer PostgreSQL retained source archive"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/report-finalizer.ts",
+    "sha256": "8cc0ff2562fd8b530c2a2e1b32b13aaccdec1a2ea9f398df0e7cd350b2cb9b7e",
+    "matchesCurrentAtCapture": true,
+    "snapshot": "comparison-runtime-02-report-finalizer.ts.snapshot",
+    "origin": "preceding reviewer PostgreSQL retained source archive"
+  },
+  {
+    "source": "skills/buster/engine/src/index.ts",
+    "sha256": "51c35b9e5455f1c1d253c769f1f020c23b1d1a0fe8e3b30abe4158e43be09f6a",
+    "matchesCurrentAtCapture": true,
+    "snapshot": "comparison-runtime-03-index.ts.snapshot",
+    "origin": "preceding reviewer PostgreSQL retained source archive"
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/isolation/plugin-sandbox",
+    "sha256": "3faba9a88eef6f4278c2cc11fef6fbdd246a898862cbe08eabbafee4b848376b"
+  }
+]

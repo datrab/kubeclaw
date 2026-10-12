@@ -67,7 +67,7 @@ try {
   const digest = computePackageDigest(packageRoot);
   const result = await runPipelineV2({
     ...(isolation ? { isolation } : {}),
-    schemaVersion: 'pipeline-platform.v2',
+    schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
     installationRoots: [installationRoot],
     trustedBuiltinRoots: [
       path.resolve('skills/common/plugins'),

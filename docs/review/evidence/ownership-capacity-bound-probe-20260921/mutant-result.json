@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "node",
+    "--import",
+    "./docs/review/evidence/ownership-capacity-bound-probe-20260921/omit-diagnosis.mjs",
+    "docs/review/evidence/ownership-capacity-bound-probe-20260921/probe.mjs"
+  ],
+  "exitCode": 1,
+  "expectedFailure": "valid lifecycle state exceeds commitment"
+}

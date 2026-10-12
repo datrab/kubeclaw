@@ -1,0 +1,6 @@
+{
+  "readerDifferentialCases": 10,
+  "checks": "same results, error identity, open flags, read calls, descriptor close on success/rejection",
+  "packageDigestAndOrderingEqual": true,
+  "descriptorClosureMutantDetected": true
+}

@@ -1,0 +1,9 @@
+{
+  "scripts/deploy-cilium.sh": "4af44f0d25b4e24d6d3c044758ab9cd7d984b9577c171174dd1598683e35faa8",
+  "scripts/verify-cilium-install-preflight.py": "aa6aeb85dfdf232609cf92171f5fdf04db16e0679ea73158b21bbcf848b9110f",
+  "scripts/verify-cilium-policies.py": "c8deb8d93e1d9d03ea8d2f06b1e6a1d27ad032c217ce5e338e99bc76b975800a",
+  "scripts/migrate-kubeclaw-network-policies-to-cilium.sh": "ced7a09334b05b064627f484e1fc23ba6286c54fc11eeb4f57a2b61901c45724",
+  "scripts/tests/cilium-observation-guards.test.py": "5019da610ce781a58eff55ce7fbcd15aa2e3d0d9bfe60fc71bf6fe19e0cdd0b3",
+  "docs/ops/cilium-networking.md": "2fdfdff2ac63d98f3f0b33dd419f1bbc07eac3cfcb26cc1d041ad6d0063c0d12",
+  "docs/review/remediation/implementation/cilium-observation-guards-20260921.md": "ae97bf54a7ff001f5d774fcaa7538b68cba0fed827a3055eedd79485779a72ee"
+}

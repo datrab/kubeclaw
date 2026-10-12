@@ -1,0 +1,6 @@
+{
+  "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+  "beforeSha256": "b782a61956a40df3828de74e71c4ac01656b84c098f23704cf88f3e9c1ac95bf",
+  "afterSha256": "8a6565565db5683e8da2c7bb17eb7a1d5f474b43d336fe1d6856219a193c3179",
+  "scope": "same workspace canonicalization and containment order, no budget or runtime changes"
+}

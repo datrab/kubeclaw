@@ -1,0 +1,67 @@
+[
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+    "snapshot": "source/skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+    "sha256": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/closure-projection.ts",
+    "snapshot": "source/skills/common/plugin-runtime/foundation/observability/closure-projection.ts",
+    "sha256": "0c76760e141a63472111d2e930e8215b8336a3a9ed9bac1533dd2cd2c0cae69a"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+    "snapshot": "source/skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+    "sha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+    "snapshot": "source/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+    "sha256": "654b4e6c8acb2af93a603e2b08ee40ff305baf8fe3c759bb4465f1fb0d996663"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+    "snapshot": "source/skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+    "sha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12"
+  },
+  {
+    "path": "scripts/retire-attempt-result.mjs",
+    "snapshot": "source/scripts/retire-attempt-result.mjs",
+    "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a"
+  },
+  {
+    "path": "scripts/retire-attempt-closure.mjs",
+    "snapshot": "source/scripts/retire-attempt-closure.mjs",
+    "sha256": "76b59193d9a271923bfd3fe0594997d752838bcd969cb19a7b52af578f42bd50"
+  },
+  {
+    "path": "tests/verification/reliability/admission-retirement.test.mjs",
+    "snapshot": "source/tests/verification/reliability/admission-retirement.test.mjs",
+    "sha256": "291c55e1777ea3881d00e2ea2f109d436409b82192d1ae15d528f014edd78451"
+  },
+  {
+    "path": "tests/verification/reliability/attempt-projection-review.test.mjs",
+    "snapshot": "source/tests/verification/reliability/attempt-projection-review.test.mjs",
+    "sha256": "a92f9d257dafbd2fdf7402d5d3035da35dd9b04667f43cadc8cee927c00c7f63"
+  },
+  {
+    "path": "tests/verification/reliability/attempt-closure-projection.test.mjs",
+    "snapshot": "source/tests/verification/reliability/attempt-closure-projection.test.mjs",
+    "sha256": "216564f512430016ef3822cf318c50d1eea4736d0c8a7221b1c5ea6002477a90"
+  },
+  {
+    "path": "tests/verification/reliability/attempt-retirement-fixture.mjs",
+    "snapshot": "source/tests/verification/reliability/attempt-retirement-fixture.mjs",
+    "sha256": "235cfee17ee594997f80ae1012b186d8e79a1aed229029a509325763322adbd3"
+  },
+  {
+    "path": "docs/operations/observability-retention.md",
+    "snapshot": "source/docs/operations/observability-retention.md.snapshot",
+    "sha256": "421d77d4af9bee75e439fdb073fd8e956ce8d7700ef1bf60b3bc5f06d1d74e36"
+  },
+  {
+    "path": "docs/review/remediation/implementation/attempt-closure-projection-20260921.md",
+    "snapshot": "source/docs/review/remediation/implementation/attempt-closure-projection-20260921.md.snapshot",
+    "sha256": "3a03335ea5605f84c48aae983c27ad36d8cc75d3decb0118489e1cf0f69648bb"
+  }
+]

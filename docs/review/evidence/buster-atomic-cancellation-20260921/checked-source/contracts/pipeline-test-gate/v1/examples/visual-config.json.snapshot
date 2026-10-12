@@ -1,0 +1,5 @@
+{
+  "manifestFile":".swarm/visual/baselines.json","profileFile":".swarm/browser-profiles.json","targets":["home-desktop"],
+  "comparisonProfile":"strict-v1","overrides":{"maximumDifferencePercent":0.1},
+  "masks":[{"target":"home-desktop","selectors":["[data-dynamic-clock]"]}],"timeoutMs":30000
+}

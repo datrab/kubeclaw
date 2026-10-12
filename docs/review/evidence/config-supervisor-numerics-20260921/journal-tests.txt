@@ -1,0 +1,16 @@
+✔ CR05 real journal consumes authored 2051 byte result limit (298.775178ms)
+✔ CR05 real journal consumes authored 2052 byte result limit (295.047122ms)
+✔ CS3 real ownership store enforces 1 authored records (49.226489ms)
+✔ CS3 real ownership store enforces 2 authored records (88.731396ms)
+✔ CS3 real ownership store enforces 1 authored bytes (13.824936ms)
+✔ CS3 real ownership store enforces 8192 authored bytes (16.129876ms)
+✔ CS3 actual execution journal admission and process boundary profile 1 (254.562219ms)
+✔ CS3 actual execution journal admission and process boundary profile 2 (301.366115ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4193.634888

@@ -1,0 +1,149 @@
+{
+  "at": "2026-09-21T17:51:56.681404+00:00",
+  "scope": "Corrected catalog authorization source inventory; unchanged rows retain original snapshots",
+  "runtimeExecuted": false,
+  "files": [
+    {
+      "path": "skills/common/plugins/command-runner/plugin.json",
+      "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146",
+      "bytes": 410
+    },
+    {
+      "path": "skills/common/plugins/command-runner/package.json",
+      "sha256": "10c4fa83d2434f83f2334c0fb779f1e08e950c632b51ec06492f86d1f7721bc2",
+      "bytes": 497
+    },
+    {
+      "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+      "sha256": "489dac2930cb42ad50dcd8174928471ecdd9b5be25354916aaa3813bed50e2b6",
+      "bytes": 1137
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/adapter.ts",
+      "sha256": "31265c4ce8ad540a119e74cc0b4449ffb0621af688f0c37fa848cdb509b4620b",
+      "bytes": 4977
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/cgroup.ts",
+      "sha256": "163b671691e314418a9c2c28a1b7bdbfe84e04e5162409e98607ff29d64f36da",
+      "bytes": 2396
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/execution.ts",
+      "sha256": "b08ca224ab8b6a6276c002152cc54814f236d2dcda84a7faebb2b4463fce2ee0",
+      "bytes": 5879
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/process-facts.ts",
+      "sha256": "d6220a90dc0cf14612e1e693c5ac708f3783d9d0d10fc6d451f052259a95742a",
+      "bytes": 2963
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/process-group.ts",
+      "sha256": "b58ed6ee068546fa44561a7875aee21633e02a4148dedb0104b15c441b8a3002",
+      "bytes": 3183
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/runner.ts",
+      "sha256": "3cf07ec2c39b3caa50419c48ce49119d37491abb83398d637d400f06ebf5e2ad",
+      "bytes": 5057
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/types.ts",
+      "sha256": "b6c616b30b31e0eab97685c9698674579cfac2762b43657536f08eb5ea70e3e7",
+      "bytes": 1531
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/plugin.json",
+      "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802",
+      "bytes": 505
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/package.json",
+      "sha256": "a57298992a51b48413907f239c5a47fe0b5d5fa33fcdc475fbbea44a0dca29b0",
+      "bytes": 335
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+      "sha256": "74c9d8c0287172334bd345b52d95de103c38559884d518d2d6f5b0cbb327505a",
+      "bytes": 1075
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+      "sha256": "aa68298b0322f62bf8e64eef51f59107eb2fe4ab940d7aedbabc8041294dcbd7",
+      "bytes": 1595
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/src/operations.ts",
+      "sha256": "52562707281edf7bf484ee214a02034b74300bed8502c8ff465ceca50739c6a5",
+      "bytes": 9732
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/src/review-source.ts",
+      "sha256": "18eb4b6dc7d8118f9ad96dfb48379fd89f361d71a9b55a1d777a030bab10fe1b",
+      "bytes": 4754
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/src/runner.ts",
+      "sha256": "e5e03e53d63d0f48fea14b2789f68af4f986b5dd73867885d7c65212b98a3dcb",
+      "bytes": 4472
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/src/values.ts",
+      "sha256": "9e6b14a191f29b6f3bd672672b7fb457833ad73eb03e5a04bb3693f0e2e12c5a",
+      "bytes": 5830
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/src/workspace-ownership.ts",
+      "sha256": "af98b1c9b1ff29623e4c5369d8ccdac837940866987e3a8c649d8a8f97aededc",
+      "bytes": 2206
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+      "sha256": "4dd81ccecacfc3b71848d2cca20c4e83e31f14223d4320ba30c83c4650592388",
+      "bytes": 2096
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+      "bytes": 4047
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+      "bytes": 9371
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4",
+      "bytes": 1051
+    },
+    {
+      "path": "skills/nova/core/execution/authorization.ts",
+      "sha256": "3f04309435d4fe3eebe5a73bac5247b0d3c981ffd4a9580e52974cf46cf3942d",
+      "bytes": 10287
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+      "bytes": 12185
+    },
+    {
+      "path": "skills/buster/engine/test-gates/direct-command-runtime.ts",
+      "sha256": "eaacae3a6c4b3110039b7134378b8eb114dc8cb2161c4bc593c405c967afa006",
+      "bytes": 7657
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "bytes": 9110,
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources-v2/skills/common/plugin-runtime/foundation/registry/capabilities.ts"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md",
+      "sha256": "a59144d32c87e5ea67c778cd7b4828ab6cd6f5a0157617ad50032faebf3589f9",
+      "bytes": 13859,
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources-v2/docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md"
+    }
+  ]
+}

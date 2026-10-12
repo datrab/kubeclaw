@@ -1,0 +1,122 @@
+✖ actual Studio survives refused Control and malformed URL with explicit responses (12.559577ms)
+✖ actual Studio retains proxy bytes, cookies and upstream status (2.254951ms)
+✖ actual Studio forwards direction idempotency keys and retry payloads to Control (4.265014ms)
+✖ actual Studio bounds upstream headers wait and remains healthy (4.964073ms)
+✖ actual Studio bounds upstream empty-body wait and remains healthy (1.667414ms)
+✖ actual Studio bounds upstream partial-body wait and remains healthy (1.517131ms)
+✖ actual Studio cancels upstream streaming when the client disconnects (1.48701ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 190.425521
+
+✖ failing tests:
+
+test at skills/prism/tests/studio-service.test.mts:55:1
+✖ actual Studio survives refused Control and malformed URL with explicit responses (12.559577ms)
+  Error: ENOENT: no such file or directory, open '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+      at Object.readFileSync (node:fs:483:20)
+      at studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:29:34)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:57:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:70:1
+✖ actual Studio retains proxy bytes, cookies and upstream status (2.254951ms)
+  Error: ENOENT: no such file or directory, open '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+      at Object.readFileSync (node:fs:483:20)
+      at studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:29:34)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:77:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:84:1
+✖ actual Studio forwards direction idempotency keys and retry payloads to Control (4.265014ms)
+  Error: ENOENT: no such file or directory, open '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+      at Object.readFileSync (node:fs:483:20)
+      at studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:29:34)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:95:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:113:3
+✖ actual Studio bounds upstream headers wait and remains healthy (4.964073ms)
+  Error: ENOENT: no such file or directory, open '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+      at Object.readFileSync (node:fs:483:20)
+      at studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:29:34)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:121:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:113:3
+✖ actual Studio bounds upstream empty-body wait and remains healthy (1.667414ms)
+  Error: ENOENT: no such file or directory, open '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+      at Object.readFileSync (node:fs:483:20)
+      at studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:29:34)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:121:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:113:3
+✖ actual Studio bounds upstream partial-body wait and remains healthy (1.517131ms)
+  Error: ENOENT: no such file or directory, open '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+      at Object.readFileSync (node:fs:483:20)
+      at studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:29:34)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:121:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:130:1
+✖ actual Studio cancels upstream streaming when the client disconnects (1.48701ms)
+  Error: ENOENT: no such file or directory, open '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+      at Object.readFileSync (node:fs:483:20)
+      at studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:29:34)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:136:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/home/node/Documents/Codex/charts/kubeclaw/files/config/swarm.config.json'
+  }

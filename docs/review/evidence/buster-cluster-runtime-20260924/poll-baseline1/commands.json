@@ -1,0 +1,11 @@
+[
+  [
+    "poll-baseline",
+    [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+    ]
+  ]
+]

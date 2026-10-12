@@ -1,0 +1,22 @@
+✔ canonical startup rejects missing/unknown/malformed admission and every retired ENV author (132.394764ms)
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (30005.53343ms)
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (30002.423784ms)
+✔ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (523.582076ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 2
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65911.450762
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-admission-config.test.mts:48:3
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (30005.53343ms)
+  'test timed out after 30000ms'
+
+test at tests/verification/reliability/buster-admission-config.test.mts:48:3
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (30002.423784ms)
+  'test timed out after 30000ms'

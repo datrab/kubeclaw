@@ -1,0 +1,150 @@
+{
+  "status": "prepared-not-booted",
+  "files": [
+    {
+      "path": "node_modules/.cache/systemd-native-vm-20260921/root/usr/bin/qemu-system-x86_64",
+      "bytes": 27791496,
+      "sha256": "d0c183817a3044bc38e104f88ef56ee235c5d91a9413cba7255c1c1751c31fc1"
+    },
+    {
+      "path": "node_modules/.cache/systemd-native-vm-20260921/root/boot/vmlinuz-virt",
+      "bytes": 12608512,
+      "sha256": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c"
+    },
+    {
+      "path": "node_modules/.cache/systemd-native-vm-20260921/initrd.cpio.gz",
+      "bytes": 1899633,
+      "sha256": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2"
+    },
+    {
+      "path": "node_modules/.cache/systemd-native-vm-20260921/guest-root.ext4",
+      "bytes": 8589934592,
+      "sha256": "d52b615e5b4eb00d1acd51a72653649ae9d0fc3776d017b97efdf317282cba93"
+    },
+    {
+      "path": "node_modules/.cache/systemd-native-vm-20260921/guest-root/usr/local/bin/node",
+      "bytes": 131391152,
+      "sha256": "78465b20b5455f64d2dbbd9e8b38470cfc23ad3abe4cdc9a00dc5e050eee70fb"
+    },
+    {
+      "path": "node_modules/.cache/systemd-native-vm-20260921/repo-snapshot-manifest.json",
+      "bytes": 5925827,
+      "sha256": "8fbbd94c7fda494c5cbc54eb5ccc4bf2483c6673b8289047cd0e44dfa873bb23"
+    },
+    {
+      "path": "node_modules/.cache/systemd-native-vm-20260921/guest-root/etc/machine-id",
+      "bytes": 37,
+      "sha256": "37f4700cd304945e18adce02b3c8c9d5f0c06ba754da7c96442712a277d03665"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/check-critical.mjs",
+      "bytes": 403,
+      "sha256": "9f5dd2105a18c2ba8c85b1541c4bef6e623ee99751bb185aa2b0925e2cdbb7ef"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/critical-identities.json",
+      "bytes": 1277,
+      "sha256": "56f6716dd4248dc2432413640dec073a245764543e801cb7a2279a59eb11149f"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/guest-identity.json",
+      "bytes": 65,
+      "sha256": "96a7212b7b3017385eccb1a001df30b61bdd24ce5b08a9b235ffd0210dcb451d"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/guest-init.sh",
+      "bytes": 3595,
+      "sha256": "6fe063e7340ccb9ddd30853ce8b1849fcaabe9ab3e6a1e714ce62b073d95b25c"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/image-build.json",
+      "bytes": 1216,
+      "sha256": "9b5d4176e57f38b6e6a80a40ad919c5344c35a391a8950515cddea3e55a0ef24"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/initrd-init.sh",
+      "bytes": 842,
+      "sha256": "3c4544ab612cbdaafb77949c23e6bec5eede4ba34c37dd3d5b5cde088c7b8769"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/launch-approved.py",
+      "bytes": 10357,
+      "sha256": "18954b406825e241c19788326c967fd5fef5fd546c474c081f62c60c9d41f76a"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/launch-command.json",
+      "bytes": 1774,
+      "sha256": "7e6f7faf96b5c5f74ab73c5c9d88eff66eba6752af1554ce84e76de93a468338"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/prepare-images.py",
+      "bytes": 5578,
+      "sha256": "fed7044541b943cde6150aa064f33fc6eb891bb5834609d93b0bd6fa77de1b67"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/prepare.py",
+      "bytes": 4450,
+      "sha256": "cb19ce1d5ac7b168757a27543b6936a23025c92a5b05fe5371f69f1619c40b63"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/snapshot-summary.json",
+      "bytes": 362,
+      "sha256": "3ead2bd46ba3ee1b390a9e5cec026083d4744b8eb684e4a8a9593cffcb3482a6"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/systemd-analyze",
+      "bytes": 243,
+      "sha256": "1c7e454b72ceb8b6cdfe76a49ff7c3444578bcf20c17fb29088354785f7be26e"
+    },
+    {
+      "path": "docs/review/remediation/implementation/systemd-native-guest-proposal-20260921.md",
+      "bytes": 5348,
+      "sha256": "7efc0e19d4ec388b4aac9cf66d99ac2851ee58c34352bd82dc8c90b94bfd4a54"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/memory-followup.json",
+      "bytes": 2233,
+      "sha256": "43d353883ca67629b2b1b08db2a5304a90284890af86bc32ab7f91907ac8d475"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/parser-parser-version.txt",
+      "bytes": 348,
+      "sha256": "8a25c9a782ed24936452bc49aa444ed6b08c780e4fe495052071700ddc6c5449"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/parser-selected-packages.json",
+      "bytes": 25329,
+      "sha256": "280ae544663206c00b497b8daba73ebe894f72ef7e776ed37ea4eae5bbb77428"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/verification-memory-refusal.txt",
+      "bytes": 81,
+      "sha256": "97806de79e8265102deee1b4f9963775922b781804c5d7c6ec775fb1187e6ecb"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/parser-release-signature.txt",
+      "bytes": 1855,
+      "sha256": "89e2818a7a1be802741d1e5e77a3f4d5bc0ed3c934811315a0599423a014b042"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/parser-runtime-entry-identities.json",
+      "bytes": 303399,
+      "sha256": "b09966f287ab20e6ed166a64404223ae05109bc415e4f455ccccc173561467a3"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/parser-parser-results.json",
+      "bytes": 5133,
+      "sha256": "d8d20a5280a8e9b9c1b03389bef8c9bb46bf5dbd6a37c430be547a7b4344839f"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/tool-runtime-identities.json",
+      "bytes": 895864,
+      "sha256": "1c316c8df68bcf86e4758d98cb3a0d76ddffcb0b65edc6ec02d1c99c3733e3ac"
+    },
+    {
+      "path": "docs/review/evidence/systemd-native-guest-proposal-20260921/runtime-binding.py",
+      "bytes": 1560,
+      "sha256": "4f08c2420b9a1d8383c6904bdea0659c001b1e20e719c52f44546843c1927267"
+    }
+  ]
+}

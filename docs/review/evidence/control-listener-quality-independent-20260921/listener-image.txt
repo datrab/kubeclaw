@@ -1,0 +1,24 @@
+✔ actual Control image declarations and exact image proof accept authored profile one (1048.182134ms)
+✔ actual Control image declarations and exact image proof accept authored profile two (954.968866ms)
+✔ image proof requires the selected role and preserves legitimate Worker PORT (1167.812015ms)
+✔ Control listener rejects invalid authored port undefined (4.440083ms)
+✔ Control listener rejects invalid authored port null (0.635657ms)
+✔ Control listener rejects invalid authored port 8080 (0.543283ms)
+✔ Control listener rejects invalid authored port 0 (0.648916ms)
+✔ Control listener rejects invalid authored port -1 (0.689348ms)
+✔ Control listener rejects invalid authored port 1.5 (0.604385ms)
+✔ Control listener rejects invalid authored port 65536 (0.646167ms)
+✔ Control listener rejects invalid authored port true (0.717508ms)
+✔ Control accepts TCP boundary 1 without promising host bind permissions (0.953114ms)
+✔ Control accepts TCP boundary 65535 without promising host bind permissions (0.79922ms)
+✔ Control snapshot owns the port before asynchronous composition; Worker keeps its PORT author (5.175031ms)
+✔ original production entrypoint serves authored listener profile one (1126.157297ms)
+✔ original production entrypoint serves authored listener profile two (948.518903ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6024.223538

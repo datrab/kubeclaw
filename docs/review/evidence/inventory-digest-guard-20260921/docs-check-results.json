@@ -1,0 +1,60 @@
+[
+  {
+    "name": "docs-inventory",
+    "command": [
+      "node",
+      "scripts/docs-inventory.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "docs-generate",
+    "command": [
+      "node",
+      "scripts/docs-generate.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "docs-main",
+    "command": [
+      "node",
+      "scripts/docs-check.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "docs-refs",
+    "command": [
+      "node",
+      "scripts/docs-check-refs.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "docs-coverage",
+    "command": [
+      "node",
+      "scripts/docs-check-coverage.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "docs-publication",
+    "command": [
+      "node",
+      "scripts/docs-publication.mjs",
+      "check"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0
+  }
+]

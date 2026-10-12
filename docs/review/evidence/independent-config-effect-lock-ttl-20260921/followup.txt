@@ -1,0 +1,15 @@
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (18043.421877ms)
+INDEPENDENT_PERSISTED_TTL 60000 2
+✔ authored platform TTL 60000 reaches the real runtime and filesystem lock consumer (8601.617056ms)
+INDEPENDENT_PERSISTED_TTL 120000 2
+✔ authored platform TTL 120000 reaches the real runtime and filesystem lock consumer (9728.066741ms)
+✔ missing and invalid TTL reject at platform, runtime and direct coordinator boundaries (8549.696908ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46205.721283

@@ -1,0 +1,7 @@
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (2452.89913ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (1936.290193ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (2219.551934ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (2272.251262ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (11459.726649ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (15009.153675ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (4195.814302ms)

@@ -1,0 +1,20 @@
+✔ Studio loads authored operator values and keeps installation inputs outside JSON (10.074375ms)
+✔ Studio rejects retired PORT="" (1.13009ms)
+✔ Studio rejects retired PORT="8080" (0.534564ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="" (0.551815ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="8080" (0.627897ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="" (0.567695ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080" (0.610126ms)
+✔ Studio rejects invalid port through original shared validation (2.628019ms)
+✔ Studio rejects invalid controlTimeoutMs through original shared validation (2.643399ms)
+✔ Studio rejects invalid controlUrl through original shared validation (5.153646ms)
+✔ Studio rejects unknown settings and invalid startup terminates before serving (384.088084ms)
+✔ production Studio Docker environment does not reintroduce a retired author (1.48885ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 912.449727

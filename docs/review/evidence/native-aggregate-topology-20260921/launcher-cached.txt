@@ -1,0 +1,35 @@
+✖ compiled original launcher refuses ordinary filesystems and cannot execute the requested program (62.609812ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 189.295924
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-native-launcher.test.mts:10:1
+✖ compiled original launcher refuses ordinary filesystems and cannot execute the requested program (62.609812ms)
+  AssertionError [ERR_ASSERTION]: <command-line>: error: '_FORTIFY_SOURCE' redefined [-Werror]
+  <built-in>: note: this is the location of the previous definition
+  /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-worker-launcher.c:2:10: fatal error: errno.h: No such file or directory
+      2 | #include <errno.h>
+        |          ^~~~~~~~~
+  compilation terminated.
+  cc1: all warnings being treated as errors
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-launcher.test.mts:16:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

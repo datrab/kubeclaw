@@ -1,0 +1,11 @@
+{
+  "status": "author checks complete; fresh independent BA review pending",
+  "files": 514,
+  "ownScopeFiles": 30,
+  "checks": "completion-results.json",
+  "runtimeCorrection": "../buster-atomic-cancellation-20260921/original-remote-runtime.json",
+  "independentCorrectionReview": "docs/review/remediation/implementation/independent-buster-atomic-cancellation-20260921.md",
+  "noDeployment": true,
+  "noNativeOwnershipClaim": true,
+  "D17ComponentFileMigrationComplete": false
+}

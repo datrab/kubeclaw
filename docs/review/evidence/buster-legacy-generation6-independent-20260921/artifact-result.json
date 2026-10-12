@@ -1,0 +1,13 @@
+{
+  "artifactsVerified": 19,
+  "exportEntriesVerified": 14,
+  "productionAndFixtureSources": 7,
+  "toolEntriesVerified": 4260,
+  "guestPayloadEntriesVerified": 1516,
+  "bothExt4UuidsVerified": true,
+  "allPreparationExitsZero": true,
+  "sameLimits": true,
+  "vmBootedByReviewer": false,
+  "diskHintsOnlyExactOwnHeldDescriptors": true,
+  "artifactManifestSha256": "e7a20b57bfbdef31ca9c64dd780c75b211aee7ab161618515ce048640bbc6e49"
+}

@@ -1,0 +1,11 @@
+{
+  "manifestSha256": "01cc028a667eebaa4e3589ff86a6059603fa74f6de2749f929f853f0a121451e",
+  "allAfterHashesMatch": true,
+  "changedFromV1": [
+    "skills/buster/engine/test-gates/kubernetes-fixture-pods.ts"
+  ],
+  "deltaExactlyFourLocalExportModifiers": true,
+  "decision": "source blocker resolved; suitable for coordinated integration and original verification",
+  "mode": "no runtime/type/lint executed",
+  "remaining": "Canonical strict quality and original local modules mandatory; live cluster scripts not authorized. Existing configuration/cleanup debt unchanged, no full D17 closure."
+}

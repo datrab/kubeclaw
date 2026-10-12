@@ -1,0 +1,30 @@
+✖ source attachment and cancellation share the durable admission fence (208.618321ms)
+ℹ Error: Test "source attachment and cancellation share the durable admission fence" at tests/verification/reliability/buster-prepared-store-cancellation.test.mts:38:1 generated asynchronous activity after the test ended. This activity created the error "Error: ENOENT: no such file or directory, scandir '/tmp/buster-source-cancel-ooHekc/state-v2/records'" and would have caused the test to fail, but instead triggered an unhandledRejection event.
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1892.051341
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-prepared-store-cancellation.test.mts:38:1
+✖ source attachment and cancellation share the durable admission fence (208.618321ms)
+  AssertionError [ERR_ASSERTION]: source read/CAS must hold the same admission lock
+  
+  0 !== 73
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-prepared-store-cancellation.test.mts:64:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 73,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

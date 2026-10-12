@@ -1,0 +1,27 @@
+{
+  "moduleSha256": "7f86040766fd1cdc010302617217adbe58b862437259aea1cff03f992ca0d510",
+  "testSha256": "6b41e748bb9b26a2753c9adfdf98e1be011db2f60f74020688f19254febe6fc2",
+  "cases": [
+    {
+      "mutation": "manifest",
+      "removed": "  requireThat(bytes.length === expected.size && hash(bytes) === expected.digest, 'MANIFEST_DIGEST_MISMATCH');",
+      "replacement": "  // Mutation: omit raw manifest identity verification.",
+      "namePattern": "TD04",
+      "exitCode": 1
+    },
+    {
+      "mutation": "archive",
+      "removed": "  same(await fileIdentity(archive), layer, 'LAYER_DIGEST_MISMATCH');",
+      "replacement": "  // Mutation: omit raw archive identity verification.",
+      "namePattern": "TD05",
+      "exitCode": 1
+    },
+    {
+      "mutation": "extracted",
+      "removed": "    if (files) same(identities[name], files[name], 'FILE_DIGEST_MISMATCH');",
+      "replacement": "    // Mutation: omit extracted file identity verification.",
+      "namePattern": "TD06: correct archive",
+      "exitCode": 1
+    }
+  ]
+}

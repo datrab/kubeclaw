@@ -3,6 +3,7 @@
 **
 
 !docker/
+docker/*
 !docker/Dockerfile.nova
 !docker/Dockerfile.prism-agent
 !docker/nova-tools/
@@ -23,14 +24,19 @@
 !docker/Dockerfile.prism-ingestion
 !docker/archviewer.nginx.conf
 !docker/buster-runtime-entrypoint.sh
+!docker/browser-archives.lock.json
+!docker/trivy-databases.lock.json
 
 !tsconfig.base.json
 !package.json
 !package-lock.json
+!versions.json
 !scripts/
 scripts/*
 !scripts/build-plugin-sandbox.mjs
 !scripts/registry-client-config.mjs
+!scripts/browser-archive-lock.mjs
+!scripts/trivy-database-lock.mjs
 !tests/
 tests/*
 !tests/verification/
@@ -86,8 +92,21 @@ contracts/agent-observability/v1/dist/
 *.env
 .env
 .env.*
+**/.env
+**/.env.*
 **/*.key
 **/*.pem
 **/*.sops.yaml.dec
 secrets.yml.dec
 keys.txt
+
+# Canonical author is a read-only Studio build-test input, never a baked fallback.
+!charts/
+charts/*
+!charts/kubeclaw/
+charts/kubeclaw/*
+!charts/kubeclaw/files/
+charts/kubeclaw/files/*
+!charts/kubeclaw/files/config/
+charts/kubeclaw/files/config/*
+!charts/kubeclaw/files/config/swarm.config.json

@@ -1,0 +1,22 @@
+{
+  "raw": [
+    {
+      "file": "vm-console.txt",
+      "sha256": "b9f6edd6588a3a9d0a3e6126a1d9a44f9aa58116f13c1dd2b5cab1143078281a",
+      "bytes": 28202
+    },
+    {
+      "file": "vm-result.json",
+      "sha256": "31b7c49122f24d9cd79f1f4b20a3a53ec8a38a8e99bd72218f4261fc75d95ebf",
+      "bytes": 1049
+    }
+  ],
+  "tests": 7,
+  "passed": 6,
+  "failed": 1,
+  "skipped": 0,
+  "failure": "ACL probe expected filesystem Permission denied but got BUSTER_SANDBOX_CALLER_DENIED",
+  "cause": "not established; guest-root capabilities may affect pre-exec ACL checks",
+  "notReached": "same test allowed identity/Caps/Groups/NNP positive assertions after failed ACL assertion",
+  "wholeRunAccepted": false
+}

@@ -1,0 +1,12 @@
+{
+  "manifestSha256": "4aee942f9c6186e3ff6171e2985e94eebabec49d388110a9ca606931cd40bcf7",
+  "allTenAfterHashesMatch": true,
+  "productionIdenticalToReviewedV2": true,
+  "changedFromV2": [
+    "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts"
+  ],
+  "delta": "one source regex receiver; exact secret-denial predicate/error retained",
+  "originalRuntimeSuffixByteIdentical": true,
+  "decision": "Both concrete source blockers resolved; suitable for coordinated integration and real original/type/lint verification",
+  "scope": "source-only, no execution. Prior V1/V2 evidence and failure history preserved. No cluster live script authorization."
+}

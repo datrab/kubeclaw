@@ -166,7 +166,7 @@ try {
   const fixtureRoot = path.resolve('tests/fixtures/plugin-system-v2');
   const observerJournal = path.join(temporary, 'observer.jsonl');
   const platform = {
-    schemaVersion: 'pipeline-platform.v2',
+    schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
     installationRoots: [fixtureRoot],
     trustedBuiltinRoots: [fixtureRoot],
     externalTrust: {

@@ -1,0 +1,147 @@
+#!/usr/bin/env python3
+"""Original deploy entrypoints with synthetic CLI peers; no real cluster calls."""
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import tempfile
+import unittest
+
+ROOT = Path(__file__).resolve().parents[2]
+NODE = shutil.which('node')
+FAKE = '''#!/usr/bin/env python3
+import json, os, pathlib, sys
+cmd = [pathlib.Path(sys.argv[0]).name, *sys.argv[1:]]
+with open(os.environ['CALLS'], 'a') as f: f.write(json.dumps(cmd)+'\\n')
+f = json.loads(os.environ['SCENARIO']); a = cmd[1:]
+if cmd[0] == 'node':
+ if a[0].endswith('/deployment-release.mjs'): print('a'*40); sys.exit(0)
+ if a[0].endswith('/infrastructure-release.mjs'): print('/fixture/locked-chart.tgz'); sys.exit(0)
+ os.execv(os.environ['REAL_NODE'], [os.environ['REAL_NODE'], *a])
+if a == ['apply', '-f', '-']: sys.stdin.read()
+if cmd[0] == 'helm':
+ if a[0] == 'list':
+  ns=a[a.index('-n')+1]; name=a[a.index('--filter')+1][1:-1].replace('\\\\.', '.')
+  value=f.get('helm', [])
+  if value == 'present': value=[{'name':name,'namespace':ns,'status':f.get('state','deployed')}]
+  print(value if isinstance(value,str) else json.dumps(value)); print(f.get('error',''),file=sys.stderr); sys.exit(f.get('helm_exit',0))
+ sys.exit(f.get('mutation_exit',0))
+if a[:3] == ['get','crd','applications.argoproj.io']: sys.exit(0)
+if a[:2] == ['get','deployments,statefulsets,cronjobs']: print('{"items":[]}'); sys.exit(0)
+if a[0] == 'get' and '--field-selector' in a:
+ kind=a[1]; name=a[a.index('--field-selector')+1].split('=',1)[1]; ns=a[a.index('-n')+1] if '-n' in a else ''
+ selected=f.get('target',name)==name
+ value=f.get('resource',[]) if selected else []
+ kinds={'secret':('Secret','v1'),'deployment':('Deployment','apps/v1'),'service':('Service','v1'),'configmap':('ConfigMap','v1'),'job':('Job','batch/v1'),'validatingadmissionpolicy':('ValidatingAdmissionPolicy','admissionregistration.k8s.io/v1')}
+ if value == 'present':
+  k,v=kinds[kind]; value=[{'kind':k,'apiVersion':v,'metadata':{'name':name,**({'namespace':ns} if ns else {})}}]
+ if isinstance(value,list): value={'apiVersion':'v1','kind':'List','items':value}
+ print(value if isinstance(value,str) else json.dumps(value)); print(f.get('error','') if selected else '',file=sys.stderr); sys.exit(f.get('resource_exit',0) if selected else 0)
+if a[0] == 'get':
+ if f.get('table_error'): print('credential helper not found',file=sys.stderr); sys.exit(1)
+ if a[1] in ['pvc','secrets','deployment']: sys.exit(0)
+ if a[1] == 'secret': print('fixture-key'); sys.exit(0)
+ print('{}'); sys.exit(0)
+if a[0] in ['create','apply','delete']: sys.exit(f.get('mutation_exit',0))
+sys.exit(0)
+'''
+
+
+class DeployObservations(unittest.TestCase):
+    def run_entry(self, command, scenario):
+        with tempfile.TemporaryDirectory(prefix='deploy-api-fixture-') as temporary:
+            directory = Path(temporary); calls = directory / 'calls'
+            calls.write_text('')
+            for executable in ('node','kubectl','helm'):
+                file=directory/executable; file.write_text(FAKE); file.chmod(0o755)
+            result=subprocess.run(['bash',str(ROOT/'scripts/deploy.sh'),*command],input='yes\n',capture_output=True,text=True,timeout=20,
+                env={**os.environ,'PATH':str(directory)+os.pathsep+os.environ['PATH'],'REAL_NODE':NODE,'CALLS':str(calls),'SCENARIO':json.dumps(scenario),
+                     'NAMESPACE':'guard-test','KUBECLAW_WORKSPACE_PROMPT':'false','KUBECLAW_DEPLOY_PRISM':'false',
+                     'TAILSCALE_OAUTH_CLIENT_ID':'fixture-client','TAILSCALE_OAUTH_CLIENT_SECRET':'fixture-secret'})
+            return result,[json.loads(line) for line in calls.read_text().splitlines()]
+
+    def mutations(self,calls):
+        return [cmd for cmd in calls if cmd[0]=='helm' and cmd[1] in ('upgrade','uninstall')
+                or cmd[0]=='kubectl' and cmd[1] in ('create','apply','delete','patch','rollout')]
+
+    def test_helm_idle_entrypoint(self):
+        for state in ('deployed','failed','superseded','uninstalled'):
+            result,calls=self.run_entry(['agent','nova'],{'helm':'present','state':state})
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertTrue(any(cmd[:2]==['helm','upgrade'] for cmd in calls))
+        for scenario in ({}, {'helm':'present','state':'pending-install'}, {'helm':'present','state':'pending-upgrade'},
+                         {'helm':'present','state':'pending-rollback'}, {'helm':'present','state':'uninstalling'},
+                         {'helm':'present','state':'unknown'}, {'helm_exit':1,'error':'release not found'},
+                         {'helm':None}, {'helm':'not json'}, {'helm':[{'name':'other','namespace':'guard-test','status':'deployed'}]},
+                         {'helm':[{'name':'agent-nova','namespace':'other','status':'deployed'}]},
+                         {'helm':[{'name':'agent-nova','namespace':'guard-test','status':'deployed'}]*2}):
+            with self.subTest(scenario=scenario):
+                result,calls=self.run_entry(['agent','nova'],scenario)
+                if scenario=={}:
+                    self.assertEqual(result.returncode,0,result.stderr)
+                else:
+                    self.assertNotEqual(result.returncode,0,result.stdout)
+                    self.assertEqual(self.mutations(calls),[])
+
+    def test_uninstall_entrypoint(self):
+        result,calls=self.run_entry(['teardown-agents'],{})
+        self.assertEqual(result.returncode,0,result.stderr); self.assertEqual(self.mutations(calls),[])
+        result,calls=self.run_entry(['teardown-agents'],{'helm':'present'})
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertEqual([cmd[2] for cmd in calls if cmd[:2]==['helm','uninstall']],['agent-nova','agent-buster'])
+        for scenario in ({'helm_exit':1,'error':'release not found'}, {'helm':'present','helm_exit':1}, {'helm':{}}):
+            result,calls=self.run_entry(['teardown-agents'],scenario)
+            self.assertNotEqual(result.returncode,0); self.assertEqual(self.mutations(calls),[])
+
+    def test_oauth_entrypoint(self):
+        for resource in ('present',[]):
+            result,calls=self.run_entry(['tailscale'],{'resource':resource})
+            self.assertEqual(result.returncode,0,result.stderr)
+            creates=[cmd for cmd in calls if cmd[:2]==['kubectl','create']]
+            self.assertEqual(len(creates),0 if resource=='present' else 2)
+            self.assertTrue(any(cmd[:2]==['helm','upgrade'] for cmd in calls))
+        for scenario in ({'resource_exit':1,'error':'credential helper not found'}, {'resource':'present','resource_exit':1},
+                         {'resource':'not json'}, {'resource':{}}, {'resource':[{'kind':'Secret','apiVersion':'v1','metadata':{'name':'wrong','namespace':'tailscale'}}]},
+                         {'resource':[{'kind':'Secret','apiVersion':'v1','metadata':{'name':'operator-oauth','namespace':'other'}}]},
+                         {'resource':[{'kind':'Secret','apiVersion':'v1','metadata':{'name':'operator-oauth','namespace':'tailscale'}}]*2}):
+            result,calls=self.run_entry(['tailscale'],scenario)
+            self.assertNotEqual(result.returncode,0,result.stdout); self.assertEqual(self.mutations(calls),[])
+        result,calls=self.run_entry(['tailscale'],{'mutation_exit':1})
+        self.assertNotEqual(result.returncode,0)
+        self.assertFalse(any(cmd[:2]==['helm','upgrade'] for cmd in calls))
+
+    def test_delete_entrypoints(self):
+        for name in ('litellm','litellm-config','buster-namespace-fence'):
+            for value in ([], 'present'):
+                result,calls=self.run_entry(['teardown'],{'target':name,'resource':value})
+                self.assertEqual(result.returncode,0,result.stderr)
+                deletes=[cmd for cmd in calls if cmd[:2]==['kubectl','delete']]
+                self.assertEqual(len(deletes),1 if value==[] else 2)
+            for value in ([], 'present',{},'not json'):
+                scenario={'target':name,'resource':value}
+                if value in ([], 'present'): scenario.update(resource_exit=1,error='API resource not found')
+                result,calls=self.run_entry(['teardown'],scenario)
+                self.assertNotEqual(result.returncode,0,result.stdout)
+                deletes=[cmd for cmd in calls if cmd[:2]==['kubectl','delete']]
+                # Existing network-policy cleanup precedes the final cluster helper.
+                self.assertEqual(len(deletes),1 if name=='buster-namespace-fence' else 0)
+                self.assertNotIn('Teardown complete.',result.stdout)
+
+    def test_rejected_secret_body_is_not_printed(self):
+        secret={'kind':'Secret','apiVersion':'v1','metadata':{'name':'operator-oauth','namespace':'wrong'},
+                'data':{'client_secret':'DO_NOT_PRINT_FIXTURE_CREDENTIAL'}}
+        result,calls=self.run_entry(['tailscale'],{'resource':[secret]})
+        self.assertNotEqual(result.returncode,0)
+        self.assertNotIn('DO_NOT_PRINT_FIXTURE_CREDENTIAL',result.stdout+result.stderr)
+        self.assertEqual(self.mutations(calls),[])
+
+    def test_optional_status_errors_are_incomplete(self):
+        result,calls=self.run_entry(['status'],{'table_error':True})
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertEqual(result.stdout.count('Status output may be incomplete.'),3)
+        self.assertNotIn('No pods found',result.stdout)
+        self.assertEqual(self.mutations(calls),[])
+
+
+if __name__=='__main__': unittest.main(verbosity=2)

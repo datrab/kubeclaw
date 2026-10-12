@@ -1,0 +1,3 @@
+PASS caller abort wins even after internal timer fires while real drained cleanup settlement is delayed
+PASS internal deadline wins despite a later caller abort during delayed real drained cleanup settlement
+PASS injected cleanup failure stays distinct and retains snapshot; this is NOT an actual failed kernel drain

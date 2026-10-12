@@ -1,0 +1,27 @@
+{
+  "suites": {
+    "unit": {
+      "uses": "kubeclaw.unit-suite@1",
+      "add": {
+        "backend": {
+          "uses": "kubeclaw.direct-command@1",
+          "mode": "blocking",
+          "concurrencyGroup": "unit",
+          "config": {
+            "executable": "pytest",
+            "args": ["--junitxml=reports/unit.xml"],
+            "workingDirectory": "backend",
+            "resultMode": "junit-required",
+            "reports": [{
+              "id": "backend-unit",
+              "format": "junit",
+              "path": "reports/unit.xml",
+              "mediaType": "application/junit+xml"
+            }]
+          }
+        }
+      }
+    }
+  },
+  "concurrencyLimits": { "unit": 2 }
+}

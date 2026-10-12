@@ -1,0 +1,50 @@
+{"ok":true,"suite":"terminal-workspace","removed":3,"retained":6}
+✔ skills/buster/engine/test-gates/tests/terminal-workspace.test.ts (133.576849ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":6}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_CANCELLED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":61}
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/remote-plan-service.ts:170
+    if (!record) throw new Error('BUSTER_REMOTE_JOB_NOT_FOUND');
+                       ^
+
+Error: BUSTER_REMOTE_JOB_NOT_FOUND
+    at FileBusterPlanJobStore.get (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/remote-plan-service.ts:170:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async BusterRemotePlanService.status (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/remote-plan-service.ts:528:13)
+    at async checkRemoteFaults (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-remote-faults.mts:76:49)
+    at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts:468:3
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-pipeline-remote-plan-runtime.mts (21320.941111ms)
+✔ real host readiness is persisted before dependents and teardown intent precedes host cleanup (2469.364075ms)
+✔ readiness for a different scope is rejected before journal write or dependency admission (2501.896989ms)
+✔ teardown before setup completion fences a late readiness report (2129.242874ms)
+✔ repeated host readiness is a protocol failure, not another fixture admission (1414.214653ms)
+✔ host SIGKILL after readiness cannot become a successful lifetime (1175.715552ms)
+✔ cancellation persists before forced termination without waiting for host cleanup (1881.73717ms)
+✔ host refuses teardown without the original readiness acknowledgement (953.237571ms)
+✔ fixture accepted survives real writer SIGKILL and cannot become a new identity (1291.625114ms)
+✔ fixture teardown survives real writer SIGKILL and cannot become a new identity (1781.723751ms)
+✔ actual fixture files preserve nonterminal readiness, first teardown intent and immutable scope binding (334.065602ms)
+✔ original Core never-launched receipt closes an unready fixture and remains replayable without invented observations (303.728513ms)
+✔ retained bytes reserve readiness and receipt space, and corruption is not silently repaired (155.324715ms)
+✔ terminal cleanup refuses linked parent directories and preserves another job source (10.064728ms)
+✔ terminal cleanup unlinks a leaf symlink without deleting its target and remains idempotent (36.372943ms)
+✔ terminal cleanup rejects symlinks in ancestors of the job root (2.670249ms)
+✔ terminal cleanup stays on original directory after job is replaced during deletion (11.641539ms)
+✔ terminal cleanup stays on original directory after workspace is replaced during deletion (9.995127ms)
+✔ suffix matching cannot contact an unrelated real HTTP service; exact origin works and redirects stop (94.003452ms)
+✔ fixture leases reject expired authority before contact and cancel a real in-flight request at expiry (1007.914582ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 20
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 44718.817132
+
+✖ failing tests:
+
+test at tests/verification/contracts/check-pipeline-remote-plan-runtime.mts:1:1
+✖ tests/verification/contracts/check-pipeline-remote-plan-runtime.mts (21320.941111ms)
+  'test failed'

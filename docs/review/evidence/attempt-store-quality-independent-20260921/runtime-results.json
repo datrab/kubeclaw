@@ -1,0 +1,46 @@
+[
+  {
+    "name": "original43",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/admission-retirement.test.mjs",
+      "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "tests/verification/reliability/attempt-closure-projection.test.mjs",
+      "tests/verification/reliability/observability-replay.test.mjs",
+      "tests/verification/reliability/observability-retirement-plan.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 108.17273952602409
+  },
+  {
+    "name": "ownership",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/attempt-store-input-ownership.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 3.3541831109905615
+  },
+  {
+    "name": "junit",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-junit-executed-required.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 2.668320194003172
+  }
+]

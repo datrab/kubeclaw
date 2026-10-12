@@ -1,0 +1,37 @@
+[
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+    "snapshot": "source-0.snapshot",
+    "sha256": "f5418b326fb8bdbb5f0a42640e5f647d2eec534c02c791ed212a6cfd1bcb8cee"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/process-input.ts",
+    "snapshot": "source-1.snapshot",
+    "sha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+    "snapshot": "source-2.snapshot",
+    "sha256": "b45b50d0cfd2ae6a0aa091ba1e1edcb936b868490ae2a579f3ac561d24f8394e"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+    "snapshot": "source-3.snapshot",
+    "sha256": "8756a9643c5439696b7355dbbf90d5f9c05af1908183b25dfaa5a5921fe627c4"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+    "snapshot": "source-4.snapshot",
+    "sha256": "c95fedf0775d6c5c7089386256c40253c23613dde6c00d7e02c3ebdad410b358"
+  },
+  {
+    "path": "docs/architecture/buster-v2-runtime.md",
+    "snapshot": "source-5.snapshot",
+    "sha256": "00c6150d70946ca6eebd86774f71b8e2c3167ccda82cfcda6628528553968ec1"
+  },
+  {
+    "path": "docs/review/remediation/implementation/report-adapter-deadline-20260921.md",
+    "snapshot": "source-6.snapshot",
+    "sha256": "48369ad6403c668a249bc59538dbfca28f44ef867f149f23557760c4c47b214f"
+  }
+]

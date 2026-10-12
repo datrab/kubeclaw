@@ -1,0 +1,16 @@
+docs check failed:
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../review/remediation/decisions.md
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../../skills/nova/core/execution/run-root.ts
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../../skills/nova/core/execution/engine-runtime.ts
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../../skills/nova/core/observability/reconciler.ts
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../../skills/buster/engine/test-gates/runner.ts
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../../skills/buster/engine/test-gates/remote-plan-service.ts
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../../skills/common/plugins/artifact-store/src/adapter.ts
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../../skills/common/plugins/telemetry-store/src/adapter.ts
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../review/remediation/implementation/buster-native-cutover-20260920.md
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../../skills/common/plugin-runtime/foundation/observability/durable-records.ts
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../../skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../review/remediation/implementation/wave47-telemetry-retirement.md
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../review/remediation/implementation/wave47-admission-retirement.md
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../review/remediation/implementation/run7-dispatch-root-review.md
+- docs/review/evidence/attempt-closure-projection-20260921/source/docs/operations/observability-retention.md links to missing path: ../review/remediation/implementation/run9-operator-root-review.md

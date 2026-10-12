@@ -1,0 +1,92 @@
+=== RUN   TestExplicitDockerCopySources
+=== RUN   TestExplicitDockerCopySources/docker/python-tools/buster.txt
+=== RUN   TestExplicitDockerCopySources/package.json
+=== RUN   TestExplicitDockerCopySources/tests/verification/contracts/check-pipeline-container-build-recovery.mts
+=== RUN   TestExplicitDockerCopySources/docker/browser-archives.lock.json
+=== RUN   TestExplicitDockerCopySources/scripts/browser-archive-lock.mjs
+=== RUN   TestExplicitDockerCopySources/scripts/build-plugin-sandbox.mjs
+=== RUN   TestExplicitDockerCopySources/tests/verification/contracts/check-pipeline-container-build-production.mts
+=== RUN   TestExplicitDockerCopySources/scripts/trivy-database-lock.mjs
+=== RUN   TestExplicitDockerCopySources/scripts/registry-client-config.mjs
+=== RUN   TestExplicitDockerCopySources/skills
+=== RUN   TestExplicitDockerCopySources/skills/worker/core/worker/native-worker-launcher.c
+=== RUN   TestExplicitDockerCopySources/package-lock.json
+=== RUN   TestExplicitDockerCopySources/contracts
+=== RUN   TestExplicitDockerCopySources/versions.json
+=== RUN   TestExplicitDockerCopySources/docker/trivy-databases.lock.json
+=== RUN   TestExplicitDockerCopySources/docker/buster-runtime-entrypoint.sh
+--- PASS: TestExplicitDockerCopySources (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/python-tools/buster.txt (0.00s)
+    --- PASS: TestExplicitDockerCopySources/package.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/tests/verification/contracts/check-pipeline-container-build-recovery.mts (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/browser-archives.lock.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/scripts/browser-archive-lock.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/scripts/build-plugin-sandbox.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/tests/verification/contracts/check-pipeline-container-build-production.mts (0.00s)
+    --- PASS: TestExplicitDockerCopySources/scripts/trivy-database-lock.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/scripts/registry-client-config.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills/worker/core/worker/native-worker-launcher.c (0.00s)
+    --- PASS: TestExplicitDockerCopySources/package-lock.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/contracts (0.00s)
+    --- PASS: TestExplicitDockerCopySources/versions.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/trivy-databases.lock.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/buster-runtime-entrypoint.sh (0.00s)
+=== RUN   TestProtectedPathsStayExcluded
+=== RUN   TestProtectedPathsStayExcluded/my-values/config.yaml
+=== RUN   TestProtectedPathsStayExcluded/.swarm/state.json
+=== RUN   TestProtectedPathsStayExcluded/worktrees/project/file
+=== RUN   TestProtectedPathsStayExcluded/.git/config
+=== RUN   TestProtectedPathsStayExcluded/.github/workflows/test.yml
+=== RUN   TestProtectedPathsStayExcluded/.cache/download.zip
+=== RUN   TestProtectedPathsStayExcluded/tmp/archive.zip
+=== RUN   TestProtectedPathsStayExcluded/node_modules/pkg/index.js
+=== RUN   TestProtectedPathsStayExcluded/skills/prism/node_modules/pkg/index.js
+=== RUN   TestProtectedPathsStayExcluded/skills/prism/server/.env
+=== RUN   TestProtectedPathsStayExcluded/skills/prism/server/.env.production
+=== RUN   TestProtectedPathsStayExcluded/skills/prism/server/token.key
+=== RUN   TestProtectedPathsStayExcluded/skills/prism/server/cert.pem
+=== RUN   TestProtectedPathsStayExcluded/skills/prism/server/session.log
+=== RUN   TestProtectedPathsStayExcluded/skills/prism/server/secret.sops.yaml.dec
+=== RUN   TestProtectedPathsStayExcluded/.env.production
+=== RUN   TestProtectedPathsStayExcluded/secrets.yml.dec
+=== RUN   TestProtectedPathsStayExcluded/keys.txt
+=== RUN   TestProtectedPathsStayExcluded/scripts/unapproved.mjs
+=== RUN   TestProtectedPathsStayExcluded/docker/unapproved.json
+=== RUN   TestProtectedPathsStayExcluded/operator-state.json
+--- PASS: TestProtectedPathsStayExcluded (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/my-values/config.yaml (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/.swarm/state.json (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/worktrees/project/file (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/.git/config (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/.github/workflows/test.yml (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/.cache/download.zip (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/tmp/archive.zip (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/node_modules/pkg/index.js (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/skills/prism/node_modules/pkg/index.js (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/skills/prism/server/.env (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/skills/prism/server/.env.production (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/skills/prism/server/token.key (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/skills/prism/server/cert.pem (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/skills/prism/server/session.log (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/skills/prism/server/secret.sops.yaml.dec (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/.env.production (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/secrets.yml.dec (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/keys.txt (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/scripts/unapproved.mjs (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/docker/unapproved.json (0.00s)
+    --- PASS: TestProtectedPathsStayExcluded/operator-state.json (0.00s)
+=== RUN   TestEachLockInputNeedsItsExplicitAllowRule
+=== RUN   TestEachLockInputNeedsItsExplicitAllowRule/versions.json
+=== RUN   TestEachLockInputNeedsItsExplicitAllowRule/docker/browser-archives.lock.json
+=== RUN   TestEachLockInputNeedsItsExplicitAllowRule/docker/trivy-databases.lock.json
+=== RUN   TestEachLockInputNeedsItsExplicitAllowRule/scripts/browser-archive-lock.mjs
+=== RUN   TestEachLockInputNeedsItsExplicitAllowRule/scripts/trivy-database-lock.mjs
+--- PASS: TestEachLockInputNeedsItsExplicitAllowRule (0.00s)
+    --- PASS: TestEachLockInputNeedsItsExplicitAllowRule/versions.json (0.00s)
+    --- PASS: TestEachLockInputNeedsItsExplicitAllowRule/docker/browser-archives.lock.json (0.00s)
+    --- PASS: TestEachLockInputNeedsItsExplicitAllowRule/docker/trivy-databases.lock.json (0.00s)
+    --- PASS: TestEachLockInputNeedsItsExplicitAllowRule/scripts/browser-archive-lock.mjs (0.00s)
+    --- PASS: TestEachLockInputNeedsItsExplicitAllowRule/scripts/trivy-database-lock.mjs (0.00s)
+PASS
+ok  	github.com/datrab/kubeclaw/tests/docker-context	0.006s

@@ -1,3 +1,4 @@
+import { nativeBusterDeploymentSelection } from './native-buster-deployment-preflight.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -36,6 +37,9 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   if (!policyFile || !namespace || helmArguments[0] !== 'template') throw new Error('Usage: native-worker-deployment-preflight.mjs POLICY_YAML NAMESPACE template HELM_ARGUMENTS');
   const documents = loadAll(execFileSync('helm', helmArguments, { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 }));
   const policy = loadNativeNodePolicy(policyFile);
-  nativePrismDeploymentSelection(documents, namespace, policy);
+  const buster = documents.some(document => document?.kind === 'Deployment'
+    && document.spec?.template?.spec?.containers?.some(container => container.name === 'buster-v2-runtime'));
+  if (buster) nativeBusterDeploymentSelection(documents, namespace, policy);
+  else nativePrismDeploymentSelection(documents, namespace, policy);
   preflightNativeWorkerNode(policy);
 }

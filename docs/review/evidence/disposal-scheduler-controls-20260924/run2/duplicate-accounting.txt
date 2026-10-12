@@ -1,0 +1,32 @@
+✔ real Loader confirmed-disposal recovery: signal failure false, retain (946.706852ms)
+✔ real Loader confirmed-disposal recovery: signal failure false, delete (600.229983ms)
+✔ real Loader confirmed-disposal recovery: signal failure true, retain (978.4586ms)
+✔ real Loader confirmed-disposal recovery: signal failure true, delete (974.912967ms)
+✔ real Loader retains cleanup and stop failures in current session (440.392417ms)
+✔ real Loader retains cleanup and stop failures in recovery session (559.333757ms)
+✖ overlapping real Loaded terminate calls account one confirmed session exactly once (503.04722ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6328.739514
+
+✖ failing tests:
+
+test at tests/verification/contracts/provider-disposal-recovery.test.mjs:121:1
+✖ overlapping real Loaded terminate calls account one confirmed session exactly once (503.04722ms)
+  AssertionError [ERR_ASSERTION]: Actual cleanup diagnostic: [{"nodeId":"deploy","message":"sum one session once, preserve actual peaks\n+ actual - expected\n\n  {\n+   cpuTimeMs: 88.822,\n-   cpuTimeMs: 44.411,\n    maximumMemoryBytes: 60665856,\n    maximumProcesses: 2\n  }\n"}]
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-recovery.test.mjs:159:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

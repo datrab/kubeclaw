@@ -1,0 +1,116 @@
+{
+  "at": "2026-09-21T19:10:24.341757+00:00",
+  "runtimeExecuted": false,
+  "files": [
+    {
+      "path": "scripts/buster_legacy_stop_transaction.py",
+      "sha256": "68cc8ac979694a40d5bc7aa1bfe04ddaab3350f2ba26beb29a16cbe81cea2eb4",
+      "snapshot": "sources/scripts/buster_legacy_stop_transaction.py"
+    },
+    {
+      "path": "scripts/buster_legacy_stop_runtime.py",
+      "sha256": "da13076f4cb8ef08c5e9e393da89b9f06b3f4675195c61960bd377a004ac1ef2",
+      "snapshot": "sources/scripts/buster_legacy_stop_runtime.py"
+    },
+    {
+      "path": "scripts/buster_legacy_stop_files.py",
+      "sha256": "2c674ea367c0a45013893db18c4b0260f79ded257f9c08b8a6c46b8e004ed3b3",
+      "snapshot": "sources/scripts/buster_legacy_stop_files.py"
+    },
+    {
+      "path": "scripts/buster_legacy_stop_policy.py",
+      "sha256": "d88e4d8b6e9070ddd80be7ddf890cb5ce78efe394c969aac6ebc8f98e2983158",
+      "snapshot": "sources/scripts/buster_legacy_stop_policy.py"
+    },
+    {
+      "path": "scripts/buster-legacy-stop.py",
+      "sha256": "e41b1e61115f21e0d908a89d18f498153cdf84dd0384e32325a16ff369287822",
+      "snapshot": "sources/scripts/buster-legacy-stop.py"
+    },
+    {
+      "path": "scripts/tests/buster-legacy-stop.test.py",
+      "sha256": "40f8eba27e66a55a2c874b249b21bb76a0476e4fa90c4aae2ee80b59576f079e",
+      "snapshot": "sources/scripts/tests/buster-legacy-stop.test.py"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+      "sha256": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-host.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-terminal.ts",
+      "sha256": "3ab3f547bf01134d9a2e9d14a12b919fbb4c8781c1035f3a4b21fc803cb7926a",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-terminal.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-channel.ts",
+      "sha256": "2cb8b7a9960e5467b2bedf4bc45c55a12df26ea5c32545fa2fc42c6b5e468c1a",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-channel.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-materialize.ts",
+      "sha256": "3fa603ff06977ffdecf435981fe392cf107e90752d97cb11a7fa3d869f484ee3",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-materialize.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-import.ts",
+      "sha256": "4f6144633592a1e2dd11cac4b82c653982cddec50930a1d6d11694a5c3c74828",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-import.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-batch.ts",
+      "sha256": "44e38c453e1ab5a1118e54e7a4a855a2e40fce27bb9a0557c7b42808da88ee74",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-batch.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-reference.ts",
+      "sha256": "d034cac06fcd04b8a2583609b00a11375e404c65897c99a21a973f19d3ff7984",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-reference.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-publication.ts",
+      "sha256": "53147aef26b51b977f07d9ab46fcee9a356ba9acfa19e041f8c3b99d1cbc0f19",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-publication.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-ledger.ts",
+      "sha256": "74c8151a3a08b7e0d8c490cba83fe74ba4dfd9cc9f23417ebb59c4fa417177bb",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-ledger.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-source.ts",
+      "sha256": "fdccb2ec89cad6824df4ebf5ce9475ecfe4a94cbf4b515bc2c9549fb204bffc0",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-source.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "snapshot": "sources/skills/buster/engine/test-gates/prepared-plan-store.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "39fae2ef7c97b92259f1e1193a91e969b405c31b6970d51c8c0f7765fbb1f2bb",
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-service.ts"
+    },
+    {
+      "path": "docs/review/remediation/implementation/buster-legacy-stop-producer-contract-20260921.md",
+      "sha256": "1416e712c0b9ef7a00b459c401c87df2eab13f2bd4cc28d7fd4d5ca709cf9db5",
+      "snapshot": "sources/docs/review/remediation/implementation/buster-legacy-stop-producer-contract-20260921.md"
+    },
+    {
+      "path": "docs/review/remediation/implementation/buster-legacy-stop-kernel-boundary-20260921.md",
+      "sha256": "419f20cae8cde8f8074c7928cc5b5df137ada4a326aa5cf434539dc87bad1bca",
+      "snapshot": "sources/docs/review/remediation/implementation/buster-legacy-stop-kernel-boundary-20260921.md"
+    },
+    {
+      "path": "docs/review/remediation/implementation/buster-compaction-fixture-migration-20260921.md",
+      "sha256": "0261e84e9dc07d746c265fb8a46b992f0b87fba767c8aa0f6655ff2a5e834427",
+      "snapshot": "sources/docs/review/remediation/implementation/buster-compaction-fixture-migration-20260921.md"
+    },
+    {
+      "path": "docs/review/remediation/implementation/buster-historical-authority-reader-design-20260921.md",
+      "sha256": "bf6b016ec91c6fe6ac829a1146962391482ad08c0c58dfbb1eae5353f524ee5d",
+      "snapshot": "sources/docs/review/remediation/implementation/buster-historical-authority-reader-design-20260921.md"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+✖ same-journal retry resolves immutable predecessor, cleanup inserted first=false (812.26549ms)
+✖ same-journal retry resolves immutable predecessor, cleanup inserted first=true (645.024163ms)
+✔ same-journal cleanup resolution rejects missing-lookup (514.11738ms)
+✔ same-journal cleanup resolution rejects missing-association (495.236474ms)
+✔ same-journal cleanup resolution rejects wrong-effect (570.410786ms)
+✔ same-journal cleanup resolution rejects wrong-original (570.94983ms)
+✔ same-journal cleanup resolution rejects predecessor-as-success (543.619108ms)
+✔ same-journal cleanup resolution rejects missing-retry (484.855658ms)
+✔ same-journal cleanup resolution rejects failed-retry (550.412383ms)
+✔ same-journal cleanup resolution rejects unarchived-retry (735.722644ms)
+✔ same-journal cleanup resolution rejects bad-output (596.185889ms)
+✔ same-journal cleanup resolution rejects live-predecessor (605.657152ms)
+✔ same-journal cleanup resolution rejects live-retry (623.514971ms)
+✔ recovery requires its own sealed cleanup archive and preserves the original failed receipt (541.143524ms)
+✔ cleanup recovery handles no-hook (303.477318ms)
+✔ cleanup recovery handles declined (307.174133ms)
+✔ cleanup recovery handles missing-result (172.874472ms)
+✔ cleanup recovery handles wrong-profile (293.257405ms)
+✔ cleanup recovery handles original-live (313.219888ms)
+✔ cleanup recovery handles cleanup-live (342.653384ms)
+✔ cleanup recovery handles missing-original (314.541932ms)
+✔ cleanup recovery handles missing-cleanup (313.782572ms)
+✔ cleanup recovery handles wrong-reference (313.564577ms)
+✔ cleanup recovery handles unknown-key (303.544889ms)
+✔ cleanup recovery handles bad-output (330.774109ms)
+✔ cleanup recovery handles different-accounting (328.8706ms)
+✔ cleanup recovery handles callback-mutation (332.723389ms)
+✔ cleanup cannot reconcile a foreign envelopeDigest (320.391642ms)
+✔ cleanup cannot reconcile a foreign attemptId (300.620314ms)
+✔ cleanup cannot reconcile a foreign attemptSpecDigest (297.983566ms)
+✔ cleanup cannot reconcile a foreign profileDigest (308.610779ms)
+✔ cleanup cannot reconcile a foreign claimId (344.570213ms)
+✔ cleanup cannot reconcile a foreign claimGeneration (340.308764ms)
+✔ cleanup cannot reconcile a foreign workerId (313.198498ms)
+✔ cleanup cannot reconcile a foreign resultDigest (320.138305ms)
+✔ cleanup cannot reconcile a foreign receiptId (354.95623ms)
+✔ cleanup cannot reconcile a foreign receiptDigest (305.235063ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 35
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16783.75797
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-native-cleanup-retry.test.mts:33:3
+✖ same-journal retry resolves immutable predecessor, cleanup inserted first=false (812.26549ms)
+  Error: EEXIST: file already exists, mkdir '/tmp/journal-capacity-cnGONB/shared/outputs/4860ea2b48ed6f812a412fbdec59182efd3d0845de839a5a9e94b432d2388c3e'
+      at async Object.mkdir (node:internal/fs/promises:1564:10)
+      at async NativeWorkerOutputSpool.create (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-output-spool.ts:30:5)
+      at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/native-cleanup-fixture.mts:65:19
+      at async withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:269:12)
+      at async NativeAttemptJournal.withAttempt (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-attempt-journal.ts:51:14)
+      at async Object.reconcile (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-cleanup-retry.test.mts:41:34)
+      at async reconcileNativeCleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-cleanup-reconciliation.ts:116:21)
+      at async recoverNativeWorkerAttempts (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-attempt-recovery.ts:30:33)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-cleanup-retry.test.mts:49:7)
+      at async Test.run (node:internal/test_runner/test:1409:7) {
+    errno: -17,
+    code: 'EEXIST',
+    syscall: 'mkdir',
+    path: '/tmp/journal-capacity-cnGONB/shared/outputs/4860ea2b48ed6f812a412fbdec59182efd3d0845de839a5a9e94b432d2388c3e'
+  }
+
+test at tests/verification/reliability/worker-native-cleanup-retry.test.mts:33:3
+✖ same-journal retry resolves immutable predecessor, cleanup inserted first=true (645.024163ms)
+  Error: EEXIST: file already exists, mkdir '/tmp/journal-capacity-dCcPkl/shared/outputs/4b34e9278401dd461389e11942d72cabc21ffe37e3efbec664b0c0a88cdb9a24'
+      at async Object.mkdir (node:internal/fs/promises:1564:10)
+      at async NativeWorkerOutputSpool.create (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-output-spool.ts:30:5)
+      at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/native-cleanup-fixture.mts:65:19
+      at async withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:269:12)
+      at async NativeAttemptJournal.withAttempt (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-attempt-journal.ts:51:14)
+      at async Object.reconcile (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-cleanup-retry.test.mts:41:34)
+      at async reconcileNativeCleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-cleanup-reconciliation.ts:116:21)
+      at async recoverNativeWorkerAttempts (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-attempt-recovery.ts:30:33)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-cleanup-retry.test.mts:49:7)
+      at async Test.run (node:internal/test_runner/test:1409:7) {
+    errno: -17,
+    code: 'EEXIST',
+    syscall: 'mkdir',
+    path: '/tmp/journal-capacity-dCcPkl/shared/outputs/4b34e9278401dd461389e11942d72cabc21ffe37e3efbec664b0c0a88cdb9a24'
+  }

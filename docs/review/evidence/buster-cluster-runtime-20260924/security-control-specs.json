@@ -1,0 +1,86 @@
+{
+  "originalSpecs": "docs/review/evidence/buster-runtime-security-policy-20260924/private-v1/mutation-specs-v3.json",
+  "controls": [
+    {
+      "name": "restore-maximumExecutionMs",
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sourceSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+      "old": "...policy.runtimeSecurity, kubectlExecutable:",
+      "new": "...policy.runtimeSecurity, maximumExecutionMs: 300000, kubectlExecutable:",
+      "test": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "expected": "real maximumExecutionMs low profile unexpectedly succeeds; counterpart high profile remains valid"
+    },
+    {
+      "name": "restore-maximumOutputBytes",
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sourceSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+      "old": "...policy.runtimeSecurity, kubectlExecutable:",
+      "new": "...policy.runtimeSecurity, maximumOutputBytes: 16777216, kubectlExecutable:",
+      "test": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "expected": "real maximumOutputBytes low profile unexpectedly succeeds; counterpart high profile remains valid"
+    },
+    {
+      "name": "restore-maximumObservationAgeMs",
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sourceSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+      "old": "...policy.runtimeSecurity, kubectlExecutable:",
+      "new": "...policy.runtimeSecurity, maximumObservationAgeMs: 10000, kubectlExecutable:",
+      "test": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "expected": "real maximumObservationAgeMs low profile unexpectedly succeeds; counterpart high profile remains valid"
+    },
+    {
+      "name": "restore-poll1000",
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sourceSha256": "d877da689ad67653723eebab1c57bf5972ea9928430a652b7e57881e49f880a2",
+      "old": "Math.min(this.#policy.pollIntervalMs, Math.max(1, deadline - Date.now()))",
+      "new": "Math.min(1000, Math.max(1, deadline - Date.now()))",
+      "test": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "expected": "1200 ms real polling profile is not respected; actual successive command separation below configured interval"
+    },
+    {
+      "name": "restore-future5000",
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sourceSha256": "d877da689ad67653723eebab1c57bf5972ea9928430a652b7e57881e49f880a2",
+      "old": "nowMs + maximumFutureSkewMs",
+      "new": "nowMs + 5000",
+      "test": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "expected": "high future-skew profile should admit otherwise valid +7500 ms observation; instead times out"
+    },
+    {
+      "name": "restore-diagnostic1024",
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sourceSha256": "d877da689ad67653723eebab1c57bf5972ea9928430a652b7e57881e49f880a2",
+      "old": ".slice(0, policy.diagnosticCodeUnits)",
+      "new": ".slice(0, 1024)",
+      "test": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "expected": "both exact diagnostic lengths mismatch original stderr"
+    },
+    {
+      "name": "restore-child-path",
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sourceSha256": "d877da689ad67653723eebab1c57bf5972ea9928430a652b7e57881e49f880a2",
+      "old": "PATH: policy.executableSearchPath.join(path.delimiter)",
+      "new": "PATH: '/usr/local/bin:/usr/bin:/bin'",
+      "test": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "expected": "actual helper selection in private authored PATH fails positive profile; actual observed PATH differs"
+    },
+    {
+      "name": "restore-abort-before-output-cause",
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sourceSha256": "d877da689ad67653723eebab1c57bf5972ea9928430a652b7e57881e49f880a2",
+      "old": "finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED')); controller.abort();",
+      "new": "controller.abort(); finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED'));",
+      "test": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "expected": "combined byte-limit negative must report OUTPUT_LIMIT exactly, not TIMEOUT"
+    },
+    {
+      "name": "restore-missing-policy-defaults",
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "sourceSha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+      "old": "  validateComponentSettings('buster-runtime-security', value, 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');",
+      "new": "  value = { ...{\"allowedNamespacePrefixes\": [\"test\"], \"maximumExecutionMs\": 300000, \"maximumOutputBytes\": 16777216, \"pollIntervalMs\": 1000, \"maximumObservationAgeMs\": 10000, \"maximumFutureSkewMs\": 5000, \"diagnosticCodeUnits\": 1024, \"executableSearchPath\": [\"/usr/local/bin\", \"/usr/bin\", \"/bin\"]}, ...(value as Record<string, unknown>) };\n  validateComponentSettings('buster-runtime-security', value, 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');",
+      "test": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "expected": "each omitted direct policy field must reject CONFIG_INVALID before filesystem access; fallback reaches nonexistent path instead"
+    }
+  ]
+}

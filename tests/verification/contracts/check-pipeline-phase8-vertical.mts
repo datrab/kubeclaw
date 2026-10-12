@@ -1,3 +1,6 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
+// Preparation authority is modeled here; parser, extraction and durable service/store remain real.
+import { ModeledBusterRemotePlanService as BusterRemotePlanService, ModeledPreparedPlanJobStore as FileBusterPlanJobStore } from '../../fixtures/test-gate/modeled-preparation.mts';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -5,7 +8,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { buildRegistry, createProductionNovaTestGate, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
-import { BusterRemotePlanRuntime, BusterRemotePlanService, FileBusterPlanJobStore } from '@kubeclaw/buster-engine';
+import { BusterRemotePlanRuntime } from '@kubeclaw/buster-engine';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'phase8-vertical-'));
 const repository = path.join(temporary, 'repository');
@@ -82,7 +85,9 @@ if(mode==='exit-fail') process.exitCode=7;
     maximumArchiveBytes: 8 * 1024 * 1024, maximumResultBytes: 32 * 1024 * 1024,
     maximumResultStoreBytes: 128 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
     sourceAttestationPublicKey: publicKey });
-  const service = new BusterRemotePlanService({ store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
+  const service = new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 32 * 1024 * 1024,
     allowedCapabilities: new Set(['command.execute']), directCommand: { executableCatalog: new Map([['node', process.execPath]]),
       executableSearchPath: [path.dirname(process.execPath)],

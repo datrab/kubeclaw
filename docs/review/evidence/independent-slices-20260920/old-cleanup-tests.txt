@@ -1,0 +1,55 @@
+✔ terminal cleanup refuses linked parent directories and preserves another job source (5.644534ms)
+✔ terminal cleanup unlinks a leaf symlink without deleting its target and remains idempotent (2.31687ms)
+✖ terminal cleanup rejects symlinks in ancestors of the job root (21.371244ms)
+✖ terminal cleanup stays on original directory after job is replaced during deletion (4.784232ms)
+✖ terminal cleanup stays on original directory after workspace is replaced during deletion (3.311624ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 2
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 177.413567
+
+✖ failing tests:
+
+test at ../../../../../tmp/independent-cleanup-old-14r9y7b0/test.mts:40:1
+✖ terminal cleanup rejects symlinks in ancestors of the job root (21.371244ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///tmp/independent-cleanup-old-14r9y7b0/test.mts:47:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /BUSTER_TERMINAL_WORKSPACE_PARENT_INVALID/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/independent-cleanup-old-14r9y7b0/test.mts:53:3
+✖ terminal cleanup stays on original directory after job is replaced during deletion (4.784232ms)
+  Error: ENOENT: no such file or directory, open '/tmp/buster-cleanup-replaced-FlIpjf/foreign/repository.tar.gz'
+      at Object.readFileSync (node:fs:483:20)
+      at TestContext.<anonymous> (file:///tmp/independent-cleanup-old-14r9y7b0/test.mts:83:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/buster-cleanup-replaced-FlIpjf/foreign/repository.tar.gz'
+  }
+
+test at ../../../../../tmp/independent-cleanup-old-14r9y7b0/test.mts:53:3
+✖ terminal cleanup stays on original directory after workspace is replaced during deletion (3.311624ms)
+  Error: ENOENT: no such file or directory, open '/tmp/buster-cleanup-replaced-gDhPof/foreign/workspace/repository/source.ts'
+      at Object.readFileSync (node:fs:483:20)
+      at TestContext.<anonymous> (file:///tmp/independent-cleanup-old-14r9y7b0/test.mts:83:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/buster-cleanup-replaced-gDhPof/foreign/workspace/repository/source.ts'
+  }

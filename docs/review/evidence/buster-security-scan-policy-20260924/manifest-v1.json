@@ -1,0 +1,29 @@
+{
+  "status": "frozen private source inventory/design only; no implementation or runtime",
+  "files": [
+    {
+      "path": "source-identities-v1.json",
+      "sha256": "470478f9e5873274d078060cfebf9064f955c92695d32b2803d58bc4920d1861"
+    },
+    {
+      "path": "ownership-proposal-v1.json",
+      "sha256": "4445b61aeb9307f4690da498594dbb3e72738ddbee355f5334542f7dbf11894b"
+    },
+    {
+      "path": "design-and-open-decisions-v1.md",
+      "sha256": "ae9f8a41b18b00b2a54eec8406a3aac07f29a9df8fe0dfa83602ebe205bbcd12"
+    },
+    {
+      "path": "acceptance-and-verification-proposal-v1.md",
+      "sha256": "569f061b6735a7263e3d70e44184e8b097e44423da65ee5fb72d8d439b7c8988"
+    }
+  ],
+  "proposedFields": 13,
+  "sourceFiles": 32,
+  "decisionsRequired": [
+    "settings.securityScan owner placement and all13authors",
+    "single registry binding preserving previously valid nonimage/public/multiregistry cases",
+    "preserved text truncation vs separate integrity change",
+    "explicit resource/lifecycle remaining work without exception"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "remoteCommit": "9628872976da8d43c3a17faa89962f9e32d88979",
+  "sourcePath": "skills/nova/plugins/review/schemas/review-bundle.v1.schema.json",
+  "gitBlob": "dded7e18ac7d987d8af8b54e22a7f8c89cd4ee7c",
+  "changedPathSchema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "else": {
+          "not": {
+            "required": [
+              "previousPath"
+            ]
+          }
+        },
+        "if": {
+          "properties": {
+            "status": {
+              "enum": [
+                "renamed",
+                "copied"
+              ]
+            }
+          },
+          "required": [
+            "status"
+          ]
+        },
+        "then": {
+          "required": [
+            "path",
+            "status",
+            "previousPath"
+          ]
+        }
+      }
+    ],
+    "properties": {
+      "path": {
+        "allOf": [
+          {
+            "maxLength": 1024,
+            "minLength": 1,
+            "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])",
+            "type": "string"
+          },
+          {
+            "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+          }
+        ]
+      },
+      "previousPath": {
+        "allOf": [
+          {
+            "maxLength": 1024,
+            "minLength": 1,
+            "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])",
+            "type": "string"
+          },
+          {
+            "pattern": "^(?!/)(?!.*:)(?!.*\\\\)(?!.*//)(?!.*/$)(?!.*[\\u0000-\\u001F\\u007F])(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+          }
+        ]
+      },
+      "status": {
+        "enum": [
+          "added",
+          "modified",
+          "deleted",
+          "renamed",
+          "copied",
+          "type_changed"
+        ]
+      }
+    },
+    "required": [
+      "path",
+      "status"
+    ],
+    "type": "object"
+  }
+}

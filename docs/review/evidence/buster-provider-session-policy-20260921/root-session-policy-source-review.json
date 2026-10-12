@@ -1,0 +1,54 @@
+{
+  "scope": "Partial private source review, not integration or runtime acceptance",
+  "identities": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "24ffa41ad944b28b7c40bfe5509548017623e488206f9f0db0005b8485fb3b84"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "b782a61956a40df3828de74e71c4ac01656b84c098f23704cf88f3e9c1ac95bf"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+      "sha256": "ab4b341f3d52181ff6b6fa33aaaa70d617616f33a1f40b0ec147db0ec2f0df06"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "sha256": "47a8f9dfe764a207a41dea94873ac67c474de3cc428f0ecc06237222b54a6bd8"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "sha256": "8cf8391f4e77b6522e8ea9a37859732168e171c228ff31fc152799d0ea205990"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "2460dd23e97cae74194d4c72255fea3e77a9b711a2de413a9d07893362646711"
+    }
+  ],
+  "requiredProviderFields": [
+    "maximumProtocolBytes",
+    "terminationGraceMs",
+    "terminationTimeoutMs",
+    "capabilityDrainTimeoutMs",
+    "minimumHeapMiB",
+    "heapFraction",
+    "maximumPendingCapabilities",
+    "minimumOpenFiles",
+    "artifactFileDescriptorReserve"
+  ],
+  "observations": [
+    "All nine selected fields reach actual Session consumer expressions.",
+    "Recovery constructs a new session from the retained policy, not reconstructed defaults.",
+    "Both already-closed and normal-close paths forward configured capability-drain time.",
+    "Capability constructor and drain no longer declare default arguments.",
+    "Loader and Session validate the runtime projection before snapshot/spawn side effects."
+  ],
+  "remaining": [
+    "Complete original caller migration and independently executed required-field/consumer tests",
+    "Schema and both Helm bounds parity, including fractional heap setting",
+    "Selected heap/resource arithmetic versus actual invocation limits",
+    "Negative controls for all newly introduced forwarding paths",
+    "Maintained DOC update and fresh independent implementation review"
+  ]
+}

@@ -1,0 +1,17 @@
+From repository root, Node v24.21.0.
+
+node --test --test-concurrency=1 skills/prism/tests/swarm-control-policy.test.mts skills/prism/tests/control-generation-http.test.mts tests/verification/deployment/prism-swarm-config.test.mjs
+244 pass, zero failures/skips, exit 0: control-policy-http-helm.txt
+
+For subject, root, studio respectively:
+CONTROL_POLICY_MUTANT=<name> node --import ./docs/review/evidence/config-control-policy-20260921/mutant-hook.mjs --test --test-concurrency=1 --test-name-pattern='CC3 real Control service profile' skills/prism/tests/control-generation-http.test.mts
+Each exit 1, 0 pass / 2 fail, zero skips: control-mutant-<name>.txt and control-mutant-results.json
+
+node --test --test-concurrency=1 scripts/config/tests/environment-readers.test.mjs
+5 pass, zero failures/skips, exit 0: discovery-tests.txt
+
+Executed the author run-mutant.py and compare-legacy.py via Python with only their output-directory literal redirected from config-discovery-readers-20260921 to control-discovery-independent-20260921. Both harnesses exit 0; private mutant test exit 1 with 2 fail / 3 pass. Kept original evidence untouched.
+
+Two further executions of node scripts/config/inventory-settings.mjs with PRISM_SESSION_SECRET set to a synthetic canary: both exit 0, output byte-identical and canary absent. discovery-determinism-secret.json records the output hash.
+
+Identity manifests recompute SHA256 and byte-compare author snapshots for each selected source in both author manifests. These are selected-source identities, not full dependency/build archives.

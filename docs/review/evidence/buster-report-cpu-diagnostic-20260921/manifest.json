@@ -1,0 +1,6 @@
+{
+  "path": "tests/verification/contracts/buster-report-policy-consumers.test.mjs",
+  "beforeSha256": "79b7db733f4cf1b4f55c1b6d8a660b4278069564ea6981605eaa30d9d5c50e08",
+  "afterSha256": "d54203f4be7980e0f3f1aa9270b9ea4d16bc37e56d077b73758aee87d5579aff",
+  "scope": "Only assertion failure message adds actual close/status/stderr. No workload, timing, limits, assertion predicate or production changes."
+}

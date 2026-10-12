@@ -1,0 +1,693 @@
+{
+  "kind": "repository manifest roster, not deployed activation evidence",
+  "manifests": [
+    {
+      "path": "skills/buster/plugins/api-flow/plugin.json",
+      "id": "kubeclaw.api-flow",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/axe/plugin.json",
+      "id": "kubeclaw.axe",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/container-build/plugin.json",
+      "id": "kubeclaw.container-build",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/plugin.json",
+      "id": "kubeclaw.coverage-budget",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "id": "kubeclaw.demo-auth-smoke",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/plugin.json",
+      "id": "kubeclaw.direct-command",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/http/plugin.json",
+      "id": "kubeclaw.http",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+      "id": "kubeclaw.junit-report",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+      "id": "kubeclaw.kubernetes-fixture",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/plugin.json",
+      "id": "kubeclaw.lighthouse",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/openapi/plugin.json",
+      "id": "kubeclaw.openapi",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/playwright/plugin.json",
+      "id": "kubeclaw.playwright",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/plugin.json",
+      "id": "kubeclaw.security-providers",
+      "stages": 0,
+      "testProviders": 5
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/plugin.json",
+      "id": "kubeclaw.size-budget",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "id": "kubeclaw.tailscale-exposure",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/buster/plugins/visual/plugin.json",
+      "id": "kubeclaw.visual",
+      "stages": 0,
+      "testProviders": 1
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/plugin.json",
+      "id": "kubeclaw.agent-observability",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/plugin.json",
+      "id": "kubeclaw.artifact-store",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/command-runner/plugin.json",
+      "id": "kubeclaw.command-runner",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/plugin.json",
+      "id": "kubeclaw.git-workspace",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/network-http/plugin.json",
+      "id": "kubeclaw.network-http",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/notification-observer/plugin.json",
+      "id": "kubeclaw.notification-observer",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+      "id": "kubeclaw.openclaw-agent-events",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/plugin.json",
+      "id": "kubeclaw.operator-messaging",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/plugin.json",
+      "id": "kubeclaw.redis-transport",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "id": "kubeclaw.runtime-dispatch",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/secret-resolver/plugin.json",
+      "id": "kubeclaw.secret-resolver",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/state-store/plugin.json",
+      "id": "kubeclaw.state-store",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/telemetry-observer/plugin.json",
+      "id": "kubeclaw.telemetry-observer",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/plugin.json",
+      "id": "kubeclaw.telemetry-store",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/plugin.json",
+      "id": "kubeclaw.transport-publisher",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/common/plugins/wait-store/plugin.json",
+      "id": "kubeclaw.wait-store",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/plugin.json",
+      "id": "kubeclaw.architecture-validator",
+      "stages": 1,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/plugin.json",
+      "id": "kubeclaw.blueprint-sync",
+      "stages": 1,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/plugin.json",
+      "id": "kubeclaw.buster-quality-gate",
+      "stages": 1,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/case-study/plugin.json",
+      "id": "kubeclaw.case-study",
+      "stages": 1,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/plugin.json",
+      "id": "kubeclaw.delivery-lint",
+      "stages": 1,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/plugin.json",
+      "id": "kubeclaw.demo-handoff",
+      "stages": 3,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/plugin.json",
+      "id": "kubeclaw.human-approval",
+      "stages": 2,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/plugin.json",
+      "id": "kubeclaw.implementation-agent",
+      "stages": 1,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/lint/plugin.json",
+      "id": "kubeclaw.lint",
+      "stages": 2,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/plugin.json",
+      "id": "kubeclaw.pipeline-review",
+      "stages": 1,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/plugin.json",
+      "id": "kubeclaw.preflight-contract",
+      "stages": 2,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/plugin.json",
+      "id": "kubeclaw.prism-design",
+      "stages": 1,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/plugin.json",
+      "id": "kubeclaw.project-summary",
+      "stages": 1,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "id": "kubeclaw.remote-test-gate",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/plugin.json",
+      "id": "kubeclaw.repository-adapter",
+      "stages": 0,
+      "testProviders": 0
+    },
+    {
+      "path": "skills/nova/plugins/review/plugin.json",
+      "id": "kubeclaw.review",
+      "stages": 3,
+      "testProviders": 0
+    }
+  ],
+  "registrations": [
+    {
+      "id": "kubeclaw.agent-observability:ingester",
+      "kind": "observers",
+      "manifest": "skills/common/plugins/agent-observability/plugin.json",
+      "module": "skills/common/plugins/agent-observability/src/observers.ts",
+      "schema": "skills/common/plugins/agent-observability/schemas/config.schema.json",
+      "provides": [],
+      "requires": [
+        "telemetry.emit"
+      ],
+      "failurePolicy": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.agent-observability:evidence",
+      "kind": "observers",
+      "manifest": "skills/common/plugins/agent-observability/plugin.json",
+      "module": "skills/common/plugins/agent-observability/src/observers.ts",
+      "schema": "skills/common/plugins/agent-observability/schemas/config.schema.json",
+      "provides": [],
+      "requires": [
+        "artifacts.write"
+      ],
+      "failurePolicy": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.artifact-store:artifact-store",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/artifact-store/plugin.json",
+      "module": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "schema": "skills/common/plugins/artifact-store/schemas/config.schema.json",
+      "provides": [
+        "artifacts.read",
+        "artifacts.write"
+      ],
+      "requires": [],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.command-runner:command",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/command-runner/plugin.json",
+      "module": "skills/common/plugins/command-runner/src/adapter.ts",
+      "schema": "skills/common/plugins/command-runner/schemas/config.schema.json",
+      "provides": [
+        "command.execute"
+      ],
+      "requires": [],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.git-workspace:git",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/git-workspace/plugin.json",
+      "module": "skills/common/plugins/git-workspace/src/adapter.ts",
+      "schema": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+      "provides": [
+        "git.workspace.create",
+        "git.workspace.remove",
+        "git.commit",
+        "git.merge",
+        "git.sync"
+      ],
+      "requires": [],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.network-http:http",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/network-http/plugin.json",
+      "module": "skills/common/plugins/network-http/src/adapter.ts",
+      "schema": "skills/common/plugins/network-http/schemas/config.schema.json",
+      "provides": [
+        "network.http"
+      ],
+      "requires": [],
+      "failurePolicy": null,
+      "inspection": "bounded field inventory"
+    },
+    {
+      "id": "kubeclaw.notification-observer:notifications",
+      "kind": "observers",
+      "manifest": "skills/common/plugins/notification-observer/plugin.json",
+      "module": "skills/common/plugins/notification-observer/src/observer.ts",
+      "schema": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+      "provides": [],
+      "requires": [
+        "operator.request"
+      ],
+      "failurePolicy": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "inspection": "bounded field inventory"
+    },
+    {
+      "id": "kubeclaw.notification-observer:preview-delivery",
+      "kind": "observers",
+      "manifest": "skills/common/plugins/notification-observer/plugin.json",
+      "module": "skills/common/plugins/notification-observer/src/observer.ts",
+      "schema": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+      "provides": [],
+      "requires": [
+        "operator.request"
+      ],
+      "failurePolicy": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "inspection": "bounded field inventory"
+    },
+    {
+      "id": "kubeclaw.openclaw-agent-events:source",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/openclaw-agent-events/plugin.json",
+      "module": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+      "schema": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+      "provides": [
+        "agent.events.subscribe"
+      ],
+      "requires": [],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.operator-messaging:operator",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/operator-messaging/plugin.json",
+      "module": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "schema": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+      "provides": [
+        "operator.request",
+        "operator.receipt"
+      ],
+      "requires": [
+        "network.http",
+        "secrets.read"
+      ],
+      "failurePolicy": null,
+      "inspection": "bounded field inventory"
+    },
+    {
+      "id": "kubeclaw.redis-transport:publisher",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/redis-transport/plugin.json",
+      "module": "skills/common/plugins/redis-transport/src/adapter.ts",
+      "schema": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+      "provides": [
+        "transport.publish"
+      ],
+      "requires": [
+        "secrets.read"
+      ],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.redis-transport:telemetry",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/redis-transport/plugin.json",
+      "module": "skills/common/plugins/redis-transport/src/adapter.ts",
+      "schema": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+      "provides": [
+        "telemetry.emit"
+      ],
+      "requires": [
+        "secrets.read"
+      ],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.runtime-dispatch:runtime",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "module": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "schema": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "provides": [
+        "runtime.dispatch"
+      ],
+      "requires": [
+        "network.http",
+        "secrets.read"
+      ],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.runtime-dispatch:openclaw",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "module": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+      "schema": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "provides": [
+        "runtime.dispatch"
+      ],
+      "requires": [
+        "git.repository.read",
+        "network.http",
+        "secrets.read"
+      ],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.secret-resolver:secrets",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/secret-resolver/plugin.json",
+      "module": "skills/common/plugins/secret-resolver/src/adapter.ts",
+      "schema": "skills/common/plugins/secret-resolver/schemas/config.schema.json",
+      "provides": [
+        "secrets.read"
+      ],
+      "requires": [],
+      "failurePolicy": null,
+      "inspection": "bounded field inventory"
+    },
+    {
+      "id": "kubeclaw.state-store:state",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/state-store/plugin.json",
+      "module": "skills/common/plugins/state-store/src/adapter.ts",
+      "schema": "skills/common/plugins/state-store/schemas/config.schema.json",
+      "provides": [
+        "state.read",
+        "state.append"
+      ],
+      "requires": [],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.telemetry-observer:telemetry",
+      "kind": "observers",
+      "manifest": "skills/common/plugins/telemetry-observer/plugin.json",
+      "module": "skills/common/plugins/telemetry-observer/src/observer.ts",
+      "schema": "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
+      "provides": [],
+      "requires": [
+        "telemetry.emit"
+      ],
+      "failurePolicy": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "inspection": "bounded field inventory"
+    },
+    {
+      "id": "kubeclaw.telemetry-store:telemetry",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/telemetry-store/plugin.json",
+      "module": "skills/common/plugins/telemetry-store/src/adapter.ts",
+      "schema": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
+      "provides": [
+        "telemetry.emit"
+      ],
+      "requires": [],
+      "failurePolicy": null,
+      "inspection": "bounded field inventory"
+    },
+    {
+      "id": "kubeclaw.transport-publisher:publisher",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/transport-publisher/plugin.json",
+      "module": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "schema": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+      "provides": [
+        "transport.publish"
+      ],
+      "requires": [
+        "network.http",
+        "secrets.read"
+      ],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.wait-store:waits",
+      "kind": "adapters",
+      "manifest": "skills/common/plugins/wait-store/plugin.json",
+      "module": "skills/common/plugins/wait-store/src/adapter.ts",
+      "schema": "skills/common/plugins/wait-store/schemas/config.schema.json",
+      "provides": [
+        "signal.wait"
+      ],
+      "requires": [],
+      "failurePolicy": null,
+      "inspection": "bounded field inventory"
+    },
+    {
+      "id": "kubeclaw.demo-handoff:handoff",
+      "kind": "adapters",
+      "manifest": "skills/nova/plugins/demo-handoff/plugin.json",
+      "module": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "schema": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
+      "provides": [
+        "demo.handoff"
+      ],
+      "requires": [
+        "artifacts.read",
+        "test.plan.evidence",
+        "operator.request",
+        "operator.receipt"
+      ],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.lint:executor",
+      "kind": "adapters",
+      "manifest": "skills/nova/plugins/lint/plugin.json",
+      "module": "skills/nova/plugins/lint/src/adapter.ts",
+      "schema": "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+      "provides": [
+        "lint.execute"
+      ],
+      "requires": [],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.pipeline-review:evidence",
+      "kind": "adapters",
+      "manifest": "skills/nova/plugins/pipeline-review/plugin.json",
+      "module": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+      "schema": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+      "provides": [
+        "report.evidence.read"
+      ],
+      "requires": [
+        "artifacts.read"
+      ],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.remote-test-gate:plan",
+      "kind": "adapters",
+      "manifest": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "module": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "schema": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
+      "provides": [
+        "test.plan.execute"
+      ],
+      "requires": [
+        "secrets.read"
+      ],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.remote-test-gate:evidence",
+      "kind": "adapters",
+      "manifest": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "module": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+      "schema": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json",
+      "provides": [
+        "test.plan.evidence"
+      ],
+      "requires": [
+        "artifacts.read"
+      ],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    },
+    {
+      "id": "kubeclaw.repository-adapter:repository",
+      "kind": "adapters",
+      "manifest": "skills/nova/plugins/repository-adapter/plugin.json",
+      "module": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+      "schema": "skills/nova/plugins/repository-adapter/schemas/config.schema.json",
+      "provides": [
+        "git.repository.read"
+      ],
+      "requires": [],
+      "failurePolicy": null,
+      "inspection": "registration only; settings uninspected"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "manifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-runtime-20260924/poll-rollback-correction/manifest.json",
+  "manifestSha256": "2762c3efb1aee4d4ea08ff65c095ec8a9acc203fea0798fc2c03cb2b0bd566e3",
+  "review": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-cluster-final-20260924/poll-rollback-source-review.json",
+  "reviewSha256": "ac83ba370352d4ab77eb9d7ca3b81a426f115c2e704da2e4be0478b37ff2ad47",
+  "status": "integrated; verification pending",
+  "files": [
+    {
+      "path": "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+      "kind": "file",
+      "beforeSha256": "49ecf52423dd615c241cddcf4fa241131704831026b334b4b7328de80f070021",
+      "sha256": "1679d4e5fda07cf0832f2c42c558093332b6e8e5fd1077bc9436841229031622"
+    }
+  ]
+}

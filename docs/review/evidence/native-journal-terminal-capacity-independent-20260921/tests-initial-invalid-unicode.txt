@@ -1,0 +1,36 @@
+✔ independent seven-way admission admits only one slot and retains exact winner replay (498.263907ms)
+✖ independent archived process preserves nonempty output, escaped diagnostics and actual serializer on sealing (92.995005ms)
+✔ exact future metadata fit completes valid maximal diagnostics; one byte short admits no blob (483.934797ms)
+✔ all pending rows reserve metadata and concurrent independent journals cannot over-admit (477.319135ms)
+✔ historical pending overcommit remains readable and replayable while growth fails closed (161.829846ms)
+✔ retained metadata outside the journal stream consumes the same whole-store ceiling (270.563448ms)
+✔ new-admission rejection persists no accepted work and cannot block historical receipt replay (250.702944ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (721.427559ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (801.848388ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (156.575399ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (158.719965ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (5633.138072ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11430.657746
+
+✖ failing tests:
+
+test at docs/review/evidence/native-journal-terminal-capacity-independent-20260921/probes.mts:34:1
+✖ independent archived process preserves nonempty output, escaped diagnostics and actual serializer on sealing (92.995005ms)
+  TypeError: RFC8785_INVALID_UNICODE
+      at encodeString (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/contracts/pipeline-observability/v1/src/canonical-json.ts:1:233)
+      at canonicalJson (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/contracts/pipeline-observability/v1/src/canonical-json.ts:2:175)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/contracts/pipeline-observability/v1/src/canonical-json.ts:2:915
+      at Array.map (<anonymous>)
+      at canonicalJson (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/contracts/pipeline-observability/v1/src/canonical-json.ts:2:872)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/contracts/pipeline-observability/v1/src/canonical-json.ts:2:915
+      at Array.map (<anonymous>)
+      at canonicalJson (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/contracts/pipeline-observability/v1/src/canonical-json.ts:2:872)
+      at FileDurableRecordStore.transition (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-records.ts:186:33)
+      at NativeAttemptJournal.recordProcess (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-attempt-journal.ts:116:25)

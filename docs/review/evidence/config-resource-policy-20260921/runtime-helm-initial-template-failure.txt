@@ -1,0 +1,929 @@
+✔ CR01 both startup snapshots use authored {"maximumResultBytes":64,"dispatchTimeoutMs":100} (9.787126ms)
+✔ CR01 both startup snapshots use authored {"maximumResultBytes":128,"dispatchTimeoutMs":2000} (0.78781ms)
+✔ CR01 both roles reject maximumResultBytes=undefined (1.059478ms)
+✔ CR01 both roles reject maximumResultBytes=null (0.559024ms)
+✔ CR01 both roles reject maximumResultBytes=5 (1.52574ms)
+✔ CR01 both roles reject maximumResultBytes=0 (0.706878ms)
+✔ CR01 both roles reject maximumResultBytes=-1 (0.630706ms)
+✔ CR01 both roles reject maximumResultBytes=1.5 (0.596615ms)
+✔ CR01 both roles reject maximumResultBytes=2147483648 (0.566334ms)
+✔ CR01 both roles reject dispatchTimeoutMs=undefined (0.610436ms)
+✔ CR01 both roles reject dispatchTimeoutMs=null (0.478253ms)
+✔ CR01 both roles reject dispatchTimeoutMs=5 (0.442001ms)
+✔ CR01 both roles reject dispatchTimeoutMs=0 (0.466752ms)
+✔ CR01 both roles reject dispatchTimeoutMs=-1 (0.446302ms)
+✔ CR01 both roles reject dispatchTimeoutMs=1.5 (0.433341ms)
+✔ CR01 both roles reject dispatchTimeoutMs=2147483648 (0.40978ms)
+✔ CR01 both roles reject missing or unsupported native section (0.528184ms)
+✔ CR01 both roles reject missing or unsupported native section (0.465942ms)
+✔ CR01 both roles reject missing or unsupported native section (0.528004ms)
+✔ CR02 both roles reject PRISM_NATIVE_MAXIMUM_RESULT_BYTES (0.500553ms)
+✔ CR02 both roles reject PRISM_NATIVE_DISPATCH_TIMEOUT_MS (0.367269ms)
+✔ CR03 original HTTP transport enforces 8 UTF-8 bytes (37.500661ms)
+✔ CR03 original HTTP transport enforces 9 UTF-8 bytes (7.343082ms)
+✔ CR04 real headers deadline follows short and long author budgets (381.579716ms)
+✔ CR04 real body deadline follows short and long author budgets (380.93893ms)
+✔ CP01 both roles reject cpuTimeMs=undefined (3.561003ms)
+✔ CP01 both roles reject cpuTimeMs=null (0.612866ms)
+✔ CP01 both roles reject cpuTimeMs=5 (0.658387ms)
+✔ CP01 both roles reject cpuTimeMs=0 (0.664807ms)
+✔ CP01 both roles reject cpuTimeMs=-1 (0.866633ms)
+✔ CP01 both roles reject cpuTimeMs=1.5 (0.634877ms)
+✔ CP01 both roles reject cpuTimeMs=9007199254740992 (0.565184ms)
+✔ CP01 both roles reject memoryBytes=undefined (0.638036ms)
+✔ CP01 both roles reject memoryBytes=null (0.628986ms)
+✔ CP01 both roles reject memoryBytes=5 (0.522333ms)
+✔ CP01 both roles reject memoryBytes=0 (0.421721ms)
+✔ CP01 both roles reject memoryBytes=-1 (0.3899ms)
+✔ CP01 both roles reject memoryBytes=1.5 (0.38572ms)
+✔ CP01 both roles reject memoryBytes=9007199254740992 (0.404531ms)
+✔ CP01 both roles reject tasks=undefined (0.41056ms)
+✔ CP01 both roles reject tasks=null (0.404291ms)
+✔ CP01 both roles reject tasks=5 (0.499883ms)
+✔ CP01 both roles reject tasks=0 (0.457452ms)
+✔ CP01 both roles reject tasks=-1 (0.433781ms)
+✔ CP01 both roles reject tasks=1.5 (0.636306ms)
+✔ CP01 both roles reject tasks=9007199254740992 (0.453282ms)
+✔ CP01 missing or competing resource policy fails (0.564695ms)
+✔ CP01 missing or competing resource policy fails (0.395191ms)
+✔ CP01 missing or competing resource policy fails (0.436002ms)
+✔ CP02 rejects PRISM_NATIVE_CPU_TIME_MS even empty (0.549145ms)
+✔ CP02 rejects PRISM_NATIVE_MEMORY_BYTES even empty (0.474393ms)
+✔ CP02 rejects PRISM_NATIVE_TASKS even empty (0.450222ms)
+✔ CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7} (98.547499ms)
+✔ CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11} (3.637475ms)
+✔ CW01 canonical author values reach the actual production worker composition (3.938053ms)
+✔ CW02 every alternate author value reaches the actual consumer (2.323071ms)
+✔ CW03 unknown key at root (1.299624ms)
+✔ CW03 unknown key at operator (0.77311ms)
+✔ CW03 unknown key at operator.prism (0.674708ms)
+✔ CW03 unknown key at operator.prism.worker (0.690958ms)
+✔ CW04 maximumActiveRequests rejects 3 (0.838402ms)
+✔ CW04 maximumActiveRequests rejects null (0.497283ms)
+✔ CW04 maximumActiveRequests rejects -1 (0.484443ms)
+✔ CW04 maximumActiveRequests rejects 0 (0.531194ms)
+✔ CW04 maximumActiveRequests rejects 1.5 (0.458502ms)
+✔ CW04 maximumActiveRequests rejects 2147483648 (0.429851ms)
+✔ CW04 maximumActiveRequests rejects undefined (0.450942ms)
+✔ CW04 maximumProbeRequests rejects 3 (0.495053ms)
+✔ CW04 maximumProbeRequests rejects null (0.484713ms)
+✔ CW04 maximumProbeRequests rejects -1 (0.453201ms)
+✔ CW04 maximumProbeRequests rejects 0 (0.477543ms)
+✔ CW04 maximumProbeRequests rejects 1.5 (0.402501ms)
+✔ CW04 maximumProbeRequests rejects 2147483648 (0.430931ms)
+✔ CW04 maximumProbeRequests rejects undefined (0.905374ms)
+✔ CW04 maximumConnections rejects 3 (0.531554ms)
+✔ CW04 maximumConnections rejects null (0.610566ms)
+✔ CW04 maximumConnections rejects -1 (2.589808ms)
+✔ CW04 maximumConnections rejects 0 (0.479342ms)
+✔ CW04 maximumConnections rejects 1.5 (0.434192ms)
+✔ CW04 maximumConnections rejects 2147483648 (0.419801ms)
+✔ CW04 maximumConnections rejects undefined (0.36685ms)
+✔ CW04 requestTimeoutMs rejects 3 (0.348929ms)
+✔ CW04 requestTimeoutMs rejects null (0.360399ms)
+✔ CW04 requestTimeoutMs rejects -1 (0.342959ms)
+✔ CW04 requestTimeoutMs rejects 0 (0.344529ms)
+✔ CW04 requestTimeoutMs rejects 1.5 (0.357649ms)
+✔ CW04 requestTimeoutMs rejects 2147483648 (0.615996ms)
+✔ CW04 requestTimeoutMs rejects undefined (0.541894ms)
+✔ CW04 shutdownTimeoutMs rejects 3 (0.40673ms)
+✔ CW04 shutdownTimeoutMs rejects null (0.367819ms)
+✔ CW04 shutdownTimeoutMs rejects -1 (0.345619ms)
+✔ CW04 shutdownTimeoutMs rejects 0 (0.350439ms)
+✔ CW04 shutdownTimeoutMs rejects 1.5 (0.359299ms)
+✔ CW04 shutdownTimeoutMs rejects 2147483648 (0.349259ms)
+✔ CW04 shutdownTimeoutMs rejects undefined (0.36108ms)
+✔ CW04 maximumInputBytes rejects 3 (0.344569ms)
+✔ CW04 maximumInputBytes rejects null (0.37834ms)
+✔ CW04 maximumInputBytes rejects -1 (0.352109ms)
+✔ CW04 maximumInputBytes rejects 0 (0.40022ms)
+✔ CW04 maximumInputBytes rejects 1.5 (0.37157ms)
+✔ CW04 maximumInputBytes rejects 2147483648 (0.36038ms)
+✔ CW04 maximumInputBytes rejects undefined (0.413811ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (0.268587ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (0.093222ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (0.096553ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (0.085592ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (0.092952ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_MAXIMUM_INPUT_BYTES (0.119383ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_ASSIGNED_INPUT_BYTES (0.099113ms)
+✔ CW06 rejects unsupported profile (0.632727ms)
+✔ CW06 rejects unsupported features (0.484072ms)
+✔ CW06 rejects unsupported tuning (0.470343ms)
+✔ CW06 rejects unsupported overrides (0.463842ms)
+✔ CW07 missing or broken authorship never falls back to defaults (0.77243ms)
+✔ CW08 maximumActiveRequests cannot exceed connection reservation (0.595905ms)
+✔ CW08 maximumProbeRequests cannot exceed connection reservation (0.459962ms)
+✔ CW09 shutdown budget remains independent of request admission deadline (0.606956ms)
+✔ CW10 effective settings omit secrets and original authentication still fails closed (0.505453ms)
+✖ CD01 original chart delivers the one canonical config to the worker mount (163.814987ms)
+✖ CD02 real Helm output from two author profiles drives the actual production loader (104.021302ms)
+✔ CD03 old Helm shutdown authority is rejected (48.490609ms)
+✔ CD04 maximumActiveRequests rejects 3 before rendering (86.062042ms)
+✔ CD04 maximumActiveRequests rejects null before rendering (78.819163ms)
+✔ CD04 maximumActiveRequests rejects -1 before rendering (111.344084ms)
+✔ CD04 maximumActiveRequests rejects 0 before rendering (107.37538ms)
+✔ CD04 maximumActiveRequests rejects 1.5 before rendering (96.919186ms)
+✔ CD04 maximumActiveRequests rejects 2147483648 before rendering (93.004903ms)
+✔ CD04 maximumActiveRequests rejects undefined before rendering (99.515834ms)
+✔ CD04 maximumProbeRequests rejects 3 before rendering (89.302997ms)
+✔ CD04 maximumProbeRequests rejects null before rendering (101.174738ms)
+✔ CD04 maximumProbeRequests rejects -1 before rendering (47.484312ms)
+✔ CD04 maximumProbeRequests rejects 0 before rendering (146.713839ms)
+✔ CD04 maximumProbeRequests rejects 1.5 before rendering (49.381712ms)
+✔ CD04 maximumProbeRequests rejects 2147483648 before rendering (90.413685ms)
+✔ CD04 maximumProbeRequests rejects undefined before rendering (101.044984ms)
+✔ CD04 maximumConnections rejects 3 before rendering (97.4588ms)
+✔ CD04 maximumConnections rejects null before rendering (161.177717ms)
+✔ CD04 maximumConnections rejects -1 before rendering (101.345742ms)
+✔ CD04 maximumConnections rejects 0 before rendering (96.957577ms)
+✔ CD04 maximumConnections rejects 1.5 before rendering (98.464377ms)
+✔ CD04 maximumConnections rejects 2147483648 before rendering (47.544824ms)
+✔ CD04 maximumConnections rejects undefined before rendering (88.117855ms)
+✔ CD04 requestTimeoutMs rejects 3 before rendering (95.13718ms)
+✔ CD04 requestTimeoutMs rejects null before rendering (92.685585ms)
+✔ CD04 requestTimeoutMs rejects -1 before rendering (104.162775ms)
+✔ CD04 requestTimeoutMs rejects 0 before rendering (95.115479ms)
+✔ CD04 requestTimeoutMs rejects 1.5 before rendering (104.961346ms)
+✔ CD04 requestTimeoutMs rejects 2147483648 before rendering (92.46455ms)
+✔ CD04 requestTimeoutMs rejects undefined before rendering (84.323916ms)
+✔ CD04 shutdownTimeoutMs rejects 3 before rendering (43.333074ms)
+✔ CD04 shutdownTimeoutMs rejects null before rendering (89.576154ms)
+✔ CD04 shutdownTimeoutMs rejects -1 before rendering (87.212792ms)
+✔ CD04 shutdownTimeoutMs rejects 0 before rendering (86.410711ms)
+✔ CD04 shutdownTimeoutMs rejects 1.5 before rendering (45.258314ms)
+✔ CD04 shutdownTimeoutMs rejects 2147483648 before rendering (77.885117ms)
+✔ CD04 shutdownTimeoutMs rejects undefined before rendering (90.875278ms)
+✔ CD04 maximumInputBytes rejects 3 before rendering (106.811915ms)
+✔ CD04 maximumInputBytes rejects null before rendering (106.083996ms)
+✔ CD04 maximumInputBytes rejects -1 before rendering (93.285261ms)
+✔ CD04 maximumInputBytes rejects 0 before rendering (97.673005ms)
+✔ CD04 maximumInputBytes rejects 1.5 before rendering (81.949764ms)
+✔ CD04 maximumInputBytes rejects 2147483648 before rendering (85.176198ms)
+✔ CD04 maximumInputBytes rejects undefined before rendering (103.631002ms)
+✔ CD04 unknown key root (99.455322ms)
+✔ CD04 unknown key operator (50.563222ms)
+✔ CD04 unknown key operator.prism (146.877103ms)
+✔ CD04 unknown key operator.prism.worker (43.902749ms)
+✖ CD04 connection overcommit fails Helm rendering (95.330694ms)
+✖ CD05 shutdown 100000 violates native-close or Pod grace (82.864038ms)
+✖ CD05 shutdown 150000 violates native-close or Pod grace (96.937856ms)
+✔ CD06 Helm packaging dereferences the canonical author/schema without manual synchronization (98.738453ms)
+✔ CI05 old Helm input authority worker.native.maximumInputBytes is rejected (83.898495ms)
+✔ CI05 old Helm input authority native.maximumInputBytes is rejected (108.529699ms)
+✔ CR06 native maximumResultBytes rejects 3 before rendering (189.672982ms)
+✔ CR06 native maximumResultBytes rejects null before rendering (108.891459ms)
+✔ CR06 native maximumResultBytes rejects -1 before rendering (50.419339ms)
+✔ CR06 native maximumResultBytes rejects 0 before rendering (70.023312ms)
+✔ CR06 native maximumResultBytes rejects 1.5 before rendering (51.318373ms)
+✔ CR06 native maximumResultBytes rejects 2147483648 before rendering (48.524209ms)
+✔ CR06 native maximumResultBytes rejects undefined before rendering (45.370287ms)
+✔ CR06 native dispatchTimeoutMs rejects 3 before rendering (48.579221ms)
+✔ CR06 native dispatchTimeoutMs rejects null before rendering (56.433557ms)
+✔ CR06 native dispatchTimeoutMs rejects -1 before rendering (52.415301ms)
+✔ CR06 native dispatchTimeoutMs rejects 0 before rendering (49.223107ms)
+✔ CR06 native dispatchTimeoutMs rejects 1.5 before rendering (51.112037ms)
+✔ CR06 native dispatchTimeoutMs rejects 2147483648 before rendering (51.567949ms)
+✔ CR06 native dispatchTimeoutMs rejects undefined before rendering (45.827719ms)
+✔ CR06 missing or unknown native section fails rendering (47.226345ms)
+✔ CR06 missing or unknown native section fails rendering (48.847458ms)
+✔ CR06 missing or unknown native section fails rendering (46.523907ms)
+✖ CR06 two real authored profiles deliver identical bytes and changing checksums to both roles (46.834655ms)
+✔ CR06 old Helm authority worker.native.maximumResultBytes rejected (40.200072ms)
+✔ CR06 old Helm authority control.nativeWorkerDispatchTimeoutMs rejected (43.724324ms)
+✔ CR06 old Helm authority control.maximumWorkerResponseBytes rejected (40.372546ms)
+✖ CP01 resource cpuTimeMs rejects 3 in Helm (46.875356ms)
+✖ CP01 resource cpuTimeMs rejects null in Helm (43.898799ms)
+✖ CP01 resource cpuTimeMs rejects -1 in Helm (49.423933ms)
+✖ CP01 resource cpuTimeMs rejects 0 in Helm (49.429043ms)
+✖ CP01 resource cpuTimeMs rejects 1.5 in Helm (47.126522ms)
+✖ CP01 resource cpuTimeMs rejects 9007199254740992 in Helm (51.127918ms)
+✖ CP01 resource cpuTimeMs rejects undefined in Helm (51.266511ms)
+✖ CP01 resource memoryBytes rejects 3 in Helm (55.959684ms)
+✖ CP01 resource memoryBytes rejects null in Helm (51.568759ms)
+✖ CP01 resource memoryBytes rejects -1 in Helm (47.508122ms)
+✖ CP01 resource memoryBytes rejects 0 in Helm (50.520062ms)
+✖ CP01 resource memoryBytes rejects 1.5 in Helm (47.244616ms)
+✖ CP01 resource memoryBytes rejects 9007199254740992 in Helm (46.24171ms)
+✖ CP01 resource memoryBytes rejects undefined in Helm (46.510157ms)
+✖ CP01 resource tasks rejects 3 in Helm (45.423498ms)
+✖ CP01 resource tasks rejects null in Helm (52.579255ms)
+✖ CP01 resource tasks rejects -1 in Helm (49.002921ms)
+✖ CP01 resource tasks rejects 0 in Helm (46.526337ms)
+✖ CP01 resource tasks rejects 1.5 in Helm (50.540582ms)
+✖ CP01 resource tasks rejects 9007199254740992 in Helm (49.953436ms)
+✖ CP01 resource tasks rejects undefined in Helm (42.475692ms)
+✔ CP01 unsupported resource policy rejected in Helm (42.626105ms)
+✖ CP01 unsupported resource policy rejected in Helm (47.148004ms)
+✖ CP01 unsupported resource policy rejected in Helm (49.506735ms)
+✔ CP06 competing Helm worker.native.resourcePolicy.tasks is rejected (44.009111ms)
+✔ CP06 competing Helm control.nativeResourcePolicy.tasks is rejected (41.001162ms)
+✖ CP06 two resource policies change both rendered snapshots and checksums (46.884086ms)
+ℹ tests 221
+ℹ suites 0
+ℹ pass 191
+ℹ fail 30
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11312.244607
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:44:1
+✖ CD01 original chart delivers the one canonical config to the worker mount (163.814987ms)
+  AssertionError [ERR_ASSERTION]: walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+  walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+  Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys
+  
+  Use --debug flag to render out invalid YAML
+  
+  
+  1 !== 0
+  
+      at render (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:28:45)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:45:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:48:1
+✖ CD02 real Helm output from two author profiles drives the actual production loader (104.021302ms)
+  AssertionError [ERR_ASSERTION]: Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys
+  
+  Use --debug flag to render out invalid YAML
+  
+  
+  1 !== 0
+  
+      at render (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:28:45)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:54:31)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:77:1
+✖ CD04 connection overcommit fails Helm rendering (95.330694ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /connection budget/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:80:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /connection budget/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:82:51
+✖ CD05 shutdown 100000 violates native-close or Pod grace (82.864038ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /worker shutdown must cover/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:85:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /worker shutdown must cover/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:82:51
+✖ CD05 shutdown 150000 violates native-close or Pod grace (96.937856ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /worker shutdown must cover/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:85:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /worker shutdown must cover/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:112:1
+✖ CR06 two real authored profiles deliver identical bytes and changing checksums to both roles (46.834655ms)
+  AssertionError [ERR_ASSERTION]: Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys
+  
+  Use --debug flag to render out invalid YAML
+  
+  
+  1 !== 0
+  
+      at render (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:28:45)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:117:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource cpuTimeMs rejects 3 in Helm (46.875356ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource cpuTimeMs rejects null in Helm (43.898799ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource cpuTimeMs rejects -1 in Helm (49.423933ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource cpuTimeMs rejects 0 in Helm (49.429043ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource cpuTimeMs rejects 1.5 in Helm (47.126522ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource cpuTimeMs rejects 9007199254740992 in Helm (51.127918ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource cpuTimeMs rejects undefined in Helm (51.266511ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource memoryBytes rejects 3 in Helm (55.959684ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource memoryBytes rejects null in Helm (51.568759ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource memoryBytes rejects -1 in Helm (47.508122ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource memoryBytes rejects 0 in Helm (50.520062ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource memoryBytes rejects 1.5 in Helm (47.244616ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource memoryBytes rejects 9007199254740992 in Helm (46.24171ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource memoryBytes rejects undefined in Helm (46.510157ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource tasks rejects 3 in Helm (45.423498ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource tasks rejects null in Helm (52.579255ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource tasks rejects -1 in Helm (49.002921ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource tasks rejects 0 in Helm (46.526337ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource tasks rejects 1.5 in Helm (50.540582ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource tasks rejects 9007199254740992 in Helm (49.953436ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:135:145
+✖ CP01 resource tasks rejects undefined in Helm (42.475692ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:138:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:140:108
+✖ CP01 unsupported resource policy rejected in Helm (47.148004ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:143:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:140:108
+✖ CP01 unsupported resource policy rejected in Helm (49.506735ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm resourcePolicy/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:143:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm resourcePolicy/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:149:1
+✖ CP06 two resource policies change both rendered snapshots and checksums (46.884086ms)
+  AssertionError [ERR_ASSERTION]: Error: execution error at (prism/templates/workloads.yaml:1:14): swarm native settings must contain exactly the supported keys
+  
+  Use --debug flag to render out invalid YAML
+  
+  
+  1 !== 0
+  
+      at render (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:28:45)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:154:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

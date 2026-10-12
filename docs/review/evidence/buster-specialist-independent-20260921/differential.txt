@@ -1,0 +1,7 @@
+{
+  "validations": 24,
+  "finalizations": 28,
+  "canonicalCases": 7,
+  "packageIdentityRemovalMutant": "detected: adapter runs for wrong package only in mutant",
+  "boundary": "HEAD original bodies with explicit dependency binding, deterministic fake adapter; no native runtime proof"
+}

@@ -1,0 +1,35 @@
+uid=1000(node) gid=1000(node) groups=1000(node)
+v24.21.0
+7504 2083 0:515 / / ro,relatime - overlay overlay rw,lowerdir=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60040/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60039/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60038/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60037/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60036/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60035/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60033/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60032/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60031/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60030/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60029/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/60028/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/59957/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/59956/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/59955/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/59954/fs,upperdir=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/62414/fs,workdir=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/62414/work,uuid=on,nouserxattr
+7506 7504 0:850 / /proc rw,nosuid,nodev,noexec,relatime - proc proc rw
+7507 7504 0:926 / /dev rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64
+7508 7507 0:927 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,gid=5,mode=620,ptmxmode=666
+7510 7507 0:915 / /dev/mqueue rw,nosuid,nodev,noexec,relatime - mqueue mqueue rw
+7531 7504 0:917 / /sys ro,nosuid,nodev,noexec,relatime - sysfs sysfs ro
+7533 7531 0:28 / /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime - cgroup2 cgroup rw
+7534 7504 9:2 /var/lib/rancher/k3s/storage/pvc-2c81872a-2342-4a82-a421-563feb89f5ea_kubeclaw-ops_workspace-codex-ops-0 /workspace rw,relatime - ext4 /dev/md2 rw
+7535 7504 9:2 /var/lib/kubelet/pods/838e97f2-51f0-4e7b-9e11-50a96da0dcf3/volumes/kubernetes.io~empty-dir/codex-tmp /tmp rw,relatime - ext4 /dev/md2 rw
+7536 7504 9:2 /var/lib/rancher/k3s/storage/pvc-e8078609-d756-4ef1-b3bb-6613fa471adf_kubeclaw-ops_home-codex-ops-0 /home/node rw,relatime - ext4 /dev/md2 rw
+7537 7504 9:2 /var/lib/kubelet/pods/838e97f2-51f0-4e7b-9e11-50a96da0dcf3/etc-hosts /etc/hosts rw,relatime - ext4 /dev/md2 rw
+7538 7507 9:2 /var/lib/kubelet/pods/838e97f2-51f0-4e7b-9e11-50a96da0dcf3/containers/codex/86c00e3c /dev/termination-log rw,relatime - ext4 /dev/md2 rw
+7539 7504 9:2 /var/lib/rancher/k3s/agent/containerd/io.containerd.grpc.v1.cri/sandboxes/c6b03d6231f25f00dfd95c7bee4471d348dc171a94155d7ade0aa4c6a1a3770b/hostname /etc/hostname ro,relatime - ext4 /dev/md2 rw
+7540 7504 9:2 /var/lib/rancher/k3s/agent/containerd/io.containerd.grpc.v1.cri/sandboxes/c6b03d6231f25f00dfd95c7bee4471d348dc171a94155d7ade0aa4c6a1a3770b/resolv.conf /etc/resolv.conf ro,relatime - ext4 /dev/md2 rw
+7541 7507 0:686 / /dev/shm rw,relatime - tmpfs shm rw,size=65536k,inode64
+7542 7504 0:541 / /run/kubeclaw-ops/bearer ro,relatime - tmpfs tmpfs rw,size=3670016k,inode64,noswap
+7543 7504 9:2 /var/lib/kubelet/pods/838e97f2-51f0-4e7b-9e11-50a96da0dcf3/volumes/kubernetes.io~configmap/kubeconfig /run/kubeclaw-ops/kubeconfig ro,relatime - ext4 /dev/md2 rw
+7544 7504 0:604 / /run/secrets/kubernetes.io/serviceaccount ro,relatime - tmpfs tmpfs rw,size=3670016k,inode64,noswap
+2093 7506 0:850 /bus /proc/bus ro,nosuid,nodev,noexec,relatime - proc proc rw
+2098 7506 0:850 /fs /proc/fs ro,nosuid,nodev,noexec,relatime - proc proc rw
+2099 7506 0:850 /irq /proc/irq ro,nosuid,nodev,noexec,relatime - proc proc rw
+2100 7506 0:850 /sys /proc/sys ro,nosuid,nodev,noexec,relatime - proc proc rw
+2101 7506 0:850 /sysrq-trigger /proc/sysrq-trigger ro,nosuid,nodev,noexec,relatime - proc proc rw
+2171 7506 0:928 / /proc/asound ro,relatime - tmpfs tmpfs ro,inode64
+2201 7506 0:934 / /proc/acpi ro,relatime - tmpfs tmpfs ro,inode64
+2219 7506 0:926 /null /proc/interrupts rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64
+2220 7506 0:926 /null /proc/kcore rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64
+2221 7506 0:926 /null /proc/keys rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64
+2380 7506 0:926 /null /proc/latency_stats rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64
+2436 7506 0:926 /null /proc/timer_list rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755,inode64
+2437 7506 0:935 / /proc/scsi ro,relatime - tmpfs tmpfs ro,inode64
+2479 7531 0:940 / /sys/firmware ro,relatime - tmpfs tmpfs ro,inode64
+2541 7531 0:945 / /sys/devices/virtual/powercap ro,relatime - tmpfs tmpfs ro,inode64

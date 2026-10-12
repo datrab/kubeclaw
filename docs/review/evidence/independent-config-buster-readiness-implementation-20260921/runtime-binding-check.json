@@ -1,0 +1,34 @@
+{
+  "boundIdentities": 35326,
+  "loadedUniqueIdentities": 2550,
+  "outsideManifest": [
+    {
+      "file": "/tmp/nova-dispatch-projection-fBoKDM/unrelated-core/plugins/artifact-store/src/adapter.ts",
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154"
+    },
+    {
+      "file": "/tmp/nova-dispatch-projection-fBoKDM/unrelated-core/plugins/plugin/stage.mjs",
+      "sha256": "507d17499588f789534262ed9478e062eabc3f1b72b6a572a6fc7abcbe02102e"
+    }
+  ],
+  "boundMismatches": [],
+  "finalAuthorFreezeDrift": [],
+  "violations": "",
+  "limits": "Actual module trace covers inheriting Node processes, not clean-env provider children. Broad source and tool binding includes those children. Diagnostic write hook is not a sandbox.",
+  "temporaryModuleClassification": [
+    {
+      "file": "/tmp/nova-dispatch-projection-fBoKDM/unrelated-core/plugins/artifact-store/src/adapter.ts",
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "exactBoundSourceMatches": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugins/artifact-store/src/adapter.ts"
+      ]
+    },
+    {
+      "file": "/tmp/nova-dispatch-projection-fBoKDM/unrelated-core/plugins/plugin/stage.mjs",
+      "sha256": "507d17499588f789534262ed9478e062eabc3f1b72b6a572a6fc7abcbe02102e",
+      "exactBoundSourceMatches": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/repair-budget/plugin/stage.mjs"
+      ]
+    }
+  ]
+}

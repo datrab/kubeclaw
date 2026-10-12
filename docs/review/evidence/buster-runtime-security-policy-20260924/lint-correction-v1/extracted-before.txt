@@ -1,0 +1,13 @@
+      const status = object(lease.status);
+      if (status.namespaceName !== namespace || object(lease.spec).namespaceName !== namespace) {
+        throw new Error('KUBERNETES_RUNTIME_SECURITY_LEASE_MISMATCH');
+      }
+      const snapshot = status.runtimeSecurity && typeof status.runtimeSecurity === 'object'
+        && !Array.isArray(status.runtimeSecurity) ? object(status.runtimeSecurity) : null;
+      if (snapshot?.phase === 'Observed' && snapshot.manifestDigest === digest
+        && snapshot.immutableImage === immutableImage && Array.isArray(snapshot.findings)
+        && Number.isSafeInteger(snapshot.podCount) && Number(snapshot.podCount) > 0
+        && Number.isSafeInteger(snapshot.serviceCount) && Number(snapshot.serviceCount) > 0
+        && runtimeSecurityObservationHasValidAccounting(snapshot)
+        && runtimeSecurityObservationIsFresh(snapshot.observedAt, Date.now(), this.#policy.maximumObservationAgeMs, this.#policy.maximumFutureSkewMs)
+        && typeof snapshot.resultDigest === 'string' && /^sha256:[a-f0-9]{64}$/u.test(snapshot.resultDigest)) {

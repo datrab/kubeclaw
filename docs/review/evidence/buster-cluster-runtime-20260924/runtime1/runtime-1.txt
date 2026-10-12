@@ -1,0 +1,115 @@
+
+> verify:buster:cluster-policy
+> npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-cluster-policy.json && node --test --test-concurrency=1 tests/verification/reliability/buster-cluster-entrypoint.test.mjs tests/verification/contracts/buster-cluster-output-consumers.test.mjs tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs tests/verification/contracts/buster-cluster-timing-consumers.test.mjs tests/verification/contracts/buster-cluster-poll-consumers.test.mjs tests/verification/deployment/buster-cluster-invoker-parity.test.mjs && node tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts && node tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts
+
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+✔ actual kubectl diagnostic captures 16 code units (10.288689ms)
+✔ actual kubectl diagnostic captures 80 code units (2.099685ms)
+✔ public invoker maximumManifestBytes, low true (1.467658ms)
+✔ public invoker maximumManifestBytes, low false (3.724097ms)
+✔ public invoker maximumResources, low true (1.682834ms)
+✔ public invoker maximumResources, low false (2.349952ms)
+✔ actual YAML consumer maximumNodes (0.828862ms)
+✔ actual YAML consumer maximumDepth (0.620156ms)
+✔ actual YAML consumer maximumAliases (0.671487ms)
+✔ actual List consumer maximumFlattenVisits (0.76197ms)
+✔ actual List consumer maximumFlattenPending (0.489253ms)
+✔ shared lease version domain reaches both actual constructors: v1 (1.886159ms)
+✔ shared lease version domain reaches both actual constructors: v2 (0.993306ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1 (0.989736ms)
+✔ shared lease version domain reaches both actual constructors: v2beta12 (0.908653ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha (1.616452ms)
+✔ shared lease version domain reaches both actual constructors: v1beta (0.571615ms)
+✔ shared lease version domain reaches both actual constructors: v1rc1 (0.550364ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1x (0.538034ms)
+✔ shared lease version domain reaches both actual constructors:  (0.682368ms)
+✔ real kubernetes.fixture output limit profile false (90.666323ms)
+✔ real kubernetes.fixture output limit profile true (42.540033ms)
+✔ real kubernetes.exposure output limit profile false (48.216442ms)
+✔ real kubernetes.exposure output limit profile true (37.747478ms)
+✔ actual kubernetes.fixture polling cadence 50 (109.904157ms)
+✔ actual kubernetes.fixture polling cadence 200 (405.487145ms)
+✔ actual kubernetes.exposure polling cadence 50 (108.634393ms)
+✔ actual kubernetes.exposure polling cadence 200 (403.626296ms)
+✔ kubernetes.fixture actual auth process uses short deadline 600 (621.681743ms)
+✔ kubernetes.fixture actual auth process uses short deadline 2000 (1038.060193ms)
+✔ kubernetes.exposure actual auth process uses short deadline 600 (615.05501ms)
+✔ kubernetes.exposure actual auth process uses short deadline 2000 (1042.355375ms)
+walk.go:75: found symbolic link in path: /tmp/cluster-invoker-chart-EaDmkK/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used
+✖ actual kubeclaw Helm and loader enforce shared cluster invoker policy (303.549536ms)
+✖ actual prism Helm and loader enforce shared cluster invoker policy (336.326034ms)
+✔ actual entrypoint rejects missing before first runtime effect (370.273592ms)
+✔ actual entrypoint rejects invalid before first runtime effect (452.362742ms)
+✔ actual entrypoint rejects group-empty before first runtime effect (365.418606ms)
+✔ actual entrypoint rejects group-equal before first runtime effect (347.036814ms)
+✔ actual entrypoint rejects version-empty before first runtime effect (347.453345ms)
+✔ actual entrypoint rejects version-equal before first runtime effect (356.618905ms)
+✔ actual entrypoint rejects secrets-empty before first runtime effect (366.953645ms)
+✔ actual entrypoint rejects secrets-equal before first runtime effect (369.83028ms)
+✔ relative executable uses the captured physical generation; component aliases reject (30.977181ms)
+✔ actual read-only preflight accepts an explicit complete generation (347.110106ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 42
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16903.914774
+
+✖ failing tests:
+
+test at tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:12:43
+✖ actual kubeclaw Helm and loader enforce shared cluster invoker policy (303.549536ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   '3e2af8c68a348402f0281abde79b61c537a15b1c8c5824f22ba724fc900393b3'
+  -   'bace0c973945d639fd0681bf5ae33ec84846af5e6d121e46a41fc02e6aed721f'
+    ]
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:92:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '3e2af8c68a348402f0281abde79b61c537a15b1c8c5824f22ba724fc900393b3' ],
+    expected: [ 'bace0c973945d639fd0681bf5ae33ec84846af5e6d121e46a41fc02e6aed721f' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:12:43
+✖ actual prism Helm and loader enforce shared cluster invoker policy (336.326034ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   '6934b8aab1d83006102163a36abeb236ab755d558d840aeab5d3c43cce0339a9',
+  +   '6934b8aab1d83006102163a36abeb236ab755d558d840aeab5d3c43cce0339a9',
+  +   '6934b8aab1d83006102163a36abeb236ab755d558d840aeab5d3c43cce0339a9'
+  -   'b94c06d582411cf38a1a9d668015fee7b06cb74a1ccda20cfc13815d1fbb7e6e',
+  -   'b94c06d582411cf38a1a9d668015fee7b06cb74a1ccda20cfc13815d1fbb7e6e',
+  -   'b94c06d582411cf38a1a9d668015fee7b06cb74a1ccda20cfc13815d1fbb7e6e'
+    ]
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:92:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '6934b8aab1d83006102163a36abeb236ab755d558d840aeab5d3c43cce0339a9', '6934b8aab1d83006102163a36abeb236ab755d558d840aeab5d3c43cce0339a9', '6934b8aab1d83006102163a36abeb236ab755d558d840aeab5d3c43cce0339a9' ],
+    expected: [ 'b94c06d582411cf38a1a9d668015fee7b06cb74a1ccda20cfc13815d1fbb7e6e', 'b94c06d582411cf38a1a9d668015fee7b06cb74a1ccda20cfc13815d1fbb7e6e', 'b94c06d582411cf38a1a9d668015fee7b06cb74a1ccda20cfc13815d1fbb7e6e' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,55 @@
+{
+  "commands": [
+    {
+      "name": "tests",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "skills/prism/tests/worker-listener-config.test.mts",
+        "skills/prism/tests/swarm-worker-config.test.mts",
+        "skills/prism/tests/control-image-environment.test.mts",
+        "skills/prism/tests/control-listener.test.mts",
+        "skills/prism/tests/swarm-worker-behavior.test.mts",
+        "skills/prism/tests/worker-readiness-chart.test.mts",
+        "tests/verification/deployment/prism-swarm-config.test.mjs"
+      ],
+      "exitCode": 1,
+      "seconds": 55.102789640426636
+    },
+    {
+      "name": "types",
+      "command": [
+        "node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "skills/prism/tsconfig.json"
+      ],
+      "exitCode": 0,
+      "seconds": 5.085263967514038
+    },
+    {
+      "name": "lint",
+      "command": [
+        "node_modules/.bin/eslint",
+        "--config",
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        "skills/common/plugin-runtime/foundation/config/swarm.ts",
+        "skills/prism/server/worker-config.ts",
+        "skills/prism/server/worker.ts",
+        "skills/prism/tests/control-image-environment.test.mts",
+        "skills/prism/tests/control-listener.test.mts",
+        "skills/prism/tests/swarm-worker-config.test.mts",
+        "skills/prism/tests/worker-listener-config.test.mts",
+        "skills/prism/tests/worker-process-shutdown-native.mts",
+        "skills/prism/tests/worker-readiness-chart.test.mts",
+        "tests/fixtures/config/swarm-bundle.mjs",
+        "tests/verification/deployment/prism-swarm-config.test.mjs",
+        "tests/verification/deployment/prism-swarm-image.mjs"
+      ],
+      "exitCode": 0,
+      "seconds": 9.218055009841919
+    }
+  ],
+  "drift": []
+}

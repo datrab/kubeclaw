@@ -1,0 +1,15 @@
+✖ CB02 actual TCP connection limit rejects the next socket and reopens after release (10061.367074ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 0
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10511.988758
+
+✖ failing tests:
+
+test at ../../../../../tmp/config-review-mutant-sx6s6vgy/behavior.test.mts:63:1
+✖ CB02 actual TCP connection limit rejects the next socket and reopens after release (10061.367074ms)
+  'test timed out after 10000ms'

@@ -1,0 +1,4 @@
+{"file":"scripts/browser-archive-lock.mjs","image":false,"deployment":false}
+{"file":"scripts/trivy-database-lock.mjs","image":false,"deployment":false}
+{"file":"docker/browser-archives.lock.json","image":true,"deployment":true}
+{"file":"versions.json","image":true,"deployment":true}

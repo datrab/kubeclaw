@@ -1,0 +1,33 @@
+{
+  "status": "prepared only, not executed",
+  "maintained": "npm run verify:buster:cancellation",
+  "script": "tsc --noEmit -p tests/verification/reliability/tsconfig.buster-cancellation.json && node --test --test-concurrency=1 tests/verification/reliability/buster-atomic-cancellation.test.mts tests/verification/reliability/buster-prepared-store-cancellation.test.mts",
+  "normalRegistration": "append && npm run verify:buster:cancellation to verify:buster:preparation; preserve original command and test paths",
+  "baseline": [
+    "flock-node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/verification/reliability/buster-atomic-cancellation.test.mts",
+    "tests/verification/reliability/buster-prepared-store-cancellation.test.mts"
+  ],
+  "mutant": [
+    "flock-node",
+    "--import",
+    "./docs/review/evidence/buster-atomic-cancellation-20260921/restore-split-cancel.mjs",
+    "--test",
+    "--test-concurrency=1",
+    "tests/verification/reliability/buster-atomic-cancellation.test.mts"
+  ],
+  "originalRemote": [
+    "flock-node",
+    "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+  ],
+  "originalRemoteDeadlines": "unchanged600ms dispatch/300ms cleanup in original nova-remote-faults.mts; no filter",
+  "relevantOriginals": [
+    "flock-node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "tests/verification/reliability/buster-admission-config.test.mts"
+  ]
+}

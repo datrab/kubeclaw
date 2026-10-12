@@ -1,0 +1,38 @@
+CI2_MUTATION_APPLIED {"mutation":"capture-registry-array-retained","pid":171634,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-settings.ts","beforeSha256":"63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4","afterSha256":"f683f93519ebcd96b5c937e7aad1e4458e308db710f71912d4849fe59f603c34","replacements":[{"from":"this.registryPrefixes = [...options.allowedRegistryPrefixes];","to":"this.registryPrefixes = options.allowedRegistryPrefixes;","count":1}]}
+✔ captured file kubernetes.fixture namespace governs actual commands after mutation (1119.065846ms)
+✔ captured file kubernetes.fixture registry governs actual commands after mutation (1048.873261ms)
+✔ captured file kubernetes.fixture secret governs actual commands after mutation (1087.281995ms)
+✔ captured file kubernetes.fixture storage governs actual commands after mutation (1057.574558ms)
+✔ captured file kubernetes.fixture manifest governs actual commands after mutation (1091.407652ms)
+✔ captured file kubernetes.exposure namespace governs actual commands after mutation (573.618766ms)
+✔ captured file kubernetes.exposure host governs actual commands after mutation (867.447207ms)
+✔ captured caller kubernetes.fixture namespace governs actual commands after mutation (783.993305ms)
+✖ captured caller kubernetes.fixture registry governs actual commands after mutation (399.665908ms)
+✔ captured caller kubernetes.fixture secret governs actual commands after mutation (849.419395ms)
+✔ captured caller kubernetes.fixture storage governs actual commands after mutation (908.082149ms)
+✔ captured caller kubernetes.fixture manifest governs actual commands after mutation (888.482856ms)
+✔ captured caller kubernetes.exposure namespace governs actual commands after mutation (404.099344ms)
+✔ captured caller kubernetes.exposure host governs actual commands after mutation (696.872726ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13612.958956
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture registry governs actual commands after mutation (399.665908ms)
+  Error: KUBERNETES_FIXTURE_IMAGE_DENIED
+      at readRequest (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts:92:15)
+      at KubernetesFixturePreparation.prepare (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts:50:26)
+      at KubernetesFixtureCapabilityInvoker.invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:84:38)
+      at CompositeTestProviderCapabilityInvoker.invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/composite-capability-runtime.ts:12:18)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-capture.test.mjs:69:72
+      at Object.invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/cluster-test-ownership.mjs:24:65)
+      at invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-capture.test.mjs:69:38)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-capture.test.mjs:78:25
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)

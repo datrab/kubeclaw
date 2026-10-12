@@ -1,0 +1,11 @@
+{
+  "scope": "Follow-up to source-review-v2-20260924.json; production fixes accepted, complete test-package gate still pending",
+  "missing": [
+    "Actual production factory with only Exposure enabled and absent clusterBindings",
+    "Actual production factory with only RuntimeSecurity enabled and absent clusterBindings"
+  ],
+  "reason": "V1 binding addendum explicitly required each enabled cluster route. Common source branch proves intended code structure but does not replace the requested real public factory negative cases.",
+  "requiredOracle": "Valid route prerequisites; exact missing-binding configuration error before creation of a fresh stateRoot. Preserve every original assertion and deadline.",
+  "runtime": "none",
+  "authorAndRootNotified": true
+}

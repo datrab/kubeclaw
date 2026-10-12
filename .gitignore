@@ -48,3 +48,10 @@ skills/common/plugin-runtime/foundation/isolation/plugin-sandbox
 
 # Ansible (if using infrastructure layer)
 *.retry
+
+# Local access state and reproducible security-test tooling are not repository inputs.
+/.kube/
+/docs/review/evidence/runtime-security-test-tools-20260924/tooling/
+# Selected provenance/metadata files in tooling are captured explicitly by the
+# cloud-handoff snapshot; binaries, DB payloads and build caches stay local.
+**/__pycache__/

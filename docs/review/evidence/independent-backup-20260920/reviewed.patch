@@ -1,0 +1,163 @@
+diff --git a/charts/prism/files/prism-backup.sh b/charts/prism/files/prism-backup.sh
+index 5aa11f74..ee842b43 100644
+--- a/charts/prism/files/prism-backup.sh
++++ b/charts/prism/files/prism-backup.sh
+@@ -1,5 +1,6 @@
+ #!/usr/bin/env bash
+ # Immutable DB/artifact groups. No automatic deletion or in-place restoration.
++# Manual retirement requires a pinned verified copy and preserves protected groups.
+ set -euo pipefail
+ umask 077
+ 
+@@ -153,10 +154,60 @@ database_proof() {
+   printf 'PRISM_DATABASE_RESTORE_SMOKE_PASSED:%s\n' "$proof_database"
+ }
+ 
++retire_group() {
++  : "${BACKUP_RETIRE_GROUP:?}" "${BACKUP_RETIRE_SHA256:?}" "${BACKUP_COPY_ROOT:?}"
++  [[ $BACKUP_RETIRE_GROUP =~ ^backup-[a-zA-Z0-9-]+$ ]] || fail RETIRE_GROUP_INVALID
++  [[ $BACKUP_RETIRE_SHA256 =~ ^[a-f0-9]{64}$ ]] || fail RETIRE_DIGEST_INVALID
++  [[ $BACKUP_COPY_ROOT == /* && -d $BACKUP_COPY_ROOT && ! -L $BACKUP_COPY_ROOT && $(realpath -- "$BACKUP_COPY_ROOT") == "$BACKUP_COPY_ROOT" ]] || fail COPY_ROOT_INVALID
++  [[ $BACKUP_COPY_ROOT != "$BACKUP_ROOT" && $BACKUP_COPY_ROOT != "$BACKUP_ROOT"/* && $BACKUP_ROOT != "$BACKUP_COPY_ROOT"/* ]] || fail COPY_ROOT_OVERLAP
++  local group="$BACKUP_ROOT/$BACKUP_RETIRE_GROUP" retiring="$BACKUP_ROOT/.retiring-$BACKUP_RETIRE_GROUP" latest digest
++  # Serialize cooperating operations on both roots. Nonblocking acquisition
++  # avoids deadlock when operators select opposite source/copy directions.
++  exec 8>"$BACKUP_COPY_ROOT/.lock"
++  flock --exclusive --nonblock 8 || fail COPY_LOCKED
++  ( BACKUP_ROOT=$BACKUP_COPY_ROOT; verify_group "$BACKUP_COPY_ROOT/$BACKUP_RETIRE_GROUP" >/dev/null )
++  digest=$(sha256sum -- "$BACKUP_COPY_ROOT/$BACKUP_RETIRE_GROUP/SHA256SUMS"); digest=${digest%% *}
++  [[ $digest == "$BACKUP_RETIRE_SHA256" ]] || fail COPY_DIGEST_MISMATCH
++  [[ ! -e "$BACKUP_ROOT/.protect-$BACKUP_RETIRE_GROUP" && ! -L "$BACKUP_ROOT/.protect-$BACKUP_RETIRE_GROUP" ]] || fail GROUP_PROTECTED
++  # Both initial and resumed retirement require another verified completed
++  # local group. A corrupted latest group cannot authorize deletion.
++  latest=$(latest_group)
++  [[ $latest != "$group" ]] || fail LATEST_GROUP_PROTECTED
++  if [[ -e $group || -L $group ]]; then
++    [[ ! -e $retiring && ! -L $retiring ]] || fail RETIRE_STATE_CONFLICT
++    verify_group "$group" >/dev/null
++    cmp -s -- "$group/SHA256SUMS" "$BACKUP_COPY_ROOT/$BACKUP_RETIRE_GROUP/SHA256SUMS" || fail COPY_GROUP_MISMATCH
++    mv --no-clobber --no-target-directory -- "$group" "$retiring"
++    [[ ! -e $group ]] || fail RETIRE_RENAME_FAILED
++    sync -f "$BACKUP_ROOT"
++  fi
++  [[ -d $retiring && ! -L $retiring ]] || fail RETIRE_STATE_MISSING
++  # After the atomic rename, an interruption leaves only this selected
++  # tombstone. Re-run with the same group and copy digest to finish deletion.
++  rm -rf --one-file-system -- "$retiring"
++  [[ ! -e $retiring && ! -L $retiring ]] || fail RETIRE_REMOVE_FAILED
++  sync -f "$BACKUP_ROOT"
++  printf 'PRISM_BACKUP_RETIRED:%s\n' "$BACKUP_RETIRE_GROUP"
++}
++
++discard_incomplete() {
++  : "${BACKUP_DISCARD_INCOMPLETE:?}"
++  [[ $BACKUP_DISCARD_INCOMPLETE =~ ^\.incomplete-[a-zA-Z0-9-]+$ ]] || fail INCOMPLETE_NAME_INVALID
++  local incomplete="$BACKUP_ROOT/$BACKUP_DISCARD_INCOMPLETE"
++  [[ -d $incomplete && ! -L $incomplete ]] || fail INCOMPLETE_INVALID
++  # This command never accepts a completed or retiring group. Incomplete
++  # groups have never been published as recovery points; the root lock proves
++  # no cooperating backup writer currently owns one.
++  rm -rf --one-file-system -- "$incomplete"
++  [[ ! -e $incomplete && ! -L $incomplete ]] || fail INCOMPLETE_REMOVE_FAILED
++  sync -f "$BACKUP_ROOT"
++  printf 'PRISM_BACKUP_INCOMPLETE_DISCARDED:%s\n' "$BACKUP_DISCARD_INCOMPLETE"
++}
++
+ configuration
+ # Bound the whole operation, including object copying and hashing, not only pg_dump.
+ if [[ ${1:-} != _locked ]]; then
+-  [[ $# == 1 && $1 =~ ^(backup|verify|database-proof)$ ]] || fail USAGE
++  [[ $# == 1 && $1 =~ ^(backup|verify|database-proof|retire|discard-incomplete)$ ]] || fail USAGE
+   exec timeout --signal=TERM --kill-after=15 "$BACKUP_MAXIMUM_DURATION_SECONDS" \
+     flock --exclusive --nonblock "$BACKUP_ROOT/.lock" bash "$0" _locked "$1"
+ fi
+@@ -165,5 +216,7 @@ case "$2" in
+   backup) backup_group ;;
+   verify) latest_group ;;
+   database-proof) database_proof ;;
++  retire) retire_group ;;
++  discard-incomplete) discard_incomplete ;;
+   *) fail USAGE ;;
+ esac
+diff --git a/tests/verification/deployment/prism-backup.test.mts b/tests/verification/deployment/prism-backup.test.mts
+index b7ec93b8..47346d58 100644
+--- a/tests/verification/deployment/prism-backup.test.mts
++++ b/tests/verification/deployment/prism-backup.test.mts
+@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
+ import test from 'node:test';
+ import { execFile, spawn } from 'node:child_process';
+ import { promisify } from 'node:util';
+-import { mkdtemp, mkdir, writeFile, readFile, readdir, rm, cp, symlink } from 'node:fs/promises';
++import { mkdtemp, mkdir, writeFile, readFile, readdir, rm, cp, symlink, rename } from 'node:fs/promises';
+ import { tmpdir } from 'node:os';
+ import path from 'node:path';
+ import { createHash } from 'node:crypto';
+@@ -157,3 +157,68 @@ test('SQL proof uses only its newly created DB and never drops a failed creation
+     assert(!error.stdout.includes('PASSED')); return error.code !== 0;
+   });
+ });
++
++
++test('manual retirement requires pinned verified copy, preserves latest/protected groups and releases quota', async t => {
++  const fixture = await setup(t);
++  await fixture.put(Buffer.alloc(1_200_000, 71));
++  const first = path.join(fixture.backups, 'backup-001');
++  await rename(await fixture.run('backup'), first);
++  const copies = path.join(fixture.root, 'copies'); await mkdir(copies);
++  await cp(first, path.join(copies, 'backup-001'), { recursive: true });
++  const selected = { BACKUP_RETIRE_GROUP: 'backup-001', BACKUP_COPY_ROOT: copies,
++    BACKUP_RETIRE_SHA256: hash(await readFile(path.join(first, 'SHA256SUMS'))) };
++  await assert.rejects(fixture.run('retire', selected), /LATEST_GROUP_PROTECTED/);
++  const second = path.join(fixture.backups, 'backup-002');
++  await rename(await fixture.run('backup'), second);
++  await writeFile(path.join(fixture.backups, '.protect-backup-001'), 'retain for recovery');
++  await assert.rejects(fixture.run('retire', selected), /GROUP_PROTECTED/);
++  await rm(path.join(fixture.backups, '.protect-backup-001'));
++  await assert.rejects(fixture.run('retire', { ...selected, BACKUP_RETIRE_SHA256: '0'.repeat(64) }), /COPY_DIGEST_MISMATCH/);
++  await assert.rejects(fixture.run('retire', { ...selected, BACKUP_COPY_ROOT: fixture.backups }), /COPY_ROOT_OVERLAP/);
++  const copyDump = path.join(copies, 'backup-001', 'database.dump'); const dump = await readFile(copyDump);
++  await writeFile(copyDump, 'corrupt'); await assert.rejects(fixture.run('retire', selected), /CHECKSUM_MISMATCH/);
++  await writeFile(copyDump, dump);
++  await assert.rejects(fixture.run('backup', { BACKUP_MAXIMUM_RETAINED_BYTES: '5000000' }), /GROUP_SIZE_EXCEEDED_INCOMPLETE_RETAINED/);
++  assert.equal(await fixture.run('retire', selected), 'PRISM_BACKUP_RETIRED:backup-001');
++  assert(!(await readdir(fixture.backups)).includes('backup-001'));
++  assert.deepEqual(await readFile(path.join(second, 'database.dump')), dump);
++  // The failed attempt is explicitly owned and selected, never removed by age.
++  for (const name of (await readdir(fixture.backups)).filter(name => name.startsWith('.incomplete-'))) {
++    await fixture.run('discard-incomplete', { BACKUP_DISCARD_INCOMPLETE: name });
++  }
++  assert.match(await fixture.run('backup', { BACKUP_MAXIMUM_RETAINED_BYTES: '5000000' }), /backup-/);
++  assert.deepEqual(await readFile(copyDump), dump, 'The verified copy remains intact');
++});
++
++test('interrupted retirement resumes only selected tombstone and revalidates copy', async t => {
++  const fixture = await setup(t); await fixture.put(Buffer.from('retirement object'));
++  const first = path.join(fixture.backups, 'backup-001'); await rename(await fixture.run('backup'), first);
++  const second = path.join(fixture.backups, 'backup-002'); await rename(await fixture.run('backup'), second);
++  const copies = path.join(fixture.root, 'copies'); await mkdir(copies);
++  await cp(first, path.join(copies, 'backup-001'), { recursive: true });
++  const selected = { BACKUP_RETIRE_GROUP: 'backup-001', BACKUP_COPY_ROOT: copies,
++    BACKUP_RETIRE_SHA256: hash(await readFile(path.join(first, 'SHA256SUMS'))) };
++  // Kill the actual backup shell in the deletion command after production rename/sync.
++  // No test-only crash branch exists in the implementation.
++  await writeFile(path.join(fixture.binaries, 'rm'), '#!/usr/bin/env bash\nif [[ $1 == -rf ]]; then kill -KILL "$PPID"; exit 71; fi\nexec /bin/rm \"$@\"\n', { mode: 0o755 });
++  await assert.rejects(fixture.run('retire', selected));
++  assert((await readdir(fixture.backups)).includes('.retiring-backup-001'));
++  assert(!(await readdir(fixture.backups)).includes('backup-001'));
++  await rm(path.join(fixture.binaries, 'rm'));
++  await rm(path.join(fixture.backups, '.retiring-backup-001', 'database.dump'));
++  await assert.rejects(fixture.run('retire', { ...selected, BACKUP_RETIRE_SHA256: '0'.repeat(64) }), /COPY_DIGEST_MISMATCH/);
++  assert.equal(await fixture.run('retire', selected), 'PRISM_BACKUP_RETIRED:backup-001');
++  assert.equal(await fixture.run('verify'), second);
++});
++
++test('incomplete cleanup rejects published groups, traversal and symlinks', async t => {
++  const fixture = await setup(t);
++  const group = await fixture.run('backup');
++  for (const name of [path.basename(group), '../outside', '.incomplete-../outside']) {
++    await assert.rejects(fixture.run('discard-incomplete', { BACKUP_DISCARD_INCOMPLETE: name }), /INCOMPLETE_NAME_INVALID/);
++  }
++  await symlink(group, path.join(fixture.backups, '.incomplete-linked'));
++  await assert.rejects(fixture.run('discard-incomplete', { BACKUP_DISCARD_INCOMPLETE: '.incomplete-linked' }), /INCOMPLETE_INVALID/);
++  assert.equal(await fixture.run('verify'), group);
++});

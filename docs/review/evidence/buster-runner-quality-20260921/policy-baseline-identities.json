@@ -1,0 +1,26 @@
+[
+  {
+    "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+    "sha256": "1616da65ba5dc6dfef24af3b849f3a6aadbf4761d4dc0a31e866765f632cd812"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+    "sha256": "0c698666a99e51226b2bca2d8287ff491a7baf37dad47448c4574176ee65f569"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+    "sha256": "47cc40152c08273b3dae3cc4e192f7662936d9f9b16f857a020eab89e4423c3f"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "2f4d8f0d305a1ad8f0404f03aca89b3d320d6df869c0d95833727fcae4fa9c0f"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "sha256": "e2da22b17dc8e7a26d52650d46e81e30c97f42c04254f9a454c2abc957011f83"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+    "sha256": "57f5f68231777a113c01773a33c350cbbb2746e97ad8aad4538b455427585ff4"
+  }
+]

@@ -1,3 +1,6 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
+// Preparation authority is modeled here; parser, extraction and durable service/store remain real.
+import { ModeledBusterRemotePlanService as BusterRemotePlanService, ModeledPreparedPlanJobStore as FileBusterPlanJobStore } from '../../fixtures/test-gate/modeled-preparation.mts';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -6,7 +9,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { test } from 'node:test';
 import { buildRegistry, discoverPackages, resolveTestPlan, createProductionNovaTestGate } from '@kubeclaw/nova-core';
-import { BusterRemotePlanRuntime, BusterRemotePlanService, FileBusterPlanJobStore } from '@kubeclaw/buster-engine';
+import { BusterRemotePlanRuntime } from '@kubeclaw/buster-engine';
 import { gateCoverageDigest, parseGateDecision, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
 
 test('original remote Buster skipped execution cannot fulfil required coverage at the same Git candidate', async () => {
@@ -29,7 +32,9 @@ test('original remote Buster skipped execution cannot fulfil required coverage a
   const store = new FileBusterPlanJobStore(path.join(temporary, 'buster-state'), { recordLimits: records,
     maximumArchiveBytes: 4 * 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
     trustedSourceAuthority: 'nova:coverage', sourceAttestationPublicKey: publicKey });
-  const service = new BusterRemotePlanService({ store, registry, workerRevision: 'a'.repeat(40),
+  const service = new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'a'.repeat(40),
     runtimeRoot: path.join(temporary, 'buster-runs'), tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 16 * 1024 * 1024,
     allowedCapabilities: new Set() });
   const token = 'coverage-native-http-token-00000000000000';

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Immutable DB/artifact groups. No automatic deletion or in-place restoration.
+# Manual retirement requires a pinned verified copy and preserves protected groups.
 set -euo pipefail
 umask 077
 
@@ -153,10 +154,82 @@ database_proof() {
   printf 'PRISM_DATABASE_RESTORE_SMOKE_PASSED:%s\n' "$proof_database"
 }
 
+retire_group() {
+  : "${BACKUP_RETIRE_GROUP:?}" "${BACKUP_RETIRE_SHA256:?}" "${BACKUP_COPY_ROOT:?}"
+  [[ $BACKUP_RETIRE_GROUP =~ ^backup-[a-zA-Z0-9-]+$ ]] || fail RETIRE_GROUP_INVALID
+  [[ $BACKUP_RETIRE_SHA256 =~ ^[a-f0-9]{64}$ ]] || fail RETIRE_DIGEST_INVALID
+  [[ $BACKUP_COPY_ROOT == /* && -d $BACKUP_COPY_ROOT && ! -L $BACKUP_COPY_ROOT && $(realpath -- "$BACKUP_COPY_ROOT") == "$BACKUP_COPY_ROOT" ]] || fail COPY_ROOT_INVALID
+  [[ $BACKUP_COPY_ROOT != "$BACKUP_ROOT" && $BACKUP_COPY_ROOT != "$BACKUP_ROOT"/* && $BACKUP_ROOT != "$BACKUP_COPY_ROOT"/* ]] || fail COPY_ROOT_OVERLAP
+  local group="$BACKUP_ROOT/$BACKUP_RETIRE_GROUP" retiring="$BACKUP_ROOT/.retiring-$BACKUP_RETIRE_GROUP" latest digest
+  local authorization="$BACKUP_ROOT/.retire-authorization-$BACKUP_RETIRE_GROUP" pending
+  # Serialize cooperating operations on both roots. Nonblocking acquisition
+  # avoids deadlock when operators select opposite source/copy directions.
+  exec 8>"$BACKUP_COPY_ROOT/.lock"
+  flock --exclusive --nonblock 8 || fail COPY_LOCKED
+  ( BACKUP_ROOT=$BACKUP_COPY_ROOT; verify_group "$BACKUP_COPY_ROOT/$BACKUP_RETIRE_GROUP" >/dev/null )
+  digest=$(sha256sum -- "$BACKUP_COPY_ROOT/$BACKUP_RETIRE_GROUP/SHA256SUMS"); digest=${digest%% *}
+  [[ $digest == "$BACKUP_RETIRE_SHA256" ]] || fail COPY_DIGEST_MISMATCH
+  [[ ! -e "$BACKUP_ROOT/.protect-$BACKUP_RETIRE_GROUP" && ! -L "$BACKUP_ROOT/.protect-$BACKUP_RETIRE_GROUP" ]] || fail GROUP_PROTECTED
+  # Both initial and resumed retirement require another verified completed
+  # local group. A corrupted latest group cannot authorize deletion.
+  latest=$(latest_group)
+  [[ $latest != "$group" ]] || fail LATEST_GROUP_PROTECTED
+  if [[ -e $authorization || -L $authorization ]]; then
+    file "$authorization"
+    [[ $(size "$authorization") == 65 ]] || fail RETIRE_AUTHORIZATION_INVALID
+    [[ $(cat -- "$authorization") == "$BACKUP_RETIRE_SHA256" ]] || fail RETIRE_AUTHORIZATION_MISMATCH
+  else
+    [[ -e $group && ! -e $retiring && ! -L $retiring ]] || fail RETIRE_AUTHORIZATION_MISSING
+    verify_group "$group" >/dev/null
+    cmp -s -- "$group/SHA256SUMS" "$BACKUP_COPY_ROOT/$BACKUP_RETIRE_GROUP/SHA256SUMS" || fail COPY_GROUP_MISMATCH
+    # Keep the original authorization outside the recursive deletion set.
+    # Publish and flush it before a rename can leave a resumable tombstone.
+    pending=$(mktemp "$BACKUP_ROOT/.retire-authorization-pending-XXXXXXXX")
+    printf '%s\n' "$BACKUP_RETIRE_SHA256" > "$pending"
+    mv --no-clobber --no-target-directory -- "$pending" "$authorization"
+    [[ ! -e $pending ]] || fail RETIRE_AUTHORIZATION_PUBLICATION_FAILED
+    sync -f "$BACKUP_ROOT"
+  fi
+  if [[ -e $group || -L $group ]]; then
+    [[ ! -e $retiring && ! -L $retiring ]] || fail RETIRE_STATE_CONFLICT
+    verify_group "$group" >/dev/null
+    cmp -s -- "$group/SHA256SUMS" "$BACKUP_COPY_ROOT/$BACKUP_RETIRE_GROUP/SHA256SUMS" || fail COPY_GROUP_MISMATCH
+    mv --no-clobber --no-target-directory -- "$group" "$retiring"
+    [[ ! -e $group ]] || fail RETIRE_RENAME_FAILED
+    sync -f "$BACKUP_ROOT"
+  fi
+  # After the atomic rename, an interruption leaves only this selected
+  # tombstone and its durable authorization. Re-run with the original digest.
+  # A missing tombstone with valid authorization means removal already finished.
+  if [[ -e $retiring || -L $retiring ]]; then
+    [[ -d $retiring && ! -L $retiring ]] || fail RETIRE_STATE_INVALID
+    rm -rf --one-file-system -- "$retiring"
+  fi
+  [[ ! -e $retiring && ! -L $retiring ]] || fail RETIRE_REMOVE_FAILED
+  sync -f "$BACKUP_ROOT"
+  rm -- "$authorization"
+  sync -f "$BACKUP_ROOT"
+  printf 'PRISM_BACKUP_RETIRED:%s\n' "$BACKUP_RETIRE_GROUP"
+}
+
+discard_incomplete() {
+  : "${BACKUP_DISCARD_INCOMPLETE:?}"
+  [[ $BACKUP_DISCARD_INCOMPLETE =~ ^\.incomplete-[a-zA-Z0-9-]+$ ]] || fail INCOMPLETE_NAME_INVALID
+  local incomplete="$BACKUP_ROOT/$BACKUP_DISCARD_INCOMPLETE"
+  [[ -d $incomplete && ! -L $incomplete ]] || fail INCOMPLETE_INVALID
+  # This command never accepts a completed or retiring group. Incomplete
+  # groups have never been published as recovery points; the root lock proves
+  # no cooperating backup writer currently owns one.
+  rm -rf --one-file-system -- "$incomplete"
+  [[ ! -e $incomplete && ! -L $incomplete ]] || fail INCOMPLETE_REMOVE_FAILED
+  sync -f "$BACKUP_ROOT"
+  printf 'PRISM_BACKUP_INCOMPLETE_DISCARDED:%s\n' "$BACKUP_DISCARD_INCOMPLETE"
+}
+
 configuration
 # Bound the whole operation, including object copying and hashing, not only pg_dump.
 if [[ ${1:-} != _locked ]]; then
-  [[ $# == 1 && $1 =~ ^(backup|verify|database-proof)$ ]] || fail USAGE
+  [[ $# == 1 && $1 =~ ^(backup|verify|database-proof|retire|discard-incomplete)$ ]] || fail USAGE
   exec timeout --signal=TERM --kill-after=15 "$BACKUP_MAXIMUM_DURATION_SECONDS" \
     flock --exclusive --nonblock "$BACKUP_ROOT/.lock" bash "$0" _locked "$1"
 fi
@@ -165,5 +238,7 @@ case "$2" in
   backup) backup_group ;;
   verify) latest_group ;;
   database-proof) database_proof ;;
+  retire) retire_group ;;
+  discard-incomplete) discard_incomplete ;;
   *) fail USAGE ;;
 esac

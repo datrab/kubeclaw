@@ -1,0 +1,3 @@
+c2de5c07b7e143ce7d5c78c0a65e5c909eb8b12f7a59bb59ae63fcd2779f3e6b  scripts/deploy.sh
+0bcacf8252a279603dff15b98c520959176ffa6cf909d05a52580e878f81ccc1  tests/verification/deployment/bootstrap-api-guard.test.mjs
+ab9f17e34aa6bc5a799a85820d7fdad29b5ef0d32071e3baa3affa93492827b0  docs/deployment/setup-flow.md

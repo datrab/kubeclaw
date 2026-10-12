@@ -1,0 +1,36 @@
+{
+  "id": "kubeclaw.pipeline-review",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "review",
+      "type": "kubeclaw.report.pipeline-review",
+      "module": "src/stage.ts",
+      "export": "execute",
+      "requiredCapabilities": [
+        "runtime.dispatch",
+        "artifacts.write",
+        "report.evidence.read"
+      ],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "evidence",
+      "module": "src/evidence-adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "report.evidence.read"
+      ],
+      "requiredCapabilities": [
+        "artifacts.read"
+      ],
+      "configSchema": "schemas/evidence-config.schema.json"
+    }
+  ]
+}

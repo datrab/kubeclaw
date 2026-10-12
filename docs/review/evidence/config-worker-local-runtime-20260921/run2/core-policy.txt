@@ -1,0 +1,15 @@
+✔ Core requires explicit valid drainTimeoutMs (15.182974ms)
+✔ Core requires explicit valid cancellationTimeoutMs (0.845912ms)
+✔ Core requires explicit valid replayLimit (0.533874ms)
+✔ real drain/cancellation 10/40 (85.996643ms)
+✔ real replay saturation/reclaim 1 (2.031203ms)
+✔ real drain/cancellation 40/10 (51.012405ms)
+✔ real replay saturation/reclaim 2 (2.385642ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 548.626395

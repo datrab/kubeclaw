@@ -1,0 +1,46 @@
+[
+  {
+    "name": "minimumHeapMiB",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/contracts/buster-report-runner-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "candidateAssertionDetection": true,
+    "requiresManualOracleReview": true
+  },
+  {
+    "name": "heapFraction",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/contracts/buster-report-runner-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "candidateAssertionDetection": true,
+    "requiresManualOracleReview": true
+  },
+  {
+    "name": "runtimeMemoryReserveBytes",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/contracts/buster-report-runtime-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "candidateAssertionDetection": true,
+    "requiresManualOracleReview": true
+  },
+  {
+    "name": "minimumOpenFiles",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/contracts/buster-report-runtime-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "candidateAssertionDetection": true,
+    "requiresManualOracleReview": true
+  }
+]

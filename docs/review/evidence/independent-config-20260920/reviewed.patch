@@ -1,0 +1,684 @@
+diff --git a/charts/kubeclaw/files/config/swarm.config.json b/charts/kubeclaw/files/config/swarm.config.json
+index 3ff9b745..c886cca6 100644
+--- a/charts/kubeclaw/files/config/swarm.config.json
++++ b/charts/kubeclaw/files/config/swarm.config.json
+@@ -1,5 +1,5 @@
+ {
+-  "_doc": "Compact authored swarm config rendered to /home/node/.openclaw/swarm.config.json. profile=standard expands to the full strict runtime config; code consumes only the expanded effective config.",
++  "_doc": "Single authored swarm configuration. The operator.prism.worker section is consumed by the production Prism loader; legacy profile expansion remains separate test support.",
+   "profile": "standard",
+   "features": {
+     "observability": true,
+@@ -14,5 +14,16 @@
+     "checks": "strict",
+     "determinism": "strict"
+   },
+-  "overrides": {}
++  "overrides": {},
++  "operator": {
++    "prism": {
++      "worker": {
++        "maximumActiveRequests": 16,
++        "maximumProbeRequests": 4,
++        "maximumConnections": 128,
++        "requestTimeoutMs": 120000,
++        "shutdownTimeoutMs": 120000
++      }
++    }
++  }
+ }
+diff --git a/charts/prism/templates/workloads.yaml b/charts/prism/templates/workloads.yaml
+index 93e2b41c..322bb0a0 100644
+--- a/charts/prism/templates/workloads.yaml
++++ b/charts/prism/templates/workloads.yaml
+@@ -1,3 +1,5 @@
++{{- $swarm := include "prism.swarmConfig" . | fromJson }}
++{{- $shutdownTimeoutMs := $swarm.operator.prism.worker.shutdownTimeoutMs }}
+ {{- if ne (int .Values.control.replicas) 1 }}
+ {{- fail "control.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage" }}
+ {{- end }}
+@@ -5,7 +7,7 @@
+ {{- if or (ne (int .Values.worker.replicas) 1) (ne .Values.worker.native.namespace .Release.Namespace) (not .Values.worker.native.nodeName) (not (regexMatch "^[a-f0-9]{64}$" .Values.worker.native.policyDigest)) }}
+ {{- fail "native Prism requires one worker, its selected namespace/node and generated policy digest" }}
+ {{- end }}
+-{{- if or (le (int .Values.worker.shutdownTimeoutMs) (add (int .Values.worker.native.closeTimeoutMs) 10000)) (le (mul (int .Values.worker.terminationGracePeriodSeconds) 1000) (int .Values.worker.shutdownTimeoutMs)) }}
++{{- if or (le (int $shutdownTimeoutMs) (add (int .Values.worker.native.closeTimeoutMs) 10000)) (le (mul (int .Values.worker.terminationGracePeriodSeconds) 1000) (int $shutdownTimeoutMs)) }}
+ {{- fail "worker shutdown must cover native close plus scope drain, and fit within pod termination grace" }}
+ {{- end }}
+ {{- range $name := list "control" "studio" "worker" }}
+@@ -32,6 +34,7 @@ spec:
+       {{- if or (and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker"))) (and (eq $name "control") $.Values.control.productDecisions.enabled) (eq $name "worker") }}
+       annotations:
+         {{- if eq $name "worker" }}
++        checksum/swarm-config: {{ include "prism.swarmConfig" $ | sha256sum }}
+         kubeclaw.dev/native-worker-role: prism
+         kubeclaw.dev/native-worker-policy: {{ $.Values.worker.native.policyDigest | quote }}
+         {{- end }}
+@@ -119,7 +122,7 @@ spec:
+             {{- end }}
+             {{- if eq $name "worker" }}
+             - { name: PRISM_NATIVE_CLOSE_TIMEOUT_MS, value: {{ $.Values.worker.native.closeTimeoutMs | quote }} }
+-            - { name: PRISM_WORKER_SHUTDOWN_TIMEOUT_MS, value: {{ $.Values.worker.shutdownTimeoutMs | quote }} }
++            - { name: SWARM_CONFIG, value: /etc/kubeclaw/swarm/swarm.config.json }
+             - { name: PRISM_CONTROL_INTERNAL_URL, value: {{ ternary "http://127.0.0.1:18080" "http://prism-control:8080" $.Values.workerTrust.spiffe.enabled | quote }} }
+             - name: DATABASE_URL
+               valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
+@@ -141,6 +144,7 @@ spec:
+           volumeMounts:
+             - { name: tmp, mountPath: /tmp }
+             {{- if eq $name "worker" }}
++            - { name: swarm-config, mountPath: /etc/kubeclaw/swarm, readOnly: true }
+             - { name: native-pool, mountPath: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism }
+             - { name: native-ownership, mountPath: /var/lib/kubeclaw/native/prism }
+             - { name: native-policy, mountPath: /etc/kubeclaw/prism-pool.json, readOnly: true }
+@@ -189,6 +193,7 @@ spec:
+       volumes:
+         - { name: tmp, emptyDir: { sizeLimit: 4Gi } }
+         {{- if eq $name "worker" }}
++        - { name: swarm-config, configMap: { name: prism-swarm-config, defaultMode: 0444 } }
+         - { name: native-pool, hostPath: { path: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism, type: Directory } }
+         - { name: native-ownership, hostPath: { path: /var/lib/kubeclaw/native/prism, type: Directory } }
+         - { name: native-policy, hostPath: { path: /etc/kubeclaw/prism-pool.json, type: File } }
+diff --git a/charts/prism/values.schema.json b/charts/prism/values.schema.json
+index 53554d87..a1c64b40 100644
+--- a/charts/prism/values.schema.json
++++ b/charts/prism/values.schema.json
+@@ -268,7 +268,6 @@
+       "required": [
+         "native",
+         "replicas",
+-        "shutdownTimeoutMs",
+         "terminationGracePeriodSeconds"
+       ],
+       "properties": {
+@@ -304,11 +303,6 @@
+             }
+           }
+         },
+-        "shutdownTimeoutMs": {
+-          "type": "integer",
+-          "minimum": 1,
+-          "maximum": 2147483647
+-        },
+         "terminationGracePeriodSeconds": {
+           "type": "integer",
+           "minimum": 1,
+diff --git a/charts/prism/values.yaml b/charts/prism/values.yaml
+index f52ea0c4..7e4cedcd 100644
+--- a/charts/prism/values.yaml
++++ b/charts/prism/values.yaml
+@@ -37,7 +37,6 @@ worker:
+     namespace: ""
+     policyDigest: ""
+     closeTimeoutMs: 105000
+-  shutdownTimeoutMs: 120000
+   terminationGracePeriodSeconds: 150
+   replicas: 1
+   resources: { requests: { cpu: "1", memory: 2Gi }, limits: { cpu: "8", memory: 8Gi } }
+diff --git a/docs/operations/prism-operator-guide.md b/docs/operations/prism-operator-guide.md
+index 3a122d44..7555123b 100644
+--- a/docs/operations/prism-operator-guide.md
++++ b/docs/operations/prism-operator-guide.md
+@@ -201,12 +201,18 @@ termination/drain paths before closing its nonce database pool. Requests receive
+ on existing connections during shutdown return 503, including `/bootstrap` and
+ `/ready`. Repeated signals share the same shutdown operation.
+ 
+-The default service drain budget is 120 seconds (`worker.shutdownTimeoutMs`),
++The default service drain budget is 120 seconds
++(`operator.prism.worker.shutdownTimeoutMs` in the canonical
++`charts/kubeclaw/files/config/swarm.config.json`),
+ with 105 seconds for cooperative host cancellation (`worker.native.closeTimeoutMs`)
+ and a 150-second Pod termination grace (`worker.terminationGracePeriodSeconds`).
+ Helm rejects budgets that cannot contain native close plus scope drain, or cannot
+-fit within the Pod grace. The corresponding process settings are
+-`PRISM_WORKER_SHUTDOWN_TIMEOUT_MS` and `PRISM_NATIVE_CLOSE_TIMEOUT_MS`.
++fit within the Pod grace. The worker reads the ConfigMap mounted read-only at
++`/etc/kubeclaw/swarm/swarm.config.json` via `SWARM_CONFIG`; native close still
++uses `PRISM_NATIVE_CLOSE_TIMEOUT_MS`. The former `worker.shutdownTimeoutMs`
++Helm value and `PRISM_WORKER_SHUTDOWN_TIMEOUT_MS` environment override are
++rejected with migration errors. See [central worker settings](operator-configuration.md)
++for all five migrated settings, validation and change delivery.
+ 
+ On user cancellation, the supervisor signals the host so its original Core
+ lifecycle can terminate browser and artifact work and emit a provisional result.
+diff --git a/scripts/check-built-runtime-image.sh b/scripts/check-built-runtime-image.sh
+index f4cc54b5..073eb0bb 100644
+--- a/scripts/check-built-runtime-image.sh
++++ b/scripts/check-built-runtime-image.sh
+@@ -38,7 +38,16 @@ PROFILE
+       -v "$PWD/tests/verification/deployment/check-buster-build.sh:/proof.sh:ro" \
+       "$image" /proof.sh
+     ;;
+-  namespace-controller|archviewer|prism-control|prism-studio|prism-worker|prism-ingestion)
++  prism-worker)
++    # Prove the shipped loader, schema and runtime Ajv dependency against the
++    # same authored snapshot that Helm packages, without starting native work.
++    docker run --rm --network none --entrypoint node \
++      -e SWARM_CONFIG=/etc/kubeclaw/swarm/swarm.config.json \
++      -v "$PWD/charts/kubeclaw/files/config/swarm.config.json:/etc/kubeclaw/swarm/swarm.config.json:ro" \
++      -v "$PWD/tests/verification/deployment/prism-swarm-image.mjs:/swarm-proof.mjs:ro" \
++      "$image" /swarm-proof.mjs
++    ;;
++  namespace-controller|archviewer|prism-control|prism-studio|prism-ingestion)
+     # These Dockerfiles execute their acceptance gates during the build.
+     docker image inspect "$image" >/dev/null
+     ;;
+diff --git a/skills/buster/engine/test-gates/remote-plan-service.ts b/skills/buster/engine/test-gates/remote-plan-service.ts
+index ebb367b2..7ed8b00a 100644
+--- a/skills/buster/engine/test-gates/remote-plan-service.ts
++++ b/skills/buster/engine/test-gates/remote-plan-service.ts
+@@ -30,19 +30,7 @@ import {
+ import { ensureDirectoryDurable, withDurableStoreLock } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
+ import type { RegistrySnapshot } from '@kubeclaw/plugin-foundation/registry/types';
+ import { TestPlanRunner, type TestPlanRunResult } from './runner.ts';
+-import { DirectCommandCapabilityInvoker, type DirectCommandCapabilityInvokerOptions } from './direct-command-runtime.ts';
+-import { ContainerBuildCapabilityInvoker, type ContainerBuildCapabilityInvokerOptions } from './container-build-runtime.ts';
+-import { KubernetesFixtureCapabilityInvoker, type KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-runtime.ts';
+-import { TailscaleExposureCapabilityInvoker, type TailscaleExposureCapabilityInvokerOptions } from './tailscale-exposure-runtime.ts';
+-import { NetworkHttpCapabilityInvoker, type NetworkHttpCapabilityInvokerOptions } from './network-http-runtime.ts';
+-import { BrowserAxeCapabilityInvoker, type BrowserAxeCapabilityInvokerOptions } from './browser-axe-runtime.ts';
+-import { BrowserLighthouseCapabilityInvoker, type BrowserLighthouseCapabilityInvokerOptions } from './browser-lighthouse-runtime.ts';
+-import { BrowserVisualCapabilityInvoker, type BrowserVisualCapabilityInvokerOptions } from './browser-visual-runtime.ts';
+-import { BrowserPlaywrightCapabilityInvoker, type BrowserPlaywrightCapabilityInvokerOptions } from './browser-playwright-runtime.ts';
+-import { SecurityScanCapabilityInvoker, type SecurityScanCapabilityInvokerOptions } from './security-scan-runtime.ts';
+-import { KubernetesRuntimeSecurityCapabilityInvoker,
+-  type KubernetesRuntimeSecurityCapabilityInvokerOptions } from './kubernetes-runtime-security.ts';
+-import { CompositeTestProviderCapabilityInvoker } from './composite-capability-runtime.ts';
++import { createBusterCapabilityRuntime, type BusterCapabilityRuntimeOptions } from './capability-runtime.ts';
+ 
+ import {
+   assertCompactionIntent, assertCompactedPlanJobRecord, compactionDigest, readJobArtifact, resultArtifacts, verifyRetainedSource,
+@@ -334,28 +322,16 @@ export class FileBusterPlanJobStore {
+   }
+ }
+ 
+-export interface BusterRemotePlanServiceOptions {
++export interface BusterRemotePlanServiceOptions extends BusterCapabilityRuntimeOptions {
+   readonly store: FileBusterPlanJobStore;
+   readonly registry: RegistrySnapshot;
+   readonly workerRevision: string;
+   readonly runtimeRoot: string;
+   readonly tarExecutable: string;
+   readonly maximumExtractedBytes: number;
+-  readonly allowedCapabilities: ReadonlySet<string>;
+   readonly maximumActiveJobs?: number;
+   readonly maximumQueuedJobs?: number;
+   readonly maximumConcurrentAttempts?: number;
+-  readonly directCommand?: Omit<DirectCommandCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly containerBuild?: Omit<ContainerBuildCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly kubernetesFixture?: Omit<KubernetesFixtureCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly tailscaleExposure?: TailscaleExposureCapabilityInvokerOptions;
+-  readonly networkHttp?: NetworkHttpCapabilityInvokerOptions;
+-  readonly browserAxe?: BrowserAxeCapabilityInvokerOptions;
+-  readonly browserLighthouse?: BrowserLighthouseCapabilityInvokerOptions;
+-  readonly browserVisual?: BrowserVisualCapabilityInvokerOptions;
+-  readonly browserPlaywright?: Omit<BrowserPlaywrightCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly securityScan?: Omit<SecurityScanCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly kubernetesRuntimeSecurity?: Omit<KubernetesRuntimeSecurityCapabilityInvokerOptions, 'workspaceRoot'>;
+   readonly dependencyReadiness?: { readonly maximumExecutionMs: number; readonly maximumOutputBytes: number };
+   readonly now?: () => Date;
+   readonly execute?: (
+@@ -692,73 +668,7 @@ export class BusterRemotePlanService {
+         throw error;
+       } finally { fs.rmSync(archive, { force: true }); }
+       const paths = { jobRoot, repositoryRoot, workspaceRoot, artifactRoot, observabilityRoot };
+-      const directCommand = this.#options.allowedCapabilities.has('command.execute')
+-        ? new DirectCommandCapabilityInvoker({
+-          ...(this.#options.directCommand ?? (() => { throw new Error('BUSTER_DIRECT_COMMAND_CONFIG_REQUIRED'); })()),
+-          workspaceRoot,
+-        })
+-        : null;
+-      const containerBuild = this.#options.allowedCapabilities.has('container.build')
+-        ? new ContainerBuildCapabilityInvoker({
+-          ...(this.#options.containerBuild ?? (() => { throw new Error('BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED'); })()),
+-          workspaceRoot,
+-        })
+-        : null;
+-      const kubernetesFixture = this.#options.allowedCapabilities.has('kubernetes.fixture')
+-        ? new KubernetesFixtureCapabilityInvoker({
+-          ...(this.#options.kubernetesFixture ?? (() => { throw new Error('BUSTER_KUBERNETES_FIXTURE_CONFIG_REQUIRED'); })()),
+-          workspaceRoot: jobRoot,
+-        })
+-        : null;
+-      const tailscaleExposure = this.#options.allowedCapabilities.has('kubernetes.exposure')
+-        ? new TailscaleExposureCapabilityInvoker(this.#options.tailscaleExposure
+-          ?? (() => { throw new Error('BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED'); })())
+-        : null;
+-      const networkHttp = this.#options.allowedCapabilities.has('network.http')
+-        ? new NetworkHttpCapabilityInvoker(this.#options.networkHttp
+-          ?? (() => { throw new Error('BUSTER_NETWORK_HTTP_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserAxe = this.#options.allowedCapabilities.has('browser.axe')
+-        ? new BrowserAxeCapabilityInvoker(this.#options.browserAxe
+-          ?? (() => { throw new Error('BUSTER_BROWSER_AXE_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserLighthouse = this.#options.allowedCapabilities.has('browser.lighthouse')
+-        ? new BrowserLighthouseCapabilityInvoker(this.#options.browserLighthouse
+-          ?? (() => { throw new Error('BUSTER_BROWSER_LIGHTHOUSE_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserVisual = this.#options.allowedCapabilities.has('browser.visual')
+-        ? new BrowserVisualCapabilityInvoker(this.#options.browserVisual
+-          ?? (() => { throw new Error('BUSTER_BROWSER_VISUAL_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserPlaywright = this.#options.allowedCapabilities.has('browser.playwright')
+-        ? new BrowserPlaywrightCapabilityInvoker({
+-          ...(this.#options.browserPlaywright ?? (() => { throw new Error('BUSTER_BROWSER_PLAYWRIGHT_CONFIG_REQUIRED'); })()),
+-          workspaceRoot,
+-        }) : null;
+-      const securityScan = this.#options.allowedCapabilities.has('security.scan')
+-        ? new SecurityScanCapabilityInvoker({
+-          ...(this.#options.securityScan ?? (() => { throw new Error('BUSTER_SECURITY_SCAN_CONFIG_REQUIRED'); })()),
+-          workspaceRoot: jobRoot,
+-        }) : null;
+-      const kubernetesRuntimeSecurity = this.#options.allowedCapabilities.has('kubernetes.runtime-security')
+-        ? new KubernetesRuntimeSecurityCapabilityInvoker({
+-          ...(this.#options.kubernetesRuntimeSecurity
+-            ?? (() => { throw new Error('BUSTER_KUBERNETES_RUNTIME_SECURITY_CONFIG_REQUIRED'); })()),
+-          workspaceRoot: jobRoot,
+-        }) : null;
+-      const routes = new Map();
+-      if (directCommand) routes.set('command.execute', directCommand);
+-      if (containerBuild) routes.set('container.build', containerBuild);
+-      if (kubernetesFixture) routes.set('kubernetes.fixture', kubernetesFixture);
+-      if (tailscaleExposure) routes.set('kubernetes.exposure', tailscaleExposure);
+-      if (networkHttp) routes.set('network.http', networkHttp);
+-      if (browserAxe) routes.set('browser.axe', browserAxe);
+-      if (browserLighthouse) routes.set('browser.lighthouse', browserLighthouse);
+-      if (browserVisual) routes.set('browser.visual', browserVisual);
+-      if (browserPlaywright) routes.set('browser.playwright', browserPlaywright);
+-      if (securityScan) routes.set('security.scan', securityScan);
+-      if (kubernetesRuntimeSecurity) routes.set('kubernetes.runtime-security', kubernetesRuntimeSecurity);
+-      const capabilities = routes.size ? new CompositeTestProviderCapabilityInvoker(routes) : null;
++      const capabilities = createBusterCapabilityRuntime(this.#options, paths);
+       const run = this.#options.execute
+         ? await this.#options.execute(job, paths, controller.signal)
+         : await new TestPlanRunner({
+@@ -770,9 +680,9 @@ export class BusterRemotePlanService {
+           observabilityRoot,
+           maximumConcurrency: job.maximumConcurrency,
+           grants: new Map(Object.entries(job.grants)),
+-          ...(capabilities ? { capabilityInvoker: capabilities } : {}),
++          ...(capabilities.invoker ? { capabilityInvoker: capabilities.invoker } : {}),
+           signal: controller.signal,
+-        }).run().finally(() => directCommand?.shutdown());
++        }).run().finally(() => capabilities.shutdown());
+       if (run.cleanupErrors.length === 0 && run.attempts.every((attempt) => attempt.executionState === 'completed')) {
+         await cleanupTerminalWorkspace(jobRoot);
+       }
+diff --git a/skills/buster/engine/test-gates/terminal-workspace.ts b/skills/buster/engine/test-gates/terminal-workspace.ts
+index 60d55b5e..b4264e53 100644
+--- a/skills/buster/engine/test-gates/terminal-workspace.ts
++++ b/skills/buster/engine/test-gates/terminal-workspace.ts
+@@ -1,26 +1,55 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
++import type { FileHandle } from 'node:fs/promises';
+ 
+ // Only reproducible input copies are disposable. Do not remove workspace,
+ // scratch, evidence, artifacts, observability, durable job records or logs.
+ export async function cleanupTerminalWorkspace(jobRoot: string): Promise<void> {
+-  // A terminal caller must already own quiescence. Do not follow a replaced
+-  // parent into another job or retained evidence, even after execution stopped.
+-  if (!await realDirectory(jobRoot)) return;
+-  const workspace = await realDirectory(path.join(jobRoot, 'workspace'));
+-  for (const relative of ['repository.tar.gz', 'workspace/repository', 'workspace/test-provider-snapshots']) {
+-    if (!workspace && relative.startsWith('workspace/')) continue;
+-    await fs.promises.rm(path.join(jobRoot, relative), { recursive: true, force: true });
++  // The caller must already prove quiescence, including all fixture lifetimes.
++  // Pin directory inodes: lstat followed by rm on the original pathname would
++  // follow a substituted parent. Never reopen that pathname after validation.
++  if (process.platform !== 'linux') throw new Error('BUSTER_TERMINAL_WORKSPACE_LINUX_REQUIRED');
++  const job = await openDirectoryPath(jobRoot);
++  if (!job) return;
++  let workspace: FileHandle | null = null;
++  try {
++    workspace = await openDirectory(`${descriptorPath(job)}/workspace`);
++    await fs.promises.rm(`${descriptorPath(job)}/repository.tar.gz`, { recursive: true, force: true });
++    if (workspace) {
++      for (const name of ['repository', 'test-provider-snapshots']) {
++        await fs.promises.rm(`${descriptorPath(workspace)}/${name}`, { recursive: true, force: true });
++      }
++    }
++  } finally {
++    try { await workspace?.close(); } finally { await job.close(); }
+   }
+ }
+ 
+-async function realDirectory(directory: string): Promise<boolean> {
++function descriptorPath(directory: FileHandle): string {
++  return `/proc/self/fd/${directory.fd}`;
++}
++
++async function openDirectory(directory: string): Promise<FileHandle | null> {
+   try {
+-    const stat = await fs.promises.lstat(directory);
+-    if (!stat.isDirectory() || stat.isSymbolicLink()) throw new Error('BUSTER_TERMINAL_WORKSPACE_PARENT_INVALID');
+-    return true;
++    return await fs.promises.open(directory, fs.constants.O_RDONLY | fs.constants.O_DIRECTORY | fs.constants.O_NOFOLLOW);
+   } catch (error) {
+-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return false;
++    const code = (error as NodeJS.ErrnoException).code;
++    if (code === 'ENOENT') return null;
++    if (code === 'ELOOP' || code === 'ENOTDIR') throw new Error('BUSTER_TERMINAL_WORKSPACE_PARENT_INVALID', { cause: error });
+     throw error;
+   }
+ }
++
++async function openDirectoryPath(directory: string): Promise<FileHandle | null> {
++  // Opening only the leaf with O_NOFOLLOW still follows intermediate symlinks.
++  // Walk from / through pinned descriptors so every supplied ancestor is checked.
++  let current = await openDirectory('/');
++  try {
++    for (const component of path.resolve(directory).split(path.sep).filter(Boolean)) {
++      if (!current) return null;
++      const next = await openDirectory(`${descriptorPath(current)}/${component}`);
++      await current.close(); current = next;
++    }
++    const result = current; current = null; return result;
++  } finally { await current?.close(); }
++}
+diff --git a/skills/common/plugin-runtime/foundation/config/README.md b/skills/common/plugin-runtime/foundation/config/README.md
+index ee60e37d..40b98ca4 100644
+--- a/skills/common/plugin-runtime/foundation/config/README.md
++++ b/skills/common/plugin-runtime/foundation/config/README.md
+@@ -37,3 +37,9 @@ delegated root as their first CLI argument. The additional isolation-kernel gate
+ also requires target UID/GID arguments and credential-drop authority so its
+ parent-death check covers that native branch. Missing prerequisites remain blocked
+ checks, not passing isolation assertions.
++
++Prism HTTP-worker operator settings are resolved by `swarm.ts` from the existing
++canonical swarm file. The strict schema rejects unknown keys, missing/invalid
++values and retired environment overrides. Other configuration surfaces are not
++yet migrated. See [operator configuration](../../../../../docs/operations/operator-configuration.md)
++for the exact migrated keys, deployment delivery and remaining scope.
+diff --git a/skills/prism/server/worker-config.ts b/skills/prism/server/worker-config.ts
+index ad127f11..6ef2f8a3 100644
+--- a/skills/prism/server/worker-config.ts
++++ b/skills/prism/server/worker-config.ts
+@@ -1,3 +1,5 @@
++import { loadPrismWorkerSettings, type PrismWorkerSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
++
+ /** Platform-owned configuration is captured once before starting the worker. */
+ 
+ export function loadWorkerConfig(environment: NodeJS.ProcessEnv = process.env) {
+@@ -8,31 +10,28 @@ export function loadWorkerConfig(environment: NodeJS.ProcessEnv = process.env) {
+   if (spiffeEnabled && !trustedControlSpiffeId) throw new Error('Prism worker SPIFFE trust policy is incomplete');
+   const databaseUrl = environment.DATABASE_URL ?? '';
+   if (!spiffeEnabled && !databaseUrl) throw new Error('DATABASE_URL is required');
+-  return Object.freeze({ spiffeEnabled, workerSecret, trustedControlSpiffeId, databaseUrl, shutdownTimeoutMs: shutdownTimeout(environment),
++  const settings = loadPrismWorkerSettings(environment);
++  return Object.freeze({ spiffeEnabled, workerSecret, trustedControlSpiffeId, databaseUrl, shutdownTimeoutMs: settings.shutdownTimeoutMs,
+     controlInternalUrl: new URL(environment.PRISM_CONTROL_INTERNAL_URL ?? 'http://prism-control:8080'),
+-    port: Number(environment.PORT ?? 8080), ingress: workerIngressLimits(environment),
++    port: Number(environment.PORT ?? 8080), ingress: ingressLimits(environment, settings),
+   });
+ }
+ 
+ export function workerIngressLimits(environment: NodeJS.ProcessEnv = process.env) {
+-  const read = (name: string, fallback: number) => {
+-    const value = Number(environment[name] ?? fallback);
+-    if (!Number.isSafeInteger(value) || value < 1 || value > 2_147_483_647) throw new Error(`PRISM_WORKER_INGRESS_INVALID:${name}`);
+-    return value;
+-  };
+-  return Object.freeze({
+-    maximumActiveRequests: read('PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS', 16),
+-    maximumProbeRequests: read('PRISM_WORKER_MAXIMUM_PROBE_REQUESTS', 4),
+-    maximumConnections: read('PRISM_WORKER_MAXIMUM_CONNECTIONS', 128),
+-    maximumInputBytes: read('PRISM_NATIVE_MAXIMUM_INPUT_BYTES', 16777216),
+-    requestTimeoutMs: read('PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS', 120000),
+-  });
++  return ingressLimits(environment, loadPrismWorkerSettings(environment));
+ }
+ 
+-function shutdownTimeout(environment: NodeJS.ProcessEnv): number {
+-  const shutdownTimeoutMs = Number(environment.PRISM_WORKER_SHUTDOWN_TIMEOUT_MS ?? 120_000);
+-  if (!Number.isSafeInteger(shutdownTimeoutMs) || shutdownTimeoutMs < 1 || shutdownTimeoutMs > 2_147_483_647) {
+-    throw new Error('PRISM_WORKER_SHUTDOWN_TIMEOUT_MS must be a positive timer-safe integer');
++function ingressLimits(environment: NodeJS.ProcessEnv, settings: PrismWorkerSettings) {
++  // Shared native input limit is a separate, not yet migrated setting.
++  const maximumInputBytes = Number(environment.PRISM_NATIVE_MAXIMUM_INPUT_BYTES ?? 16777216);
++  if (!Number.isSafeInteger(maximumInputBytes) || maximumInputBytes < 1 || maximumInputBytes > 2_147_483_647) {
++    throw new Error('PRISM_WORKER_INGRESS_INVALID:PRISM_NATIVE_MAXIMUM_INPUT_BYTES');
+   }
+-  return shutdownTimeoutMs;
++  return Object.freeze({
++    maximumActiveRequests: settings.maximumActiveRequests,
++    maximumProbeRequests: settings.maximumProbeRequests,
++    maximumConnections: settings.maximumConnections,
++    maximumInputBytes,
++    requestTimeoutMs: settings.requestTimeoutMs,
++  });
+ }
+diff --git a/skills/prism/tests/native/worker-harness.mts b/skills/prism/tests/native/worker-harness.mts
+index 807c278d..4dc42c7a 100644
+--- a/skills/prism/tests/native/worker-harness.mts
++++ b/skills/prism/tests/native/worker-harness.mts
+@@ -24,7 +24,7 @@ export async function nativeWorkerHarness(t: { after(callback: () => Promise<voi
+   const admitted = new Promise<ManagedWorkerServer>((resolve, fail) => { admit = resolve; reject = fail; });
+   const supervision = NativeWorkerOwnership.supervise({ ...native, store }, async owner => {
+     const execution = await nativePrismExecution(owner, native, config);
+-    const server = createWorkerServer(auth, execution);
++    const server = createWorkerServer(auth, execution, config.ingress);
+     admit(server);
+     await finished;
+     owner.fenceAdmission();
+diff --git a/skills/prism/tests/worker-ingress-capacity.test.mts b/skills/prism/tests/worker-ingress-capacity.test.mts
+index a5fab4fb..56117b27 100644
+--- a/skills/prism/tests/worker-ingress-capacity.test.mts
++++ b/skills/prism/tests/worker-ingress-capacity.test.mts
+@@ -1,3 +1,6 @@
++import fs from 'node:fs';
++import { tmpdir } from 'node:os';
++import path from 'node:path';
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import http from 'node:http';
+@@ -18,7 +21,12 @@ function response(request: http.ClientRequest): Promise<{ status: number; body:
+   });
+ }
+ 
+-test('actual HTTP ingress rejects excess unfinished bodies while reserving health capacity', { timeout: 15000 }, async () => {
++test('actual HTTP ingress rejects excess unfinished bodies while reserving health capacity', { timeout: 15000 }, async t => {
++  const root = fs.mkdtempSync(path.join(tmpdir(), 'prism-ingress-config-'));
++  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
++  const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
++  Object.assign(authored.operator.prism.worker, { maximumActiveRequests: 1, maximumProbeRequests: 1, maximumConnections: 4 });
++  const file = path.join(root, 'swarm.config.json'); fs.writeFileSync(file, JSON.stringify(authored));
+   let accepted = 0;
+   let notify: () => void = () => {};
+   const receiving = new Promise<void>(resolve => { notify = resolve; });
+@@ -28,7 +36,7 @@ test('actual HTTP ingress rejects excess unfinished bodies while reserving healt
+     const chunks: Buffer[] = [];
+     for await (const bytes of request) chunks.push(bytes);
+     outgoing.end(Buffer.concat(chunks));
+-  }, async () => {}, { ...workerIngressLimits({}), maximumActiveRequests: 1, maximumProbeRequests: 1, maximumConnections: 4 });
++  }, async () => {}, workerIngressLimits({ SWARM_CONFIG: file }));
+   server.listen(0, '127.0.0.1'); await once(server, 'listening');
+   const port = (server.address() as AddressInfo).port;
+   const options = { host: '127.0.0.1', port, agent: false as const };
+diff --git a/skills/prism/tests/worker-process-shutdown.native.mts b/skills/prism/tests/worker-process-shutdown.native.mts
+index 92baec07..1013d897 100644
+--- a/skills/prism/tests/worker-process-shutdown.native.mts
++++ b/skills/prism/tests/worker-process-shutdown.native.mts
+@@ -4,7 +4,7 @@ import { spawn, type ChildProcess } from 'node:child_process';
+ import { createServer, type ServerResponse } from 'node:http';
+ import { createServer as createTcpServer } from 'node:net';
+ import { once } from 'node:events';
+-import { mkdtemp, rm } from 'node:fs/promises';
++import { mkdtemp, rm, readFile, writeFile } from 'node:fs/promises';
+ import { tmpdir } from 'node:os';
+ import { join } from 'node:path';
+ import fixture from '../../../contracts/prism/v1/fixtures/minimal-web.json' with { type: 'json' };
+@@ -14,6 +14,14 @@ import { handleInternalArtifact } from '../server/internal-artifacts.ts';
+ 
+ assert.equal(process.env.PRISM_NATIVE_ISOLATED_TEST_POOL, 'true', 'A dedicated native test pool is required');
+ 
++async function authoredConfig(t: { after(fn: () => Promise<void>): void }, shutdownTimeoutMs: number): Promise<string> {
++  const root = await mkdtemp(join(tmpdir(), 'prism-shutdown-config-'));
++  t.after(() => rm(root, { recursive: true, force: true }));
++  const config = JSON.parse(await readFile(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
++  config.operator.prism.worker.shutdownTimeoutMs = shutdownTimeoutMs;
++  const file = join(root, 'swarm.config.json'); await writeFile(file, JSON.stringify(config)); return file;
++}
++
+ async function unusedPort(): Promise<number> {
+   const reservation = createTcpServer(); reservation.listen(0, '127.0.0.1'); await once(reservation, 'listening');
+   const address = reservation.address(); assert(address && typeof address !== 'string');
+@@ -56,7 +64,7 @@ async function setup(t: { after(callback: () => Promise<void>): void }, phase: '
+   const port = await unusedPort(), workerOrigin = new URL(`http://127.0.0.1:${port}`);
+   const child = spawn(process.execPath, [new URL('../server/worker.ts', import.meta.url).pathname], {
+     env: { ...process.env, PORT: String(port), WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control',
+-      PRISM_WORKER_SECRET: 'local', DATABASE_URL: '', PRISM_CONTROL_INTERNAL_URL: origin.href, PRISM_WORKER_SHUTDOWN_TIMEOUT_MS: '1500' },
++      PRISM_WORKER_SECRET: 'local', DATABASE_URL: '', PRISM_CONTROL_INTERNAL_URL: origin.href, SWARM_CONFIG: await authoredConfig(t, 1500) },
+     stdio: ['ignore', 'pipe', 'pipe'],
+   });
+   let stderr = ''; child.stderr!.setEncoding('utf8'); child.stderr!.on('data', data => { stderr += String(data); });
+@@ -114,7 +122,7 @@ for (const signal of ['SIGTERM', 'SIGINT'] as const) {
+     const child = spawn(process.execPath, [new URL('../server/worker.ts', import.meta.url).pathname], {
+       env: { ...process.env, PORT: String(port), WORKER_TRUST_SPIFFE_ENABLED: 'false', PRISM_WORKER_SECRET: 'local',
+         DATABASE_URL: `postgresql://local:local@127.0.0.1:${address.port}/local`, PRISM_CONTROL_INTERNAL_URL: 'http://127.0.0.1:1',
+-        PRISM_WORKER_SHUTDOWN_TIMEOUT_MS: '30' }, stdio: ['ignore', 'pipe', 'pipe'],
++        SWARM_CONFIG: await authoredConfig(t, 30) }, stdio: ['ignore', 'pipe', 'pipe'],
+     });
+     let stderr = ''; child.stderr!.setEncoding('utf8'); child.stderr!.on('data', data => { stderr += String(data); });
+     const exit = once(child, 'exit') as Promise<[number | null, NodeJS.Signals | null]>;
+diff --git a/skills/prism/tests/worker-shutdown-boundaries.test.mts b/skills/prism/tests/worker-shutdown-boundaries.test.mts
+index 098fd0b0..334aef76 100644
+--- a/skills/prism/tests/worker-shutdown-boundaries.test.mts
++++ b/skills/prism/tests/worker-shutdown-boundaries.test.mts
+@@ -1,3 +1,4 @@
++import { fileURLToPath } from 'node:url';
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import { createServer as createTcpServer, type Socket } from 'node:net';
+@@ -71,7 +72,7 @@ test('invalid service deadline cannot stop a healthy listener; configuration own
+     const response = await fetch(new URL('/bootstrap', f.origin)); assert.equal(response.status, 200); await response.body?.cancel();
+   }
+   await f.worker.shutdown(1500);
+-  const environment = { WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' };
++  const environment = { SWARM_CONFIG: fileURLToPath(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)), WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' };
+   assert.equal(loadWorkerConfig(environment).shutdownTimeoutMs, 120_000);
+   for (const value of ['', '0', '-1', '1.5', 'NaN', 'Infinity', '2147483648']) {
+     assert.throws(() => loadWorkerConfig({ ...environment, PRISM_WORKER_SHUTDOWN_TIMEOUT_MS: value }), /PRISM_WORKER_SHUTDOWN_TIMEOUT_MS/u);
+diff --git a/tests/verification/deployment/argocd-chart-order.test.mjs b/tests/verification/deployment/argocd-chart-order.test.mjs
+index c7b7ef6f..6ac23777 100644
+--- a/tests/verification/deployment/argocd-chart-order.test.mjs
++++ b/tests/verification/deployment/argocd-chart-order.test.mjs
+@@ -6,7 +6,7 @@ import { loadAll } from 'js-yaml';
+ const helm = process.env.HELM_BIN ?? 'helm';
+ const render = (chart, options = []) => loadAll(execFileSync(helm,
+   ['template', 'gitops-check', `charts/${chart}`, ...options], { encoding: 'utf8' })).filter(Boolean);
+-const prism = ['-f', 'charts/prism/ci-values.yaml'];
++const prism = ['-f', 'charts/prism/ci-values.yaml', '--namespace', 'default'];
+ const wave = resource => Number(resource.metadata.annotations?.['argocd.argoproj.io/sync-wave'] ?? 0);
+ 
+ test('Prism database and migration prerequisites precede its Argo migration hook and all application deployments', () => {
+diff --git a/tests/verification/deployment/prism-native-runtime.test.mjs b/tests/verification/deployment/prism-native-runtime.test.mjs
+index 2ae48971..aeb95302 100644
+--- a/tests/verification/deployment/prism-native-runtime.test.mjs
++++ b/tests/verification/deployment/prism-native-runtime.test.mjs
+@@ -30,7 +30,10 @@ test('actual Prism Helm render binds V3 producer, supervisor, NRI selection and
+     assert.equal(nri.roles.prism.container, supervisor.name); assert.equal(nri.roles.prism.namespace, 'kubeclaw');
+     assert.equal(worker.spec.template.metadata.annotations['kubeclaw.dev/native-worker-role'], 'prism');
+     assert.equal(spec.terminationGracePeriodSeconds, 150);
+-    assert.equal(supervisor.env.find(item => item.name === 'PRISM_WORKER_SHUTDOWN_TIMEOUT_MS').value, '120000');
++    assert.equal(supervisor.env.find(item => item.name === 'SWARM_CONFIG').value, '/etc/kubeclaw/swarm/swarm.config.json');
++    const authored = JSON.parse(docs.find(doc => doc?.kind === 'ConfigMap' && doc.metadata.name === 'prism-swarm-config').data['swarm.config.json']);
++    assert.equal(authored.operator.prism.worker.shutdownTimeoutMs, 120000);
++    assert.equal(supervisor.env.find(item => item.name === 'PRISM_WORKER_SHUTDOWN_TIMEOUT_MS'), undefined);
+     assert.equal(supervisor.env.find(item => item.name === 'PRISM_NATIVE_CLOSE_TIMEOUT_MS').value, '105000');
+     assert.equal(worker.spec.strategy.type, 'Recreate'); assert.equal(worker.spec.replicas, 1);
+     assert.deepEqual(spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms,
+diff --git a/tests/verification/reliability/buster-terminal-workspace-native.test.mts b/tests/verification/reliability/buster-terminal-workspace-native.test.mts
+index a183840a..4e843fd8 100644
+--- a/tests/verification/reliability/buster-terminal-workspace-native.test.mts
++++ b/tests/verification/reliability/buster-terminal-workspace-native.test.mts
+@@ -36,3 +36,60 @@ test('terminal cleanup unlinks a leaf symlink without deleting its target and re
+     await cleanupTerminalWorkspace(path.join(root, 'already-absent'));
+   } finally { fs.rmSync(root, { recursive: true, force: true }); }
+ });
++
++test('terminal cleanup rejects symlinks in ancestors of the job root', async () => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-cleanup-ancestor-'));
++  try {
++    const target = path.join(root, 'target');
++    fs.mkdirSync(path.join(target, 'job'), { recursive: true });
++    fs.writeFileSync(path.join(target, 'job', 'repository.tar.gz'), 'foreign archive');
++    fs.symlinkSync(target, path.join(root, 'linked'));
++    await assert.rejects(cleanupTerminalWorkspace(path.join(root, 'linked', 'job')), /BUSTER_TERMINAL_WORKSPACE_PARENT_INVALID/);
++    assert.equal(fs.readFileSync(path.join(target, 'job', 'repository.tar.gz'), 'utf8'), 'foreign archive');
++  } finally { fs.rmSync(root, { recursive: true, force: true }); }
++});
++
++for (const replaced of ['job', 'workspace'] as const) {
++  test(`terminal cleanup stays on original directory after ${replaced} is replaced during deletion`, async context => {
++    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-cleanup-replaced-'));
++    const job = path.join(root, 'job'); const foreign = path.join(root, 'foreign');
++    const archived = path.join(root, 'original');
++    const disposable = ['repository.tar.gz', 'workspace/repository/source.ts', 'workspace/test-provider-snapshots/provider.js'];
++    const retained = ['result.json', 'workspace/evidence/proof.json', 'workspace/scratch/task.log'];
++    try {
++      for (const directory of [job, foreign]) {
++        for (const name of [...disposable, ...retained]) {
++          const file = path.join(directory, name);
++          fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, `${directory}:${name}`);
++        }
++      }
++      const originalRemove = fs.promises.rm;
++      let changed = false;
++      // Pause at the real deletion boundary, replace a parent on disk, then use
++      // the original fs implementation. No mocked deletion or fake success.
++      context.mock.method(fs.promises, 'rm', async (...args: Parameters<typeof fs.promises.rm>) => {
++        if (!changed) {
++          changed = true;
++          const original = replaced === 'job' ? job : path.join(job, 'workspace');
++          const replacement = replaced === 'job' ? foreign : path.join(foreign, 'workspace');
++          fs.renameSync(original, archived); fs.symlinkSync(replacement, original);
++        }
++        return originalRemove(...args);
++      });
++      await cleanupTerminalWorkspace(job);
++      context.mock.restoreAll();
++      assert.equal(changed, true);
++      for (const name of [...disposable, ...retained]) {
++        assert.equal(fs.readFileSync(path.join(foreign, name), 'utf8'), `${foreign}:${name}`);
++      }
++      const originalWorkspace = replaced === 'job' ? path.join(archived, 'workspace') : archived;
++      assert.equal(fs.existsSync(path.join(originalWorkspace, 'repository')), false);
++      assert.equal(fs.existsSync(path.join(originalWorkspace, 'test-provider-snapshots')), false);
++      assert.equal(fs.readFileSync(path.join(originalWorkspace, 'evidence/proof.json'), 'utf8'), `${job}:workspace/evidence/proof.json`);
++      assert.equal(fs.readFileSync(path.join(originalWorkspace, 'scratch/task.log'), 'utf8'), `${job}:workspace/scratch/task.log`);
++      const originalJob = replaced === 'job' ? archived : job;
++      assert.equal(fs.readFileSync(path.join(originalJob, 'result.json'), 'utf8'), `${job}:result.json`);
++      assert.equal(fs.existsSync(path.join(originalJob, 'repository.tar.gz')), false);
++    } finally { context.mock.restoreAll(); fs.rmSync(root, { recursive: true, force: true }); }
++  });
++}
+diff --git a/tests/verification/reliability/http-authority.test.mts b/tests/verification/reliability/http-authority.test.mts
+index d3f73996..0c817263 100644
+--- a/tests/verification/reliability/http-authority.test.mts
++++ b/tests/verification/reliability/http-authority.test.mts
+@@ -3,6 +3,7 @@ import { test } from 'node:test';
+ import http from 'node:http';
+ import { once } from 'node:events';
+ import { NetworkHttpCapabilityInvoker } from '../../../skills/buster/engine/test-gates/network-http-runtime.ts';
++import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
+ 
+ test('suffix matching cannot contact an unrelated real HTTP service; exact origin works and redirects stop', async () => {
+   let contacts = 0;
+@@ -17,10 +18,13 @@ test('suffix matching cannot contact an unrelated real HTTP service; exact origi
+   const options = { allowedOrigins: [], allowedHostSuffixes: ['.0.0.1'], allowedPorts: [port], maximumResponseBytes: 4096, maximumExecutionMs: 2000 };
+   const request = (method: string, route = '/') => ({ operation: 'request', resource: { type: 'network.url', canonicalId: origin + route }, payload: { method } });
+   try {
+-    const restricted = new NetworkHttpCapabilityInvoker(options);
++    const restricted = createBusterCapabilityRuntime({ allowedCapabilities: new Set(['network.http']), networkHttp: options },
++      { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }).invoker!;
+     for (const method of ['GET', 'HEAD']) await assert.rejects(restricted.invoke('network.http', request(method), new AbortController().signal), /HTTP_REQUEST_EXACT_ORIGIN_REQUIRED/);
+     assert.equal(contacts, 0);
+-    const allowed = new NetworkHttpCapabilityInvoker({ ...options, allowedOrigins: [origin] });
++    const allowed = createBusterCapabilityRuntime({ allowedCapabilities: new Set(['network.http']),
++      networkHttp: { ...options, allowedOrigins: [origin] } },
++    { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }).invoker!;
+     const response = await allowed.invoke('network.http', request('GET'), new AbortController().signal);
+     assert.equal(response.body, 'real service response');
+     assert.equal(contacts, 1);

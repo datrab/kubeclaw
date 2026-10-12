@@ -1,0 +1,247 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+    "beforeSha256": "57f5f68231777a113c01773a33c350cbbb2746e97ad8aad4538b455427585ff4",
+    "afterSha256": "a04de312879696876c9bf92b084b157155152d26e86bfa3023896ca8c53426f1",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+    "beforeSha256": "eabc4f6e65db3e282269a063570397365cfb22547c22071bfd2c41a830b49fc1",
+    "afterSha256": "6f0742e73bb03100a5ef611b7a160a400f6383d7a36dc81ed341c5a493132c4e",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "beforeSha256": "606b462f6e88e7e58f393e17d936353376a4095a89a93690f47a299b54c8e7ea",
+    "afterSha256": "d2e81938db163ec92bd021a047f30aa5bec06549f01f15f794ff360ecec58820",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "docs/operations/operator-configuration.md",
+    "beforeSha256": "08b9eebb134be85c0a941a56f711c958ea1c2916bc987d82345e8a906a574e4d",
+    "afterSha256": "c2242d7e8fb09e851903a4402ef230a2dd2039f699b7ee075ee823a22ea3e619",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "package.json",
+    "beforeSha256": "eb66db873134fa399d946af2ed80ad77d186806e140a19b78d68f18f8f79df1b",
+    "afterSha256": "e6fcfe751eb82779aa52a74558c2173fa72168ee77c873f63b7fb681de16e0c4",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-config-values.ts",
+    "beforeSha256": "eb4d8a252517506fdc096a017d1b807d194b88bfa21605900792ca4810efe148",
+    "afterSha256": "b18d1684d25bae992b70c9e99910dc36a3015dbcef0ea72a6c0ee19dfdc27792",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "beforeSha256": "e9041c22bade59059c4d92de9035e9eacacf6d7b6a71ef5c4cdd5cadd1e4c0c2",
+    "afterSha256": "53f4d9d8ca4d66d1ce077a4bb40df389e7ebc040b4813db8055987dce5c46c4d",
+    "liveBaselineMatches": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "beforeSha256": "2f4d8f0d305a1ad8f0404f03aca89b3d320d6df869c0d95833727fcae4fa9c0f",
+    "afterSha256": "39fae2ef7c97b92259f1e1193a91e969b405c31b6970d51c8c0f7765fbb1f2bb",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "beforeSha256": "8e415809e2b38a402d55da5cccb1aa0c89c8a9ae0e31b6ce8cc7b332c9b7b150",
+    "afterSha256": "8d31713e1a4ff4b14a9c98ee2616ee48dc0336a67a01e2ddec915a602f67fd09",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "beforeSha256": "d0dc8f6348ffc8a46f8693632b45f26224eefaac96d844fee8f0357e4ad6258d",
+    "afterSha256": "fbfddf5396dcb1ac90c7c2296613641b917d4d4a27468e4e7362c5a622ae1f8c",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "beforeSha256": "8a7f137964b58b6e97c7d7b2182dfd3365c4fd2cb06ba0eb493620a1b2133617",
+    "afterSha256": "8e5398a1681bbb6c89ee519d45fe12db63b9871a37ab1bd49cb8ecb65c405602",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-admission.mts",
+    "beforeSha256": "b098446f00fa489ca37a3ee29fff5b3f44861bd35da006390f351709a9e61470",
+    "afterSha256": "65a81daae9d2b924bd8ec33c36a443825a26afe862f77825259827fe3f5c9200",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+    "beforeSha256": null,
+    "afterSha256": "6882e383cb3ddd4da247073791d29d273c943dbf394c3944b0d7fe35665968d0",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-readiness-profile.mts",
+    "beforeSha256": null,
+    "afterSha256": "fbf7d6db71a52b117f924df7488d186b7ebae22572f85da532cd6624bc6a7ca8",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-container-build-production.mts",
+    "beforeSha256": "bcd5ffa51f323a4ce25dc4ed633bfed8b394a5cc24e6a7923d4e4cfdbdfcf48f",
+    "afterSha256": "b46d220db76505a731c22a0465bf1ee2bd87c7378e865266472a02759b0bf4ee",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+    "beforeSha256": "648a6c3ca397c71ff9cfeaee6166ab54ae41ecdfe792ee86099db5e3fdf9bbab",
+    "afterSha256": "33999fd059678e30e8e497b60283157eaa5bfae828bb8522b473ff006dfc4879",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+    "beforeSha256": "7cf1ef1d3d5d38b9a47ed16db9085765d0c027464a0a9770f7e9ea8c5d8730e5",
+    "afterSha256": "354c548fa084428b3f9f44f7aa47d579617a61fffc480a465db45219e13d2f23",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+    "beforeSha256": "de82aed1410fe23ee7b661d0259ee058666e7c5ab52927fa035c61d787966843",
+    "afterSha256": "0f60a8d996fbe02db074e2731b42f8a8e74548e13f718d219d632b2c622f71eb",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+    "beforeSha256": "017832d2e275aac8f97502598fce1e5da2a2eac553f7f489e671405048799790",
+    "afterSha256": "d0068337fa1a3e3215f9089af80d7ac7f946855476c92bb49c561fd952ec8a68",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+    "beforeSha256": "07b6e4bac547572d7366cdbbc465c6f2f07247a95a698cbf94fcbdafab832ed2",
+    "afterSha256": "53ee533eeb630a1dcb2ca3094dba406938d22026038e0ac7c02c9ed73a0e46df",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "beforeSha256": "e641b948846fe282f8aecfbd51ba3cacf6246de8385d4e1089ac0ebdaa16c850",
+    "afterSha256": "ae543e13e21df5fc6b2616e9a2b637d6150577517bff58d1387cff5ab447191d",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "beforeSha256": "b0945a115cf4db8c8914e7c43d78593c2ca1171f0c16d0a18b4012a2348bda0f",
+    "afterSha256": "b702b32bef4db80aa1cf5b5f32e9e005c061dbbb177691d367f14ea47a6164e1",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+    "beforeSha256": "8858e0c29405a91e1dff974266882890468a8ae6286dc72108701d15e5a96783",
+    "afterSha256": "b666effbfaa33240f82e837447c44e5772462c6de66830918628f8a828c3073a",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+    "beforeSha256": "2806557ad5a461c55c5fc6ceec544fee59ed3288c12478ff4fb2f60cbbdeebc3",
+    "afterSha256": "9b95880bdc1e897250fff1200564e609652ea17be78f6495650fe3d10d3c98cf",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+    "beforeSha256": "5162a93485d7eebf0a96353f1c5c57d9c94e0f0a473a96178ddab6c6f0cb6a47",
+    "afterSha256": "c83192b39b688cd94bb997788f04fb4cd02d1ed8b458875ec197e2948b625615",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+    "beforeSha256": "f94654a16328fdd3669a586402b271003b6d5c62781346316af3bd2e3ea0e798",
+    "afterSha256": "054ebcdc8f17692f4edfe3b01cc4369728f9d1b9cdec38938777f7eb50c787b0",
+    "liveBaselineMatches": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/deployment/buster-readiness-config.test.mjs",
+    "beforeSha256": null,
+    "afterSha256": "ba08feae8f78bf05f2a3c7fa82bf72ec1f1f5a3ff016e5af7794c8ebe72c8e29",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/deployment/buster-readiness.test.mts",
+    "beforeSha256": "e9a61c6085469644632f508bb5acbbdc8110d4e041e2ac166b661a568b963f66",
+    "afterSha256": "3ce59e6867be75b73db550b2b8fe421112d9fe0a36eab03e2dba50bb60226545",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/reliability/buster-job-compaction.test.mts",
+    "beforeSha256": "b11b7191f635dfae7f30dc93018daf8b0767787bebc613b98aa0b2e43346389b",
+    "afterSha256": "fe86fe28f882c197a0c17d4ed91b42a38bae7666d7e7834eaedd36774aea54f4",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/reliability/buster-readiness-config.test.mts",
+    "beforeSha256": null,
+    "afterSha256": "7d48c0768760d7cb813a62e103b5e1fded3196c6b1c9cb49ded6cc53408f67c9",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/reliability/buster-readiness-consumer.test.mts",
+    "beforeSha256": null,
+    "afterSha256": "34af0ed326455a7205835378cb9d202992c102d9d311e9e0989bd23d1f7ae392",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "beforeSha256": "c36239672adce29078981070228740d84705a8f7caaa4fc191e4e150b238bd7f",
+    "afterSha256": "9fad2a1206cf4b07003c29a6c5c10e108586f0de7d7577b9d49cb94b1006bff4",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/reliability/coverage-remote.test.mts",
+    "beforeSha256": "6f09d7356e99bd919279de4b1b379cf360dc328d0d872817947f761cd879e339",
+    "afterSha256": "70a24aa0e2c342ec218b3b420982d003ab991f654a1a38efed42fed207759bc4",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "beforeSha256": "781ec998f49a915227e63e114ece006539716e51707041db059082fe1e98c61f",
+    "afterSha256": "e66a6784aaf130ce1df92e6be934d00a57e6a16c83a96d100c67046108d9f5eb",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/reliability/tsconfig.buster-readiness.json",
+    "beforeSha256": null,
+    "afterSha256": "36a2ddc30e5e85105583f47eb896f93b701cafc73fb47f7d75adf5161c839179",
+    "liveBaselineMatches": true,
+    "liveSymlink": null
+  }
+]

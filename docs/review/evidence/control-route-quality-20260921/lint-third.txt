@@ -1,0 +1,9 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/baseline-previews.ts
+  38:1  error  Async function 'renderBaselinePreview' has too many lines (63). Maximum allowed is 60  max-lines-per-function
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/dispatch-route.ts
+  28:1  error  Async function 'dispatchDesign' has too many lines (65). Maximum allowed is 60  max-lines-per-function
+
+✖ 2 problems (2 errors, 0 warnings)
+

@@ -1,0 +1,12 @@
+✔ full process policy reaches real child I/O with only scope limits allocated (98.237245ms)
+✔ process input budget rejects before allocating a scope (0.963244ms)
+✔ real child output and deadline still use the complete process policy (183.743761ms)
+✔ modeled measured CPU policy remains enforced after scope projection (14.240866ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 543.788812

@@ -1,0 +1,44 @@
+libacl1 2.3.2-2+b1
+libapparmor1 4.1.0-1
+libaudit-common 1:4.0.2-2+deb13u1
+libaudit1 1:4.0.2-2+deb13u1
+libblkid1 2.41.5-0+deb13u1
+libbpf1 1:1.5.0-3
+libc6 2.41-12+deb13u4
+libcap2 1:2.75-10+deb13u1+b3
+libcrypt1 1:4.4.38-1
+libelf1t64 0.192-4
+libgcrypt20 1.11.0-7+deb13u1
+libgpg-error0 1.51-4
+libkmod2 34.2-2
+liblz4-1 1.10.0-4
+liblzma5 5.8.1-1+deb13u1
+libmount1 2.41.5-0+deb13u1
+libpam0g 1.7.0-5
+libpcre2-8-0 10.46-1~deb13u2
+libseccomp2 2.6.0-2
+libselinux1 3.8.1-1
+libssl3t64 3.5.7-1~deb13u2
+libsystemd-shared 257.13-1~deb13u1
+libsystemd0 257.13-1~deb13u1
+libzstd1 1.5.7+dfsg-1
+openssl-provider-legacy 3.5.7-1~deb13u2
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/systemd-parser-isolated-20260921/prepare-debian.py", line 34, in <module>
+    with tarfile.open(fileobj=io.BytesIO(body),mode='r:*') as archive:archive.extractall(root,filter='data')
+                                                                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/tarfile.py", line 2471, in extractall
+    tarinfo, unfiltered = self._get_extract_tarinfo(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        member, filter_function, path)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/tarfile.py", line 2561, in _get_extract_tarinfo
+    self._handle_fatal_error(e)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.14/tarfile.py", line 2559, in _get_extract_tarinfo
+    filtered = filter_function(unfiltered, path)
+  File "/usr/lib/python3.14/tarfile.py", line 893, in data_filter
+    new_attrs = _get_filtered_attrs(member, dest_path, True)
+  File "/usr/lib/python3.14/tarfile.py", line 860, in _get_filtered_attrs
+    raise AbsoluteLinkError(member)
+tarfile.AbsoluteLinkError: './etc/profile.d/70-systemd-shell-extra.sh' is a link to an absolute path

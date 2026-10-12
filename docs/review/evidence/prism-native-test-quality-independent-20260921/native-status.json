@@ -1,0 +1,11 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "verify:prism:native-worker"
+  ],
+  "exit": 1,
+  "reviewerDeadlineSeconds": 35,
+  "terminatedOwnProcessGroup": true,
+  "elapsedSeconds": 35.03216704702936
+}

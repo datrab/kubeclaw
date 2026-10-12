@@ -1,0 +1,5 @@
+{
+  "status": "not executed",
+  "cause": "Pre-write integration validation rejected missing kind metadata; subsequent probe rejected not-yet-integrated source. Neither executed a probe or changed source.",
+  "resolution": "Retain author manifest, add verified explicit regular-file metadata in separate integration manifest; rerun with fresh output directory."
+}

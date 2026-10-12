@@ -1,0 +1,14 @@
+✔ distinct valid modeled lifetimes reconcile without changing original persisted metadata (440.511381ms)
+✔ separately sealed success cannot hide abandoned cleanup ownership (361.456173ms)
+✔ separately sealed success cannot hide no-binding cleanup ownership (312.849713ms)
+✔ separately sealed success cannot hide populated cleanup ownership (348.820871ms)
+✔ separately sealed success cannot hide foreign-identity cleanup ownership (335.392149ms)
+✔ separately sealed success cannot hide different-counters cleanup ownership (332.268279ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2678.635253

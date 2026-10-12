@@ -1,0 +1,15 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "permit-unconfirmed",
+    "seconds": 67.47924283798784,
+    "semanticAcceptance": "pending actual named-assertion review"
+  }
+]

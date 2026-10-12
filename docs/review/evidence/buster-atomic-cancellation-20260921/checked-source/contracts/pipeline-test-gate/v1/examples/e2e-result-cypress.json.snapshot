@@ -1,0 +1,25 @@
+{
+  "schemaId": "kubeclaw.e2e-result.v1",
+  "schemaDigest": "sha256:fec4bcd487eb09590dee3c6d6228d6088963c5476747c8731db4d3a53a114637",
+  "values": {
+    "schemaVersion": "e2e-result.v1",
+    "provider": "cypress",
+    "targetOrigin": "https://preview.example.invalid",
+    "workers": 1,
+    "browserProjects": ["chrome"],
+    "testCases": [
+      {
+        "id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "title": "checkout completes",
+        "project": "chrome",
+        "browser": "chrome",
+        "status": "passed",
+        "attempts": 1,
+        "errors": []
+      }
+    ],
+    "counts": { "total": 1, "passed": 1, "failed": 0, "skipped": 0, "unexecuted": 0 },
+    "reportFormat": "cypress-json",
+    "resourceEnforcement": "cgroup-v2"
+  }
+}

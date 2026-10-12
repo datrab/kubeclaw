@@ -1,0 +1,4 @@
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-worker-launcher.c:5:10: fatal error: linux/magic.h: No such file or directory
+    5 | #include <linux/magic.h>
+      |          ^~~~~~~~~~~~~~~
+compilation terminated.

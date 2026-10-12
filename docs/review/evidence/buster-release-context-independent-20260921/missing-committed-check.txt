@@ -1,0 +1,42 @@
+MUTATION_APPLIED: remove Buster committed-resource preflight only
+✔ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (4963.354649ms)
+✔ imperative ownership guard fails closed and permits only other namespaces (0.74654ms)
+✔ committed bundle corruption, switched selection and hidden image changes fail before activation (4500.555703ms)
+✖ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (8895.724805ms)
+✔ root claim and retained workload tracking block imperative adoption after partial GitOps transitions (0.569164ms)
+✔ original runtime teardown commands stop before any Helm mutation when Argo owns the namespace (297.777357ms)
+✔ Buster export requires the supplied native binding before publishing a bundle (2385.666871ms)
+walk.go:75: found symbolic link in path: /tmp/release-helm-EDJkKm/charts/prism/files/config/swarm.config.json resolves to /tmp/release-helm-EDJkKm/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/release-helm-EDJkKm/charts/prism/files/config/swarm.schema.json resolves to /tmp/release-helm-EDJkKm/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+✔ release selection rejects missing, duplicate and cross-commit build receipts (16.571987ms)
+✔ generated release values render actual Helm charts with immutable role and sidecar references (1364.04614ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22769.457298
+
+✖ failing tests:
+
+test at tests/verification/deployment/gitops-release.test.mjs:153:1
+✖ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (8895.724805ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:209:10
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:45:5)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:153:122)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /NATIVE_BUSTER_POLICY_MISMATCH/,
+    operator: 'throws',
+    diff: 'simple'
+  }

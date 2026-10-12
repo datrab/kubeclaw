@@ -1,0 +1,72 @@
+# Ownership terminal metadata capacity
+
+Pre-implementation acceptance, 2026-09-21. This follows the metadata exhaustion
+finding in the [independent topology review](independent-native-topology-20260921.md).
+The drain correction protects known processes when persistence fails. It does
+not ensure that an admitted attempt can persist its terminal evidence within an
+unchanged metadata quota. This remaining NT2/F6 capacity work is open.
+
+## Required behavior
+
+- TC1: New ownership and child admission reserve sufficient bytes for all
+  already admitted records to reach their permitted terminal representations.
+  Admission uses the same durable store lock as the write. Concurrent admissions
+  cannot consume another attempt's reserved terminal capacity.
+- TC2: Derive the byte bound from the actual validated representation and
+  canonical serializer. Cover JSON escaping, bindings, observations, diagnosis,
+  revision growth, host identity, retained children and the enclosing document.
+  Do not add arbitrary padding, raise configured quotas, or shorten accepted
+  identity/diagnosis inputs to make tests pass.
+- TC3: All previously accepted historical formats remain readable. Existing
+  records that already exceed the prospective capacity commitment can still
+  attempt safe drain and valid lifecycle writes within the actual byte ceiling.
+  They cannot authorize further unbudgeted admission. Do not claim that a
+  previously saturated store becomes recoverable without available space.
+- TC4: Terminal capacity is a byte reservation, not permission to synthesize
+  counters, delete history, release a pool reservation early, or skip identity
+  checks. Duplicate reservation, CAS, immutable binding and terminal replay
+  behavior remain intact. Actual write failures retain the independently
+  reviewed safe-drain behavior.
+- TC5: Prove the boundary with the real filesystem store and real locking:
+  exact-fit and one-byte-short admission; competing owners and children;
+  worst-case escaped diagnosis and maximum valid numeric observations;
+  reopened stores; and preexisting overcommitted records. Preserve original
+  ownership/child/CAS tests and include negative controls that remove the
+  reservation or omit a growing field. Scope-method models must be identified
+  as such; they are not native kernel evidence.
+- TC-DOC: Update the operator runbook, capacity implications, implementation
+  status and independent review. Explain why effective concurrent capacity may
+  be lower than the record-count ceiling. Keep legacy exhaustion, physical I/O
+  failure and unavailable real-host proof explicit.
+
+## Representation constraints inspected before implementation
+
+The current decoder bounds diagnosis at 4,096 UTF-16 code units. JSON can encode
+each unit using six ASCII bytes, so diagnosis alone may require 24,578 bytes
+including quotes. Valid control characters can reach this bound; counting
+characters as UTF-8 bytes is not safe for their canonical JSON representation.
+The canonical serializer rejects isolated surrogates even though the diagnosis
+field validator does not itself check well-formed Unicode. Preserve that
+distinction when testing accepted values and rejected writes.
+
+Bindings contain a fixed-format boot UUID, scope name and nonnegative safe
+integer device/inode values. Observations contain five nonnegative safe integer
+counters, the fixed `linux-tasks` unit and a boolean. Revision is a positive safe
+integer. Identity and existing child names/limits are immutable and their actual
+serialized sizes can be charged. A reserved child can acquire a binding later;
+future children require separate admission. A null host identity may later become
+up to 256 permitted ASCII characters. Historical v1/v2 data decode into the v3
+in-memory representation, whose serialized size must be considered on writes.
+
+An implementation may calculate a conservative maximal representation without
+persisting it. Such a calculation is accounting only: it must never be exposed
+as observed kernel identity or counters. Terminal records with no permitted
+future transition need their retained actual bytes, not fictitious future growth.
+
+The existing 64 MiB default and record-count limit are independent ceilings.
+Reserving the full accepted diagnosis domain has a material concurrency cost;
+that cost must be measured and documented instead of concealed by raising the
+quota. Choosing a different diagnostic representation would be a separate
+explicit contract change, not a shortcut in this correction.
+
+No implementation or acceptance is claimed by this document.

@@ -47,7 +47,7 @@ export async function sourceApprovalFixture(root, clean = false, findingSeverity
   const allArtifacts = { allowedNamespaces: ['kubeclaw.architecture-validator','kubeclaw.human-approval','kubeclaw.blueprint-sync','kubeclaw.implementation-agent'] };
   const read = { allowedPrefixes: ['.'] }; const mutate = { allowedRoots: [repository, workspaces] };
   const workspace = { ...mutate, allowedWorkspaceRoots: [workspaces] };
-  const platform = { schemaVersion: 'pipeline-platform.v2', installationRoots: [installation], trustedBuiltinRoots: [installation], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
+  const platform = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [installation], trustedBuiltinRoots: [installation], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: { 'artifacts.read':'kubeclaw.artifact-store:artifact-store','artifacts.write':'kubeclaw.artifact-store:artifact-store','signal.wait':'kubeclaw.wait-store:waits','operator.request':'kubeclaw.operator-messaging:operator',
       'network.http':'kubeclaw.network-http:http','secrets.read':'kubeclaw.secret-resolver:secrets','runtime.dispatch':'kubeclaw.runtime-dispatch:runtime','git.repository.read':'kubeclaw.repository-adapter:repository',
       ...Object.fromEntries(['git.workspace.create','git.workspace.remove','git.sync','git.commit','git.merge'].map(cap => [cap,'kubeclaw.git-workspace:git'])), 'state.append':'kubeclaw.state-store:state' },

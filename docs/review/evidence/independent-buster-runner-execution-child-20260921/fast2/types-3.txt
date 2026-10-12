@@ -1,0 +1,1 @@
+skills/common/plugin-runtime/foundation/config/buster-execution.ts(67,29): error TS2345: Argument of type '"buster-execution-observation"' is not assignable to parameter of type '"buster-preparation" | "buster-admission" | "buster-dependency-readiness" | "buster-execution" | "buster-observation"'.

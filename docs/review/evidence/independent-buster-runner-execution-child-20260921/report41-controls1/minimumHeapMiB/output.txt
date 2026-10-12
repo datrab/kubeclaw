@@ -1,0 +1,32 @@
+✖ default Runner report child consumes minimumHeapMiB (881.445946ms)
+✔ default Runner report child consumes heapFraction (650.834987ms)
+✔ Runner rejects incoherent report runtimeMemoryReserveBytes before effects (31.339551ms)
+✔ Runner rejects incoherent report minimumOpenFiles before effects (7.205007ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4937.816654
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-report-runner-policy.test.mjs:153:57
+✖ default Runner report child consumes minimumHeapMiB (881.445946ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(observed.args.includes(`--max-old-space-size=${heap}`))
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-report-runner-policy.test.mjs:169:5)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

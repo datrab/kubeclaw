@@ -1,0 +1,158 @@
+[
+  {
+    "name": "probes",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes.mts"
+    ],
+    "environmentOverrides": {},
+    "exitCode": 0
+  },
+  {
+    "name": "mutant-post-bind-fence",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/mutate.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes.mts"
+    ],
+    "environmentOverrides": {
+      "REVIEW_MUTATION": "post-bind-fence"
+    },
+    "exitCode": 1
+  },
+  {
+    "name": "mutant-helper-serialization",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/mutate.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes.mts"
+    ],
+    "environmentOverrides": {
+      "REVIEW_MUTATION": "helper-serialization"
+    },
+    "exitCode": 1
+  },
+  {
+    "name": "mutant-child-cas",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/mutate.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes.mts"
+    ],
+    "environmentOverrides": {
+      "REVIEW_MUTATION": "child-cas"
+    },
+    "exitCode": 1
+  },
+  {
+    "name": "mutant-local-event-mount",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/mutate.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-owned-children.test.mts"
+    ],
+    "environmentOverrides": {
+      "REVIEW_MUTATION": "local-event-mount"
+    },
+    "exitCode": 1
+  },
+  {
+    "name": "original-node-pools",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "/usr/local/lib/node_modules/npm/bin/npm-cli.js",
+      "run",
+      "verify:worker-core:node-pools"
+    ],
+    "environmentOverrides": {},
+    "exitCode": 1
+  },
+  {
+    "name": "original-ownership-cancellation-observation",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-ownership-store.test.mts",
+      "tests/verification/reliability/worker-observation-durability.test.mts",
+      "tests/verification/reliability/worker-native-observation.test.mts",
+      "tests/verification/reliability/worker-native-cancellation.test.mts",
+      "tests/verification/reliability/worker-native-launcher.test.mts"
+    ],
+    "environmentOverrides": {},
+    "exitCode": 1
+  },
+  {
+    "name": "original-native-scope",
+    "argv": [
+      "npm",
+      "run",
+      "verify:worker-core:native-scope"
+    ],
+    "environmentOverrides": {},
+    "exitCode": 1
+  },
+  {
+    "name": "original-launch-cancellation-children",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/native-process-cancellation.test.mts",
+      "tests/verification/reliability/native-process-launches.test.mts",
+      "tests/verification/reliability/worker-owned-children.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "probes-with-quota-diagnostic",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes.mts"
+    ],
+    "exitCode": 0
+  }
+]

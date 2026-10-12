@@ -1,0 +1,25 @@
+{"fixture":"terminal-persistence-cut","timing":"during","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"cancelled","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: during (1714.532998ms)
+{"fixture":"terminal-persistence-cut","timing":"after","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"failed","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: after (1178.08583ms)
+{"fixture":"terminal-persistence-cut","timing":"queued","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"failed","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: queued (932.73427ms)
+{"fixture":"terminal-persistence-cut","timing":"admission","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: admission (1402.327458ms)
+{"fixture":"terminal-persistence-cut","timing":"read-failure","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: read-failure (710.874524ms)
+{"fixture":"terminal-persistence-cut","timing":"healthy-terminal","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: healthy-terminal (963.847805ms)
+✔ original remote Buster skipped execution cannot fulfil required coverage at the same Git candidate (3369.137902ms)
+✔ result admission reserves capacity across competing processes and reconstruction (11909.182496ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 37691.215092

@@ -205,13 +205,61 @@ node --test tests/verification/deployment/runtime-tool-locks.test.mjs tests/veri
 These tests compare two actual isolated Python installations and two actual Go
 builds, and reject deliberately wrong hashes. They are not two complete image
 builds. ARM64 wheel resolution/installation does not prove ARM64 execution.
-Playwright's npm version fixes browser revisions, but independently verified
-browser archive hashes remain unfinished. Trivy's deliberate database refresh
-also remains a separate data input: its freshness gate and observed database
-hashes do not make two different refreshes identical. IFR-21-001 stays open.
+Playwright's npm version fixes browser revisions; selected browser archives now
+have verified byte identities as described below. Trivy database manifests, layers,
+database files and metadata are now pinned in `versions.json`; the generated
+`docker/trivy-databases.lock.json` binds them to the scanner version. The Buster
+build verifies these bytes without resolving mutable tags. Follow the
+[explicit database update procedure](local-image-vulnerability-scan.md#offline-buster-job-databases)
+before their source-age limit. Different reviewed database updates intentionally
+select different bytes. Complete image comparisons and tools exercised inside
+those images remain outstanding; IFR-21-001 stays open.
 
 For complete image acceptance, preserve the architecture and builder settings,
 selected browser/database bytes, complete package inventory/SBOM and output
 manifests for two isolated builds. Compare software identities and classify
 metadata/provenance and intentional data-refresh differences. Continue deploying
 only the accepted output digest through the existing release-selection path.
+
+### Playwright browser archives
+
+Buster and Prism install Debian 12 browser archives through
+`scripts/browser-archive-lock.mjs`. `versions.json` owns each archive's exact URL,
+SHA-256, size and installed layout for amd64 and arm64. The generated
+`docker/browser-archives.lock.json` derives the Playwright version from
+`package-lock.json`; do not edit it independently. Buster installs Chromium,
+Chromium headless shell, Firefox, WebKit and FFmpeg. Prism installs Chromium,
+Chromium headless shell and FFmpeg. The original Playwright `install-deps` command
+installs OS packages from each image's configured Debian snapshot.
+
+To update after an intentional npm Playwright upgrade:
+
+1. Run `npm ci --ignore-scripts` with the reviewed package lock.
+2. Create the parent cache directory if needed, then run
+   `node scripts/browser-archive-lock.mjs --resolve node_modules/.cache/browser-update-NEW`.
+   The output directory must be absent. This downloads all ten real archives
+   from the first URL selected by the installed Playwright registry and writes
+   `browserArchives.json` only after every download succeeds. `progress.json`
+   is diagnostic partial output, never an installable lock.
+3. Review URLs, revisions and platform layouts. Independently verify the saved
+   archive hashes and sizes, then replace only `versions.json.browserArchives`
+   with the complete resolved object. Run `npm run versions:sync` and review the
+   generated diff together with the npm lock change.
+4. Run `node --test scripts/tests/browser-archive-lock.test.mjs` and
+   `npm run versions:check`, build both role images on both architectures, and
+   exercise their browser runtime checks. Archive verification and extraction
+   alone do not establish that a browser launches or that the complete image is
+   reproducible.
+
+Image builds reject version/registry/lock drift before downloading. Downloaded
+bytes must match both size and hash before Playwright's original ZIP extractor
+runs. There is no alternate URL fallback. A changed or unavailable upstream
+archive fails the build and requires an explicit reviewed update.
+
+Installation requires an absent destination and owns an exclusive sibling
+`<destination>.installing` directory while constructing the complete browser
+set. Normal errors remove that owned temporary directory. A killed build can
+leave it behind; discard the failed image build layer and rerun. When invoking
+manually, verify no installer owns it before removing that specific temporary
+directory. Never delete an existing browser destination to bypass this check.
+Publication is atomic filesystem rename; power-loss durability is not claimed.

@@ -1,0 +1,47 @@
+[
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "8e5398a1681bbb6c89ee519d45fe12db63b9871a37ab1bd49cb8ecb65c405602",
+    "capturedAfterBRIntegration": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "sha256": "fbfddf5396dcb1ac90c7c2296613641b917d4d4a27468e4e7362c5a622ae1f8c",
+    "capturedAfterBRIntegration": true
+  },
+  {
+    "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+    "sha256": "a04de312879696876c9bf92b084b157155152d26e86bfa3023896ca8c53426f1",
+    "capturedAfterBRIntegration": true
+  },
+  {
+    "path": "charts/prism/templates/_swarm-bundle.tpl",
+    "sha256": "6f0742e73bb03100a5ef611b7a160a400f6383d7a36dc81ed341c5a493132c4e",
+    "capturedAfterBRIntegration": true
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "sha256": "bade10bab0cc111f8fec4e1c2166e949549b2880f0e800b8c61f455ad8885d92",
+    "capturedAfterBRIntegration": true
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "39fae2ef7c97b92259f1e1193a91e969b405c31b6970d51c8c0f7765fbb1f2bb",
+    "capturedAfterBRIntegration": true
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+    "sha256": "47cc40152c08273b3dae3cc4e192f7662936d9f9b16f857a020eab89e4423c3f",
+    "capturedAfterBRIntegration": true
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-loader.ts",
+    "sha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+    "capturedAfterBRIntegration": true
+  },
+  {
+    "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+    "sha256": "1616da65ba5dc6dfef24af3b849f3a6aadbf4761d4dc0a31e866765f632cd812",
+    "capturedAfterBRIntegration": true
+  }
+]

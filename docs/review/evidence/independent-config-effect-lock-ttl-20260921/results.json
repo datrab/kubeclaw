@@ -1,0 +1,104 @@
+[
+  {
+    "name": "fixture-preservation",
+    "command": [
+      "node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-effect-lock-ttl-20260921/check-preservation.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "original12-persisted-oracle",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-effect-lock-ttl-20260921/trace.mjs",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-effect-lock-ttl-20260921/persisted-oracle.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/effect-lock-configuration.test.mjs",
+      "tests/verification/reliability/effect-lock-lifetime.test.mts",
+      "tests/verification/reliability/forge-lock-wait.test.mts"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "original-platform",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-effect-lock-ttl-20260921/trace.mjs",
+      "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "original-capability",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-effect-lock-ttl-20260921/trace.mjs",
+      "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "original-phase7",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-effect-lock-ttl-20260921/trace.mjs",
+      "tests/verification/contracts/check-plugin-system-v2-phase7.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "mutant-runtime",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-effect-lock-ttl-20260921/trace.mjs",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-effect-lock-ttl-20260921/restore-fallback.mjs",
+      "--test",
+      "--test-name-pattern=missing and invalid TTL",
+      "tests/verification/reliability/effect-lock-configuration.test.mjs"
+    ],
+    "exitCode": 1,
+    "semanticRejection": true
+  },
+  {
+    "name": "mutant-constructor",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-effect-lock-ttl-20260921/trace.mjs",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-effect-lock-ttl-20260921/restore-fallback.mjs",
+      "--test",
+      "--test-name-pattern=missing and invalid TTL",
+      "tests/verification/reliability/effect-lock-configuration.test.mjs"
+    ],
+    "exitCode": 1,
+    "semanticRejection": true
+  }
+]

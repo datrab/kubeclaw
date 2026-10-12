@@ -33,7 +33,7 @@ assert.equal(artifactFromWrite(sampleAttempt, { ...sampleRequest,
   payload: { ...sampleRequest.payload, checkpoint: false } }, { artifact: sampleArtifact }), undefined);
 
 const platform = {
-  schemaVersion: 'pipeline-platform.v2',
+  schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
   installationRoots: [path.resolve('tests/fixtures/plugin-system-v2'), path.resolve('skills/common/plugins')],
   trustedBuiltinRoots: [path.resolve('tests/fixtures/plugin-system-v2'), path.resolve('skills/common/plugins')],
   externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },

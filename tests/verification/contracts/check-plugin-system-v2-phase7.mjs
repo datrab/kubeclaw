@@ -135,14 +135,14 @@ const coordinator = new core.EffectCoordinator(
   new core.FileEffectJournal(journalFile),
   () => new Date('2026-07-28T00:00:00Z'),
   undefined,
-  new core.FileResourceLockManager(path.join(root, 'locks')),
+  new core.FileResourceLockManager(path.join(root, 'locks')), 300_000,
 );
 const first = await coordinator.invoke(adapter, owner, invocation, new AbortController().signal);
 const replay = await new core.EffectCoordinator(
   new core.FileEffectJournal(journalFile),
   () => new Date('2026-07-28T00:01:00Z'),
   undefined,
-  new core.FileResourceLockManager(path.join(root, 'locks')),
+  new core.FileResourceLockManager(path.join(root, 'locks')), 300_000,
 ).invoke(adapter, owner, invocation, new AbortController().signal);
 assert.equal(calls, 1, 'durable receipt prevents duplicate external execution');
 assert.equal(first.effectId, replay.effectId);
@@ -229,7 +229,7 @@ const concurrentDispatchCoordinator = new core.EffectCoordinator(
   new core.MemoryEffectJournal(),
   undefined,
   undefined,
-  new core.MemoryResourceLockManager(),
+  new core.MemoryResourceLockManager(), 300_000,
 );
 const runtimeInvocation = {
   ...invocation,
@@ -296,7 +296,7 @@ const recoveredReceipt = await new core.EffectCoordinator(
   interruptedJournal,
   undefined,
   undefined,
-  new core.MemoryResourceLockManager(),
+  new core.MemoryResourceLockManager(), 300_000,
 ).invoke(
   receiptAwareAdapter,
   owner,
@@ -313,7 +313,7 @@ await assert.rejects(
     unavailableReceiptJournal,
     undefined,
     undefined,
-    new core.MemoryResourceLockManager(),
+    new core.MemoryResourceLockManager(), 300_000,
   ).invoke(
     { ...adapter, receipt: undefined },
     owner,

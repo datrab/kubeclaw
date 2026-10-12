@@ -1,0 +1,9 @@
+{
+  "productionChangesDuringSuccessful43Run": [],
+  "priorClosureTestModulesByteIdentical": [
+    "tests/verification/reliability/admission-retirement.test.mjs",
+    "tests/verification/reliability/attempt-projection-review.test.mjs",
+    "tests/verification/reliability/attempt-closure-projection.test.mjs"
+  ],
+  "newOwnershipProbeFormattingOnlyAfterItsFirstPass": true
+}

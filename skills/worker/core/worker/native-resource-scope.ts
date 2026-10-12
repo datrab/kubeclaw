@@ -1,5 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { requireHierarchicalCgroupEvents } from './native-hierarchy-events.ts';
+import { randomUUID } from 'node:crypto';
+import type { WorkerOwnedChild } from './ownership-children.ts';
+import { aggregateChildLimits, configureNativeLimits, createNativeChild, verifyNativeChild, verifyNativeChildren } from './native-owned-children.ts';
 import { setTimeout as delay } from 'node:timers/promises';
 import { performance } from 'node:perf_hooks';
 import { observeNativeWorkerResources, type NativeWorkerResourceObservation } from './native-resource-observation.ts';
@@ -36,24 +40,17 @@ function positive(value: number): void {
   if (!Number.isSafeInteger(value) || value < 1) throw new Error('WORKER_NATIVE_LIMIT_INVALID');
 }
 
-function writeLimit(scope: string, name: string, value: number): void {
-  const file = path.join(scope, name);
-  fs.writeFileSync(file, String(value));
-  const effective = Number(fs.readFileSync(file, 'utf8').trim());
-  if (!Number.isSafeInteger(effective) || effective !== value) {
-    throw new Error(`WORKER_NATIVE_LIMIT_MISMATCH:${name}`);
-  }
-}
-
 /** A kernel scope, not an attempt/fixture registry or a process launcher. */
 export class NativeWorkerResourceScope {
   readonly #path: string;
   readonly #device: number;
   readonly #inode: number;
+  readonly #aggregate: boolean;
   #disposed = false;
   #quiescing = false;
 
-  private constructor(scope: string) {
+  private constructor(scope: string, aggregate: boolean) {
+    this.#aggregate = aggregate;
     this.#path = scope;
     const stat = fs.statSync(scope);
     this.#device = stat.dev;
@@ -65,8 +62,10 @@ export class NativeWorkerResourceScope {
     positive(limits.memoryBytes);
     positive(limits.tasks);
     const root = delegatedRoot(rootValue);
+    requireHierarchicalCgroupEvents(root);
     // Existing roots are never chmod/chowned, remounted or reconfigured here.
-    const scope = fs.mkdtempSync(path.join(root, 'worker-'));
+    const scope = path.join(root, `worker-${randomUUID()}`);
+    fs.mkdirSync(scope);
     return NativeWorkerResourceScope.#configure(scope, limits);
   }
 
@@ -75,19 +74,21 @@ export class NativeWorkerResourceScope {
     positive(limits.memoryBytes);
     positive(limits.tasks);
     if (!scopeNamePattern.test(scopeName)) throw new Error('WORKER_NATIVE_SCOPE_NAME_INVALID');
-    const scope = path.join(delegatedRoot(rootValue), scopeName);
+    const root = delegatedRoot(rootValue);
+    requireHierarchicalCgroupEvents(root);
+    const scope = path.join(root, scopeName);
     fs.mkdirSync(scope); // Exclusive. Never adopt a pre-existing directory during admission.
     return NativeWorkerResourceScope.#configure(scope, limits);
   }
 
   static #configure(scope: string, limits: NativeWorkerScopeLimits): NativeWorkerResourceScope {
     try {
-      writeLimit(scope, 'memory.max', limits.memoryBytes);
-      writeLimit(scope, 'memory.swap.max', 0);
-      writeLimit(scope, 'memory.oom.group', 1);
-      writeLimit(scope, 'pids.max', limits.tasks);
+      configureNativeLimits(scope, limits);
+      fs.writeFileSync(path.join(scope, 'cgroup.subtree_control'), '+cpu +memory +pids');
+      const enabled = fs.readFileSync(path.join(scope, 'cgroup.subtree_control'), 'utf8').trim().split(/\s+/u);
+      if (!['cpu', 'memory', 'pids'].every(name => enabled.includes(name))) throw new Error('WORKER_NATIVE_CONTROLLERS_MISSING');
       fs.accessSync(path.join(scope, 'cgroup.kill'), fs.constants.W_OK);
-      const owner = new NativeWorkerResourceScope(scope);
+      const owner = new NativeWorkerResourceScope(scope, true);
       if (owner.observe().populated) throw new Error('WORKER_NATIVE_SCOPE_NOT_EMPTY');
       return owner;
     } catch (cause) {
@@ -103,17 +104,17 @@ export class NativeWorkerResourceScope {
   }
 
   /** Recovery before the durable launch fence: only an empty reservation can be adopted. */
-  static recoverEmptyReservation(rootValue: string, scopeName: string): NativeWorkerResourceScope {
+  static recoverEmptyReservation(rootValue: string, scopeName: string, aggregate = false): NativeWorkerResourceScope {
     if (!scopeNamePattern.test(scopeName)) throw new Error('WORKER_NATIVE_SCOPE_NAME_INVALID');
     const scope = path.join(delegatedRoot(rootValue), scopeName);
     if (!fs.lstatSync(scope).isDirectory()) throw new Error('WORKER_NATIVE_SCOPE_BINDING_CHANGED');
-    const owner = new NativeWorkerResourceScope(scope);
+    const owner = new NativeWorkerResourceScope(scope, aggregate);
     if (owner.observe().populated) throw new Error('WORKER_NATIVE_UNBOUND_SCOPE_POPULATED');
     return owner;
   }
 
   /** An inode alone can be reused across boots. Both identities must match. */
-  static reopen(rootValue: string, binding: WorkerScopeBinding): NativeWorkerResourceScope {
+  static reopen(rootValue: string, binding: WorkerScopeBinding, aggregate = false): NativeWorkerResourceScope {
     if (!scopeNamePattern.test(binding.scopeName) || binding.bootId !== bootId()) {
       throw new Error('WORKER_NATIVE_SCOPE_BINDING_CHANGED');
     }
@@ -122,7 +123,7 @@ export class NativeWorkerResourceScope {
     if (!stat.isDirectory() || stat.dev !== binding.device || stat.ino !== binding.inode) {
       throw new Error('WORKER_NATIVE_SCOPE_BINDING_CHANGED');
     }
-    return new NativeWorkerResourceScope(scope);
+    return new NativeWorkerResourceScope(scope, aggregate);
   }
 
   binding(): WorkerScopeBinding {
@@ -130,11 +131,35 @@ export class NativeWorkerResourceScope {
     return { scopeName: path.basename(this.#path), bootId: bootId(), device: this.#device, inode: this.#inode };
   }
 
-  /** Only the trusted pre-exec launcher may use this path. */
-  launcherPath(): string {
+  childLimits(requested?: NativeWorkerScopeLimits): NativeWorkerScopeLimits {
+    this.#checkIdentity();
+    return aggregateChildLimits(this.#path, requested);
+  }
+
+  createChild(child: WorkerOwnedChild): WorkerScopeBinding {
     this.#checkIdentity();
     if (this.#quiescing) throw new Error('WORKER_NATIVE_SCOPE_QUIESCING');
-    return this.#path;
+    return createNativeChild(this.#path, this.binding(), child);
+  }
+
+  /** The caller must persist the returned child binding before obtaining launch arguments. */
+  childLaunchArguments(child: WorkerOwnedChild): readonly string[] {
+    this.#checkIdentity();
+    if (this.#quiescing) throw new Error('WORKER_NATIVE_SCOPE_QUIESCING');
+    if (!child.binding) throw new Error('WORKER_NATIVE_CHILD_BINDING_REQUIRED');
+    const target = verifyNativeChild(this.#path, this.binding(), child);
+    return [target, String(this.#device), String(this.#inode), String(child.binding.device), String(child.binding.inode)];
+  }
+
+  verifyChildren(children: readonly WorkerOwnedChild[], removalStarted: boolean): void {
+    this.#checkIdentity();
+    verifyNativeChildren(this.#path, this.binding(), children, removalStarted);
+  }
+
+  disposeChildren(children: readonly WorkerOwnedChild[]): void {
+    this.#checkIdentity();
+    if (!this.#quiescing || this.observe().populated) throw new Error('WORKER_NATIVE_SCOPE_NOT_QUIESCENT');
+    for (const target of verifyNativeChildren(this.#path, this.binding(), children, true)) fs.rmdirSync(target);
   }
 
   observe(): NativeWorkerResourceObservation {
@@ -170,6 +195,7 @@ export class NativeWorkerResourceScope {
 
   #checkIdentity(): void {
     if (this.#disposed) throw new Error('WORKER_NATIVE_SCOPE_DISPOSED');
+    if (this.#aggregate) requireHierarchicalCgroupEvents(this.#path);
     const stat = fs.lstatSync(this.#path);
     if (!stat.isDirectory() || stat.dev !== this.#device || stat.ino !== this.#inode) {
       throw new Error('WORKER_NATIVE_SCOPE_IDENTITY_CHANGED');

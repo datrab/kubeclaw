@@ -1,0 +1,1 @@
+tests/verification/reliability/worker-native-topology-live.mts(70,15): error TS7022: 'rejected' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.

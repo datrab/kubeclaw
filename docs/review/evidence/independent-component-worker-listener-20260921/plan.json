@@ -1,0 +1,152 @@
+{
+  "status": "combined source freeze matched; exclusive review slot assigned; positives authorized",
+  "ready": true,
+  "runtimeExecuted": false,
+  "baselineSeparation": "Earlier Buster admission work is prior authored baseline, not this reviewer's fresh acceptance of that implementation.",
+  "invalidHistoricalRuns": [
+    "component integration5",
+    "component integration6",
+    "component integration7"
+  ],
+  "sourceRoots": [
+    "skills",
+    "contracts",
+    "tests",
+    "charts",
+    "scripts",
+    "docker",
+    "my-values"
+  ],
+  "dependencyRoots": [
+    "node_modules"
+  ],
+  "dependencyExclusion": "node_modules/.cache is excluded from generic dependency traversal; the actually used native-host-tools/root is included separately in full. No VM images or unrelated browser caches are implied to be bound.",
+  "toolRoot": "node_modules/.cache/native-host-tools/root",
+  "rootFiles": [
+    "package.json",
+    "package-lock.json",
+    "tsconfig.base.json",
+    "versions.json"
+  ],
+  "requiredTools": [
+    "node",
+    "helm",
+    "git",
+    "sh",
+    "python3",
+    "bash",
+    "ldd"
+  ],
+  "componentModules": [
+    "tests/verification/reliability/config-component-bundle.test.mts",
+    "tests/verification/reliability/config-component-generation.test.mjs",
+    "tests/verification/deployment/config-component-packaging.test.mjs",
+    "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "tests/verification/deployment/buster-admission-render.test.mjs",
+    "skills/prism/tests/swarm-control-policy.test.mts",
+    "skills/prism/tests/swarm-input-limit.test.mts",
+    "skills/prism/tests/swarm-native-settings.test.mts",
+    "skills/prism/tests/swarm-resource-operation.test.mts",
+    "skills/prism/tests/swarm-resource-policy.test.mts",
+    "skills/prism/tests/swarm-result-journal.test.mts",
+    "skills/prism/tests/swarm-supervisor-config.test.mts",
+    "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "skills/prism/tests/swarm-worker-behavior.test.mts",
+    "skills/prism/tests/swarm-worker-config.test.mts",
+    "skills/prism/tests/studio-config.test.mts",
+    "skills/prism/tests/studio-service.test.mts"
+  ],
+  "busterModules": [
+    "tests/verification/reliability/buster-admission-config.test.mts",
+    "tests/verification/reliability/buster-preparation-identities.test.mts",
+    "tests/verification/reliability/buster-preparation-ledger.test.mts",
+    "tests/verification/e2e/swarm-author-profile.test.mjs"
+  ],
+  "releaseModules": [
+    "tests/verification/deployment/release-configuration.test.mjs",
+    "tests/verification/deployment/code-release.test.mjs",
+    "tests/verification/deployment/deployment-release.test.mjs",
+    "tests/verification/deployment/gitops-release.test.mjs",
+    "tests/verification/deployment/release-images.test.mjs"
+  ],
+  "listenerAdditionalModules": [
+    "skills/prism/tests/worker-listener-config.test.mts",
+    "skills/prism/tests/control-image-environment.test.mts",
+    "skills/prism/tests/control-listener.test.mts",
+    "skills/prism/tests/worker-readiness-chart.test.mts"
+  ],
+  "typeProjects": [
+    "tests/verification/reliability/tsconfig.config-components.json",
+    "skills/prism/tsconfig.json",
+    "skills/common/plugin-runtime/tsconfig.json",
+    "tests/verification/e2e/tsconfig.json"
+  ],
+  "scriptModules": [
+    "tests/verification/deployment/check-deployment-truth.mjs"
+  ],
+  "lintFiles": [
+    "scripts/updates/release-configuration.mjs",
+    "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "skills/prism/server/worker-config.ts",
+    "skills/prism/server/worker.ts",
+    "skills/prism/tests/control-image-environment.test.mts",
+    "skills/prism/tests/control-listener.test.mts",
+    "skills/prism/tests/fixtures/control-policy.mts",
+    "skills/prism/tests/fixtures/native-process-boundary.mts",
+    "skills/prism/tests/fixtures/studio-service.mts",
+    "skills/prism/tests/native/operation-journal.mts",
+    "skills/prism/tests/studio-canonical-image.mts",
+    "skills/prism/tests/studio-config.test.mts",
+    "skills/prism/tests/swarm-control-policy.test.mts",
+    "skills/prism/tests/swarm-input-limit.test.mts",
+    "skills/prism/tests/swarm-native-settings.test.mts",
+    "skills/prism/tests/swarm-resource-operation.test.mts",
+    "skills/prism/tests/swarm-resource-policy.test.mts",
+    "skills/prism/tests/swarm-result-journal.test.mts",
+    "skills/prism/tests/swarm-supervisor-config.test.mts",
+    "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "skills/prism/tests/swarm-worker-behavior.test.mts",
+    "skills/prism/tests/swarm-worker-config.test.mts",
+    "skills/prism/tests/worker-ingress-capacity.test.mts",
+    "skills/prism/tests/worker-listener-config.test.mts",
+    "skills/prism/tests/worker-process-shutdown-native.mts",
+    "skills/prism/tests/worker-readiness-chart.test.mts",
+    "skills/prism/tests/worker-shutdown-boundaries.test.mts",
+    "tests/fixtures/config/swarm-bundle.mjs",
+    "tests/fixtures/test-gate/buster-admission.mts",
+    "tests/fixtures/test-gate/buster-cli-profile.mjs",
+    "tests/fixtures/test-gate/modeled-preparation.mts",
+    "tests/verification/contracts/infra-private-access.test.mjs",
+    "tests/verification/deployment/buster-admission-render.test.mjs",
+    "tests/verification/deployment/check-deployment-truth.mjs",
+    "tests/verification/deployment/config-component-packaging.test.mjs",
+    "tests/verification/deployment/prism-native-runtime.test.mjs",
+    "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "tests/verification/deployment/prism-swarm-image.mjs",
+    "tests/verification/e2e/real-run-workspace.mjs",
+    "tests/verification/e2e/support/platform-config.ts",
+    "tests/verification/e2e/swarm-author-profile.test.mjs",
+    "tests/verification/reliability/buster-admission-config.test.mts",
+    "tests/verification/reliability/buster-extraction-concurrency.test.mts",
+    "tests/verification/reliability/buster-historical-import.test.mts",
+    "tests/verification/reliability/buster-preparation-identities.test.mts",
+    "tests/verification/reliability/buster-preparation-ledger.test.mts",
+    "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "tests/verification/reliability/config-component-bundle.test.mts",
+    "tests/verification/reliability/config-component-generation.test.mjs"
+  ],
+  "expectedCases": {
+    "basis": "docs/review/evidence/independent-component-worker-listener-20260921/original-case-name-inventory.json",
+    "requirement": "Full explicit modules, no skips/cancels; compare final TAP case names against preserved original inventory and separately inspect assertion migration. Historical pass status is not reused."
+  },
+  "frozenAuthorManifest": "docs/review/evidence/independent-component-worker-listener-20260921/combined-freeze.json",
+  "negativeControlCommands": [],
+  "unexecutedGates": [
+    "WL3: real worker.ts startup on two authored ports with actual native prerequisites; modeled Native HTTP composition is only partial evidence",
+    "WL5: actual built worker image and role-specific gate",
+    "Component actual Buster image COPY/build and Studio packaged image gate; Docker source inspection is structural only",
+    "Two actual Git/Argo profile rollouts and invalid-update behavior"
+  ],
+  "negativeControlStatus": "Separate independent controls follow full positives; current empty command list is not a mutation acceptance claim."
+}

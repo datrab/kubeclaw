@@ -1,0 +1,639 @@
+{
+  "server": {
+    "health_checks": {
+      "bind_address": "0.0.0.0",
+      "bind_port": "8080",
+      "listener_enabled": true,
+      "live_path": "/live",
+      "ready_path": "/ready"
+    },
+    "plugins": {
+      "BundlePublisher": [
+        {
+          "k8s_configmap": {
+            "plugin_data": {
+              "clusters": [
+                {
+                  "chart-internal": {
+                    "configmap_key": "bundle.spiffe",
+                    "configmap_name": "spire-bundle",
+                    "format": "spiffe",
+                    "namespace": "spire-system"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "DataStore": [
+        {
+          "sql": {
+            "plugin_data": {
+              "connection_string": "/run/spire/data/datastore.sqlite3",
+              "database_type": "sqlite3",
+              "disable_migration": false,
+              "max_idle_conns": 2,
+              "max_open_conns": 100
+            }
+          }
+        }
+      ],
+      "KeyManager": [
+        {
+          "disk": {
+            "plugin_data": {
+              "keys_path": "/run/spire/data/keys.json"
+            }
+          }
+        }
+      ],
+      "NodeAttestor": [
+        {
+          "k8s_psat": {
+            "plugin_data": {
+              "clusters": [
+                {
+                  "kubeclaw-cluster2": {
+                    "allowed_node_label_keys": [],
+                    "allowed_pod_label_keys": [],
+                    "audience": [
+                      "spire-server"
+                    ],
+                    "service_account_allow_list": [
+                      "spire-system:spire-agent"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "server": {
+      "audit_log_enabled": false,
+      "bind_address": "0.0.0.0",
+      "bind_port": "8081",
+      "ca_key_type": "rsa-2048",
+      "ca_subject": [
+        {
+          "common_name": "kubeclaw.internal",
+          "country": [
+            "DE"
+          ],
+          "organization": [
+            "KubeClaw"
+          ]
+        }
+      ],
+      "ca_ttl": "24h",
+      "data_dir": "/run/spire/data",
+      "default_jwt_svid_ttl": "1h",
+      "default_x509_svid_ttl": "4h",
+      "disable_jwt_svids": true,
+      "jwt_issuer": "https://oidc-discovery.kubeclaw.internal",
+      "log_format": "text",
+      "log_level": "info",
+      "ratelimit": {
+        "attestation": true,
+        "signing": true
+      },
+      "trust_domain": "kubeclaw.internal"
+    }
+  },
+  "agent": {
+    "agent": {
+      "data_dir": "/var/lib/spire",
+      "log_format": "text",
+      "log_level": "info",
+      "rebootstrap_delay": "10m",
+      "rebootstrap_mode": "always",
+      "server_address": "spire-server.spire-server",
+      "server_port": "443",
+      "socket_path": "/tmp/spire-agent/public/spire-agent.sock",
+      "trust_bundle_format": "spiffe",
+      "trust_bundle_path": "/run/spire/bundle/bundle.spiffe",
+      "trust_domain": "kubeclaw.internal"
+    },
+    "health_checks": {
+      "bind_address": "0.0.0.0",
+      "bind_port": "9982",
+      "listener_enabled": true,
+      "live_path": "/live",
+      "ready_path": "/ready"
+    },
+    "plugins": {
+      "KeyManager": [
+        {
+          "memory": {
+            "plugin_data": null
+          }
+        }
+      ],
+      "NodeAttestor": [
+        {
+          "k8s_psat": {
+            "plugin_data": {
+              "cluster": "kubeclaw-cluster2"
+            }
+          }
+        }
+      ],
+      "WorkloadAttestor": [
+        {
+          "k8s": {
+            "plugin_data": {
+              "disable_container_selectors": false,
+              "skip_kubelet_verification": true,
+              "use_new_container_locator": true,
+              "verbose_container_locator_logs": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "serverSpec": {
+    "replicas": 1,
+    "serviceName": "spire-server",
+    "selector": {
+      "matchLabels": {
+        "app.kubernetes.io/name": "server",
+        "app.kubernetes.io/instance": "spire",
+        "app.kubernetes.io/component": "server"
+      }
+    },
+    "template": {
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/default-container": "spire-server",
+          "checksum/config": "403266e67440f8a07163716649d084a2ec58df9106f29e684ec025382018fa7b",
+          "checksum/config2": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "checksum/config3": "089f157a5455070afcbc258a52f304fbac97be4b48fdb7b9da2e3736b944ff12",
+          "checksum/configTornjak": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+        },
+        "labels": {
+          "app.kubernetes.io/name": "server",
+          "app.kubernetes.io/instance": "spire",
+          "app.kubernetes.io/component": "server",
+          "component": "server",
+          "release": "spire",
+          "release-namespace": "spire-server"
+        }
+      },
+      "spec": {
+        "serviceAccountName": "spire-server",
+        "shareProcessNamespace": true,
+        "securityContext": {
+          "fsGroup": 1000,
+          "fsGroupChangePolicy": "OnRootMismatch",
+          "runAsGroup": 1000,
+          "runAsUser": 1000
+        },
+        "priorityClassName": "system-cluster-critical",
+        "containers": [
+          {
+            "name": "spire-server",
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "readOnlyRootFilesystem": true,
+              "runAsNonRoot": true,
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "image": "ghcr.io/spiffe/spire-server:1.15.2",
+            "imagePullPolicy": "IfNotPresent",
+            "args": [
+              "-expandEnv",
+              "-config",
+              "/run/spire/config/server.conf"
+            ],
+            "env": [
+              {
+                "name": "PATH",
+                "value": "/opt/spire/bin:/bin"
+              }
+            ],
+            "ports": [
+              {
+                "name": "grpc",
+                "containerPort": 8081,
+                "protocol": "TCP"
+              },
+              {
+                "containerPort": 8080,
+                "name": "healthz"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/live",
+                "port": "healthz"
+              },
+              "failureThreshold": 2,
+              "initialDelaySeconds": 15,
+              "periodSeconds": 60,
+              "timeoutSeconds": 3
+            },
+            "readinessProbe": {
+              "httpGet": {
+                "path": "/ready",
+                "port": "healthz"
+              },
+              "initialDelaySeconds": 5,
+              "periodSeconds": 5
+            },
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "spire-server-socket",
+                "mountPath": "/tmp/spire-server/private",
+                "readOnly": false
+              },
+              {
+                "name": "spire-config",
+                "mountPath": "/run/spire/config",
+                "readOnly": true
+              },
+              {
+                "name": "spire-data",
+                "mountPath": "/run/spire/data",
+                "readOnly": false
+              },
+              {
+                "name": "server-tmp",
+                "mountPath": "/tmp",
+                "readOnly": false
+              }
+            ]
+          },
+          {
+            "name": "spire-controller-manager",
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "readOnlyRootFilesystem": true,
+              "runAsNonRoot": true,
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "image": "ghcr.io/spiffe/spire-controller-manager:0.7.0",
+            "imagePullPolicy": "IfNotPresent",
+            "args": [
+              "--config=controller-manager-config.yaml"
+            ],
+            "env": [
+              {
+                "name": "ENABLE_WEBHOOKS",
+                "value": "true"
+              }
+            ],
+            "ports": [
+              {
+                "name": "https",
+                "containerPort": 9443,
+                "protocol": "TCP"
+              },
+              {
+                "containerPort": 8083,
+                "name": "hp-cm"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/healthz",
+                "port": "hp-cm"
+              },
+              "failureThreshold": 3,
+              "initialDelaySeconds": 5,
+              "periodSeconds": 10,
+              "timeoutSeconds": 5
+            },
+            "readinessProbe": {
+              "httpGet": {
+                "path": "/readyz",
+                "port": "hp-cm"
+              },
+              "failureThreshold": 3,
+              "initialDelaySeconds": 5,
+              "periodSeconds": 10,
+              "timeoutSeconds": 5
+            },
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "spire-server-socket",
+                "mountPath": "/tmp/spire-server/private",
+                "readOnly": true
+              },
+              {
+                "name": "controller-manager-config",
+                "mountPath": "/controller-manager-config.yaml",
+                "subPath": "controller-manager-config.yaml",
+                "readOnly": true
+              },
+              {
+                "name": "spire-controller-manager-tmp",
+                "mountPath": "/tmp",
+                "subPath": "spire-controller-manager",
+                "readOnly": false
+              }
+            ]
+          }
+        ],
+        "volumes": [
+          {
+            "name": "server-tmp",
+            "emptyDir": {}
+          },
+          {
+            "name": "spire-config",
+            "configMap": {
+              "name": "spire-server"
+            }
+          },
+          {
+            "name": "spire-server-socket",
+            "emptyDir": {}
+          },
+          {
+            "name": "spire-controller-manager-tmp",
+            "emptyDir": {}
+          },
+          {
+            "name": "controller-manager-config",
+            "configMap": {
+              "name": "spire-controller-manager"
+            }
+          }
+        ]
+      }
+    },
+    "volumeClaimTemplates": [
+      {
+        "metadata": {
+          "name": "spire-data"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "1Gi"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "agentSpec": {
+    "selector": {
+      "matchLabels": {
+        "app.kubernetes.io/name": "agent",
+        "app.kubernetes.io/instance": "spire",
+        "app.kubernetes.io/component": "default"
+      }
+    },
+    "updateStrategy": {
+      "type": "RollingUpdate",
+      "rollingUpdate": {
+        "maxUnavailable": 1
+      }
+    },
+    "template": {
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/default-container": "spire-agent",
+          "checksum/config": "200d29798e6d40dbb0234aec3b643946f5dc4ccc394d8e3baf0922f4b0648d28"
+        },
+        "labels": {
+          "app.kubernetes.io/name": "agent",
+          "app.kubernetes.io/instance": "spire",
+          "app.kubernetes.io/component": "default"
+        }
+      },
+      "spec": {
+        "hostPID": true,
+        "hostNetwork": true,
+        "dnsPolicy": "ClusterFirstWithHostNet",
+        "serviceAccountName": "spire-agent",
+        "securityContext": {
+          "fsGroup": 1000,
+          "fsGroupChangePolicy": "OnRootMismatch",
+          "runAsGroup": 1000,
+          "runAsUser": 1000
+        },
+        "priorityClassName": "system-node-critical",
+        "initContainers": [
+          {
+            "name": "ensure-alternate-names",
+            "image": "cgr.dev/chainguard/bash:latest@sha256:90041f375e30f41aa7e0390075d8a69dc61900771d52fa98d63ee5d03d866a58",
+            "imagePullPolicy": "IfNotPresent",
+            "command": [
+              "bash",
+              "-xc"
+            ],
+            "args": [
+              "cd /run/spire/agent-sockets\nL=`readlink socket`\n[ \"x$L\" != \"xspire-agent.sock\" ] && rm -f socket\n[ ! -L socket ] && ln -s spire-agent.sock socket\nL=`readlink api.sock`\n[ \"x$L\" != \"xspire-agent.sock\" ] && rm -f api.sock\n[ ! -L api.sock ] && ln -s spire-agent.sock api.sock\n[ -L spire-agent.sock ] && rm -f spire-agent.sock\nexit 0\n"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "spire-agent-socket-dir",
+                "mountPath": "/run/spire/agent-sockets"
+              }
+            ],
+            "securityContext": {
+              "runAsUser": 0,
+              "runAsGroup": 0
+            }
+          },
+          {
+            "name": "fsgroupfix",
+            "image": "cgr.dev/chainguard/bash:latest@sha256:90041f375e30f41aa7e0390075d8a69dc61900771d52fa98d63ee5d03d866a58",
+            "imagePullPolicy": "IfNotPresent",
+            "command": [
+              "bash",
+              "-c"
+            ],
+            "args": [
+              "chown -R \"1000:1000\" /run/spire/agent-sockets /tmp/spire-agent/private\nchown -R \"1000:1000\" /run/spire/agent-sockets /tmp/spire-agent/broker\nchown -R \"1000:1000\" /var/lib/spire\n"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "spire-agent-socket-dir",
+                "mountPath": "/run/spire/agent-sockets"
+              },
+              {
+                "name": "spire-agent-persistence",
+                "mountPath": "/var/lib/spire"
+              },
+              {
+                "name": "spire-agent-admin-socket-dir",
+                "mountPath": "/tmp/spire-agent/private"
+              },
+              {
+                "name": "spire-agent-broker-socket-dir",
+                "mountPath": "/tmp/spire-agent/broker"
+              }
+            ],
+            "securityContext": {
+              "runAsUser": 0,
+              "runAsGroup": 0
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "spire-agent",
+            "image": "ghcr.io/spiffe/spire-agent:1.15.2",
+            "imagePullPolicy": "IfNotPresent",
+            "args": [
+              "-config",
+              "/opt/spire/conf/agent/agent.conf"
+            ],
+            "securityContext": {},
+            "env": [
+              {
+                "name": "PATH",
+                "value": "/opt/spire/bin:/bin"
+              }
+            ],
+            "ports": [
+              {
+                "containerPort": 9982,
+                "name": "healthz"
+              }
+            ],
+            "volumeMounts": [
+              {
+                "name": "spire-config",
+                "mountPath": "/opt/spire/conf/agent",
+                "readOnly": true
+              },
+              {
+                "name": "spire-agent-persistence",
+                "mountPath": "/var/lib/spire"
+              },
+              {
+                "name": "spire-bundle",
+                "readOnly": true,
+                "mountPath": "/run/spire/bundle"
+              },
+              {
+                "name": "spire-agent-socket-dir",
+                "mountPath": "/tmp/spire-agent/public",
+                "readOnly": false
+              },
+              {
+                "name": "spire-token",
+                "mountPath": "/var/run/secrets/tokens"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/live",
+                "port": "healthz"
+              },
+              "initialDelaySeconds": 15,
+              "periodSeconds": 60
+            },
+            "readinessProbe": {
+              "httpGet": {
+                "path": "/ready",
+                "port": "healthz"
+              },
+              "initialDelaySeconds": 10,
+              "periodSeconds": 30
+            },
+            "resources": {}
+          }
+        ],
+        "volumes": [
+          {
+            "name": "spire-config",
+            "configMap": {
+              "name": "spire-agent"
+            }
+          },
+          {
+            "name": "spire-agent-admin-socket-dir",
+            "emptyDir": {}
+          },
+          {
+            "name": "spire-agent-broker-socket-dir",
+            "emptyDir": {}
+          },
+          {
+            "name": "spire-agent-persistence",
+            "emptyDir": {}
+          },
+          {
+            "name": "spire-bundle",
+            "configMap": {
+              "name": "spire-bundle"
+            }
+          },
+          {
+            "name": "spire-token",
+            "projected": {
+              "sources": [
+                {
+                  "serviceAccountToken": {
+                    "path": "spire-agent",
+                    "expirationSeconds": 7200,
+                    "audience": "spire-server"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "spire-agent-socket-dir",
+            "hostPath": {
+              "path": "/run/spire/agent-sockets",
+              "type": "DirectoryOrCreate"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "registration": {
+    "className": "spire-server-spire",
+    "hint": "default",
+    "spiffeIDTemplate": "spiffe://{{ .TrustDomain }}/ns/{{ .PodMeta.Namespace }}/sa/{{ .PodSpec.ServiceAccountName }}",
+    "podSelector": {
+      "matchLabels": {
+        "kubeclaw.dev/worker-trust": "true"
+      }
+    },
+    "namespaceSelector": {
+      "matchExpressions": [
+        {
+          "key": "kubernetes.io/metadata.name",
+          "operator": "NotIn",
+          "values": [
+            "spire-server",
+            "spire-system"
+          ]
+        }
+      ]
+    },
+    "fallback": true
+  }
+}

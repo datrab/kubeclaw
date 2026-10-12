@@ -1,0 +1,19 @@
+{
+  "status": "private-unexecuted",
+  "files": [
+    {
+      "path": "tests/verification/contracts/buster-default-store-policy.test.mjs",
+      "sha256": "c71296152b0d6974f7d42d5a9ae338807b587c21809656bd6d4d781d05722ff7"
+    },
+    {
+      "path": "tests/verification/contracts/buster-process-sampling.test.mjs",
+      "sha256": "d4c68874cee198b85420bac65cda2964b59ca4064d5c2829947f7c98dd58dbfa"
+    }
+  ],
+  "limitations": [
+    "no complete28consumer acceptance",
+    "receiverhooks delegate all actual operations",
+    "resource sampling scheduling only",
+    "original recovery/count tests still required"
+  ]
+}

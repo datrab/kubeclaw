@@ -1,0 +1,270 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+    "sha256": "999649fb834be3763eecda6735a2fc65b610c0e47ed8e4b66477771bdd5894c6"
+  },
+  {
+    "path": "charts/prism/templates/_swarm-bundle.tpl",
+    "sha256": "48254682f1b9d7edbf1546dd1c285a4e67815042062e906be514095c1bbedd20"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "sha256": "dd3b06c92a726cb2bcd68b61f8bc819e2b51101b10362bd043e92313f10fbc2a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-loader.ts",
+    "sha256": "03c227b06bc5d6e5b967d8ddfd519816bfffce45007f0e52b50dd49347606f50"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-result-validation.ts",
+    "sha256": "7063bd5db3614ad76adf2fa3dbdb9b430b34f1ae772e1c9c4b29848766c7ffcc"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+    "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+    "sha256": "15994d9caebf7f98f2e23740a66ad105ec721c0ebbe01aba22def8a9e4c5bad4"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-evidence.ts",
+    "sha256": "2613dc8b3a3f252d4afa13415b17e6345de726e8ccb2115e7551615a4578e174"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+    "sha256": "9012607f67aeb7abe5aa29ae6687ea1e43b091b3bea3c1b57b0ed9d01fa6c705"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-preparation.ts",
+    "sha256": "b0f2a62cd1bd4179736bf2c9346a44bb946a1db28fdd661ad4ffee064814667d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+    "sha256": "cdba534f94cbf3fca17d16d40b196d5a303620e8809f1f419e996478dbfd0d69"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-completion.ts",
+    "sha256": "2281dc0ddf02338e1619f8710d10b42819a1641d5e850fd2c062f3f161e28c82"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+    "sha256": "10c02adcf2a5975eeab7759cffd9ba6d9cbf38dce76971dfe1789554197ec239"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-log-capture.ts",
+    "sha256": "ad5e07e980881a18fc5b4d3b68d888caa80bd988478908b2dd54daf478e5a3d1"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-managed-evidence.ts",
+    "sha256": "6ba483ec81af52dce533911b5231b1cda3aa5c9825f244cd06156bab4c8b316c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-node.ts",
+    "sha256": "f8dee4f5340d84b8be053ab13b9fce925eafcfd7e6e3a1125029ca5929608851"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-paths.ts",
+    "sha256": "f683bb15cf53a7bf2216ade88088aa3f2ab04ad3d41fab16871d9e071cdd9827"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-plan-identity.ts",
+    "sha256": "48f11e7aa0670b51fc72c07315401208729d16a3090d7e6781ee00440fd74b70"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+    "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-provider-state.ts",
+    "sha256": "f599ef7ca3920c4a0d8425c8892465034db7db94c592f32c53d9b72778f00f17"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+    "sha256": "40cd4f0fc7a84079efe2a3fe026c214ef34cd48f278db5cbac45e250e6afc9b7"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-setup.ts",
+    "sha256": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-types.ts",
+    "sha256": "b28e648f56ccf27cf8914891abb6afc470d00c56f01f5b7fdbfc71fc02c1eb1b"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-values.ts",
+    "sha256": "e0d381931d7e580113faaafb8ae05fa0e9431e15202a23b97bbc1fb974e27021"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-worker-profile.ts",
+    "sha256": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+    "sha256": "2bc8ae28f2f2e9e65616681ba2e2b430b2d3378f6119f6bdc0b0aae5fd7b2d40"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tests/specialist-boundary.test.ts",
+    "sha256": "0a18dcb7d5d2836cd8ad677c596ada7e0fb17b0690d4af966c574e2a3d683e63"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+    "sha256": "5d6b78d0ab9da185827f35d25c5f2c6da68a4f7e1de8e815b48641b935c298d5"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "sha256": "df566aa6c12fda5943c736ec0babd4dff62113cc99e74128c488a551bb3efeef"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "6eb99f6f053feee7debade1324f4044c2dd3820c5f51e6f081ebee406dff1700"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-admission.mts",
+    "sha256": "4a837465298a2f4ce648af6ffeeadc21ef5aa749fb4458e2399a6c8ae306cc21"
+  },
+  {
+    "path": "tests/fixtures/test-gate/execution-policy.mts",
+    "sha256": "940ec43a0bd64c208f54932421574d2edb8e972fa13786e2457f85015b0e1d76"
+  },
+  {
+    "path": "tests/fixtures/test-gate/runner-contract-fixture.mts",
+    "sha256": "8a5ca1911223af5ac527bc7181a069da0ce6a4992e0656d88140f29b4c91bf36"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-a11y-implementation.mts",
+    "sha256": "928f563240043531b1bad8e33929bac2580b3923f5ff097c29be1954c9a0de9f"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-api-implementation.mts",
+    "sha256": "f57cad959ef62433d04c8dc43d780d083706091d08d48ef4d22563f96ae64679"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-buster-execution-policy.mts",
+    "sha256": "9d7364333f7a15b08880ea5137d4e0461b0627bf115f791c26fab733b8e70baa"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-container-build-production.mts",
+    "sha256": "15d43ec1ffe4ce5501f0e2f0a9456f793bd52cf14187f941774185920f0f6dc1"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+    "sha256": "7212b4f255504f2f083261442e2ce69e07cfc4655b84e5258ee478077d83beb3"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-implementation.mts",
+    "sha256": "a7e83800086b9ce65d2a43aa8a923f24034e02653de1a7907fc322ef1d7a1349"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-live.mts",
+    "sha256": "cd61db8167af96a7637b2e476c4171204b07aeda272fb6e5ee62ce79fcf74d8a"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-parity.mts",
+    "sha256": "2562b896b0c87b5f3643fbcbba7f10c4a9e1d7f02cd80bdd9b3db9934cd236ee"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+    "sha256": "915caa76b6eca542ac0336db6119685b069d4face68e2778f4aa0fdf876963ac"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-implementation.mts",
+    "sha256": "e3557cea4d9c391a9562280d37535c13e33f0d1764374cab38dcab3363a64c5c"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+    "sha256": "9d1a9cde8215db81181d0b86efd6b253077c8b71320da47c654f5f244f712d53"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+    "sha256": "a59cff6c5b1fceb8ddaa81c311f7059097543647dc0d5430320090f2c5ee100c"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+    "sha256": "1d2129c888fa769bfd023b934f7381d9eb080e47c2ec08d513ac3555ddc1be99"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+    "sha256": "9b31584a78405ae2ee9501874f007b1d858c69edc86780d39f332881257a602f"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "sha256": "e3ee66387ec2c36dd3bf779885819b7d2a84284afeab8ff4e56414d31e37a066"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "sha256": "bc0a7e29e1a39e2396749d9c7882a43eb1a387c9410269c0de37517f2e45b38b"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+    "sha256": "bef5d53264fe879e1776a3852f4a52e4b50d6c3d500bded41c6a07ea011d6b23"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+    "sha256": "f5a2ccb691cbce0705e66b91eaec7369e0b71433afa60edad34b7789f7f51151"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+    "sha256": "91a293cdf9f26f9e8c27fc58c57156edd27afd61ddfd4dd2e776c13a0a81e105"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+    "sha256": "989e6b8b5596938acf2a45ab0c600d3b936f2af85af60600a54852c2d415ac8d"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+    "sha256": "e4c0557df16d07ba9739ade1cc63cc0984c241e556fc2e2d3c79e59b1af5e90b"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+    "sha256": "636c877577b946c1ddfd41e8e0e83faade5eacfb3bd5d7f1020430a951c3b4b5"
+  },
+  {
+    "path": "tests/verification/contracts/check-provider-semantics-remediation.mts",
+    "sha256": "2b1d87e39d05cbbdcb3b5337a70c2f76c542d0808178a7fe5d159a8d7e58ac29"
+  },
+  {
+    "path": "tests/verification/contracts/tsconfig.buster-execution-policy.json",
+    "sha256": "d6a016b5cc53db6e76389c47cf5b90297b474d510086cd8da6cfc474d47ddd16"
+  },
+  {
+    "path": "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+    "sha256": "71f5df96d2888018eaf8f1291ffbb62011954271c2b5c65096ccd212c490053b"
+  },
+  {
+    "path": "tests/verification/reliability/buster-job-compaction.test.mts",
+    "sha256": "78d31932a04baddf88178a9e3bbf2d558ae15bdba400860d805f90e7ac502515"
+  },
+  {
+    "path": "tests/verification/reliability/buster-readiness-consumer.test.mts",
+    "sha256": "f307679213f151f0d42a187f4a07ca8cfc42bf73d9ca42f44386669d32a66a09"
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "sha256": "40273b3b975c8d8d37bac9cb2fa19629da86fc02aafc4efafcce09fb507b5d1e"
+  },
+  {
+    "path": "tests/verification/reliability/coverage-remote.test.mts",
+    "sha256": "712fad3e5b3c3f6faa217c9ff1f23ec36f3e41fa1dc910a584c05051f40761c5"
+  },
+  {
+    "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "sha256": "501bd977c14b12b1af01d75fe7e3b0667e6735386993b417c2a0cab07cda007d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-child.mjs",
+    "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+  },
+  {
+    "path": "tests/verification/contracts/provider-child-session.test.mjs",
+    "sha256": "d45b58ffd9e7a37d8301fe8569df691a945073d66374b0d85073b377e905f2b6"
+  }
+]

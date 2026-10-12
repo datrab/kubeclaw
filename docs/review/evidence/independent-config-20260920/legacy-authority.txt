@@ -1,0 +1,145 @@
+✔ CW01 canonical author values reach the actual production worker composition (2.611978ms)
+✔ CW02 every alternate author value reaches the actual consumer (1.875858ms)
+✔ CW03 unknown key at root (1.010857ms)
+✔ CW03 unknown key at operator (0.559854ms)
+✔ CW03 unknown key at operator.prism (0.574015ms)
+✔ CW03 unknown key at operator.prism.worker (0.683707ms)
+✔ CW04 maximumActiveRequests rejects 3 (0.697178ms)
+✔ CW04 maximumActiveRequests rejects 0 (0.420381ms)
+✔ CW04 maximumActiveRequests rejects 1.5 (0.428071ms)
+✔ CW04 maximumActiveRequests rejects 2147483648 (0.539194ms)
+✔ CW04 maximumActiveRequests rejects undefined (0.440792ms)
+✔ CW04 maximumProbeRequests rejects 3 (0.3864ms)
+✔ CW04 maximumProbeRequests rejects 0 (0.39326ms)
+✔ CW04 maximumProbeRequests rejects 1.5 (0.36719ms)
+✔ CW04 maximumProbeRequests rejects 2147483648 (0.39016ms)
+✔ CW04 maximumProbeRequests rejects undefined (0.434621ms)
+✔ CW04 maximumConnections rejects 3 (0.500443ms)
+✔ CW04 maximumConnections rejects 0 (0.423331ms)
+✔ CW04 maximumConnections rejects 1.5 (0.432741ms)
+✔ CW04 maximumConnections rejects 2147483648 (0.430171ms)
+✔ CW04 maximumConnections rejects undefined (0.40008ms)
+✔ CW04 requestTimeoutMs rejects 3 (0.473162ms)
+✔ CW04 requestTimeoutMs rejects 0 (0.38607ms)
+✔ CW04 requestTimeoutMs rejects 1.5 (0.664938ms)
+✔ CW04 requestTimeoutMs rejects 2147483648 (0.423421ms)
+✔ CW04 requestTimeoutMs rejects undefined (0.376049ms)
+✔ CW04 shutdownTimeoutMs rejects 3 (0.37943ms)
+✔ CW04 shutdownTimeoutMs rejects 0 (0.382139ms)
+✔ CW04 shutdownTimeoutMs rejects 1.5 (0.413591ms)
+✔ CW04 shutdownTimeoutMs rejects 2147483648 (0.493982ms)
+✔ CW04 shutdownTimeoutMs rejects undefined (0.464712ms)
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (0.872843ms)
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (0.174675ms)
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (0.157934ms)
+✖ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (0.157624ms)
+✖ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (0.236776ms)
+✔ CW06 rejects unsupported profile (0.809311ms)
+✔ CW06 rejects unsupported features (0.424211ms)
+✔ CW06 rejects unsupported tuning (0.39988ms)
+✔ CW06 rejects unsupported overrides (0.445671ms)
+✔ CW07 missing or broken authorship never falls back to defaults (7.75199ms)
+✔ CW08 maximumActiveRequests cannot exceed connection reservation (0.641056ms)
+✔ CW08 maximumProbeRequests cannot exceed connection reservation (0.39275ms)
+✔ CW09 shutdown budget remains independent of request admission deadline (0.562475ms)
+✔ CW10 effective settings omit secrets and original authentication still fails closed (0.448512ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 40
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 289.333778
+
+✖ failing tests:
+
+test at ../../../../../tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:37:212
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (0.872843ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:38:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:37:212
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (0.174675ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:38:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:37:212
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (0.157934ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:38:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:37:212
+✖ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (0.157624ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:38:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:37:212
+✖ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (0.236776ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:38:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }

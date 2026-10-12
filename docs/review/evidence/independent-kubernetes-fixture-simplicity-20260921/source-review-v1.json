@@ -1,0 +1,71 @@
+{
+  "manifestSha256": "d4a2d2cf2692fa9b9d4137b1333ba3dc7d9599f1f0e9aa3db3a611a2075b8354",
+  "mode": "source-only no runtime/type/lint",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "liveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "liveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-pods.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "liveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "liveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "liveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "liveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "liveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "liveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "liveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "liveMatchesBefore": true
+    }
+  ],
+  "decision": "blocked on four illegal nested export declarations in pods helper",
+  "runtimeSuffixByteIdentical": true,
+  "sourceAssertionMapping": "Two regex literals changed (#waitService and #runnerSubject); added closure import/call checks. README claims three: clarify actual count.",
+  "preservation": "Reviewed constructor, request/lease validation, PVC and service/pod traversal, readiness budget order, generated secret redaction, guarded prepare cleanup and actual command wrapper. No additional concrete behavioral discrepancy found.",
+  "openDebt": "Original Promise.catch(()=>undefined) cleanup suppression preserved; canonical rule only CatchClause, so no method exemption lost. Existing operator literals/defaults unchanged and not claimed migrated."
+}

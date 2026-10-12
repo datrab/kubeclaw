@@ -1,0 +1,16 @@
+✔ final inventory verification rejects changed real bytes despite colliding metadata (4.444544ms)
+✔ repeated verification of unchanged bytes fits the original scan quota (2.654738ms)
+✔ final inventory verification rejects grow (0.850022ms)
+✔ final inventory verification rejects shrink (0.889123ms)
+✔ final inventory verification rejects remove (0.945395ms)
+✔ final inventory verification rejects replace (1.069148ms)
+✔ final inventory verification rejects symlink (1.330504ms)
+✔ insufficient initial hash quota never becomes an executable clean inventory (0.705668ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 139.166133

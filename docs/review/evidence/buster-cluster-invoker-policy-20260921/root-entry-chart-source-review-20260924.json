@@ -1,0 +1,84 @@
+{
+  "status": "bounded root source inspection only; full TS review and execution pending",
+  "checks": [
+    "Actual shell calls read-only complete-bundle preflight before runtime-root helper, lock, temporary registry files and child service launch.",
+    "Validation and delivery select the same whole Buster component via busterComponentRaw; stable delivered name is buster-engine.config.json.",
+    "Both current ConfigMap consumers use swarmBundle; workload checksums derive from that bundle or complete rendered ConfigMap.",
+    "Broker CRD/RBAC/controller endpoint values are taken from selected clusterInvokers.shared.",
+    "Existing registryHealthConfiguration validates endpoint agreement without performing a network request.",
+    "Entrypoint tests explicitly translate only the preflight path and reject subsequent node calls; no live deployment claim.",
+    "Helm tests inspect selected packaged bytes, inactive-profile isolation, checksum changes and malformed/retired inputs. These assertions have not yet executed."
+  ],
+  "files": [
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "source": "snapshot-v1",
+      "sha256": "0b725285b971344b45ac4d0cba933679e6ca432d78e1b0249d7e310f10bc9280"
+    },
+    {
+      "path": "scripts/buster-cluster-preflight.mjs",
+      "source": "snapshot-v1",
+      "sha256": "8af3686b218937310a08b03ef31a5d63c60d6525551003e3d655e0bf28c5bb5f"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "source": "snapshot-v1",
+      "sha256": "1f597fc57f3cf5dc7d39d317f7009fdcb8c5cbc73f6191907ac01df67b0ecade"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "source": "snapshot-v1",
+      "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "source": "snapshot-v1",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+    },
+    {
+      "path": "charts/kubeclaw/templates/rbac.yaml",
+      "source": "snapshot-v1",
+      "sha256": "45525f90703f76d3dbcfb67290599359b6366025bd6fdc77040c27d85da6f5e9"
+    },
+    {
+      "path": "tests/verification/reliability/buster-cluster-entrypoint.test.mjs",
+      "source": "snapshot-v1",
+      "sha256": "c9bbbaf745bb975ac3445bd034f28934621da1db5716ed6f861eb1c379488469"
+    },
+    {
+      "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+      "source": "snapshot-v1",
+      "sha256": "8cd2b37713b1e54258ba7cef09dcf7baa706da77c49e197f0a7d324ce512712d"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "source": "current unchanged dependency",
+      "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+    },
+    {
+      "path": "charts/prism/templates/configmap-swarm-config.yaml",
+      "source": "current unchanged dependency",
+      "sha256": "75886e7ddea3625d4fa3af7eb866cd63c46ede89d89ca3718d4a022d7304e5e6"
+    },
+    {
+      "path": "charts/prism/templates/_swarm-config.tpl",
+      "source": "current unchanged dependency",
+      "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a"
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "source": "current unchanged dependency",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "source": "current unchanged dependency",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "source": "current unchanged dependency",
+      "sha256": "b18d1684d25bae992b70c9e99910dc36a3015dbcef0ea72a6c0ee19dfdc27792"
+    }
+  ]
+}

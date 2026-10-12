@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { runProcessInput } from '../process-input.ts';
-const options = { prefix: 'PIPE_TEST', timeoutMs: 2_000, maximumOutputBytes: 1024 };
+const options = { processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, prefix: 'PIPE_TEST', timeoutMs: 2_000, maximumOutputBytes: 1024 };
 await assert.rejects(runProcessInput(process.execPath, ['-e', 'process.stdin.destroy();process.exit(0)'], {
   ...options, input: Buffer.alloc(8 * 1024 * 1024),
 }), (error: Error & { cause?: NodeJS.ErrnoException }) => error.message === 'PIPE_TEST_STDIN_FAILED' && ['EPIPE', 'ECONNRESET'].includes(error.cause?.code ?? ''));

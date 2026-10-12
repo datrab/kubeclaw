@@ -1,0 +1,7 @@
+{
+  "error": "Reviewer initially classified all files under inspected plugin directories as production; two test modules changed during explicit TTL migration. No production assertion or inventory scope was changed.",
+  "paths": [
+    "skills/common/plugins/notification-observer/tests/live-function.test.ts",
+    "skills/common/plugins/operator-messaging/tests/live-function.test.ts"
+  ]
+}

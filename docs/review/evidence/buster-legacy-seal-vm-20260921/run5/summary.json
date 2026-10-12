@@ -1,0 +1,132 @@
+{
+  "casesInvoked": 29,
+  "passed": 29,
+  "failed": 0,
+  "driverSummary": {
+    "cases": 29,
+    "failed": [],
+    "kernelAcceptance": true,
+    "stopAuthority": false
+  },
+  "execSession": 97246,
+  "qemuPid": 295685,
+  "qemuAbsent": true,
+  "cases": [
+    {
+      "case": "complete",
+      "exitCode": 0
+    },
+    {
+      "case": "quota-exact",
+      "exitCode": 0
+    },
+    {
+      "case": "quota-byte-short",
+      "exitCode": 0
+    },
+    {
+      "case": "quota-entry-short",
+      "exitCode": 0
+    },
+    {
+      "case": "mutable-file",
+      "exitCode": 0
+    },
+    {
+      "case": "mutable-directory",
+      "exitCode": 0
+    },
+    {
+      "case": "plan-link",
+      "exitCode": 0
+    },
+    {
+      "case": "hardlink",
+      "exitCode": 0
+    },
+    {
+      "case": "device",
+      "exitCode": 0
+    },
+    {
+      "case": "fifo",
+      "exitCode": 0
+    },
+    {
+      "case": "bind-mount",
+      "exitCode": 0
+    },
+    {
+      "case": "different-device",
+      "exitCode": 0
+    },
+    {
+      "case": "tmpfs-root",
+      "exitCode": 0
+    },
+    {
+      "case": "extra-bounding",
+      "exitCode": 0
+    },
+    {
+      "case": "retained-extra",
+      "exitCode": 0
+    },
+    {
+      "case": "foreign-ancestor",
+      "exitCode": 0
+    },
+    {
+      "case": "writable-ancestor",
+      "exitCode": 0
+    },
+    {
+      "case": "missing-store",
+      "exitCode": 0
+    },
+    {
+      "case": "interrupted",
+      "exitCode": 0
+    },
+    {
+      "case": "mutation-denial",
+      "exitCode": 0
+    },
+    {
+      "case": "uid1000-read",
+      "exitCode": 0
+    },
+    {
+      "case": "runtime",
+      "exitCode": 0
+    },
+    {
+      "case": "runtime-plan-reject",
+      "exitCode": 0
+    },
+    {
+      "case": "runtime-links",
+      "exitCode": 0
+    },
+    {
+      "case": "runtime-link-fifo",
+      "exitCode": 0
+    },
+    {
+      "case": "namespace-stable",
+      "exitCode": 0
+    },
+    {
+      "case": "different-uuid",
+      "exitCode": 0
+    },
+    {
+      "case": "foreign-descendant",
+      "exitCode": 0
+    },
+    {
+      "case": "writable-descendant",
+      "exitCode": 0
+    }
+  ]
+}

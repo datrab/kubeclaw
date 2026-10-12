@@ -1,0 +1,37 @@
+{
+  "status": "terminal HOLD; diagnostic only, initial runtime failures remain",
+  "session": 75986,
+  "exitCode": 0,
+  "sourceDrift": [],
+  "originalRuntimeSession": 64237,
+  "originalRuntimeExitCode": 1,
+  "cpu": {
+    "originalHighFailure": "closed.code null != 0; original signal and summary not recorded",
+    "diagnosticLow": {
+      "code": null,
+      "signal": "SIGKILL",
+      "wallMs": 998
+    },
+    "diagnosticHigh": {
+      "code": 0,
+      "wallMs": 1233,
+      "cpuMicroseconds": 1200002,
+      "executionState": "completed"
+    },
+    "limitsAndAssertions": "unchanged; exact-hash loader adds observations only",
+    "inferenceLimit": "Isolated pass does not identify the cause or invalidate the original high-profile failure."
+  },
+  "boundary": {
+    "originalVirtualAdjacent": "Both nonexistent files rejected by TypeScript project service before rule evaluation.",
+    "existingAdjacent": "process-input.ts yields severity2 discipline/no-direct-env-access; fallback also yields discipline/no-env-default.",
+    "declaredInfrastructure": "Both actual runtime paths accept direct env read and reject hardcoded fallback with severity2 no-env-default."
+  },
+  "mutantsExecuted": false,
+  "artifacts": {
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-diagnostics1/cpu-diagnostic.txt": "313299a4e902d2267d86da5c4b65786353a588ff66f8a4d2a2ded16f366035d2",
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-diagnostics1/boundary-diagnostic.txt": "3fa4a0d86330aaba3fa286e8a4bfc54cff6bcd047fed182534452dab8770826c",
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-diagnostics1/results.json": "2ec6951fc4294de6d3fe35149ca19fb653bb208168e10ea67fff9d2adacc6310",
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-diagnostics-source/spec.json": "542282a91170a93c23c52e0414138b0ab129f40261958833de20d89670d8608e",
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-diagnostics-source/observe-test.mjs": "5c0383b22b2f768dc1e0da8f0356bf367e8e3b140eefb09c471ad1d614ae8ba7"
+  }
+}

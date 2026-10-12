@@ -1,0 +1,100 @@
+{
+  "changedOriginalSources": [
+    "docs/review/remediation/implementation/config-testprovider-authority-20260921.md"
+  ],
+  "originalAuthoritiesRetained": true,
+  "newAuthorities": [
+    {
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "line": 121,
+      "expression": "const statusPassed = config.expectedStatuses ? config.expectedStatuses.includes(response.status)",
+      "classification": "implicit request acceptance: absent expectedStatuses accepts only 200 <= status < 300"
+    },
+    {
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "line": 122,
+      "expression": ": response.status >= 200 && response.status < 300;",
+      "classification": "implicit request acceptance: absent expectedStatuses accepts only 200 <= status < 300"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 5,
+      "expression": "const MAXIMUM_LCOV_BYTES = 64 * 1024 * 1024;",
+      "classification": "LCOV parser capacity: 64 MiB, applied after whole-file read"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 6,
+      "expression": "const MAXIMUM_LINES = 2_000_000;",
+      "classification": "LCOV parser capacity: 64 MiB, applied after whole-file read"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 7,
+      "expression": "",
+      "classification": "LCOV parser capacity: 64 MiB, applied after whole-file read"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 8,
+      "expression": "function parseLcov(bytes, id) {",
+      "classification": "LCOV parser capacity: 64 MiB, applied after whole-file read"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 9,
+      "expression": "if (bytes.byteLength > MAXIMUM_LCOV_BYTES) throw new Error(`COVERAGE_LCOV_TOO_LARGE:${id}`);",
+      "classification": "LCOV parser capacity: 64 MiB, applied after whole-file read"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 30,
+      "expression": "lines.set(line, Math.max(lines.get(line) ?? 0, hits));",
+      "classification": "LCOV DA-record count limit: 2000000; not physical line count"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 31,
+      "expression": "records += 1;",
+      "classification": "LCOV DA-record count limit: 2000000; not physical line count"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 32,
+      "expression": "if (records > MAXIMUM_LINES) throw new Error(`COVERAGE_LCOV_LINE_LIMIT:${id}`);",
+      "classification": "LCOV DA-record count limit: 2000000; not physical line count"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 65,
+      "expression": "const bytes = fs.readFileSync(fileURLToPath(input.artifact.storageUrl));",
+      "classification": "whole-file synchronous allocation/read precedes size/digest and parser capacity checks"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 66,
+      "expression": "if (bytes.byteLength !== input.artifact.sizeBytes) throw new Error(`COVERAGE_INPUT_SIZE_MISMATCH:${input.name}`);",
+      "classification": "whole-file synchronous allocation/read precedes size/digest and parser capacity checks"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 67,
+      "expression": "const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;",
+      "classification": "whole-file synchronous allocation/read precedes size/digest and parser capacity checks"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 68,
+      "expression": "if (digest !== input.artifact.contentDigest) throw new Error(`COVERAGE_INPUT_DIGEST_MISMATCH:${input.name}`);",
+      "classification": "whole-file synchronous allocation/read precedes size/digest and parser capacity checks"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "line": 69,
+      "expression": "return parseLcov(bytes, input.name);",
+      "classification": "whole-file synchronous allocation/read precedes size/digest and parser capacity checks"
+    }
+  ],
+  "reportDiff": "--- \n+++ \n@@ -23,10 +23,10 @@\n | api-flow / flow | Required `flowFile`; optional explicit URL or fixture endpoint, request timeout, response bytes, maximum steps. Flow file contains setup/steps/cleanup, variables and expectations. | Schema 10000 ms / 1048576 bytes / 64 steps; code repeats request limits, defaults step method GET, maps/expectations empty, setup/cleanup empty, minimum WebSocket messages 1. `network.http`; timeout is capped by invocation time. Flow request defaults are not global endpoint authorization. |\n | axe / axe | Required routes; URL/endpoint, profiles/profileFile, tags, exclusions, accepted findings and timeout. | Defaults desktop/mobile, wcag2a/wcag2aa, empty exclusions/acceptances and 30000 ms. Code owns built-in desktop 1440\u00d7900 and mobile 390\u00d7844 browser profiles, locale/timezone/media settings; custom profile file <=262144 bytes and <=32 profiles. `browser.axe` separately caps combinations, concurrency, execution, result/screenshots. |\n | container-build / buildkit | Required buildContext and definition; nested Dockerfile/build arguments/target or declared build structure, outputName and platform. | Code derives omitted output name from module/node identity and defaults platform linux/amd64. `container.build` chooses actual buildctl, address, registry, permitted platforms/args and ceilings. Immutable image/digest result is a protocol assertion, not an operator default. |\n-| coverage-budget / lcov | Optional minimumLinePercent and combine; LCOV artifact inputs are required by implementation. | Missing minimum means no requested threshold except blocking resolver explicitly requires it. Code combines by default (`combine !== false`); explicit false uses the minimum individual percentage; percentages are test acceptance criteria. Local artifact read verifies declared bytes/digest. No external capability or provider daemon. |\n+| coverage-budget / lcov | Optional minimumLinePercent and combine; LCOV artifact inputs are required by implementation. | Missing minimum means no requested threshold except blocking resolver explicitly requires it. Code combines by default (`combine !== false`); explicit false uses the minimum individual percentage; percentages are test acceptance criteria. Local artifact read verifies declared bytes/digest. Parser caps are 64 MiB (`MAXIMUM_LCOV_BYTES`) and 2000000 DA records (`MAXIMUM_LINES`), not all physical LCOV lines. Both checks occur after `fs.readFileSync` has already allocated/read the file; these are parser bounds, not a preallocation I/O bound. No external capability or provider daemon. |\n | demo-auth-smoke / session | All eight protocol/loginPath/usernameKey/passwordKey/cookieName/protectedPath/usernamePointer/assertions fields required. Inputs carry deployment and credentials. | No schema defaults. Three actual HTTP exchanges implement unauthenticated denial, login and protected identity/business assertions. Code sets response cap 65536 bytes and uses remaining invocation deadline. These credentials are fixture inputs; no new secret literal in operator config. `network.http` remains resource authority. |\n | direct-command / command | Required executable catalog ID and resultMode; args, workingDirectory, environment, reports, coverage and artifacts declarations. | Code defaults args [], directory `.`, environment {}, output declarations []; max 256 args, 4096 characters/arg/value, 64 environment entries, 16 reports and 8 coverage/artifact declarations. Protected variable names disallow PATH/HOME/credential/control overrides. `command.execute` resolves the ID through Buster's own catalog and enforced resource policy, not common command-runner's `catalog:name` identity. |\n-| http / request | URL or linked endpoint plus path/method/accept and expected status/text/content-type; requested response bytes/time. | Schema GET, */*, 1048576 bytes, 10000 ms; code adds `/` or linked endpoint path and null optional assertions. URL/fixture ambiguity is rejected. `network.http` applies its independent origins/ports/websocket/time/byte policy. |\n+| http / request | URL or linked endpoint plus path/method/accept and expected status/text/content-type; requested response bytes/time. | Schema GET, */*, 1048576 bytes, 10000 ms; code adds `/` or linked endpoint path and null optional assertions. Absent `expectedStatuses` is not unrestricted acceptance: `result()` requires `response.status >= 200 && response.status < 300`; an explicit list replaces that 2xx acceptance rule. URL/fixture ambiguity is rejected. `network.http` applies its independent origins/ports/websocket/time/byte policy. |\n | kubernetes-fixture / deployment | Required serviceName/servicePort; immutable image or linked image, optional target port, namespacePrefix, retention, readiness seconds, secretReferences/testCredentials. | Code namespace `test`, retention delete/1800 seconds, readiness 120 seconds, empty secret references. Image digest agreement and fixture schemas are protocol rules. `kubernetes.fixture` owns actual kubectl, controller/lease policy, allowed source secrets, resource/PVC/lifetime/time ceilings. |\n | lighthouse / lighthouse | Required purpose/routes/settingsFile/profile; URL/endpoint, budget, runs, acceptances, timeout. | Schema/code timeout 120000 ms and no acceptances; conditional runs default 3 for performance, 1 otherwise. Blocking performance requires budget in resolver. `browser.lighthouse` owns actual Chrome, allowed origins and maximum runs/time/results. |\n | openapi / operations | Required specFile; URL/endpoint, explicit operation parameters/body/headers or tags, request time/response bytes. | Schema/code 10000 ms / 1048576 bytes; nested operation cleanup defaults false. Optional parameter/query/header maps default empty, tags empty; OpenAPI response-schema semantics and cleanup ordering are test protocol, not environment policy. `network.http`; timeout capped by invocation. |\n",
+  "runtimeExecuted": false
+}

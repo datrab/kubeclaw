@@ -1,0 +1,7 @@
+{
+  "status": "private proposal; not integrated or runtime tested",
+  "path": "skills/nova/core/test-gates/source-process-lifecycle.ts",
+  "beforeSha256": "5924d42b6b5140cd8148aba4d69e54eca84ba8883e0a2739420019f5b48f778b",
+  "afterSha256": "bab5042e77413e7ce8d0b681f767b7e39328cd50c2fc57a70fc12df4f8b31b1f",
+  "scope": "Record TERM failure and still install actual close wait; immediately retain group failure while waiting for close; reject after observed signal/group failure even if close succeeds. Existing timing values remain unchanged and uncentralized."
+}

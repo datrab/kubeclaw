@@ -56,10 +56,12 @@ Run:
 npm test --prefix skills/nova/plugins/blueprint-sync
 ```
 
-Package tests found: 0.
+Package tests found: 2.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/blueprint-sync/plugin.json`
 - Package root: `skills/nova/plugins/blueprint-sync`
 - Authored package guide: `skills/nova/plugins/blueprint-sync/README.md`
+- Test: `skills/nova/plugins/blueprint-sync/tests/live-function.test.ts`
+- Test: `skills/nova/plugins/blueprint-sync/tests/package-boundary.test.mjs`

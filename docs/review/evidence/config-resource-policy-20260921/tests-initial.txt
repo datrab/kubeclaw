@@ -1,0 +1,38 @@
+✔ CP03 original Control persists and dispatches startup budgets and preserves admitted retry identity (3370.937733ms)
+✔ CP01 both roles reject cpuTimeMs=undefined (4.048696ms)
+✔ CP01 both roles reject cpuTimeMs=null (0.646837ms)
+✔ CP01 both roles reject cpuTimeMs=5 (0.590606ms)
+✔ CP01 both roles reject cpuTimeMs=0 (0.633936ms)
+✔ CP01 both roles reject cpuTimeMs=-1 (0.685128ms)
+✔ CP01 both roles reject cpuTimeMs=1.5 (0.687338ms)
+✔ CP01 both roles reject cpuTimeMs=9007199254740992 (0.591826ms)
+✔ CP01 both roles reject memoryBytes=undefined (0.671657ms)
+✔ CP01 both roles reject memoryBytes=null (0.631306ms)
+✔ CP01 both roles reject memoryBytes=5 (0.563475ms)
+✔ CP01 both roles reject memoryBytes=0 (0.480113ms)
+✔ CP01 both roles reject memoryBytes=-1 (0.420351ms)
+✔ CP01 both roles reject memoryBytes=1.5 (0.480092ms)
+✔ CP01 both roles reject memoryBytes=9007199254740992 (0.476223ms)
+✔ CP01 both roles reject tasks=undefined (0.444402ms)
+✔ CP01 both roles reject tasks=null (0.433711ms)
+✔ CP01 both roles reject tasks=5 (0.476632ms)
+✔ CP01 both roles reject tasks=0 (0.437562ms)
+✔ CP01 both roles reject tasks=-1 (0.428332ms)
+✔ CP01 both roles reject tasks=1.5 (0.516524ms)
+✔ CP01 both roles reject tasks=9007199254740992 (0.451932ms)
+✔ CP01 missing or competing resource policy fails (0.532574ms)
+✔ CP01 missing or competing resource policy fails (0.482563ms)
+✔ CP01 missing or competing resource policy fails (0.438791ms)
+✔ CP02 rejects PRISM_NATIVE_CPU_TIME_MS even empty (0.682078ms)
+✔ CP02 rejects PRISM_NATIVE_MEMORY_BYTES even empty (0.690438ms)
+✔ CP02 rejects PRISM_NATIVE_TASKS even empty (0.440792ms)
+✔ CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7} (45.107373ms)
+✔ CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11} (5.432472ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4412.094361

@@ -1,0 +1,49 @@
+✔ required session policy maximumProtocolBytes rejects before package/process access (3.798649ms)
+✔ required session policy terminationGraceMs rejects before package/process access (0.494783ms)
+✔ required session policy terminationTimeoutMs rejects before package/process access (0.448301ms)
+✔ required session policy capabilityDrainTimeoutMs rejects before package/process access (0.40936ms)
+✔ required session policy minimumHeapMiB rejects before package/process access (0.468162ms)
+✔ required session policy heapFraction rejects before package/process access (0.446122ms)
+✔ required session policy maximumPendingCapabilities rejects before package/process access (0.559785ms)
+✔ required session policy minimumOpenFiles rejects before package/process access (0.542964ms)
+✔ required session policy artifactFileDescriptorReserve rejects before package/process access (0.453821ms)
+✔ fractional heap selection and immutable complete runtime snapshot (0.574374ms)
+✔ actual child stdout uses protocol cap 1024 (388.239419ms)
+✔ actual child stdout uses protocol cap 65536 (129.795073ms)
+✔ actual V8 heap consumes selected minimumHeapMiB (260.507869ms)
+✔ actual V8 heap consumes selected heapFraction (247.780029ms)
+✔ actual descriptor exhaustion consumes minimumOpenFiles (264.01615ms)
+✔ actual descriptor exhaustion consumes artifactFileDescriptorReserve (269.340259ms)
+✖ real uncooperative child consumes selected SIGKILL escalation grace (477.281415ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 16
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4591.261831
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-provider-session-policy.test.mjs:88:1
+✖ real uncooperative child consumes selected SIGKILL escalation grace (477.281415ms)
+  AssertionError [ERR_ASSERTION]: native supervisor must close before the500ms parent escalation
+  + actual - expected
+  
+  + {
+  +   at: 4375.657164,
+  +   signal: 'SIGKILL'
+  + }
+  - undefined
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-provider-session-policy.test.mjs:130:16)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { signal: 'SIGKILL', at: 4375.657164 },
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

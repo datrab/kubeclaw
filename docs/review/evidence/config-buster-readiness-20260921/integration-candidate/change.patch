@@ -1,0 +1,938 @@
+--- a/charts/kubeclaw/files/config/buster-engine.config.json
++++ b/charts/kubeclaw/files/config/buster-engine.config.json
+@@ -39,6 +39,10 @@
+       "maximumActiveJobs": 2,
+       "maximumQueuedJobs": 8,
+       "maximumConcurrentAttempts": 64
++    },
++    "dependencyReadiness": {
++      "maximumExecutionMs": 1000,
++      "maximumOutputBytes": 65536
+     }
+   }
+ }
+--- a/charts/kubeclaw/templates/_swarm-config.tpl
++++ b/charts/kubeclaw/templates/_swarm-config.tpl
+@@ -59,17 +59,19 @@
+ {{- if hasKey $config.operator "buster" -}}
+ {{- $buster := $config.operator.buster -}}
+ {{- if not (kindIs "map" $buster) -}}{{- fail "swarm buster must be an object" -}}{{- end -}}
+-{{- if or (ne (len $buster) 2) (not (hasKey $buster "preparation")) (not (hasKey $buster "admission")) -}}{{- fail "swarm buster requires preparation and admission only" -}}{{- end -}}
+-{{- $admission := $buster.admission -}}
+-{{- $admissionDefinition := (index $definitions "buster-admission") -}}
+-{{- if not (kindIs "map" $admission) -}}{{- fail "swarm buster admission must be an object" -}}{{- end -}}
+-{{- if ne (len $admission) (len $admissionDefinition.required) -}}{{- fail "swarm buster admission requires exactly supported keys" -}}{{- end -}}
+-{{- range $key := $admissionDefinition.required -}}
+-{{- if not (hasKey $admission $key) -}}{{- fail (printf "required buster admission key %s" $key) -}}{{- end -}}
+-{{- $value := index $admission $key -}}
+-{{- if not (kindIs "float64" $value) -}}{{- fail (printf "buster admission %s must be an integer" $key) -}}{{- end -}}
+-{{- $limit := index $admissionDefinition.properties $key -}}
+-{{- if or (lt $value (float64 $limit.minimum)) (gt $value (float64 $limit.maximum)) (ne $value (floor $value)) -}}{{- fail (printf "buster admission %s is outside its integer bounds" $key) -}}{{- end -}}
++{{- if or (ne (len $buster) 3) (not (hasKey $buster "preparation")) (not (hasKey $buster "admission")) (not (hasKey $buster "dependencyReadiness")) -}}{{- fail "swarm buster requires preparation, admission and dependencyReadiness only" -}}{{- end -}}
++{{- range $section, $schema := dict "admission" "buster-admission" "dependencyReadiness" "buster-dependency-readiness" -}}
++{{- $policy := index $buster $section -}}
++{{- $policyDefinition := index $definitions $schema -}}
++{{- if not (kindIs "map" $policy) -}}{{- fail (printf "swarm buster %s must be an object" $section) -}}{{- end -}}
++{{- if ne (len $policy) (len $policyDefinition.required) -}}{{- fail (printf "swarm buster %s requires exactly supported keys" $section) -}}{{- end -}}
++{{- range $key := $policyDefinition.required -}}
++{{- if not (hasKey $policy $key) -}}{{- fail (printf "required buster %s key %s" $section $key) -}}{{- end -}}
++{{- $value := index $policy $key -}}
++{{- if not (kindIs "float64" $value) -}}{{- fail (printf "buster %s %s must be an integer" $section $key) -}}{{- end -}}
++{{- $limit := index $policyDefinition.properties $key -}}
++{{- if or (lt $value (float64 $limit.minimum)) (gt $value (float64 $limit.maximum)) (ne $value (floor $value)) -}}{{- fail (printf "buster %s %s is outside its integer bounds" $section $key) -}}{{- end -}}
++{{- end -}}
+ {{- end -}}
+ {{- $preparation := $buster.preparation -}}
+ {{- $definition := (index $definitions "buster-preparation") -}}
+--- a/docker/buster-runtime-entrypoint.sh
++++ b/docker/buster-runtime-entrypoint.sh
+@@ -225,7 +225,6 @@
+     terminationGraceMs: 2000,
+     allowSampledProcessLimit: true,
+   },
+-  dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+   containerBuild: {
+     buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: process.env.BUILDKIT_HOST,
+     ...JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),
+--- a/docs/operations/operator-configuration.md
++++ b/docs/operations/operator-configuration.md
+@@ -16,7 +16,7 @@
+ | `prism-studio.config.json` | Studio listener, Control origin and deadline |
+ | `prism-worker.config.json` | `ingress` and native `supervisor` |
+ | `prism-execution.config.json` | shared Prism `resourcePolicy` and `maximumResultBytes` |
+-| `buster-engine.config.json` | `preparation` and `admission` |
++| `buster-engine.config.json` | `preparation`, `admission` and `dependencyReadiness` |
+ | `worker-core.config.json` | `localRuntime.drainTimeoutMs`, `cancellationTimeoutMs`, and `replayLimit` |
+ 
+ Each document has `schemaVersion: "swarm-component.v1"`, the corresponding `owner`,
+@@ -407,3 +407,18 @@
+ `worker-core.config.json`, owner `worker-core`, authors `settings.localRuntime.drainTimeoutMs` (300000), `cancellationTimeoutMs` (30000), and `replayLimit` (65536). All three fields are required; timers accept integer milliseconds from 1 through 2147483647 and replay capacity accepts integers from 1 through 1000000. The entry references this sixth component and both charts deliver all seven bundle files under the same immutable ConfigMap generation. Changing this component participates in the actual workload rollout checksum. There is no environment override or low-level constructor default.
+ 
+ Buster reads the complete bundle once before startup and passes the immutable policy through production service composition and prepared execution into the default Worker Core runtime. Replay capacity counts retained accepted attempt identities inside each prepared-job runtime until their claims expire; a second job receives a separate runtime. It is neither durable replay history nor a process-global admission queue. The existing Buster path does not call Core drain, so this migration does not add a Buster drain lifecycle. Core drain waits `drainTimeoutMs`, cancels remaining attempts, then waits `cancellationTimeoutMs`; its actual consumer tests are separate from Buster replay propagation. Custom low-level runtime injection still requires an explicit policy but does not prove that the injected runtime implements it.
++
++## Buster dependency readiness
++
++Set both fields under `settings.dependencyReadiness` in `buster-engine.config.json`. The existing bundle reference is the only configuration entrypoint; there is no separate environment or Helm-values override.
++
++| Field | Explicit canonical value | Required bounds and effect |
++| --- | --- | --- |
++| `maximumExecutionMs` | 1000 | Safe integer 1–30000 milliseconds; maximum duration of one dependency process. |
++| `maximumOutputBytes` | 65536 | Safe integer 1–1048576 bytes; combined stdout and stderr ceiling for that process. |
++
++Both fields are mandatory even when `container.build` is disabled. Validation never enables that capability or starts a probe. With it enabled, the actual service invokes the configured buildctl executable against its configured BuildKit address. Concurrent readiness requests share an in-flight check; completed results are not cached. Timeout, excess output, spawn failure or unsuccessful exit make functional readiness unavailable. New jobs and accepted replays are checked before acceptance/start; terminal replays remain readable without a dependency probe. Shutdown cancels the active check and awaits closure. These limits apply to the readiness process, separately from build execution budgets. Readiness is availability evidence, not BuildKit isolation.
++
++Remove `dependencyReadiness` from the former generated/runtime JSON before upgrading: presence is rejected even for null, empty or equal-valued objects. Missing fields, strings, fractions and out-of-range values are rejected instead of receiving defaults. Direct service API callers must also supply the complete policy. Update and publish the complete config generation, render the relevant chart, then restart/roll out the process; existing instances retain their captured policy. The owner contributes to the config rollout checksum. Liveness `/healthz`, initialization `/bootstrapz`, and dependency readiness `/readyz` remain separate.
++
++Controlled executable tests establish policy propagation and process enforcement; they do not establish actual buildctl availability, a built image, a working BuildKit daemon, native isolation, or cluster activation. Those proofs remain separate. The process helper's fixed PATH/locale and other Buster runtime/provider settings are not migrated by this two-field change.
+--- a/package.json
++++ b/package.json
+@@ -225,7 +225,8 @@
+     "verify:prism:native-dispatch": "node --test skills/prism/tests/native/operation-journal.mts && node --test skills/prism/tests/native/operation-http.mts",
+     "verify:prism:native-worker": "node --test --test-concurrency=1 skills/prism/tests/*-native.mts skills/prism/integration/worker-concurrent-resource-attribution.mts",
+     "verify:buster:admission": "tsc --noEmit -p tests/verification/reliability/tsconfig.buster-admission.json && node --test --test-concurrency=1 tests/verification/reliability/buster-admission-config.test.mts tests/verification/reliability/buster-admission-cli.test.mjs tests/verification/deployment/buster-admission-render.test.mjs && node tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+-    "verify:buster:cancellation": "tsc --noEmit -p tests/verification/reliability/tsconfig.buster-cancellation.json && node --test --test-concurrency=1 tests/verification/reliability/buster-atomic-cancellation.test.mts tests/verification/reliability/buster-prepared-store-cancellation.test.mts"
++    "verify:buster:cancellation": "tsc --noEmit -p tests/verification/reliability/tsconfig.buster-cancellation.json && node --test --test-concurrency=1 tests/verification/reliability/buster-atomic-cancellation.test.mts tests/verification/reliability/buster-prepared-store-cancellation.test.mts",
++    "verify:buster:readiness-config": "tsc --noEmit -p tests/verification/reliability/tsconfig.buster-readiness.json && node --test --test-concurrency=1 tests/verification/reliability/buster-readiness-config.test.mts tests/verification/reliability/buster-readiness-consumer.test.mts tests/verification/deployment/buster-readiness-config.test.mjs tests/verification/deployment/buster-readiness.test.mts"
+   },
+   "devDependencies": {
+     "@types/js-yaml": "^4.0.9",
+--- a/skills/buster/engine/test-gates/production-config-values.ts
++++ b/skills/buster/engine/test-gates/production-config-values.ts
+@@ -169,6 +169,9 @@
+ 
+ export function validateRuntimeRoot(value: Record<string, unknown>): void {
+   if (value.schemaVersion !== 'buster-remote-plan-runtime.v1') throw new Error('BUSTER_REMOTE_CONFIG_VERSION_INVALID');
++  if (Object.hasOwn(value, 'dependencyReadiness')) {
++    throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:dependencyReadiness:use buster-engine.config.json settings.dependencyReadiness');
++  }
+   for (const key of ['maximumArchiveBytes', 'maximumExtractedBytes', 'maximumRequestBytes']) {
+     if (Object.hasOwn(value, key))
+       throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use buster-engine.config.json settings.preparation`);
+--- a/skills/buster/engine/test-gates/production.ts
++++ b/skills/buster/engine/test-gates/production.ts
+@@ -4,7 +4,7 @@
+ import { object, integer, validateRuntimeRoot, runtimeAuthority, runtimeRegistry } from './production-config-values.ts';
+ import { capabilitySources } from './production-capability-sources.ts';
+ import type { BusterPreparation } from './preparation-client.ts';
+-import type { BusterSettings, WorkerCoreSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
++import { validateBusterDependencyReadinessSettings, type BusterSettings, type WorkerCoreSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import { BusterRemotePlanRuntime } from './remote-plan-runtime.ts';
+@@ -32,6 +32,7 @@
+ 
+ function configuredService(value: Record<string, unknown>, directory: string, environment: NodeJS.ProcessEnv,
+   preparation: BusterPreparation, settings: { buster: BusterSettings; workerLocalRuntime: WorkerCoreSettings['localRuntime'] }, workerRevision: string, sourceAttestationPublicKey: string) {
++  const dependencyReadiness = validateBusterDependencyReadinessSettings(settings.buster.dependencyReadiness);
+   const registry = runtimeRegistry(value, directory);
+   const records = object(value.recordLimits, 'recordLimits');
+   const allowedCapabilities = new Set(Array.isArray(value.allowedCapabilities)
+@@ -54,10 +55,7 @@
+       sourceAttestationPublicKey,
+     }),
+     registry,
+-    ...(value.dependencyReadiness === undefined ? {} : { dependencyReadiness: {
+-      maximumExecutionMs: integer(object(value.dependencyReadiness, 'dependencyReadiness').maximumExecutionMs, 'dependencyReadiness.maximumExecutionMs'),
+-      maximumOutputBytes: integer(object(value.dependencyReadiness, 'dependencyReadiness').maximumOutputBytes, 'dependencyReadiness.maximumOutputBytes'),
+-    } }),
++    dependencyReadiness,
+     workerRevision,
+     runtimeRoot: path.resolve(directory, value.runtimeRoot as string),
+     admission: settings.buster.admission, workerLocalRuntime: settings.workerLocalRuntime,
+--- a/skills/buster/engine/test-gates/remote-plan-service.ts
++++ b/skills/buster/engine/test-gates/remote-plan-service.ts
+@@ -1,5 +1,5 @@
+ import { validateLocalWorkerRuntimePolicy, type LocalWorkerRuntimePolicy } from "@kubeclaw/worker-core";
+-import { validateBusterAdmissionSettings, type BusterAdmissionSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
++import { validateBusterAdmissionSettings, validateBusterDependencyReadinessSettings, type BusterAdmissionSettings, type BusterDependencyReadinessSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+ import { executeBusterPreparedJob } from './remote-prepared-execution.ts';
+ import { preparedPlanRuntimeRoot } from './prepared-plan-paths.ts';
+ import type { BusterStagedAdmission } from './preparation-input.ts';
+@@ -28,7 +28,7 @@
+   readonly runtimeRoot: string;
+   readonly admission: BusterAdmissionSettings;
+   readonly workerLocalRuntime: LocalWorkerRuntimePolicy;
+-  readonly dependencyReadiness?: { readonly maximumExecutionMs: number; readonly maximumOutputBytes: number };
++  readonly dependencyReadiness: BusterDependencyReadinessSettings;
+   readonly now?: () => Date;
+   readonly execute?: (
+     job: PreparedPlanJob,
+@@ -42,8 +42,8 @@
+   if (!options.allowedCapabilities.has('container.build')) return undefined;
+   if (!options.containerBuild) throw new Error('BUSTER_READINESS_BUILDKIT_CONFIG_REQUIRED');
+   return new BuildkitReadiness({ buildctlExecutable: options.containerBuild.buildctlExecutable,
+-    buildkitHost: options.containerBuild.buildkitHost, maximumExecutionMs: options.dependencyReadiness?.maximumExecutionMs ?? 1000,
+-    maximumOutputBytes: options.dependencyReadiness?.maximumOutputBytes ?? 65536 });
++    buildkitHost: options.containerBuild.buildkitHost, maximumExecutionMs: options.dependencyReadiness.maximumExecutionMs,
++    maximumOutputBytes: options.dependencyReadiness.maximumOutputBytes });
+ }
+ 
+ export class BusterRemotePlanService {
+@@ -64,9 +64,10 @@
+ 
+   constructor(options: BusterRemotePlanServiceOptions) {
+     const workerLocalRuntime = validateLocalWorkerRuntimePolicy(options.workerLocalRuntime);
++    const dependencyReadiness = validateBusterDependencyReadinessSettings(options.dependencyReadiness);
+     if (!/^[a-f0-9]{40,64}$/u.test(options.workerRevision)) throw new Error('BUSTER_REMOTE_WORKER_REVISION_INVALID');
+-    this.#buildkitReadiness = configuredBuildkitReadiness(options);
+-    this.#options = { ...options, workerLocalRuntime };
++    this.#options = { ...options, workerLocalRuntime, dependencyReadiness };
++    this.#buildkitReadiness = configuredBuildkitReadiness(this.#options);
+     this.#now = options.now ?? (() => new Date());
+     const admission = validateBusterAdmissionSettings(options.admission);
+     this.#maximumActiveJobs = admission.maximumActiveJobs;
+--- a/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
++++ b/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
+@@ -16,7 +16,7 @@
+ };
+ const validateEntry = ajv.compile(entrySchema);
+ const validateComponent = ajv.compile(componentSchema);
+-const settingsValidators = new Map(['buster-preparation', 'buster-admission'].map(name => [name, ajv.compile({
++const settingsValidators = new Map(['buster-preparation', 'buster-admission', 'buster-dependency-readiness'].map(name => [name, ajv.compile({
+   $defs: componentSchema.$defs, $ref: `#/$defs/${name}`,
+ })]));
+ interface Component {
+@@ -37,7 +37,7 @@
+ }
+ 
+ /** Envelope validators are also used at the existing owned-host boundary. */
+-export function validateComponentSettings(name: 'buster-preparation' | 'buster-admission', value: unknown, error: string): void {
++export function validateComponentSettings(name: 'buster-preparation' | 'buster-admission' | 'buster-dependency-readiness', value: unknown, error: string): void {
+   const validate = settingsValidators.get(name);
+   if (!validate || !validate(value)) throw new Error(error);
+ }
+--- a/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
++++ b/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
+@@ -202,7 +202,8 @@
+       "additionalProperties": false,
+       "required": [
+         "preparation",
+-        "admission"
++        "admission",
++        "dependencyReadiness"
+       ],
+       "properties": {
+         "preparation": {
+@@ -421,6 +422,9 @@
+               "maximum": 9007199254740991
+             }
+           }
++        },
++        "dependencyReadiness": {
++          "$ref": "#/$defs/buster-dependency-readiness"
+         }
+       }
+     },
+@@ -671,6 +675,26 @@
+           }
+         }
+       }
++    },
++    "buster-dependency-readiness": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "maximumExecutionMs",
++        "maximumOutputBytes"
++      ],
++      "properties": {
++        "maximumExecutionMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 30000
++        },
++        "maximumOutputBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 1048576
++        }
++      }
+     }
+   },
+   "oneOf": [
+--- a/skills/common/plugin-runtime/foundation/config/swarm.ts
++++ b/skills/common/plugin-runtime/foundation/config/swarm.ts
+@@ -14,9 +14,14 @@
+   readonly maximumQueuedJobs: number;
+   readonly maximumConcurrentAttempts: number;
+ }
++export interface BusterDependencyReadinessSettings {
++  readonly maximumExecutionMs: number;
++  readonly maximumOutputBytes: number;
++}
+ export interface BusterSettings {
+   readonly preparation: BusterPreparationSettings;
+   readonly admission: BusterAdmissionSettings;
++  readonly dependencyReadiness: BusterDependencyReadinessSettings;
+ }
+ 
+ export interface BusterPreparationSettings {
+@@ -155,7 +160,7 @@
+   return loadPrismSettings(environment).worker;
+ }
+ 
+-/** Capture both Buster policies once before constructing service consumers. */
++/** Capture Buster policies once before constructing service consumers. */
+ export function loadBusterSettings(environment: NodeJS.ProcessEnv): BusterSettings {
+   return loadSwarmSettings(environment).buster;
+ }
+@@ -163,7 +168,13 @@
+ function busterSettingsFromConfig(value: unknown): BusterSettings {
+   const preparation = busterPreparationSettingsFromConfig(value);
+   const admission = validateBusterAdmissionSettings((value as SwarmConfig).operator.buster?.admission);
+-  return Object.freeze({ preparation, admission });
++  const dependencyReadiness = validateBusterDependencyReadinessSettings((value as SwarmConfig).operator.buster?.dependencyReadiness);
++  return Object.freeze({ preparation, admission, dependencyReadiness });
++}
++
++export function validateBusterDependencyReadinessSettings(value: unknown): BusterDependencyReadinessSettings {
++  validateComponentSettings('buster-dependency-readiness', value, 'SWARM_CONFIG_BUSTER_DEPENDENCY_READINESS_INVALID');
++  return Object.freeze({ ...value as BusterDependencyReadinessSettings });
+ }
+ 
+ export function validateBusterAdmissionSettings(value: unknown): BusterAdmissionSettings {
+--- a/tests/fixtures/test-gate/buster-admission.mts
++++ b/tests/fixtures/test-gate/buster-admission.mts
+@@ -47,6 +47,7 @@
+     trustedSourceAuthority: 'nova:admission', sourceAttestationPublicKey: keys.publicKey.export({ type: 'spki', format: 'pem' }) });
+   const started = new Map<string, ReturnType<typeof Promise.withResolvers<void>>>();
+   const service = new ModeledBusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, admission: profile.settings.admission,
+     workerRevision: 'a'.repeat(40), runtimeRoot: path.join(root, 'runs'), tarExecutable: '/usr/bin/tar',
+     maximumExtractedBytes: 1048576, allowedCapabilities: new Set(),
+--- /dev/null
++++ b/tests/fixtures/test-gate/buster-readiness-mutation.mjs
+@@ -0,0 +1,20 @@
++// Private semantic negative controls, enabled only by the explicit test command.
++import assert from 'node:assert/strict';
++import { registerHooks } from 'node:module';
++const mutation = process.env.BUSTER_READINESS_MUTATION;
++const changes = {
++  'restore-policy-default': ['validateBusterDependencyReadinessSettings(options.dependencyReadiness)',
++    'validateBusterDependencyReadinessSettings(options.dependencyReadiness ?? { maximumExecutionMs: 1000, maximumOutputBytes: 65536 })'],
++  'restore-field-defaults': ['validateBusterDependencyReadinessSettings(options.dependencyReadiness)',
++    'validateBusterDependencyReadinessSettings({ maximumExecutionMs: 1000, maximumOutputBytes: 65536, ...options.dependencyReadiness })'],
++  'ignore-execution': ['maximumExecutionMs: options.dependencyReadiness.maximumExecutionMs', 'maximumExecutionMs: 1000'],
++  'ignore-output': ['maximumOutputBytes: options.dependencyReadiness.maximumOutputBytes', 'maximumOutputBytes: 65536'],
++};
++assert.ok(Object.hasOwn(changes, mutation), 'explicit known mutation required');
++registerHooks({ load(url, context, nextLoad) {
++  const result = nextLoad(url, context);
++  if (!url.endsWith('/skills/buster/engine/test-gates/remote-plan-service.ts')) return result;
++  const [before, after] = changes[mutation], source = String(result.source);
++  assert.equal(source.split(before).length, 2, 'semantic mutation has one actual production target');
++  return { ...result, source: source.replace(before, after) };
++} });
+--- /dev/null
++++ b/tests/fixtures/test-gate/buster-readiness-profile.mts
+@@ -0,0 +1,81 @@
++/** Real factory/service/process; fixture executable is deliberately not BuildKit.
++ * Native preparation ownership is modeled by the existing fixture and unused by readiness. */
++import fs from 'node:fs';
++import assert from 'node:assert/strict';
++import path from 'node:path';
++import { cliProfile } from './buster-cli-profile.mjs';
++import { ModeledPreparation } from './modeled-preparation.mts';
++import { readTestBundle, writeTestBundle } from '../config/swarm-bundle.mjs';
++import { loadSwarmSettings, type BusterDependencyReadinessSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
++import { loadProductionBusterRemotePlanRuntime } from '../../../skills/buster/engine/test-gates/production.ts';
++
++export function readinessExecutable(root: string) {
++  const executable = path.join(root, 'fixture-buildctl'), control = path.join(root, 'fixture-control.json');
++  const invocations = path.join(root, 'fixture-invocations.jsonl');
++  fs.writeFileSync(control, JSON.stringify({ delayMs: 0, outputBytes: 0, exitCode: 0 }));
++  fs.writeFileSync(executable, `#!${process.execPath}\nconst fs = require('node:fs');\nconst config = JSON.parse(fs.readFileSync(${JSON.stringify(control)}, 'utf8'));\nfs.appendFileSync(${JSON.stringify(invocations)}, JSON.stringify({ pid: process.pid, startTicks: fs.readFileSync('/proc/self/stat', 'utf8').split(') ')[1].split(' ')[19], args: process.argv.slice(2) }) + '\\n');\nprocess.stdout.write('x'.repeat(config.outputBytes));\nsetTimeout(() => process.exit(config.exitCode), config.delayMs);\n`, { mode: 0o700 });
++  return { executable, control, invocations,
++    set: (delayMs: number, outputBytes: number, exitCode: number) => fs.writeFileSync(control, JSON.stringify({ delayMs, outputBytes, exitCode })) };
++}
++
++export function readinessRuntime(root: string, policy: BusterDependencyReadinessSettings, enabled: boolean) {
++  const fixture = readinessExecutable(root);
++  const profile = cliProfile(root, { maximumActiveJobs: 1, maximumQueuedJobs: 2, maximumConcurrentAttempts: 3 });
++  const file = profile.environment.SWARM_CONFIG;
++  const documents = readTestBundle(file);
++  documents['buster-engine'].settings.dependencyReadiness = policy;
++  writeTestBundle(file, documents);
++  const settings = loadSwarmSettings(profile.environment);
++  const source = JSON.parse(fs.readFileSync(profile.runtime, 'utf8'));
++  source.allowedCapabilities = enabled ? ['container.build'] : [];
++  source.containerBuild = { buildctlExecutable: fixture.executable, buildkitHost: 'unix:///fixture-not-buildkit.sock',
++    registryBaseUrl: 'https://registry.example.test', registryReference: 'registry.example.test',
++    repositoryPrefix: 'fixture', allowedPlatforms: ['linux/amd64'], allowedBuildArguments: [],
++    maximumLogBytes: 1024, maximumExecutionMs: 1000, maximumManifestBytes: 1024 };
++  fs.writeFileSync(profile.runtime, JSON.stringify(source));
++  const preparation = new ModeledPreparation(path.join(root, 'plan-jobs'), {
++    recordLimits: source.recordLimits, maximumArchiveBytes: 1048576,
++    maximumResultBytes: source.maximumResultBytes, maximumResultStoreBytes: source.maximumResultStoreBytes,
++    trustedSourceAuthority: source.trustedSourceAuthority,
++    sourceAttestationPublicKey: profile.environment.ADMISSION_TEST_SOURCE_KEY });
++  const create = () => loadProductionBusterRemotePlanRuntime(profile.runtime, preparation, settings.buster,
++    settings.workerCore.localRuntime, profile.environment);
++  return { ...fixture, create, settings, source, profile, documents, file, preparation };
++}
++
++/** Observe the existing real diagnostic write and forward it unchanged. */
++export function observeReadinessDiagnostics() {
++  const original = process.stderr.write;
++  const events: Array<Record<string, unknown>> = [];
++  process.stderr.write = function (...args: Parameters<typeof process.stderr.write>) {
++    const text = typeof args[0] === 'string' ? args[0] : Buffer.from(args[0]).toString('utf8');
++    for (const line of text.split('\n')) {
++      try {
++        const event = JSON.parse(line);
++        if (event?.event === 'buster.dependency-readiness' && event.dependency === 'buildkit') events.push(event);
++      } catch { /* Other stderr output is forwarded without reinterpretation. */ }
++    }
++    return Reflect.apply(original, process.stderr, args) as boolean;
++  };
++  return { events, restore: () => { process.stderr.write = original; } };
++}
++
++export function assertProbeFinished(file: string, expectedCalls: number) {
++  const calls = fs.readFileSync(file, 'utf8').trim().split('\n').map(line => JSON.parse(line) as {
++    pid: number; startTicks: string; args: string[];
++  });
++  assert.equal(calls.length, expectedCalls, 'actual child must publish its start marker');
++  const call = calls.at(-1)!;
++  assert.deepEqual(call.args, ['--addr', 'unix:///fixture-not-buildkit.sock', 'debug', 'workers']);
++  assert.ok(Number.isSafeInteger(call.pid) && call.pid > 0);
++  assert.match(call.startTicks, /^[0-9]+$/);
++  let stat: string;
++  try { stat = fs.readFileSync(`/proc/${call.pid}/stat`, 'utf8'); }
++  catch (error) {
++    assert.equal((error as NodeJS.ErrnoException).code, 'ENOENT');
++    return;
++  }
++  const fields = stat.slice(stat.lastIndexOf(')') + 2).split(' ');
++  assert.ok(fields[19] !== call.startTicks || fields[0] === 'Z',
++    'the identified child must have terminated before the readiness result returns');
++}
+--- a/tests/verification/contracts/check-pipeline-container-build-production.mts
++++ b/tests/verification/contracts/check-pipeline-container-build-production.mts
+@@ -58,6 +58,7 @@
+       defaultConcurrencyLimit: 1, maximumConcurrencyLimits: { 'container-build': 1 } } });
+ 
+   const makeService = () => new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+     store: new FileBusterPlanJobStore(busterState, { recordLimits: records, maximumArchiveBytes: 16 * 1024 * 1024,
+       maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
+--- a/tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts
+@@ -11,6 +11,7 @@
+   const plan=resolveTestPlan({planId:'plan:e2e:remote',runId:'run:e2e:remote',project:'e2e-remote',scope:{moduleId:'e2e',gateId:null},createdAt:'2026-09-04T00:00:00.000Z',declaration:{tests:{playwright:{uses:'kubeclaw.playwright@1',mode:'blocking',retries:0,concurrencyGroup:'browser-playwright',config:{url:origin,projectDirectory:'.',configFile:'playwright.config.ts',workers:1,timeoutMs:60000}}},concurrencyLimits:{'browser-playwright':1}},suiteTemplates:[],registry,facts:{changedPaths:['specs/home.spec.ts'],moduleType:'service',pipelineStage:'test'},policy:{defaultTimeoutMs:90000,maximumTimeoutMs:90000,defaultLimits:limits,maximumLimits:limits,maximumRetryCount:1,maximumMatrixSize:1,maximumNodes:2,defaultConcurrencyLimit:1,maximumConcurrencyLimits:{'browser-playwright':1}}});
+   const records={maximumRecords:100,maximumBytes:134217728,maximumRecordBytes:67108864};const store=new FileBusterPlanJobStore(path.join(root,'buster-state'),{recordLimits:records,maximumArchiveBytes:8388608,maximumResultBytes:67108864,maximumResultStoreBytes:134217728,trustedSourceAuthority:'nova:production',sourceAttestationPublicKey:publicKey});
+   const service=new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },store,registry,workerRevision:'b'.repeat(40),runtimeRoot:path.join(root,'buster-runs'),tarExecutable:'/usr/bin/tar',maximumExtractedBytes:33554432,allowedCapabilities:new Set(['browser.playwright']),browserPlaywright:{allowedOrigins:[origin],allowedTargetPorts:[address.port],playwrightExecutable:path.join(sourceRoot,'node_modules/.bin/playwright'),sandboxExecutable:fileURLToPath(import.meta.resolve('@kubeclaw/plugin-foundation/isolation/plugin-sandbox')),runtimeNodeModules:path.join(sourceRoot,'node_modules'),browsersPath:'/ms-playwright',readOnlyRoots:['/app','/ms-playwright','/usr','/lib','/lib64','/etc/fonts','/etc/hosts','/etc/nsswitch.conf','/etc/resolv.conf','/etc/ssl','/proc','/sys','/dev'],maximumWorkers:2,maximumExecutionMs:120000,maximumOutputBytes:4194304,maximumResultBytes:67108864,maximumArtifactBytes:67108864,maximumArtifactFiles:32,maximumProcesses:64,maximumMemoryBytes:4294967296,maximumCpuMillis:120000,terminationGraceMs:5000,allowSampledResourceLimits:true}});
+   const runtime=new BusterRemotePlanRuntime({service,host:'127.0.0.1',port:0,token,maximumRequestBytes:16777216,maximumResponseBytes:65536,maximumResultBytes:67108864,shutdownTimeoutMs:5000});const runtimeAddress=await runtime.start();try{const gate=createProductionNovaTestGate({stateRoot:path.join(root,'nova-state'),endpoint:`http://127.0.0.1:${runtimeAddress.port}`,token,sourceAuthority:'nova:production',sourceAttestationPrivateKey:privateKey,pollMilliseconds:10,maximumResponseBytes:65536,maximumResultBytes:67108864,maximumArchiveBytes:8388608,maximumArchiveStoreBytes:33554432,maximumEvidenceBytes:67108864,maximumEvidenceStoreBytes:134217728,recordLimits:records});const gateRequest={idempotencyKey:'e2e:remote:vertical',pipelineStageId:'stage:e2e',plan,repositoryRoot:repository,repositoryId:'repository:e2e',maximumConcurrency:1,grants:new Map([['playwright',['browser.playwright']]]),submittedAt:'2026-09-04T00:00:00.000Z',timeoutMs:180000};const executed=await gate.execute(gateRequest);assert.equal(executed.remote.status.state,'completed');const reference=executed.remote.status.result!;const result=JSON.parse((await service.result(executed.remote.status.jobId,reference.contentDigest,reference.sizeBytes)).toString('utf8'));assert.equal(executed.remote.decision.state,'passed',JSON.stringify(result));assert.equal(result.attempts[0].providerDetails.values.browserProjects.includes('real-chromium'),true);assert.equal(result.attempts[0].providerDetails.values.resourceEnforcement,'sampled');assert.equal(result.attempts[0].evidence.some((item:any)=>item.type==='test-report'),true);const duplicate=await gate.execute(gateRequest);assert.equal(duplicate.remote.status.jobId,executed.remote.status.jobId);assert.equal(duplicate.remote.decision.decisionDigest,executed.remote.decision.decisionDigest);const imports=JSON.parse(fs.readFileSync(path.join(root,'nova-state/imports/records/store.json'),'utf8')).records;assert.equal(imports.some((record:any)=>record.payload?.decision?.decisionDigest===executed.remote.decision.decisionDigest),true);}finally{await runtime.stop();}
+ } finally { await new Promise<void>((resolve)=>server.close(()=>resolve())); fs.rmSync(root,{recursive:true,force:true}); }
+--- a/tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts
+@@ -53,6 +53,7 @@
+     maximumResultStoreBytes: 128 * 1024 * 1024, trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey: publicKey });
+   const chromeExecutable = '/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell';
+   const service = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'b'.repeat(40), runtimeRoot: path.join(root, 'buster-runs'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 32 * 1024 * 1024, allowedCapabilities: new Set(['browser.lighthouse']),
+     browserLighthouse: { allowedOrigins: [origin], chromeExecutable, maximumRuns: 4, maximumExecutionMs: 180_000,
+--- a/tests/verification/contracts/check-pipeline-phase10-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-phase10-vertical.mts
+@@ -85,6 +85,7 @@
+     maximumResultStoreBytes: 128 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
+     sourceAttestationPublicKey: publicKey });
+   const service = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 32 * 1024 * 1024,
+     allowedCapabilities: new Set(['command.execute']), directCommand: { executableCatalog: new Map([['node', process.execPath]]),
+--- a/tests/verification/contracts/check-pipeline-phase8-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-phase8-vertical.mts
+@@ -85,6 +85,7 @@
+     maximumResultStoreBytes: 128 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
+     sourceAttestationPublicKey: publicKey });
+   const service = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 32 * 1024 * 1024,
+     allowedCapabilities: new Set(['command.execute']), directCommand: { executableCatalog: new Map([['node', process.execPath]]),
+--- a/tests/verification/contracts/check-pipeline-phase9-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-phase9-vertical.mts
+@@ -64,6 +64,7 @@
+     maximumResultStoreBytes: 64 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
+     sourceAttestationPublicKey: publicKey });
+   const service = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 32 * 1024 * 1024,
+     allowedCapabilities: new Set(['command.execute']), directCommand: { executableCatalog: new Map([['node', process.execPath]]),
+--- a/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts
++++ b/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts
+@@ -174,6 +174,7 @@
+   return { planId: job.plan.planId, runId: job.plan.runId, attempts: [], nodes: [nodeResult(job)], cleanupErrors: [] };
+ };
+ const service = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
+   tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024,
+@@ -204,6 +205,7 @@
+   trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
+ });
+ const unavailableService = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   store: unavailableStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'unavailable-buildkit-runs'),
+   tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['container.build']),
+@@ -435,6 +437,7 @@
+   await busterStore.accept(interruptedJob, '2026-08-10T01:00:00.000Z');
+   await busterStore.transition(interruptedJob.jobId, ['accepted'], 'running', '2026-08-10T01:00:01.000Z');
+   const restarted = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+     store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024,
+@@ -446,6 +449,7 @@
+   const changedRegistryJob = job('dispatch:registry-changed');
+   await busterStore.accept(changedRegistryJob, '2026-08-10T01:00:00.000Z');
+   const mismatched = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+     store: busterStore,
+     registry: { ...registry, snapshotDigest: `sha256:${'4'.repeat(64)}` },
+--- a/tests/verification/contracts/check-pipeline-remote-real-provider.mts
++++ b/tests/verification/contracts/check-pipeline-remote-real-provider.mts
+@@ -110,6 +110,7 @@
+     trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey,
+   });
+   const service = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+     store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'), tarExecutable: process.env.KUBECLAW_TEST_TAR ?? '/usr/bin/tar',
+     maximumExtractedBytes: 16 * 1024 * 1024, allowedCapabilities: new Set(),
+--- a/tests/verification/contracts/check-pipeline-security-remote-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-security-remote-vertical.mts
+@@ -24,6 +24,7 @@
+   const records={maximumRecords:100,maximumBytes:134217728,maximumRecordBytes:67108864};const cacheCandidates=[...(process.env.KUBECLAW_SECURITY_TEST_CACHE?[process.env.KUBECLAW_SECURITY_TEST_CACHE]:[]),path.join(os.homedir(),'.cache/trivy'),path.join(os.homedir(),'.cache/.cache/trivy'),'/tmp/.cache/trivy'];const cache=cacheCandidates.find((item)=>fs.existsSync(item));assert.ok(cache,'real Trivy database is required');
+   const store=new FileBusterPlanJobStore(path.join(root,'buster-state'),{recordLimits:records,maximumArchiveBytes:8388608,maximumResultBytes:67108864,maximumResultStoreBytes:134217728,trustedSourceAuthority:'nova:production',sourceAttestationPublicKey:publicKey});
+   const service=new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },store,registry,workerRevision:'b'.repeat(40),runtimeRoot:path.join(root,'buster-runs'),tarExecutable:'/usr/bin/tar',maximumExtractedBytes:33554432,allowedCapabilities:new Set(['security.scan']),securityScan:{trivyExecutable:process.env.KUBECLAW_SECURITY_TEST_TRIVY??'/usr/local/bin/trivy',allowedRegistryPrefixes:['docker.io/library'],maximumExecutionMs:300000,maximumOutputBytes:67108864,cacheDirectory:cache}});
+   const runtime=new BusterRemotePlanRuntime({service,host:'127.0.0.1',port:0,token,maximumRequestBytes:16777216,maximumResponseBytes:65536,maximumResultBytes:67108864,shutdownTimeoutMs:5000});const address=await runtime.start();
+   try{const gate=createProductionNovaTestGate({stateRoot:path.join(root,'nova-state'),endpoint:`http://127.0.0.1:${address.port}`,token,sourceAuthority:'nova:production',sourceAttestationPrivateKey:privateKey,pollMilliseconds:10,maximumResponseBytes:65536,maximumResultBytes:67108864,maximumArchiveBytes:8388608,maximumArchiveStoreBytes:33554432,maximumEvidenceBytes:67108864,maximumEvidenceStoreBytes:134217728,recordLimits:records});
+--- a/tests/verification/contracts/check-pipeline-size-budget-production.mts
++++ b/tests/verification/contracts/check-pipeline-size-budget-production.mts
+@@ -48,6 +48,7 @@
+     suiteTemplates: [template], registry, facts: { changedPaths: ['dist/index.html'], moduleType: 'frontend',
+       pipelineStage: 'test' }, policy });
+   const makeService = () => new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+     store: new FileBusterPlanJobStore(busterState, { recordLimits: records, maximumArchiveBytes: 16 * 1024 * 1024,
+       maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
+--- a/tests/verification/contracts/check-pipeline-visual-remote-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-visual-remote-vertical.mts
+@@ -35,6 +35,7 @@
+   const records={maximumRecords:100,maximumBytes:134217728,maximumRecordBytes:67108864};
+   const store=new FileBusterPlanJobStore(path.join(root,'buster-state'),{recordLimits:records,maximumArchiveBytes:8388608,maximumResultBytes:67108864,maximumResultStoreBytes:134217728,trustedSourceAuthority:'nova:production',sourceAttestationPublicKey:publicKey});
+   const service=new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },store,registry,workerRevision:'b'.repeat(40),runtimeRoot:path.join(root,'buster-runs'),tarExecutable:'/usr/bin/tar',maximumExtractedBytes:33554432,allowedCapabilities:new Set(['browser.visual']),browserVisual:{allowedOrigins:[origin],allowedBrowsers:['chromium'],browserExecutables:{chromium:executable},maximumCombinations:2,maximumConcurrency:1,maximumExecutionMs:60000,maximumResultBytes:33554432,maximumScreenshotBytes:8388608,maximumMasksPerCombination:4}});
+   const runtime=new BusterRemotePlanRuntime({service,host:'127.0.0.1',port:0,token,maximumRequestBytes:16777216,maximumResponseBytes:65536,maximumResultBytes:67108864,shutdownTimeoutMs:5000}); const runtimeAddress=await runtime.start();
+   try{
+--- a/tests/verification/contracts/check-pipeline-worker-local-config.mts
++++ b/tests/verification/contracts/check-pipeline-worker-local-config.mts
+@@ -162,7 +162,7 @@
+       artifactRoot: path.join(validationRoot, 'artifacts'),
+       observabilityRoot: path.join(validationRoot, 'observability'), maximumConcurrency: 1,
+       workerLocalRuntime: snapshot.workerCore.localRuntime };
+-    const serviceOptions = { store, preparation, registry, workerRevision: 'a'.repeat(40),
++    const serviceOptions = { dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 }, store, preparation, registry, workerRevision: 'a'.repeat(40),
+       runtimeRoot: path.join(validationRoot, 'service'), admission: snapshot.buster.admission,
+       allowedCapabilities: new Set<string>(), workerLocalRuntime: snapshot.workerCore.localRuntime };
+     fs.mkdirSync(runnerOptions.repositoryRoot, { recursive: true });
+--- /dev/null
++++ b/tests/verification/deployment/buster-readiness-config.test.mjs
+@@ -0,0 +1,70 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { spawnSync } from 'node:child_process';
++import yaml from 'js-yaml';
++import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
++import { readTestBundle, writeTestBundle, bundleFromConfigMap, bundleNames } from '../../fixtures/config/swarm-bundle.mjs';
++import { loadBusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
++
++for (const name of ['kubeclaw', 'prism']) test(`actual ${name} Helm rejects malformed readiness policy and delivers both authored profiles`, () => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'readiness-chart-'));
++  try {
++    const chart = path.join(root, name);
++    fs.cpSync(`charts/${name}`, chart, { recursive: true, dereference: true });
++    // Keep every mutation under this private copy, including canonical author aliases.
++    for (const file of [...bundleNames, 'swarm.schema.json', 'swarm-components.schema.json']) {
++      const target = path.join(chart, 'files/config', file), bytes = fs.readFileSync(target);
++      if (fs.lstatSync(target).isSymbolicLink()) fs.unlinkSync(target);
++      fs.writeFileSync(target, bytes); assert.equal(fs.lstatSync(target).isSymbolicLink(), false);
++    }
++    const values = name === 'prism' ? yaml.load(fs.readFileSync('charts/prism/ci-values.yaml', 'utf8'))
++      : yaml.load(fs.readFileSync('my-values/buster-values.yaml', 'utf8'));
++    const namespace = name === 'prism' ? 'default' : 'readiness-test';
++    if (name === 'kubeclaw') {
++      const policy = yaml.load(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8'));
++      policy.nodeName = 'readiness-render-only'; policy.pools.buster.namespace = namespace;
++      const binding = nativePoolPolicy(policy, 'buster');
++      values.busterNative = { namespace, nodeName: binding.nodeName, policyDigest: binding.policyDigest };
++      values.runtimeInfrastructure = { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } };
++      values.extraContainers.find(item => item.name === 'buster-v2-runtime').image = `ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`;
++    }
++    const file = path.join(root, 'values.yaml'); fs.writeFileSync(file, yaml.dump(values));
++    const entry = path.join(chart, 'files/config/swarm.config.json');
++    const baseline = readTestBundle(entry);
++    const render = () => spawnSync('helm', ['template', 'readiness', chart, '--namespace', namespace, '-f', file],
++      { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
++    const checksums = [];
++    for (const policy of [{ maximumExecutionMs: 300, maximumOutputBytes: 64 }, { maximumExecutionMs: 2500, maximumOutputBytes: 1024 }]) {
++      const document = structuredClone(baseline); document['buster-engine'].settings.dependencyReadiness = policy;
++      writeTestBundle(entry, document);
++      const result = render(); assert.equal(result.status, 0, result.stderr);
++      const docs = yaml.loadAll(result.stdout), map = docs.find(doc => doc?.kind === 'ConfigMap' && doc.data?.['swarm.config.json']);
++      const mounted = path.join(root, 'mounted/swarm.config.json'); fs.mkdirSync(path.dirname(mounted), { recursive: true });
++      writeTestBundle(mounted, bundleFromConfigMap(map.data));
++      assert.deepEqual(loadBusterSettings({ SWARM_CONFIG: mounted }).dependencyReadiness, policy);
++      const deployment = docs.find(doc => doc?.kind === 'Deployment' && doc.spec.template.metadata.annotations?.['checksum/swarm-config']);
++      checksums.push(deployment.spec.template.metadata.annotations['checksum/swarm-config']);
++    }
++    assert.notEqual(checksums[0], checksums[1], 'owner change must trigger rollout');
++    const original = baseline['buster-engine'].settings.dependencyReadiness;
++    const malformed = [undefined, null, [], {}, { ...original, extra: 1 }];
++    for (const [field, maximum] of [['maximumExecutionMs', 30000], ['maximumOutputBytes', 1048576]]) {
++      for (const value of [undefined, null, false, true, '1000', [], {}, 0, -1, 1.5, maximum + 1]) {
++        const policy = { ...original, [field]: value }; if (value === undefined) delete policy[field]; malformed.push(policy);
++      }
++      for (const value of [1, maximum]) {
++        const document = structuredClone(baseline); document['buster-engine'].settings.dependencyReadiness = { ...original, [field]: value };
++        writeTestBundle(entry, document); const result = render(); assert.equal(result.status, 0, result.stderr);
++      }
++    }
++    for (const policy of malformed) {
++      const document = structuredClone(baseline); document['buster-engine'].settings.dependencyReadiness = policy;
++      writeTestBundle(entry, document); const result = render(); assert.notEqual(result.status, 0);
++      assert.match(result.stderr, /swarm|dependencyReadiness|maximumExecutionMs|maximumOutputBytes/);
++    }
++    assert.doesNotMatch(fs.readFileSync('docker/buster-runtime-entrypoint.sh', 'utf8'), /dependencyReadiness/);
++  } finally { fs.rmSync(root, { recursive: true, force: true }); }
++});
+--- a/tests/verification/deployment/buster-readiness.test.mts
++++ b/tests/verification/deployment/buster-readiness.test.mts
+@@ -5,6 +5,8 @@
+ import path from 'node:path';
+ import {spawnSync} from 'node:child_process';
+ import {parseAllDocuments} from 'yaml';
++import yaml from 'js-yaml';
++import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
+ import {runDependencyProcess} from '../../../skills/buster/engine/test-gates/dependency-process.ts';
+ import {BuildkitReadiness} from '../../../skills/buster/engine/test-gates/buildkit-readiness.ts';
+ 
+@@ -45,8 +47,18 @@
+  const stopped=await check.check();assert.equal(stopped.code,'DEPENDENCY_CANCELLED');assert.equal(stopped.errno,null);
+  assert.throws(()=>new BuildkitReadiness({buildctlExecutable:'/usr/local/bin/buildctl',buildkitHost:'unix:///buildkit.sock',maximumExecutionMs:30001,maximumOutputBytes:1024}),/DEPENDENCY_PROCESS_LIMIT_INVALID/u);
+ });
+-test('actual Helm uses bootstrap and functional readiness separately from liveness',()=>{
+- const rendered=spawnSync('helm',['template','readiness-test','charts/kubeclaw','-f','my-values/buster-values.yaml','--set','runtimeInfrastructure.registry.endpoint=https://registry.example.test','--set','runtimeInfrastructure.registry.transport=https','--set','runtimeInfrastructure.registry.authSecretName=registry-test'],{encoding:'utf8'});
++test('actual Helm uses bootstrap and functional readiness separately from liveness',t=>{
++ const root=fs.mkdtempSync(path.join(os.tmpdir(),'readiness-helm-'));
++ t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
++ const values=yaml.load(fs.readFileSync('my-values/buster-values.yaml','utf8')) as { extraContainers: Array<{ name: string; image: string }>; busterNative?: unknown };
++ const policy=yaml.load(fs.readFileSync('my-values/infra/native-worker-pools.yaml','utf8')) as { nodeName: string; pools: { buster: { namespace: string } } };
++ policy.nodeName='readiness-render-only';policy.pools.buster.namespace='readiness-test';
++ const binding=nativePoolPolicy(policy,'buster');
++ values.busterNative={namespace:'readiness-test',nodeName:binding.nodeName,policyDigest:binding.policyDigest};
++ // Valid-shaped immutable reference is render-only; no image existence or activation claim.
++ values.extraContainers.find((item:{name:string})=>item.name==='buster-v2-runtime')!.image=`ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`;
++ const file=path.join(root,'values.yaml');fs.writeFileSync(file,yaml.dump(values));
++ const rendered=spawnSync('helm',['template','readiness-test','charts/kubeclaw','--namespace','readiness-test','-f',file,'--set','runtimeInfrastructure.registry.endpoint=https://registry.example.test','--set','runtimeInfrastructure.registry.transport=https','--set','runtimeInfrastructure.registry.authSecretName=registry-test'],{encoding:'utf8'});
+  assert.equal(rendered.status,0,rendered.stderr);
+  const deployment=parseAllDocuments(rendered.stdout).map(doc=>doc.toJSON()).find(doc=>doc?.kind==='Deployment'&&doc.spec.template.spec.containers.some((item:{name:string})=>item.name==='buster-v2-runtime'));
+  const worker=deployment.spec.template.spec.containers.find((item:{name:string})=>item.name==='buster-v2-runtime');
+--- a/tests/verification/reliability/buster-job-compaction.test.mts
++++ b/tests/verification/reliability/buster-job-compaction.test.mts
+@@ -39,6 +39,7 @@
+   const storeRoot = path.join(temporary, 'original-state'); const runtimeRoot = path.join(temporary, 'runtime');
+   const store = new FileBusterPlanJobStore(storeRoot, options);
+   const serviceFor = (jobStore: FileBusterPlanJobStore) => new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store: jobStore, registry,
+     workerRevision: 'a'.repeat(40), runtimeRoot, tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set() });
+   const runtimeFor = (service: BusterRemotePlanService) => new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token,
+@@ -198,6 +199,7 @@
+             const registry = buildRegistry(discoverPackages({ installationRoots: [input.pluginRoot], trustPolicy: {
+               trustedBuiltinRoots: [input.pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'fifo-test' } }));
+             const service = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, runtimeRoot: input.runtimeRoot, workerRevision: 'a'.repeat(40),
+               tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1048576, allowedCapabilities: new Set() });
+             const server = new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token: input.token,
+--- /dev/null
++++ b/tests/verification/reliability/buster-readiness-config.test.mts
+@@ -0,0 +1,65 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { loadBusterSettings, validateBusterDependencyReadinessSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
++import { validateRuntimeRoot } from '../../../skills/buster/engine/test-gates/production-config-values.ts';
++import { canonicalSwarmEntry, readTestBundle, writeTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
++
++const bounds = { maximumExecutionMs: 30000, maximumOutputBytes: 1048576 };
++
++test('readiness policy is required and strictly validated at file and direct boundaries', () => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-readiness-config-'));
++  const file = path.join(root, 'swarm.config.json');
++  const baseline = readTestBundle(canonicalSwarmEntry);
++  const original = baseline['buster-engine'].settings.dependencyReadiness;
++  try {
++    for (const [field, maximum] of Object.entries(bounds)) {
++      for (const value of [undefined, null, false, true, '1000', [], {}, 0, -1, 1.5, maximum + 1, Number.MAX_SAFE_INTEGER + 1]) {
++        const documents = structuredClone(baseline);
++        const policy = { ...original, [field]: value };
++        if (value === undefined) delete policy[field];
++        documents['buster-engine'].settings.dependencyReadiness = policy;
++        writeTestBundle(file, documents);
++        assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);
++        assert.throws(() => validateBusterDependencyReadinessSettings(policy), /SWARM_CONFIG_BUSTER_DEPENDENCY_READINESS_INVALID/);
++      }
++      for (const value of [1, maximum]) {
++        const documents = structuredClone(baseline);
++        const policy = { ...original, [field]: value };
++        documents['buster-engine'].settings.dependencyReadiness = policy;
++        writeTestBundle(file, documents);
++        assert.deepEqual(loadBusterSettings({ SWARM_CONFIG: file }).dependencyReadiness, policy);
++        assert.deepEqual(validateBusterDependencyReadinessSettings(policy), policy);
++      }
++    }
++    for (const policy of [undefined, null, [], {}, { ...original, extra: 1 }]) {
++      const documents = structuredClone(baseline);
++      documents['buster-engine'].settings.dependencyReadiness = policy;
++      writeTestBundle(file, documents);
++      assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);
++      assert.throws(() => validateBusterDependencyReadinessSettings(policy), /SWARM_CONFIG_BUSTER_DEPENDENCY_READINESS_INVALID/);
++    }
++  } finally { fs.rmSync(root, { recursive: true, force: true }); }
++});
++
++test('readiness policy captures immutable values rather than retaining the caller object', () => {
++  const input = { maximumExecutionMs: 1000, maximumOutputBytes: 65536 };
++  const captured = validateBusterDependencyReadinessSettings(input);
++  input.maximumExecutionMs = 2000;
++  input.maximumOutputBytes = 131072;
++  assert.deepEqual(captured, { maximumExecutionMs: 1000, maximumOutputBytes: 65536 });
++  assert.ok(Object.isFrozen(captured));
++});
++
++test('retired runtime JSON readiness author is rejected even when equal, empty or null', () => {
++  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig: '/fixture/platform.json',
++    host: '127.0.0.1', sourceAttestationPublicKeyEnvironmentVariable: 'FIXTURE_PUBLIC_KEY',
++    trustedSourceAuthority: 'fixture:source', stateRoot: '/fixture/state', runtimeRoot: '/fixture/runtime',
++    tarExecutable: '/usr/bin/tar' };
++  assert.doesNotThrow(() => validateRuntimeRoot(runtime));
++  for (const dependencyReadiness of [undefined, null, {}, { maximumExecutionMs: 1000, maximumOutputBytes: 65536 }]) {
++    assert.throws(() => validateRuntimeRoot({ ...runtime, dependencyReadiness }), /SWARM_CONFIG_LEGACY_OVERRIDE:dependencyReadiness/);
++  }
++});
+--- /dev/null
++++ b/tests/verification/reliability/buster-readiness-consumer.test.mts
+@@ -0,0 +1,148 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { buildRegistry, discoverPackages } from '@kubeclaw/nova-core';
++import { BusterRemotePlanService, type BusterRemotePlanServiceOptions } from '../../../skills/buster/engine/test-gates/remote-plan-service.ts';
++import { admissionFixture } from '../../fixtures/test-gate/buster-admission.mts';
++import { readinessRuntime, readinessExecutable, observeReadinessDiagnostics, assertProbeFinished } from '../../fixtures/test-gate/buster-readiness-profile.mts';
++import { loadProductionBusterRemotePlanRuntime } from '../../../skills/buster/engine/test-gates/production.ts';
++import type { BusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
++import { writeTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
++
++const profile = { maximumActiveJobs: 1, maximumQueuedJobs: 2, maximumConcurrentAttempts: 3 };
++for (const scenario of [
++  { name: 'execution', policy: { maximumExecutionMs: 300, maximumOutputBytes: 4096 }, delayMs: 1200, bytes: 0, ready: false, code: 'DEPENDENCY_TIMEOUT' },
++  { name: 'execution', policy: { maximumExecutionMs: 2500, maximumOutputBytes: 4096 }, delayMs: 1200, bytes: 0, ready: true, code: 'DEPENDENCY_OK' },
++  { name: 'output', policy: { maximumExecutionMs: 2500, maximumOutputBytes: 64 }, delayMs: 0, bytes: 256, ready: false, code: 'DEPENDENCY_OUTPUT_LIMIT' },
++  { name: 'output', policy: { maximumExecutionMs: 2500, maximumOutputBytes: 1024 }, delayMs: 0, bytes: 256, ready: true, code: 'DEPENDENCY_OK' },
++]) {
++  test(`real factory/service/process honors ${scenario.name} policy ${JSON.stringify(scenario.policy)}`, { timeout: 30000 }, async () => {
++    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-readiness-consumer-'));
++    const input = { ...scenario.policy };
++    const f = readinessRuntime(root, input, true);
++    const runtime = f.create();
++    const diagnostic = observeReadinessDiagnostics();
++    try {
++      // This changes the file author after loading, not the direct service options.
++      input.maximumExecutionMs = 30000; input.maximumOutputBytes = 1048576;
++      f.documents['buster-engine'].settings.dependencyReadiness = input;
++      writeTestBundle(f.file, f.documents);
++      f.set(scenario.delayMs, scenario.bytes, 0);
++      const address = await runtime.start();
++      const origin = `http://127.0.0.1:${address.port}`;
++      for (const route of ['/healthz', '/bootstrapz']) assert.equal((await fetch(origin + route)).status, 200);
++      const response = await fetch(origin + '/readyz');
++      assert.equal(response.status, scenario.ready ? 200 : 503);
++      const value = await response.json();
++      assert.equal(value.ready, scenario.ready);
++      assert.equal(value.code, scenario.ready ? 'BUSTER_READY' : 'BUSTER_DEPENDENCY_UNAVAILABLE');
++      // All profiles prove genuine start, invocation and observed termination.
++      assertProbeFinished(f.invocations, 1);
++      assert.equal(diagnostic.events.length, 1);
++      assert.equal(diagnostic.events[0]!.code, scenario.code);
++
++    } finally { try { await runtime.stop(); } finally { diagnostic.restore(); fs.rmSync(root, { recursive: true, force: true }); } }
++  });
++}
++
++test('factory disabled capability does not execute configured dependency and rejects retired runtime authors', { timeout: 30000 }, async () => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-readiness-disabled-'));
++  const f = readinessRuntime(root, { maximumExecutionMs: 500, maximumOutputBytes: 512 }, false);
++  const runtime = f.create();
++  try {
++    f.set(10000, 10000, 31);
++    const address = await runtime.start();
++    assert.equal((await fetch(`http://127.0.0.1:${address.port}/readyz`)).status, 200);
++    assert.equal(fs.existsSync(f.invocations), false);
++    for (const dependencyReadiness of [undefined, null, {}, { maximumExecutionMs: 30001, maximumOutputBytes: 1024 }]) {
++      const invalid = { ...f.settings.buster, dependencyReadiness } as unknown as BusterSettings;
++      assert.throws(() => loadProductionBusterRemotePlanRuntime(f.profile.runtime, f.preparation, invalid,
++        f.settings.workerCore.localRuntime, f.profile.environment), /SWARM_CONFIG_BUSTER_DEPENDENCY_READINESS_INVALID/);
++      assert.equal(fs.existsSync(f.invocations), false);
++    }
++    for (const dependencyReadiness of [null, {}, { maximumExecutionMs: 1000, maximumOutputBytes: 65536 }]) {
++      fs.writeFileSync(f.profile.runtime, JSON.stringify({ ...f.source, dependencyReadiness }));
++      assert.throws(f.create, /SWARM_CONFIG_LEGACY_OVERRIDE:dependencyReadiness/);
++      assert.equal(fs.existsSync(f.invocations), false);
++    }
++  } finally { await runtime.stop(); fs.rmSync(root, { recursive: true, force: true }); }
++});
++
++test('real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay', { timeout: 30000 }, async () => {
++  const f = await admissionFixture(profile);
++  const executable = readinessExecutable(f.root);
++  const plugins = path.resolve('skills/buster/plugins');
++  const registry = buildRegistry(discoverPackages({ installationRoots: [plugins], trustPolicy: {
++    trustedBuiltinRoots: [plugins], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'admission' } }));
++  let executions = 0;
++  const options: BusterRemotePlanServiceOptions = { store: f.store, preparation: f.store.modeledPreparation, registry,
++    workerRevision: 'a'.repeat(40), runtimeRoot: path.join(f.root, 'probe-runs'), admission: profile,
++    workerLocalRuntime: { drainTimeoutMs: 300000, cancellationTimeoutMs: 30000, replayLimit: 65536 },
++    dependencyReadiness: { maximumExecutionMs: 2000, maximumOutputBytes: 1024 },
++    allowedCapabilities: new Set(['container.build']), containerBuild: {
++      buildctlExecutable: executable.executable, buildkitHost: 'unix:///fixture-not-buildkit.sock',
++      registryBaseUrl: 'https://registry.example.test', registryReference: 'registry.example.test', repositoryPrefix: 'fixture',
++      allowedPlatforms: ['linux/amd64'], allowedBuildArguments: [], maximumLogBytes: 1024,
++      maximumExecutionMs: 1000, maximumManifestBytes: 1024 },
++    execute: async () => { executions += 1; throw new Error('unexpected execution'); } };
++  const service = new BusterRemotePlanService(options);
++  try {
++    for (const dependencyReadiness of [undefined, null, {}, { maximumExecutionMs: 0, maximumOutputBytes: 1024 },
++      { maximumExecutionMs: 1000 }, { maximumOutputBytes: 65536 }]) {
++      assert.throws(() => new BusterRemotePlanService({ ...options, allowedCapabilities: new Set(), dependencyReadiness } as unknown as BusterRemotePlanServiceOptions),
++        /SWARM_CONFIG_BUSTER_DEPENDENCY_READINESS_INVALID/);
++      assert.equal(fs.existsSync(executable.invocations), false);
++    }
++    for (const [field, maximum] of [['maximumExecutionMs', 30000], ['maximumOutputBytes', 1048576]] as const) {
++      for (const value of [null, false, true, '1000', [], {}, 0, -1, 1.5, maximum + 1]) {
++        assert.throws(() => new BusterRemotePlanService({ ...options, allowedCapabilities: new Set(),
++          dependencyReadiness: { ...options.dependencyReadiness, [field]: value } } as unknown as BusterRemotePlanServiceOptions),
++        /SWARM_CONFIG_BUSTER_DEPENDENCY_READINESS_INVALID/);
++        assert.equal(fs.existsSync(executable.invocations), false);
++      }
++      for (const value of [1, maximum]) {
++        const valid = new BusterRemotePlanService({ ...options, allowedCapabilities: new Set(),
++          dependencyReadiness: { ...options.dependencyReadiness, [field]: value } });
++        await valid.shutdown(5000); assert.equal(fs.existsSync(executable.invocations), false);
++      }
++    }
++    // Direct service options are separate from a serialized config author.
++    let captureChecks = 0;
++    for (const scenario of [
++      { policy: { maximumExecutionMs: 300, maximumOutputBytes: 4096 }, delay: 1200, bytes: 0, code: 'DEPENDENCY_TIMEOUT' },
++      { policy: { maximumExecutionMs: 2500, maximumOutputBytes: 64 }, delay: 0, bytes: 256, code: 'DEPENDENCY_OUTPUT_LIMIT' },
++    ]) {
++      const policy = { ...scenario.policy };
++      const captured = new BusterRemotePlanService({ ...options, dependencyReadiness: policy });
++      const diagnostic = observeReadinessDiagnostics();
++      try {
++        policy.maximumExecutionMs = 30000; policy.maximumOutputBytes = 1048576;
++        executable.set(scenario.delay, scenario.bytes, 0);
++        await captured.recover();
++        const result = await captured.readiness();
++        assert.equal(result.ready, false);
++        assert.equal(result.code, 'BUSTER_DEPENDENCY_UNAVAILABLE');
++        captureChecks += 1; assertProbeFinished(executable.invocations, captureChecks);
++        assert.equal(diagnostic.events.length, 1);
++        assert.equal(diagnostic.events[0]!.code, scenario.code);
++      } finally { try { await captured.shutdown(5000); } finally { diagnostic.restore(); } }
++    }
++    executable.set(0, 0, 7);
++    const encode = (job: ReturnType<typeof f.job>) => (async function* () { yield Buffer.from(JSON.stringify(job)); })();
++    const rejected = f.job('readiness-new', 1);
++    await assert.rejects(service.submit(encode(rejected)), /BUSTER_DEPENDENCY_UNAVAILABLE/);
++    assert.equal((await f.store.records()).length, 0); assert.equal(executions, 0);
++    const accepted = f.job('readiness-replay', 1);
++    await f.store.accept(accepted, new Date().toISOString());
++    const before = await f.store.get(accepted.jobId);
++    await assert.rejects(service.submit(encode(accepted)), /BUSTER_DEPENDENCY_UNAVAILABLE/);
++    assert.deepEqual(await f.store.get(accepted.jobId), before); assert.equal(executions, 0);
++    const terminal = await service.cancel(accepted.jobId);
++    assert.equal(terminal.state, 'cancelled');
++    const calls = fs.readFileSync(executable.invocations);
++    assert.deepEqual(await service.submit(encode(accepted)), terminal);
++    assert.deepEqual(fs.readFileSync(executable.invocations), calls); assert.equal(executions, 0);
++  } finally { await service.shutdown(5000); await f.close(); }
++});
+--- a/tests/verification/reliability/buster-shutdown-storage.test.mts
++++ b/tests/verification/reliability/buster-shutdown-storage.test.mts
+@@ -61,6 +61,7 @@
+     const runtimeRoot = path.join(root, 'runtime-is-a-file');
+     fs.writeFileSync(preparedPlanRuntimeRoot(runtimeRoot), 'original filesystem ENOTDIR; no provider can start');
+     const service = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store: limited, registry, workerRevision: 'a'.repeat(40), runtimeRoot,
+       tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['command.execute']), admission: { ...loadBusterSettings({ SWARM_CONFIG: canonicalSwarmEntry }).admission, maximumActiveJobs: 1 } });
+     const queued = job('reservation:other');
+--- a/tests/verification/reliability/coverage-remote.test.mts
++++ b/tests/verification/reliability/coverage-remote.test.mts
+@@ -32,6 +32,7 @@
+     maximumArchiveBytes: 4 * 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
+     trustedSourceAuthority: 'nova:coverage', sourceAttestationPublicKey: publicKey });
+   const service = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'a'.repeat(40),
+     runtimeRoot: path.join(temporary, 'buster-runs'), tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 16 * 1024 * 1024,
+     allowedCapabilities: new Set() });
+--- a/tests/verification/reliability/nova-dispatch-projection.test.mjs
++++ b/tests/verification/reliability/nova-dispatch-projection.test.mjs
+@@ -83,6 +83,7 @@
+     maximumArchiveBytes: 1024 ** 2, maximumResultBytes: 1024 ** 2, maximumResultStoreBytes: 4 * 1024 ** 2,
+     trustedSourceAuthority: 'nova:projection', sourceAttestationPublicKey: keys.publicKey.export({ type: 'spki', format: 'pem' }) });
+   const service = new BusterRemotePlanService({
++    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+     workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store: buster, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(root, 'buster-runtime'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 ** 2, allowedCapabilities: new Set(['network.http']),
+     networkHttp: { allowedOrigins: [origin], allowedHostSuffixes: [], allowedPorts: [target.address().port], maximumResponseBytes: 1024 ** 2, maximumExecutionMs: 30000 } });
+--- /dev/null
++++ b/tests/verification/reliability/tsconfig.buster-readiness.json
+@@ -0,0 +1,8 @@
++{
++  "extends": "../../../skills/buster/engine/tsconfig.json",
++  "include": [
++    "buster-readiness-config.test.mts",
++    "buster-readiness-consumer.test.mts",
++    "../deployment/buster-readiness.test.mts"
++  ]
++}

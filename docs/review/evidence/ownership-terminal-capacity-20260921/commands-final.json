@@ -1,0 +1,35 @@
+[
+  {
+    "name": "node-pools-final",
+    "command": [
+      "node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-resource-reservations.test.mts",
+      "tests/verification/reliability/worker-owned-children.test.mts",
+      "tests/verification/reliability/worker-native-quiescence.test.mts",
+      "tests/verification/reliability/worker-terminal-capacity.test.mts",
+      "tests/verification/reliability/worker-ownership-store.test.mts",
+      "tests/verification/reliability/worker-native-journal.test.mts",
+      "tests/verification/deployment/native-worker-node.test.mjs"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "diagnosis-mutant",
+    "command": [
+      "node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "./docs/review/evidence/ownership-capacity-bound-probe-20260921/omit-diagnosis.mjs",
+      "--test",
+      "tests/verification/reliability/worker-terminal-capacity.test.mts"
+    ],
+    "exitCode": 1
+  }
+]

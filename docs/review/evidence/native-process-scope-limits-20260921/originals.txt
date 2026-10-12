@@ -1,0 +1,20 @@
+✔ actual cooperative host gets bounded cancellation with no invented cleanup receipt (111.73335ms)
+✔ actual unresponsive host gets bounded cancellation with no invented cleanup receipt (386.435807ms)
+✔ missing or invalid control limits cannot create an unbounded channel (0.951244ms)
+✔ drain owns concurrent real launchers before readiness and permanently fences new starts (15.853208ms)
+✔ failed exec is reaped even when drain begins before the error event (2.110395ms)
+✔ completed real children need no further signals and empty drain also fences admission (29.016796ms)
+✔ control descriptor exists only for the explicitly requested host (3.957802ms)
+✔ invalid drain timeout cannot disable admission or overflow a Node timer (28.209815ms)
+✔ full process policy reaches real child I/O with only scope limits allocated (43.489597ms)
+✔ process input budget rejects before allocating a scope (0.685658ms)
+✔ real child output and deadline still use the complete process policy (136.608299ms)
+✔ modeled measured CPU policy remains enforced after scope projection (14.569324ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1146.943833

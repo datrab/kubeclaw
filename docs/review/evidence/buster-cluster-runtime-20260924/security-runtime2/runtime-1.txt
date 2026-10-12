@@ -1,0 +1,15 @@
+
+> verify:buster:cluster-ownership
+> node --test --test-concurrency=1 tests/verification/contracts/buster-cluster-ownership.test.mjs
+
+✔ genuine nested test lifetime OWN-TIMEOUT-CLEAN (2232.649304ms)
+✔ genuine nested test lifetime OWN-STOP-FAILURE (195.583354ms)
+✔ genuine nested test lifetime OWN-DISPOSAL-TIMEOUT-LATE (10239.167067ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12760.637857

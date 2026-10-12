@@ -1,0 +1,98 @@
+{
+  "complete": true,
+  "files": [
+    {
+      "afterSha256": "a8ed6c31613a155caba92792bbe4763fcb0eacf093dc8f41695a238105a8bdb7",
+      "beforeSha256": "fab3f9473ac2c7872dc338f8d8a144ad82815302db1621e69eaab725e5397a0e",
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json"
+    },
+    {
+      "afterSha256": "4eecd519cfe89e737a80054c99e50ecf4b8fb068bd7fc1763339e7cce5137df7",
+      "beforeSha256": "ab7b801b16ee4ef979cb2349857269f18892095ac5af979bbe700a284845335a",
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl"
+    },
+    {
+      "afterSha256": "978aa2a5feb68e3cf5b9c94aa4077207e71c6a2cef804d063d40d8781b786d53",
+      "beforeSha256": "9fc57f8a89122232e27b0fb4dce604d8260099c5edf1088d97b720e10b8b9711",
+      "path": "docs/architecture/buster-execution-configuration.md"
+    },
+    {
+      "afterSha256": "eaee99c11a7e10c93099ed52ca2d54c0bc745c9d78e3b7d9f3aea8b52b42f7dd",
+      "beforeSha256": "f0210ef19a9c09164f09f140f5dd7e83ed2aa32cca5fa24fe3667e6b0dec4e8c",
+      "path": "skills/buster/engine/BOUNDARIES.md"
+    },
+    {
+      "afterSha256": "ab4b341f3d52181ff6b6fa33aaaa70d617616f33a1f40b0ec147db0ec2f0df06",
+      "beforeSha256": "b7dc5260ba57dd177fcb2e1e40f85f39554bf261f3e99388a6d91d17d24879b1",
+      "path": "skills/buster/engine/test-gates/provider-capabilities.ts"
+    },
+    {
+      "afterSha256": "24ffa41ad944b28b7c40bfe5509548017623e488206f9f0db0005b8485fb3b84",
+      "beforeSha256": "480ccdab11b1329caa5c564a5dc7a121ca043a955bb9d48365dd8fbacaa5e503",
+      "path": "skills/buster/engine/test-gates/provider-loader.ts"
+    },
+    {
+      "afterSha256": "b782a61956a40df3828de74e71c4ac01656b84c098f23704cf88f3e9c1ac95bf",
+      "beforeSha256": "24c91d8a84da1d17ead3060f04eb6556176d4dd55e5ba916a304f0a302ab1daf",
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts"
+    },
+    {
+      "afterSha256": "e2960d464717d819653c1b379db904b050455d4b23be03aa93105ad7dfc7c6c1",
+      "beforeSha256": "95c85b56a46c0f6d8efba412d0be7d9cfeba1fd579d8aa41c99ce06c13705513",
+      "path": "skills/buster/engine/test-gates/runner.ts"
+    },
+    {
+      "afterSha256": "1504796cdad4715c9333cb491187434c84ca47cbc5078063c582bf28718311f1",
+      "beforeSha256": "1e49ef570c2261f1339520df81e823bcd43aa2ee982532e21372e4f4c4dbab5d",
+      "path": "skills/buster/engine/test-gates/tests/provider-capabilities.test.ts"
+    },
+    {
+      "afterSha256": "47a8f9dfe764a207a41dea94873ac67c474de3cc428f0ecc06237222b54a6bd8",
+      "beforeSha256": "076cf80a40f30899eabebc0c838079fed1d76101d16d473b98af03fbc74d3fbc",
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts"
+    },
+    {
+      "afterSha256": "8cf8391f4e77b6522e8ea9a37859732168e171c228ff31fc152799d0ea205990",
+      "beforeSha256": "24ad306968220642c2ef63d46b9a304404c30556ef91f535fd43a131196b0fa2",
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts"
+    },
+    {
+      "afterSha256": "2460dd23e97cae74194d4c72255fea3e77a9b711a2de413a9d07893362646711",
+      "beforeSha256": "209bbde26a9954d8f1e41a79332ae1cbd1af69e87d5b52b80535127263738ee9",
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json"
+    },
+    {
+      "afterSha256": "ed8f8c89e549ccc689e62549f7d01dcdded94650cfd5f136b2c0a427a07b9c31",
+      "beforeSha256": null,
+      "path": "tests/fixtures/test-gate/session-policy.mjs"
+    },
+    {
+      "afterSha256": "137c240536cb898c9a21e73c030abc95a6ab1174904e004229dedf7a4b187dd7",
+      "beforeSha256": null,
+      "path": "tests/verification/contracts/buster-provider-session-policy.test.mjs"
+    },
+    {
+      "afterSha256": "eb9d13a34006c4399b57cb4ccc5b064d306eb8275f270c11068fcb3b695d7664",
+      "beforeSha256": null,
+      "path": "tests/verification/contracts/buster-session-capabilities.test.mjs"
+    },
+    {
+      "afterSha256": "989e6b8b5596938acf2a45ab0c600d3b936f2af85af60600a54852c2d415ac8d",
+      "beforeSha256": "a899db1a40e9c696629b9c10127839dd3d627ed7767e2fae8d0ab6c483a059d7",
+      "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    },
+    {
+      "afterSha256": "94649f2f57c6d3ed7c483c44aaf5dbe9f8527c6a6362579688120ae20cbd71f1",
+      "beforeSha256": "7b9f4b225558fba174fa324aba956679263d357a4815c6deae12ea398f1f9daf",
+      "path": "tests/verification/contracts/provider-loader-ownership.test.mjs"
+    },
+    {
+      "afterSha256": "13dc87d6ddb859e93df0843e798c6633b4f8424f006951925f69aee198aec58d",
+      "beforeSha256": "61963ed8b01ae75c5c1021510424abb6b108229019848fe99e9f10770d8958d1",
+      "path": "tests/verification/deployment/prism-swarm-config.test.mjs"
+    }
+  ],
+  "review": "docs/review/evidence/independent-buster-provider-session-policy-20260921/source-comparison-v4.json",
+  "runtimeVerified": false,
+  "scope": "Nine additional mandatory provider fields in existing execution owner; consumer and original regression verification pending."
+}

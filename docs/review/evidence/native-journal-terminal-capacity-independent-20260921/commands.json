@@ -1,0 +1,85 @@
+[
+  {
+    "name": "tests",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-native-journal.test.mts",
+      "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-journal-terminal-capacity-independent-20260921/probes.mts"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "mutant",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-journal-terminal-capacity-independent-20260921/revert-admission.mjs",
+      "--test",
+      "--test-name-pattern=independent seven-way",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-journal-terminal-capacity-independent-20260921/probes.mts"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.native-scope.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/worker/core/worker/native-attempt-journal.ts",
+      "skills/worker/core/worker/native-journal-capacity.ts",
+      "skills/worker/core/worker/native-journal-state.ts",
+      "tests/verification/reliability/native-journal-capacity-fixture.mts",
+      "tests/verification/reliability/worker-native-journal-capacity.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "probes-final",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-journal-terminal-capacity-independent-20260921/probes.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "mutant-final",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-journal-terminal-capacity-independent-20260921/revert-admission.mjs",
+      "--test",
+      "--test-name-pattern=independent seven-way",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-journal-terminal-capacity-independent-20260921/probes.mts"
+    ],
+    "exitCode": 1
+  }
+]

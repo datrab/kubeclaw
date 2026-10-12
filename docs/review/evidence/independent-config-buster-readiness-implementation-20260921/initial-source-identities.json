@@ -1,0 +1,53 @@
+{
+  "status": "read-only preparation, author run active; no independent runtime or final freeze",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "bade10bab0cc111f8fec4e1c2166e949549b2880f0e800b8c61f455ad8885d92"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "39fae2ef7c97b92259f1e1193a91e969b405c31b6970d51c8c0f7765fbb1f2bb"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+      "sha256": "7f50b4c1c6c1e661319dd2f9ba1afecf27dd19a26c06ac51ef52abc0d97703f3"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "sha256": "c1f305fd3281328e1cd5714b1366cb946907e2a96af2bf6c3f629c2ab4ed354b"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "b18d1684d25bae992b70c9e99910dc36a3015dbcef0ea72a6c0ee19dfdc27792"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "8e5398a1681bbb6c89ee519d45fe12db63b9871a37ab1bd49cb8ecb65c405602"
+    },
+    {
+      "path": "tests/verification/reliability/buster-readiness-consumer.test.mts",
+      "sha256": "34af0ed326455a7205835378cb9d202992c102d9d311e9e0989bd23d1f7ae392"
+    },
+    {
+      "path": "tests/verification/reliability/buster-readiness-config.test.mts",
+      "sha256": "7d48c0768760d7cb813a62e103b5e1fded3196c6b1c9cb49ded6cc53408f67c9"
+    },
+    {
+      "path": "tests/verification/deployment/buster-readiness-config.test.mjs",
+      "sha256": "ba08feae8f78bf05f2a3c7fa82bf72ec1f1f5a3ff016e5af7794c8ebe72c8e29"
+    },
+    {
+      "path": "tests/verification/deployment/buster-readiness.test.mts",
+      "sha256": "3ce59e6867be75b73db550b2b8fe421112d9fe0a36eab03e2dba50bb60226545"
+    },
+    {
+      "path": "tests/fixtures/test-gate/buster-readiness-profile.mts",
+      "sha256": "450ba5066d39b5a154d39a38d3d0eb0eacf8cb744561e43927d1feb153f95e39"
+    },
+    {
+      "path": "tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "sha256": "6882e383cb3ddd4da247073791d29d273c943dbf394c3944b0d7fe35665968d0"
+    }
+  ]
+}

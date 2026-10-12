@@ -1,0 +1,12 @@
+{
+  "status": "private-unintegrated-unexecuted",
+  "path": "package.json",
+  "beforeSha256": "e6fcfe751eb82779aa52a74558c2173fa72168ee77c873f63b7fb681de16e0c4",
+  "afterSha256": "f5eec9356c2611aed1b9e1f5abeba7b518bc737755a177792a1d409c3ce05f96",
+  "addedCommands": {
+    "verify:buster:execution-config": "npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-execution-policy.json && node --test --test-concurrency=1 tests/verification/contracts/buster-settings-registry.test.mjs tests/verification/contracts/check-pipeline-buster-execution-policy.mts tests/verification/contracts/provider-child-session.test.mjs tests/verification/contracts/buster-process-sampling.test.mjs tests/verification/contracts/buster-default-store-policy.test.mjs tests/verification/contracts/buster-provider-session-policy.test.mjs tests/verification/contracts/buster-session-capabilities.test.mjs tests/verification/contracts/provider-loader-ownership.test.mjs",
+    "verify:lint:policy-delivery": "node skills/nova/plugins/lint/tests/eslint-discipline.test.mjs && node --test tests/verification/deployment/eslint-policy-delivery.test.mjs"
+  },
+  "existingCommandsPreserved": true,
+  "scope": "New maintained entrypoints only; no original verifier removed/replaced. Requires normal installed native tools and actual sandbox build. These commands do not replace plan-runner, phase7, readiness or full native gates."
+}

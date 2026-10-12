@@ -1,0 +1,43 @@
+{
+  "sha256": "9625b4e475639427215f844db3d677e184dea7f5e5f9fa1dac5b3d37b577bdf8",
+  "original27AndAllOtherAstUnchanged": true,
+  "cases": 29,
+  "modeledBranchChecks": [
+    {
+      "case": "foreign-descendant",
+      "mode": "0o100644",
+      "uid": 1000,
+      "immutable": true,
+      "error": null
+    },
+    {
+      "case": "writable-descendant",
+      "mode": "0o40775",
+      "uid": 0,
+      "immutable": true,
+      "error": null
+    },
+    {
+      "case": "foreign-descendant",
+      "mode": "0o100644",
+      "uid": 0,
+      "immutable": true,
+      "error": "DESCENDANT_AUTHORITY_PREREQUISITE"
+    },
+    {
+      "case": "writable-descendant",
+      "mode": "0o40755",
+      "uid": 0,
+      "immutable": true,
+      "error": "DESCENDANT_AUTHORITY_PREREQUISITE"
+    },
+    {
+      "case": "writable-descendant",
+      "mode": "0o40775",
+      "uid": 0,
+      "immutable": false,
+      "error": "DESCENDANT_SEAL_PREREQUISITE"
+    }
+  ],
+  "privilegedExecution": false
+}

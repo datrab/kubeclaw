@@ -1,0 +1,15 @@
+--- 
++++ 
+@@ -50,9 +50,9 @@
+   ['status drift', 'register.md', s => s.replace('| verifiziert |', '| offen |')],
+   ['missing Markdown ID', 'register.md', s => s.replace('PCR-AGENT-CONTRACT-001', 'MISSING')],
+   ['missing Markdown evidence', 'register.md', s => s.replace('[1](implementation/contracts-2.md)', 'none')],
+-  ['wrong register sum', 'register.md', s => s.replace('141/154', '154/154')],
+-  ['wrong progress sum', 'progress.md', s => s.replace('141/154', '154/154')],
+-  ['wrong handoff sum', 'handoff.md', s => s.replace('141/154', '154/154')],
++  ['wrong register sum', 'register.md', s => s.replace(/\*\*(\d+)\/154 lokal verifiziert/, (_, count) => `**${Number(count) + 1}/154 lokal verifiziert`)],
++  ['wrong progress sum', 'progress.md', s => s.replace(/\*\*(\d+)\/154 lokal verifiziert/, (_, count) => `**${Number(count) + 1}/154 lokal verifiziert`)],
++  ['wrong handoff sum', 'handoff.md', s => s.replace(/\*\*(\d+)\/154 lokal verifiziert/, (_, count) => `**${Number(count) + 1}/154 lokal verifiziert`)],
+ ]) test(name, t => {
+   const temp = fixture(t); const path = resolve(temp, dir, file);
+   const before = readFileSync(path, 'utf8'); const after = mutate(before);

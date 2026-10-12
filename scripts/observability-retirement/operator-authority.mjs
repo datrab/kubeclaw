@@ -1,3 +1,5 @@
+import { resolveWaitValue } from '../../skills/common/plugin-runtime/foundation/observability/wait-projection.ts';
+import { resolveRetainedCoreWait } from '../../skills/nova/core/state/wait-projection-reader.ts';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { portableJson } from '../../skills/common/plugin-runtime/sdk/src/index.ts';
@@ -91,10 +93,13 @@ function selectedWait(effects, notification, context, human) {
       summary: human.input.summary, signalType: wait.signalType, authorizedIssuer: issuer, expiresAt })) fail();
   return { effect, wait };
 }
-function originalWaitValue(waitRecords, waiting) {
+function originalWaitValue(waitRecords, waiting, scope) {
   const record = select(waitRecords, item => item.stream === 'waits/all' && item.idempotencyKey === waiting.effect.request.idempotencyKey);
-  if (!same(record.payload, { schemaVersion: 'wait-value.v1', wait: waiting.wait })) fail();
-  return record;
+  const original = resolveWaitValue(record, source => resolveRetainedCoreWait(source, {
+    storageRoot: scope.novaStorageRoot, waitRoot: scope.intent.waitRoot, orchestratorIssuerId: scope.orchestratorIssuerId,
+  }));
+  if (!same(original, { schemaVersion: 'wait-value.v1', wait: waiting.wait })) fail();
+  return { ...record, payload: original, payloadDigest: payloadDigest(original) };
 }
 function historicalSignal(inventory, scope, events, waiting, first, human) {
   const definition = { schemaVersion: 'pipeline-definition.v2', id: human.graph.pipelineId,
@@ -144,10 +149,11 @@ export function operatorAuthority(inventory, scope, context, waitRecords) {
   const expiryOrigin = Date.parse(waiting.wait.expiresAt) - human.config.timeoutMinutes * 60000;
   if (expiryOrigin < Date.parse(first.dispatched.entry.occurredAt) || expiryOrigin > Date.parse(waiting.effect.request.requestedAt)) fail();
   effectAudit(first, waiting.effect);
-  const waitRecord = originalWaitValue(waitRecords, waiting);
+  const waitRecord = originalWaitValue(waitRecords, waiting, scope);
   const resolved = historicalSignal(inventory, scope, events, waiting, first, human);
   const next = approvedAttempt(events, first, resolved, human);
-  return { request: notification.request, receipt: notification.receipt.result,
+  return { request: notification.request, receipt: notification.receipt.result, wait: waiting.wait, waitEffectKey: waiting.effect.request.idempotencyKey,
+    originalWaitPayloadDigest: waitRecord.payloadDigest,
     digest: payloadDigest({ effect: notification, wait: waiting, waitRecordDigest: waitRecord.payloadDigest,
       signal: resolved.signal, firstAttempt: first.completed.hash, approvedAttempt: next.completed.hash }) };
 }

@@ -1,0 +1,11 @@
+[
+  [
+    "ci2",
+    [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ]
+  ]
+]

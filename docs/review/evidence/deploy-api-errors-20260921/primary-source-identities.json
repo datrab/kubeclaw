@@ -1,0 +1,22 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.18.4/cmd/helm/list.go",
+    "file": "helm-v3.18.4-cmd-helm-list.go.txt",
+    "sha256": "0899939eba4b428512533f42c376a33fda771896ebc801a02330e22dcd3b12be"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.18.4/pkg/action/list.go",
+    "file": "helm-v3.18.4-pkg-action-list.go.txt",
+    "sha256": "cf99d8da1d53f544641f345937789c3038b7d86adbbd114f3270d2c930ddb255"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.22.0/cmd/helm/list.go",
+    "file": "helm-v3.22.0-cmd-helm-list.go.txt",
+    "sha256": "0899939eba4b428512533f42c376a33fda771896ebc801a02330e22dcd3b12be"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/helm/helm/v3.22.0/pkg/action/list.go",
+    "file": "helm-v3.22.0-pkg-action-list.go.txt",
+    "sha256": "cf99d8da1d53f544641f345937789c3038b7d86adbbd114f3270d2c930ddb255"
+  }
+]

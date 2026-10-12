@@ -1,0 +1,142 @@
+[
+  {
+    "source": "charts/kubeclaw/files/config/swarm.config.json",
+    "snapshot": "00-swarm.config.json.snapshot",
+    "sha256": "bd914eabc06742adf06036e2f941809eb1fcad3a6f3576e380a157b2edeb1803"
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "snapshot": "01-swarm.schema.json.snapshot",
+    "sha256": "df77dc6297c307c5b1810189143774d516e53361dd9bc0f4a598c7de46189e81"
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "snapshot": "02-swarm.ts.snapshot",
+    "sha256": "56777c2e8643a71a7874574f07b96e5683a515de2405a22fd58e55fb67ef552a"
+  },
+  {
+    "source": "skills/prism/server/worker-config.ts",
+    "snapshot": "03-worker-config.ts.snapshot",
+    "sha256": "249ea80da729fd1edcc149798ef343ba7e7f1e789528acedd540fabad4e9e337"
+  },
+  {
+    "source": "skills/prism/server/control-config.ts",
+    "snapshot": "04-control-config.ts.snapshot",
+    "sha256": "788baccde2cf532f7f445b33805c687194e1e289e6f45278456d87ad95d03d2a"
+  },
+  {
+    "source": "skills/prism/config/native-worker.ts",
+    "snapshot": "05-native-worker.ts.snapshot",
+    "sha256": "612d7bf95e18091f83c493c9be52e6a0c40ad15a477425ca7077ad6bb37cd452"
+  },
+  {
+    "source": "charts/prism/templates/_swarm-config.tpl",
+    "snapshot": "06-_swarm-config.tpl.snapshot",
+    "sha256": "12eb2d673aa4dce4171b35a8f68c982b59f8c4d2d2510791e8b59615a354a9d5"
+  },
+  {
+    "source": "charts/prism/templates/workloads.yaml",
+    "snapshot": "07-workloads.yaml.snapshot",
+    "sha256": "ec1e3753b7f61c72c0a63371574f2bd968c14d268b9157ca8eaf475db174c893"
+  },
+  {
+    "source": "scripts/check-built-runtime-image.sh",
+    "snapshot": "08-check-built-runtime-image.sh.snapshot",
+    "sha256": "f0035ed27805f0771e991779c4ac90edf235cb801e9b1d42c6fffcc8ab195e8e"
+  },
+  {
+    "source": "tests/verification/deployment/prism-swarm-image.mjs",
+    "snapshot": "09-prism-swarm-image.mjs.snapshot",
+    "sha256": "a28a3084d174be6bd9d479b7f395ef7a72abd4fc79e66524191e8f2e8d32d75d"
+  },
+  {
+    "source": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "snapshot": "10-prism-swarm-config.test.mjs.snapshot",
+    "sha256": "e91afcccf9473580b210acd6c42c9e156419fcb4675a2e0466e20e9de03344af"
+  },
+  {
+    "source": "skills/prism/tests/swarm-native-settings.test.mts",
+    "snapshot": "11-swarm-native-settings.test.mts.snapshot",
+    "sha256": "2285b7bba257eb5c537ad2948f220847f69dad4c024e7c01f6c4f76dc2f4fb9e"
+  },
+  {
+    "source": "skills/prism/tests/swarm-result-journal.test.mts",
+    "snapshot": "12-swarm-result-journal.test.mts.snapshot",
+    "sha256": "1950ac5103c7d53238d3cb1fc6f33d13cdaaf0b5d6ce3130e839898f01f6136b"
+  },
+  {
+    "source": "skills/prism/tests/control-server-config.test.mts",
+    "snapshot": "13-control-server-config.test.mts.snapshot",
+    "sha256": "3a3f747a718d8ef68ed0769f83a80f9db565cf3753f6182dc09a5f645dc147cb"
+  },
+  {
+    "source": "skills/prism/tests/control-product-composition.test.mts",
+    "snapshot": "14-control-product-composition.test.mts.snapshot",
+    "sha256": "ed66c17178551d439bbc33175955e3d6652673885b593ef7b98aeefb6a2d2dbe"
+  },
+  {
+    "source": "skills/prism/tests/control-generation-http.test.mts",
+    "snapshot": "15-control-generation-http.test.mts.snapshot",
+    "sha256": "4b918e95d9279cbf6ecd6b7a5305d23be82cd26773db7ecf504abd40c3c3c0d9"
+  },
+  {
+    "source": "skills/prism/tests/native/operation-http.mts",
+    "snapshot": "16-operation-http.mts.snapshot",
+    "sha256": "9b27da2427d1d21d335efdeef73181d0feeedb7f90a2beb25b8272f53f426faf"
+  },
+  {
+    "source": "docs/operations/operator-configuration.md",
+    "snapshot": "17-operator-configuration.md.snapshot",
+    "sha256": "f6e4261330a949044aa86e04c91c18ca00ed07e8cbb8f3b19efa40bed5f5a258"
+  },
+  {
+    "source": "docs/operations/prism-operator-guide.md",
+    "snapshot": "18-prism-operator-guide.md.snapshot",
+    "sha256": "987180d748a40083e207e0c650605b8168e663af3a2f374b49019d274946ba9b"
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/config/README.md",
+    "snapshot": "19-README.md.snapshot",
+    "sha256": "9320b668a63f3de8cf16bb1a75840aceeb69602ffe9a18579b1f363461a6acda"
+  },
+  {
+    "source": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "snapshot": "20-config-inventory-20260920.json.snapshot",
+    "sha256": "e2e028b9a462642e37b7f0aeaf198d355b15be60622834ae389b569e098d75ed"
+  },
+  {
+    "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "snapshot": "21-config-inventory-20260920.md.snapshot",
+    "sha256": "39757a94ba12bd44b01528fd9567555eb5381aa60bddf53095ee48c9e5641b8b"
+  },
+  {
+    "source": "docs/review/remediation/implementation/config-result-dispatch-20260921.md",
+    "snapshot": "22-config-result-dispatch-20260921.md.snapshot",
+    "sha256": "e1910da83f5bd9463e644dd079a156bebec6fdcaf4d06334222cf84d9137009f"
+  },
+  {
+    "source": "skills/prism/control/worker-operation-transport.ts",
+    "snapshot": "23-worker-operation-transport.ts.snapshot",
+    "sha256": "048a23bb132d4d70978e28449a468169ccd87b3a06fa2127fedffbcc992a9958"
+  },
+  {
+    "source": "skills/prism/server/worker.ts",
+    "snapshot": "24-worker.ts.snapshot",
+    "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+  },
+  {
+    "source": "skills/prism/server/native-worker-execution.ts",
+    "snapshot": "25-native-worker-execution.ts.snapshot",
+    "sha256": "bd783ea7ea618e9d0560b2f50f39c7e5973b6355307dfa34a0524846cbddc9ad"
+  },
+  {
+    "source": "tests/verification/deployment/deployment-release.test.mjs",
+    "snapshot": "26-deployment-release.test.mjs.snapshot",
+    "sha256": "a220514403cf6ad5241d9c51f1a5382d41c2001210df38bf20aa3e127724a16c"
+  },
+  {
+    "source": "tests/verification/deployment/gitops-release.test.mjs",
+    "snapshot": "27-gitops-release.test.mjs.snapshot",
+    "sha256": "44bf41800ccd8232eef08bd2bdbdd0e700077824aada29ffd3d5cd0de62d6e81"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "exitCode": 1,
+  "command": [
+    "python3",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation6/launch-smaller-as.py",
+    "--execute-reviewed-proposal",
+    "--confirm-no-heavy-tests"
+  ]
+}

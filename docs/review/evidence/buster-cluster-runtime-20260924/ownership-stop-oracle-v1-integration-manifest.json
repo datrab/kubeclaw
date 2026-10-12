@@ -1,0 +1,18 @@
+{
+  "originalManifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-runtime-security-policy-20260924/ownership-stop-oracle-v1/manifest.json",
+  "originalManifestSha256": "055b6d41df9b26b8e202c4a4415f2018fd216b360925853d084e9463c3870a23",
+  "files": [
+    {
+      "path": "tests/fixtures/test-gate/cluster-ownership-scenario.mjs",
+      "kind": "file",
+      "beforeSha256": "341c79995904955505607f309ec697d8508b282e0557b1a2ef66ecc31fc9c473",
+      "sha256": "2733291320e51f7a1a08521d2ebb39d632815ab614260a1360a6cc7d62b9768d"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "kind": "file",
+      "beforeSha256": "d71fb8decddcff431f4e67750516ad8886dad335cba63051d79fb1880149611d",
+      "sha256": "d71bfc2c3c468406deb05f0cf45582eff2786633e0570adfd336f3a36ba2f695"
+    }
+  ]
+}

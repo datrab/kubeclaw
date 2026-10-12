@@ -1,0 +1,190 @@
+walk.go:75: found symbolic link in path: /tmp/code-materialize-BNAMkL/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/code-materialize-BNAMkL/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/code-materialize-BNAMkL/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/code-materialize-BNAMkL/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/code-materialize-BNAMkL/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/code-materialize-BNAMkL/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/code-materialize-BNAMkL/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/code-materialize-BNAMkL/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+Error: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding
+
+Use --debug flag to render out invalid YAML
+✔ deploy bundle fields decode folded URLs and preserve overlay credential selection (181.192888ms)
+✔ agent changes and manifest changes do not rebuild tools; embedded service code does (0.77793ms)
+✔ code selection reuses images only across unchanged image inputs, including deleted inputs (178.439718ms)
+✔ bundle selection rejects missing hashes, mutable URLs and wrong role archives (0.491123ms)
+✔ push detector rebuilds an environment changed by an earlier unselected build (286.986016ms)
+✔ actual bootstrap checksum command rejects modified downloads before extraction (14.375788ms)
+✔ rendered code updates retain image digests and require selected URL, role, hash and revision (11.284109ms)
+✖ real materialization and Helm render enable pinned bundles for all three agents on retained images (3237.079487ms)
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (489.191953ms)
+✖ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (337.259815ms)
+✖ private operational overlays survive while replaced or removed runtime slots fail (206.632711ms)
+✖ Prism and Ops reject image overrides even when another value could conceal them (184.299219ms)
+✖ source configuration and materialized values are rechecked by actual deployment entrypoints (202.983337ms)
+✖ private bundle URL and authentication survive while the selected revision stays fixed (124.487197ms)
+✖ private extraEnv cannot shadow reserved runtime bundle controls (156.446986ms)
+✖ noncanonical alias and indirect controls cannot stand in for bundle consumers (156.484537ms)
+✔ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (14122.424742ms)
+✔ imperative ownership guard fails closed and permits only other namespaces (1.026246ms)
+✔ committed bundle corruption, switched selection and hidden image changes fail before activation (14313.346715ms)
+✔ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (25720.918948ms)
+✔ root claim and retained workload tracking block imperative adoption after partial GitOps transitions (0.732468ms)
+✔ original runtime teardown commands stop before any Helm mutation when Argo owns the namespace (767.486813ms)
+✔ Buster export requires the supplied native binding before publishing a bundle (8815.369086ms)
+fatal: not a tree object
+✔ unchanged release configuration survives unrelated later commits, but new chart or values cannot qualify old images (390.325563ms)
+✔ deleted, added, symlinked, and unavailable source configurations fail explicitly (280.813443ms)
+✔ ops chart has its own source binding, independent of runtime-only changes (229.123308ms)
+✖ canonical aliases bind both target bytes to the image source commit, including schema outside charts (3587.918556ms)
+✔ canonical alias cannot be retargeted or replaced with an identical regular copy (8080.74237ms)
+✔ source commit cannot introduce arbitrary or retargeted aliases (634.678757ms)
+✔ canonical schema cannot escape through a directory symlink or leaf symlink (1268.148973ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 20
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 84766.292156
+
+✖ failing tests:
+
+test at tests/verification/deployment/code-release.test.mjs:130:1
+✖ real materialization and Helm render enable pinned bundles for all three agents on retained images (3237.079487ms)
+  Error: Command failed: helm template agent-buster /tmp/code-materialize-BNAMkL/charts/kubeclaw -f /tmp/code-materialize-BNAMkL/releases/values/buster.yaml
+  walk.go:75: found symbolic link in path: /tmp/code-materialize-BNAMkL/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/code-materialize-BNAMkL/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+  walk.go:75: found symbolic link in path: /tmp/code-materialize-BNAMkL/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/code-materialize-BNAMkL/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+  Error: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/code-release.test.mjs:162:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12) {
+    status: 1,
+    signal: null,
+    output: [ null, '', 'walk.go:75: found symbolic link in path: /tmp/code-materialize-BNAMkL/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/code-materialize-BNAMkL/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /tmp/code-materialize-BNAMkL/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/code-materialize-BNAMkL/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nError: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n' ],
+    pid: 557966,
+    stdout: '',
+    stderr: 'walk.go:75: found symbolic link in path: /tmp/code-materialize-BNAMkL/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/code-materialize-BNAMkL/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /tmp/code-materialize-BNAMkL/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/code-materialize-BNAMkL/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nError: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n'
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:53:1
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (489.191953ms)
+  ReferenceError: schema is not defined
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:28:61)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:53:114)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/verification/deployment/deployment-release.test.mjs:76:1
+✖ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (337.259815ms)
+  ReferenceError: schema is not defined
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:28:61)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:76:134)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/deployment/deployment-release.test.mjs:88:1
+✖ private operational overlays survive while replaced or removed runtime slots fail (206.632711ms)
+  ReferenceError: schema is not defined
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:28:61)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:88:97)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/deployment-release.test.mjs:99:1
+✖ Prism and Ops reject image overrides even when another value could conceal them (184.299219ms)
+  ReferenceError: schema is not defined
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:28:61)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:99:95)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/deployment-release.test.mjs:117:1
+✖ source configuration and materialized values are rechecked by actual deployment entrypoints (202.983337ms)
+  ReferenceError: schema is not defined
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:28:61)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:117:107)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/deployment-release.test.mjs:128:1
+✖ private bundle URL and authentication survive while the selected revision stays fixed (124.487197ms)
+  ReferenceError: schema is not defined
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:28:61)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:128:101)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/deployment-release.test.mjs:139:1
+✖ private extraEnv cannot shadow reserved runtime bundle controls (156.446986ms)
+  ReferenceError: schema is not defined
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:28:61)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:139:79)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/deployment-release.test.mjs:154:1
+✖ noncanonical alias and indirect controls cannot stand in for bundle consumers (156.484537ms)
+  ReferenceError: schema is not defined
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:28:61)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:154:93)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/release-configuration.test.mjs:85:1
+✖ canonical aliases bind both target bytes to the image source commit, including schema outside charts (3587.918556ms)
+  Error: Command failed: git -C /tmp/release-configuration-LNBMoH -c user.name=Release Test -c user.email=release@example.invalid commit -qm Configuration fixture
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at git (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/release-configuration.test.mjs:11:23)
+      at commit (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/release-configuration.test.mjs:13:45)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/release-configuration.test.mjs:91:46
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/release-configuration.test.mjs:81:5
+      at repository (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/release-configuration.test.mjs:19:5)
+      at withAliases (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/release-configuration.test.mjs:74:10) {
+    status: 1,
+    signal: null,
+    output: [ null, 'On branch master\nnothing to commit, working tree clean\n', '' ],
+    pid: 565593,
+    stdout: 'On branch master\nnothing to commit, working tree clean\n',
+    stderr: ''
+  }

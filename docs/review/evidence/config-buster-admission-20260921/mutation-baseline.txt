@@ -1,0 +1,12 @@
+✔ canonical startup rejects missing/unknown/malformed admission and every retired ENV author (80.130017ms)
+✔ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (969.423044ms)
+✔ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (937.769379ms)
+✔ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (450.753117ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5470.008097

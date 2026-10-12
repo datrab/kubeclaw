@@ -1,0 +1,1 @@
+PASS: chunked UTF-8 is measured in bytes at actual HTTP and child stdin; startup snapshot survives author-file mutation; execution never invoked. No native isolation claim.

@@ -1,0 +1,22 @@
+✔ recovery requires its own sealed cleanup archive and preserves the original failed receipt (509.099813ms)
+✔ cleanup recovery fences no-hook (319.837293ms)
+✔ cleanup recovery fences declined (306.281923ms)
+✔ cleanup recovery fences missing-result (166.115392ms)
+✔ cleanup recovery fences wrong-profile (313.434607ms)
+✔ cleanup recovery fences original-live (324.769441ms)
+✔ cleanup recovery fences cleanup-live (299.881537ms)
+✔ cleanup recovery fences missing-original (302.947237ms)
+✔ cleanup recovery fences missing-cleanup (329.530504ms)
+✔ cleanup recovery fences wrong-reference (332.267404ms)
+✔ cleanup recovery fences unknown-key (296.575343ms)
+✔ cleanup recovery fences bad-output (338.796223ms)
+✔ cleanup recovery fences different-accounting (349.385596ms)
+✔ cleanup recovery fences callback-mutation (369.753893ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5108.324064

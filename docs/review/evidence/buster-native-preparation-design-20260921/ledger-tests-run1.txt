@@ -1,0 +1,12 @@
+✔ real ledger serializes competing admissions into exactly two fixed slots (116.32793ms)
+✔ admission reserves a future cleanup record inside the original record quota (55.81753ms)
+✔ profile, clock and settings ownership is captured before waiting on a real writer lock (34.051157ms)
+✔ malformed persisted cleanup association is rejected without rewriting bytes (35.805211ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 896.04574

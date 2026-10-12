@@ -1,0 +1,11 @@
+
+> verify:buster:readiness-config
+> tsc --noEmit -p tests/verification/reliability/tsconfig.buster-readiness.json && node --test --test-concurrency=1 tests/verification/reliability/buster-readiness-config.test.mts tests/verification/reliability/buster-readiness-consumer.test.mts tests/verification/deployment/buster-readiness-config.test.mjs tests/verification/deployment/buster-readiness.test.mts
+
+tests/fixtures/test-gate/buster-readiness-profile.mts(50,3): error TS2322: Type '(...args: [chunk: string | Uint8Array<ArrayBufferLike>, callback?: (error?: Error | null | undefined) => void] | [chunk: string | Uint8Array<ArrayBufferLike>, encoding?: BufferEncoding, callback?: (error?: Error | ... 1 more ... | undefined) => void]) => boolean' is not assignable to type '{ (buffer: string | Uint8Array<ArrayBufferLike>, cb?: ((err?: Error | null | undefined) => void) | undefined): boolean; (str: string | Uint8Array<ArrayBufferLike>, encoding?: BufferEncoding | undefined, cb?: ((err?: Error | ... 1 more ... | undefined) => void) | undefined): boolean; }'.
+  Types of parameters 'args' and 'buffer' are incompatible.
+    Type '[buffer: string | Uint8Array<ArrayBufferLike>, cb?: ((err?: Error | null | undefined) => void) | undefined]' is not assignable to type '[chunk: string | Uint8Array<ArrayBufferLike>, callback?: (error?: Error | null | undefined) => void] | [chunk: string | Uint8Array<ArrayBufferLike>, encoding?: BufferEncoding, callback?: (error?: Error | ... 1 more ... | undefined) => void]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Type '[buffer: string | Uint8Array<ArrayBufferLike>, cb?: ((err?: Error | null | undefined) => void) | undefined]' is not assignable to type '[chunk: string | Uint8Array<ArrayBufferLike>, encoding?: BufferEncoding, callback?: (error?: Error | null | undefined) => void]'.
+        Type at position 1 in source is not compatible with type at position 1 in target.
+          Type '((err?: Error | null | undefined) => void) | undefined' is not assignable to type 'BufferEncoding'.
+            Type 'undefined' is not assignable to type 'BufferEncoding'.

@@ -1,0 +1,45 @@
+{
+  "reviewer": "bootstrap_guard_fresh_review",
+  "status": "source-confirmed gap; bounded preimplementation criteria suitable with clarifications below; no runtime",
+  "identities": [
+    {
+      "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "sha256": "aa8c4a9e4b7adccfce6d4ee78d6b8e67d86171bb8651e3c90fb14b3d948e7521"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-node.ts",
+      "sha256": "f8dee4f5340d84b8be053ab13b9fce925eafcfd7e6e3a1125029ca5929608851"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "sha256": "10c02adcf2a5975eeab7759cffd9ba6d9cbf38dce76971dfe1789554197ec239"
+    },
+    {
+      "path": "docs/review/evidence/runner-scheduler-drain-20260921/criteria-before-code.md",
+      "sha256": "a6fd9fa32d39c45c76d7bca74e3947d49bc54234210b887febb6f13e73583c88"
+    }
+  ],
+  "sourceFindings": [
+    "completeNext awaits Promise.race; a rejection skips running deletion/result and retainedFixture registration and jumps into run finally. Other already-started tasks are not awaited before cleanupFixtures.",
+    "Retention occurs only in completeNext, not inside executeNode promise. A late fulfilled fixture remains outside Runner retainedFixtures once run exits, so cleanup misses it.",
+    "run finally awaits cleanupFixtures: its rejection replaces a primary scheduling/execution rejection in JavaScript.",
+    "Normal Runner passes executeRunnerNode and appends retention only through scheduler callback; this is a real production caller, not only a synthetic owner possibility."
+  ],
+  "criteriaReview": {
+    "SD1-SD2": "Directly address draining and exactly-once late fixture collection; use explicit start/settlement barriers and a third pending node.",
+    "SD3": "Preserve each distinct rejection and single-error identity. Promise.race already attaches rejection handlers to inputs; do not claim the current defect inevitably produces an unhandledRejection. No-unhandled is a regression requirement.",
+    "SD4": "Preserve execution plus cleanup errors; also explicitly retain existing cleanup-only rejection identity rather than wrapping or swallowing it.",
+    "SD5": "Keep full original concurrency/groups/dependency/retry/cancellation behavior and original bounds.",
+    "SD6": "Normal Runner test must cause an actual rejected executeNode promise; a resolved failed NodeExecution does not enter this exceptional branch. Real owned provider-process settling/late-retention evidence must accompany scheduler-unit barriers.",
+    "SD-DOC": "No additional timeout/abort authority or native/durable-recovery claim. Already-started node deadlines and cancellation remain their owners."
+  },
+  "scopeClarifications": [
+    "No new starts after scheduler observes failure; specify this observation boundary rather than suggesting synchronous knowledge of every asynchronously settled task.",
+    "Synchronous schedule/reservation failure after another node has started should use the same drain path; no separate lifecycle architecture is required."
+  ],
+  "writes": "Only new independent evidence JSON; no production/test/criteria edit."
+}

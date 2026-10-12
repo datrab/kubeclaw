@@ -6,6 +6,7 @@ import { execFileSync } from 'node:child_process';
 import yaml from 'js-yaml';
 import { validateReleaseReceipt, validateRenderedRelease } from './updates/deployment-release.mjs';
 import { loadNativeNodePolicy } from './native-worker-node-policy.mjs';
+import { nativeBusterDeploymentSelection } from './native-buster-deployment-preflight.mjs';
 import { nativePrismDeploymentSelection } from './native-worker-deployment-preflight.mjs';
 import { exportGitOpsBundle, gitOpsDigest, gitOpsName, gitOpsClusterKinds, inspectGitOpsResources } from './gitops-bundle.mjs';
 import { claimedNamespaces } from './gitops-owner.mjs';
@@ -66,10 +67,14 @@ export function readCommittedBundle(repository, directory, revision) {
   return bundle;
 }
 
-export function bootstrapDocuments(repository, directory, url, revision, argoNamespace, naming = {}) {
+function validateBootstrapAddress(url, argoNamespace) {
   const address = new URL(url);
   if (address.protocol !== 'https:' || address.username || address.password || address.search || address.hash
     || !address.hostname || !gitOpsName(argoNamespace)) throw new Error('GITOPS_REPOSITORY_OR_NAMESPACE_INVALID');
+}
+
+export function bootstrapDocuments(repository, directory, url, revision, argoNamespace, naming = {}) {
+  validateBootstrapAddress(url, argoNamespace);
   const bundle = readCommittedBundle(repository, directory, revision);
   if (bundle.groups.some(group => group.namespace === argoNamespace || group.resources.some(resource => resource.namespace === argoNamespace))) throw new Error('GITOPS_ADMIN_NAMESPACE_CANNOT_HOST_WORKLOADS');
   const name = naming.rootName ?? `${bundle.groups[0].namespace}-runtime`;
@@ -169,9 +174,13 @@ export function preflightGitOps(repository, result, argoNamespace, run = runComm
     verifyApplicationOwners(result, argoNamespace, applications, group.namespace);
     verifyGroupPrerequisites(group, get, run);
   }
+  const policy = loadNativeNodePolicy(policyFile);
+  const buster = result.bundle.groups.find(group => group.role === 'buster');
+  const busterResources = yaml.loadAll(gitFile(repository, result.values.revision, `${buster.path}/resources.yaml`)).filter(Boolean);
+  nativeBusterDeploymentSelection(busterResources, buster.namespace, policy);
   const prism = result.bundle.groups.find(group => group.role === 'prism');
   const resources = yaml.loadAll(gitFile(repository, result.values.revision, `${prism.path}/resources.yaml`)).filter(Boolean);
-  nativePrismDeploymentSelection(resources, prism.namespace, loadNativeNodePolicy(policyFile));
+  nativePrismDeploymentSelection(resources, prism.namespace, policy);
   run(process.execPath, [path.join(repository, 'scripts/native-worker-node-preflight.mjs'), policyFile]);
 }
 

@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/buster/engine/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "name": "types-1",
+    "seconds": 6.357001657946967
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "name": "types-2",
+    "seconds": 9.29314757802058
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/nova/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "name": "types-3",
+    "seconds": 4.192151537979953
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/contracts/tsconfig.buster-cluster-policy.json"
+    ],
+    "exitCode": 2,
+    "name": "types-4",
+    "seconds": 6.153541618026793
+  }
+]

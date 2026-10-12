@@ -1,0 +1,12 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-runtime-20260924/tool-paths-probe.mjs"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "tool-probe",
+    "seconds": 0.2646651139948517
+  }
+]

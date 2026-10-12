@@ -1,0 +1,30 @@
+{
+  "originalManifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-runtime-security-policy-20260924/ownership-gate-v2/manifest.json",
+  "originalManifestSha256": "81d8484f32e04a28834b5d54438303bb1fcbfe85566ae811b87911fcd0e30135",
+  "files": [
+    {
+      "path": "package.json",
+      "kind": "file",
+      "beforeSha256": "f8196926199327a52aea2dd050a870f9d9952182989dd00099ec19b01f23baf0",
+      "sha256": "63322d00421a359d4c310e2e8a59ac888dd869dd800db715612a032aa7e3d517"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-ownership-reporter.mjs",
+      "kind": "file",
+      "beforeSha256": null,
+      "sha256": "c84e680ad414d79e2b23bbfcc9460692e8dc631ed461a883bde6cd89a1a5f8e7"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-ownership-scenario.mjs",
+      "kind": "file",
+      "beforeSha256": null,
+      "sha256": "341c79995904955505607f309ec697d8508b282e0557b1a2ef66ecc31fc9c473"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "kind": "file",
+      "beforeSha256": null,
+      "sha256": "9a72278e4ef15a5a19c718f893ecca04d8263d1d66ab27059291c20bfea1d7ca"
+    }
+  ]
+}

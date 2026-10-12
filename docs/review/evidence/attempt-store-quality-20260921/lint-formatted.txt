@@ -1,0 +1,15 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts
+  136:1  error  Async function 'evaluateStoredClosures' has too many lines (70). Maximum allowed is 60  max-lines-per-function
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts
+  170:1  error  Async function 'persistEvidence' has too many lines (64). Maximum allowed is 60  max-lines-per-function
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts
+   66:8   error  Async function 'retireImportedResult' has too many lines (76). Maximum allowed is 60   max-lines-per-function
+   76:32  error  Async arrow function has too many lines (65). Maximum allowed is 60                    max-lines-per-function
+  145:8   error  Async function 'retireImportedClosure' has too many lines (82). Maximum allowed is 60  max-lines-per-function
+  158:32  error  Async arrow function has too many lines (68). Maximum allowed is 60                    max-lines-per-function
+
+✖ 6 problems (6 errors, 0 warnings)
+

@@ -1,0 +1,5 @@
+
+> verify:docs:schema-fields
+> node scripts/check-suite-migration-workflow.mjs docs-schema
+
+suite migration docs-schema check passed

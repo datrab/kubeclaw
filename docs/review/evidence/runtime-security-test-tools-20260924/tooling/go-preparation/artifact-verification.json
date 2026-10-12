@@ -1,0 +1,13 @@
+{
+  "downloadUrl": "https://go.dev/dl/go1.26.5.linux-amd64.tar.gz",
+  "officialMetadataUrl": "https://go.dev/dl/?mode=json&include=all",
+  "archiveSha256": "5c2c3b16caefa1d968a94c1daca04a7ca301a496d9b086e17ad77bb81393f053",
+  "archiveBytes": 66879095,
+  "officialMetadataSha256": "1ed915f72633d0a72eaa2f462740153db4fe347cb56f7d1e25ec44868568f13e",
+  "version": "1.26.5",
+  "repositoryVersionsSha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+  "goModSha256": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f",
+  "rootGoSum": "absent",
+  "toolchain": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/runtime-security-test-tools-20260924/tooling/go",
+  "selection": "Exact versions.json GO_VERSION/GO_SHA256_AMD64, compatible with root go 1.22 directive. Does not establish identity with separate controller Docker golang:1.22 base."
+}

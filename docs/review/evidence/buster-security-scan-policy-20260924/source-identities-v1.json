@@ -1,0 +1,133 @@
+{
+  "status": "read-only source inventory; no code changes or runtime",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+      "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/trivy-database.ts",
+      "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-command-options.ts",
+      "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be"
+    },
+    {
+      "path": "scripts/registry-client-config.mjs",
+      "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+    },
+    {
+      "path": "scripts/trivy-database-lock.mjs",
+      "sha256": "7f86040766fd1cdc010302617217adbe58b862437259aea1cff03f992ca0d510"
+    },
+    {
+      "path": "docker/trivy-databases.lock.json",
+      "sha256": "eb4de828de3d1afe277aad01925ab94a8ed2eb08fbe41c00fd3e16889d81569e"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+      "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+      "sha256": "e37ea6086143c335c70c0fcc5ea7839b4e149a012fd6efbc22dd374c1af958c7"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+      "sha256": "0581bde77436534084542396ff836e417532c9fffa314af56d52f8b094248162"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+      "sha256": "bef5d53264fe879e1776a3852f4a52e4b50d6c3d500bded41c6a07ea011d6b23"
+    },
+    {
+      "path": "tests/verification/deployment/registry-trivy-native.test.mts",
+      "sha256": "f44146efba4d2f9d8fb13e2be50f654d43bb710639f8ea54b7bacc3c703eb26e"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "sha256": "caa32846ed52fb2143c05aa0d5b1d9afda11f03c0ca7c7542bca5c8377ca0858"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-implementation.mts",
+      "sha256": "a8b4cabada3ed10e3b67a37509e15b1c6f8d590b3e6f515149950b9c140a7a3a"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-parity.mts",
+      "sha256": "0a9a3a7fd2a404bcef3d978898835241159a4a628b6e59f2ffbd03f7b10f1b99"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-cutover.mts",
+      "sha256": "f75cd40e6acdaa6e19acb7ec4f7e297d89990c2de88d8d7f7adaf09acda8eb0e"
+    },
+    {
+      "path": "tests/verification/e2e/nova-security-production-preflight.mts",
+      "sha256": "23fda5ee402cefae2e402c16b7dd823eadf473ce7805443ce4e1ec614b7ad2b3"
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-security-configuration-reference.md",
+      "sha256": "4e017476552f21dc98208c0142cd3adf431bd618af35037e978a58106413157a"
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-security-operator-guide.md",
+      "sha256": "b64b13a053ceade7962f9289d2a2b9e95700f56cca2d4ad0a60e46e66d19e92e"
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-security-security-model.md",
+      "sha256": "2bb339930cb3df84d4779d945c19d5f7a150a1ff11d1682a91e52eaceac7965f"
+    },
+    {
+      "path": "docs/operations/registry-clients.md",
+      "sha256": "46778fa3d1939ecb11dea2289ba789d98c04744d2ab1122502248ebf2fae4dde"
+    },
+    {
+      "path": "package.json",
+      "sha256": "63322d00421a359d4c310e2e8a59ac888dd869dd800db715612a032aa7e3d517"
+    }
+  ]
+}

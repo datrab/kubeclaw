@@ -1,0 +1,39 @@
+✖ real PostgreSQL commit, concurrent retries, writer death and original worker journal preserve one native attempt (169.719656ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 886.256392
+
+✖ failing tests:
+
+test at skills/prism/tests/native/operation-journal.mts:33:1
+✖ real PostgreSQL commit, concurrent retries, writer death and original worker journal preserve one native attempt (169.719656ms)
+  error: permission denied to set parameter "extension_control_path"
+      at /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/pg-pool/index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async migrate (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/storage/index.ts:29:35)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/native/operation-journal.mts:45:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    length: 124,
+    severity: 'FATAL',
+    code: '42501',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'guc.c',
+    line: '3598',
+    routine: 'set_config_with_handle'
+  }

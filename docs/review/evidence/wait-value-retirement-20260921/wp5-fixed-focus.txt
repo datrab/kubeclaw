@@ -1,0 +1,11 @@
+✔ Core exposes retained Wait resolver only to the selected original built-in and revokes it on shutdown (31312.154963ms)
+✔ wrong source/receipt identities, aliased/reversed domains and changed intent cannot authorize Wait replacement (25814.412723ms)
+✔ the existing operator projection receipt replays after Wait projection using the original logical Wait digest (20311.835235ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 85195.712514

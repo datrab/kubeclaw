@@ -1,0 +1,11 @@
+{
+  "beforeSha256": "f60607f5fc9c563843fcdcb16e77a5eefc220cf46b3d4b786f12cd01f83fe85e",
+  "afterSha256": "a77c649fd18ba52ced09fae142bcc74c8a230fde268085b13d7d21624eeff6e1",
+  "onlyChange": "append three report policy modules",
+  "addedModules": [
+    "tests/verification/contracts/buster-report-runtime-policy.test.mjs",
+    "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+    "tests/verification/contracts/buster-report-runner-policy.test.mjs"
+  ],
+  "execution": "pending"
+}

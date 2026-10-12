@@ -1,0 +1,13 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "include": [
+    "check-pipeline-buster-execution-policy.mts",
+    "check-pipeline-test-plan-runner.mts",
+    "../../fixtures/test-gate/runner-contract-fixture.mts",
+    "../../fixtures/test-gate/execution-policy.mts"
+  ],
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
+  }
+}

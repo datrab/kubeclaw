@@ -46,7 +46,7 @@ const adapters = new core.AdapterRuntime({
     ['kubeclaw.telemetry-store:telemetry', { root: path.join(temporary, 'telemetry') }],
     ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(temporary, 'artifacts') }],
   ]),
-  effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager()),
+  effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
   shutdownTimeoutMs: 1000,
   async emitDomainEvent() {},
 });

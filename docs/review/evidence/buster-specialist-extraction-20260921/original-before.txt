@@ -1,0 +1,81 @@
+node:fs:621
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/tmp/junit-execution-required-apImEO/all-skipped.xml'
+    at Object.openSync (node:fs:621:18)
+    at Object.readFileSync (node:fs:487:35)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-junit-executed-required.mts:121:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/tmp/junit-execution-required-apImEO/all-skipped.xml'
+}
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-junit-executed-required.mts (581.727545ms)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'errored'
+- 'timed_out'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-test-plan-runner.mts:846:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'errored',
+  expected: 'timed_out',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-pipeline-test-plan-runner.mts (35552.814633ms)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"planId":"plan:20cb5717-627b-4b6f-b97b-d44e2064b931","runId":"run:eccee578-9810-4a58-95e3-c2570c49d35a","attempts":[{"schemaVersion":"attempt-result.v1","planId":"plan:20cb5717-627b-4b6f-b97b-d44e2064b931","runId":"run:eccee578-9810-4a58-95e3-c2570c49d35a","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"probe","executionId":"plan:20cb5717-627b-4b6f-b97b-d44e2064b931:probe","testIdentity":"test:6333d0633da016e69ed96c6273f85513ccb451954cbb7f6aee09a1d932c58cbc","nodeKind":"test","attemptId":"attempt:6055764863e653c65a799673d774864429ea37c26c5f1282f2470f5de958e0cd","attemptNumber":1,"provider":{"packageId":"kubeclaw.api-flow","packageVersion":"1.0.0","contentDigest":"sha256:404cc68fce4f287cc47d68f6661cc1ae6c848cf83fc4b098b73ee360a6f5881a","registrationId":"flow","contractId":"kubeclaw.api-flow@1"},"mode":"blocking","executionState":"errored","outcome":null,"startedAt":"2026-09-21T07:40:15.508Z","completedAt":"2026-09-21T07:40:15.896Z","durationMs":388,"summary":"TEST_PROVIDER_INITIALIZE_EXITED:null:SIGSEGV","counts":{"total":0,"passed":0,"failed":0,"skipped":0},"findings":[],"metrics":[],"reports":[],"evidence":[],"outputs":[],"resources":{"cpuTimeMs":0,"maximumMemoryBytes":671744,"logBytes":0,"artifactBytes":0},"exitCode":null,"signal":null,"providerDetails":null,"resultDigest":"sha256:d75b359adc065863d95d7efc2dd43cbd75c33969f984354d6405ad94b10d5a2c","receipt":{"receiptId":"receipt:57162d8bc6d0568659cf6980b750f7cf9655ba339046b39083765eceb1cbb061","receiptDigest":"sha256:b2adb3a3d040e05c3d23e2a33747b6051b6f25a070e18ae105ffd2e95eb5a260"}}],"nodes":[{"schemaVersion":"node-result.v1","planId":"plan:20cb5717-627b-4b6f-b97b-d44e2064b931","runId":"run:eccee578-9810-4a58-95e3-c2570c49d35a","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"probe","executionId":"plan:20cb5717-627b-4b6f-b97b-d44e2064b931:probe","testIdentity":"test:6333d0633da016e69ed96c6273f85513ccb451954cbb7f6aee09a1d932c58cbc","nodeKind":"test","mode":"blocking","state":"errored","outcome":null,"attemptIds":["attempt:6055764863e653c65a799673d774864429ea37c26c5f1282f2470f5de958e0cd"],"finalAttemptId":"attempt:6055764863e653c65a799673d774864429ea37c26c5f1282f2470f5de958e0cd","unstable":false,"skipReason":null,"resultDigest":"sha256:3939864a12d4e365d820a5dd1719ff1bb8f0b226d72c27fe553bae2310924aea","receipt":{"receiptId":"receipt:453a6d5461630e7e575e13b2bd16e8872adc28d710793e4f5c56398af44985f7","receiptDigest":"sha256:cadd8d193f9e356997a21d04c43eae5ee9f71b194ba553ccc5942774f42196bf"}}],"cleanupErrors":[{"nodeId":"probe","message":"TEST_PROVIDER_INITIALIZE_EXITED:null:SIGSEGV"}]}
+
+null !== 'failed'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-provider-semantics-remediation.mts:53:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: 'failed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-provider-semantics-remediation.mts (9978.542075ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46126.681944
+
+✖ failing tests:
+
+test at tests/verification/contracts/check-junit-executed-required.mts:1:1
+✖ tests/verification/contracts/check-junit-executed-required.mts (581.727545ms)
+  'test failed'
+
+test at tests/verification/contracts/check-pipeline-test-plan-runner.mts:1:1
+✖ tests/verification/contracts/check-pipeline-test-plan-runner.mts (35552.814633ms)
+  'test failed'
+
+test at tests/verification/contracts/check-provider-semantics-remediation.mts:1:1
+✖ tests/verification/contracts/check-provider-semantics-remediation.mts (9978.542075ms)
+  'test failed'

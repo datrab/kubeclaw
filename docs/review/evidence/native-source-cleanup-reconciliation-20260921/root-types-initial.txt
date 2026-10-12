@@ -1,0 +1,2 @@
+tests/verification/reliability/worker-native-cleanup.test.mts(37,74): error TS2540: Cannot assign to 'phase' because it is a read-only property.
+tests/verification/reliability/worker-native-cleanup.test.mts(38,72): error TS2540: Cannot assign to 'phase' because it is a read-only property.

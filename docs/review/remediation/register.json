@@ -4762,10 +4762,22 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP12",
-      "status": "offen",
+      "status": "in Bearbeitung",
       "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "verification_status": "Dokumentations-/Renderteil frisch unabhängig geprüft; T1/T2 insgesamt unvollständig, Live-Abnahme nicht ausgeführt",
+      "verification_evidence": [
+        {
+          "report": "implementation/independent-tailscale-access-preparation-20260921.md",
+          "raw": [
+            "../evidence/tailscale-access-independent-20260921/result.json",
+            "../evidence/tailscale-access-independent-20260921/tests.txt"
+          ],
+          "summary": "Begrenzte Nichtautorenprüfung: 5/5 lokale Manifest-/Helmtests, ursprüngliche zwei Nova-Fälle unverändert, vier Dokumentänderungen geprüft. Keine externen Regeln oder echten Clients verifiziert."
+        },
+        {
+          "report": "implementation/tailscale-access-matrix-20260921.md"
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/tailscale.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-04-001\n**Mittel; offene Frage.** Auslöser: Argo-/Ops-/Prism-Zugriff oder neue Broker-Preview wird als verfügbar betrachtet, obwohl ACL-/Grant-/TagOwner-Konfiguration nicht erfasst ist. Quellen: obige Values, Ingress-Templates und `docs/deployment/tailscale-operator.md`. Auswirkung: Zugriff fehlt oder ist breiter als erwartet. Ursachenbehebung: redigierten externen Zugriffsvertrag mit Tag-Eigentümern, zugelassenen Nutzern und Zweck je Ingress dokumentieren. Test: je ein erlaubter und verbotener echter Tailnet-Client, Proxy-Neustart und OAuth-/Zertifikatrotation.\n\nManifest- und Aufruferreview abgeschlossen; kein Operator-Chart installiert, keine Tailnet-Daten gelesen. Doku teilweise vorhanden, konkrete externe Konfiguration und Recovery ohne Operator offen. Optionaler Userspace-Tailscale im [Ops-Pod](ops-pod.md) ist ein anderer Zugriffsweg.",
@@ -4773,13 +4785,15 @@
         "https://github.com/datrab/kubeclaw/blob/85ddfcbfc15e078780ea0434fc167e6f9a9b9488/docs/deployment/tailscale-operator.md"
       ],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Aktuellen redigierten Tailnet-Regelstand mit Revision, effektiven Grants/ACLs, TagOwnern und Credentialverantwortung sowie echte erlaubte/verbotene Clientreferenzen pro Zugang binden. Danach lokale T1/T2/DOC-Abnahme prüfen; reale Allow/Deny-, Proxyneustart- und OAuth-/Zertifikatsrotationstests bleiben separate Live-Gates.",
       "related_findings": [
         "F-T14-01",
         "F-T14-02",
         "PCR-TAILSCALE-002"
       ],
-      "decision_notes": []
+      "decision_notes": [],
+      "verification_scope": "Uncommitteter Arbeitsbaum: vier private Ingressfamilien und optionaler ausgehender Ops-SOCKS-Pfad, Authentifizierungsgrenzen, Rotation und Diagnose dokumentiert. Keine vollständige T1/T2- oder Finding-Abnahme.",
+      "remaining_work": "Externe Regel- und Clientbindung für T1/T2 fehlt; kein Beispielclient als Ersatz. Anschließend getrennte Live-Abnahme gemäß Originalvertrag."
     },
     {
       "id": "IFR-07-001",
@@ -5026,18 +5040,33 @@
       "family": "infrastructure",
       "severity": "mittel",
       "work_package": "WP13",
-      "status": "offen",
+      "status": "verifiziert",
       "implementation_commit": null,
-      "verification_status": "nicht ausgeführt",
-      "verification_evidence": [],
+      "verification_status": "lokal verifiziert nach D12: S1, S2 und S-DOC; Live-Abnahme separat ausstehend",
+      "verification_evidence": [
+        {
+          "report": "implementation/independent-spire-current-scope-20260921.md",
+          "raw": [
+            "../evidence/spire-current-audit-20260921/result.json"
+          ],
+          "summary": "Frische unabhängige Prüfung der lokalen S1/S2/S-DOC-Kriterien; sechs frühere Quellenidentitäten unverändert, echter erneuter Helm-Render bytegleich, effektive Konfiguration geprüft. Keine Live-Ausfall-, Erneuerungs- oder Restoretests ausgeführt."
+        },
+        {
+          "report": "implementation/spire-recovery-matrix-20260921.md"
+        }
+      ],
       "source_review": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/spire.md",
       "source_code_commit": "85ddfcbfc15e078780ea0434fc167e6f9a9b9488",
       "source_finding_text": "## Befund IFR-06-001\n**Mittel; offene Frage.** Auslöser: SPIRE-Server-/Agent-Ausfall oder CA-Verlust. Values und Runbook belegen Installation/Peer-Bindung, aber keinen getesteten Restore des CA-/Serverzustands, keine konkrete garantierte Ausfalldauer und keine dokumentierte Widerrufsfrist bereits ausgestellter SVIDs. Rotation per SDS ist implementierter Mechanismus; sofortiger Widerruf ist daraus nicht ableitbar.\n\nUrsachenbehebung: gepinnte Charts vollständig rendern und tatsächlichen Server-PVC-/CA-/TTL-Vertrag sowie Rotation/Recovery mit aktiven Jobs dokumentieren. Echter Test: gültige/ungültige Identität, fortlaufende SVID-Erneuerung, Server-/Agent-Ausfall über Zertifikatsablauf, Neustart/CA-Restore und erneute gegenseitige Authentifizierung. Kein Fail-open aktivieren.",
       "code_links": [],
       "unresolved_code_references": [],
-      "next_action": "Am Umsetzungscommit gegen Originalbelege erneut bestätigen; Ursachenbehebung und Verifikation aus dem Originalbefund innerhalb des zugeordneten Arbeitspakets durchführen.",
+      "next_action": "Separate Live-Abnahme: erlaubte/falsche Identitäten, Erneuerung unter aktiver Arbeit, Server-/Agentausfall über Zertifikatsablauf, Neustart und kohärenter CA-/Serverrestore; gegenseitige Authentifizierung ohne Fail-open und gemessene Unterbrechung gegen vorab definiertes Recoveryziel prüfen.",
       "related_findings": [],
-      "decision_notes": []
+      "decision_notes": [
+        "2026-09-21: S1/S2/S-DOC frisch unabhängig lokal abgenommen; ursprünglicher Befundtext und separate Live-Pflichten unverändert. Kein garantierter Ausfallzeitraum oder sofortiger Widerruf behauptet."
+      ],
+      "verification_scope": "Lokaler Dokumentations-/Renderabschluss am quellengebundenen Arbeitsbaum; nicht committed. Tatsächlicher Wiederherstellungserfolg und Ausfalldauer sind nicht bewiesen.",
+      "remaining_work": "Nur separate Live-Gates nach D12; geschützte Backup-/Schlüsselreferenzen, Restorevolumes und Recoveryziel vor Durchführung bereitstellen und prüfen."
     },
     {
       "id": "IFR-11-001",
@@ -5662,12 +5691,12 @@
     }
   ],
   "implementation_branch": "fix/remediation-foundations-20260909",
-  "updated_at": "2026-09-14",
+  "updated_at": "2026-09-21",
   "progress_counts": {
-    "verifiziert": 141,
-    "in Bearbeitung": 3,
+    "verifiziert": 142,
+    "in Bearbeitung": 4,
     "implementiert": 2,
-    "offen": 8
+    "offen": 6
   },
   "additional_integration_findings": [
     {

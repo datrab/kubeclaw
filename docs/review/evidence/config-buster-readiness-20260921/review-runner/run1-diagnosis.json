@@ -1,0 +1,34 @@
+{
+  "terminalExit": 1,
+  "sourceDrift": [],
+  "fixtureFix": "Actual stderr.write overload tuple union; unchanged forwarding and assertions",
+  "toolFix": "Map absolute /usr/bin/tar to bound genuine GNU tar, preserving arguments/options",
+  "externalPrerequisitesOpen": [
+    "original-check-pipeline-container-build-production"
+  ],
+  "followupCommands": [
+    "real-tool-effects",
+    "planned-1",
+    "planned-2",
+    "planned-3",
+    "original-check-pipeline-e2e-remote-vertical",
+    "original-check-pipeline-lighthouse-remote-vertical",
+    "original-check-pipeline-phase10-vertical",
+    "original-check-pipeline-phase8-vertical",
+    "original-check-pipeline-phase9-vertical",
+    "original-check-pipeline-security-remote-vertical",
+    "original-check-pipeline-size-budget-production",
+    "original-check-pipeline-visual-remote-vertical",
+    "original-buster-job-compaction.test",
+    "original-buster-shutdown-storage.test",
+    "original-coverage-remote.test",
+    "original-nova-dispatch-projection.test",
+    "types-1",
+    "canonical-lint",
+    "mutant-restore-policy-default",
+    "mutant-restore-field-defaults",
+    "mutant-ignore-execution",
+    "mutant-ignore-output"
+  ],
+  "originalLimitsAndAssertionsUnchanged": true
+}

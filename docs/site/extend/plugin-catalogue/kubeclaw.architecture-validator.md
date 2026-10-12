@@ -56,10 +56,13 @@ Run:
 npm test --prefix skills/nova/plugins/architecture-validator
 ```
 
-Package tests found: 0.
+Package tests found: 3.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/architecture-validator/plugin.json`
 - Package root: `skills/nova/plugins/architecture-validator`
 - Authored package guide: `skills/nova/plugins/architecture-validator/README.md`
+- Test: `skills/nova/plugins/architecture-validator/tests/live-function.test.ts`
+- Test: `skills/nova/plugins/architecture-validator/tests/package-boundary.test.mjs`
+- Test: `skills/nova/plugins/architecture-validator/tests/protocol.unit.test.ts`

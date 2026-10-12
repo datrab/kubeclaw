@@ -1,0 +1,65 @@
+[
+  {
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/private-run:/run",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/systemd:/usr/lib/systemd",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/share/systemd:/usr/share/systemd",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "--library-path",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu/systemd",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/bin/systemd-analyze",
+      "verify",
+      "--man=no",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/probes/kubeclaw-native-pools.service"
+    ],
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/private-run:/run",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/systemd:/usr/lib/systemd",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/share/systemd:/usr/share/systemd",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "--library-path",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu/systemd",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/bin/systemd-analyze",
+      "verify",
+      "--man=no",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/probes/malformed.service"
+    ],
+    "status": 1,
+    "stdout": "",
+    "stderr": "malformed.service: Command /a/nonexistent/executable-for-parser-negative-control is not executable: No such file or directory\n"
+  },
+  {
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/private-run:/run",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/systemd:/usr/lib/systemd",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/share/systemd:/usr/share/systemd",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "--library-path",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu/systemd",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/bin/systemd-analyze",
+      "verify",
+      "--man=no",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/probes/missing-start.service"
+    ],
+    "status": 1,
+    "stdout": "",
+    "stderr": "missing-start.service: Service has no ExecStart=, ExecStop=, or SuccessAction=. Refusing.\nUnit missing-start.service has a bad unit file setting.\n"
+  }
+]

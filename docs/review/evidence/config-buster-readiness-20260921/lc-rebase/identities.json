@@ -1,0 +1,16 @@
+[
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "liveSha256": "e2da22b17dc8e7a26d52650d46e81e30c97f42c04254f9a454c2abc957011f83",
+    "originalBaseSha256": "e9041c22bade59059c4d92de9035e9eacacf6d7b6a71ef5c4cdd5cadd1e4c0c2",
+    "originalDraftSha256": "53f4d9d8ca4d66d1ce077a4bb40df389e7ebc040b4813db8055987dce5c46c4d",
+    "rebasedSha256": "bade10bab0cc111f8fec4e1c2166e949549b2880f0e800b8c61f455ad8885d92"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+    "liveSha256": "7f82532f841843d098d45122c9f1ab404e48b9077851b7d417460c31ad436b2f",
+    "originalBaseSha256": "f94654a16328fdd3669a586402b271003b6d5c62781346316af3bd2e3ea0e798",
+    "originalDraftSha256": "054ebcdc8f17692f4edfe3b01cc4369728f9d1b9cdec38938777f7eb50c787b0",
+    "rebasedSha256": "9fc8af9062b107a72c437f3e61d743b5794d96ed002b69170d3238942cae2a6a"
+  }
+]

@@ -1,0 +1,596 @@
+{
+  "schemaVersion": "observability-retirement-code-inventory.v1",
+  "status": "read-only inventory; not R1 acceptance; no tests executed",
+  "observedAtUtc": "2026-09-21T12:13:35.182356+00:00",
+  "scope": "PCR-OBS-002 durable Foundation stores and connected Nova/Buster/shared plugin consumers; native dependency boundaries included; deployed roots and Prism application databases not certified",
+  "stores": [
+    {
+      "id": "record-envelope",
+      "sources": [
+        "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "skills/common/plugin-runtime/foundation/observability/record-retirement.ts"
+      ],
+      "owner_writer": "Domainadapter; records/store.json",
+      "writer_fence": "withDurableStoreLock; records/.write-lock; Inprozessqueue",
+      "quota": "maximumRecords/maximumBytes/maximumRecordBytes",
+      "consumers": "Alle unten aufgeführten RecordStore-Domänen",
+      "references_and_idempotency": "stream+idempotencyKey+payloadDigest; Sequenz; v2 owner; Tombstones und Retirementreceipts bleiben",
+      "current_retirement": "retire für v2 mit Domänenautorisation; transition/CAS für Projektionen",
+      "remaining_release_gap": "Primitive ist kein globaler Executor; v1 ohne owner nicht raten; Tombstones zählen weiterhin gegen Metadatenbytes"
+    },
+    {
+      "id": "blob-envelope",
+      "sources": [
+        "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts"
+      ],
+      "owner_writer": "Domainadapter; blobs/sha256",
+      "writer_fence": "Bei Gesamtquote root/.write-lock über blob-budget; ohne Gesamtquote kein Budgetlock",
+      "quota": "maximumBytes; optional maximumTotalBytes; temporäre Dateien zählen beim Scan",
+      "consumers": "Artifact, Dispatch, Import, Buster Result, native Journale",
+      "references_and_idempotency": "SHA256-Inhalt; alle Domänenreferenzen beachten; kein selbständiger Runowner",
+      "current_retirement": "Duplicate put dedupliziert; finally entfernt eigene temporäre Datei",
+      "remaining_release_gap": "Keine allgemeine Lösch-/Referenzzählungs-API; SIGKILL-Temps und unique Inhalte nicht durch endlich viele Quoten lösbar"
+    },
+    {
+      "id": "telemetry",
+      "sources": [
+        "skills/common/plugins/telemetry-store/src/adapter.ts",
+        "scripts/retire-telemetry.mjs"
+      ],
+      "owner_writer": "telemetry.emit; telemetry/plugin-events",
+      "writer_fence": "Runmutation → Recordwriter",
+      "quota": "maxRecordBytes/maximumRecords/maximumStoreBytes",
+      "consumers": "Telemetryobserver/Adapter; kanonische Nova-Historie bleibt",
+      "references_and_idempotency": "v2 owner=request.attempt.runId; Idempotenzkey; Runhead/Snapshot",
+      "current_retirement": "Manuelles delete-telemetry-projections mit Tombstones vorhanden",
+      "remaining_release_gap": "Ownerlose Alteinträge nicht freigebbar; Metadaten/Tombstones weiter endlich; keinen neuen Executor bauen"
+    },
+    {
+      "id": "admission",
+      "sources": [
+        "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+        "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+        "scripts/retire-admission.mjs"
+      ],
+      "owner_writer": "Admission; admission.json",
+      "writer_fence": "withDurableStoreLock am Admissionstore plus Executorquellenfences",
+      "quota": "Ingress/Records/Bytes/QuarantineRecords/QuarantineBytes",
+      "consumers": "Buster Runner; Nova Observability Reconciler; ACK/Replay",
+      "references_and_idempotency": "Producer+Boot+Run+Sequenz+Digest/Cursor; gaps/unresolved/quarantine; Completionquelle Attempt",
+      "current_retirement": "Bestehende manuelle Completionprojektion",
+      "remaining_release_gap": "Retired refs/Gap-/Quarantäne-/Idempotenzmetadaten bleiben; unbekannte Zuordnung schützt statt TTL"
+    },
+    {
+      "id": "attempt-results-closures",
+      "sources": [
+        "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+        "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+        "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+        "scripts/retire-attempt-result.mjs",
+        "scripts/retire-attempt-closure.mjs"
+      ],
+      "owner_writer": "AttemptStore; attempt-store.json",
+      "writer_fence": "AttemptState serial → withDurableStoreLock; originale Import-/Runfences im Executor",
+      "quota": "maximumMetadataBytes/maximumResults/maximumClosures",
+      "consumers": "Runner; Reconciler; Admissioncompletion; Ergebnis-/Closure-Reader",
+      "references_and_idempotency": "attemptId+claimGeneration, Ergebnis-/Closuredigest, Completionintent, originale Importquelle",
+      "current_retirement": "Akzeptierte imported-result-/closure-Projektionen vorhanden",
+      "remaining_release_gap": "Completionintents, Referenzmetadaten und weitere resident history bleiben; rekonstruierende Quelle darf nicht gelöscht werden"
+    },
+    {
+      "id": "attempt-evidence",
+      "sources": [
+        "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+        "skills/common/plugin-runtime/foundation/observability/attempt-state.ts"
+      ],
+      "owner_writer": "AttemptStore; Evidence-Metadaten und Artifactbytes",
+      "writer_fence": "AttemptState Writerlock",
+      "quota": "maximumEvidenceObjects/maximumEvidenceBytes/maximumEvidenceObjectBytes/pending age",
+      "consumers": "Result/Completeness/Closure und Artifactreader",
+      "references_and_idempotency": "EvidenceId, Attemptgeneration, Digest/storageUrl; Ergebnisreferenzen",
+      "current_retirement": "reclaimExpiredEvidence nur unreferenzierte staging Evidence nach bestehender Regel",
+      "remaining_release_gap": "Abgeschlossene referenzierte Evidence besitzt keinen vollständigen Freigabepfad; kein TTL für bestätigte Historie"
+    },
+    {
+      "id": "outbox-library",
+      "sources": [
+        "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts"
+      ],
+      "owner_writer": "FileProducerOutbox; outbox.json",
+      "writer_fence": "withDurableStoreLock",
+      "quota": "maximumRecords/maximumBytes",
+      "consumers": "deliverOutbox Bibliotheksfunktion; kein Produktionskonstruktor unter skills/scripts gefunden",
+      "references_and_idempotency": "Producer+Boot+Run+Sequenz; ACK prüft Recorddigest/Cursor",
+      "current_retirement": "compact löscht bestätigte Transportkopien",
+      "remaining_release_gap": "Nicht als angeschlossener Produktionsengpass oder Clawdeck-Consumercheckpoint darstellen"
+    },
+    {
+      "id": "nova-run-authority",
+      "sources": [
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/state/plugins.ts",
+        "skills/nova/core/state/journal.ts"
+      ],
+      "owner_writer": "Nova Core; events/signals/administrative-decisions, Pluginstatejournal, run-snapshot",
+      "writer_fence": "Runmutation; jedes Journal FileMutex .append-lock; Snapshot atomare Veröffentlichung",
+      "quota": "FileJournal hat hier keine Gesamtbyte-/Recordquote",
+      "consumers": "Runresume/Adminreopen, Lifecycle-/Pluginreducer, Auditor, Retirementautorisation",
+      "references_and_idempotency": "Hashkette/Sequenzen; Run/Attempt/Signalidentität; gepinnte Pakete/Definition/Config",
+      "current_retirement": "Keine vollständige Runretirement-Authority; kanonische Historie bleibt",
+      "remaining_release_gap": "Vor Historylöschung müssen alle Reopen-/Resume-/Readpfade dauerhafte Enddisposition kennen; D07 separat"
+    },
+    {
+      "id": "nova-effects",
+      "sources": [
+        "skills/nova/core/effects/journal.ts",
+        "skills/nova/core/effects/dependency-journal.ts",
+        "skills/nova/core/execution/effect-recovery.ts"
+      ],
+      "owner_writer": "EffectCoordinator; effects.jsonl + effect-results/sha256",
+      "writer_fence": "FileJournal append-lock; Resultdatei durable link; Runmutation äußere Domäne",
+      "quota": "Keine aggregierte Result-/Journalquote in diesen Klassen",
+      "consumers": "Effectrecovery, DependencyRequestIndex, Retirementautorisation",
+      "references_and_idempotency": "Requested/accepted/completed; idempotencyKey; ausgelagerte Receipt-Digests",
+      "current_retirement": "Kein Historyexecutor",
+      "remaining_release_gap": "Ungewisse Effekte nie löschen; Verlust von Receipt/Dependencyhistorie kann externe Aktion wiederholen"
+    },
+    {
+      "id": "nova-observers",
+      "sources": [
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/core/telemetry/observer-recovery.ts"
+      ],
+      "owner_writer": "ObserverRuntime; observer-checkpoints.jsonl/observer-deliveries.jsonl",
+      "writer_fence": "Journal append-locks; serializedObserverDrainer in Prozess; Runmutation äußere Domäne",
+      "quota": "Keine FileJournal-Gesamtquote",
+      "consumers": "Observerdrain/-recovery; Telemetry-/Operator-/Transportadapter",
+      "references_and_idempotency": "DeliveryId, Observercheckpoint, Eventposition; completed vs pending",
+      "current_retirement": "Kein eigener Executor; telemetry projection bewahrt diese Originale",
+      "remaining_release_gap": "Pending/uncertain Zustellung schützen; Producer-ACK kein Consumercheckpoint"
+    },
+    {
+      "id": "nova-resource-locks",
+      "sources": [
+        "skills/nova/core/effects/locks.ts"
+      ],
+      "owner_writer": "FileResourceLockManager; storageRoot/resource-locks",
+      "writer_fence": "FileJournal locks.jsonl + Claimdateien",
+      "quota": "Lease-TTL ist Besitzlebensdauer, keine Historyretentionquote",
+      "consumers": "EffectCoordinator, Recovery",
+      "references_and_idempotency": "Claimtoken/PID/Ressourcenidentität und Leasehistorie",
+      "current_retirement": "Aktive Claimverwaltung; kein Historyretirement",
+      "remaining_release_gap": "Alte Auditrecords nur mit erhaltenem Besitz-/Recoveryvertrag kompaktierbar"
+    },
+    {
+      "id": "nova-reconciliation",
+      "sources": [
+        "skills/nova/core/observability/reconciler.ts"
+      ],
+      "owner_writer": "Reconciler; observability/reconciliation.jsonl und reconciliation-plan.json",
+      "writer_fence": "FileJournal; plan writeDurableState; keine eigene Planwriterfence dort",
+      "quota": "Plan-/Storelimits aus Erzeuger; Journal ohne eigene Gesamtquote",
+      "consumers": "Reconcile/Importentscheidungen und Attempt-Projektionsautorität",
+      "references_and_idempotency": "decisionKey mit Run/Plan/Node/Attempt/Generation/Result/Action",
+      "current_retirement": "Kein vollständiger Retirementexecutor",
+      "remaining_release_gap": "Retained imported decision ist Quelle bestehender Projektionen und darf nicht vor diesen verschwinden"
+    },
+    {
+      "id": "nova-dispatch",
+      "sources": [
+        "skills/nova/core/test-gates/remote-dispatch-store.ts",
+        "scripts/retire-nova-dispatch.mjs"
+      ],
+      "owner_writer": "FileNovaRemotePlanStore; dispatch records + Archiveblobs",
+      "writer_fence": "Run → retained Import → Dispatch Recordwriter",
+      "quota": "recordLimits/maximumArchiveBytes/maximumArchiveStoreBytes",
+      "consumers": "Remote dispatch/load/retry; Import; Inventar",
+      "references_and_idempotency": "jobId/idempotencyKey/requestDigest; Sourceattestation; interruption records",
+      "current_retirement": "Manuelle Archiveprojektion bewahrt kanonischen Blob und rekonstruiert Job",
+      "remaining_release_gap": "Records/unique Archivebytes/Interruptions bleiben; alter Bericht run3 ohne angebundenen Executor ist überholt"
+    },
+    {
+      "id": "nova-import",
+      "sources": [
+        "skills/nova/core/test-gates/remote-result-import.ts",
+        "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts"
+      ],
+      "owner_writer": "FileNovaGateImportStore; imports records + Evidenceblobs",
+      "writer_fence": "Recordwriter; withRetainedImport hält Originalquelle gefenced",
+      "quota": "recordLimits/maximumEvidenceStoreBytes",
+      "consumers": "readVerifiedResult/readExecutionGraphs; Demo/Remote-Evidence; Dispatch-/Attemptprojektion",
+      "references_and_idempotency": "Job/result/decision digests, verified output, sortierte Evidence-Digests",
+      "current_retirement": "Retained authority, kein gesamter Importrelease",
+      "remaining_release_gap": "Löschung würde bereits akzeptierte Projektionen und unabhängige Consumer brechen"
+    },
+    {
+      "id": "shared-artifacts",
+      "sources": [
+        "skills/common/plugins/artifact-store/src/adapter.ts"
+      ],
+      "owner_writer": "artifacts.write; artifacts/<namespace> + CAS",
+      "writer_fence": "Recordwriter dann separater Blobbudgetwriter; METADATEN VOR Blob",
+      "quota": "maxArtifactBytes/maximumRecords/maximumStoreBytes; separate Record-/Blobquoten",
+      "consumers": "Review/Governor/Repair, Prismdesign, Remote-Evidence, Demo, Projectsummary; artifacts.read get/latest",
+      "references_and_idempotency": "ArtifactRef producer/run/namespace/id/digest; gleiche Blobs über Runs teilbar",
+      "current_retirement": "Nur Deduplikation; keine connected Retirementoperation",
+      "remaining_release_gap": "Metadata-first verhindert behaupteten Blob-vor-Metadata-Leak. Historische refs/Bytes müssen für get/latest/D07 erhalten bleiben; kein generisches Tombstone"
+    },
+    {
+      "id": "shared-state",
+      "sources": [
+        "skills/common/plugins/state-store/src/adapter.ts",
+        "skills/nova/plugins/blueprint-sync/src/stage.ts"
+      ],
+      "owner_writer": "state.append; state/<namespace>",
+      "writer_fence": "Recordwriter; read/append separate Aufrufe",
+      "quota": "maxEntryBytes/maximumRecords/maximumStoreBytes",
+      "consumers": "state.read liefert vollständige Historie; Blueprint-/Reviewconsumer",
+      "references_and_idempotency": "Ownerloser v1 Record; request.idempotencyKey; gesamter Wert für Duplicateantwort",
+      "current_retirement": "Kein Executor",
+      "remaining_release_gap": "Kein allgemeines runbezogenes Ownership-/Consumerabschlussprotokoll; nicht als Telemetrie behandeln"
+    },
+    {
+      "id": "shared-waits",
+      "sources": [
+        "skills/common/plugins/wait-store/src/adapter.ts",
+        "skills/nova/plugins/human-approval/src/stage.ts",
+        "scripts/observability-retirement/operator-authority.mjs"
+      ],
+      "owner_writer": "signal.wait create; waits/all",
+      "writer_fence": "Recordwriter; bestehende Operatorretention hält Waitreadfence",
+      "quota": "maxEntryBytes/maximumRecords/maximumStoreBytes",
+      "consumers": "signal.wait read/create duplicate; Core Resume via kanonischer Historie; operatorAuthority verlangt Originalwert",
+      "references_and_idempotency": "waitId=Hash(idempotencyKey); wait-value.v1 ownerlos; Issuer/Type/Expiry/Request",
+      "current_retirement": "Kein eigener Executor; Operatorrequestprojektion lässt Waitwert unberührt",
+      "remaining_release_gap": "Doppelter bestätigter Waitwert bleibt; mögliche enge Projektion muss ALLE Reader und bestehende Operatorautorität erhalten"
+    },
+    {
+      "id": "operator-deliveries",
+      "sources": [
+        "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+        "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+        "scripts/retire-operator-request.mjs"
+      ],
+      "owner_writer": "Operatoradapter; notifications/<target>",
+      "writer_fence": "Run → Wait Recordreadfence → Delivery CAS/Writer",
+      "quota": "Konfigurierte Deliveryrecord-/Bytequote und feste Recordgrenze",
+      "consumers": "reserve/complete/deliveryReceipt/lookup; Demo handoff",
+      "references_and_idempotency": "Request/Reservation/Receipt; v1 vs v2 lookup authority; uncertain verhindert POSTwiederholung",
+      "current_retirement": "Manuelle bestätigte human-approval v1 Requestprojektion vorhanden",
+      "remaining_release_gap": "Receipts, andere Formate/v2/Discord, count bleiben; keine blinde globale Deliveryretention"
+    },
+    {
+      "id": "transport-publications",
+      "sources": [
+        "skills/common/plugins/transport-publisher/src/adapter.ts"
+      ],
+      "owner_writer": "transport.publish; publications/<resource>",
+      "writer_fence": "Recordwriter/CAS; externe HTTP-Wirkung außerhalb Lock",
+      "quota": "maximumDeliveryRecords/maximumDeliveryBytes/DELIVERY_RECORD_MAX_BYTES",
+      "consumers": "Publication invoke/reconcile/receipt",
+      "references_and_idempotency": "Request + reservierter Terminalrecord; idempotencyKey und Digest; uncertain",
+      "current_retirement": "Kein Executor",
+      "remaining_release_gap": "Requestpayload und Receipt schützen vor zweiter externer Aktion; eigene Authority nötig"
+    },
+    {
+      "id": "demo-handoff",
+      "sources": [
+        "skills/nova/plugins/demo-handoff/src/adapter.ts"
+      ],
+      "owner_writer": "demo.handoff commit; demo-ready/intents + receipts",
+      "writer_fence": "Recordwriter; Controllerpost/status außerhalb Lock",
+      "quota": "10000 Records; 64 MiB; 65536 Recordbytes",
+      "consumers": "Commit/recovery; Operatorreceipt lookup; Controllerstatus",
+      "references_and_idempotency": "RequestId/bodydigest, LeaseUID/candidate, intent verhindert erneutes initiales POST",
+      "current_retirement": "Kein Executor",
+      "remaining_release_gap": "Controller-/Projektlebensdauer und originale Artifact-/Deliverybelege bewahren; DemoTTL ist keine Erlaubnis"
+    },
+    {
+      "id": "buster-historical",
+      "sources": [
+        "skills/buster/engine/test-gates/historical-plan-store.ts",
+        "scripts/compact-buster-job.mjs"
+      ],
+      "owner_writer": "HistoricalBusterPlanJobStore; ältere buster-plan-jobs",
+      "writer_fence": "Recordwriter/CAS mit Retainedsource-Prüfung",
+      "quota": "recordLimits/archive/result limits/result aggregate reservation",
+      "consumers": "Historische job/status/result/evidence und manuelle Kompaktion",
+      "references_and_idempotency": "Job/request/idempotency/source/result/Evidence digests",
+      "current_retirement": "compact-buster-job nutzt explizit HistoricalBusterPlanJobStore",
+      "remaining_release_gap": "Kein Count-/Resultblob-/Evidencegesamtfreigabepfad; NICHT als Executor des neuen metadata-v2-Stores behaupten"
+    },
+    {
+      "id": "buster-prepared",
+      "sources": [
+        "skills/buster/engine/test-gates/prepared-plan-store.ts",
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "skills/buster/engine/test-gates/production.ts"
+      ],
+      "owner_writer": "Aktueller FileBusterPlanJobStore Alias = PreparedBusterPlanJobStore; metadata-v2",
+      "writer_fence": "Recordwriter; globale Annahme-/Reservationchecks im Owner",
+      "quota": "recordLimits/result object/store; aktive/queued/concurrent limits im Service",
+      "consumers": "accept/status/result/recovery; executePrepared",
+      "references_and_idempotency": "Prepared admission/source binding; idempotency und Ergebnisreservierung",
+      "current_retirement": "Kein prepared-history Executor in diesen Quellen",
+      "remaining_release_gap": "Neuer Produktionspfad ist laufende Buster-Arbeit; historische Archivekompaktion deckt ihn nicht. Keine parallelen Edits"
+    },
+    {
+      "id": "buster-source-runtime",
+      "sources": [
+        "skills/buster/engine/test-gates/preparation-ledger.ts",
+        "skills/buster/engine/test-gates/terminal-workspace.ts",
+        "skills/buster/engine/test-gates/artifacts.ts",
+        "skills/buster/engine/test-gates/runner.ts"
+      ],
+      "owner_writer": "PreparationSourceLedger/source-ledger/state.json; Runtime-/Source-/Provider-/Evidencefiles",
+      "writer_fence": "Ledger withDurableStoreLock; Native ownership/fenced Cleanup; Evidence wx",
+      "quota": "Sourcebytes/entries/metadata/records; Provider/Attempt evidence/output limits",
+      "consumers": "Preparation/Runner; status/evidence; native recovery/cleanup",
+      "references_and_idempotency": "Reservation/Preparedsource/Rootidentitäten; Result- und Artifactrefs; leases",
+      "current_retirement": "Terminalworkspace-Cleanup und aktuelle Ledger-Reconciliation sind separate Buster-Pakete",
+      "remaining_release_gap": "Positive End-to-end Orphan-/Fixture-/quota integration offen; kein pauschales Rootlöschen aus OBS"
+    },
+    {
+      "id": "native-attempt-ownership",
+      "sources": [
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/ownership-store.ts"
+      ],
+      "owner_writer": "Core journal metadata/data/outputs und owners.json; Buster/Prism Owner",
+      "writer_fence": "Journal lifetime stripes + admission fence + Records; Ownership serial/supervisor fence",
+      "quota": "Records/state/input/result/output/totalBytes; Ownership records/bytes inkl Terminalreserve",
+      "consumers": "Native execute/recover/replay; Cleanup-Reconciliation",
+      "references_and_idempotency": "Envelope/Claimgeneration/Resultreceipt; Host/kernel/root identities; dispositions",
+      "current_retirement": "Terminalreserve und Cleanup-Reconciliation vorhanden, keine volle History-GC",
+      "remaining_release_gap": "Freie Live-Ressource ist nicht freie Historyquote; Enddisposition und späte Zustellungen benötigen eigenes Domainprotokoll"
+    },
+    {
+      "id": "native-fixtures",
+      "sources": [
+        "skills/buster/engine/test-gates/native-fixture-journal.ts"
+      ],
+      "owner_writer": "FileBusterFixtureJournal metadata/data",
+      "writer_fence": "phases lifetime + Records/Blobs",
+      "quota": "maximumRecords/maximumStateBytes/maximumBlobBytes/maximumTotalBytes",
+      "consumers": "Fixture admission/ready/phase/recovery",
+      "references_and_idempotency": "Admissionreceipt/Ready-/Terminalreceipt; Fixturebesitz",
+      "current_retirement": "Phasentransitionen, kein historischer Releaseexecutor",
+      "remaining_release_gap": "Retained Fixture ist aktive eigene Lebensdauer; B4/W4/W5 zuerst, nicht als terminaler Jobmüll behandeln"
+    }
+  ],
+  "sourceIdentities": [
+    {
+      "path": "scripts/compact-buster-job.mjs",
+      "sha256": "bf10ee8da2de22ac7463be04b77401ff71e4ee89632bf66b61c5852cf02bed47"
+    },
+    {
+      "path": "scripts/observability-retirement/operator-authority.mjs",
+      "sha256": "2b81f162503bfdd45b752b9cecec29abe5a5cb8306712c89b6e17e652c8f9d66"
+    },
+    {
+      "path": "scripts/retire-admission.mjs",
+      "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96"
+    },
+    {
+      "path": "scripts/retire-attempt-closure.mjs",
+      "sha256": "76b59193d9a271923bfd3fe0594997d752838bcd969cb19a7b52af578f42bd50"
+    },
+    {
+      "path": "scripts/retire-attempt-result.mjs",
+      "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a"
+    },
+    {
+      "path": "scripts/retire-nova-dispatch.mjs",
+      "sha256": "96c2616a01b2169c4c6d16503013c74640700455d53dde0ed689f3b7eabc6fc4"
+    },
+    {
+      "path": "scripts/retire-operator-request.mjs",
+      "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21"
+    },
+    {
+      "path": "scripts/retire-telemetry.mjs",
+      "sha256": "050d770035a702a33e487ae06c7903aee6333cdbdf1f1e44dd4b5fcf7503c456"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/artifacts.ts",
+      "sha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "sha256": "cee4f4faa85609f1064c7331f2b6e9a347e944c74f069b6fadc05c92e73f33dd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "sha256": "3c8f6a7bb826849b19f09f2c2103bc44098eab0837d6e892fef40c165888d0ce"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "78ce156e0568a6d9410aacf4a29a948e279bdc612d22fb1c311ee9aa9e261585"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "fdf4d3375e3e824d04e5eae1a54b425c7543ccc9ce5f9245c9495ccbf3905ce8"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "ab67c1300cdca9e173b4c9014df2381fe22b9bfe4d5f19bdc68dfd0bc2cf7b7e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
+      "sha256": "60264e4f91904b49c57225184cc86233778c5c7146039bdd783bdb86ba71a9b1"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "sha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "sha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "sha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "sha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "sha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "sha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+      "sha256": "8a9b796faeb8e4decc083deebc7624212798ade8e7243aa54b770b0250f40529"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+      "sha256": "25ce708f55dfd154d04f044edfac8f232989b2fbd59a7b644bb41aa65dfcbddc"
+    },
+    {
+      "path": "skills/common/plugins/state-store/src/adapter.ts",
+      "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7"
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+      "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+    },
+    {
+      "path": "skills/common/plugins/wait-store/src/adapter.ts",
+      "sha256": "b55d76d4913c0c6f4074af43615046365ba226dfb51189fd26fa6d486753b92d"
+    },
+    {
+      "path": "skills/nova/core/effects/dependency-journal.ts",
+      "sha256": "dc0e567a573b822afb54353b04a4b58cd93fad1b155067d1173957ae6a5035a3"
+    },
+    {
+      "path": "skills/nova/core/effects/journal.ts",
+      "sha256": "1ab8839b77c51008973975a324d675af129e8aa45152ae0fde97c954d5af3b95"
+    },
+    {
+      "path": "skills/nova/core/effects/locks.ts",
+      "sha256": "7ca675286800ee88314919f7c0d524c7b5cde99928b9e93c8036e566ecc4b793"
+    },
+    {
+      "path": "skills/nova/core/execution/effect-recovery.ts",
+      "sha256": "06ee56bce5fedf57518e39858b700278c33b81d4edb2177587007f392b0ce186"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-admin.ts",
+      "sha256": "f3ba44d49baffa01ee74a4d749818e8f903feb48827eb9108f959c24c8a0a1f2"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-run.ts",
+      "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "de279faaeffc78713d3b3049d43a2efb9add45e4ad05a89c0f4efde1dbe120ec"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71"
+    },
+    {
+      "path": "skills/nova/core/state/journal.ts",
+      "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+    },
+    {
+      "path": "skills/nova/core/state/plugins.ts",
+      "sha256": "b55aa7f90c5a7a7df5c71e5624eacada23f2e98748ec4b962d3ad5b047fc7876"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observer-recovery.ts",
+      "sha256": "9d97600debff727243d62fbad6c4a4616b056a4e4afb1098e1e19bbaa5f3edcb"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observers.ts",
+      "sha256": "b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-result-import.ts",
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/src/stage.ts",
+      "sha256": "77735e30c7109aee73cd6c396fe11858275935df1f251aae77d582ed4a7f2765"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/src/stage.ts",
+      "sha256": "9e54e56d6b5acc631985cc2de9e9be943f3e8cdeaa09835dfdc1e402d67da8fd"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+      "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5"
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5"
+    }
+  ],
+  "concurrentChangesObserved": [
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "readSha256": "cee4f4faa85609f1064c7331f2b6e9a347e944c74f069b6fadc05c92e73f33dd",
+      "laterSha256": "e3b421d62bcaa158efb7f468463fb0c060d4408b8e4527ffc60022d3be65a809",
+      "disposition": "Buster work in progress; not a frozen source acceptance; rebind and reread before implementation"
+    }
+  ]
+}

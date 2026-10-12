@@ -25,7 +25,7 @@ const storageRoot = path.join(temporary, 'state');
 const runId = `run:matrix:${scenario.id}`;
 const runRoot = path.join(storageRoot, 'runs', runId.replaceAll(':', '_'));
 const platform = {
-  schemaVersion: 'pipeline-platform.v2' as const,
+  schemaVersion: 'pipeline-platform.v2' as const, effectLockTtlMs: 300_000,
   installationRoots: [fixtureRoot],
   trustedBuiltinRoots: [fixtureRoot],
   externalTrust: {

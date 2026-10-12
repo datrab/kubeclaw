@@ -1,0 +1,18 @@
+✔ DB/object group preserves original artifact IDs on a fresh directory and retains old backups (210.006937ms)
+✔ verification catches modified DB, missing/extra/corrupt objects, and symlinks (331.656093ms)
+✔ failures and capacity limits keep previous groups and never publish partial copies (217.674132ms)
+✔ corrupt or symlinked sources cannot produce a completed group (81.159446ms)
+✔ native lock prevents overlap and whole-operation deadline kills blocked dump (1026.813844ms)
+✔ actual Helm render runs the group script and verification has no database credentials (92.839834ms)
+✔ SQL proof uses only its newly created DB and never drops a failed creation (283.147189ms)
+✔ manual retirement requires pinned verified copy, preserves latest/protected groups and releases quota (688.339815ms)
+✔ interrupted retirement resumes only selected tombstone and revalidates copy (458.286668ms)
+✔ incomplete cleanup rejects published groups, traversal and symlinks (180.776533ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3730.159351

@@ -1,0 +1,1711 @@
+{
+  "at": "2026-09-21T18:33:19.080762+00:00",
+  "scope": "Named source inventory, not full runtime closure; 48-manifest roster exhaustive",
+  "runtimeExecuted": false,
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "57f5f68231777a113c01773a33c350cbbb2746e97ad8aad4538b455427585ff4",
+      "bytes": 1304,
+      "snapshot": "sources/charts/kubeclaw/files/config/buster-engine.config.json"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/e2e-playwright.json",
+      "sha256": "8692f1b6c9fcbe969d0548d4de48bbf9f51091ded062b64907f36ef2e9230f7e",
+      "bytes": 933,
+      "snapshot": "sources/contracts/pipeline-test-gate/v1/examples/e2e-playwright.json"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/package.json",
+      "sha256": "234fe885078a92ec896b1f32675a20c3bbbe427cfdb1e3fd684932cc6291d48f",
+      "bytes": 762,
+      "snapshot": "sources/contracts/pipeline-test-gate/v1/package.json"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/tsconfig.json",
+      "sha256": "6f4a5fde664d67c451337d4f62c8df33e5ea4fde18367801845b2fb951d578d1",
+      "bytes": 190,
+      "snapshot": "sources/contracts/pipeline-test-gate/v1/tsconfig.json"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "606b462f6e88e7e58f393e17d936353376a4095a89a93690f47a299b54c8e7ea",
+      "bytes": 16383,
+      "snapshot": "sources/docker/buster-runtime-entrypoint.sh"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-testprovider-authority-20260921.md",
+      "sha256": "9e6b5efd2ea490fb1e6b23ba91c0644bc976619815f59ceb25082b2ff36f2e67",
+      "bytes": 19707,
+      "snapshot": "sources-final/docs/review/remediation/implementation/config-testprovider-authority-20260921.md"
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "sha256": "cf9afa2f8340c53b50e98e4bbdb0109bec5b3ce2530c42fd2519c86f350fd2c8",
+      "bytes": 7637,
+      "snapshot": "sources/my-values/buster-values.yaml"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/artifacts.ts",
+      "sha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179",
+      "bytes": 5273,
+      "snapshot": "sources/skills/buster/engine/test-gates/artifacts.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-axe-runtime.ts",
+      "sha256": "7370bdf54556875b996cc0ac4c4219a8c9ddc11d25dfb72875f41806e82482c8",
+      "bytes": 14054,
+      "snapshot": "sources/skills/buster/engine/test-gates/browser-axe-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+      "sha256": "a7af35a6b7df314129cf9150c3d44d2017c2bf47b9e529ef1ff6962129966b75",
+      "bytes": 13633,
+      "snapshot": "sources/skills/buster/engine/test-gates/browser-lighthouse-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+      "sha256": "20e32c52051339237e14cf1bed0da9c690ece23297bec9bb77a628e8df211917",
+      "bytes": 27804,
+      "snapshot": "sources/skills/buster/engine/test-gates/browser-playwright-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+      "sha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+      "bytes": 18255,
+      "snapshot": "sources/skills/buster/engine/test-gates/browser-visual-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+      "sha256": "7f50b4c1c6c1e661319dd2f9ba1afecf27dd19a26c06ac51ef52abc0d97703f3",
+      "bytes": 1860,
+      "snapshot": "sources/skills/buster/engine/test-gates/buildkit-readiness.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/canonical-value.ts",
+      "sha256": "7158e326bb4b2622989af106ba49b664f90eccbe61df24a0d97e6400457c370e",
+      "bytes": 502,
+      "snapshot": "sources/skills/buster/engine/test-gates/canonical-value.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "sha256": "9d8c2e2fee2a13c34dc00efe3a7ed7c4eb2047a7d496baf9c4c6b7c4cafcde78",
+      "bytes": 5599,
+      "snapshot": "sources/skills/buster/engine/test-gates/capability-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/composite-capability-runtime.ts",
+      "sha256": "fbd71da7e0fe2e53801e60e36c3c13636b4fcb5be0e43503ef66571820b0810f",
+      "bytes": 877,
+      "snapshot": "sources/skills/buster/engine/test-gates/composite-capability-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+      "bytes": 16842,
+      "snapshot": "sources/skills/buster/engine/test-gates/container-build-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "sha256": "c1f305fd3281328e1cd5714b1366cb946907e2a96af2bf6c3f629c2ab4ed354b",
+      "bytes": 3681,
+      "snapshot": "sources/skills/buster/engine/test-gates/dependency-process.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/direct-command-runtime.ts",
+      "sha256": "eaacae3a6c4b3110039b7134378b8eb114dc8cb2161c4bc593c405c967afa006",
+      "bytes": 7657,
+      "snapshot": "sources/skills/buster/engine/test-gates/direct-command-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/exposure-generation.ts",
+      "sha256": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360",
+      "bytes": 3855,
+      "snapshot": "sources/skills/buster/engine/test-gates/exposure-generation.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/exposure-handoff.ts",
+      "sha256": "4e725c913e11f5eb11a4444c9a96373e423c06b2da33287e5269fbe1401b9e83",
+      "bytes": 4202,
+      "snapshot": "sources/skills/buster/engine/test-gates/exposure-handoff.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/fixture-authority.ts",
+      "sha256": "b3fac0a68c4cab2d3c1abfabf10b38848cc6917512a6684e80a030656ee0a1f5",
+      "bytes": 2410,
+      "snapshot": "sources/skills/buster/engine/test-gates/fixture-authority.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/generated-demo-credentials.ts",
+      "sha256": "0df7b344a3ccb3c27322a0381ca8f2cf891feca22140c9a5e1899fa520ae10da",
+      "bytes": 3979,
+      "snapshot": "sources/skills/buster/engine/test-gates/generated-demo-credentials.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "bytes": 16318,
+      "snapshot": "sources/skills/buster/engine/test-gates/historical-plan-store.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "sha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "bytes": 43221,
+      "snapshot": "sources/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "sha256": "42f3533feab2fcf98a60e4fe570d9980c6d008785d65df6e73e15e3f2f54dc85",
+      "bytes": 2009,
+      "snapshot": "sources/skills/buster/engine/test-gates/kubernetes-manifest.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sha256": "01da0c323776cc8f9f4778d9ed2afb198133b79f7f2afbfa0850f657dda357b0",
+      "bytes": 11451,
+      "snapshot": "sources/skills/buster/engine/test-gates/kubernetes-runtime-security.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-control.ts",
+      "sha256": "6d305ecd5509af0dc13b90e02d00339619822cb5551c17077b4503439bfd272d",
+      "bytes": 7899,
+      "snapshot": "sources/skills/buster/engine/test-gates/native-fixture-control.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+      "bytes": 10837,
+      "snapshot": "sources/skills/buster/engine/test-gates/native-fixture-journal.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
+      "sha256": "fb755b6a559c3eb4f34e9a6151cc26dd4a6e14ff0e4c16d9e727964547497297",
+      "bytes": 4037,
+      "snapshot": "sources/skills/buster/engine/test-gates/native-fixture-lifetime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-state.ts",
+      "sha256": "448417a808f5d630c24aba477af3fed88bc2a8f74e9a9c203c4f6f5bbd035b5e",
+      "bytes": 6113,
+      "snapshot": "sources/skills/buster/engine/test-gates/native-fixture-state.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d",
+      "bytes": 15726,
+      "snapshot": "sources/skills/buster/engine/test-gates/network-http-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/pngjs.d.ts",
+      "sha256": "cf251c5bf79b8a73db7b2c7010aa912bf4efc7448ebb06a27202be31a8664327",
+      "bytes": 244,
+      "snapshot": "sources/skills/buster/engine/test-gates/pngjs.d.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+      "sha256": "a3f47267addf5e371faff3896521eb3aac35b49523275a7766ed29c8d1d42f6a",
+      "bytes": 3939,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-archive.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-channel.ts",
+      "sha256": "ab1ec1c5aae3c99cb56e33d1df3029ac5e72247a1db99b5f23d590f4d961d01d",
+      "bytes": 6145,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-channel.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-binding.ts",
+      "sha256": "454c3f6a5a41e179776eddda24ff7a89e9ac959558cfb8343f6334861fc93901",
+      "bytes": 3982,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup-binding.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts",
+      "sha256": "837f2b0c6acf2ab0afb56e6a54857fefc15272f8c5c026a3c796e4fd55d9e166",
+      "bytes": 2027,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup-envelope.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+      "sha256": "7f68045db88cfea003fb204b06c61b5cef0d48ff0bb416fa060dceeb33249365",
+      "bytes": 2921,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup-execution.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+      "sha256": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242",
+      "bytes": 5676,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup-host.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
+      "sha256": "8cc3b8d59fb38bcb04b6549a05bb7c95f153f7f603405724f84a9385a45ce134",
+      "bytes": 4360,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup-validation.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup.ts",
+      "sha256": "192c1954407e294483ea08389220eab128052ba57e9b7a72b26fcb768d608bc1",
+      "bytes": 6796,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-cleanup.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "sha256": "31b1bec56dc09daafb7e0ba425243009b86f7f73eb693ae0e74617c1cac6f6dd",
+      "bytes": 7371,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-client.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-command.ts",
+      "sha256": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6",
+      "bytes": 2925,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-command.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-config.ts",
+      "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+      "bytes": 4936,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-config.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-envelope.ts",
+      "sha256": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+      "bytes": 4452,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-envelope.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-execution.ts",
+      "sha256": "e23033bcf78d19dfada0a25d7cffc9ba8133b97b686ffba24b362c601c8a6e93",
+      "bytes": 4399,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-execution.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-extraction.ts",
+      "sha256": "10f495344bc139291bfd127662682bd35b601d9643b915b5016e49334a3523ca",
+      "bytes": 7119,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-extraction.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-gate.ts",
+      "sha256": "7f3cb9aa8100a003713195cf3149f9097ea5f0cec18779e8deca92a0d2d894d7",
+      "bytes": 5092,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-gate.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-header.ts",
+      "sha256": "921c13b2285ce3293ec2c2c75a0e42f576bb11300d527b7dd9640a270136f167",
+      "bytes": 5705,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-header.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-batch.ts",
+      "sha256": "44e38c453e1ab5a1118e54e7a4a855a2e40fce27bb9a0557c7b42808da88ee74",
+      "bytes": 9616,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-batch.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-channel.ts",
+      "sha256": "2cb8b7a9960e5467b2bedf4bc45c55a12df26ea5c32545fa2fc42c6b5e468c1a",
+      "bytes": 4001,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-channel.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+      "sha256": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16",
+      "bytes": 5879,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-host.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-import.ts",
+      "sha256": "4f6144633592a1e2dd11cac4b82c653982cddec50930a1d6d11694a5c3c74828",
+      "bytes": 1448,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-import.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-ledger.ts",
+      "sha256": "74c8151a3a08b7e0d8c490cba83fe74ba4dfd9cc9f23417ebb59c4fa417177bb",
+      "bytes": 3617,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-ledger.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-materialize.ts",
+      "sha256": "3fa603ff06977ffdecf435981fe392cf107e90752d97cb11a7fa3d869f484ee3",
+      "bytes": 5359,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-materialize.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-publication.ts",
+      "sha256": "53147aef26b51b977f07d9ab46fcee9a356ba9acfa19e041f8c3b99d1cbc0f19",
+      "bytes": 9315,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-publication.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-reference.ts",
+      "sha256": "d034cac06fcd04b8a2583609b00a11375e404c65897c99a21a973f19d3ff7984",
+      "bytes": 8873,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-reference.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-source.ts",
+      "sha256": "fdccb2ec89cad6824df4ebf5ce9475ecfe4a94cbf4b515bc2c9549fb204bffc0",
+      "bytes": 5135,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-source.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-terminal.ts",
+      "sha256": "3ab3f547bf01134d9a2e9d14a12b919fbb4c8781c1035f3a4b21fc803cb7926a",
+      "bytes": 2988,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-terminal.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-host-channel.ts",
+      "sha256": "8383114bb82cfc3c38a7c65ebd8c2ea21fb88c7b25b1a185473b2f82c639fa08",
+      "bytes": 2521,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-host-channel.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-host.ts",
+      "sha256": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+      "bytes": 7072,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-host.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-input.ts",
+      "sha256": "b573c86f1f7b140baaae2d1cbcd3d6d381115688f30fe799a99b3999965c73c9",
+      "bytes": 5562,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-input.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+      "sha256": "e37446c62e1e9a599a525c4203935b6b43ed093c8af612bc89e95b5c321c19b1",
+      "bytes": 12577,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-ledger-state.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+      "bytes": 18824,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-ledger.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+      "sha256": "20362a6d9a4147be607c1006cd42a33465d5b56b7df5acfef04562009abba179",
+      "bytes": 3182,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-native-phase.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-parent-channel.ts",
+      "sha256": "9b6548ed266f22453044c813d31b60f1cd4bef9d85f5b0fe2cacec06fc48ada9",
+      "bytes": 5811,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-parent-channel.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-published.ts",
+      "sha256": "0fbf0c57cfbf1e93e515e3bce2c6f24b64f607fa6001e80ed79cceb37d4f5c14",
+      "bytes": 2330,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-published.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-recovery.ts",
+      "sha256": "3bc1d7f6787a1917ea471b55c4f7075618ae16459b6f9d85825493bc98ca10de",
+      "bytes": 6068,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-recovery.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+      "sha256": "2f079e6521872c056e44fad666efef8e38e4ba07ef9772aa4118d38c3c5df04d",
+      "bytes": 2211,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-reservations.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-result-origin.ts",
+      "sha256": "ac56f5ca81b362b406e96c1d6177419e705b769913c8bb6883cb116710e9be58",
+      "bytes": 1408,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-result-origin.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-slots.ts",
+      "sha256": "cca405b4dac32f2292483815880fb2e0d1d58c5d5134957864fd1bf65f8ed897",
+      "bytes": 410,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-slots.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-source.ts",
+      "sha256": "dd165bec2ad71b1664b7bec6c5d48a7a1b1602bd3824f8735e09292eb9b6ef22",
+      "bytes": 7266,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-source.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+      "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+      "bytes": 5244,
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-supervisor.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-paths.ts",
+      "sha256": "7130126f30a200aaa3a24f5df63e8df82fe9c468d2bee321b16dfc63b8d52ead",
+      "bytes": 587,
+      "snapshot": "sources/skills/buster/engine/test-gates/prepared-plan-paths.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "bytes": 15520,
+      "snapshot": "sources/skills/buster/engine/test-gates/prepared-plan-store.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "sha256": "b45b50d0cfd2ae6a0aa091ba1e1edcb936b868490ae2a579f3ac561d24f8394e",
+      "bytes": 3221,
+      "snapshot": "sources/skills/buster/engine/test-gates/process-input-lifecycle.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "sha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620",
+      "bytes": 4603,
+      "snapshot": "sources/skills/buster/engine/test-gates/process-input.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-browser-options.ts",
+      "sha256": "846a6488bf66ab4a84d8fb79db7cd88ddcaf69b77707bda9a116ed567fa38cdd",
+      "bytes": 7016,
+      "snapshot": "sources/skills/buster/engine/test-gates/production-browser-options.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "c2135bd4f48030b883e6c13749991a17e2e47e8b4db7272d8fa096081136d9d4",
+      "bytes": 4735,
+      "snapshot": "sources/skills/buster/engine/test-gates/production-capability-sources.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sha256": "7808623ea1d8bb3f838254a898f84807d04c40d4ae17042440eeae2bdee1492e",
+      "bytes": 6125,
+      "snapshot": "sources/skills/buster/engine/test-gates/production-cluster-options.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-command-options.ts",
+      "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81",
+      "bytes": 6568,
+      "snapshot": "sources/skills/buster/engine/test-gates/production-command-options.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "eb4d8a252517506fdc096a017d1b807d194b88bfa21605900792ca4810efe148",
+      "bytes": 9473,
+      "snapshot": "sources/skills/buster/engine/test-gates/production-config-values.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "e2da22b17dc8e7a26d52650d46e81e30c97f42c04254f9a454c2abc957011f83",
+      "bytes": 6748,
+      "snapshot": "sources/skills/buster/engine/test-gates/production.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+      "sha256": "b7dc5260ba57dd177fcb2e1e40f85f39554bf261f3e99388a6d91d17d24879b1",
+      "bytes": 2270,
+      "snapshot": "sources/skills/buster/engine/test-gates/provider-capabilities.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+      "bytes": 22181,
+      "snapshot": "sources/skills/buster/engine/test-gates/provider-loader.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-result-validation.ts",
+      "sha256": "1e5371e0528f03a73d1d24d8e0764d501d49c9d8c22d231315db5a3af5539631",
+      "bytes": 3175,
+      "snapshot": "sources/skills/buster/engine/test-gates/provider-result-validation.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+      "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c",
+      "bytes": 2760,
+      "snapshot": "sources/skills/buster/engine/test-gates/registry-health-access.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+      "sha256": "e74b3fe2e8dca0157d22c6bd1b50f5cc69df91ec29eedbdbaef86d4ff05a42de",
+      "bytes": 9464,
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-compaction.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+      "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2",
+      "bytes": 7608,
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-http.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+      "sha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c",
+      "bytes": 2741,
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "2f4d8f0d305a1ad8f0404f03aca89b3d320d6df869c0d95833727fcae4fa9c0f",
+      "bytes": 14395,
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-service.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "sha256": "47cc40152c08273b3dae3cc4e192f7662936d9f9b16f857a020eab89e4423c3f",
+      "bytes": 5022,
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-prepared-execution.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-package.ts",
+      "sha256": "71cc3d1906a029b8d5e06067f26bda1fe6199f93cce8f523e351ea02eb43e104",
+      "bytes": 3659,
+      "snapshot": "sources/skills/buster/engine/test-gates/report-adapter-package.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "sha256": "0c698666a99e51226b2bca2d8287ff491a7baf37dad47448c4574176ee65f569",
+      "bytes": 13195,
+      "snapshot": "sources/skills/buster/engine/test-gates/report-adapter-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-artifact-reader.ts",
+      "sha256": "d3b4f8c4fae897876c8825cae357e9740de70ebd43686eaa85efcc94ed27b872",
+      "bytes": 3374,
+      "snapshot": "sources/skills/buster/engine/test-gates/report-artifact-reader.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-finalizer.ts",
+      "sha256": "8cc0ff2562fd8b530c2a2e1b32b13aaccdec1a2ea9f398df0e7cd350b2cb9b7e",
+      "bytes": 2037,
+      "snapshot": "sources/skills/buster/engine/test-gates/report-finalizer.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "724d95538646558ad3f1930899ee1cd905ab8b8727d1bc84469831b55ef979fb",
+      "bytes": 66585,
+      "snapshot": "sources/skills/buster/engine/test-gates/runner.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+      "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9",
+      "bytes": 15184,
+      "snapshot": "sources/skills/buster/engine/test-gates/security-scan-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "sha256": "1616da65ba5dc6dfef24af3b849f3a6aadbf4761d4dc0a31e866765f632cd812",
+      "bytes": 4908,
+      "snapshot": "sources/skills/buster/engine/test-gates/specialist-report-finalization.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sha256": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d",
+      "bytes": 18863,
+      "snapshot": "sources/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
+      "sha256": "60264e4f91904b49c57225184cc86233778c5c7146039bdd783bdb86ba71a9b1",
+      "bytes": 2499,
+      "snapshot": "sources/skills/buster/engine/test-gates/terminal-workspace.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/trivy-database.ts",
+      "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+      "bytes": 7316,
+      "snapshot": "sources/skills/buster/engine/test-gates/trivy-database.ts"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/README.md",
+      "sha256": "fdb4520d8d9a12e25a79787a5f2dd219a5bbc98d95ef0c22c204ee82d668a55e",
+      "bytes": 1213,
+      "snapshot": "sources/skills/buster/plugins/api-flow/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/package.json",
+      "sha256": "445b9e460b6bff419d952b72f5a0fa1edf0c9676aeebda22c7d10808a0c7c3be",
+      "bytes": 274,
+      "snapshot": "sources/skills/buster/plugins/api-flow/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/plugin.json",
+      "sha256": "d6c8f75a90ab142a4273893cd0e0bcf12a1d377432a42eb8f65127c177bbe536",
+      "bytes": 896,
+      "snapshot": "sources/skills/buster/plugins/api-flow/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+      "sha256": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc",
+      "bytes": 741,
+      "snapshot": "sources/skills/buster/plugins/api-flow/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/schemas/flow.schema.json",
+      "sha256": "b4b30b26fbc0719f8438cb422124a1898691dd3b05af47d010d786b1400d76aa",
+      "bytes": 2213,
+      "snapshot": "sources/skills/buster/plugins/api-flow/schemas/flow.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/src/provider.js",
+      "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b",
+      "bytes": 16126,
+      "snapshot": "sources/skills/buster/plugins/api-flow/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+      "sha256": "1a9940e7c356e4a1d76932795d2cc03dd5778ebbf16c9c3e43f0c073e4769bee",
+      "bytes": 6333,
+      "snapshot": "sources/skills/buster/plugins/api-flow/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/tests/remediation.test.ts",
+      "sha256": "78bc3bd731052a460fe70a118ba4868ab848715f1be46cedeba59116db79b280",
+      "bytes": 4435,
+      "snapshot": "sources/skills/buster/plugins/api-flow/tests/remediation.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/api-flow/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/axe/README.md",
+      "sha256": "1ab2a74127ab6340c77b01a9dcca756486c4b9a9ecec19e03e88bab05cb44a6a",
+      "bytes": 721,
+      "snapshot": "sources/skills/buster/plugins/axe/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/axe/package.json",
+      "sha256": "327f3ef9454c30b8ad08063077c3e54c9d4d7bab92c567cdc0ce19fac90c0e6a",
+      "bytes": 143,
+      "snapshot": "sources/skills/buster/plugins/axe/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/axe/plugin.json",
+      "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7",
+      "bytes": 840,
+      "snapshot": "sources/skills/buster/plugins/axe/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+      "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d",
+      "bytes": 1697,
+      "snapshot": "sources/skills/buster/plugins/axe/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/axe/src/provider.js",
+      "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472",
+      "bytes": 9903,
+      "snapshot": "sources/skills/buster/plugins/axe/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+      "sha256": "162a6c598cdd19f4add0d723a0f5081baa319a2e91ddcd93922e501876188376",
+      "bytes": 7614,
+      "snapshot": "sources/skills/buster/plugins/axe/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/axe/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/axe/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/README.md",
+      "sha256": "9f717d5483450ff8aa9e01f95694bbe54165b6ee18f0014ece1fa6de77a892d3",
+      "bytes": 711,
+      "snapshot": "sources/skills/buster/plugins/container-build/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/package.json",
+      "sha256": "41ce5c62fe46dae75e978b0527c0df92e5a4229afaa08a97e6132b6697c60198",
+      "bytes": 247,
+      "snapshot": "sources/skills/buster/plugins/container-build/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/plugin.json",
+      "sha256": "6a43c756b8707be3a5efb3851ed8869a17e376658a30503bf9d51697a7e9c011",
+      "bytes": 849,
+      "snapshot": "sources/skills/buster/plugins/container-build/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+      "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9",
+      "bytes": 1470,
+      "snapshot": "sources/skills/buster/plugins/container-build/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/src/provider.js",
+      "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847",
+      "bytes": 7616,
+      "snapshot": "sources/skills/buster/plugins/container-build/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/tests/deadline.test.mts",
+      "sha256": "954aeb0a42c50f5fb10c9dacf5a693ee591c0792aff608cee712b7c2300a8a7e",
+      "bytes": 5113,
+      "snapshot": "sources/skills/buster/plugins/container-build/tests/deadline.test.mts"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/tests/live-function.test.ts",
+      "sha256": "00e57731e981ea7d189bc65a6899a3370114ebdcc8a691d3544b184aa359badb",
+      "bytes": 2555,
+      "snapshot": "sources/skills/buster/plugins/container-build/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/tsconfig.json",
+      "sha256": "5eb88565fa82210b6087aa1a49848ff556f1a1ff1db0d8aa840c6811afd56526",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/container-build/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/README.md",
+      "sha256": "2a8f2e52e59f5ee7be788636a86a36a0fa37306d65fc273caacf84494e47c217",
+      "bytes": 704,
+      "snapshot": "sources/skills/buster/plugins/coverage-budget/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/package.json",
+      "sha256": "e71eed1e45b7b06141991a11a5388bd4f1d5d1fcf16ec3b1c264a1ab1e46ec44",
+      "bytes": 205,
+      "snapshot": "sources/skills/buster/plugins/coverage-budget/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/plugin.json",
+      "sha256": "0f0ae38312005bf70de5b8da45dd96122be24614b05079b2ed410248e9166067",
+      "bytes": 1405,
+      "snapshot": "sources/skills/buster/plugins/coverage-budget/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+      "sha256": "72fc0422bb8f35b01b44405d217a3a1a4d62c4f875ddbe3bce1ddb814126025f",
+      "bytes": 253,
+      "snapshot": "sources/skills/buster/plugins/coverage-budget/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b",
+      "bytes": 5671,
+      "snapshot": "sources/skills/buster/plugins/coverage-budget/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
+      "sha256": "ff5791f1e5db1194bca1581627f145377ec405f884cfc0880a7451914542bdc7",
+      "bytes": 2642,
+      "snapshot": "sources/skills/buster/plugins/coverage-budget/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/coverage-budget/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/README.md",
+      "sha256": "3230e842192813df317830d44228dae9836152ce7bddde9e65c2c4a7a9a37631",
+      "bytes": 2250,
+      "snapshot": "sources/skills/buster/plugins/demo-auth-smoke/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/package.json",
+      "sha256": "5a84a7836083284bf650f603fe2927226e6d7656ffade1d9fcae9a028daeb25d",
+      "bytes": 401,
+      "snapshot": "sources/skills/buster/plugins/demo-auth-smoke/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "sha256": "a7dc11d0cd73886181c787be579552ed8f26eba3a4b364e87361ca6eff0db194",
+      "bytes": 1503,
+      "snapshot": "sources/skills/buster/plugins/demo-auth-smoke/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+      "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e",
+      "bytes": 1677,
+      "snapshot": "sources/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+      "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b",
+      "bytes": 7645,
+      "snapshot": "sources/skills/buster/plugins/demo-auth-smoke/src/protocol.js"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+      "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30",
+      "bytes": 4645,
+      "snapshot": "sources/skills/buster/plugins/demo-auth-smoke/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/tsconfig.json",
+      "sha256": "e12d6baaab845a1c094cf7ba25bd8970b15c7d70c39df733d1c0f4a16afb0d39",
+      "bytes": 152,
+      "snapshot": "sources/skills/buster/plugins/demo-auth-smoke/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/README.md",
+      "sha256": "3b5bb9c04b220b9979e57a95ff7c09b0d7d25c48e3104425f2c73fb3a7408e34",
+      "bytes": 987,
+      "snapshot": "sources/skills/buster/plugins/direct-command/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/package.json",
+      "sha256": "716cc8390d5e277df7c1b73cd02c32660f97940ac1c4f243c6585817ea000b9e",
+      "bytes": 426,
+      "snapshot": "sources/skills/buster/plugins/direct-command/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/plugin.json",
+      "sha256": "649466714d77ce1afe3a753f48e1a77481aa757fb46a325f3ea05c0c3ed2835a",
+      "bytes": 4181,
+      "snapshot": "sources/skills/buster/plugins/direct-command/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+      "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8",
+      "bytes": 2602,
+      "snapshot": "sources/skills/buster/plugins/direct-command/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/src/provider.js",
+      "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667",
+      "bytes": 11557,
+      "snapshot": "sources/skills/buster/plugins/direct-command/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/tests/live-function.test.ts",
+      "sha256": "afff58d4690e877f8c99f3bc4edb27b0e2afbcde5731da34a49436cfc52d8689",
+      "bytes": 2931,
+      "snapshot": "sources/skills/buster/plugins/direct-command/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/direct-command/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/http/README.md",
+      "sha256": "d1e5043fc7de143d939eac59d9472ccd230fbe54e745ceb628b820d7bd759105",
+      "bytes": 633,
+      "snapshot": "sources/skills/buster/plugins/http/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/http/package.json",
+      "sha256": "446771fd3e7d99eda5000f892e3ebf58bf2c604979243819d0537e97548e718c",
+      "bytes": 327,
+      "snapshot": "sources/skills/buster/plugins/http/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/http/plugin.json",
+      "sha256": "be8c584b93172cc05d88c547f43d351dd00a0570475bad0c2a6bfbebc6792453",
+      "bytes": 1053,
+      "snapshot": "sources/skills/buster/plugins/http/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/http/schemas/config.schema.json",
+      "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f",
+      "bytes": 1166,
+      "snapshot": "sources/skills/buster/plugins/http/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+      "bytes": 10394,
+      "snapshot": "sources/skills/buster/plugins/http/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/http/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/http/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+      "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77",
+      "bytes": 460,
+      "snapshot": "sources/skills/buster/plugins/junit-report-adapter/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/README.md",
+      "sha256": "30cbdad838949b74272a02f1712169a5c1ec4856015ab024ece60ad2cce10e37",
+      "bytes": 1140,
+      "snapshot": "sources/skills/buster/plugins/kubernetes-fixture/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/package.json",
+      "sha256": "debc7dcd104cd84691e588d7d3cc40ae9363d6d9cf02f082c410cd262afcd64a",
+      "bytes": 213,
+      "snapshot": "sources/skills/buster/plugins/kubernetes-fixture/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+      "sha256": "9c658fd6807beea11340609d22483ffac429a5e9184e74233a145774ec92feea",
+      "bytes": 1607,
+      "snapshot": "sources/skills/buster/plugins/kubernetes-fixture/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+      "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443",
+      "bytes": 1842,
+      "snapshot": "sources/skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "sha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e",
+      "bytes": 10049,
+      "snapshot": "sources/skills/buster/plugins/kubernetes-fixture/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+      "sha256": "59f85c44388dd5e8ae8659a88b4f6edd8585bd5afc0a154d52f9cbe21406c6eb",
+      "bytes": 2190,
+      "snapshot": "sources/skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/kubernetes-fixture/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/README.md",
+      "sha256": "747d7478d270fb9b8c2c9103ff0f10783627d4a619ce0206afd675c7eaca9bca",
+      "bytes": 744,
+      "snapshot": "sources/skills/buster/plugins/lighthouse/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/package.json",
+      "sha256": "12149f172e9fede4aacd1bc838b8ded0b49280df47e62a4dedf421154d412d99",
+      "bytes": 199,
+      "snapshot": "sources/skills/buster/plugins/lighthouse/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/plugin.json",
+      "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1",
+      "bytes": 971,
+      "snapshot": "sources/skills/buster/plugins/lighthouse/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+      "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958",
+      "bytes": 1721,
+      "snapshot": "sources/skills/buster/plugins/lighthouse/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/src/provider.js",
+      "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5",
+      "bytes": 12828,
+      "snapshot": "sources/skills/buster/plugins/lighthouse/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+      "sha256": "7b6404af53e7442b1d716d2ddb559ecbe294c5a09886f2e41295169ff20d5e93",
+      "bytes": 5817,
+      "snapshot": "sources/skills/buster/plugins/lighthouse/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/tsconfig.json",
+      "sha256": "7ea156239ab42e02f03ca507403f02f79f8147e862f5a95ad88c08cf65994a79",
+      "bytes": 152,
+      "snapshot": "sources/skills/buster/plugins/lighthouse/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/README.md",
+      "sha256": "afc989c4127027ad0f66ec95dea04953020f688b231427a77dff0714c9b1159a",
+      "bytes": 1686,
+      "snapshot": "sources/skills/buster/plugins/openapi/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/package.json",
+      "sha256": "81a46bbcf2e779ac724874adb3d18a6b86768a5abab6c9c0ef4913019a8bc3b3",
+      "bytes": 231,
+      "snapshot": "sources/skills/buster/plugins/openapi/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/plugin.json",
+      "sha256": "ea64826e4be0b75620a11de0d375abb6ef0361492488adaa5c3b839e49fbf3af",
+      "bytes": 892,
+      "snapshot": "sources/skills/buster/plugins/openapi/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+      "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29",
+      "bytes": 1932,
+      "snapshot": "sources/skills/buster/plugins/openapi/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca",
+      "bytes": 22774,
+      "snapshot": "sources/skills/buster/plugins/openapi/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/schema-support.js",
+      "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b",
+      "bytes": 3986,
+      "snapshot": "sources/skills/buster/plugins/openapi/src/schema-support.js"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+      "sha256": "9caf53c6a77db03bb58a798c3bfc9fd6dd8e73f2bc91333a148dfa57ff081a33",
+      "bytes": 18356,
+      "snapshot": "sources/skills/buster/plugins/openapi/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/tests/remediation.test.ts",
+      "sha256": "0c157e593df364b8837168f42e3a6eb6a3aa2ac8c8ec0d8766fb41071ae5fbbd",
+      "bytes": 5659,
+      "snapshot": "sources/skills/buster/plugins/openapi/tests/remediation.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/openapi/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/README.md",
+      "sha256": "9b370d17fcf2a99824fe1506b703790bf149b26a73008a0f4fe628ce79b4e346",
+      "bytes": 1010,
+      "snapshot": "sources/skills/buster/plugins/playwright/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/package.json",
+      "sha256": "cde18f5dffba2e429f1f8e9cca99a23a72c1e7b75fad9b77cc5ef1a5e333cf6e",
+      "bytes": 271,
+      "snapshot": "sources/skills/buster/plugins/playwright/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/plugin.json",
+      "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9",
+      "bytes": 978,
+      "snapshot": "sources/skills/buster/plugins/playwright/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+      "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977",
+      "bytes": 1251,
+      "snapshot": "sources/skills/buster/plugins/playwright/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/src/provider.js",
+      "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8",
+      "bytes": 12626,
+      "snapshot": "sources/skills/buster/plugins/playwright/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/tests/fixture/playwright.config.ts",
+      "sha256": "7c55fb6ed9bc55a2bd9df23aa752fda7be2090bf14ac92dca4ffe0647458ce42",
+      "bytes": 362,
+      "snapshot": "sources/skills/buster/plugins/playwright/tests/fixture/playwright.config.ts"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts",
+      "sha256": "8c82f2af60c14339036326de17304c698fe6f7c4d1e336ffae9881dc93ddd2f0",
+      "bytes": 443,
+      "snapshot": "sources/skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/tests/live-function.test.ts",
+      "sha256": "e1ad40bfd668ed5a6b3aad21397d09b1b96f5d3d8ad378c818b287e25777b52a",
+      "bytes": 9142,
+      "snapshot": "sources/skills/buster/plugins/playwright/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/playwright/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/README.md",
+      "sha256": "97f0db9adda62d1b15cfa518816547b15ad66b1c38f35010c75d6d5797f5cd20",
+      "bytes": 1189,
+      "snapshot": "sources/skills/buster/plugins/security-providers/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/package.json",
+      "sha256": "16c52f7be8292eb52291e14b8aec97fd9ebcedd421f52647df5dc5cd876b7f10",
+      "bytes": 235,
+      "snapshot": "sources/skills/buster/plugins/security-providers/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/plugin.json",
+      "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+      "bytes": 3239,
+      "snapshot": "sources/skills/buster/plugins/security-providers/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+      "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4",
+      "bytes": 1074,
+      "snapshot": "sources/skills/buster/plugins/security-providers/schemas/dependency.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+      "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191",
+      "bytes": 2210,
+      "snapshot": "sources/skills/buster/plugins/security-providers/schemas/headers.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+      "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca",
+      "bytes": 967,
+      "snapshot": "sources/skills/buster/plugins/security-providers/schemas/image.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+      "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+      "bytes": 935,
+      "snapshot": "sources/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+      "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea",
+      "bytes": 935,
+      "snapshot": "sources/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/common.js",
+      "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3",
+      "bytes": 6590,
+      "snapshot": "sources/skills/buster/plugins/security-providers/src/common.js"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+      "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57",
+      "bytes": 1997,
+      "snapshot": "sources/skills/buster/plugins/security-providers/src/database-evidence.js"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/dependency.js",
+      "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55",
+      "bytes": 2639,
+      "snapshot": "sources/skills/buster/plugins/security-providers/src/dependency.js"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/headers.js",
+      "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7",
+      "bytes": 7515,
+      "snapshot": "sources/skills/buster/plugins/security-providers/src/headers.js"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/image.js",
+      "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588",
+      "bytes": 2674,
+      "snapshot": "sources/skills/buster/plugins/security-providers/src/image.js"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+      "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd",
+      "bytes": 2689,
+      "snapshot": "sources/skills/buster/plugins/security-providers/src/kubernetes-policy.js"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+      "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5",
+      "bytes": 3726,
+      "snapshot": "sources/skills/buster/plugins/security-providers/src/kubernetes-runtime.js"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+      "sha256": "e37ea6086143c335c70c0fcc5ea7839b4e149a012fd6efbc22dd374c1af958c7",
+      "bytes": 6425,
+      "snapshot": "sources/skills/buster/plugins/security-providers/tests/database-freshness.test.mts"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+      "sha256": "0581bde77436534084542396ff836e417532c9fffa314af56d52f8b094248162",
+      "bytes": 10602,
+      "snapshot": "sources/skills/buster/plugins/security-providers/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/security-providers/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/README.md",
+      "sha256": "9cab80aae3f14c2c1dac300c3875ffa561dda4e64bdec0bfcec530e1e1ceb7a4",
+      "bytes": 405,
+      "snapshot": "sources/skills/buster/plugins/size-budget/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/package.json",
+      "sha256": "381c7472b565616bf9d29567a726c3de521a873917ed71d4c920014ae92eb269",
+      "bytes": 211,
+      "snapshot": "sources/skills/buster/plugins/size-budget/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/plugin.json",
+      "sha256": "5f9a11dad63edf557454124ae8a71a6382ddac5212dbeaf064e86019fe28a737",
+      "bytes": 1532,
+      "snapshot": "sources/skills/buster/plugins/size-budget/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+      "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894",
+      "bytes": 1237,
+      "snapshot": "sources/skills/buster/plugins/size-budget/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/src/provider.js",
+      "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce",
+      "bytes": 19188,
+      "snapshot": "sources/skills/buster/plugins/size-budget/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/tests/live-function.test.ts",
+      "sha256": "0db789a82964e2676582e0bee7afd31e046d6f4b6e9604ccaf63474f78207408",
+      "bytes": 8583,
+      "snapshot": "sources/skills/buster/plugins/size-budget/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/size-budget/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/README.md",
+      "sha256": "7fcb51b8fb8d22dddab78d9e5aa09abe37f547aa8385e0e9d22cfcfcf88db4df",
+      "bytes": 1644,
+      "snapshot": "sources/skills/buster/plugins/tailscale-exposure/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/package.json",
+      "sha256": "3918395fcd44dfcba85323354798768a11c9d4219e4284769579f02913d84f9d",
+      "bytes": 203,
+      "snapshot": "sources/skills/buster/plugins/tailscale-exposure/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "sha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+      "bytes": 933,
+      "snapshot": "sources/skills/buster/plugins/tailscale-exposure/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+      "sha256": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd",
+      "bytes": 597,
+      "snapshot": "sources/skills/buster/plugins/tailscale-exposure/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0",
+      "bytes": 6876,
+      "snapshot": "sources/skills/buster/plugins/tailscale-exposure/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts",
+      "sha256": "3e2524bee3df8bec94f757d87e03122395280c0fc7a80d42776669430f142c56",
+      "bytes": 2205,
+      "snapshot": "sources/skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792",
+      "bytes": 173,
+      "snapshot": "sources/skills/buster/plugins/tailscale-exposure/tsconfig.json"
+    },
+    {
+      "path": "skills/buster/plugins/visual/README.md",
+      "sha256": "dadded5f27a5006b797e701cbedb69778288f55014c64e36a115a749f6a70ba5",
+      "bytes": 1103,
+      "snapshot": "sources/skills/buster/plugins/visual/README.md"
+    },
+    {
+      "path": "skills/buster/plugins/visual/package.json",
+      "sha256": "790b09a88f930ce966cb8001f6e911f1809e9fe0ed4ec83413ca112179ff713a",
+      "bytes": 188,
+      "snapshot": "sources/skills/buster/plugins/visual/package.json"
+    },
+    {
+      "path": "skills/buster/plugins/visual/plugin.json",
+      "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90",
+      "bytes": 991,
+      "snapshot": "sources/skills/buster/plugins/visual/plugin.json"
+    },
+    {
+      "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+      "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da",
+      "bytes": 1577,
+      "snapshot": "sources/skills/buster/plugins/visual/schemas/config.schema.json"
+    },
+    {
+      "path": "skills/buster/plugins/visual/src/browser-identity.js",
+      "sha256": "44ab23cb793d764710dae28b0a3a4c340ae57aeeb6e36dc7bfae192c05c265d3",
+      "bytes": 1003,
+      "snapshot": "sources/skills/buster/plugins/visual/src/browser-identity.js"
+    },
+    {
+      "path": "skills/buster/plugins/visual/src/provider.js",
+      "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1",
+      "bytes": 17703,
+      "snapshot": "sources/skills/buster/plugins/visual/src/provider.js"
+    },
+    {
+      "path": "skills/buster/plugins/visual/tests/browser-identity.test.mjs",
+      "sha256": "84249a40bd69166a6c052e8654fb3b384201c536a818713768e55806e0fea6a3",
+      "bytes": 3836,
+      "snapshot": "sources/skills/buster/plugins/visual/tests/browser-identity.test.mjs"
+    },
+    {
+      "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+      "sha256": "c8dfbac810f6b1be0db10368b203eb5731f9ebdb6ab2afde87171748cd4f7109",
+      "bytes": 14010,
+      "snapshot": "sources/skills/buster/plugins/visual/tests/live-function.test.ts"
+    },
+    {
+      "path": "skills/buster/plugins/visual/tsconfig.json",
+      "sha256": "7ea156239ab42e02f03ca507403f02f79f8147e862f5a95ad88c08cf65994a79",
+      "bytes": 152,
+      "snapshot": "sources/skills/buster/plugins/visual/tsconfig.json"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "8a7f137964b58b6e97c7d7b2182dfd3365c4fd2cb06ba0eb493620a1b2133617",
+      "bytes": 12320,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/config/swarm.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+      "bytes": 16293,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/build.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+      "bytes": 4047,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/configuration.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+      "bytes": 5817,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/schema.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+      "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+      "bytes": 2895,
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/registry/types.ts"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/plugin.json",
+      "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+      "bytes": 2305,
+      "snapshot": "sources/skills/common/plugins/agent-observability/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/plugin.json",
+      "sha256": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f",
+      "bytes": 443,
+      "snapshot": "sources/skills/common/plugins/artifact-store/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/plugin.json",
+      "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146",
+      "bytes": 410,
+      "snapshot": "sources/skills/common/plugins/command-runner/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/git-workspace/plugin.json",
+      "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802",
+      "bytes": 505,
+      "snapshot": "sources/skills/common/plugins/git-workspace/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/network-http/plugin.json",
+      "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3",
+      "bytes": 402,
+      "snapshot": "sources/skills/common/plugins/network-http/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/notification-observer/plugin.json",
+      "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+      "bytes": 1610,
+      "snapshot": "sources/skills/common/plugins/notification-observer/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+      "sha256": "16e0baa799abd2a53ef43f3ccfb0a4055d90c2129453de750992eafec9112be5",
+      "bytes": 423,
+      "snapshot": "sources/skills/common/plugins/openclaw-agent-events/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/plugin.json",
+      "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563",
+      "bytes": 498,
+      "snapshot": "sources/skills/common/plugins/operator-messaging/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/plugin.json",
+      "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843",
+      "bytes": 744,
+      "snapshot": "sources/skills/common/plugins/redis-transport/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+      "bytes": 822,
+      "snapshot": "sources/skills/common/plugins/runtime-dispatch/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/secret-resolver/plugin.json",
+      "sha256": "c36463ec4caa7adc8334d5adc6ac362d8a6fa5763e9a3b1ff03bf044024ed347",
+      "bytes": 408,
+      "snapshot": "sources/skills/common/plugins/secret-resolver/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/state-store/plugin.json",
+      "sha256": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb",
+      "bytes": 424,
+      "snapshot": "sources/skills/common/plugins/state-store/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/telemetry-observer/plugin.json",
+      "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+      "bytes": 1390,
+      "snapshot": "sources/skills/common/plugins/telemetry-observer/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/telemetry-store/plugin.json",
+      "sha256": "77c3f887ed4068b00a3d3a3019c5257b9a9a7c397c5d94a2bc21095b5481b848",
+      "bytes": 412,
+      "snapshot": "sources/skills/common/plugins/telemetry-store/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/plugin.json",
+      "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f",
+      "bytes": 473,
+      "snapshot": "sources/skills/common/plugins/transport-publisher/plugin.json"
+    },
+    {
+      "path": "skills/common/plugins/wait-store/plugin.json",
+      "sha256": "f7564d3bb167b2aebe69bba54ab7ba2d59cf588475ea21c8c4cb4ab658a210ed",
+      "bytes": 400,
+      "snapshot": "sources/skills/common/plugins/wait-store/plugin.json"
+    },
+    {
+      "path": "skills/nova/core/test-gates/deadline.ts",
+      "sha256": "27bb55650cfa85943f64843b523b671460f86a93b173f2233ffe31cdf72d182b",
+      "bytes": 2088,
+      "snapshot": "sources/skills/nova/core/test-gates/deadline.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/dispatch-operation.ts",
+      "sha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+      "bytes": 5223,
+      "snapshot": "sources/skills/nova/core/test-gates/dispatch-operation.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/dispatch-projection.ts",
+      "sha256": "0dcce75d3c75064638270d1405c287f58e51d27d82930b6ebb661d2edccaa8fd",
+      "bytes": 4009,
+      "snapshot": "sources/skills/nova/core/test-gates/dispatch-projection.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/http-response.ts",
+      "sha256": "03da46c89c22facbf8970a363288f29addc6171cea2b65d0286696e8ff9da74b",
+      "bytes": 2038,
+      "snapshot": "sources/skills/nova/core/test-gates/http-response.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/pipeline.ts",
+      "sha256": "8e17514a8b9699f2f921f07b6f450b3c4357903ec4726f72099644d1703cd2ed",
+      "bytes": 4042,
+      "snapshot": "sources/skills/nova/core/test-gates/pipeline.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+      "bytes": 5504,
+      "snapshot": "sources/skills/nova/core/test-gates/production.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "bytes": 9555,
+      "snapshot": "sources/skills/nova/core/test-gates/remote-dispatch-store.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+      "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "bytes": 9549,
+      "snapshot": "sources/skills/nova/core/test-gates/remote-dispatch.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-gate-cli.ts",
+      "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+      "bytes": 2077,
+      "snapshot": "sources/skills/nova/core/test-gates/remote-gate-cli.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-result-authority.ts",
+      "sha256": "f32cda2218fb9fef4d3405bd3aef99b2f4c497750d9f7c5ff23bb2e36b799835",
+      "bytes": 11333,
+      "snapshot": "sources/skills/nova/core/test-gates/remote-result-authority.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-result-import.ts",
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "bytes": 14590,
+      "snapshot": "sources/skills/nova/core/test-gates/remote-result-import.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/resolver.ts",
+      "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3",
+      "bytes": 42270,
+      "snapshot": "sources/skills/nova/core/test-gates/resolver.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/runtime-config.ts",
+      "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+      "bytes": 4909,
+      "snapshot": "sources/skills/nova/core/test-gates/runtime-config.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/secure-endpoint.ts",
+      "sha256": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a",
+      "bytes": 768,
+      "snapshot": "sources/skills/nova/core/test-gates/secure-endpoint.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/source-git.ts",
+      "sha256": "869044fecd888a1e4ded10059c8f6a5ec4510d1ca9c277507de545538f1fb90c",
+      "bytes": 2712,
+      "snapshot": "sources/skills/nova/core/test-gates/source-git.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/source-process-lifecycle.ts",
+      "sha256": "5924d42b6b5140cd8148aba4d69e54eca84ba8883e0a2739420019f5b48f778b",
+      "bytes": 2981,
+      "snapshot": "sources/skills/nova/core/test-gates/source-process-lifecycle.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/source-snapshot.ts",
+      "sha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+      "bytes": 3429,
+      "snapshot": "sources/skills/nova/core/test-gates/source-snapshot.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/transport-error.ts",
+      "sha256": "ad99cced693a08380f5c317de672eb5cf919c3abae2398eda5cc5e5770a4b195",
+      "bytes": 298,
+      "snapshot": "sources/skills/nova/core/test-gates/transport-error.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/types.ts",
+      "sha256": "560f3edc4024f8c65d6857f90df837454f6554be9cc3c29c6d09b320af4f28a2",
+      "bytes": 4047,
+      "snapshot": "sources/skills/nova/core/test-gates/types.ts"
+    },
+    {
+      "path": "skills/nova/core/test-gates/verified-output.ts",
+      "sha256": "7e7294645409f8e8fe95cb27b300e85b75157763ed80be004f544e238b79712c",
+      "bytes": 2403,
+      "snapshot": "sources/skills/nova/core/test-gates/verified-output.ts"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/plugin.json",
+      "sha256": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+      "bytes": 621,
+      "snapshot": "sources/skills/nova/plugins/architecture-validator/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/plugin.json",
+      "sha256": "b7d85a1c195d9d5280da1c396ac1d697be9e0d3a85babe1046850c18fa47e384",
+      "bytes": 614,
+      "snapshot": "sources/skills/nova/plugins/blueprint-sync/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/plugin.json",
+      "sha256": "19b03b5c61f4b6decbf06a650a3824db02f61ba010939246a7d1bd35ae3e6966",
+      "bytes": 613,
+      "snapshot": "sources/skills/nova/plugins/buster-quality-gate/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/case-study/plugin.json",
+      "sha256": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+      "bytes": 578,
+      "snapshot": "sources/skills/nova/plugins/case-study/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/plugin.json",
+      "sha256": "4d560ad2f25858a8f399097effb0f32c7a25bfbe326c3dfd61101346ee1d01d9",
+      "bytes": 551,
+      "snapshot": "sources/skills/nova/plugins/delivery-lint/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/plugin.json",
+      "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e",
+      "bytes": 1679,
+      "snapshot": "sources/skills/nova/plugins/demo-handoff/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/plugin.json",
+      "sha256": "a93144f20bcd0968995844516da5221e8d77aa5c559577c7f1165f00dfd0f4b8",
+      "bytes": 1073,
+      "snapshot": "sources/skills/nova/plugins/human-approval/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/plugin.json",
+      "sha256": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+      "bytes": 696,
+      "snapshot": "sources/skills/nova/plugins/implementation-agent/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/lint/plugin.json",
+      "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04",
+      "bytes": 1226,
+      "snapshot": "sources/skills/nova/plugins/lint/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/plugin.json",
+      "sha256": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+      "bytes": 892,
+      "snapshot": "sources/skills/nova/plugins/pipeline-review/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/plugin.json",
+      "sha256": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c",
+      "bytes": 976,
+      "snapshot": "sources/skills/nova/plugins/preflight-contract/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/plugin.json",
+      "sha256": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+      "bytes": 482,
+      "snapshot": "sources/skills/nova/plugins/prism-design/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/plugin.json",
+      "sha256": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454",
+      "bytes": 551,
+      "snapshot": "sources/skills/nova/plugins/project-summary/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "sha256": "7c42888270bb814bfeb9c47b2bc1daa4a858e649890866c9abb0f6b3c4b8d35e",
+      "bytes": 745,
+      "snapshot": "sources/skills/nova/plugins/remote-test-gate/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/plugin.json",
+      "sha256": "91fe75d56133722d51c62bb2b06f729cdf3ee35735f471857fb324aab34501bd",
+      "bytes": 421,
+      "snapshot": "sources/skills/nova/plugins/repository-adapter/plugin.json"
+    },
+    {
+      "path": "skills/nova/plugins/review/plugin.json",
+      "sha256": "5ced42bfc8ca0851739ed6bbd668085345dea0e1caa391c5f1520e7f919be8f1",
+      "bytes": 1684,
+      "snapshot": "sources/skills/nova/plugins/review/plugin.json"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "scope": "Root independent static value-preservation check for staged component split; no loader/runtime/packaging acceptance",
+  "operatorLeafCount": 59,
+  "allExistingOperatorValuesPreserved": true,
+  "sourceSha256": {
+    "charts/kubeclaw/files/config/swarm.config.json": "b9f7ca208263a45c39c67fb21c864a83a33a04144dcade051fa24a0719d72451",
+    "docs/review/evidence/config-component-layout-20260921/staging/files/charts/kubeclaw/files/config/buster-engine.config.json": "57f5f68231777a113c01773a33c350cbbb2746e97ad8aad4538b455427585ff4",
+    "docs/review/evidence/config-component-layout-20260921/staging/files/charts/kubeclaw/files/config/prism-control.config.json": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+    "docs/review/evidence/config-component-layout-20260921/staging/files/charts/kubeclaw/files/config/prism-execution.config.json": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+    "docs/review/evidence/config-component-layout-20260921/staging/files/charts/kubeclaw/files/config/prism-studio.config.json": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+    "docs/review/evidence/config-component-layout-20260921/staging/files/charts/kubeclaw/files/config/prism-worker.config.json": "a2ae24efb4777b5018041c58a790025435308afa6efb5e9598d2980c0544ee69",
+    "docs/review/evidence/config-component-layout-20260921/staging/files/charts/kubeclaw/files/config/swarm.config.json": "ab3ee0545ef7d04897523efcfe3a7c93acf036025e92a4142b044a530e0d0634"
+  }
+}

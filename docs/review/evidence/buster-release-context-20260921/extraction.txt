@@ -1,0 +1,1 @@
+PASS: expanded validateBundle AST preserves original branches, literals and statement order.

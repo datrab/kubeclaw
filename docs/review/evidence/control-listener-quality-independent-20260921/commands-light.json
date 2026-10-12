@@ -1,0 +1,41 @@
+[
+  {
+    "name": "http-boundaries",
+    "command": [
+      "node",
+      "--test",
+      "docs/review/evidence/control-listener-quality-independent-20260921/http-boundaries.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "auth-mutant",
+    "command": [
+      "node",
+      "--import",
+      "./docs/review/evidence/control-listener-quality-independent-20260921/omit-auth.mjs",
+      "--test",
+      "docs/review/evidence/control-listener-quality-independent-20260921/http-boundaries.mts"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "literal-audit",
+    "command": [
+      "node",
+      "docs/review/evidence/control-listener-quality-independent-20260921/literal-audit.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "listener-image",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/control-listener.test.mts",
+      "skills/prism/tests/control-image-environment.test.mts"
+    ],
+    "exitCode": 0
+  }
+]

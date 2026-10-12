@@ -1,0 +1,62 @@
+[
+  {
+    "mode": "empty",
+    "status": 0,
+    "stdout": "[]\n",
+    "stderr": "",
+    "parserStatus": 0,
+    "parserOutput": "absent",
+    "calls": [
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm"
+    ]
+  },
+  {
+    "mode": "valid",
+    "status": 0,
+    "stdout": "[{\"name\":\"agent-nova\",\"namespace\":\"guard-test\",\"revision\":\"1\",\"updated\":\"-\",\"status\":\"deployed\",\"chart\":\"fixture-1.0.0\",\"app_version\":\"\"}]\n",
+    "stderr": "",
+    "parserStatus": 0,
+    "parserOutput": "deployed",
+    "calls": [
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm"
+    ]
+  },
+  {
+    "mode": "denied",
+    "status": 1,
+    "stdout": "",
+    "stderr": "Error: list: failed to list: credential not found\n",
+    "parserStatus": 1,
+    "parserOutput": "",
+    "calls": [
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm"
+    ]
+  },
+  {
+    "mode": "corrupt",
+    "status": 0,
+    "stdout": "[]\n",
+    "stderr": "",
+    "parserStatus": 0,
+    "parserOutput": "absent",
+    "calls": [
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm"
+    ]
+  },
+  {
+    "mode": "corrupt-latest",
+    "status": 0,
+    "stdout": "[{\"name\":\"agent-nova\",\"namespace\":\"guard-test\",\"revision\":\"1\",\"updated\":\"-\",\"status\":\"deployed\",\"chart\":\"fixture-1.0.0\",\"app_version\":\"\"}]\n",
+    "stderr": "",
+    "parserStatus": 0,
+    "parserOutput": "deployed",
+    "calls": [
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm"
+    ]
+  }
+]

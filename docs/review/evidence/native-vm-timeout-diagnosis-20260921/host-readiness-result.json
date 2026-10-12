@@ -1,0 +1,44 @@
+[
+  {
+    "mode": "accepted",
+    "context": "child-v8",
+    "stdout": "durable\n",
+    "firstByteMs": 539.0550079999999,
+    "stderr": "DIAGNOSTIC_BOOT {\"context\":\"child-v8\"}\nDIAGNOSTIC_READY {\"elapsedMs\":510.58282099999997,\"loads\":138,\"loadMs\":17.281114000000148}\n"
+  },
+  {
+    "mode": "accepted",
+    "context": null,
+    "stdout": "durable\n",
+    "firstByteMs": 674.984535,
+    "stderr": "DIAGNOSTIC_BOOT {\"context\":null}\nDIAGNOSTIC_READY {\"elapsedMs\":641.110358,\"loads\":138,\"loadMs\":15.504186999999906}\n"
+  },
+  {
+    "mode": "sealed",
+    "context": "child-v8",
+    "stdout": "durable\n",
+    "firstByteMs": 1107.2107290000001,
+    "stderr": "DIAGNOSTIC_BOOT {\"context\":\"child-v8\"}\nDIAGNOSTIC_READY {\"elapsedMs\":1062.852601,\"loads\":138,\"loadMs\":17.52121000000009}\n"
+  },
+  {
+    "mode": "sealed",
+    "context": null,
+    "stdout": "durable\n",
+    "firstByteMs": 656.0904959999998,
+    "stderr": "DIAGNOSTIC_BOOT {\"context\":null}\nDIAGNOSTIC_READY {\"elapsedMs\":624.314074,\"loads\":138,\"loadMs\":16.864924999999943}\n"
+  },
+  {
+    "mode": "supervisor",
+    "context": "child-v8",
+    "stdout": "locked\n",
+    "firstByteMs": 436.97277699999995,
+    "stderr": "DIAGNOSTIC_BOOT {\"context\":\"child-v8\"}\nDIAGNOSTIC_READY {\"elapsedMs\":405.79825999999997,\"loads\":133,\"loadMs\":15.504506000000017}\n"
+  },
+  {
+    "mode": "supervisor",
+    "context": null,
+    "stdout": "locked\n",
+    "firstByteMs": 441.3079780000003,
+    "stderr": "DIAGNOSTIC_BOOT {\"context\":null}\nDIAGNOSTIC_READY {\"elapsedMs\":405.290957,\"loads\":133,\"loadMs\":14.545664999999822}\n"
+  }
+]

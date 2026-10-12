@@ -1,0 +1,260 @@
+{
+  "at": "2026-09-21T20:00:23.401883+00:00",
+  "runtimeExecuted": false,
+  "checks": {
+    "onlyAppend": true,
+    "currentMatchesIntegratedPackage": true,
+    "onlyScriptChanged": true,
+    "fieldCount": 37,
+    "allDocumented": true
+  },
+  "fields": [
+    {
+      "field": "provider.cleanupTimeoutMs",
+      "value": 30000,
+      "documented": true
+    },
+    {
+      "field": "provider.maximumResultBytes",
+      "value": 16777216,
+      "documented": true
+    },
+    {
+      "field": "provider.claimGraceMs",
+      "value": 60000,
+      "documented": true
+    },
+    {
+      "field": "provider.queueTimeoutMs",
+      "value": 60000,
+      "documented": true
+    },
+    {
+      "field": "provider.workerResultWrapperBytes",
+      "value": 4096,
+      "documented": true
+    },
+    {
+      "field": "provider.maximumProtocolBytes",
+      "value": 16777216,
+      "documented": true
+    },
+    {
+      "field": "provider.terminationGraceMs",
+      "value": 500,
+      "documented": true
+    },
+    {
+      "field": "provider.terminationTimeoutMs",
+      "value": 1000,
+      "documented": true
+    },
+    {
+      "field": "provider.capabilityDrainTimeoutMs",
+      "value": 1000,
+      "documented": true
+    },
+    {
+      "field": "provider.minimumHeapMiB",
+      "value": 16,
+      "documented": true
+    },
+    {
+      "field": "provider.heapFraction",
+      "value": 0.7,
+      "documented": true
+    },
+    {
+      "field": "provider.maximumPendingCapabilities",
+      "value": 32,
+      "documented": true
+    },
+    {
+      "field": "provider.minimumOpenFiles",
+      "value": 64,
+      "documented": true
+    },
+    {
+      "field": "provider.artifactFileDescriptorReserve",
+      "value": 32,
+      "documented": true
+    },
+    {
+      "field": "reports.maximumAggregateResultBytes",
+      "value": 16777216,
+      "documented": true
+    },
+    {
+      "field": "reports.maximumSourceBytes",
+      "value": 67108864,
+      "documented": true
+    },
+    {
+      "field": "reports.maximumCases",
+      "value": 5000,
+      "documented": true
+    },
+    {
+      "field": "reports.maximumFindings",
+      "value": 5000,
+      "documented": true
+    },
+    {
+      "field": "reports.maximumCaseFindings",
+      "value": 100,
+      "documented": true
+    },
+    {
+      "field": "reports.maximumTimeoutMs",
+      "value": 300000,
+      "documented": true
+    },
+    {
+      "field": "reports.memoryBytes",
+      "value": 536870912,
+      "documented": true
+    },
+    {
+      "field": "reports.minimumCpuTimeMs",
+      "value": 1000,
+      "documented": true
+    },
+    {
+      "field": "reports.maximumOpenFiles",
+      "value": 64,
+      "documented": true
+    },
+    {
+      "field": "observation.resourceSampleIntervalMs",
+      "value": 10,
+      "documented": true
+    },
+    {
+      "field": "observation.processSampleIntervalMs",
+      "value": 50,
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumEvidenceObjects",
+      "value": 10000,
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumEvidenceBytes",
+      "value": 10737418240,
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumEvidenceObjectBytes",
+      "value": 1073741824,
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumResults",
+      "value": 10000,
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumClosures",
+      "value": 10000,
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumMetadataBytes",
+      "value": 268435456,
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumPendingEvidenceAgeMs",
+      "value": 3600000,
+      "documented": true
+    },
+    {
+      "field": "stores.admission.maximumIngressBytes",
+      "value": 16777216,
+      "documented": true
+    },
+    {
+      "field": "stores.admission.maximumRecords",
+      "value": 10000,
+      "documented": true
+    },
+    {
+      "field": "stores.admission.maximumBytes",
+      "value": 268435456,
+      "documented": true
+    },
+    {
+      "field": "stores.admission.maximumQuarantineRecords",
+      "value": 1000,
+      "documented": true
+    },
+    {
+      "field": "stores.admission.maximumQuarantineBytes",
+      "value": 67108864,
+      "documented": true
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/architecture/buster-execution-configuration.md",
+      "sha256": "1a6e7e5f49841ecfe45cc7f62a6110da872fdaca2771bfd52ce8262ad7113f55"
+    },
+    {
+      "path": "package.json",
+      "sha256": "d13c1ecb58c1aaf6eaa1fb4e1978c20492f6995c72e1cb37510ea34b39bb61dd"
+    },
+    {
+      "path": "tests/verification/contracts/tsconfig.buster-execution-policy.json",
+      "sha256": "d6a016b5cc53db6e76389c47cf5b90297b474d510086cd8da6cfc474d47ddd16"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "a8ed6c31613a155caba92792bbe4763fcb0eacf093dc8f41695a238105a8bdb7"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "4eecd519cfe89e737a80054c99e50ecf4b8fb068bd7fc1763339e7cce5137df7"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "2460dd23e97cae74194d4c72255fea3e77a9b711a2de413a9d07893362646711"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "sha256": "47a8f9dfe764a207a41dea94873ac67c474de3cc428f0ecc06237222b54a6bd8"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "8a6565565db5683e8da2c7bb17eb7a1d5f474b43d336fe1d6856219a193c3179"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "24ffa41ad944b28b7c40bfe5509548017623e488206f9f0db0005b8485fb3b84"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+      "sha256": "ab4b341f3d52181ff6b6fa33aaaa70d617616f33a1f40b0ec147db0ec2f0df06"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "e2960d464717d819653c1b379db904b050455d4b23be03aa93105ad7dfc7c6c1"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "sha256": "2bc8ae28f2f2e9e65616681ba2e2b430b2d3378f6119f6bdc0b0aae5fd7b2d40"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/additional-proofs/command-integration.json",
+      "sha256": "56d7eae0389cc3a0d3a43f7c3e37bc095442d66b0a031eae1415a7b9a08c162d"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/additional-proofs/command-before-package.json",
+      "sha256": "f5eec9356c2611aed1b9e1f5abeba7b518bc737755a177792a1d409c3ce05f96"
+    },
+    {
+      "path": "docs/review/evidence/buster-provider-session-policy-20260921/additional-proofs/command-after-package.json",
+      "sha256": "d13c1ecb58c1aaf6eaa1fb4e1978c20492f6995c72e1cb37510ea34b39bb61dd"
+    }
+  ]
+}

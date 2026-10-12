@@ -1,0 +1,372 @@
+✖ default Runner-owned store enforces maximumEvidenceObjects=1 (314.148741ms)
+✖ default Runner-owned store enforces maximumEvidenceObjects=2 (146.606969ms)
+✖ default Runner-owned store enforces maximumEvidenceBytes=1 (119.232222ms)
+✖ default Runner-owned store enforces maximumEvidenceBytes=2 (114.862299ms)
+✖ default Runner-owned store enforces maximumEvidenceObjectBytes=1 (119.95439ms)
+✖ default Runner-owned store enforces maximumEvidenceObjectBytes=2 (102.153091ms)
+✖ default Runner-owned store reclaims selected orphan age 10 (119.235172ms)
+✖ default Runner-owned store reclaims selected orphan age 60000 (115.988168ms)
+✖ default Runner-owned admission retains bounded quarantine 1 (113.186336ms)
+✖ default Runner-owned admission retains bounded quarantine 2 (115.112585ms)
+✖ default Runner-owned admission enforces quarantine bytes 2 (108.818053ms)
+✖ default Runner-owned admission enforces quarantine bytes 10000 (110.359092ms)
+✖ default Runner-owned admission enforces ingress bytes 2048 (111.709897ms)
+✖ default Runner-owned admission enforces ingress bytes 8192 (118.328389ms)
+✖ default Runner completion consumes closure quota 1 (207.843363ms)
+✖ default Runner completion consumes closure quota 2 (267.789232ms)
+✖ default Runner completion consumes admission byte capacity 1025 (97.533041ms)
+✖ default Runner completion consumes admission byte capacity 1048576 (101.134304ms)
+✔ default Runner completion enforces metadata bytes 1024 (79.539097ms)
+✖ default Runner completion enforces metadata bytes 1048576 (114.043088ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 1
+ℹ fail 19
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5019.526978
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:64:5
+✖ default Runner-owned store enforces maximumEvidenceObjects=1 (314.148741ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:67:28)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:64:5
+✖ default Runner-owned store enforces maximumEvidenceObjects=2 (146.606969ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:67:28)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:64:5
+✖ default Runner-owned store enforces maximumEvidenceBytes=1 (119.232222ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:67:28)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:64:5
+✖ default Runner-owned store enforces maximumEvidenceBytes=2 (114.862299ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:67:28)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:64:5
+✖ default Runner-owned store enforces maximumEvidenceObjectBytes=1 (119.95439ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:67:28)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:64:5
+✖ default Runner-owned store enforces maximumEvidenceObjectBytes=2 (102.153091ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:67:28)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:85:3
+✖ default Runner-owned store reclaims selected orphan age 10 (119.235172ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:86:26)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:85:3
+✖ default Runner-owned store reclaims selected orphan age 60000 (115.988168ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:86:26)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:97:3
+✖ default Runner-owned admission retains bounded quarantine 1 (113.186336ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:98:27)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:97:3
+✖ default Runner-owned admission retains bounded quarantine 2 (115.112585ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:98:27)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:109:3
+✖ default Runner-owned admission enforces quarantine bytes 2 (108.818053ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:110:27)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:109:3
+✖ default Runner-owned admission enforces quarantine bytes 10000 (110.359092ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:110:27)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:120:3
+✖ default Runner-owned admission enforces ingress bytes 2048 (111.709897ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:121:27)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:120:3
+✖ default Runner-owned admission enforces ingress bytes 8192 (118.328389ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:121:27)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:141:3
+✖ default Runner completion consumes closure quota 1 (207.843363ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:142:45)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:141:3
+✖ default Runner completion consumes closure quota 2 (267.789232ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:142:45)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:155:3
+✖ default Runner completion consumes admission byte capacity 1025 (97.533041ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:156:37)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:155:3
+✖ default Runner completion consumes admission byte capacity 1048576 (101.134304ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:156:37)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-default-store-policy.test.mjs:166:3
+✖ default Runner completion enforces metadata bytes 1048576 (114.043088ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(admission)
+  
+      at configuredStores (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:48:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-default-store-policy.test.mjs:167:34)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

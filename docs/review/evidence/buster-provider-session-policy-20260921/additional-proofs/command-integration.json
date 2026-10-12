@@ -1,0 +1,7 @@
+{
+  "beforeSha256": "f5eec9356c2611aed1b9e1f5abeba7b518bc737755a177792a1d409c3ce05f96",
+  "afterSha256": "d13c1ecb58c1aaf6eaa1fb4e1978c20492f6995c72e1cb37510ea34b39bb61dd",
+  "command": "verify:buster:execution-config",
+  "onlyChange": "append tests/verification/contracts/buster-completion-policy.test.mjs",
+  "reviewStatus": "pending source review and execution"
+}

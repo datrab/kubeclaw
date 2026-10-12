@@ -1,0 +1,44 @@
+[
+  {
+    "name": "ownership",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/reliability/worker-ownership-store.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "quiescence",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/reliability/worker-native-quiescence.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "probe",
+    "command": [
+      "node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-worker-scope-required-20260921/probe.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "native-types",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.native-scope.json"
+    ],
+    "exitCode": 0
+  }
+]

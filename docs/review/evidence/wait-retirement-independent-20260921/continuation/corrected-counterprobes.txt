@@ -1,0 +1,23 @@
+✔ corrected independent: foreign storage retains same run ID but cannot authorize original records (6216.728777ms)
+✖ corrected independent: validly hashed foreign approval signal issuer rejects at actual authority (5209.935801ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12180.632874
+
+✖ failing tests:
+
+test at docs/review/evidence/wait-retirement-independent-20260921/continuation/counterprobes.mjs:38:1
+✖ corrected independent: validly hashed foreign approval signal issuer rejects at actual authority (5209.935801ms)
+  Error: WAIT_RETAINED_CORE_EVIDENCE_INVALID
+      at retainedWaitFailure (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/state/wait-projection-source.ts:7:57)
+      at originalSignal (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/state/wait-projection-reader.ts:77:93)
+      at resolveRetainedCoreWait (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/state/wait-projection-reader.ts:93:41)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-retirement-independent-20260921/continuation/counterprobes.mjs:49:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

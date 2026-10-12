@@ -1,0 +1,47 @@
+{
+  "status": "private frozen draft for independent source review; not integrated or executed",
+  "author": "/root/cluster_production_capture_tests",
+  "files": [
+    {
+      "path": "docs/architecture/buster-cluster-configuration.md",
+      "beforeSha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4",
+      "afterSha256": "9b3481248d9ba8500106296b78835274078bf6d18cdc4cfc269b4191d97f2acb"
+    },
+    {
+      "path": "package.json",
+      "beforeSha256": "8ed84f5a8eb007801c9e24e3c6aa18484a1ad81c3199f990ae66b4d0951f5d0b",
+      "afterSha256": "3cee31356300628fff49fe36e27cb5c7b376f3b98085cf2e2fe69440978d3754"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-api.mjs",
+      "beforeSha256": null,
+      "afterSha256": "d40e348ef9372cc013391e27f4f4be20c636116fe1b6fc0fc9af83e15fa3c7f0"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-program.cjs",
+      "beforeSha256": null,
+      "afterSha256": "499dc5c951bb3fdc956205b2bd19271313abc446363da99fa1611ebf50e0c0b1"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-route-provider.mjs",
+      "beforeSha256": null,
+      "afterSha256": "4a6d0c1cc263bb964a25c4a0a5fe2a8c8e940aa127990b5be4369d67c65b1888"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-capture.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "592ec1b8b4ba15c444cbcbbcdf361f777043a537f050a4770653153e847f7942"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "c1e24d7cbb18514f960e6f0339c39854aa33fb2b142b80abb6cfdff3057a192b"
+    }
+  ],
+  "overlaps": [
+    "package.json",
+    "docs/architecture/buster-cluster-configuration.md"
+  ],
+  "originalTestsModified": false,
+  "productionFilesModified": false
+}

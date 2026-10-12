@@ -1,0 +1,8 @@
+2026-09-21, repository root; no cluster operations.
+helm pull spire --repo https://spiffe.github.io/helm-charts-hardened/ --version 0.30.0 --destination node_modules/.cache/spire-effective-20260921
+exit 0
+helm template spire node_modules/.cache/spire-effective-20260921/spire-0.30.0.tgz --namespace spire-server --values my-values/infra/spire-values.yaml > docs/review/evidence/spire-effective-20260921/rendered.yaml
+exit 0
+sha256sum node_modules/.cache/spire-effective-20260921/spire-0.30.0.tgz my-values/infra/spire-values.yaml docs/review/evidence/spire-effective-20260921/rendered.yaml
+See sha256.txt. Chart archive and extracted source remain in ignored node_modules/.cache/spire-effective-20260921.
+No historical archive digest available; no upstream mutation claim.

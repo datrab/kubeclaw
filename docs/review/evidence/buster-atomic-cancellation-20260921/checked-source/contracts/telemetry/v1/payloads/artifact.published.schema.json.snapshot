@@ -1,0 +1,168 @@
+{
+  "$id": "artifact.published.payload.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/agent_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "artifact_id": {
+      "type": "string"
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "$ref": "../envelope.schema.json#/properties/attempt"
+    },
+    "byte_length": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "completeness": {
+      "enum": [
+        "full",
+        "truncated",
+        "summarized",
+        "transformed",
+        "unavailable",
+        "reference_only"
+      ]
+    },
+    "content_class": {
+      "enum": [
+        "metadata",
+        "payload",
+        "artifact",
+        "quarantined"
+      ]
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "dispatch_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/dispatch_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "extensions": {
+      "$ref": "../envelope.schema.json#/properties/extensions"
+    },
+    "gate_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "gate_type": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_type"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "kind": {
+      "type": "string"
+    },
+    "logical_id": {
+      "type": "string"
+    },
+    "media_type": {
+      "type": "string"
+    },
+    "model_call_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/model_call_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "module_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/module_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "original_byte_length": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "original_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reference": {
+      "type": "string"
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "tool_call_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/tool_call_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "transformation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "artifact_id",
+    "logical_id",
+    "kind",
+    "media_type",
+    "byte_length",
+    "sha256",
+    "content_class",
+    "reference"
+  ],
+  "type": "object"
+}

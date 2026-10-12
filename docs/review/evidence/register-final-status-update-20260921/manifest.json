@@ -1,0 +1,16 @@
+{
+  "updatedAt": "2026-09-21T21:09:47.563221+00:00",
+  "scope": "Documentation reflects independently accepted current REGISTER deliverable; statuses/counts/generator unchanged, A1 exception retained",
+  "files": [
+    {
+      "path": "docs/review/remediation/progress.md",
+      "beforeSha256": "b5c7b9005c6be2cda96b5f52e0335bc710b7a461af74938d8d221a114b12b7eb",
+      "afterSha256": "d4eb50084dfb57afae05a653d306d06cdd5031400785882b617dce0f85b92d91"
+    },
+    {
+      "path": "docs/review/remediation/implementation/open-work-inventory-20260921.md",
+      "beforeSha256": "62725dd776d5aa407e9ca354184dfb07635080e3567d8b21882a65c15292ecea",
+      "afterSha256": "7f0c67f2315c08232b7929b1ee6100b58ef6b209033d5226db941a7874628256"
+    }
+  ]
+}

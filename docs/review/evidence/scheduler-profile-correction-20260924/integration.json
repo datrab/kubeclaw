@@ -1,0 +1,7 @@
+{
+  "time": "2026-09-24T13:00:46.788789+00:00",
+  "path": "tests/fixtures/test-gate/scheduler-drain.mjs",
+  "sha256": "e50770fcd688b2a8fba758f5426445d74d4acc2f415f2ce790aa12e0d4039875",
+  "previousRuntime": "84507 terminal1, only scheduler prerequisite failed, all other commands0, unexpecteddrift[]",
+  "independentReview": "pending; reviewer unavailable due reported usage limit"
+}

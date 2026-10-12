@@ -1,0 +1,140 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+    "beforeSha256": "a2ae24efb4777b5018041c58a790025435308afa6efb5e9598d2980c0544ee69",
+    "stagedSha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834",
+    "new": false
+  },
+  {
+    "path": "charts/kubeclaw/files/config/swarm-components.schema.json",
+    "beforeSha256": "6d8ee7a3628cf3952e9f2838777f1926578c57bb193b7a809eef2a2143a3e922",
+    "stagedSha256": "75b10b25550b0622948bd8334df660a5d526988a37abe29263e406dfddd688ae",
+    "new": false
+  },
+  {
+    "path": "charts/prism/templates/_swarm-bundle.tpl",
+    "beforeSha256": "53b1deb4f3e1618aba7e628065ca518a992948cc96256c492660568bf296a853",
+    "stagedSha256": "1769fccb43906ac862216274e36c7d78574d977c736a49e3c4b199b1752cc29b",
+    "new": false
+  },
+  {
+    "path": "charts/prism/templates/_swarm-config.tpl",
+    "beforeSha256": "1578d2dd8e6dc3ad79791f26a65be33d9293db0a1f8257b5a49ebe13a0d88f81",
+    "stagedSha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a",
+    "new": false
+  },
+  {
+    "path": "charts/prism/templates/configmap-worker-trust.yaml",
+    "beforeSha256": "f84c715b0ffd6088dc996221a83987bc1711086785da5e5e0bb1f70c0a274f7c",
+    "stagedSha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+    "new": false
+  },
+  {
+    "path": "charts/prism/templates/networkpolicy.yaml",
+    "beforeSha256": "5e4e412c6dc3a6043620fcfa533b5881c9e9533b39632cdcca870c13d9cae838",
+    "stagedSha256": "75d2770a9d4a008cc10f6e506717ba8832e52d27ac2bd583bfee57dbd76eaa9f",
+    "new": false
+  },
+  {
+    "path": "charts/prism/templates/services.yaml",
+    "beforeSha256": "feea08cb2eaf89d5fb520c321a275a8550add0ca46337f4614d7384a7c1701df",
+    "stagedSha256": "abae201f362dacc4e4422c8867d57113483eb443d5cf964e2a65996bf9683a85",
+    "new": false
+  },
+  {
+    "path": "charts/prism/templates/workloads.yaml",
+    "beforeSha256": "4ddcda430b6f0099ecc08e925cc6b993cd34c47ec569694a0ed592318fb2677d",
+    "stagedSha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+    "new": false
+  },
+  {
+    "path": "docker/Dockerfile.prism-worker",
+    "beforeSha256": "45a85a6dc57aeb2988cca00e8f62e402f2ca928f60f9e2799a9b8ae5fc72a810",
+    "stagedSha256": "820d8c1b9cb0784113fbd4c2ceb206b40cb0e2381d3fad3df647d7dcc784bb80",
+    "new": false
+  },
+  {
+    "path": "docs/operations/operator-configuration.md",
+    "beforeSha256": "f3af261fbec738becb7d378482fc437c8b05cd5764ae16838c4340809bb83085",
+    "stagedSha256": "f6bb72c4e10b2be71dbe7eb4e815a06774da6495493367d4c549b1fdf94a120b",
+    "new": false
+  },
+  {
+    "path": "docs/operations/prism-operator-guide.md",
+    "beforeSha256": "83cc745fea8ee122dc2f9f98e19a042661871f2afb57dda1ab00909c6ef9c4c7",
+    "stagedSha256": "ae7210ec91dd14eebe979c07fb8a15347deefe95b606f727b84a48b6da10d6f7",
+    "new": false
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "beforeSha256": "f89c78d96f4a1fa041468890d8759d711514ea7ff9c45fd29c5239d8daa4c4fd",
+    "stagedSha256": "544558cc880ad81f000cb11906b9458c15a678e572e8c33118868c49e23ef492",
+    "new": false
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "beforeSha256": "85b45443605d8b390e36c02c0c632fe7147e939e420b37e50f065c56d9433734",
+    "stagedSha256": "6f6b912845d49627a7c2b2ff3cf010f94ebb0eeb84ea2bf1e3983df0be2c76a9",
+    "new": false
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/README.md",
+    "beforeSha256": "7b4e5e7fc1593eef086c61858c7a4d4b8bb995d43d7351ceaf8010d4026ecb69",
+    "stagedSha256": "f63c6578e0ae1592b89116190fe9015df72b34bd684c03e55f6cc11629b5ab14",
+    "new": false
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "beforeSha256": "79e53789b12d226fc39c842b2434d116ebfd6ba6eb0f9e0d2fa8b62c7beee686",
+    "stagedSha256": "484de1f0d6b7b7a4c069204495ddd31816e546b40ba41284a21c95cc51f6633e",
+    "new": false
+  },
+  {
+    "path": "skills/prism/server/worker-config.ts",
+    "beforeSha256": "249ea80da729fd1edcc149798ef343ba7e7f1e789528acedd540fabad4e9e337",
+    "stagedSha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+    "new": false
+  },
+  {
+    "path": "skills/prism/tests/control-image-environment.test.mts",
+    "beforeSha256": "986bc0c393447bd9d0b2a5ccacfaa463a293e6f71ea641676e880c08b8c652ed",
+    "stagedSha256": "72caacee4bd355a89206afbe8314502736d7beb151f4e1010bc6cbd890d59d1a",
+    "new": false
+  },
+  {
+    "path": "skills/prism/tests/control-listener.test.mts",
+    "beforeSha256": "a4eb9e781c22e3480e3bf0982cd38bec77cf66fca09d40a0bd08f617b31b2786",
+    "stagedSha256": "9de211954528ea017cd032e6abddd677f336adf1580e442b1dbfad305bbd1af5",
+    "new": false
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "beforeSha256": "5e774a0b27a7e5dbf6112cde98035ae5d700b787d2f50ab696b7f088f6b74a2a",
+    "stagedSha256": "e17586a73f9df4a305d9f714eb07ef81367f0fd4f71188c15292baecdd4db8ee",
+    "new": false
+  },
+  {
+    "path": "skills/prism/tests/worker-listener-config.test.mts",
+    "beforeSha256": null,
+    "stagedSha256": "0aec03794d255d3750076f64d1717f432194e0b82041134f1239ed826b265890",
+    "new": true
+  },
+  {
+    "path": "skills/prism/tests/worker-process-shutdown-native.mts",
+    "beforeSha256": "a38fcc168f0ce723610ad65d14378514809c7d61610233a996263f7bd5bb36da",
+    "stagedSha256": "3daca7922a7edf8e21d146d165159454bf5504bc47c248fc82c3f65065e252af",
+    "new": false
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "beforeSha256": "3b6900687deed73fc7733bd4e1c5209b2bcedecb5896fb41bc127f10fa031cd0",
+    "stagedSha256": "be27e473e2f427f0a9a149fbbf2c26c63973baec9f07026b3ad04d8b33665248",
+    "new": false
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-image.mjs",
+    "beforeSha256": "723aa8a5d4ac3614caaf1ad6077b72513a937bcc7d644edc48eec3db4634afa9",
+    "stagedSha256": "d3bc60f07bdd4ace771d3e868cfae6418813ca786d4570b804afdd0fdadef7dd",
+    "new": false
+  }
+]

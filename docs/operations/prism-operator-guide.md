@@ -130,12 +130,14 @@ request flow and the reason Envoy remains part of the deployment.
 
 ### Pipeline preference identity
 
-For automatic Nova design generation, set the platform-owned Helm value
-`control.pipelinePreferenceSubject` to the real subject ID shown as `userId` in
-that operator's authenticated Prism preference events (`user-` followed by 24
-hexadecimal characters). The Control deployment passes it as
-`PRISM_PIPELINE_PREFERENCE_SUBJECT`. No real account is selected by the default
-chart: an empty value leaves automated snapshots without a personal subject.
+For automatic Nova design generation, set
+`prism-control.config.json → settings.pipelinePreferenceSubject` in the canonical swarm document
+to the real subject ID shown as `userId` in that operator's authenticated Prism
+preference events (`user-` followed by 24 hexadecimal characters). The canonical
+value is `null`, which leaves automated snapshots without a personal subject.
+The old Helm `control.pipelinePreferenceSubject` and environment
+`PRISM_PIPELINE_PREFERENCE_SUBJECT` authors are rejected, including attempts to
+restate the same value. Do not configure them alongside the swarm document.
 
 After verifying Nova's existing signed or SPIFFE dispatch identity, Control uses
 this configured subject even when the request contains no subject field. A
@@ -201,12 +203,29 @@ termination/drain paths before closing its nonce database pool. Requests receive
 on existing connections during shutdown return 503, including `/bootstrap` and
 `/ready`. Repeated signals share the same shutdown operation.
 
-The default service drain budget is 120 seconds (`worker.shutdownTimeoutMs`),
-with 105 seconds for cooperative host cancellation (`worker.native.closeTimeoutMs`)
+The default service drain budget is 120 seconds
+(`prism-worker.config.json → settings.ingress.shutdownTimeoutMs` in the canonical
+`charts/kubeclaw/files/config/swarm.config.json`),
+with 105 seconds for cooperative host cancellation (`prism-worker.config.json → settings.supervisor.closeTimeoutMs`),
+10 seconds for scope/launcher drain (`prism-worker.config.json → settings.supervisor.drainTimeoutMs`)
 and a 150-second Pod termination grace (`worker.terminationGracePeriodSeconds`).
-Helm rejects budgets that cannot contain native close plus scope drain, or cannot
-fit within the Pod grace. The corresponding process settings are
-`PRISM_WORKER_SHUTDOWN_TIMEOUT_MS` and `PRISM_NATIVE_CLOSE_TIMEOUT_MS`.
+Startup and Helm require shutdown strictly greater than native close plus scope
+drain; Helm additionally requires it strictly below the Pod grace. The worker reads the ConfigMap mounted read-only at
+`/etc/kubeclaw/swarm/swarm.config.json` via `SWARM_CONFIG`. The former
+`worker.shutdownTimeoutMs` and `worker.native.closeTimeoutMs` Helm values and
+`PRISM_WORKER_SHUTDOWN_TIMEOUT_MS` / `PRISM_NATIVE_CLOSE_TIMEOUT_MS` environment overrides are
+rejected with migration errors. See [central Prism settings](operator-configuration.md)
+for the six worker settings and shared `prism-execution.config.json → settings.maximumResultBytes`
+and `dispatchTimeoutMs`, plus `native.resourcePolicy` CPU milliseconds, memory
+bytes and Linux tasks. The nine numeric `native.supervisor` settings now share
+that author too; UID/GID, ownership/output/journal budgets and poll/drain/close
+values retain their units and bounds. Host identity and generated root-owned
+pool policy remain separately validated. Resource policy is captured at startup; retries preserve
+previously accepted budgets. Control and Worker both mount the same authored ConfigMap
+and restart on its checksum change. Control's response-byte limit matches the
+worker result-journal limit; its dispatch deadline covers response streaming.
+The old result/deadline environment overrides are rejected. The central guide
+documents byte units, timeout/recovery effects and remaining migration scope.
 
 On user cancellation, the supervisor signals the host so its original Core
 lifecycle can terminate browser and artifact work and emit a provisional result.
@@ -220,3 +239,51 @@ Successful supervisor shutdown logs `prism_native_worker_shutdown` with
 uncertainty exits nonzero with `prism_native_worker_failure`; none permits further
 admission. A remote receiver may already have persisted bytes when a request is
 cancelled, and such bytes are not reported as rolled back.
+
+### Studio server configuration
+
+Set the Studio `settings` in
+[`prism-studio.config.json`](../../charts/kubeclaw/files/config/prism-studio.config.json).
+The explicit entry references all six components; Studio validates that complete
+bundle once before opening its listener. Missing or
+invalid settings prevent startup. Changing the ConfigMap causes a checksum-based
+rollout; an already running process retains its startup snapshot.
+
+| Setting | Unit and bounds | Canonical value |
+| --- | --- | --- |
+| `port` | Integer TCP port, 1–65,535 | 8080 |
+| `controlTimeoutMs` | Integer milliseconds, 1–2,147,483,647; includes upstream headers and body | 30,000 |
+| `controlUrl` | Absolute HTTP(S) origin, without credentials, path prefix, query or fragment | `http://prism-control:8080` |
+
+Studio rejects `PORT`, `PRISM_CONTROL_TIMEOUT_MS` and `PRISM_CONTROL_URL`, including
+empty or matching values, with `SWARM_CONFIG_LEGACY_OVERRIDE`. This retirement is
+specific to each role; Worker also rejects PORT and uses its own component file,
+while Agent retains its separately documented inputs.
+Do not add competing `studio.port`, `studio.controlTimeoutMs` or
+`studio.controlUrl` Helm values.
+
+The Helm deployment supports the in-cluster `prism-control` HTTP Service on port
+8080, using its short name or the release namespace's `.svc` or
+`.svc.cluster.local` DNS name. Other origins are supported by standalone Studio
+only; the chart rejects them because its egress grant is limited to Control
+Pods. The public Studio Service remains port 80, targeting the authored Studio
+listener. Control's Service remains port 8080 even when Control's own listener
+uses another port.
+
+`STUDIO_ROOT` remains an installation asset path, not an operator network or
+performance setting. Without it, assets are resolved from `../dist-studio`
+relative to the installed server module. The image explicitly installs them at
+`/app/prism/skills/prism/dist-studio`. The override also supports the original
+actual-service tests with temporary static fixtures. `PRISM_INGRESS_SECRET`
+remains a Secret input; it must never be written into swarm JSON. With no secret,
+static/health serving remains available and proxy requests return the established
+503 response. Client-supplied ingress-secret headers are replaced by the trusted
+installation secret.
+
+## Worker listener configuration
+
+Worker reads its required listener port from `prism-worker.config.json`
+`settings.ingress.port`; remove the retired `PORT` environment variable. Public
+Service discovery remains `prism-worker:8080`. See the [operator migration and
+networking contract](operator-configuration.md#worker-listener-component-migration).
+The migration is implemented; positive native entrypoint and built-image acceptance remain open.

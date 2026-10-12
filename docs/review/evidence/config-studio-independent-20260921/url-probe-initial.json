@@ -1,0 +1,14 @@
+[
+  {
+    "input": "http://control\\suffix",
+    "accepted": true,
+    "href": "http://control/suffix",
+    "pathname": "/suffix"
+  },
+  {
+    "input": "http://control:8080/",
+    "accepted": true,
+    "href": "http://control:8080/",
+    "pathname": "/"
+  }
+]

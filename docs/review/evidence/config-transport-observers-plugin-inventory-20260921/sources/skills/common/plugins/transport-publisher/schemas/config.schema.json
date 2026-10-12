@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["targets", "deliveryRoot"],
+  "properties": {
+    "deliveryRoot": { "type": "string", "minLength": 1 },
+    "maximumDeliveryRecords": { "type": "integer", "minimum": 1, "default": 100000 },
+    "maximumDeliveryBytes": { "type": "integer", "minimum": 1, "default": 268435456 },
+    "targets": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["endpoint", "signingSecret"],
+        "properties": {
+          "endpoint": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https?://"
+          },
+          "signingSecret": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+          },
+          "maxPayloadBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1048576,
+            "default": 262144
+          }
+        }
+      }
+    }
+  }
+}

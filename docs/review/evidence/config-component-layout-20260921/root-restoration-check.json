@@ -1,0 +1,41 @@
+{
+  "scope": "six canonical component files only; not runtime acceptance",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/swarm.config.json",
+      "expectedIntegration4Sha256": "ab3ee0545ef7d04897523efcfe3a7c93acf036025e92a4142b044a530e0d0634",
+      "actualSha256": "ab3ee0545ef7d04897523efcfe3a7c93acf036025e92a4142b044a530e0d0634",
+      "equal": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-control.config.json",
+      "expectedIntegration4Sha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+      "actualSha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+      "equal": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-studio.config.json",
+      "expectedIntegration4Sha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+      "actualSha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+      "equal": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+      "expectedIntegration4Sha256": "a2ae24efb4777b5018041c58a790025435308afa6efb5e9598d2980c0544ee69",
+      "actualSha256": "a2ae24efb4777b5018041c58a790025435308afa6efb5e9598d2980c0544ee69",
+      "equal": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-execution.config.json",
+      "expectedIntegration4Sha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+      "actualSha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+      "equal": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "expectedIntegration4Sha256": "57f5f68231777a113c01773a33c350cbbb2746e97ad8aad4538b455427585ff4",
+      "actualSha256": "57f5f68231777a113c01773a33c350cbbb2746e97ad8aad4538b455427585ff4",
+      "equal": true
+    }
+  ]
+}

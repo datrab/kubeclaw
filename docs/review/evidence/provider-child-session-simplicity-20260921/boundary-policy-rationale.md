@@ -1,0 +1,9 @@
+# Proposed explicit provider-child infrastructure boundary
+
+Private proposal; not integrated, linted or accepted. The earlier session draft and its independent review did not change lint policy; this separate addition requires its own review.
+
+The canonical lint policy already distinguishes application code from exact-file module-loader and console boundaries. The common isolation child is listed in both categories. Buster's provider child has the same relevant responsibilities: import the provider module selected by its parent and redirect provider console calls into the child's framed IPC channel. Console interception here prevents ordinary provider output from corrupting the JSON protocol; it is not application debug logging. Dynamic import is the plugin loading operation, not a hidden settings loader.
+
+The proposed policy patch lists only `skills/buster/engine/test-gates/provider-child.mjs` in those two existing boundary arrays. It does not alter a rule implementation, add a wildcard, raise limits, suppress diagnostics inline, or exempt mutable module state. The five state findings still require the actual session-owner refactor. Avoiding these diagnostics through aliased console access, computed import tricks or moving the child into a broadly exempt directory would conceal the architecture and is rejected.
+
+This is an explicit change to which file the existing rules recognize as infrastructure; it must not be described as seven code defects fixed by refactoring. Independent review must confirm the boundary's actual responsibility and narrow scope. Canonical lint must subsequently run on the integrated child and retain every other rule. The original full child/Runner behavior, real protocol tests, cancellation controls and maintained execution-boundary documentation remain required. Parent module/permission validation and actual sandbox enforcement are separate contracts; the lint declaration proves neither.

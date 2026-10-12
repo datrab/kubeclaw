@@ -1,0 +1,15 @@
+{
+  "test": {
+    "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+    "sha256": "7b9f4b225558fba174fa324aba956679263d357a4815c6deae12ea398f1f9daf"
+  },
+  "sourceReviewed": true,
+  "runtimeExecuted": false,
+  "findingsResolved": [
+    "Cleanup registered before setup writes and hook installation; restores handle partial setup.",
+    "Original signal function targets owned detached process group; only ESRCH is expected.",
+    "Cleanup close wait has its own 2000ms bound; no fixture removal after missing closure or unexpected signaling failure."
+  ],
+  "unchangedScope": "Product deadlines and original five error-path oracles are unchanged. Close-event loss is injected after real child close, not an actual unkillable process.",
+  "remaining": "Execute all cases with actual sandbox and independently verify result/timeout/cleanup assertions; no source-only runtime acceptance."
+}

@@ -1,0 +1,22 @@
+✔ existing namespace continues without create (177.299237ms)
+✔ kubectl generic List output is accepted (113.56483ms)
+✔ successful empty lookup creates namespace before Helm (178.027826ms)
+✔ lookup failure stops all mutation: exec: executable credential-helper not found (18.129973ms)
+✔ lookup failure stops all mutation: Error from server (Forbidden): namespaces is forbidden (79.884629ms)
+✔ lookup failure stops all mutation: The connection to the server was refused (15.834535ms)
+✔ lookup failure stops all mutation: Error from server (NotFound): the server could not find the requested resource (20.419032ms)
+✔ create failure stops before Helm without a fallback (166.875221ms)
+✔ invalid successful response refuses mutation:  (199.440103ms)
+✔ invalid successful response refuses mutation: not json (121.01102ms)
+✔ invalid successful response refuses mutation: {} (188.005762ms)
+✔ invalid successful response refuses mutation: {"kind":"Status","code":404} (187.104018ms)
+✔ invalid successful response refuses mutation: {"apiVersion":"v1","kind":"NamespaceList","items":[{"metadata":{"name":"other"}}]} (126.387188ms)
+✔ invalid successful response refuses mutation: {"apiVersion":"v1","kind":"NamespaceList","items":[null]} (273.33868ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2079.949263

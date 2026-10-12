@@ -1,0 +1,26 @@
+✔ actual Buster chart mounts both authored admission profiles and rejects retired ENV authors (451.848083ms)
+✔ actual service CLI rejects inherited retired ENV before opening its parent channel (5351.901352ms)
+✔ actual unprivileged CLI starts and stops with authored policy {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (2056.937128ms)
+✔ actual unprivileged CLI starts and stops with authored policy {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":5} (2169.538234ms)
+✔ canonical startup rejects missing/unknown/malformed admission and every retired ENV author (37.881894ms)
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (30006.279567ms)
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (30003.141623ms)
+✔ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (256.985819ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 2
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72756.117608
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-admission-config.test.mts:49:3
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (30006.279567ms)
+  'test timed out after 30000ms'
+
+test at tests/verification/reliability/buster-admission-config.test.mts:49:3
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (30003.141623ms)
+  'test timed out after 30000ms'

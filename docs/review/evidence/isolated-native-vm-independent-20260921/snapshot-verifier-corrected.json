@@ -1,0 +1,35 @@
+{
+  "actualFunction": "def verify_snapshot():\n    expected_entries = {item['path']: item for item in json.loads((cache / 'repo-snapshot-manifest.json').read_text())}\n    actual_entries = {}\n    for directory, directories, names in os.walk(export, followlinks=False):\n        directory = pathlib.Path(directory)\n        if directory != export:\n            actual_entries[str(directory.relative_to(export))] = 'directory'\n        for name in names + [name for name in directories if (directory / name).is_symlink()]:\n            file = directory / name\n            mode = file.lstat().st_mode\n            kind = 'symlink' if stat.S_ISLNK(mode) else 'file' if stat.S_ISREG(mode) else 'unsupported'\n            actual_entries[str(file.relative_to(export))] = kind\n    if set(actual_entries) != set(expected_entries):\n        raise SystemExit('Snapshot entry set changed (extra or missing files/directories).')\n    for relative, item in expected_entries.items():\n        file = export / relative\n        if actual_entries[relative] != item['type']:\n            raise SystemExit('Snapshot entry type changed: ' + relative)\n        if item['type'] == 'symlink':\n            if os.readlink(file) != item['symlink'] or not file.resolve().is_relative_to(export.resolve()):\n                raise SystemExit('Snapshot symlink changed or escapes export: ' + relative)\n        elif item['type'] == 'file':\n            if checksum_file(file) != item['sha256']:\n                raise SystemExit('Snapshot bytes changed: ' + relative)",
+  "results": [
+    {
+      "case": "unchanged",
+      "accepted": true,
+      "reason": null
+    },
+    {
+      "case": "extra-file",
+      "accepted": false,
+      "reason": "Snapshot entry set changed (extra or missing files/directories)."
+    },
+    {
+      "case": "extra-directory",
+      "accepted": false,
+      "reason": "Snapshot entry set changed (extra or missing files/directories)."
+    },
+    {
+      "case": "regular-replaced-by-escaping-symlink",
+      "accepted": false,
+      "reason": "Snapshot entry type changed: file"
+    },
+    {
+      "case": "missing-file",
+      "accepted": false,
+      "reason": "Snapshot entry set changed (extra or missing files/directories)."
+    },
+    {
+      "case": "changed-bytes",
+      "accepted": false,
+      "reason": "Snapshot bytes changed: file"
+    }
+  ]
+}

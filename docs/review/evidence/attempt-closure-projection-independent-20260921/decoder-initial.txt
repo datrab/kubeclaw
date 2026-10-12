@@ -1,0 +1,10 @@
+✔ independent closure decoder refuses malformed direct references without repair or writes (2429.116552ms)
+ℹ {"malformedCases":["unknown-version","extra-field","mixed-full-reference","foreign-result-key","wrong-closure-digest","missing-source-completion","source-is-full-result","recursive-reference","duplicate-reference","mixed-duplicate-closure","missing-reference-receipt","invalid-reference-receipt","empty-reference-set"],"fullLogicalStateRecovered":true,"fixture":"actual validated result projection; closure reference constructed only for decoder-boundary probes"}
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3557.183477

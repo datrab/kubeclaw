@@ -1,0 +1,65 @@
+
+> verify:test-gate:security-cutover
+> npm run verify:test-gate:security-parity && node tests/verification/contracts/check-pipeline-security-cutover.mts && node --test tests/skills/nova/project_setup/progress-scaffold.test.mjs
+
+
+> verify:test-gate:security-parity
+> npm run verify:test-gate:security-implementation && node scripts/check-suite-parity-ledger.mjs docs/architecture/pipeline-test-gate-security-baseline.json docs/architecture/pipeline-test-gate-security-parity-ledger.json && node tests/verification/contracts/check-pipeline-security-parity.mts
+
+
+> verify:test-gate:security-implementation
+> npm run plugin-system:sandbox:build && npm test --prefix skills/buster/plugins/security-providers && node tests/verification/contracts/check-pipeline-security-implementation.mts && node tests/verification/contracts/check-pipeline-security-remote-vertical.mts && go test ./cmd/buster-namespace-controller/... && npm run verify:test-gate:provider-registry && npx tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json && npm run verify:docs:schema-fields && npm run verify:docs:error-codes && npm run verify:docs:examples && npm run verify:docs:controlled-language
+
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+
+> test
+> node --test tests/live-function.test.ts tests/database-freshness.test.mts
+
+node:internal/fs/promises:1889
+  return await PromisePrototypeThen(
+         ^
+
+Error: ENOENT: no such file or directory, realpath '/home/node/.cache/trivy'
+    at async realpath (node:internal/fs/promises:1889:10)
+    at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/plugins/security-providers/tests/database-freshness.test.mts:15:15 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'realpath',
+  path: '/home/node/.cache/trivy'
+}
+
+Node.js v24.21.0
+✖ tests/database-freshness.test.mts (130.047236ms)
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/plugins/security-providers/tests/live-function.test.ts:27
+if (!cachePath) throw new Error('SECURITY_TEST_TRIVY_DATABASE_MISSING');
+                      ^
+
+Error: SECURITY_TEST_TRIVY_DATABASE_MISSING
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/plugins/security-providers/tests/live-function.test.ts:27:23
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ tests/live-function.test.ts (2151.334115ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2295.614719
+
+✖ failing tests:
+
+test at tests/database-freshness.test.mts:1:1
+✖ tests/database-freshness.test.mts (130.047236ms)
+  'test failed'
+
+test at tests/live-function.test.ts:1:1
+✖ tests/live-function.test.ts (2151.334115ms)
+  'test failed'

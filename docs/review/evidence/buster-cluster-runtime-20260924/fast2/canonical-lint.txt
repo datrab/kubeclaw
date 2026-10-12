@@ -1,0 +1,9 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/native-worker-node-policy.d.mts
+  0:0  error  Parsing error: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/native-worker-node-policy.d.mts was not found by the project service. Consider either including it in the tsconfig.json or including it in allowDefaultProject
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/registry-client-config.d.mts
+  0:0  error  Parsing error: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/registry-client-config.d.mts was not found by the project service. Consider either including it in the tsconfig.json or including it in allowDefaultProject
+
+✖ 2 problems (2 errors, 0 warnings)
+

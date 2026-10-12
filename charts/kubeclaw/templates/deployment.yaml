@@ -24,6 +24,10 @@ spec:
         kubeclaw.dev/worker-trust: "true"
         {{- end }}
       annotations:
+        {{- if eq .Values.agentRole "buster" }}
+        kubeclaw.dev/native-worker-role: buster
+        kubeclaw.dev/native-worker-policy: {{ .Values.busterNative.policyDigest | quote }}
+        {{- end }}
         checksum/config: {{ include (print $.Template.BasePath "/configmap-gateway.yaml") . | sha256sum }}
         checksum/swarm-config: {{ include (print $.Template.BasePath "/configmap-swarm-config.yaml") . | sha256sum }}
         {{- if .Values.workerTrust.spiffe.enabled }}
@@ -39,6 +43,14 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      {{- if eq .Values.agentRole "buster" }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchFields:
+                  - { key: metadata.name, operator: In, values: [{{ .Values.busterNative.nodeName | quote }}] }
+      {{- end }}
       terminationGracePeriodSeconds: {{ .Values.shutdown.terminationGracePeriodSeconds | default 180 }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -266,7 +278,7 @@ spec:
             - name: NODE_PATH
               value: "/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules"
             - name: SWARM_CONFIG
-              value: "/home/node/.openclaw/swarm.config.json"
+              value: "/etc/kubeclaw/swarm/swarm.config.json"
             - name: LITELLM_API_KEY
               valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
             - name: OPENCLAW_GATEWAY_TOKEN
@@ -624,13 +636,9 @@ spec:
                 rm -rf /config/node_modules
               fi
               ln -sfnT /opt/kubeclaw-tools/node_modules /config/node_modules
-              if [ -f "/init-swarm-config/swarm.config.json" ]; then
-                cp -Lf "/init-swarm-config/swarm.config.json" "/config/swarm.config.json"
-                echo "    swarm.config.json written from chart source"
-              fi
-              if [ -f "/config/swarm.config.json" ]; then
-                node -e 'const fs=require("fs"); const p="/config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(p,"utf8")); if (Object.prototype.hasOwnProperty.call(config,"discord_webhook_url")) { delete config.discord_webhook_url; const temporaryPath=`${p}.kubeclaw-normalize.tmp`; fs.writeFileSync(temporaryPath, JSON.stringify(config,null,2)+"\n", { mode: 0o600 }); fs.renameSync(temporaryPath,p); } console.log("    swarm.config.json source normalized without runtime webhook secrets");'
-              fi
+              # Operator bundle is mounted directly from one ConfigMap generation.
+              # Retire only the two former generated config files; reject unexpected objects.
+              node -e 'const fs=require("fs"); for (const p of ["/config/swarm.config.json","/runtime-config/swarm.config.json"]) { let s; try { s=fs.lstatSync(p); } catch (e) { if (e.code === "ENOENT") continue; throw e; } if (!s.isFile() || s.nlink !== 1) throw new Error(`RETIRED_SWARM_CONFIG_FILE_INVALID:${p}`); fs.unlinkSync(p); }'
               if [ -f "/init-swarm-config/.semgrep.yml" ]; then
                 if [ "${OVERRIDE_SWARM_CONFIG}" = "true" ] || [ ! -f "/config/.semgrep.yml" ]; then
                   cp -Lf "/init-swarm-config/.semgrep.yml" "/config/.semgrep.yml"
@@ -655,7 +663,7 @@ spec:
                 cp -Lf "/init-swarm-config/.tflint.hcl" "/config/.tflint.hcl"
                 echo "    .tflint.hcl written from chart source"
               fi
-              for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
+              for lint_config in discipline-eslint-plugin.mjs eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
                 if [ -f "/init-swarm-config/$lint_config" ]; then
                   cp -Lf "/init-swarm-config/$lint_config" "/config/$lint_config"
                   echo "    $lint_config written from chart source"
@@ -670,10 +678,7 @@ spec:
               mkdir -p /runtime-config
               rm -rf /runtime-config/node_modules
               ln -sfnT /opt/kubeclaw-tools/node_modules /runtime-config/node_modules
-              if [ -f /config/swarm.config.json ]; then
-                node -e 'const fs=require("fs"); const source="/config/swarm.config.json"; const target="/runtime-config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(source,"utf8")); if (process.env.DISCORD_WEBHOOK) config.discord_webhook_url=process.env.DISCORD_WEBHOOK; fs.writeFileSync(target, JSON.stringify(config,null,2)+"\n");'
-                echo "    swarm.config.json rendered into runtime config"
-              fi
+              # No copied or secret-mutated operator configuration.
               if [ -f /config/.semgrep.yml ]; then
                 cp -Lf /config/.semgrep.yml /runtime-config/.semgrep.yml
               fi
@@ -686,7 +691,7 @@ spec:
               if [ -f /config/.tflint.hcl ]; then
                 cp -Lf /config/.tflint.hcl /runtime-config/.tflint.hcl
               fi
-              for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
+              for lint_config in discipline-eslint-plugin.mjs eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
                 if [ -f "/config/$lint_config" ]; then
                   cp -Lf "/config/$lint_config" "/runtime-config/$lint_config"
                 fi
@@ -1225,6 +1230,9 @@ spec:
             - name: init-swarm-config
               mountPath: /init-swarm-config
               readOnly: true
+            - name: init-swarm-config
+              mountPath: /etc/kubeclaw/swarm
+              readOnly: true
             - name: tmp
               mountPath: /tmp
             - name: tmp
@@ -1355,7 +1363,7 @@ spec:
                   key: {{ .Values.discordWebhook.secretKey | default "discordWebhook" }}
             {{- end }}
             - name: SWARM_CONFIG
-              value: "/home/node/.openclaw/swarm.config.json"
+              value: "/etc/kubeclaw/swarm/swarm.config.json"
             - name: GATEWAY_PORT
               value: {{ .Values.gateway.port | quote }}
             - name: KUBECLAW_DRAIN_FILE
@@ -1410,9 +1418,9 @@ spec:
             {{- include "kubeclaw.demoReadyClientMounts" . | nindent 12 }}
             - name: config
               mountPath: /home/node/.openclaw
-            - name: runtime-config
-              mountPath: /home/node/.openclaw/swarm.config.json
-              subPath: swarm.config.json
+            - name: init-swarm-config
+              mountPath: /etc/kubeclaw/swarm
+              readOnly: true
             - name: runtime-config
               mountPath: /runtime-config
               readOnly: true
@@ -1522,7 +1530,7 @@ spec:
         {{- end }}
         {{- range .Values.extraContainers }}
         {{- if eq .name "buster-v2-runtime" }}
-        - {{ include "kubeclaw.registryContainer" (dict "root" $ "container" .) | nindent 10 | trim }}
+        - {{ include "kubeclaw.busterNativeContainer" (dict "root" $ "container" .) | nindent 10 | trim }}
         {{- else }}
         - {{ toYaml . | nindent 10 | trim }}
         {{- end }}
@@ -1570,6 +1578,13 @@ spec:
       # VOLUMES
       # ---------------------------------------------------------------
       volumes:
+        {{- if eq .Values.agentRole "buster" }}
+        - { name: buster-native-pool, hostPath: { path: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/buster, type: Directory } }
+        - { name: buster-native-ownership, hostPath: { path: /var/lib/kubeclaw/native/buster, type: Directory } }
+        - { name: buster-native-policy, hostPath: { path: /etc/kubeclaw/buster-pool.json, type: File } }
+        - { name: buster-native-node, hostPath: { path: /etc/kubeclaw/native-node-id, type: File } }
+        - { name: buster-native-runtime, hostPath: { path: /etc/kubeclaw/native-runtime-identity.json, type: File } }
+        {{- end }}
         {{- include "kubeclaw.demoReadyClientVolumes" . | nindent 8 }}
         {{- range $name, $client := dict "registry" .Values.runtimeInfrastructure.registry "dockerHubMirror" .Values.runtimeInfrastructure.dockerHubMirror }}
         {{- if $client.caSecretName }}

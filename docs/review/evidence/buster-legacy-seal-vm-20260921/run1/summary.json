@@ -1,0 +1,147 @@
+{
+  "casesInvoked": 27,
+  "passed": 0,
+  "failed": 27,
+  "commonPrerequisite": "BusyBox mount -o rprivate / attempts to read missing /etc/fstab",
+  "verifierCasesReached": false,
+  "vmBooted": true,
+  "sourceDrift": false,
+  "watchdogStopped": false,
+  "cases": [
+    {
+      "case": "complete",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "quota-exact",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "quota-byte-short",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "quota-entry-short",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "mutable-file",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "mutable-directory",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "plan-link",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "hardlink",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "device",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "fifo",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "bind-mount",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "different-device",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "tmpfs-root",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "extra-bounding",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "retained-extra",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "foreign-ancestor",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "writable-ancestor",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "missing-store",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "interrupted",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "mutation-denial",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "uid1000-read",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "runtime",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "runtime-plan-reject",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "runtime-links",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "runtime-link-fifo",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "namespace-stable",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    },
+    {
+      "case": "different-uuid",
+      "exitCode": 1,
+      "stderr": "RuntimeError: COMMAND_FAILED:{\"command\": [\"mount\", \"-o\", \"rprivate\", \"/\"], \"exitCode\": 1, \"stdout\": \"\", \"stderr\": \"mount: can't read '/etc/fstab': No such file or directory\\n\"}\n"
+    }
+  ]
+}

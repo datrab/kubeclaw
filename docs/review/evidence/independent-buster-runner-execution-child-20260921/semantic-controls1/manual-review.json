@@ -1,0 +1,17 @@
+{
+  "session": 27668,
+  "wrapperExit": 0,
+  "drift": [],
+  "observations": {
+    "childFixedInterval": "Named40profile actual scheduled delay10 vs expected40, ERR_ASSERTION.",
+    "childMissingPolicy": "Named undefined-policy case actual PROVIDER_SHOULD_NOT_LOAD vs TEST_PROVIDER_OBSERVATION_INVALID.",
+    "parentSampling": "Mutant applied; actual scans0 violates original10ms profile;60000ms remains passing.",
+    "pcHandlerRemoval": "Applied real child path; full original Runner actual false expectedtrue on cooperative cancellation assertion at1853.",
+    "lintBoundary": "Ordinary neighbor rejects console and dynamic import; exact child permits these roles but retains mutable-state rejection."
+  },
+  "limitations": [
+    "Sampling scheduling only, not all resource peaks.",
+    "No sandbox/native/image acceptance.",
+    "Temporary controls are distinct from maintained production tests."
+  ]
+}

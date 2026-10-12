@@ -1,0 +1,398 @@
+[
+  {
+    "filePath": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+    "before": {
+      "sha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "messages": [
+        {
+          "ruleId": "discipline/no-fallback-chain",
+          "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority.",
+          "line": 94
+        },
+        {
+          "ruleId": "complexity",
+          "message": "Function 'podSpecs' has a complexity of 23. Maximum allowed is 15.",
+          "line": 155
+        },
+        {
+          "ruleId": "complexity",
+          "message": "Function 'validatePodSecurity' has a complexity of 28. Maximum allowed is 15.",
+          "line": 255
+        },
+        {
+          "ruleId": "max-lines-per-function",
+          "message": "Function 'inspectManifest' has too many lines (98). Maximum allowed is 60.",
+          "line": 300
+        },
+        {
+          "ruleId": "max-params",
+          "message": "Function 'inspectManifest' has too many parameters (8). Maximum allowed is 7.",
+          "line": 300
+        },
+        {
+          "ruleId": "complexity",
+          "message": "Function 'inspectManifest' has a complexity of 53. Maximum allowed is 15.",
+          "line": 300
+        },
+        {
+          "ruleId": "max-lines",
+          "message": "File has too many lines (726). Maximum allowed is 300.",
+          "line": 319
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 346
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 350
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 352
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 353
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 361
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 362
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 363
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+          "line": 367
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+          "line": 368
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+          "line": 371
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+          "line": 372
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (6). Maximum allowed is 3.",
+          "line": 374
+        },
+        {
+          "ruleId": "max-lines-per-function",
+          "message": "Constructor has too many lines (61). Maximum allowed is 60.",
+          "line": 447
+        },
+        {
+          "ruleId": "complexity",
+          "message": "Constructor has a complexity of 25. Maximum allowed is 15.",
+          "line": 447
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 514
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 514
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 515
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 516
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 563
+        },
+        {
+          "ruleId": "max-lines-per-function",
+          "message": "Private async method #prepare has too many lines (101). Maximum allowed is 60.",
+          "line": 637
+        },
+        {
+          "ruleId": "complexity",
+          "message": "Private async method #prepare has a complexity of 31. Maximum allowed is 15.",
+          "line": 637
+        }
+      ]
+    },
+    "current": {
+      "sha256": "3548e91e7383579fffd16f1c89e3eca83c0599be04c1c4f728d07fa9b8d41b53",
+      "messages": [
+        {
+          "ruleId": "discipline/no-fallback-chain",
+          "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority.",
+          "line": 97
+        },
+        {
+          "ruleId": "complexity",
+          "message": "Function 'podSpecs' has a complexity of 23. Maximum allowed is 15.",
+          "line": 158
+        },
+        {
+          "ruleId": "complexity",
+          "message": "Function 'validatePodSecurity' has a complexity of 28. Maximum allowed is 15.",
+          "line": 258
+        },
+        {
+          "ruleId": "max-lines-per-function",
+          "message": "Function 'inspectManifest' has too many lines (98). Maximum allowed is 60.",
+          "line": 303
+        },
+        {
+          "ruleId": "max-params",
+          "message": "Function 'inspectManifest' has too many parameters (8). Maximum allowed is 7.",
+          "line": 303
+        },
+        {
+          "ruleId": "complexity",
+          "message": "Function 'inspectManifest' has a complexity of 53. Maximum allowed is 15.",
+          "line": 303
+        },
+        {
+          "ruleId": "max-lines",
+          "message": "File has too many lines (730). Maximum allowed is 300.",
+          "line": 319
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 349
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 353
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 355
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 356
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 364
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 365
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 366
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+          "line": 370
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+          "line": 371
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+          "line": 374
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+          "line": 375
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (6). Maximum allowed is 3.",
+          "line": 377
+        },
+        {
+          "ruleId": "max-lines-per-function",
+          "message": "Constructor has too many lines (62). Maximum allowed is 60.",
+          "line": 450
+        },
+        {
+          "ruleId": "complexity",
+          "message": "Constructor has a complexity of 25. Maximum allowed is 15.",
+          "line": 450
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 518
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 518
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 519
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 520
+        },
+        {
+          "ruleId": "max-depth",
+          "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+          "line": 567
+        },
+        {
+          "ruleId": "max-lines-per-function",
+          "message": "Private async method #prepare has too many lines (101). Maximum allowed is 60.",
+          "line": 641
+        },
+        {
+          "ruleId": "complexity",
+          "message": "Private async method #prepare has a complexity of 31. Maximum allowed is 15.",
+          "line": 641
+        }
+      ]
+    }
+  },
+  {
+    "filePath": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+    "before": {
+      "sha256": "b45b50d0cfd2ae6a0aa091ba1e1edcb936b868490ae2a579f3ac561d24f8394e",
+      "messages": [
+        {
+          "ruleId": "discipline/no-swallowed-error",
+          "message": "Handle the error intentionally or rethrow it with context.",
+          "line": 35
+        },
+        {
+          "ruleId": "discipline/no-swallowed-error",
+          "message": "Handle the error intentionally or rethrow it with context.",
+          "line": 44
+        }
+      ]
+    },
+    "current": {
+      "sha256": "35a4be02b927eca37c9cc68725c53a8987e6d73b0915dcfd9fd173b641833972",
+      "messages": [
+        {
+          "ruleId": "discipline/no-swallowed-error",
+          "message": "Handle the error intentionally or rethrow it with context.",
+          "line": 38
+        },
+        {
+          "ruleId": "discipline/no-swallowed-error",
+          "message": "Handle the error intentionally or rethrow it with context.",
+          "line": 47
+        }
+      ]
+    }
+  },
+  {
+    "filePath": "skills/buster/engine/test-gates/process-input.ts",
+    "before": {
+      "sha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620",
+      "messages": []
+    },
+    "current": {
+      "sha256": "321c30cda2cd5d0d417a21947ad2a4535b1a04904a83eeea4484a92116e9b1c8",
+      "messages": [
+        {
+          "ruleId": "max-lines-per-function",
+          "message": "Function 'runProcessInput' has too many lines (61). Maximum allowed is 60.",
+          "line": 32
+        }
+      ]
+    }
+  },
+  {
+    "filePath": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+    "before": {
+      "sha256": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d",
+      "messages": [
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 97
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 97
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 98
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 99
+        }
+      ]
+    },
+    "current": {
+      "sha256": "916fbe54e491c216e50fc3b20c81f0e114c918724ca327908a8fbd51cdbd8d86",
+      "messages": [
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 101
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 101
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 102
+        },
+        {
+          "ruleId": "discipline/no-direct-env-access",
+          "message": "Read environment variables only in a declared configuration or infrastructure adapter.",
+          "line": 103
+        }
+      ]
+    }
+  }
+]

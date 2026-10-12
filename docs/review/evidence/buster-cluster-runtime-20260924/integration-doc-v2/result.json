@@ -1,0 +1,39 @@
+{
+  "manifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-runtime-20260924/doc-v2-integration-manifest.json",
+  "manifestSha256": "bcd1f25b2d9a2197ec38002279b09947e52deb7698c388890e1ecf112366829d",
+  "review": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-cluster-security-doc-20260924/source-review-v2.json",
+  "reviewSha256": "261afb5d0102d51d290d177b0cada644e784d7975fc914533a8e4d7b7af000d3",
+  "status": "integrated; verification pending",
+  "files": [
+    {
+      "path": "docs/architecture/buster-cluster-configuration.md",
+      "kind": "file",
+      "beforeSha256": "d31e4fdd6d65dd9bd988373ce7d3ec52b977d78b297884e6a4b518c5476d1201",
+      "sha256": "13bf4962e4592e07e1313ad26ed14744b1b027ad7c8c7442fdcfeb5ac1acd20a"
+    },
+    {
+      "path": "docs/architecture/buster-runtime-security-configuration.md",
+      "kind": "file",
+      "beforeSha256": "f8b02af9d4242a34b30d483842b13eab43c896688f075f87694283f9fa1f3537",
+      "sha256": "7551d656eda3cf7b72cf54289e075e652b4b2e1fad367244e723eff7f27d1d7e"
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "kind": "file",
+      "beforeSha256": "2b2f88102906e784e9038168ee8f8ad5b1866f04e8aeea255db1da0c65f10863",
+      "sha256": "6282f331b991e6c9b21933138a98f3474d03e756655d46514a520a575dccdda1"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-cluster-invokers-20260924.md",
+      "kind": "file",
+      "beforeSha256": "1a14db0dc32723c9a66ae34afae27e9fcc02d3e93447c3395245f2687d59b36c",
+      "sha256": "2566c04a356fc3a9f750bce64b5b1705ff7715a4b44d62c4764e38d801a27db3"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "kind": "file",
+      "beforeSha256": "7d56f74725a675785d1c9d47de7a7069b10369485ca2886f4e81e76c9e0e9b71",
+      "sha256": "c8aede0670b6f7db455bd055e314cc7c93121f3afce3b7206844484b83286c77"
+    }
+  ]
+}

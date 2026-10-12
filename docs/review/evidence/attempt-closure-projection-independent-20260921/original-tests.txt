@@ -1,0 +1,37 @@
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (2313.529672ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (1828.092548ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (2011.629025ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (2418.857108ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (2759.038497ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (12905.571342ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (10013.702688ms)
+✔ real confirmed import and admission retirement do not release the remaining mixed-run result quota (11808.993822ms)
+ℹ {"admissionBytesReleased":7177,"resultQuota":2,"retainedResults":2,"subsequentResultWrite":"OBSERVABILITY_RESULT_STORE_FULL","realConsumerReplay":"already-imported","journalUnchanged":true,"overallFindingComplete":false}
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (5688.722929ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✔ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (10417.201475ms)
+ℹ {"retiredResultSlots":1,"releasedBytes":19668,"residentLimit":2,"logicalResults":3,"originalImportReplay":"already-imported"}
+✔ Attempt projection rejects stale CAS, run checkpoint and operation conflicts without touching the original state (4079.68375ms)
+✔ Attempt projection preserves an actual waiting run and refuses missing, corrupted or nonregular import authority (7407.06302ms)
+✔ Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection (5218.63547ms)
+✔ Attempt SIGKILL after durable projection reopens with exact original result and no duplicate import or quota reinsertion (6503.024285ms)
+✔ closure projection frees actual resident quota and net bytes while all original consumers retain full identities (8704.512786ms)
+ℹ {"releasedClosures":1,"releasedBytes":130,"logicalClosures":2,"residentLimit":1}
+✔ read-only plan and actual CLI apply agree; finalization, changed intent and bounded metadata remain enforced (13798.933175ms)
+✔ no byte saving, stale store, source mismatch and run fence fail before mutation (3391.152366ms)
+✔ waiting run and absent result projection are not eligible; malformed references cannot yield successful reads or ACKs (4807.334354ms)
+✔ actual Attempt writer fence prevents closure retirement; killing waiting operator leaves original state (4032.051086ms)
+✔ actual SIGKILL at rename boundaries and after commit reopens complete state without double release (11091.732028ms)
+✔ independent review: projected replay survives a real later journal append but missing or corrupt referenced history cannot produce an ACK (2571.613556ms)
+✔ independent review: structurally valid rehashed foreign or unimported checkpoints cannot authorize projection (3223.123572ms)
+✔ independent review: reclaimed unreferenced evidence preserves the projected result and metadata quota still applies (2431.777907ms)
+✔ independent review: original run fence rejects a concurrent retirement and permits unchanged replay after owner release (3001.075253ms)
+✔ independent review: original synchronous journal reader does not time out while actual retirement awaits evidence IO (2346.467785ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 148084.025552

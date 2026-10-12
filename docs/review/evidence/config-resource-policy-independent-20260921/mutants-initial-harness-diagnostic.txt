@@ -1,0 +1,88 @@
+{"name":"producer-memory-default","old":"limit: policy.memoryBytes","replacement":"limit: 8589934592","status":1,"semanticAssertionDetected":true}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /AssertionError|Missing expected exception/. Input:
+
+'✖ CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7} (49.332181ms)\n' +
+  '✖ CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11} (3.09271ms)\n' +
+  'ℹ tests 2\n' +
+  'ℹ suites 0\n' +
+  'ℹ pass 0\n' +
+  'ℹ fail 2\n' +
+  'ℹ cancelled 0\n' +
+  'ℹ skipped 0\n' +
+  'ℹ todo 0\n' +
+  'ℹ duration_ms 464.88046\n' +
+  '\n' +
+  '✖ failing tests:\n' +
+  '\n' +
+  'test at ../../../../../tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.mts:41:3\n' +
+  '✖ CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7} (49.332181ms)\n' +
+  '  Error: PRISM_NATIVE_POLICY_EXCEEDS_POOL:memoryBytes\n' +
+  '      at requirePrismResourcePoolCapacity (file:///tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.ts:7:47)\n' +
+  '      at TestContext.<anonymous> (file:///tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.mts:57:5)\n' +
+  '      at Test.runInAsyncScope (node:async_hooks:227:14)\n' +
+  '      at Test.run (node:internal/test_runner/test:1402:25)\n' +
+  '      at Test.start (node:internal/test_runner/test:1262:17)\n' +
+  '      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)\n' +
+  '\n' +
+  'test at ../../../../../tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.mts:41:3\n' +
+  '✖ CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11} (3.09271ms)\n' +
+  '  Error: PRISM_NATIVE_POLICY_EXCEEDS_POOL:memoryBytes\n' +
+  '      at requirePrismResourcePoolCapacity (file:///tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.ts:7:47)\n' +
+  '      at TestContext.<anonymous> (file:///tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.mts:57:5)\n' +
+  '      at Test.runInAsyncScope (node:async_hooks:227:14)\n' +
+  '      at Test.run (node:internal/test_runner/test:1402:25)\n' +
+  '      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n' +
+  '      at Test.postRun (node:internal/test_runner/test:1542:19)\n' +
+  '      at Test.run (node:internal/test_runner/test:1467:12)\n' +
+  '      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)\n'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-resource-policy-independent-20260921/mutate.mjs:36:12
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '✖ CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7} (49.332181ms)\n' +
+    '✖ CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11} (3.09271ms)\n' +
+    'ℹ tests 2\n' +
+    'ℹ suites 0\n' +
+    'ℹ pass 0\n' +
+    'ℹ fail 2\n' +
+    'ℹ cancelled 0\n' +
+    'ℹ skipped 0\n' +
+    'ℹ todo 0\n' +
+    'ℹ duration_ms 464.88046\n' +
+    '\n' +
+    '✖ failing tests:\n' +
+    '\n' +
+    'test at ../../../../../tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.mts:41:3\n' +
+    '✖ CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7} (49.332181ms)\n' +
+    '  Error: PRISM_NATIVE_POLICY_EXCEEDS_POOL:memoryBytes\n' +
+    '      at requirePrismResourcePoolCapacity (file:///tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.ts:7:47)\n' +
+    '      at TestContext.<anonymous> (file:///tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.mts:57:5)\n' +
+    '      at Test.runInAsyncScope (node:async_hooks:227:14)\n' +
+    '      at Test.run (node:internal/test_runner/test:1402:25)\n' +
+    '      at Test.start (node:internal/test_runner/test:1262:17)\n' +
+    '      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)\n' +
+    '\n' +
+    'test at ../../../../../tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.mts:41:3\n' +
+    '✖ CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11} (3.09271ms)\n' +
+    '  Error: PRISM_NATIVE_POLICY_EXCEEDS_POOL:memoryBytes\n' +
+    '      at requirePrismResourcePoolCapacity (file:///tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.ts:7:47)\n' +
+    '      at TestContext.<anonymous> (file:///tmp/prism-resource-mutant-mMNmmA/pool-equality-rejected.mts:57:5)\n' +
+    '      at Test.runInAsyncScope (node:async_hooks:227:14)\n' +
+    '      at Test.run (node:internal/test_runner/test:1402:25)\n' +
+    '      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n' +
+    '      at Test.postRun (node:internal/test_runner/test:1542:19)\n' +
+    '      at Test.run (node:internal/test_runner/test:1467:12)\n' +
+    '      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)\n',
+  expected: /AssertionError|Missing expected exception/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

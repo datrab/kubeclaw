@@ -1,0 +1,44 @@
+{
+  "reviewer": "/root/runtime_security_policy_review",
+  "decision": "accept_local_consumer_baseline_at_bound_source_only",
+  "run": "docs/review/evidence/buster-cluster-runtime-20260924/security-consumers2",
+  "counts": {
+    "tests": 61,
+    "pass": 61,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "results": [
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "ci2",
+      "seconds": 6.375682624988258
+    }
+  ],
+  "sourceBinding": {
+    "objects": 35435,
+    "handoffFiles": 84,
+    "independentBeforeAfterEquality": true,
+    "guard": {
+      "violationRecorded": false
+    }
+  },
+  "scope": "Original entire RuntimeSecurity consumer module with both policy profiles, required/invalid/retired admission, genuine combined streams, deadline, age/skew, diagnostics/PATH, poll timings, namespace behavior and reload consumer counterpart. No service path closure inferred from this helper-composed module.",
+  "notEstablished": [
+    "Mutation controls acceptance",
+    "Production child lifecycle ownership",
+    "Full original security suite/Trivy/remote regression",
+    "Final DOC and overall goal closure"
+  ],
+  "rawEvidenceSha256": "fe741be21d875228abd8f5c44f9551cd104de98436b452c2cf537a463f2825b1",
+  "sourceTestSha256": "fa7ef952e620fce3549c525bce1639e0605fd99f3d9a1fd8d7626c5e8183ba88"
+}

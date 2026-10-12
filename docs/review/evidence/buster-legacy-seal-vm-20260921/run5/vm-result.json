@@ -1,0 +1,28 @@
+{
+  "qemuExitCode": 0,
+  "elapsedSeconds": 90.1370759679703,
+  "stoppedReason": null,
+  "passed": true,
+  "verifiedInitialArtifacts": {
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/generation5/guest-root.ext4": "85740da5adcd5fbc40e4acf2c4567e79e28d141efdc62953e58b4f20045ab731",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/generation5/second.ext4": "f351a2048958b4bd98a656546b8e343adfdb1b25c01ee79d37796b5bbb26c6d0",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/generation5/vmlinuz-virt": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/generation5/initrd.cpio.gz": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/generation5/repo-snapshot-manifest.json": "80528dc251bd904f8f10147c7b33baf979dfe15be709cc2a8a62ce0fdfbce87d",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation5/guest-init.sh": "d554e25956ac6a28c96d2815704fb68d44131789bd420c33453943ca1544aae0",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation5/prepare-images.py": "8db52f7c98e5d79f4700de3da5f627c11d89f6ecc7407f49a776151615ac1668",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation5/prepare-runtime.py": "7f5610fef7829dbb46dc71f996a301a16412cbdb79afcc1d4e3825b3565e9f80",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation5/runtime-binding.py": "4f08c2420b9a1d8383c6904bdea0659c001b1e20e719c52f44546843c1927267",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation5/tool-runtime-identities.json": "1c316c8df68bcf86e4758d98cb3a0d76ddffcb0b65edc6ec02d1c99c3733e3ac",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation5/source-export-identities.json": "b5d6c64e3331936bce7920e3617d6ba7635330345d38cfc25356cc2a185af0d8",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation5/guest-payload-identities.json": "40902813e18dc0f6c881e86adfc88491095acd26a4c04c4651593ff072e658d3",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation5/image-build.json": "46b00f91c49f324579b6aac753351230ecf3186a59f461cd4caa45052205deaf",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation5/prepared-artifacts.json": "3be1d65d32cee186e6066d8ac93034c5ecf0a70cb2787af1575a98793f89624f",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation5/launch-smaller-as.py": "7124ea82a0d1d7f4d6a650f27dd453024acaf3dc856e7e2bbf340ca32a67151e",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation5/launch-command-smaller-as.json": "87d43597210124bc3a99927dd18a204400a9b1f3029ca9503917c288ddd470b3",
+    "docs/review/remediation/implementation/independent-vm-fixed-corridor-20260921.md": "928aeeb5e1080359aa8b7d867ad2158cd7d75371831699e367901f794530f8bd"
+  },
+  "initialDiskSha256": "85740da5adcd5fbc40e4acf2c4567e79e28d141efdc62953e58b4f20045ab731",
+  "finalMutableDiskSha256": "e91068de6d5921727725041aeb77bbe941cf9ee78bdb37823c805892e5bd3897",
+  "finalSecondDiskSha256": "412586361d246c2b5a49e98afc30ac49060c18dc83f1f33115770ad82f258368"
+}

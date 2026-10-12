@@ -1,0 +1,47 @@
+{
+  "at": "2026-09-21T19:57:28.464707+00:00",
+  "runtimeExecuted": false,
+  "originalTestBodiesBytePreserved": true,
+  "files": [
+    {
+      "path": "tests/fixtures/test-gate/session-policy.mjs",
+      "sha256": "cf18fdf8c3ab83fbeb211311fc9aba57d3fdb412f777aafd02e32ca02db0a316",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-completion-policy.test.mjs",
+      "sha256": "403ce90d831fff9dc2c5c610570e79826db0c2ad831ad34ea89bf8fdc7d53510",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "sha256": "be7a5564374acc9c2ea7cbbea2ba864850e99167460c8aefde79b3d6d8799196",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "sha256": "331bfbfbf501192293154f2b237470374190365401630516e2e2f602ab1a022d",
+      "liveReadOnly": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "sha256": "15994d9caebf7f98f2e23740a66ad105ec721c0ebbe01aba22def8a9e4c5bad4",
+      "liveReadOnly": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "8a6565565db5683e8da2c7bb17eb7a1d5f474b43d336fe1d6856219a193c3179",
+      "liveReadOnly": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+      "sha256": "ab4b341f3d52181ff6b6fa33aaaa70d617616f33a1f40b0ec147db0ec2f0df06",
+      "liveReadOnly": true
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42",
+      "liveReadOnly": true
+    }
+  ]
+}

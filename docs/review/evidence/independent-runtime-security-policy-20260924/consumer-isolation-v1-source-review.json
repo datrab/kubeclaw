@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/runtime_security_policy_review",
+  "decision": "accept_source_integration_and_full_baseline_control_verification_only",
+  "manifestSha256": "2427668922d6c7cad8afc1547816242a7e3b339d7d25ea04be4d0d4bcc58c9b0",
+  "hashesAndLiveBaselineVerified": true,
+  "findings": [],
+  "sourceResolution": {
+    "RS-CONTROL-CROSSTALK-01": "Only age/future freshness requests gain explicit600ms timeout, matching their existing600ms selected execution ceiling. The maximumExecutionMs mutant still restores300000 globally, but freshness requests remain orthogonally bounded. The actual low/high execution-cap test retains uncapped request and same250/4000ms profiles plus700ms child, so default restoration remains observable. No test selection/count or expectation change.",
+    "lifetime": "An owned AbortController follows test signal; original invoke promise remains returned unchanged to assertion and is immediately rejection-observed for teardown. Teardown cancels, awaits observed in-flight invokes, kills only tracked live direct fixture children if needed, waits actualclose, then removes root. The existing2s bound is now global; failure retainsroot because rm is after successful race. Timer/listener/hook restored in finally. Raced background cleanup cannot later remove files.",
+    "failureVisibility": "Pending observation resolves only the teardown join; it does not replace work returned to tests. All original exact error/consumer oracles and explicit confirmClosed checks remain. SIGKILL is failure teardown for exact observed fixture children, not a claim of production child ownership."
+  },
+  "requiredEvidence": [
+    "Same complete61cases baseline with zero skips/cancels.",
+    "All9 full semantic controls with exact hook identities and intended assertions; execution control must have no collateral age/future testtimeouts.",
+    "Any disposal failure must remain failed and retained evidence must not be removed.",
+    "Final canonical checks and independent bound evidence/DOC review."
+  ],
+  "scope": "Single private test-file change; no production code, underlying command/request/attempt/test deadline relaxation or runtime execution by reviewer.",
+  "boundFiles": [
+    {
+      "path": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "beforeSha256": "fa7ef952e620fce3549c525bce1639e0605fd99f3d9a1fd8d7626c5e8183ba88",
+      "afterSha256": "f67e43a2be7ebc263274834ea4dc8e8083fa007043a522fbdb86e1380bd290ff"
+    }
+  ]
+}

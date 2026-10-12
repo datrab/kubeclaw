@@ -1,0 +1,394 @@
+{
+  "scope": "static inventory review, not plugin execution",
+  "originalCount": 27,
+  "correctedCount": 28,
+  "schemaFields": 14,
+  "checks": [
+    {
+      "version": "original",
+      "path": "skills/common/plugins/command-runner/plugin.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/plugin.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/command-runner/package.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/package.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/schemas/config.schema.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/command-runner/src/adapter.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/adapter.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/command-runner/src/cgroup.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/cgroup.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/command-runner/src/execution.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/execution.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/command-runner/src/process-facts.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/process-facts.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/command-runner/src/process-group.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/process-group.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/command-runner/src/runner.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/runner.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/command-runner/src/types.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/types.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/git-workspace/plugin.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/plugin.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/git-workspace/package.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/package.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/schemas/config.schema.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/adapter.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/git-workspace/src/operations.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/operations.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/git-workspace/src/review-source.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/review-source.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/git-workspace/src/runner.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/runner.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/git-workspace/src/values.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/values.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugins/git-workspace/src/workspace-ownership.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/workspace-ownership.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/nova/core/execution/authorization.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/nova/core/execution/authorization.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/nova/core/execution/engine-snapshots.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "skills/buster/engine/test-gates/direct-command-runtime.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/buster/engine/test-gates/direct-command-runtime.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "original",
+      "path": "docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md",
+      "snapshotValid": true,
+      "currentMatches": false
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/command-runner/plugin.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/plugin.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/command-runner/package.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/package.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/command-runner/schemas/config.schema.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/schemas/config.schema.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/command-runner/src/adapter.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/adapter.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/command-runner/src/cgroup.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/cgroup.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/command-runner/src/execution.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/execution.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/command-runner/src/process-facts.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/process-facts.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/command-runner/src/process-group.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/process-group.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/command-runner/src/runner.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/runner.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/command-runner/src/types.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/command-runner/src/types.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/git-workspace/plugin.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/plugin.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/git-workspace/package.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/package.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/git-workspace/schemas/config.schema.json",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/schemas/config.schema.json",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/git-workspace/src/adapter.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/adapter.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/git-workspace/src/operations.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/operations.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/git-workspace/src/review-source.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/review-source.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/git-workspace/src/runner.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/runner.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/git-workspace/src/values.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/values.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugins/git-workspace/src/workspace-ownership.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugins/git-workspace/src/workspace-ownership.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/nova/core/execution/authorization.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/nova/core/execution/authorization.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/nova/core/execution/engine-snapshots.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/buster/engine/test-gates/direct-command-runtime.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources/skills/buster/engine/test-gates/direct-command-runtime.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources-v2/skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "snapshotValid": true,
+      "currentMatches": true
+    },
+    {
+      "version": "-v2",
+      "path": "docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md",
+      "snapshot": "docs/review/evidence/config-command-git-plugin-inventory-20260921/sources-v2/docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md",
+      "snapshotValid": true,
+      "currentMatches": true
+    }
+  ],
+  "correctedReportSha256": "a59144d32c87e5ea67c778cd7b4828ab6cd6f5a0157617ad50032faebf3589f9"
+}

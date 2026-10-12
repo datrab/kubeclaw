@@ -1,0 +1,14 @@
+✔ CS3 real ownership store enforces 1 authored records (45.930876ms)
+✔ CS3 real ownership store enforces 2 authored records (47.814945ms)
+✔ CS3 real ownership store enforces 1 authored bytes (12.3817ms)
+✔ CS3 real ownership store enforces 8192 authored bytes (22.867361ms)
+✔ CS3 actual execution journal admission and process boundary profile 1 (110.471653ms)
+✔ CS3 actual execution journal admission and process boundary profile 2 (141.71346ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1590.501212

@@ -1,3 +1,4 @@
+import { loadSwarmSettings } from '../../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -160,7 +161,17 @@ function hasCompactConfigAuthority(config: AnyRecord) {
   return false;
 }
 
+/** Validate shared authorship before deriving the legacy E2E-only profile input. */
+export function pipelineProfileFromSwarm(file: string): AnyRecord {
+  const snapshot = loadSwarmSettings({ SWARM_CONFIG: path.resolve(file) });
+  return { ...cloneJson(snapshot.profile), _doc: snapshot.profile._doc };
+}
+
 export function expandSwarmConfig(rawConfig: any) {
+  if (typeof rawConfig === 'string') rawConfig = pipelineProfileFromSwarm(rawConfig);
+  if (isPlainObject(rawConfig) && (hasOwn(rawConfig, 'operator') || hasOwn(rawConfig, 'components'))) {
+    throw new Error('SWARM_CONFIG_INVALID:inline authorship is not accepted; pass an explicit bundle entry');
+  }
   if (!isCompactSwarmConfig(rawConfig)) return rawConfig;
   if (!isPlainObject(rawConfig)) throw new Error('swarm.config.json: required object');
 

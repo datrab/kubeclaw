@@ -1,0 +1,59 @@
+{
+  "scope": "Independent nonauthor audit of two descendant kernel cases",
+  "rawConsoleSha256": "c7ed4d4828a9200250ec03b7f1f622e61d676f115184ae7c1e4ffab9ce7b2338",
+  "driverSha256": "9625b4e475639427215f844db3d677e184dea7f5e5f9fa1dac5b3d37b577bdf8",
+  "passed": true,
+  "cases": [
+    {
+      "case": "foreign-descendant",
+      "authority": {
+        "case": "foreign-descendant",
+        "gid": 0,
+        "immutable": true,
+        "mode": "0o644",
+        "phase": "descendant-authority",
+        "uid": 1000
+      },
+      "verifierExit": 1,
+      "rejection": "ValueError: BUSTER_LEGACY_SEAL_AUTHORITY_INVALID",
+      "capabilities": {
+        "gid": 0,
+        "phase": "capabilities",
+        "sets": {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        },
+        "uid": 0
+      }
+    },
+    {
+      "case": "writable-descendant",
+      "authority": {
+        "case": "writable-descendant",
+        "gid": 0,
+        "immutable": true,
+        "mode": "0o775",
+        "phase": "descendant-authority",
+        "uid": 0
+      },
+      "verifierExit": 1,
+      "rejection": "ValueError: BUSTER_LEGACY_SEAL_AUTHORITY_INVALID",
+      "capabilities": {
+        "gid": 0,
+        "phase": "capabilities",
+        "sets": {
+          "CapAmb": 0,
+          "CapBnd": 481,
+          "CapEff": 481,
+          "CapInh": 0,
+          "CapPrm": 481
+        },
+        "uid": 0
+      }
+    }
+  ],
+  "migrationAcceptance": false
+}

@@ -1,0 +1,30 @@
+{
+  "reason": "Frozen review bytes are evidence snapshots, not current documentation pages. Only storage names changed; original source identity manifests and snapshot bytes are unchanged.",
+  "files": [
+    {
+      "previousStoragePath": "docs/review/evidence/independent-slices-20260920/new-files/docs/ops/cilium-networking.md",
+      "newStoragePath": "docs/review/evidence/independent-slices-20260920/new-files/docs/ops/cilium-networking.md.snapshot",
+      "sha256": "8fbff73b5f3347580e5a8f6f71aab93bfbdd9517f074ed656708ec99d35f3d7b"
+    },
+    {
+      "previousStoragePath": "docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/acceptance-20260920.md",
+      "newStoragePath": "docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/acceptance-20260920.md.snapshot",
+      "sha256": "90e0fade7d2b26102f817900f800789a8efd25897f36b4f26c9338e7b1a343f2"
+    },
+    {
+      "previousStoragePath": "docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/implementation/buster-native-cutover-20260920.md",
+      "newStoragePath": "docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/implementation/buster-native-cutover-20260920.md.snapshot",
+      "sha256": "491e217251b8592f92197540484252c5d25d53b4917f59f7a9d2f19642a36f08"
+    },
+    {
+      "previousStoragePath": "docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/implementation/register-consistency-20260920.md",
+      "newStoragePath": "docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/implementation/register-consistency-20260920.md.snapshot",
+      "sha256": "59d801dd16d51fcc0bdcaf56679b09868c3d4da035be8e48eef5221e384a644f"
+    },
+    {
+      "previousStoragePath": "docs/review/evidence/independent-slices-20260920/r1-recheck/files/docs/review/remediation/implementation/register-consistency-20260920.md",
+      "newStoragePath": "docs/review/evidence/independent-slices-20260920/r1-recheck/files/docs/review/remediation/implementation/register-consistency-20260920.md.snapshot",
+      "sha256": "5ef9a0410b47f2e015bfe0069707a550ceca931e05085bb93afa862fd3ca5190"
+    }
+  ]
+}

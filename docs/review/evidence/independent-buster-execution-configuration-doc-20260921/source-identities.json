@@ -1,0 +1,192 @@
+{
+  "at": "2026-09-21T19:34:41.077471+00:00",
+  "runtimeExecuted": false,
+  "files": [
+    {
+      "path": "docs/architecture/buster-execution-configuration.md",
+      "sha256": "9fc57f8a89122232e27b0fb4dce604d8260099c5edf1088d97b720e10b8b9711"
+    },
+    {
+      "path": "docs/architecture/buster-v2-runtime.md",
+      "sha256": "86f0ee84591fd1d8a5f1f31f37cf4de03c4dc88f63de8a5a720f4eafd2735b3a"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "fab3f9473ac2c7872dc338f8d8a144ad82815302db1621e69eaab725e5397a0e"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "209bbde26a9954d8f1e41a79332ae1cbd1af69e87d5b52b80535127263738ee9"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "sha256": "076cf80a40f30899eabebc0c838079fed1d76101d16d473b98af03fbc74d3fbc"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "dd3b06c92a726cb2bcd68b61f8bc819e2b51101b10362bd043e92313f10fbc2a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-setup.ts",
+      "sha256": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "sha256": "15994d9caebf7f98f2e23740a66ad105ec721c0ebbe01aba22def8a9e4c5bad4"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "sha256": "2bc8ae28f2f2e9e65616681ba2e2b430b2d3378f6119f6bdc0b0aae5fd7b2d40"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "sha256": "0c698666a99e51226b2bca2d8287ff491a7baf37dad47448c4574176ee65f569"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "sha256": "62a88c6c23e47440b05c62ea55453ba5b973a10fafc23e157e82bbd9ae526320"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "sha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "sha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "sha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "sha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
+    }
+  ],
+  "fieldCoverage": [
+    {
+      "field": "provider.cleanupTimeoutMs",
+      "documented": true
+    },
+    {
+      "field": "provider.maximumResultBytes",
+      "documented": true
+    },
+    {
+      "field": "provider.claimGraceMs",
+      "documented": true
+    },
+    {
+      "field": "provider.queueTimeoutMs",
+      "documented": true
+    },
+    {
+      "field": "provider.workerResultWrapperBytes",
+      "documented": true
+    },
+    {
+      "field": "reports.maximumAggregateResultBytes",
+      "documented": true
+    },
+    {
+      "field": "reports.maximumSourceBytes",
+      "documented": true
+    },
+    {
+      "field": "reports.maximumCases",
+      "documented": true
+    },
+    {
+      "field": "reports.maximumFindings",
+      "documented": true
+    },
+    {
+      "field": "reports.maximumCaseFindings",
+      "documented": true
+    },
+    {
+      "field": "reports.maximumTimeoutMs",
+      "documented": true
+    },
+    {
+      "field": "reports.memoryBytes",
+      "documented": true
+    },
+    {
+      "field": "reports.minimumCpuTimeMs",
+      "documented": true
+    },
+    {
+      "field": "reports.maximumOpenFiles",
+      "documented": true
+    },
+    {
+      "field": "observation.resourceSampleIntervalMs",
+      "documented": true
+    },
+    {
+      "field": "observation.processSampleIntervalMs",
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumEvidenceObjects",
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumEvidenceBytes",
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumEvidenceObjectBytes",
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumResults",
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumClosures",
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumMetadataBytes",
+      "documented": true
+    },
+    {
+      "field": "stores.attempts.maximumPendingEvidenceAgeMs",
+      "documented": true
+    },
+    {
+      "field": "stores.admission.maximumIngressBytes",
+      "documented": true
+    },
+    {
+      "field": "stores.admission.maximumRecords",
+      "documented": true
+    },
+    {
+      "field": "stores.admission.maximumBytes",
+      "documented": true
+    },
+    {
+      "field": "stores.admission.maximumQuarantineRecords",
+      "documented": true
+    },
+    {
+      "field": "stores.admission.maximumQuarantineBytes",
+      "documented": true
+    }
+  ]
+}

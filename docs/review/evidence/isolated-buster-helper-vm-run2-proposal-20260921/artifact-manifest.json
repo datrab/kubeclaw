@@ -1,0 +1,115 @@
+{
+  "status": "prepared-not-booted",
+  "files": [
+    {
+      "path": "node_modules/.cache/buster-helper-vm-run2-20260921/root/usr/bin/qemu-system-x86_64",
+      "bytes": 27791496,
+      "sha256": "d0c183817a3044bc38e104f88ef56ee235c5d91a9413cba7255c1c1751c31fc1"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-run2-20260921/root/boot/vmlinuz-virt",
+      "bytes": 12608512,
+      "sha256": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-run2-20260921/initrd.cpio.gz",
+      "bytes": 1899633,
+      "sha256": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-run2-20260921/guest-root.ext4",
+      "bytes": 8589934592,
+      "sha256": "8b6ca26245f8cd5596f45058627b18d612c028ddf4ea526d8532e5b9cf10f909"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-run2-20260921/guest-root/usr/local/bin/node",
+      "bytes": 131391152,
+      "sha256": "78465b20b5455f64d2dbbd9e8b38470cfc23ad3abe4cdc9a00dc5e050eee70fb"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-run2-20260921/repo-snapshot-manifest.json",
+      "bytes": 6539037,
+      "sha256": "7d75b0ba49eb18744bd63d2f741c60d65329f73251f38f4c5716780c25d0aaad"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-run2-20260921/guest-root/etc/machine-id",
+      "bytes": 37,
+      "sha256": "c4fb15c6b7f07518459c5894fb3e0c9a75f3d66318eca26cb62301bde5aad346"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/baseline-added-packages.json",
+      "bytes": 1465,
+      "sha256": "5e62a0ad06b1e330d211b43796aec4eab71dd582de888021d89d23fbee2f826b"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/baseline-author-source-identities.json",
+      "bytes": 3770,
+      "sha256": "6864e8e8251e907d3b73f59fd959f9080f476391b18ccfd0da0d79781d17e12e"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/guest-identity.json",
+      "bytes": 120,
+      "sha256": "3f4fa4cd833fa98362e96f8443929d56cb9061644d8d3895c5521e12648f2ad0"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/guest-init.sh",
+      "bytes": 1987,
+      "sha256": "ac40547065172ff340b6cc8509111c2bdcbc63ee6579f1b3c0a9469d745bcc87"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/image-build.json",
+      "bytes": 1228,
+      "sha256": "5f89e182cd2ea4ab0c1590d2579444a543ef15097ebf5c616ce2b3b4e7f55259"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/initrd-init.sh",
+      "bytes": 842,
+      "sha256": "3c4544ab612cbdaafb77949c23e6bec5eede4ba34c37dd3d5b5cde088c7b8769"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/launch-approved.py",
+      "bytes": 9679,
+      "sha256": "ea3bbf7f7c25bf0102a8b459ac394efcde892cfcc28a4e2a0372aaf36e129b2b"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/launch-command.json",
+      "bytes": 1811,
+      "sha256": "70a57424eb76c1076bf4cf9cf34fa607f4121d47a926eee53b670797eee3a91c"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/prepare-images.py",
+      "bytes": 5592,
+      "sha256": "52ea7e6855045af4dfb64481b32d2852b3dce40edf8190d3935f4a2076df597c"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/prepare.py",
+      "bytes": 4402,
+      "sha256": "6468409836a1b0dd6d03459bcad4d3a5767b224f3079c81d2a87504e56f57c70"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/snapshot-delta.json",
+      "bytes": 1262,
+      "sha256": "46cb18882605254162eb0075797a722a8888213b769aad695228ed2ca2e8e789"
+    },
+    {
+      "path": "docs/review/remediation/implementation/isolated-buster-helper-vm-run2-proposal-20260921.md",
+      "bytes": 3066,
+      "sha256": "577df34c5268af4c941b103dd9762257138d7934b8ec8c2eb055ccef77a0f985"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/verification-memory-refusal.txt",
+      "bytes": 81,
+      "sha256": "97806de79e8265102deee1b4f9963775922b781804c5d7c6ec775fb1187e6ecb"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/memory-preflight-followup.json",
+      "bytes": 89,
+      "sha256": "cb869da1a940bd2dd871b3ab13815a83f6e03ef403d53dc30c7ce943c946a77e"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/verification-only.txt",
+      "bytes": 866,
+      "sha256": "652985cb1d805061f71f890389ae347a7d554431714297bcc95f93c7829742f5"
+    }
+  ]
+}

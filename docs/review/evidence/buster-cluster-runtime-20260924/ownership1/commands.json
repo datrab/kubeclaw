@@ -1,0 +1,11 @@
+[
+  [
+    "ownership",
+    [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-ownership.test.mjs"
+    ]
+  ]
+]

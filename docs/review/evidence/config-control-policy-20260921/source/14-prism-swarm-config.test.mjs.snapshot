@@ -1,0 +1,266 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { execFileSync, spawnSync } from 'node:child_process';
+import yaml from 'js-yaml';
+import { loadControlServerConfig } from '../../../skills/prism/server/control-config.ts';
+import { loadWorkerConfig } from '../../../skills/prism/server/worker-config.ts';
+const root = path.resolve(import.meta.dirname, '../../..');
+const canonical = path.join(root, 'charts/kubeclaw/files/config/swarm.config.json');
+const base = JSON.parse(fs.readFileSync(canonical, 'utf8'));
+const helm = (chart, extra = []) => spawnSync('helm', ['template', 'config-review', chart, '--namespace', 'default', '-f', path.join(chart, 'ci-values.yaml'), ...extra], { encoding: 'utf8' });
+function copiedChart(t) {
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-swarm-chart-'));
+  t.after(() => fs.rmSync(temp, { recursive: true, force: true }));
+  const chart = path.join(temp, 'prism'); fs.cpSync(path.join(root, 'charts/prism'), chart, { recursive: true, dereference: true });
+  for (const name of ['swarm.config.json', 'swarm.schema.json']) {
+    const file = path.join(chart, 'files/config', name);
+    const content = fs.readFileSync(file);
+    if (fs.lstatSync(file).isSymbolicLink()) fs.unlinkSync(file);
+    fs.writeFileSync(file, content);
+    assert.ok(!fs.lstatSync(file).isSymbolicLink(), 'isolated mutation cannot follow canonical author symlink');
+  }
+  return chart;
+}
+function render(chart, extra) {
+  const result = helm(chart, extra); assert.equal(result.status, 0, result.stderr);
+  return yaml.loadAll(result.stdout).filter(Boolean);
+}
+function delivery(docs, role = 'worker') {
+  const config = docs.find(d => d.kind === 'ConfigMap' && d.metadata.name === 'prism-swarm-config');
+  const deployment = docs.find(d => d.kind === 'Deployment' && d.metadata.name === `prism-${role}`);
+  const worker = deployment.spec.template.spec.containers.find(c => c.name === role);
+  const env = Object.fromEntries(worker.env.filter(e => 'value' in e).map(e => [e.name, e.value]));
+  assert.equal(env.SWARM_CONFIG, '/etc/kubeclaw/swarm/swarm.config.json');
+  assert.ok(!Object.keys(env).some(k => /^PRISM_WORKER_(?:MAXIMUM_|REQUEST_BODY_TIMEOUT|SHUTDOWN_TIMEOUT)/.test(k)));
+  const mount = worker.volumeMounts.find(m => m.name === 'swarm-config');
+  assert.deepEqual(mount, { name: 'swarm-config', mountPath: '/etc/kubeclaw/swarm', readOnly: true });
+  assert.equal(deployment.spec.template.spec.volumes.find(v => v.name === mount.name).configMap.name, config.metadata.name);
+  assert.match(deployment.spec.template.metadata.annotations['checksum/swarm-config'], /^[a-f0-9]{64}$/);
+  return config.data['swarm.config.json'];
+}
+test('CD01 original chart delivers the one canonical config to the worker mount', () => {
+  const bytes = delivery(render(path.join(root, 'charts/prism')));
+  assert.deepEqual(JSON.parse(bytes), base);
+});
+test('CD02 real Helm output from two author profiles drives the actual production loader', t => {
+  const chart = copiedChart(t);
+  const profiles = [base, structuredClone(base)];
+  profiles[1].operator.prism.worker = { maximumActiveRequests: 7, maximumProbeRequests: 2, maximumConnections: 40, requestTimeoutMs: 3000, shutdownTimeoutMs: 130000, maximumInputBytes: 8192 };
+  for (const authored of profiles) {
+    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(authored));
+    const rendered = delivery(render(chart));
+    const file = path.join(chart, 'mounted-swarm.config.json'); fs.writeFileSync(file, rendered);
+    const actual = loadWorkerConfig({ SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://test/control' });
+    assert.equal(actual.shutdownTimeoutMs, authored.operator.prism.worker.shutdownTimeoutMs);
+    const { shutdownTimeoutMs, ...ingress } = authored.operator.prism.worker;
+    assert.deepEqual(actual.ingress, ingress);
+  }
+});
+test('CD03 old Helm shutdown authority is rejected', () => {
+  const result = helm(path.join(root, 'charts/prism'), ['--set', 'worker.shutdownTimeoutMs=120000']);
+  assert.notEqual(result.status, 0); assert.match(result.stderr, /worker.shutdownTimeoutMs moved/);
+});
+for (const key of Object.keys(base.operator.prism.worker)) for (const invalid of ['3', null, -1, 0, 1.5, 2147483648, undefined]) test(`CD04 ${key} rejects ${String(invalid)} before rendering`, t => {
+  const chart = copiedChart(t); const config = structuredClone(base); config.operator.prism.worker[key] = invalid;
+  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /swarm worker/);
+});
+for (const location of ['', 'operator', 'operator.prism', 'operator.prism.worker']) test(`CD04 unknown key ${location || 'root'}`, t => {
+  const chart = copiedChart(t); const config = structuredClone(base); let object = config;
+  for (const key of location.split('.').filter(Boolean)) object = object[key]; object.unknown = 1;
+  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /swarm/);
+});
+test('CD04 connection overcommit fails Helm rendering', t => {
+  const chart = copiedChart(t); const config = structuredClone(base); config.operator.prism.worker.maximumConnections = 16;
+  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /connection budget/);
+});
+for (const shutdownTimeoutMs of [100000, 150000]) test(`CD05 shutdown ${shutdownTimeoutMs} violates native-close or Pod grace`, t => {
+  const chart = copiedChart(t); const config = structuredClone(base); config.operator.prism.worker.shutdownTimeoutMs = shutdownTimeoutMs;
+  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /worker shutdown must cover/);
+});
+test('CD06 Helm packaging dereferences the canonical author/schema without manual synchronization', t => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-swarm-package-')); t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  execFileSync('helm', ['package', path.join(root, 'charts/prism'), '--destination', dir], { stdio: 'pipe' });
+  const archive = path.join(dir, fs.readdirSync(dir).find(name => name.endsWith('.tgz')));
+  const contents = execFileSync('tar', ['-xzOf', archive, 'prism/files/config/swarm.config.json'], { encoding: 'utf8' });
+  assert.deepEqual(JSON.parse(contents), base);
+  const schema = execFileSync('tar', ['-xzOf', archive, 'prism/files/config/swarm.schema.json'], { encoding: 'utf8' });
+  assert.deepEqual(JSON.parse(schema), JSON.parse(fs.readFileSync(path.join(root, 'skills/common/plugin-runtime/foundation/config/swarm.schema.json'))));
+});
+
+for (const key of ['worker.native.maximumInputBytes', 'native.maximumInputBytes']) test(`CI05 old Helm input authority ${key} is rejected`, () => {
+  const result = helm(path.join(root, 'charts/prism'), ['--set', `${key}=16777216`]);
+  assert.notEqual(result.status, 0); assert.match(result.stderr, key.startsWith('worker.') ? /additional properties 'maximumInputBytes' not allowed/ : /additional properties 'native' not allowed/);
+});
+
+for (const key of ['maximumResultBytes', 'dispatchTimeoutMs']) for (const invalid of ['3', null, -1, 0, 1.5, 2147483648, undefined]) test(`CR06 native ${key} rejects ${String(invalid)} before rendering`, t => {
+  const chart = copiedChart(t), config = structuredClone(base); config.operator.prism.native[key] = invalid;
+  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /swarm native/);
+});
+for (const native of [undefined, null, { ...base.operator.prism.native, extra: 1 }]) test('CR06 missing or unknown native section fails rendering', t => {
+  const chart = copiedChart(t), config = structuredClone(base); config.operator.prism.native = native;
+  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /swarm (?:native|prism)/);
+});
+test('CR06 two real authored profiles deliver identical bytes and changing checksums to both roles', t => {
+  const chart = copiedChart(t), checksums = [];
+  for (const native of [base.operator.prism.native, { ...base.operator.prism.native, maximumResultBytes: 8192, dispatchTimeoutMs: 3000 }]) {
+    const config = structuredClone(base); config.operator.prism.native = native;
+    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+    const docs = render(chart), workerBytes = delivery(docs), controlBytes = delivery(docs, 'control');
+    assert.equal(controlBytes, workerBytes); assert.deepEqual(JSON.parse(controlBytes), config);
+    const file = path.join(chart, 'mounted-swarm.config.json'); fs.writeFileSync(file, controlBytes);
+    const actual = loadControlServerConfig({ SWARM_CONFIG: file, PRISM_SESSION_SECRET: 'test', PRISM_INGRESS_SECRET: 'test',
+      PRISM_WORKER_SECRET: 'test', PRISM_DISPATCH_SECRET: 'test', PRISM_INGESTION_SECRET: 'test' });
+    const worker = loadWorkerConfig({ SWARM_CONFIG: file, PRISM_WORKER_SECRET: 'test', DATABASE_URL: 'postgresql://not-opened' });
+    assert.equal(actual.maximumWorkerResponseBytes, native.maximumResultBytes);
+    assert.equal(actual.nativeWorkerDispatchTimeoutMs, native.dispatchTimeoutMs); assert.deepEqual(worker.native, native);
+    const roleChecksums = ['control', 'worker'].map(role => docs.find(d => d.kind === 'Deployment' && d.metadata.name === `prism-${role}`).spec.template.metadata.annotations['checksum/swarm-config']);
+    assert.equal(roleChecksums[0], roleChecksums[1]); checksums.push(roleChecksums[0]);
+  }
+  assert.notEqual(checksums[0], checksums[1]);
+});
+for (const key of ['worker.native.maximumResultBytes', 'control.nativeWorkerDispatchTimeoutMs', 'control.maximumWorkerResponseBytes']) test(`CR06 old Helm authority ${key} rejected`, () => {
+  const result = helm(path.join(root, 'charts/prism'), ['--set', `${key}=67108864`]);
+  assert.notEqual(result.status, 0); assert.match(result.stderr, key.startsWith('control.') ? /Control result and dispatch limits must be authored/ : /additional properties/);
+});
+
+for (const key of ['cpuTimeMs', 'memoryBytes', 'tasks']) for (const invalid of ['3', null, -1, 0, 1.5, Number.MAX_SAFE_INTEGER + 1, undefined]) test(`CP01 resource ${key} rejects ${String(invalid)} in Helm`, t => {
+  const chart = copiedChart(t), config = structuredClone(base); config.operator.prism.native.resourcePolicy[key] = invalid;
+  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /swarm resourcePolicy/);
+});
+for (const policy of [undefined, null, { ...base.operator.prism.native.resourcePolicy, processes: 2048 }]) test('CP01 unsupported resource policy rejected in Helm', t => {
+  const chart = copiedChart(t), config = structuredClone(base); config.operator.prism.native.resourcePolicy = policy;
+  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /swarm (?:resourcePolicy|native)/);
+});
+for (const key of ['worker.native.resourcePolicy.tasks', 'control.nativeResourcePolicy.tasks']) test(`CP06 competing Helm ${key} is rejected`, () => {
+  const result = helm(path.join(root, 'charts/prism'), ['--set', `${key}=2048`]);
+  assert.notEqual(result.status, 0); assert.match(result.stderr, /resource policy must be authored|additional properties/);
+});
+test('CP06 two resource policies change both rendered snapshots and checksums', t => {
+  const chart = copiedChart(t), hashes = [];
+  for (const policy of [base.operator.prism.native.resourcePolicy, { cpuTimeMs: 123, memoryBytes: 4096, tasks: 7 }]) {
+    const config = structuredClone(base); config.operator.prism.native.resourcePolicy = policy;
+    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+    const docs = render(chart);
+    assert.deepEqual(JSON.parse(delivery(docs, 'control')).operator.prism.native.resourcePolicy, policy);
+    assert.equal(delivery(docs), delivery(docs, 'control'));
+    const checksums = ['control', 'worker'].map(role => docs.find(d => d.kind === 'Deployment' && d.metadata.name === `prism-${role}`).spec.template.metadata.annotations['checksum/swarm-config']);
+    assert.equal(checksums[0], checksums[1]); hashes.push(checksums[0]);
+  }
+  assert.notEqual(hashes[0], hashes[1]);
+});
+test('CP01 Helm accepts the resource safe-integer ceiling without timer coercion', t => {
+  const chart = copiedChart(t), config = structuredClone(base);
+  config.operator.prism.native.resourcePolicy = { cpuTimeMs: Number.MAX_SAFE_INTEGER, memoryBytes: Number.MAX_SAFE_INTEGER, tasks: Number.MAX_SAFE_INTEGER };
+  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+  assert.deepEqual(JSON.parse(delivery(render(chart))).operator.prism.native.resourcePolicy, config.operator.prism.native.resourcePolicy);
+});
+
+for (const key of Object.keys(base.operator.prism.native.supervisor)) {
+  for (const invalid of [undefined, null, '1', 0, -1, 1.5, key === 'maximumJournalBytes' ? 9007199254740992 : 2147483648]) {
+    test(`CS5 Helm rejects supervisor ${key}=${String(invalid)}`, t => {
+      const chart = copiedChart(t), config = structuredClone(base);
+      config.operator.prism.native.supervisor[key] = invalid;
+      fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+      const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /swarm supervisor/);
+    });
+  }
+}
+test('CS5 old Helm supervisor close author is rejected', () => {
+  const result = helm(path.join(root, 'charts/prism'), ['--set', 'worker.native.closeTimeoutMs=105000']);
+  assert.notEqual(result.status, 0); assert.match(result.stderr, /closeTimeoutMs/);
+});
+test('CS4 Helm uses authored drain as well as close in shutdown budget', t => {
+  const chart = copiedChart(t), config = structuredClone(base);
+  for (const drainTimeoutMs of [14999, 15000, 15001]) {
+    config.operator.prism.native.supervisor.drainTimeoutMs = drainTimeoutMs;
+    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+    const result = helm(chart);
+    if (drainTimeoutMs < 15000) assert.equal(result.status, 0, result.stderr);
+    else { assert.notEqual(result.status, 0); assert.match(result.stderr, /worker shutdown must cover/); }
+  }
+});
+test('CS5 both actual mounts and checksums deliver two supervisor profiles without old environment authors', t => {
+  const chart = copiedChart(t), config = structuredClone(base); let prior;
+  for (const factor of [1, 2]) {
+    const supervisor = { uid: 1000 + factor, gid: 2000 + factor, maximumOwnershipRecords: factor,
+      maximumOwnershipBytes: 8192 * factor, maximumOutputBytes: 8 * factor, maximumJournalBytes: 16384 * factor,
+      pollIntervalMs: 3 * factor, drainTimeoutMs: 7 * factor, closeTimeoutMs: 11 * factor };
+    config.operator.prism.native.supervisor = supervisor;
+    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+    const docs = render(chart);
+    for (const role of ['worker', 'control']) {
+      const file = path.join(chart, `${role}-mounted.json`); fs.writeFileSync(file, delivery(docs, role));
+      const loaded = loadWorkerConfig({ SWARM_CONFIG: file, PRISM_WORKER_SECRET: 'test', DATABASE_URL: 'postgresql://not-opened' });
+      assert.deepEqual(loaded.native.supervisor, supervisor);
+      const deployment = docs.find(d => d.kind === 'Deployment' && d.metadata.name === `prism-${role}`);
+      const container = deployment.spec.template.spec.containers.find(c => c.name === role);
+      assert.ok(!container.env.some(e => /^PRISM_NATIVE_(?:UID|GID|MAXIMUM_OWNERSHIP_|MAXIMUM_OUTPUT_|MAXIMUM_JOURNAL_|POLL_INTERVAL_|DRAIN_TIMEOUT_|CLOSE_TIMEOUT_)/.test(e.name)));
+      const checksum = deployment.spec.template.metadata.annotations['checksum/swarm-config'];
+      if (prior) assert.notEqual(checksum, prior);
+    }
+    prior = docs.find(d => d.kind === 'Deployment' && d.metadata.name === 'prism-worker').spec.template.metadata.annotations['checksum/swarm-config'];
+  }
+});
+for (const supervisor of [null, undefined, { ...base.operator.prism.native.supervisor, unknown: 1 }]) {
+  test('CS5 Helm rejects missing, null or extended supervisor object', t => {
+    const chart = copiedChart(t), config = structuredClone(base); config.operator.prism.native.supervisor = supervisor;
+    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+    const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /swarm (?:native|supervisor)/);
+  });
+}
+
+for (const [key, values] of Object.entries({
+  pipelinePreferenceSubject: [undefined, '', 'operator:test', 1, false],
+  artifactRoot: [undefined, null, '', '/', 'relative', '/tmp/../artifacts', '/tmp/artifacts/', '/tmp//artifacts', '/tmp/\u0000artifacts', 1],
+  studioPublicUrl: [undefined, null, '', 'relative', 'file:///tmp', 'https://', 'https://user:pass@studio', 'https://studio?query=1', 'https://studio#fragment', 'https://bad host', 1],
+})) for (const value of values) test(`CC4 Helm rejects Control ${key}=${JSON.stringify(value)}`, t => {
+  const chart = copiedChart(t), config = structuredClone(base); config.operator.prism.control[key] = value;
+  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /swarm control/);
+});
+for (const control of [undefined, null, {}, {...base.operator.prism.control,unknown:1}]) test('CC4 Helm strict Control object', t => {
+  const chart = copiedChart(t), config = structuredClone(base); config.operator.prism.control = control;
+  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /swarm (?:prism|control)/);
+});
+test('CC4 retired Helm subject author rejects even disabled value', () => {
+  for (const value of ['', `user-${'a'.repeat(24)}`]) {
+    const result = helm(path.join(root,'charts/prism'), ['--set-string',`control.pipelinePreferenceSubject=${value}`]);
+    assert.notEqual(result.status,0); assert.match(result.stderr,/pipelinePreferenceSubject/);
+  }
+});
+test('CC4 two real mounted Control profiles align PVC and checksum while retaining generated trust topology', t => {
+  const chart = copiedChart(t); let previous;
+  for (const factor of [1,2]) {
+    const config = structuredClone(base);
+    config.operator.prism.control = {pipelinePreferenceSubject:`user-${String(factor).repeat(24)}`,artifactRoot:`/data/control-${factor}`,studioPublicUrl:`https://studio-${factor}.example.test`};
+    fs.writeFileSync(path.join(chart,'files/config/swarm.config.json'),JSON.stringify(config));
+    const docs = render(chart,['--set','workerTrust.spiffe.enabled=true']);
+    const file = path.join(chart,'mounted-control.json'); fs.writeFileSync(file,delivery(docs,'control'));
+    const deployment = docs.find(d=>d.kind==='Deployment' && d.metadata.name==='prism-control');
+    const container = deployment.spec.template.spec.containers.find(c=>c.name==='control');
+    const environment = Object.fromEntries(container.env.filter(e=>'value' in e).map(e=>[e.name,e.value]));
+    const loaded = loadControlServerConfig({...environment,SWARM_CONFIG:file,PRISM_SESSION_SECRET:'test',PRISM_INGRESS_SECRET:'test',PRISM_INGESTION_SECRET:'test'});
+    assert.equal(loaded.pipelinePreferenceSubject,config.operator.prism.control.pipelinePreferenceSubject);
+    assert.equal(loaded.studioPublicUrl,config.operator.prism.control.studioPublicUrl);
+    assert.equal(loaded.artifactRoot,config.operator.prism.control.artifactRoot);
+    assert.equal(container.volumeMounts.find(m=>m.name==='artifacts').mountPath,loaded.artifactRoot);
+    assert.equal(loaded.workerUrl.href,'http://127.0.0.1:18081/');
+    assert.equal(loaded.controlInternalUrl.href,'http://127.0.0.1:18080/');
+    assert.equal(loaded.trustedControlSpiffeId,'spiffe://kubeclaw.internal/ns/default/sa/prism-control');
+    assert.ok(!['PRISM_PIPELINE_PREFERENCE_SUBJECT','ARTIFACT_ROOT','PRISM_STUDIO_PUBLIC_URL'].some(key=>key in environment));
+    const checksum = deployment.spec.template.metadata.annotations['checksum/swarm-config'];
+    if (previous) assert.notEqual(checksum,previous); previous = checksum;
+  }
+});

@@ -89,7 +89,7 @@ export async function forgeFixture(mode: 'parallel' | 'locked-worktree' | 'branc
     ['kubeclaw.lint:executor', { allowedRepositoryRoots: [repo], allowedPolicyRoots: [temporary] }],
     ['kubeclaw.git-workspace:git', { allowedRepositoryRoots: [temporary], workspaceRoot: workspaces, gitExecutable: fs.realpathSync('/usr/bin/git'), authorName: 'Workspace Test', authorEmail: 'workspace@example.invalid', maxExecutionMs: 5000, maxOutputBytes: 65536, terminationGraceMs: 100 }],
   ]);
-  const adapters = new core.AdapterRuntime({ granted, activated, configs, effects: new core.EffectCoordinator(journal, undefined, audit, locks), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
+  const adapters = new core.AdapterRuntime({ granted, activated, configs, effects: new core.EffectCoordinator(journal, undefined, audit, locks, 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   const runId = `run:forge:${mode}`;
   // This standalone graph tests native parallel Git/worktree lifecycle and lint repair.

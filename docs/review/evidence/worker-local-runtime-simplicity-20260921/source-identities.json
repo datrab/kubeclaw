@@ -1,0 +1,7 @@
+{
+  "path": "skills/worker/core/worker/local-runtime.ts",
+  "beforeSha256": "fd7b52dad6caed1f120a3eccbfeba3a465350ea96245dbd68d6b3e42b6411838",
+  "afterSha256": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+  "status": "private draft; no execution or acceptance",
+  "preservation": "exact replay reclamation loop moved to private method; call stays after profile validation and before duplicate/capacity checks"
+}

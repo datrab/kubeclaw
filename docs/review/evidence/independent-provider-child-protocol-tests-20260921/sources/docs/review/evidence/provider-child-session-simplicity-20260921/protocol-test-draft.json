@@ -1,0 +1,26 @@
+{
+  "testPath": "tests/verification/contracts/provider-child-session.test.mjs",
+  "draftPath": "docs/review/evidence/provider-child-session-simplicity-20260921/files/tests/verification/contracts/provider-child-session.test.mjs",
+  "sha256": "a23fb808f6a9bd6ac59332a1404e61fa9d219495004a3dc547927357622a650a",
+  "runtimeExecuted": false,
+  "integrated": false,
+  "coverage": [
+    "detached context.invoke",
+    "two concurrent RPCs with reverse replies",
+    "provider instance state across execute and cleanup",
+    "import-time console routing",
+    "RPC abort before and after a successful reply",
+    "ignored late reply",
+    "unawaited RPC rejection",
+    "actual child close code"
+  ],
+  "limits": "Direct real child protocol only; full sandboxed Runner and original real-provider contracts remain mandatory.",
+  "reviewCorrection": {
+    "beforeSha256": "54b6a571d890dd7442cd7dca4cf3be8485b3bcd3e7517e7a503c9cdc85d0c917",
+    "changes": [
+      "assert no unconsumed messages after child closure, including extra aborts for fulfilled RPCs and late-reply output",
+      "register cleanup before fixture creation and always remove files in finally"
+    ],
+    "runtimeExecuted": false
+  }
+}

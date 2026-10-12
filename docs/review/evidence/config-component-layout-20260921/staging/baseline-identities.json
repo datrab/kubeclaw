@@ -1,0 +1,338 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "sha256": "b9f7ca208263a45c39c67fb21c864a83a33a04144dcade051fa24a0719d72451"
+  },
+  {
+    "path": "charts/kubeclaw/templates/_buster-native.tpl",
+    "sha256": "4cc1152a523ac9dd87b41ce909027a2208f74888369176a821135a8d0bd1d5c5"
+  },
+  {
+    "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+    "sha256": "f8ad0d8be50e5aef97a57523811b74b71efb8405b1872ab5ec89b11974b52999"
+  },
+  {
+    "path": "charts/kubeclaw/templates/deployment.yaml",
+    "sha256": "5c0a7f8a6fc5e05bd6d4fe675410c328e824fcf4a0f5549ed4e8599f57a4af74"
+  },
+  {
+    "path": "charts/kubeclaw/values.yaml",
+    "sha256": "9413d711e4608154e3beda483e844f96f1d18cae193b442232b78a4bc926a0ab"
+  },
+  {
+    "path": "charts/prism/templates/_swarm-config.tpl",
+    "sha256": "eb179b1825a1682a1080234984d702369d625e3404552451e90f7bc6ed4093d7"
+  },
+  {
+    "path": "charts/prism/templates/configmap-swarm-config.yaml",
+    "sha256": "be0a7373c30283e4b46bb911d1a893d73da9c5d27267e22328cc6010e2551e4f"
+  },
+  {
+    "path": "charts/prism/templates/workloads.yaml",
+    "sha256": "189fbbdc5755fb2e052a28a566410a9184297d0a1a2ed4adce24d19f3dc5f9c3"
+  },
+  {
+    "path": "docker/Dockerfile.buster-runtime",
+    "sha256": "e7104051fd0b53b1169d2be70519c6c8d7b21c2b06ee86a1f176886fc3892688"
+  },
+  {
+    "path": "docker/Dockerfile.prism-studio",
+    "sha256": "7236981dff3fd9008e1156d810041df3a5b8f00311362978912446e33a2bad0c"
+  },
+  {
+    "path": "scripts/check-built-runtime-image.sh",
+    "sha256": "0e5a5c3516bec7669e744208d80bf9727625346845a52eff69b1388230b690d0"
+  },
+  {
+    "path": "scripts/deploy.sh",
+    "sha256": "562e88fed927fdf1e81041e67ae1ba98f7c5d0bd390171a4b50311c105cdcdcf"
+  },
+  {
+    "path": "scripts/updates/release-configuration.mjs",
+    "sha256": "2d41b251498d6459b0638f597a5daa3fa6b908f94d44d9f73924a1a040008478"
+  },
+  {
+    "path": "skills/buster/engine/remote-plan-cli.ts",
+    "sha256": "f10d961a5d171f846d8f5d7dff11eb387ccbd36282c10c30d1b2b627fd2cfdfa"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+    "sha256": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
+    "sha256": "8cc3b8d59fb38bcb04b6549a05bb7c95f153f7f603405724f84a9385a45ce134"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-config.ts",
+    "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+    "sha256": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-host.ts",
+    "sha256": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+    "sha256": "20362a6d9a4147be607c1006cd42a33465d5b56b7df5acfef04562009abba179"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+    "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-config-values.ts",
+    "sha256": "771cf3a0105edc54bbca6af53d5761082374aab2be15c3df72e5f6e5ee6ec567"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "330f1285b6efe175d58003d0efe94fc2dfbface7769beb6e22dd2d773a37db4f"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "sha256": "6529733c4220ded5ef9b1482793ceadaf7f23d1a855bb9bd13de6454ec3c1a5a"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "1ab81d8acff9b7b87d193964780c08f39350086bf60aee51771e312ad6ae8e6e"
+  },
+  {
+    "path": "skills/prism/config/native-worker.ts",
+    "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "sha256": "b36d7c699625b10c9b4d8f912f6435310cafc92cb27bec72fbf37fcc0bb550bb"
+  },
+  {
+    "path": "skills/prism/server/studio-config.ts",
+    "sha256": "377f836f98c8d346a41a9eff4cbe1488a0451038ead95e0f941c66fdcfe35fad"
+  },
+  {
+    "path": "skills/prism/server/worker-config.ts",
+    "sha256": "249ea80da729fd1edcc149798ef343ba7e7f1e789528acedd540fabad4e9e337"
+  },
+  {
+    "path": "skills/prism/tests/control-image-environment.test.mts",
+    "sha256": "986bc0c393447bd9d0b2a5ccacfaa463a293e6f71ea641676e880c08b8c652ed"
+  },
+  {
+    "path": "skills/prism/tests/control-listener.test.mts",
+    "sha256": "a4eb9e781c22e3480e3bf0982cd38bec77cf66fca09d40a0bd08f617b31b2786"
+  },
+  {
+    "path": "skills/prism/tests/control-product-composition.test.mts",
+    "sha256": "01a1802ee788f4c79d2ac465cc0abb91f7bccc6703cf9b848694a19cd23b74c6"
+  },
+  {
+    "path": "skills/prism/tests/control-server-config.test.mts",
+    "sha256": "81e0b5caae2b338bc7ab54c3619a1b2514a09f0edbf7862fbb838e69432aac5a"
+  },
+  {
+    "path": "skills/prism/tests/fixtures/control-policy.mts",
+    "sha256": "2f34288687f06986f9a119a9ea099d673078deb9ee2e294a3f32d66d5b5fa642"
+  },
+  {
+    "path": "skills/prism/tests/fixtures/studio-service.mts",
+    "sha256": "42a941fef8378dda81237345cb783c14ae663ec1aa3c62cea5b3910b7e235bf9"
+  },
+  {
+    "path": "skills/prism/tests/native/operation-http.mts",
+    "sha256": "9b27da2427d1d21d335efdeef73181d0feeedb7f90a2beb25b8272f53f426faf"
+  },
+  {
+    "path": "skills/prism/tests/native/operation-journal.mts",
+    "sha256": "39da7dff64c7a3a4a121060f8288075bcf060c8479ddcbaad095793e9964294b"
+  },
+  {
+    "path": "skills/prism/tests/native/resource-policy.mts",
+    "sha256": "87a51b65935045a98f9992ed8b6360f45100760d8cb4d9a8c05c123e2a718d1b"
+  },
+  {
+    "path": "skills/prism/tests/pipeline-preference-subject.test.mts",
+    "sha256": "49479739fe2cf28c1327aa84987b0699c320cd186f4a587875e055c5e7a61193"
+  },
+  {
+    "path": "skills/prism/tests/studio-canonical-image.mts",
+    "sha256": "ae7a69a37ec6c36ce63de2f9f6765db57d07d5af5bf9ee11a58993b03ca537de"
+  },
+  {
+    "path": "skills/prism/tests/studio-config.test.mts",
+    "sha256": "9a602947f7938b6b72aa1074dc3593610a00d125a2535904cc71d488e5ec1a9b"
+  },
+  {
+    "path": "skills/prism/tests/swarm-control-policy.test.mts",
+    "sha256": "0176a786730f0a46c0ff5e309a4b302c2897ea58b201cd766131199f4f523322"
+  },
+  {
+    "path": "skills/prism/tests/swarm-input-limit.test.mts",
+    "sha256": "27ce3b61eba3b022f43540f763a052f52856a3eb071099acaf40da5f110d2620"
+  },
+  {
+    "path": "skills/prism/tests/swarm-native-settings.test.mts",
+    "sha256": "28a94e0757755c8f43476277ac895a178f973e23fb0e8d2c40ed4a6fbf41f136"
+  },
+  {
+    "path": "skills/prism/tests/swarm-resource-operation.test.mts",
+    "sha256": "9a25f8052a7776b01cff113d699bf8460b79045c06435f97aaa7124566ad7d03"
+  },
+  {
+    "path": "skills/prism/tests/swarm-resource-policy.test.mts",
+    "sha256": "48b1e26bdc4b7347c70e96b91045298403052fa0e92754b7c3e1bd09b62b95f7"
+  },
+  {
+    "path": "skills/prism/tests/swarm-result-journal.test.mts",
+    "sha256": "bc004d6f8f5fc130205dfd1bb952f6f7beb118b4fad96eaa07a9dd512505bda6"
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-config.test.mts",
+    "sha256": "101745720ae655ea9b10cfd28770f13e9b9cc9722c3db63d933607239d002d8b"
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "sha256": "bcfae27446f1de541b80d5669b7d34b8548880130779bedb7a1ccc856167b72b"
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-behavior.test.mts",
+    "sha256": "ef4c2a95c71674b9547d3e938425e69a64e132ac879d79763979fdbf7c841cba"
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "sha256": "67ca022a61121f0c55d335eddaca3de78c56755a2f4dbdd1dad0f838d95e2f66"
+  },
+  {
+    "path": "skills/prism/tests/worker-ingress-capacity.test.mts",
+    "sha256": "bec028cb418e787bfbb730c9dc8a6a4ac663e91a66c5f19821a9290844a6320d"
+  },
+  {
+    "path": "skills/prism/tests/worker-process-shutdown-native.mts",
+    "sha256": "17d516b69f96cae527736e672d4ce33b34f39efe782d2cf0fb0c9ce6685a71ea"
+  },
+  {
+    "path": "skills/prism/tests/worker-shutdown-boundaries.test.mts",
+    "sha256": "813148fc4b18aa94703ac4f1fd45511f956e8d192e1197c8c4f7c8d0f57c3e42"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-admission.mts",
+    "sha256": "8fca581a354470b14b6d7f3b04f51cc92cf6b0627e22c42a0c61efe430666a11"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+    "sha256": "c22a1d78a63cb077a8eee9f3b34d349c6e40306b70d9a4a107e11754d77a0487"
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "sha256": "426b54bed8e939d47fca1ec6c0872b27e178e8dbb410b3b3825a9a11f5fecb51"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation.mts",
+    "sha256": "38483633a7a5454dba0f527e16bd6a42bae36bf78077c03c7cf185ce9a9b5d9e"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "sha256": "00bdc96bce82bfb152937cde1376627bea4d18c49a281d5d006dcb236205f827"
+  },
+  {
+    "path": "tests/verification/contracts/infra-private-access.test.mjs",
+    "sha256": "28b408ff2ae5444418df27da6b9d486f624b0b8b101dcdb1e6586d9aaf12e3f2"
+  },
+  {
+    "path": "tests/verification/deployment/buster-admission-render.test.mjs",
+    "sha256": "3a96798b43af4ee80f72b68116c8750b9418d262a059fb8fd6c051e90974fe42"
+  },
+  {
+    "path": "tests/verification/deployment/check-deployment-truth.mjs",
+    "sha256": "d58e76a4f11ae95bbf5cd90534f6937a1dc68810e52264a81314d4a0cdf0c933"
+  },
+  {
+    "path": "tests/verification/deployment/code-release.test.mjs",
+    "sha256": "135a563287971d05f3b6eff053b704a9ae261617b92da2da01bc24f5a29c85d9"
+  },
+  {
+    "path": "tests/verification/deployment/deployment-release.test.mjs",
+    "sha256": "a220514403cf6ad5241d9c51f1a5382d41c2001210df38bf20aa3e127724a16c"
+  },
+  {
+    "path": "tests/verification/deployment/gitops-release.test.mjs",
+    "sha256": "a48397a9abf16a3bc66e39fbb611cab4e982e13eb14b739334424dcd3cf0bb8a"
+  },
+  {
+    "path": "tests/verification/deployment/prism-native-runtime.test.mjs",
+    "sha256": "17e9ade95b47c7d9d91708ed6a7b3cc94e1d90e5fc6f9d8c74ed4d5da81b568a"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "sha256": "6ccdafc99fcd7396faa48247dc2b6d78892490a98bec777971006dd00e3d6347"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-image.mjs",
+    "sha256": "3330ef6686a396e4314f3eb99f5142d0708dfa78e58077db2f8a36ae648a353b"
+  },
+  {
+    "path": "tests/verification/deployment/release-configuration.test.mjs",
+    "sha256": "e288d5c7c6d613128c41b0c73aea74ce0e1f1470de0dabd16027c40eafeecef6"
+  },
+  {
+    "path": "tests/verification/deployment/release-images.test.mjs",
+    "sha256": "9afd3f5e826b015a998c1969416b5622c444e9dfacfdc8db7054b69a032447dc"
+  },
+  {
+    "path": "tests/verification/e2e/audit-failure-matrix-contracts.mjs",
+    "sha256": "8325f4808b61027ed3e2c1562607a3c2913962436b3a1e7f71d99caa6e3a3572"
+  },
+  {
+    "path": "tests/verification/e2e/real-run-workspace.mjs",
+    "sha256": "fb22e8f3629d5d40a365c2b1788410b9f8649fbfb6c75a844ee426e2c7cce97a"
+  },
+  {
+    "path": "tests/verification/e2e/run-real-pipeline-e2e.mjs",
+    "sha256": "81c248e5598dd88b906c041854157ef306dd17ae8051f369eb66a9f8d9283b11"
+  },
+  {
+    "path": "tests/verification/e2e/run-real-pipeline-e2e.test.mjs",
+    "sha256": "ae69d7657c669d09f798f4a1bc8deb54d010e04efaffe3533b53aa653fac919e"
+  },
+  {
+    "path": "tests/verification/e2e/run-real-pipeline-failure-matrix.mjs",
+    "sha256": "245040a04ee3473682c518252452d3970eb9d523b3091df2db51d0cc7fb1c914"
+  },
+  {
+    "path": "tests/verification/e2e/support/platform-config.ts",
+    "sha256": "37d697802237f55b3eb610b6b68435c8a53b2ea7d8e704acee04a58494512e90"
+  },
+  {
+    "path": "tests/verification/e2e/swarm-author-profile.test.mjs",
+    "sha256": "a9f3bfcbf47d55c49e06e4670418273c4715d16d62dc02330a0c49d6f70d7865"
+  },
+  {
+    "path": "tests/verification/reliability/buster-admission-config.test.mts",
+    "sha256": "d5cb2e38a5e7935577c02bd2f8743812bcd3106090dbc31d16a1084a835e7088"
+  },
+  {
+    "path": "tests/verification/reliability/buster-extraction-concurrency.test.mts",
+    "sha256": "24f0f5ea946c4672d7fbb5bba07332736fb0e4309c76036d7c5b72e8d4d596f2"
+  },
+  {
+    "path": "tests/verification/reliability/buster-historical-import.test.mts",
+    "sha256": "ddfe40af2c3d89732c20154357cbca56fb7cce8046c6867481e4a0575e3c1606"
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-identities.test.mts",
+    "sha256": "64feb116c377500403a8e659224fdcc6d12f0c054f32e06f2ac18cb453829f1a"
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-ledger.test.mts",
+    "sha256": "dc1363cfaa22ea1ec21181ae6fdd0aac532c1072a9da68c6cc723b121099b8ac"
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-native-recovery-live.mts",
+    "sha256": "62d3a3539c4513acb5272cc33c8d98c5407f5a968d1458003b0e1909ee8c92d1"
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "sha256": "7e317d3f65a874bcf615fc187d6128685ec3eb3b0468466057416b6d067901ed"
+  }
+]

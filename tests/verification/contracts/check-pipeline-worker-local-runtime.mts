@@ -42,6 +42,7 @@ function envelope(workerProfile: WorkerProfileV1, workerId = 'worker:buster:loca
 const workerProfile = profile();
 const options = { workerId: 'worker:buster:local', workerType: 'buster', coreVersion: '1.0.0',
   protocolVersions: ['worker-protocol.v1'] as const, profiles: [workerProfile], capacity: 2,
+  drainTimeoutMs: 300000, cancellationTimeoutMs: 30000, replayLimit: 65536,
   now: () => new Date('2026-08-05T12:30:00Z') };
 const worker = new LocalWorkerRuntime(options);
 assert.equal(worker.state, 'starting');

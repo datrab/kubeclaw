@@ -1,0 +1,3866 @@
+[
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 176,
+    "expression": "const root = process.env.RUNTIME_CONFIG_ROOT;",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 177,
+    "expression": "const registry = process.env.REGISTRY_REFERENCE;",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 179,
+    "expression": "const exactHttpOrigins = (process.env.BUSTER_NETWORK_HTTP_EXACT_ORIGINS || '')",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 181,
+    "expression": "const exactBrowserOrigins = (process.env.BUSTER_BROWSER_AXE_EXACT_ORIGINS || '')",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 186,
+    "expression": "externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 193,
+    "expression": "host: '0.0.0.0', port: Number(process.env.BUSTER_PLAN_PORT || 18891),",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 194,
+    "expression": "...(process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 195,
+    "expression": "? { trustedPeerSpiffeIds: [process.env.BUSTER_TRUSTED_PEER_SPIFFE_ID] }",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 198,
+    "expression": "trustedSourceAuthority: process.env.BUSTER_PLAN_TRUSTED_SOURCE_AUTHORITY || 'nova:production',",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 199,
+    "expression": "stateRoot: process.env.BUSTER_V2_STATE_DIR,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 200,
+    "expression": "runtimeRoot: process.env.BUSTER_V2_RUN_DIR,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 201,
+    "expression": "tarExecutable: '/usr/bin/tar',",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 202,
+    "expression": "recordLimits: { maximumRecords: 10000, maximumBytes: 1073741824, maximumRecordBytes: 67108864 },",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 203,
+    "expression": "maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 204,
+    "expression": "maximumResponseBytes: 67108864,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 206,
+    "expression": "allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse', 'browser.visual', 'browser.playwright', 'security.scan', 'kubernetes.runtime-security'],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 220,
+    "expression": "maximumOutputBytes: 16777216,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 221,
+    "expression": "maximumExecutionMs: 900000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 222,
+    "expression": "maximumProcesses: 128,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 223,
+    "expression": "maximumMemoryBytes: 4294967296,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 224,
+    "expression": "maximumCpuMillis: 900000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 225,
+    "expression": "terminationGraceMs: 2000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 228,
+    "expression": "dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 230,
+    "expression": "buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: process.env.BUILDKIT_HOST,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 231,
+    "expression": "...JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 232,
+    "expression": "repositoryPrefix: 'kubeclaw/pipeline', allowedPlatforms: ['linux/amd64', 'linux/arm64'],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 233,
+    "expression": "allowedBuildArguments: ['NODE_ENV'], maximumLogBytes: 8388608,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 234,
+    "expression": "maximumExecutionMs: 900000, maximumManifestBytes: 16777216,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 237,
+    "expression": "kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace: process.env.CONTROLLER_NAMESPACE,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 238,
+    "expression": "leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 239,
+    "expression": "leaseApiVersion: process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1', allowedNamespacePrefixes: ['test'],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 240,
+    "expression": "allowedRegistryPrefixes: [`${registry}/kubeclaw`],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 241,
+    "expression": "allowedSecretReferences: (process.env.BUSTER_ALLOWED_SOURCE_SECRETS || '').split(',').filter(Boolean),",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 242,
+    "expression": "allowedStorageClasses: [], allowDefaultStorageClass: true,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 243,
+    "expression": "maximumManifestBytes: 1048576,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 244,
+    "expression": "maximumResources: 64, maximumPersistentVolumeClaimBytes: 10737418240,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 245,
+    "expression": "maximumPersistentVolumeTotalBytes: 21474836480,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 246,
+    "expression": "maximumRetentionSeconds: 604800, maximumExecutionMs: 900000, pollIntervalMs: 1000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 249,
+    "expression": "kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace: process.env.CONTROLLER_NAMESPACE,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 250,
+    "expression": "leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 251,
+    "expression": "leaseApiVersion: process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1', allowedNamespacePrefixes: ['test'],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 252,
+    "expression": "allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 900000, pollIntervalMs: 1000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 256,
+    "expression": "allowedOrigins: exactHttpOrigins, allowedHostSuffixes: ['.svc.cluster.local', '.ts.net'], allowedPorts: [80, 443],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 257,
+    "expression": "allowedMethods: ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT'],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 258,
+    "expression": "allowedRequestHeaders: ['accept', 'authorization', 'content-type', 'cookie', 'x-api-key'],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 259,
+    "expression": "allowWebSocket: process.env.BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET === 'true',",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 260,
+    "expression": "maximumRequestBytes: 1048576, maximumResponseBytes: 16777216, maximumExecutionMs: 120000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 263,
+    "expression": "allowedOrigins: exactBrowserOrigins,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 264,
+    "expression": "allowedBrowsers: ['chromium', 'firefox', 'webkit'],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 265,
+    "expression": "maximumCombinations: 32,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 266,
+    "expression": "maximumConcurrency: 4,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 267,
+    "expression": "maximumExecutionMs: 120000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 268,
+    "expression": "maximumResultBytes: 16777216,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 269,
+    "expression": "maximumScreenshots: 16,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 270,
+    "expression": "maximumScreenshotBytes: 8388608,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 273,
+    "expression": "allowedOrigins: exactBrowserOrigins,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 274,
+    "expression": "chromeExecutable: require('/app/node_modules/playwright').chromium.executablePath(),",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 275,
+    "expression": "maximumRuns: 80,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 276,
+    "expression": "maximumExecutionMs: 180000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 277,
+    "expression": "maximumResultBytes: 67108864,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 280,
+    "expression": "allowedOrigins: exactBrowserOrigins,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 281,
+    "expression": "allowedBrowsers: ['chromium', 'firefox', 'webkit'],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 282,
+    "expression": "maximumCombinations: 64,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 283,
+    "expression": "maximumConcurrency: 4,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 284,
+    "expression": "maximumExecutionMs: 120000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 285,
+    "expression": "maximumResultBytes: 134217728,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 286,
+    "expression": "maximumScreenshotBytes: 16777216,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 287,
+    "expression": "maximumMasksPerCombination: 32,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 290,
+    "expression": "allowedOrigins: exactBrowserOrigins,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 291,
+    "expression": "allowedTargetPorts: [18080],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 292,
+    "expression": "playwrightExecutable: '/app/node_modules/.bin/playwright',",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 293,
+    "expression": "sandboxExecutable: '/opt/kubeclaw-trusted/plugin-sandbox',",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 297,
+    "expression": "maximumWorkers: 4,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 298,
+    "expression": "maximumExecutionMs: 900000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 299,
+    "expression": "maximumOutputBytes: 16777216,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 300,
+    "expression": "maximumResultBytes: 67108864,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 301,
+    "expression": "maximumArtifactBytes: 268435456,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 302,
+    "expression": "maximumArtifactFiles: 256,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 303,
+    "expression": "maximumProcesses: 128,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 304,
+    "expression": "maximumMemoryBytes: 4294967296,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 305,
+    "expression": "maximumCpuMillis: 900000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 306,
+    "expression": "terminationGraceMs: 5000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 307,
+    "expression": "cgroupRoot: process.env.BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 312,
+    "expression": "registry: JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 313,
+    "expression": "trivyExecutable: '/usr/local/bin/trivy',",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 314,
+    "expression": "allowedRegistryPrefixes: [`${registry}/kubeclaw`],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 315,
+    "expression": "maximumExecutionMs: 900000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 316,
+    "expression": "maximumOutputBytes: 67108864,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 319,
+    "expression": "maximumVulnerabilityAgeMs: 48 * 60 * 60 * 1000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 320,
+    "expression": "maximumJavaAgeMs: 7 * 24 * 60 * 60 * 1000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 321,
+    "expression": "maximumDatabaseBytes: 8 * 1024 * 1024 * 1024,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 325,
+    "expression": "kubectlExecutable: '/usr/local/bin/kubectl',",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 326,
+    "expression": "controllerNamespace: process.env.CONTROLLER_NAMESPACE,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 327,
+    "expression": "leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 328,
+    "expression": "allowedNamespacePrefixes: ['test'],",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 329,
+    "expression": "maximumExecutionMs: 300000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 330,
+    "expression": "maximumOutputBytes: 16777216,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 331,
+    "expression": "pollIntervalMs: 1000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "line": 332,
+    "expression": "maximumObservationAgeMs: 10000,",
+    "classification": "image/runtime operator author or installation/secret input; classify per report"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 5,
+    "expression": "const METHODS = new Set(['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT']);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 6,
+    "expression": "const STEP_KEYS = new Set(['id', 'protocol', 'method', 'path', 'headers', 'body', 'messages', 'timeoutMs', 'expect', 'extract']);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 7,
+    "expression": "const EXPECT_KEYS = new Set(['status', 'contentType', 'bodyContains', 'json', 'minimumMessages', 'messageContains']);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 8,
+    "expression": "const FLOW_KEYS = new Set(['schemaVersion', 'variables', 'setup', 'steps', 'cleanup']);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 9,
+    "expression": "const IDENTIFIER = /^[a-z][a-z0-9-]{0,63}$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 10,
+    "expression": "const VARIABLE = /^[A-Za-z][A-Za-z0-9_]{0,63}$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 11,
+    "expression": "const SELECTOR = /^[A-Za-z0-9_-]+(?:\\.[A-Za-z0-9_-]+)*$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 13,
+    "expression": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 15,
+    "expression": "function integer(value, fallback, minimum, maximum, code) { const result = value ?? fallback; if (!Number.isSafeInteger(result) || result < minimum || result > maximum) throw new Error(code); return result; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 16,
+    "expression": "function map(value, code, maximum = 32) { const result = object(value ?? {}, code); if (Object.keys(result).length > maximum) throw new Error(code); return result; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 18,
+    "expression": "if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error(code);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 32,
+    "expression": "if (!inputs.length || inputs[0].kind !== 'value') throw new Error('API_FLOW_TARGET_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 34,
+    "expression": "if (input.name === 'endpoint') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 36,
+    "expression": "|| typeof value.url !== 'string') throw new Error('API_FLOW_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 41,
+    "expression": "const selected = config.endpointName === undefined ? (value.endpoints.length === 1 ? value.endpoints[0] : null)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 51,
+    "expression": "exact(flow, FLOW_KEYS, 'API_FLOW_FILE_INVALID'); if (flow.schemaVersion !== 'kubeclaw.api-flow.v1') throw new Error('API_FLOW_VERSION_UNSUPPORTED'); return flow;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 55,
+    "expression": "if (typeof step.id !== 'string' || !IDENTIFIER.test(step.id) || seen.has(step.id)) throw new Error(seen.has(step.id) ? 'API_FLOW_STEP_ID_DUPLICATE' : 'API_FLOW_STEP_ID_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 56,
+    "expression": "seen.add(step.id); if (step.protocol !== undefined && step.protocol !== 'websocket') throw new Error('API_FLOW_PROTOCOL_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 57,
+    "expression": "const method = String(step.method ?? 'GET').toUpperCase(); if (step.protocol === 'websocket' ? step.method !== undefined : !METHODS.has(method)) throw new Error('API_FLOW_METHOD_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 58,
+    "expression": "if (typeof step.path !== 'string' || !step.path.startsWith('/') || step.path.startsWith('//') || /[\\r\\n#]/u.test(step.path) || step.path.length > 2048) throw new Error('API_FLOW_PATH_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 60,
+    "expression": "if (Object.entries(headers).some(([name, content]) => !/^[a-z0-9!#$%&'*+.^_`|~-]+$/iu.test(name) || typeof content !== 'string' || content.length < 1 || content.length > 4096 || /[\\r\\n]/u.test(content))) throw new Error('API_FLOW_HEADERS_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 61,
+    "expression": "if (step.timeoutMs !== undefined) integer(step.timeoutMs, null, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 63,
+    "expression": "const expect = exact(step.expect ?? {}, EXPECT_KEYS, 'API_FLOW_EXPECT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 66,
+    "expression": "if (step.protocol === 'websocket') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 73,
+    "expression": "for (const key of ['contentType', 'bodyContains', 'messageContains']) if (expect[key] !== undefined && typeof expect[key] !== 'string') throw new Error('API_FLOW_EXPECT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 74,
+    "expression": "if (expect.minimumMessages !== undefined) integer(expect.minimumMessages, null, 1, 64, 'API_FLOW_EXPECT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 76,
+    "expression": "for (const [name, selector] of Object.entries(map(step.extract, 'API_FLOW_EXTRACT_INVALID'))) if (!VARIABLE.test(name) || typeof selector !== 'string' || !SELECTOR.test(selector)) throw new Error('API_FLOW_EXTRACT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 80,
+    "expression": "const groups = [['setup', flow.setup ?? []], ['steps', flow.steps], ['cleanup', flow.cleanup ?? []]];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 88,
+    "expression": "if (typeof value === 'string') return value.replace(/\\{\\{([A-Za-z][A-Za-z0-9_]*)\\}\\}/gu, (_match, name) => { if (!(name in variables)) throw new Error(`API_FLOW_VARIABLE_MISSING:${name}`); return variables[name]; });",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 90,
+    "expression": "if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, interpolate(item, variables)])); return value;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 92,
+    "expression": "function byPath(value, selector) { let current = value; for (const part of selector.split('.')) { if (current === null || current === undefined || !Object.prototype.hasOwnProperty.call(current, part)) return undefined; current = current[part]; } return current; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 97,
+    "expression": "if (!left || !right || typeof left !== 'object' || typeof right !== 'object') return false;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 106,
+    "expression": "if ((expect.minimumMessages ?? 1) > response.messageCount) result.push('The WebSocket returned too few messages.');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 120,
+    "expression": "const passed = records.filter((item) => item.state === 'passed').length; const skipped = records.filter((item) => item.state === 'skipped').length;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 124,
+    "expression": "const config = object(invocation.configuration.values, 'API_FLOW_CONFIG_INVALID'); const flow = validateFlow(readFlow(invocation, context, config), integer(config.maximumSteps, 64, 1, 256, 'API_FLOW_STEP_LIMIT_INVALID'));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 134,
+    "expression": "if (execution.failed && group !== 'cleanup') continue;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 137,
+    "expression": "const url = stepUrl(base, String(interpolate(step.path, flow.variables))); const timeoutMs = Math.min(integer(step.timeoutMs, config.requestTimeoutMs ?? 10_000, 1, 300_000, 'API_FLOW_TIMEOUT_INVALID'), invocation.timeoutMs); const maximumResponseBytes = integer(config.maximumResponseBytes, 1_048_576, 1, 16_777_216, 'API_FLOW_RESPONSE_LIMIT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 138,
+    "expression": "if (step.protocol === 'websocket') response = await invoke({ operation: 'websocket', resource: { type: 'network.url', canonicalId: url }, payload: { headers: interpolate(step.headers ?? {}, flow.variables), messages: interpolate(step.messages ?? [], flow.variables).map((item) => typeof item === 'string' ? item : JSON.stringify(item)), minimumMessages: step.expect?.minimumMessages ?? 1, timeoutMs, maximumResponseBytes } });",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 139,
+    "expression": "else response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url }, payload: { method: step.method, headers: interpolate(step.headers ?? {}, flow.variables), body: step.body === undefined ? undefined : JSON.stringify(interpolate(step.body, flow.variables)), responseHeaders: ['content-type'], timeoutMs, maximumResponseBytes } });",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 141,
+    "expression": "if (group === 'steps') executedMainSteps += 1;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 142,
+    "expression": "const stepFailures = failures(step.expect ?? {}, response, step.protocol === 'websocket');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 143,
+    "expression": "if (!stepFailures.length && step.extract) { let body; try { body = JSON.parse(response.body); } catch { stepFailures.push('The response body was not valid JSON for extraction.'); } if (body !== undefined) for (const [name, selector] of Object.entries(step.extract)) { const value = byPath(body, selector); if (value === undefined) stepFailures.push(`Extraction ${name} did not find ${selector}.`); else flow.variables[name] = String(value); } }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 144,
+    "expression": "records.push({ id: step.id, state: stepFailures.length ? 'failed' : 'passed', status: response.status ?? null, durationMs: Date.now() - started, failures: stepFailures });",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/src/provider.js",
+    "line": 145,
+    "expression": "} catch (error) { context.signal.throwIfAborted(); if (execution.failed) continue; const message = error instanceof Error ? error.message : String(error); if (group === 'steps' && message.startsWith('API_FLOW_VARIABLE_MISSING:')) records.push({ id: step.id, state: 'skipped', status: null, durationMs: Date.now() - started, failures: [] }); else records.push({ id: step.id, state: 'failed', status: null, durationMs: Date.now() - started, failures: [message] }); }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+    "line": 14,
+    "expression": "const route = new URL(request.url ?? '/', 'http://localhost').pathname; calls.set(route, (calls.get(route) ?? 0) + 1);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+    "line": 15,
+    "expression": "if (route === '/login') { response.setHeader('content-type', 'application/json'); response.end('{\"token\":\"abc\"}'); return; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+    "line": 16,
+    "expression": "if (route === '/data' && request.headers.authorization === 'Bearer abc') { response.setHeader('content-type', 'application/json'); response.end('{\"ok\":true,\"user\":{\"role\":\"admin\"}}'); return; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+    "line": 17,
+    "expression": "if (route === '/independent') { response.end('ok'); return; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+    "line": 18,
+    "expression": "if (route === '/logout') { response.writeHead(204).end(); return; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+    "line": 26,
+    "expression": "const address = server.address(); if (!address || typeof address === 'string') throw new Error('API_FLOW_TEST_BIND_FAILED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/tests/remediation.test.ts",
+    "line": 15,
+    "expression": "if (request.url === '/slow') { abortOnContact!.abort(new Error('CALLER_CANCELLED')); return; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/tests/remediation.test.ts",
+    "line": 16,
+    "expression": "response.end(request.url === '/large' ? 'x'.repeat(2048) : 'ok');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/tests/remediation.test.ts",
+    "line": 19,
+    "expression": "const address = server.address(); if (!address || typeof address === 'string') throw new Error('SERVER_BIND_FAILED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/tests/remediation.test.ts",
+    "line": 24,
+    "expression": "function execute(flow: unknown, config: Record<string, unknown> = {}, signal = new AbortController().signal) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 5,
+    "expression": "const BUILTIN_PROFILES = Object.freeze({",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 12,
+    "expression": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 14,
+    "expression": "if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error('AXE_PROFILE_FILE_DENIED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 22,
+    "expression": "if (typeof config.url === 'string') return new URL(config.url).origin;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 23,
+    "expression": "if (invocation.inputs.length !== 1 || invocation.inputs[0].kind !== 'value') throw new Error('AXE_TARGET_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 25,
+    "expression": "if (input.name === 'endpoint') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 27,
+    "expression": "|| typeof value.url !== 'string') throw new Error('AXE_INPUT_INVALID'); return new URL(value.url).origin;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 30,
+    "expression": "|| value.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(value.endpoints)) throw new Error('AXE_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 31,
+    "expression": "const selected = config.endpointName === undefined ? value.endpoints[0]",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 33,
+    "expression": "if (!selected || typeof selected.url !== 'string') throw new Error('AXE_ENDPOINT_NOT_FOUND'); return new URL(selected.url).origin;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 40,
+    "expression": "if (document?.schemaVersion !== 'kubeclaw.browser-profiles.v1') throw new Error('AXE_PROFILE_FILE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 53,
+    "expression": "const selected = config.profiles ?? ['desktop', 'mobile'];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 54,
+    "expression": "return selected.map((name) => profiles[name] ?? (() => { throw new Error(`AXE_PROFILE_NOT_FOUND:${name}`); })());",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 57,
+    "expression": "const acceptance = (config.acceptances ?? []).find((item) => item.rule === rule && item.route === route && item.selector === selector);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 76,
+    "expression": "combinations, tags: config.tags ?? ['wcag2a', 'wcag2aa'], exclude: config.exclude ?? [], timeoutMs: config.timeoutMs ?? 30000,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 78,
+    "expression": "if (response.schemaVersion !== 'browser-axe-result.v1' || !Array.isArray(response.results)) throw new Error('AXE_CAPABILITY_RESULT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 84,
+    "expression": "violations += 1; const selector = String(node?.target?.[0] ?? '<unknown>'); const acceptedFinding = acceptanceFor(config, route, String(violation.id), selector);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 86,
+    "expression": "const viewport = result.context?.viewport; const conditions = `${result.browser} ${viewport?.width ?? '?'}x${viewport?.height ?? '?'}`;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/src/provider.js",
+    "line": 101,
+    "expression": "const report = { ...response, results: response.results.map((result) => ({ ...result,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 14,
+    "expression": "if (request.url === '/good') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 18,
+    "expression": "if (request.url === '/egress') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 22,
+    "expression": "if (request.url === '/websocket-egress') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 26,
+    "expression": "if (request.url === '/websocket-local') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 30,
+    "expression": "if (request.url === '/webrtc-egress') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 34,
+    "expression": "if (request.url === '/popup-egress') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 38,
+    "expression": "if (request.url === '/redirect-egress') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 42,
+    "expression": "if (request.url === '/redirect-local') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 49,
+    "expression": "const address = server.address(); if (!address || typeof address === 'string') throw new Error('AXE_TEST_BIND_FAILED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 63,
+    "expression": "const context: any = { signal, workspaceRoot: root, log() {}, invoke: (name: string, request: any) => capability.invoke(name, request, signal) };",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 67,
+    "expression": "assert.equal(bad.outcome, 'failed'); assert.equal(bad.findings.some((finding: any) => finding.rule === 'button-name'), true);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+    "line": 68,
+    "expression": "assert.equal(bad.evidenceFiles.some((evidence: any) => evidence.type === 'screenshot'), true);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 5,
+    "expression": "const NAME = /^[a-z0-9](?:[a-z0-9._-]{0,126}[a-z0-9])?$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 6,
+    "expression": "const PLATFORM = /^linux\\/[a-z0-9_+-]+(?:\\/[a-z0-9._+-]+)?$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 7,
+    "expression": "const ARG_NAME = /^[A-Za-z_][A-Za-z0-9_]*$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 8,
+    "expression": "const PROTECTED_ARGUMENT = /(?:TOKEN|SECRET|PASSWORD|KEY|CREDENTIAL)/iu;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 10,
+    "expression": "const TEMPLATES = Object.freeze({",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 30,
+    "expression": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`CONTAINER_BUILD_CONFIG_INVALID:${label}`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 35,
+    "expression": "if (typeof value !== 'string' || value.length < 1 || value.length > 1024 || value.includes('\\0') || path.isAbsolute(value)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 36,
+    "expression": "|| value.split(/[\\\\/]/u).some((part) => part === '' || part === '..')) throw new Error(`CONTAINER_BUILD_PATH_INVALID:${label}`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 37,
+    "expression": "return value === '.' ? '.' : value.split(/[\\\\/]/u).join('/');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 60,
+    "expression": "if (definition.type === 'dockerfile') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 64,
+    "expression": "if (definition.target !== undefined && (typeof definition.target !== 'string' || !NAME.test(definition.target))) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 72,
+    "expression": "|| typeof item !== 'string' || item.length > 4096 || item.includes('\\0'))) throw new Error('CONTAINER_BUILD_ARGUMENT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 74,
+    "expression": "} else if (definition.type === 'template') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 84,
+    "expression": "const outputName = value.outputName ?? String(invocation.moduleId ?? invocation.nodeId).toLowerCase().replace(/[^a-z0-9._-]/gu, '-');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 85,
+    "expression": "if (typeof outputName !== 'string' || !NAME.test(outputName)) throw new Error('CONTAINER_BUILD_OUTPUT_NAME_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 86,
+    "expression": "const platform = value.platform ?? 'linux/amd64';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 87,
+    "expression": "if (typeof platform !== 'string' || !PLATFORM.test(platform)) throw new Error('CONTAINER_BUILD_PLATFORM_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 116,
+    "expression": "if (typeof result.stdout === 'string' && result.stdout) context.log('stdout', result.stdout);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 117,
+    "expression": "if (typeof result.stderr === 'string' && result.stderr) context.log('stderr', result.stderr);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 120,
+    "expression": "rule: String(result.errorCode ?? 'CONTAINER_BUILD_FAILED'), message: String(result.message ?? 'Container build failed.') }];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 132,
+    "expression": "summary: passed ? `Built and verified ${String(result.immutableImage)}.` : String(result.message ?? 'Container build failed.'),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/src/provider.js",
+    "line": 141,
+    "expression": "registryImage: result.registryImage ?? null, immutableImage: result.immutableImage ?? null, digest: result.digest ?? null }),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/tests/live-function.test.ts",
+    "line": 18,
+    "expression": "const guard = { workspaceRoot: root, log() {}, async invoke() {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 5,
+    "expression": "const MAXIMUM_LCOV_BYTES = 64 * 1024 * 1024;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 6,
+    "expression": "const MAXIMUM_LINES = 2_000_000;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 30,
+    "expression": "lines.set(line, Math.max(lines.get(line) ?? 0, hits));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 33,
+    "expression": "} else if (raw === 'end_of_record') current = null;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 53,
+    "expression": "if (minimum !== undefined && (typeof minimum !== 'number' || !Number.isFinite(minimum) || minimum < 0 || minimum > 100)) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 56,
+    "expression": "const inputs = invocation.inputs.filter((input) => input.kind === 'artifact').sort((a, b) => a.name.localeCompare(b.name));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 60,
+    "expression": "if (input.artifact.mediaType !== 'text/lcov' || !input.artifact.storageUrl.startsWith('file:')) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 73,
+    "expression": "const target = combinedFiles.get(file) ?? new Map(); combinedFiles.set(file, target);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 74,
+    "expression": "for (const [line, hits] of lines) target.set(line, Math.max(target.get(line) ?? 0, hits));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 79,
+    "expression": "const useCombined = config.combine !== false;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 81,
+    "expression": "const passed = minimum === undefined || measured >= minimum;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+    "line": 94,
+    "expression": "providerDetails: details({ minimumLinePercent: minimum ?? null, combine: useCombined,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 3,
+    "expression": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('DEMO_AUTH_CONTRACT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 8,
+    "expression": "if (Object.keys(value).some(key => !keys.includes(key)) || keys.some(key => value[key] === undefined)) throw new Error('DEMO_AUTH_CONTRACT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 11,
+    "expression": "if (typeof value !== 'string' || !value || value.length > 2048 || /[\\0\\r\\n]/u.test(value)) throw new Error('DEMO_AUTH_CONTRACT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 17,
+    "expression": "if (!value.startsWith('/') || value.startsWith('//') || value.includes('\\\\') || url.origin !== 'https://demo.invalid' || url.hash || url.search || url.pathname !== value) throw new Error('DEMO_AUTH_PATH_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 25,
+    "expression": "if (value.protocol !== 'json-session.v1') throw new Error('DEMO_AUTH_PROTOCOL_UNSUPPORTED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 33,
+    "expression": "|| (typeof assertion.equals === 'number' && !Number.isFinite(assertion.equals))",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 34,
+    "expression": "|| (typeof assertion.equals === 'string' && assertion.equals.length > 2048)) throw new Error('DEMO_AUTH_ASSERTION_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 41,
+    "expression": "if (!current || typeof current !== 'object' || !Object.hasOwn(current,key)) throw new Error('DEMO_AUTH_ASSERTION_MISSING');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 50,
+    "expression": "if (!schemas[input.name] || values[input.name] || input.kind !== 'value' || input.schemaId !== schemas[input.name]) throw new Error('DEMO_AUTH_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 59,
+    "expression": "|| source.schemaVersion !== 'generated-demo-credential-source.v1') throw new Error('DEMO_AUTH_PROVENANCE_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 83,
+    "expression": "const [name,...value] = attribute.split('=');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 85,
+    "expression": "attrs.set(name.toLowerCase(),value.join('='));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 87,
+    "expression": "if ((attrs.has('secure') && attrs.get('secure') !== '') || (attrs.has('httponly') && attrs.get('httponly') !== '')",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 93,
+    "expression": "if (typeof header !== 'string' || header.length > 4096 || /[\\r\\n,]/u.test(header)) throw new Error('DEMO_AUTH_SESSION_COOKIE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 95,
+    "expression": "if (!pair.startsWith(`${config.cookieName}=`) || !/^[A-Za-z0-9!#$%&'*+.^_`|~-]+=[\\x21\\x23-\\x2B\\x2D-\\x3A\\x3C-\\x5B\\x5D-\\x7E]+$/u.test(pair)) throw new Error('DEMO_AUTH_SESSION_COOKIE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 103,
+    "expression": "if (typeof cookiePath !== 'string' || !cookiePath.startsWith('/') || !attrs.has('httponly')",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 104,
+    "expression": "|| (url.protocol === 'https:' && !attrs.has('secure')) || (url.protocol !== 'https:' && attrs.has('secure'))",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+    "line": 105,
+    "expression": "|| (attrs.get('samesite')?.toLowerCase() === 'none' && !attrs.has('secure'))) throw new Error('DEMO_AUTH_SESSION_COOKIE_SCOPE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+    "line": 7,
+    "expression": "|| typeof response.body !== 'string' || response.sizeBytes !== Buffer.byteLength(response.body)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+    "line": 12,
+    "expression": "if (response.status !== 200 || response.headers?.['content-type'] !== 'application/json') throw new Error('DEMO_AUTH_PROTECTED_RESPONSE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+    "line": 38,
+    "expression": "payload:{method,headers:{accept:'application/json',...headers},...(body === undefined ? {} : {body}),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 5,
+    "expression": "const PROTECTED_ENVIRONMENT = /^(?:BUSTER_|NOVA_|KUBECLAW_|OPENAI_|AWS_|AZURE_|GOOGLE_|GITHUB_|CI$|PATH$|HOME$|USER$|SHELL$|NODE_OPTIONS$|NODE_PATH$|LD_|DYLD_|SSL_CERT_|SSH_|GIT_|NPM_TOKEN$|.*(?:TOKEN|SECRET|PASSWORD|PRIVATE_KEY|CREDENTIAL).*)/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 6,
+    "expression": "const STABLE_ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 7,
+    "expression": "const ENVIRONMENT_NAME = /^[A-Za-z_][A-Za-z0-9_]*$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 10,
+    "expression": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`DIRECT_COMMAND_CONFIG_INVALID:${label}`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 15,
+    "expression": "if (typeof value !== 'string' || value.length === 0 || value.length > 1024 || value.includes('\\0')",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 16,
+    "expression": "|| path.isAbsolute(value) || value.split(/[\\\\/]/u).some((part) => part === '..' || part === '')) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 19,
+    "expression": "return value === '.' ? '.' : value.split(/[\\\\/]/u).join('/');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 32,
+    "expression": "if (value === undefined) return [];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 33,
+    "expression": "if (!Array.isArray(value) || value.length > (kind === 'report' ? 16 : 8)) throw new Error(`DIRECT_COMMAND_CONFIG_INVALID:${kind}s`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 40,
+    "expression": "if (typeof id !== 'string' || !STABLE_ID.test(id) || ids.has(id) || paths.has(file)) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 48,
+    "expression": "if (kind === 'coverage' && (item.format !== 'lcov' || item.mediaType !== 'text/lcov')) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 60,
+    "expression": "if (typeof value.executable !== 'string' || !STABLE_ID.test(value.executable)) throw new Error('DIRECT_COMMAND_EXECUTABLE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 61,
+    "expression": "const args = value.args ?? [];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 64,
+    "expression": "const workingDirectory = relativePath(value.workingDirectory ?? '.', 'workingDirectory');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 65,
+    "expression": "const environment = value.environment === undefined ? {} : object(value.environment, 'environment');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 68,
+    "expression": "|| typeof item !== 'string' || item.length > 4096 || item.includes('\\0'))) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 76,
+    "expression": "if (resultMode === 'junit-required' && reports.length === 0) throw new Error('DIRECT_COMMAND_REPORT_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 77,
+    "expression": "if (resultMode === 'exit-code' && reports.length !== 0) throw new Error('DIRECT_COMMAND_REPORTS_FORBIDDEN');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 91,
+    "expression": "const noFollow = fs.constants.O_NOFOLLOW ?? 0;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 160,
+    "expression": "if (record && typeof record === 'object' && (record.stream === 'stdout' || record.stream === 'stderr')",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 161,
+    "expression": "&& typeof record.content === 'string') context.log(record.stream, record.content);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 164,
+    "expression": "if (typeof command.stdout === 'string' && command.stdout) context.log('stdout', command.stdout);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 165,
+    "expression": "if (typeof command.stderr === 'string' && command.stderr) context.log('stderr', command.stderr);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 167,
+    "expression": "if (typeof command.errorCode === 'string') throw new Error(command.errorCode);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/src/provider.js",
+    "line": 202,
+    "expression": "commandResources: command.resources && typeof command.resources === 'object' ? command.resources : {} })",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/tests/live-function.test.ts",
+    "line": 32,
+    "expression": "assert.equal(result.evidenceFiles.find((item: any) => item.evidenceId === 'build-output')?.type, 'artifact');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 3,
+    "expression": "const DNS_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 6,
+    "expression": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 10,
+    "expression": "function integer(value, fallback, minimum, maximum, code) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 11,
+    "expression": "const resolved = value ?? fallback;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 17,
+    "expression": "const resolved = value ?? '/';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 18,
+    "expression": "if (typeof resolved !== 'string' || resolved.length > 2048 || !resolved.startsWith('/') || resolved.startsWith('//')",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 24,
+    "expression": "if (typeof value !== 'string' || value.length > 2048) throw new Error('HTTP_CONFIG_URL_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 28,
+    "expression": "const canonicalMatch = value === canonical || (!allowPath && url.pathname === '/' && value === url.origin);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 30,
+    "expression": "|| (!allowPath && url.pathname !== '/') || url.search || !canonicalMatch) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 43,
+    "expression": "const inputs = invocation.inputs.filter((input) => input.name === 'deployment');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 45,
+    "expression": "|| input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1')) throw new Error('HTTP_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 46,
+    "expression": "const endpointInputs = invocation.inputs.filter((input) => input.name === 'endpoint');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 48,
+    "expression": "|| input.schemaId !== 'kubeclaw.public-endpoint-fixture@1')) throw new Error('HTTP_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 53,
+    "expression": "|| typeof value.url !== 'string') throw new Error('HTTP_INPUT_ENDPOINT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 64,
+    "expression": "if (typeof endpoint.name !== 'string' || !DNS_LABEL.test(endpoint.name) || typeof endpoint.url !== 'string') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 76,
+    "expression": "if (value.endpointName !== undefined && (!deployment || typeof value.endpointName !== 'string' || !DNS_LABEL.test(value.endpointName))) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 82,
+    "expression": "const selected = value.endpointName === undefined",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 88,
+    "expression": "const method = value.method ?? 'GET';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 90,
+    "expression": "const accept = value.accept ?? '*/*';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 91,
+    "expression": "if (typeof accept !== 'string' || accept.length < 1 || accept.length > 512 || /[\\r\\n]/u.test(accept)) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 94,
+    "expression": "const expectedStatuses = value.expectedStatuses ?? null;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 100,
+    "expression": "const expectedText = value.expectedText ?? null;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 102,
+    "expression": "|| method === 'HEAD')) throw new Error('HTTP_CONFIG_EXPECTED_TEXT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 103,
+    "expression": "const expectedContentType = value.expectedContentType ?? null;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 108,
+    "expression": "const path = pathValue(value.path ?? defaultPath);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 110,
+    "expression": "expectedContentType, maximumResponseBytes: integer(value.maximumResponseBytes, 1_048_576, 1, 16_777_216,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 112,
+    "expression": "requestTimeoutMs: integer(value.requestTimeoutMs, 10_000, 1, 300_000, 'HTTP_CONFIG_TIMEOUT_INVALID') };",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/http/src/provider.js",
+    "line": 124,
+    "expression": "const contentType = response.headers?.['content-type'] ?? null;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 5,
+    "expression": "const DIGEST = /^sha256:[a-f0-9]{64}$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 6,
+    "expression": "const IMAGE = /^(?:[A-Za-z0-9.-]+(?::[0-9]{1,5})?\\/[a-z0-9]+(?:[._/-][a-z0-9]+)*)@(sha256:[a-f0-9]{64})$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 7,
+    "expression": "const DNS_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 8,
+    "expression": "const SECRET = /^[A-Za-z0-9._-]+$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 9,
+    "expression": "const MEDIA_TYPE = 'application/vnd.kubeclaw.checked-kubernetes-yaml';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 10,
+    "expression": "const MAX_NAMESPACE_PREFIX_LENGTH = 42;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 13,
+    "expression": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`KUBERNETES_FIXTURE_CONFIG_INVALID:${label}`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 19,
+    "expression": "const imageInputs = invocation.inputs.filter((item) => item.name === 'image');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 24,
+    "expression": "|| item.schemaId !== 'kubeclaw.container-image@1')) throw new Error('KUBERNETES_FIXTURE_IMAGE_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 26,
+    "expression": "if (value.image === undefined && imageInputs.length === 0) throw new Error('KUBERNETES_FIXTURE_IMAGE_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 27,
+    "expression": "const image = value.image === undefined ? object(imageInputs[0].value, 'image-input') : object(value.image, 'image');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 28,
+    "expression": "const matched = typeof image.reference === 'string' ? IMAGE.exec(image.reference) : null;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 29,
+    "expression": "if (!matched || typeof image.digest !== 'string' || !DIGEST.test(image.digest) || matched[1] !== image.digest) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 32,
+    "expression": "if (typeof value.serviceName !== 'string' || !DNS_LABEL.test(value.serviceName)) throw new Error('KUBERNETES_FIXTURE_SERVICE_NAME_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 36,
+    "expression": "const namespacePrefix = value.namespacePrefix ?? 'test';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 37,
+    "expression": "if (typeof namespacePrefix !== 'string' || namespacePrefix.length > MAX_NAMESPACE_PREFIX_LENGTH || !DNS_LABEL.test(namespacePrefix)) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 40,
+    "expression": "const retention = value.retention === undefined ? {} : object(value.retention, 'retention');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 41,
+    "expression": "const retentionMode = retention.mode ?? 'delete';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 42,
+    "expression": "const retentionSeconds = retention.seconds ?? 1800;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 45,
+    "expression": "const readinessTimeoutSeconds = value.readinessTimeoutSeconds ?? 120;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 49,
+    "expression": "const secretReferences = value.secretReferences ?? [];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 51,
+    "expression": "|| secretReferences.some((item) => typeof item !== 'string' || !SECRET.test(item))) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 54,
+    "expression": "const testCredentials = value.testCredentials === undefined ? null : object(value.testCredentials, 'testCredentials');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 56,
+    "expression": "|| typeof testCredentials.secretName !== 'string' || !DNS_LABEL.test(testCredentials.secretName))) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 62,
+    "expression": "...(serviceTargetPort === undefined ? {} : { serviceTargetPort }),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 67,
+    "expression": "const inputs = invocation.inputs.filter((item) => item.name === 'checked-manifest');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 68,
+    "expression": "if (inputs.length !== 1 || inputs[0].kind !== 'artifact') throw new Error('KUBERNETES_FIXTURE_INPUT_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 74,
+    "expression": "if (typeof artifact.storageUrl !== 'string' || !artifact.storageUrl.startsWith('file:')) throw new Error('KUBERNETES_FIXTURE_INPUT_URL_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 90,
+    "expression": "payload: { ...names, namespacePrefix: config.namespacePrefix, project: invocation.moduleId ?? invocation.runId,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 93,
+    "expression": "...(config.serviceTargetPort === undefined ? {} : { serviceTargetPort: config.serviceTargetPort }),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 122,
+    "expression": "metrics: [{ name: 'kubernetes_fixture_resources', value: Number(result.resourceCount ?? 0) },",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 123,
+    "expression": "{ name: 'kubernetes_fixture_pods', value: Number(result.podCount ?? 0) }], evidenceFiles: [], reports: [],",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+    "line": 136,
+    "expression": "if (config.retentionMode === 'retain') return;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 5,
+    "expression": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 7,
+    "expression": "function bounded(value, minimum, maximum) { return typeof value === 'number' && Number.isFinite(value) && value >= minimum && value <= maximum; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 9,
+    "expression": "if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error('LIGHTHOUSE_SETTINGS_FILE_DENIED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 17,
+    "expression": "if (typeof config.url === 'string') return new URL(config.url).origin;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 18,
+    "expression": "if (invocation.inputs.length !== 1 || invocation.inputs[0].kind !== 'value') throw new Error('LIGHTHOUSE_TARGET_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 20,
+    "expression": "if (input.name === 'endpoint') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 22,
+    "expression": "|| typeof value.url !== 'string') throw new Error('LIGHTHOUSE_INPUT_INVALID'); return new URL(value.url).origin;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 25,
+    "expression": "|| value.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(value.endpoints)) throw new Error('LIGHTHOUSE_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 26,
+    "expression": "const selected = config.endpointName === undefined ? value.endpoints[0] : value.endpoints.find((item) => item?.name === config.endpointName);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 27,
+    "expression": "if (!selected || typeof selected.url !== 'string') throw new Error('LIGHTHOUSE_ENDPOINT_NOT_FOUND'); return new URL(selected.url).origin;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 33,
+    "expression": "if (document?.schemaVersion !== 'kubeclaw.lighthouse-settings.v1') throw new Error('LIGHTHOUSE_SETTINGS_FILE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 75,
+    "expression": "function accepted(config, route, audit) { return (config.acceptances ?? []).find((item) => item.route === route && item.audit === audit && expiryValid(item.expiresAt)) ?? null; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 76,
+    "expression": "function median(values) { const ordered = [...values].sort((a, b) => a - b); return ordered[Math.floor(ordered.length / 2)]; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 77,
+    "expression": "function score(report, category) { const value = report?.categories?.[category]?.score; if (typeof value !== 'number') throw new Error('LIGHTHOUSE_CATEGORY_MISSING'); return Math.round(value * 100); }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 78,
+    "expression": "function metric(report, audit) { const value = report?.audits?.[audit]?.numericValue; if (typeof value !== 'number') throw new Error('LIGHTHOUSE_METRIC_MISSING'); return value; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 87,
+    "expression": "const runCount = config.runs ?? (config.purpose === 'performance' ? 3 : 1);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 90,
+    "expression": "payload: { runs, timeoutMs: config.timeoutMs ?? 120000 } });",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 91,
+    "expression": "if (response.schemaVersion !== 'browser-lighthouse-result.v1' || !Array.isArray(response.results)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 102,
+    "expression": "if (config.purpose === 'performance') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 105,
+    "expression": "const values = { score: scores[representative], lcpMs: metric(representativeReport, 'largest-contentful-paint'),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 123,
+    "expression": "if (auditRefs.some((reference) => report.audits?.[reference.id]?.scoreDisplayMode === 'error')) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 143,
+    "expression": "metrics: routeResults.flatMap((result) => Object.entries(result).filter(([, value]) => typeof value === 'number')",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/src/provider.js",
+    "line": 144,
+    "expression": ".map(([name, value]) => ({ name: `lighthouse.${name}`, value, unit: name === 'score' ? 'score' : name === 'cls' ? 'ratio' : 'ms' }))),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+    "line": 27,
+    "expression": "if (!forbiddenAddress || typeof forbiddenAddress === 'string') throw new Error('LIGHTHOUSE_TEST_BIND_FAILED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+    "line": 31,
+    "expression": "if (request.url === '/egress') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+    "line": 38,
+    "expression": "const address = server.address(); if (!address || typeof address === 'string') throw new Error('LIGHTHOUSE_TEST_BIND_FAILED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+    "line": 52,
+    "expression": "const context: any = { signal, workspaceRoot: root, log() {}, invoke: (name: string, request: any) => capability.invoke(name, request, signal) };",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+    "line": 67,
+    "expression": "assert.equal(passed.evidenceFiles.filter((item: any) => item.type === 'performance-report-representative').length, 1);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+    "line": 73,
+    "expression": "assert.equal(failed.findings.some((item: any) => item.rule === 'largest-contentful-paint'), true);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 6,
+    "expression": "const METHODS = ['delete', 'get', 'head', 'options', 'patch', 'post', 'put'];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 7,
+    "expression": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 9,
+    "expression": "if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error('OPENAPI_FILE_DENIED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 21,
+    "expression": "if (invocation.inputs.length !== 1 || invocation.inputs[0].kind !== 'value') throw new Error('OPENAPI_TARGET_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 23,
+    "expression": "if (input.name === 'endpoint') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 25,
+    "expression": "|| typeof value.url !== 'string') throw new Error('OPENAPI_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 29,
+    "expression": "|| value.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(value.endpoints)) throw new Error('OPENAPI_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 30,
+    "expression": "const selected = config.endpointName === undefined ? (value.endpoints.length === 1 ? value.endpoints[0] : null)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 38,
+    "expression": "if (typeof schema.$ref !== 'string' || !schema.$ref.startsWith('#/')) throw new Error('OPENAPI_EXTERNAL_REF_DENIED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 41,
+    "expression": "if (!found || typeof found !== 'object' || !Object.prototype.hasOwnProperty.call(found, part)) throw new Error('OPENAPI_SCHEMA_REF_MISSING');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 50,
+    "expression": "if (!left || !right || typeof left !== 'object' || typeof right !== 'object') return false;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 56,
+    "expression": "if (typeof source !== 'string' || source.length > 256 || /[()|]/u.test(source)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 58,
+    "expression": "const unbounded = source.match(/(?<!\\\\)[*+]/gu)?.length ?? 0;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 61,
+    "expression": "const minimum = Number(match[1]); const maximum = match[2] === undefined ? minimum : (match[2] ? Number(match[2]) : Infinity);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 68,
+    "expression": "if (rawSchema === undefined || rawSchema === null || rawSchema === true) return [];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 82,
+    "expression": "const types = schema.type === undefined ? [] : Array.isArray(schema.type) ? schema.type : [schema.type];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 83,
+    "expression": "if (types.length && !types.includes(actual) && !(actual === 'integer' && types.includes('number'))) return [...failures, `${label} must have type ${types.join(' or ')}.`];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 84,
+    "expression": "if (typeof value === 'string') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 87,
+    "expression": "if (typeof schema.pattern === 'string' && !safePattern(schema.pattern).test(value)) failures.push(`${label} does not match the declared pattern.`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 88,
+    "expression": "if (schema.format === 'uuid' && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu.test(value)) failures.push(`${label} is not a UUID.`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 89,
+    "expression": "if (schema.format === 'date-time' && Number.isNaN(Date.parse(value))) failures.push(`${label} is not a date-time.`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 91,
+    "expression": "if (typeof value === 'number') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 92,
+    "expression": "if (typeof schema.minimum === 'number' && value < schema.minimum) failures.push(`${label} is below the minimum.`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 93,
+    "expression": "if (typeof schema.maximum === 'number' && value > schema.maximum) failures.push(`${label} is above the maximum.`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 95,
+    "expression": "&& typeof schema.minimum === 'number' && value <= schema.minimum) failures.push(`${label} must exceed the minimum.`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 97,
+    "expression": "&& typeof schema.maximum === 'number' && value >= schema.maximum) failures.push(`${label} must be below the maximum.`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 98,
+    "expression": "if (typeof schema.exclusiveMinimum === 'number' && value <= schema.exclusiveMinimum) failures.push(`${label} must exceed the minimum.`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 99,
+    "expression": "if (typeof schema.exclusiveMaximum === 'number' && value >= schema.exclusiveMaximum) failures.push(`${label} must be below the maximum.`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 109,
+    "expression": "if (value && typeof value === 'object' && !Array.isArray(value)) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 115,
+    "expression": "const additionalKeys = Object.keys(value).filter((key) => !Object.prototype.hasOwnProperty.call(schema.properties ?? {}, key));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 117,
+    "expression": "else if (schema.additionalProperties && typeof schema.additionalProperties === 'object') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 125,
+    "expression": "if (!content || typeof content !== 'object' || typeof contentType !== 'string') return undefined;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 144,
+    "expression": "if (typeof operation.operationId !== 'string' || found.has(operation.operationId)) throw new Error('OPENAPI_OPERATION_ID_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 146,
+    "expression": "for (const raw of [...(resolvedPathItem.parameters ?? []), ...(operation.parameters ?? [])]) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 148,
+    "expression": "parameters.set(`${location}\\0${location === 'header' ? name.toLowerCase() : name}`, raw);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 154,
+    "expression": "const failures = []; const supplied = { path: selected.pathParameters ?? {}, query: selected.query ?? {}, header: selected.headers ?? {} };",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 155,
+    "expression": "const declared = { path: new Set(), query: new Set(), header: new Set() };",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 158,
+    "expression": "if (parameter.in === 'cookie' && parameter.required === true) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 162,
+    "expression": "declared[parameter.in].add(parameter.in === 'header' ? String(parameter.name).toLowerCase() : String(parameter.name));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 165,
+    "expression": "const canonical = location === 'header' ? name.toLowerCase() : name;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 169,
+    "expression": "const values = supplied[location]; const key = location === 'header' ? Object.keys(values).find((name) => name.toLowerCase() === String(parameter.name).toLowerCase()) : parameter.name;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 182,
+    "expression": "const rule = operation.responses?.[String(status)] ?? operation.responses?.[range] ?? operation.responses?.default ?? null;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 195,
+    "expression": "if (typeof spec?.openapi !== 'string' || !/^3\\.[01]\\./u.test(spec.openapi)) throw new Error('OPENAPI_VERSION_UNSUPPORTED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 196,
+    "expression": "const catalog = operations(spec); const explicit = Array.isArray(config.operations) ? config.operations : []; const tags = new Set(config.tags ?? []);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 198,
+    "expression": "const tagged = [...catalog.entries()].filter(([operationId, found]) => !explicitIds.has(operationId)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 199,
+    "expression": "&& (found.operation.tags ?? []).some((tag) => tags.has(tag))).map(([operationId]) => ({ operationId }));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 215,
+    "expression": "let route = found.route; for (const [name, value] of Object.entries(selected.pathParameters ?? {})) route = route.replace(`{${name}}`, encodeURIComponent(String(value)));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 219,
+    "expression": "for (const [name, value] of Object.entries(selected.query ?? {})) url.searchParams.set(name, String(value));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 224,
+    "expression": "if (selected.body !== undefined && Object.keys(selected.headers ?? {}).some((name) => name.toLowerCase() === 'content-type')) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 227,
+    "expression": "if (selected.body !== undefined && requestMedia === undefined) failures.push('A JSON request body is not declared.');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 229,
+    "expression": "else if (selected.body === undefined && requestBody?.required === true) failures.push('A request body is required.');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 231,
+    "expression": "const responseRules = Object.values(found.operation.responses ?? {}).map((entry) => resolveSchema(spec, entry));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 232,
+    "expression": "const responseHeaders = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.headers ?? {}))",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 234,
+    "expression": "const acceptedTypes = [...new Set(responseRules.flatMap((entry) => Object.keys(entry?.content ?? {})))];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 235,
+    "expression": "response = await invoke({ operation: 'request', resource: { type: 'network.url', canonicalId: url.href }, payload: { method: found.method.toUpperCase(), headers: { ...(selected.headers ?? {}), ...(acceptedTypes.length ? { accept: acceptedTypes.join(', ') } : {}), ...(selected.body === undefined ? {} : { 'content-type': 'application/json' }) }, responseHeaders, body: selected.body === undefined ? undefined : JSON.stringify(selected.body), timeoutMs: Math.min(config.requestTimeoutMs ?? 10_000, invocation.timeoutMs), maximumResponseBytes: config.maximumResponseBytes ?? 1_048_576 } });",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 241,
+    "expression": "if (rule?.content && media === undefined) failures.push(`Content type ${String(contentType)} is not documented.`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 244,
+    "expression": "if (typeof contentType === 'string' && contentType.toLowerCase().includes('json')) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/provider.js",
+    "line": 249,
+    "expression": "for (const [name, rawHeader] of Object.entries(rule?.headers ?? {})) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 3,
+    "expression": "const ANNOTATIONS = new Set(['title', 'description', 'default', 'example', 'examples',",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 5,
+    "expression": "const ASSERTIONS = new Set(['$ref', '$defs', 'definitions', 'type', 'nullable', 'const', 'enum',",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 9,
+    "expression": "const TYPES = new Set(['null', 'boolean', 'object', 'array', 'number', 'integer', 'string']);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 11,
+    "expression": "function object(value) { return value !== null && typeof value === 'object' && !Array.isArray(value); }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 30,
+    "expression": "if (schema[key] === undefined) continue;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 32,
+    "expression": "if (exclusive30 ? typeof schema[key] !== 'boolean' : typeof schema[key] !== 'number') invalid();",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 36,
+    "expression": "for (const key of ['nullable', 'uniqueItems']) if (schema[key] !== undefined && typeof schema[key] !== 'boolean') invalid();",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 39,
+    "expression": "|| schema.required.some((key) => typeof key !== 'string'))) invalid();",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 40,
+    "expression": "if (schema.pattern !== undefined && typeof schema.pattern !== 'string') invalid();",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 46,
+    "expression": "if (raw === undefined || typeof raw === 'boolean') return;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 51,
+    "expression": "if (Object.keys(raw).some((key) => key !== '$ref' && !ANNOTATIONS.has(key) && !key.startsWith('x-'))) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 64,
+    "expression": "if (raw[key] === undefined) continue;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/src/schema-support.js",
+    "line": 69,
+    "expression": "if (raw[key] === undefined) continue;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+    "line": 90,
+    "expression": "const server = http.createServer((request, response) => { const pathname = new URL(request.url ?? '/', 'http://localhost').pathname;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+    "line": 91,
+    "expression": "if (pathname === '/cleanup' && request.method === 'DELETE') cleanupRequests += 1;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+    "line": 93,
+    "expression": "if (pathname === '/html') { htmlAccept = request.headers.accept; response.setHeader('content-type', 'text/html'); response.end('<p>ok</p>'); return; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+    "line": 94,
+    "expression": "if (pathname === '/empty') { response.setHeader('content-type', 'application/json'); response.end('{}'); return; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+    "line": 95,
+    "expression": "if (pathname === '/typed-map') typedMapContentType = request.headers['content-type'];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+    "line": 97,
+    "expression": "response.setHeader('content-type', 'application/json'); if (pathname !== '/no-header') response.setHeader('x-request-id', 'one');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+    "line": 100,
+    "expression": "const address = server.address(); if (!address || typeof address === 'string') throw new Error('OPENAPI_TEST_BIND_FAILED'); const origin = `http://127.0.0.1:${address.port}`;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+    "line": 108,
+    "expression": "const context = { signal, workspaceRoot: root, log() {}, invoke: (name: string, request: any) => capability.invoke(name, request, signal) } as any;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+    "line": 144,
+    "expression": "{ operationId, ...(body === undefined ? {} : { body }) },",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+    "line": 236,
+    "expression": "(unsafePattern.components.responses.Item.content['application/json'].schema.properties.id as Record<string, unknown>).pattern = '^(a+)+$';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/remediation.test.ts",
+    "line": 19,
+    "expression": "const address = server.address(); if (!address || typeof address === 'string') throw new Error('SERVER_BIND_FAILED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/tests/remediation.test.ts",
+    "line": 59,
+    "expression": "assert.equal(contacts - before, request && outcome === 'failed' ? 0 : 1);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 5,
+    "expression": "const STABLE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 6,
+    "expression": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 7,
+    "expression": "function relative(value, code) { if (typeof value !== 'string' || !value || value.length > 1024 || value.includes('\\0') || path.isAbsolute(value) || value.split(/[\\\\/]/u).some((part) => part === '..' || part === '')) throw new Error(code); return value; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 9,
+    "expression": "function origin(value, code) { let url; try { url = new URL(value); } catch { throw new Error(code); } if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) throw new Error(code); return url.origin; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 13,
+    "expression": "if (typeof config.url === 'string') return origin(config.url, 'PLAYWRIGHT_TARGET_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 14,
+    "expression": "if (invocation.inputs.length !== 1 || invocation.inputs[0].kind !== 'value') throw new Error('PLAYWRIGHT_TARGET_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 16,
+    "expression": "if (input.name === 'endpoint') { if (input.schemaId !== 'kubeclaw.public-endpoint-fixture@1' || value.schemaVersion !== 'public-endpoint-fixture.v1' || typeof value.url !== 'string') throw new Error('PLAYWRIGHT_INPUT_INVALID'); return origin(value.url, 'PLAYWRIGHT_INPUT_INVALID'); }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 17,
+    "expression": "if (input.name !== 'deployment' || input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1' || value.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(value.endpoints)) throw new Error('PLAYWRIGHT_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 18,
+    "expression": "const selected = config.endpointName === undefined ? value.endpoints[0] : value.endpoints.find((item) => item?.name === config.endpointName);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 19,
+    "expression": "if (!selected || typeof selected.url !== 'string') throw new Error('PLAYWRIGHT_ENDPOINT_NOT_FOUND'); return origin(selected.url, 'PLAYWRIGHT_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 21,
+    "expression": "function allTests(report) { const result = []; const visit = (suite, titles = []) => { const next = suite.title ? [...titles, suite.title] : titles; for (const spec of suite.specs ?? []) for (const test of spec.tests ?? []) result.push({ title: [...next, spec.title, test.projectName].filter(Boolean).join(' > '), spec, test }); for (const child of suite.suites ?? []) visit(child, next); }; for (const suite of report.suites ?? []) visit(suite); return result; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 22,
+    "expression": "function attachmentType(name, contentType) { const lower = String(name).toLowerCase(); if (contentType === 'image/png' || lower.includes('screenshot')) return 'screenshot'; if (contentType === 'application/zip' && lower.includes('trace')) return 'trace'; if (String(contentType).startsWith('video/') || lower.includes('video')) return 'video'; return 'test-artifact'; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 25,
+    "expression": "if (!raw || typeof raw !== 'object' || typeof raw.data !== 'string') return null;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 41,
+    "expression": "if (status === 'unexpected') { failed += 1; const last = results.at(-1); findings.push(finding(String(testIndex), entry.title, last?.error?.message ?? last?.error?.value ?? 'Test failed after retries.')); }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 42,
+    "expression": "else if (status === 'skipped') skipped += 1; else if (!results.some((result) => result.status !== 'skipped')) unexecuted += 1; else passed += 1;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 44,
+    "expression": "const caseStatus = status === 'unexpected' ? 'failed' : status === 'skipped' ? 'skipped' : results.some((result) => result.status !== 'skipped') ? 'passed' : 'unexecuted';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 45,
+    "expression": "testCases.push({ id: `sha256:${crypto.createHash('sha256').update(`${testIndex}\\0${entry.title}\\0${project ?? ''}`).digest('hex')}`,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 47,
+    "expression": "errors: results.flatMap((result) => typeof result?.error?.message === 'string' ? [result.error.message.slice(0, 4096)] : []) });",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 50,
+    "expression": "const minimumExecuted = Math.max(mode === 'blocking' ? 1 : 0, config.minimumExecutedTests ?? 1);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 52,
+    "expression": "for (const title of config.requiredTests ?? []) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 70,
+    "expression": "timeoutMs: Math.min(config.timeoutMs ?? invocation.timeoutMs, invocation.timeoutMs), limits: {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 75,
+    "expression": "if (command.schemaVersion !== 'browser-playwright-result.v1' || command.targetOrigin !== target || !Number.isSafeInteger(command.workers) || command.workers < 1 || command.workers > workers || !Array.isArray(command.artifacts) || !['cgroup-v2', 'sampled'].includes(command.resources?.enforcement)) throw new Error('PLAYWRIGHT_CAPABILITY_RESULT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/src/provider.js",
+    "line": 80,
+    "expression": "if (!Array.isArray(report.suites) || !report.stats || typeof report.stats !== 'object') throw new Error('PLAYWRIGHT_REPORT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/tests/fixture/playwright.config.ts",
+    "line": 8,
+    "expression": "baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/tests/live-function.test.ts",
+    "line": 10,
+    "expression": "const browsersPath = process.env.PLAYWRIGHT_BROWSERS_PATH;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/tests/live-function.test.ts",
+    "line": 20,
+    "expression": "const address = server.address(); if (!address || typeof address === 'string') throw new Error('PLAYWRIGHT_TEST_BIND_FAILED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/tests/live-function.test.ts",
+    "line": 24,
+    "expression": "const deniedAddress = deniedServer.address(); if (!deniedAddress || typeof deniedAddress === 'string') throw new Error('PLAYWRIGHT_TEST_BIND_FAILED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/tests/live-function.test.ts",
+    "line": 39,
+    "expression": "const signal = new AbortController().signal; const context: any = { signal, workspaceRoot: root, log(_stream: string, content: string) { process.stderr.write(content); }, invoke: (name: string, request: any) => capability.invoke(name, request, signal) };",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/tests/live-function.test.ts",
+    "line": 50,
+    "expression": "assert.equal(passed.providerDetails.values.browserProjects.includes('real-chromium'), true); assert.equal(passed.evidenceFiles.some((item: any) => item.type === 'test-report'), true);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/tests/live-function.test.ts",
+    "line": 58,
+    "expression": "const failedCase = failed.providerDetails.values.testCases.find((item: any) => item.status === 'failed');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 3,
+    "expression": "export const SEVERITIES = Object.freeze(['critical', 'high', 'medium', 'low', 'info']);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 4,
+    "expression": "const POLICY = Object.freeze({ profile: 'strict-v1', blockingSeverities: Object.freeze(['critical', 'high']),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 8,
+    "expression": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 12,
+    "expression": "export function integer(value, fallback, minimum, maximum, code) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 13,
+    "expression": "const result = value ?? fallback;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 19,
+    "expression": "const list = value ?? [];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 26,
+    "expression": "|| typeof item.reason !== 'string' || item.reason.trim().length < 8 || item.reason.length > 1024",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 27,
+    "expression": "|| typeof item.expiresAt !== 'string' || !Number.isFinite(Date.parse(item.expiresAt))) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 47,
+    "expression": "export function result(invocation, scanner, rawFindings, resolvedPolicy, detailValues = {}) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 58,
+    "expression": "if (typeof finding.id !== 'string' || finding.id.length < 1 || finding.id.length > 256 || ids.has(finding.id)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 67,
+    "expression": "|| (resolvedPolicy.blockActiveThreats && finding.status === 'affected')",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 68,
+    "expression": "|| (resolvedPolicy.blockMissingFixes && finding.category === 'vulnerability' && !finding.fixedVersion);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 70,
+    "expression": "...(typeof finding.rule === 'string' ? { rule: finding.rule } : {}),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 71,
+    "expression": "...(typeof finding.file === 'string' ? { file: finding.file } : {}),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 74,
+    "expression": "...(typeof finding.category === 'string' ? { category: finding.category.slice(0, 128) } : {}),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 75,
+    "expression": "...(typeof finding.package === 'string' ? { package: finding.package.slice(0, 512) } : {}),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 76,
+    "expression": "...(typeof finding.installedVersion === 'string' ? { installedVersion: finding.installedVersion.slice(0, 512) } : {}),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 77,
+    "expression": "...(typeof finding.fixedVersion === 'string' ? { fixedVersion: finding.fixedVersion.slice(0, 512) } : {}),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 78,
+    "expression": "...(typeof finding.file === 'string' ? { sourceFile: finding.file } : {}),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 81,
+    "expression": "...(typeof finding.status === 'string' ? { status: finding.status.slice(0, 128) } : {}) });",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/common.js",
+    "line": 103,
+    "expression": "const normalized = String(value ?? 'unknown').replace(/[^A-Za-z0-9._:@/-]+/gu, '-');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 3,
+    "expression": "const DIGEST = /^sha256:[a-f0-9]{64}$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 8,
+    "expression": "if (typeof evidence.evaluatedAt !== 'string' || evidence.schemaVersion !== 'trivy-database-evidence.v1' || !Number.isFinite(evaluated) || evaluated > Date.now()",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+    "line": 14,
+    "expression": "if (version === undefined || kinds.has(item.kind) || item.schemaVersion !== version) throw new Error('SECURITY_DATABASE_EVIDENCE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 12,
+    "expression": "return { projectDirectory, timeoutMs: integer(value.timeoutMs, 300_000, 1000, 900_000, 'DEPENDENCY_SCAN_TIMEOUT_INVALID'),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/dependency.js",
+    "line": 34,
+    "expression": "if (response.scanner !== 'trivy' || response.operation !== 'dependency') throw new Error('DEPENDENCY_SCAN_RESPONSE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 3,
+    "expression": "const PROFILES = Object.freeze({",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 22,
+    "expression": "if (typeof item.id !== 'string' || !/^[a-z0-9.-]+$/u.test(item.id) || item.id.length > 128",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 23,
+    "expression": "|| typeof item.header !== 'string' || !/^[a-z0-9-]+$/u.test(item.header) || item.header.length > 128",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 25,
+    "expression": "|| (item.kind !== 'present' && (typeof item.value !== 'string' || item.value.length < 1 || item.value.length > 1024))",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 26,
+    "expression": "|| (item.kind === 'hsts-min-age' && (!/^\\d+$/u.test(item.value) || Number(item.value) < 1))) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 30,
+    "expression": "...(item.kind === 'present' ? {} : { value: item.value }) };",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 36,
+    "expression": "const value = overrides === undefined ? {} : object(overrides, 'SECURITY_HEADERS_RULES_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 37,
+    "expression": "const remove = value.remove ?? [];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 39,
+    "expression": "|| remove.some((id) => typeof id !== 'string')) throw new Error('SECURITY_HEADERS_RULES_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 40,
+    "expression": "const replace = (value.replace ?? []).map(rule); const add = (value.add ?? []).map(rule);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 45,
+    "expression": "const resolved = base.filter((item) => !remove.includes(item.id)).map((item) => replacement.get(item.id) ?? item).concat(add);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 55,
+    "expression": "if (input.name !== 'deployment' || input.kind !== 'value' || input.schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 59,
+    "expression": "if (value.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(value.endpoints) || value.endpoints.length !== 1) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 63,
+    "expression": "if (typeof endpoint.url !== 'string') throw new Error('SECURITY_HEADERS_DEPLOYMENT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 65,
+    "expression": "if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 79,
+    "expression": "if (value.profile === 'web-https-v1' && !origin.startsWith('https://')) throw new Error('SECURITY_HEADERS_HTTPS_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 81,
+    "expression": "requestTimeoutMs: integer(value.requestTimeoutMs, 10_000, 1, 300_000, 'SECURITY_HEADERS_TIMEOUT_INVALID'),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 86,
+    "expression": "if (item.kind === 'present') return typeof value === 'string' && value.length > 0;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 87,
+    "expression": "if (typeof value !== 'string') return false;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 88,
+    "expression": "if (item.kind === 'equals') return value.toLowerCase() === item.value.toLowerCase();",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 89,
+    "expression": "if (item.kind === 'contains') return value.toLowerCase().includes(item.value.toLowerCase());",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 97,
+    "expression": "const responseHeaders = [...new Set(config.rules.map((item) => item.header))];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/headers.js",
+    "line": 106,
+    "expression": "observations.push({ path, status: response.status, headers: responseHeaders.filter((name) => typeof headers[name] === 'string') });",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 7,
+    "expression": "if (input.name !== 'image' || input.kind !== 'value' || input.schemaId !== 'kubeclaw.container-image@1') throw new Error('IMAGE_SCAN_INPUT_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 10,
+    "expression": "|| typeof value.digest !== 'string' || !value.reference.endsWith(`@${value.digest}`)) throw new Error('IMAGE_SCAN_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 16,
+    "expression": "return { timeoutMs: integer(value.timeoutMs, 300_000, 1000, 900_000, 'IMAGE_SCAN_TIMEOUT_INVALID'), policy: policy(value.policy) };",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/image.js",
+    "line": 37,
+    "expression": "if (response.scanner !== 'trivy' || response.operation !== 'image') throw new Error('IMAGE_SCAN_RESPONSE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 10,
+    "expression": "|| typeof input.artifact.storageUrl !== 'string' || !input.artifact.storageUrl.startsWith('file:')) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 20,
+    "expression": "return { timeoutMs: integer(value.timeoutMs, 120_000, 1000, 300_000, 'KUBERNETES_POLICY_TIMEOUT_INVALID'), policy: policy(value.policy) };",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 28,
+    "expression": "severity: item.severity, message: String(item.message ?? item.title), rule: String(item.id),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+    "line": 41,
+    "expression": "if (response.scanner !== 'trivy' || response.operation !== 'kubernetes-policy') throw new Error('KUBERNETES_POLICY_RESPONSE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 7,
+    "expression": "const deploymentInput = invocation.inputs.find((item) => item.name === 'deployment');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 8,
+    "expression": "const manifestInput = invocation.inputs.find((item) => item.name === 'checked-manifest');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 11,
+    "expression": "|| typeof manifestInput.artifact.storageUrl !== 'string' || !manifestInput.artifact.storageUrl.startsWith('file:')) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+    "line": 27,
+    "expression": "return { timeoutMs: integer(value.timeoutMs, 120_000, 1000, 300_000, 'KUBERNETES_RUNTIME_SECURITY_TIMEOUT_INVALID'),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+    "line": 3,
+    "expression": "import { execFileSync } from 'node:child_process';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+    "line": 21,
+    "expression": "...(process.env.KUBECLAW_SECURITY_TEST_CACHE ? [process.env.KUBECLAW_SECURITY_TEST_CACHE] : []),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+    "line": 29,
+    "expression": "const trivy = fs.realpathSync(process.env.KUBECLAW_SECURITY_TEST_TRIVY ?? '/usr/local/bin/trivy');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+    "line": 34,
+    "expression": "function invocation(provider: string, values: Record<string, unknown>, inputs: unknown[] = []) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+    "line": 48,
+    "expression": "if (request.url === '/missing-headers') { response.end(); return; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+    "line": 57,
+    "expression": "if (!address || typeof address === 'string') throw new Error('SECURITY_TEST_SERVER_FAILED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+    "line": 63,
+    "expression": "const context = { signal: new AbortController().signal, workspaceRoot: root, log() {},",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+    "line": 69,
+    "expression": "const sharedPrefix = 'x'.repeat(160);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+    "line": 108,
+    "expression": "const knownVulnerability = dependency.findings.find((item: any) => item.rule === 'CVE-2021-23337');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+    "line": 111,
+    "expression": "&& item.package === 'lodash' && item.installedVersion === '4.17.20'));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+    "line": 141,
+    "expression": "assert.ok(policyResult.findings.some((item: any) => item.rule === 'KSV-0001'));",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 7,
+    "expression": "const MAXIMUM_INPUT_BYTES = 512 * 1024 * 1024;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 8,
+    "expression": "const MAXIMUM_EXPANDED_BYTES = 2 * 1024 * 1024 * 1024;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 9,
+    "expression": "const MAXIMUM_FILES = 100_000;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 10,
+    "expression": "const MAXIMUM_BASELINE_BYTES = 1024 * 1024;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 11,
+    "expression": "const ZERO_BLOCK = Buffer.alloc(512);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 12,
+    "expression": "const MEDIA_FORMATS = new Map([",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 18,
+    "expression": "const NAME = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 21,
+    "expression": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`SIZE_BUDGET_CONFIG_INVALID:${label}`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 31,
+    "expression": "if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) throw new Error(`SIZE_BUDGET_LIMIT_INVALID:${label}`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 41,
+    "expression": "const matchingFiles = value.matchingFiles ?? [];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 46,
+    "expression": "if (typeof rule.id !== 'string' || !NAME.test(rule.id) || ids.has(rule.id)) throw new Error(`SIZE_BUDGET_RULE_ID_INVALID:${String(rule.id)}`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 48,
+    "expression": "if (typeof rule.pattern !== 'string' || rule.pattern.length < 1 || rule.pattern.length > 512 || rule.pattern.includes('\\0')) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 52,
+    "expression": "maximumBytes: safeInteger(rule.maximumBytes, `matchingFiles.${rule.id}.maximumBytes`), requireMatch: rule.requireMatch !== false };",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 55,
+    "expression": "format: value.format ?? 'auto',",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 56,
+    "expression": "maximumTotalBytes: value.maximumTotalBytes === undefined ? null : safeInteger(value.maximumTotalBytes, 'maximumTotalBytes'),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 57,
+    "expression": "maximumFileCount: value.maximumFileCount === undefined ? null : safeInteger(value.maximumFileCount, 'maximumFileCount'),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 59,
+    "expression": "maximumGrowthBytes: value.maximumGrowthBytes === undefined ? null : safeInteger(value.maximumGrowthBytes, 'maximumGrowthBytes'),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 60,
+    "expression": "maximumGrowthPercent: value.maximumGrowthPercent === undefined ? null : finite(value.maximumGrowthPercent, 'maximumGrowthPercent'),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 61,
+    "expression": "largestFiles: value.largestFiles === undefined ? 10 : safeInteger(value.largestFiles, 'largestFiles'),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 68,
+    "expression": "if (invocation.mode === 'blocking' && !hasLimit) throw new Error('SIZE_BUDGET_BLOCKING_LIMIT_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 76,
+    "expression": "if (character === '*') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 77,
+    "expression": "if (pattern[index + 1] === '*') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 78,
+    "expression": "if (pattern[index + 2] === '/') { expression += '(?:.*/)?'; index += 2; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 82,
+    "expression": "} else if (character === '?') expression += '[^/]';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 95,
+    "expression": "if (selected.kind !== 'artifact' || !selected.artifact || typeof selected.artifact !== 'object') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 103,
+    "expression": "if (typeof artifact.storageUrl !== 'string' || !artifact.storageUrl.startsWith('file:')) throw new Error(`SIZE_BUDGET_INPUT_URL_INVALID:${label}`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 156,
+    "expression": "|| normalized.split('/').some((part) => part === '' || part === '.' || part === '..')) throw new Error('SIZE_BUDGET_ARCHIVE_PATH_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 206,
+    "expression": "if (type === '5') { if (size !== 0) throw new Error('SIZE_BUDGET_ARCHIVE_INVALID:directory-size'); continue; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 207,
+    "expression": "if (type !== '0') throw new Error(`SIZE_BUDGET_ARCHIVE_ENTRY_DENIED:${type}`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 223,
+    "expression": "if (config.format === 'auto') return inferred;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 224,
+    "expression": "if (config.format !== inferred && !(config.format === 'file' && artifact.mediaType === 'application/octet-stream')) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 234,
+    "expression": "? [{ path: String(artifact.artifactId ?? 'build-output'), bytes: artifact.sizeBytes }]",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 235,
+    "expression": ": await scanTar(file, format === 'tar-gzip', signal);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 241,
+    "expression": "const largest = [...files].sort((left, right) => right.bytes - left.bytes || left.path.localeCompare(right.path))",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 249,
+    "expression": "if (artifact.mediaType !== 'application/vnd.kubeclaw.size-budget-baseline+json') throw new Error('SIZE_BUDGET_BASELINE_MEDIA_TYPE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 264,
+    "expression": "if (!value || value.schemaVersion !== 'size-budget-baseline.v1' || !Number.isSafeInteger(value.totalBytes)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/src/provider.js",
+    "line": 265,
+    "expression": "|| value.totalBytes < 0 || typeof value.sourceDigest !== 'string') throw new Error('SIZE_BUDGET_BASELINE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/tests/live-function.test.ts",
+    "line": 3,
+    "expression": "import { execFileSync } from 'node:child_process';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/tests/live-function.test.ts",
+    "line": 23,
+    "expression": "function invocation(output: any, values: any, mode = 'blocking', baseline?: any, attempt = 'one') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 3,
+    "expression": "const DNS_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 6,
+    "expression": "if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`TAILSCALE_EXPOSURE_CONFIG_INVALID:${label}`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 10,
+    "expression": "function parseRetention(value = 'release') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 19,
+    "expression": "const path = value.path ?? '/';",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 20,
+    "expression": "const readinessTimeoutSeconds = value.readinessTimeoutSeconds ?? 120;",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 22,
+    "expression": "if (endpointName !== undefined && (typeof endpointName !== 'string' || !DNS_LABEL.test(endpointName))) throw new Error('TAILSCALE_EXPOSURE_ENDPOINT_NAME_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 23,
+    "expression": "if (hostname !== undefined && (typeof hostname !== 'string' || !DNS_LABEL.test(hostname))) throw new Error('TAILSCALE_EXPOSURE_HOSTNAME_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 24,
+    "expression": "if (typeof path !== 'string' || !path.startsWith('/') || path.startsWith('//') || path.length > 1024",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 33,
+    "expression": "if (invocation.inputs.some((item) => item.name !== 'deployment')) throw new Error('TAILSCALE_EXPOSURE_INPUT_UNKNOWN');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 34,
+    "expression": "const inputs = invocation.inputs.filter((item) => item.name === 'deployment');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 35,
+    "expression": "if (inputs.length !== 1 || inputs[0].kind !== 'value' || inputs[0].schemaId !== 'kubeclaw.kubernetes-deployment-fixture@1') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 40,
+    "expression": "|| !DNS_LABEL.test(value.leaseName) || typeof value.namespace !== 'string' || !DNS_LABEL.test(value.namespace)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 41,
+    "expression": "|| typeof value.expiresAt !== 'string' || !Number.isFinite(Date.parse(value.expiresAt))",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 44,
+    "expression": "const selected = endpointName === undefined",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 47,
+    "expression": "if (!selected || typeof selected.name !== 'string' || !DNS_LABEL.test(selected.name) || typeof selected.url !== 'string') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 48,
+    "expression": "throw new Error(endpointName === undefined ? 'TAILSCALE_EXPOSURE_ENDPOINT_AMBIGUOUS' : 'TAILSCALE_EXPOSURE_ENDPOINT_NOT_FOUND');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 51,
+    "expression": "if (url.protocol !== 'http:' || url.username || url.password || url.hash || url.pathname !== '/' || url.search) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 55,
+    "expression": "const servicePort = url.port === '' ? 80 : Number(url.port);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 76,
+    "expression": "...(config.retentionMode === 'await-readiness' ? {retentionMode:config.retentionMode} : {}),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 87,
+    "expression": "if(config.retentionMode==='await-readiness' && (result.handoff?.phase!=='awaiting-readiness'||!Number.isSafeInteger(result.handoff.exposureGeneration)||result.handoff.exposureGeneration<1))throw new Error('TAILSCALE_EXPOSURE_HANDOFF_MISSING');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+    "line": 101,
+    "expression": "...(config.retentionMode === 'await-readiness' ? {retentionMode:config.retentionMode} : {}) } });",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/browser-identity.js",
+    "line": 3,
+    "expression": "if (schemaVersion === 'kubeclaw.visual-baselines.v1') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/browser-identity.js",
+    "line": 6,
+    "expression": "if (schemaVersion !== 'kubeclaw.visual-baselines.v2') throw new Error('VISUAL_MANIFEST_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 6,
+    "expression": "const COMPARISON_PROFILES = Object.freeze({",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 10,
+    "expression": "function object(value, code) { if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(code); return value; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 12,
+    "expression": "function number(value, minimum, maximum, code) { if (typeof value !== 'number' || !Number.isFinite(value) || value < minimum || value > maximum) throw new Error(code); return value; }",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 14,
+    "expression": "if (typeof relative !== 'string' || path.isAbsolute(relative) || relative.includes('\\0')) throw new Error(code);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 25,
+    "expression": "const expected = { colorScheme: profile.colorScheme ?? null, reducedMotion: profile.reducedMotion ?? null,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 26,
+    "expression": "locale: profile.locale ?? null, timezoneId: profile.timezoneId ?? null, deviceScaleFactor: profile.deviceScaleFactor ?? 1,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 27,
+    "expression": "hasTouch: profile.hasTouch ?? false, isMobile: profile.isMobile ?? false, fullPage: true };",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 44,
+    "expression": "|| bytes.toString('ascii', 12, 16) !== 'IHDR') throw new Error(code);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 53,
+    "expression": "if (typeof config.url === 'string') return origin(config.url, 'VISUAL_TARGET_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 54,
+    "expression": "if (invocation.inputs.length !== 1 || invocation.inputs[0].kind !== 'value') throw new Error('VISUAL_TARGET_REQUIRED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 56,
+    "expression": "if (input.name === 'endpoint') {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 58,
+    "expression": "|| typeof value.url !== 'string') throw new Error('VISUAL_INPUT_INVALID'); return origin(value.url, 'VISUAL_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 61,
+    "expression": "|| value.schemaVersion !== 'kubernetes-deployment-fixture.v1' || !Array.isArray(value.endpoints)) throw new Error('VISUAL_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 62,
+    "expression": "const selected = config.endpointName === undefined ? value.endpoints[0] : value.endpoints.find((item) => item?.name === config.endpointName);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 63,
+    "expression": "if (!selected || typeof selected.url !== 'string') throw new Error('VISUAL_ENDPOINT_NOT_FOUND'); return origin(selected.url, 'VISUAL_INPUT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 67,
+    "expression": "if (document.schemaVersion !== 'kubeclaw.browser-profiles.v1') throw new Error('VISUAL_PROFILE_FILE_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 90,
+    "expression": "if (typeof entry.id !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u.test(entry.id) || ids.has(entry.id)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 91,
+    "expression": "|| typeof entry.route !== 'string' || entry.route.length > 1024 || !entry.route.startsWith('/') || entry.route.startsWith('//') || /[?#\\r\\n]/u.test(entry.route)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 93,
+    "expression": "|| typeof entry.sha256 !== 'string' || !/^sha256:[a-f0-9]{64}$/u.test(entry.sha256)) throw new Error('VISUAL_MANIFEST_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 113,
+    "expression": "const name = config.comparisonProfile ?? 'strict-v1'; const base = COMPARISON_PROFILES[name];",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 114,
+    "expression": "if (!base) throw new Error('VISUAL_COMPARISON_PROFILE_INVALID'); const overrides = config.overrides ?? {};",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 117,
+    "expression": "maximumDifferencePercent: overrides.maximumDifferencePercent ?? base.maximumDifferencePercent,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 118,
+    "expression": "pixelThreshold: overrides.pixelThreshold ?? base.pixelThreshold,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 119,
+    "expression": "uncertaintyMarginPercent: overrides.uncertaintyMarginPercent ?? base.uncertaintyMarginPercent,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 135,
+    "expression": "const selected = config.targets.map((id) => baselineManifest.entries.get(id) ?? (() => { throw new Error(`VISUAL_TARGET_NOT_FOUND:${id}`); })());",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 136,
+    "expression": "const masks = new Map(); for (const raw of config.masks ?? []) {",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 142,
+    "expression": "combinations: selected.map((entry) => ({ id: entry.id, route: entry.route, profile: entry.profile, masks: masks.get(entry.id) ?? [] })),",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 143,
+    "expression": "timeoutMs: config.timeoutMs ?? 30000,",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 145,
+    "expression": "if (response.schemaVersion !== 'browser-visual-result.v1' || !Array.isArray(response.results)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 153,
+    "expression": "|| JSON.stringify(current.masks) !== JSON.stringify(masks.get(entry.id) ?? [])) throw new Error('VISUAL_CAPABILITY_RESULT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 160,
+    "expression": "if (compared.schemaVersion !== 'browser-visual-comparison.v1' || !Number.isSafeInteger(compared.width)",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/src/provider.js",
+    "line": 162,
+    "expression": "|| typeof compared.diffPercent !== 'number' || !Number.isFinite(compared.diffPercent) || typeof compared.difference !== 'string') throw new Error('VISUAL_CAPABILITY_RESULT_INVALID');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+    "line": 17,
+    "expression": "const deniedAddress = deniedServer.address(); if (!deniedAddress || typeof deniedAddress === 'string') throw new Error('VISUAL_TEST_BIND_FAILED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+    "line": 21,
+    "expression": "if (request.url === '/egress') return response.end(`<!doctype html><img src=\"${deniedOrigin}/pixel.png\">`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+    "line": 22,
+    "expression": "if (request.url === '/websocket') return response.end(`<!doctype html><script>new WebSocket('${deniedOrigin.replace('http:', 'ws:')}/socket')</script>`);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+    "line": 23,
+    "expression": "if (request.url === '/slow') return setTimeout(() => response.end('<!doctype html><p>late</p>'), 2000);",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+    "line": 24,
+    "expression": "if (request.url === '/tall') return response.end('<!doctype html><div style=\"height:100000px\">too tall</div>');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+    "line": 25,
+    "expression": "if (request.url === '/noise') return response.end(`<!doctype html><style>*{margin:0}</style><canvas width=\"640\" height=\"480\"></canvas><script>",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+    "line": 30,
+    "expression": "const address = server.address(); if (!address || typeof address === 'string') throw new Error('VISUAL_TEST_BIND_FAILED');",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+    "line": 65,
+    "expression": "const context: any = { signal: controller.signal, workspaceRoot: path.join(root, 'workspace'), log() {},",
+    "classification": "provider request fallback/semantic bound"
+  },
+  {
+    "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+    "line": 74,
+    "expression": "assert.equal(failed.findings.some((item: any) => item.rule === 'visual-difference'), true);",
+    "classification": "provider request fallback/semantic bound"
+  }
+]

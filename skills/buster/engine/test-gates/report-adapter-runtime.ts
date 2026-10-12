@@ -1,3 +1,7 @@
+import { validateBusterReportSettings, validateBusterProcessInputSettings, type BusterProcessInputSettings, type BusterReportExecutionSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+import { readPackage, writePackageSnapshot } from './report-adapter-package.ts';
+import type { ReportArtifactReader } from './report-artifact-reader.ts';
+export { FileReportArtifactReader, type ReportArtifactReader } from './report-artifact-reader.ts';
 import crypto from 'node:crypto';
 import { ProcessInputCleanupError, runProcessInput } from './process-input.ts';
 import fs from 'node:fs';
@@ -18,22 +22,6 @@ export interface ReportAdapterRuntimeLimits extends ReportAdapterLimits {
   readonly openFiles: number;
 }
 
-export interface ReportArtifactReader {
-  read(artifact: ArtifactRefV1, maximumBytes: number, signal?: AbortSignal): Promise<Buffer>;
-}
-
-const DIGEST = /^sha256:[a-f0-9]{64}$/u;
-const HARD_LIMITS = Object.freeze({
-  maximumSourceBytes: 64 * 1024 * 1024,
-  maximumResultBytes: 16 * 1024 * 1024,
-  timeoutMs: 5 * 60 * 1000,
-  memoryBytes: 2 * 1024 * 1024 * 1024,
-  cpuMillis: 5 * 60 * 1000,
-  openFiles: 256,
-});
-const MAXIMUM_PACKAGE_FILES = 2_048;
-const MAXIMUM_PACKAGE_BYTES = 64 * 1024 * 1024;
-const PACKAGE_SNAPSHOT_TIMEOUT_MS = 30_000;
 const REQUIRED_LIMITS = Object.freeze([
   'maximumCases', 'maximumFindings', 'maximumCaseFindings',
   'maximumSourceBytes', 'maximumResultBytes', 'timeoutMs',
@@ -57,133 +45,6 @@ function abortable<T>(operation: Promise<T>, signal: AbortSignal): Promise<T> {
   });
 }
 
-interface PackageFile {
-  readonly relative: string;
-  readonly bytes: Buffer;
-}
-
-async function readPackage(root: string, signal?: AbortSignal): Promise<{ digest: string; files: PackageFile[] }> {
-  const started = Date.now();
-  const files: PackageFile[] = [];
-  let totalBytes = 0;
-  const check = () => {
-    if (signal?.aborted) throw signal.reason ?? new Error('REPORT_ADAPTER_CANCELLED');
-    if (Date.now() - started > PACKAGE_SNAPSHOT_TIMEOUT_MS) throw new Error('REPORT_ADAPTER_PACKAGE_SNAPSHOT_TIMEOUT');
-  };
-  const visit = async (relative = ''): Promise<void> => {
-    check();
-    const directory = path.join(root, relative);
-    const entries = (await fs.promises.readdir(directory, { withFileTypes: true }))
-      .sort((left, right) => left.name < right.name ? -1 : left.name > right.name ? 1 : 0);
-    for (const entry of entries) {
-      check();
-      const child = path.join(relative, entry.name);
-      if (entry.isSymbolicLink()) throw new Error(`REPORT_ADAPTER_PACKAGE_SYMLINK:${child}`);
-      if (entry.isDirectory()) { await visit(child); continue; }
-      if (!entry.isFile()) throw new Error(`REPORT_ADAPTER_PACKAGE_ENTRY_INVALID:${child}`);
-      if (files.length >= MAXIMUM_PACKAGE_FILES) throw new Error('REPORT_ADAPTER_PACKAGE_FILE_LIMIT');
-      const source = path.join(root, child);
-      const handle = await fs.promises.open(source, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
-      try {
-        const stat = await handle.stat();
-        if (!stat.isFile() || stat.size > MAXIMUM_PACKAGE_BYTES - totalBytes) {
-          throw new Error('REPORT_ADAPTER_PACKAGE_BYTE_LIMIT');
-        }
-        const content = Buffer.alloc(stat.size + 1);
-        let offset = 0;
-        while (offset < content.byteLength) {
-          check();
-          const { bytesRead } = await handle.read(content, offset, content.byteLength - offset, offset);
-          if (bytesRead === 0) break;
-          offset += bytesRead;
-        }
-        if (offset !== stat.size) throw new Error('REPORT_ADAPTER_PACKAGE_CHANGED');
-        totalBytes += offset;
-        files.push({ relative: child, bytes: content.subarray(0, offset) });
-      } finally { await handle.close(); }
-    }
-  };
-  await visit();
-  files.sort((left, right) => left.relative < right.relative ? -1 : left.relative > right.relative ? 1 : 0);
-  const hash = crypto.createHash('sha256');
-  for (const file of files) {
-    hash.update(Buffer.from(`${Buffer.byteLength(file.relative)}:${file.relative}:${file.bytes.byteLength}:`));
-    hash.update(file.bytes);
-  }
-  return { digest: `sha256:${hash.digest('hex')}`, files };
-}
-
-async function writePackageSnapshot(destination: string, files: readonly PackageFile[], signal?: AbortSignal): Promise<void> {
-  const started = Date.now();
-  await fs.promises.mkdir(destination, { mode: 0o700 });
-  for (const file of files) {
-    if (signal?.aborted) throw signal.reason ?? new Error('REPORT_ADAPTER_CANCELLED');
-    if (Date.now() - started > PACKAGE_SNAPSHOT_TIMEOUT_MS) throw new Error('REPORT_ADAPTER_PACKAGE_SNAPSHOT_TIMEOUT');
-    const target = path.join(destination, file.relative);
-    await fs.promises.mkdir(path.dirname(target), { recursive: true, mode: 0o700 });
-    await fs.promises.writeFile(target, file.bytes, { flag: 'wx', mode: 0o600 });
-  }
-}
-
-export class FileReportArtifactReader implements ReportArtifactReader {
-  readonly #roots: string[];
-
-  constructor(roots: readonly string[]) {
-    if (roots.length === 0) throw new Error('REPORT_ARTIFACT_ROOT_REQUIRED');
-    this.#roots = roots.map((root) => {
-      if (!path.isAbsolute(root)) throw new Error('REPORT_ARTIFACT_ROOT_NOT_ABSOLUTE');
-      const canonical = fs.realpathSync(root);
-      if (canonical === path.parse(canonical).root) throw new Error('REPORT_ARTIFACT_ROOT_TOO_BROAD');
-      return canonical;
-    });
-  }
-
-  async read(artifact: ArtifactRefV1, maximumBytes: number, signal?: AbortSignal): Promise<Buffer> {
-    positiveInteger(maximumBytes, 'REPORT_ADAPTER_SOURCE_LIMIT_INVALID');
-    if (!artifact.storageUrl.startsWith('file:')) throw new Error('REPORT_ARTIFACT_STORAGE_UNSUPPORTED');
-    if (!DIGEST.test(artifact.contentDigest)) throw new Error('REPORT_ARTIFACT_DIGEST_INVALID');
-    if (artifact.sizeBytes > maximumBytes) throw new Error('REPORT_ADAPTER_SOURCE_LIMIT');
-    const candidate = fileURLToPath(artifact.storageUrl);
-    let handle: Awaited<ReturnType<typeof fs.promises.open>>;
-    try {
-      handle = await fs.promises.open(candidate, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
-    } catch {
-      throw new Error('REPORT_ARTIFACT_PATH_FORBIDDEN');
-    }
-    try {
-      const opened = fs.realpathSync(candidate);
-      if (!this.#roots.some((root) => opened.startsWith(`${root}${path.sep}`))) {
-        throw new Error('REPORT_ARTIFACT_PATH_FORBIDDEN');
-      }
-      const descriptor = await handle.stat();
-      const current = fs.statSync(opened);
-      if (!descriptor.isFile() || descriptor.dev !== current.dev || descriptor.ino !== current.ino) {
-        throw new Error('REPORT_ARTIFACT_PATH_FORBIDDEN');
-      }
-      if (descriptor.size !== artifact.sizeBytes || descriptor.size > maximumBytes) {
-        throw new Error('REPORT_ARTIFACT_SIZE_MISMATCH');
-      }
-      const bytes = Buffer.alloc(artifact.sizeBytes + 1);
-      let offset = 0;
-      while (offset < bytes.byteLength) {
-        if (signal?.aborted) throw signal.reason ?? new Error('REPORT_ADAPTER_CANCELLED');
-        const { bytesRead } = await handle.read(bytes, offset, bytes.byteLength - offset, offset);
-        if (bytesRead === 0) break;
-        offset += bytesRead;
-      }
-      if (offset !== artifact.sizeBytes) {
-        throw new Error('REPORT_ARTIFACT_SIZE_MISMATCH');
-      }
-      const content = bytes.subarray(0, offset);
-      const digest = `sha256:${crypto.createHash('sha256').update(content).digest('hex')}`;
-      if (digest !== artifact.contentDigest) throw new Error('REPORT_ARTIFACT_DIGEST_MISMATCH');
-      return content;
-    } finally {
-      await handle.close();
-    }
-  }
-}
-
 function runtimePaths(): { launcher: string; child: string } {
   const launcher = fileURLToPath(import.meta.resolve('@kubeclaw/plugin-foundation/isolation/plugin-sandbox'));
   const child = path.join(path.dirname(fileURLToPath(import.meta.url)), 'report-adapter-child.mjs');
@@ -191,32 +52,68 @@ function runtimePaths(): { launcher: string; child: string } {
   return { launcher, child };
 }
 
-function validateLimits(limits: ReportAdapterRuntimeLimits): void {
+function validateLimits(limits: ReportAdapterRuntimeLimits, policy: BusterReportExecutionSettings): void {
   if (!limits || typeof limits !== 'object' || Array.isArray(limits)) {
     throw new Error('REPORT_ADAPTER_LIMITS_INVALID');
   }
   for (const name of REQUIRED_LIMITS) {
     positiveInteger(limits[name], `REPORT_ADAPTER_LIMIT_INVALID:${name}`);
   }
+  // Structural maxima are reportCase/reportAdapterResult constraints in pipeline-test-gate.v1.schema.json.
   if (limits.maximumCases > 5_000 || limits.maximumFindings > 5_000 || limits.maximumCaseFindings > 100) {
     throw new Error('REPORT_ADAPTER_DETAIL_LIMIT_EXCEEDS_CONTRACT');
   }
-  for (const [name, maximum] of Object.entries(HARD_LIMITS)) {
-    if (limits[name as keyof typeof HARD_LIMITS] > maximum) throw new Error(`REPORT_ADAPTER_HARD_LIMIT_EXCEEDED:${name}`);
+  const selectedCeilings = {
+    maximumCases: policy.maximumCases, maximumFindings: policy.maximumFindings,
+    maximumCaseFindings: policy.maximumCaseFindings,
+    maximumSourceBytes: policy.maximumSourceBytes, maximumResultBytes: policy.maximumAggregateResultBytes,
+    timeoutMs: policy.maximumTimeoutMs, memoryBytes: policy.memoryBytes,
+    cpuMillis: Math.max(policy.minimumCpuTimeMs, Math.floor(policy.maximumTimeoutMs / 1000) * 1000),
+    openFiles: policy.maximumOpenFiles,
+  };
+  for (const [name, maximum] of Object.entries(selectedCeilings)) {
+    if (limits[name as keyof typeof selectedCeilings] > maximum) throw new Error(`REPORT_ADAPTER_HARD_LIMIT_EXCEEDED:${name}`);
   }
-  if (limits.openFiles < 16) throw new Error('REPORT_ADAPTER_OPEN_FILE_LIMIT_TOO_LOW');
-  const requiredMemory = 64 * 1024 * 1024
+  if (limits.cpuMillis < policy.minimumCpuTimeMs) throw new Error('REPORT_ADAPTER_CPU_LIMIT_BELOW_POLICY');
+  if (limits.openFiles < policy.minimumOpenFiles) throw new Error('REPORT_ADAPTER_OPEN_FILE_LIMIT_TOO_LOW');
+  const requiredMemory = policy.runtimeMemoryReserveBytes
     + (limits.maximumSourceBytes * 3)
     + (limits.maximumResultBytes * 2);
   if (limits.memoryBytes < requiredMemory) throw new Error('REPORT_ADAPTER_MEMORY_LIMIT_INCOMPATIBLE');
 }
 
+function bindReportResult(value: ReportAdapterOutput, entry: ReportAdapterRegistryEntry,
+  artifact: ArtifactRefV1, limits: ReportAdapterRuntimeLimits): ReportAdapterResultV1 {
+  const result: ReportAdapterResultV1 = {
+    ...value,
+    schemaVersion: 'report-adapter-result.v1',
+    adapter: {
+      adapterId: entry.registration.adapterId,
+      format: entry.registration.format,
+      contractVersion: entry.registration.contractVersion,
+      package: { ...entry.registration.package },
+    },
+    sourceArtifact: { ...artifact },
+  };
+  validatePipelineTestGateContract('reportAdapterResult', result);
+  if (result.cases.length > limits.maximumCases) throw new Error('REPORT_ADAPTER_CASE_LIMIT');
+  if (result.findings.length > limits.maximumFindings) throw new Error('REPORT_ADAPTER_FINDING_LIMIT');
+  if (result.cases.some((reportCase) => reportCase.findings.length > limits.maximumCaseFindings)) {
+    throw new Error('REPORT_ADAPTER_CASE_FINDING_LIMIT');
+  }
+  return Object.freeze(structuredClone(result));
+}
+
 export class RegisteredReportAdapterRuntime {
+  readonly #policy: BusterReportExecutionSettings;
+  readonly #processInputPolicy: BusterProcessInputSettings;
   readonly #reader: ReportArtifactReader;
   readonly #runtimeRoot: string;
   readonly #runtimeRootIdentity: { readonly dev: number; readonly ino: number };
 
-  constructor(reader: ReportArtifactReader, runtimeRoot: string) {
+  constructor(reader: ReportArtifactReader, runtimeRoot: string, policy: BusterReportExecutionSettings, processInputPolicy: BusterProcessInputSettings) {
+    this.#processInputPolicy = validateBusterProcessInputSettings(processInputPolicy);
+    this.#policy = validateBusterReportSettings(policy);
     if (!path.isAbsolute(runtimeRoot)) throw new Error('REPORT_ADAPTER_RUNTIME_ROOT_NOT_ABSOLUTE');
     const resolvedRoot = path.resolve(runtimeRoot);
     if (resolvedRoot === path.parse(resolvedRoot).root) throw new Error('REPORT_ADAPTER_RUNTIME_ROOT_TOO_BROAD');
@@ -252,20 +149,25 @@ export class RegisteredReportAdapterRuntime {
 
   async adapt(entry: ReportAdapterRegistryEntry, artifact: ArtifactRefV1,
     limits: ReportAdapterRuntimeLimits, signal?: AbortSignal): Promise<ReportAdapterResultV1> {
-    validateLimits(limits);
+    validateLimits(limits, this.#policy);
     const deadline = new AbortController();
     const timer = setTimeout(() => deadline.abort(new Error('REPORT_ADAPTER_TIMEOUT')), limits.timeoutMs);
     const boundedSignal = signal ? AbortSignal.any([signal, deadline.signal]) : deadline.signal;
     try {
       return await this.#adaptWithinDeadline(entry, artifact, limits, boundedSignal);
+    } catch (error) {
+      // The process helper wraps signal aborts after drain; preserve our own deadline identity.
+      if (deadline.signal.aborted && boundedSignal.reason === deadline.signal.reason
+        && error instanceof Error && error.message === 'REPORT_ADAPTER_CANCELLED'
+        && error.cause === deadline.signal.reason) throw deadline.signal.reason;
+      throw error;
     } finally {
       clearTimeout(timer);
     }
   }
 
-  async #adaptWithinDeadline(entry: ReportAdapterRegistryEntry, artifact: ArtifactRefV1,
-    limits: ReportAdapterRuntimeLimits, signal: AbortSignal): Promise<ReportAdapterResultV1> {
-    this.#assertRuntimeRoot();
+  async #readSource(entry: ReportAdapterRegistryEntry, artifact: ArtifactRefV1,
+    limits: ReportAdapterRuntimeLimits, signal: AbortSignal): Promise<Buffer> {
     if (artifact.type !== 'test-report') {
       throw new Error(`REPORT_ADAPTER_ARTIFACT_TYPE_FORBIDDEN:${artifact.type}`);
     }
@@ -280,6 +182,13 @@ export class RegisteredReportAdapterRuntime {
     }
     const sourceDigest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
     if (sourceDigest !== artifact.contentDigest) throw new Error('REPORT_ARTIFACT_DIGEST_MISMATCH');
+    return bytes;
+  }
+
+  async #adaptWithinDeadline(entry: ReportAdapterRegistryEntry, artifact: ArtifactRefV1,
+    limits: ReportAdapterRuntimeLimits, signal: AbortSignal): Promise<ReportAdapterResultV1> {
+    this.#assertRuntimeRoot();
+    const bytes = await this.#readSource(entry, artifact, limits, signal);
     const expectedDigest = entry.registration.package.contentDigest;
     const sourcePackage = await abortable(readPackage(entry.package.root, signal), signal);
     if (sourcePackage.digest !== expectedDigest) {
@@ -300,24 +209,7 @@ export class RegisteredReportAdapterRuntime {
         throw new Error('REPORT_ADAPTER_MODULE_FORBIDDEN');
       }
       const value = await this.#run(entry, artifact, bytes, limits, packageRoot, modulePath, signal);
-      const result: ReportAdapterResultV1 = {
-        ...value,
-        schemaVersion: 'report-adapter-result.v1',
-        adapter: {
-          adapterId: entry.registration.adapterId,
-          format: entry.registration.format,
-          contractVersion: entry.registration.contractVersion,
-          package: { ...entry.registration.package },
-        },
-        sourceArtifact: { ...artifact },
-      };
-      validatePipelineTestGateContract('reportAdapterResult', result);
-      if (result.cases.length > limits.maximumCases) throw new Error('REPORT_ADAPTER_CASE_LIMIT');
-      if (result.findings.length > limits.maximumFindings) throw new Error('REPORT_ADAPTER_FINDING_LIMIT');
-      if (result.cases.some((reportCase) => reportCase.findings.length > limits.maximumCaseFindings)) {
-        throw new Error('REPORT_ADAPTER_CASE_FINDING_LIMIT');
-      }
-      return Object.freeze(structuredClone(result));
+      return bindReportResult(value, entry, artifact, limits);
     } catch (error) {
       if (error instanceof ProcessInputCleanupError) disposalConfirmed = false;
       throw error;
@@ -335,11 +227,11 @@ export class RegisteredReportAdapterRuntime {
     const result = await runProcessInput(runtime.launcher, [
         String(limits.memoryBytes), String(limits.cpuMillis / 1000),
         String(limits.openFiles), process.execPath,
-        `--max-old-space-size=${Math.max(16, Math.floor(limits.memoryBytes / (1024 * 1024) * 0.7))}`,
+        `--max-old-space-size=${Math.max(this.#policy.minimumHeapMiB, Math.floor(limits.memoryBytes / (1024 * 1024) * this.#policy.heapFraction))}`,
         '--permission', `--allow-fs-read=${runtime.child}`, `--allow-fs-read=${packageRoot}`,
         '--no-addons', '--no-experimental-sqlite', runtime.child,
       ], {
-      cwd: packageRoot, env: { NODE_NO_WARNINGS: '1' }, ...(signal ? { signal } : {}),
+      processInputPolicy: this.#processInputPolicy, cwd: packageRoot, env: { NODE_NO_WARNINGS: '1' }, ...(signal ? { signal } : {}),
       timeoutMs: limits.timeoutMs, maximumOutputBytes: limits.maximumResultBytes,
       prefix: 'REPORT_ADAPTER', outputLimitError: 'REPORT_ADAPTER_RESULT_LIMIT', input: `${JSON.stringify({
         kind: 'adapt',

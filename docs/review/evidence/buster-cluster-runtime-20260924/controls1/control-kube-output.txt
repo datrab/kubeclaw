@@ -1,0 +1,36 @@
+CLUSTER_MUTATION_APPLIED {"mutation":"kube-output","pid":35942,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts","beforeSha256":"d940cbaed6bf4f86cd1b03d3654b2483464d9e187caf04383a39398f283496fc","afterSha256":"f1e032ab7e71aff84f97cc3391630af6c2ac2195f94020a7817bfea6076b3152","replacements":[{"from":"this.#settings.maximumManifestBytes * this.#settings.commandOutputManifestMultiplier","to":"this.#settings.maximumManifestBytes * 2","count":1}],"replacedAnchors":1}
+✔ real kubernetes.fixture output limit profile false (102.052265ms)
+✖ real kubernetes.fixture output limit profile true (48.646841ms)
+✔ real kubernetes.exposure output limit profile false (36.604651ms)
+✔ real kubernetes.exposure output limit profile true (39.408834ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2070.876183
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-output-consumers.test.mjs:53:38
+✖ real kubernetes.fixture output limit profile true (48.646841ms)
+  Error: KUBERNETES_FIXTURE_KUBECTL_FAILED:KUBERNETES_FIXTURE_KUBECTL_OUTPUT_LIMIT
+      at #kubectlRun (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:45:19)
+      at async #release (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:75:9)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-output-consumers.test.mjs:78:30)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    [cause]: Error: KUBERNETES_FIXTURE_KUBECTL_OUTPUT_LIMIT
+        at collect (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/process-input.ts:75:14)
+        at Socket.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/process-input.ts:85:48)
+        at Socket.emit (node:events:526:24)
+        at addChunk (node:internal/streams/readable:568:12)
+        at readableAddChunkPushByteMode (node:internal/streams/readable:519:3)
+        at Readable.push (node:internal/streams/readable:399:5)
+        at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+      stdout: '',
+      stderr: ''
+    }
+  }

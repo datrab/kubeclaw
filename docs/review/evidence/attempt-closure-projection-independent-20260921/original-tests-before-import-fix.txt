@@ -1,0 +1,53 @@
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (6904.692423ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (4984.600789ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (4414.629827ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (3283.144065ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (2848.019377ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (5655.922248ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (5912.863161ms)
+✖ real confirmed import and admission retirement do not release the remaining mixed-run result quota (7702.178418ms)
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (6509.54592ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✖ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (5101.751021ms)
+✔ Attempt projection rejects stale CAS, run checkpoint and operation conflicts without touching the original state (7332.119203ms)
+✔ Attempt projection preserves an actual waiting run and refuses missing, corrupted or nonregular import authority (7448.889021ms)
+✔ Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection (5060.59869ms)
+✔ Attempt SIGKILL after durable projection reopens with exact original result and no duplicate import or quota reinsertion (4652.880006ms)
+✔ closure projection frees actual resident quota and net bytes while all original consumers retain full identities (6062.406529ms)
+ℹ {"releasedClosures":1,"releasedBytes":130,"logicalClosures":2,"residentLimit":1}
+✔ read-only plan and actual CLI apply agree; finalization, changed intent and bounded metadata remain enforced (10237.56449ms)
+✔ no byte saving, stale store, source mismatch and run fence fail before mutation (7383.769851ms)
+✔ waiting run and absent result projection are not eligible; malformed references cannot yield successful reads or ACKs (7909.74031ms)
+✔ actual Attempt writer fence prevents closure retirement; killing waiting operator leaves original state (3991.993136ms)
+✔ actual SIGKILL at rename boundaries and after commit reopens complete state without double release (12098.209527ms)
+✔ independent review: projected replay survives a real later journal append but missing or corrupt referenced history cannot produce an ACK (2461.321086ms)
+✔ independent review: structurally valid rehashed foreign or unimported checkpoints cannot authorize projection (5700.35549ms)
+✔ independent review: reclaimed unreferenced evidence preserves the projected result and metadata quota still applies (3055.170234ms)
+✔ independent review: original run fence rejects a concurrent retirement and permits unchanged replay after owner release (2031.141779ms)
+✔ independent review: original synchronous journal reader does not time out while actual retirement awaits evidence IO (1975.298505ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 23
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 144406.984568
+
+✖ failing tests:
+
+test at tests/verification/reliability/admission-retirement.test.mjs:118:1
+✖ real confirmed import and admission retirement do not release the remaining mixed-run result quota (7702.178418ms)
+  ReferenceError: budgetFixture is not defined
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/admission-retirement.test.mjs:124:19)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/admission-retirement.test.mjs:196:1
+✖ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (5101.751021ms)
+  ReferenceError: budgetFixture is not defined
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/admission-retirement.test.mjs:199:17)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

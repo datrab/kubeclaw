@@ -1,0 +1,12 @@
+[
+  {
+    "readPath": "charts/prism/templates/_swarm-bundle.tpl",
+    "linkTarget": "../../kubeclaw/templates/_swarm-config.tpl",
+    "physicalAuthor": "charts/kubeclaw/templates/_swarm-config.tpl"
+  },
+  {
+    "readPath": "charts/kubeclaw/files/config/swarm-components.schema.json",
+    "linkTarget": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "physicalAuthor": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json"
+  }
+]

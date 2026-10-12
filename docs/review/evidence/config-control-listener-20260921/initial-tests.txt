@@ -1,0 +1,36 @@
+✔ actual Control image declarations and exact image proof accept authored profile one (612.310075ms)
+✔ actual Control image declarations and exact image proof accept authored profile two (637.174544ms)
+✔ Control listener rejects invalid authored port undefined (4.372423ms)
+✔ Control listener rejects invalid authored port null (0.679398ms)
+✔ Control listener rejects invalid authored port 8080 (0.542524ms)
+✔ Control listener rejects invalid authored port 0 (0.636637ms)
+✔ Control listener rejects invalid authored port -1 (0.723379ms)
+✔ Control listener rejects invalid authored port 1.5 (0.614126ms)
+✔ Control listener rejects invalid authored port 65536 (0.604656ms)
+✔ Control listener rejects invalid authored port true (0.621576ms)
+✔ Control accepts TCP boundary 1 without promising host bind permissions (0.854662ms)
+✔ Control accepts TCP boundary 65535 without promising host bind permissions (0.632487ms)
+✖ Control snapshot owns the port before asynchronous composition; Worker keeps its PORT author (10.050349ms)
+✔ original production entrypoint serves authored listener profile one (573.130109ms)
+✔ original production entrypoint serves authored listener profile two (540.574472ms)
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (5.08244ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (1.041697ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (1.821137ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 17
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3082.430892
+
+✖ failing tests:
+
+test at skills/prism/tests/control-listener.test.mts:37:1
+✖ Control snapshot owns the port before asynchronous composition; Worker keeps its PORT author (10.050349ms)
+  Error: DATABASE_URL is required
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:12:45)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-listener.test.mts:47:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

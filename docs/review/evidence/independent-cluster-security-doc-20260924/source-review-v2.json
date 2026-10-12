@@ -1,0 +1,49 @@
+{
+  "reviewer": "/root/cluster_security_doc_review",
+  "decision": "accepted_for_documentation_source_integration_only",
+  "manifestSha256": "2e380fee5b21e096c7885f733d259bcfe8fb81ecd5c7970b0db22a357d9e6694",
+  "checks": [
+    {
+      "path": "docs/architecture/buster-cluster-configuration.md",
+      "baselineMatches": true,
+      "beforeMatches": true,
+      "v1Matches": true,
+      "v2Matches": true
+    },
+    {
+      "path": "docs/architecture/buster-runtime-security-configuration.md",
+      "baselineMatches": true,
+      "beforeMatches": true,
+      "v1Matches": true,
+      "v2Matches": true
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "baselineMatches": true,
+      "beforeMatches": true,
+      "v1Matches": true,
+      "v2Matches": true
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-cluster-invokers-20260924.md",
+      "baselineMatches": true,
+      "beforeMatches": true,
+      "v1Matches": true,
+      "v2Matches": true
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "baselineMatches": true,
+      "beforeMatches": true,
+      "v1Matches": true,
+      "v2Matches": true
+    }
+  ],
+  "resolvedFindings": [
+    "DOC-RS-DEADLINE: V2 explicitly excludes synchronous manifest resolution/stat/read/hash from the common kubectl/poll timer and retains allocation/outer-attempt-budget limitation. Confirmed against current invoker source."
+  ],
+  "unchangedFiles": 4,
+  "blockingFindings": [],
+  "scope": "Fresh five-file identities and V1-to-V2 delta; V1 full inventory/link/schema/consumer inspection retained. No runtime or production source changes.",
+  "pending": "Full regression terminal result, corrected security controls, lifecycle controls, independent evidence review and final checkpoint update remain required; no global CONFIG/original issue/live acceptance."
+}

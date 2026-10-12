@@ -1,0 +1,54 @@
+{
+  "id": "kubeclaw.review",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "review",
+      "type": "kubeclaw.decision.review",
+      "module": "src/stage.ts",
+      "export": "execute",
+      "requiredCapabilities": [
+        "runtime.dispatch",
+        "git.repository.read",
+        "artifacts.read",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    },
+    {
+      "id": "repository-audit",
+      "type": "kubeclaw.audit.repository-review",
+      "module": "src/repository-audit-stage.ts",
+      "export": "executeRepositoryAudit",
+      "requiredCapabilities": [
+        "runtime.dispatch",
+        "git.repository.read",
+        "artifacts.read",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/repository-audit-config.schema.json",
+      "inputSchema": "schemas/repository-audit-input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    },
+    {
+      "id": "repository-revalidation",
+      "type": "kubeclaw.audit.repository-review-revalidation",
+      "module": "src/repository-revalidation-stage.ts",
+      "export": "executeRepositoryRevalidation",
+      "requiredCapabilities": [
+        "runtime.dispatch",
+        "git.repository.read",
+        "artifacts.read",
+        "artifacts.write"
+      ],
+      "configSchema": "schemas/repository-audit-config.schema.json",
+      "inputSchema": "schemas/repository-revalidation-input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": []
+}

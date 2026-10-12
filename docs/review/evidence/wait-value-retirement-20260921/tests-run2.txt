@@ -1,0 +1,19 @@
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (13473.01451ms)
+✔ real terminal approval projects Wait bytes, uses actual Core-owned adapter reader and keeps late duplicate identity (16491.063464ms)
+✔ retained original prefix mutation, truncation and same-byte inode replacement fail without rewriting the projected Wait (11083.445653ms)
+{"proof":"actual-wait-adapter-byte-and-count-quota","originalInitialQuota":268435456,"fixedLaterQuota":9440,"fixedLaterRecordQuota":2,"originalSerializedBytes":9312,"projectedSerializedBytes":3008,"finalSerializedBytesIncludingMetadata":4874,"releasedBytes":6304,"rejected":"blocked","admitted":"waiting","recordRejected":"blocked"}
+✔ fixed real Wait byte quota admits original Core work only after measured savings and record quota is unchanged (19701.939092ms)
+✔ real separate delivery writer fence blocks Wait commit and late original writers retain the accepted receipt (10944.149136ms)
+✔ actual SIGKILL before-rename leaves one atomic Wait state and retry never reinflates original bytes (7129.226361ms)
+✔ actual SIGKILL after-rename leaves one atomic Wait state and retry never reinflates original bytes (6533.299874ms)
+✔ wrong source/receipt identities, aliased/reversed domains and changed intent cannot authorize Wait replacement (6020.414413ms)
+✔ a small original Wait cannot fund projection metadata and remains byte-identical (5663.738993ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 98166.992252

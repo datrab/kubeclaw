@@ -1,0 +1,39 @@
+✖ corrected independent: validly hashed foreign approval signal issuer rejects at actual authority (5855.075389ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6584.573104
+
+✖ failing tests:
+
+test at docs/review/evidence/wait-retirement-independent-20260921/correction/counterprobes.mjs:38:1
+✖ corrected independent: validly hashed foreign approval signal issuer rejects at actual authority (5855.075389ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /OPERATOR_RETENTION_CORE_AUTHORITY_REQUIRED/. Input:
+  
+  'Error: APPROVAL_ISSUER_DENIED'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-retirement-independent-20260921/correction/counterprobes.mjs:50:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: APPROVAL_ISSUER_DENIED
+        at parseIssuer (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/human-approval/src/approval.ts:90:38)
+        at parseApprovalGuidance (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/human-approval/src/approval.ts:109:18)
+        at historicalSignal (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/observability-retirement/operator-authority.mjs:114:20)
+        at operatorAuthority (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/observability-retirement/operator-authority.mjs:153:20)
+        at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/retire-wait-value.mjs:97:23
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async withRunMutationLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/execution/run-mutation.ts:16:20)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-retirement-independent-20260921/correction/counterprobes.mjs:50:2),
+    expected: /OPERATOR_RETENTION_CORE_AUTHORITY_REQUIRED/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

@@ -6,7 +6,7 @@ import { loadAll } from 'js-yaml';
 const helm = process.env.HELM_BIN ?? 'helm';
 const render = (chart, options = []) => loadAll(execFileSync(helm,
   ['template', 'gitops-check', `charts/${chart}`, ...options], { encoding: 'utf8' })).filter(Boolean);
-const prism = ['-f', 'charts/prism/ci-values.yaml'];
+const prism = ['-f', 'charts/prism/ci-values.yaml', '--namespace', 'default'];
 const wave = resource => Number(resource.metadata.annotations?.['argocd.argoproj.io/sync-wave'] ?? 0);
 
 test('Prism database and migration prerequisites precede its Argo migration hook and all application deployments', () => {

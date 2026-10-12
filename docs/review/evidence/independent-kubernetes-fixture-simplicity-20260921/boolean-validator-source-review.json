@@ -1,0 +1,8 @@
+{
+  "manifestSha256": "a490cda4e6b4d62e1bad9dc0ecb48ff35763263792cb590148f8dd4f2e4df9b1",
+  "beforeAfterMatch": true,
+  "onlyTwoIdentifierRenames": true,
+  "booleanReturnTypeAndBodyUnchanged": true,
+  "decision": "source accepted; conventional predicate name accurately describes existing boolean function and existing lint recognition. No default relocation or rule change.",
+  "runtime": "none"
+}

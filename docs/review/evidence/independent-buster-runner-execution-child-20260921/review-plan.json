@@ -1,0 +1,173 @@
+{
+  "status": "Prepared only; no runtime before explicit completed integration/freeze and slot",
+  "fastFirst": [
+    [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/contracts/tsconfig.buster-execution-policy.json"
+    ],
+    [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/buster/engine/tsconfig.json"
+    ],
+    [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/buster/engine/test-gates/production.ts",
+      "skills/buster/engine/test-gates/provider-child.mjs",
+      "skills/buster/engine/test-gates/provider-loader.ts",
+      "skills/buster/engine/test-gates/provider-result-validation.ts",
+      "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "skills/buster/engine/test-gates/runner-attempt-evidence.ts",
+      "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+      "skills/buster/engine/test-gates/runner-attempt-preparation.ts",
+      "skills/buster/engine/test-gates/runner-attempt-result.ts",
+      "skills/buster/engine/test-gates/runner-completion.ts",
+      "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "skills/buster/engine/test-gates/runner-log-capture.ts",
+      "skills/buster/engine/test-gates/runner-managed-evidence.ts",
+      "skills/buster/engine/test-gates/runner-node.ts",
+      "skills/buster/engine/test-gates/runner-paths.ts",
+      "skills/buster/engine/test-gates/runner-plan-identity.ts",
+      "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "skills/buster/engine/test-gates/runner-provider-state.ts",
+      "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "skills/buster/engine/test-gates/runner-setup.ts",
+      "skills/buster/engine/test-gates/runner-types.ts",
+      "skills/buster/engine/test-gates/runner-values.ts",
+      "skills/buster/engine/test-gates/runner-worker-profile.ts",
+      "skills/buster/engine/test-gates/runner.ts",
+      "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "skills/buster/engine/test-gates/tests/specialist-boundary.test.ts",
+      "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "tests/fixtures/test-gate/buster-admission.mts",
+      "tests/fixtures/test-gate/execution-policy.mts",
+      "tests/fixtures/test-gate/runner-contract-fixture.mts",
+      "tests/verification/contracts/check-pipeline-a11y-implementation.mts",
+      "tests/verification/contracts/check-pipeline-api-implementation.mts",
+      "tests/verification/contracts/check-pipeline-buster-execution-policy.mts",
+      "tests/verification/contracts/check-pipeline-container-build-production.mts",
+      "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-http-implementation.mts",
+      "tests/verification/contracts/check-pipeline-http-live.mts",
+      "tests/verification/contracts/check-pipeline-http-parity.mts",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "tests/verification/contracts/check-pipeline-lighthouse-implementation.mts",
+      "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+      "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+      "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "tests/verification/contracts/check-provider-semantics-remediation.mts",
+      "tests/verification/contracts/provider-child-session.test.mjs",
+      "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+      "tests/verification/reliability/buster-job-compaction.test.mts",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "tests/verification/reliability/coverage-remote.test.mts",
+      "tests/verification/reliability/nova-dispatch-projection.test.mjs"
+    ]
+  ],
+  "serialRuntime": [
+    [
+      "node",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    ],
+    [
+      "node",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts"
+    ],
+    [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-deadline.test.mts",
+      "tests/verification/reliability/provider-completion.test.mjs"
+    ],
+    [
+      "node",
+      "tests/verification/contracts/check-pipeline-worker-local-runtime.mts"
+    ],
+    [
+      "node",
+      "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts"
+    ],
+    [
+      "node",
+      "tests/verification/contracts/check-pipeline-observability-durable-attempts.mts"
+    ],
+    [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/check-pipeline-buster-execution-policy.mts",
+      "tests/verification/contracts/provider-child-session.test.mjs"
+    ],
+    [
+      "node",
+      "--test",
+      "tests/verification/integration/direct-command-output-contract.test.mts"
+    ],
+    [
+      "npm",
+      "run",
+      "verify:config:components"
+    ]
+  ],
+  "controls": [
+    "Two actual copied-child observation controls, exact named TAP failures manually reviewed; bind harness, Node and dependency closure externally",
+    "Preserve actual PC SIGTERM-handler-removal control against combined child, full original Runner, not initialization failure",
+    "ESLint API exact child allows console/import while adjacent ordinary production path rejects both; child mutable state must still reject; no source writes",
+    "Execution policy lost-wiring/fallback controls require concrete selected consumer failures; await final author map"
+  ],
+  "binding": {
+    "roots": [
+      "skills",
+      "contracts",
+      "tests",
+      "charts",
+      "scripts",
+      "docker",
+      "my-values"
+    ],
+    "dependencies": [
+      "node_modules excluding unrelated .cache",
+      "actual native-host-tools/root",
+      "global npm module closure"
+    ],
+    "tools": "actual Node/Helm/GNUflock/GNUtar/sandbox binaries and observed ldd libraries; exact pathname mapping forwards all args/options",
+    "evidence": "Union author/Root final hashes including symlink physical targets; pre/post hashes/modes/inodes, source patch+new files, actual module trace incl generated-module classification, known-write diagnostic guard and no alias mutation",
+    "noClaims": "No native/image/BuildKit; tracing clean-env children is not claimed; lint diagnostic hook is not a sandbox"
+  },
+  "originalScopeOpen": [
+    "Original remote-process-restart targets actual privileged CLI; prerequisites/fixture migration must be established, never substitute modeled restart",
+    "Container-build-recovery requires real BuildKit/registry; no unauthorized host/service actions",
+    "Prior historical compaction and external vertical failures remain failures"
+  ],
+  "observedConsumerGap": "Private policy test currently directly proves provider result cap, report aggregate cap, result count, admission count, queue/claim policy; child delay proof separate. Other newly authored leaves need actual-consumer mapping, not blanket acceptance from schema negatives."
+}

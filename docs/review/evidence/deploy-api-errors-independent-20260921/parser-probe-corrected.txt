@@ -1,0 +1,21 @@
+original accepted real supported list shapes secret List
+original accepted real supported list shapes secret SecretList
+original rejected 7 malformed cases without body disclosure secret
+original accepted real supported list shapes configmap List
+original accepted real supported list shapes configmap ConfigMapList
+original rejected 7 malformed cases without body disclosure configmap
+original accepted real supported list shapes service List
+original accepted real supported list shapes service ServiceList
+original rejected 7 malformed cases without body disclosure service
+original accepted real supported list shapes deployment List
+original accepted real supported list shapes deployment DeploymentList
+original rejected 7 malformed cases without body disclosure deployment
+original accepted real supported list shapes job List
+original accepted real supported list shapes job JobList
+original rejected 7 malformed cases without body disclosure job
+original accepted real supported list shapes validatingadmissionpolicy List
+original accepted real supported list shapes validatingadmissionpolicy ValidatingAdmissionPolicyList
+original rejected 7 malformed cases without body disclosure validatingadmissionpolicy
+independent API-version-removal mutant detected by original rejection oracle
+reject incomplete or invalid continuation tokens resource
+reject incomplete or invalid continuation tokens helm-storage

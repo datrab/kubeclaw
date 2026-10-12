@@ -1,0 +1,173 @@
+--- a/tests/fixtures/test-gate/cluster-command-api.mjs
++++ b/tests/fixtures/test-gate/cluster-command-api.mjs
+@@ -3,6 +3,7 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
++import { runtimeSecurityResultDigest } from '../../../skills/buster/engine/test-gates/kubernetes-runtime-security.ts';
+ 
+ export function clusterCommandApi(root, hostname = 'preview.ts.net') {
+   const log = path.join(root, 'commands.jsonl');
+@@ -10,13 +11,15 @@
+   const executable = path.join(root, 'kubectl-local');
+   const source = fs.readFileSync(fileURLToPath(new URL('./cluster-command-program.cjs', import.meta.url)), 'utf8');
+   fs.writeFileSync(executable, `#!${process.execPath}\nconst fixture = ${JSON.stringify({ log, state, hostname })};\n${source}`, { mode: 0o700, flag: 'wx' });
+-  const seed = (namespace = 'test-one') => fs.writeFileSync(state, JSON.stringify({
++  const seed = (namespace = 'test-one', security = null) => fs.writeFileSync(state, JSON.stringify({
+     metadata: { name: 'test-one', resourceVersion: '1', generation: 1, annotations: {} },
+     spec: { namespaceName: namespace, serviceName: 'app', servicePort: 8080 },
+-    status: { phase: 'Ready', namespaceName: namespace, createdAt: '2026-09-21T00:00:00.000Z', expiresAt: '2099-01-01T00:00:00.000Z' },
++    ...(security ? { padding: 'x'.repeat(security.padding) } : {}),
++    status: { ...(security ? { runtimeSecurity: { ...security.snapshot, resultDigest: runtimeSecurityResultDigest(security.snapshot) } } : {}),
++      phase: 'Ready', namespaceName: namespace, createdAt: '2026-09-21T00:00:00.000Z', expiresAt: '2099-01-01T00:00:00.000Z' },
+   }));
+   seed();
+-  return { executable, seed, calls: () => fs.existsSync(log)
++  return { executable, seed, responseBytes: () => fs.statSync(state).size, calls: () => fs.existsSync(log)
+     ? fs.readFileSync(log, 'utf8').trim().split('\n').filter(Boolean).map(line => JSON.parse(line)) : [] };
+ }
+ 
+--- a/tests/fixtures/test-gate/cluster-command-program.cjs
++++ b/tests/fixtures/test-gate/cluster-command-program.cjs
+@@ -26,6 +26,11 @@
+     previewUrl: `https://${fixture.hostname}/`, exposureHostname: fixture.hostname });
+   output = '{}';
+ } else if (args[0] === 'delete') output = '{}';
++else if (args[0] === 'get' && args[1].startsWith('busternamespaceleases.')) {
++  if (!lease.status.runtimeSecurity) throw new Error('RUNTIME_SECURITY_OBSERVATION_NOT_SEEDED');
++  lease.status.runtimeSecurity.observedAt = new Date().toISOString();
++  output = JSON.stringify(lease);
++}
+ else if (args[0] === 'get' && args[1] === 'busternamespacelease') output = JSON.stringify(lease);
+ else if (args[0] === 'get' && args[1] === 'pods') output = JSON.stringify({ items: [{ metadata: { name: 'app' }, status: { conditions: [{ type: 'Ready', status: 'True' }] } }] });
+ else if (args[0] === 'get' && args[1] === 'service') output = JSON.stringify({ spec: { ports: [{ port: 8080, targetPort: 8080 }] } });
+--- a/tests/fixtures/test-gate/cluster-route-provider.mjs
++++ b/tests/fixtures/test-gate/cluster-route-provider.mjs
+@@ -6,12 +6,13 @@
+     const assert = (await import('node:assert/strict')).default;
+     const config = invocation.configuration.values;
+     const request = structuredClone(config.request);
+-    if (config.capability === 'kubernetes.fixture') {
++    if (config.capability === 'kubernetes.fixture' || config.capability === 'kubernetes.runtime-security') {
+       request.payload.manifestPath = path.join(context.workspaceRoot, invocation.workspace.repository, 'checked.yaml');
+       assert.equal(fs.readFileSync(request.payload.manifestPath, 'utf8'), config.manifest);
+     }
+     const result = await context.invoke(config.capability, request);
+-    assert.equal(result.ok, true);
++    if (config.capability === 'kubernetes.runtime-security') assert.equal(result.scanner, 'kubernetes-runtime-security');
++    else assert.equal(result.ok, true);
+     assert.equal(result.namespace, config.request.payload.namespace ?? config.request.payload.namespaceName);
+     if (config.capability === 'kubernetes.exposure') assert.equal(result.hostname, config.hostname);
+     fs.writeFileSync(path.join(context.workspaceRoot, invocation.workspace.evidence, 'cluster-proof.json'), JSON.stringify({ pid: process.pid, result }));
+--- a/tests/verification/contracts/buster-cluster-production-route.test.mjs
++++ b/tests/verification/contracts/buster-cluster-production-route.test.mjs
+@@ -16,7 +16,7 @@
+ import { manifest, imageDigest } from '../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs';
+ 
+ const records = { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024, maximumRecordBytes: 16 * 1024 * 1024 };
+-const capabilities = ['kubernetes.fixture', 'kubernetes.exposure'];
++const capabilities = ['kubernetes.fixture', 'kubernetes.exposure', 'kubernetes.runtime-security'];
+ function packages(root) {
+   const installRoot = path.join(root, 'plugins');
+   const packageRoot = path.join(installRoot, 'cluster-proof');
+@@ -52,6 +52,12 @@
+       manifestDigest: `sha256:${crypto.createHash('sha256').update(checked).digest('hex')}`,
+       serviceName: 'app', servicePort: 8080, retentionSeconds: 300, retentionMode: 'delete', readinessTimeoutMs: 1000, secretReferences: [] },
+   };
++  if (capability === 'kubernetes.runtime-security') {
++    request.operation = 'inspect'; delete request.resource;
++    request.payload = { leaseName: 'test-one', namespace: `${profile.prefix}-one`,
++      immutableImage: `${profile.registry}@${imageDigest}`, manifestPath: 'provided-in-child',
++      manifestDigest: `sha256:${crypto.createHash('sha256').update(checked).digest('hex')}` };
++  }
+   if (capability === 'kubernetes.exposure') request.payload.namespace = `${profile.prefix}-one`;
+   const unsigned = { schemaVersion: 'resolved-test-plan.v1', planId: 'plan:ci2', runId: 'run:ci2', project: 'ci2',
+     scope: { moduleId: 'module', gateId: null }, registrySnapshotDigest: registry.snapshotDigest,
+@@ -72,9 +78,9 @@
+ 
+ const profiles = [
+   { name: 'first', prefix: 'test', namespace: 'control-first', group: 'first.example.test', version: 'v1alpha1',
+-    account: 'runner-first', registry: 'registry.local/app', hostname: 'preview.first.test', suffix: '.first.test' },
++    runtimeOutputBytes: 2048, runtimePadding: 1000, runtimeDeniedBytes: 1024, account: 'runner-first', registry: 'registry.local/app', hostname: 'preview.first.test', suffix: '.first.test' },
+   { name: 'second', prefix: 'other', namespace: 'control-second', group: 'second.example.test', version: 'v2beta1',
+-    account: 'runner-second', registry: 'alternate.local/other', hostname: 'preview.second.test', suffix: '.second.test' },
++    runtimeOutputBytes: 8192, runtimePadding: 4000, runtimeDeniedBytes: 2048, account: 'runner-second', registry: 'alternate.local/other', hostname: 'preview.second.test', suffix: '.second.test' },
+ ];
+ for (const profile of profiles) for (const capability of capabilities) {
+   test(`production decoder/service/IPC ${profile.name} ${capability}, allowed and grant/route denied`, { timeout: 60000 }, async t => {
+@@ -95,6 +101,7 @@
+     Object.assign(policy.kubernetesFixture, { allowedNamespacePrefixes: [profile.prefix], registryRepositoryPrefixes: [profile.registry.split('/')[1]],
+       runnerServiceAccount: profile.account, credentialReaderServiceAccount: 'reader' });
+     Object.assign(policy.tailscaleExposure, { allowedNamespacePrefixes: [profile.prefix], allowedHostSuffixes: [profile.suffix] });
++    Object.assign(policy.runtimeSecurity, { allowedNamespacePrefixes: [profile.prefix], maximumOutputBytes: profile.runtimeOutputBytes });
+     const bundle = path.join(root, 'bundle/swarm.config.json'); writeTestBundle(bundle, documents);
+     const snapshot = loadSwarmSettings({ SWARM_CONFIG: bundle });
+     const keys = crypto.generateKeyPairSync('ed25519');
+@@ -107,8 +114,20 @@
+       providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: path.join(root, 'platform-state'),
+       shutdownTimeoutMs: 5000, orchestratorIssuerId: 'ci2', administrativeDecisionIssuers: [] }));
+     const selectedPlan = plan(registry, capability, profile);
+-    for (const mode of ['allowed', 'grant-denied', 'route-denied']) {
+-      const runRoot = path.join(root, mode); fs.mkdirSync(runRoot); api.seed(`${profile.prefix}-one`);
++    const modes = ['allowed', 'grant-denied', 'route-denied', ...(capability === 'kubernetes.runtime-security' ? ['policy-denied'] : [])];
++    for (const mode of modes) {
++      const runRoot = path.join(root, mode); fs.mkdirSync(runRoot);
++      const selectedRequest = selectedPlan.nodes[0].configuration.values.request.payload;
++      api.seed(`${profile.prefix}-one`, capability === 'kubernetes.runtime-security' ? { padding: profile.runtimePadding, snapshot: {
++        phase: 'Observed', manifestDigest: selectedRequest.manifestDigest, immutableImage: selectedRequest.immutableImage,
++        findings: [], totalFindingCount: 0, omittedFindingCount: 0, podCount: 1, serviceCount: 1,
++      } } : null);
++      let selectedSnapshot = snapshot;
++      if (mode === 'policy-denied') {
++        const deniedDocuments = structuredClone(documents);
++        deniedDocuments['buster-engine'].settings.clusterInvokers.runtimeSecurity.maximumOutputBytes = profile.runtimeDeniedBytes;
++        writeTestBundle(bundle, deniedDocuments); selectedSnapshot = loadSwarmSettings({ SWARM_CONFIG: bundle });
++      }
+       const configuration = { schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig, host: '127.0.0.1', port: 0,
+         tokenEnvironmentVariable: 'CI2_TOKEN', sourceAttestationPublicKeyEnvironmentVariable: 'CI2_KEY', trustedSourceAuthority: 'nova:production',
+         stateRoot: path.join(runRoot, 'buster-state'), runtimeRoot: path.join(runRoot, 'runs'), tarExecutable: '/usr/bin/tar',
+@@ -126,7 +145,7 @@
+         maximumArchiveBytes: 4 * 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024,
+         maximumResultStoreBytes: 64 * 1024 * 1024, trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey: publicKey });
+       preparation.configure({ tarExecutable: process.env.KUBECLAW_TEST_TAR ?? '/usr/bin/tar', maximumExtractedBytes: 16 * 1024 * 1024 });
+-      const runtime = loadProductionBusterRemotePlanRuntime(config, preparation, snapshot.buster, snapshot.workerCore.localRuntime,
++      const runtime = loadProductionBusterRemotePlanRuntime(config, preparation, selectedSnapshot.buster, selectedSnapshot.workerCore.localRuntime,
+         { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), CI2_TOKEN: token, CI2_KEY: publicKey });
+       const address = await runtime.start();
+       try {
+@@ -144,18 +163,32 @@
+           assert.equal(api.calls().length, prior); continue;
+         }
+         const executed = await execution;
+-        if (mode === 'grant-denied') {
++        if (mode === 'grant-denied' || mode === 'policy-denied') {
+           assert.notEqual(executed.remote.decision.state, 'passed');
+           const imports = new FileNovaGateImportStore(path.join(runRoot, 'nova-state/imports'), {
+             recordLimits: records, maximumEvidenceStoreBytes: 16 * 1024 * 1024 });
+           const graphs = await imports.readExecutionGraphs();
+           assert.equal(graphs.length, 1);
+-          assert.match(JSON.stringify(graphs[0].attempts), /TEST_PROVIDER_CAPABILITY_DENIED/);
+-          assert.equal(api.calls().length, prior); continue;
++          assert.match(JSON.stringify(graphs[0].attempts), mode === 'grant-denied'
++            ? /TEST_PROVIDER_CAPABILITY_DENIED/ : /KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED/);
++          if (mode === 'grant-denied') assert.equal(api.calls().length, prior);
++          else {
++            const deniedCalls = api.calls().slice(prior); assert.equal(deniedCalls.length, 1);
++            assert(api.responseBytes() > profile.runtimeDeniedBytes && api.responseBytes() < profile.runtimeOutputBytes);
++            assert.deepEqual(deniedCalls[0].args, ['get', `busternamespaceleases.${profile.group}`, 'test-one', '-n', profile.namespace, '-o', 'json']);
++            assert.notEqual(deniedCalls[0].pid, process.pid);
++          }
++          continue;
+         }
+         assert.equal(executed.remote.decision.state, 'passed', JSON.stringify(executed));
+         const calls = api.calls().slice(prior);
+         assert(calls.length > 0 && calls.every(call => call.pid !== process.pid), 'actual local CLI subprocesses executed');
++        if (capability === 'kubernetes.runtime-security') {
++          assert(api.responseBytes() > profile.runtimeDeniedBytes && api.responseBytes() < profile.runtimeOutputBytes);
++          assert.equal(calls.length, 1);
++          assert.deepEqual(calls[0].args, ['get', `busternamespaceleases.${profile.group}`, 'test-one', '-n', profile.namespace, '-o', 'json']);
++          continue;
++        }
+         const auth = calls.filter(call => call.args[0] === 'auth');
+         assert(auth.length >= 2);
+         for (const call of auth) {

@@ -1,0 +1,127 @@
+[
+  {
+    "name": "admission-cli-render",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/verification/reliability/buster-admission-cli.test.mjs",
+      "tests/verification/deployment/buster-admission-render.test.mjs"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "seconds": 20.393433900084347
+  },
+  {
+    "name": "original-runtime-config",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "seconds": 5.073375653941184
+  },
+  {
+    "name": "equal-legacy-cli",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-buster-admission-independent-20260921/equal-legacy-cli.mjs"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "seconds": 7.477702881093137
+  },
+  {
+    "name": "prism-focused",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-name-pattern=^BA Prism",
+      "tests/verification/deployment/prism-swarm-config.test.mjs"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "seconds": 2.5207722480408847
+  },
+  {
+    "name": "preservation",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-buster-admission-20260921/check-preservation.mjs"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "seconds": 0.4647167520597577
+  },
+  {
+    "name": "mutant-restore-defaults",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-buster-admission-20260921/mutate.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts"
+    ],
+    "environmentDelta": {
+      "BUSTER_ADMISSION_MUTATION": "restore-defaults"
+    },
+    "exitCode": 1,
+    "seconds": 5.395318569964729,
+    "detected": true
+  },
+  {
+    "name": "mutant-ignore-weight",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-buster-admission-20260921/mutate.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts"
+    ],
+    "environmentDelta": {
+      "BUSTER_ADMISSION_MUTATION": "ignore-weight"
+    },
+    "exitCode": 1,
+    "seconds": 5.200028377003036,
+    "detected": true
+  }
+]

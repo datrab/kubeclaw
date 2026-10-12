@@ -1,0 +1,7 @@
+{
+  "model": "actual Linux flock shared inherited descriptor; unprivileged workspace temporary file",
+  "parentLockStillOpen": true,
+  "contenderBeforeChildUnlock": 7,
+  "childUnlockExit": 0,
+  "contenderAfterChildUnlock": 0
+}

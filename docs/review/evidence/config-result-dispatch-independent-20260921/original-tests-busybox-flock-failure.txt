@@ -1,0 +1,250 @@
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (2.533825ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (0.952364ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (0.328139ms)
+✔ CI03 original HTTP body boundary follows authored 64 bytes (41.327676ms)
+✔ CI03 original HTTP body boundary follows authored 128 bytes (12.687754ms)
+✔ CI04 production command and real host parser use assigned 64 bytes (1452.170461ms)
+✔ CI04 production command and real host parser use assigned 128 bytes (1452.630853ms)
+✔ CR01 both startup snapshots use authored {"maximumResultBytes":64,"dispatchTimeoutMs":100} (15.031465ms)
+✔ CR01 both startup snapshots use authored {"maximumResultBytes":128,"dispatchTimeoutMs":2000} (0.705838ms)
+✔ CR01 both roles reject maximumResultBytes=undefined (1.079548ms)
+✔ CR01 both roles reject maximumResultBytes=null (0.644356ms)
+✔ CR01 both roles reject maximumResultBytes=5 (0.679658ms)
+✔ CR01 both roles reject maximumResultBytes=0 (0.731039ms)
+✔ CR01 both roles reject maximumResultBytes=-1 (0.641996ms)
+✔ CR01 both roles reject maximumResultBytes=1.5 (0.536233ms)
+✔ CR01 both roles reject maximumResultBytes=2147483648 (0.79392ms)
+✔ CR01 both roles reject dispatchTimeoutMs=undefined (0.604595ms)
+✔ CR01 both roles reject dispatchTimeoutMs=null (0.466152ms)
+✔ CR01 both roles reject dispatchTimeoutMs=5 (0.443221ms)
+✔ CR01 both roles reject dispatchTimeoutMs=0 (0.41874ms)
+✔ CR01 both roles reject dispatchTimeoutMs=-1 (0.39111ms)
+✔ CR01 both roles reject dispatchTimeoutMs=1.5 (1.268102ms)
+✔ CR01 both roles reject dispatchTimeoutMs=2147483648 (0.38667ms)
+✔ CR01 both roles reject missing or unsupported native section (0.503843ms)
+✔ CR01 both roles reject missing or unsupported native section (0.496463ms)
+✔ CR01 both roles reject missing or unsupported native section (0.38623ms)
+✔ CR02 both roles reject PRISM_NATIVE_MAXIMUM_RESULT_BYTES (0.513203ms)
+✔ CR02 both roles reject PRISM_NATIVE_DISPATCH_TIMEOUT_MS (0.371719ms)
+✔ CR03 original HTTP transport enforces 8 UTF-8 bytes (47.868273ms)
+✔ CR03 original HTTP transport enforces 9 UTF-8 bytes (8.983239ms)
+✔ CR04 real headers deadline follows short and long author budgets (381.120823ms)
+✔ CR04 real body deadline follows short and long author budgets (382.98559ms)
+✖ CR05 real journal consumes authored 2051 byte result limit (30.208812ms)
+✖ CR05 real journal consumes authored 2052 byte result limit (16.579774ms)
+✔ CW01 canonical author values reach the actual production worker composition (3.350286ms)
+✔ CW02 every alternate author value reaches the actual consumer (1.843377ms)
+✔ CW03 unknown key at root (1.105478ms)
+✔ CW03 unknown key at operator (0.658147ms)
+✔ CW03 unknown key at operator.prism (0.603366ms)
+✔ CW03 unknown key at operator.prism.worker (0.757169ms)
+✔ CW04 maximumActiveRequests rejects 3 (0.700738ms)
+✔ CW04 maximumActiveRequests rejects null (0.418271ms)
+✔ CW04 maximumActiveRequests rejects -1 (0.459242ms)
+✔ CW04 maximumActiveRequests rejects 0 (0.563334ms)
+✔ CW04 maximumActiveRequests rejects 1.5 (0.521543ms)
+✔ CW04 maximumActiveRequests rejects 2147483648 (0.39982ms)
+✔ CW04 maximumActiveRequests rejects undefined (0.41492ms)
+✔ CW04 maximumProbeRequests rejects 3 (0.437641ms)
+✔ CW04 maximumProbeRequests rejects null (0.40379ms)
+✔ CW04 maximumProbeRequests rejects -1 (0.415331ms)
+✔ CW04 maximumProbeRequests rejects 0 (0.426341ms)
+✔ CW04 maximumProbeRequests rejects 1.5 (0.39917ms)
+✔ CW04 maximumProbeRequests rejects 2147483648 (0.40004ms)
+✔ CW04 maximumProbeRequests rejects undefined (0.39427ms)
+✔ CW04 maximumConnections rejects 3 (0.447811ms)
+✔ CW04 maximumConnections rejects null (0.574645ms)
+✔ CW04 maximumConnections rejects -1 (0.459222ms)
+✔ CW04 maximumConnections rejects 0 (0.39325ms)
+✔ CW04 maximumConnections rejects 1.5 (0.374829ms)
+✔ CW04 maximumConnections rejects 2147483648 (0.39848ms)
+✔ CW04 maximumConnections rejects undefined (0.39145ms)
+✔ CW04 requestTimeoutMs rejects 3 (0.382409ms)
+✔ CW04 requestTimeoutMs rejects null (0.507243ms)
+✔ CW04 requestTimeoutMs rejects -1 (0.39981ms)
+✔ CW04 requestTimeoutMs rejects 0 (0.39202ms)
+✔ CW04 requestTimeoutMs rejects 1.5 (0.37681ms)
+✔ CW04 requestTimeoutMs rejects 2147483648 (0.543694ms)
+✔ CW04 requestTimeoutMs rejects undefined (1.890628ms)
+✔ CW04 shutdownTimeoutMs rejects 3 (0.38564ms)
+✔ CW04 shutdownTimeoutMs rejects null (0.381839ms)
+✔ CW04 shutdownTimeoutMs rejects -1 (0.338009ms)
+✔ CW04 shutdownTimeoutMs rejects 0 (0.310048ms)
+✔ CW04 shutdownTimeoutMs rejects 1.5 (0.309488ms)
+✔ CW04 shutdownTimeoutMs rejects 2147483648 (0.316248ms)
+✔ CW04 shutdownTimeoutMs rejects undefined (0.314498ms)
+✔ CW04 maximumInputBytes rejects 3 (0.328068ms)
+✔ CW04 maximumInputBytes rejects null (0.309448ms)
+✔ CW04 maximumInputBytes rejects -1 (0.312668ms)
+✔ CW04 maximumInputBytes rejects 0 (0.439641ms)
+✔ CW04 maximumInputBytes rejects 1.5 (0.313378ms)
+✔ CW04 maximumInputBytes rejects 2147483648 (0.313228ms)
+✔ CW04 maximumInputBytes rejects undefined (0.337029ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (0.202296ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (0.053512ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (0.046841ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (0.047351ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (0.052122ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_MAXIMUM_INPUT_BYTES (0.049041ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_ASSIGNED_INPUT_BYTES (0.051541ms)
+✔ CW06 rejects unsupported profile (0.500322ms)
+✔ CW06 rejects unsupported features (0.328048ms)
+✔ CW06 rejects unsupported tuning (0.328348ms)
+✔ CW06 rejects unsupported overrides (0.319178ms)
+✔ CW07 missing or broken authorship never falls back to defaults (7.417059ms)
+✔ CW08 maximumActiveRequests cannot exceed connection reservation (0.472332ms)
+✔ CW08 maximumProbeRequests cannot exceed connection reservation (0.311368ms)
+✔ CW09 shutdown budget remains independent of request admission deadline (0.501993ms)
+✔ CW10 effective settings omit secrets and original authentication still fails closed (0.450161ms)
+✔ CD01 original chart delivers the one canonical config to the worker mount (84.543881ms)
+✔ CD02 real Helm output from two author profiles drives the actual production loader (133.832471ms)
+✔ CD03 old Helm shutdown authority is rejected (47.069973ms)
+✔ CD04 maximumActiveRequests rejects 3 before rendering (51.307541ms)
+✔ CD04 maximumActiveRequests rejects null before rendering (48.748276ms)
+✔ CD04 maximumActiveRequests rejects -1 before rendering (43.072721ms)
+✔ CD04 maximumActiveRequests rejects 0 before rendering (44.133388ms)
+✔ CD04 maximumActiveRequests rejects 1.5 before rendering (52.238905ms)
+✔ CD04 maximumActiveRequests rejects 2147483648 before rendering (50.576753ms)
+✔ CD04 maximumActiveRequests rejects undefined before rendering (55.491328ms)
+✔ CD04 maximumProbeRequests rejects 3 before rendering (50.826749ms)
+✔ CD04 maximumProbeRequests rejects null before rendering (47.667698ms)
+✔ CD04 maximumProbeRequests rejects -1 before rendering (53.548538ms)
+✔ CD04 maximumProbeRequests rejects 0 before rendering (49.68331ms)
+✔ CD04 maximumProbeRequests rejects 1.5 before rendering (51.471445ms)
+✔ CD04 maximumProbeRequests rejects 2147483648 before rendering (48.678634ms)
+✔ CD04 maximumProbeRequests rejects undefined before rendering (50.222604ms)
+✔ CD04 maximumConnections rejects 3 before rendering (49.067935ms)
+✔ CD04 maximumConnections rejects null before rendering (56.421983ms)
+✔ CD04 maximumConnections rejects -1 before rendering (52.770429ms)
+✔ CD04 maximumConnections rejects 0 before rendering (50.497261ms)
+✔ CD04 maximumConnections rejects 1.5 before rendering (51.786514ms)
+✔ CD04 maximumConnections rejects 2147483648 before rendering (56.595297ms)
+✔ CD04 maximumConnections rejects undefined before rendering (49.004382ms)
+✔ CD04 requestTimeoutMs rejects 3 before rendering (45.37743ms)
+✔ CD04 requestTimeoutMs rejects null before rendering (46.501209ms)
+✔ CD04 requestTimeoutMs rejects -1 before rendering (48.955471ms)
+✔ CD04 requestTimeoutMs rejects 0 before rendering (52.269546ms)
+✔ CD04 requestTimeoutMs rejects 1.5 before rendering (52.353709ms)
+✔ CD04 requestTimeoutMs rejects 2147483648 before rendering (50.976623ms)
+✔ CD04 requestTimeoutMs rejects undefined before rendering (48.90045ms)
+✔ CD04 shutdownTimeoutMs rejects 3 before rendering (50.886381ms)
+✔ CD04 shutdownTimeoutMs rejects null before rendering (47.882324ms)
+✔ CD04 shutdownTimeoutMs rejects -1 before rendering (50.88911ms)
+✔ CD04 shutdownTimeoutMs rejects 0 before rendering (50.901231ms)
+✔ CD04 shutdownTimeoutMs rejects 1.5 before rendering (48.233133ms)
+✔ CD04 shutdownTimeoutMs rejects 2147483648 before rendering (49.130546ms)
+✔ CD04 shutdownTimeoutMs rejects undefined before rendering (44.705063ms)
+✔ CD04 maximumInputBytes rejects 3 before rendering (45.521994ms)
+✔ CD04 maximumInputBytes rejects null before rendering (45.246447ms)
+✔ CD04 maximumInputBytes rejects -1 before rendering (51.898496ms)
+✔ CD04 maximumInputBytes rejects 0 before rendering (54.812741ms)
+✔ CD04 maximumInputBytes rejects 1.5 before rendering (52.77975ms)
+✔ CD04 maximumInputBytes rejects 2147483648 before rendering (47.159855ms)
+✔ CD04 maximumInputBytes rejects undefined before rendering (49.775783ms)
+✔ CD04 unknown key root (46.831917ms)
+✔ CD04 unknown key operator (44.378854ms)
+✔ CD04 unknown key operator.prism (55.14859ms)
+✔ CD04 unknown key operator.prism.worker (47.74151ms)
+✔ CD04 connection overcommit fails Helm rendering (47.160846ms)
+✔ CD05 shutdown 100000 violates native-close or Pod grace (49.946527ms)
+✔ CD05 shutdown 150000 violates native-close or Pod grace (56.371021ms)
+✔ CD06 Helm packaging dereferences the canonical author/schema without manual synchronization (49.68542ms)
+✔ CI05 old Helm input authority worker.native.maximumInputBytes is rejected (43.394719ms)
+✔ CI05 old Helm input authority native.maximumInputBytes is rejected (41.530171ms)
+✔ CR06 native maximumResultBytes rejects 3 before rendering (45.41897ms)
+✔ CR06 native maximumResultBytes rejects null before rendering (45.687088ms)
+✔ CR06 native maximumResultBytes rejects -1 before rendering (49.469395ms)
+✔ CR06 native maximumResultBytes rejects 0 before rendering (44.415305ms)
+✔ CR06 native maximumResultBytes rejects 1.5 before rendering (46.729374ms)
+✔ CR06 native maximumResultBytes rejects 2147483648 before rendering (52.954294ms)
+✔ CR06 native maximumResultBytes rejects undefined before rendering (47.105114ms)
+✔ CR06 native dispatchTimeoutMs rejects 3 before rendering (47.223637ms)
+✔ CR06 native dispatchTimeoutMs rejects null before rendering (49.042264ms)
+✔ CR06 native dispatchTimeoutMs rejects -1 before rendering (53.745144ms)
+✔ CR06 native dispatchTimeoutMs rejects 0 before rendering (45.657977ms)
+✔ CR06 native dispatchTimeoutMs rejects 1.5 before rendering (48.548441ms)
+✔ CR06 native dispatchTimeoutMs rejects 2147483648 before rendering (50.287475ms)
+✔ CR06 native dispatchTimeoutMs rejects undefined before rendering (46.57648ms)
+✔ CR06 missing or unknown native section fails rendering (49.516696ms)
+✔ CR06 missing or unknown native section fails rendering (49.205158ms)
+✔ CR06 missing or unknown native section fails rendering (47.33278ms)
+✔ CR06 two real authored profiles deliver identical bytes and changing checksums to both roles (111.613943ms)
+✔ CR06 old Helm authority worker.native.maximumResultBytes rejected (40.846225ms)
+✔ CR06 old Helm authority control.nativeWorkerDispatchTimeoutMs rejected (44.59317ms)
+✔ CR06 old Helm authority control.maximumWorkerResponseBytes rejected (42.516577ms)
+ℹ tests 174
+ℹ suites 0
+ℹ pass 172
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9977.038892
+
+✖ failing tests:
+
+test at skills/prism/tests/swarm-result-journal.test.mts:18:54
+✖ CR05 real journal consumes authored 2051 byte result limit (30.208812ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /WORKER_NATIVE_JOURNAL_RESULT_LIMIT/. Input:
+  
+  'Error: OBSERVABILITY_STORE_LOCK_FAILED:/tmp/prism-result-journal-nCcnNB/journal/fences/18/lifetime:OBSERVABILITY_STORE_LOCKED:1:/usr/bin/flock: unrecognized option: timeout\n' +
+    'BusyBox v1.37.0 (2026-01-10 15:38:28 UTC) multi-call binary.\n' +
+    '\n' +
+    'Usage: flock [-sxun] FD | { FILE [-c] PROG ARGS }\n' +
+    '\n' +
+    '[Un]lock file descriptor, or lock FILE, run PROG\n' +
+    '\n' +
+    '\t-s\tShared lock\n' +
+    '\t-x\tExclusive lock (default)\n' +
+    '\t-u\tUnlock FD\n' +
+    '\t-n\tFail rather than wait'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-result-journal.test.mts:31:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: OBSERVABILITY_STORE_LOCK_FAILED:/tmp/prism-result-journal-nCcnNB/journal/fences/18/lifetime:OBSERVABILITY_STORE_LOCKED:1:/usr/bin/flock: unrecognized option: timeout
+    BusyBox v1.37.0 (2026-01-10 15:38:28 UTC) multi-call binary.
+    
+    Usage: flock [-sxun] FD | { FILE [-c] PROG ARGS }
+    
+    [Un]lock file descriptor, or lock FILE, run PROG
+    
+    	-s	Shared lock
+    	-x	Exclusive lock (default)
+    	-u	Unlock FD
+    	-n	Fail rather than wait
+        at withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:263:11)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async NativeAttemptJournal.withAttempt (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-attempt-journal.ts:49:14)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-result-journal.test.mts:31:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3),
+    expected: /WORKER_NATIVE_JOURNAL_RESULT_LIMIT/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-result-journal.test.mts:18:54
+✖ CR05 real journal consumes authored 2052 byte result limit (16.579774ms)
+  Error: OBSERVABILITY_STORE_LOCK_FAILED:/tmp/prism-result-journal-ACepKC/journal/fences/18/lifetime:OBSERVABILITY_STORE_LOCKED:1:/usr/bin/flock: unrecognized option: timeout
+  BusyBox v1.37.0 (2026-01-10 15:38:28 UTC) multi-call binary.
+  
+  Usage: flock [-sxun] FD | { FILE [-c] PROG ARGS }
+  
+  [Un]lock file descriptor, or lock FILE, run PROG
+  
+  	-s	Shared lock
+  	-x	Exclusive lock (default)
+  	-u	Unlock FD
+  	-n	Fail rather than wait
+      at withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:263:11)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async NativeAttemptJournal.withAttempt (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-attempt-journal.ts:49:14)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-result-journal.test.mts:34:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

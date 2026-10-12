@@ -1,0 +1,45 @@
+{
+  "suites": {
+    "unit": {
+      "uses": "kubeclaw.unit-suite@1",
+      "add": {
+        "javascript": {
+          "uses": "kubeclaw.direct-command@1",
+          "mode": "blocking",
+          "concurrencyGroup": "unit",
+          "config": {
+            "executable": "npm",
+            "args": ["test", "--", "--reporter=junit"],
+            "workingDirectory": ".",
+            "resultMode": "junit-required",
+            "reports": [{
+              "id": "javascript-unit",
+              "format": "junit",
+              "path": "reports/unit.xml",
+              "mediaType": "application/junit+xml"
+            }],
+            "coverage": [{
+              "id": "javascript-coverage",
+              "format": "lcov",
+              "path": "coverage/lcov.info",
+              "mediaType": "text/lcov"
+            }]
+          }
+        },
+        "coverage": {
+          "uses": "kubeclaw.coverage-budget@1",
+          "mode": "advisory",
+          "config": { "minimumLinePercent": 80, "combine": true },
+          "inputs": {
+            "coverage-1": {
+              "from": "javascript",
+              "output": "coverage-1",
+              "mediaType": "text/lcov"
+            }
+          }
+        }
+      }
+    }
+  },
+  "concurrencyLimits": { "unit": 2 }
+}

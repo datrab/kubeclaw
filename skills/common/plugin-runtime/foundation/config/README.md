@@ -37,3 +37,45 @@ delegated root as their first CLI argument. The additional isolation-kernel gate
 also requires target UID/GID arguments and credential-drop authority so its
 parent-death check covers that native branch. Missing prerequisites remain blocked
 checks, not passing isolation assertions.
+
+Prism worker and shared native transport operator settings are resolved by `swarm.ts` from the existing
+canonical component bundle. Control and Worker capture one strict startup snapshot; Control response bytes and Worker journal
+result bytes share `native.maximumResultBytes`, while `native.dispatchTimeoutMs`
+bounds the complete Control HTTP exchange. Required `native.resourcePolicy`
+values supply cumulative CPU milliseconds, memory bytes and Linux tasks to the
+Control producer and Worker admission from their frozen startup snapshots.
+Resource safe-integer bounds differ from timer bounds; pool memory/task fit is
+checked at supervisor composition, without comparing CPU time to CPU rate. The strict schema rejects unknown keys, missing/invalid
+values and retired environment overrides. `native.supervisor` supplies nine
+required numeric UID/GID, ownership/output/journal and poll/drain/close settings.
+The loader freezes this object and requires worker shutdown strictly above close
+plus drain; Helm uses those same authored values and checks Pod grace separately.
+Generated host identity, pool policy and runtime paths retain their authorities.
+Other configuration surfaces are not
+yet fully migrated. Studio also uses this shared loader for its required
+`prism-studio.config.json → settings` port, Control origin and proxy deadline. Its role loader
+rejects `PORT`, `PRISM_CONTROL_URL` and `PRISM_CONTROL_TIMEOUT_MS`; installation
+assets and ingress credentials retain their separate inputs. The native Buster
+preparation path reads `buster-engine.config.json → settings.preparation` through the same schema,
+while its node/pool identity and remaining runtime/platform configuration are
+separate checked inputs. This does not establish completed Buster integration.
+See [operator configuration](../../../../../docs/operations/operator-configuration.md)
+for the exact migrated keys, deployment delivery and remaining scope.
+
+## Explicit effect-lock lifetime
+
+Every `pipeline-platform.v2` document must author `effectLockTtlMs` as an integer
+from 60000 to 86400000 milliseconds. Neither the Nova runtime nor the direct
+`EffectCoordinator` constructor supplies a TTL default. Add `"effectLockTtlMs":
+300000` to preserve the former implicit five-minute policy. Missing values fail
+platform validation. This lifetime is separate from `shutdownTimeoutMs`. The
+Buster entrypoint authors its generated platform value explicitly; this does
+not complete the broader component-file configuration migration.
+
+## Worker listener configuration
+
+`PrismWorkerSettings.port` is a required integer in the range 1–65535, authored
+by `prism-worker.config.json` `settings.ingress.port`. The shared loader validates
+it; Worker captures it once and rejects its retired role-specific `PORT` input.
+See the [operator contract](../../../../../docs/operations/operator-configuration.md#worker-listener-component-migration)
+for deployment and migration. The change is implemented; see the linked criteria for the remaining acceptance gates.

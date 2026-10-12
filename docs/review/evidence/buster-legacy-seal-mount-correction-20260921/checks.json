@@ -1,0 +1,10 @@
+{
+  "casesPreserved": 27,
+  "resourceConstantsPreserved": true,
+  "directMountSignatureAndFlagsChecked": true,
+  "explicitCliMountForms": 5,
+  "helpExit": 0,
+  "nonrootExit": 1,
+  "nonrootStderr": "RuntimeError: GUEST_ROOT_REQUIRED\n",
+  "privilegedCallsExecuted": false
+}

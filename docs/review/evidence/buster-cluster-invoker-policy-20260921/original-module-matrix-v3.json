@@ -1,0 +1,135 @@
+[
+  {
+    "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+    "baselineSha256": "31184df6adbd40d072cc4ebd24cdb80c434e287369105aa0f82fe1b52e3012e8",
+    "afterSha256": "06ec94d5ba0e6f2db60cfb1574bc21a79fd8e2763abdf79fbc26650aac022ac1",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+    "baselineSha256": "bcaaee2be2131b4508110a4f60370b02541b86eb9962cc60d8ec4b82d069706f",
+    "afterSha256": "e59433c5babd34e6c6fd07e68ab4e8012464fa54e418e163353dd6632baa603d",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/contracts/buster-process-input-callers.test.mjs",
+    "baselineSha256": "16c94f356e98005e5ac05d309c9bcad8111cf64d4c87243473936a2396a2f870",
+    "afterSha256": "118aaf312f9e6f6d00a4b20d57b5e2a9c1aaaf672db7d67c31a28027d35d02ee",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+    "baselineSha256": "5b2558a440a50ba57221cd3a4ec2d2924d42c86635746c4af505d87833526f69",
+    "afterSha256": "daeedf2c76ea68a35b7ee527891cff707532785b923d25b9be5084ce2c5ec2c3",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+    "baselineSha256": "8188d995f22cc5a124f3bfa3b6bb72167f79de1f2098db25a0238c36f095f8e5",
+    "afterSha256": "644c286de8e40f31aaa7889b7fb956c6b3430c1ba7b75998df3226471b3134fb",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+    "baselineSha256": "9a99a8196763ca41bd9bc10269b4e2a3ade22d72e7a4393a64f0e10ca15f8af4",
+    "afterSha256": "2f29e99bf331dd69dd7d76161c6a6116d55c9e2b30c57b37b98ca1a47ff194f6",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+    "baselineSha256": "915caa76b6eca542ac0336db6119685b069d4face68e2778f4aa0fdf876963ac",
+    "afterSha256": "d9701f630af15a9f8592d62c3650ba614f3b4e65a7c12315fde656199b080771",
+    "scope": "types-and-lint-only; live gate remains open",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "baselineSha256": "640531af9a0284ecfee39b6dfbc06393437b2e1fb8d182cb8fca8d07cb7622ae",
+    "afterSha256": "606c566c00541111a4f76544bea70b79aa794fd7f3502fa901e1a1428c135ebd",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+    "baselineSha256": "3aa382dd6b81e8ac3736eee06a0ecfb8951e06e339c771367789f332921f5987",
+    "afterSha256": "1cdc3105bcf3a63a32a2a79f3ae6fe7d7214ac5c29a025d591b23c18834cb951",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+    "baselineSha256": "6a4b0f3b041550a794010ca954281eabbc8a7c4f64ff598a7f84b0b56c609799",
+    "afterSha256": "259143200677ba037d71eef8d0c569582c9fffd6841cae357d83a9bc0bc35a0d",
+    "scope": "types-and-lint-only; live gate remains open",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+    "baselineSha256": "636c877577b946c1ddfd41e8e0e83faade5eacfb3bd5d7f1020430a951c3b4b5",
+    "afterSha256": "e3b8462e1190467d9bc16f771f81f356ba78fe07accefec8cd4292cb519d7d60",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/deployment/buster-admission-render.test.mjs",
+    "baselineSha256": "6d15c495edc1b7d6b4c615c9373fa9f72cc7dbf665a7da7dd260e4ed7df7a91b",
+    "afterSha256": "880659b662e0dc3400c5e8f5cfb0b4d2ea6cfaeeefa25d8daf6e5bcc1b5aebc8",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/deployment/buster-process-input-parity.test.mjs",
+    "baselineSha256": "a0fa942758dde1118015f3fd8255656c6fe4e31045e96837b75a05f11afd9247",
+    "afterSha256": "6a371ee2f232e195366c970a00d43052302f30db6974a8a5836e0f7a72d057c3",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/deployment/buster-readiness-config.test.mjs",
+    "baselineSha256": "6219a487b0ce51de79934d15d278e3060b07df02a65b420f9c81a3477fe5487d",
+    "afterSha256": "2ebcfbb1fdb7e190a265d14ff0d03baaaed6ecd8106e567e5c02cc8a05ed9e53",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/deployment/config-component-packaging.test.mjs",
+    "baselineSha256": "a3a7ded6a76afdfa59ff5723419cc0f5367308de7c2b241ed17b7c1ad12b5aa5",
+    "afterSha256": "e54bf0bc008ab23503971efcf8cc037364b09cfcd9e47bee8a33455eb6328930",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "baselineSha256": "13dc87d6ddb859e93df0843e798c6633b4f8424f006951925f69aee198aec58d",
+    "afterSha256": "ba4bcd6bd8bc01379ef02ed7d8a9ff49a46f4da270ad6eba5247d4f7199f2a72",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+    "baselineSha256": "1c61acfc0bea18e60f76c924603905e06e77335867606ced211cf971249ca6d1",
+    "afterSha256": "3d370b6ab521d825db82f6a9d509ce3eb7c61766d193c4fe000541e4507fe27f",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+    "baselineSha256": "994692a35f36897e515c3f1594b6a6cfbbec38eb70758a26643252e192bed618",
+    "afterSha256": "28958d66a366909e6182d79024e52c9cb51e2d96f832b762277066a995219fe5",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  },
+  {
+    "path": "tests/verification/reliability/tailscale-generation.test.mjs",
+    "baselineSha256": "3a754d1094691461b50c928846b45768fc853354f4dcd12579054c5ed26a15a2",
+    "afterSha256": "eeb00058cadb06726ef4292ef0b5fe9da2dfbb8992a96982b23521ad404f3691",
+    "scope": "full original module required",
+    "mapping": "explicit required profiles/selected complete canonical profile; existing assertions retained except documented source-authority/error-text mappings"
+  }
+]

@@ -1,0 +1,118 @@
+[
+  {
+    "path": "tests/fixtures/test-gate/buster-admission.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-a11y-implementation.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-api-implementation.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-container-build-production.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-implementation.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-live.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-parity.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-implementation.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-runtime.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/contracts/check-provider-semantics-remediation.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/reliability/buster-job-compaction.test.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/reliability/coverage-remote.test.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "identicalAfterReversingExplicitConstructorFields": true
+  },
+  {
+    "path": "tests/verification/reliability/worker-deadline.test.mts",
+    "identicalAfterReversingExplicitConstructorFields": true
+  }
+]

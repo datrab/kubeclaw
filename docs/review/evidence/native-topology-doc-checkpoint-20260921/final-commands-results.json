@@ -1,0 +1,79 @@
+[
+  {
+    "name": "blueprint-generate-final",
+    "argv": [
+      "node",
+      "scripts/docs-blueprint-generate.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "generated-check-final",
+    "argv": [
+      "npm",
+      "run",
+      "docs:check:generated"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "blueprint-check-final",
+    "argv": [
+      "node",
+      "scripts/docs-blueprint-generate.mjs",
+      "--check"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "main-final",
+    "argv": [
+      "node",
+      "scripts/docs-check.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "references-final",
+    "argv": [
+      "node",
+      "scripts/docs-check-refs.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "coverage-final",
+    "argv": [
+      "node",
+      "scripts/docs-check-coverage.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "publication-final",
+    "argv": [
+      "node",
+      "scripts/docs-publication.mjs",
+      "check"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "register-final",
+    "argv": [
+      "node",
+      "scripts/review/remediation-register.mjs",
+      "--check"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "whitespace-final",
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0
+  }
+]

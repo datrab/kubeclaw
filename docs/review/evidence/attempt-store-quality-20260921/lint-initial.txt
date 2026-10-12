@@ -1,0 +1,17 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts
+   70:8   error  Async function 'evaluateCompleteness' has too many lines (140). Maximum allowed is 60  max-lines-per-function
+   97:34  error  Async arrow function has too many lines (112). Maximum allowed is 60                   max-lines-per-function
+  139:13  error  Blocks are nested too deeply (4). Maximum allowed is 3                                 max-depth
+  143:15  error  Blocks are nested too deeply (5). Maximum allowed is 3                                 max-depth
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts
+  129:8  error  Async function 'storeEvidence' has too many lines (89). Maximum allowed is 60  max-lines-per-function
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/attempt-results.ts
+  10:8   error  Async function 'storeResult' has too many lines (126). Maximum allowed is 60  max-lines-per-function
+  26:34  error  Async arrow function has too many lines (109). Maximum allowed is 60          max-lines-per-function
+  26:34  error  Async arrow function has a complexity of 24. Maximum allowed is 15            complexity
+
+✖ 8 problems (8 errors, 0 warnings)
+

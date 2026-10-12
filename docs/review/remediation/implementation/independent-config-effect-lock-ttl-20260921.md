@@ -1,0 +1,30 @@
+# Independent review: explicit orchestrator effect-lock TTL
+
+Status: bounded TTL1–TTL5/TTL-DOC change accepted after independent source and runtime review; no blocking finding remains. This report does not accept the complete D17 component-author migration.
+
+The reviewer did not author the TTL implementation. All 91 author manifest entries and their saved snapshots match the current files at the initial review checkpoint. The runtime path is `loadPlatformConfig` → `createAdapterRuntime` → `EffectCoordinator` → durable effect acquisition/renewal → `FileResourceLockManager`. The platform requires the unchanged integer range of 60,000–86,400,000 milliseconds. The low-level coordinator separately requires a positive safe integer; previously authored short low-level test lifetimes retain their meaning.
+
+Both former five-minute fallbacks are absent. Missing platform values fail schema validation; missing direct/runtime TTL fails constructor validation before journal/lock operations. The constructor retains its ordinary clock behavior when explicitly passed `undefined`; this is not a replacement TTL author. Acquisition and renewal receive the same stored explicit TTL. Persisted acquired/expiry timestamps were independently checked, in addition to observing the argument passed to the manager.
+
+The author inventory covers namespace-qualified and multiline constructors, current platform objects and generated scripts. Inspection found no renamed `EffectCoordinator` import alias or another maintained platform author outside the inventoried production/test/script/image roots. Frozen `.swarm` worktrees and historical evidence are not current production authors and were not migrated. The fixture edit records describe 65 ordinary modules with 85 insertions plus three maintained historical runners with four insertions. The latter import current Core, while immutable historical producer snapshots remain unchanged. Original assertions and existing explicit short TTLs are preserved; the one current four-argument constructor is an intentional negative test.
+
+## Explicit remaining D17 boundary
+
+`docker/buster-runtime-entrypoint.sh` now writes `effectLockTtlMs: 300_000` into its generated platform document. This prevents the stricter platform loader from breaking Buster registry configuration, but it remains a configurable value authored in code. Buster uses this document for registry/trust paths, not the orchestrator effect runtime. A later component-file author migration or separation of registry configuration is still required. The bounded fallback-removal change must not be described as completing central configuration ownership.
+
+Other lock constants, such as provisional-claim retention and metadata mutex timeout, are separate existing policies outside this bounded TTL change; this review makes no all-settings claim.
+
+## Independent execution and retained correction
+
+The unchanged maintained TTL/lock-lifetime/Forge modules and original platform/capability/phase7 scripts ran with actual GNU flock through the existing tool binding. A private test-only assertion additionally inspects the first persisted active record per lock identity and require `expiresAt - acquiredAt` to equal each authored profile. Later renewal records retain their original acquisition timestamp and must not be subjected to that initial-acquisition oracle. Both restored-fallback mutations were independently rerun and failed actual missing-value assertions. Source manifests and actual loaded dependency identities retain the execution boundary.
+
+
+[Initial commands and raw results](../../evidence/independent-config-effect-lock-ttl-20260921/results.json) retain the full original 12-case run: 10 passed and two failed only at the reviewer's added persistence assertion. That initial oracle also selected 300,000-ms locks created earlier by the shared Human Approval fixture. It incorrectly compared those setup locks against the new profile. Production and original assertions were not changed. The initial hook is retained byte-for-byte as `persisted-oracle-initial.mjs.snapshot`.
+
+The corrected test-only hook captures IDs returned by the actual profile acquisitions, checks that every captured ID has an initial persisted active record, requires a nonempty set, and checks its exact initial lifetime. It neither mocks acquisition nor changes lock content. The [follow-up](../../evidence/independent-config-effect-lock-ttl-20260921/followup-results.json) passes all four TTL/fixture cases, including both actual 60,000- and 120,000-ms persisted lifetimes. The original eight lock-lifetime/Forge cases already passed in the initial run and were not needlessly repeated. No test was filtered out of either positive module execution.
+
+All three complete original platform/capability/phase7 scripts pass. Both fallback-restoration negative controls fail with `Missing expected exception`, not an import or syntax failure. The independent fixture-preservation check passes all 68 modules/89 exact insertions. The author's Nova/Foundation types and canonical touched-production/new-test lint exit 0 on the manifest-bound source; this reviewer inspected and bound those author results rather than claiming another independent type/lint execution.
+
+The initial source manifests cover 2,278 files with no drift, and the loader trace records 270 actual runtime files, including external dependencies; all loaded hashes match at final verification. The corrected follow-up separately binds its changed test hook and source closure with no drift. Initial failed evidence is preserved and is not relabeled as a 12/12 pass. Final positive coverage is the unchanged eight original lock/Forge cases plus the corrected four-case TTL module, alongside the three original contract scripts.
+
+This accepts only the explicit TTL contract and removal of its two hidden fallbacks. The generated Buster code author described above, plugin/component author migration, remaining operational constants, and any host/kernel/deployment acceptance remain open.

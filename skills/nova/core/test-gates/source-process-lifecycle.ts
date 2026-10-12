@@ -25,12 +25,12 @@ export class SourceProcessLifecycle {
     let bound: NodeJS.Timeout | undefined;
     const signalFailures: unknown[] = [];
     try {
-      this.#signal('SIGTERM');
+      try { this.#signal('SIGTERM'); } catch (error) { signalFailures.push(error); }
       force = setTimeout(() => {
         try { this.#signal('SIGKILL'); } catch (error) { signalFailures.push(error); }
       }, 250);
       await Promise.race([
-        Promise.all([this.#closed, this.#acknowledge(deadline)]),
+        Promise.all([this.#closed, this.#acknowledge(deadline).catch(error => { signalFailures.push(error); })]),
         new Promise<never>((_resolve, reject) => {
           bound = setTimeout(() => reject(new Error('NOVA_SOURCE_PROCESS_CLEANUP_TIMEOUT')), Math.max(1, deadline - Date.now()));
         }),
@@ -40,6 +40,7 @@ export class SourceProcessLifecycle {
       this.#child.stdout?.destroy(); this.#child.stderr?.destroy();
       throw signalFailures.length ? new AggregateError([error, ...signalFailures], 'NOVA_SOURCE_PROCESS_CLEANUP_FAILED', { cause: error }) : error;
     } finally { clearTimeout(force); clearTimeout(bound); }
+    if (signalFailures.length) throw new AggregateError(signalFailures, 'NOVA_SOURCE_PROCESS_CLEANUP_FAILED');
   }
 
   async #acknowledge(deadline: number): Promise<void> {

@@ -1,0 +1,69 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { Inventory } from '../../../scripts/observability-retirement/files.mjs';
+
+function fixture(t, maximumTotalBytes = 128) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'inventory-digest-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const file = path.join(root, 'state.json');
+  fs.writeFileSync(file, '{"value":1}');
+  const inventory = new Inventory({ maximumFiles: 8, maximumTotalBytes, maximumSnapshotBytes: 128 });
+  inventory.root(root, 'test');
+  return { root, file, inventory };
+}
+
+// Fault injection models a filesystem stamp collision, not a false content read.
+function collideFileStamps(t, file) {
+  const original = fs.lstatSync(file);
+  for (const name of ['lstatSync', 'fstatSync']) {
+    const real = fs[name];
+    t.mock.method(fs, name, (...args) => {
+      const stat = real(...args);
+      if (stat.dev !== original.dev || stat.ino !== original.ino) return stat;
+      return Object.assign(Object.create(stat), { mtimeMs: original.mtimeMs, ctimeMs: original.ctimeMs });
+    });
+  }
+}
+
+test('final inventory verification rejects changed real bytes despite colliding metadata', t => {
+  const { file, inventory } = fixture(t);
+  collideFileStamps(t, file);
+  fs.writeFileSync(file, '{"value":2}');
+  assert.equal(fs.readFileSync(file, 'utf8'), '{"value":2}');
+  inventory.verifyUnchanged();
+  assert.ok(inventory.blockers.some(item => item.code === 'SNAPSHOT_CHANGED' && item.subject === file));
+});
+
+test('repeated verification of unchanged bytes fits the original scan quota', t => {
+  const { file, inventory } = fixture(t, Buffer.byteLength('{"value":1}'));
+  inventory.verifyUnchanged();
+  inventory.verifyUnchanged();
+  assert.deepEqual(inventory.blockers, []);
+  assert.equal(inventory.bytesHashed, fs.statSync(file).size, 'scan quota counts unique inventoried bytes');
+});
+
+for (const change of ['grow', 'shrink', 'remove', 'replace', 'symlink']) {
+  test(`final inventory verification rejects ${change}`, t => {
+    const { root, file, inventory } = fixture(t);
+    if (change === 'grow') fs.appendFileSync(file, 'x');
+    if (change === 'shrink') fs.truncateSync(file, 1);
+    if (change === 'remove') fs.unlinkSync(file);
+    if (change === 'replace' || change === 'symlink') {
+      const other = path.join(root, 'other');
+      fs.writeFileSync(other, '{"value":1}');
+      if (change === 'replace') fs.renameSync(other, file);
+      else { fs.unlinkSync(file); fs.symlinkSync(other, file); }
+    }
+    inventory.verifyUnchanged();
+    assert.ok(inventory.blockers.some(item => item.code === 'SNAPSHOT_CHANGED'));
+  });
+}
+
+test('insufficient initial hash quota never becomes an executable clean inventory', t => {
+  const { inventory } = fixture(t, 1);
+  inventory.verifyUnchanged();
+  assert.ok(inventory.blockers.some(item => item.code === 'INVENTORY_BYTE_LIMIT'));
+});

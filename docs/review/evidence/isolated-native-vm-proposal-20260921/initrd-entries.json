@@ -1,0 +1,170 @@
+[
+  {
+    "path": "bin",
+    "mode": "0o40755",
+    "bytes": 0,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "lib",
+    "mode": "0o40755",
+    "bytes": 0,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "proc",
+    "mode": "0o40755",
+    "bytes": 0,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "sys",
+    "mode": "0o40755",
+    "bytes": 0,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "dev",
+    "mode": "0o40755",
+    "bytes": 0,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "newroot",
+    "mode": "0o40755",
+    "bytes": 0,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules",
+    "mode": "0o40755",
+    "bytes": 0,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "dev/console",
+    "mode": "0o20600",
+    "bytes": 0,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "dev/null",
+    "mode": "0o20666",
+    "bytes": 0,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "bin/busybox",
+    "mode": "0o100755",
+    "bytes": 804616,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "bin/sh",
+    "mode": "0o120777",
+    "bytes": 7,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "lib/ld-musl-x86_64.so.1",
+    "mode": "0o100755",
+    "bytes": 670312,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules/virtio_blk.ko",
+    "mode": "0o100644",
+    "bytes": 74215,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules/crc16.ko",
+    "mode": "0o100644",
+    "bytes": 11503,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules/mbcache.ko",
+    "mode": "0o100644",
+    "bytes": 34263,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules/jbd2.ko",
+    "mode": "0o100644",
+    "bytes": 423215,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules/ext4.ko",
+    "mode": "0o100644",
+    "bytes": 2410999,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules/netfs.ko",
+    "mode": "0o100644",
+    "bytes": 722687,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules/9pnet.ko",
+    "mode": "0o100644",
+    "bytes": 241255,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules/9p.ko",
+    "mode": "0o100644",
+    "bytes": 211127,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules/9pnet_virtio.ko",
+    "mode": "0o100644",
+    "bytes": 55015,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules/rng-core.ko",
+    "mode": "0o100644",
+    "bytes": 55055,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "modules/virtio-rng.ko",
+    "mode": "0o100644",
+    "bytes": 26767,
+    "uid": 0,
+    "gid": 0
+  },
+  {
+    "path": "init",
+    "mode": "0o100755",
+    "bytes": 842,
+    "uid": 0,
+    "gid": 0
+  }
+]

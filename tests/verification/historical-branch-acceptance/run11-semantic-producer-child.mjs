@@ -66,7 +66,7 @@ const adapters = new core.AdapterRuntime({granted, activated, configs: new Map([
   ['kubeclaw.secret-resolver:secrets', {environment: {'review-token': 'KUBECLAW_SEMANTIC_PRODUCER_TOKEN'}}],
   ['kubeclaw.repository-adapter:repository', {repositoryRoot: source.repository, expectedHead: source.head}],
   ['kubeclaw.artifact-store:artifact-store', {artifactRoot}],
-]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.MemoryResourceLockManager()),
+]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
   shutdownTimeoutMs: 1000, async emitDomainEvent() {}});
 try {
   await adapters.start();

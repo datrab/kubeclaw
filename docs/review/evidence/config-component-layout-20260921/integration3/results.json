@@ -1,0 +1,61 @@
+[
+  {
+    "name": "missing-tar-diagnosis",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-component-layout-20260921/admission-diagnosis/persisted-error.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 4.617
+  },
+  {
+    "name": "maintained",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "/usr/local/lib/node_modules/npm/bin/npm-cli.js",
+      "run",
+      "verify:config:components"
+    ],
+    "exitCode": 0,
+    "seconds": 123.595
+  },
+  {
+    "name": "buster",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/verification/reliability/buster-preparation-identities.test.mts",
+      "tests/verification/reliability/buster-preparation-ledger.test.mts",
+      "tests/verification/e2e/swarm-author-profile.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 12.698
+  },
+  {
+    "name": "prism-types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/prism/tsconfig.json"
+    ],
+    "exitCode": 2,
+    "seconds": 9.199
+  }
+]

@@ -1,0 +1,38 @@
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+NATIVE_NRI_POLICY_NOT_TRUSTED
+✔ actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts (1304.580577ms)
+✖ original statically built NRI executable reads the actual generated root-owned policy (5801.230403ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7871.925095
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-native-runtime.test.mjs:70:1
+✖ original statically built NRI executable reads the actual generated root-owned policy (5801.230403ms)
+  Error: Command failed: /tmp/native-nri-binary-aBOMol/10-kubeclaw-native --check-policy /tmp/native-nri-binary-aBOMol/native-nri.json
+  NATIVE_NRI_POLICY_NOT_TRUSTED
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-native-runtime.test.mjs:77:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12) {
+    status: 1,
+    signal: null,
+    output: [ null, '', 'NATIVE_NRI_POLICY_NOT_TRUSTED\n' ],
+    pid: 252310,
+    stdout: '',
+    stderr: 'NATIVE_NRI_POLICY_NOT_TRUSTED\n'
+  }

@@ -1,0 +1,1 @@
+PASS: four empty legacy overrides rejected; invalid later author bytes reject new load but preserve both loaded snapshots; oversized unterminated real stream rejected and closed by client

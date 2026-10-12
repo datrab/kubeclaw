@@ -1,0 +1,4 @@
+{
+  "stage": "independent schema field comparison",
+  "error": "Reviewer expected required on nested target rows; manifest uses requiredInTarget. Exact key distinction inspected; no source/schema change or omitted constraint."
+}

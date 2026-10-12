@@ -1,0 +1,5 @@
+{
+  "tests/verification/contracts/buster-report-policy-consumers.test.mjs": "d54203f4be7980e0f3f1aa9270b9ea4d16bc37e56d077b73758aee87d5579aff",
+  "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts": "3aa382dd6b81e8ac3736eee06a0ecfb8951e06e339c771367789f332921f5987",
+  "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs": "54bb3a32574fb06d835bd3ac04614c6cc18d2286949003dd5ea3b97f27dcf714"
+}

@@ -1,0 +1,25 @@
+
+> verify:worker-core:local-config
+> npm run verify:worker-core:local-runtime && node --test tests/verification/contracts/check-pipeline-worker-local-policy.mts && node tests/verification/contracts/check-pipeline-worker-local-config.mts
+
+
+> verify:worker-core:local-runtime
+> node tests/verification/contracts/check-pipeline-worker-local-runtime.mts && tsc --noEmit -p tests/verification/contracts/tsconfig.worker-local-runtime.json && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+
+{"ok":true,"phase":"5.5-D","states":["starting","ready","draining","stopped","unhealthy"]}
+✔ Core requires explicit valid drainTimeoutMs (15.576815ms)
+✔ Core requires explicit valid cancellationTimeoutMs (1.357455ms)
+✔ Core requires explicit valid replayLimit (0.736119ms)
+✔ real drain/cancellation 10/40 (82.831703ms)
+✔ real replay saturation/reclaim 1 (1.915699ms)
+✔ real drain/cancellation 40/10 (52.444473ms)
+✔ real replay saturation/reclaim 2 (2.630729ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 468.000135
+{"ok":true,"profiles":[1,2],"jobsPerProfile":2,"runtime":"production-factory/default-runner/default-core","nativePreparation":"modeled"}

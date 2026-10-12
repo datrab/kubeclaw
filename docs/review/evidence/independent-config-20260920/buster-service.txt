@@ -1,0 +1,28 @@
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":4}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_CANCELLED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":3}
+{"ok":true,"regression":"nova-remote-deadlines","lostSubmit":"cancelled","unavailableRemote":"durable-unknown","stalledBodies":["result","evidence"],"restart":"reconnected"}
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/remote-plan-service.ts:611
+          timer = setTimeout(() => reject(new Error('BUSTER_REMOTE_SHUTDOWN_TIMEOUT')), timeoutMs);
+                                          ^
+
+Error: BUSTER_REMOTE_SHUTDOWN_TIMEOUT
+    at Timeout.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/remote-plan-service.ts:611:43)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-pipeline-remote-plan-runtime.mts (28969.02899ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28981.587664
+
+✖ failing tests:
+
+test at tests/verification/contracts/check-pipeline-remote-plan-runtime.mts:1:1
+✖ tests/verification/contracts/check-pipeline-remote-plan-runtime.mts (28969.02899ms)
+  'test failed'

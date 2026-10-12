@@ -1,0 +1,25 @@
+validator parity PASS valid
+validator parity PASS minimum
+validator parity PASS maximum
+validator parity PASS overmaximum
+validator parity PASS zero
+validator parity PASS fraction
+validator parity PASS hash
+validator parity PASS extra
+validator parity PASS url
+validator parity PASS traversal
+validator parity PASS absolute
+validator parity PASS directory
+validator parity PASS order
+validator parity PASS architecture
+validator upper-bound mutant DETECTED
+actual literal bundle resolution PASS
+effective exact boundary PASS scripts/browser-archive-lock.mjs
+effective exact boundary PASS scripts/updates/runtime-inputs.mjs
+unlisted sibling stays restricted PASS
+actual entrypoint parity PASS manual
+actual entrypoint parity PASS absent
+actual entrypoint parity PASS zero
+actual entrypoint parity PASS unchanged
+actual entrypoint parity PASS changed
+actual entrypoint parity PASS pull-request

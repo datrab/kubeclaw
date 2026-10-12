@@ -1,0 +1,19 @@
+{
+  "demo-handoff": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "cd ../../../.. && node --test skills/nova/plugins/demo-handoff/tests/*.test.mts skills/nova/plugins/demo-handoff/tests/*.test.mjs"
+  },
+  "lint": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/eslint-discipline.test.mjs && node tests/eslint-type-evidence.test.mjs && node --test tests/remediation.test.mjs && node tests/live-function.test.ts",
+    "test:remediation": "node --test tests/remediation.test.mjs"
+  },
+  "pipeline-review": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+  },
+  "repository-adapter": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/path-safety.test.ts"
+  }
+}

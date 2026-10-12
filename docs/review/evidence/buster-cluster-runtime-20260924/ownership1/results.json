@@ -1,0 +1,14 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-ownership.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 0,
+    "name": "ownership",
+    "seconds": 45.1919265689794
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "mode": "docs-schema",
+    "exitCode": 0,
+    "output": "suite migration docs-schema check passed\n"
+  },
+  {
+    "mode": "docs-errors",
+    "exitCode": 0,
+    "output": "suite migration docs-errors check passed\n"
+  }
+]

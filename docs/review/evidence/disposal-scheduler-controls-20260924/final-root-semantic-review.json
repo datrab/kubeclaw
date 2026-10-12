@@ -1,0 +1,74 @@
+{
+  "reviewer": "root",
+  "independentFinalAcceptance": false,
+  "controls": [
+    {
+      "name": "recovery-completed",
+      "run": "run1",
+      "logSha256": "50d50f8af1277b4c039bed6a632e9de4e0cb6cf5dab94299bd598c9896cab42d",
+      "applications": 1,
+      "observed": "see root-semantic-review.json and final manual notes"
+    },
+    {
+      "name": "faulted-completed",
+      "run": "run1",
+      "logSha256": "337c7431eedb4db7d3e5d4ed4148cef0cca6ad21338cab86a9eba26e8cb97278",
+      "applications": 1,
+      "observed": "see root-semantic-review.json and final manual notes"
+    },
+    {
+      "name": "rollback-suppressed",
+      "run": "run1",
+      "logSha256": "7f6cb2a711fe3e69b0b0bf6e8ce0662b57ffdd9145dfcf9bbd2d79402e64bdf1",
+      "applications": 2,
+      "observed": "see root-semantic-review.json and final manual notes"
+    },
+    {
+      "name": "success-only-confirmation",
+      "run": "run2",
+      "logSha256": "dddf7d4eddb4a310122bba79a57ee2a3f4706ac0348cb8fd2cfd6b96bfda5a43",
+      "applications": 1,
+      "observed": "see root-semantic-review.json and final manual notes"
+    },
+    {
+      "name": "permit-unconfirmed",
+      "run": "run3",
+      "logSha256": "d97f4dffa15a8e00af82f0a6c8a3bcb9d6c298358466429419806570a1347ed5",
+      "applications": 1,
+      "observed": "see root-semantic-review.json and final manual notes"
+    },
+    {
+      "name": "duplicate-accounting",
+      "run": "run2",
+      "logSha256": "2238472a64309af4d5c5b51c7885fdb78e784607816ecc471f5a524debf6aead",
+      "applications": 1,
+      "observed": "see root-semantic-review.json and final manual notes"
+    },
+    {
+      "name": "hidden-error-details",
+      "run": "run2",
+      "logSha256": "b64c8353cdeff6da3387c28c794708b98762aa9d47f29db0db7f94525f28bcec",
+      "applications": 1,
+      "observed": "see root-semantic-review.json and final manual notes"
+    },
+    {
+      "name": "old-scheduler",
+      "run": "run1",
+      "logSha256": "a31d31a48863f6a8dc790f5fd69e0b4ccf3b1fe54d192a7f31751df8d1ac2ce0",
+      "applications": 2,
+      "observed": "see root-semantic-review.json and final manual notes"
+    },
+    {
+      "name": "retain-unconditional",
+      "run": "run1",
+      "logSha256": "901fe7f78b57cf9e6bada401f39c093e05350cbc95294314ae6952405db01073",
+      "applications": "actual private plugin copy before discovery",
+      "observed": "see root-semantic-review.json and final manual notes"
+    }
+  ],
+  "finalNotes": {
+    "permit-unconfirmed": "Current/replacement close cases fail actual cleanup rejection. Current/replacement drain cases fail actual child-count gating (3 instead2;4 instead3). Both follow real timeout paths; no initialization/import failure.",
+    "duplicate-accounting": "Public cleanup diagnostic contains actual CPU88.822 vs expected44.411 with identical memory/process peaks; exactlydouble after overlapping real stops.",
+    "scope": "All nine mutants detected at intended runtime/behavioral boundaries. Root review only; fresh independent final report still pending. Earlier weaker diagnostics preserved, not relabeled."
+  }
+}

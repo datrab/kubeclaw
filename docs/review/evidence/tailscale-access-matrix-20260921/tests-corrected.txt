@@ -1,0 +1,42 @@
+✔ actual Nova Helm render exposes architecture only through its private authenticated service (133.828356ms)
+✔ actual Helm rejects credential omission and a carried-over legacy architecture NodePort (105.897228ms)
+✔ authored Argo ingress and operator values identify external OAuth and shared proxy tags (1.444157ms)
+✖ actual Prism render binds private Studio ingress to its Service and removes only ingress when disabled (53.925255ms)
+✔ actual Ops render exposes optional outbound SOCKS only and retains incoming deny policy (87.852258ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 480.451796
+
+✖ failing tests:
+
+test at tests/verification/contracts/infra-private-access.test.mjs:53:1
+✖ actual Prism render binds private Studio ingress to its Service and removes only ingress when disabled (53.925255ms)
+  Error: Command failed: helm template prism charts/prism -f charts/prism/ci-values.yaml --set tailscale.enabled=true --set tailscale.hostname=private-studio-test
+  walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+  walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+  Error: execution error at (prism/templates/workloads.yaml:8:4): native Prism requires one worker, its selected namespace/node and generated policy digest
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/infra-private-access.test.mjs:56:33)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12) {
+    status: 1,
+    signal: null,
+    output: [ null, '', 'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nError: execution error at (prism/templates/workloads.yaml:8:4): native Prism requires one worker, its selected namespace/node and generated policy digest\n\nUse --debug flag to render out invalid YAML\n' ],
+    pid: 412691,
+    stdout: '',
+    stderr: 'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nError: execution error at (prism/templates/workloads.yaml:8:4): native Prism requires one worker, its selected namespace/node and generated policy digest\n\nUse --debug flag to render out invalid YAML\n'
+  }

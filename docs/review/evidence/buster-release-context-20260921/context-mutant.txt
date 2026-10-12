@@ -1,0 +1,75 @@
+MUTATION_APPLIED: remove Buster baseline context only
+✖ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (1383.466601ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1594.793549
+
+✖ failing tests:
+
+test at tests/verification/deployment/gitops-release.test.mjs:51:1
+✖ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (1383.466601ms)
+  Error: Command failed: bash /tmp/gitops-release-diDBBe/scripts/deploy.sh render buster image
+  MUTATION_APPLIED: remove Buster baseline context only
+  MUTATION_APPLIED: remove Buster baseline context only
+  Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding
+  
+  Use --debug flag to render out invalid YAML
+  node:internal/errors:986
+    const err = new Error(message);
+                ^
+  
+  Error: Command failed: helm template agent-buster /tmp/gitops-release-diDBBe/charts/kubeclaw --namespace agents -f /tmp/gitops-release-diDBBe/releases/values/buster.yaml -f /tmp/release-registry-context-DHBfom/3.yaml
+  Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at render (file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:208:30)
+      at file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:210:24
+      at withDeploymentContext (file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:172:12)
+      at file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:209:5
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26 {
+    status: 1,
+    signal: null,
+    output: [
+      null,
+      '',
+      'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n' +
+        '\n' +
+        'Use --debug flag to render out invalid YAML\n'
+    ],
+    pid: 236081,
+    stdout: '',
+    stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n' +
+      '\n' +
+      'Use --debug flag to render out invalid YAML\n'
+  }
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at renderGroup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/gitops-bundle.mjs:78:20)
+      at exportGitOpsBundle (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/gitops-bundle.mjs:111:33)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:52:18
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:45:5)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:51:115)
+      at Test.runInAsyncScope (node:async_hooks:227:14) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "MUTATION_APPLIED: remove Buster baseline context only\nMUTATION_APPLIED: remove Buster baseline context only\nError: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\nnode:internal/errors:986\n  const err = new Error(message);\n              ^\n\nError: Command failed: helm template agent-buster /tmp/gitops-release-diDBBe/charts/kubeclaw --namespace agents -f /tmp/gitops-release-diDBBe/releases/values/buster.yaml -f /tmp/release-registry-context-DHBfom/3.yaml\nError: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at render (file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:208:30)\n    at file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:210:24\n    at withDeploymentContext (file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:172:12)\n    at file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:209:5\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26 {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    '',\n    'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n      '\\n' +\n      'Use --debug flag to render out invalid YAML\\n'\n  ],\n  pid: 236081,\n  stdout: '',\n  stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n    '\\n' +\n    'Use --debug flag to render out invalid YAML\\n'\n}\n\nNode.js v24.21.0\n" ],
+    pid: 235879,
+    stdout: '',
+    stderr: "MUTATION_APPLIED: remove Buster baseline context only\nMUTATION_APPLIED: remove Buster baseline context only\nError: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\nnode:internal/errors:986\n  const err = new Error(message);\n              ^\n\nError: Command failed: helm template agent-buster /tmp/gitops-release-diDBBe/charts/kubeclaw --namespace agents -f /tmp/gitops-release-diDBBe/releases/values/buster.yaml -f /tmp/release-registry-context-DHBfom/3.yaml\nError: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at render (file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:208:30)\n    at file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:210:24\n    at withDeploymentContext (file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:172:12)\n    at file:///tmp/gitops-release-diDBBe/scripts/updates/deployment-release.mjs:209:5\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26 {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    '',\n    'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n      '\\n' +\n      'Use --debug flag to render out invalid YAML\\n'\n  ],\n  pid: 236081,\n  stdout: '',\n  stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n    '\\n' +\n    'Use --debug flag to render out invalid YAML\\n'\n}\n\nNode.js v24.21.0\n"
+  }

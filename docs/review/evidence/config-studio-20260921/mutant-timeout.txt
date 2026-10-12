@@ -1,0 +1,41 @@
+✖ Studio loads authored operator values and keeps installation inputs outside JSON (15.500687ms)
+✔ Studio rejects retired PORT="" (0.867153ms)
+✔ Studio rejects retired PORT="8080" (0.522414ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="" (0.505143ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="8080" (1.019087ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="" (0.76374ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080" (0.625967ms)
+✔ Studio rejects invalid port through original shared validation (3.101192ms)
+✔ Studio rejects invalid controlTimeoutMs through original shared validation (4.57722ms)
+✔ Studio rejects invalid controlUrl through original shared validation (3.309617ms)
+✔ Studio rejects unknown settings and invalid startup terminates before serving (241.646797ms)
+✔ production Studio Docker environment does not reintroduce a retired author (1.065898ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 522.004619
+
+✖ failing tests:
+
+test at skills/prism/tests/studio-config.test.mts:20:1
+✖ Studio loads authored operator values and keeps installation inputs outside JSON (15.500687ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  250 !== 741
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-config.test.mts:25:43)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 250,
+    expected: 741,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

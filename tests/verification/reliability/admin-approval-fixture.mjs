@@ -23,7 +23,7 @@ export async function approvalFixture(root, rejected) {
   }
   fs.symlinkSync(path.resolve('node_modules'), path.join(root, 'node_modules'), 'dir');
   const roots = [installation];
-  const platform = { schemaVersion: 'pipeline-platform.v2', installationRoots: roots, trustedBuiltinRoots: roots,
+  const platform = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: { 'git.repository.read': 'kubeclaw.repository-adapter:repository', 'artifacts.write': 'kubeclaw.artifact-store:artifact-store', 'artifacts.read': 'kubeclaw.artifact-store:artifact-store',
       'signal.wait': 'kubeclaw.wait-store:waits', 'operator.request': 'kubeclaw.operator-messaging:operator',

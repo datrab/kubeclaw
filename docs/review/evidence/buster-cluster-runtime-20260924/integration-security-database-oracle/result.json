@@ -1,0 +1,15 @@
+{
+  "manifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-runtime-20260924/security-database-install-oracle/manifest.json",
+  "manifestSha256": "04b0552a236eb47b614936ef430af37f9a3b4adf702bf4b57ad12c6933340b11",
+  "review": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-runtime-security-policy-20260924/security-database-install-oracle-source-review.json",
+  "reviewSha256": "0574f7575298ade5613b812905b79acf84650ef2577006c8e8894794239101ab",
+  "status": "integrated; verification pending",
+  "files": [
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-implementation.mts",
+      "kind": "file",
+      "beforeSha256": "a8b4cabada3ed10e3b67a37509e15b1c6f8d590b3e6f515149950b9c140a7a3a",
+      "sha256": "c68c8676462f99c7c817af8abe53f5aa0cdbd83aaa7d473ff08fcd9a16c678c1"
+    }
+  ]
+}

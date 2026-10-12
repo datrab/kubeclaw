@@ -1,0 +1,1101 @@
+--- a/charts/kubeclaw/files/config/buster-engine.config.json
++++ b/charts/kubeclaw/files/config/buster-engine.config.json
+@@ -97,6 +97,11 @@
+           "maximumQuarantineRecords": 1000,
+           "maximumQuarantineBytes": 67108864
+         }
++      },
++      "processInput": {
++        "cleanupTimeoutMs": 1500,
++        "terminationGraceMs": 250,
++        "acknowledgementPollMs": 10
+       }
+     }
+   }
+--- a/charts/kubeclaw/templates/_swarm-config.tpl
++++ b/charts/kubeclaw/templates/_swarm-config.tpl
+@@ -62,13 +62,13 @@
+ {{- if or (ne (len $buster) 4) (not (hasKey $buster "preparation")) (not (hasKey $buster "admission")) (not (hasKey $buster "dependencyReadiness")) (not (hasKey $buster "execution")) -}}{{- fail "swarm buster requires preparation, admission, dependencyReadiness and execution only" -}}{{- end -}}
+ {{- $execution := $buster.execution -}}
+ {{- if not (kindIs "map" $execution) -}}{{- fail "buster-engine.config.json execution must be an object" -}}{{- end -}}
+-{{- if ne (len $execution) 4 -}}{{- fail "buster execution requires provider, reports, observation and stores" -}}{{- end -}}
+-{{- range $key := list "provider" "reports" "observation" "stores" -}}
++{{- if ne (len $execution) 5 -}}{{- fail "buster execution requires provider, reports, observation, stores and processInput" -}}{{- end -}}
++{{- range $key := list "provider" "reports" "observation" "stores" "processInput" -}}
+ {{- if not (hasKey $execution $key) -}}{{- fail (printf "buster execution requires %s" $key) -}}{{- end -}}
+ {{- end -}}
+ {{- if not (kindIs "map" $execution.stores) -}}{{- fail "buster execution stores must be an object" -}}{{- end -}}
+ {{- if or (ne (len $execution.stores) 2) (not (hasKey $execution.stores "attempts")) (not (hasKey $execution.stores "admission")) -}}{{- fail "buster execution stores requires attempts and admission" -}}{{- end -}}
+-{{- $policies := dict "provider" $execution.provider "reports" $execution.reports "observation" $execution.observation "store-attempts" $execution.stores.attempts "store-admission" $execution.stores.admission -}}
++{{- $policies := dict "processInput" $execution.processInput "provider" $execution.provider "reports" $execution.reports "observation" $execution.observation "store-attempts" $execution.stores.attempts "store-admission" $execution.stores.admission -}}
+ {{- range $section, $policy := $policies -}}
+ {{- $definition := index $definitions (printf "buster-execution-%s" $section) -}}
+ {{- if not (kindIs "map" $policy) -}}{{- fail (printf "buster execution %s must be an object" $section) -}}{{- end -}}
+@@ -88,6 +88,7 @@
+ {{- end -}}
+ {{- if gt $execution.provider.maximumResultBytes (subf (subf (float64 9007199254740991) $execution.reports.maximumAggregateResultBytes)  $execution.provider.workerResultWrapperBytes) -}}{{- fail "buster execution result sum is unsafe" -}}{{- end -}}
+ {{- if ge $execution.provider.terminationGraceMs $execution.provider.terminationTimeoutMs -}}{{- fail "buster execution termination grace must precede termination timeout" -}}{{- end -}}
++{{- if or (ge $execution.processInput.terminationGraceMs $execution.processInput.cleanupTimeoutMs) (gt $execution.processInput.acknowledgementPollMs $execution.processInput.cleanupTimeoutMs) -}}{{- fail "buster execution processInput timing is invalid" -}}{{- end -}}
+ {{- if gt $execution.reports.minimumOpenFiles $execution.reports.maximumOpenFiles -}}{{- fail "buster execution report minimumOpenFiles exceeds maximumOpenFiles" -}}{{- end -}}
+ {{- $reportMemory := addf $execution.reports.runtimeMemoryReserveBytes (mulf (float64 3) $execution.reports.maximumSourceBytes) (mulf (float64 2) $execution.reports.maximumAggregateResultBytes) -}}
+ {{- if lt $execution.reports.memoryBytes $reportMemory -}}{{- fail "buster execution report memory cannot hold the maximum selected report profile" -}}{{- end -}}
+--- a/docs/architecture/buster-execution-configuration.md
++++ b/docs/architecture/buster-execution-configuration.md
+@@ -5,7 +5,7 @@
+ That file contains the selected operator values. The
+ [component schema](../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json)
+ defines required fields and legal ranges; it does not supply missing values.
+-All 41 execution fields are required. Thirty-nine are positive integers;
++All 44 execution fields are required. Forty-two are positive integers;
+ `provider.heapFraction` and `reports.heapFraction` are numbers strictly greater than zero and at most one.
+ Unknown fields, missing values, strings and out-of-range values are rejected.
+ Fractions are rejected for integer fields.
+@@ -108,9 +108,9 @@
+ shipped floor remains 16; selecting a smaller value does not guarantee Node can
+ start. Positive consumer controls use working 64/96 descriptor allowances.
+ 
+-The shared ProcessInputLifecycle still owns cleanup1500ms, force250ms and poll10ms
+-values used by report and other callers. Their separate migration remains open;
+-this report snapshot does not claim full Buster CONFIG closure.
++The shared process-input policy is a separate section of the same execution snapshot,
++not a second report policy owner. Native supervisor timing remains separately owned.
++
+ 
+ ## Process observation
+ 
+@@ -186,3 +186,23 @@
+ been centralized, or that native isolation and deployment behavior have passed
+ their separate acceptance gates. Current implementation and verification status
+ is tracked in the [remediation register](../review/remediation/register.json).
++
++## Shared process-input lifecycle
++
++`settings.execution.processInput` supplies three required positive timer-safe integers:
++`cleanupTimeoutMs` bounds native close plus owned-group acknowledgement (shipped 1500 ms),
++`terminationGraceMs` schedules SIGKILL after TERM (shipped 250 ms), and
++`acknowledgementPollMs` spaces actual group checks (shipped 10 ms). Grace must be
++strictly below cleanup timeout and polling must not exceed that timeout.
++
++Report adapters, Kubernetes fixtures and Tailscale exposure commands receive the
++same immutable execution snapshot. Missing or invalid lifecycle policy, command
++timeout or output capacity fails before spawning; the default command wrappers
++no longer invent 30000 ms/1 MiB values. Their existing explicit per-command limits
++remain in force. Failure to confirm actual close and owned-group disappearance
++remains a cleanup failure; destroyed parent pipes do not prove child termination.
++
++The Tailscale caller's explicit 1 MiB output budget, Kubernetes manifestBytes*2
++output relationship and each invoker's separate polling configuration remain
++separate existing authorities. This focused migration does not close those D17
++items, the Foundation process-group capture deadline (250 ms), or the native C supervisor stop policy. No native/live acceptance is implied.
+--- a/package.json
++++ b/package.json
+@@ -227,7 +227,7 @@
+     "verify:buster:admission": "tsc --noEmit -p tests/verification/reliability/tsconfig.buster-admission.json && node --test --test-concurrency=1 tests/verification/reliability/buster-admission-config.test.mts tests/verification/reliability/buster-admission-cli.test.mjs tests/verification/deployment/buster-admission-render.test.mjs && node tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+     "verify:buster:cancellation": "tsc --noEmit -p tests/verification/reliability/tsconfig.buster-cancellation.json && node --test --test-concurrency=1 tests/verification/reliability/buster-atomic-cancellation.test.mts tests/verification/reliability/buster-prepared-store-cancellation.test.mts",
+     "verify:buster:readiness-config": "tsc --noEmit -p tests/verification/reliability/tsconfig.buster-readiness.json && node --test --test-concurrency=1 tests/verification/reliability/buster-readiness-config.test.mts tests/verification/reliability/buster-readiness-consumer.test.mts tests/verification/deployment/buster-readiness-config.test.mjs tests/verification/deployment/buster-readiness.test.mts",
+-    "verify:buster:execution-config": "npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-execution-policy.json && node --test --test-concurrency=1 tests/verification/contracts/buster-settings-registry.test.mjs tests/verification/contracts/check-pipeline-buster-execution-policy.mts tests/verification/contracts/provider-child-session.test.mjs tests/verification/contracts/buster-process-sampling.test.mjs tests/verification/contracts/buster-default-store-policy.test.mjs tests/verification/contracts/buster-provider-session-policy.test.mjs tests/verification/contracts/buster-session-capabilities.test.mjs tests/verification/contracts/provider-loader-ownership.test.mjs tests/verification/contracts/buster-completion-policy.test.mjs tests/verification/contracts/buster-report-policy-consumers.test.mjs tests/verification/contracts/buster-report-runtime-policy.test.mjs tests/verification/contracts/buster-report-policy-parity.test.mjs tests/verification/contracts/buster-report-runner-policy.test.mjs",
++    "verify:buster:execution-config": "npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-execution-policy.json && node --test --test-concurrency=1 tests/verification/contracts/buster-settings-registry.test.mjs tests/verification/contracts/check-pipeline-buster-execution-policy.mts tests/verification/contracts/provider-child-session.test.mjs tests/verification/contracts/buster-process-sampling.test.mjs tests/verification/contracts/buster-default-store-policy.test.mjs tests/verification/contracts/buster-provider-session-policy.test.mjs tests/verification/contracts/buster-session-capabilities.test.mjs tests/verification/contracts/provider-loader-ownership.test.mjs tests/verification/contracts/buster-completion-policy.test.mjs tests/verification/contracts/buster-report-policy-consumers.test.mjs tests/verification/contracts/buster-report-runtime-policy.test.mjs tests/verification/contracts/buster-report-policy-parity.test.mjs tests/verification/contracts/buster-report-runner-policy.test.mjs tests/verification/contracts/buster-process-input-policy.test.mjs tests/verification/contracts/buster-process-input-callers.test.mjs tests/verification/deployment/buster-process-input-parity.test.mjs",
+     "verify:lint:policy-delivery": "node skills/nova/plugins/lint/tests/eslint-discipline.test.mjs && node --test tests/verification/deployment/eslint-policy-delivery.test.mjs"
+   },
+   "devDependencies": {
+--- a/skills/buster/engine/test-gates/capability-runtime.ts
++++ b/skills/buster/engine/test-gates/capability-runtime.ts
+@@ -1,3 +1,4 @@
++import type { BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+ import { DirectCommandCapabilityInvoker, type DirectCommandCapabilityInvokerOptions } from './direct-command-runtime.ts';
+ import { ContainerBuildCapabilityInvoker, type ContainerBuildCapabilityInvokerOptions } from './container-build-runtime.ts';
+ import { KubernetesFixtureCapabilityInvoker, type KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-runtime.ts';
+@@ -17,8 +18,8 @@
+   readonly allowedCapabilities: ReadonlySet<string>;
+   readonly directCommand?: Omit<DirectCommandCapabilityInvokerOptions, 'workspaceRoot'>;
+   readonly containerBuild?: Omit<ContainerBuildCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly kubernetesFixture?: Omit<KubernetesFixtureCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly tailscaleExposure?: TailscaleExposureCapabilityInvokerOptions;
++  readonly kubernetesFixture?: Omit<KubernetesFixtureCapabilityInvokerOptions, 'workspaceRoot' | 'processInputPolicy'>;
++  readonly tailscaleExposure?: Omit<TailscaleExposureCapabilityInvokerOptions, 'processInputPolicy'>;
+   readonly networkHttp?: NetworkHttpCapabilityInvokerOptions;
+   readonly browserAxe?: BrowserAxeCapabilityInvokerOptions;
+   readonly browserLighthouse?: BrowserLighthouseCapabilityInvokerOptions;
+@@ -32,7 +33,7 @@
+  * The service currently owns this process; native cutover must move this single
+  * construction boundary into the attempt host, without parent-side RPC work. */
+ export function createBusterCapabilityRuntime(options: BusterCapabilityRuntimeOptions,
+-  paths: Readonly<{ jobRoot: string; workspaceRoot: string }>) {
++  paths: Readonly<{ jobRoot: string; workspaceRoot: string }>, processInputPolicy: BusterProcessInputSettings) {
+   const { jobRoot, workspaceRoot } = paths;
+   const routes = new Map<string, TestProviderCapabilityInvoker>();
+   const add = <T extends TestProviderCapabilityInvoker>(capability: string, create: () => T): T | undefined => {
+@@ -46,10 +47,10 @@
+     ...required(options.containerBuild, 'BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED'), workspaceRoot,
+   }));
+   add('kubernetes.fixture', () => new KubernetesFixtureCapabilityInvoker({
+-    ...required(options.kubernetesFixture, 'BUSTER_KUBERNETES_FIXTURE_CONFIG_REQUIRED'), workspaceRoot: jobRoot,
++    ...required(options.kubernetesFixture, 'BUSTER_KUBERNETES_FIXTURE_CONFIG_REQUIRED'), workspaceRoot: jobRoot, processInputPolicy,
+   }));
+   add('kubernetes.exposure', () => new TailscaleExposureCapabilityInvoker(
+-    required(options.tailscaleExposure, 'BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED')));
++    { ...required(options.tailscaleExposure, 'BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED'), processInputPolicy }));
+   add('network.http', () => new NetworkHttpCapabilityInvoker(
+     required(options.networkHttp, 'BUSTER_NETWORK_HTTP_CONFIG_REQUIRED')));
+   add('browser.axe', () => new BrowserAxeCapabilityInvoker(
+--- a/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts
+@@ -1,3 +1,4 @@
++import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+ import crypto from 'node:crypto';
+ import { assertGeneratedCredentialLease,generatedDemoCredentials } from './generated-demo-credentials.ts';
+ import { runProcessInput } from './process-input.ts';
+@@ -31,12 +32,13 @@
+   => Promise<{ stdout?: string; stderr?: string }>;
+ type JsonObject = Record<string, unknown>;
+ 
+-async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>): Promise<{ stdout: string; stderr: string }> {
++async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>, processInputPolicy: BusterProcessInputSettings): Promise<{ stdout: string; stderr: string }> {
+   const result = await runProcessInput(command, args, {
++    processInputPolicy,
+     ...(options.env ? { env: options.env as NodeJS.ProcessEnv } : {}),
+     ...(options.signal ? { signal: options.signal as AbortSignal } : {}),
+     input: options.input as string | Buffer | null ?? null,
+-    timeoutMs: Number(options.timeout ?? 30_000), maximumOutputBytes: Number(options.maxBuffer ?? 1024 * 1024),
++    timeoutMs: options.timeout as number, maximumOutputBytes: options.maxBuffer as number,
+     prefix: 'KUBERNETES_FIXTURE_KUBECTL',
+   });
+   const stdout = result.stdout.toString('utf8'); const stderr = result.stderr.toString('utf8');
+@@ -45,6 +47,7 @@
+ }
+ 
+ export interface KubernetesFixtureCapabilityInvokerOptions {
++  readonly processInputPolicy: BusterProcessInputSettings;
+   readonly workspaceRoot: string;
+   readonly kubectlExecutable: string;
+   readonly controllerNamespace: string;
+@@ -445,6 +448,7 @@
+   readonly #now: () => Date;
+ 
+   constructor(options: KubernetesFixtureCapabilityInvokerOptions) {
++    const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);
+     this.#root = fs.realpathSync(options.workspaceRoot);
+     this.#kubectl = fs.realpathSync(options.kubectlExecutable);
+     fs.accessSync(this.#kubectl, fs.constants.X_OK);
+@@ -502,7 +506,7 @@
+     if (!Number.isSafeInteger(this.#pollIntervalMs) || this.#pollIntervalMs < 50 || this.#pollIntervalMs > 10_000) {
+       throw new Error('KUBERNETES_FIXTURE_POLL_INTERVAL_INVALID');
+     }
+-    this.#execute = options.execute ?? executeProcess;
++    this.#execute = options.execute ?? ((command, args, operation) => executeProcess(command, args, operation, processInputPolicy));
+     this.#now = options.now ?? (() => new Date());
+   }
+ 
+--- a/skills/buster/engine/test-gates/process-input-lifecycle.ts
++++ b/skills/buster/engine/test-gates/process-input-lifecycle.ts
+@@ -1,16 +1,19 @@
++import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+ import type { ChildProcess } from 'node:child_process';
+ import { captureLinuxProcessGroup, linuxProcessGroupRunning } from '@kubeclaw/plugin-foundation/processes/linux-process-group';
+ 
+ // Own both the native close and the group lifetime. A leader can exit while
+ // descendants remain runnable or keep its pipes open.
+ export class ProcessInputLifecycle {
++  readonly #policy: BusterProcessInputSettings;
+   readonly #child: ChildProcess;
+   readonly #closed: Promise<void>;
+   readonly #group: number | undefined;
+   readonly #identityError: unknown;
+   #cleanup: Promise<void> | undefined;
+ 
+-  constructor(child: ChildProcess, closed: Promise<void>) {
++  constructor(child: ChildProcess, closed: Promise<void>, policy: BusterProcessInputSettings) {
++    this.#policy = validateBusterProcessInputSettings(policy);
+     this.#child = child; this.#closed = closed;
+     if (process.platform === 'linux' && child.pid) {
+       try { this.#group = captureLinuxProcessGroup(child.pid); }
+@@ -24,7 +27,7 @@
+   }
+ 
+   async #finish(): Promise<void> {
+-    const deadline = Date.now() + 1_500;
++    const deadline = Date.now() + this.#policy.cleanupTimeoutMs;
+     let force: NodeJS.Timeout | undefined;
+     let bound: NodeJS.Timeout | undefined;
+     try {
+@@ -33,7 +36,7 @@
+       this.#signal('SIGTERM');
+       force = setTimeout(() => {
+         try { this.#signal('SIGKILL'); } catch { /* The awaited acknowledgement reports failure. */ }
+-      }, 250);
++      }, this.#policy.terminationGraceMs);
+       await Promise.race([
+         Promise.all([this.#closed, this.#acknowledge(deadline)]),
+         new Promise<never>((_resolve, reject) => {
+@@ -55,7 +58,7 @@
+     if (this.#group === undefined) throw new Error('PROCESS_INPUT_IDENTITY_UNAVAILABLE', { cause: this.#identityError });
+     while (await linuxProcessGroupRunning(this.#group, deadline)) {
+       if (Date.now() >= deadline) throw new Error('PROCESS_INPUT_CLEANUP_TIMEOUT');
+-      await new Promise((resolve) => setTimeout(resolve, 10));
++      await new Promise((resolve) => setTimeout(resolve, this.#policy.acknowledgementPollMs));
+     }
+   }
+ 
+--- a/skills/buster/engine/test-gates/process-input.ts
++++ b/skills/buster/engine/test-gates/process-input.ts
+@@ -1,3 +1,4 @@
++import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+ import { spawn } from 'node:child_process';
+ import { ProcessInputLifecycle } from './process-input-lifecycle.ts';
+ 
+@@ -9,6 +10,7 @@
+ }
+ 
+ export interface ProcessInputOptions {
++  readonly processInputPolicy: BusterProcessInputSettings;
+   readonly cwd?: string;
+   readonly env?: NodeJS.ProcessEnv;
+   readonly signal?: AbortSignal;
+@@ -28,6 +30,9 @@
+ // Attach every stream error handler before sending input. Failures settle only
+ // after close and process-group acknowledgement, with a bounded failure on incomplete disposal.
+ export function runProcessInput(command: string, args: readonly string[], options: ProcessInputOptions): Promise<ProcessInputResult> {
++  const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);
++  if (!Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1 || options.timeoutMs > 2147483647) throw new Error('PROCESS_INPUT_TIMEOUT_INVALID');
++  if (!Number.isSafeInteger(options.maximumOutputBytes) || options.maximumOutputBytes < 1) throw new Error('PROCESS_INPUT_OUTPUT_LIMIT_INVALID');
+   if (options.signal?.aborted) return Promise.reject(new Error(`${options.prefix}_CANCELLED`, { cause: options.signal.reason }));
+   return new Promise((resolve, reject) => {
+     const child = spawn(command, [...args], { ...(options.cwd ? { cwd: options.cwd } : {}),
+@@ -79,7 +84,7 @@
+     child.once('close', (code, signal) => {
+       exitCode = code; exitSignal = signal; resolveClosed(); finish();
+     });
+-    lifecycle = new ProcessInputLifecycle(child, closed);
++    lifecycle = new ProcessInputLifecycle(child, closed, processInputPolicy);
+     if (options.signal?.aborted) { abort(); return; }
+     try { child.stdin.end(options.input ?? undefined); }
+     catch (error) { fail(new Error(`${options.prefix}_STDIN_FAILED`, { cause: error })); }
+--- a/skills/buster/engine/test-gates/remote-prepared-execution.ts
++++ b/skills/buster/engine/test-gates/remote-prepared-execution.ts
+@@ -29,7 +29,7 @@
+ async function runPlan(options: BusterRemotePlanServiceOptions, job: PreparedPlanJob,
+   paths: ExecutionPaths, signal: AbortSignal): Promise<TestPlanRunResult> {
+   signal.throwIfAborted();
+-  const capabilities = createBusterCapabilityRuntime(options, paths);
++  const capabilities = createBusterCapabilityRuntime(options, paths, options.executionPolicy.processInput);
+   if (options.execute) return options.execute(job, paths, signal);
+   return new TestPlanRunner({ plan: job.plan, registry: options.registry,
+     workspaceRoot: paths.workspaceRoot, repositoryRoot: paths.repositoryRoot,
+--- a/skills/buster/engine/test-gates/report-adapter-runtime.ts
++++ b/skills/buster/engine/test-gates/report-adapter-runtime.ts
+@@ -1,4 +1,4 @@
+-import { validateBusterReportSettings, type BusterReportExecutionSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
++import { validateBusterReportSettings, validateBusterProcessInputSettings, type BusterProcessInputSettings, type BusterReportExecutionSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+ import { readPackage, writePackageSnapshot } from './report-adapter-package.ts';
+ import type { ReportArtifactReader } from './report-artifact-reader.ts';
+ export { FileReportArtifactReader, type ReportArtifactReader } from './report-artifact-reader.ts';
+@@ -106,11 +106,13 @@
+ 
+ export class RegisteredReportAdapterRuntime {
+   readonly #policy: BusterReportExecutionSettings;
++  readonly #processInputPolicy: BusterProcessInputSettings;
+   readonly #reader: ReportArtifactReader;
+   readonly #runtimeRoot: string;
+   readonly #runtimeRootIdentity: { readonly dev: number; readonly ino: number };
+ 
+-  constructor(reader: ReportArtifactReader, runtimeRoot: string, policy: BusterReportExecutionSettings) {
++  constructor(reader: ReportArtifactReader, runtimeRoot: string, policy: BusterReportExecutionSettings, processInputPolicy: BusterProcessInputSettings) {
++    this.#processInputPolicy = validateBusterProcessInputSettings(processInputPolicy);
+     this.#policy = validateBusterReportSettings(policy);
+     if (!path.isAbsolute(runtimeRoot)) throw new Error('REPORT_ADAPTER_RUNTIME_ROOT_NOT_ABSOLUTE');
+     const resolvedRoot = path.resolve(runtimeRoot);
+@@ -229,7 +231,7 @@
+         '--permission', `--allow-fs-read=${runtime.child}`, `--allow-fs-read=${packageRoot}`,
+         '--no-addons', '--no-experimental-sqlite', runtime.child,
+       ], {
+-      cwd: packageRoot, env: { NODE_NO_WARNINGS: '1' }, ...(signal ? { signal } : {}),
++      processInputPolicy: this.#processInputPolicy, cwd: packageRoot, env: { NODE_NO_WARNINGS: '1' }, ...(signal ? { signal } : {}),
+       timeoutMs: limits.timeoutMs, maximumOutputBytes: limits.maximumResultBytes,
+       prefix: 'REPORT_ADAPTER', outputLimitError: 'REPORT_ADAPTER_RESULT_LIMIT', input: `${JSON.stringify({
+         kind: 'adapt',
+--- a/skills/buster/engine/test-gates/runner.ts
++++ b/skills/buster/engine/test-gates/runner.ts
+@@ -57,7 +57,7 @@
+     this.#loader = options.loader ?? new RegisteredTestProviderLoader({ provider: executionPolicy.provider, observation: executionPolicy.observation });
+     this.#store = options.evidenceStore ?? new FileEvidenceStore(artifactRoot);
+     this.#reportAdapterRuntime = options.reportAdapterRuntime ?? new RegisteredReportAdapterRuntime(
+-      new FileReportArtifactReader([artifactRoot]), path.join(observabilityRoot, 'report-adapters'), executionPolicy.reports);
++      new FileReportArtifactReader([artifactRoot]), path.join(observabilityRoot, 'report-adapters'), executionPolicy.reports, executionPolicy.processInput);
+     this.#customDurableAttemptStore = options.durableAttemptStore !== undefined;
+     this.#durableAttemptStore =
+       options.durableAttemptStore ??
+--- a/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts
++++ b/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts
+@@ -1,3 +1,4 @@
++import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+ import { runProcessInput } from './process-input.ts';
+ import { assertHandoffSourceRequest,existingExposureHandoff,exposureHandoffPatch,observedExposureHandoff } from './exposure-handoff.ts';
+ import { EXPOSURE_OWNER_ANNOTATION, EXPOSURE_REQUEST_ANNOTATION, EXPOSURE_PREDECESSORS_ANNOTATION, exposurePredecessors, exposureIdentity, generationObserved, assertExposureRequest, assertRequestedExposure, ownedReleaseAction } from './exposure-generation.ts';
+@@ -11,12 +12,13 @@
+ type Execute = (command: string, args: readonly string[], options: Readonly<Record<string, unknown>>)
+   => Promise<{ stdout?: string; stderr?: string }>;
+ 
+-async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>): Promise<{ stdout: string; stderr: string }> {
++async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>, processInputPolicy: BusterProcessInputSettings): Promise<{ stdout: string; stderr: string }> {
+   const result = await runProcessInput(command, args, {
++    processInputPolicy,
+     ...(options.env ? { env: options.env as NodeJS.ProcessEnv } : {}),
+     ...(options.signal ? { signal: options.signal as AbortSignal } : {}),
+     input: options.input as string | Buffer | null ?? null,
+-    timeoutMs: Number(options.timeout ?? 30_000), maximumOutputBytes: Number(options.maxBuffer ?? 1024 * 1024),
++    timeoutMs: options.timeout as number, maximumOutputBytes: options.maxBuffer as number,
+     prefix: 'TAILSCALE_EXPOSURE_KUBECTL',
+   });
+   const stdout = result.stdout.toString('utf8'); const stderr = result.stderr.toString('utf8');
+@@ -25,6 +27,7 @@
+ }
+ 
+ export interface TailscaleExposureCapabilityInvokerOptions {
++  readonly processInputPolicy: BusterProcessInputSettings;
+   readonly kubectlExecutable: string;
+   readonly controllerNamespace: string;
+   readonly leaseApiGroup: string;
+@@ -75,6 +78,7 @@
+   readonly #environment: NodeJS.ProcessEnv;
+ 
+   constructor(options: TailscaleExposureCapabilityInvokerOptions) {
++    const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);
+     this.#kubectl = fs.realpathSync(options.kubectlExecutable);
+     if (!fs.statSync(this.#kubectl).isFile()) throw new Error('TAILSCALE_EXPOSURE_KUBECTL_INVALID');
+     if (!DNS_LABEL.test(options.controllerNamespace)) throw new Error('TAILSCALE_EXPOSURE_CONTROLLER_NAMESPACE_INVALID');
+@@ -93,7 +97,7 @@
+     this.#suffixes = [...new Set(options.allowedHostSuffixes.map(suffix))];
+     this.#maximumExecutionMs = integer(options.maximumExecutionMs, 'maximumExecutionMs', 1, MAX_TIMER_MS);
+     this.#pollIntervalMs = integer(options.pollIntervalMs ?? 1000, 'pollIntervalMs', 10, this.#maximumExecutionMs);
+-    this.#execute = options.execute ?? executeProcess; this.#now = options.now ?? (() => new Date());
++    this.#execute = options.execute ?? ((command, args, operation) => executeProcess(command, args, operation, processInputPolicy)); this.#now = options.now ?? (() => new Date());
+     this.#environment = { PATH: process.env.PATH, KUBECONFIG: process.env.KUBECONFIG,
+       KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,
+       KUBERNETES_SERVICE_PORT: process.env.KUBERNETES_SERVICE_PORT };
+--- a/skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts
++++ b/skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts
+@@ -18,7 +18,7 @@
+     const dir = path.join(root, String(iteration)); fs.mkdirSync(dir);
+     const code = `const fs=require('node:fs'),cp=require('node:child_process');const files=[];for(let i=0;i<3;i++){const f=${JSON.stringify(dir)}+'/'+i+'.json';files.push(f);cp.spawn(process.execPath,['-e',${JSON.stringify(childCode)},f],{stdio:'ignore'}).unref();}const timer=setInterval(()=>{if(files.every(f=>fs.existsSync(f))){clearInterval(timer);}},5);`;
+     try {
+-      const result = await runProcessInput(process.execPath, ['-e', code], { prefix: 'LIFETIME', timeoutMs: 2_000, maximumOutputBytes: 4096 });
++      const result = await runProcessInput(process.execPath, ['-e', code], { processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, prefix: 'LIFETIME', timeoutMs: 2_000, maximumOutputBytes: 4096 });
+       assert.equal(result.code, 0, result.stderr.toString());
+       const identities = [0, 1, 2].map((id) => JSON.parse(fs.readFileSync(path.join(dir, `${id}.json`), 'utf8')));
+       assert.deepEqual(identities.filter(({ hostPid }) => running(hostPid)), [], `iteration ${iteration}: live descendants at settlement`);
+@@ -35,7 +35,7 @@
+   const acknowledged = path.join(root, 'term-ack');
+   const supervisor = `const fs=require('node:fs'),cp=require('node:child_process');const child=cp.spawn(process.execPath,['-e',${JSON.stringify(childCode)},${JSON.stringify(supervised)}],{detached:true,stdio:'ignore'});process.on('SIGTERM',()=>{child.once('close',()=>{fs.writeFileSync(${JSON.stringify(acknowledged)},'reaped');process.exit(0);});child.kill('SIGKILL');});setInterval(()=>{},1000);`;
+   try {
+-    await assert.rejects(runProcessInput(process.execPath, ['-e', supervisor], { prefix: 'LIFETIME', timeoutMs: 500, maximumOutputBytes: 4096 }), /LIFETIME_TIMEOUT/);
++    await assert.rejects(runProcessInput(process.execPath, ['-e', supervisor], { processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, prefix: 'LIFETIME', timeoutMs: 500, maximumOutputBytes: 4096 }), /LIFETIME_TIMEOUT/);
+     assert.equal(fs.readFileSync(acknowledged, 'utf8'), 'reaped');
+     assert.equal(running(JSON.parse(fs.readFileSync(supervised, 'utf8')).hostPid), false);
+   } finally {
+@@ -47,7 +47,7 @@
+   const code = `require('node:child_process').spawn(process.execPath,['-e',${JSON.stringify(childCode)},${JSON.stringify(identity)}],{detached:true,stdio:['ignore','inherit','inherit']}).unref();`;
+   const started = Date.now();
+   try {
+-    await assert.rejects(runProcessInput(process.execPath, ['-e', code], { prefix: 'LIFETIME', timeoutMs: 100, maximumOutputBytes: 4096 }), /LIFETIME_CLEANUP_FAILED/);
++    await assert.rejects(runProcessInput(process.execPath, ['-e', code], { processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, prefix: 'LIFETIME', timeoutMs: 100, maximumOutputBytes: 4096 }), /LIFETIME_CLEANUP_FAILED/);
+     assert.ok(Date.now() - started < 2_500, 'escaped pipe must not hold the caller indefinitely');
+   } finally {
+     if (fs.existsSync(identity)) { const { pid } = JSON.parse(fs.readFileSync(identity, 'utf8')); try { process.kill(pid, 'SIGKILL'); } catch { /* Already gone. */ } }
+--- a/skills/buster/engine/test-gates/tests/process-input.test.ts
++++ b/skills/buster/engine/test-gates/tests/process-input.test.ts
+@@ -1,6 +1,6 @@
+ import assert from 'node:assert/strict';
+ import { runProcessInput } from '../process-input.ts';
+-const options = { prefix: 'PIPE_TEST', timeoutMs: 2_000, maximumOutputBytes: 1024 };
++const options = { processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, prefix: 'PIPE_TEST', timeoutMs: 2_000, maximumOutputBytes: 1024 };
+ await assert.rejects(runProcessInput(process.execPath, ['-e', 'process.stdin.destroy();process.exit(0)'], {
+   ...options, input: Buffer.alloc(8 * 1024 * 1024),
+ }), (error: Error & { cause?: NodeJS.ErrnoException }) => error.message === 'PIPE_TEST_STDIN_FAILED' && ['EPIPE', 'ECONNRESET'].includes(error.cause?.code ?? ''));
+--- a/skills/common/plugin-runtime/foundation/config/buster-execution.ts
++++ b/skills/common/plugin-runtime/foundation/config/buster-execution.ts
+@@ -52,7 +52,14 @@
+   readonly maximumQuarantineRecords: number;
+   readonly maximumQuarantineBytes: number;
+ }
++export interface BusterProcessInputSettings {
++  readonly cleanupTimeoutMs: number;
++  readonly terminationGraceMs: number;
++  readonly acknowledgementPollMs: number;
++}
++
+ export interface BusterExecutionSettings {
++  readonly processInput: BusterProcessInputSettings;
+   readonly provider: BusterProviderExecutionSettings;
+   readonly reports: BusterReportExecutionSettings;
+   readonly observation: BusterObservationSettings;
+@@ -62,6 +69,7 @@
+ export function validateBusterExecutionSettings(value: unknown): BusterExecutionSettings {
+   validateComponentSettings('buster-execution', value, 'SWARM_CONFIG_BUSTER_EXECUTION_INVALID');
+   const policy = value as BusterExecutionSettings;
++  const processInput = validateBusterProcessInputSettings(policy.processInput);
+   validateProviderTiming(policy.provider);
+   if (policy.provider.maximumResultBytes > Number.MAX_SAFE_INTEGER - policy.reports.maximumAggregateResultBytes - policy.provider.workerResultWrapperBytes) {
+     throw new Error('SWARM_CONFIG_BUSTER_EXECUTION_RESULT_SUM_INVALID');
+@@ -70,7 +78,7 @@
+   if (policy.stores.attempts.maximumEvidenceObjectBytes > policy.stores.attempts.maximumEvidenceBytes) {
+     throw new Error('SWARM_CONFIG_BUSTER_EXECUTION_EVIDENCE_POOL_INVALID');
+   }
+-  return Object.freeze({ provider: Object.freeze({ ...policy.provider }), reports: Object.freeze({ ...policy.reports }),
++  return Object.freeze({ processInput, provider: Object.freeze({ ...policy.provider }), reports: Object.freeze({ ...policy.reports }),
+     observation: Object.freeze({ ...policy.observation }), stores: Object.freeze({
+       attempts: Object.freeze({ ...policy.stores.attempts }), admission: Object.freeze({ ...policy.stores.admission }),
+     }) });
+@@ -110,3 +118,12 @@
+   validateReportCoherence(policy);
+   return Object.freeze({ ...policy });
+ }
++
++export function validateBusterProcessInputSettings(value: unknown): BusterProcessInputSettings {
++  validateComponentSettings('buster-execution-processInput', value, 'SWARM_CONFIG_BUSTER_PROCESS_INPUT_INVALID');
++  const policy = value as BusterProcessInputSettings;
++  if (policy.terminationGraceMs >= policy.cleanupTimeoutMs || policy.acknowledgementPollMs > policy.cleanupTimeoutMs) {
++    throw new Error('SWARM_CONFIG_BUSTER_PROCESS_INPUT_TIMING_INVALID');
++  }
++  return Object.freeze({ ...policy });
++}
+--- a/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
++++ b/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
+@@ -17,7 +17,7 @@
+ const validateEntry = ajv.compile(entrySchema);
+ const validateComponent = ajv.compile(componentSchema);
+ const settingsDefinitionNames = ['buster-preparation', 'buster-admission', 'buster-dependency-readiness',
+-  'buster-execution', 'buster-execution-observation', 'buster-provider-runtime', 'buster-execution-reports'] as const;
++  'buster-execution', 'buster-execution-observation', 'buster-provider-runtime', 'buster-execution-reports', 'buster-execution-processInput'] as const;
+ const settingsValidators = new Map(settingsDefinitionNames.map(name => [name, ajv.compile({
+   $defs: componentSchema.$defs, $ref: `#/$defs/${name}`,
+ })]));
+--- a/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
++++ b/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
+@@ -1010,7 +1010,8 @@
+         "provider",
+         "reports",
+         "observation",
+-        "stores"
++        "stores",
++        "processInput"
+       ],
+       "properties": {
+         "provider": {
+@@ -1024,6 +1025,9 @@
+         },
+         "stores": {
+           "$ref": "#/$defs/buster-execution-stores"
++        },
++        "processInput": {
++          "$ref": "#/$defs/buster-execution-processInput"
+         }
+       }
+     },
+@@ -1040,6 +1044,32 @@
+         },
+         "observation": {
+           "$ref": "#/$defs/buster-execution-observation"
++        }
++      }
++    },
++    "buster-execution-processInput": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "cleanupTimeoutMs",
++        "terminationGraceMs",
++        "acknowledgementPollMs"
++      ],
++      "properties": {
++        "cleanupTimeoutMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 2147483647
++        },
++        "terminationGraceMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 2147483647
++        },
++        "acknowledgementPollMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 2147483647
+         }
+       }
+     }
+--- /dev/null
++++ b/tests/verification/contracts/buster-process-input-callers.test.mjs
+@@ -0,0 +1,75 @@
++import assert from 'node:assert/strict';
++import childProcess from 'node:child_process';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import process from 'node:process';
++import { syncBuiltinESMExports } from 'node:module';
++import test from 'node:test';
++import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
++
++function fixture(t) {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'process-input-invoker-'));
++  const realSpawn = childProcess.spawn, realKill = process.kill;
++  let child, closed, actualClose = false, spawnHook, killHook;
++  const signals = [];
++  let output = '';
++  t.after(async () => {
++    let signalError;
++    try {
++      if (child && !actualClose) {
++        try { realKill(-child.pid, 'SIGKILL'); }
++        catch (error) { if (error.code !== 'ESRCH') signalError = error; }
++        let timer;
++        try { await Promise.race([closed, new Promise((_, reject) => {
++          timer = setTimeout(() => reject(new Error('OWNED_INVOKER_CHILD_NOT_CLOSED')), 2000);
++        })]); } finally { clearTimeout(timer); }
++      }
++      if (signalError) throw signalError;
++      fs.rmSync(root, { recursive: true, force: true });
++    } finally { spawnHook?.mock.restore(); killHook?.mock.restore(); syncBuiltinESMExports(); }
++  });
++  const binary = path.join(root, 'kubectl-fixture');
++  fs.writeFileSync(binary, `#!${process.execPath}\nprocess.on('SIGTERM',()=>{});process.stdout.write('started');setInterval(()=>{},1000);\n`, { mode: 0o700, flag: 'wx' });
++  spawnHook = t.mock.method(childProcess, 'spawn', function (command, args, options) {
++    assert.equal(command, binary); assert.equal(child, undefined); assert.equal(options.detached, true);
++    child = Reflect.apply(realSpawn, childProcess, [command, args, options]);
++    closed = new Promise(resolve => child.once('close', () => { actualClose = true; resolve(); }));
++    child.stdout.on('data', bytes => { output += bytes.toString(); });
++    return child;
++  });
++  killHook = t.mock.method(process, 'kill', function (pid, signal) {
++    if (child && pid === -child.pid && signal !== 0) signals.push({ signal, at: performance.now() });
++    return Reflect.apply(realKill, process, [pid, signal]);
++  });
++  syncBuiltinESMExports();
++  return { root, binary, signals, observe: () => ({ actualClose, output }) };
++}
++for (const capability of ['kubernetes.fixture', 'kubernetes.exposure']) {
++  for (const terminationGraceMs of [50, 400]) test(`real ${capability} factory command consumes grace ${terminationGraceMs}`, { timeout: 10000 }, async t => {
++    const f = fixture(t);
++    const policy = { cleanupTimeoutMs: 2000, terminationGraceMs, acknowledgementPollMs: 10 };
++    const common = { kubectlExecutable: f.binary, controllerNamespace: 'test', leaseApiGroup: 'example.test',
++      leaseApiVersion: 'v1', allowedNamespacePrefixes: ['test'], maximumExecutionMs: 500 };
++    const runtime = createBusterCapabilityRuntime({ allowedCapabilities: new Set([capability]),
++      kubernetesFixture: { ...common, allowedRegistryPrefixes: ['registry.test/app'], allowedSecretReferences: [],
++        allowedStorageClasses: [], allowDefaultStorageClass: false, maximumManifestBytes: 4096, maximumResources: 1,
++        maximumPersistentVolumeClaimBytes: 1, maximumPersistentVolumeTotalBytes: 1, maximumRetentionSeconds: 60 },
++      tailscaleExposure: { ...common, allowedHostSuffixes: ['.ts.net'], pollIntervalMs: 100 },
++    }, { jobRoot: f.root, workspaceRoot: f.root }, policy);
++    t.after(() => runtime.shutdown());
++    policy.terminationGraceMs = 1200;
++    const request = { operation: 'release', resource: { type: capability,
++      canonicalId: `${capability === 'kubernetes.fixture' ? 'kubernetes-fixture' : 'kubernetes-exposure'}:attempt:one` },
++      payload: { leaseName: 'lease-one', namespace: 'test-one' } };
++    const prefix = capability === 'kubernetes.fixture' ? 'KUBERNETES_FIXTURE_KUBECTL' : 'TAILSCALE_EXPOSURE_KUBECTL';
++    await assert.rejects(runtime.invoker.invoke(capability, request, new AbortController().signal), error =>
++      (capability === 'kubernetes.fixture' ? error.cause?.message : error.message) === `${prefix}_TIMEOUT`);
++    assert.deepEqual(f.observe(), { actualClose: true, output: 'started' });
++    const term = f.signals.find(row => row.signal === 'SIGTERM'), kill = f.signals.find(row => row.signal === 'SIGKILL');
++    assert(term && kill);
++    const duration = kill.at - term.at;
++    assert(duration >= terminationGraceMs - 15);
++    if (terminationGraceMs === 50) assert(duration < 300);
++  });
++}
+--- /dev/null
++++ b/tests/verification/contracts/buster-process-input-policy.test.mjs
+@@ -0,0 +1,136 @@
++import assert from 'node:assert/strict';
++import childProcess from 'node:child_process';
++import fs from 'node:fs';
++import process from 'node:process';
++import { syncBuiltinESMExports } from 'node:module';
++import test from 'node:test';
++import { runProcessInput } from '../../../skills/buster/engine/test-gates/process-input.ts';
++import { validateBusterProcessInputSettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-execution.ts';
++
++const selected = { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 };
++function observe(t, delayedClose = false) {
++  const realSpawn = childProcess.spawn;
++  const realKill = process.kill;
++  const realScan = fs.promises.readdir;
++  let row;
++  const signals = [];
++  const scans = [];
++  let releaseTimer;
++  let spawnHook;
++  let killHook;
++  let scanHook;
++  t.after(async () => {
++    try {
++      if (row && !row.actualClose) {
++        let signalError;
++        try { realKill(-row.child.pid, 'SIGKILL'); }
++        catch (error) { if (error.code !== 'ESRCH') signalError = error; }
++        let timer;
++        try { await Promise.race([row.closed, new Promise((_, reject) => {
++          timer = setTimeout(() => reject(new Error('OWNED_TEST_CHILD_CLOSE_TIMEOUT')), 2000);
++        })]); } finally { clearTimeout(timer); }
++        if (signalError) throw signalError;
++      }
++      if (row?.heldClose) { row.emit.call(row.child, 'close', ...row.heldClose); row.heldClose = null; }
++      clearTimeout(releaseTimer);
++    } finally {
++      spawnHook?.mock.restore(); killHook?.mock.restore(); scanHook?.mock.restore(); syncBuiltinESMExports();
++    }
++  });
++  spawnHook = t.mock.method(childProcess, 'spawn', function (...args) {
++    assert.equal(row, undefined, 'one exact actual child');
++    assert.equal(args[2]?.detached, true);
++    const child = Reflect.apply(realSpawn, childProcess, args);
++    let close;
++    row = { child, actualClose: false, heldClose: null, emit: child.emit,
++      closed: new Promise(resolve => { close = resolve; }), stdout: '' };
++    child.stdout.on('data', bytes => { row.stdout += bytes.toString(); });
++    child.emit = function (event, ...values) {
++      if (event === 'close') {
++        row.actualClose = true; close();
++        if (delayedClose) {
++          row.heldClose = values;
++          releaseTimer = setTimeout(() => { row.heldClose = null; row.emit.call(child, event, ...values); }, 200);
++          return false;
++        }
++      }
++      return Reflect.apply(row.emit, child, [event, ...values]);
++    };
++    return child;
++  });
++  syncBuiltinESMExports();
++  killHook = t.mock.method(process, 'kill', function (pid, signal) {
++    if (row && pid === -row.child.pid && signal !== 0) signals.push({ signal, at: performance.now() });
++    return Reflect.apply(realKill, process, [pid, signal]);
++  });
++  scanHook = t.mock.method(fs.promises, 'readdir', function (...args) {
++    if (args[0] === '/proc' && new Error().stack?.includes('linuxProcessGroupRunning')) scans.push(performance.now());
++    return Reflect.apply(realScan, fs.promises, args);
++  });
++  return { signals, scans, child: () => row };
++}
++
++const ignoreTerm = `process.on('SIGTERM',()=>{});process.stdout.write('ready');setInterval(()=>{},1000);`;
++function options(policy) {
++  return { processInputPolicy: policy, prefix: 'POLICY', timeoutMs: 500, maximumOutputBytes: 4096 };
++}
++
++test('required process-input policy and explicit command bounds fail before spawn', t => {
++  let spawns = 0;
++  t.mock.method(childProcess, 'spawn', () => { spawns++; throw new Error('UNEXPECTED_SPAWN'); });
++  syncBuiltinESMExports();
++  t.after(() => { t.mock.restoreAll(); syncBuiltinESMExports(); });
++  for (const key of Object.keys(selected)) {
++    for (const value of [undefined, null, '10', 0, -1, 1.5, 2147483648]) {
++      const policy = { ...selected, [key]: value };
++      assert.throws(() => runProcessInput(process.execPath, ['-e', ''], options(policy)), /SWARM_CONFIG_BUSTER_PROCESS_INPUT/);
++    }
++  }
++  assert.throws(() => runProcessInput(process.execPath, [], options(undefined)), /SWARM_CONFIG_BUSTER_PROCESS_INPUT/);
++  assert.throws(() => runProcessInput(process.execPath, [], { ...options(selected), timeoutMs: undefined }), /PROCESS_INPUT_TIMEOUT_INVALID/);
++  assert.throws(() => runProcessInput(process.execPath, [], { ...options(selected), maximumOutputBytes: undefined }), /PROCESS_INPUT_OUTPUT_LIMIT_INVALID/);
++  assert.throws(() => validateBusterProcessInputSettings({ ...selected, terminationGraceMs: 1500 }), /TIMING_INVALID/);
++  assert.throws(() => validateBusterProcessInputSettings({ ...selected, acknowledgementPollMs: 1501 }), /TIMING_INVALID/);
++  assert.equal(spawns, 0);
++});
++
++for (const terminationGraceMs of [50, 400]) test(`actual escalation consumes ${terminationGraceMs}ms`, { timeout: 10000 }, async t => {
++  const observed = observe(t);
++  const policy = { ...selected, terminationGraceMs };
++  const running = runProcessInput(process.execPath, ['-e', ignoreTerm], options(policy));
++  policy.terminationGraceMs = 1200; // caller mutation cannot alter the captured policy
++  await assert.rejects(running, { message: 'POLICY_TIMEOUT' });
++  assert.equal(observed.child().stdout, 'ready');
++  assert.equal(observed.child().actualClose, true);
++  const term = observed.signals.find(row => row.signal === 'SIGTERM');
++  const kill = observed.signals.find(row => row.signal === 'SIGKILL');
++  assert(term && kill);
++  const elapsed = kill.at - term.at;
++  assert(elapsed >= terminationGraceMs - 15);
++  if (terminationGraceMs === 50) assert(elapsed < 300, 'must distinguish the longer authored grace');
++});
++
++for (const cleanupTimeoutMs of [100, 600]) test(`cleanup close bound consumes ${cleanupTimeoutMs}ms`, { timeout: 10000 }, async t => {
++  const observed = observe(t, true);
++  const policy = { cleanupTimeoutMs, terminationGraceMs: 20, acknowledgementPollMs: 10 };
++  const running = runProcessInput(process.execPath, ['-e', 'process.stdout.write("ready")'], options(policy));
++  if (cleanupTimeoutMs === 100) {
++    await assert.rejects(running, error => error.message === 'POLICY_CLEANUP_FAILED'
++      && error.errors.some(cause => cause.message === 'PROCESS_INPUT_CLEANUP_TIMEOUT'));
++  } else assert.equal((await running).code, 0);
++  assert.equal(observed.child().stdout, 'ready');
++  assert.equal(observed.child().actualClose, true, 'only notification was held, actual process ended');
++});
++
++for (const acknowledgementPollMs of [10, 100]) test(`actual group scan intervals consume ${acknowledgementPollMs}ms`, { timeout: 10000 }, async t => {
++  const observed = observe(t);
++  await assert.rejects(runProcessInput(process.execPath, ['-e', ignoreTerm], options({
++    cleanupTimeoutMs: 2000, terminationGraceMs: 600, acknowledgementPollMs,
++  })), { message: 'POLICY_TIMEOUT' });
++  assert.equal(observed.child().stdout, 'ready');
++  assert.equal(observed.child().actualClose, true);
++  assert(observed.scans.length >= 3, 'actual repeated group checks required');
++  const gaps = observed.scans.slice(1).map((value, index) => value - observed.scans[index]);
++  if (acknowledgementPollMs === 100) assert(gaps.every(gap => gap >= 90));
++  else assert(gaps.some(gap => gap < 90), 'must distinguish the long polling profile');
++});
+--- a/tests/verification/contracts/buster-report-runtime-policy.test.mjs
++++ b/tests/verification/contracts/buster-report-runtime-policy.test.mjs
+@@ -81,7 +81,7 @@
+     const candidate = { ...runnerExecutionPolicy.reports };
+     if (value === undefined) delete candidate[field]; else candidate[field] = value;
+     const runtimeRoot = path.join(root, `absent-${String(value)}`);
+-    assert.throws(() => new RegisteredReportAdapterRuntime({ read() { throw new Error('unexpected read'); } }, runtimeRoot, candidate), /SWARM_CONFIG_BUSTER_REPORT_POLICY_INVALID/);
++    assert.throws(() => new RegisteredReportAdapterRuntime({ read() { throw new Error('unexpected read'); } }, runtimeRoot, candidate, runnerExecutionPolicy.processInput), /SWARM_CONFIG_BUSTER_REPORT_POLICY_INVALID/);
+     assert.equal(fs.existsSync(runtimeRoot), false);
+   }
+   assert.equal(children.length, 0);
+@@ -92,7 +92,7 @@
+   for (const value of field === 'minimumHeapMiB' ? [32, 64] : [0.1, 0.2]) {
+     const selected = field === 'minimumHeapMiB' ? { minimumHeapMiB: value, heapFraction: 0.01 } : { minimumHeapMiB: 16, heapFraction: value };
+     const policy = validateBusterReportSettings({ ...runnerExecutionPolicy.reports, ...selected });
+-    const runtime = new RegisteredReportAdapterRuntime(f.reader, path.join(f.root, `runtime-${value}`), policy);
++    const runtime = new RegisteredReportAdapterRuntime(f.reader, path.join(f.root, `runtime-${value}`), policy, runnerExecutionPolicy.processInput);
+     const result = await runtime.adapt(f.entry, f.artifact, limits);
+     assert.equal(result.counts.passed, 1); observed.push(Number(result.cases[0].name));
+   }
+@@ -103,7 +103,7 @@
+   const f = adapterFixture(t);
+   for (const minimumOpenFiles of [64, 96]) {
+     const policy = validateBusterReportSettings({ ...runnerExecutionPolicy.reports, maximumOpenFiles: 96, minimumOpenFiles });
+-    const runtime = new RegisteredReportAdapterRuntime(f.reader, path.join(f.root, `fd-${minimumOpenFiles}`), policy);
++    const runtime = new RegisteredReportAdapterRuntime(f.reader, path.join(f.root, `fd-${minimumOpenFiles}`), policy, runnerExecutionPolicy.processInput);
+     const before = f.children.length;
+     if (minimumOpenFiles === 64) {
+       assert.equal((await runtime.adapt(f.entry, f.artifact, { ...limits, openFiles: 64 })).counts.passed, 1);
+@@ -133,7 +133,7 @@
+   const f = adapterFixture(t);
+   for (const runtimeMemoryReserveBytes of [64 * 1024 * 1024, 128 * 1024 * 1024]) {
+     const policy = validateBusterReportSettings({ ...runnerExecutionPolicy.reports, runtimeMemoryReserveBytes });
+-    const runtime = new RegisteredReportAdapterRuntime(f.reader, path.join(f.root, `reserve-${runtimeMemoryReserveBytes}`), policy);
++    const runtime = new RegisteredReportAdapterRuntime(f.reader, path.join(f.root, `reserve-${runtimeMemoryReserveBytes}`), policy, runnerExecutionPolicy.processInput);
+     const request = { ...limits, memoryBytes: 128 * 1024 * 1024 };
+     const before = f.children.length;
+     if (runtimeMemoryReserveBytes === 64 * 1024 * 1024) {
+@@ -150,7 +150,7 @@
+   const f = adapterFixture(t);
+   const policy = validateBusterReportSettings({ ...runnerExecutionPolicy.reports,
+     maximumSourceBytes: 1024, maximumTimeoutMs: 2000, minimumCpuTimeMs: 1000 });
+-  const runtime = new RegisteredReportAdapterRuntime(f.reader, path.join(f.root, 'selected-cap'), policy);
++  const runtime = new RegisteredReportAdapterRuntime(f.reader, path.join(f.root, 'selected-cap'), policy, runnerExecutionPolicy.processInput);
+   assert.equal((await runtime.adapt(f.entry, f.artifact, limits)).counts.passed, 1);
+   const before = f.children.length;
+   for (const [change, error] of [
+--- a/tests/verification/contracts/check-pipeline-junit-report-adapter.mts
++++ b/tests/verification/contracts/check-pipeline-junit-report-adapter.mts
+@@ -58,7 +58,7 @@
+   cpuMillis: 5_000,
+   openFiles: 64,
+ };
+-const runtime = new RegisteredReportAdapterRuntime(new FileReportArtifactReader([artifacts]), runtimeRoot, runnerExecutionPolicy.reports);
++const runtime = new RegisteredReportAdapterRuntime(new FileReportArtifactReader([artifacts]), runtimeRoot, runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput);
+ const result = await runtime.adapt(adapter, artifact, limits);
+ assert.deepEqual(result.counts, { total: 2, passed: 1, failed: 1, errored: 0, skipped: 0 });
+ assert.equal(result.cases[1].findings[0].message, 'wrong value');
+--- a/tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts
+@@ -74,14 +74,14 @@
+ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-implementation-'));
+ try {
+   const executable = resolveExecutable('kubectl');
+-  assert.throws(() => new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary, kubectlExecutable: executable,
++  assert.throws(() => new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary, kubectlExecutable: executable,
+     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
+     allowedStorageClasses: ['example.com/fast'], allowDefaultStorageClass: false,
+     maximumManifestBytes: 1024 * 1024, maximumResources: 64,
+     maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 15 * 1024 ** 3,
+     maximumRetentionSeconds: 3600, maximumExecutionMs: 120_000 }), /KUBERNETES_FIXTURE_STORAGE_CLASSES_INVALID/u);
+-  const capability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary, kubectlExecutable: executable,
++  const capability = new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary, kubectlExecutable: executable,
+     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
+     allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
+@@ -118,7 +118,7 @@
+   const deadlinePath = path.join(temporary, 'deadline.yaml');
+   fs.writeFileSync(deadlinePath, deadlineManifest);
+   const podTimeouts: number[] = [];
+-  const deadlineCapability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary,
++  const deadlineCapability = new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary,
+     kubectlExecutable: executable, controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai',
+     leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'],
+     allowedSecretReferences: [], allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
+@@ -171,7 +171,7 @@
+   await assert.rejects(() => invokeFixture(fixtureRequest('replica-total', `---\napiVersion: apps\/v1\nkind: StatefulSet\nmetadata:\n  name: replicated\nspec:\n  replicas: 16\n  serviceName: app\n  selector:\n    matchLabels:\n      app: app\n  template:\n    metadata:\n      labels:\n        app: app\n    spec:\n      securityContext:\n        runAsNonRoot: true\n        seccompProfile:\n          type: RuntimeDefault\n      containers:\n        - name: app\n          image: registry.local/app@${digest}\n          securityContext:\n            runAsNonRoot: true\n            allowPrivilegeEscalation: false\n            capabilities:\n              drop: [ALL]\n  volumeClaimTemplates:\n    - metadata:\n        name: state\n      spec:\n        storageClassName: fast\n        resources:\n          requests:\n            storage: 1Gi\n`)), /KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED/u);
+   await assert.rejects(() => invokeFixture(fixtureRequest('ephemeral-volume', `---\napiVersion: v1\nkind: Pod\nmetadata:\n  name: ephemeral\nspec:\n  securityContext:\n    runAsNonRoot: true\n    seccompProfile:\n      type: RuntimeDefault\n  containers:\n    - name: app\n      image: registry.local/app@${digest}\n      securityContext:\n        runAsNonRoot: true\n        allowPrivilegeEscalation: false\n        capabilities:\n          drop: [ALL]\n  volumes:\n    - name: data\n      ephemeral:\n        volumeClaimTemplate:\n          spec:\n            storageClassName: fast\n            resources:\n              requests:\n                storage: 100Gi\n`)), /KUBERNETES_FIXTURE_GENERIC_EPHEMERAL_VOLUME_DENIED/u);
+ 
+-  const validationCapability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary,
++  const validationCapability = new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary,
+     kubectlExecutable: executable, controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai',
+     leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'],
+     allowedSecretReferences: [], allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
+--- a/tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts
++++ b/tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts
+@@ -97,7 +97,7 @@
+   const liveRunRoot = path.dirname(generatedWorkspace.artifactRoot);
+   const liveArtifactRoot = `${generatedWorkspace.artifactRoot}-suite5-artifacts`;
+   const liveObservabilityRoot = `${generatedWorkspace.artifactRoot}-suite5-observability`;
+-  const kubernetes = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: liveRunRoot,
++  const kubernetes = new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: liveRunRoot,
+     kubectlExecutable: '/usr/local/bin/kubectl',
+     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: [`${registryHost}/${repositoryName}`],
+--- a/tests/verification/contracts/check-pipeline-report-adapter-runtime.mts
++++ b/tests/verification/contracts/check-pipeline-report-adapter-runtime.mts
+@@ -115,9 +115,9 @@
+ const registry = buildRegistry(packages);
+ const reader = new FileReportArtifactReader([artifactRoot]);
+ assert.throws(() => new FileReportArtifactReader([path.parse(artifactRoot).root]), /REPORT_ARTIFACT_ROOT_TOO_BROAD/u);
+-assert.throws(() => new RegisteredReportAdapterRuntime(reader, path.parse(runtimeRoot).root, runnerExecutionPolicy.reports),
++assert.throws(() => new RegisteredReportAdapterRuntime(reader, path.parse(runtimeRoot).root, runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput),
+   /REPORT_ADAPTER_RUNTIME_ROOT_TOO_BROAD/u);
+-const runtime = new RegisteredReportAdapterRuntime(reader, runtimeRoot, runnerExecutionPolicy.reports);
++const runtime = new RegisteredReportAdapterRuntime(reader, runtimeRoot, runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput);
+ assert.equal(fs.statSync(runtimeRoot).mode & 0o077, 0, 'runtime snapshots stay in an owner-private directory');
+ 
+ const reportPath = path.join(artifactRoot, 'report.xml');
+@@ -199,12 +199,12 @@
+   read() {
+     return new Promise(() => {});
+   },
+-}, path.join(workspace, 'preparation-runtime'), runnerExecutionPolicy.reports);
++}, path.join(workspace, 'preparation-runtime'), runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput);
+ await assert.rejects(preparationRuntime.adapt(valid, artifact, { ...limits, timeoutMs: 50 }),
+   /REPORT_ADAPTER_TIMEOUT/u, 'the host deadline bounds a non-cooperative artifact reader');
+ const dishonestReaderRuntime = new RegisteredReportAdapterRuntime({
+   async read() { return Buffer.from('<different/>'); },
+-}, path.join(workspace, 'dishonest-reader-runtime'), runnerExecutionPolicy.reports);
++}, path.join(workspace, 'dishonest-reader-runtime'), runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput);
+ await assert.rejects(dishonestReaderRuntime.adapt(valid, artifact, limits),
+   /REPORT_ARTIFACT_DIGEST_MISMATCH/u, 'the host revalidates every storage driver result');
+ 
+@@ -217,7 +217,7 @@
+ const raceController = new AbortController();
+ const raceRuntime = new RegisteredReportAdapterRuntime({
+   async read() { raceController.abort(new Error('cancelled during read')); return reportBytes; },
+-}, path.join(workspace, 'race-runtime'), runnerExecutionPolicy.reports);
++}, path.join(workspace, 'race-runtime'), runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput);
+ await assert.rejects(raceRuntime.adapt(valid, artifact, limits, raceController.signal), /cancelled during read/u);
+ 
+ const overLimit = registry.reportAdapters.get('example.over-limit-report:junit');
+--- a/tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts
+@@ -60,7 +60,7 @@
+ assert.match(controller, /legacyMutableExposureDigest/u);
+ assert.match(controller, /return "https:\/\/" \+ host \+ "\/"/u);
+ const kubectlExecutable = resolveExecutable('kubectl');
+-const capability = new TailscaleExposureCapabilityInvoker({ kubectlExecutable,
++const capability = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
+   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000 });
+ await assert.rejects(() => capability.invoke('kubernetes.exposure', { operation: 'prepare',
+@@ -71,7 +71,7 @@
+ const expiresAt = new Date(Date.now() + 60_000).toISOString();
+ let exposureOwner: string | undefined;
+ let resourceVersion = '1';
+-const cancellable = new TailscaleExposureCapabilityInvoker({ kubectlExecutable,
++const cancellable = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
+   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+   async execute(_command, args) {
+@@ -110,7 +110,7 @@
+ assert.match(patches[1]!, /"provider":"off"/u);
+ const rollbackFailure = Object.freeze(new Error('rollback unavailable'));
+ let failedOwner: string | undefined;
+-const failedRollback = new TailscaleExposureCapabilityInvoker({ kubectlExecutable,
++const failedRollback = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
+   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+   async execute(_command, args) {
+@@ -144,7 +144,7 @@
+ const stalePatches: string[] = [];
+ let staleOwner: string | undefined;
+ let supersededOwner: string | undefined;
+-const staleRollback = new TailscaleExposureCapabilityInvoker({ kubectlExecutable,
++const staleRollback = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
+   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+   async execute(_command, args) {
+@@ -180,7 +180,7 @@
+ const ownershipPatches: string[] = [];
+ let requestedOwner: string | undefined;
+ let ownershipReads = 0;
+-const supersededReady = new TailscaleExposureCapabilityInvoker({ kubectlExecutable,
++const supersededReady = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
+   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+   async execute(_command, args) {
+--- a/tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts
++++ b/tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts
+@@ -10,7 +10,7 @@
+ if (!leaseName || !namespace || !serviceName || !Number.isSafeInteger(servicePort) || !expiresAt
+   || !Number.isFinite(Date.parse(expiresAt))) throw new Error('TAILSCALE_EXPOSURE_LIVE_INPUT_REQUIRED');
+ const controllerNamespace = process.env.KUBECLAW_CONTROLLER_NAMESPACE ?? 'kubeclaw';
+-const exposure = new TailscaleExposureCapabilityInvoker({ kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace,
++const exposure = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace,
+   leaseApiGroup: process.env.KUBECLAW_LEASE_API_GROUP ?? 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 300_000, pollIntervalMs: 1000 });
+ const signal = new AbortController().signal;
+--- /dev/null
++++ b/tests/verification/deployment/buster-process-input-parity.test.mjs
+@@ -0,0 +1,103 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { spawnSync } from 'node:child_process';
++import yaml from 'js-yaml';
++import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
++import { readTestBundle, writeTestBundle, bundleFromConfigMap, bundleNames } from '../../fixtures/config/swarm-bundle.mjs';
++import { loadBusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
++
++for (const name of ['kubeclaw', 'prism']) test(`actual ${name} Helm and loader enforce shared process-input policy`, () => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'process-input-chart-'));
++  try {
++    const chart = path.join(root, name);
++    fs.cpSync(`charts/${name}`, chart, { recursive: true, dereference: true });
++    const mutationFiles = [...bundleNames, 'swarm.schema.json', 'swarm-components.schema.json'];
++    const originals = mutationFiles.map(file => {
++      const source = path.join(`charts/${name}`, 'files/config', file);
++      return { path: fs.realpathSync(source), stat: fs.statSync(source) };
++    });
++    const privateRoot = fs.realpathSync(root);
++    const assertPrivate = target => {
++      const parent = fs.realpathSync(path.dirname(target));
++      assert.ok(parent.startsWith(`${privateRoot}${path.sep}`));
++      const actual = fs.realpathSync(target), stat = fs.statSync(target);
++      assert.ok(actual.startsWith(`${privateRoot}${path.sep}`));
++      assert.equal(fs.lstatSync(target).isSymbolicLink(), false);
++      assert.equal(stat.isFile(), true);
++      for (const original of originals) {
++        assert.notEqual(actual, original.path);
++        assert.ok(stat.dev !== original.stat.dev || stat.ino !== original.stat.ino,
++          'private mutation target must not alias an original inode');
++      }
++    };
++    // Detach aliases in the private directory before any writable open.
++    for (const file of mutationFiles) {
++      const target = path.join(chart, 'files/config', file);
++      assert.ok(fs.realpathSync(path.dirname(target)).startsWith(`${privateRoot}${path.sep}`));
++      const bytes = fs.readFileSync(target), initial = fs.statSync(target);
++      const aliasesOriginal = originals.some(original => initial.dev === original.stat.dev && initial.ino === original.stat.ino);
++      if (fs.lstatSync(target).isSymbolicLink() || aliasesOriginal) {
++        fs.unlinkSync(target);
++        fs.writeFileSync(target, bytes, { flag: 'wx' });
++      }
++    }
++    // Validate all destinations before the first mutation, including hardlink identities.
++    for (const file of mutationFiles) assertPrivate(path.join(chart, 'files/config', file));
++    const writePrivateBundle = (entry, document) => {
++      for (const file of mutationFiles) assertPrivate(path.join(chart, 'files/config', file));
++      writeTestBundle(entry, document);
++    };
++    const values = name === 'prism' ? yaml.load(fs.readFileSync('charts/prism/ci-values.yaml', 'utf8'))
++      : yaml.load(fs.readFileSync('my-values/buster-values.yaml', 'utf8'));
++    const namespace = name === 'prism' ? 'default' : 'readiness-test';
++    if (name === 'kubeclaw') {
++      const policy = yaml.load(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8'));
++      policy.nodeName = 'readiness-render-only'; policy.pools.buster.namespace = namespace;
++      const binding = nativePoolPolicy(policy, 'buster');
++      values.busterNative = { namespace, nodeName: binding.nodeName, policyDigest: binding.policyDigest };
++      values.runtimeInfrastructure = { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } };
++      values.extraContainers.find(item => item.name === 'buster-v2-runtime').image = `ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`;
++    }
++    const file = path.join(root, 'values.yaml'); fs.writeFileSync(file, yaml.dump(values));
++    const entry = path.join(chart, 'files/config/swarm.config.json');
++    const baseline = readTestBundle(entry);
++    const render = () => spawnSync('helm', ['template', 'readiness', chart, '--namespace', namespace, '-f', file],
++      { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
++    const renderPolicy = policy => {
++      const document = structuredClone(baseline);
++      document['buster-engine'].settings.execution.processInput = policy;
++      writePrivateBundle(entry, document);
++      return render();
++    };
++    for (const policy of [
++      { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 },
++      { cleanupTimeoutMs: 2400, terminationGraceMs: 400, acknowledgementPollMs: 25 },
++    ]) {
++      const result = renderPolicy(policy); assert.equal(result.status, 0, result.stderr);
++      const docs = yaml.loadAll(result.stdout);
++      const map = docs.find(doc => doc?.kind === 'ConfigMap' && doc.data?.['swarm.config.json']);
++      assert(map);
++      const mounted = path.join(root, 'mounted/swarm.config.json');
++      fs.mkdirSync(path.dirname(mounted), { recursive: true });
++      writeTestBundle(mounted, bundleFromConfigMap(map.data));
++      assert.deepEqual(loadBusterSettings({ SWARM_CONFIG: mounted }).execution.processInput, policy);
++    }
++    const selected = baseline['buster-engine'].settings.execution.processInput;
++    const invalid = [undefined, { ...selected, extra: 1 },
++      { ...selected, terminationGraceMs: selected.cleanupTimeoutMs },
++      { ...selected, acknowledgementPollMs: selected.cleanupTimeoutMs + 1 }];
++    for (const field of Object.keys(selected)) {
++      for (const value of [undefined, null, true, '10', 0, -1, 1.5, 2147483648]) {
++        invalid.push({ ...selected, [field]: value });
++      }
++    }
++    for (const policy of invalid) {
++      const result = renderPolicy(policy); assert.notEqual(result.status, 0);
++      assert.match(result.stderr, /buster execution/);
++      assert.throws(() => loadBusterSettings({ SWARM_CONFIG: entry }), /SWARM_CONFIG/);
++    }
++  } finally { fs.rmSync(root, { recursive: true, force: true }); }
++});
+--- a/tests/verification/reliability/demo-exposure-handoff.test.mjs
++++ b/tests/verification/reliability/demo-exposure-handoff.test.mjs
+@@ -15,7 +15,7 @@
+  try{
+   const expiresAt=new Date(Date.now()+3600_000).toISOString();api.state.lease.status.expiresAt=expiresAt;
+   Object.assign(api.state.lease.spec,{ttlSeconds:3600,cleanupPolicy:'retain',verifiedImage:`registry.example/app@sha256:${'a'.repeat(64)}`,manifestDigest:`sha256:${'b'.repeat(64)}`});
+-  const options={kubectlExecutable:execFileSync('which',['kubectl'],{encoding:'utf8'}).trim(),controllerNamespace:'kubeclaw',leaseApiGroup:'kubeclaw.forgestack.ai',leaseApiVersion:'v1alpha1',allowedNamespacePrefixes:['test'],allowedHostSuffixes:['.ts.net'],maximumExecutionMs:10_000,pollIntervalMs:10};
++  const options={processInputPolicy:{ cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 },kubectlExecutable:execFileSync('which',['kubectl'],{encoding:'utf8'}).trim(),controllerNamespace:'kubeclaw',leaseApiGroup:'kubeclaw.forgestack.ai',leaseApiVersion:'v1alpha1',allowedNamespacePrefixes:['test'],allowedHostSuffixes:['.ts.net'],maximumExecutionMs:10_000,pollIntervalMs:10};
+   let runtime=new TailscaleExposureCapabilityInvoker(options);
+   const context={invoke:(capability,request)=>runtime.invoke(capability,request,new AbortController().signal),log:()=>{}};
+   const invocation={attemptId:'attempt:demo-one',timeoutMs:5000,configuration:{values:{path:'/current',retentionMode:'await-readiness'}},inputs:[{name:'deployment',kind:'value',schemaId:'kubeclaw.kubernetes-deployment-fixture@1',value:{schemaVersion:'kubernetes-deployment-fixture.v1',leaseName:'preview-one',namespace:'test-one',expiresAt,endpoints:[{name:'web',url:'http://web.test-one.svc.cluster.local:80'}]}}]};
+--- a/tests/verification/reliability/http-authority.test.mts
++++ b/tests/verification/reliability/http-authority.test.mts
+@@ -19,12 +19,12 @@
+   const request = (method: string, route = '/') => ({ operation: 'request', resource: { type: 'network.url', canonicalId: origin + route }, payload: { method } });
+   try {
+     const restricted = createBusterCapabilityRuntime({ allowedCapabilities: new Set(['network.http']), networkHttp: options },
+-      { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }).invoker!;
++      { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }, { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }).invoker!;
+     for (const method of ['GET', 'HEAD']) await assert.rejects(restricted.invoke('network.http', request(method), new AbortController().signal), /HTTP_REQUEST_EXACT_ORIGIN_REQUIRED/);
+     assert.equal(contacts, 0);
+     const allowed = createBusterCapabilityRuntime({ allowedCapabilities: new Set(['network.http']),
+       networkHttp: { ...options, allowedOrigins: [origin] } },
+-    { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }).invoker!;
++    { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }, { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }).invoker!;
+     const response = await allowed.invoke('network.http', request('GET'), new AbortController().signal);
+     assert.equal(response.body, 'real service response');
+     assert.equal(contacts, 1);
+--- a/tests/verification/reliability/kubernetes-manifest-budget.test.mjs
++++ b/tests/verification/reliability/kubernetes-manifest-budget.test.mjs
+@@ -13,7 +13,7 @@
+   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kube-yaml-budget-'));
+   try {
+     const executable = execFileSync('which', ['kubectl'], { encoding: 'utf8' }).trim();
+-    const capability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: root, kubectlExecutable: executable,
++    const capability = new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: root, kubectlExecutable: executable,
+       controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+       allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
+       allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
+--- a/tests/verification/reliability/tailscale-generation.test.mjs
++++ b/tests/verification/reliability/tailscale-generation.test.mjs
+@@ -11,7 +11,7 @@
+   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'tailscale-wire-')); const api = await exposureAPI(root);
+   const priorConfig = process.env.KUBECONFIG; process.env.KUBECONFIG = api.config;
+   try {
+-    const client = new TailscaleExposureCapabilityInvoker({ kubectlExecutable: execFileSync('which', ['kubectl'], { encoding: 'utf8' }).trim(),
++    const client = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable: execFileSync('which', ['kubectl'], { encoding: 'utf8' }).trim(),
+       controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+       allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 10_000, pollIntervalMs: 10 });
+     const request = attempt => ({ operation: 'prepare', resource: { type: 'kubernetes.exposure', canonicalId: `kubernetes-exposure:attempt:${attempt}` },

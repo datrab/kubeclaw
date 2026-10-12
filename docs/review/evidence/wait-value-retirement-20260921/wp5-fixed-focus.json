@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "/usr/local/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-name-pattern=Core exposes retained|wrong source/receipt identities|existing operator projection receipt",
+    "tests/verification/reliability/wait-resolver-audience.test.mjs",
+    "tests/verification/reliability/wait-value-projection.test.mjs"
+  ],
+  "exitCode": 0,
+  "sources": [
+    {
+      "path": "scripts/retire-wait-value.mjs",
+      "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+      "sha256": "db6ef5e755808975ba934fa20276b6ac04e40161c3b81607b2c254bb07e36541"
+    },
+    {
+      "path": "tests/verification/reliability/wait-value-projection.test.mjs",
+      "sha256": "208efc60129abe88df55490acbd70a6273a2ce10c3f7b1cbcf07c360ce15a71e"
+    },
+    {
+      "path": "tests/verification/reliability/wait-resolver-audience.test.mjs",
+      "sha256": "16e58e1d0d4200ad1e09c500ae8c898b491b2b41d3acdc288e29d1ccf78ac11e"
+    }
+  ],
+  "sourceDrift": []
+}

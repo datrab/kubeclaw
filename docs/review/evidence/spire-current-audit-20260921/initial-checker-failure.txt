@@ -1,0 +1,1 @@
+Initial independent assertion read container runAsUser only and got undefined. Effective UID is inherited from actual pod securityContext. Corrected assertion models Kubernetes inheritance; no chart/value/doc change.

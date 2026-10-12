@@ -1,0 +1,39 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "scope": "Read-only CI1-CI5 source coverage audit, no runtime/exit-code acceptance",
+  "decision": "Additional CI2 behavioral coverage required before bounded acceptance",
+  "covered": {
+    "CI1": "Both-chart parity iterates missing/null/type/number invalidity across all leaf fields, two valid profiles, version grammar, coherence and retired Helm keys. Production config originals reject old runtime sections and invalid/extra namespace binding before store creation. Entrypoint executes actual shell/preflight with all three retired ENV names empty/equal and checks no subsequent command.",
+    "CI3": "Output low/high genuine subprocesses for both consumers; actual short-auth deadlines; command-boundary polling; diagnostic exact truncation; public fixture quota low/high and zero commands on rejection; real parser/flatten primitives and preserved PVC arithmetic original tests. Parser primitive tests are not themselves full production-loader proof.",
+    "CI4": "Both chart selector/packaging/checksum tests and negative leaf tests present. Semantic controls still await raw evidence review.",
+    "CI5": "Original test source assertions reviewed selectively, no closure inferred from counts. Current final documentation and complete run/control evidence remain pending."
+  },
+  "findings": [
+    {
+      "id": "CI2-CAPTURE",
+      "priority": "P2",
+      "evidence": [
+        "buster-cluster-output-consumers.test.mjs:71 mutates only scalar caller options",
+        "buster-cluster-entrypoint.test.mjs:49 switches component to symlink and checks existing snapshot executable, not changed file policy through consumer",
+        "config-component-bundle.test.mts:63 freezes Prism/preparation/profile properties, not the new cluster arrays/nested manifest",
+        "config-component-generation.test.mjs exercises generation integrity generically but not cluster post-capture effects"
+      ],
+      "required": "Add actual consumer probes after changing component file contents and caller-owned arrays/nested manifest objects after capture. Observe preserved original authorization/manifest behavior for both invokers where relevant; include fresh capture changed-profile positive control so the mutation would matter. Do not substitute Object.isFrozen alone."
+    },
+    {
+      "id": "CI2-PRODUCTION-ROUTE",
+      "priority": "P2",
+      "evidence": [
+        "check-pipeline-remote-runtime-config.mts constructs/starts/stops real runtime routes using one canonical snapshot, with preparation deliberately throwing UNEXPECTED_PREPARATION",
+        "new consumer tests call clusterRuntimeBinding/options/createBusterCapabilityRuntime directly rather than invoking a cluster capability through loadProductionBusterRemotePlanRuntime",
+        "preserved direct invoker original tests cover subject, registry, storage and lease oracles but bypass full production decoder"
+      ],
+      "required": "Add two-profile behavioral coverage through actual production decoder/service route to both invokers (a clearly declared local CLI/API boundary is allowed). Assert authored binding/subject/registry/group or another observable setting reaches consumer, and denied route/grant cannot execute that command despite full configured policy. Reuse a genuine route or independently demonstrate equivalent already-executed coverage; do not count constructor start/stop as invocation proof."
+    }
+  ],
+  "limits": [
+    "No source edits or runtime execution performed.",
+    "These are package CI2 proof gaps, not assertions of a demonstrated production defect.",
+    "This does not require live cluster deployment or broaden original criteria."
+  ]
+}

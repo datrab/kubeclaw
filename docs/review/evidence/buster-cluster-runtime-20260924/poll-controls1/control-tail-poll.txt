@@ -1,0 +1,33 @@
+CLUSTER_MUTATION_APPLIED {"mutation":"tail-poll","pid":45576,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts","beforeSha256":"6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc","afterSha256":"bdb62361fe734ce24a2337f108c204ec3c04b827cee3ae2f80347b64858c7e7f","replacements":[{"from":"Math.min(this.#pollIntervalMs,","to":"Math.min(1000,","count":1}],"replacedAnchors":1}
+✔ actual kubernetes.fixture polling cadence 50 (157.947567ms)
+✔ actual kubernetes.fixture polling cadence 200 (404.693387ms)
+✖ actual kubernetes.exposure polling cadence 50 (1505.842135ms)
+✖ actual kubernetes.exposure polling cadence 200 (1502.741245ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5964.968199
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-poll-consumers.test.mjs:12:33
+✖ actual kubernetes.exposure polling cadence 50 (1505.842135ms)
+  Error: TAILSCALE_EXPOSURE_READINESS_TIMEOUT
+      at #wait (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:140:33)
+      at async #prepare (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:233:21)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-poll-consumers.test.mjs:66:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/contracts/buster-cluster-poll-consumers.test.mjs:12:33
+✖ actual kubernetes.exposure polling cadence 200 (1502.741245ms)
+  Error: TAILSCALE_EXPOSURE_READINESS_TIMEOUT
+      at #wait (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:140:33)
+      at async #prepare (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:233:21)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-poll-consumers.test.mjs:66:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

@@ -1,0 +1,41 @@
+[
+  {
+    "mutant": "subject",
+    "command": [
+      "node",
+      "--import",
+      "./docs/review/evidence/config-control-policy-20260921/mutant-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=CC3 real Control service profile",
+      "skills/prism/tests/control-generation-http.test.mts"
+    ],
+    "exitCode": 1
+  },
+  {
+    "mutant": "root",
+    "command": [
+      "node",
+      "--import",
+      "./docs/review/evidence/config-control-policy-20260921/mutant-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=CC3 real Control service profile",
+      "skills/prism/tests/control-generation-http.test.mts"
+    ],
+    "exitCode": 1
+  },
+  {
+    "mutant": "studio",
+    "command": [
+      "node",
+      "--import",
+      "./docs/review/evidence/config-control-policy-20260921/mutant-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=CC3 real Control service profile",
+      "skills/prism/tests/control-generation-http.test.mts"
+    ],
+    "exitCode": 1
+  }
+]

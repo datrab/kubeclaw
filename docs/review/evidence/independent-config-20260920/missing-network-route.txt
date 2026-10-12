@@ -1,0 +1,20 @@
+✖ suffix matching cannot contact an unrelated real HTTP service; exact origin works and redirects stop (7.767411ms)
+✔ fixture leases reject expired authority before contact and cancel a real in-flight request at expiry (1032.432271ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2277.694534
+
+✖ failing tests:
+
+test at ../../../../../tmp/independent-config-negative-88xy6u3e/http-authority.test.mts:8:1
+✖ suffix matching cannot contact an unrelated real HTTP service; exact origin works and redirects stop (7.767411ms)
+  TypeError: Cannot read properties of null (reading 'invoke')
+      at TestContext.<anonymous> (file:///tmp/independent-config-negative-88xy6u3e/http-authority.test.mts:23:75)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

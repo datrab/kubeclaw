@@ -1,0 +1,238 @@
+[
+  {
+    "path": "tests/verification/reliability/result-reservation.test.mts",
+    "originalAssertions": 4,
+    "currentAssertions": 4,
+    "originalCases": [
+      "'result admission reserves capacity across competing processes and reconstruction'"
+    ],
+    "currentCases": [
+      "'result admission reserves capacity across competing processes and reconstruction'"
+    ],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/reliability/buster-job-compaction.test.mts",
+    "originalAssertions": 76,
+    "currentAssertions": 76,
+    "originalCases": [
+      "'manual compaction reclaims genuine completed-job metadata bytes, preserving terminal HTTP replay'",
+      "'real metadata byte quota is released; record count and completed status remain'",
+      "'reopened original HTTP consumer returns same completion; full validation and conflicts survive'",
+      "'stale scope, unknown identity, movable branch and missing retained tag reject unchanged'",
+      "'missing or changed real result blocks compaction'",
+      "'accepted, running and uncertain execution remain ineligible'",
+      "'actual artifact bytes stay readable over HTTP; missing artifact prevents mutation'",
+      "'caller mutation after submission cannot alter the persisted intent or poison replay'",
+      "'concurrent identical operation has one writer; stale original CAS cannot restore archive'",
+      "'SIGKILL before mutation and after durable commit recover without double release'",
+      "'manual CLI persists one receipt and idempotent retry returns zero additional bytes'"
+    ],
+    "currentCases": [
+      "'manual compaction reclaims genuine completed-job metadata bytes, preserving terminal HTTP replay'",
+      "'real metadata byte quota is released; record count and completed status remain'",
+      "'reopened original HTTP consumer returns same completion; full validation and conflicts survive'",
+      "'stale scope, unknown identity, movable branch and missing retained tag reject unchanged'",
+      "'missing or changed real result blocks compaction'",
+      "'accepted, running and uncertain execution remain ineligible'",
+      "'actual artifact bytes stay readable over HTTP; missing artifact prevents mutation'",
+      "'caller mutation after submission cannot alter the persisted intent or poison replay'",
+      "'concurrent identical operation has one writer; stale original CAS cannot restore archive'",
+      "'SIGKILL before mutation and after durable commit recover without double release'",
+      "'manual CLI persists one receipt and idempotent retry returns zero additional bytes'"
+    ],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "originalAssertions": 25,
+    "currentAssertions": 27,
+    "originalCases": [
+      "`durable shutdown failure ownership: ${timing}`"
+    ],
+    "currentCases": [
+      "`durable shutdown failure ownership: ${timing}`"
+    ],
+    "changedOriginalAssertions": [
+      "assert.equal(fs.readFileSync(runtimeRoot, 'utf8'), 'original filesystem ENOTDIR; no provider can start')",
+      "assert.equal(fs.readFileSync(runtimeRoot, 'utf8'), 'original filesystem ENOTDIR; no provider can start')"
+    ],
+    "addedOrMappedAssertions": [
+      "assert.equal(running.payload.status.state, 'running')",
+      "assert.ok(Buffer.byteLength(canonicalJson({ ...running.payload, status: { ...running.payload.status,\n      state: 'cancelled', error: 'OBSERVABILITY_STORE_PATH_NOT_DIRECTORY' } })) > quota)",
+      "assert.equal(fs.readFileSync(preparedPlanRuntimeRoot(runtimeRoot), 'utf8'), 'original filesystem ENOTDIR; no provider can start')",
+      "assert.equal(fs.readFileSync(preparedPlanRuntimeRoot(runtimeRoot), 'utf8'), 'original filesystem ENOTDIR; no provider can start')"
+    ]
+  },
+  {
+    "path": "tests/verification/reliability/coverage-remote.test.mts",
+    "originalAssertions": 8,
+    "currentAssertions": 8,
+    "originalCases": [
+      "'original remote Buster skipped execution cannot fulfil required coverage at the same Git candidate'"
+    ],
+    "currentCases": [
+      "'original remote Buster skipped execution cannot fulfil required coverage at the same Git candidate'"
+    ],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "originalAssertions": 95,
+    "currentAssertions": 95,
+    "originalCases": [
+      "'original completed import projects duplicate bytes with real quotas and exact HTTP replay'",
+      "'original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input'",
+      "'manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner'",
+      "'independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId'",
+      "'independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation'",
+      "'independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release'",
+      "'actual blocked original Core with a completed import cannot authorize retention before cancellation'",
+      "'honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility'",
+      "'registered implementation source authorizes dispatch projection through its committed artifact'",
+      "'actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job'",
+      "'actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery'"
+    ],
+    "currentCases": [
+      "'original completed import projects duplicate bytes with real quotas and exact HTTP replay'",
+      "'original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input'",
+      "'manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner'",
+      "'independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId'",
+      "'independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation'",
+      "'independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release'",
+      "'actual blocked original Core with a completed import cannot authorize retention before cancellation'",
+      "'honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility'",
+      "'registered implementation source authorizes dispatch projection through its committed artifact'",
+      "'actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job'",
+      "'actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery'"
+    ],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/reliability/nova-remote-faults.mts",
+    "originalAssertions": 25,
+    "currentAssertions": 25,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+    "originalAssertions": 6,
+    "currentAssertions": 6,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-container-build-production.mts",
+    "originalAssertions": 11,
+    "currentAssertions": 11,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "originalAssertions": 54,
+    "currentAssertions": 54,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [
+      "assert.equal(fs.readFileSync(path.join(paths.repositoryRoot, 'README.md'), 'utf8'), 'remote plan source\\n')"
+    ],
+    "addedOrMappedAssertions": [
+      "assert.equal(fs.readFileSync(path.join(paths.sourceRepositoryRoot, 'README.md'), 'utf8'), 'remote plan source\\n')"
+    ]
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-security-parity.mts",
+    "originalAssertions": 13,
+    "currentAssertions": 13,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+    "originalAssertions": 4,
+    "currentAssertions": 4,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+    "originalAssertions": 6,
+    "currentAssertions": 6,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+    "originalAssertions": 14,
+    "currentAssertions": 14,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+    "originalAssertions": 8,
+    "currentAssertions": 8,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "originalAssertions": 17,
+    "currentAssertions": 18,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": [
+      "assert.ok(executed.remote.status.result)"
+    ]
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+    "originalAssertions": 7,
+    "currentAssertions": 7,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+    "originalAssertions": 5,
+    "currentAssertions": 5,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+    "originalAssertions": 6,
+    "currentAssertions": 6,
+    "originalCases": [],
+    "currentCases": [],
+    "changedOriginalAssertions": [],
+    "addedOrMappedAssertions": []
+  }
+]

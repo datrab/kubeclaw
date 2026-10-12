@@ -1,0 +1,79 @@
+[
+  {
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/reliability/config-component-bundle.test.mts",
+      "tests/verification/reliability/config-component-generation.test.mjs",
+      "tests/verification/deployment/config-component-packaging.test.mjs",
+      "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "tests/verification/deployment/buster-admission-render.test.mjs",
+      "skills/prism/tests/swarm-control-policy.test.mts",
+      "skills/prism/tests/swarm-input-limit.test.mts",
+      "skills/prism/tests/swarm-native-settings.test.mts",
+      "skills/prism/tests/swarm-resource-operation.test.mts",
+      "skills/prism/tests/swarm-resource-policy.test.mts",
+      "skills/prism/tests/swarm-result-journal.test.mts",
+      "skills/prism/tests/swarm-supervisor-config.test.mts",
+      "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+      "skills/prism/tests/swarm-worker-behavior.test.mts",
+      "skills/prism/tests/swarm-worker-config.test.mts",
+      "skills/prism/tests/studio-config.test.mts",
+      "skills/prism/tests/studio-service.test.mts"
+    ],
+    "exitCode": 0,
+    "expectedExit": 0,
+    "name": "componentModules",
+    "seconds": 137.63226326799486
+  },
+  {
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/verification/reliability/buster-preparation-identities.test.mts",
+      "tests/verification/reliability/buster-preparation-ledger.test.mts",
+      "tests/verification/e2e/swarm-author-profile.test.mjs"
+    ],
+    "exitCode": 0,
+    "expectedExit": 0,
+    "name": "busterModules",
+    "seconds": 15.159074531053193
+  },
+  {
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/deployment/release-configuration.test.mjs",
+      "tests/verification/deployment/code-release.test.mjs",
+      "tests/verification/deployment/deployment-release.test.mjs",
+      "tests/verification/deployment/gitops-release.test.mjs",
+      "tests/verification/deployment/release-images.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExit": 0,
+    "name": "releaseModules",
+    "seconds": 174.441918740049
+  }
+]

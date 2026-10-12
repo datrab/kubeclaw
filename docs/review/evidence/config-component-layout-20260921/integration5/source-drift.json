@@ -1,0 +1,8 @@
+[
+  "charts/kubeclaw/files/config/prism-control.config.json",
+  "charts/kubeclaw/files/config/buster-engine.config.json",
+  "charts/kubeclaw/files/config/prism-execution.config.json",
+  "charts/kubeclaw/files/config/prism-worker.config.json",
+  "charts/kubeclaw/files/config/swarm.config.json",
+  "charts/kubeclaw/files/config/prism-studio.config.json"
+]

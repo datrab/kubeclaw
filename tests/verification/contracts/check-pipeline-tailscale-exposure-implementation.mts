@@ -3,6 +3,9 @@ import { randomUUID } from 'node:crypto';
 import { resolveExecutable } from './support/resolve-executable.mts';
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import YAML from 'yaml';
+import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
 import { buildRegistry, discoverPackages } from '@kubeclaw/nova-core';
 import { TailscaleExposureCapabilityInvoker } from '../../../skills/buster/engine/test-gates/tailscale-exposure-runtime.ts';
 
@@ -33,13 +36,41 @@ assert.match(runtime, /purpose: 'gate'[^]*provider: 'off'/u);
 assert.match(controller, /ensurePreviewExposure/u);
 assert.match(controller, /tailscale-ingress/u);
 assert.match(crd, /purpose:\s*\n\s*type: string/u);
-assert.doesNotMatch(crd, /self == oldSelf/u);
+// Render prerequisites only; this binding does not assert a running native node.
+const renderPolicy = YAML.parse(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8'));
+renderPolicy.nodeName = 'exposure-render-only';
+renderPolicy.pools.buster.namespace = 'kubeclaw';
+const renderBinding = nativePoolPolicy(renderPolicy, 'buster');
+const lease = YAML.parse(execFileSync(process.env.KUBECLAW_TEST_HELM ?? 'helm', [
+  'template', 'exposure-contract', 'charts/kubeclaw', '--namespace', 'kubeclaw',
+  '-f', 'my-values/buster-values.yaml',
+  '--set', 'busterNative.namespace=kubeclaw',
+  '--set', `busterNative.nodeName=${renderBinding.nodeName}`,
+  '--set', `busterNative.policyDigest=${renderBinding.policyDigest}`,
+  '--set', 'agentRole=buster', '--set', 'busterNamespaceBroker.enabled=true',
+  '--set', 'extraContainers[0].name=buster-v2-runtime',
+  '--set', `extraContainers[0].image=ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`,
+  '--set', 'runtimeInfrastructure.registry.endpoint=http://registry.render-test:5000',
+  '--set', 'runtimeInfrastructure.registry.transport=http-lab',
+  '--show-only', 'templates/buster-namespace-lease-crd.yaml',
+], { encoding: 'utf8', maxBuffer: 2 * 1024 * 1024 }));
+const leaseSchema = lease.spec.versions[0].schema.openAPIV3Schema;
+for (const schema of [leaseSchema, leaseSchema.properties.spec]) {
+  assert(!(schema['x-kubernetes-validations'] ?? []).some((validation: { rule: string }) => validation.rule === 'self == oldSelf'),
+    'the complete lease/exposure spec must remain mutable');
+}
+assert(leaseSchema.properties.spec['x-kubernetes-validations'].some((validation: { rule: string; message: string }) =>
+  validation.message === 'access is immutable'
+  && validation.rule === 'has(self.access) == has(oldSelf.access) && (!has(self.access) || self.access == oldSelf.access)'),
+'access identity must retain its actual immutability rule');
+assert.deepEqual(leaseSchema.properties.status.properties.demoProduct.properties.decisions.items['x-kubernetes-validations']
+  .map((validation: { rule: string }) => validation.rule), ['self == oldSelf'], 'recorded human decisions remain immutable');
 assert.match(crd, /access is immutable/u);
 assert.match(crd, /previewUrl:\s*\n\s*type: string\s*\n\s*nullable: true/u);
 assert.match(controller, /legacyMutableExposureDigest/u);
 assert.match(controller, /return "https:\/\/" \+ host \+ "\/"/u);
 const kubectlExecutable = resolveExecutable('kubectl');
-const capability = new TailscaleExposureCapabilityInvoker({ kubectlExecutable,
+const capability = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000 });
 await assert.rejects(() => capability.invoke('kubernetes.exposure', { operation: 'prepare',
@@ -50,7 +81,7 @@ const patches: string[] = [];
 const expiresAt = new Date(Date.now() + 60_000).toISOString();
 let exposureOwner: string | undefined;
 let resourceVersion = '1';
-const cancellable = new TailscaleExposureCapabilityInvoker({ kubectlExecutable,
+const cancellable = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
   async execute(_command, args) {
@@ -89,7 +120,7 @@ assert.match(patches[0]!, /final-preview/u);
 assert.match(patches[1]!, /"provider":"off"/u);
 const rollbackFailure = Object.freeze(new Error('rollback unavailable'));
 let failedOwner: string | undefined;
-const failedRollback = new TailscaleExposureCapabilityInvoker({ kubectlExecutable,
+const failedRollback = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
   async execute(_command, args) {
@@ -123,7 +154,7 @@ const staleCancellation = new AbortController();
 const stalePatches: string[] = [];
 let staleOwner: string | undefined;
 let supersededOwner: string | undefined;
-const staleRollback = new TailscaleExposureCapabilityInvoker({ kubectlExecutable,
+const staleRollback = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
   async execute(_command, args) {
@@ -159,7 +190,7 @@ assert.equal(stalePatches.length, 1, 'a stale rollback must not disable the newe
 const ownershipPatches: string[] = [];
 let requestedOwner: string | undefined;
 let ownershipReads = 0;
-const supersededReady = new TailscaleExposureCapabilityInvoker({ kubectlExecutable,
+const supersededReady = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
   async execute(_command, args) {

@@ -1,0 +1,40 @@
+[
+  {
+    "name": "child-two",
+    "command": [
+      "python3",
+      "docs/review/evidence/provider-child-session-simplicity-20260921/run-observation-controls.py",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-buster-runner-execution-child-20260921/semantic-controls1/child"
+    ],
+    "exitCode": 0,
+    "detected": true
+  },
+  {
+    "name": "boundary",
+    "command": [
+      "node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-buster-runner-execution-child-20260921/boundary-control.mjs"
+    ],
+    "exitCode": 0,
+    "detected": true
+  },
+  {
+    "name": "sampling",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/contracts/buster-process-sampling.test.mjs"
+    ],
+    "exitCode": 1,
+    "detected": true
+  },
+  {
+    "name": "removed-term",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    ],
+    "exitCode": 1,
+    "detected": true
+  }
+]

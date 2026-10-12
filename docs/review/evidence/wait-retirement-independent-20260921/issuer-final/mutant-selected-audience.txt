@@ -1,0 +1,32 @@
+SEMANTIC_MUTANT_APPLIED:selected-audience
+✖ Core exposes retained Wait resolver only to the selected original built-in and revokes it on shutdown (5515.168075ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6228.884375
+
+✖ failing tests:
+
+test at tests/verification/reliability/wait-resolver-audience.test.mjs:11:1
+✖ Core exposes retained Wait resolver only to the selected original built-in and revokes it on shutdown (5515.168075ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'function'
+  - 'undefined'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/wait-resolver-audience.test.mjs:35:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'function',
+    expected: 'undefined',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

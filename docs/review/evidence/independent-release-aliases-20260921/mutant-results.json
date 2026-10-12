@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "skip-canonical-targets",
+    "exitCode": 1,
+    "replacement": {
+      "before": "[...entries, ...targets]",
+      "after": "entries"
+    }
+  },
+  {
+    "mutant": "skip-ancestor-validation",
+    "exitCode": 1,
+    "replacement": {
+      "before": "if (!fs.lstatSync(path.join(root, ancestor)).isDirectory())",
+      "after": "if (false)"
+    }
+  },
+  {
+    "mutant": "trust-current-alias-only",
+    "exitCode": 1,
+    "replacement": {
+      "before": "!target || git(['cat-file', 'blob', entry.digest]) !== target",
+      "after": "!target"
+    }
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "source": ".dockerignore",
+    "snapshot": "00-.dockerignore.snapshot",
+    "sha256": "7befebeee56215798aa7e9243afdf1772e4982d896bc2285d818d595694ff908"
+  },
+  {
+    "source": "scripts/browser-archive-lock.mjs",
+    "snapshot": "01-browser-archive-lock.mjs.snapshot",
+    "sha256": "741708cd74353e5298aa8affec188e44f6f53c1babe503a24619f6f349b528c9"
+  },
+  {
+    "source": "scripts/updates/runtime-inputs.mjs",
+    "snapshot": "02-runtime-inputs.mjs.snapshot",
+    "sha256": "811d8f41cdcdd4af5907f224eb15286b8a238b0a237ec56e445cf0af97978847"
+  },
+  {
+    "source": "tests/verification/deployment/runtime-input-locks.test.mjs",
+    "snapshot": "03-runtime-input-locks.test.mjs.snapshot",
+    "sha256": "e72d4da97379a33c9af72ff2c938d8d88bed46f75a77cee131dad3eeb64d39c3"
+  },
+  {
+    "source": "scripts/tests/docker-context/context_test.go",
+    "snapshot": "04-context_test.go.snapshot",
+    "sha256": "c87e5ab33ae4190d5ab2c62f6134c2b644fe96f789e2182f8aa6e83602d336fd"
+  },
+  {
+    "source": "scripts/tests/docker-context/go.mod",
+    "snapshot": "05-go.mod.snapshot",
+    "sha256": "5bbae57117da7f6b904429070e0d6c776fe7fd734e8769f065b31627bbed8e78"
+  },
+  {
+    "source": "scripts/tests/docker-context/go.sum",
+    "snapshot": "06-go.sum.snapshot",
+    "sha256": "11f1d2993cb2b5aed8c7d5276c6cc7c57a28240b628709a70f226a1e8d970299"
+  },
+  {
+    "source": "docs/operations/runtime-versions-and-images.md",
+    "snapshot": "07-runtime-versions-and-images.md.snapshot",
+    "sha256": "354746d1ba4047408ff3e06e3baeee26634416170b038d4215bb3190d82bd85c"
+  }
+]

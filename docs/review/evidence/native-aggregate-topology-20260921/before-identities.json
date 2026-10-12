@@ -1,0 +1,152 @@
+[
+  {
+    "path": "skills/worker/core/worker/native-pool-policy.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-pool-policy.ts",
+    "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+  },
+  {
+    "path": "skills/worker/core/worker/native-process-control.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-process-control.ts",
+    "sha256": "3cfd56d48a2f70fb80072692a133fb0c8490bd94ec79d5270b771dd2e2717d2e"
+  },
+  {
+    "path": "skills/worker/core/worker/native-node-identity.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-node-identity.ts",
+    "sha256": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3"
+  },
+  {
+    "path": "skills/worker/core/worker/native-result.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-result.ts",
+    "sha256": "11c8074a973fec8f764e64668e29c7d4907a5b9e605b6bad04cbfa0454d318bd"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-pool.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-resource-pool.ts",
+    "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-observation.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-resource-observation.ts",
+    "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-attempt-recovery.ts",
+    "sha256": "fc55712ec3a5237e0131969d4aa190fcf994541525521210e8598ec63c950769"
+  },
+  {
+    "path": "skills/worker/core/worker/native-process-cancellation.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-process-cancellation.ts",
+    "sha256": "1a3295c2220b82b3c06047151df0a6ca4e126f747f5eaabb57ddb5a753cd1bf5"
+  },
+  {
+    "path": "skills/worker/core/worker/native-process-launches.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-process-launches.ts",
+    "sha256": "4b4ea9b64584e43f2f791d97872430f0d2dcf917d5ada11c0a8bb2ecd4456155"
+  },
+  {
+    "path": "skills/worker/core/worker/native-control-channel.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-control-channel.ts",
+    "sha256": "253ecc17f153e13e6e00aad3f842565ad17a01e85cac15db910d9b4b2ea9edc8"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-state.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-journal-state.ts",
+    "sha256": "caca74b468a134faf29da1f74d0a69443f495e63fbbf8fb39692ff9de0ba8111"
+  },
+  {
+    "path": "skills/worker/core/worker/native-output-spool.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-output-spool.ts",
+    "sha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7"
+  },
+  {
+    "path": "skills/worker/core/worker/native-runtime-identity.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-runtime-identity.ts",
+    "sha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-scope.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-resource-scope.ts",
+    "sha256": "2aa1a46145ff77451e85796c1ce13ade3c4eaf7beba5063cabf0acb081190d4c"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-executor.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-attempt-executor.ts",
+    "sha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3"
+  },
+  {
+    "path": "skills/worker/core/worker/native-supervisor-authority.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-supervisor-authority.ts",
+    "sha256": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-journal.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-attempt-journal.ts",
+    "sha256": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-process.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-worker-process.ts",
+    "sha256": "d43bc3ce05976d77579dbc624cae8be1d3209732b023124e3eb6f0a8fd9860da"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-worker-ownership.ts",
+    "sha256": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-accounting.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-resource-accounting.ts",
+    "sha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448"
+  },
+  {
+    "path": "skills/worker/core/worker/native-process-output.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-process-output.ts",
+    "sha256": "5f7a4e1cdd9424fefe249775886a34019da38f7a76c486b38005c5d727f14350"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-launcher.c",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/native-worker-launcher.c",
+    "sha256": "dfccd80f747faa7139cf7033150f0731b22c0de3da31a99f3223beea94d263c7"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/ownership-store.ts",
+    "sha256": "d784b4196a6103a0ad1e1eaa086640d89ea3205db74be0b0d569045183d20b79"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-state.ts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/ownership-state.ts",
+    "sha256": "fb56676102eadf6a00d3a138cacab4ff945ba5974ba78786c3840ba18faed05a"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-observation.test.mts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/worker-native-observation.test.mts",
+    "sha256": "aec9daa4872aa4e13dbae6e16c69fb383d731b7082b17abd81681d2cf722ff95"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-scope-live.mts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/worker-native-scope-live.mts",
+    "sha256": "f675bd6333d8fe3191e5b0d15ae11db3621cbaf8a457db79635dfb3de8ca7e45"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-contract.test.mts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/worker-native-contract.test.mts",
+    "sha256": "06ae7e8015b6b4675b595817bbe889f37643cb36fe93fb1797c0f1a8230ce05e"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-journal.test.mts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/worker-native-journal.test.mts",
+    "sha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-launcher.test.mts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/worker-native-launcher.test.mts",
+    "sha256": "4ddfccf7e7ea894c8735f66777af0f193943d83e302d09a47440e83c66a6089c"
+  },
+  {
+    "path": "tests/verification/reliability/worker-ownership-store.test.mts",
+    "snapshot": "docs/review/evidence/native-aggregate-topology-20260921/before/worker-ownership-store.test.mts",
+    "sha256": "af2319b4a8c90b71b58cd6a3d46e7349fde0593151d4130af7d9c09a8765787b"
+  }
+]

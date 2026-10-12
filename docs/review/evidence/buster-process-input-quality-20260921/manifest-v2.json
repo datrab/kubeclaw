@@ -1,0 +1,22 @@
+{
+  "status": "private V2 records observed group errors before the shared deadline",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "beforeSha256": "321c30cda2cd5d0d417a21947ad2a4535b1a04904a83eeea4484a92116e9b1c8",
+      "afterSha256": "4215ff0c2849dba12fe36887aed1ba771a0c77c8475274176807ea472b66856d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "beforeSha256": "35a4be02b927eca37c9cc68725c53a8987e6d73b0915dcfd9fd173b641833972",
+      "afterSha256": "ff1279f5ca4af3364b0e04cf977803717b6884329f75b9c5461be3b5455797bd"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+      "beforeSha256": "5fe7ac0657744ce6039b702a2d435fd870916e6e32b78fb90addb3e75606611a",
+      "afterSha256": "71843faf3904ce7e001aecd5ec4c0e8a511f6a4d5fe77baafa1e9f4306dfa09d"
+    }
+  ],
+  "scope": "bounded process cleanup error retention, cohesive validation extraction, exact infrastructure environment declarations; no thresholds changed",
+  "afterDirectory": "after-v2"
+}

@@ -1,0 +1,18 @@
+{
+  "scope": "final inventory documents only; no accepted implementation manifest",
+  "documents": [
+    {
+      "path": "docs/review/remediation/assessment-20261012.md",
+      "sha256": "ca435562011936e4a272fc65c929a72d8143b029892ebf192078343ef756fbf3"
+    },
+    {
+      "path": "docs/review/remediation/independent-assessment-20261012.md",
+      "sha256": "2aa12532abf739d8bdb362911f0072b8a61279dbbb1765c5a44a65e84b6cfdc4"
+    },
+    {
+      "path": "docs/review/remediation/audit-20261012.json",
+      "sha256": "db9e9f2364705ae9cea13f15d4b9d8e592e02a0599039cab5b72da1276d65922"
+    }
+  ],
+  "reviewedAssessmentNote": "Independent reviewer approved corrected substantive assessment and audit; final review link appended subsequently."
+}

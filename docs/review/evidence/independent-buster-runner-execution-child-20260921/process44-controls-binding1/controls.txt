@@ -1,0 +1,8 @@
+cleanupTimeoutMs True
+terminationGraceMs True
+acknowledgementPollMs True
+report-forwarding True
+kubernetes-forwarding True
+tailscale-forwarding True
+swallowed-signal-errors True
+rejected-quality-v1 True

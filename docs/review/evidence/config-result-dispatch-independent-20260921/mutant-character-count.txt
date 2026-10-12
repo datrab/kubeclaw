@@ -1,0 +1,27 @@
+✖ CR03 original HTTP transport enforces 8 UTF-8 bytes (34.739017ms)
+✔ CR03 original HTTP transport enforces 9 UTF-8 bytes (9.01286ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 579.683212
+
+✖ failing tests:
+
+test at ../../../../../tmp/independent-prism-transport-Ghpnkc/character-count.mts:59:42
+✖ CR03 original HTTP transport enforces 8 UTF-8 bytes (34.739017ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///tmp/independent-prism-transport-Ghpnkc/character-count.mts:66:33)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /PRISM_NATIVE_RESULT_BODY_LIMIT/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

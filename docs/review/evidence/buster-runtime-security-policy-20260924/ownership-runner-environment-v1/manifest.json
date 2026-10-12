@@ -1,0 +1,13 @@
+{
+  "status": "frozen private harness-only correction; unexecuted; no oracle/deadline change",
+  "files": [
+    {
+      "path": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "beforeSha256": "9a72278e4ef15a5a19c718f893ecca04d8263d1d66ab27059291c20bfea1d7ca",
+      "afterSha256": "d71fb8decddcff431f4e67750516ad8886dad335cba63051d79fb1880149611d"
+    }
+  ],
+  "observedFailureLog": "/tmp/cluster-ownership-gate-MCONNM/stderr.txt",
+  "removedEnvironmentKey": "NODE_TEST_CONTEXT",
+  "retained": "Every other inherited environment key, including NODE_OPTIONS, tool guards and mutation bindings"
+}

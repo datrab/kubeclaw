@@ -1,0 +1,109 @@
+✔ direction selection rolls back on actual SQL insert failure and replays a committed response (2948.772621ms)
+✔ all feedback actions persist valid wire IDs, explicit retries deduplicate and fresh actions remain distinct (1868.220922ms)
+✔ failed rejection retains proposed state; stale and historical partial selections do not invent receipts (1721.263636ms)
+✔ wire preference IDs replay only exact owner and content while preserving internal UUIDs (1756.202744ms)
+✔ wire ID migration preserves legacy UUID/content and refuses ambiguous historical wire identities (3463.535001ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (3381.924184ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (2105.869869ms)
+✔ CC3 real Control service profile 1 selects history, artifact root and Studio URL (2068.305084ms)
+✔ CC3 real Control service profile 2 selects history, artifact root and Studio URL (2057.336722ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (3333.874848ms)
+✖ actual production listener rejects invalid opt-in configuration before listening (1030.256848ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (3899.481446ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (3119.062028ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (2821.309906ms)
+✖ actual production listener rejects invalid opt-in configuration before listening (526.010218ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (2038.715025ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (2223.40737ms)
+✔ independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key (1991.678945ms)
+✔ independent original composed restart rejects prior session authority before recording and preserves fresh authorized intent (2123.630967ms)
+✔ Tailscale exchange requires the trusted ingress path (2.525485ms)
+✔ session signatures and expiry fail closed (0.360609ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 19
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46956.93864
+
+✖ failing tests:
+
+test at skills/prism/tests/control-product-composition.test.mts:74:1
+✖ actual production listener rejects invalid opt-in configuration before listening (1030.256848ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /PRISM_PRODUCT_ORIGIN is required/. Input:
+  
+  'file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:46\n' +
+    '  if (environment.PORT !== undefined) throw new Error("SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use operator.prism.control.port");\n' +
+    '                                            ^\n' +
+    '\n' +
+    'Error: SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use operator.prism.control.port\n' +
+    '    at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:46:45)\n' +
+    '    at loadControlCompositionConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:73:19)\n' +
+    '    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control.ts:5:27\n' +
+    '    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n' +
+    '    at async node:internal/modules/esm/loader:647:26\n' +
+    '    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n' +
+    '\n' +
+    'Node.js v24.21.0\n'
+  
+      at Object.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-product-composition.test.mts:80:14)
+      at expectedException (node:assert:578:17)
+      at expectsError (node:assert:703:21)
+      at strict.rejects (node:assert:769:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-product-composition.test.mts:75:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:46\n  if (environment.PORT !== undefined) throw new Error("SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use operator.prism.control.port");\n                                            ^\n\nError: SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use operator.prism.control.port\n    at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:46:45)\n    at loadControlCompositionConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:73:19)\n    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control.ts:5:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n',
+    expected: /PRISM_PRODUCT_ORIGIN is required/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/control-product-composition.test.mts:74:1
+✖ actual production listener rejects invalid opt-in configuration before listening (526.010218ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /PRISM_PRODUCT_ORIGIN is required/. Input:
+  
+  'file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:46\n' +
+    '  if (environment.PORT !== undefined) throw new Error("SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use operator.prism.control.port");\n' +
+    '                                            ^\n' +
+    '\n' +
+    'Error: SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use operator.prism.control.port\n' +
+    '    at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:46:45)\n' +
+    '    at loadControlCompositionConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:73:19)\n' +
+    '    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control.ts:5:27\n' +
+    '    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n' +
+    '    at async node:internal/modules/esm/loader:647:26\n' +
+    '    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n' +
+    '\n' +
+    'Node.js v24.21.0\n'
+  
+      at Object.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-product-composition.test.mts:80:14)
+      at expectedException (node:assert:578:17)
+      at expectsError (node:assert:703:21)
+      at strict.rejects (node:assert:769:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-product-composition.test.mts:75:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:46\n  if (environment.PORT !== undefined) throw new Error("SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use operator.prism.control.port");\n                                            ^\n\nError: SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use operator.prism.control.port\n    at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:46:45)\n    at loadControlCompositionConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:73:19)\n    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control.ts:5:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n',
+    expected: /PRISM_PRODUCT_ORIGIN is required/,
+    operator: 'match',
+    diff: 'simple'
+  }

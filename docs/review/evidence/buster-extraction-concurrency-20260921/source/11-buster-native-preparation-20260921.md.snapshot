@@ -1,0 +1,342 @@
+# Buster owned admission and preparation boundary
+
+Status: implementation assigned by the parent under the existing user goal,
+2026-09-21. The baseline below precedes production changes. No native execution
+or acceptance claim follows from this design. This replaces the proposed
+extraction-only increment with the minimum coherent scope below. B1–B5 and
+IFR-16 remain open. The parent is running exclusive VM tests; this assessment
+uses source inspection only. Frozen source identities and byte-exact snapshots
+are in `../../evidence/buster-native-preparation-design-20260921/source-identities.json`.
+
+## Why moving extraction alone is insufficient
+
+`remote-plan-http.ts:requestBody` buffers the complete request, concatenates it,
+parses JSON, then validates `remotePlanJob` before calling the service.
+`contracts/pipeline-test-gate/v1/src/validation.ts` validates archive bytes through
+`repositoryArchiveBytes`; that function allocates decoded bytes, re-encodes them
+and hashes them. `FileBusterPlanJobStore.#preflight` repeats archive validation
+and canonical whole-job digest work. `#accept` embeds the archive in a durable
+record. `FileDurableRecordStore` writes all records into `records/store.json`;
+`get(jobId)` reads that global store, not one immutable job file. The generated
+production limits allow a 96 MiB HTTP body, 64 MiB archive and 1 GiB record store.
+These are finite limits, but they are not preparation ownership or accounting.
+
+`BusterRemotePlanService.#execute` later decodes the same archive into
+`repository.tar.gz`, lists and extracts it. Moving only those last operations
+would leave bulk archive processing in the shared unowned service. Passing the
+whole archive through fd3 similarly relocates neither earlier copies nor
+validation. Passing `records/store.json` to a host makes each job scan other jobs
+and gives the child a mutable global input rather than an immutable source lease.
+
+The entrypoint intentionally runs the service with `setpriv` as UID 1000.
+Removing that boundary would run the existing providers and capability routes
+as root. It is not an acceptable preparation integration.
+
+## Smallest coherent production change
+
+The wire `RemotePlanJobV1` can remain unchanged, preserving exact request digest,
+source attestation and idempotency semantics. Its *admission implementation* and
+private persisted record must change together:
+
+1. Authenticate HTTP before body consumption. Reserve a finite admission slot
+   and native preparation capacity before accepting bulk input. Forward bounded
+   chunks with backpressure directly into the owned admission/preparation host;
+   no request-wide concatenation, JSON parse, base64 conversion or whole-job
+   canonicalization in the service or privileged supervisor. Disconnect,
+   overflow and incomplete input terminate and drain that lifetime. The HTTP
+   transport still has bounded per-chunk/TLS work; it is not a claimed zero-cost
+   transport or per-provider execution proof.
+2. The fixed host validates the original V1 request and attestation, derives its
+   original digest, and publishes a sealed per-job source plus metadata. Finite
+   host memory must accommodate the existing bounded full JSON validator until
+   a separately justified streaming validator exists. Streaming ingress does
+   not mean the original validator is a streaming parser. Publication uses
+   private staging, fsync and atomic rename; output is bounded metadata only.
+3. The privileged owner chooses all commands, UID, role pool and private staging
+   roots. The service supplies a bounded correlation token, never executable,
+   target path, UID, cgroup or a trusted completion claim. Reuse Core's binary
+   `NativeWorkerControlChannel`; add one concrete Buster admission protocol, not
+   a generic command broker. Existing fixture fd3 has its own lifetime/consumer
+   and must not receive a second reader.
+4. Persist a strict new job-record version containing the original job header,
+   status, bounded immutable source reference and preparation journal identity.
+   Keep archive bytes out of the global metadata store. Bind source digest,
+   size, job/request/plan identity and retained completion receipt. Source quota
+   reservations, metadata references, pending admissions and interrupted staging
+   all count toward finite capacity. Duplicate admission returns the existing
+   identity and consumes no permanent extra reservation.
+5. Start extraction only from that source lease in the same owned preparation
+   lifetime, or a separately persisted phase with explicit accepted budgets and
+   recovery binding. Do not ambiguously reset one budget between phases. Preserve
+   current tar entry/type/path/expanded-byte checks. Publish the repository only
+   after successful preparation and authoritative quiescence, before ordinary
+   legacy plan execution begins. The remaining provider path is still V1.
+6. Read historical full and compacted V1 records without rewriting them or
+   altering their receipts. An accepted historical full record cannot enter the
+   new productive path through `store.get` followed by service-side decode.
+   Resumption requires an explicit bounded, owned import of the historical
+   record/source, with recorded CAS identity and operator-visible disposition.
+   Running historical jobs retain interrupted handling; terminal historical
+   records remain readable. Missing import authority fails closed, not automatic
+   migration, deletion, or an extraction-only fallback.
+7. Native owner/journal recovery and role binding precede HTTP readiness. Stop
+   admission before shutdown, drain the child service and all preparation work,
+   and retain uncertain source/repository state until exact ownership proves
+   quiescence. Update manual job compaction/source-reference accounting for the
+   new record version; do not grant automatic D07 deletion authority.
+
+This is an admission/source-storage migration as well as preparation integration.
+It crosses `remote-plan-http`, `remote-plan-service`, `remote-plan-compaction`,
+production composition, CLI/entrypoint, image and Buster deployment wiring. The
+current runner can continue consuming the validated job *header* and repository,
+but all functions typed as full `RemotePlanJobV1` must be traced: reconstructing
+that type in the supervisor would reintroduce the archive. Shared Core storage
+must not gain a Buster-specific record bypass.
+
+## Preimplementation criteria
+
+| ID | Required evidence before acceptance |
+| --- | --- |
+| BP1 | The production HTTP-to-owned-host route is mandatory; two authored preparation profiles affect actual accepted limits. No parent full-body/decode/hash path remains. Oversized, truncated, malformed and unauthenticated requests exercise original status/identity semantics. |
+| BP2 | Original source attestation, job/idempotency/request/plan digest and duplicate/conflict cases remain unchanged. Strict new metadata/reference decoding rejects unknown versions/keys, foreign source, symlink replacement, digest/size mismatch and references of references. |
+| BP3 | Actual finite slot and byte reservations cover pending ingress, immutable sources, staging, journals and metadata; concurrent duplicate admissions do not leak capacity. No process-to-task conversion. No policy fallback or legacy preparation environment override. |
+| BP4 | Parent has fixed command/UID/path authority, service remains UID 1000 and cannot write the role pool or privileged configuration. Child-requested path/UID/executable probes fail. Actual image/chart mount, node reservation and role binding are checked; no deployment claim. |
+| BP5 | Original extraction behavior and cancellation hold under real owned descendants. Tests kill before/after source rename, metadata CAS and preparation seal, then recover exact identities without reusing uncertain work. Publication precedes visibility; cleanup follows quiescence. Missing kernel delegation is recorded as unrun/failure, never a mock native pass. |
+| BP6 | Historical accepted/running/completed/compacted records have explicit read/recovery/import behavior. No silent migration, old receipt rewrite or second productive preparation implementation. Manual compaction and late replay retain source identity and bounded reference accounting. |
+| BP7 | Retain original remote runtime/contracts/runner/report/JUnit, shutdown/storage, compaction, terminal workspace and deployment readiness assertions. Run relevant complete suites, canonical lint/typechecks, distinct semantic mutants and a fresh independent review. New tests distinguish transport, storage and real-kernel evidence. |
+| BP-DOC | Update operator settings, migration/recovery/runbook, deployment privilege boundaries, source retention and seam status. Document every remaining V1/native/kernel limit; no B1 or IFR-16 closure from this slice. |
+
+The sole proposed author is `swarm.operator.buster.preparation`; its exact
+CPU-time milliseconds, memory bytes, Linux task count, wall timeout, ingress,
+source/staging and journal limits must be finalized together with reservation
+math before code. Existing 64 MiB archive/96 MiB request/512 MiB expanded-source
+values are compatibility inputs, not a complete new resource policy. Inventing
+a memory default without bounding original JSON/validation copies would be
+premature. Prism's existing startup/schema acceptance must remain intact.
+
+## Assigned implementation scope
+
+Proceeding safely requires the coherent admission/source-record migration above,
+including historical accepted-job import behavior. The parent explicitly assigned this larger coherent scope after reviewing the
+dependency; no additional user permission is pending.
+No disconnected helper or nominal native wrapper has been added while this
+boundary is resolved. Implementation must provide this one production path,
+not introduce settings whose only consumer is an unused preparation prototype.
+
+## Initial authored policy, recorded before schema edits
+
+The implementation starts with CPU time 120,000 ms, memory 8,589,934,592 bytes,
+64 Linux tasks, a 300,000 ms execution timeout and 10,000 ms cleanup timeout.
+These are independent finite limits, not conversions of V1 process counts or
+comparisons of CPU time with pool CPU rate. Actual allocation must fit the role
+pool; denied allocation does not fall back. The memory limit bounds failures;
+it is not a promise that every historically valid 1 GiB store can be parsed.
+Historical import must preserve its original file on resource exhaustion.
+
+Ingress allows 2 active preparations and 16 pending admissions, with 100,663,296
+request bytes, 67,108,864 archive bytes, 536,870,912 expanded bytes and 4,194,304
+header bytes. Storage has 1,073,741,824 source/staging bytes, 67,108,864 metadata
+bytes and 10,000 records. Reservations include worst-case staging before ingress;
+these bounds can admit fewer jobs than the active-count limit. Ownership state
+is bounded at 16,777,216 bytes and journals at 268,435,456 bytes. Parent envelope
+input is capped at 65,536 bytes, host output/result at 4,194,304 bytes; header
+size must additionally fit result framing. Polling is 25 ms, drain and close
+timeouts 5,000 ms each. The canonical author will contain every value; consumers
+must not reproduce these defaults. Test results and pool integration are pending.
+
+Before production consumption, parent review corrected three initial values:
+header 3,145,728 bytes, host output 8,388,608 bytes and close timeout 10,000 ms.
+Result remains 4,194,304 bytes and drain 5,000 ms. Loader checks reserve four
+maximum envelope inputs between header/result and result/output and require
+close strictly above drain. Actual serialized publication must also be checked
+before durable source visibility; numeric headroom is not a substitute for that
+check. The initial equal header/result/output and close/drain values above are
+superseded and were never deployed.
+
+The 8 GiB cap budgets ingress copies independently from archive bytes: one
+96 MiB accumulated binary body, one concatenated body, up to two-byte-per-unit
+JSON text, parsed base64 text, up to 64 MiB decoded archive, validation base64
+re-encoding and whole-job canonical JSON/digest copies, plus schema/plan objects
+and runtime overhead. This is conservative headroom for normal ingress, not a
+formal bound on arbitrary JSON object expansion or the larger historical-store
+import. The native memory cap is authoritative and must stop pathological inputs;
+original-source preservation and no publication on memory failure are acceptance
+requirements. A successful large-input test will establish the tested envelope,
+not universal success for all byte-equal JSON documents.
+
+Before tar-policy consumption, the existing tar limits are explicitly migrated:
+120,000 ms per command, 200,000 entries, 1,048,576 bytes per listing buffer,
+and 65,536 retained stderr bytes. Source admission additionally caps 400,010
+entries and charges 256 logical reservation bytes per entry. That charge is a
+policy weight, not an estimate or enforcement of physical filesystem blocks.
+Reservations include five source container/archive/metadata/repository/owner-marker entries
+plus every allowed extracted entry. Physical allocation and inode exhaustion
+remain a separate IFR-16 boundary; recovery tests must measure actual allocation
+and must not report the logical ledger as a kernel filesystem quota.
+
+### Concurrent preparation filesystem authority
+
+Before productive wiring, the shared preparation UID 1003 was found insufficient
+to isolate two concurrent unpublished gates. The assigned composition therefore
+uses the existing unprivileged generic sandbox inside native ownership, with
+only its own root-created gate writable and fixed code/library/observation roots
+readable. The source ancestor and sibling gates are never read or write roots.
+Landlock/seccomp failures block preparation; there is no unsandboxed fallback.
+`operator.buster.preparation.maximumOpenFiles` is authored as 64, matching the
+existing foundation isolated-Node helper contract. The schema permits integral
+values from 8 through 2147483647. This is a per-process RLIMIT_NOFILE ceiling; it
+is not an inode reservation or Linux-task budget. The helper CPU ceiling is
+ceil(resourcePolicy.cpuTimeMs / 1000) seconds; native aggregate millisecond
+measurement remains authoritative. Required tests include simultaneous own-gate
+positive read/write and sibling-gate read/write/rename denial, plus actual Node
+fd3 and tar behavior. These additions have not yet been accepted or executed.
+
+### Fixed parallel identity slots (preimplementation correction)
+
+The parent rejected reducing parallel preparation to evade isolation. Two fixed
+image-owned UID/GID pairs, 1003/1003 and 1004/1004, preserve the authored active
+limit of two. The previous shared-UID Landlock proposal is insufficient: its
+filesystem rules alone do not prohibit foreign path-based chmod or all signals.
+No such broader isolation claim is accepted from read/write checks.
+
+Before gate creation or launch the root ledger atomically assigns one free fixed
+slot and binds it to the original admission/spec. The accepted envelope and
+source reference include that identity. Private gates use root:assigned-slot
+01770 and root-owned sticky markers; each host also has its own Landlock scope.
+Foreign slots lack DAC traversal, ownership and signal authority. The service
+helper still permits only target UID 1001/GID 1000, and inherited subordinate
+ranges must exclude every identity from zero through 1004.
+
+Slot release is a separate durable transition after native tree quiescence and
+gate revocation/publication. Publication intent alone does not free the slot.
+Crash before or during chmod/chown, failed cleanup, missing ownership and unknown
+gates retain the slot. Recovery must bind the exact accepted envelope, native
+receipt, gate device/inode/marker and publication phase before releasing it.
+The source byte/entry reservation remains charged independently of slot reuse.
+
+Required cases: two simultaneous own-gate successes, cross-slot read/write/
+chmod/rename/signal denial, third admission capacity rejection, no reuse while
+unknown/live/partially published, successful exact-idempotent recovery after
+revocation, and immutable published source despite later reuse of the same slot.
+Add real UID 1004 authority probes and metadata/future-proof size cases. These
+are additions to BP1–BP7/DOC, not replacement criteria or an accepted result.
+
+### Two owned phases preserve accepted-input durability (before implementation)
+
+The parent approved replacing the unsafe preview-only 202 boundary. Phase one
+validates the full original wire inside native ownership, exposes only bounded
+header metadata for the original service authority/queue/idempotency checks,
+and then durably stages the exact wire plus bound header. Only after native
+quiescence, root gate revocation to 0700 and a durable root-ledger input reference
+may the service persist accepted status and return 202. A live host's mutable
+files or an in-memory preview are never accepted-input evidence.
+
+Phase two binds that exact input reference and job/header identity to one durable
+extraction envelope before launch. Root streams the retained file without parsing
+its archive, the owned host validates/extracts it in its own gate, and root only
+publishes the repository after positive native quiescence. The V2 job record
+retains the immutable input reference independently of its nullable prepared
+repository reference. Retries recover/reuse the same extraction association;
+they cannot silently replace its accepted budgets or input.
+
+Required additions: actual crash immediately after 202 and before tar; exact
+input/status/receipt replay; extraction failure with original input retained;
+restart between private gate revocation and slot-release commit; duplicate,
+grant and queue rejection without an accepted input; partial staging failure
+retained and charged; and immutable input across later slot reuse. No automatic
+pruning of staged wire follows successful extraction. Manual retention keeps
+original references and receipts. Full BP acceptance still requires actual
+productive host/store tests, not an injected preparation client.
+
+Reservations will account for distinct phases: fixed gate/marker metadata before
+validation; exact validated wire plus bounded header/entry charges before staging;
+retained input concurrently with archive and expanded repository before extraction.
+An input-only phase must not reserve an expanded repository it never creates.
+The 1 GiB source budget remains unchanged and cannot necessarily accommodate two
+maximum-sized requests plus their expanded repositories. Capacity rejection
+keeps every existing accepted input and uncertain allocation charged.
+
+### Bounded cleanup retry association (criteria before implementation)
+
+The parent approved a concrete retry for the post-delete/pre-result crash window. A retry is a new native attempt, never a rewritten original receipt or an interpretation of `ENOENT` as completion. The root source ledger must persist the full new cleanup envelope, unchanged effects digest, original failed envelope/result/receipt binding, and prior cleanup envelope/receipt association before launch. Every previous cleanup owner must be terminal and proven unpopulated. Unknown ownership remains fenced. One recovery invocation may launch at most one new cleanup attempt for an original effect; no retry loop or increased limits is permitted. All retained association history consumes the existing finite metadata/record/journal budgets, with future terminal metadata reserved before destructive work. Publication and cleanup use the same root ledger fence, and retained/published input or source is ineligible.
+
+Required cases include process death after deletion but before result archival, after archival but before role-ledger commit, and after ledger commit; idempotent replay must preserve all original failed bytes, use the previously bound attempt when it is recoverable, and create a new bound attempt only after prior quiescence is independently established. Missing/foreign/prior-live cleanup evidence, changed source marker/device/inode, changed effects digest, published references and insufficient future metadata capacity must prevent deletion or relaunch. Actual owned cleanup and kernel quiescence remain required for production proof.
+
+The production parent has KILL/SETUID/SETGID plus existing entrypoint CHOWN/SETPCAP authority, not DAC_OVERRIDE or DAC_READ_SEARCH. Final staging descendants retain their preparation UID, with directories 0755 and files 0444 behind the root-owned gate. Final guest tests must reproduce that capability set and test both fixed preparation slots; unrestricted guest root is not evidence of this read boundary.
+
+### Sequential extraction generations (criteria before implementation)
+
+A job acknowledged after durable input staging may crash during extraction while its V2 status remains accepted. The root ledger may admit a new extraction generation for the same immutable input only after the previous generation is positively released. It retains the old envelope, failed result and cleanup/metadata-only release proof. A serialized CAS permits one current generation per input; the successor records the preceding envelope digest and increasing generation. It never changes wire identity, grants or the accepted job header. All historical records and references remain charged to the existing metadata/record limits; released source bytes reflect only proved deletion, while retained original wire remains charged. One recovery invocation may start at most one new cleanup attempt; no retry loop or quota increase is introduced. Actual crash-before-release, crash-after-release and competing admission tests must prove progress and exclusion. This remains unaccepted until those tests and fresh review complete.
+
+### Core recovery export used by Buster
+
+Root authorized re-exporting the existing `recoverNativeAttempt` function without changing its implementation. Buster uses it only under `journal.withAttempt`, after ownership recovery, with `newlyAccepted=false` for an existing cleanup predecessor; the returned result is durably sealed before choosing one new bounded retry. A new failed cleanup in the current lifetime still follows `executeNativeWorkerAttempt` and fences the owner. This avoids both duplicated recovery logic and treating an old failure replay as a new successful launch.
+
+### Source attachment versus cancellation: retained regression and correction
+
+The adapted original remote-runtime test exposed a real V2 write race: attaching
+published source changed the durable payload between a cancellation/status read
+and its compare-and-swap. The first failing runtime run is retained by the
+consumer-adaptation evidence; a later passing run did not establish safety by
+itself. `attachSource` and `transition` now acquire the same admission fence as
+acceptance and completion. Inputs are captured before awaiting that fence.
+
+`buster-prepared-store-cancellation.test.mts` pauses an actual durable store read
+before its write, checks an independent GNU `flock` contender cannot acquire the
+admission lock, and queues cancellation while that operation is pending. It
+proves the published source remains attached, cancellation is terminal, and a
+subsequent accepted-to-running transition is rejected. This is real filesystem
+and locking evidence; its signed header/source-reference fixture is deliberately
+not archive extraction or native ownership evidence. The first test run omitted
+the contract-required cancellation error and failed; that log remains intact.
+The corrected final test passes. A runtime-only mutation removing solely the
+source-attachment fence fails the explicit lock assertion (actual contender exit
+0 versus required conflict exit 73); no production source is mutated by that
+runner. Evidence is under `buster-native-preparation-design-20260921`, with
+`store-cancellation-final.txt` and `store-cancellation-mutant-final.txt`.
+
+The original runtime rerun and six original shutdown cases also pass after this
+correction. Other provider prerequisites and all BP native/cutover acceptance
+requirements remain independently outstanding; this correction does not close
+those requirements.
+
+### Published-source retention remains a distinct, unresolved production gate
+
+The original V1 compaction cases retain their pre-migration semantics: removing
+embedded archive bytes can release V1 metadata capacity. A V2 record never
+contains that archive, so returning the same released-metadata figure would be
+false. The new retained wire and published repository instead require a distinct
+manual retirement operation, with the original completion intent, Git/source
+identity and evidence protections plus measured retained-source accounting.
+Failed, unpublished preparation reconciliation cannot authorize deletion of a
+published gate.
+
+A terminal job status alone does not prove the still-transitional service and
+provider descendants have released source descriptors. Published retirement
+therefore remains gated on independently established offline workload stop and
+native quiescence, under the root lifetime/publication fence. No online deletion
+or fabricated completion proof is added to bypass that dependency. The immutable
+legacy store, legacy results and legacy runtime artifacts remain charged; their
+future explicitly authorized retirement is still part of R1, rather than an
+unbounded permanent exemption. Neither the preserved historical test boundary
+nor the new store concurrency fix establishes this missing retirement gate.
+
+### Recovery preserves the accepted extraction input identity
+
+The live extraction path checks the returned job header against the immutable
+input reference. The persisted-source decoder now enforces the same job ID,
+request digest and header digest relationship against the accepted extraction
+envelope. This also covers startup recovery and later published-reference reads;
+a valid-looking source reference for a different header cannot be admitted merely
+because its own fields are well formed. The added decoder case includes a valid
+reference and independent foreign job/request/header identities. It is a decoder
+boundary test, not evidence of actual native execution or gate ownership.
+# Extraction coordination follow-up
+
+Concurrent identical extraction requests are now coordinated before reservation
+and exclusive gate creation by canonical source root and exact retained-input
+identity. This preserves different-input parallelism and leaves durable
+ledger/journal authority unchanged. The bounded change, original nineteen-case
+local run, exact before-source negative control and proof limits are documented
+in [the extraction concurrency report](buster-extraction-concurrency-20260921.md).
+It does not establish native guest acceptance or close BP/B1/IFR16.

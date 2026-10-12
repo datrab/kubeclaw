@@ -1,0 +1,36 @@
+{
+  "guest-root.ext4": "02854cf0062450bdd8dfae895f9be7e2e54c75659b74d5baa65f927904154760",
+  "second.ext4": "f7584c3f8dcf9e6f68965bb9cae421a50d6f10b62693ab907ffa20bab10b2098",
+  "vm-console.txt": "7545971ccb4bee8e9a91d902d13de6115d8a9bb6fd000cd24cd911d39ed5713c",
+  "vm-result.json": "62b1a55f769187297b5b7a71f72592cea73d1d8a18d9e3bf4a3948e1de07a1da",
+  "launcherSha256": "f38efea66663007bb69a0145b1bdab4570fbd27776aca98a9bab51d7b1f3f35e",
+  "oldExportIntact": true,
+  "recipeAndLauncherOnlyGenerationPathsChanged": true,
+  "run2Passed": false,
+  "newImages": {
+    "guest-root.ext4": {
+      "mode": 420,
+      "type": "file",
+      "bytes": 268435456,
+      "sha256": "18df3738bba4d4ca9916fb62f23ef918c572a0d7a96ca90257dff5c727dfa855"
+    },
+    "second.ext4": {
+      "mode": 420,
+      "type": "file",
+      "bytes": 16777216,
+      "sha256": "876b590487473b3cf82cd38196cb70f8d816b8897260bc2a94cac0fde4a0793a"
+    },
+    "initrd.cpio.gz": {
+      "mode": 420,
+      "type": "file",
+      "bytes": 1899633,
+      "sha256": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2"
+    },
+    "vmlinuz-virt": {
+      "mode": 420,
+      "type": "file",
+      "bytes": 12608512,
+      "sha256": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c"
+    }
+  }
+}

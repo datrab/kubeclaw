@@ -1,0 +1,4 @@
+both roles reject equal and empty legacy setting PRISM_NATIVE_CPU_TIME_MS
+both roles reject equal and empty legacy setting PRISM_NATIVE_MEMORY_BYTES
+both roles reject equal and empty legacy setting PRISM_NATIVE_TASKS
+nested snapshots frozen; omitted producer policy fails; cumulative CPU not compared with quota

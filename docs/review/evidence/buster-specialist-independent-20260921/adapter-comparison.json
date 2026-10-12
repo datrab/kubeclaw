@@ -1,0 +1,46 @@
+[
+  {
+    "mode": "plain",
+    "version": "before",
+    "status": 1,
+    "runnerSha256": "d6695dc52cd1919a88f7feed8051a543bdd9cee260b95afb829cbcee6f254919",
+    "testsSha256": {
+      "tests/verification/contracts/check-pipeline-junit-report-adapter.mts": "c95fedf0775d6c5c7089386256c40253c23613dde6c00d7e02c3ebdad410b358",
+      "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts": "e1e096539887eb28e45258a697962f0950a26dd96acf3555b57736ff54485270"
+    },
+    "log": "adapters-plain-before.txt"
+  },
+  {
+    "mode": "plain",
+    "version": "after",
+    "status": 1,
+    "runnerSha256": "dcb6721532a023c53dda13ab2c5ce4f3698bc441f97a9c7b9109666da458e91e",
+    "testsSha256": {
+      "tests/verification/contracts/check-pipeline-junit-report-adapter.mts": "c95fedf0775d6c5c7089386256c40253c23613dde6c00d7e02c3ebdad410b358",
+      "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts": "e1e096539887eb28e45258a697962f0950a26dd96acf3555b57736ff54485270"
+    },
+    "log": "adapters-plain-after.txt"
+  },
+  {
+    "mode": "proot",
+    "version": "before",
+    "status": 1,
+    "runnerSha256": "d6695dc52cd1919a88f7feed8051a543bdd9cee260b95afb829cbcee6f254919",
+    "testsSha256": {
+      "tests/verification/contracts/check-pipeline-junit-report-adapter.mts": "c95fedf0775d6c5c7089386256c40253c23613dde6c00d7e02c3ebdad410b358",
+      "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts": "e1e096539887eb28e45258a697962f0950a26dd96acf3555b57736ff54485270"
+    },
+    "log": "adapters-proot-before.txt"
+  },
+  {
+    "mode": "proot",
+    "version": "after",
+    "status": 1,
+    "runnerSha256": "dcb6721532a023c53dda13ab2c5ce4f3698bc441f97a9c7b9109666da458e91e",
+    "testsSha256": {
+      "tests/verification/contracts/check-pipeline-junit-report-adapter.mts": "c95fedf0775d6c5c7089386256c40253c23613dde6c00d7e02c3ebdad410b358",
+      "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts": "e1e096539887eb28e45258a697962f0950a26dd96acf3555b57736ff54485270"
+    },
+    "log": "adapters-proot-after.txt"
+  }
+]

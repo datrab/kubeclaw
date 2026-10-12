@@ -1,0 +1,49 @@
+CLUSTER_MUTATION_APPLIED {"mutation":"manifest-alias","pid":38188,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-manifest.ts","beforeSha256":"a86a248f1bd72e949a6d2cf63811f48fb1974e417954eea0e4a9f5f2a1a9e8df","afterSha256":"925db9c4963ffda41ad42706baf1002027adef81694d1e7d4178bd8926ee708c","replacements":[{"from":"policy.maximumAliases","to":"1000","count":1}],"replacedAnchors":1}
+✔ actual kubectl diagnostic captures 16 code units (10.195302ms)
+✔ actual kubectl diagnostic captures 80 code units (1.866568ms)
+✔ public invoker maximumManifestBytes, low true (1.405837ms)
+✔ public invoker maximumManifestBytes, low false (3.488769ms)
+✔ public invoker maximumResources, low true (1.881539ms)
+✔ public invoker maximumResources, low false (2.270639ms)
+✔ actual YAML consumer maximumNodes (0.79253ms)
+✔ actual YAML consumer maximumDepth (0.466142ms)
+✖ actual YAML consumer maximumAliases (1.044006ms)
+✔ actual List consumer maximumFlattenVisits (0.615656ms)
+✔ actual List consumer maximumFlattenPending (0.321368ms)
+✔ shared lease version domain reaches both actual constructors: v1 (1.577461ms)
+✔ shared lease version domain reaches both actual constructors: v2 (0.737369ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1 (0.76826ms)
+✔ shared lease version domain reaches both actual constructors: v2beta12 (0.963325ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha (1.1538ms)
+✔ shared lease version domain reaches both actual constructors: v1beta (0.626557ms)
+✔ shared lease version domain reaches both actual constructors: v1rc1 (0.638847ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1x (0.532084ms)
+✔ shared lease version domain reaches both actual constructors:  (0.628336ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 19
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2016.907041
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs:60:4
+✖ actual YAML consumer maximumAliases (1.044006ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs:63:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /ALIAS_LIMIT/,
+    operator: 'throws',
+    diff: 'simple'
+  }

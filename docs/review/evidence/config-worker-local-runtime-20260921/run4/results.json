@@ -1,0 +1,54 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-local-runtime-20260921/tool-effects.mjs"
+    ],
+    "exitCode": 0,
+    "name": "real-tool-effects",
+    "seconds": 0.06394153099972755
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/contracts/check-pipeline-worker-local-policy.mts"
+    ],
+    "exitCode": 0,
+    "name": "core-policy",
+    "seconds": 0.5146570979850367
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+    ],
+    "exitCode": 0,
+    "name": "production-replay",
+    "seconds": 4.835203840979375
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/contracts/tsconfig.worker-local-runtime.json"
+    ],
+    "exitCode": 0,
+    "name": "local-types",
+    "seconds": 6.047953492030501
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "name": "runtime-types",
+    "seconds": 6.396358772995882
+  }
+]

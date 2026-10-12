@@ -1,0 +1,27 @@
+{
+  "fixtureRegistryOnly": true,
+  "securityContext": {
+    "allowPrivilegeEscalation": true,
+    "appArmorProfile": {
+      "type": "Unconfined"
+    },
+    "capabilities": {
+      "add": [
+        "CHOWN",
+        "SETGID",
+        "SETPCAP",
+        "SETUID"
+      ],
+      "drop": [
+        "ALL"
+      ]
+    },
+    "privileged": false,
+    "runAsGroup": 0,
+    "runAsNonRoot": false,
+    "runAsUser": 0,
+    "seccompProfile": {
+      "type": "Unconfined"
+    }
+  }
+}

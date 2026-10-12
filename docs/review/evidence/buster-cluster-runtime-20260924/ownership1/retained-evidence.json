@@ -1,0 +1,44 @@
+[
+  {
+    "originalDirectory": "/tmp/cluster-ownership-gate-GBIKcM",
+    "retainedAt": "docs/review/evidence/buster-cluster-runtime-20260924/ownership1/retained-evidence/cluster-ownership-gate-GBIKcM",
+    "files": [
+      {
+        "path": "stderr.txt",
+        "sha256": "24ebf3da10746077803c330e0b5521004cc8c35bcb3aa64c81a5fb277833a16f"
+      },
+      {
+        "path": "reporter.jsonl",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "originalDirectory": "/tmp/cluster-ownership-gate-IpJaBM",
+    "retainedAt": "docs/review/evidence/buster-cluster-runtime-20260924/ownership1/retained-evidence/cluster-ownership-gate-IpJaBM",
+    "files": [
+      {
+        "path": "stderr.txt",
+        "sha256": "bea8b3bb98f552d357cc5de4a126b24ee45dbd320494e47d870a9dc762972867"
+      },
+      {
+        "path": "reporter.jsonl",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "originalDirectory": "/tmp/cluster-ownership-gate-MCONNM",
+    "retainedAt": "docs/review/evidence/buster-cluster-runtime-20260924/ownership1/retained-evidence/cluster-ownership-gate-MCONNM",
+    "files": [
+      {
+        "path": "stderr.txt",
+        "sha256": "df09c44bba66f21216d3b68a7ec61f2d2aef2a44d60c5f83be93675b00391d1a"
+      },
+      {
+        "path": "reporter.jsonl",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  }
+]

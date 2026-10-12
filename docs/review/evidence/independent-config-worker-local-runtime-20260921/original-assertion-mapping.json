@@ -1,0 +1,38 @@
+[
+  {
+    "file": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+    "originalAssertions": 116,
+    "currentAssertions": 130,
+    "missingOriginalAssertions": [],
+    "addedAssertions": [
+      "assert.equal(unresolvedTimeout.nodes[0]?.state, \"errored\")",
+      "assert.match(unresolvedTimeout.attempts[0]!.summary, /WORKER_PHASE_UNRESOLVED/)",
+      "assert.equal(unresolvedTimeoutLoader.terminations.length, 1)",
+      "assert.equal(unresolvedTimeoutLoader.cleanups.length, 0, \"quarantined execution must not start cleanup\")",
+      "assert.deepEqual(unresolvedTimeout.attempts[0]!.evidence, [], \"quarantined execution must not collect evidence\")",
+      "assert.ok(unresolvedTimeout.cleanupErrors.some(error => /WORKER_PHASE_UNRESOLVED/.test(error.message)))",
+      "assert.ok(Number.isSafeInteger(logHangPid) && logHangPid > 0, \"actual provider wrote its startup identity\")",
+      "assert.throws(() => process.kill(logHangPid, 0), { code: \"ESRCH\" }, \"actual hung provider is gone\")",
+      "assert.deepEqual(fs.readFileSync(path.join(logHangScratch, \"log-hang-pid\")), marker)",
+      "assert.throws(() => process.kill(logHangPid, 0), { code: \"ESRCH\" })",
+      "assert.equal(unresolvedLog.nodes[0]?.state, \"errored\")",
+      "assert.match(unresolvedLog.attempts[0]!.summary, /WORKER_PHASE_UNRESOLVED/)",
+      "assert.equal(unresolvedLogLoader.cleanups.length, 0)",
+      "assert.deepEqual(unresolvedLog.attempts[0]!.evidence, [])"
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "originalAssertions": 18,
+    "currentAssertions": 18,
+    "missingOriginalAssertions": [],
+    "addedAssertions": []
+  },
+  {
+    "file": "tests/verification/reliability/worker-deadline.test.mts",
+    "originalAssertions": 19,
+    "currentAssertions": 19,
+    "missingOriginalAssertions": [],
+    "addedAssertions": []
+  }
+]

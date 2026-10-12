@@ -1,0 +1,677 @@
+"""Disposable-guest LIS1–10 driver; never invoke with host root privileges."""
+import argparse
+import array
+import ctypes
+import errno
+import fcntl
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import selectors
+import shutil
+import signal
+import stat
+import struct
+import subprocess
+import sys
+import time
+import uuid
+
+ROOT = Path('/var/lib/legacy-seal-tests')
+MAX_BYTES, MAX_ENTRIES, MAX_CASES = 4 * 1024 * 1024, 128, 32
+CASE_SECONDS, TOTAL_SECONDS, OUTPUT_BYTES = 10, 120, 256 * 1024
+IMMUTABLE = 16
+EMITTED_BYTES = 0
+TOTAL_OUTPUT_BYTES = 8 * 1024 * 1024
+GETFLAGS = 0x80000000 | (array.array('l').itemsize << 16) | (ord('f') << 8) | 1
+SETFLAGS = 0x40000000 | (array.array('l').itemsize << 16) | (ord('f') << 8) | 2
+CASES = ('complete', 'quota-exact', 'quota-byte-short', 'quota-entry-short',
+         'mutable-file', 'mutable-directory', 'plan-link', 'hardlink', 'device', 'fifo',
+         'bind-mount', 'different-device', 'tmpfs-root', 'extra-bounding', 'retained-extra',
+         'foreign-ancestor', 'writable-ancestor', 'missing-store', 'interrupted',
+         'mutation-denial', 'uid1000-read', 'runtime', 'runtime-plan-reject',
+         'runtime-links', 'runtime-link-fifo', 'namespace-stable', 'different-uuid',
+         'foreign-descendant', 'writable-descendant')
+
+
+def require(value, message):
+    if not value:
+        raise RuntimeError(message)
+
+
+def digest(data):
+    return 'sha256:' + hashlib.sha256(data).hexdigest()
+
+
+def emit(value):
+    global EMITTED_BYTES
+    text = json.dumps(value, sort_keys=True)
+    EMITTED_BYTES += len(text.encode()) + 1
+    require(EMITTED_BYTES <= TOTAL_OUTPUT_BYTES, 'TOTAL_OUTPUT_LIMIT')
+    print(text, flush=True)
+
+
+def bound_sources(args):
+    for name in ('verifier', 'capability_child', 'driver'):
+        file = Path(getattr(args, name))
+        require(file.is_absolute() and file.is_file() and not file.is_symlink(), 'SOURCE_PATH:' + name)
+        require(hashlib.sha256(file.read_bytes()).hexdigest() == getattr(args, name + '_sha256'),
+                'SOURCE_HASH:' + name)
+
+
+def module(file, name):
+    spec = importlib.util.spec_from_file_location(name, file)
+    require(spec is not None and spec.loader is not None, 'MODULE_REQUIRED')
+    value = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(value)
+    return value
+
+
+def death_signal():
+    parent = os.getppid()
+    libc = ctypes.CDLL(None, use_errno=True)
+    if libc.prctl(1, signal.SIGKILL, 0, 0, 0) != 0 or os.getppid() != parent:
+        os._exit(125)
+
+
+def bounded(command, seconds=CASE_SECONDS, expected=None, output_limit=OUTPUT_BYTES, namespace_lifetime=False):
+    """Drain both streams continuously; kill the entire private process group on overflow/time."""
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                               stdin=subprocess.PIPE if namespace_lifetime else subprocess.DEVNULL,
+                               start_new_session=True, preexec_fn=death_signal)
+    selector = selectors.DefaultSelector()
+    for stream in (process.stdout, process.stderr):
+        os.set_blocking(stream.fileno(), False)
+        selector.register(stream, selectors.EVENT_READ)
+    chunks = {process.stdout: bytearray(), process.stderr: bytearray()}
+    deadline = time.monotonic() + seconds
+    namespace_pidfd = None
+    try:
+        while selector.get_map():
+            require(time.monotonic() < deadline, 'CHILD_WATCHDOG')
+            for key, _ in selector.select(min(.05, max(0, deadline - time.monotonic()))):
+                data = os.read(key.fileobj.fileno(), 8192)
+                if not data:
+                    selector.unregister(key.fileobj)
+                else:
+                    chunks[key.fileobj].extend(data)
+                    require(sum(map(len, chunks.values())) <= output_limit, 'CHILD_OUTPUT_LIMIT')
+                    if namespace_lifetime and namespace_pidfd is None and key.fileobj is process.stdout:
+                        for line in bytes(chunks[process.stdout]).splitlines(keepends=True):
+                            if line.endswith(b'\n'):
+                                value = json.loads(line)
+                                if value.get('phase') == 'namespace-init':
+                                    children = Path(f'/proc/{process.pid}/task/{process.pid}/children').read_text().split()
+                                    require(len(children) == 1, 'SINGLE_NAMESPACE_INIT_REQUIRED')
+                                    init_pid = int(children[0])
+                                    require(os.readlink(f'/proc/{init_pid}/ns/pid') == value['namespace'],
+                                            'NAMESPACE_INIT_IDENTITY_MISMATCH')
+                                    namespace_pidfd = os.pidfd_open(init_pid)
+                                    process.stdin.write(b'x')
+                                    process.stdin.flush()
+                                    process.stdin.close()
+                                    break
+        code = process.wait(timeout=max(.01, deadline - time.monotonic()))
+    finally:
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        process.wait()
+        if namespace_lifetime:
+            require(namespace_pidfd is not None, 'NAMESPACE_LIFETIME_UNPROVEN_ABORT')
+            waiter = selectors.DefaultSelector()
+            try:
+                waiter.register(namespace_pidfd, selectors.EVENT_READ)
+                require(waiter.select(1), 'NAMESPACE_INIT_NOT_TERMINAL_ABORT')
+            finally:
+                waiter.close(); os.close(namespace_pidfd)
+        selector.close()
+        process.stdout.close()
+        process.stderr.close()
+        if process.stdin is not None and not process.stdin.closed:
+            process.stdin.close()
+    result = {'command': command, 'exitCode': code,
+              'stdout': bytes(chunks[process.stdout]).decode('utf8', 'replace'),
+              'stderr': bytes(chunks[process.stderr]).decode('utf8', 'replace')}
+    if expected is not None:
+        require(code == expected, 'COMMAND_FAILED:' + json.dumps(result))
+    return result
+
+
+def tool(*command):
+    return bounded(list(command), expected=0)
+
+
+def private_mounts():
+    libc = ctypes.CDLL(None, use_errno=True)
+    libc.unshare.argtypes = [ctypes.c_int]
+    libc.unshare.restype = ctypes.c_int
+    require(libc.unshare(0x00020000) == 0, 'MOUNT_NAMESPACE_PREREQUISITE:' + str(ctypes.get_errno()))
+    # Linux UAPI mount.h: MS_REC=16384, MS_PRIVATE=(1<<18).
+    # A direct propagation syscall has no /etc/fstab lookup or mount helper.
+    libc.mount.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_char_p,
+                           ctypes.c_ulong, ctypes.c_void_p]
+    libc.mount.restype = ctypes.c_int
+    if libc.mount(None, b'/', None, 16384 | (1 << 18), None) != 0:
+        error = ctypes.get_errno()
+        raise OSError(error, 'PRIVATE_MOUNT_PREREQUISITE:' + os.strerror(error))
+
+
+def flags(path, enable=None):
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    try:
+        value = array.array('l', [0])
+        fcntl.ioctl(fd, GETFLAGS, value, True)
+        if enable is not None:
+            value[0] = value[0] | IMMUTABLE if enable else value[0] & ~IMMUTABLE
+            fcntl.ioctl(fd, SETFLAGS, value)
+            fcntl.ioctl(fd, GETFLAGS, value, True)
+            require(bool(value[0] & IMMUTABLE) == enable, 'FLAG_READBACK')
+        return value[0]
+    finally:
+        os.close(fd)
+
+
+def entries(tree):
+    result = [tree]
+    for parent, dirs, files in os.walk(tree, followlinks=False):
+        result.extend(Path(parent) / name for name in dirs + files)
+    return result
+
+
+def seal(tree, omitted=()):
+    for item in reversed(entries(tree)):
+        mode = item.lstat().st_mode
+        if (stat.S_ISREG(mode) or stat.S_ISDIR(mode)) and item not in omitted:
+            flags(item, True)
+
+
+def fixture(tree, runtime=False):
+    tree.mkdir(mode=0o755)
+    (tree / 'results').mkdir()
+    (tree / 'results' / 'result.json').write_bytes(b'{"result":"original"}\n')
+    if not runtime:
+        (tree / 'records').mkdir()
+        (tree / 'records' / 'store.json').write_bytes(b'{"schemaVersion":1,"records":[]}\n')
+    return tree
+
+
+def fixture_bound():
+    all_entries = entries(ROOT)
+    require(len(all_entries) <= MAX_ENTRIES, 'FIXTURE_ENTRY_LIMIT')
+    total = sum(p.lstat().st_size for p in all_entries
+                if not stat.S_ISDIR(p.lstat().st_mode))
+    require(total <= MAX_BYTES, 'FIXTURE_BYTE_LIMIT')
+
+
+def superblock(device):
+    info = os.stat(device)
+    require(stat.S_ISBLK(info.st_mode), 'EXT4_BLOCK_DEVICE_REQUIRED')
+    fd = os.open(device, os.O_RDONLY | os.O_CLOEXEC)
+    try:
+        data = os.pread(fd, 1024, 1024)
+    finally:
+        os.close(fd)
+    require(len(data) == 1024 and data[56:58] == b'\x53\xef', 'EXT4_SUPERBLOCK_REQUIRED')
+    return str(uuid.UUID(bytes=data[104:120])), info.st_rdev
+
+
+def truth(tree, fsuuid):
+    """Independent fixture-side inventory: lstat/readlink, never follows retained links."""
+    inventory = hashlib.sha256()
+    def record(value):
+        inventory.update(json.dumps(value, sort_keys=True, separators=(',', ':'),
+                                    ensure_ascii=True).encode() + b'\n')
+    record({'filesystemUuid': fsuuid})
+    totals = {'bytes': 0, 'entries': 0, 'resultBytes': 0, 'resultEntries': 0}
+    def walk(item, relative):
+        info = item.lstat()
+        totals['entries'] += 1
+        row = {'path': relative, 'inode': info.st_ino, 'mode': stat.S_IMODE(info.st_mode),
+               'uid': info.st_uid, 'gid': info.st_gid}
+        if stat.S_ISLNK(info.st_mode):
+            target = os.readlink(item)
+            size = len(os.fsencode(target))
+            row.update(kind='symlink', target=target, bytes=size)
+            totals['bytes'] += size
+        elif stat.S_ISDIR(info.st_mode):
+            row['kind'] = 'directory'
+        else:
+            require(stat.S_ISREG(info.st_mode), 'TRUTH_SPECIAL_NOT_SUPPORTED')
+            data = item.read_bytes()
+            row.update(kind='file', bytes=len(data), digest=digest(data))
+            totals['bytes'] += len(data)
+            if relative.startswith('results/'):
+                totals['resultBytes'] += len(data)
+                totals['resultEntries'] += 1
+        record(row)
+        if stat.S_ISDIR(info.st_mode):
+            for child in sorted(item.iterdir()):
+                walk(child, child.name if relative == '.' else relative + '/' + child.name)
+    walk(tree, '.')
+    return dict(totals, inventoryDigest='sha256:' + inventory.hexdigest(), filesystemUuid=fsuuid,
+                inode=tree.stat().st_ino)
+
+
+def child_command(args, tree, kind='plan', profile='parent', limits=None):
+    bound_sources(args)
+    byte_limit, entry_limit = limits or (MAX_BYTES, MAX_ENTRIES)
+    return [sys.executable, '-I', args.capability_child, '--verifier', args.verifier,
+            '--root', str(tree), '--kind', kind, '--profile', profile,
+            '--maximum-bytes', str(byte_limit), '--maximum-entries', str(entry_limit)]
+
+
+def verified(args, tree, expected=None, kind='plan', profile='parent', limits=None, audit=None):
+    command = child_command(args, tree, kind, profile, limits)
+    if audit:
+        command = ['strace', '-f', '-yy', '-e', 'trace=open,openat,openat2', '--'] + command
+    result = bounded(command)
+    emit({'phase': 'verifier', **result})
+    rows = [json.loads(line) for line in result['stdout'].splitlines()]
+    require(rows and rows[0]['phase'] == 'capabilities', 'CAPABILITY_PHASE_REQUIRED')
+    if audit:
+        assert_audit(result['stderr'], audit)
+    if expected:
+        require(result['exitCode'] == 1 and 'BUSTER_LEGACY_SEAL_' + expected in result['stderr'],
+                'WRONG_REJECTION:' + expected)
+        require(len(rows) == 1, 'NEGATIVE_PUBLISHED_OBSERVATION')
+        return None
+    require(result['exitCode'] == 0 and len(rows) == 2 and rows[1]['phase'] == 'verified',
+            'VERIFICATION_FAILED')
+    actual = rows[1]['observation']
+    fsuuid, device = superblock(args.ext4_device)
+    require(tree.stat().st_dev == device, 'FIXTURE_DEVICE_MISMATCH')
+    expected_truth = truth(tree, fsuuid)
+    for key, value in expected_truth.items():
+        if kind == 'runtime' and key.startswith('result'):
+            require(key not in actual, 'RUNTIME_RESULT_COUNTER')
+        else:
+            require(actual[key] == value, 'TRUTH_MISMATCH:' + key)
+    require(actual['schemaVersion'] == ('buster-legacy-immutable-runtime.v1' if kind == 'runtime'
+                                      else 'buster-legacy-immutable-tree.v1'), 'SCHEMA')
+    if kind == 'plan':
+        store = tree / 'records' / 'store.json'
+        require(actual['store'] == {'device': store.stat().st_dev, 'inode': store.stat().st_ino,
+                                   'bytes': store.stat().st_size, 'digest': digest(store.read_bytes())},
+                'STORE_TRUTH')
+    else:
+        require('store' not in actual, 'RUNTIME_STORE_FIELD')
+    return actual
+
+
+def assert_audit(trace, targets):
+    """strace -yy decodes returned and dirfd paths, including held /proc descriptors."""
+    require('openat(' in trace or 'open(' in trace, 'SYSCALL_TRACE_REQUIRED')
+    for target in targets:
+        matching = [line for line in trace.splitlines() if str(target) in line
+                    and any(call in line for call in ('open(', 'openat(', 'openat2('))]
+        require(matching, 'AUDIT_TARGET_NOT_OBSERVED:' + str(target))
+        require(all('O_PATH' in line for line in matching), 'SPECIAL_DATA_OPEN:' + str(target))
+
+
+def own_command(args, **values):
+    command = [sys.executable, '-I', args.driver]
+    for key in ('verifier', 'capability_child', 'driver', 'verifier_sha256',
+                'capability_child_sha256', 'driver_sha256', 'ext4_device', 'second_ext4_device'):
+        command += ['--' + key.replace('_', '-'), getattr(args, key)]
+    for key, value in values.items():
+        command += ['--' + key.replace('_', '-'), str(value)]
+    return command
+
+
+def mutation_worker(args, mode, tree):
+    cap = module(args.capability_child, 'actual_capability_child')
+    emit({'phase': 'capabilities', 'sets': cap.apply_profile(False)})
+    if mode == 'read':
+        os.setgroups([])
+        os.setgid(1000)
+        os.setuid(1000)
+        require(os.getuid() == os.getgid() == 1000 and os.getgroups() == [], 'READ_IDENTITY')
+        emit({'phase': 'read', 'uid': os.getuid(), 'gid': os.getgid(),
+              'digest': digest((tree / 'results/result.json').read_bytes()),
+              'sets': cap.capability_observation()})
+        for action in (lambda: (tree / 'results/result.json').write_bytes(b'changed'),
+                       lambda: (tree / 'new').write_bytes(b'new')):
+            try:
+                action()
+            except OSError as error:
+                require(error.errno in (errno.EPERM, errno.EACCES), 'READ_MUTATION_ERRNO')
+            else:
+                raise RuntimeError('READ_MUTATION_SUCCEEDED')
+        return
+    target = tree / 'results/result.json'
+    operations = {
+        'append': lambda: append(target), 'truncate': lambda: os.truncate(target, 0),
+        'create': lambda: (tree / 'new').write_bytes(b'new'),
+        'unlink': lambda: target.unlink(), 'rename': lambda: target.rename(tree / 'renamed'),
+        'chmod': lambda: target.chmod(0o600), 'chown': lambda: os.chown(target, 1000, 1000),
+        'clear-flags': lambda: flags(target, False),
+    }
+    for name, operation in operations.items():
+        try:
+            operation()
+        except OSError as error:
+            require(error.errno in (errno.EPERM, errno.EACCES), 'MUTATION_ERRNO:' + name)
+            emit({'operation': name, 'denied': error.errno})
+        else:
+            raise RuntimeError('MUTATION_SUCCEEDED:' + name)
+    # Independent unsealed controls, one inode per destructive operation.
+    controls = ROOT / 'controls'
+    for name in operations:
+        file = controls / name
+        if name == 'clear-flags':
+            try:
+                flags(file, False)
+            except OSError as error:
+                # CAP_LINUX_IMMUTABLE is intentionally absent; never call this a
+                # successful immutable-toggle control without kernel permission.
+                require(error.errno == errno.EPERM, 'CONTROL_FLAGS_ERRNO')
+                emit({'control': name, 'capabilityLimited': True})
+                continue
+        elif name == 'append': append(file)
+        elif name == 'truncate': os.truncate(file, 0)
+        elif name == 'create': (controls / 'created').write_bytes(b'new')
+        elif name == 'unlink': file.unlink()
+        elif name == 'rename': file.rename(controls / 'renamed')
+        elif name == 'chmod': file.chmod(0o600)
+        elif name == 'chown': os.chown(file, 1000, 1000)
+        emit({'control': name, 'succeeded': True})
+
+
+def append(file):
+    with file.open('ab') as stream:
+        stream.write(b'changed')
+
+
+def run_case(args):
+    require(os.getpid() == 1, 'PRIVATE_PID_NAMESPACE_INIT_REQUIRED')
+    emit({'phase': 'namespace-init', 'pid': os.getpid(),
+          'namespace': os.readlink('/proc/self/ns/pid')})
+    # The outer watchdog bounds this wait. No fixture write precedes pidfd ACK.
+    require(sys.stdin.buffer.read(1) == b'x', 'NAMESPACE_START_ACK_REQUIRED')
+    private_mounts()
+    tree = fixture(ROOT / 'tree', runtime=args.case in ('runtime', 'runtime-plan-reject',
+                                                       'runtime-links', 'runtime-link-fifo'))
+    case = args.case
+    omitted = []
+    if case == 'mutable-file': omitted = [tree / 'records/store.json']
+    if case == 'mutable-directory': omitted = [tree / 'records']
+    if case == 'foreign-descendant': os.chown(tree / 'records/store.json', 1000, 0)
+    if case == 'writable-descendant': (tree / 'records').chmod(0o775)
+    if case == 'missing-store': (tree / 'records/store.json').unlink()
+    if case == 'plan-link': (tree / 'link').symlink_to('/nonexistent-legacy-target')
+    if case == 'hardlink': os.link(tree / 'records/store.json', tree / 'duplicate')
+    if case in ('device', 'fifo'):
+        special = tree / 'special'
+        if case == 'device': os.mknod(special, stat.S_IFCHR | 0o600, os.makedev(1, 3))
+        else: os.mkfifo(special)
+    if case in ('bind-mount', 'different-device'):
+        (tree / 'mounted').mkdir()
+        if case == 'bind-mount':
+            source = ROOT / 'mount-source'; source.mkdir(); flags(source, True)
+            tool('mount', '-o', 'bind', str(source), str(tree / 'mounted'))
+        else: tool('mount', '-t', 'tmpfs', '-o', 'size=64k', 'tmpfs', str(tree / 'mounted'))
+        omitted.append(tree / 'mounted')
+    if case == 'tmpfs-root':
+        tool('mount', '-t', 'tmpfs', '-o', 'size=64k,mode=0755', 'tmpfs', str(tree))
+        mounted = tree.stat()
+        require(mounted.st_uid == 0 and mounted.st_gid == 0
+                and stat.S_IMODE(mounted.st_mode) == 0o755, 'TMPFS_ROOT_AUTHORITY_PREREQUISITE')
+        emit({'case': case, 'phase': 'tmpfs-root-authority', 'uid': mounted.st_uid,
+              'gid': mounted.st_gid, 'mode': oct(stat.S_IMODE(mounted.st_mode))})
+        verified(args, tree, 'EXT4_REQUIRED')
+        emit({'case': case, 'passed': True})
+        return
+    if case in ('runtime-links', 'runtime-link-fifo'):
+        external = ROOT / 'external'; external.write_bytes(b'before')
+        (tree / 'relative').symlink_to('results/result.json')
+        (tree / 'absolute').symlink_to(external)
+        (tree / 'dangling').symlink_to('absent')
+        if case == 'runtime-link-fifo':
+            os.mkfifo(ROOT / 'fifo-target')
+            (tree / 'fifo-link').symlink_to(ROOT / 'fifo-target')
+    if case == 'interrupted': flags(tree, True)
+    else: seal(tree, omitted)
+    fixture_bound()
+    fsuuid, device = superblock(args.ext4_device)
+    require(tree.stat().st_dev == device, 'PRIMARY_DEVICE_BINDING')
+    if case in ('complete', 'quota-exact', 'quota-byte-short', 'quota-entry-short'):
+        measured = truth(tree, fsuuid)
+        limits = (measured['bytes'], measured['entries'])
+        if case == 'quota-byte-short': limits = (limits[0] - 1, limits[1])
+        if case == 'quota-entry-short': limits = (limits[0], limits[1] - 1)
+        verified(args, tree, {'quota-byte-short': 'BYTE_LIMIT', 'quota-entry-short': 'ENTRY_LIMIT'}.get(case),
+                 limits=limits if case != 'complete' else None)
+    elif case in ('mutable-file', 'mutable-directory', 'interrupted'):
+        verified(args, tree, 'IMMUTABLE_REQUIRED')
+    elif case in ('plan-link', 'hardlink', 'device', 'fifo'):
+        verified(args, tree, 'ENTRY_INVALID', audit=[tree / ('link' if case == 'plan-link' else 'special')]
+                 if case in ('device', 'fifo', 'plan-link') else None)
+        if case in ('device', 'fifo'):
+            control = bounded(['strace', '-f', '-yy', '-e', 'trace=open,openat,openat2', '--',
+                               sys.executable, '-I', '-c',
+                               'import os,sys; fd=os.open(sys.argv[1],os.O_RDONLY|os.O_NONBLOCK); os.close(fd)',
+                               str(tree / 'special')], expected=0)
+            emit({'phase': 'audit-positive-control', **control})
+            try: assert_audit(control['stderr'], [tree / 'special'])
+            except RuntimeError as error:
+                require(str(error).startswith('SPECIAL_DATA_OPEN:'), 'AUDIT_CONTROL_WRONG_FAILURE')
+            else: raise RuntimeError('AUDIT_FAILED_TO_DETECT_DATA_OPEN')
+    elif case in ('bind-mount', 'different-device'): verified(args, tree, 'MOUNT_CHANGED')
+    elif case == 'retained-extra': verified(args, tree, 'CAPABILITY_BOUND_INVALID', profile='retained-extra')
+    elif case == 'extra-bounding':
+        result = bounded(own_command(args, worker='extra', tree=tree))
+        emit(result)
+        require(result['exitCode'] == 1 and 'BUSTER_LEGACY_SEAL_CAPABILITY_BOUND_INVALID' in result['stderr'],
+                'EXTRA_CAPABILITY_REJECTION')
+    elif case in ('foreign-ancestor', 'writable-ancestor'):
+        if case == 'foreign-ancestor': os.chown(ROOT, 1000, 0)
+        else: ROOT.chmod(0o777)
+        try: verified(args, tree, 'AUTHORITY_INVALID')
+        finally: os.chown(ROOT, 0, 0); ROOT.chmod(0o755)
+    elif case in ('foreign-descendant', 'writable-descendant'):
+        target = tree / ('records/store.json' if case == 'foreign-descendant' else 'records')
+        observed = target.stat()
+        require(observed.st_uid == (1000 if case == 'foreign-descendant' else 0)
+                and (case != 'writable-descendant' or stat.S_IMODE(observed.st_mode) == 0o775),
+                'DESCENDANT_AUTHORITY_PREREQUISITE')
+        require(all(flags(item) & IMMUTABLE for item in entries(tree)), 'DESCENDANT_SEAL_PREREQUISITE')
+        emit({'case': case, 'phase': 'descendant-authority', 'uid': observed.st_uid,
+              'gid': observed.st_gid, 'mode': oct(stat.S_IMODE(observed.st_mode)),
+              'immutable': True})
+        verified(args, tree, 'AUTHORITY_INVALID')
+    elif case in ('missing-store', 'runtime-plan-reject'): verified(args, tree, 'STORE_REQUIRED')
+    elif case == 'mutation-denial':
+        before = truth(tree, fsuuid)
+        controls = ROOT / 'controls'; controls.mkdir()
+        for name in ('append', 'truncate', 'create', 'unlink', 'rename', 'chmod', 'chown', 'clear-flags'):
+            (controls / name).write_bytes(b'control')
+        fixture_bound()
+        result = bounded(own_command(args, worker='mutation', tree=tree), expected=0); emit(result)
+        require(truth(tree, fsuuid) == before, 'MUTATION_CHANGED_SOURCE')
+        require(all(flags(p) & IMMUTABLE for p in entries(tree)), 'MUTATION_CHANGED_FLAGS')
+    elif case == 'uid1000-read':
+        result = bounded(own_command(args, worker='read', tree=tree), expected=0); emit(result)
+        row = next(json.loads(line) for line in result['stdout'].splitlines() if '"phase": "read"' in line)
+        require(row['digest'] == digest((tree / 'results/result.json').read_bytes()), 'READ_DIGEST')
+        require(all(value == 0 for key, value in row['sets'].items() if key != 'CapBnd'), 'READ_CAPS')
+    elif case == 'runtime': verified(args, tree, kind='runtime')
+    elif case in ('runtime-links', 'runtime-link-fifo'):
+        before = verified(args, tree, kind='runtime', audit=[tree / 'fifo-link'] if case.endswith('fifo') else None)
+        if case.endswith('fifo'):
+            # The link inode must be inspected; its external FIFO target must not appear in any open syscall.
+            result = bounded(['strace', '-f', '-yy', '-e', 'trace=open,openat,openat2', '--'] + child_command(args, tree, 'runtime'))
+            emit(result)
+            require(result['exitCode'] == 0, 'LINK_AUDIT_FAILED')
+            require(not any(str(ROOT / 'fifo-target') in line for line in result['stderr'].splitlines()
+                            if any(call in line for call in ('open(', 'openat(', 'openat2('))), 'LINK_TARGET_OPEN')
+        external.write_bytes(b'after-change')
+        require(external.read_bytes() == b'after-change', 'EXTERNAL_MUTATION_CONTROL')
+        require(verified(args, tree, kind='runtime') == before, 'LINK_TARGET_AFFECTED_INVENTORY')
+        verified(args, tree, 'ENTRY_INVALID')
+    elif case == 'namespace-stable':
+        namespace_pair(args, tree)
+    elif case == 'different-uuid':
+        second_uuid, second_device = superblock(args.second_ext4_device)
+        require(second_uuid != fsuuid and second_device != device, 'DISTINCT_EXT4_REQUIRED')
+        mounted = ROOT / 'second'; mounted.mkdir()
+        tool('mount', '-t', 'ext4', args.second_ext4_device, str(mounted))
+        other = fixture(mounted / 'tree'); seal(other); fixture_bound()
+        original = verified(args, tree)
+        clone_args = argparse.Namespace(**vars(args)); clone_args.ext4_device = args.second_ext4_device
+        copied = verified(clone_args, other)
+        require(copied['store']['digest'] == original['store']['digest'], 'SECOND_LOGICAL_BYTES')
+        require(copied['filesystemUuid'] != original['filesystemUuid'] and
+                copied['inventoryDigest'] != original['inventoryDigest'], 'SECOND_SOURCE_IDENTITY_MATCHED')
+    else: raise RuntimeError('UNKNOWN_CASE')
+    emit({'case': case, 'passed': True})
+
+
+def namespace_pair(args, tree):
+    """Hold both actual namespaces live until their observations are compared."""
+    children = []
+    selector = selectors.DefaultSelector()
+    buffers = {}
+    observations = {}
+    deadline = time.monotonic() + CASE_SECONDS
+    try:
+        for _ in range(2):
+            child = subprocess.Popen(own_command(args, worker='namespace', tree=tree),
+                                     stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                     stderr=subprocess.PIPE, start_new_session=True,
+                                     preexec_fn=death_signal)
+            children.append(child)
+            for stream in (child.stdout, child.stderr):
+                os.set_blocking(stream.fileno(), False)
+                buffers[stream] = bytearray()
+                selector.register(stream, selectors.EVENT_READ, child)
+        while len(observations) != 2:
+            require(time.monotonic() < deadline, 'NAMESPACE_PAIR_WATCHDOG')
+            for key, _ in selector.select(.05):
+                chunk = os.read(key.fileobj.fileno(), 8192)
+                require(bool(chunk), 'NAMESPACE_CHILD_EARLY_EXIT')
+                buffers[key.fileobj].extend(chunk)
+                require(sum(map(len, buffers.values())) <= OUTPUT_BYTES, 'NAMESPACE_OUTPUT_LIMIT')
+                if key.fileobj is key.data.stdout:
+                    for line in bytes(buffers[key.fileobj]).splitlines(keepends=True):
+                        if line.endswith(b'\n'):
+                            value = json.loads(line)
+                            if 'namespaceObservation' in value:
+                                observations[key.data.pid] = value['namespaceObservation']
+        require(all(child.poll() is None for child in children), 'NAMESPACES_NOT_LIVE')
+        identities = [os.readlink(f'/proc/{child.pid}/ns/mnt') for child in children]
+        require(identities[0] != identities[1], 'DISTINCT_LIVE_NAMESPACES_REQUIRED')
+        left, right = [observations[child.pid] for child in children]
+        require(left['mountId'] != right['mountId'], 'DISTINCT_LIVE_MOUNT_IDS_REQUIRED')
+        for key in ('filesystemUuid', 'inode', 'inventoryDigest', 'bytes', 'entries'):
+            require(left[key] == right[key], 'NAMESPACE_IDENTITY:' + key)
+        emit({'phase': 'live-namespace-comparison', 'namespaces': identities,
+              'observations': [left, right]})
+        for child in children:
+            child.stdin.write(b'x'); child.stdin.flush(); child.stdin.close()
+        for child in children:
+            require(child.wait(timeout=max(.01, deadline - time.monotonic())) == 0,
+                    'NAMESPACE_CHILD_FAILED')
+            emit({'phase': 'namespace-child', 'stdout': bytes(buffers[child.stdout]).decode(),
+                  'stderr': bytes(buffers[child.stderr]).decode()})
+    finally:
+        for child in children:
+            try: os.killpg(child.pid, signal.SIGKILL)
+            except ProcessLookupError: pass
+            child.wait()
+            for stream in (child.stdin, child.stdout, child.stderr):
+                if not stream.closed: stream.close()
+        selector.close()
+
+
+def cleanup():
+    for item in entries(ROOT):
+        info = item.lstat()
+        if stat.S_ISDIR(info.st_mode) or stat.S_ISREG(info.st_mode):
+            flags(item, False)
+    for item in ROOT.iterdir():
+        if item.is_dir() and not item.is_symlink(): shutil.rmtree(item)
+        else: item.unlink()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    for name in ('verifier', 'capability-child', 'driver', 'verifier-sha256',
+                 'capability-child-sha256', 'driver-sha256', 'ext4-device', 'second-ext4-device'):
+        parser.add_argument('--' + name, required=True)
+    parser.add_argument('--case', choices=CASES)
+    parser.add_argument('--worker', choices=('mutation', 'read', 'extra', 'namespace'))
+    parser.add_argument('--tree')
+    parser.add_argument('--supervised', action='store_true')
+    args = parser.parse_args()
+    require(os.getuid() == os.geteuid() == os.getgid() == os.getegid() == 0, 'GUEST_ROOT_REQUIRED')
+    require(Path('/run/legacy-seal-disposable-guest').read_text() == 'LIS-disposable-ext4-v1\n', 'GUEST_MARKER_REQUIRED')
+    bound_sources(args)
+    if args.worker:
+        tree = Path(args.tree)
+        require(tree.is_absolute() and tree.is_relative_to(ROOT) and tree.resolve() == tree, 'WORKER_TREE')
+        if args.worker in ('mutation', 'read'): mutation_worker(args, args.worker, tree)
+        elif args.worker == 'extra':
+            cap = module(args.capability_child, 'capability_observer')
+            observed = cap.capability_observation()
+            require(observed['CapBnd'] & ~cap.ALLOWED and observed['CapEff'] & ~cap.ALLOWED,
+                    'EXTRA_CAPABILITY_PREREQUISITE')
+            emit({'phase': 'capabilities', 'sets': observed})
+            module(args.verifier, 'original_verifier').verify(str(tree), MAX_BYTES, MAX_ENTRIES)
+        else:
+            private_mounts()
+            view = ROOT / 'namespace-view'; view.mkdir(exist_ok=True)
+            tool('mount', '-o', 'bind', str(tree), str(view))
+            emit({'namespaceObservation': verified(args, view)})
+            require(sys.stdin.buffer.read(1) == b'x', 'NAMESPACE_RELEASE_REQUIRED')
+        return
+    if args.case:
+        run_case(args); return
+    if not args.supervised:
+        result = bounded(own_command(args) + ['--supervised'], TOTAL_SECONDS,
+                         output_limit=TOTAL_OUTPUT_BYTES)
+        sys.stdout.write(result['stdout'])
+        sys.stderr.write(result['stderr'])
+        require(result['exitCode'] == 0, 'DRIVER_FAILED')
+        return
+    def overall_timeout(_signal, _frame):
+        raise RuntimeError('OVERALL_WATCHDOG')
+    signal.signal(signal.SIGALRM, overall_timeout)
+    signal.setitimer(signal.ITIMER_REAL, TOTAL_SECONDS)
+    require(len(CASES) <= MAX_CASES, 'CASE_LIMIT')
+    require(not ROOT.exists() and not ROOT.is_symlink(), 'FRESH_FIXTURE_REQUIRED')
+    os.umask(0o022)
+    for name in ('mount', 'strace', 'unshare'):
+        require(shutil.which(name), 'PREREQUISITE_TOOL:' + name)
+    superblock(args.ext4_device); superblock(args.second_ext4_device)
+    ROOT.mkdir(mode=0o755)
+    deadline = time.monotonic() + TOTAL_SECONDS
+    failures = []
+    for case in CASES:
+        try:
+            result = bounded(['unshare', '--pid', '--fork', '--mount-proc', '--kill-child=KILL', '--'] +
+                             own_command(args, case=case),
+                             min(CASE_SECONDS, max(.001, deadline - time.monotonic())), namespace_lifetime=True)
+            emit({'case': case, **result})
+            terminal = [json.loads(line) for line in result['stdout'].splitlines()]
+            if result['exitCode'] != 0 or not terminal or terminal[-1] != {'case': case, 'passed': True}:
+                failures.append(case)
+        except Exception as error:
+            emit({'case': case, 'failure': str(error), 'abortedBeforeCleanup': True,
+                  'unexecuted': list(CASES[CASES.index(case) + 1:])})
+            raise
+        cleanup()
+        require(time.monotonic() < deadline, 'OVERALL_WATCHDOG')
+    emit({'cases': len(CASES), 'failed': failures, 'kernelAcceptance': not failures,
+          'stopAuthority': False})
+    require(not failures, 'LIS_CASES_FAILED')
+
+
+if __name__ == '__main__':
+    try: main()
+    except (OSError, ValueError, RuntimeError, RecursionError) as error:
+        print(f'{type(error).__name__}: {error}', file=sys.stderr)
+        sys.exit(1)

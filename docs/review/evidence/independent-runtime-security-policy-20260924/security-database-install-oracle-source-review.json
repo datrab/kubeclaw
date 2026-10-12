@@ -1,0 +1,24 @@
+{
+  "reviewer": "/root/runtime_security_policy_review",
+  "decision": "accept_source_integration_and_full_original_verification_only",
+  "manifestSha256": "04b0552a236eb47b614936ef430af37f9a3b4adf702bf4b57ad12c6933340b11",
+  "candidateBeforeLiveHashesVerified": true,
+  "findings": [],
+  "assessment": [
+    "Old assertion encoded mutable-tag --download-java-db-only implementation rather than required installed Java database. Current Dockerfile has already replaced that path with locked installer.",
+    "New checks retain original JavaDB nonempty requirement and additionally require vulnerabilityDB nonempty, explicit COPY of lock and installer, RUN of installer with actual trivy --version, and absence of retired mutable-tag download flags.",
+    "Both existing positive DB presence conditions remain in actual Dockerfile RUN. Script enforces lock/versions equality, scanner version and exact manifest/layer/extracted-byte identity; genuine successful installer execution is separately evidenced in runtime-security-test-tools-20260924.",
+    "Only one stale source-contract assertion changes; existing controller/RBAC/CRD/digest/freshness assertions remain. No production/Dockerfile/source version change, assertion skip, fallback or synthetic database introduced."
+  ],
+  "limits": [
+    "These are Dockerfile source assertions, not executed Docker build or deployed image evidence.",
+    "They do not prove locked database freshness: preserved lock vulnerability snapshot is stale under existing48h policy. Separate fresh test cache does not update or approve production lock.",
+    "No tests run by reviewer; complete original implementation/cutover and combined final bound checks must run after integration."
+  ],
+  "file": {
+    "path": "tests/verification/contracts/check-pipeline-security-implementation.mts",
+    "kind": "file",
+    "beforeSha256": "a8b4cabada3ed10e3b67a37509e15b1c6f8d590b3e6f515149950b9c140a7a3a",
+    "sha256": "c68c8676462f99c7c817af8abe53f5aa0cdbd83aaa7d473ff08fcd9a16c678c1"
+  }
+}

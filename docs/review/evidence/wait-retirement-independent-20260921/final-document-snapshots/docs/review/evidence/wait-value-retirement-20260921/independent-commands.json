@@ -1,0 +1,253 @@
+{
+  "scope": "Proposal for one fresh independently bound execution; author results remain separately and selectively bound.",
+  "commands": [
+    {
+      "name": "original-wait-live",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "tests/live-function.test.ts"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugins/wait-store",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "wait-boundary-original-five-plus-reexport",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "tests/package-boundary.test.mjs"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugins/wait-store",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "original-operator-wait-audience-23",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/reliability/wait-value-projection.test.mjs",
+        "tests/verification/reliability/wait-resolver-audience.test.mjs",
+        "tests/verification/reliability/operator-request-projection.test.mjs",
+        "tests/verification/reliability/operator-projection-independent.test.mjs"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "blob-foundation-14",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/reliability/blob-budget.test.mts",
+        "tests/verification/reliability/blob-read-boundary.test.mjs",
+        "tests/verification/reliability/blob-read-independent.test.mjs",
+        "tests/verification/reliability/record-transition-authority-independent.test.mjs",
+        "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+        "tests/verification/reliability/record-retained-transition.test.mjs"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "legacy-cutover-original-runtime-mapped-source",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "foundation-types",
+      "command": [
+        "/usr/local/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "skills/common/plugin-runtime/tsconfig.json"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "nova-types",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "skills/nova/tsconfig.json"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "scoped-lint",
+      "command": [
+        "node",
+        "node_modules/eslint/bin/eslint.js",
+        "--config",
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        "skills/common/plugins/wait-store/src/adapter.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime.ts",
+        "skills/common/plugin-runtime/sdk/src/index.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/adapters.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "scripts/observability-retirement/operator-authority.mjs",
+        "scripts/retire-operator-request.mjs",
+        "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+        "skills/common/plugin-runtime/sdk/src/retained-wait.ts",
+        "skills/nova/core/state/wait-projection-reader.ts",
+        "scripts/retire-wait-value.mjs",
+        "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+        "skills/nova/core/state/wait-projection-source.ts",
+        "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib"
+      },
+      "expectedExitCode": 0
+    },
+    {
+      "name": "mutant-events-prefix",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "--import",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-value-retirement-20260921/mutant.mjs",
+        "--test",
+        "--test-concurrency=1",
+        "--test-name-pattern=retained original prefix mutation",
+        "tests/verification/reliability/wait-value-projection.test.mjs"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib",
+        "WAIT_PROJECTION_MUTANT": "events-prefix"
+      },
+      "expectedExitCode": 1,
+      "requiredDiagnostics": [
+        "SEMANTIC_MUTANT_APPLIED:events-prefix",
+        "Missing expected rejection"
+      ]
+    },
+    {
+      "name": "mutant-receipt-authority",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "--import",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-value-retirement-20260921/mutant.mjs",
+        "--test",
+        "--test-concurrency=1",
+        "--test-name-pattern=wrong source/receipt identities",
+        "tests/verification/reliability/wait-value-projection.test.mjs"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib",
+        "WAIT_PROJECTION_MUTANT": "receipt-authority"
+      },
+      "expectedExitCode": 1,
+      "requiredDiagnostics": [
+        "SEMANTIC_MUTANT_APPLIED:receipt-authority",
+        "Missing expected rejection"
+      ]
+    },
+    {
+      "name": "mutant-original-wait-digest",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "--import",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-value-retirement-20260921/mutant.mjs",
+        "--test",
+        "--test-concurrency=1",
+        "--test-name-pattern=existing operator projection receipt",
+        "tests/verification/reliability/wait-value-projection.test.mjs"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib",
+        "WAIT_PROJECTION_MUTANT": "original-wait-digest"
+      },
+      "expectedExitCode": 1,
+      "requiredDiagnostics": [
+        "SEMANTIC_MUTANT_APPLIED:original-wait-digest",
+        "OPERATOR_PROJECTION_AUTHORITY_REQUIRED"
+      ]
+    },
+    {
+      "name": "mutant-selected-audience",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "--import",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-value-retirement-20260921/mutant.mjs",
+        "--test",
+        "--test-concurrency=1",
+        "--test-name-pattern=Core exposes retained",
+        "tests/verification/reliability/wait-resolver-audience.test.mjs"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "environment": {
+        "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib",
+        "WAIT_PROJECTION_MUTANT": "selected-audience"
+      },
+      "expectedExitCode": 1,
+      "requiredDiagnostics": [
+        "SEMANTIC_MUTANT_APPLIED:selected-audience",
+        "Expected values to be strictly equal"
+      ]
+    }
+  ]
+}

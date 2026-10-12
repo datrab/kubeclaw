@@ -1,0 +1,57 @@
+{
+  "git": {
+    "identity": {
+      "bytes": 3162712,
+      "device": 2097155,
+      "inode": 11434409,
+      "kind": "file",
+      "mode": 493,
+      "sha256": "081e55dbb116bd5fce9b5e16df5c1bf843748f03cd5c2ddf0627a8eccda839c1"
+    },
+    "path": "/usr/bin/git"
+  },
+  "helm": {
+    "identity": {
+      "bytes": 61624482,
+      "device": 2097155,
+      "inode": 11666276,
+      "kind": "file",
+      "mode": 493,
+      "sha256": "7a319dee5ea7a1f7d7a0d92d5c223586f3b65abc33163c9de2a85f083aa3df2b"
+    },
+    "path": "/usr/local/bin/helm"
+  },
+  "node": {
+    "identity": {
+      "bytes": 131391152,
+      "device": 2097155,
+      "inode": 11182709,
+      "kind": "file",
+      "mode": 493,
+      "sha256": "78465b20b5455f64d2dbbd9e8b38470cfc23ad3abe4cdc9a00dc5e050eee70fb"
+    },
+    "path": "/usr/local/bin/node"
+  },
+  "python3": {
+    "identity": {
+      "bytes": 14080,
+      "device": 2097155,
+      "inode": 11434420,
+      "kind": "file",
+      "mode": 493,
+      "sha256": "16c8377b7e809985cf46d64559df85bda416264f63b06c84536d3acbe549e23b"
+    },
+    "path": "/usr/bin/python3.14"
+  },
+  "sh": {
+    "identity": {
+      "bytes": 804616,
+      "device": 2097155,
+      "inode": 11182048,
+      "kind": "file",
+      "mode": 493,
+      "sha256": "01a989eb4d1d04b0d146c790ac536abd88f374ec74a2e110c58910b840d42045"
+    },
+    "path": "/bin/busybox"
+  }
+}

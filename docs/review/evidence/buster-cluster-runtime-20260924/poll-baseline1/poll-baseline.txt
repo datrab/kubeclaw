@@ -1,0 +1,12 @@
+✔ actual kubernetes.fixture polling cadence 50 (119.652318ms)
+✔ actual kubernetes.fixture polling cadence 200 (404.201192ms)
+✔ actual kubernetes.exposure polling cadence 50 (108.464199ms)
+✔ actual kubernetes.exposure polling cadence 200 (403.238428ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3050.217251

@@ -11,7 +11,7 @@ test('actual kubectl binds Ready, replay and cleanup to durable exposure ownersh
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'tailscale-wire-')); const api = await exposureAPI(root);
   const priorConfig = process.env.KUBECONFIG; process.env.KUBECONFIG = api.config;
   try {
-    const client = new TailscaleExposureCapabilityInvoker({ kubectlExecutable: execFileSync('which', ['kubectl'], { encoding: 'utf8' }).trim(),
+    const client = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable: execFileSync('which', ['kubectl'], { encoding: 'utf8' }).trim(),
       controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
       allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 10_000, pollIntervalMs: 10 });
     const request = attempt => ({ operation: 'prepare', resource: { type: 'kubernetes.exposure', canonicalId: `kubernetes-exposure:attempt:${attempt}` },

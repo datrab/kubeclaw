@@ -1,0 +1,1 @@
+Review source binding failed before any test: an unused cached tool symlink resolves to absent host /usr/bin/setarch. Corrected binder records dangling link text, nonstrict resolution and explicit absent-target state rather than excluding it. No source or assertion change.

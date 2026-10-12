@@ -1,0 +1,24 @@
+✔ corrupt existing object is never acknowledged or overwritten and failed pending is removed (303.163834ms)
+✔ put snapshots caller buffers before IO and retained IDs survive a new store instance (183.740608ms)
+✔ independent native writers atomically install identical content and leave no pending files (1507.933127ms)
+✔ acknowledged native writer content remains readable after SIGKILL (607.052607ms)
+✔ actual FIFO objects reject without blocking get or existing-object put (590.874928ms)
+✔ direction selection rolls back on actual SQL insert failure and replays a committed response (11194.611423ms)
+✔ all feedback actions persist valid wire IDs, explicit retries deduplicate and fresh actions remain distinct (5532.06904ms)
+✔ failed rejection retains proposed state; stale and historical partial selections do not invent receipts (3786.263281ms)
+✔ wire preference IDs replay only exact owner and content while preserving internal UUIDs (3695.479881ms)
+✔ wire ID migration preserves legacy UUID/content and refuses ambiguous historical wire identities (10183.687097ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (13595.272525ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (4706.477059ms)
+✔ CC3 real Control service profile 1 selects history, artifact root and Studio URL (2888.671706ms)
+✔ CC3 real Control service profile 2 selects history, artifact root and Studio URL (6706.352261ms)

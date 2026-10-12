@@ -1,0 +1,15 @@
+{
+  "decision": "source accepted for integration after Runtime2 HOLD and fresh verification",
+  "manifestSha256": "9cdff6c95d5dee08da67d2ed56d9e0486bae3914c2b1b8cbabac20ff9316d63a",
+  "identityErrors": [],
+  "scope": "one test module only, four existing legacy-key negatives retained on both charts",
+  "review": [
+    "Raw Runtime2 error exactly matches Prism closed-schema denial of busterNamespaceBroker; chart schema has additionalProperties false and does not define this section. Corrected oracle requires that exact boundary, not a generic nonzero exit.",
+    "Kubeclaw retained template path now checked for exact retired property name.",
+    "Each mutation uses a new object spread from captured original value. Finally restores original own-property presence and original object value then writes restored values; no mutation of original broker object.",
+    "Added successful render before remaining invalid-policy loop rules out lingering invalid broker section. Subsequent original cluster-error and loader-negative assertions remain unchanged.",
+    "No production/schema privilege change; original failed runtime evidence remains red."
+  ],
+  "runtime": "none",
+  "rawEvidence": "docs/review/evidence/buster-cluster-runtime-20260924/runtime2/runtime-1.txt"
+}

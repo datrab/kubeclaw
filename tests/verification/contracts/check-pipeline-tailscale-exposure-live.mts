@@ -1,7 +1,9 @@
+import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
 import assert from 'node:assert/strict';
 import { TailscaleExposureCapabilityInvoker, NetworkHttpCapabilityInvoker } from '@kubeclaw/buster-engine';
 
 if (process.env.KUBECLAW_TAILSCALE_EXPOSURE_LIVE !== '1') throw new Error('KUBECLAW_TAILSCALE_EXPOSURE_LIVE=1 is required');
+const clusterEndpoint = loadSwarmSettings(process.env).buster.clusterInvokers.shared;
 const leaseName = process.env.KUBECLAW_TAILSCALE_LIVE_LEASE;
 const namespace = process.env.KUBECLAW_TAILSCALE_LIVE_NAMESPACE;
 const serviceName = process.env.KUBECLAW_TAILSCALE_LIVE_SERVICE;
@@ -10,8 +12,8 @@ const expiresAt = process.env.KUBECLAW_TAILSCALE_LIVE_EXPIRES_AT;
 if (!leaseName || !namespace || !serviceName || !Number.isSafeInteger(servicePort) || !expiresAt
   || !Number.isFinite(Date.parse(expiresAt))) throw new Error('TAILSCALE_EXPOSURE_LIVE_INPUT_REQUIRED');
 const controllerNamespace = process.env.KUBECLAW_CONTROLLER_NAMESPACE ?? 'kubeclaw';
-const exposure = new TailscaleExposureCapabilityInvoker({ kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace,
-  leaseApiGroup: process.env.KUBECLAW_LEASE_API_GROUP ?? 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+const exposure = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace,
+  leaseApiGroup: clusterEndpoint.leaseApiGroup, leaseApiVersion: clusterEndpoint.leaseApiVersion,
   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 300_000, pollIntervalMs: 1000 });
 const signal = new AbortController().signal;
 let prepared: Readonly<Record<string, unknown>> | null = null;

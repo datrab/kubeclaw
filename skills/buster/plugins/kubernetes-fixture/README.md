@@ -10,6 +10,14 @@ Secret references. It does not build, expose, test, or reveal Secret values.
 The default cleanup mode deletes the lease after dependent tests finish.
 Retained fixtures use a bounded lease expiry. The controller deletes the
 namespace at expiry.
+
+Retention applies only to a successfully completed fixture confirmed by the
+host. Failed or otherwise incomplete attempts request lease release even when
+`retention.mode` is `retain`. Cleanup receives the host's explicit disposition,
+including when it runs in a replacement provider process. A failed release is
+reported as cleanup failure and prevents an ordinary retry from hiding the
+unresolved resource. See the [cleanup authority contract](../../../../docs/architecture/buster-fixture-cleanup.md)
+for the API and historical-provider limitations.
 # Generated demo credential output
 
 When `testCredentials.mode` is `generate`, the controller creates an immutable

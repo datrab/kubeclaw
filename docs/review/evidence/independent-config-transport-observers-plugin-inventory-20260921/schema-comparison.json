@@ -1,0 +1,36 @@
+[
+  {
+    "plugin": "redis-transport",
+    "fieldPatterns": 6,
+    "registrations": [
+      "publisher",
+      "telemetry"
+    ],
+    "exactSchemaEquality": true
+  },
+  {
+    "plugin": "transport-publisher",
+    "fieldPatterns": 7,
+    "registrations": [
+      "publisher"
+    ],
+    "exactSchemaEquality": true
+  },
+  {
+    "plugin": "agent-observability",
+    "fieldPatterns": 0,
+    "registrations": [
+      "ingester",
+      "evidence"
+    ],
+    "exactSchemaEquality": true
+  },
+  {
+    "plugin": "openclaw-agent-events",
+    "fieldPatterns": 4,
+    "registrations": [
+      "source"
+    ],
+    "exactSchemaEquality": true
+  }
+]

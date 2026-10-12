@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/review/remediation/implementation/independent-native-process-scope-limits-20260921.md",
+    "sha256": "00f8db21717beee09f81f0b0d97a6d878a93157b438b90d5d33af388e4026163"
+  },
+  {
+    "path": "docs/review/remediation/implementation/isolated-native-vm-run3-execution-20260921.md",
+    "sha256": "9fbcc5f16272dbe68cff0ea8e68be32e0f67b85a9570e3d25dfb029966725463"
+  },
+  {
+    "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/terminal-identities.json",
+    "sha256": "15deceb979f079b7c7a2ad54097fec7df8cd4de3fa5175d55c5bde913df805ad"
+  },
+  {
+    "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/vm-result.json",
+    "sha256": "739a359d0338cb9831ad27a6ff6c19507d7afb60a848b00d8b6cd31e3ebfa4d1"
+  },
+  {
+    "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/vm-console.txt",
+    "sha256": "4b44ed96f64f6a358f4cf633503137ab7f2362aa0a204684560ff08df1553df1"
+  }
+]

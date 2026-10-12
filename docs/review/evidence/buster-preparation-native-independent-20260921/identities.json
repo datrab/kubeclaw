@@ -1,0 +1,104 @@
+{
+  "files": [
+    {
+      "path": "docs/review/remediation/implementation/buster-preparation-native-proof-20260921.md",
+      "sha256": "89818fe4e6e1f3bb98237bd5c4e50c1d5b30da04c7765ea2f0cf5af3ba39d51d",
+      "bytes": 8910,
+      "snapshot": "source/00-buster-preparation-native-proof-20260921.md.snapshot"
+    },
+    {
+      "path": "package.json",
+      "sha256": "122c190c39c92b98fce1cc7df962cb0b8a2633ddf1500a967c8eb8019a238080",
+      "bytes": 43640,
+      "snapshot": "source/01-package.json.snapshot"
+    },
+    {
+      "path": "scripts/tests/buster-preparation-native-mutations.mjs",
+      "sha256": "b8bbd43d84c197af1be9f3ef19638a4662fba6c44b32996003910f5b5aa00d09",
+      "bytes": 2089,
+      "snapshot": "source/02-buster-preparation-native-mutations.mjs.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+      "sha256": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242",
+      "bytes": 5676,
+      "snapshot": "source/03-preparation-cleanup-host.ts.snapshot"
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-crash.mts",
+      "sha256": "fad9d70dc16b12b993d20f5ae13997ecd8812f57495e52d989c9cf2de9d09ab9",
+      "bytes": 967,
+      "snapshot": "source/04-native-preparation-crash.mts.snapshot"
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-delete-barrier.mts",
+      "sha256": "69cca3f3a9f30f3dc605334a11f9331fd4f384841e7d448d400b2b35d5e86d73",
+      "bytes": 1138,
+      "snapshot": "source/05-native-preparation-delete-barrier.mts.snapshot"
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-delete-loader.mjs",
+      "sha256": "d563a75fd4204e00abe9d43d4673b2b859c11db4fe83d6b0593b846dfe6c86e6",
+      "bytes": 1042,
+      "snapshot": "source/06-native-preparation-delete-loader.mjs.snapshot"
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-permissions.mts",
+      "sha256": "834d38299345eaac1aa4e2a31c8b7862298bb976a6a239d0a4b917df312725f9",
+      "bytes": 4869,
+      "snapshot": "source/07-native-preparation-permissions.mts.snapshot"
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-quota.mts",
+      "sha256": "cf9255385f7ac3964d44914986fc35d5d1ab7c81611000f8d6c47b7fab965484",
+      "bytes": 1686,
+      "snapshot": "source/08-native-preparation-quota.mts.snapshot"
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-release-crash.mts",
+      "sha256": "8a0917323ca5131a21a9e324efffac31c935530648fc9ec6c09665aef37bd123",
+      "bytes": 2894,
+      "snapshot": "source/09-native-preparation-release-crash.mts.snapshot"
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-release-mutant.mjs",
+      "sha256": "9617e994481189cb914aac2ae1c85f3b0dc6d949e008c93dc458e8761e2e7959",
+      "bytes": 871,
+      "snapshot": "source/10-native-preparation-release-mutant.mjs.snapshot"
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation.mts",
+      "sha256": "38483633a7a5454dba0f527e16bd6a42bae36bf78077c03c7cf185ce9a9b5d9e",
+      "bytes": 9621,
+      "snapshot": "source-v2/native-preparation.mts.snapshot"
+    },
+    {
+      "path": "tests/verification/reliability/buster-preparation-native-live.mts",
+      "sha256": "352a6a813745092e19ace252600cc0eaccbc776129ea4f7c343b010d374d6ba8",
+      "bytes": 9885,
+      "snapshot": "source/12-buster-preparation-native-live.mts.snapshot"
+    },
+    {
+      "path": "tests/verification/reliability/buster-preparation-native-recovery-live.mts",
+      "sha256": "62d3a3539c4513acb5272cc33c8d98c5407f5a968d1458003b0e1909ee8c92d1",
+      "bytes": 8292,
+      "snapshot": "source/13-buster-preparation-native-recovery-live.mts.snapshot"
+    },
+    {
+      "path": "tests/verification/reliability/buster-preparation-native-source-live.mts",
+      "sha256": "7ac8e112f08948720f00b40ea829e242a0c707e5595235282304de0443e18ad3",
+      "bytes": 3703,
+      "snapshot": "source/14-buster-preparation-native-source-live.mts.snapshot"
+    },
+    {
+      "path": "tests/verification/reliability/tsconfig.buster-preparation-native.json",
+      "sha256": "7e7d1e466ddacd14683768d76ff4287309c5419351b4855dde798d64c2c2a2f1",
+      "bytes": 485,
+      "snapshot": "source/15-tsconfig.buster-preparation-native.json.snapshot"
+    }
+  ],
+  "v2Changes": [
+    "tests/fixtures/test-gate/native-preparation.mts"
+  ],
+  "reviewType": "read-only source; no native execution"
+}

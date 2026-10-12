@@ -1,3 +1,4 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -57,7 +58,7 @@ const limits: ReportAdapterRuntimeLimits = {
   cpuMillis: 5_000,
   openFiles: 64,
 };
-const runtime = new RegisteredReportAdapterRuntime(new FileReportArtifactReader([artifacts]), runtimeRoot);
+const runtime = new RegisteredReportAdapterRuntime(new FileReportArtifactReader([artifacts]), runtimeRoot, runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput);
 const result = await runtime.adapt(adapter, artifact, limits);
 assert.deepEqual(result.counts, { total: 2, passed: 1, failed: 1, errored: 0, skipped: 0 });
 assert.equal(result.cases[1].findings[0].message, 'wrong value');

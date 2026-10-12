@@ -1,0 +1,14 @@
+✔ completion winning the real writer fence is returned without stale cancellation or abort (907.631988ms)
+✔ cancellation winning the real writer fence prevents a later completion (539.380679ms)
+✔ concurrent queued cancellation converges and repeated terminal cancellation leaves bytes unchanged (733.584382ms)
+✔ parallel active cancellation converges and preserves terminal bytes (588.236645ms)
+✔ invalid persisted status and record shape remain rejected without writes (374.39569ms)
+✔ source attachment and cancellation share the durable admission fence (153.552081ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6773.20047

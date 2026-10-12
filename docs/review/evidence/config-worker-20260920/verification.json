@@ -1,0 +1,30 @@
+{
+  "recordedAt": "2026-09-20T20:08:10.360485+00:00",
+  "commands": [
+    {
+      "argv": [
+        "./node_modules/.bin/eslint",
+        "--config",
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        "skills/common/plugin-runtime/foundation/config/swarm.ts",
+        "skills/prism/server/worker-config.ts",
+        "skills/prism/tests/swarm-worker-config.test.mts",
+        "skills/prism/tests/worker-ingress-capacity.test.mts",
+        "skills/prism/tests/worker-shutdown-boundaries.test.mts",
+        "skills/prism/tests/native/worker-harness.mts",
+        "scripts/config/inventory-settings.mjs",
+        "tests/verification/deployment/prism-swarm-config.test.mjs",
+        "tests/verification/deployment/prism-swarm-image.mjs",
+        "tests/verification/deployment/prism-native-runtime.test.mjs",
+        "tests/verification/deployment/argocd-chart-order.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "lint.txt"
+    }
+  ],
+  "unexecuted": [
+    "Docker built-image verification: docker executable unavailable",
+    "Native NRI binary gate: go executable unavailable"
+  ],
+  "existingFailure": "Canonical lint on worker-process-shutdown.native.mts rejects existing native.mts filename; runtime test source was migrated, filename rule not disabled."
+}

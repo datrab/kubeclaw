@@ -1,3 +1,4 @@
+{{- $clusterShared := (include "kubeclaw.swarmConfig" . | mustFromJson).operator.buster.clusterInvokers.shared -}}
 {{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") -}}
 ---
 apiVersion: v1
@@ -67,10 +68,10 @@ rules:
     resources: ["tokenreviews"]
     verbs: ["create"]
   {{- end }}
-  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
+  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
     resources: ["busternamespaceleases"]
     verbs: ["get", "list", "watch", "patch", "update"]
-  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
+  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
     resources: ["busternamespaceleases/status"]
     verbs: ["get", "patch", "update"]
   - apiGroups: [""]
@@ -209,9 +210,9 @@ spec:
             - name: BUSTER_ALLOWED_SOURCE_SECRETS
               value: {{ join "," .Values.busterNamespaceBroker.controller.allowedSourceSecrets | quote }}
             - name: BUSTER_LEASE_API_GROUP
-              value: {{ .Values.busterNamespaceBroker.leaseApiGroup | quote }}
+              value: {{ $clusterShared.leaseApiGroup | quote }}
             - name: BUSTER_LEASE_API_VERSION
-              value: {{ .Values.busterNamespaceBroker.leaseApiVersion | quote }}
+              value: {{ $clusterShared.leaseApiVersion | quote }}
             - name: BUSTER_ALLOWED_NAMESPACE_PREFIXES
               value: {{ join "," .Values.busterNamespaceBroker.allowedPrefixes | quote }}
             - name: BUSTER_DEFAULT_TTL_SECONDS

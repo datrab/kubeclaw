@@ -1,0 +1,82 @@
+[
+  {
+    "path": "skills/common/plugins/wait-store/src/adapter.ts",
+    "sha256": "b55d76d4913c0c6f4074af43615046365ba226dfb51189fd26fa6d486753b92d",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/skills/common/plugins/wait-store/src/adapter.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/README.md",
+    "sha256": "1e950161e573a8dfe0ae3700bce649c16e7935a833702d9032992bb75e6ea5f3",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/skills/common/plugins/wait-store/README.md.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+    "sha256": "d4f0ee5d8960b4ff619bf5d45064b069a39f75b978cf831837de08cb5900d6e4",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/skills/common/plugin-runtime/sdk/src/runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+    "sha256": "464a94399315ad25f40511b8d1ee93c76b3535a82cd90fbde06bf0a58aa0cc9a",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/skills/common/plugin-runtime/sdk/src/index.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-runtime.ts",
+    "sha256": "de279faaeffc78713d3b3049d43a2efb9add45e4ad05a89c0f4efde1dbe120ec",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/skills/nova/core/execution/engine-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/adapters.ts",
+    "sha256": "293011e7313155b08f33bbef4ce0e910d00c7feef88fd6c585b040bb2cadbc24",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/skills/nova/core/execution/adapters.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "sha256": "9bb8a0c27dfa199756cbe16a6898e7fb4d3a43c6ca59af144026bbb135a44619",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/skills/nova/core/execution/adapter-startup.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/state/read-run-evidence.ts",
+    "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/skills/nova/core/state/read-run-evidence.ts.snapshot"
+  },
+  {
+    "path": "scripts/observability-retirement/operator-authority.mjs",
+    "sha256": "2b81f162503bfdd45b752b9cecec29abe5a5cb8306712c89b6e17e652c8f9d66",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/scripts/observability-retirement/operator-authority.mjs.snapshot"
+  },
+  {
+    "path": "scripts/retire-operator-request.mjs",
+    "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/scripts/retire-operator-request.mjs.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/tests/live-function.test.ts",
+    "sha256": "2de20a6573baec4e456ad4da22ff2fb6c9f5212ada9d75b940e0c21f2a5372d1",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/skills/common/plugins/wait-store/tests/live-function.test.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/tests/package-boundary.test.mjs",
+    "sha256": "00eab0f8704399826a723bf36ea5be2d9ead710777b3c1b47431461485beace7",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/skills/common/plugins/wait-store/tests/package-boundary.test.mjs.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+    "sha256": "646b4ac41f1deec54a572f1f9870e9fec7c78f924a585b762755a6304c92d6f2",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/tests/verification/reliability/operator-retention-authority-fixture.test.mjs.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/operator-request-projection.test.mjs",
+    "sha256": "eb30a59891f2ca9ed5c972495969b7f786a3f3e274bceee6138b9c8aa7642bd6",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/tests/verification/reliability/operator-request-projection.test.mjs.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/operator-projection-independent.test.mjs",
+    "sha256": "98694f4488603810505bccfa890e7386cb118379097cd6dbe6562a3786d4b9c8",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/tests/verification/reliability/operator-projection-independent.test.mjs.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/fixtures/operator-retention-worker.mjs",
+    "sha256": "457dec59baa1f5fbe43f08ab249baadff667e8b03cc887efea46ddcac846f075",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/before/tests/verification/reliability/fixtures/operator-retention-worker.mjs.snapshot"
+  }
+]

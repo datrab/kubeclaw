@@ -60,7 +60,7 @@ test('original HTTP importer, artifact store and evidence adapter preserve owner
    grants:new Map([['test.evidence-consumer:consume',new Map([['test.plan.evidence',{allowedNamespaces:['kubeclaw.project-summary']}]])],['kubeclaw.remote-test-gate:evidence',new Map([['artifacts.read',{allowedNamespaces:['kubeclaw.project-summary','kubeclaw.buster-quality-gate']}]])]])});
   const activated=await activateRegistry(granted.snapshot,new Set(granted.grants.keys()));
   const durable=new AdapterRuntime({granted,activated,configs:new Map([['kubeclaw.remote-test-gate:evidence',{stateRoot:root,manifestStageId:'project-summary',gateStageId:'final-test'}],['kubeclaw.artifact-store:artifact-store',{artifactRoot:path.join(root,'artifacts')}]]),shutdownTimeoutMs:1000,async emitDomainEvent(){},
-   effects:new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl')),undefined,undefined,new FileResourceLockManager(path.join(root,'locks')))});
+   effects:new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl')),undefined,undefined,new FileResourceLockManager(path.join(root,'locks')), 300_000)});
   await durable.start();try {
    assert.deepEqual(await durable.invoke('test.plan.evidence',producer('demo-evidence'),'original-effect:projection',request.request,new AbortController().signal),projected);
    assert.deepEqual(await durable.invoke('test.plan.evidence',producer('demo-evidence'),'original-effect:projection',request.request,new AbortController().signal),projected);

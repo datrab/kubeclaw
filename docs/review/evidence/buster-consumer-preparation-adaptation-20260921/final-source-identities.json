@@ -1,0 +1,86 @@
+[
+  {
+    "path": "tests/verification/reliability/result-reservation.test.mts",
+    "sha256": "278069fdb5f8648cd64c044f14e79856574cb1189ffeaf42df849fc386c5046e"
+  },
+  {
+    "path": "tests/verification/reliability/buster-job-compaction.test.mts",
+    "sha256": "03da2914c8b40122833ba4056741125f7c08a8e7f618ef87407412264dded3fe"
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "sha256": "098105c151618534a0df2be181a0a9ae509a11629f95e2433c232e33b416207e"
+  },
+  {
+    "path": "tests/verification/reliability/coverage-remote.test.mts",
+    "sha256": "2ff2c6462d7a547b5e338dce0bd12d07235189da166e11be92add5479666c64b"
+  },
+  {
+    "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "sha256": "ce7b9d94efb5b348cb9b143725a37aa449e43e5357cf90b169273d82345411da"
+  },
+  {
+    "path": "tests/verification/reliability/nova-remote-faults.mts",
+    "sha256": "b14c845886e702ea23d12ed7b8b9231ddc2abfbf8411eb34d78b5b088d975e9a"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+    "sha256": "1943f4a1654cc1b06c49646cfa943ff4e09c3483115555df19664eb91fd54b2c"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-container-build-production.mts",
+    "sha256": "cd37321a28df348f1523db54fe35b33ad8af068143b697fec385bd5eeb5d9d9e"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "sha256": "13e698f7350ee9411a506620b354577f360c27a0b7a2dd35f40c4bf9a974cae7"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-security-parity.mts",
+    "sha256": "0a9a3a7fd2a404bcef3d978898835241159a4a628b6e59f2ffbd03f7b10f1b99"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+    "sha256": "5ec300168680776d04de0ded1971c6412a16d703d1d492b939f6de58f421487e"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+    "sha256": "ba90af75c01f81aada852389e43e6e01d037bc1faee427a8c77282585d9da58f"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+    "sha256": "9927dcd398fbd87ded34113dd8627ab5016cac53dc557aee6004166ca78a3b7f"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+    "sha256": "2644c58e6750cca841694588b510448b59d5f55e32714eedd519073ec81cd16f"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "sha256": "014cf0c18f1b14ae391a8c3c834053c48d25270e43ebc6175cbc3f2a693f9011"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+    "sha256": "304046afbafe417cf0d08f0a09fbd6b0c79c6771fca812f4a4b675b106cbb9df"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+    "sha256": "3a14a26958129063afb3f5e79238de914c17641a104f87d21eff3b188b193d7b"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+    "sha256": "0a8723784c501627831c4d47b365513c5da7e60b24be53c8fa6ee36d048a6583"
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "sha256": "4d050f820990d6a18a6e82b580e25610c2211daabfb9b17d105ed57313958c01"
+  },
+  {
+    "path": "tests/verification/contracts/quality-provider-runtime.mts",
+    "sha256": "627463e4c0e7b548837103cb391fa9f7be3c4db882f9bfdb465925b9133234c3"
+  },
+  {
+    "path": "docs/review/remediation/implementation/buster-consumer-preparation-adaptation-20260921.md",
+    "sha256": "8bfb6f1993b210300624f59f1f983a984e9bc9a50c8d98043ca1240449fa1238"
+  }
+]

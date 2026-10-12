@@ -1,0 +1,186 @@
+[
+  {
+    "command": [
+      "apk",
+      "verify",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/gpgv-2.4.9-r1.apk"
+    ],
+    "exit": 0,
+    "stdout": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/gpgv-2.4.9-r1.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "extract",
+      "--no-chown",
+      "--destination",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/verifier",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/gpgv-2.4.9-r1.apk"
+    ],
+    "exit": 0,
+    "stdout": "Extracting /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/gpgv-2.4.9-r1.apk...\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "verify",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libassuan-3.0.2-r0.apk"
+    ],
+    "exit": 0,
+    "stdout": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libassuan-3.0.2-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "extract",
+      "--no-chown",
+      "--destination",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/verifier",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libassuan-3.0.2-r0.apk"
+    ],
+    "exit": 0,
+    "stdout": "Extracting /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libassuan-3.0.2-r0.apk...\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "verify",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libbz2-1.0.8-r6.apk"
+    ],
+    "exit": 0,
+    "stdout": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libbz2-1.0.8-r6.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "extract",
+      "--no-chown",
+      "--destination",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/verifier",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libbz2-1.0.8-r6.apk"
+    ],
+    "exit": 0,
+    "stdout": "Extracting /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libbz2-1.0.8-r6.apk...\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "verify",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libgcrypt-1.12.2-r0.apk"
+    ],
+    "exit": 0,
+    "stdout": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libgcrypt-1.12.2-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "extract",
+      "--no-chown",
+      "--destination",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/verifier",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libgcrypt-1.12.2-r0.apk"
+    ],
+    "exit": 0,
+    "stdout": "Extracting /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libgcrypt-1.12.2-r0.apk...\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "verify",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libgpg-error-1.61-r0.apk"
+    ],
+    "exit": 0,
+    "stdout": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libgpg-error-1.61-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "extract",
+      "--no-chown",
+      "--destination",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/verifier",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libgpg-error-1.61-r0.apk"
+    ],
+    "exit": 0,
+    "stdout": "Extracting /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/libgpg-error-1.61-r0.apk...\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "verify",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/musl-1.2.6-r2.apk"
+    ],
+    "exit": 0,
+    "stdout": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/musl-1.2.6-r2.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "extract",
+      "--no-chown",
+      "--destination",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/verifier",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/musl-1.2.6-r2.apk"
+    ],
+    "exit": 0,
+    "stdout": "Extracting /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/musl-1.2.6-r2.apk...\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "verify",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/npth-1.8-r0.apk"
+    ],
+    "exit": 0,
+    "stdout": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/npth-1.8-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "extract",
+      "--no-chown",
+      "--destination",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/verifier",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/npth-1.8-r0.apk"
+    ],
+    "exit": 0,
+    "stdout": "Extracting /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/npth-1.8-r0.apk...\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "verify",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/zlib-1.3.2-r0.apk"
+    ],
+    "exit": 0,
+    "stdout": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/zlib-1.3.2-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "apk",
+      "extract",
+      "--no-chown",
+      "--destination",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/verifier",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/zlib-1.3.2-r0.apk"
+    ],
+    "exit": 0,
+    "stdout": "Extracting /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/alpine-packages/zlib-1.3.2-r0.apk...\n",
+    "stderr": ""
+  }
+]

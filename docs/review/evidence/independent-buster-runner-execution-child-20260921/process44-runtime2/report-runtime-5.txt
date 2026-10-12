@@ -1,0 +1,14 @@
+✔ original provider and kubectl transfer pending exposure ownership without extending its lease (1147.434663ms)
+✔ suffix matching cannot contact an unrelated real HTTP service; exact origin works and redirects stop (68.370147ms)
+✔ fixture leases reject expired authority before contact and cancel a real in-flight request at expiry (1006.215114ms)
+✔ original invoker bounds cycles, deep Lists, alias DAGs and resource expansion before kubectl (619.400527ms)
+✔ ordinary shared YAML aliases retain their content (3.755057ms)
+✔ actual kubectl binds Ready, replay and cleanup to durable exposure ownership (3473.488244ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10345.577028

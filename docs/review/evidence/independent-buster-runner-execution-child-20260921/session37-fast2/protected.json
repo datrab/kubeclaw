@@ -1,0 +1,122 @@
+[
+  {
+    "dev": "2306",
+    "ino": "11980194",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11713448",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-worker.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11714262",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/worker-core.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11713447",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-studio.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11702285",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11713445",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-control.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11701892",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11963602",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11713446",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-execution.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11701891",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/lint-policy.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11980194",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11713448",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-worker.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11701889",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11701887",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/jscpd.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11714262",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/worker-core.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11713447",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-studio.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11702285",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11701888",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/knip.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11713445",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-control.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11701892",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11963602",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11713446",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-execution.config.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11701890",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/lint-baseline.json"
+  },
+  {
+    "dev": "2306",
+    "ino": "11701886",
+    "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/jscpd-tests.json"
+  }
+]

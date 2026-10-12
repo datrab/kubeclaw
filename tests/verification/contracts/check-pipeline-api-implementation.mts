@@ -1,3 +1,4 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -60,7 +61,8 @@ const plan = resolveTestPlan({ planId: 'plan:api', runId: 'run:api', project: 'a
 assert.deepEqual(plan.nodes.map((node) => node.provider.contractId).sort(), ['kubeclaw.api-flow@1', 'kubeclaw.http@1', 'kubeclaw.openapi@1']);
 const capability = new NetworkHttpCapabilityInvoker({ allowedOrigins: [origin], allowedHostSuffixes: [], allowedPorts: [address.port], allowedMethods: ['GET', 'POST'], allowedRequestHeaders: ['accept', 'content-type'], maximumRequestBytes: 1024 * 1024, maximumResponseBytes: 1024 * 1024, maximumExecutionMs: 30_000 });
 try {
-  const run = await new TestPlanRunner({ plan, registry, workspaceRoot: path.join(root, 'workspace'), repositoryRoot: path.join(root, 'workspace/repository'), artifactRoot: path.join(root, 'artifacts'), observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1, grants: new Map(plan.nodes.map((node) => [node.id, ['network.http']])), capabilityInvoker: capability }).run();
+  const run = await new TestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: path.join(root, 'workspace'), repositoryRoot: path.join(root, 'workspace/repository'), artifactRoot: path.join(root, 'artifacts'), observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1, grants: new Map(plan.nodes.map((node) => [node.id, ['network.http']])), capabilityInvoker: capability }).run();
   assert.equal(run.nodes.every((node) => node.outcome === 'passed'), true, JSON.stringify(run));
   assert.equal(run.attempts.filter((attempt) => attempt.evidence.length > 0).length, 3);
 } finally { await new Promise<void>((resolve) => server.close(() => resolve())); fs.rmSync(root, { recursive: true, force: true }); }

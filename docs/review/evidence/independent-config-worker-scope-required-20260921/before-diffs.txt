@@ -1,0 +1,97 @@
+--- /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-scope-required-20260921/before/skills/worker/core/worker/native-worker-ownership.ts
++++ /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-worker-ownership.ts
+@@ -13,7 +13,7 @@
+   readonly store: FileWorkerOwnershipStore;
+   readonly nodeIdentity: string;
+   readonly drainTimeoutMs: number;
+-  readonly maximumActiveScopes?: number;
++  readonly maximumActiveScopes: number;
+   readonly poolLimits: NativeWorkerPoolLimits;
+ }
+ 
+@@ -186,7 +186,7 @@
+ 
+   private constructor(options: NativeWorkerOwnershipOptions) {
+     this.#options = options;
+-    this.#pool = new NativeWorkerResourcePool(options.cgroupRoot, options.poolLimits, options.maximumActiveScopes ?? 128);
++    this.#pool = new NativeWorkerResourcePool(options.cgroupRoot, options.poolLimits, options.maximumActiveScopes);
+   }
+ 
+   isReady(): boolean {
+@@ -211,7 +211,7 @@
+     if (!Number.isSafeInteger(options.drainTimeoutMs) || options.drainTimeoutMs < 1) {
+       throw new Error('WORKER_NATIVE_DRAIN_LIMIT_INVALID');
+     }
+-    if (options.maximumActiveScopes !== undefined && (!Number.isSafeInteger(options.maximumActiveScopes) || options.maximumActiveScopes < 1)) {
++    if (!Number.isSafeInteger(options.maximumActiveScopes) || options.maximumActiveScopes < 1) {
+       throw new Error('WORKER_NATIVE_CAPACITY_INVALID');
+     }
+     const captured = { ...options, poolLimits: { ...options.poolLimits }, cgroupRoot: fs.realpathSync(options.cgroupRoot) };
+--- /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-scope-required-20260921/before/tests/verification/reliability/worker-native-scope-live.mts
++++ /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-scope-live.mts
+@@ -110,7 +110,7 @@
+   const poolFile = process.env.KUBECLAW_WORKER_TEST_POOL_LIMITS_FILE;
+   if (!poolFile) throw new Error('KUBECLAW_WORKER_TEST_POOL_LIMITS_FILE must bind the actual prepared aggregate pool');
+   const poolLimits = JSON.parse(await fs.readFile(poolFile, 'utf8'));
+-  const ownership = { cgroupRoot: root, store, nodeIdentity: readNativeWorkerNodeIdentity(identityFile), drainTimeoutMs: 5000, poolLimits };
++  const ownership = { cgroupRoot: root, store, nodeIdentity: readNativeWorkerNodeIdentity(identityFile), drainTimeoutMs: 5000, maximumActiveScopes: 128, poolLimits };
+   try {
+     await NativeWorkerOwnership.supervise(ownership, async owner => {
+       const result = await runNativeWorkerProcess({ owner, identity,
+--- /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-scope-required-20260921/before/tests/verification/reliability/worker-native-topology-live.mts
++++ /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-topology-live.mts
+@@ -44,7 +44,7 @@
+   const stateRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'native-topology-live-'));
+   const store = new FileWorkerOwnershipStore(stateRoot, { maximumRecords: 32, maximumBytes: 131072 });
+   return { stateRoot, store, options: { cgroupRoot: root!, store,
+-    nodeIdentity: readNativeWorkerNodeIdentity(nodeIdentityFile!), drainTimeoutMs: 5000, poolLimits },
++    nodeIdentity: readNativeWorkerNodeIdentity(nodeIdentityFile!), drainTimeoutMs: 5000, maximumActiveScopes: 128, poolLimits },
+   command: { launcher: launcher!, uid: 1000, gid: 1000, executable: process.execPath,
+     arguments: ['-e', hostCode], cwd: '/', environment: {} } };
+ }
+--- /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-scope-required-20260921/before/tests/verification/reliability/worker-native-quiescence.test.mts
++++ /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-quiescence.test.mts
+@@ -44,7 +44,7 @@
+     },
+     disposeChildren() { events.push('remove-children'); }, dispose() { events.push('remove-parent'); },
+   };
+-  const options = { store, cgroupRoot: root, nodeIdentity: 'model', drainTimeoutMs: 1000,
++  const options = { store, cgroupRoot: root, nodeIdentity: 'model', drainTimeoutMs: 1000, maximumActiveScopes: 128,
+     poolLimits: { memoryBytes: 8192, tasks: 8, cpuQuotaMicroseconds: 1000, cpuPeriodMicroseconds: 1000 } };
+   const lease = (current = record) => new NativeWorkerOwnershipLease(scopeModel as unknown as NativeWorkerResourceScope,
+     current, options, failed => settled.push(failed));
+--- /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-scope-required-20260921/before/tests/verification/reliability/worker-ownership-store.test.mts
++++ /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-ownership-store.test.mts
+@@ -149,13 +149,31 @@
+   }
+ });
+ 
++test('native supervision requires explicit valid scope capacity before filesystem access or admission', async () => {
++  const f = await fixture();
++  try {
++    await f.store.reserve(identity);
++    const before = await fs.readFile(path.join(f.root, 'owners.json'));
++    let entered = false;
++    for (const value of [undefined, null, 0, -1, 1.5, Number.NaN, Infinity, Number.MAX_SAFE_INTEGER + 1, '128']) {
++      await assert.rejects(NativeWorkerOwnership.supervise({
++        cgroupRoot: path.join(f.root, 'absent-cgroup'), store: f.store, nodeIdentity: 'storage-test-node',
++        drainTimeoutMs: 1000, maximumActiveScopes: value as unknown as number,
++        poolLimits: { memoryBytes: 1073741824, tasks: 1024, cpuQuotaMicroseconds: 100000, cpuPeriodMicroseconds: 100000 },
++      }, async () => { entered = true; }), /WORKER_NATIVE_CAPACITY_INVALID/u);
++    }
++    assert.equal(entered, false);
++    assert.deepEqual(await fs.readFile(path.join(f.root, 'owners.json')), before);
++  } finally { await f.cleanup(); }
++});
++
+ test('native recovery rejects ordinary directories before exposing admission or modifying existing ownership', async () => {
+   const f = await fixture();
+   try {
+     await f.store.reserve(identity);
+     const before = await fs.readFile(path.join(f.root, 'owners.json'));
+     let entered = false;
+-    await assert.rejects(NativeWorkerOwnership.supervise({ cgroupRoot: f.root, store: f.store, nodeIdentity: 'storage-test-node', drainTimeoutMs: 1000,
++    await assert.rejects(NativeWorkerOwnership.supervise({ cgroupRoot: f.root, store: f.store, nodeIdentity: 'storage-test-node', drainTimeoutMs: 1000, maximumActiveScopes: 128,
+       poolLimits: { memoryBytes: 1073741824, tasks: 1024, cpuQuotaMicroseconds: 100000, cpuPeriodMicroseconds: 100000 } }, async () => {
+       entered = true;
+     }), /WORKER_NATIVE_ROOT_INVALID/u);

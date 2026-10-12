@@ -1,0 +1,39 @@
+fatal: not a tree object
+✔ unchanged release configuration survives unrelated later commits, but new chart or values cannot qualify old images (111.179756ms)
+✔ deleted, added, symlinked, and unavailable source configurations fail explicitly (42.560802ms)
+✔ ops chart has its own source binding, independent of runtime-only changes (52.578836ms)
+✔ canonical aliases bind both target bytes to the image source commit, including schema outside charts (247.424568ms)
+✔ canonical alias cannot be retargeted or replaced with an identical regular copy (130.378784ms)
+✔ source commit cannot introduce arbitrary or retargeted aliases (90.347496ms)
+✖ canonical schema cannot escape through a directory symlink or leaf symlink (73.473147ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 828.076616
+
+✖ failing tests:
+
+test at ../../../../../tmp/independent-release-mutants-9rsmb1us/skip-ancestor-validation.test.mjs:114:1
+✖ canonical schema cannot escape through a directory symlink or leaf symlink (73.473147ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at file:///tmp/independent-release-mutants-9rsmb1us/skip-ancestor-validation.test.mjs:120:12
+      at file:///tmp/independent-release-mutants-9rsmb1us/skip-ancestor-validation.test.mjs:72:5
+      at repository (file:///tmp/independent-release-mutants-9rsmb1us/skip-ancestor-validation.test.mjs:19:5)
+      at withAliases (file:///tmp/independent-release-mutants-9rsmb1us/skip-ancestor-validation.test.mjs:65:10)
+      at TestContext.<anonymous> (file:///tmp/independent-release-mutants-9rsmb1us/skip-ancestor-validation.test.mjs:114:90)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /RELEASE_CONFIGURATION_DIRECTORY_REQUIRED/u,
+    operator: 'throws',
+    diff: 'simple'
+  }

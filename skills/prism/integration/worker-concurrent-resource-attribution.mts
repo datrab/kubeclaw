@@ -1,4 +1,5 @@
-import test from 'node:test';
+import { nativeResourcePolicy } from '../tests/native/resource-policy.mts';
+import test, { type TestContext } from 'node:test';
 import assert from 'node:assert/strict';
 import { pbkdf2Sync, createHash } from 'node:crypto';
 import { createServer } from 'node:http';
@@ -21,10 +22,7 @@ const input = Buffer.from(JSON.stringify({
 }));
 const contentDigest = `sha256:${createHash('sha256').update(input).digest('hex')}`;
 
-await test('native attempt receipt excludes real concurrent supervisor-process CPU', { timeout: 60000 }, async t => {
-  const root = await mkdtemp(join(tmpdir(), 'prism-native-attribution-'));
-  const store = new ContentAddressedArtifactStore(root);
-  await store.put(input);
+async function startControlledArtifactService(t: TestContext, store: ContentAddressedArtifactStore) {
   let releaseRead!: () => void;
   let markReadStarted!: () => void;
   const readReleased = new Promise<void>(resolve => { releaseRead = resolve; });
@@ -53,6 +51,14 @@ await test('native attempt receipt excludes real concurrent supervisor-process C
   const address = server.address();
   assert(address && typeof address !== 'string');
   const origin = new URL(`http://127.0.0.1:${address.port}`);
+  return { origin, readStarted, releaseRead };
+}
+
+await test('native attempt receipt excludes real concurrent supervisor-process CPU', { timeout: 60000 }, async t => {
+  const root = await mkdtemp(join(tmpdir(), 'prism-native-attribution-'));
+  const store = new ContentAddressedArtifactStore(root);
+  await store.put(input);
+  const { origin, readStarted, releaseRead } = await startControlledArtifactService(t, store);
   const artifact = {
     artifactId: `artifact:${contentDigest}`,
     type: 'prism-engine-input',
@@ -61,7 +67,7 @@ await test('native attempt receipt excludes real concurrent supervisor-process C
     sizeBytes: input.byteLength,
     storageUrl: new URL(`/v1/internal/artifacts/${contentDigest}`, origin).href,
   };
-  const envelope = prismNativeAttempt('render', artifact, 'concurrent-resource-attribution');
+  const envelope = prismNativeAttempt('render', artifact, 'concurrent-resource-attribution', nativeResourcePolicy);
   const worker = await nativeWorkerHarness(t, { mode: 'spiffe', trustedControlSpiffeId: 'spiffe://local/control' }, origin);
   t.after(() => rm(root, { recursive: true, force: true }));
   worker.listen(0, '127.0.0.1'); await once(worker, 'listening');

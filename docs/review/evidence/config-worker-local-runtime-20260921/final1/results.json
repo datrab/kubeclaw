@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/npm",
+      "run",
+      "verify:worker-core:local-config"
+    ],
+    "exitCode": 0,
+    "name": "maintained-local-config",
+    "seconds": 18.869973764987662
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/buster/engine/test-gates/provider-child.mjs"
+    ],
+    "exitCode": 1,
+    "name": "provider-child-lint",
+    "seconds": 0.81535783293657
+  }
+]

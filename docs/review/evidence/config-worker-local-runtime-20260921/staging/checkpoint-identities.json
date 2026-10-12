@@ -1,0 +1,337 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "kind": "file",
+    "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58",
+    "beforeSha256": "ab3ee0545ef7d04897523efcfe3a7c93acf036025e92a4142b044a530e0d0634"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/worker-core.config.json",
+    "kind": "file",
+    "sha256": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615",
+    "beforeSha256": null
+  },
+  {
+    "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+    "kind": "file",
+    "sha256": "eabc4f6e65db3e282269a063570397365cfb22547c22071bfd2c41a830b49fc1",
+    "beforeSha256": "1769fccb43906ac862216274e36c7d78574d977c736a49e3c4b199b1752cc29b"
+  },
+  {
+    "path": "charts/prism/files/config/worker-core.config.json",
+    "kind": "symlink",
+    "target": "../../../kubeclaw/files/config/worker-core.config.json"
+  },
+  {
+    "path": "docker/Dockerfile.buster-runtime",
+    "kind": "file",
+    "sha256": "874d89034b372a6a82c47aa1169375a6b1542030cf22ad72a32b252ab0df60cb",
+    "beforeSha256": "68846c882e9b0e20ebf83ccc20d753b2e8cde3ed7bb0714a3e47863a1a61d6f8"
+  },
+  {
+    "path": "docs/operations/operator-configuration.md",
+    "kind": "file",
+    "sha256": "08b9eebb134be85c0a941a56f711c958ea1c2916bc987d82345e8a906a574e4d",
+    "beforeSha256": "f795518f3371f3235da779e1aac89420f0552e06d1a3b4258d8ed6b228c02238"
+  },
+  {
+    "path": "docs/operations/prism-operator-guide.md",
+    "kind": "file",
+    "sha256": "1c3fca34b5521ad8f0a02c91eadf07ca9016f8808b3734ce46395cf4c4497bb8",
+    "beforeSha256": "2c5ea4a201ac3969328a55872cc33d5bc6177f9fcfa466b97e664ba31b6e09fc"
+  },
+  {
+    "path": "scripts/deploy.sh",
+    "kind": "file",
+    "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960",
+    "beforeSha256": "c491e53677694183566a30c182fe7d1595468bb3a8f3477bb248148819b0ad2f"
+  },
+  {
+    "path": "scripts/updates/release-configuration.mjs",
+    "kind": "file",
+    "sha256": "25913c0267162ddb0c89b36cf6c141061431bd9ead08990ff195cc9808a23fc6",
+    "beforeSha256": "a93ca420d8753a6958625d4196e85866adf2a4ee11acdbe3ca836bc270bc858b"
+  },
+  {
+    "path": "skills/buster/engine/remote-plan-cli.ts",
+    "kind": "file",
+    "sha256": "2f5e47619915feede36cf8909c860b9cd7e4dd4378eeaf2f9b8b72a61a8d5670",
+    "beforeSha256": "f10d961a5d171f846d8f5d7dff11eb387ccbd36282c10c30d1b2b627fd2cfdfa"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "kind": "file",
+    "sha256": "e9041c22bade59059c4d92de9035e9eacacf6d7b6a71ef5c4cdd5cadd1e4c0c2",
+    "beforeSha256": "e9508ea7274873e803ac2c43faedbb3172469a551292a794f9b40db2caadd6ed"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "kind": "file",
+    "sha256": "2f4d8f0d305a1ad8f0404f03aca89b3d320d6df869c0d95833727fcae4fa9c0f",
+    "beforeSha256": "9d2c6655c2eb411f3333cdf9d2b459970f10da44969318cc2eda3c26ed4c6660"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+    "kind": "file",
+    "sha256": "47cc40152c08273b3dae3cc4e192f7662936d9f9b16f857a020eab89e4423c3f",
+    "beforeSha256": "c30fd160cb458232e68f27eaae24d9e622a85184f65ad8fbde3135cf14e3355d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "kind": "file",
+    "sha256": "724d95538646558ad3f1930899ee1cd905ab8b8727d1bc84469831b55ef979fb",
+    "beforeSha256": "ab67c1300cdca9e173b4c9014df2381fe22b9bfe4d5f19bdc68dfd0bc2cf7b7e"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "kind": "file",
+    "sha256": "8e415809e2b38a402d55da5cccb1aa0c89c8a9ae0e31b6ce8cc7b332c9b7b150",
+    "beforeSha256": "a68d76958c5bbe28d145ab9a410cae3bf0be33cd87dedf2752824ced5666bcc9"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "kind": "file",
+    "sha256": "d0dc8f6348ffc8a46f8693632b45f26224eefaac96d844fee8f0357e4ad6258d",
+    "beforeSha256": "75b10b25550b0622948bd8334df660a5d526988a37abe29263e406dfddd688ae"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "kind": "file",
+    "sha256": "2269b97277a5a24ccd14434c942cdf4ea83c43d1c6a8e048083add782140ae20",
+    "beforeSha256": "cc3ca68d2c90b3e2f36eecdbd43348f409cff5bf6cbbf33a230e6d19201870c4"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "kind": "file",
+    "sha256": "8a7f137964b58b6e97c7d7b2182dfd3365c4fd2cb06ba0eb493620a1b2133617",
+    "beforeSha256": "484de1f0d6b7b7a4c069204495ddd31816e546b40ba41284a21c95cc51f6633e"
+  },
+  {
+    "path": "skills/worker/core/src/index.ts",
+    "kind": "file",
+    "sha256": "d1fdfef010a187fbcba74044215741edc538bfb046bcb5e946406ce0de5d016a",
+    "beforeSha256": "d91104702b8b8071ed8e8e732a3a1a88a4528ba028236a90f3b1e8b54799b55d"
+  },
+  {
+    "path": "skills/worker/core/worker/local-runtime.ts",
+    "kind": "file",
+    "sha256": "fd7b52dad6caed1f120a3eccbfeba3a465350ea96245dbd68d6b3e42b6411838",
+    "beforeSha256": "02876cafd08f35c84b67d3c8972e45167074c226c928c53a81b190bd67071435"
+  },
+  {
+    "path": "tests/fixtures/config/swarm-bundle.mjs",
+    "kind": "file",
+    "sha256": "f8a5e83c176286805adbcfff0dfba5ee26b782ae374603c5c1ff50dd7b022e61",
+    "beforeSha256": "08cc278569ff299b04690e53d212ae9b44dccedbd3098a6bf3e594dc391f4e90"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-admission.mts",
+    "kind": "file",
+    "sha256": "b098446f00fa489ca37a3ee29fff5b3f44861bd35da006390f351709a9e61470",
+    "beforeSha256": "2c4f38463969666c75f2a99515363672c6b6380d493be1a721c80e11c232fe3d"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-a11y-implementation.mts",
+    "kind": "file",
+    "sha256": "23d3b579a090eb2bd027951ab6df4a7d01a4eeb2da0ecb21cff103f975c9cd11",
+    "beforeSha256": "0ea72573076c6da5a4a4a0c4004f33ae584e0fc0b450e87736d0e3a35155ca54"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-api-implementation.mts",
+    "kind": "file",
+    "sha256": "4f131ae15fd42e9b3bf5b51626d1d9997a2897a3a2ef6a2e301ea0e4b150e603",
+    "beforeSha256": "b48ad62bbd802d1c871e4e7033c397e7148b8956931209a1f773e2f6056faa24"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-container-build-production.mts",
+    "kind": "file",
+    "sha256": "bcd5ffa51f323a4ce25dc4ed633bfed8b394a5cc24e6a7923d4e4cfdbdfcf48f",
+    "beforeSha256": "cd37321a28df348f1523db54fe35b33ad8af068143b697fec385bd5eeb5d9d9e"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+    "kind": "file",
+    "sha256": "648a6c3ca397c71ff9cfeaee6166ab54ae41ecdfe792ee86099db5e3fdf9bbab",
+    "beforeSha256": "2644c58e6750cca841694588b510448b59d5f55e32714eedd519073ec81cd16f"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-implementation.mts",
+    "kind": "file",
+    "sha256": "612a4b17c74ed61909a6edb757304a8cc6e5551b1f92e55225561ed1f949e770",
+    "beforeSha256": "ad57c6c710d9178e1318e0945bae864c3a0d8ac583c551c266955dec416acd8d"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-live.mts",
+    "kind": "file",
+    "sha256": "c828a11679a917b803921961a20510472387197a9a8c0567e2e704d6f1973530",
+    "beforeSha256": "7063c388330f1051c5973c00f078a0c79cbff421c2bf14de75ea1b7fedfab719"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-parity.mts",
+    "kind": "file",
+    "sha256": "2172c05f73569ec72ec99b0f43b37d0fe934e59c109117b83ac49908c3bf1905",
+    "beforeSha256": "aff0204964c6d009098e196d3ca865f3d4a4a9e8fb960c96fbb1f31f4c2aaed7"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+    "kind": "file",
+    "sha256": "7608fc72844b708ed3bd6068d03230d558ce691fb1beeb8b16dd6f8da1965c45",
+    "beforeSha256": "1b8bcff5ec4699dc6af7f06e88f9add62dab3859532aeddecf3f0dd532950e8c"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-implementation.mts",
+    "kind": "file",
+    "sha256": "9cdb82d6db864e5bdcfbb1d282ad1e97d5a6049208939b99ea8d9aa6df5acea6",
+    "beforeSha256": "5bc4dec13b5ac28fa703b989c1ced531079a69cf32fc380b12b06fe27c459e3d"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+    "kind": "file",
+    "sha256": "7cf1ef1d3d5d38b9a47ed16db9085765d0c027464a0a9770f7e9ea8c5d8730e5",
+    "beforeSha256": "3a14a26958129063afb3f5e79238de914c17641a104f87d21eff3b188b193d7b"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+    "kind": "file",
+    "sha256": "de82aed1410fe23ee7b661d0259ee058666e7c5ab52927fa035c61d787966843",
+    "beforeSha256": "0a8723784c501627831c4d47b365513c5da7e60b24be53c8fa6ee36d048a6583"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+    "kind": "file",
+    "sha256": "017832d2e275aac8f97502598fce1e5da2a2eac553f7f489e671405048799790",
+    "beforeSha256": "9927dcd398fbd87ded34113dd8627ab5016cac53dc557aee6004166ca78a3b7f"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+    "kind": "file",
+    "sha256": "07b6e4bac547572d7366cdbbc465c6f2f07247a95a698cbf94fcbdafab832ed2",
+    "beforeSha256": "5ec300168680776d04de0ded1971c6412a16d703d1d492b939f6de58f421487e"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "kind": "file",
+    "sha256": "e641b948846fe282f8aecfbd51ba3cacf6246de8385d4e1089ac0ebdaa16c850",
+    "beforeSha256": "13e698f7350ee9411a506620b354577f360c27a0b7a2dd35f40c4bf9a974cae7"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "kind": "file",
+    "sha256": "6c69e8f0d0b68e1091633eb47848bf790d578e6d68aa20d6be80149385657d06",
+    "beforeSha256": "014cf0c18f1b14ae391a8c3c834053c48d25270e43ebc6175cbc3f2a693f9011"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "kind": "file",
+    "sha256": "640531af9a0284ecfee39b6dfbc06393437b2e1fb8d182cb8fca8d07cb7622ae",
+    "beforeSha256": "62c639f1542af0e1cac65b9655b931a17fc412328f264ef7c77b196821295c37"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+    "kind": "file",
+    "sha256": "8858e0c29405a91e1dff974266882890468a8ae6286dc72108701d15e5a96783",
+    "beforeSha256": "ba90af75c01f81aada852389e43e6e01d037bc1faee427a8c77282585d9da58f"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+    "kind": "file",
+    "sha256": "306435bbe92ae5de565beecf51b85bf03f09fcb5feb7f8de003415856f744cb6",
+    "beforeSha256": "76847d7e80909ddda182d7919811f810cb0fdc182658f37240c8022c4b325ae2"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+    "kind": "file",
+    "sha256": "2806557ad5a461c55c5fc6ceec544fee59ed3288c12478ff4fb2f60cbbdeebc3",
+    "beforeSha256": "304046afbafe417cf0d08f0a09fbd6b0c79c6771fca812f4a4b675b106cbb9df"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+    "kind": "file",
+    "sha256": "493248fd2d5c71c2948f890ad3922c4af0921291ac6ec68c6372ad4cca72cdfe",
+    "beforeSha256": "efeca0daa7740816cec5ae99b42694c0226b9f89a771c871d62818d56aecf5fd"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+    "kind": "file",
+    "sha256": "5162a93485d7eebf0a96353f1c5c57d9c94e0f0a473a96178ddab6c6f0cb6a47",
+    "beforeSha256": "1943f4a1654cc1b06c49646cfa943ff4e09c3483115555df19664eb91fd54b2c"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+    "kind": "file",
+    "sha256": "5524cf80f3cca2bff6c673f024cf0788452e5a1193307e557c18ac587e1315f3",
+    "beforeSha256": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-policy.mts",
+    "kind": "file",
+    "sha256": "1f1072cfeb00fd51ebf7bbe3c9fe2308b311e0803d9d4ca4ae3b577d73b13cab",
+    "beforeSha256": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-runtime.mts",
+    "kind": "file",
+    "sha256": "dd004c101132454e1d621ac4ffbf061f34fd492aa8d55a2619966210cf8a0d92",
+    "beforeSha256": "b451220e5a45cb77addcfc0dfb42ca048768b8b12e528de2f9c57d41e47027e9"
+  },
+  {
+    "path": "tests/verification/contracts/check-provider-semantics-remediation.mts",
+    "kind": "file",
+    "sha256": "6588dc9049ef7987a18eac628de093736f523c6e3af87f348519984418ad3303",
+    "beforeSha256": "6813929a929660d7198d6851943f55c1bfaeb15eccfb610fd6bacd948d2387f8"
+  },
+  {
+    "path": "tests/verification/contracts/tsconfig.worker-local-runtime.json",
+    "kind": "file",
+    "sha256": "2ec48eb3e95a089268791a85c929812e435d1f0b6649f2e845c251e8491640d8",
+    "beforeSha256": "e685b626bfdb6e75e45c697d2342ea152e4dfee3626142a73b193235d9a12274"
+  },
+  {
+    "path": "tests/verification/deployment/config-component-packaging.test.mjs",
+    "kind": "file",
+    "sha256": "a3a7ded6a76afdfa59ff5723419cc0f5367308de7c2b241ed17b7c1ad12b5aa5",
+    "beforeSha256": "6d611cfbeaacdbb09b56aec3e458c6be37b924759a86803db9a8501820398166"
+  },
+  {
+    "path": "tests/verification/deployment/release-configuration.test.mjs",
+    "kind": "file",
+    "sha256": "61ede5f0d88cdb3f85ce4ab9a08cb48beba439acb6f8aedecc27a3ddfd964d92",
+    "beforeSha256": "4824241284e36fd4e95cf0e601d0971771824703fbb50d4eccf66ef26493e3cc"
+  },
+  {
+    "path": "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+    "kind": "file",
+    "sha256": "e35780680d8572991bb6ae5ada62583c653e3892f6a6312192ddbe2ee98ad79c",
+    "beforeSha256": "4330c6ee5a406f0356f5bdcdc556ab92c1de7e4ccb7bccc01783205aadb17821"
+  },
+  {
+    "path": "tests/verification/reliability/buster-job-compaction.test.mts",
+    "kind": "file",
+    "sha256": "b11b7191f635dfae7f30dc93018daf8b0767787bebc613b98aa0b2e43346389b",
+    "beforeSha256": "03da2914c8b40122833ba4056741125f7c08a8e7f618ef87407412264dded3fe"
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "kind": "file",
+    "sha256": "c36239672adce29078981070228740d84705a8f7caaa4fc191e4e150b238bd7f",
+    "beforeSha256": "3a21f7565ce3eb94daf15593886ddb50c5386be1564f53dfc7a274ad0a5c5c5e"
+  },
+  {
+    "path": "tests/verification/reliability/coverage-remote.test.mts",
+    "kind": "file",
+    "sha256": "6f09d7356e99bd919279de4b1b379cf360dc328d0d872817947f761cd879e339",
+    "beforeSha256": "2ff2c6462d7a547b5e338dce0bd12d07235189da166e11be92add5479666c64b"
+  },
+  {
+    "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "kind": "file",
+    "sha256": "781ec998f49a915227e63e114ece006539716e51707041db059082fe1e98c61f",
+    "beforeSha256": "8207a8065db7c0755ca3ef4d28559e2fe22e8e40c4edff58f815e30caf9f2bb5"
+  },
+  {
+    "path": "tests/verification/reliability/worker-deadline.test.mts",
+    "kind": "file",
+    "sha256": "5348356de9a6fdc020bba87675941cb80bd594a2d2272b61a659b24c72dfde9c",
+    "beforeSha256": "410108ac2048d3d9ab1e949a7e8f387e53d0eb17b95b42fe1d0abcb15a372163"
+  }
+]

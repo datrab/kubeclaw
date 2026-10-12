@@ -1,0 +1,14 @@
+{
+  "scripts/trivy-database-lock.mjs": "00-trivy-database-lock.mjs.snapshot",
+  "scripts/tests/trivy-database-lock.test.mjs": "01-trivy-database-lock.test.mjs.snapshot",
+  "scripts/tests/trivy-database-lock.native.mjs": "02-trivy-database-lock.native.mjs.snapshot",
+  "scripts/versions.mjs": "03-versions.mjs.snapshot",
+  "versions.json": "04-versions.json.snapshot",
+  "docker/trivy-databases.lock.json": "05-trivy-databases.lock.json.snapshot",
+  "docker/Dockerfile.buster-runtime": "06-Dockerfile.buster-runtime.snapshot",
+  ".github/workflows/build-images.yaml": "07-build-images.yaml.snapshot",
+  ".github/workflows/role-images.yaml": "08-role-images.yaml.snapshot",
+  "tests/verification/deployment/versions.test.mjs": "09-versions.test.mjs.snapshot",
+  "docs/operations/local-image-vulnerability-scan.md": "10-local-image-vulnerability-scan.md.snapshot",
+  "docs/operations/runtime-versions-and-images.md": "11-runtime-versions-and-images.md.snapshot"
+}

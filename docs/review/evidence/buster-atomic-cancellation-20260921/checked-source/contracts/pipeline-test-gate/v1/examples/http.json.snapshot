@@ -1,0 +1,21 @@
+{
+  "tests": {
+    "health": {
+      "uses": "kubeclaw.http@1",
+      "mode": "blocking",
+      "retries": 2,
+      "concurrencyGroup": "http",
+      "config": {
+        "url": "https://service.example.test",
+        "path": "/health",
+        "expectedStatuses": [200],
+        "expectedText": "ready",
+        "maximumResponseBytes": 65536,
+        "requestTimeoutMs": 10000
+      }
+    }
+  },
+  "concurrencyLimits": {
+    "http": 4
+  }
+}

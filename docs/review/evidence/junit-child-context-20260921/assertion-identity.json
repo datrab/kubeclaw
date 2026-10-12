@@ -1,0 +1,17 @@
+{
+  "unchanged": true,
+  "count": 11,
+  "assertions": [
+    "assert.equal(child.status, scenario.failed && !scenario.xml ? 1 : 0, child.stderr.toString())",
+    "assert.throws(()=>finalizeDirectCommandReports(base,[report],mode==='blocking'), /TEST_REPORT_ZERO_CASES/u)",
+    "assert.equal(finalized.outcome, missing||scenario.failed?'failed':'passed')",
+    "assert.equal(finalized.counts.failed, parsed.counts.failed + parsed.counts.errored)",
+    "assert.match(finalized.summary,/TEST_REPORT_NO_EXECUTED_CASES/u)",
+    "assert.match(finalized.summary,/1 JUnit case\\(s\\) passed; 1 skipped/u)",
+    "assert.equal(decision.state,mode==='blocking'&&(missing||scenario.failed)?'failed':'passed')",
+    "assert.equal(decision.reviews.length,0)",
+    "assert.match(decision.nodes[0]!.reason,/TEST_REPORT_NO_EXECUTED_CASES/u)",
+    "assert.equal(gateDecisionStageResult(decision).outcome,decision.state==='failed'?'request_fix':'passed')",
+    "assert.equal((await reopened.readExecutionGraphs())[0]!.decisionDigest,decision.decisionDigest)"
+  ]
+}

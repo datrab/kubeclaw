@@ -1,0 +1,18 @@
+
+> verify:lint:policy-delivery
+> node skills/nova/plugins/lint/tests/eslint-discipline.test.mjs && node --test tests/verification/deployment/eslint-policy-delivery.test.mjs tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs
+
+{"ok":true,"suite":"eslint-discipline-rules"}
+✔ kubernetes-fixture-runtime alone is an environment boundary and still rejects defaults (7255.973656ms)
+✔ tailscale-exposure-runtime alone is an environment boundary and still rejects defaults (193.522025ms)
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+✔ packaged ESLint policy survives both real copy phases and requires its rule module (1971.959315ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10162.364155

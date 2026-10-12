@@ -1,0 +1,58 @@
+file:///tmp/buster-adapter-parity-y9exggv1/skills/buster/engine/test-gates/report-adapter-runtime.ts:361
+    catch (error) { throw new Error(`REPORT_ADAPTER_PROTOCOL_INVALID:${String(result.code)}:${String(result.signal)}`, { cause: error }); }
+                          ^
+
+Error: REPORT_ADAPTER_PROTOCOL_INVALID:null:SIGSEGV
+    at #run (file:///tmp/buster-adapter-parity-y9exggv1/skills/buster/engine/test-gates/report-adapter-runtime.ts:361:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    ... 2 lines matching cause stack trace ...
+    at async file:///tmp/buster-adapter-parity-y9exggv1/tests/verification/contracts/check-pipeline-junit-report-adapter.mts:61:16 {
+  [cause]: SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at #run (file:///tmp/buster-adapter-parity-y9exggv1/skills/buster/engine/test-gates/report-adapter-runtime.ts:360:26)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async #adaptWithinDeadline (file:///tmp/buster-adapter-parity-y9exggv1/skills/buster/engine/test-gates/report-adapter-runtime.ts:302:21)
+      at async RegisteredReportAdapterRuntime.adapt (file:///tmp/buster-adapter-parity-y9exggv1/skills/buster/engine/test-gates/report-adapter-runtime.ts:260:14)
+      at async file:///tmp/buster-adapter-parity-y9exggv1/tests/verification/contracts/check-pipeline-junit-report-adapter.mts:61:16
+}
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-pipeline-junit-report-adapter.mts (6687.325713ms)
+file:///tmp/buster-adapter-parity-y9exggv1/skills/buster/engine/test-gates/report-adapter-runtime.ts:361
+    catch (error) { throw new Error(`REPORT_ADAPTER_PROTOCOL_INVALID:${String(result.code)}:${String(result.signal)}`, { cause: error }); }
+                          ^
+
+Error: REPORT_ADAPTER_PROTOCOL_INVALID:null:SIGSEGV
+    at #run (file:///tmp/buster-adapter-parity-y9exggv1/skills/buster/engine/test-gates/report-adapter-runtime.ts:361:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    ... 2 lines matching cause stack trace ...
+    at async file:///tmp/buster-adapter-parity-y9exggv1/tests/verification/contracts/check-pipeline-report-adapter-runtime.mts:147:16 {
+  [cause]: SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at #run (file:///tmp/buster-adapter-parity-y9exggv1/skills/buster/engine/test-gates/report-adapter-runtime.ts:360:26)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async #adaptWithinDeadline (file:///tmp/buster-adapter-parity-y9exggv1/skills/buster/engine/test-gates/report-adapter-runtime.ts:302:21)
+      at async RegisteredReportAdapterRuntime.adapt (file:///tmp/buster-adapter-parity-y9exggv1/skills/buster/engine/test-gates/report-adapter-runtime.ts:260:14)
+      at async file:///tmp/buster-adapter-parity-y9exggv1/tests/verification/contracts/check-pipeline-report-adapter-runtime.mts:147:16
+}
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-pipeline-report-adapter-runtime.mts (13205.9343ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19909.826198
+
+✖ failing tests:
+
+test at tests/verification/contracts/check-pipeline-junit-report-adapter.mts:1:1
+✖ tests/verification/contracts/check-pipeline-junit-report-adapter.mts (6687.325713ms)
+  'test failed'
+
+test at tests/verification/contracts/check-pipeline-report-adapter-runtime.mts:1:1
+✖ tests/verification/contracts/check-pipeline-report-adapter-runtime.mts (13205.9343ms)
+  'test failed'

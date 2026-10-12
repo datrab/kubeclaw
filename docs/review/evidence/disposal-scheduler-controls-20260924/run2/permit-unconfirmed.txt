@@ -1,0 +1,82 @@
+✖ Loaded current close timeout cannot start another child (1802.17491ms)
+✖ Loaded current drain timeout cannot start another child (31447.288543ms)
+✖ Loaded replacement close timeout cannot start another child (2135.491301ms)
+✖ Loaded replacement drain timeout cannot start another child (31437.150266ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68042.785492
+
+✖ failing tests:
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded current close timeout cannot start another child (1802.17491ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:55:7)
+      at async instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:100:24)
+      at async cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:50:7)
+      at async cleanupRetainedFixtures (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:70:12)
+      at async RunnerScheduler.run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-scheduler.ts:45:13)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:108:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded current drain timeout cannot start another child (31447.288543ms)
+  AssertionError [ERR_ASSERTION]: negative must reach actual Loaded gating assertions
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:112:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded replacement close timeout cannot start another child (2135.491301ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:55:7)
+      at async instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:100:24)
+      at async cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:50:7)
+      at async cleanupRetainedFixtures (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:70:12)
+      at async RunnerScheduler.run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-scheduler.ts:45:13)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:108:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded replacement drain timeout cannot start another child (31437.150266ms)
+  AssertionError [ERR_ASSERTION]: negative must reach actual Loaded gating assertions
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:112:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

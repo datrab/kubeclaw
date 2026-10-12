@@ -1,0 +1,55 @@
+✖ full process policy reaches real child I/O with only scope limits allocated (1.723964ms)
+✔ process input budget rejects before allocating a scope (0.684487ms)
+✖ real child output and deadline still use the complete process policy (0.242426ms)
+✖ modeled measured CPU policy remains enforced after scope projection (2.006311ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 232.069423
+
+✖ failing tests:
+
+test at tests/verification/reliability/native-process-policy.test.mts:44:1
+✖ full process policy reaches real child I/O with only scope limits allocated (1.723964ms)
+  Error: WORKER_NATIVE_LIMIT_INVALID
+      at validateChildLimits (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/ownership-children.ts:25:11)
+      at Object.allocate (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/native-process-policy.test.mts:24:5)
+      at runNativeWorkerProcess (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-worker-process.ts:72:37)
+      at execute (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/native-process-policy.test.mts:37:24)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/native-process-policy.test.mts:45:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/verification/reliability/native-process-policy.test.mts:58:1
+✖ real child output and deadline still use the complete process policy (0.242426ms)
+  Error: WORKER_NATIVE_LIMIT_INVALID
+      at validateChildLimits (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/ownership-children.ts:25:11)
+      at Object.allocate (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/native-process-policy.test.mts:24:5)
+      at runNativeWorkerProcess (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-worker-process.ts:72:37)
+      at execute (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/native-process-policy.test.mts:37:24)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/native-process-policy.test.mts:59:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+
+test at tests/verification/reliability/native-process-policy.test.mts:65:1
+✖ modeled measured CPU policy remains enforced after scope projection (2.006311ms)
+  Error: WORKER_NATIVE_LIMIT_INVALID
+      at validateChildLimits (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/ownership-children.ts:25:11)
+      at Object.allocate (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/native-process-policy.test.mts:24:5)
+      at runNativeWorkerProcess (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-worker-process.ts:72:37)
+      at execute (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/native-process-policy.test.mts:37:24)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/native-process-policy.test.mts:66:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)

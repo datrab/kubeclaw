@@ -1,0 +1,35 @@
+✔ CS3 real ownership store enforces 1 authored records with representation-sized capacity (205.600424ms)
+✔ CS3 real ownership store enforces 2 authored records with representation-sized capacity (191.540353ms)
+✔ CS3 real ownership store enforces 1 authored bytes (15.538139ms)
+✔ CS3 real ownership store enforces 8192 authored bytes (68.258445ms)
+✔ CS3 actual execution journal admission and process boundary profile 1 (304.811003ms)
+✔ CS3 actual execution journal admission and process boundary profile 2 (299.648601ms)
+✔ preexisting metadata saturation still reaches modeled drain and never disposes or releases (114.476752ms)
+✔ metadata I/O failure retains failed ownership after modeled drain and can retry when storage recovers (219.931732ms)
+✔ unknown-child verification failure prevents modeled subtree mutation (158.058032ms)
+✔ child reservations are durable, CAS-fenced, immutable after binding and charged to metadata quota (188.336041ms)
+✔ strict topology decoder rejects unknown fields, names, duplicates and mismatched child identity (45.755116ms)
+✔ v1 and v2 ownership decode explicitly as drain-only legacy leaves; child admission is forbidden (76.612089ms)
+✔ mountinfo parser requires hierarchical events on the actual covering mount (0.80664ms)
+✔ concurrent durable reservations converge and survive reopening (99.449196ms)
+✔ caller mutation after reserve starts cannot change persisted identity (16.066943ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (179.716029ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (88.906415ms)
+✔ record quota fails atomically without losing existing ownership (87.035217ms)
+✔ corrupt persisted ownership fails without overwriting the record (15.811127ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (44.016232ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (1012.133491ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (29.006675ms)
+✔ exact-fit owner admission covers actual persisted maximal terminal bytes; one byte less rejects before write (131.954522ms)
+✔ competing owner admissions cannot consume the same global terminal capacity (23.896084ms)
+✔ competing children on different owners reserve future binding and terminal bytes globally (268.274024ms)
+✔ terminal records retain actual bytes; all historical formats remain readable without rewriting (94.407667ms)
+✔ preexisting overcommit blocks admission but preserves reads, lifecycle attempts and host provenance fencing (52.744505ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8138.109987

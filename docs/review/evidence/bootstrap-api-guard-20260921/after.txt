@@ -1,0 +1,15 @@
+✔ existing namespace continues without create (26.802071ms)
+✔ successful empty lookup creates namespace before Helm (23.942589ms)
+✔ lookup failure stops all mutation: exec: executable credential-helper not found (17.369792ms)
+✔ lookup failure stops all mutation: Error from server (Forbidden): namespaces is forbidden (16.204322ms)
+✔ lookup failure stops all mutation: The connection to the server was refused (18.1094ms)
+✔ lookup failure stops all mutation: Error from server (NotFound): the server could not find the requested resource (16.91575ms)
+✔ create failure stops before Helm without a fallback (17.894775ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 216.094662

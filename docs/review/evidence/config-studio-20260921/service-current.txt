@@ -1,0 +1,15 @@
+✔ actual Studio survives refused Control and malformed URL with explicit responses (323.858287ms)
+✔ actual Studio retains proxy bytes, cookies and upstream status (319.466329ms)
+✔ actual Studio forwards direction idempotency keys and retry payloads to Control (294.238454ms)
+✔ actual Studio bounds upstream headers wait and remains healthy (516.168081ms)
+✔ actual Studio bounds upstream empty-body wait and remains healthy (516.809329ms)
+✔ actual Studio bounds upstream partial-body wait and remains healthy (504.969831ms)
+✔ actual Studio cancels upstream streaming when the client disconnects (285.386745ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2947.304704

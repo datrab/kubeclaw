@@ -1,0 +1,189 @@
+{
+  "renamed": [
+    {
+      "original": "skills/prism/tests/worker-http-cancellation.native.mts",
+      "current": "skills/prism/tests/worker-http-cancellation-native.mts",
+      "sha256": "39be007e67b21e960dcdb11ee81c836bab597d26ca7a04a74827839cea1b2f6c",
+      "bytesUnchanged": true
+    },
+    {
+      "original": "skills/prism/tests/worker-process-shutdown.native.mts",
+      "current": "skills/prism/tests/worker-process-shutdown-native.mts",
+      "sha256": "17d516b69f96cae527736e672d4ce33b34f39efe782d2cf0fb0c9ce6685a71ea",
+      "bytesUnchanged": true
+    },
+    {
+      "original": "skills/prism/tests/worker-readiness.native.mts",
+      "current": "skills/prism/tests/worker-readiness-native.mts",
+      "sha256": "259c25b98529558bcdbc619fe086bbc9a5d91b4951733f09aa18413bf3337ef2",
+      "bytesUnchanged": true
+    }
+  ],
+  "activeGlobsUpdated": 2,
+  "originalGlobEmpty": true,
+  "unchangedMembership": [
+    "worker-http-cancellation-native.mts",
+    "worker-process-shutdown-native.mts",
+    "worker-readiness-native.mts"
+  ],
+  "attributionOriginalTokensRestoredByInlining": true,
+  "unchangedAssertionsDeadlinesAndNumericConstants": {
+    "assertions": [
+      [
+        "assert",
+        ".",
+        "equal",
+        "(",
+        "request",
+        ".",
+        "headers",
+        ".",
+        "authorization",
+        ",",
+        "'Bearer local'",
+        ")"
+      ],
+      [
+        "assert",
+        ".",
+        "equal",
+        "(",
+        "request",
+        ".",
+        "url",
+        ",",
+        "`/v1/internal/artifacts/${",
+        "contentDigest",
+        "}`",
+        ")"
+      ],
+      [
+        "assert",
+        "(",
+        "address",
+        "&&",
+        "typeof",
+        "address",
+        "!==",
+        "'string'",
+        ")"
+      ],
+      [
+        "assert",
+        "(",
+        "workerAddress",
+        "&&",
+        "typeof",
+        "workerAddress",
+        "!==",
+        "'string'",
+        ")"
+      ],
+      [
+        "assert",
+        ".",
+        "equal",
+        "(",
+        "response",
+        ".",
+        "status",
+        ",",
+        "200",
+        ")"
+      ],
+      [
+        "assert",
+        ".",
+        "equal",
+        "(",
+        "result",
+        ".",
+        "schemaVersion",
+        ",",
+        "'worker-attempt-result.v3'",
+        ")"
+      ],
+      [
+        "assert",
+        ".",
+        "equal",
+        "(",
+        "result",
+        ".",
+        "state",
+        ",",
+        "'completed'",
+        ",",
+        "result",
+        ".",
+        "error",
+        "?.",
+        "message",
+        ")"
+      ],
+      [
+        "assert",
+        ".",
+        "equal",
+        "(",
+        "measured",
+        ".",
+        "status",
+        ",",
+        "'observed'",
+        ")"
+      ],
+      [
+        "assert",
+        "(",
+        "unrelatedCpuMs",
+        ">",
+        "100",
+        ",",
+        "`expected material unrelated CPU, got ${",
+        "unrelatedCpuMs",
+        "} ms`",
+        ")"
+      ],
+      [
+        "assert",
+        "(",
+        "measured",
+        ".",
+        "value",
+        "<",
+        "unrelatedCpuMs",
+        "/",
+        "2",
+        ",",
+        "`attempt receipt included concurrent service CPU: measured=${",
+        "measured",
+        ".",
+        "value",
+        "} ms, unrelated=${",
+        "unrelatedCpuMs",
+        "} ms`",
+        ",",
+        ")"
+      ]
+    ],
+    "tests": [
+      "'native attempt receipt excludes real concurrent supervisor-process CPU'"
+    ],
+    "numbers": [
+      "0",
+      "0",
+      "100",
+      "1000",
+      "1000",
+      "2",
+      "200",
+      "200",
+      "32",
+      "500",
+      "5000",
+      "500_000",
+      "60000"
+    ]
+  }
+}

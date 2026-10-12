@@ -1,0 +1,83 @@
+[
+  {
+    "name": "helm",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "tests/verification/deployment/config-component-packaging.test.mjs",
+      "tests/verification/deployment/buster-admission-render.test.mjs"
+    ],
+    "exitCode": 1,
+    "seconds": 21.66
+  },
+  {
+    "name": "prism",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/swarm-control-policy.test.mts",
+      "skills/prism/tests/swarm-input-limit.test.mts",
+      "skills/prism/tests/swarm-native-settings.test.mts",
+      "skills/prism/tests/swarm-resource-operation.test.mts",
+      "skills/prism/tests/swarm-resource-policy.test.mts",
+      "skills/prism/tests/swarm-result-journal.test.mts",
+      "skills/prism/tests/swarm-supervisor-config.test.mts",
+      "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+      "skills/prism/tests/swarm-worker-behavior.test.mts",
+      "skills/prism/tests/swarm-worker-config.test.mts",
+      "skills/prism/tests/studio-config.test.mts",
+      "skills/prism/tests/studio-service.test.mts"
+    ],
+    "exitCode": 1,
+    "seconds": 52.263
+  },
+  {
+    "name": "buster",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/verification/reliability/buster-preparation-identities.test.mts",
+      "tests/verification/reliability/buster-preparation-ledger.test.mts",
+      "tests/verification/e2e/swarm-author-profile.test.mjs"
+    ],
+    "exitCode": 1,
+    "seconds": 68.435
+  },
+  {
+    "name": "types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/prism/tsconfig.json"
+    ],
+    "exitCode": 2,
+    "seconds": 10.172
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "tests/fixtures/config/swarm-bundle.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 8.008
+  }
+]

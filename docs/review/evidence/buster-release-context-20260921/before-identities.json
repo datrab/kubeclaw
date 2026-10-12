@@ -1,0 +1,27 @@
+[
+  {
+    "path": "scripts/updates/deployment-release.mjs",
+    "sha256": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3",
+    "snapshot": "docs/review/evidence/buster-release-context-20260921/before/0-deployment-release.mjs.snapshot"
+  },
+  {
+    "path": "tests/verification/deployment/gitops-release.test.mjs",
+    "sha256": "44bf41800ccd8232eef08bd2bdbdd0e700077824aada29ffd3d5cd0de62d6e81",
+    "snapshot": "docs/review/evidence/buster-release-context-20260921/before/1-gitops-release.test.mjs.snapshot"
+  },
+  {
+    "path": "tests/verification/deployment/release-images.test.mjs",
+    "sha256": "a1deba2ffcbadd4803448101446c73419914022f06f74dfebb420278d9efb544",
+    "snapshot": "docs/review/evidence/buster-release-context-20260921/before/2-release-images.test.mjs.snapshot"
+  },
+  {
+    "path": "scripts/gitops.mjs",
+    "sha256": "4f6de3a78c0e2bab93ac3b3420b672e155dd2016acd39bc086dd9fb176c54746",
+    "snapshot": "docs/review/evidence/buster-release-context-20260921/before/3-gitops.mjs.snapshot"
+  },
+  {
+    "path": "scripts/native-buster-deployment-preflight.mjs",
+    "sha256": "94fe735290384a55918963d4b9754fda20ca472868c061daa17e42c7a719e0ae",
+    "snapshot": "docs/review/evidence/buster-release-context-20260921/before/4-native-buster-deployment-preflight.mjs.snapshot"
+  }
+]

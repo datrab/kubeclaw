@@ -1,0 +1,39 @@
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":4}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_CANCELLED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":3}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /NOVA_REMOTE_PLAN_TIMEOUT:REMOTE_STATE_CANCELLED/u. Input:
+
+'Error: NOVA_REMOTE_PLAN_TIMEOUT:REMOTE_STATE_UNKNOWN'
+
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async checkRemoteFaults (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-remote-faults.mts:68:7)
+    at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts:466:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: Error: NOVA_REMOTE_PLAN_TIMEOUT:REMOTE_STATE_UNKNOWN
+      at reconcileInterruption (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/test-gates/dispatch-operation.ts:67:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async dispatchOperation (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/test-gates/dispatch-operation.ts:31:27)
+      at async waitForActual (node:assert:646:5)
+      at async strict.rejects (node:assert:769:25)
+      at async checkRemoteFaults (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-remote-faults.mts:68:7)
+      at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts:466:3 {
+    reconciliation: {
+      jobId: 'job:4d068b9ad04531f003c5de1286eb4e4c571075e51c18d72d59faca635d284fab',
+      requestDigest: 'sha256:30a4fa0d181f45b0c5d575aa35f1904b3a64881455e1438c524b8a2050a1a381',
+      reason: 'NOVA_REMOTE_PLAN_TIMEOUT',
+      remoteState: 'unknown',
+      observedAt: '2026-09-21T16:01:18.373Z',
+      lastError: 'NOVA_REMOTE_PLAN_CANCELLED'
+    },
+    [cause]: [NovaGateTimeoutError: NOVA_REMOTE_PLAN_TIMEOUT]
+  },
+  expected: /NOVA_REMOTE_PLAN_TIMEOUT:REMOTE_STATE_CANCELLED/u,
+  operator: 'rejects',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

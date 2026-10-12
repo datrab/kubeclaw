@@ -1,0 +1,32 @@
+{
+  "acceptedForIntegration": true,
+  "manifest": {
+    "status": "private documentation draft; independent source review pending",
+    "path": "docs/review/remediation/implementation/config-buster-provider-session-20260921.md",
+    "beforeSha256": "5e068ea5bd7d531f9770772e6fea5a0cc76664bc5a72fc7d14be26f1fe826300",
+    "afterSha256": "79b6475cc8545d87ac8ff3540a4dad12930dfb3f0105504675b4986f78878e7a"
+  },
+  "links": [
+    {
+      "target": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/architecture/buster-execution-configuration.md",
+      "sha256": "f4f2c8c1cce8409352b002cb38b2160dc031381251a072d8a9f1460d5b755409"
+    },
+    {
+      "target": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-provider-session-policy-20260921/manifest.json",
+      "sha256": "c6a03a2b0cf1b1024546c9093b846641f72b5d764cc5ceaae02f603b1c6c812c"
+    },
+    {
+      "target": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-provider-session-policy-20260921/integration-result.json",
+      "sha256": "ace219d00eae04c6f0975412301c62928adbe37925ab4ca7922dba854a1e9b08"
+    },
+    {
+      "target": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-buster-runner-execution-child-20260921/session37-runtime4/results.json",
+      "sha256": "05550bb24bc6f172965dda9e9c4097a9b4b19325d055bf93aed6fad6a8689233"
+    },
+    {
+      "target": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-buster-runner-execution-child-20260921/session37-controls1/results.json",
+      "sha256": "f85eb58b689ccccbc67ab71950f899cfe04994729f4009cbeb0c5f3cd82ca608"
+    }
+  ],
+  "scope": "Claims match stableRuntime4/manual4controls; historical proposal/mixed failures and native supervisor boundary explicit. No runtime."
+}

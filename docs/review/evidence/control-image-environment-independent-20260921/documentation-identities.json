@@ -1,0 +1,26 @@
+[
+  {
+    "source": "docs/operations/operator-configuration.md",
+    "sha256": "85919426eba67c4b2a8330ac5387d56f1bdb786822dae3269a077be15bbe46e6"
+  },
+  {
+    "source": "docs/review/remediation/progress.md",
+    "sha256": "6f8ae54b70fe78ed764b25d788e66716d4702730b4fbb8300f34dd4ca01ded9b"
+  },
+  {
+    "source": "docs/review/remediation/handoff.md",
+    "sha256": "fc660cce7c9232008602520ceb7673cf945052eeb8d19accb547fac9e6b16384"
+  },
+  {
+    "source": "docs/review/remediation/implementation/control-image-environment-20260921.md",
+    "sha256": "27bb2c2e6d2646a326adbdf5e1d9a856b44601ea7395b4dad91913048756eb7d"
+  },
+  {
+    "source": "docs/review/remediation/implementation/config-control-policy-20260921.md",
+    "sha256": "de1ed82a053aee93c2ad4c9bb865d092b8d6101db13fe743c2bad0c09c402638"
+  },
+  {
+    "source": "docs/review/remediation/implementation/implementation-20260920.md",
+    "sha256": "ddba1bd49537b436c929ed9dcfe21c48e0d602f1f4cf156975568c0eb92533ba"
+  }
+]

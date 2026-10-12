@@ -1,0 +1,6 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-values.ts
+  29:33  error  Use one explicit value and at most one fallback; longer fallback chains hide authority  discipline/no-fallback-chain
+
+✖ 1 problem (1 error, 0 warnings)
+

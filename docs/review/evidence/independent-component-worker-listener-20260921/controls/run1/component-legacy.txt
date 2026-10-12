@@ -1,0 +1,208 @@
+CONFIG_MUTANT_APPLIED:legacy
+✔ CW01 canonical author values reach the actual production worker composition (14.906327ms)
+✔ CW02 every alternate author value reaches the actual consumer (7.290959ms)
+✔ CW03 unknown key at entry (4.088616ms)
+✔ CW03 unknown key at prism-worker (5.584715ms)
+✔ CW03 unknown key at prism-worker.settings (4.974819ms)
+✔ CW03 unknown key at prism-worker.settings.ingress (3.903691ms)
+✔ CW04 port rejects 3 (47.702277ms)
+✔ CW04 port rejects null (3.503841ms)
+✔ CW04 port rejects -1 (3.272395ms)
+✔ CW04 port rejects 0 (3.363028ms)
+✔ CW04 port rejects 1.5 (3.029948ms)
+✔ CW04 port rejects 2147483648 (3.347787ms)
+✔ CW04 port rejects undefined (3.572733ms)
+✔ CW04 maximumActiveRequests rejects 3 (3.348497ms)
+✔ CW04 maximumActiveRequests rejects null (3.156372ms)
+✔ CW04 maximumActiveRequests rejects -1 (7.021102ms)
+✔ CW04 maximumActiveRequests rejects 0 (2.987427ms)
+✔ CW04 maximumActiveRequests rejects 1.5 (2.923956ms)
+✔ CW04 maximumActiveRequests rejects 2147483648 (3.226434ms)
+✔ CW04 maximumActiveRequests rejects undefined (3.298976ms)
+✔ CW04 maximumProbeRequests rejects 3 (51.551727ms)
+✔ CW04 maximumProbeRequests rejects null (3.178583ms)
+✔ CW04 maximumProbeRequests rejects -1 (2.721231ms)
+✔ CW04 maximumProbeRequests rejects 0 (2.655088ms)
+✔ CW04 maximumProbeRequests rejects 1.5 (2.71033ms)
+✔ CW04 maximumProbeRequests rejects 2147483648 (2.565697ms)
+✔ CW04 maximumProbeRequests rejects undefined (3.0715ms)
+✔ CW04 maximumConnections rejects 3 (2.742371ms)
+✔ CW04 maximumConnections rejects null (2.803702ms)
+✔ CW04 maximumConnections rejects -1 (2.635168ms)
+✔ CW04 maximumConnections rejects 0 (2.646979ms)
+✔ CW04 maximumConnections rejects 1.5 (2.838213ms)
+✔ CW04 maximumConnections rejects 2147483648 (3.0955ms)
+✔ CW04 maximumConnections rejects undefined (2.667639ms)
+✔ CW04 requestTimeoutMs rejects 3 (2.644668ms)
+✔ CW04 requestTimeoutMs rejects null (2.820913ms)
+✔ CW04 requestTimeoutMs rejects -1 (2.616898ms)
+✔ CW04 requestTimeoutMs rejects 0 (2.623058ms)
+✔ CW04 requestTimeoutMs rejects 1.5 (3.378968ms)
+✔ CW04 requestTimeoutMs rejects 2147483648 (3.212633ms)
+✔ CW04 requestTimeoutMs rejects undefined (3.299156ms)
+✔ CW04 shutdownTimeoutMs rejects 3 (3.172393ms)
+✔ CW04 shutdownTimeoutMs rejects null (2.949587ms)
+✔ CW04 shutdownTimeoutMs rejects -1 (3.11316ms)
+✔ CW04 shutdownTimeoutMs rejects 0 (33.431566ms)
+✔ CW04 shutdownTimeoutMs rejects 1.5 (4.667411ms)
+✔ CW04 shutdownTimeoutMs rejects 2147483648 (4.775483ms)
+✔ CW04 shutdownTimeoutMs rejects undefined (5.150484ms)
+✔ CW04 maximumInputBytes rejects 3 (4.042405ms)
+✔ CW04 maximumInputBytes rejects null (20.415239ms)
+✔ CW04 maximumInputBytes rejects -1 (4.603049ms)
+✔ CW04 maximumInputBytes rejects 0 (4.844555ms)
+✔ CW04 maximumInputBytes rejects 1.5 (53.093677ms)
+✔ CW04 maximumInputBytes rejects 2147483648 (5.80925ms)
+✔ CW04 maximumInputBytes rejects undefined (4.253811ms)
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (4.157678ms)
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (4.66006ms)
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (3.10246ms)
+✖ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (3.339586ms)
+✖ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (2.468874ms)
+✖ CW05 rejects legacy authority PRISM_NATIVE_MAXIMUM_INPUT_BYTES (2.30952ms)
+✖ CW05 rejects legacy authority PRISM_NATIVE_ASSIGNED_INPUT_BYTES (2.495145ms)
+✔ CW06 rejects unsupported profile (3.062429ms)
+✔ CW06 rejects unsupported features (2.754672ms)
+✔ CW06 rejects unsupported tuning (2.877055ms)
+✔ CW06 rejects unsupported overrides (4.930108ms)
+✔ CW07 missing or broken authorship never falls back to defaults (10.168354ms)
+✔ CW08 maximumActiveRequests cannot exceed connection reservation (3.997224ms)
+✔ CW08 maximumProbeRequests cannot exceed connection reservation (38.332174ms)
+✔ CW09 shutdown budget remains independent of request admission deadline (7.681699ms)
+✔ CW10 effective settings omit secrets and original authentication still fails closed (3.774698ms)
+ℹ tests 71
+ℹ suites 0
+ℹ pass 64
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1596.081382
+
+✖ failing tests:
+
+test at skills/prism/tests/swarm-worker-config.test.mts:40:285
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (4.157678ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-config.test.mts:41:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-worker-config.test.mts:40:285
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (4.66006ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-config.test.mts:41:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-worker-config.test.mts:40:285
+✖ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (3.10246ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-config.test.mts:41:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-worker-config.test.mts:40:285
+✖ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (3.339586ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-config.test.mts:41:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-worker-config.test.mts:40:285
+✖ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (2.468874ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-config.test.mts:41:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-worker-config.test.mts:40:285
+✖ CW05 rejects legacy authority PRISM_NATIVE_MAXIMUM_INPUT_BYTES (2.30952ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-config.test.mts:41:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-worker-config.test.mts:40:285
+✖ CW05 rejects legacy authority PRISM_NATIVE_ASSIGNED_INPUT_BYTES (2.495145ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-config.test.mts:41:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_LEGACY_OVERRIDE/,
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "480ccdab11b1329caa5c564a5dc7a121ca043a955bb9d48365dd8fbacaa5e503",
+      "snapshot": "after-v2/skills/buster/engine/test-gates/provider-loader.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "24c91d8a84da1d17ead3060f04eb6556176d4dd55e5ba916a304f0a302ab1daf",
+      "snapshot": "after-v2/skills/buster/engine/test-gates/provider-process-session.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-observation.ts",
+      "sha256": "eca305796cc719a34e1d8707db0c3a8b5421815ce092c6b12f136e6003762e92",
+      "snapshot": "after-v2/skills/buster/engine/test-gates/provider-process-observation.ts"
+    }
+  ],
+  "drainDependency": {
+    "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+    "sha256": "b7dc5260ba57dd177fcb2e1e40f85f39554bf261f3e99388a6d91d17d24879b1"
+  },
+  "sourceFindingsAddressed": [
+    "Confirmed child close reaches actual bounded capabilities.drain before propagating signal failure.",
+    "No-close rejection does not enter an unbounded finally drain.",
+    "Initialization failure is saved before callback registration and checked on initialize; later execute error does not disable cleanup."
+  ],
+  "runtimeVerified": false,
+  "remaining": "Five explicit error/cleanup runtime controls plus original full Runner/provider suite; source inspection alone is not acceptance."
+}

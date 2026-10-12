@@ -1,0 +1,4 @@
+suite migration docs-schema check failed:
+- docs/architecture/pipeline-test-gate-e2e-configuration-reference.md: undocumented project field minimumExecutedTests
+- docs/architecture/pipeline-test-gate-e2e-configuration-reference.md: undocumented project field requiredTests
+- docs/architecture/pipeline-test-gate-tailscale-exposure-configuration-reference.md: undocumented project field retentionMode

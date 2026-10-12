@@ -10,16 +10,28 @@ const root = path.resolve(import.meta.dirname, '../../..');
 test('central versions update actual build/deployment files and reject drift without repairing it', () => {
   const copy = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-versions-'));
   try {
-    for (const file of ['versions.json', ...versionOutputs(root).keys()]) {
+    for (const file of ['versions.json', 'package-lock.json', ...versionOutputs(root).keys()]) {
       fs.mkdirSync(path.dirname(path.join(copy, file)), { recursive: true });
       fs.copyFileSync(path.join(root, file), path.join(copy, file));
     }
     assert.equal(syncVersions(copy).changed.length, 0);
+    const packagePath = path.join(copy, 'package-lock.json');
+    const packageSource = fs.readFileSync(packagePath, 'utf8');
+    const changedPackage = JSON.parse(packageSource);
+    changedPackage.packages['node_modules/playwright-core'].version = '9.9.9';
+    fs.writeFileSync(packagePath, JSON.stringify(changedPackage));
+    assert.throws(() => syncVersions(copy), /browser-archives.lock.json/);
+    fs.writeFileSync(packagePath, packageSource);
     const busterPath = path.join(copy, 'docker/Dockerfile.buster-runtime');
     const buster = fs.readFileSync(busterPath, 'utf8');
-    assert.match(buster, /^ARG TRIVY_DATABASE_REFRESH=manual$/m);
-    assert.match(buster, /^RUN test -n "\$TRIVY_DATABASE_REFRESH" && setpriv /m);
-    assert.equal((buster.match(/TRIVY_DATABASE_REFRESH/g) ?? []).length, 2);
+    assert.doesNotMatch(buster, /TRIVY_DATABASE_REFRESH/);
+    const databaseLockPath = path.join(copy, 'docker/trivy-databases.lock.json');
+    const originalDatabaseLock = fs.readFileSync(databaseLockPath, 'utf8');
+    fs.writeFileSync(databaseLockPath, originalDatabaseLock.replace('trivy-database-lock.v1', 'invalid-lock'));
+    assert.throws(() => syncVersions(copy), /Version drift/);
+    assert.match(fs.readFileSync(databaseLockPath, 'utf8'), /invalid-lock/);
+    assert.deepEqual(syncVersions(copy, false).changed, ['docker/trivy-databases.lock.json']);
+    assert.equal(fs.readFileSync(databaseLockPath, 'utf8'), originalDatabaseLock);
     fs.appendFileSync(busterPath, '\nARG TRIVY_DATABASE_REFRESH_VERSION=1.0\n');
     assert.throws(() => versionOutputs(copy), /unmanaged version argument/);
     fs.writeFileSync(busterPath, buster.replace(/^FROM \S+/m, 'FROM ${TRIVY_DATABASE_REFRESH}'));
@@ -32,6 +44,8 @@ test('central versions update actual build/deployment files and reject drift wit
     manifest.monitoringCharts.loki.version = '99.1.2';
     manifest.redisProduction.image = `registry-1.docker.io/bitnami/redis:latest@sha256:${'a'.repeat(64)}`;
     manifest.buildArgs.KUBECTL_VERSION = '1.99.9';
+    manifest.buildArgs.TRIVY_VERSION = '0.99.9';
+    manifest.trivyDatabases.java.files['metadata.json'].size++;
     manifest.buildArgs.BUILDKIT_BASE = `moby/buildkit:v99.0.0-rootless@sha256:${'c'.repeat(64)}`;
     manifest.imageOverrides['ops-pod'].HELM_VERSION = 'v3.99.9';
     fs.writeFileSync(path.join(copy, 'versions.json'), JSON.stringify(manifest));
@@ -66,6 +80,9 @@ test('central versions update actual build/deployment files and reject drift wit
     manifest.imageOverrides['buster-runtime'].BUILDKIT_BASE = `moby/buildkit:v99.1.0-rootless@sha256:${'d'.repeat(64)}`;
     fs.writeFileSync(path.join(copy, 'versions.json'), JSON.stringify(manifest));
     syncVersions(copy, false);
+    const generatedLock = JSON.parse(fs.readFileSync(databaseLockPath, 'utf8'));
+    assert.equal(generatedLock.scannerVersion, manifest.buildArgs.TRIVY_VERSION);
+    assert.deepEqual(generatedLock.databases, manifest.trivyDatabases);
     const effectiveBuildkit = manifest.imageOverrides['buster-runtime'].BUILDKIT_BASE;
     assert.ok(fs.readFileSync(path.join(copy, 'scripts/deploy.sh'), 'utf8')
       .includes(`BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${'${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-'}${effectiveBuildkit}}"`));

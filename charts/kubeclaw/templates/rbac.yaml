@@ -1,3 +1,4 @@
+{{- $clusterShared := (include "kubeclaw.swarmConfig" . | mustFromJson).operator.buster.clusterInvokers.shared -}}
 {{- $leaseClientEnabled := and .Values.busterNamespaceBroker.enabled (or (eq .Values.agentRole "buster") .Values.busterNamespaceBroker.leaseClient.enabled) -}}
 {{- $verificationReadEnabled := and $leaseClientEnabled .Values.busterNamespaceBroker.leaseClient.verificationRead.enabled -}}
 {{- if and .Values.serviceAccount.create $leaseClientEnabled }}
@@ -14,10 +15,10 @@ metadata:
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 rules:
-  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
+  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
     resources: ["busternamespaceleases"]
     verbs: ["create", "get", "list", "watch", "patch", "update", "delete"]
-  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
+  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
     resources: ["busternamespaceleases/status"]
     verbs: ["get"]
   - apiGroups: ["apps"]

@@ -1,0 +1,178 @@
+
+> verify:buster:execution-config
+> npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-execution-policy.json && node --test --test-concurrency=1 tests/verification/contracts/buster-settings-registry.test.mjs tests/verification/contracts/check-pipeline-buster-execution-policy.mts tests/verification/contracts/provider-child-session.test.mjs tests/verification/contracts/buster-process-sampling.test.mjs tests/verification/contracts/buster-default-store-policy.test.mjs tests/verification/contracts/buster-provider-session-policy.test.mjs tests/verification/contracts/buster-session-capabilities.test.mjs tests/verification/contracts/provider-loader-ownership.test.mjs
+
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+✔ default Runner-owned store enforces maximumEvidenceObjects=1 (595.554215ms)
+✔ default Runner-owned store enforces maximumEvidenceObjects=2 (199.895957ms)
+✔ default Runner-owned store enforces maximumEvidenceBytes=1 (225.712255ms)
+✔ default Runner-owned store enforces maximumEvidenceBytes=2 (193.113732ms)
+✔ default Runner-owned store enforces maximumEvidenceObjectBytes=1 (211.872227ms)
+✔ default Runner-owned store enforces maximumEvidenceObjectBytes=2 (225.53896ms)
+✔ default Runner-owned store reclaims selected orphan age 10 (263.325927ms)
+✔ default Runner-owned store reclaims selected orphan age 60000 (271.21258ms)
+✔ default Runner-owned admission retains bounded quarantine 1 (199.171318ms)
+✔ default Runner-owned admission retains bounded quarantine 2 (222.773649ms)
+✔ default Runner-owned admission enforces quarantine bytes 2 (127.831565ms)
+✔ default Runner-owned admission enforces quarantine bytes 10000 (150.372497ms)
+✔ default Runner-owned admission enforces ingress bytes 2048 (240.147928ms)
+✔ default Runner-owned admission enforces ingress bytes 8192 (256.09697ms)
+✔ default Runner completion consumes closure quota 1 (303.800273ms)
+✔ default Runner completion consumes closure quota 2 (362.803369ms)
+✔ default Runner completion consumes admission byte capacity 1025 (99.455461ms)
+✔ default Runner completion consumes admission byte capacity 1048576 (132.645069ms)
+✔ default Runner completion enforces metadata bytes 1024 (68.247304ms)
+✔ default Runner completion enforces metadata bytes 1048576 (153.56211ms)
+✔ actual parent process sampling consumes 10ms (954.293748ms)
+✔ actual parent process sampling consumes 60000ms (535.939984ms)
+✔ required session policy maximumProtocolBytes rejects before package/process access (3.532712ms)
+✔ required session policy terminationGraceMs rejects before package/process access (0.485973ms)
+✔ required session policy terminationTimeoutMs rejects before package/process access (0.435521ms)
+✔ required session policy capabilityDrainTimeoutMs rejects before package/process access (0.410151ms)
+✔ required session policy minimumHeapMiB rejects before package/process access (0.433111ms)
+✔ required session policy heapFraction rejects before package/process access (0.38411ms)
+✔ required session policy maximumPendingCapabilities rejects before package/process access (0.448452ms)
+✔ required session policy minimumOpenFiles rejects before package/process access (0.502513ms)
+✔ required session policy artifactFileDescriptorReserve rejects before package/process access (0.673658ms)
+✔ fractional heap selection and immutable complete runtime snapshot (0.656757ms)
+✖ actual child stdout uses protocol cap 1024 (550.224303ms)
+✔ actual child stdout uses protocol cap 65536 (197.728381ms)
+✔ actual V8 heap consumes selected minimumHeapMiB (244.07921ms)
+✔ actual V8 heap consumes selected heapFraction (323.619246ms)
+✔ actual descriptor exhaustion consumes minimumOpenFiles (433.516756ms)
+✔ actual descriptor exhaustion consumes artifactFileDescriptorReserve (292.359068ms)
+✖ real uncooperative child consumes selected SIGKILL escalation grace (867.639608ms)
+✔ real HTTP capability admission 1 (89.165595ms)
+✔ real HTTP capability admission 2 (16.394084ms)
+✔ actual uncooperative HTTP settlement drain 10 (67.357731ms)
+✔ actual uncooperative HTTP settlement drain 1000 (105.039645ms)
+✔ runtime settings registry accepts authored buster-preparation (3.145601ms)
+✔ runtime settings registry accepts authored buster-admission (0.439111ms)
+✔ runtime settings registry accepts authored buster-dependency-readiness (0.422661ms)
+✔ runtime settings registry accepts authored buster-execution (70.242186ms)
+✔ actual execution and observation decoders accept unchanged canonical policy (1.581001ms)
+✔ execution policy requires actual numeric owner provider.cleanupTimeoutMs (3.344067ms)
+✔ execution policy requires actual numeric owner provider.maximumResultBytes (0.665897ms)
+✔ execution policy requires actual numeric owner provider.claimGraceMs (0.573635ms)
+✔ execution policy requires actual numeric owner provider.queueTimeoutMs (0.571725ms)
+✔ execution policy requires actual numeric owner provider.workerResultWrapperBytes (0.676937ms)
+✔ execution policy requires actual numeric owner provider.maximumProtocolBytes (0.598625ms)
+✔ execution policy requires actual numeric owner provider.terminationGraceMs (0.549875ms)
+✔ execution policy requires actual numeric owner provider.terminationTimeoutMs (0.601976ms)
+✔ execution policy requires actual numeric owner provider.capabilityDrainTimeoutMs (0.77465ms)
+✔ execution policy requires actual numeric owner provider.minimumHeapMiB (0.653137ms)
+✔ execution policy requires actual numeric owner provider.heapFraction (0.494222ms)
+✔ execution policy requires actual numeric owner provider.maximumPendingCapabilities (0.595116ms)
+✔ execution policy requires actual numeric owner provider.minimumOpenFiles (0.602856ms)
+✔ execution policy requires actual numeric owner provider.artifactFileDescriptorReserve (0.445511ms)
+✔ execution policy requires actual numeric owner reports.maximumAggregateResultBytes (0.453722ms)
+✔ execution policy requires actual numeric owner reports.maximumSourceBytes (0.912023ms)
+✔ execution policy requires actual numeric owner reports.maximumCases (0.432151ms)
+✔ execution policy requires actual numeric owner reports.maximumFindings (0.647807ms)
+✔ execution policy requires actual numeric owner reports.maximumCaseFindings (0.453891ms)
+✔ execution policy requires actual numeric owner reports.maximumTimeoutMs (0.520423ms)
+✔ execution policy requires actual numeric owner reports.memoryBytes (0.531254ms)
+✔ execution policy requires actual numeric owner reports.minimumCpuTimeMs (0.470313ms)
+✔ execution policy requires actual numeric owner reports.maximumOpenFiles (0.438021ms)
+✔ execution policy requires actual numeric owner observation.resourceSampleIntervalMs (0.434301ms)
+✔ execution policy requires actual numeric owner observation.processSampleIntervalMs (0.429191ms)
+✔ execution policy requires actual numeric owner stores.attempts.maximumEvidenceObjects (0.532403ms)
+✔ execution policy requires actual numeric owner stores.attempts.maximumEvidenceBytes (0.445462ms)
+✔ execution policy requires actual numeric owner stores.attempts.maximumEvidenceObjectBytes (0.427421ms)
+✔ execution policy requires actual numeric owner stores.attempts.maximumResults (0.426211ms)
+✔ execution policy requires actual numeric owner stores.attempts.maximumClosures (0.476152ms)
+✔ execution policy requires actual numeric owner stores.attempts.maximumMetadataBytes (0.464302ms)
+✔ execution policy requires actual numeric owner stores.attempts.maximumPendingEvidenceAgeMs (0.484413ms)
+✔ execution policy requires actual numeric owner stores.admission.maximumIngressBytes (0.431351ms)
+✔ execution policy requires actual numeric owner stores.admission.maximumRecords (0.485433ms)
+✔ execution policy requires actual numeric owner stores.admission.maximumBytes (0.723509ms)
+✔ execution policy requires actual numeric owner stores.admission.maximumQuarantineRecords (0.426361ms)
+✔ execution policy requires actual numeric owner stores.admission.maximumQuarantineBytes (0.431481ms)
+✔ validated execution snapshot is immutable and caller changes do not change it (0.241476ms)
+✔ real Runner rejects missing policy and equal retired authors before creating paths (38.336631ms)
+✔ real default provider consumes selected result capacity 100 (580.506826ms)
+✔ real default provider consumes selected result capacity 4096 (154.685568ms)
+✔ actual registered report adapter consumes aggregate budget 100 (237.342485ms)
+✔ actual registered report adapter consumes aggregate budget 4096 (228.557649ms)
+✔ real durable result quota consumes selected 1 (188.446592ms)
+✔ real durable result quota consumes selected 2 (360.972161ms)
+✔ admission quota 1 retains both results and bounds completed admission (221.555707ms)
+✔ admission quota 2 retains both results and bounds completed admission (322.144667ms)
+✔ actual Core admission consumes queueTimeoutMs=50 (5.784689ms)
+✔ actual Core admission consumes queueTimeoutMs=5000 (178.067843ms)
+✔ actual Core admission consumes claimGraceMs=50 (71.240691ms)
+✔ actual Core admission consumes claimGraceMs=5000 (134.132517ms)
+✔ real child preserves detached invoke, concurrent replies, instance state and import logs (154.246017ms)
+✔ real child settles outstanding RPCs and ignores late replies; early reply=false (129.121218ms)
+✔ real child settles outstanding RPCs and ignores late replies; early reply=true (181.612045ms)
+✔ real child rejects an unawaited RPC and exits with failure (109.965513ms)
+✔ real child rejects invalid observation before provider import: undefined (171.990356ms)
+✔ real child rejects invalid observation before provider import: null (114.047198ms)
+✔ real child rejects invalid observation before provider import: {} (101.246787ms)
+✔ real child rejects invalid observation before provider import: [] (103.25774ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":0} (99.033079ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":1.5} (99.194574ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":"10"} (102.323865ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":2147483648} (122.182269ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":10,"extra":1} (175.864746ms)
+✔ real child uses authored sample interval 10 (392.6308ms)
+✔ real child uses authored sample interval 40 (398.509122ms)
+✔ real child reuses an identical sampling policy and rejects a changed policy (105.187939ms)
+✔ signal failure still drains capability settlement after actual child close (199.833536ms)
+✔ actual close with nonsettling capability reports bounded drain failure (1098.513107ms)
+✔ withheld close notification retains termination bound without entering capability drain (1041.531384ms)
+✔ constructor observation error is retained for later initialize (11.775035ms)
+▶ aborted initialization rejects and a distinct healthy session completes real cleanup
+  ✔ already aborted context (8.940561ms)
+  ✔ healthy positive control (46.011859ms)
+✔ aborted initialization rejects and a distinct healthy session completes real cleanup (55.71213ms)
+✔ real session termination bound 100 with delayed actual-close delivery (277.337829ms)
+✔ real session termination bound 500 with delayed actual-close delivery (298.312292ms)
+✔ actual session IPC consumes pending-capability count 1 (57.6405ms)
+✔ actual session IPC consumes pending-capability count 2 (159.690658ms)
+✔ actual session IPC consumes capability drain 10 (179.033489ms)
+✔ actual session IPC consumes capability drain 500 (200.76905ms)
+ℹ tests 128
+ℹ suites 0
+ℹ pass 126
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 42618.995997
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-provider-session-policy.test.mjs:44:51
+✖ actual child stdout uses protocol cap 1024 (550.224303ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /TEST_PROVIDER_PROTOCOL_LIMIT/. Input:
+  
+  'TEST_PROVIDER_PROCESS_CLOSED'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-provider-session-policy.test.mjs:49:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'TEST_PROVIDER_PROCESS_CLOSED',
+    expected: /TEST_PROVIDER_PROTOCOL_LIMIT/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-provider-session-policy.test.mjs:88:1
+✖ real uncooperative child consumes selected SIGKILL escalation grace (867.639608ms)
+  AssertionError [ERR_ASSERTION]: real own-group TERM and KILL must both be forwarded
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-provider-session-policy.test.mjs:121:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

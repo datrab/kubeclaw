@@ -1,0 +1,3 @@
+Error: execution error at (kubeclaw/templates/deployment.yaml:1525:13): runtimeInfrastructure.registry.endpoint is required; configure a node-reachable registry origin
+
+Use --debug flag to render out invalid YAML

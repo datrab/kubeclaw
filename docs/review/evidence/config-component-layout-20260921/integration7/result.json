@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+    "/usr/local/bin/node",
+    "--test",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/config-component-packaging.test.mjs"
+  ],
+  "exitCode": 0,
+  "testSourceBefore": "88edec55a30e2babe1f63701333a0838c7cb791163363bb437fcc0caece3a596",
+  "testSourceAfter": "88edec55a30e2babe1f63701333a0838c7cb791163363bb437fcc0caece3a596"
+}

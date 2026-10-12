@@ -1,0 +1,57 @@
+[
+  {
+    "source": "scripts/browser-archive-lock.mjs",
+    "snapshot": "00-browser-archive-lock.mjs.snapshot",
+    "sha256": "741708cd74353e5298aa8affec188e44f6f53c1babe503a24619f6f349b528c9"
+  },
+  {
+    "source": "scripts/tests/browser-archive-lock.test.mjs",
+    "snapshot": "01-browser-archive-lock.test.mjs.snapshot",
+    "sha256": "6a8e55c013f8a99c34e152748314e36ebe41fe6030f038f57c2e18f28b8857bf"
+  },
+  {
+    "source": "scripts/versions.mjs",
+    "snapshot": "02-versions.mjs.snapshot",
+    "sha256": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00"
+  },
+  {
+    "source": "scripts/updates/runtime-inputs.mjs",
+    "snapshot": "03-runtime-inputs.mjs.snapshot",
+    "sha256": "2381e5d7398f48fa8e15d3d582c8db6e6bc37de2bfb690f8aebeccc437f791f7"
+  },
+  {
+    "source": ".dockerignore",
+    "snapshot": "04-.dockerignore.snapshot",
+    "sha256": "c8fcba11cc3a9a1b381ccdc23cf1fa86686d1eb06845a4d983d8b5989aa4a57e"
+  },
+  {
+    "source": "docker/Dockerfile.buster-runtime",
+    "snapshot": "05-Dockerfile.buster-runtime.snapshot",
+    "sha256": "286741a2f5406ff08723bb39d3ba95b2f55a556b1eeb89bf16960c21a572d38a"
+  },
+  {
+    "source": "docker/Dockerfile.prism-worker",
+    "snapshot": "06-Dockerfile.prism-worker.snapshot",
+    "sha256": "45a85a6dc57aeb2988cca00e8f62e402f2ca928f60f9e2799a9b8ae5fc72a810"
+  },
+  {
+    "source": "docker/browser-archives.lock.json",
+    "snapshot": "07-browser-archives.lock.json.snapshot",
+    "sha256": "6f82ae5a8f399c89067cb49625d32db08b5d08b6eafb19fe7fd4376e625b578a"
+  },
+  {
+    "source": "versions.json",
+    "snapshot": "08-versions.json.snapshot",
+    "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+  },
+  {
+    "source": "package-lock.json",
+    "snapshot": "09-package-lock.json.snapshot",
+    "sha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  {
+    "source": "docs/operations/runtime-versions-and-images.md",
+    "snapshot": "10-runtime-versions-and-images.md.snapshot",
+    "sha256": "354746d1ba4047408ff3e06e3baeee26634416170b038d4215bb3190d82bd85c"
+  }
+]

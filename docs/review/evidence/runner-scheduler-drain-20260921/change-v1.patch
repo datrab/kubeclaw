@@ -1,0 +1,310 @@
+--- skills/buster/engine/test-gates/runner-scheduler.ts
++++ skills/buster/engine/test-gates/runner-scheduler.ts
+@@ -28,6 +28,7 @@
+   }
+ 
+   async run(): Promise<TestPlanRunResult> {
++    const failures: unknown[] = [];
+     try {
+       while (this.#pending.size > 0 || this.#running.size > 0) {
+         let progressed = this.#schedulePending();
+@@ -37,9 +38,14 @@
+         }
+         if (!progressed) throw new Error('TEST_RUNNER_DEADLOCK');
+       }
++    } catch (error) {
++      failures.push(error);
++      await this.#settleRunning(failures);
+     } finally {
+-      await this.#owner.cleanupFixtures();
++      try { await this.#owner.cleanupFixtures(); }
++      catch (error) { addFailure(failures, error); }
+     }
++    throwFailures(failures);
+     this.#applyCleanupFailures();
+     return freeze({
+       planId: this.#owner.options.plan.planId,
+@@ -109,12 +115,30 @@
+       id, execution: await task,
+     })));
+     this.#running.delete(completed.id);
+-    this.#results.set(completed.id, completed.execution.result);
+-    this.#attempts.push(...completed.execution.attempts);
+-    this.#outputs.set(completed.id, completed.execution.outputs);
+-    if (completed.execution.retainedFixture) this.#owner.retainFixture(
+-      this.#owner.options.plan.nodes.find(item => item.id === completed.id)!,
+-      completed.execution.retainedFixture,
++    this.#recordExecution(completed.id, completed.execution);
++  }
++
++  async #settleRunning(failures: unknown[]): Promise<void> {
++    const entries = [...this.#running.entries()];
++    const settled = await Promise.allSettled(entries.map(([, task]) => task));
++    this.#running.clear();
++    for (const [index, outcome] of settled.entries()) {
++      if (outcome.status === 'rejected') {
++        addFailure(failures, outcome.reason);
++        continue;
++      }
++      try { this.#recordExecution(entries[index]![0], outcome.value); }
++      catch (error) { addFailure(failures, error); }
++    }
++  }
++
++  #recordExecution(id: string, execution: NodeExecution): void {
++    this.#results.set(id, execution.result);
++    this.#attempts.push(...execution.attempts);
++    this.#outputs.set(id, execution.outputs);
++    if (execution.retainedFixture) this.#owner.retainFixture(
++      this.#owner.options.plan.nodes.find(item => item.id === id)!,
++      execution.retainedFixture,
+     );
+   }
+ 
+@@ -132,3 +156,12 @@
+     }
+   }
+ }
++
++function addFailure(failures: unknown[], error: unknown): void {
++  if (!failures.includes(error)) failures.push(error);
++}
++
++function throwFailures(failures: readonly unknown[]): void {
++  if (failures.length === 1) throw failures[0];
++  if (failures.length > 1) throw new AggregateError(failures, 'TEST_RUNNER_EXECUTION_CLEANUP_FAILED');
++}
+--- /dev/null
++++ tests/fixtures/test-gate/scheduler-drain.mjs
+@@ -0,0 +1,53 @@
++import fs from 'node:fs';
++import path from 'node:path';
++import { buildRegistry, discoverPackages, resolveTestPlan } from '../../../skills/nova/core/src/index.ts';
++import { runnerExecutionPolicy } from './execution-policy.mts';
++
++export function schedulerRunnerOptions(root, capabilityInvoker) {
++  const plugins = path.join(root, 'plugins');
++  const packageRoot = path.join(plugins, 'scheduler-drain');
++  fs.mkdirSync(packageRoot, { recursive: true });
++  fs.writeFileSync(path.join(packageRoot, 'package.json'), JSON.stringify({ name: 'scheduler-drain', type: 'module' }));
++  fs.writeFileSync(path.join(packageRoot, 'schema.json'), JSON.stringify({ type: 'object', additionalProperties: false }));
++  fs.writeFileSync(path.join(packageRoot, 'provider.js'), `
++export function provider() { return {
++  async execute(invocation, context) {
++    await context.invoke('test.barrier', { nodeId: invocation.nodeId });
++    return { schemaVersion: 'provider-result.v1', outcome: 'passed', summary: 'actual provider finished',
++      counts: { total: 1, passed: 1, failed: 0, skipped: 0 }, findings: [], metrics: [],
++      evidenceFiles: [], reports: [], outputs: [], exitCode: 0, signal: null, providerDetails: null };
++  },
++  async cleanup(invocation, context) {
++    await context.invoke('test.barrier', { nodeId: invocation.nodeId, cleanup: true });
++  }
++}; }
++`);
++  const registration = kind => ({ id: kind, contractId: 'test.scheduler-' + kind + '@1', kind,
++    module: 'provider.js', export: 'provider', configSchema: 'schema.json', inputs: [], outputs: [],
++    requiredCapabilities: ['test.barrier'], retrySafe: true, matrixFields: [], reportFormats: [], evidenceTypes: [],
++    evidenceDefaults: { onPass: [], onFail: [], onError: [] } });
++  fs.writeFileSync(path.join(packageRoot, 'plugin.json'), JSON.stringify({ id: 'test.scheduler-drain',
++    apiVersion: 'pipeline-plugin-v2', packageVersion: '1.0.0', stages: [], observers: [], adapters: [],
++    testProviders: [registration('test'), registration('fixture')] }));
++  const registry = buildRegistry(discoverPackages({ installationRoots: [plugins], trustPolicy: {
++    trustedBuiltinRoots: [plugins], allowedSourceDigests: new Map(), verifiedAttestations: new Map(),
++    verifierId: 'test:scheduler-drain' } }));
++  const limits = { cpuMillis: 10000, memoryBytes: 512 * 1024 * 1024, logBytes: 1048576,
++    artifactBytes: 16777216, artifactFiles: 16, processes: 16 };
++  const plan = resolveTestPlan({ planId: 'plan:scheduler-drain', runId: 'run:scheduler-drain', project: 'scheduler-proof',
++    scope: { moduleId: 'app', gateId: null }, createdAt: '2026-09-21T00:00:00.000Z',
++    declaration: { tests: { a: { uses: 'test.scheduler-test@1', mode: 'blocking', retries: 0 },
++      c: { uses: 'test.scheduler-test@1', mode: 'blocking', retries: 0 } },
++      fixtures: { b: { uses: 'test.scheduler-fixture@1', retries: 0 } }, concurrencyLimits: {} },
++    suiteTemplates: [], registry, facts: { changedPaths: [], moduleType: 'service', pipelineStage: 'test' },
++    policy: { defaultTimeoutMs: 10000, maximumTimeoutMs: 10000, defaultLimits: limits, maximumLimits: limits,
++      maximumRetryCount: 0, maximumMatrixSize: 1, maximumNodes: 3, defaultConcurrencyLimit: 2,
++      maximumConcurrencyLimits: {} } });
++  const workspaceRoot = path.join(root, 'workspace');
++  const repositoryRoot = path.join(workspaceRoot, 'repository');
++  fs.mkdirSync(repositoryRoot, { recursive: true });
++  return { plan, registry, workspaceRoot, repositoryRoot, artifactRoot: path.join(root, 'artifacts'),
++    observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 2, executionPolicy: runnerExecutionPolicy,
++    workerLocalRuntime: { drainTimeoutMs: 300000, cancellationTimeoutMs: 30000, replayLimit: 65536 },
++    grants: new Map(['a', 'b', 'c'].map(id => [id, ['test.barrier']])), capabilityInvoker };
++}
+--- /dev/null
++++ tests/verification/contracts/runner-scheduler-drain.test.mjs
+@@ -0,0 +1,99 @@
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import { setImmediate } from 'node:timers/promises';
++import { RunnerScheduler } from '../../../skills/buster/engine/test-gates/runner-scheduler.ts';
++
++function deferred() {
++  let resolve, reject;
++  const promise = new Promise((yes, no) => { resolve = yes; reject = no; });
++  return { promise, resolve, reject };
++}
++
++function execution(id, retainedFixture = null) {
++  return { result: { nodeId: id }, attempts: [], outputs: [], retainedFixture };
++}
++
++function fixture(ids, executeNode, cleanupFixtures) {
++  const retained = [];
++  const started = [];
++  const owner = {
++    options: { plan: { planId: 'plan:drain', runId: 'run:drain', concurrencyLimits: {},
++      nodes: ids.map(id => ({ id, skipReason: null, dependencies: [], concurrencyGroup: null })) },
++    maximumConcurrency: 2 },
++    authorityId: 'authority:drain', id: () => 'nonce:drain', cleanupErrors: [],
++    executeNode(node, outputs) { started.push(node.id); return executeNode(node, outputs); },
++    retainFixture(node, value) { retained.push({ nodeId: node.id, value }); },
++    cleanupFixtures,
++  };
++  return { owner, retained, started, scheduler: new RunnerScheduler(owner) };
++}
++
++for (const lateFailure of [false, true]) {
++  test(`scheduler settles started peer before cleanup; late failure ${lateFailure}`, { timeout: 2000 }, async () => {
++    const first = deferred(), peer = deferred();
++    const primary = new Error('first execution failed');
++    const secondary = new Error('peer execution failed');
++    const retainedFixture = { identity: 'actual late execution value' };
++    let cleanupCalls = 0;
++    const state = fixture(['a', 'b', 'c'], node => node.id === 'a' ? first.promise : peer.promise,
++      async () => {
++        assert.deepEqual(state.retained, lateFailure ? [] : [{ nodeId: 'b', value: retainedFixture }]);
++        cleanupCalls++;
++      });
++    let settled = false;
++    const outcome = state.scheduler.run().then(() => { throw new Error('unexpected success'); }, error => {
++      settled = true; return error;
++    });
++    assert.deepEqual(state.started, ['a', 'b']);
++    first.reject(primary);
++    await setImmediate();
++    assert.equal(settled, false);
++    assert.equal(cleanupCalls, 0);
++    assert.deepEqual(state.started, ['a', 'b']);
++    if (lateFailure) peer.reject(secondary);
++    else peer.resolve(execution('b', retainedFixture));
++    const error = await outcome;
++    assert.equal(cleanupCalls, 1);
++    assert.deepEqual(state.started, ['a', 'b']);
++    if (lateFailure) {
++      assert(error instanceof AggregateError);
++      assert.deepEqual(error.errors, [primary, secondary]);
++      assert.deepEqual(state.retained, []);
++    } else {
++      assert.equal(error, primary);
++      assert.deepEqual(state.retained, [{ nodeId: 'b', value: retainedFixture }]);
++    }
++  });
++}
++
++test('scheduler drains a started peer after synchronous reservation failure', { timeout: 2000 }, async () => {
++  const peer = deferred();
++  let cleanupCalls = 0;
++  const state = fixture(['a', 'b'], () => peer.promise, async () => { cleanupCalls++; });
++  state.owner.options.plan.nodes[1].concurrencyGroup = 'missing';
++  const outcome = state.scheduler.run().catch(error => error);
++  await setImmediate();
++  assert.deepEqual(state.started, ['a']);
++  assert.equal(cleanupCalls, 0);
++  peer.resolve(execution('a'));
++  const error = await outcome;
++  assert.equal(error.message, 'TEST_RUNNER_CONCURRENCY_GROUP_MISSING:missing');
++  assert.equal(cleanupCalls, 1);
++});
++
++test('scheduler preserves execution and cleanup errors', { timeout: 2000 }, async () => {
++  const executionError = new Error('execution failure');
++  const cleanupError = new Error('fixture cleanup failure');
++  const state = fixture(['a'], async () => { throw executionError; }, async () => { throw cleanupError; });
++  await assert.rejects(state.scheduler.run(), error => {
++    assert(error instanceof AggregateError);
++    assert.deepEqual(error.errors, [executionError, cleanupError]);
++    return true;
++  });
++});
++
++test('scheduler preserves cleanup-only error identity', { timeout: 2000 }, async () => {
++  const cleanupError = new Error('fixture cleanup failure');
++  const state = fixture(['a'], async () => execution('a'), async () => { throw cleanupError; });
++  await assert.rejects(state.scheduler.run(), error => error === cleanupError);
++});
+--- /dev/null
++++ tests/verification/contracts/runner-scheduler-provider-drain.test.mjs
+@@ -0,0 +1,73 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { setImmediate } from 'node:timers/promises';
++import { TestPlanRunner } from '../../../skills/buster/engine/test-gates/runner.ts';
++import { ownProviderChildren } from '../../fixtures/test-gate/kubernetes-cleanup-children.mjs';
++import { schedulerRunnerOptions } from '../../fixtures/test-gate/scheduler-drain.mjs';
++
++function deferred() {
++  let resolve;
++  const promise = new Promise(yes => { resolve = yes; });
++  return { promise, resolve };
++}
++
++test('actual Runner drains its active provider and cleans a late fixture after a preparation rejection',
++  { timeout: 60000 }, async t => {
++    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'scheduler-provider-drain-'));
++    const ownership = ownProviderChildren(t, root);
++    const peerStarted = deferred(), releasePeer = deferred(), preparationFailed = deferred();
++    const cleanups = [];
++    const options = schedulerRunnerOptions(root, { async invoke(capability, request) {
++      assert.equal(capability, 'test.barrier');
++      if (request.cleanup) { cleanups.push(request.nodeId); return {}; }
++      if (request.nodeId === 'b') {
++        peerStarted.resolve();
++        await releasePeer.promise;
++      } else {
++        assert.equal(request.nodeId, 'a');
++        await peerStarted.promise;
++      }
++      return {};
++    } });
++    const failure = new Error('INJECTED_THIRD_ATTEMPT_COPY_FAILURE');
++    const originalCopy = fs.cpSync;
++    let copies = 0;
++    t.mock.method(fs, 'cpSync', function (source, destination, ...args) {
++      if (source === options.repositoryRoot) {
++        copies++;
++        if (copies === 3) { preparationFailed.resolve(); throw failure; }
++      }
++      return Reflect.apply(originalCopy, fs, [source, destination, ...args]);
++    });
++    let settled = false;
++    const outcome = new TestPlanRunner(options).run().then(value => {
++      settled = true; return { value };
++    }, error => { settled = true; return { error }; });
++    try {
++      await Promise.race([preparationFailed.promise, outcome.then(result => {
++        throw result.error ?? new Error('Runner ended before the intended preparation fault');
++      })]);
++      await setImmediate();
++      assert.equal(copies, 3, 'fault must reach real preparation after the first completed node');
++      assert.equal(settled, false, 'outer Runner must wait for its already-started peer');
++      assert(!cleanups.includes('b'), 'fixture cannot be cleaned while still executing');
++      releasePeer.resolve();
++      const result = await outcome;
++      assert.equal(result.error, failure, 'original actual preparation rejection remains unchanged');
++      assert.deepEqual(cleanups.filter(id => id === 'b'), ['b']);
++      const peer = ownership.owned.find(row => row.messages.some(message => message.kind === 'initialize'
++        && message.invocation.nodeId === 'b'));
++      assert(peer && peer.closed, 'late fixture provider must actually close before Runner rejects');
++      assert(peer.responses.some(message => message.kind === 'result' && message.value.outcome === 'passed'));
++      assert.deepEqual(peer.messages.filter(message => message.kind === 'cleanup').map(message => message.disposition),
++        ['completed-fixture']);
++      assert(!ownership.owned.some(row => row.messages.some(message => message.kind === 'initialize'
++        && message.invocation.nodeId === 'c')), 'failed preparation must not spawn a third provider');
++    } finally {
++      releasePeer.resolve();
++      await outcome;
++    }
++  });

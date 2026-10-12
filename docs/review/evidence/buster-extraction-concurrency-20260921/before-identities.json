@@ -1,0 +1,27 @@
+[
+  {
+    "path": "skills/buster/engine/test-gates/preparation-extraction.ts",
+    "sha256": "c091985203bbc3695c2a724bfd1e8cb307c3937781acff02966fb607cbb2d4b8",
+    "snapshot": "before-0.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+    "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+    "snapshot": "before-1.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+    "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+    "snapshot": "before-2.snapshot"
+  },
+  {
+    "path": "package.json",
+    "sha256": "122c190c39c92b98fce1cc7df962cb0b8a2633ddf1500a967c8eb8019a238080",
+    "snapshot": "before-3.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/tsconfig.buster-preparation.json",
+    "sha256": "6fccf6d8402b9a30b052393e76a6282bd7ef9926063600e75e0914636e186b36",
+    "snapshot": "before-4.snapshot"
+  }
+]

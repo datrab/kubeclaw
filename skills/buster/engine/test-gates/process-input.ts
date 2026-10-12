@@ -1,3 +1,4 @@
+import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
 import { spawn } from 'node:child_process';
 import { ProcessInputLifecycle } from './process-input-lifecycle.ts';
 
@@ -9,6 +10,7 @@ export class ProcessInputCleanupError extends AggregateError {
 }
 
 export interface ProcessInputOptions {
+  readonly processInputPolicy: BusterProcessInputSettings;
   readonly cwd?: string;
   readonly env?: NodeJS.ProcessEnv;
   readonly signal?: AbortSignal;
@@ -25,9 +27,17 @@ export interface ProcessInputResult {
   readonly stderr: Buffer;
 }
 
+function processPolicy(options: ProcessInputOptions): BusterProcessInputSettings {
+  const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);
+  if (!Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1 || options.timeoutMs > 2147483647) throw new Error('PROCESS_INPUT_TIMEOUT_INVALID');
+  if (!Number.isSafeInteger(options.maximumOutputBytes) || options.maximumOutputBytes < 1) throw new Error('PROCESS_INPUT_OUTPUT_LIMIT_INVALID');
+  return processInputPolicy;
+}
+
 // Attach every stream error handler before sending input. Failures settle only
 // after close and process-group acknowledgement, with a bounded failure on incomplete disposal.
 export function runProcessInput(command: string, args: readonly string[], options: ProcessInputOptions): Promise<ProcessInputResult> {
+  const processInputPolicy = processPolicy(options);
   if (options.signal?.aborted) return Promise.reject(new Error(`${options.prefix}_CANCELLED`, { cause: options.signal.reason }));
   return new Promise((resolve, reject) => {
     const child = spawn(command, [...args], { ...(options.cwd ? { cwd: options.cwd } : {}),
@@ -79,7 +89,7 @@ export function runProcessInput(command: string, args: readonly string[], option
     child.once('close', (code, signal) => {
       exitCode = code; exitSignal = signal; resolveClosed(); finish();
     });
-    lifecycle = new ProcessInputLifecycle(child, closed);
+    lifecycle = new ProcessInputLifecycle(child, closed, processInputPolicy);
     if (options.signal?.aborted) { abort(); return; }
     try { child.stdin.end(options.input ?? undefined); }
     catch (error) { fail(new Error(`${options.prefix}_STDIN_FAILED`, { cause: error })); }

@@ -1,0 +1,26 @@
+✔ CE01 shared authorship is centrally validated before explicit E2E-profile projection (15.712807ms)
+✔ CE02 root rejects invalid central authorship before E2E derivation (34.787999ms)
+✔ CE02 operator rejects invalid central authorship before E2E derivation (3.585801ms)
+✔ CE02 worker-value rejects invalid central authorship before E2E derivation (2.949605ms)
+✔ CE03 run-scoped E2E overrides are added only after central validation and projection (3.19904ms)
+✔ canonical startup rejects missing/unknown/malformed admission and every retired ENV author (200.714042ms)
+✔ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (1933.447328ms)
+✔ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (1221.735482ms)
+✔ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (606.789079ms)
+✔ prepared source accepts valid identity and rejects JSON scalar coercion (1.355094ms)
+✔ staged input accepts valid identity and rejects JSON scalar coercion (52.522258ms)
+✔ cleanup effects accepts valid identity and rejects JSON scalar coercion (0.847241ms)
+✔ cleanup gate digest cannot be coerced from a JSON array (0.544374ms)
+✔ recovered source reference remains bound to the originally accepted extraction header (48.895996ms)
+✔ real ledger serializes competing admissions into exactly two fixed slots (212.106423ms)
+✔ admission reserves a future cleanup record inside the original record quota (87.292917ms)
+✔ profile, clock and settings ownership is captured before waiting on a real writer lock (61.221468ms)
+✔ malformed persisted cleanup association is rejected without rewriting bytes (29.958997ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12542.387512

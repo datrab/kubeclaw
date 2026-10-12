@@ -13,7 +13,7 @@ if (process.argv[2] === 'child') {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kube-yaml-budget-'));
   try {
     const executable = execFileSync('which', ['kubectl'], { encoding: 'utf8' }).trim();
-    const capability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: root, kubectlExecutable: executable,
+    const capability = new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova', pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: root, kubectlExecutable: executable,
       controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
       allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
       allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
@@ -46,7 +46,7 @@ if (process.argv[2] === 'child') {
     execFileSync(process.execPath, ['--max-old-space-size=128', import.meta.filename, 'child'], { timeout: 15_000, stdio: 'pipe' });
   });
   test('ordinary shared YAML aliases retain their content', () => {
-    const [document] = boundedManifestDocuments(Buffer.from('first: &value {name: ordinary}\nsecond: *value\n'));
+    const [document] = boundedManifestDocuments(Buffer.from('first: &value {name: ordinary}\nsecond: *value\n'), { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 });
     assert.deepEqual(document, { first: { name: 'ordinary' }, second: { name: 'ordinary' } });
   });
 }

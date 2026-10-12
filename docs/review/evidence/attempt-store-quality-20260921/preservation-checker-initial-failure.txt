@@ -1,0 +1,90 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: readState
++ actual - expected
+... Skipped lines
+
+  [
+    'function',
+    'f',
+    '(',
+    '',
+...
+    'maximumMetadataBytes',
++   ',',
+    ')',
+    ';',
+    'const',
+    '{',
+    'state',
+...
+    'limits',
++   ',',
+    ')',
+    ';',
+    'this',
+    '.',
+    'projections',
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/attempt-store-quality-20260921/check-preservation.mjs:14:68
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'function',           'f',                    '(',
+    '',                   ')',                    '{',
+    'const',              'raw',                  '=',
+    'await',              'readDurableState',     '<',
+    'PersistedAttempt',   '>',                    '(',
+    'this',               '.',                    'file',
+    ',',                  'EMPTY_STATE',          ',',
+    'this',               '.',                    'limits',
+    '.',                  'maximumMetadataBytes', ',',
+    ')',                  ';',                    'const',
+    '{',                  'state',                ',',
+    'projections',        ',',                    'closureProjections',
+    '}',                  '=',                    'decodeAttemptState',
+    '(',                  'raw',                  ',',
+    'this',               '.',                    'root',
+    ',',                  'this',                 '.',
+    'limits',             ',',                    ')',
+    ';',                  'this',                 '.',
+    'projections',        '=',                    'projections',
+    ';',                  'this',                 '.',
+    'closureProjections', '=',                    'closureProjections',
+    ';',                  'return',               'state',
+    ';',                  '}'
+  ],
+  expected: [
+    'function',           'f',                    '(',
+    '',                   ')',                    '{',
+    'const',              'raw',                  '=',
+    'await',              'readDurableState',     '<',
+    'PersistedAttempt',   '>',                    '(',
+    'this',               '.',                    'file',
+    ',',                  'EMPTY_STATE',          ',',
+    'this',               '.',                    'limits',
+    '.',                  'maximumMetadataBytes', ')',
+    ';',                  'const',                '{',
+    'state',              ',',                    'projections',
+    ',',                  'closureProjections',   '}',
+    '=',                  'decodeAttemptState',   '(',
+    'raw',                ',',                    'this',
+    '.',                  'root',                 ',',
+    'this',               '.',                    'limits',
+    ')',                  ';',                    'this',
+    '.',                  'projections',          '=',
+    'projections',        ';',                    'this',
+    '.',                  'closureProjections',   '=',
+    'closureProjections', ';',                    'return',
+    'state',              ';',                    '}'
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

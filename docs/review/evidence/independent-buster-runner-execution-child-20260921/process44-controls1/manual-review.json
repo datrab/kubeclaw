@@ -1,0 +1,121 @@
+{
+  "status": "Eight bounded semantic detections accepted; no live mutation",
+  "sourceDrift": [],
+  "cases": [
+    {
+      "name": "cleanupTimeoutMs",
+      "acceptedNamedOracleMarkers": [
+        "not ok 4 - cleanup close bound consumes 100ms",
+        "Missing expected rejection."
+      ],
+      "singleExactHookApplication": true,
+      "artifacts": {
+        "output.txt": "3d30073ce42c2f793fb09fdafb3c7cbaeb9f9e565410fea14444a6fbf92fcffe",
+        "spec.json": "5ee12ea5c567cf6e052fe5350f4790d425f16ad41fa54ffd42c6187c7997b71a",
+        "applied.jsonl": "713ae20067ff12be42525821bb79c82d51d5cc855614f5171ef24c1bba1f3c7b"
+      }
+    },
+    {
+      "name": "terminationGraceMs",
+      "acceptedNamedOracleMarkers": [
+        "not ok 3 - actual escalation consumes 400ms",
+        "assert(elapsed >= terminationGraceMs - 15)"
+      ],
+      "singleExactHookApplication": true,
+      "artifacts": {
+        "output.txt": "074bbceed76b65cdde0215417cbfb26ebe78fa4346172c36bb7890729f0b5f2f",
+        "spec.json": "07f58582127403ca69c58ce45a826eba3ae267b1f10af1856c9327802f428ace",
+        "applied.jsonl": "25beed7bc7ef4332650437a50a9b0bd3a90b18f3271bcb3df293e48967e782e2"
+      }
+    },
+    {
+      "name": "acknowledgementPollMs",
+      "acceptedNamedOracleMarkers": [
+        "not ok 7 - actual group scan intervals consume 100ms",
+        "assert(gaps.every(gap => gap >= 90))"
+      ],
+      "singleExactHookApplication": true,
+      "artifacts": {
+        "output.txt": "0a0f09bb16ea79f3ba6975bfe82044ddd1a91489062738d3aca0920b5d22d863",
+        "spec.json": "5175df192818668286ff51d92010ec6a573e582b0a561479111bd90835cb066f",
+        "applied.jsonl": "c32258f47844a5a541b6c1ccb13c5d3a3266d5be99187935762df0328f25a929"
+      }
+    },
+    {
+      "name": "report-forwarding",
+      "acceptedNamedOracleMarkers": [
+        "not ok 1 - default Runner report child consumes minimumHeapMiB",
+        "SWARM_CONFIG_BUSTER_PROCESS_INPUT_INVALID",
+        "new RegisteredReportAdapterRuntime",
+        "new TestPlanRunner",
+        "TestContext.<anonymous>"
+      ],
+      "singleExactHookApplication": true,
+      "artifacts": {
+        "output.txt": "365cf7f0723076675ce6c5706f4f1a27ad428d34ad99ccdcf11cf937b4887b96",
+        "spec.json": "1b5923e32d09e82e18e8022131d762024b17ac6db0850606b9f9939ae2e677db",
+        "applied.jsonl": "34980fb33488d4fdfaf57924b62e1f10b3a55b20d9d7da4434a338c7e633e536"
+      }
+    },
+    {
+      "name": "kubernetes-forwarding",
+      "acceptedNamedOracleMarkers": [
+        "not ok 1 - real kubernetes.fixture factory command consumes grace 50",
+        "SWARM_CONFIG_BUSTER_PROCESS_INPUT_INVALID",
+        "new KubernetesFixtureSettings",
+        "createBusterCapabilityRuntime",
+        "ok 3 - real kubernetes.exposure"
+      ],
+      "singleExactHookApplication": true,
+      "artifacts": {
+        "output.txt": "ff94251d4c1d8bf879759d27500ebd03a621b1e91e004436ef35c419d99b3cad",
+        "spec.json": "066e07655c23b1b3aea4b1f6b10fd9a1a3a480fcb80522fe9366479ee31f6520",
+        "applied.jsonl": "ff01444e5109a7aa7d53b1ad2823e10e0d66320158414c16665ad7b32c942c30"
+      }
+    },
+    {
+      "name": "tailscale-forwarding",
+      "acceptedNamedOracleMarkers": [
+        "not ok 3 - real kubernetes.exposure factory command consumes grace 50",
+        "SWARM_CONFIG_BUSTER_PROCESS_INPUT_INVALID",
+        "new TailscaleExposureCapabilityInvoker",
+        "createBusterCapabilityRuntime",
+        "ok 1 - real kubernetes.fixture"
+      ],
+      "singleExactHookApplication": true,
+      "artifacts": {
+        "output.txt": "5375f79367caf89b6af49b2075ebd6d8ddf3545f88a2f68f13e22fff9bf39032",
+        "spec.json": "9f3697a156703ad9c040e543611cceb87865545d08ec6096965362d0c39b0286",
+        "applied.jsonl": "2a28495bd189e206f9004824bea3795ad7bce2eab46b23625d603b3d958875d9"
+      }
+    },
+    {
+      "name": "swallowed-signal-errors",
+      "acceptedNamedOracleMarkers": [
+        "not ok 10 - cleanup deadline retains the final KILL error as well as its timeout",
+        "assert(includesCause(error, failure))",
+        "failure cannot settle before real close"
+      ],
+      "singleExactHookApplication": true,
+      "artifacts": {
+        "output.txt": "d3a3252045536ab5780f1aa0bd30bbd9b9c0bd7d07206987740503e1f6e031b4",
+        "spec.json": "3d9818de6c2223eb301e279ed2b983ee4a2f419661f9ab6421688dc85efc0ec2",
+        "applied.jsonl": "ecea46a7024fd3071f43dbdff388e577981419d4dd719e49be87e53a32ae59ca"
+      }
+    },
+    {
+      "name": "rejected-quality-v1",
+      "acceptedNamedOracleMarkers": [
+        "not ok 11 - group observation failure survives a later close deadline",
+        "assert(includesCause(error, failure))",
+        ":211:5"
+      ],
+      "singleExactHookApplication": true,
+      "artifacts": {
+        "output.txt": "4222ca481e9f2ad6d74e19c40c5fe976cada7d1c654ea9492917b2461dd21eb6",
+        "spec.json": "1e793d31bd32819d4ad98dafa267095ef3fcb36e9032b7e2a0a29380618ce1b5",
+        "applied.jsonl": "650492f4c170e7689a8aa01b4b611c038b5e141951788bc8570b5fbbc7a9c92e"
+      }
+    }
+  ]
+}

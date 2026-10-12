@@ -1,0 +1,48 @@
+{
+  "integratedAt": "2026-09-21T20:42:57.984196+00:00",
+  "manifestSha256": "4aee942f9c6186e3ff6171e2985e94eebabec49d388110a9ca606931cd40bcf7",
+  "sourceReview": "independent-kubernetes-fixture-simplicity-20260921/source-review-v3.json",
+  "runtimeAcceptance": false,
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "sha256": "2709b1a75b62d219b1c3771ee5698134e690343cb1d9df8063b3eaeea8881aec"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "sha256": "ea8247a2d440f65726372a71dcdc629be9dbcdf682a4b874c0d6288329cbc18e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-pods.ts",
+      "sha256": "676752f55ed5a52830067897f6199746a0808a2a1e4e66ccc41f6250b284b5bd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "sha256": "b2a8cb4442d3243dec435a480f04506ab7e79438150169efb85d9ea01c3095ee"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "sha256": "5881e8bc25800a80f18a3377fc3fe66b11853a6e5aea51630dbd86e44c19d439"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "sha256": "1572e13ce4ce41070867e8e0ff64a8b28772623fd1f693d2e25d0a43dede4288"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "sha256": "f1ce10ddd4574b8e735dd89e34b16dbb7401283e7f158cc24ffabf1af3ea4616"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "sha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "sha256": "b0fc410563b99da53603cca363dee4e8dd3552893ff13e96317ecdb4ee8570bf"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "sha256": "9a99a8196763ca41bd9bc10269b4e2a3ade22d72e7a4393a64f0e10ca15f8af4"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+✔ registered Kubernetes provider retain, failed preparation true (1032.28439ms)
+✔ registered Kubernetes provider retain, failed preparation false (442.208079ms)
+✔ registered Kubernetes provider delete, failed preparation true (479.851022ms)
+✔ registered Kubernetes provider delete, failed preparation false (409.152636ms)
+✖ post-passed Worker measurement fault uses incomplete cleanup then allows later retained success (554.816769ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4128.903571
+
+✖ failing tests:
+
+test at tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:66:1
+✖ post-passed Worker measurement fault uses incomplete cleanup then allows later retained success (554.816769ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'completed-fixture'
+  - 'incomplete'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:109:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'completed-fixture',
+    expected: 'incomplete',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

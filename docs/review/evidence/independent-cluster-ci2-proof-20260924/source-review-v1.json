@@ -1,0 +1,108 @@
+{
+  "reviewer": "/root/runtime_security_policy_review",
+  "scope": "Independent source/criteria review only; no runtime or live changes",
+  "manifestSha256": "692a27120c3da97571b39650a1d93a488cf80d832e74c87659f0141641cde6a3",
+  "sevenCandidateAndBeforeHashesVerified": true,
+  "decision": "changes_required_before_integration_for_timeout_teardown",
+  "originalCriteria": {
+    "CI2-CAPTURE": "Addressed in source: 14 cases exercise actual CLI before/after file or caller mutation, and newly loaded/newly constructed consumers enforce changed policy; old snapshot receives separate new-consumer check.",
+    "CI2-PRODUCTION-ROUTE": "Addressed in source: two profiles per capability use actual loadProductionBusterRemotePlanRuntime, real service/registry/discovered provider/Nova HTTP and capability IPC. Observable CLI args/lease JSON/result hostname and separate grant/route denial checks. No forwarding or factory replacement.",
+    "remaining": "Executed evidence at exact source, canonical checks, complete original scopes, semantic failure controls and final independent evidence/DOC review remain required."
+  },
+  "findings": [
+    {
+      "id": "CI2-TEARDOWN-01",
+      "priority": "P2",
+      "references": [
+        "tests/verification/contracts/buster-cluster-capture.test.mjs:42",
+        "tests/verification/contracts/buster-cluster-capture.test.mjs:63",
+        "tests/verification/contracts/buster-cluster-production-route.test.mjs:82",
+        "tests/verification/contracts/buster-cluster-production-route.test.mjs:131",
+        "tests/verification/contracts/buster-cluster-production-route.test.mjs:177"
+      ],
+      "problem": "Unconditional root-removal after hooks are not joined to outstanding operations on test timeout. Capture creates never-aborted per-invocation signals; capability runtime shutdown only owns directCommand and cannot cancel cluster invokes. Production test stops runtime only in its body finally; an expired node:test timeout can run root-removal teardown before that async body finishes. This can delete API/state/provider files while real child/service work still runs, and generate secondary failures instead of preserving decisive evidence.",
+      "required": "Tie invocation cancellation to owned/test abort; track outstanding invocation/gate work and service lifetime; order teardown as cancellation, bounded awaited settlement/actual shutdown, then remove owned files. On unconfirmed termination retain files and fail explicitly. Cover partial setup/start failures. Do not use a deadline relaxation or command mock as a repair."
+    }
+  ],
+  "sourceObservations": [
+    "Seven semantic mutations each match exactly once at their recorded current source hash; intended failure oracles target forwarding/capture behavior.",
+    "Fixture command API is a genuine executable with stdin/argv observations and local JSON state; explicitly modeled Kubernetes/Tailscale behavior.",
+    "ModeledPreparation retains real parser/signature/extraction and discloses modeled native identity/publication; no native/live proof implied.",
+    "All original maintained command members remain and only two new modules are appended.",
+    "Documentation accurately distinguishes source coverage from executed evidence and leaves overall CONFIG/native/live completion open."
+  ],
+  "controlSourceAnchors": [
+    {
+      "name": "production-shared-group-wrong",
+      "matches": 1,
+      "sourceHashVerified": true
+    },
+    {
+      "name": "production-runner-subject-wrong",
+      "matches": 1,
+      "sourceHashVerified": true
+    },
+    {
+      "name": "production-service-cluster-forwarding-dropped",
+      "matches": 1,
+      "sourceHashVerified": true
+    },
+    {
+      "name": "capture-registry-array-retained",
+      "matches": 1,
+      "sourceHashVerified": true
+    },
+    {
+      "name": "capture-nested-manifest-retained",
+      "matches": 1,
+      "sourceHashVerified": true
+    },
+    {
+      "name": "capture-tail-prefix-array-retained",
+      "matches": 1,
+      "sourceHashVerified": true
+    },
+    {
+      "name": "capture-tail-suffix-array-retained",
+      "matches": 1,
+      "sourceHashVerified": true
+    }
+  ],
+  "boundFiles": [
+    {
+      "path": "docs/architecture/buster-cluster-configuration.md",
+      "beforeSha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4",
+      "afterSha256": "9b3481248d9ba8500106296b78835274078bf6d18cdc4cfc269b4191d97f2acb"
+    },
+    {
+      "path": "package.json",
+      "beforeSha256": "8ed84f5a8eb007801c9e24e3c6aa18484a1ad81c3199f990ae66b4d0951f5d0b",
+      "afterSha256": "3cee31356300628fff49fe36e27cb5c7b376f3b98085cf2e2fe69440978d3754"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-api.mjs",
+      "beforeSha256": null,
+      "afterSha256": "d40e348ef9372cc013391e27f4f4be20c636116fe1b6fc0fc9af83e15fa3c7f0"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-program.cjs",
+      "beforeSha256": null,
+      "afterSha256": "499dc5c951bb3fdc956205b2bd19271313abc446363da99fa1611ebf50e0c0b1"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-route-provider.mjs",
+      "beforeSha256": null,
+      "afterSha256": "4a6d0c1cc263bb964a25c4a0a5fe2a8c8e940aa127990b5be4369d67c65b1888"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-capture.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "592ec1b8b4ba15c444cbcbbcdf361f777043a537f050a4770653153e847f7942"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "c1e24d7cbb18514f960e6f0339c39854aa33fb2b142b80abb6cfdff3057a192b"
+    }
+  ]
+}

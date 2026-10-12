@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox",
+    "536870912",
+    "10",
+    "64",
+    "/usr/local/bin/node",
+    "--max-old-space-size=358",
+    "-e",
+    "console.log(\"started\")"
+  ],
+  "PROOT_NO_SECCOMP": "1",
+  "exitCode": 255,
+  "stdout": "",
+  "stderr": ""
+}

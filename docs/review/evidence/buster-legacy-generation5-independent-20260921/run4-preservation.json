@@ -1,0 +1,40 @@
+{
+  "guest-root.ext4": {
+    "sha256": "ee4080637d575d67a23ad915ec60a5031478f790b93b2fcbc64071644282a325",
+    "sameFdHintReturned": true
+  },
+  "second.ext4": {
+    "sha256": "3d4e24595269cfd9224051db0ed8159698a6d966e8dba2082a994d7ab6d8ea59",
+    "sameFdHintReturned": true
+  },
+  "launcherSha256": "7124ea82a0d1d7f4d6a650f27dd453024acaf3dc856e7e2bbf340ca32a67151e",
+  "sourceExportIdentical": true,
+  "oldExportAndLogsIntact": true,
+  "pathsOnlyRecipeAndLauncherDelta": true,
+  "images": {
+    "guest-root.ext4": {
+      "mode": 420,
+      "type": "file",
+      "bytes": 268435456,
+      "sha256": "85740da5adcd5fbc40e4acf2c4567e79e28d141efdc62953e58b4f20045ab731"
+    },
+    "second.ext4": {
+      "mode": 420,
+      "type": "file",
+      "bytes": 16777216,
+      "sha256": "f351a2048958b4bd98a656546b8e343adfdb1b25c01ee79d37796b5bbb26c6d0"
+    },
+    "initrd.cpio.gz": {
+      "mode": 420,
+      "type": "file",
+      "bytes": 1899633,
+      "sha256": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2"
+    },
+    "vmlinuz-virt": {
+      "mode": 420,
+      "type": "file",
+      "bytes": 12608512,
+      "sha256": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c"
+    }
+  }
+}

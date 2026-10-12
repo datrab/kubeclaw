@@ -1,0 +1,35 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts
+   323:1   error  File has too many lines (1844). Maximum allowed is 300                                         max-lines
+   346:1   error  Function 'finalNodeResult' has too many parameters (8). Maximum allowed is 7                   max-params
+   422:8   error  Function 'validateAndMapOutputs' has a complexity of 16. Maximum allowed is 15                 complexity
+   489:30  error  Use one explicit value and at most one fallback; longer fallback chains hide authority         discipline/no-fallback-chain
+   553:3   error  Constructor has too many lines (133). Maximum allowed is 60                                    max-lines-per-function
+   553:3   error  Constructor has a complexity of 35. Maximum allowed is 15                                      complexity
+   687:3   error  Async method 'run' has too many lines (178). Maximum allowed is 60                             max-lines-per-function
+   687:3   error  Async method 'run' has a complexity of 26. Maximum allowed is 15                               complexity
+   718:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   734:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   750:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   762:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   779:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   780:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   783:13  error  Blocks are nested too deeply (5). Maximum allowed is 3                                         max-depth
+   787:13  error  Blocks are nested too deeply (5). Maximum allowed is 3                                         max-depth
+   815:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   953:3   error  Private async method #executeNode has a complexity of 16. Maximum allowed is 15                complexity
+  1010:3   error  Private async method #executeAttempt has too many lines (608). Maximum allowed is 60           max-lines-per-function
+  1010:3   error  Private async method #executeAttempt has a complexity of 72. Maximum allowed is 15             complexity
+  1120:7   error  Async method 'execute' has too many lines (112). Maximum allowed is 60                         max-lines-per-function
+  1269:7   error  Async method 'collectEvidence' has too many lines (121). Maximum allowed is 60                 max-lines-per-function
+  1269:7   error  Async method 'collectEvidence' has a complexity of 25. Maximum allowed is 15                   complexity
+  1286:15  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+  1290:17  error  Blocks are nested too deeply (5). Maximum allowed is 3                                         max-depth
+  1366:15  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+  1581:9   error  Use one explicit value and at most one fallback; longer fallback chains hide authority         discipline/no-fallback-chain
+  1605:7   error  Use one explicit value and at most one fallback; longer fallback chains hide authority         discipline/no-fallback-chain
+  1619:3   error  Private async method #persistWorkerCompletion has too many lines (122). Maximum allowed is 60  max-lines-per-function
+  1737:7   error  Handle the error intentionally or rethrow it with context                                      discipline/no-swallowed-error
+
+✖ 30 problems (30 errors, 0 warnings)
+

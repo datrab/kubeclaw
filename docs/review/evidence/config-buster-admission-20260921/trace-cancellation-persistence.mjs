@@ -1,0 +1,33 @@
+// Diagnostic only: observe the original methods/HTTP server events, preserve all arguments/results/deadlines.
+import fs from 'node:fs';
+import http from 'node:http';
+import { HttpRemotePlanTransport } from '@kubeclaw/nova-core';
+import { BusterRemotePlanService } from '../../../../skills/buster/engine/test-gates/remote-plan-service.ts';
+import { PreparedBusterPlanJobStore } from '../../../../skills/buster/engine/test-gates/prepared-plan-store.ts';
+const events = [];
+const record = value => { if (events.length < 10000) events.push({ at: performance.now(), ...value }); };
+for (const [owner, label, methods] of [[HttpRemotePlanTransport, 'transport', ['cancel', 'status']], [BusterRemotePlanService, 'service', ['cancel', 'status']], [PreparedBusterPlanJobStore, 'store', ['transition', 'get', 'attachSource']]]) {
+  for (const method of methods) {
+    const original = owner.prototype[method];
+    owner.prototype[method] = function (...args) {
+      record({ kind: `${label}.${method}.start`, jobId: typeof args[0] === 'string' ? args[0] : args[0]?.job?.jobId, target: method === 'transition' ? args[2] : undefined });
+      return Reflect.apply(original, this, args).then(result => {
+        record({ kind: `${label}.${method}.result`, jobId: args[0], state: result?.state ?? result?.payload?.status?.state }); return result;
+      }, error => {
+        record({ kind: `${label}.${method}.error`, jobId: args[0], error: error.message }); throw error;
+      });
+    };
+  }
+}
+const emit = http.Server.prototype.emit;
+http.Server.prototype.emit = function (name, ...args) {
+  if (name === 'request' && args[0].method === 'DELETE') {
+    const [request, response] = args;
+    const identity = { port: request.socket.localPort, path: request.url };
+    record({ kind: 'http.delete.receive', ...identity });
+    response.once('finish', () => record({ kind: 'http.delete.finish', status: response.statusCode, ...identity }));
+    response.once('close', () => record({ kind: 'http.delete.close', finished: response.writableFinished, ...identity }));
+  }
+  return Reflect.apply(emit, this, [name, ...args]);
+};
+process.once('exit', code => fs.writeFileSync(new URL('./cancellation-persistence-timing.json', import.meta.url), JSON.stringify({ code, events }, null, 2)));

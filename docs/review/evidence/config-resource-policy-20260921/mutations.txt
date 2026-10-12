@@ -1,0 +1,3 @@
+{"name":"producer-default","old":"limit: policy.cpuTimeMs","replacement":"limit: 60000","status":1,"semanticAssertionDetected":true}
+{"name":"pool-bypass","old":"policy[metric] > pool[metric]","replacement":"false","status":1,"semanticAssertionDetected":true}
+{"name":"admission-bypass","old":"!recovered && budget.limit > maximum","replacement":"false","status":1,"semanticAssertionDetected":true}

@@ -1,0 +1,5 @@
+skills/common/plugin-runtime/foundation/config/swarm.ts:52:  'PRISM_NATIVE_UID', 'PRISM_NATIVE_GID', 'PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS',
+skills/common/plugin-runtime/foundation/config/swarm.ts:53:  'PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES', 'PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES',
+skills/common/plugin-runtime/foundation/config/swarm.ts:54:  'PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES', 'PRISM_NATIVE_POLL_INTERVAL_MS',
+skills/common/plugin-runtime/foundation/config/swarm.ts:55:  'PRISM_NATIVE_DRAIN_TIMEOUT_MS', 'PRISM_NATIVE_CLOSE_TIMEOUT_MS',
+charts/prism/templates/_swarm-config.tpl:12:{{- if hasKey .Values.worker.native "closeTimeoutMs" -}}{{- fail "worker.native.closeTimeoutMs moved to swarm.config.json operator.prism.native.supervisor" -}}{{- end -}}

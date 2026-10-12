@@ -1,0 +1,3 @@
+# Independent criteria clarifications accepted before code
+
+The independent preimplementation review is accepted. SD4 also preserves cleanup-only rejection identity. SD6 must produce a genuinely rejected executeNode promise, not a resolved failed node result. SD1 forbids new starts after the scheduler observes the fault and includes synchronous schedule/reservation failure after a peer has started. Promise.race already attaches rejection handlers; no-unhandled is a regression requirement rather than a claim that every old failure was unhandled. Existing node deadlines remain the authority; no new stop timeout is introduced.

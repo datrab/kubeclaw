@@ -1,9 +1,18 @@
 import type { WorkerOwnershipIdentity, WorkerOwnershipPhase, WorkerOwnershipRecord, WorkerScopeBinding } from './ownership-store.ts';
+import { validateTopology } from './ownership-children.ts';
 import { sha256Digest } from './digest.ts';
 import { validateNativeWorkerResourceObservation } from './native-resource-observation.ts';
 
+export const maximumOwnershipDiagnosisUnits = 4096;
+export const maximumOwnershipHostIdentityCharacters = 256;
+
+export function validateOwnershipHostIdentity(value: unknown): asserts value is string {
+  if (typeof value !== 'string' || value.length > maximumOwnershipHostIdentityCharacters
+    || !/^[A-Za-z0-9][A-Za-z0-9:._-]*$/u.test(value)) throw new Error('WORKER_OWNERSHIP_HOST_IDENTITY_INVALID');
+}
+
 export interface WorkerOwnershipState {
-  schemaVersion: 'worker-ownership-store.v2';
+  schemaVersion: 'worker-ownership-store.v3';
   hostIdentity: string | null;
   records: WorkerOwnershipRecord[];
 }
@@ -55,7 +64,7 @@ function bindingValid(binding: unknown, scopeName: string): asserts binding is W
 }
 
 export function validateRecord(record: unknown): asserts record is WorkerOwnershipRecord {
-  exact(record, ['identity', 'scopeName', 'revision', 'phase', 'binding', 'diagnosis', 'finalObservation']);
+  exact(record, ['identity', 'scopeName', 'revision', 'phase', 'binding', 'diagnosis', 'finalObservation', 'topology']);
   identityValid(record.identity);
   if (typeof record.scopeName !== 'string' || !/^worker-[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(record.scopeName)
     || !Number.isSafeInteger(record.revision) || Number(record.revision) < 1
@@ -63,6 +72,7 @@ export function validateRecord(record: unknown): asserts record is WorkerOwnersh
     throw new Error('WORKER_OWNERSHIP_RECORD_INVALID');
   }
   validateRecordBinding(record);
+  validateTopology(record.topology, record.binding as WorkerScopeBinding | null);
   validateDiagnosis(record);
   if (record.finalObservation !== null) {
     validateNativeWorkerResourceObservation(record.finalObservation);
@@ -82,7 +92,7 @@ function validateRecordBinding(record: Record<string, unknown>): void {
 
 function validateDiagnosis(record: Record<string, unknown>): void {
   if (record.diagnosis !== null && (typeof record.diagnosis !== 'string' || record.diagnosis.length < 1
-    || record.diagnosis.length > 4096)) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_INVALID');
+    || record.diagnosis.length > maximumOwnershipDiagnosisUnits)) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_INVALID');
   if (['unresolved', 'abandoned'].includes(String(record.phase)) && record.diagnosis === null) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_REQUIRED');
 }
 
@@ -101,13 +111,13 @@ export function decodeOwnershipState(value: unknown, maximumRecords: number): Wo
     if (keys.has(identityKey) || scopes.has(record.scopeName)) throw new Error('WORKER_OWNERSHIP_DUPLICATE');
     keys.add(identityKey); scopes.add(record.scopeName);
   }
-  return { schemaVersion: 'worker-ownership-store.v2', hostIdentity, records } as WorkerOwnershipState;
+  return { schemaVersion: 'worker-ownership-store.v3', hostIdentity, records } as WorkerOwnershipState;
 }
 
 function statePayload(value: unknown) {
   const legacy = typeof value === 'object' && value !== null && 'schemaVersion' in value && value.schemaVersion === 'worker-ownership-store.v1';
   exact(value, legacy ? ['schemaVersion', 'records'] : ['schemaVersion', 'hostIdentity', 'records']);
-  if (!['worker-ownership-store.v1', 'worker-ownership-store.v2'].includes(String(value.schemaVersion)) || !Array.isArray(value.records)) {
+  if (!['worker-ownership-store.v1', 'worker-ownership-store.v2', 'worker-ownership-store.v3'].includes(String(value.schemaVersion)) || !Array.isArray(value.records)) {
     throw new Error('WORKER_OWNERSHIP_STORE_INVALID');
   }
   const records = legacy ? value.records.map(record => {
@@ -115,8 +125,10 @@ function statePayload(value: unknown) {
     return { ...record, finalObservation: null };
   }) : value.records;
   const hostIdentity = legacy ? null : value.hostIdentity;
-  if (hostIdentity !== null && (typeof hostIdentity !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9:._-]{0,255}$/u.test(hostIdentity))) {
-    throw new Error('WORKER_OWNERSHIP_HOST_IDENTITY_INVALID');
-  }
-  return { records, hostIdentity };
+  if (hostIdentity !== null) validateOwnershipHostIdentity(hostIdentity);
+  const upgraded = value.schemaVersion === 'worker-ownership-store.v3' ? records : records.map(record => {
+    exact(record, ['identity', 'scopeName', 'revision', 'phase', 'binding', 'diagnosis', 'finalObservation']);
+    return { ...record, topology: { kind: 'legacy-leaf', children: [] } };
+  });
+  return { records: upgraded, hostIdentity };
 }

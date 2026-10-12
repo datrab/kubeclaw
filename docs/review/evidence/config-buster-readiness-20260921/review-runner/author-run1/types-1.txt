@@ -1,0 +1,4 @@
+tests/fixtures/test-gate/buster-readiness-profile.mts(50,3): error TS2322: Type '(str: string | Uint8Array<ArrayBufferLike>, encoding?: BufferEncoding | undefined, cb?: ((err?: Error | null | undefined) => void) | undefined) => boolean' is not assignable to type '{ (buffer: string | Uint8Array<ArrayBufferLike>, cb?: ((err?: Error | null | undefined) => void) | undefined): boolean; (str: string | Uint8Array<ArrayBufferLike>, encoding?: BufferEncoding | undefined, cb?: ((err?: Error | ... 1 more ... | undefined) => void) | undefined): boolean; }'.
+  Types of parameters 'encoding' and 'cb' are incompatible.
+    Type '((err?: Error | null | undefined) => void) | undefined' is not assignable to type 'BufferEncoding | undefined'.
+      Type '(err?: Error | null | undefined) => void' is not assignable to type 'BufferEncoding | undefined'.

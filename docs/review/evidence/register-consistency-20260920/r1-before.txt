@@ -1,0 +1,90 @@
+✔ all historical and integration identities and real evidence resolve; actual generated files match (87.871767ms)
+✔ missing historical ID (2.637887ms)
+✔ substituted historical ID with unchanged total (2.019591ms)
+✔ duplicate ID (2.305308ms)
+✔ missing integration ID (1.97169ms)
+✔ wrong status sum (1.856817ms)
+✔ wrong family sum (1.96341ms)
+✔ unknown status (2.534084ms)
+✔ missing original evidence (2.158524ms)
+✖ unresolvable original commit (38.11577ms)
+✖ unresolvable original path (33.460831ms)
+✔ missing implementation evidence (2.094644ms)
+✔ missing evidence file (2.061182ms)
+✔ missing evidence object report (2.378631ms)
+✔ unresolvable commit evidence (4.966337ms)
+✔ missing integration evidence (33.488982ms)
+✔ status drift (43.066287ms)
+✔ missing Markdown ID (39.469244ms)
+✔ missing Markdown evidence (40.514862ms)
+✔ wrong register sum (37.659429ms)
+✔ wrong progress sum (42.066391ms)
+✔ wrong handoff sum (39.378342ms)
+✔ generation repairs only counters/views, preserves every finding and historical checkpoint, and is idempotent (155.019996ms)
+✔ malformed source prevents generation without touching generated files (12.1856ms)
+✖ unresolvable original prevents generation without touching any register files (59.530906ms)
+✔ all individual source statuses are rendered, not inferred from available evidence (6.30691ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 23
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 800.590479
+
+✖ failing tests:
+
+test at scripts/tests/remediation-register.test.mjs:37:4
+✖ unresolvable original commit (38.11577ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/remediation-register.test.mjs:37:60)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Command failed/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at scripts/tests/remediation-register.test.mjs:37:4
+✖ unresolvable original path (33.460831ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/remediation-register.test.mjs:37:60)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Command failed/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at scripts/tests/remediation-register.test.mjs:86:1
+✖ unresolvable original prevents generation without touching any register files (59.530906ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/remediation-register.test.mjs:92:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Command failed/,
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -1,0 +1,23 @@
+✔ aggregate blob budget survives reconstruction, deduplicates and serializes competing processes (1182.755081ms)
+✔ original get rejects genuine content-addressed bytes over its configured maximum before allocation (15.420917ms)
+✔ original bounded reader preserves zero, exact maximum and unchanged quota/digest behavior (166.08131ms)
+✔ final symlink, parent symlink and FIFO cannot become blob bytes (26.700616ms)
+✔ corrupt and truncated content reject repeatedly without losing the original valid reader (77.112648ms)
+✔ actual concurrent parent replacement is rejected or returns only the exact originally addressed bytes (2946.328129ms)
+{"maximumBytes":16,"storedBytes":33,"oversizedReadsRejected":160,"exactBoundaryReadsSucceeded":160,"descriptorSoftLimit":64}
+✔ independent real low-descriptor process rejects oversized reads repeatedly and still reads exact-boundary bytes (1048.022107ms)
+✔ independent actual competing process waits for original read fence, and callback receives owned records (1606.141464ms)
+✔ independent actual SIGKILL of read-fence owner releases original kernel lock without partial write (868.906902ms)
+✔ retained transition snapshots input before waiting and provides owned clones of both original stores (98.628686ms)
+✔ retained transition rejects self, separate same-root instance, symlink-parent and hardlink aliases before acquiring dependency (41.25686ms)
+✔ retained transition preserves synchronous authorization, stale CAS and actual byte quota without callback bypass (76.880902ms)
+✔ independent transition authorization sees original locked records but cannot mutate committed state through its clone (98.78532ms)
+✔ independent async authorization and stale CAS fail before write, preserving bytes and releasing original fence (96.369777ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13080.307568

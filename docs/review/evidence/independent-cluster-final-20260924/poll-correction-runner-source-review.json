@@ -1,0 +1,13 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "Accept targeted rerun orchestration for sole poll-test correction",
+  "originalSha256": "2e064a9c013492efc89a4b105e266382fc74ecad60680f4b5486e0217efb4548",
+  "correctedSha256": "25084774ab51f4c5770ee6ca0444426596fca771f370208cc51ce0c7657adae7",
+  "diffReview": [
+    "Only adds complete existing polling test module baseline phase, subset selecting existing kube-poll/tail-poll controls, and expected-exit/mutation-env handling for that new controls phase.",
+    "Existing full runtime command list, control definitions, source/dependency/tool bindings, protection and before/after drift machinery remain unchanged.",
+    "No test name filters, skips, changed deadlines or changed assertions.",
+    "Appropriate delta verification because only one polling test boundary changed; original Runtime3 remains proof for its recorded source state, not a full rerun of current delta."
+  ],
+  "runtimeStatus": "Not executed by reviewer; await baseline/control raw evidence and terminal status."
+}

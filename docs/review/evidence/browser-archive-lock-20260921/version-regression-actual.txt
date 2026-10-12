@@ -1,0 +1,30 @@
+✖ central versions update actual build/deployment files and reject drift without repairing it (27.183481ms)
+✔ every central base requires a digest, including non-OpenClaw runtimes (0.488453ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 113.652802
+
+✖ failing tests:
+
+test at tests/verification/deployment/versions.test.mjs:10:1
+✖ central versions update actual build/deployment files and reject drift without repairing it (27.183481ms)
+  Error: ENOENT: no such file or directory, open '/tmp/kubeclaw-versions-BmkNoD/package-lock.json'
+      at Object.readFileSync (node:fs:483:20)
+      at read (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/versions.mjs:153:27)
+      at versionOutputs (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/versions.mjs:169:100)
+      at syncVersions (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/versions.mjs:174:19)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/versions.test.mjs:17:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/kubeclaw-versions-BmkNoD/package-lock.json'
+  }

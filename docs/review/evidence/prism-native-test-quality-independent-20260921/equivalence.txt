@@ -1,0 +1,12 @@
+{
+  "renameBytesIdentical": 3,
+  "oldPathsRemoved": true,
+  "globMembershipIdentical": true,
+  "packageOnlyGlobChanges": 2,
+  "inlinedSyntaxTreeEquivalent": true,
+  "negativeControlsDetected": [
+    "modified test deadline",
+    "removed cleanup registration"
+  ],
+  "conclusion": "bounded mechanical/helper refactor only; no native execution conclusion"
+}

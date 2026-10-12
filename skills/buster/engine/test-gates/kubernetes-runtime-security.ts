@@ -3,19 +3,29 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import type { TestProviderCapabilityInvoker } from './runner.ts';
+import { kubernetesCredentialEnvironment } from './kubernetes-command-environment.ts';
+
+import { validateBusterRuntimeSecuritySettings, type BusterRuntimeSecuritySettings } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
 
 type JsonObject = Record<string, unknown>;
 
-export interface KubernetesRuntimeSecurityCapabilityInvokerOptions {
+export interface KubernetesRuntimeSecurityCapabilityInvokerOptions extends BusterRuntimeSecuritySettings {
   readonly workspaceRoot: string;
   readonly kubectlExecutable: string;
   readonly controllerNamespace: string;
   readonly leaseApiGroup: string;
-  readonly allowedNamespacePrefixes: readonly string[];
-  readonly maximumExecutionMs: number;
-  readonly maximumOutputBytes: number;
-  readonly pollIntervalMs?: number;
-  readonly maximumObservationAgeMs: number;
+}
+
+function capturedOptions(options: KubernetesRuntimeSecurityCapabilityInvokerOptions): BusterRuntimeSecuritySettings {
+  const { workspaceRoot, kubectlExecutable, controllerNamespace, leaseApiGroup, ...settings } = options;
+  const policy = validateBusterRuntimeSecuritySettings(settings);
+  if (typeof workspaceRoot !== 'string' || workspaceRoot.length === 0
+    || typeof kubectlExecutable !== 'string' || kubectlExecutable.length === 0
+    || typeof controllerNamespace !== 'string' || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(controllerNamespace)
+    || typeof leaseApiGroup !== 'string' || !/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/u.test(leaseApiGroup)) {
+    throw new Error('KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');
+  }
+  return policy;
 }
 
 function object(value: unknown, code = 'KUBERNETES_RUNTIME_SECURITY_RESPONSE_INVALID'): JsonObject {
@@ -69,15 +79,13 @@ export function containedRuntimeSecurityManifest(root: string, value: unknown): 
   return resolved;
 }
 
-async function kubectl(executable: string, args: readonly string[], timeoutMs: number, maximumBytes: number,
+async function kubectl(executable: string, args: readonly string[], timeoutMs: number, policy: BusterRuntimeSecuritySettings,
   signal: AbortSignal): Promise<Buffer> {
   return await new Promise<Buffer>((resolve, reject) => {
     const controller = new AbortController();
     const combined = AbortSignal.any([signal, controller.signal]);
     const child = spawn(executable, [...args], { signal: combined, stdio: ['ignore', 'pipe', 'pipe'],
-      env: { PATH: '/usr/local/bin:/usr/bin:/bin', HOME: process.env.HOME, KUBECONFIG: process.env.KUBECONFIG,
-        KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,
-        KUBERNETES_SERVICE_PORT: process.env.KUBERNETES_SERVICE_PORT, LANG: 'C.UTF-8', LC_ALL: 'C.UTF-8' } });
+      env: { PATH: policy.executableSearchPath.join(path.delimiter), ...kubernetesCredentialEnvironment(), LANG: 'C.UTF-8', LC_ALL: 'C.UTF-8' } });
     const stdout: Buffer[] = []; const stderr: Buffer[] = []; let bytes = 0; let settled = false;
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     const finish = (error?: Error, output?: Buffer): void => {
@@ -85,7 +93,7 @@ async function kubectl(executable: string, args: readonly string[], timeoutMs: n
     };
     const collect = (target: Buffer[]) => (chunk: Buffer): void => {
       bytes += chunk.byteLength;
-      if (bytes > maximumBytes) { controller.abort(); finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED')); }
+      if (bytes > policy.maximumOutputBytes) { finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED')); controller.abort(); }
       else target.push(Buffer.from(chunk));
     };
     child.stdout.on('data', collect(stdout)); child.stderr.on('data', collect(stderr));
@@ -96,33 +104,42 @@ async function kubectl(executable: string, args: readonly string[], timeoutMs: n
       if (settled) return;
       if (signal.aborted) return finish(new Error('KUBERNETES_RUNTIME_SECURITY_CANCELLED'));
       if (controller.signal.aborted) return finish(new Error('KUBERNETES_RUNTIME_SECURITY_TIMEOUT'));
-      if (code !== 0 || childSignal) return finish(new Error(`KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:${Buffer.concat(stderr).toString('utf8').slice(0, 1024)}`));
+      if (code !== 0 || childSignal) return finish(new Error(`KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:${Buffer.concat(stderr).toString('utf8').slice(0, policy.diagnosticCodeUnits)}`));
       finish(undefined, Buffer.concat(stdout));
     });
   });
 }
 
+function runtimeSecuritySnapshot(lease: JsonObject, namespace: string): JsonObject | null {
+  const status = object(lease.status);
+  if (status.namespaceName !== namespace || object(lease.spec).namespaceName !== namespace) {
+    throw new Error('KUBERNETES_RUNTIME_SECURITY_LEASE_MISMATCH');
+  }
+  return status.runtimeSecurity && typeof status.runtimeSecurity === 'object'
+    && !Array.isArray(status.runtimeSecurity) ? object(status.runtimeSecurity) : null;
+}
+
+function observationMatches(snapshot: JsonObject | null, digest: string, immutableImage: string,
+  policy: BusterRuntimeSecuritySettings): snapshot is JsonObject {
+  return snapshot?.phase === 'Observed' && snapshot.manifestDigest === digest
+    && snapshot.immutableImage === immutableImage && Array.isArray(snapshot.findings)
+    && Number.isSafeInteger(snapshot.podCount) && Number(snapshot.podCount) > 0
+    && Number.isSafeInteger(snapshot.serviceCount) && Number(snapshot.serviceCount) > 0
+    && runtimeSecurityObservationHasValidAccounting(snapshot)
+    && runtimeSecurityObservationIsFresh(snapshot.observedAt, Date.now(), policy.maximumObservationAgeMs, policy.maximumFutureSkewMs)
+    && typeof snapshot.resultDigest === 'string' && /^sha256:[a-f0-9]{64}$/u.test(snapshot.resultDigest);
+}
+
 export class KubernetesRuntimeSecurityCapabilityInvoker implements TestProviderCapabilityInvoker {
   readonly #root: string; readonly #kubectl: string; readonly #controllerNamespace: string;
-  readonly #leaseApiGroup: string; readonly #prefixes: readonly string[]; readonly #maximumExecutionMs: number;
-  readonly #maximumOutputBytes: number;
-  readonly #pollIntervalMs: number;
-  readonly #maximumObservationAgeMs: number;
+  readonly #leaseApiGroup: string;
+  readonly #policy: BusterRuntimeSecuritySettings;
 
   constructor(options: KubernetesRuntimeSecurityCapabilityInvokerOptions) {
+    this.#policy = capturedOptions(options);
     this.#root = fs.realpathSync(options.workspaceRoot); this.#kubectl = fs.realpathSync(options.kubectlExecutable);
     fs.accessSync(this.#kubectl, fs.constants.X_OK); this.#controllerNamespace = options.controllerNamespace;
-    this.#leaseApiGroup = options.leaseApiGroup; this.#prefixes = [...options.allowedNamespacePrefixes];
-    this.#maximumExecutionMs = options.maximumExecutionMs; this.#maximumOutputBytes = options.maximumOutputBytes;
-    this.#pollIntervalMs = options.pollIntervalMs ?? 1_000;
-    this.#maximumObservationAgeMs = options.maximumObservationAgeMs;
-    if (this.#prefixes.length < 1 || !Number.isSafeInteger(this.#maximumExecutionMs) || this.#maximumExecutionMs < 1
-      || !Number.isSafeInteger(this.#maximumOutputBytes) || this.#maximumOutputBytes < 1024
-      || !Number.isSafeInteger(this.#pollIntervalMs) || this.#pollIntervalMs < 10 || this.#pollIntervalMs > 10_000
-      || !Number.isSafeInteger(this.#maximumObservationAgeMs) || this.#maximumObservationAgeMs < this.#pollIntervalMs
-      || this.#maximumObservationAgeMs > 60_000) {
-      throw new Error('KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');
-    }
+    this.#leaseApiGroup = options.leaseApiGroup;
   }
 
   async invoke(capability: string, request: unknown, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
@@ -131,33 +148,22 @@ export class KubernetesRuntimeSecurityCapabilityInvoker implements TestProviderC
     if (value.operation !== 'inspect') throw new Error('KUBERNETES_RUNTIME_SECURITY_OPERATION_DENIED');
     const payload = object(value.payload, 'KUBERNETES_RUNTIME_SECURITY_REQUEST_INVALID');
     const leaseName = text(payload.leaseName, 'leaseName', 253); const namespace = text(payload.namespace, 'namespace', 63);
-    if (!this.#prefixes.some((prefix) => namespace.startsWith(`${prefix}-`))) throw new Error('KUBERNETES_RUNTIME_SECURITY_NAMESPACE_DENIED');
+    if (!this.#policy.allowedNamespacePrefixes.some((prefix) => namespace.startsWith(`${prefix}-`))) throw new Error('KUBERNETES_RUNTIME_SECURITY_NAMESPACE_DENIED');
     const immutableImage = text(payload.immutableImage, 'immutableImage');
     const manifestPath = containedRuntimeSecurityManifest(this.#root, payload.manifestPath);
     const digest = text(payload.manifestDigest, 'manifestDigest', 71);
     const actualDigest = `sha256:${crypto.createHash('sha256').update(fs.readFileSync(manifestPath)).digest('hex')}`;
     if (actualDigest !== digest) throw new Error('KUBERNETES_RUNTIME_SECURITY_MANIFEST_DIGEST_MISMATCH');
-    const timeoutMs = Math.min(this.#maximumExecutionMs,
-      Number.isSafeInteger(payload.timeoutMs) ? Number(payload.timeoutMs) : this.#maximumExecutionMs);
+    const timeoutMs = Math.min(this.#policy.maximumExecutionMs,
+      Number.isSafeInteger(payload.timeoutMs) ? Number(payload.timeoutMs) : this.#policy.maximumExecutionMs);
     const leaseResource = `busternamespaceleases.${this.#leaseApiGroup}`;
     const deadline = Date.now() + timeoutMs;
     while (Date.now() < deadline) {
       const lease = object(JSON.parse((await kubectl(this.#kubectl,
         ['get', leaseResource, leaseName, '-n', this.#controllerNamespace, '-o', 'json'],
-        Math.max(1, deadline - Date.now()), this.#maximumOutputBytes, signal)).toString('utf8')));
-      const status = object(lease.status);
-      if (status.namespaceName !== namespace || object(lease.spec).namespaceName !== namespace) {
-        throw new Error('KUBERNETES_RUNTIME_SECURITY_LEASE_MISMATCH');
-      }
-      const snapshot = status.runtimeSecurity && typeof status.runtimeSecurity === 'object'
-        && !Array.isArray(status.runtimeSecurity) ? object(status.runtimeSecurity) : null;
-      if (snapshot?.phase === 'Observed' && snapshot.manifestDigest === digest
-        && snapshot.immutableImage === immutableImage && Array.isArray(snapshot.findings)
-        && Number.isSafeInteger(snapshot.podCount) && Number(snapshot.podCount) > 0
-        && Number.isSafeInteger(snapshot.serviceCount) && Number(snapshot.serviceCount) > 0
-        && runtimeSecurityObservationHasValidAccounting(snapshot)
-        && runtimeSecurityObservationIsFresh(snapshot.observedAt, Date.now(), this.#maximumObservationAgeMs)
-        && typeof snapshot.resultDigest === 'string' && /^sha256:[a-f0-9]{64}$/u.test(snapshot.resultDigest)) {
+        Math.max(1, deadline - Date.now()), this.#policy, signal)).toString('utf8')));
+      const snapshot = runtimeSecuritySnapshot(lease, namespace);
+      if (observationMatches(snapshot, digest, immutableImage, this.#policy)) {
         if (runtimeSecurityResultDigest(snapshot) !== snapshot.resultDigest) {
           throw new Error('KUBERNETES_RUNTIME_SECURITY_RESULT_DIGEST_MISMATCH');
         }
@@ -169,7 +175,7 @@ export class KubernetesRuntimeSecurityCapabilityInvoker implements TestProviderC
       await new Promise<void>((resolve, reject) => {
         const onAbort = () => { clearTimeout(timer); reject(new Error('KUBERNETES_RUNTIME_SECURITY_CANCELLED')); };
         const timer = setTimeout(() => { signal.removeEventListener('abort', onAbort); resolve(); },
-          Math.min(this.#pollIntervalMs, Math.max(1, deadline - Date.now())));
+          Math.min(this.#policy.pollIntervalMs, Math.max(1, deadline - Date.now())));
         signal.addEventListener('abort', onAbort, { once: true });
       });
     }
@@ -177,9 +183,9 @@ export class KubernetesRuntimeSecurityCapabilityInvoker implements TestProviderC
   }
 }
 
-export function runtimeSecurityObservationIsFresh(value: unknown, nowMs: number, maximumAgeMs: number): boolean {
+export function runtimeSecurityObservationIsFresh(value: unknown, nowMs: number, maximumAgeMs: number, maximumFutureSkewMs: number): boolean {
   if (typeof value !== 'string') return false;
   const observedMs = Date.parse(value);
   if (!Number.isFinite(observedMs)) return false;
-  return observedMs <= nowMs + 5_000 && nowMs - observedMs <= maximumAgeMs;
+  return observedMs <= nowMs + maximumFutureSkewMs && nowMs - observedMs <= maximumAgeMs;
 }

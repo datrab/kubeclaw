@@ -33,7 +33,11 @@ assert.equal(fs.existsSync('contracts/pipeline-test-gate/v1/legacy-suite-bridge.
 assert.equal(fs.existsSync('skills/buster/plugins/buster-suite-runtime'), false);
 
 const lintPolicy = JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/lint-policy.json', 'utf8'));
-assert.deepEqual(lintPolicy.experimental_tools, []);
+assert.deepEqual(lintPolicy.experimental_tools, [
+  'eslint-type-evidence-production',
+  'eslint-type-evidence-tests',
+  'eslint-type-evidence-generated',
+]);
 assert.equal(lintPolicy.projects.some((project: any) => project.kubernetes?.raw_manifests?.length > 0), true);
 assert.equal(lintPolicy.projects.some((project: any) => project.kubernetes?.policy_packs?.length > 0), true);
 

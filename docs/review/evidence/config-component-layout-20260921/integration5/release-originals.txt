@@ -1,0 +1,117 @@
+walk.go:75: found symbolic link in path: /tmp/code-materialize-aJJaej/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/code-materialize-aJJaej/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/code-materialize-aJJaej/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/code-materialize-aJJaej/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/code-materialize-aJJaej/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/code-materialize-aJJaej/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/code-materialize-aJJaej/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/code-materialize-aJJaej/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/code-materialize-aJJaej/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/code-materialize-aJJaej/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/code-materialize-aJJaej/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/code-materialize-aJJaej/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+✔ deploy bundle fields decode folded URLs and preserve overlay credential selection (162.873599ms)
+✔ agent changes and manifest changes do not rebuild tools; embedded service code does (1.117348ms)
+✔ code selection reuses images only across unchanged image inputs, including deleted inputs (176.939452ms)
+✔ bundle selection rejects missing hashes, mutable URLs and wrong role archives (3.89451ms)
+✔ push detector rebuilds an environment changed by an earlier unselected build (272.257086ms)
+✔ actual bootstrap checksum command rejects modified downloads before extraction (13.667753ms)
+✔ rendered code updates retain image digests and require selected URL, role, hash and revision (14.404822ms)
+✔ real materialization and Helm render enable pinned bundles for all three agents on retained images (2561.087547ms)
+✔ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (12323.096023ms)
+✔ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (5551.633795ms)
+✖ private operational overlays survive while replaced or removed runtime slots fail (4321.837103ms)
+✔ Prism and Ops reject image overrides even when another value could conceal them (8956.061283ms)
+✔ source configuration and materialized values are rechecked by actual deployment entrypoints (2342.68912ms)
+✔ private bundle URL and authentication survive while the selected revision stays fixed (2998.1589ms)
+✔ private extraEnv cannot shadow reserved runtime bundle controls (10761.439541ms)
+✔ noncanonical alias and indirect controls cannot stand in for bundle consumers (6530.236739ms)
+✔ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (9264.931335ms)
+✔ imperative ownership guard fails closed and permits only other namespaces (1.220551ms)
+✔ committed bundle corruption, switched selection and hidden image changes fail before activation (9306.959039ms)
+✔ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (17020.46369ms)
+✔ root claim and retained workload tracking block imperative adoption after partial GitOps transitions (1.437558ms)
+✔ original runtime teardown commands stop before any Helm mutation when Argo owns the namespace (310.839822ms)
+✔ Buster export requires the supplied native binding before publishing a bundle (5235.662529ms)
+fatal: not a tree object
+✔ unchanged release configuration survives unrelated later commits, but new chart or values cannot qualify old images (289.46508ms)
+✔ deleted, added, symlinked, and unavailable source configurations fail explicitly (140.549697ms)
+✔ ops chart has its own source binding, independent of runtime-only changes (141.800909ms)
+✔ canonical aliases bind both target bytes to the image source commit, including schema outside charts (4204.33187ms)
+✔ canonical alias cannot be retargeted or replaced with an identical regular copy (6004.254374ms)
+✔ source commit cannot introduce arbitrary or retargeted aliases (519.73972ms)
+✔ canonical schema cannot escape through a directory symlink or leaf symlink (598.414616ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 29
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 110578.262554
+
+✖ failing tests:
+
+test at tests/verification/deployment/deployment-release.test.mjs:98:1
+✖ private operational overlays survive while replaced or removed runtime slots fail (4321.837103ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /image slot changed or missing|requires exactly one extraContainers/. Input:
+  
+  'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\n' +
+    'Error: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n' +
+    'node:internal/errors:986\n' +
+    '  const err = new Error(message);\n' +
+    '              ^\n' +
+    '\n' +
+    'Error: Command failed: helm template agent-buster /tmp/deployment-selection-aildCK/charts/kubeclaw --namespace kubeclaw -f /tmp/deployment-selection-aildCK/releases/values/buster.yaml -f /tmp/release-registry-context-GadOJh/3.yaml\n' +
+    'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\n' +
+    'Error: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n' +
+    '\n' +
+    '    at genericNodeError (node:internal/errors:986:15)\n' +
+    '    at wrappedFn (node:internal/errors:540:14)\n' +
+    '    at checkExecSyncError (node:child_process:942:11)\n' +
+    '    at execFileSync (node:child_process:978:15)\n' +
+    '    at render (file:///tmp/deployment-selection-aildCK/scripts/updates/deployment-release.mjs:208:30)\n' +
+    '    at file:///tmp/deployment-selection-aildCK/scripts/updates/deployment-release.mjs:210:24\n' +
+    '    at withDeploymentContext (file:///tmp/deployment-selection-aildCK/scripts/updates/deployment-release.mjs:172:12)\n' +
+    '    at file:///tmp/deployment-selection-aildCK/scripts/updates/deployment-release.mjs:209:5\n' +
+    '    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n' +
+    '    at async node:internal/modules/esm/loader:647:26 {\n' +
+    '  status: 1,\n' +
+    '  signal: null,\n' +
+    '  output: [\n' +
+    '    null,\n' +
+    "    '',\n" +
+    "    'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\\n' +\n" +
+    "      'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\\n' +\n" +
+    "      'Error: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n" +
+    "      '\\n' +\n" +
+    "      'Use --debug flag to render out invalid YAML\\n'\n" +
+    '  ],\n' +
+    '  pid: 573119,\n' +
+    "  stdout: '',\n" +
+    "  stderr: 'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\\n' +\n" +
+    "    'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\\n' +\n" +
+    "    'Error: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n" +
+    "    '\\n' +\n" +
+    "    'Use --debug flag to render out invalid YAML\\n'\n" +
+    '}\n' +
+    '\n' +
+    'Node.js v24.21.0\n'
+  
+      at failure (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:61:82)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:104:3
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:57:5)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:98:97)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nError: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\nnode:internal/errors:986\n  const err = new Error(message);\n              ^\n\nError: Command failed: helm template agent-buster /tmp/deployment-selection-aildCK/charts/kubeclaw --namespace kubeclaw -f /tmp/deployment-selection-aildCK/releases/values/buster.yaml -f /tmp/release-registry-context-GadOJh/3.yaml\nwalk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nError: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at render (file:///tmp/deployment-selection-aildCK/scripts/updates/deployment-release.mjs:208:30)\n    at file:///tmp/deployment-selection-aildCK/scripts/updates/deployment-release.mjs:210:24\n    at withDeploymentContext (file:///tmp/deployment-selection-aildCK/scripts/updates/deployment-release.mjs:172:12)\n    at file:///tmp/deployment-selection-aildCK/scripts/updates/deployment-release.mjs:209:5\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26 {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    '',\n    'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\\n' +\n      'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\\n' +\n      'Error: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n      '\\n' +\n      'Use --debug flag to render out invalid YAML\\n'\n  ],\n  pid: 573119,\n  stdout: '',\n  stderr: 'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\\n' +\n    'walk.go:75: found symbolic link in path: /tmp/deployment-selection-aildCK/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/deployment-selection-aildCK/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\\n' +\n    'Error: execution error at (kubeclaw/templates/deployment.yaml:1533:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n    '\\n' +\n    'Use --debug flag to render out invalid YAML\\n'\n}\n\nNode.js v24.21.0\n",
+    expected: /image slot changed or missing|requires exactly one extraContainers/,
+    operator: 'match',
+    diff: 'simple'
+  }

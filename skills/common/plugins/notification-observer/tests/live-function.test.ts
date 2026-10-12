@@ -78,7 +78,7 @@ const adapters = new core.AdapterRuntime({
     ['kubeclaw.secret-resolver:secrets', { environment: { 'notification.webhook': secretName } }],
 
   ]),
-  effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager()),
+  effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
   shutdownTimeoutMs: 1000, async emitDomainEvent() {},
 });
 const events = new core.FileJournal(path.join(temporary, 'events.jsonl'));

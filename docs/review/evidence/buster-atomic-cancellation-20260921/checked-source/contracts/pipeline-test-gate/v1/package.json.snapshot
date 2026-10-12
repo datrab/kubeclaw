@@ -1,0 +1,25 @@
+{
+  "name": "@kubeclaw/pipeline-test-gate-contract",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "schemas",
+    "src"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./schemas/pipeline-test-gate.v1.schema.json",
+    "./e2e-result-schema": "./schemas/e2e-result.v1.schema.json",
+    "./gate-decision": "./src/gate-decision.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node ../../../tests/verification/integration/pipeline-gate-remediation.test.mts && node --test ../../../tests/verification/integration/pipeline-gate-coverage.test.mts"
+  },
+  "dependencies": {
+    "@kubeclaw/pipeline-observability-contract": "*",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  }
+}

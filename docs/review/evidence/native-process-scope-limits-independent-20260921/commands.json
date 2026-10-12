@@ -1,0 +1,59 @@
+[
+  {
+    "name": "tests",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/native-process-policy.test.mts",
+      "tests/verification/reliability/native-process-launches.test.mts",
+      "tests/verification/reliability/native-process-cancellation.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "mutation-invalid-import",
+    "command": [
+      "node",
+      "--import",
+      ".//home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-process-scope-limits-independent-20260921/revert-projection.mjs",
+      "--test",
+      "tests/verification/reliability/native-process-policy.test.mts"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.native-scope.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/worker/core/worker/native-worker-process.ts",
+      "tests/verification/reliability/native-process-policy.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "mutation",
+    "command": [
+      "node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-process-scope-limits-independent-20260921/revert-projection.mjs",
+      "--test",
+      "tests/verification/reliability/native-process-policy.test.mts"
+    ],
+    "exitCode": 1
+  }
+]

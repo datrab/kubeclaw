@@ -1,0 +1,739 @@
+
+> verify:config:components
+> tsc --noEmit -p tests/verification/reliability/tsconfig.config-components.json && node --test --test-concurrency=1 tests/verification/reliability/config-component-bundle.test.mts tests/verification/reliability/config-component-generation.test.mjs tests/verification/deployment/config-component-packaging.test.mjs tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/buster-admission-render.test.mjs skills/prism/tests/swarm-*.test.mts skills/prism/tests/studio-config.test.mts skills/prism/tests/studio-service.test.mts
+
+✔ Studio loads authored operator values and keeps installation inputs outside JSON (31.151545ms)
+✔ Studio rejects retired PORT="" (1.646842ms)
+✔ Studio rejects retired PORT="8080" (1.252672ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="" (1.353305ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="8080" (1.766425ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="" (1.491728ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080" (1.397656ms)
+✔ Studio rejects invalid port through original shared validation (9.005833ms)
+✔ Studio rejects invalid controlTimeoutMs through original shared validation (8.628254ms)
+✔ Studio rejects invalid controlUrl through original shared validation (20.552241ms)
+✔ Studio rejects unknown settings and invalid startup terminates before serving (317.875727ms)
+✔ production Studio Docker environment does not reintroduce a retired author (2.625418ms)
+✔ actual Studio survives refused Control and malformed URL with explicit responses (408.427397ms)
+✔ actual Studio retains proxy bytes, cookies and upstream status (398.857429ms)
+✔ actual Studio forwards direction idempotency keys and retry payloads to Control (384.151679ms)
+✔ actual Studio bounds upstream headers wait and remains healthy (603.431618ms)
+✔ actual Studio bounds upstream empty-body wait and remains healthy (671.830056ms)
+✔ actual Studio bounds upstream partial-body wait and remains healthy (659.791685ms)
+✔ actual Studio cancels upstream streaming when the client disconnects (555.57346ms)
+✔ authored Studio timeout 150 reaches the live proxy and startup snapshot (1086.022913ms)
+✔ authored Studio timeout 600 reaches the live proxy and startup snapshot (991.434117ms)
+✔ missing Studio ingress secret retains 503 proxy response and static availability (358.071326ms)
+✔ CC1 Control pipelinePreferenceSubject rejects undefined (11.659311ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "" (1.766575ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "operator:test" (1.631683ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "user-abc" (9.387573ms)
+✔ CC1 Control pipelinePreferenceSubject rejects 1 (1.688753ms)
+✔ CC1 Control pipelinePreferenceSubject rejects false (1.584141ms)
+✔ CC1 Control artifactRoot rejects undefined (1.93454ms)
+✔ CC1 Control artifactRoot rejects null (1.858599ms)
+✔ CC1 Control artifactRoot rejects "" (1.861258ms)
+✔ CC1 Control artifactRoot rejects "/" (1.687213ms)
+✔ CC1 Control artifactRoot rejects "relative" (1.703024ms)
+✔ CC1 Control artifactRoot rejects "/tmp/../artifacts" (4.480265ms)
+✔ CC1 Control artifactRoot rejects "/tmp/artifacts/" (2.351931ms)
+✔ CC1 Control artifactRoot rejects "/tmp//artifacts" (2.115424ms)
+✔ CC1 Control artifactRoot rejects "/tmp/\u0000artifacts" (1.697394ms)
+✔ CC1 Control artifactRoot rejects 1 (1.716894ms)
+✔ CC1 Control studioPublicUrl rejects undefined (2.120545ms)
+✔ CC1 Control studioPublicUrl rejects null (1.831667ms)
+✔ CC1 Control studioPublicUrl rejects "" (2.029732ms)
+✔ CC1 Control studioPublicUrl rejects "relative" (1.54642ms)
+✔ CC1 Control studioPublicUrl rejects "file:///tmp" (1.844957ms)
+✔ CC1 Control studioPublicUrl rejects "https://" (1.93312ms)
+✔ CC1 Control studioPublicUrl rejects "https://user:pass@studio" (1.788287ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio?query=1" (1.725635ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio#fragment" (1.914199ms)
+✔ CC1 Control studioPublicUrl rejects "https://bad host" (2.154656ms)
+✔ CC1 Control studioPublicUrl rejects 1 (1.831017ms)
+✔ CC1 strict Control object (2.843344ms)
+✔ CC1 strict Control object (2.614717ms)
+✔ CC1 strict Control object (2.946586ms)
+✔ CC1 strict Control object (2.977977ms)
+✔ CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty (2.130775ms)
+✔ CC2 retired ARTIFACT_ROOT rejects even empty (2.188147ms)
+✔ CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty (1.644392ms)
+✔ CC2 authored Control snapshot survives file mutation (10.098231ms)
+✔ CI03 original HTTP body boundary follows authored 64 bytes (69.789534ms)
+✔ CI03 original HTTP body boundary follows authored 128 bytes (17.953964ms)
+✔ CI04 production command and real host parser use assigned 64 bytes (1609.987746ms)
+✔ CI04 production command and real host parser use assigned 128 bytes (1803.410695ms)
+✔ CR01 both startup snapshots use authored {"maximumResultBytes":64,"dispatchTimeoutMs":100} (11.254051ms)
+✔ CR01 both startup snapshots use authored {"maximumResultBytes":128,"dispatchTimeoutMs":2000} (4.089166ms)
+✔ CR01 both roles reject maximumResultBytes=undefined (3.007428ms)
+✔ CR01 both roles reject maximumResultBytes=null (2.359661ms)
+✔ CR01 both roles reject maximumResultBytes=5 (2.427363ms)
+✔ CR01 both roles reject maximumResultBytes=0 (2.704ms)
+✔ CR01 both roles reject maximumResultBytes=-1 (2.264259ms)
+✔ CR01 both roles reject maximumResultBytes=1.5 (2.252898ms)
+✔ CR01 both roles reject maximumResultBytes=2147483648 (1.981251ms)
+✔ CR01 both roles reject dispatchTimeoutMs=undefined (1.781836ms)
+✔ CR01 both roles reject dispatchTimeoutMs=null (1.298633ms)
+✔ CR01 both roles reject dispatchTimeoutMs=5 (1.222402ms)
+✔ CR01 both roles reject dispatchTimeoutMs=0 (1.375346ms)
+✔ CR01 both roles reject dispatchTimeoutMs=-1 (2.520765ms)
+✔ CR01 both roles reject dispatchTimeoutMs=1.5 (1.359205ms)
+✔ CR01 both roles reject dispatchTimeoutMs=2147483648 (1.56644ms)
+✔ CR01 both roles reject missing or unsupported native section (2.777682ms)
+✔ CR01 both roles reject missing or unsupported native section (2.612567ms)
+✔ CR01 both roles reject missing or unsupported native section (2.631548ms)
+✔ CR02 both roles reject PRISM_NATIVE_MAXIMUM_RESULT_BYTES (1.273913ms)
+✔ CR02 both roles reject PRISM_NATIVE_DISPATCH_TIMEOUT_MS (1.088218ms)
+✔ CR03 original HTTP transport enforces 8 UTF-8 bytes (54.937329ms)
+✔ CR03 original HTTP transport enforces 9 UTF-8 bytes (10.089481ms)
+✔ CR04 real headers deadline follows short and long author budgets (386.020378ms)
+✔ CR04 real body deadline follows short and long author budgets (388.776469ms)
+✔ CP03 original Control persists and dispatches startup budgets and preserves admitted retry identity (4497.977006ms)
+✔ CP01 both roles reject cpuTimeMs=undefined (11.343273ms)
+✔ CP01 both roles reject cpuTimeMs=null (2.812912ms)
+✔ CP01 both roles reject cpuTimeMs=5 (2.913705ms)
+✔ CP01 both roles reject cpuTimeMs=0 (2.794872ms)
+✔ CP01 both roles reject cpuTimeMs=-1 (2.32326ms)
+✔ CP01 both roles reject cpuTimeMs=1.5 (2.492324ms)
+✔ CP01 both roles reject cpuTimeMs=9007199254740992 (2.189737ms)
+✔ CP01 both roles reject memoryBytes=undefined (2.006492ms)
+✔ CP01 both roles reject memoryBytes=null (2.033022ms)
+✔ CP01 both roles reject memoryBytes=5 (2.089274ms)
+✔ CP01 both roles reject memoryBytes=0 (1.577301ms)
+✔ CP01 both roles reject memoryBytes=-1 (1.569261ms)
+✔ CP01 both roles reject memoryBytes=1.5 (1.492349ms)
+✔ CP01 both roles reject memoryBytes=9007199254740992 (1.991042ms)
+✔ CP01 both roles reject tasks=undefined (1.521789ms)
+✔ CP01 both roles reject tasks=null (1.482778ms)
+✔ CP01 both roles reject tasks=5 (1.748675ms)
+✔ CP01 both roles reject tasks=0 (1.501028ms)
+✔ CP01 both roles reject tasks=-1 (1.505939ms)
+✔ CP01 both roles reject tasks=1.5 (1.494748ms)
+✔ CP01 both roles reject tasks=9007199254740992 (1.500509ms)
+✔ CP01 missing or competing resource policy fails (15.050049ms)
+✔ CP01 missing or competing resource policy fails (2.139136ms)
+✔ CP01 missing or competing resource policy fails (2.075904ms)
+✔ CP02 rejects PRISM_NATIVE_CPU_TIME_MS even empty (1.236892ms)
+✔ CP02 rejects PRISM_NATIVE_MEMORY_BYTES even empty (1.001736ms)
+✔ CP02 rejects PRISM_NATIVE_TASKS even empty (0.972945ms)
+✔ CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7} (51.428809ms)
+✔ CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11} (6.9912ms)
+✔ CP01 resource safe-integer ceiling is independent of transport timer ceiling (4.058245ms)
+✔ CP02 a loaded producer never consults later legacy environment changes (2.414332ms)
+✔ CR05 real journal consumes authored 2051 byte result limit (159.01189ms)
+✔ CR05 real journal consumes authored 2052 byte result limit (155.603913ms)
+✔ CS1 supervisor uid rejects undefined (10.236014ms)
+✔ CS1 supervisor uid rejects null (2.246188ms)
+✔ CS1 supervisor uid rejects 1 (1.716545ms)
+✔ CS1 supervisor uid rejects 0 (1.890019ms)
+✔ CS1 supervisor uid rejects -1 (1.754906ms)
+✔ CS1 supervisor uid rejects 1.5 (1.574881ms)
+✔ CS1 supervisor uid rejects 2147483648 (1.55008ms)
+✔ CS1 supervisor gid rejects undefined (1.515439ms)
+✔ CS1 supervisor gid rejects null (1.472828ms)
+✔ CS1 supervisor gid rejects 1 (1.424287ms)
+✔ CS1 supervisor gid rejects 0 (1.421476ms)
+✔ CS1 supervisor gid rejects -1 (1.338215ms)
+✔ CS1 supervisor gid rejects 1.5 (1.508079ms)
+✔ CS1 supervisor gid rejects 2147483648 (1.470598ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects undefined (1.395776ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects null (1.373855ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects 1 (1.454867ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects 0 (2.516015ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects -1 (1.362025ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects 1.5 (1.446068ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects 2147483648 (1.297214ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects undefined (1.592351ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects null (1.423357ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects 1 (1.469478ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects 0 (1.349904ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects -1 (1.291664ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects 1.5 (1.302444ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects 2147483648 (1.287994ms)
+✔ CS1 supervisor maximumOutputBytes rejects undefined (1.407127ms)
+✔ CS1 supervisor maximumOutputBytes rejects null (1.471498ms)
+✔ CS1 supervisor maximumOutputBytes rejects 1 (1.346195ms)
+✔ CS1 supervisor maximumOutputBytes rejects 0 (1.384986ms)
+✔ CS1 supervisor maximumOutputBytes rejects -1 (1.53334ms)
+✔ CS1 supervisor maximumOutputBytes rejects 1.5 (1.435567ms)
+✔ CS1 supervisor maximumOutputBytes rejects 2147483648 (1.815237ms)
+✔ CS1 supervisor maximumJournalBytes rejects undefined (1.973281ms)
+✔ CS1 supervisor maximumJournalBytes rejects null (1.429557ms)
+✔ CS1 supervisor maximumJournalBytes rejects 1 (1.252732ms)
+✔ CS1 supervisor maximumJournalBytes rejects 0 (1.326734ms)
+✔ CS1 supervisor maximumJournalBytes rejects -1 (1.584501ms)
+✔ CS1 supervisor maximumJournalBytes rejects 1.5 (1.449358ms)
+✔ CS1 supervisor maximumJournalBytes rejects 9007199254740992 (1.440997ms)
+✔ CS1 supervisor pollIntervalMs rejects undefined (1.292264ms)
+✔ CS1 supervisor pollIntervalMs rejects null (1.363635ms)
+✔ CS1 supervisor pollIntervalMs rejects 1 (1.418887ms)
+✔ CS1 supervisor pollIntervalMs rejects 0 (1.379076ms)
+✔ CS1 supervisor pollIntervalMs rejects -1 (1.306454ms)
+✔ CS1 supervisor pollIntervalMs rejects 1.5 (1.413416ms)
+✔ CS1 supervisor pollIntervalMs rejects 2147483648 (1.279713ms)
+✔ CS1 supervisor drainTimeoutMs rejects undefined (1.276923ms)
+✔ CS1 supervisor drainTimeoutMs rejects null (1.250263ms)
+✔ CS1 supervisor drainTimeoutMs rejects 1 (1.360206ms)
+✔ CS1 supervisor drainTimeoutMs rejects 0 (1.404096ms)
+✔ CS1 supervisor drainTimeoutMs rejects -1 (1.314634ms)
+✔ CS1 supervisor drainTimeoutMs rejects 1.5 (1.252962ms)
+✔ CS1 supervisor drainTimeoutMs rejects 2147483648 (1.340904ms)
+✔ CS1 supervisor closeTimeoutMs rejects undefined (2.237008ms)
+✔ CS1 supervisor closeTimeoutMs rejects null (14.766772ms)
+✔ CS1 supervisor closeTimeoutMs rejects 1 (1.383295ms)
+✔ CS1 supervisor closeTimeoutMs rejects 0 (1.359235ms)
+✔ CS1 supervisor closeTimeoutMs rejects -1 (1.776166ms)
+✔ CS1 supervisor closeTimeoutMs rejects 1.5 (2.128645ms)
+✔ CS1 supervisor closeTimeoutMs rejects 2147483648 (1.406547ms)
+✔ CS1 strict supervisor object (1.53372ms)
+✔ CS1 strict supervisor object (1.254742ms)
+✔ CS1 strict supervisor object (1.269953ms)
+✔ CS2 old PRISM_NATIVE_UID is rejected even empty (1.15278ms)
+✔ CS2 old PRISM_NATIVE_GID is rejected even empty (1.126089ms)
+✔ CS2 old PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS is rejected even empty (1.023986ms)
+✔ CS2 old PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES is rejected even empty (1.047337ms)
+✔ CS2 old PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES is rejected even empty (1.024387ms)
+✔ CS2 old PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES is rejected even empty (1.243912ms)
+✔ CS2 old PRISM_NATIVE_POLL_INTERVAL_MS is rejected even empty (2.659788ms)
+✔ CS2 old PRISM_NATIVE_DRAIN_TIMEOUT_MS is rejected even empty (1.102109ms)
+✔ CS2 old PRISM_NATIVE_CLOSE_TIMEOUT_MS is rejected even empty (1.078538ms)
+✔ CS4 combined close plus drain 14999 (8.218752ms)
+✔ CS4 combined close plus drain 15000 (1.877358ms)
+✔ CS4 combined close plus drain 15001 (1.871909ms)
+✔ CS3 production mapping and actual output spool profile 1 (80.022198ms)
+✔ CS3 production mapping and actual output spool profile 2 (19.149175ms)
+✔ CS2 startup snapshot ignores later legacy environment changes (2.557306ms)
+✔ CS1 journal safe-integer ceiling and timer/identity integer ceilings remain distinct (1.571011ms)
+✔ CS3 real ownership store enforces 1 authored records with representation-sized capacity (217.527863ms)
+✔ CS3 real ownership store enforces 2 authored records with representation-sized capacity (186.07711ms)
+✔ CS3 real ownership store enforces 1 authored bytes (13.516589ms)
+✔ CS3 real ownership store enforces 8192 authored bytes (73.10366ms)
+✔ CS3 actual execution journal admission and process boundary profile 1 (135.80181ms)
+✔ CS3 actual execution journal admission and process boundary profile 2 (183.496044ms)
+✔ CB01 real probe reservation overflows and recovers while work remains active (72.136664ms)
+✔ CB02 actual TCP connection limit rejects the next socket and reopens after release (6.923369ms)
+✔ CB03 original Node body deadline sends 408 without shortening its checking interval (30004.457977ms)
+✔ CW01 canonical author values reach the actual production worker composition (16.173708ms)
+✔ CW02 every alternate author value reaches the actual consumer (3.954653ms)
+✔ CW03 unknown key at entry (1.55699ms)
+✔ CW03 unknown key at prism-worker (1.293424ms)
+✔ CW03 unknown key at prism-worker.settings (1.461958ms)
+✔ CW03 unknown key at prism-worker.settings.ingress (1.481679ms)
+✔ CW04 port rejects 3 (1.356035ms)
+✔ CW04 port rejects null (1.206661ms)
+✔ CW04 port rejects -1 (1.263252ms)
+✔ CW04 port rejects 0 (1.353195ms)
+✔ CW04 port rejects 1.5 (1.336354ms)
+✔ CW04 port rejects 2147483648 (1.252163ms)
+✔ CW04 port rejects undefined (1.263223ms)
+✔ CW04 maximumActiveRequests rejects 3 (1.230272ms)
+✔ CW04 maximumActiveRequests rejects null (1.243212ms)
+✔ CW04 maximumActiveRequests rejects -1 (1.242472ms)
+✔ CW04 maximumActiveRequests rejects 0 (1.210531ms)
+✔ CW04 maximumActiveRequests rejects 1.5 (1.256353ms)
+✔ CW04 maximumActiveRequests rejects 2147483648 (1.297744ms)
+✔ CW04 maximumActiveRequests rejects undefined (1.325874ms)
+✔ CW04 maximumProbeRequests rejects 3 (1.335094ms)
+✔ CW04 maximumProbeRequests rejects null (1.255732ms)
+✔ CW04 maximumProbeRequests rejects -1 (1.235182ms)
+✔ CW04 maximumProbeRequests rejects 0 (1.288574ms)
+✔ CW04 maximumProbeRequests rejects 1.5 (1.371876ms)
+✔ CW04 maximumProbeRequests rejects 2147483648 (1.289233ms)
+✔ CW04 maximumProbeRequests rejects undefined (1.364525ms)
+✔ CW04 maximumConnections rejects 3 (1.292073ms)
+✔ CW04 maximumConnections rejects null (1.511559ms)
+✔ CW04 maximumConnections rejects -1 (1.283653ms)
+✔ CW04 maximumConnections rejects 0 (1.273092ms)
+✔ CW04 maximumConnections rejects 1.5 (1.283063ms)
+✔ CW04 maximumConnections rejects 2147483648 (1.582011ms)
+✔ CW04 maximumConnections rejects undefined (1.349635ms)
+✔ CW04 requestTimeoutMs rejects 3 (1.364095ms)
+✔ CW04 requestTimeoutMs rejects null (1.507679ms)
+✔ CW04 requestTimeoutMs rejects -1 (1.305163ms)
+✔ CW04 requestTimeoutMs rejects 0 (1.312914ms)
+✔ CW04 requestTimeoutMs rejects 1.5 (1.275143ms)
+✔ CW04 requestTimeoutMs rejects 2147483648 (1.326745ms)
+✔ CW04 requestTimeoutMs rejects undefined (1.304823ms)
+✔ CW04 shutdownTimeoutMs rejects 3 (1.428537ms)
+✔ CW04 shutdownTimeoutMs rejects null (1.280843ms)
+✔ CW04 shutdownTimeoutMs rejects -1 (1.290913ms)
+✔ CW04 shutdownTimeoutMs rejects 0 (1.276803ms)
+✔ CW04 shutdownTimeoutMs rejects 1.5 (1.272423ms)
+✔ CW04 shutdownTimeoutMs rejects 2147483648 (1.304374ms)
+✔ CW04 shutdownTimeoutMs rejects undefined (1.318174ms)
+✔ CW04 maximumInputBytes rejects 3 (1.336545ms)
+✔ CW04 maximumInputBytes rejects null (1.293513ms)
+✔ CW04 maximumInputBytes rejects -1 (1.278163ms)
+✔ CW04 maximumInputBytes rejects 0 (1.473469ms)
+✔ CW04 maximumInputBytes rejects 1.5 (2.504295ms)
+✔ CW04 maximumInputBytes rejects 2147483648 (1.142859ms)
+✔ CW04 maximumInputBytes rejects undefined (1.15469ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (0.172995ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (0.057821ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (0.049111ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (0.056122ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (0.057502ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_MAXIMUM_INPUT_BYTES (0.056372ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_ASSIGNED_INPUT_BYTES (0.049152ms)
+✔ CW06 rejects unsupported profile (1.069498ms)
+✔ CW06 rejects unsupported features (0.994516ms)
+✔ CW06 rejects unsupported tuning (0.987855ms)
+✔ CW06 rejects unsupported overrides (1.026576ms)
+✔ CW07 missing or broken authorship never falls back to defaults (8.017537ms)
+✔ CW08 maximumActiveRequests cannot exceed connection reservation (1.93477ms)
+✔ CW08 maximumProbeRequests cannot exceed connection reservation (1.534419ms)
+✔ CW09 shutdown budget remains independent of request admission deadline (2.263779ms)
+✔ CW10 effective settings omit secrets and original authentication still fails closed (0.941085ms)
+✔ actual Buster chart mounts both authored admission profiles and rejects retired ENV authors (499.920182ms)
+✔ actual service CLI rejects inherited retired ENV before opening its parent channel (6777.16507ms)
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/buster-engine.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-control.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-control.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-execution.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-execution.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-studio.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-studio.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-worker.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-worker.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/worker-core.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/worker-core.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+Error: execution error at (prism/templates/workloads.yaml:1:14): swarm component missing: prism-execution
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): swarm component missing: prism-execution
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime requires exactly three settings
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime requires exactly three settings
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.cancellationTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.cancellationTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.cancellationTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.cancellationTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.cancellationTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.cancellationTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.cancellationTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime requires exactly three settings
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.replayLimit must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.replayLimit must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.replayLimit must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.replayLimit is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.replayLimit is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.replayLimit is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.replayLimit is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime requires exactly three settings
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime requires exactly three settings
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.cancellationTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.cancellationTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.cancellationTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.cancellationTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.cancellationTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.cancellationTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.cancellationTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime requires exactly three settings
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.replayLimit must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.replayLimit must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.replayLimit must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.replayLimit is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.replayLimit is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.replayLimit is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.replayLimit is out of range
+
+Use --debug flag to render out invalid YAML
+✔ prism package contains the complete canonical bundle and shared validator (79.584768ms)
+✔ kubeclaw package contains the complete canonical bundle and shared validator (75.702807ms)
+✔ prism: each component changes real rollout checksum; omitted checksum is detected (911.299055ms)
+✔ kubeclaw: each component changes real rollout checksum; omitted checksum is detected (929.213839ms)
+✔ prism: real archive missing a required component fails the complete delivery oracle (109.608863ms)
+✔ kubeclaw: real archive missing a required component fails the complete delivery oracle (121.841369ms)
+✔ Buster image COPY contains all authored files; removing one source fails the same structural oracle (0.616916ms)
+✔ prism: worker-core AJV/Helm integer-boundary parity (1972.321192ms)
+✔ kubeclaw: worker-core AJV/Helm integer-boundary parity (1838.092812ms)
+✔ CD01 original chart delivers the one canonical config to the worker mount (116.039279ms)
+✔ CD02 real Helm output from two author profiles drives the actual production loader (223.745743ms)
+✔ CD03 old Helm shutdown authority is rejected (48.815292ms)
+✔ CD04 port rejects 3 before rendering (63.647165ms)
+✔ CD04 port rejects null before rendering (52.413615ms)
+✔ CD04 port rejects -1 before rendering (57.331792ms)
+✔ CD04 port rejects 0 before rendering (57.002774ms)
+✔ CD04 port rejects 1.5 before rendering (51.480761ms)
+✔ CD04 port rejects 2147483648 before rendering (56.236253ms)
+✔ CD04 port rejects undefined before rendering (49.541001ms)
+✔ CD04 maximumActiveRequests rejects 3 before rendering (49.831928ms)
+✔ CD04 maximumActiveRequests rejects null before rendering (56.540142ms)
+✔ CD04 maximumActiveRequests rejects -1 before rendering (53.262747ms)
+✔ CD04 maximumActiveRequests rejects 0 before rendering (59.20479ms)
+✔ CD04 maximumActiveRequests rejects 1.5 before rendering (61.952391ms)
+✔ CD04 maximumActiveRequests rejects 2147483648 before rendering (56.314455ms)
+✔ CD04 maximumActiveRequests rejects undefined before rendering (56.920531ms)
+✔ CD04 maximumProbeRequests rejects 3 before rendering (52.373754ms)
+✔ CD04 maximumProbeRequests rejects null before rendering (51.229344ms)
+✔ CD04 maximumProbeRequests rejects -1 before rendering (54.16366ms)
+✔ CD04 maximumProbeRequests rejects 0 before rendering (53.086532ms)
+✔ CD04 maximumProbeRequests rejects 1.5 before rendering (52.6155ms)
+✔ CD04 maximumProbeRequests rejects 2147483648 before rendering (60.246937ms)
+✔ CD04 maximumProbeRequests rejects undefined before rendering (61.813678ms)
+✔ CD04 maximumConnections rejects 3 before rendering (55.979217ms)
+✔ CD04 maximumConnections rejects null before rendering (58.169534ms)
+✔ CD04 maximumConnections rejects -1 before rendering (58.592665ms)
+✔ CD04 maximumConnections rejects 0 before rendering (57.584718ms)
+✔ CD04 maximumConnections rejects 1.5 before rendering (52.120427ms)
+✔ CD04 maximumConnections rejects 2147483648 before rendering (163.154387ms)
+✔ CD04 maximumConnections rejects undefined before rendering (297.959482ms)
+✔ CD04 requestTimeoutMs rejects 3 before rendering (385.279479ms)
+✔ CD04 requestTimeoutMs rejects null before rendering (205.473071ms)
+✔ CD04 requestTimeoutMs rejects -1 before rendering (290.213071ms)
+✔ CD04 requestTimeoutMs rejects 0 before rendering (218.986781ms)
+✔ CD04 requestTimeoutMs rejects 1.5 before rendering (130.056312ms)
+✔ CD04 requestTimeoutMs rejects 2147483648 before rendering (102.964731ms)
+✔ CD04 requestTimeoutMs rejects undefined before rendering (97.656245ms)
+✔ CD04 shutdownTimeoutMs rejects 3 before rendering (64.134908ms)
+✔ CD04 shutdownTimeoutMs rejects null before rendering (57.207309ms)
+✔ CD04 shutdownTimeoutMs rejects -1 before rendering (57.25781ms)
+✔ CD04 shutdownTimeoutMs rejects 0 before rendering (64.520238ms)
+✔ CD04 shutdownTimeoutMs rejects 1.5 before rendering (56.380677ms)
+✔ CD04 shutdownTimeoutMs rejects 2147483648 before rendering (57.813524ms)
+✔ CD04 shutdownTimeoutMs rejects undefined before rendering (57.337302ms)
+✔ CD04 maximumInputBytes rejects 3 before rendering (56.976413ms)
+✔ CD04 maximumInputBytes rejects null before rendering (59.54991ms)
+✔ CD04 maximumInputBytes rejects -1 before rendering (55.273338ms)
+✔ CD04 maximumInputBytes rejects 0 before rendering (51.054299ms)
+✔ CD04 maximumInputBytes rejects 1.5 before rendering (52.24538ms)
+✔ CD04 maximumInputBytes rejects 2147483648 before rendering (49.679175ms)
+✔ CD04 maximumInputBytes rejects undefined before rendering (51.263045ms)
+✔ CD04 unknown key entry (57.475275ms)
+✔ CD04 unknown key prism-worker (100.841417ms)
+✔ CD04 unknown key prism-worker.settings (57.588539ms)
+✔ CD04 unknown key prism-worker.settings.ingress (75.587704ms)
+✔ CD04 connection overcommit fails Helm rendering (73.88047ms)
+✔ CD05 shutdown 100000 violates native-close or Pod grace (59.171259ms)
+✔ CD05 shutdown 150000 violates native-close or Pod grace (73.13137ms)
+✔ CD06 Helm packaging dereferences the canonical author/schema without manual synchronization (67.485454ms)
+✔ CI05 old Helm input authority worker.native.maximumInputBytes is rejected (40.432075ms)
+✔ CI05 old Helm input authority native.maximumInputBytes is rejected (42.470927ms)
+✔ CR06 native maximumResultBytes rejects 3 before rendering (51.121381ms)
+✔ CR06 native maximumResultBytes rejects null before rendering (59.95623ms)
+✔ CR06 native maximumResultBytes rejects -1 before rendering (54.443277ms)
+✔ CR06 native maximumResultBytes rejects 0 before rendering (64.894088ms)
+✔ CR06 native maximumResultBytes rejects 1.5 before rendering (60.595297ms)
+✔ CR06 native maximumResultBytes rejects 2147483648 before rendering (58.83268ms)
+✔ CR06 native maximumResultBytes rejects undefined before rendering (61.947502ms)
+✔ CR06 native dispatchTimeoutMs rejects 3 before rendering (52.433985ms)
+✔ CR06 native dispatchTimeoutMs rejects null before rendering (54.246722ms)
+✔ CR06 native dispatchTimeoutMs rejects -1 before rendering (49.872169ms)
+✔ CR06 native dispatchTimeoutMs rejects 0 before rendering (52.953429ms)
+✔ CR06 native dispatchTimeoutMs rejects 1.5 before rendering (55.71827ms)
+✔ CR06 native dispatchTimeoutMs rejects 2147483648 before rendering (54.674224ms)
+✔ CR06 native dispatchTimeoutMs rejects undefined before rendering (57.181018ms)
+✔ CR06 missing or unknown native section fails rendering (56.356127ms)
+✔ CR06 missing or unknown native section fails rendering (54.116449ms)
+✔ CR06 missing or unknown native section fails rendering (54.488769ms)
+✔ CR06 two real authored profiles deliver identical bytes and changing checksums to both roles (211.765714ms)
+✔ CR06 old Helm authority worker.native.maximumResultBytes rejected (43.152185ms)
+✔ CR06 old Helm authority control.nativeWorkerDispatchTimeoutMs rejected (49.059138ms)
+✔ CR06 old Helm authority control.maximumWorkerResponseBytes rejected (49.10001ms)
+✔ CP01 resource cpuTimeMs rejects 3 in Helm (60.676469ms)
+✔ CP01 resource cpuTimeMs rejects null in Helm (59.319153ms)
+✔ CP01 resource cpuTimeMs rejects -1 in Helm (59.705643ms)
+✔ CP01 resource cpuTimeMs rejects 0 in Helm (61.967072ms)
+✔ CP01 resource cpuTimeMs rejects 1.5 in Helm (62.093805ms)
+✔ CP01 resource cpuTimeMs rejects 9007199254740992 in Helm (57.078736ms)
+✔ CP01 resource cpuTimeMs rejects undefined in Helm (56.546002ms)
+✔ CP01 resource memoryBytes rejects 3 in Helm (59.384185ms)
+✔ CP01 resource memoryBytes rejects null in Helm (67.751371ms)
+✔ CP01 resource memoryBytes rejects -1 in Helm (64.277352ms)
+✔ CP01 resource memoryBytes rejects 0 in Helm (66.198691ms)
+✔ CP01 resource memoryBytes rejects 1.5 in Helm (64.22313ms)
+✔ CP01 resource memoryBytes rejects 9007199254740992 in Helm (61.112359ms)
+✔ CP01 resource memoryBytes rejects undefined in Helm (62.223628ms)
+✔ CP01 resource tasks rejects 3 in Helm (63.361958ms)
+✔ CP01 resource tasks rejects null in Helm (62.030144ms)
+✔ CP01 resource tasks rejects -1 in Helm (57.943817ms)
+✔ CP01 resource tasks rejects 0 in Helm (54.361615ms)
+✔ CP01 resource tasks rejects 1.5 in Helm (62.767542ms)
+✔ CP01 resource tasks rejects 9007199254740992 in Helm (62.342811ms)
+✔ CP01 resource tasks rejects undefined in Helm (92.207834ms)
+✔ CP01 unsupported resource policy rejected in Helm (98.071565ms)
+✔ CP01 unsupported resource policy rejected in Helm (65.537254ms)
+✔ CP01 unsupported resource policy rejected in Helm (63.265196ms)
+✔ CP06 competing Helm worker.native.resourcePolicy.tasks is rejected (56.028538ms)
+✔ CP06 competing Helm control.nativeResourcePolicy.tasks is rejected (56.559852ms)
+✔ CP06 two resource policies change both rendered snapshots and checksums (247.359854ms)
+✔ CP01 Helm accepts the resource safe-integer ceiling without timer coercion (112.833917ms)
+✔ CS5 Helm rejects supervisor uid=undefined (60.180816ms)
+✔ CS5 Helm rejects supervisor uid=null (67.128485ms)
+✔ CS5 Helm rejects supervisor uid=1 (57.915967ms)
+✔ CS5 Helm rejects supervisor uid=0 (53.833001ms)
+✔ CS5 Helm rejects supervisor uid=-1 (60.307179ms)
+✔ CS5 Helm rejects supervisor uid=1.5 (62.572757ms)
+✔ CS5 Helm rejects supervisor uid=2147483648 (59.904629ms)
+✔ CS5 Helm rejects supervisor gid=undefined (64.897038ms)
+✔ CS5 Helm rejects supervisor gid=null (65.893833ms)
+✔ CS5 Helm rejects supervisor gid=1 (54.282093ms)
+✔ CS5 Helm rejects supervisor gid=0 (55.591257ms)
+✔ CS5 Helm rejects supervisor gid=-1 (66.631662ms)
+✔ CS5 Helm rejects supervisor gid=1.5 (60.804042ms)
+✔ CS5 Helm rejects supervisor gid=2147483648 (62.933616ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=undefined (58.316758ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=null (49.359866ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=1 (55.505014ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=0 (52.106097ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=-1 (58.840541ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=1.5 (53.671317ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=2147483648 (60.160685ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=undefined (51.230625ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=null (55.151436ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=1 (51.341127ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=0 (53.436221ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=-1 (55.829393ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=1.5 (56.607253ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=2147483648 (57.154957ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=undefined (59.507509ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=null (62.213098ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=1 (60.392281ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=0 (50.360241ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=-1 (61.959812ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=1.5 (63.330207ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=2147483648 (53.886563ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=undefined (61.838199ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=null (54.911289ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=1 (59.259922ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=0 (53.77733ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=-1 (51.648795ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=1.5 (57.859396ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=9007199254740992 (55.560936ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=undefined (52.333273ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=null (62.710831ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=1 (51.86442ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=0 (53.153144ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=-1 (53.414761ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=1.5 (51.340547ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=2147483648 (57.216749ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=undefined (49.226302ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=null (59.295872ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=1 (62.908396ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=0 (70.292367ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=-1 (60.761341ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=1.5 (52.152098ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=2147483648 (51.001559ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=undefined (55.787972ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=null (62.906956ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=1 (62.809013ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=0 (52.9904ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=-1 (62.056554ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=1.5 (64.505997ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=2147483648 (56.377187ms)
+✔ CS5 old Helm supervisor close author is rejected (40.23273ms)
+✔ CS4 Helm uses authored drain as well as close in shutdown budget (203.531101ms)
+✔ CS5 both actual mounts and checksums deliver two supervisor profiles without old environment authors (242.96106ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (66.837787ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (66.010306ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (51.931883ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=undefined (57.777703ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject="" (60.841583ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject="operator:test" (54.859458ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=1 (56.647915ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=false (54.354505ms)
+✔ CC4 Helm rejects Control artifactRoot=undefined (57.484545ms)
+✔ CC4 Helm rejects Control artifactRoot=null (56.448369ms)
+✔ CC4 Helm rejects Control artifactRoot="" (62.176057ms)
+✔ CC4 Helm rejects Control artifactRoot="/" (49.353985ms)
+✔ CC4 Helm rejects Control artifactRoot="relative" (50.979468ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/../artifacts" (55.478184ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/artifacts/" (57.491556ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp//artifacts" (56.358337ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/\u0000artifacts" (60.285769ms)
+✔ CC4 Helm rejects Control artifactRoot=1 (58.456221ms)
+✔ CC4 Helm rejects Control studioPublicUrl=undefined (63.350047ms)
+✔ CC4 Helm rejects Control studioPublicUrl=null (64.416625ms)
+✔ CC4 Helm rejects Control studioPublicUrl="" (66.552221ms)
+✔ CC4 Helm rejects Control studioPublicUrl="relative" (62.228868ms)
+✔ CC4 Helm rejects Control studioPublicUrl="file:///tmp" (58.161994ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://" (61.229212ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://user:pass@studio" (60.128124ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://studio?query=1" (59.436816ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://studio#fragment" (64.101456ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://bad host" (65.801831ms)
+✔ CC4 Helm rejects Control studioPublicUrl=1 (55.722601ms)
+✔ CC4 Helm strict Control object (49.603392ms)
+✔ CC4 Helm strict Control object (49.737346ms)
+✔ CC4 Helm strict Control object (53.318158ms)
+✔ CC4 Helm strict Control object (55.127845ms)
+✔ CC4 retired Helm subject author rejects even disabled value (102.757396ms)
+✔ CC4 two real mounted Control profiles align PVC and checksum while retaining generated trust topology (341.103867ms)
+✔ CL chart listener 23456 keeps every Control destination coherent (SPIFFE true) (132.574867ms)
+✔ CL chart listener 23456 keeps every Control destination coherent (SPIFFE false) (120.205877ms)
+✔ CL chart listener 23457 keeps every Control destination coherent (SPIFFE true) (115.710421ms)
+✔ CL chart listener 23457 keeps every Control destination coherent (SPIFFE false) (114.475729ms)
+✔ CL Helm rejects invalid listener undefined (69.447495ms)
+✔ CL Helm rejects invalid listener null (62.633389ms)
+✔ CL Helm rejects invalid listener 8080 (57.040335ms)
+✔ CL Helm rejects invalid listener 0 (64.045416ms)
+✔ CL Helm rejects invalid listener 65536 (52.005674ms)
+✔ CL Helm rejects invalid listener 3.5 (54.19286ms)
+✔ CL Helm rejects invalid listener true (54.970471ms)
+✔ CL Helm rejects second listener author (52.486247ms)
+✔ Studio authored profiles bind loader and all rendered listener edges (445.606788ms)
+✔ Studio chart rejects competing values and unsupported upstream topology (1023.491746ms)
+✔ BA Prism chart preserves two Buster admission profiles through the mounted canonical document (190.763621ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=undefined (56.585473ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=null (51.013219ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=2 (62.626979ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=0 (60.026182ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=-1 (57.160497ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=1.5 (60.35227ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=9007199254740992 (57.63935ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=undefined (58.745088ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=null (60.818322ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=2 (54.375376ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=0 (60.630418ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=-1 (60.934795ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=1.5 (58.459411ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=9007199254740992 (50.929237ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=undefined (58.757919ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=null (58.454021ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=2 (56.986403ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=0 (52.60626ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=-1 (52.649511ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=1.5 (51.755068ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=9007199254740992 (57.010864ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (57.212729ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (57.071645ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (58.688697ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (61.625453ms)
+✔ BA Prism chart retains strict Buster sibling rejection (56.380477ms)
+✔ WL Worker topology follows 23458, SPIFFE=false (97.516091ms)
+✔ WL Worker topology follows 23458, SPIFFE=true (143.921541ms)
+✔ WL Worker topology follows 23459, SPIFFE=false (98.834174ms)
+✔ WL Worker topology follows 23459, SPIFFE=true (110.350832ms)
+✔ WL legacy Worker Helm port rejects "8080" (42.247633ms)
+✔ WL legacy Worker Helm port rejects "" (43.811382ms)
+✔ explicit entry required; old inline authorship is rejected (11.713113ms)
+✔ prism-control: missing file, wrong owner, unknown envelope and reference rejected (11.612401ms)
+✔ prism-studio: missing file, wrong owner, unknown envelope and reference rejected (7.297979ms)
+✔ prism-worker: missing file, wrong owner, unknown envelope and reference rejected (6.431896ms)
+✔ prism-execution: missing file, wrong owner, unknown envelope and reference rejected (7.403462ms)
+✔ buster-engine: missing file, wrong owner, unknown envelope and reference rejected (9.588048ms)
+✔ worker-core: missing file, wrong owner, unknown envelope and reference rejected (9.239949ms)
+✔ every authored setting is required, including explicit nullable values (103.969818ms)
+✔ both domains validate before selecting either and nested snapshots stay frozen (10.83855ms)
+✔ real ConfigMap-style entry symlink resolves component files within its physical generation (3.958642ms)
+✔ actual data symlink replacement after entry read retains one complete old generation (22.109631ms)
+✔ removing a selected generation component after reading entry rejects (3.769517ms)
+✔ changing an already read component during later reads rejects the local bundle (6.722934ms)
+ℹ tests 565
+ℹ suites 0
+ℹ pass 565
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 89003.110867

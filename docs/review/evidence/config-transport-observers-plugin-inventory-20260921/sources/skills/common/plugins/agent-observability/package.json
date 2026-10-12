@@ -1,0 +1,12 @@
+{
+  "name": "@kubeclaw/plugin-agent-observability",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/observers.unit.test.mjs && node tests/parity.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+  },
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*"
+  }
+}

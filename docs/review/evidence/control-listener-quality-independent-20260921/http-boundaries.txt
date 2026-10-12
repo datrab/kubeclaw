@@ -1,0 +1,32 @@
+[prism-control] request failed { method: 'GET', path: '/unknown', error: 'invalid session' }
+[prism-control] request failed { method: 'POST', path: '/v1/projects', error: 'invalid CSRF token' }
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/projects',
+  error: "Expected property name or '}' in JSON at position 1 (line 1 column 2)"
+}
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/projects',
+  error: 'externalId and name are required'
+}
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/dispatch',
+  error: "Expected property name or '}' in JSON at position 1 (line 1 column 2)"
+}
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/dispatch',
+  error: 'invalid dispatch signature'
+}
+[prism-control] request failed { method: 'GET', path: '/unknown', error: 'invalid session' }
+✔ independent public/auth/CSRF/raw signature/error and cross-request boundaries (89.056423ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1074.820279

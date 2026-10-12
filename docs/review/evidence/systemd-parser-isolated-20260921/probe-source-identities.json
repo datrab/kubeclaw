@@ -1,0 +1,18 @@
+[
+  {
+    "path": "scripts/render-native-worker-node.mjs",
+    "sha256": "b32571ac43e893783a87002d473ecc3d3b9dd76d996ea3b26f76ec6a2ed748fc"
+  },
+  {
+    "path": "scripts/native-worker-node-policy.mjs",
+    "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1"
+  },
+  {
+    "path": "my-values/infra/native-worker-pools.yaml",
+    "sha256": "3fdf392b1e755b7b3a5b29954b0feb786140956209de6f6011adc2412aeb0888"
+  },
+  {
+    "path": "tests/verification/deployment/native-worker-node.test.mjs",
+    "sha256": "cc44b880bf366f9ac0153c80a41054379967946bee7d215fedf07644821fc6da"
+  }
+]

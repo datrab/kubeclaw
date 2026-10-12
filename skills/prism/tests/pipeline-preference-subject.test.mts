@@ -1,3 +1,4 @@
+import {controlPolicyFixture, writeControlPolicy} from './fixtures/control-policy.mts';
 import {loadControlConfig} from '../server/control-config.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -35,13 +36,13 @@ test('platform subject automatically selects its real persisted personal history
 });
 
 
-test('Control startup validates and freezes platform subject configuration',()=>{
+test('Control startup validates and freezes platform subject configuration',t=>{
  const subject=`user-${'a'.repeat(24)}`;
- const environment={PRISM_PIPELINE_PREFERENCE_SUBJECT:subject};
+ const environment=controlPolicyFixture(t,{pipelinePreferenceSubject:subject});
  const config=loadControlConfig(environment);
- environment.PRISM_PIPELINE_PREFERENCE_SUBJECT=`user-${'b'.repeat(24)}`;
+ writeControlPolicy(environment.root,{pipelinePreferenceSubject:`user-${'b'.repeat(24)}`});
  assert.equal(config.pipelinePreferenceSubject,subject);
  assert.equal(Object.isFrozen(config),true);
- assert.equal(loadControlConfig({}).pipelinePreferenceSubject,undefined);
- assert.throws(()=>loadControlConfig({PRISM_PIPELINE_PREFERENCE_SUBJECT:'operator:wrong'}),/invalid platform/);
+ assert.equal(loadControlConfig(controlPolicyFixture(t,{})).pipelinePreferenceSubject,undefined);
+ assert.throws(()=>loadControlConfig(controlPolicyFixture(t,{pipelinePreferenceSubject:'operator:wrong'})),/SWARM_CONFIG_INVALID/);
 });

@@ -1,0 +1,91 @@
+✔ CW01 canonical author values reach the actual production worker composition (2.395082ms)
+✔ CW02 every alternate author value reaches the actual consumer (1.868678ms)
+✔ CW03 unknown key at root (1.095568ms)
+✔ CW03 unknown key at operator (0.565404ms)
+✔ CW03 unknown key at operator.prism (0.661887ms)
+✔ CW03 unknown key at operator.prism.worker (0.76683ms)
+✔ CW04 maximumActiveRequests rejects 3 (0.619426ms)
+✔ CW04 maximumActiveRequests rejects 0 (0.432051ms)
+✔ CW04 maximumActiveRequests rejects 1.5 (0.422871ms)
+✔ CW04 maximumActiveRequests rejects 2147483648 (0.584895ms)
+✔ CW04 maximumActiveRequests rejects undefined (0.444662ms)
+✔ CW04 maximumProbeRequests rejects 3 (0.518754ms)
+✔ CW04 maximumProbeRequests rejects 0 (0.38565ms)
+✔ CW04 maximumProbeRequests rejects 1.5 (0.37813ms)
+✔ CW04 maximumProbeRequests rejects 2147483648 (0.374689ms)
+✔ CW04 maximumProbeRequests rejects undefined (0.460742ms)
+✔ CW04 maximumConnections rejects 3 (0.38126ms)
+✔ CW04 maximumConnections rejects 0 (0.39518ms)
+✔ CW04 maximumConnections rejects 1.5 (0.391381ms)
+✔ CW04 maximumConnections rejects 2147483648 (0.36461ms)
+✔ CW04 maximumConnections rejects undefined (0.479353ms)
+✔ CW04 requestTimeoutMs rejects 3 (0.483932ms)
+✔ CW04 requestTimeoutMs rejects 0 (0.427891ms)
+✔ CW04 requestTimeoutMs rejects 1.5 (0.561425ms)
+✔ CW04 requestTimeoutMs rejects 2147483648 (0.430821ms)
+✔ CW04 requestTimeoutMs rejects undefined (0.378099ms)
+✔ CW04 shutdownTimeoutMs rejects 3 (0.37198ms)
+✔ CW04 shutdownTimeoutMs rejects 0 (0.36507ms)
+✔ CW04 shutdownTimeoutMs rejects 1.5 (0.35645ms)
+✔ CW04 shutdownTimeoutMs rejects 2147483648 (0.3776ms)
+✔ CW04 shutdownTimeoutMs rejects undefined (0.366099ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (0.177794ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (0.066662ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (0.169464ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (0.083652ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (0.095183ms)
+✔ CW06 rejects unsupported profile (0.579305ms)
+✔ CW06 rejects unsupported features (0.472393ms)
+✔ CW06 rejects unsupported tuning (0.37891ms)
+✔ CW06 rejects unsupported overrides (0.38144ms)
+✔ CW07 missing or broken authorship never falls back to defaults (0.608636ms)
+✖ CW08 maximumActiveRequests cannot exceed connection reservation (1.004826ms)
+✖ CW08 maximumProbeRequests cannot exceed connection reservation (0.442981ms)
+✔ CW09 shutdown budget remains independent of request admission deadline (0.485183ms)
+✔ CW10 effective settings omit secrets and original authentication still fails closed (0.350989ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 43
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 271.765843
+
+✖ failing tests:
+
+test at ../../../../../tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:49:70
+✖ CW08 maximumActiveRequests cannot exceed connection reservation (1.004826ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:51:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /CONNECTION_BUDGET_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:49:70
+✖ CW08 maximumProbeRequests cannot exceed connection reservation (0.442981ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts:51:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /CONNECTION_BUDGET_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -162,7 +162,7 @@ const adapters = new core.AdapterRuntime({
       timeoutMs: 1000,
     }],
   ]),
-  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager()),
+  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
   shutdownTimeoutMs: 1000,
   async emitDomainEvent() {},
 });

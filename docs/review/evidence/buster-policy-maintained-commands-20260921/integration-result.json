@@ -1,0 +1,7 @@
+{
+  "status": "integrated; execution pending",
+  "path": "package.json",
+  "beforeSha256": "e6fcfe751eb82779aa52a74558c2173fa72168ee77c873f63b7fb681de16e0c4",
+  "afterSha256": "f5eec9356c2611aed1b9e1f5abeba7b518bc737755a177792a1d409c3ce05f96",
+  "review": "../independent-buster-runner-execution-child-20260921/maintained-command-source-review.json"
+}

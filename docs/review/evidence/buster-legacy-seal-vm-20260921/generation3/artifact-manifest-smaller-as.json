@@ -1,0 +1,107 @@
+{
+  "status": "generation3-prepared-not-booted",
+  "files": [
+    {
+      "path": "node_modules/.cache/buster-legacy-seal-vm-20260921/generation3/guest-root.ext4",
+      "bytes": 268435456,
+      "mode": 420,
+      "sha256": "18df3738bba4d4ca9916fb62f23ef918c572a0d7a96ca90257dff5c727dfa855"
+    },
+    {
+      "path": "node_modules/.cache/buster-legacy-seal-vm-20260921/generation3/second.ext4",
+      "bytes": 16777216,
+      "mode": 420,
+      "sha256": "876b590487473b3cf82cd38196cb70f8d816b8897260bc2a94cac0fde4a0793a"
+    },
+    {
+      "path": "node_modules/.cache/buster-legacy-seal-vm-20260921/generation3/vmlinuz-virt",
+      "bytes": 12608512,
+      "mode": 420,
+      "sha256": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c"
+    },
+    {
+      "path": "node_modules/.cache/buster-legacy-seal-vm-20260921/generation3/initrd.cpio.gz",
+      "bytes": 1899633,
+      "mode": 420,
+      "sha256": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2"
+    },
+    {
+      "path": "node_modules/.cache/buster-legacy-seal-vm-20260921/generation3/repo-snapshot-manifest.json",
+      "bytes": 1178,
+      "mode": 420,
+      "sha256": "a7d298564b09951c380f3d917d367bf9ff1a329bac3dcf6a9324f256e6db4622"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/guest-init.sh",
+      "bytes": 971,
+      "mode": 420,
+      "sha256": "d554e25956ac6a28c96d2815704fb68d44131789bd420c33453943ca1544aae0"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/prepare-images.py",
+      "bytes": 5877,
+      "mode": 420,
+      "sha256": "5a48542dd166958ce97858f60cc07cc621e94a731d9cc8c3e0505fc3d43c7826"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/prepare-runtime.py",
+      "bytes": 5608,
+      "mode": 420,
+      "sha256": "a91e50dbc90784c2969fa673f57bcc03e4f9ffa24ef91a01b3d479fcff9578ab"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/runtime-binding.py",
+      "bytes": 1560,
+      "mode": 420,
+      "sha256": "4f08c2420b9a1d8383c6904bdea0659c001b1e20e719c52f44546843c1927267"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/tool-runtime-identities.json",
+      "bytes": 895864,
+      "mode": 420,
+      "sha256": "1c316c8df68bcf86e4758d98cb3a0d76ddffcb0b65edc6ec02d1c99c3733e3ac"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/source-export-identities.json",
+      "bytes": 1070,
+      "mode": 420,
+      "sha256": "2cb0eda63c52e8080700c63ca86b4a65ce6868178cf6510e5fef57ac3d397538"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/guest-payload-identities.json",
+      "bytes": 283543,
+      "mode": 420,
+      "sha256": "40902813e18dc0f6c881e86adfc88491095acd26a4c04c4651593ff072e658d3"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/image-build.json",
+      "bytes": 1843,
+      "mode": 420,
+      "sha256": "cffde65a8414adbcee77acd82d98bef78d75a62eb8eb02674883b8ed03039140"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/prepared-artifacts.json",
+      "bytes": 671,
+      "mode": 420,
+      "sha256": "904ba682fa6f0021c7c16de4d071abc0e012ba5acb84a49316e475cb120d1e5f"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/launch-smaller-as.py",
+      "bytes": 11389,
+      "mode": 420,
+      "sha256": "f38efea66663007bb69a0145b1bdab4570fbd27776aca98a9bab51d7b1f3f35e"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/launch-command-smaller-as.json",
+      "bytes": 2102,
+      "mode": 420,
+      "sha256": "9ed3784d785ac505923ae42dcd6d2a735a7c1af50de09019ff88dfbb29fe52e1"
+    },
+    {
+      "path": "docs/review/remediation/implementation/independent-vm-fixed-corridor-20260921.md",
+      "bytes": 3901,
+      "mode": 420,
+      "sha256": "928aeeb5e1080359aa8b7d867ad2158cd7d75371831699e367901f794530f8bd"
+    }
+  ]
+}

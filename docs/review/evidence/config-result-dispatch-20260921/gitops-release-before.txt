@@ -1,0 +1,154 @@
+file:///tmp/gitops-release-OIjcFJ/scripts/updates/release-configuration.mjs:54
+    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                             ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at verifyReleaseConfiguration (file:///tmp/gitops-release-OIjcFJ/scripts/updates/release-configuration.mjs:54:78)
+    at file:///tmp/gitops-release-OIjcFJ/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/gitops-release-aClJOl/scripts/updates/release-configuration.mjs:54
+    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                             ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at verifyReleaseConfiguration (file:///tmp/gitops-release-aClJOl/scripts/updates/release-configuration.mjs:54:78)
+    at file:///tmp/gitops-release-aClJOl/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/gitops-release-KoAegb/scripts/updates/release-configuration.mjs:54
+    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                             ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at verifyReleaseConfiguration (file:///tmp/gitops-release-KoAegb/scripts/updates/release-configuration.mjs:54:78)
+    at file:///tmp/gitops-release-KoAegb/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (537.366639ms)
+✔ imperative ownership guard fails closed and permits only other namespaces (1.300973ms)
+✖ committed bundle corruption, switched selection and hidden image changes fail before activation (672.687435ms)
+✖ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (688.9799ms)
+✔ root claim and retained workload tracking block imperative adoption after partial GitOps transitions (0.667937ms)
+✔ original runtime teardown commands stop before any Helm mutation when Argo owns the namespace (1203.022184ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 3
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3820.448529
+
+✖ failing tests:
+
+test at tests/verification/deployment/gitops-release.test.mjs:47:1
+✖ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (537.366639ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/gitops-release-OIjcFJ/scripts/updates/release-configuration.mjs:54
+      if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                               ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at verifyReleaseConfiguration (file:///tmp/gitops-release-OIjcFJ/scripts/updates/release-configuration.mjs:54:78)
+      at file:///tmp/gitops-release-OIjcFJ/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:36:5)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:47:115)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    status: 1,
+    signal: null,
+    output: [ null, <Buffer >, <Buffer 66 69 6c 65 3a 2f 2f 2f 74 6d 70 2f 67 69 74 6f 70 73 2d 72 65 6c 65 61 73 65 2d 4f 49 6a 63 46 4a 2f 73 63 72 69 70 74 73 2f 75 70 64 61 74 65 73 2f ... 778 more bytes> ],
+    pid: 45841,
+    stdout: <Buffer >,
+    stderr: <Buffer 66 69 6c 65 3a 2f 2f 2f 74 6d 70 2f 67 69 74 6f 70 73 2d 72 65 6c 65 61 73 65 2d 4f 49 6a 63 46 4a 2f 73 63 72 69 70 74 73 2f 75 70 64 61 74 65 73 2f ... 778 more bytes>
+  }
+
+test at tests/verification/deployment/gitops-release.test.mjs:123:1
+✖ committed bundle corruption, switched selection and hidden image changes fail before activation (672.687435ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/gitops-release-aClJOl/scripts/updates/release-configuration.mjs:54
+      if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                               ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at verifyReleaseConfiguration (file:///tmp/gitops-release-aClJOl/scripts/updates/release-configuration.mjs:54:78)
+      at file:///tmp/gitops-release-aClJOl/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:36:5)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:123:111)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    status: 1,
+    signal: null,
+    output: [ null, <Buffer >, <Buffer 66 69 6c 65 3a 2f 2f 2f 74 6d 70 2f 67 69 74 6f 70 73 2d 72 65 6c 65 61 73 65 2d 61 43 6c 4a 4f 6c 2f 73 63 72 69 70 74 73 2f 75 70 64 61 74 65 73 2f ... 778 more bytes> ],
+    pid: 45931,
+    stdout: <Buffer >,
+    stderr: <Buffer 66 69 6c 65 3a 2f 2f 2f 74 6d 70 2f 67 69 74 6f 70 73 2d 72 65 6c 65 61 73 65 2d 61 43 6c 4a 4f 6c 2f 73 63 72 69 70 74 73 2f 75 70 64 61 74 65 73 2f ... 778 more bytes>
+  }
+
+test at tests/verification/deployment/gitops-release.test.mjs:143:1
+✖ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (688.9799ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/gitops-release-KoAegb/scripts/updates/release-configuration.mjs:54
+      if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                               ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at verifyReleaseConfiguration (file:///tmp/gitops-release-KoAegb/scripts/updates/release-configuration.mjs:54:78)
+      at file:///tmp/gitops-release-KoAegb/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:36:5)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:143:122)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19) {
+    status: 1,
+    signal: null,
+    output: [ null, <Buffer >, <Buffer 66 69 6c 65 3a 2f 2f 2f 74 6d 70 2f 67 69 74 6f 70 73 2d 72 65 6c 65 61 73 65 2d 4b 6f 41 65 67 62 2f 73 63 72 69 70 74 73 2f 75 70 64 61 74 65 73 2f ... 778 more bytes> ],
+    pid: 46047,
+    stdout: <Buffer >,
+    stderr: <Buffer 66 69 6c 65 3a 2f 2f 2f 74 6d 70 2f 67 69 74 6f 70 73 2d 72 65 6c 65 61 73 65 2d 4b 6f 41 65 67 62 2f 73 63 72 69 70 74 73 2f 75 70 64 61 74 65 73 2f ... 778 more bytes>
+  }

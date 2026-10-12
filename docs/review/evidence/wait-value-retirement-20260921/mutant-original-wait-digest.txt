@@ -1,0 +1,20 @@
+SEMANTIC_MUTANT_APPLIED:original-wait-digest
+✖ the existing operator projection receipt replays after Wait projection using the original logical Wait digest (6454.433282ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7236.132894
+
+✖ failing tests:
+
+test at tests/verification/reliability/wait-value-projection.test.mjs:321:1
+✖ the existing operator projection receipt replays after Wait projection using the original logical Wait digest (6454.433282ms)
+  Error: OPERATOR_PROJECTION_AUTHORITY_REQUIRED
+      at fail (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugins/operator-messaging/src/delivery-projection.ts:12:32)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugins/operator-messaging/src/delivery-projection.ts:129:109
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-records.ts:111:37
+      at async withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:269:12)

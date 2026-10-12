@@ -1,0 +1,124 @@
+✖ CL chart listener 23456 keeps every Control destination coherent (SPIFFE true) (125.644623ms)
+✖ CL chart listener 23456 keeps every Control destination coherent (SPIFFE false) (112.808916ms)
+✖ CL chart listener 23457 keeps every Control destination coherent (SPIFFE true) (102.730658ms)
+✖ CL chart listener 23457 keeps every Control destination coherent (SPIFFE false) (83.684873ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 802.826774
+
+✖ failing tests:
+
+test at ../../../../../tmp/control-chart-mutant-xdf1pvko/tests/verification/deployment/prism-swarm-config.test.mjs:270:5
+✖ CL chart listener 23456 keeps every Control destination coherent (SPIFFE true) (125.644623ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+        port: 8080,
+  +     targetPort: 8080
+  -     targetPort: 23456
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///tmp/control-chart-mutant-xdf1pvko/tests/verification/deployment/prism-swarm-config.test.mjs:281:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { port: 8080, targetPort: 8080 } ],
+    expected: [ { port: 8080, targetPort: 23456 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/control-chart-mutant-xdf1pvko/tests/verification/deployment/prism-swarm-config.test.mjs:270:5
+✖ CL chart listener 23456 keeps every Control destination coherent (SPIFFE false) (112.808916ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+        port: 8080,
+  +     targetPort: 8080
+  -     targetPort: 23456
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///tmp/control-chart-mutant-xdf1pvko/tests/verification/deployment/prism-swarm-config.test.mjs:281:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { port: 8080, targetPort: 8080 } ],
+    expected: [ { port: 8080, targetPort: 23456 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/control-chart-mutant-xdf1pvko/tests/verification/deployment/prism-swarm-config.test.mjs:270:5
+✖ CL chart listener 23457 keeps every Control destination coherent (SPIFFE true) (102.730658ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+        port: 8080,
+  +     targetPort: 8080
+  -     targetPort: 23457
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///tmp/control-chart-mutant-xdf1pvko/tests/verification/deployment/prism-swarm-config.test.mjs:281:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { port: 8080, targetPort: 8080 } ],
+    expected: [ { port: 8080, targetPort: 23457 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/control-chart-mutant-xdf1pvko/tests/verification/deployment/prism-swarm-config.test.mjs:270:5
+✖ CL chart listener 23457 keeps every Control destination coherent (SPIFFE false) (83.684873ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+        port: 8080,
+  +     targetPort: 8080
+  -     targetPort: 23457
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///tmp/control-chart-mutant-xdf1pvko/tests/verification/deployment/prism-swarm-config.test.mjs:281:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { port: 8080, targetPort: 8080 } ],
+    expected: [ { port: 8080, targetPort: 23457 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

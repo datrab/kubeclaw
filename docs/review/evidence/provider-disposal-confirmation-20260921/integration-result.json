@@ -1,0 +1,45 @@
+{
+  "time": "2026-09-21T21:50:13.938283+00:00",
+  "manifest": "manifest-v3.json",
+  "review": "root-source-review-v3.json",
+  "runtime": "pending",
+  "sourceWindow": "Nash17556 terminal0 explicitHOLD",
+  "files": [
+    {
+      "path": "docs/architecture/buster-fixture-cleanup.md",
+      "sha256": "dd455285522761c5c9f26251291a7f7325d404e53b0e8b220c92c0d5484d63c4"
+    },
+    {
+      "path": "package.json",
+      "sha256": "a94c2d1af6d7a68a0949f3ccb6d89362cb6f7e78c14cdfb986d0f8cd59fdceca"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "sha256": "c8c3709acc66be25880a9e56bc4ab0df9f8eb3d3b76b19e0d3aedb3964c0705b"
+    },
+    {
+      "path": "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+      "sha256": "c5ad3ab397057d02a52a1d26d1b23486c4c59d9988b3410ed3768223cfa9e257"
+    },
+    {
+      "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+      "sha256": "22eb659212d4bc2f5f43b6678b4608b15e703869cbfef6d77bcfce3fd154fae6"
+    },
+    {
+      "path": "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs",
+      "sha256": "a31ae99e4e61a71962b3017c1eaeca8227457a9891722d6616fbdcb05a062b13"
+    },
+    {
+      "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "sha256": "edbe313ffac1eb2b4d2435cca801ca1c9e711cfe5f23de0783f616a88460a050"
+    }
+  ]
+}

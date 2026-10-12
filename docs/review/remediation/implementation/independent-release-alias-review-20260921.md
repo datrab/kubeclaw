@@ -1,0 +1,17 @@
+# Independent release configuration alias review — 2026-09-21
+
+Reviewer: fresh `release_alias_fresh_review` subagent, separate from the implementation agent. Scope: the two Prism canonical aliases in release configuration verification, their commit binding, real release materialization integration, and corresponding operator documentation. No production or test implementation was changed during this review.
+
+Result: **accepted for this bounded local slice; no outstanding finding**. The verifier has a literal two-entry alias allowlist rather than a generic symlink resolver. It checks both committed and current link text, resolves the fixed canonical paths, verifies the canonical regular-file blobs against the same selected commit, rejects linked ancestors, and retains the existing configuration fileset and family isolation checks. The schema outside the chart directory is explicitly included in verification. The previous arbitrary-symlink rejection remains effective. This is a small extension of the existing verifier, with no new alternate materialization path.
+
+The actual `scripts/updates/materialize-release.mjs` invokes this verifier before writing release values. Its pre-existing `--check-selected-source` exception only runs with `--check`; it is not a new deployment bypass. The two updated materialization fixtures preserve the actual relative aliases and copy their canonical schema rather than substituting synthetic chart configuration.
+
+Independent execution:
+
+- Original release configuration, code release, GitOps continuous, runtime input locks and release images suites: **25/25 passed**, no skips or cancellations; real Helm rendering is included. Raw output: `docs/review/evidence/independent-release-aliases-20260921/original-tests.txt`.
+- Additional reviewer-authored real Git probes: reject a wrongly committed alias even after its working-tree text is corrected; reject a committed canonical symlink even after replacement by a regular working-tree file; reject a missing committed canonical schema despite a present current file; reject linked `charts`, `my-values`, and `skills` ancestors. Restoring the original tree still passes. Source and output: `probes.mjs` and `probes.txt` in the same evidence directory.
+- Three isolated negative controls each failed on semantic assertions: omit target verification; omit ancestor verification; omit committed alias-text verification while keeping current alias checks. The last mutant is caught by the reviewer's additional probe. No production source was mutated. `mutants.py`, `mutant-results.json`, and the three named raw logs preserve the changes and results.
+
+`reviewed-source-sha256.json` binds this review to the verifier, production materializer, changed integration tests, and operator documentation. The documentation accurately identifies both canonical edit locations, source qualification, allowed links, rejected alternatives and preservation requirements when copying a release checkout. It does not prescribe a second editable config copy.
+
+Limits: these are local filesystem, Git, materialization and Helm tests. They do not demonstrate a Docker build, successful image qualification, deployment, or completion of CONFIG. As documented by the implementation, verification assumes a release checkout that is not being concurrently rewritten; descriptor-pinned race resistance was not introduced or claimed. The historical finding register remains unchanged.

@@ -1,0 +1,127 @@
+✔ real Loader confirmed-disposal recovery: signal failure false, retain (1648.336092ms)
+✔ real Loader confirmed-disposal recovery: signal failure false, delete (750.602908ms)
+✖ real Loader confirmed-disposal recovery: signal failure true, retain (951.3285ms)
+✖ real Loader confirmed-disposal recovery: signal failure true, delete (965.623672ms)
+✔ real Loader retains cleanup and stop failures in current session (436.545581ms)
+✔ real Loader retains cleanup and stop failures in recovery session (559.271049ms)
+✔ overlapping real Loaded terminate calls account one confirmed session exactly once (561.489537ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 5
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7816.942232
+
+✖ failing tests:
+
+test at tests/verification/contracts/provider-disposal-recovery.test.mjs:12:3
+✖ real Loader confirmed-disposal recovery: signal failure true, retain (951.3285ms)
+  Error [AggregateError]: TEST_PROVIDER_RETAINED_CLEANUP_UNCONFIRMED:TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED:TEST_PROVIDER_PROCESS_NOT_AVAILABLE:TEST_PROVIDER_SIGNAL_FAILED:TEST_PROVIDER_SIGNAL_FAILED
+      at retainedCleanupFailure (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:118:21)
+      at async cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:61:14)
+      at async cleanupRetainedFixtures (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:70:12)
+      ... 3 lines matching cause stack trace ...
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    [cause]: Error [AggregateError]: TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED:TEST_PROVIDER_PROCESS_NOT_AVAILABLE:TEST_PROVIDER_SIGNAL_FAILED
+        at #cleanupSession (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:102:33)
+        at async IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:92:5)
+        at async cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:50:7)
+        at async cleanupRetainedFixtures (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:70:12)
+        at async RunnerScheduler.run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-scheduler.ts:45:13)
+        at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-recovery.test.mjs:45:20)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+      [cause]: Error: TEST_PROVIDER_PROCESS_NOT_AVAILABLE
+          at ProviderProcessSession.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:160:45)
+          at #cleanupSession (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:98:64)
+          at async IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:92:5),
+      [errors]: [
+        Error: TEST_PROVIDER_PROCESS_NOT_AVAILABLE
+            at ProviderProcessSession.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:160:45)
+            at #cleanupSession (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:98:64)
+            at async IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:92:5),
+        [Error]
+      ]
+    },
+    [errors]: [
+      AggregateError: TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED:TEST_PROVIDER_PROCESS_NOT_AVAILABLE:TEST_PROVIDER_SIGNAL_FAILED
+          at #cleanupSession (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:102:33)
+          at async IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:92:5)
+          at async cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:50:7)
+          at async cleanupRetainedFixtures (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:70:12)
+          at async RunnerScheduler.run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-scheduler.ts:45:13)
+          at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-recovery.test.mjs:45:20)
+          at async Test.run (node:internal/test_runner/test:1409:7)
+          at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+        [cause]: Error: TEST_PROVIDER_PROCESS_NOT_AVAILABLE
+            at ProviderProcessSession.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:160:45)
+            at #cleanupSession (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:98:64)
+            at async IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:92:5)
+      },
+      Error: TEST_PROVIDER_SIGNAL_FAILED
+          at signal (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:182:43)
+          at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:190:80
+          ... 6 lines matching cause stack trace ...
+          at cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:51:18)
+          at cleanupInstance (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:23:12) {
+        [cause]: [Error]
+      }
+    ]
+  }
+
+test at tests/verification/contracts/provider-disposal-recovery.test.mjs:12:3
+✖ real Loader confirmed-disposal recovery: signal failure true, delete (965.623672ms)
+  Error [AggregateError]: TEST_PROVIDER_RETAINED_CLEANUP_UNCONFIRMED:TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED:TEST_PROVIDER_PROCESS_NOT_AVAILABLE:TEST_PROVIDER_SIGNAL_FAILED:TEST_PROVIDER_SIGNAL_FAILED
+      at retainedCleanupFailure (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:118:21)
+      at async cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:61:14)
+      at async cleanupRetainedFixtures (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:70:12)
+      ... 3 lines matching cause stack trace ...
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    [cause]: Error [AggregateError]: TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED:TEST_PROVIDER_PROCESS_NOT_AVAILABLE:TEST_PROVIDER_SIGNAL_FAILED
+        at #cleanupSession (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:102:33)
+        at async IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:92:5)
+        at async cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:50:7)
+        at async cleanupRetainedFixtures (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:70:12)
+        at async RunnerScheduler.run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-scheduler.ts:45:13)
+        at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-recovery.test.mjs:45:20)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+      [cause]: Error: TEST_PROVIDER_PROCESS_NOT_AVAILABLE
+          at ProviderProcessSession.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:160:45)
+          at #cleanupSession (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:98:64)
+          at async IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:92:5),
+      [errors]: [
+        Error: TEST_PROVIDER_PROCESS_NOT_AVAILABLE
+            at ProviderProcessSession.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:160:45)
+            at #cleanupSession (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:98:64)
+            at async IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:92:5),
+        [Error]
+      ]
+    },
+    [errors]: [
+      AggregateError: TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED:TEST_PROVIDER_PROCESS_NOT_AVAILABLE:TEST_PROVIDER_SIGNAL_FAILED
+          at #cleanupSession (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:102:33)
+          at async IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:92:5)
+          at async cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:50:7)
+          at async cleanupRetainedFixtures (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:70:12)
+          at async RunnerScheduler.run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-scheduler.ts:45:13)
+          at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-recovery.test.mjs:45:20)
+          at async Test.run (node:internal/test_runner/test:1409:7)
+          at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+        [cause]: Error: TEST_PROVIDER_PROCESS_NOT_AVAILABLE
+            at ProviderProcessSession.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:160:45)
+            at #cleanupSession (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:98:64)
+            at async IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:92:5)
+      },
+      Error: TEST_PROVIDER_SIGNAL_FAILED
+          at signal (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:182:43)
+          at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:190:80
+          ... 6 lines matching cause stack trace ...
+          at cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:51:18)
+          at cleanupInstance (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:23:12) {
+        [cause]: [Error]
+      }
+    ]
+  }

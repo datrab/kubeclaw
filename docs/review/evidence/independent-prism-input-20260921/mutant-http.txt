@@ -1,0 +1,21 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'WORKER_TRUST_PEER_MISSING'
+- 'Prism attempt request is too large'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-prism-input-20260921/mutant-probe-626c7e2a8bfb416db3f7afe90daa5153.mjs:33:82
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'WORKER_TRUST_PEER_MISSING',
+  expected: 'Prism attempt request is too large',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

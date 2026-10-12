@@ -1,0 +1,11 @@
+✔ actual data symlink replacement after entry read retains one complete old generation (19.387447ms)
+✔ removing a selected generation component after reading entry rejects (6.527011ms)
+✔ changing an already read component during later reads rejects the local bundle (3.173213ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 593.993683

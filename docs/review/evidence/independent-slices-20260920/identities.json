@@ -1,0 +1,21 @@
+{
+  "source": "cd9f235345f5fd8736a2ffe75d806288e4d538db",
+  "node": "v24.21.0",
+  "files": {
+    "scripts/review/remediation-register.mjs": "970653b2eb0b4692acd99d34b70cdec1e01e23b65057e74978cd2cff268a794e",
+    "scripts/review/remediation-identities.json": "2f6fbb58a790eab9a728f1f3378f89e56c4b91b17dcfbc41b2ab2288a886a3c1",
+    "scripts/tests/remediation-register.test.mjs": "b110baa72ee42e2bcdb4e548c8dc9900da29d7e0f89136d4592a3a9cb2899d10",
+    "skills/buster/engine/test-gates/terminal-workspace.ts": "60264e4f91904b49c57225184cc86233778c5c7146039bdd783bdb86ba71a9b1",
+    "tests/verification/reliability/buster-terminal-workspace-native.test.mts": "57872985a8be236d6d0006c5808a3344bbfaa97485fe68f2f5abaeecb1fe373d",
+    "skills/buster/engine/test-gates/tests/terminal-workspace.test.ts": "b02702d27aedf1ec68ff08ecf6205748f23a4219eb7515f7d52ab87fb19a6b6c",
+    "docs/review/remediation/register.json": "d6579bcc9cdf977a053fec348ee10ccf38b346618954f7a86c7130911cc7fdff",
+    "docs/review/remediation/register.md": "f72fc36f8f387e2fd6dc2178cce3b31ee6d348644bd37fa53c03b22e56247fc5",
+    "docs/review/remediation/progress.md": "e90378f9979e4a01bfce078106ef2c474f42b2dd5b024b0e9315c8349b4cba9d",
+    "docs/review/remediation/handoff.md": "9d378143a71eff6bc4f64d97e628ac6d5a9cee4d0973ed92b9798e0f747694fa",
+    "docs/review/remediation/acceptance-20260920.md": "90e0fade7d2b26102f817900f800789a8efd25897f36b4f26c9338e7b1a343f2",
+    "docs/review/remediation/implementation/register-consistency-20260920.md": "59d801dd16d51fcc0bdcaf56679b09868c3d4da035be8e48eef5221e384a644f",
+    "docs/review/remediation/implementation/buster-native-cutover-20260920.md": "491e217251b8592f92197540484252c5d25d53b4917f59f7a9d2f19642a36f08",
+    "docs/operations/observability-retention.md": "51b15f6c69d0ad48a6f9cbede5c5aa0b9f56065048740e3338ac1c0f626f9f57",
+    "docs/ops/cilium-networking.md": "8fbff73b5f3347580e5a8f6f71aab93bfbdd9517f074ed656708ec99d35f3d7b"
+  }
+}

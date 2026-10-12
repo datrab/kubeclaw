@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prism.engine-requests.v1.json",
+  "$defs": {
+    "generate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "input"],
+      "properties": {
+        "operation": { "const": "generate" },
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["document", "instruction"],
+          "properties": {
+            "document": { "type": "object" },
+            "instruction": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20000
+            },
+            "mode": { "enum": ["directions", "initial-document", "refine"] }
+          }
+        }
+      }
+    },
+    "render": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "input"],
+      "properties": {
+        "operation": { "const": "render" },
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["document", "view", "state", "viewport"],
+          "properties": {
+            "document": { "type": "object" },
+            "view": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+            "state": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+            "viewport": { "enum": ["compact", "regular", "wide"] },
+            "capture": { "type": "boolean" },
+            "assetSources": {
+              "type": "object",
+              "propertyNames": { "pattern": "^[a-z][a-z0-9-]{1,79}$" },
+              "additionalProperties": {
+                "type": "string",
+                "maxLength": 16000000,
+                "pattern": "^data:[a-z0-9.+-]+/[a-z0-9.+-]+;base64,"
+              }
+            }
+          }
+        }
+      }
+    },
+    "evaluate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "input"],
+      "properties": {
+        "operation": { "const": "evaluate" },
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["document"],
+          "properties": { "document": { "type": "object" } }
+        }
+      }
+    },
+    "ingest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "input"],
+      "properties": {
+        "operation": { "const": "ingest" },
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["text"],
+          "properties": {
+            "text": { "type": "string", "minLength": 1, "maxLength": 200000 }
+          }
+        }
+      }
+    },
+    "publish": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "input"],
+      "properties": {
+        "operation": { "const": "publish" },
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["document", "approved"],
+          "properties": {
+            "document": { "type": "object" },
+            "approved": { "const": true }
+          }
+        }
+      }
+    }
+  }
+}

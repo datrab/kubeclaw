@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import http from 'node:http';
 import { once } from 'node:events';
 import { NetworkHttpCapabilityInvoker } from '../../../skills/buster/engine/test-gates/network-http-runtime.ts';
+import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
 
 test('suffix matching cannot contact an unrelated real HTTP service; exact origin works and redirects stop', async () => {
   let contacts = 0;
@@ -17,10 +18,13 @@ test('suffix matching cannot contact an unrelated real HTTP service; exact origi
   const options = { allowedOrigins: [], allowedHostSuffixes: ['.0.0.1'], allowedPorts: [port], maximumResponseBytes: 4096, maximumExecutionMs: 2000 };
   const request = (method: string, route = '/') => ({ operation: 'request', resource: { type: 'network.url', canonicalId: origin + route }, payload: { method } });
   try {
-    const restricted = new NetworkHttpCapabilityInvoker(options);
+    const restricted = createBusterCapabilityRuntime({ allowedCapabilities: new Set(['network.http']), networkHttp: options },
+      { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }, { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }).invoker!;
     for (const method of ['GET', 'HEAD']) await assert.rejects(restricted.invoke('network.http', request(method), new AbortController().signal), /HTTP_REQUEST_EXACT_ORIGIN_REQUIRED/);
     assert.equal(contacts, 0);
-    const allowed = new NetworkHttpCapabilityInvoker({ ...options, allowedOrigins: [origin] });
+    const allowed = createBusterCapabilityRuntime({ allowedCapabilities: new Set(['network.http']),
+      networkHttp: { ...options, allowedOrigins: [origin] } },
+    { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }, { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }).invoker!;
     const response = await allowed.invoke('network.http', request('GET'), new AbortController().signal);
     assert.equal(response.body, 'real service response');
     assert.equal(contacts, 1);

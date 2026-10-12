@@ -1,0 +1,25 @@
+✖ source attachment and cancellation share the durable admission fence (105.977227ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 922.235772
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-prepared-store-cancellation.test.mts:38:1
+✖ source attachment and cancellation share the durable admission fence (105.977227ms)
+  Error [PipelineTestGateContractError]: Invalid pipeline test-gate remotePlanStatus: / terminal failure status requires only an error
+      at validatePipelineTestGateContract (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/contracts/pipeline-test-gate/v1/src/validation.ts:276:25)
+      at #transitionStatus (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/prepared-plan-store.ts:207:5)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:269:12)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-prepared-store-cancellation.test.mts:67:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    definition: 'remotePlanStatus',
+    errors: [ '/ terminal failure status requires only an error' ]
+  }

@@ -1,0 +1,6 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/trivy-database-lock.native.mjs
+  1:1  error  Use a lowercase kebab-case filename  discipline/filename-case
+
+✖ 1 problem (1 error, 0 warnings)
+

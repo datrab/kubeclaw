@@ -1,0 +1,235 @@
+{
+  "uniqueConfigFieldPatterns": 17,
+  "registrationConfigFieldPatterns": 23,
+  "plugins": [
+    {
+      "plugin": "redis-transport",
+      "registrations": [
+        "publisher",
+        "telemetry"
+      ],
+      "fields": [
+        {
+          "path": "url",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^rediss?://[^/@:]+:[0-9]+$",
+            "maxLength": 512
+          }
+        },
+        {
+          "path": "passwordSecret",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+          }
+        },
+        {
+          "path": "streamPrefix",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9:_-]{0,127}$"
+          }
+        },
+        {
+          "path": "maxLen",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          }
+        },
+        {
+          "path": "dedupTtlMs",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 31536000000
+          }
+        },
+        {
+          "path": "timeoutMs",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 300000
+          }
+        }
+      ]
+    },
+    {
+      "plugin": "transport-publisher",
+      "registrations": [
+        "publisher"
+      ],
+      "fields": [
+        {
+          "path": "deliveryRoot",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "maximumDeliveryRecords",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 100000
+          }
+        },
+        {
+          "path": "maximumDeliveryBytes",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 268435456
+          }
+        },
+        {
+          "path": "targets",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "minProperties": 1,
+            "propertyNames": {
+              "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+            },
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "endpoint",
+                "signingSecret"
+              ],
+              "properties": {
+                "endpoint": {
+                  "type": "string",
+                  "format": "uri",
+                  "pattern": "^https?://"
+                },
+                "signingSecret": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+                },
+                "maxPayloadBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1048576,
+                  "default": 262144
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "targets.*.endpoint",
+          "requiredInTarget": true,
+          "schema": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https?://"
+          }
+        },
+        {
+          "path": "targets.*.signingSecret",
+          "requiredInTarget": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9._-]{0,127}$"
+          }
+        },
+        {
+          "path": "targets.*.maxPayloadBytes",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1048576,
+            "default": 262144
+          }
+        }
+      ]
+    },
+    {
+      "plugin": "agent-observability",
+      "registrations": [
+        "ingester",
+        "evidence"
+      ],
+      "fields": []
+    },
+    {
+      "plugin": "openclaw-agent-events",
+      "registrations": [
+        "source"
+      ],
+      "fields": [
+        {
+          "path": "hooks",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "agent_end",
+                "llm_input",
+                "llm_output",
+                "subagent_spawned",
+                "subagent_delivery_target",
+                "subagent_ended",
+                "before_tool_call",
+                "after_tool_call",
+                "model_call_started",
+                "model_call_ended",
+                "session_start",
+                "session_end"
+              ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        },
+        {
+          "path": "maxQueueEvents",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000,
+            "default": 256
+          }
+        },
+        {
+          "path": "maxQueueBytes",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16777216,
+            "default": 1048576
+          }
+        },
+        {
+          "path": "drainTimeoutMs",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 60000,
+            "default": 5000
+          }
+        }
+      ]
+    }
+  ]
+}

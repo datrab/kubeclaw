@@ -1,0 +1,26 @@
+[
+  {
+    "path": "skills/buster/engine/BOUNDARIES.md",
+    "sha256": "f0210ef19a9c09164f09f140f5dd7e83ed2aa32cca5fa24fe3667e6b0dec4e8c"
+  },
+  {
+    "path": "docs/review/remediation/implementation/buster-provider-cancellation-20260921.md",
+    "sha256": "f6f200ee8f9cce36bf808f9b90835ee57743338e785c6dba6450f5fc5677cff6"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-worker-local-runtime-20260921.md",
+    "sha256": "a79fb6e688db7f12fd01e3fed1602872422b391a4f1793521c745904b8256857"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-child.mjs",
+    "sha256": "5dd41b92245c36b8e4d1d63d8a14f95f8647fda040ba2c3c60e20a088becfa50"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "sha256": "e2da22b17dc8e7a26d52650d46e81e30c97f42c04254f9a454c2abc957011f83"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+    "sha256": "7f82532f841843d098d45122c9f1ab404e48b9077851b7d417460c31ad436b2f"
+  }
+]

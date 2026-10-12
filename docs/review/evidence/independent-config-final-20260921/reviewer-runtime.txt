@@ -1,0 +1,63 @@
+✔ CB01 real probe reservation overflows and recovers while work remains active (27.650255ms)
+✔ CB02 actual TCP connection limit rejects the next socket and reopens after release (4.577816ms)
+✔ CB03 original Node body deadline sends 408 without shortening its checking interval (30002.980691ms)
+✔ CW01 canonical author values reach the actual production worker composition (2.392891ms)
+✔ CW02 every alternate author value reaches the actual consumer (1.863858ms)
+✔ CW03 unknown key at root (1.271722ms)
+✔ CW03 unknown key at operator (0.536434ms)
+✔ CW03 unknown key at operator.prism (0.649317ms)
+✔ CW03 unknown key at operator.prism.worker (0.719478ms)
+✔ CW04 maximumActiveRequests rejects 3 (0.678248ms)
+✔ CW04 maximumActiveRequests rejects 0 (0.39805ms)
+✔ CW04 maximumActiveRequests rejects 1.5 (0.435171ms)
+✔ CW04 maximumActiveRequests rejects 2147483648 (0.584505ms)
+✔ CW04 maximumActiveRequests rejects undefined (0.455092ms)
+✔ CW04 maximumProbeRequests rejects 3 (0.585725ms)
+✔ CW04 maximumProbeRequests rejects 0 (0.376379ms)
+✔ CW04 maximumProbeRequests rejects 1.5 (0.355629ms)
+✔ CW04 maximumProbeRequests rejects 2147483648 (0.368089ms)
+✔ CW04 maximumProbeRequests rejects undefined (0.464782ms)
+✔ CW04 maximumConnections rejects 3 (0.366959ms)
+✔ CW04 maximumConnections rejects 0 (0.40677ms)
+✔ CW04 maximumConnections rejects 1.5 (0.39989ms)
+✔ CW04 maximumConnections rejects 2147483648 (0.367529ms)
+✔ CW04 maximumConnections rejects undefined (0.36558ms)
+✔ CW04 requestTimeoutMs rejects 3 (0.514863ms)
+✔ CW04 requestTimeoutMs rejects 0 (0.41278ms)
+✔ CW04 requestTimeoutMs rejects 1.5 (0.562874ms)
+✔ CW04 requestTimeoutMs rejects 2147483648 (0.458992ms)
+✔ CW04 requestTimeoutMs rejects undefined (0.378699ms)
+✔ CW04 shutdownTimeoutMs rejects 3 (0.358759ms)
+✔ CW04 shutdownTimeoutMs rejects 0 (0.350199ms)
+✔ CW04 shutdownTimeoutMs rejects 1.5 (0.357669ms)
+✔ CW04 shutdownTimeoutMs rejects 2147483648 (0.351179ms)
+✔ CW04 shutdownTimeoutMs rejects undefined (0.372139ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (0.159674ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (0.069551ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (0.190315ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (0.111072ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (0.111493ms)
+✔ CW06 rejects unsupported profile (0.731119ms)
+✔ CW06 rejects unsupported features (0.459712ms)
+✔ CW06 rejects unsupported tuning (0.3809ms)
+✔ CW06 rejects unsupported overrides (0.3753ms)
+✔ CW07 missing or broken authorship never falls back to defaults (0.635496ms)
+✔ CW08 maximumActiveRequests cannot exceed connection reservation (0.481282ms)
+✔ CW08 maximumProbeRequests cannot exceed connection reservation (0.365739ms)
+✔ CW09 shutdown budget remains independent of request admission deadline (0.481132ms)
+✔ CW10 effective settings omit secrets and original authentication still fails closed (0.357779ms)
+✔ actual HTTP ingress rejects excess unfinished bodies while reserving health capacity (90.290052ms)
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_CONNECT_TIMEOUT","durationMs":104,"active":1,"open":0,"pending":0}
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_UNKNOWN","durationMs":0,"active":1,"open":0,"pending":0}
+✔ shutdown waits for actual native pg acquisition settlement and closes the original pool (186.103904ms)
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_CONNECT_TIMEOUT","durationMs":350,"active":1,"open":0,"pending":0}
+✔ one service deadline fails explicitly while the real pg startup remains unresolved (357.227195ms)
+✔ invalid service deadline cannot stop a healthy listener; configuration owns a separate bounded default (21.451257ms)
+ℹ tests 52
+ℹ suites 0
+ℹ pass 52
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32292.775565

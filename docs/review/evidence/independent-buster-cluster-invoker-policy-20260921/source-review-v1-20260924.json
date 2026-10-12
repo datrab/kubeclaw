@@ -1,0 +1,43 @@
+{
+  "date": "2026-09-24",
+  "mode": "independent source-only; no runtime/types/lint/Helm execution",
+  "manifest": "docs/review/evidence/buster-cluster-invoker-policy-20260921/manifest-v1.json",
+  "manifestSha256": "a26f8790b36757b5f1d6c72620b502b4f9dd14464a9c8806a75d13c4d185b232",
+  "snapshotFileHashMismatches": [],
+  "decision": "blocked pending shared API-version domain correction; otherwise bounded source review found no additional concrete blocking defect",
+  "findings": [
+    {
+      "id": "CLUSTER-V1-01",
+      "severity": "blocking configuration domain inconsistency",
+      "schema": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json $defs.buster-cluster-invokers.properties.shared.properties.leaseApiVersion",
+      "consumer": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:96",
+      "acceptedCentralRejectedConsumer": [
+        "v1alpha",
+        "v1beta"
+      ],
+      "detail": "Schema and KubernetesFixture accept optional alpha/beta suffix with zero numeric suffix digits. Tailscale requires at least one suffix digit. Production projects this same shared value unchanged into both constructors, so centrally valid and Helm-deliverable settings can fail Exposure construction.",
+      "requested": "Define one explicit shared version domain and preserve authored v1/v1alpha1. Add raw schema/both-chart and actual constructor forwarding boundary cases; do not silently broaden consumer syntax merely for parity."
+    }
+  ],
+  "reviewed": [
+    "required closed component schema registered in actual settingsValidators",
+    "deep cloned/frozen policy nested arrays and manifest",
+    "actual component-generation-relative kubectl resolution",
+    "production cluster binding exact namespace and no runtime policy override",
+    "Kubernetes repository projection from existing validated registry origin",
+    "explicit projected service-account subjects; direct constructor full-subject API",
+    "RuntimeSecurity shared endpoint forwarding with separate remaining budgets",
+    "required constructor timing/output/parser policies and concrete command use",
+    "original assertion diff mappings and original-module matrix",
+    "new actual local child output/deadline ownership and teardown",
+    "polling/diagnostic injected command boundaries and direct parser consumer scope"
+  ],
+  "boundedConclusions": [
+    "No runtime or whole D17 closure claimed.",
+    "New output and short-deadline tests use actual local child processes, not Kubernetes API acceptance.",
+    "Polling tests exercise real invoker polling with injected command responses. Diagnostic test forwards an injected command exception and retains cause identity. YAML/List tests exercise direct parser APIs, not entire production startup.",
+    "Original changed assertion predicates inspected: two retired source-authority regexes replaced by actual preflight/selected profile checks and five exact secret refs; required-owner diagnostic adds clusterInvokers; direct constructor calls explicitly add required prior settings.",
+    "Existing request defaults, RuntimeSecurity unrelated budgets, controller policy and Foundation capture remain outside migrated owner scope.",
+    "Root separately reviews entrypoint/chart delivery. Full original suites, both-chart render/package parity, types/lint and semantic controls remain required after source correction."
+  ]
+}

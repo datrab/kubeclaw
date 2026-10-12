@@ -5,7 +5,8 @@ import { isImageInput } from '../../../scripts/updates/runtime-inputs.mjs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { loadAll } from 'js-yaml';
+import { load, loadAll, dump } from 'js-yaml';
+import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
 
 function sourceRootFromArgs() {
   const index = process.argv.indexOf('--source-root');
@@ -62,7 +63,7 @@ assert.doesNotMatch(
 assert.match(prismWorkloads, /control\.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage/,
   'Prism control must not scale a shared ReadWriteOnce artifact volume across nodes');
 assert.match(prismNetworkPolicies,
-  /name:\s*prism-openclaw-agent[\s\S]*ternary 8443 8080 \.Values\.workerTrust\.spiffe\.enabled/,
+  /name:\s*prism-openclaw-agent[\s\S]*ternary 8443 \$controlPort \.Values\.workerTrust\.spiffe\.enabled/,
   'Prism agent egress must reach control with and without SPIFFE');
 assert.doesNotMatch(networkPolicies,
   /name:\s*kubeclaw-agents-ingress[\s\S]*cidr:\s*0\.0\.0\.0\/0[\s\S]*port:\s*18789/,
@@ -262,16 +263,26 @@ assert.doesNotMatch(
   /npm install -g/u,
   'the Buster gateway must not resolve global JavaScript tools outside a lockfile',
 );
-for (const [label, dockerfile] of [
-  ['Buster runtime image', busterRuntimeDockerfile],
-  ['Prism worker image', prismWorkerDockerfile],
+for (const [label, dockerfile, role] of [
+  ['Buster runtime image', busterRuntimeDockerfile, 'buster'],
+  ['Prism worker image', prismWorkerDockerfile, 'prism'],
 ]) {
   assert.match(
     dockerfile,
-    /node \.?\/?(?:app\/)?node_modules\/playwright\/cli\.js install --with-deps chromium/,
+    /node \.?\/?(?:app\/)?node_modules\/playwright\/cli\.js install-deps chromium/,
     `${label} must invoke the production Playwright CLI without the pruned dev-dependency symlink`,
   );
+  assert.match(dockerfile, /COPY docker\/browser-archives\.lock\.json /,
+    `${label} must copy the pinned browser archive identities`);
+  assert.match(dockerfile, /COPY scripts\/browser-archive-lock\.mjs /,
+    `${label} must copy the actual locked browser installer`);
+  assert.match(dockerfile, new RegExp(`node (?:/app/)?scripts/browser-archive-lock\\.mjs --install "\\$TARGETARCH" ${role} /ms-playwright`),
+    `${label} must install actual archives using its role and target architecture`);
 }
+assert.match(read('scripts/check-built-runtime-image.sh'), /tests\/verification\/deployment\/check-buster-build\.sh:\/proof\.sh:ro/,
+  'the Buster built-image gate must run the actual browser proof');
+assert.match(read('tests/verification/deployment/check-buster-build.sh'), /chromium\.launch[\s\S]*newPage\(\)[\s\S]*setContent[\s\S]*textContent[\s\S]*b\.close\(\)/,
+  'the actual Buster image proof must launch the installed browser and check rendered content');
 assert.match(
   dockerignore,
   /^!tests\/verification\/live\/\*\*$/m,
@@ -284,13 +295,13 @@ assert.match(
 );
 assert.match(
   prismStudioDockerfile,
-  /COPY --from=build \/build\/skills\/prism\/server \/app\/prism\/server/,
+  /COPY --from=build \/build\/skills\/prism\/server \/app\/prism\/skills\/prism\/server/,
   'the Prism Studio image must package every imported server module',
 );
 assert.match(
   prismStudioDockerfile,
-  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/app\/prism\/tests\/studio-service\.test\.mts\s*\\\n\s*node --test \/app\/prism\/tests\/studio-service\.test\.mts/,
-  'the final Studio image must pass HTTP regression tests as its runtime user',
+  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts[\s\S]*source=skills\/prism\/tests\/fixtures\/studio-service\.mts,target=\/app\/prism\/skills\/prism\/tests\/fixtures\/studio-service\.mts[\s\S]*source=skills\/prism\/tests\/studio-canonical-image\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts[\s\S]*SWARM_CONFIG=\/tmp\/studio-authored\/swarm\.config\.json node --test --test-concurrency=1 \/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts \/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts/,
+  'the final Studio image must run original HTTP cases and canonical profile as its runtime user',
 );
 
 assert.match(
@@ -590,8 +601,8 @@ assert.doesNotMatch(
 );
 assert.match(
   chart,
-  /temporaryPath=`\$\{p\}\.kubeclaw-normalize\.tmp`[\s\S]*writeFileSync\(temporaryPath[\s\S]*mode: 0o600[\s\S]*renameSync\(temporaryPath,p\)/,
-  'legacy swarm config normalization must atomically replace ConfigMap-derived read-only files',
+  /\["\/config\/swarm\.config\.json","\/runtime-config\/swarm\.config\.json"\][\s\S]*lstatSync\(p\)[\s\S]*s\.nlink !== 1[\s\S]*RETIRED_SWARM_CONFIG_FILE_INVALID[\s\S]*unlinkSync\(p\)/,
+  'retired generated config files must be narrowly removed after type and link-count checks',
 );
 assert.match(
   gatewayConfig,
@@ -813,7 +824,7 @@ assert.match(
 );
 assert.match(
   busterValues,
-  /name:\s*buster-v2-runtime[\s\S]*runAsUser:\s*0[\s\S]*runAsGroup:\s*0[\s\S]*runAsNonRoot:\s*false[\s\S]*add:\s*\["CHOWN",\s*"SETGID",\s*"SETPCAP",\s*"SETUID"\]/,
+  /name:\s*buster-v2-runtime[\s\S]*runAsUser:\s*0[\s\S]*runAsGroup:\s*0[\s\S]*runAsNonRoot:\s*false[\s\S]*add:\s*\["CHOWN",\s*"KILL",\s*"SETGID",\s*"SETPCAP",\s*"SETUID"\]/,
   'the supervisor must be able to enter the job UID and then drop the complete capability set',
 );
 assert.doesNotMatch(
@@ -851,16 +862,16 @@ assert.match(
   /chown root:builder "\$config"[\s\S]*chmod 0640 "\$config"/,
   'the generated BuildKit configuration must remain writable by the supervisor and readable by the builder',
 );
-const configRootOwnership = busterRuntimeEntrypoint.indexOf('chown -R root:root "$runtime_config_root"');
+const configRootOwnership = busterRuntimeEntrypoint.indexOf('chown root:root "$runtime_config_root"');
 const kubeconfigWrite = busterRuntimeEntrypoint.indexOf('cat >"$kubeconfig"');
 const runtimeConfigWrite = busterRuntimeEntrypoint.indexOf("fs.writeFileSync(path.join(root, 'runtime.json')");
-const configRootHandoff = busterRuntimeEntrypoint.indexOf('chown -R builder:builder "$runtime_config_root"');
+const configRootHandoff = busterRuntimeEntrypoint.indexOf('chown root:builder "$runtime_config_root"');
 assert.ok(
   configRootOwnership >= 0
     && configRootOwnership < kubeconfigWrite
     && kubeconfigWrite < runtimeConfigWrite
     && runtimeConfigWrite < configRootHandoff,
-  'the capability-restricted supervisor must generate runtime configuration before handing the directory to builder',
+  'the capability-restricted supervisor must generate runtime configuration before granting builder read access while preserving root ownership',
 );
 assert.match(
   busterRuntimeEntrypoint,
@@ -869,14 +880,28 @@ assert.match(
 );
 assert.match(
   busterRuntimeEntrypoint,
-  /chown -R builder:builder "\$plan_state_dir" "\$plan_run_dir"/,
-  'the Buster plan runtime must own the directories whose modes it initializes without CAP_FOWNER',
+  /node \/usr\/local\/libexec\/buster-state-root\.mjs/,
+  'the Buster parent must use the fixed state-root handoff',
 );
+assert.match(busterRuntimeDockerfile, /COPY scripts\/buster-state-root\.mjs \/usr\/local\/libexec\/buster-state-root\.mjs/);
+const stateRootHelper = read('scripts/buster-state-root.mjs');
+assert.match(stateRootHelper, /const root = '\/var\/lib\/buster-v2'/);
+assert.match(stateRootHelper, /legacyDirectory\(path\.join\(root, 'plan-jobs'\)\)/);
+assert.match(stateRootHelper, /directory\(path\.join\(root, 'plan-jobs-v2'\), 1000, 0o700\)/);
+assert.match(stateRootHelper, /directory\(path\.join\(root, 'runs-v2'\), 1000, 0o700\)/);
+assert.doesNotMatch(busterRuntimeEntrypoint, /chown -R builder:builder "\$plan_state_dir" "\$plan_run_dir"/,
+  'legacy state must not be reopened by recursive service ownership');
 assert.match(
   busterRuntimeEntrypoint,
-  /BUSTER_V2_TOKEN="\$worker_token" KUBECONFIG="\$kubeconfig" setpriv[\s\S]*--groups 1000,1002[\s\S]*remote-plan-cli\.ts/,
-  'the plan runtime must retain only its required token and BuildKit socket access',
+  /BUSTER_V2_TOKEN="\$worker_token" KUBECONFIG="\$kubeconfig"[\s\S]*node \/app\/skills\/buster\/engine\/native-parent\.ts/,
+  'the token branch must enter the actual native parent',
 );
+assert.match(busterRuntimeEntrypoint, /BUSTER_TRUSTED_PEER_SPIFFE_ID="\$trusted_peer_spiffe_id" KUBECONFIG="\$kubeconfig"[\s\S]*node \/app\/skills\/buster\/engine\/native-parent\.ts/);
+assert.match(read('skills/buster/engine/native-parent.ts'), /runBusterPreparationSupervisor/);
+const preparationSupervisor = read('skills/buster/engine/test-gates/preparation-supervisor.ts');
+assert.match(preparationSupervisor, /serveUnprivilegedBuster/);
+assert.match(preparationSupervisor, /\/usr\/bin\/setpriv[\s\S]*--reuid=1000[\s\S]*--regid=1000[\s\S]*--groups[\s\S]*1000,1002[\s\S]*remote-plan-cli\.ts[\s\S]*--config[\s\S]*preparationRuntimeConfig/,
+  'the actual parent must launch the service with its explicit UID, groups and runtime configuration');
 assert.doesNotMatch(busterRuntimeEntrypoint, /BUSTER_LEGACY|18892|buster-suite-runtime\/src\/worker\.ts/);
 assert.match(
   deploy,
@@ -954,6 +979,18 @@ if (helm.error?.code !== 'ENOENT') {
     'the generic default must not invent an execution provider',
   );
 
+  const nativeFixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'deployment-native-profile-'));
+  let nativeBinding;
+  try {
+    const profileFile = path.join(nativeFixtureRoot, 'native-worker-pools.yaml');
+    fs.copyFileSync(path.join(sourceRoot, 'my-values/infra/native-worker-pools.yaml'), profileFile);
+    const profile = load(fs.readFileSync(profileFile, 'utf8'));
+    profile.nodeName = 'deployment-render-test'; profile.pools.buster.namespace = 'kubeclaw';
+    fs.writeFileSync(profileFile, dump(profile));
+    nativeBinding = nativePoolPolicy(load(fs.readFileSync(profileFile, 'utf8')), 'buster');
+  } finally { fs.rmSync(nativeFixtureRoot, { recursive: true, force: true }); }
+  const busterRuntimeIndex = load(read('my-values/buster-values.yaml')).extraContainers.findIndex(item => item.name === 'buster-v2-runtime');
+  assert(busterRuntimeIndex >= 0);
   const busterHelm = spawnSync(
     'helm',
     [
@@ -964,6 +1001,11 @@ if (helm.error?.code !== 'ENOENT') {
       'kubeclaw',
       '--values',
       path.join(sourceRoot, 'my-values/buster-values.yaml'),
+      '--set-string', `busterNative.nodeName=${nativeBinding.nodeName}`,
+      '--set-string', 'busterNative.namespace=kubeclaw',
+      '--set-string', `busterNative.policyDigest=${nativeBinding.policyDigest}`,
+      // Shape-valid render fixture only; no built-image or deployment evidence.
+      '--set-string', `extraContainers[${busterRuntimeIndex}].image=ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`,
       '--set-string',
       'runtimeInfrastructure.registry.endpoint=https://registry.example.test',
       '--set-string',

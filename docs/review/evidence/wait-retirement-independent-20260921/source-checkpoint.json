@@ -1,0 +1,33 @@
+{
+  "scope": "readonly source checkpoint; runtime acceptance pending",
+  "files": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+      "sha256": "b9d7866810eaa8b77681aa42c69b8f4651229317b0f73d0077b1866f97c1e73a"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "sha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/package.json",
+      "sha256": "d2639c87351035eb4ed0d34569934d18151b4024ec81a7604680ad3a6ae71ae2"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+      "sha256": "db6ef5e755808975ba934fa20276b6ac04e40161c3b81607b2c254bb07e36541"
+    },
+    {
+      "path": "skills/common/plugins/wait-store/tests/package-boundary.test.mjs",
+      "sha256": "f8c7f535103cd16f37ce8ab8c9dbc192262ff786f54fdfab7bad0a504c9e09f1"
+    }
+  ]
+}

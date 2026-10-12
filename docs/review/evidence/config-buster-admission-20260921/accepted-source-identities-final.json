@@ -1,0 +1,2572 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "sha256": "b9f7ca208263a45c39c67fb21c864a83a33a04144dcade051fa24a0719d72451",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/charts/kubeclaw/files/config/swarm.config.json.snapshot"
+  },
+  {
+    "path": "charts/kubeclaw/templates/_buster-native.tpl",
+    "sha256": "4cc1152a523ac9dd87b41ce909027a2208f74888369176a821135a8d0bd1d5c5",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/charts/kubeclaw/templates/_buster-native.tpl.snapshot"
+  },
+  {
+    "path": "charts/prism/templates/_swarm-config.tpl",
+    "sha256": "eb179b1825a1682a1080234984d702369d625e3404552451e90f7bc6ed4093d7",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/charts/prism/templates/_swarm-config.tpl.snapshot"
+  },
+  {
+    "path": "contracts/agent-observability/v1/package.json",
+    "sha256": "b6be0e236ff99a32a8f838d07dfd1fafed7cc241adcc3d277b9f4cc5ab3858de",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/agent-observability/v1/package.json.snapshot"
+  },
+  {
+    "path": "contracts/agent-observability/v1/src/complexity.ts",
+    "sha256": "cc1e3f8a9beaaec2d56cb04533a681b7569e2ac8a457694248249380624d6d60",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/agent-observability/v1/src/complexity.ts.snapshot"
+  },
+  {
+    "path": "contracts/agent-observability/v1/src/constants.ts",
+    "sha256": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/agent-observability/v1/src/constants.ts.snapshot"
+  },
+  {
+    "path": "contracts/agent-observability/v1/src/index.ts",
+    "sha256": "53701c60777f686a2f9da25235ad02e755e820714ca8621de795bf1a5376acb3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/agent-observability/v1/src/index.ts.snapshot"
+  },
+  {
+    "path": "contracts/agent-observability/v1/src/mapping.ts",
+    "sha256": "76dcb599813722b108f9f0a918c60899c019ece2484b10587b628bf72f055592",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/agent-observability/v1/src/mapping.ts.snapshot"
+  },
+  {
+    "path": "contracts/agent-observability/v1/src/routing.ts",
+    "sha256": "ef7851b00d9c32b46d890ca4210f4afee6fa0ecc9796fab417b6b2c705af571d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/agent-observability/v1/src/routing.ts.snapshot"
+  },
+  {
+    "path": "contracts/agent-observability/v1/src/types.ts",
+    "sha256": "f1b3a0dff514d59f62a8448649c444b4eb6116de6d85500bc3aa6671ea63eb96",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/agent-observability/v1/src/types.ts.snapshot"
+  },
+  {
+    "path": "contracts/agent-observability/v1/src/validation.ts",
+    "sha256": "2e8b7c17d7deeb0cc87e4bd2b05dc8e9712372de161e7c1eeb7cc5270ad6697e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/agent-observability/v1/src/validation.ts.snapshot"
+  },
+  {
+    "path": "contracts/agent-observability/v1/tests/validation.test.ts",
+    "sha256": "7d22329a89728d3afdc4681f221d474aa0e57668d181672d20f7ef0e5f448e41",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/agent-observability/v1/tests/validation.test.ts.snapshot"
+  },
+  {
+    "path": "contracts/agent-observability/v1/tsconfig.build.json",
+    "sha256": "2ff9f973bdc28594f9520fa847b1670363aa3757eaaca8171cf43388aa75dc5f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/agent-observability/v1/tsconfig.build.json.snapshot"
+  },
+  {
+    "path": "contracts/agent-observability/v1/tsconfig.json",
+    "sha256": "6f4a5fde664d67c451337d4f62c8df33e5ea4fde18367801845b2fb951d578d1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/agent-observability/v1/tsconfig.json.snapshot"
+  },
+  {
+    "path": "contracts/delivery-manifest/v3/package.json",
+    "sha256": "9aca27855f2ebe49f7bdebc16b1e19f40d9f9d3d0c8bdd48f21b1bd26f34887f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/delivery-manifest/v3/package.json.snapshot"
+  },
+  {
+    "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+    "sha256": "6a991c53bfafbcc0509e1e01acc68eb16abe23ffedfdcf49cdc04be61d488c9a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/delivery-manifest/v3/src/index.ts",
+    "sha256": "5293ab3d5813e814487011bd80cad516bc3d1f5faec1181c86675505fa8ba294",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/delivery-manifest/v3/src/index.ts.snapshot"
+  },
+  {
+    "path": "contracts/delivery-manifest/v3/tests/contract.test.mts",
+    "sha256": "df05d4828ab56ed945fd18ce2829663129972ce7211ac4fe5bf24a364cb4dc6f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/delivery-manifest/v3/tests/contract.test.mts.snapshot"
+  },
+  {
+    "path": "contracts/delivery-manifest/v3/tsconfig.json",
+    "sha256": "17595dbb9c3faeeba9ef2d2268a7d35139cb3cb0c6dc195eed46420ccc26b47e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/delivery-manifest/v3/tsconfig.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-observability/v1/fixtures/producer-closure.json",
+    "sha256": "8517f4827142e959a8b1d305464aff1f042dbc6bf20f60256368c3a1ebc86442",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-observability/v1/fixtures/producer-closure.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-observability/v1/fixtures/producer-record.json",
+    "sha256": "4d51f93a5b755558ba6e11b80fe1330fd4be5652da87ea9c8b0123b38f0ccbbc",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-observability/v1/fixtures/producer-record.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-observability/v1/package.json",
+    "sha256": "54a92a1b6802019a8654ee4224a12abaad3fcc580f4b01d6baaaec91ba7c687a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-observability/v1/package.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-observability/v1/schemas/pipeline-observability.v1.schema.json",
+    "sha256": "108a81ce7489c1ea720054555a81315345d6bafa6a6d00ff29fc32feac6075a9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-observability/v1/schemas/pipeline-observability.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-observability/v1/src/canonical-json.ts",
+    "sha256": "378c3ba35ca88e40527e3912dfc0f897e6d5cbdc1dfd40b3a825fbf1241e9177",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-observability/v1/src/canonical-json.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-observability/v1/src/index.ts",
+    "sha256": "f4f928c9b1b8c1345c829a44b89d05f847b057051aff05ce6d8cd8b98ed897c2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-observability/v1/src/index.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-observability/v1/src/types.ts",
+    "sha256": "667337c76a94709fa5b4b817adfd112859397924e163fc5bca3bacf50c5287f9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-observability/v1/src/types.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-observability/v1/src/validation.ts",
+    "sha256": "7901db9ca3d9253e1edfb9b816034334b1d4f763fca197b64e6249f86bfc5977",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-observability/v1/src/validation.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-observability/v1/tsconfig.json",
+    "sha256": "17595dbb9c3faeeba9ef2d2268a7d35139cb3cb0c6dc195eed46420ccc26b47e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-observability/v1/tsconfig.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/a11y-config.json",
+    "sha256": "6b8c6b88291f1dd613c663aa73fb71f134d7107c92ee064255e2fb052ddf0eb5",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/a11y-config.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/api-flow-config.json",
+    "sha256": "3a2a4e5fc4196347ef30b70285ed229d30f907ef59eb17a60467d6f3b5c97750",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/api-flow-config.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/api-suite.json",
+    "sha256": "7bffd67986e5973678980b0f84373324812a88bc6c8c94a2c84bdfd00ce03d89",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/api-suite.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/browser-profiles.json",
+    "sha256": "bc337e46e47306272fca7e6d52756df642da78740d45bce36e01498565e6598a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/browser-profiles.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/container-build-dockerfile.json",
+    "sha256": "48a622ea73abb998a1752fd00f3f13714c2d5c85765959e8f451b6eecd486bf1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/container-build-dockerfile.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/e2e-playwright.json",
+    "sha256": "8692f1b6c9fcbe969d0548d4de48bbf9f51091ded062b64907f36ef2e9230f7e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/e2e-playwright.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/e2e-result-cypress.json",
+    "sha256": "a3599bfedf2e0a7dbd33b00f85a3699cac7b89ef9b20e2652471cecfabf2c601",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/e2e-result-cypress.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/http.json",
+    "sha256": "a7ea2b9f2eafa3e7f070c57596fc79429496fd41a929891f8fa6d205532edd9f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/http.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/kubernetes-fixture.json",
+    "sha256": "f122b79d53496ed965bee7cdd01bdd4fc0346a58cc3b029b8b9cfd64ba0d98d1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/kubernetes-fixture.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/lighthouse-performance-config.json",
+    "sha256": "a261bee932439f80f320c094caecc281390ed95dc4c1f8d6bda50c251597969a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/lighthouse-performance-config.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/lighthouse-settings.json",
+    "sha256": "9f6737c9e8976aa9fbbbd7e0e47112d70508822b400e41e70b2f3f6e348d1c27",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/lighthouse-settings.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/openapi-config.json",
+    "sha256": "29f2c83c1916747bdfd989f487a5a8801f01092d67e98080ac38a390e704370c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/openapi-config.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/security-config.json",
+    "sha256": "0e5eb051681889239aa8bbb1b06b694acb7bcdd53f5f65650a19d9dc1d425eef",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/security-config.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/size-budget-growth.json",
+    "sha256": "2d3d71aaa043d66dd375cf38b4ea06029a91170e0c3f27a70f4d1407c3909ef0",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/size-budget-growth.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/size-budget-tar.json",
+    "sha256": "fe92786c69a485688c90385ba42ac6c77e13f1102033f360b59eb2e67d668bc1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/size-budget-tar.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/tailscale-exposure.json",
+    "sha256": "fe19207f0984964c058a8c05198010b9dedcf143eba841830dde633dc84713de",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/tailscale-exposure.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/unit-suite-blocking.json",
+    "sha256": "6c405f044793d7cae65f7da556ee45d0c799e2acc392970055f28cf3becd7166",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/unit-suite-blocking.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/unit-suite-with-coverage.json",
+    "sha256": "df5f0185869e59d7579f842712f9be843b1f79201b8686a1d81214f4c124401c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/unit-suite-with-coverage.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/visual-baselines.json",
+    "sha256": "2dd9d80a8cde2b086dd974f3e13570b8c46dff4165553a97791a595e3c248326",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/visual-baselines.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/examples/visual-config.json",
+    "sha256": "09af4ca2ab315a354a2c3aff3f18169f8103326eaf2c8a1b7a1a37676a8776b3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/examples/visual-config.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/package.json",
+    "sha256": "234fe885078a92ec896b1f32675a20c3bbbe427cfdb1e3fd684932cc6291d48f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/package.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/schemas/browser-profiles.v1.schema.json",
+    "sha256": "64403da87f9401086dddcaee5ce7ab499fe07170e1d7eae005a485422a866a39",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/schemas/browser-profiles.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
+    "sha256": "fec4bcd487eb09590dee3c6d6228d6088963c5476747c8731db4d3a53a114637",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/schemas/lighthouse-settings.v1.schema.json",
+    "sha256": "2cf38765e6ec83870f92204613330a0cce235d0925c8b3e6995950f972d93c96",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/schemas/lighthouse-settings.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+    "sha256": "e97aedc52818a5f89f2fc88090b99e7b7339966603f686b64c69459270a655df",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/schemas/visual-baselines.v2.schema.json",
+    "sha256": "6e3b24ecebee45556a69a26b04e24503ce2ba75ddc5ddf35878defc89c9a65e4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/schemas/visual-baselines.v2.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/src/coverage-expectation.ts",
+    "sha256": "5eda774f82255ff6f370296498cba229de7b2bbd057d7872c1731f105cbc6c04",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/src/coverage-expectation.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/src/coverage-result.ts",
+    "sha256": "654b5a308de7de6e07eae48f8061ff826d746e2f577b77494788ceab08ce6052",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/src/coverage-result.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/src/coverage.ts",
+    "sha256": "bd5a20ccbefab393453dc9072ceb72343ee40741776909007d3a084578b0855d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/src/coverage.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/src/digest.ts",
+    "sha256": "ee29d0b95e09ae305b9b79d1f289514100c08b4badbd427057cdfeed2fdfa762",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/src/digest.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/src/gate-decision.ts",
+    "sha256": "3b2351f0da524a6063897d52e2df02d3f58322b363b8d22f8e7bb8c2c225ef24",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/src/gate-decision.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/src/index.ts",
+    "sha256": "d07da1c8e237c2f5b110221d03c4b6fbabb1cddd564a7b71cde1133a6bd86224",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/src/index.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/src/remote.ts",
+    "sha256": "7f02db208c0728dabdcf51604e149f97b018666019e51b8e2853338e9f7bf9b8",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/src/remote.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/src/types.ts",
+    "sha256": "704d87007fce75e3f6d8eafd73273478de08c0bf6b1d0ee753f3da31b9fc010c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/src/types.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/src/validation.ts",
+    "sha256": "0932fe19bc79f5dba2a63842cf7892ac6ae0ea6885ed2efb36ac4f2e70b4b69a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/src/validation.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/a11y.v1.json",
+    "sha256": "282abd3758498ac1906207fee2ef7c7174a5c3593ed045cfb8820faa0db32cd1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/a11y.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/api.v1.json",
+    "sha256": "6fe84be884aa1ef55e53f911ae26ff3b961fe9556f05a879e0e692c29b9e07aa",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/api.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/container-build.v1.json",
+    "sha256": "24b15b4c1ad52bac14fefdc050675dfeeb52e1d8f3533809b15bc7ff4d35c87e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/container-build.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/e2e.v1.json",
+    "sha256": "733ec045c8c33512522e71a38c1ac5e180c01d554b4d993461ba3564fe2599c4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/e2e.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/http.v1.json",
+    "sha256": "46d5c420cdaf6f0506a1be5877cbebd10c72fe4e965a0ee1170f50d95dcb2959",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/http.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/kubernetes-fixture.v1.json",
+    "sha256": "e7525aa2cb4464a83fd1a2f4844192c6d1feedc3b50ec102bf4f76bd03d3d320",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/kubernetes-fixture.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/perf.v1.json",
+    "sha256": "8f7c2eedf5aed38f3655b1551dc3698d718f020c66107b0b6b129b914bb6b985",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/perf.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/security.v1.json",
+    "sha256": "c80ba0003edd39789a185293a4e49722314f233f78608c836bec9b01fc3d9177",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/security.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/size-budget.v1.json",
+    "sha256": "fda75b7935aa53f1994e27bcfd300a526fe77dbeea36d063282245f7564843f2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/size-budget.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/tailscale-exposure.v1.json",
+    "sha256": "84620d85f16f8efded52fc8fb5cd37de76ef4f33763afe7ad7898f49e6e5fd34",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/tailscale-exposure.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/unit.v1.json",
+    "sha256": "f89c12bee9794dccd0779621911ee96fc2cbb1398d5bb3e699a34e9cfaa27af7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/unit.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/suites/visual.v1.json",
+    "sha256": "8e2489f267882c482c45830a6e0f876d07f4043ae33a6433ad85518d625a3bdf",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/suites/visual.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/tests/declarations-typecheck.ts",
+    "sha256": "e07f1a294642b9ffa21916896423eaef9598f620f4a1ed3eb8a11cb1f2c6a627",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/tests/declarations-typecheck.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-test-gate/v1/tsconfig.json",
+    "sha256": "6f4a5fde664d67c451337d4f62c8df33e5ea4fde18367801845b2fb951d578d1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-test-gate/v1/tsconfig.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/package.json",
+    "sha256": "40d234e5ba169853c0c1ca4dcab3590373163c6b7189461157ff569a7aa42df5",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/package.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+    "sha256": "e6374730f27bde4d13885b0288a2c74fa9d8fba738ab01f2d1ab85caa924e610",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json",
+    "sha256": "26e936fbd954562547e7c0548085ae65ceb22394061d956532730a17ced42f7c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json",
+    "sha256": "debb2e5ca9ade4c30f5081d56b4596af4b295e282e2c099a6d1623b4b15c5cf3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v2.mjs",
+    "sha256": "6c3c5720647cc3b74394d0ca7d3dd2fdd42728dd3b9217f31e033ca20518d56a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v2.mjs.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v3.mjs",
+    "sha256": "38ccfa7b89a2f759cb600308309357337ed22be14f48398a1761517889d327c6",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v3.mjs.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/digest.ts",
+    "sha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/src/digest.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/index.ts",
+    "sha256": "013609ae51e836644640820de878378c0cbc797d6c299f06d926925790676c72",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/src/index.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
+    "sha256": "e75e058344978e1a94856c05caf03cfcff92ccb67e6fefe5c91249d4bc3e5fc8",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/src/resource-types-v2.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-types-v3.ts",
+    "sha256": "37133709e46db3c537178b2ce4ec0666317e9b461360f25b4c349e71f5adab36",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/src/resource-types-v3.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+    "sha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+    "sha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/trust.ts",
+    "sha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/src/trust.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+    "sha256": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/src/types.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+    "sha256": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/src/validation.ts.snapshot"
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/tsconfig.json",
+    "sha256": "6f4a5fde664d67c451337d4f62c8df33e5ea4fde18367801845b2fb951d578d1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/pipeline-worker-core/v1/tsconfig.json.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/fixtures/minimal-web.json",
+    "sha256": "716e4beaf38dc49be48fdca6da5c2f0ca53e55692a3f1cbb7200879247e049e5",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/fixtures/minimal-web.json.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/package.json",
+    "sha256": "88ab4aa94f1fa8d02e55d36d790361ad06247e0058ab87b878ea316af3f3cf1f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/package.json.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/schemas/baseline-v2.schema.json",
+    "sha256": "b6b0493e68e7b31b5b1e504adde4a230fe0ae59843d410961acdefea6bf0e3ea",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/schemas/baseline-v2.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/schemas/engine-requests.v1.json",
+    "sha256": "e35e0074cd79026a02b297fd3c6cdeeff1a115ea6a83957e396aa42572aa3f42",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/schemas/engine-requests.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/schemas/engine-results.v1.json",
+    "sha256": "1e24e32119ac95f6162968d4f57fa63fe1aafdf1457c0610d7df81d6dacd80b6",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/schemas/engine-results.v1.json.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/schemas/prism-v1.schema.json",
+    "sha256": "7e8e248ffbc3753ee462d8e4f1d8de98499c02df94f07f0bcfc28367886bf99b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/schemas/prism-v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/scripts/generate-validators.mjs",
+    "sha256": "3aa33ba91680dd24360d299c99b6eccdb1a35aae5ef175e4caf2b6a8a9b5bfd1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/scripts/generate-validators.mjs.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/src/baseline-archive.ts",
+    "sha256": "7017d8472863ec34449a725300f5c92707aa3dce13371f5e982621cce9b25237",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/src/baseline-archive.ts.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/src/complexity.ts",
+    "sha256": "041bfa7037f86afaf6f9667bc90a07db4fe088924dcb3e7ef650841dfd1c60df",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/src/complexity.ts.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/src/digest.ts",
+    "sha256": "672099defd80766e508e40150e5d20071e00e019f13da6497d2c8754f2455b6d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/src/digest.ts.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/src/document-semantics.ts",
+    "sha256": "0a467d617890be691aaff6eb114b4acbb5de4efca55a5888879b7518a7f4cef2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/src/document-semantics.ts.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/src/index.ts",
+    "sha256": "441cbe7b6ad9c471c3d8144de958497377d3785cff53904ac45943cfaf4a7c18",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/src/index.ts.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/src/node-catalog.ts",
+    "sha256": "6c005e8a54eb395677727023fe8bb659c223cd252baac6d1e628112172127104",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/src/node-catalog.ts.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/src/validators.generated.d.mts",
+    "sha256": "ab7660bdfa092c896a6d8962774e64e303bc639e55e25a6390ef1a825c6943d6",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/src/validators.generated.d.mts.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/src/validators.generated.mjs",
+    "sha256": "26e790a95b065b5b77538f501863a09a90f2ccd67e1c76cf617c8fff2dc09f41",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/src/validators.generated.mjs.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/tests/contracts.test.mts",
+    "sha256": "6a1316a41bc5afd040725d681f566e1d394b121274e02140e7896f9e9afef4ae",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/tests/contracts.test.mts.snapshot"
+  },
+  {
+    "path": "contracts/prism/v1/tsconfig.json",
+    "sha256": "ac0699e525c17b02202fa5dc6244a03192ebe630ea2fa612f4a463db6fb68be7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/prism/v1/tsconfig.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle-types.ts",
+    "sha256": "c635c9c3c5514d56f9b28eb818b7d3661a40980d71202e00e8710c13d1bcf8a6",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle-types.ts.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/artifact_published.v1.schema.json",
+    "sha256": "a7149c080b40334d9fe3ebf7eef3bd1ef762fbd907c29cf8f39308c2415e039f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/artifact_published.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/composed_prompt.v1.schema.json",
+    "sha256": "8e79ef4ce605652e945cac6d775fd1e63c8355c7c53360e5d8fc83faac40a18b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/composed_prompt.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/evaluation_fact.v1.schema.json",
+    "sha256": "9f861fae4b452846f95c24ecaf8a4aab72836eea3b489fa58b324c34a7ee21d4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/evaluation_fact.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/expected_source_facts.v1.schema.json",
+    "sha256": "adac333f20835ab3b577de8bf58cf1f854f60ff793aeb92007cebe49e469d7b7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/expected_source_facts.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/pipeline_command_evidence.v1.schema.json",
+    "sha256": "9656fe68444c76d8a55fbb2ddea9e0c7ce920f3a2ebe0a6f78828fc02a251dab",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/pipeline_command_evidence.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/pipeline_command_request.v1.schema.json",
+    "sha256": "d82a5dc733ca231a1787f50beaecb3f5f3bbe3450f996c1846989cd57e946309",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/pipeline_command_request.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/pipeline_evidence_export.v1.schema.json",
+    "sha256": "d4812a40c9e391c446bab7dc1a36c459f176b82880510aee7219fa85e6fd940d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/pipeline_evidence_export.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/pipeline_lifecycle_event.v1.schema.json",
+    "sha256": "87d7dabd2b9a42453d7df22c63b3c077399ced84cc8c582efe9e58b7fe64c269",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/pipeline_lifecycle_event.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/pipeline_lifecycle_read_models.v1.schema.json",
+    "sha256": "672c9957cb70a9c5416c5c158d38601671ecda81285af39a621a59d01402473a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/pipeline_lifecycle_read_models.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/producer_health_snapshot.v1.schema.json",
+    "sha256": "0683aadcc42939299af6376a5acd092c8cfa91167fb50b4a30ee65c65cf4ed02",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/producer_health_snapshot.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/quarantined_payload.v1.schema.json",
+    "sha256": "2f483599b0add0b8a3eb76a94140b0ec30faf69a3fe6bef968c28f4c5cfa9f93",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/quarantined_payload.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/run_archive_manifest.v1.schema.json",
+    "sha256": "bad5592033656ba589a4db875dd9e4097b7058aaec8189eb598342491e02f936",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/run_archive_manifest.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/run_catalog_entry.v1.schema.json",
+    "sha256": "a6ba06799013ca2fe1fe2e731e5ab15d69b7c2f74457ba070b9fb936d149bc20",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/run_catalog_entry.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/run_manifest.v1.schema.json",
+    "sha256": "84d4bb6ad40b302c0b041f44821170e30bc75fb454432a177ac6bf2d22182bcf",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/run_manifest.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/runtime_log.v1.schema.json",
+    "sha256": "425db52cc4158172c618918af9827d555698cd1312b8d4f86bad645002ef8cb4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/runtime_log.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/bundle/terminal_closure.v1.schema.json",
+    "sha256": "e5714987b84fcc47fcfec52d0f06b9d3fd0f1bfb6280fb25d5e023e8c071e718",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/bundle/terminal_closure.v1.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/catalog.json",
+    "sha256": "0e87c64bf3dc06c60586d3d8b63e5f60ab15712bb915d745de44f325a94b4c5e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/catalog.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/contract-manifest.json",
+    "sha256": "bd449d1306776271ac3eaed5cb2d599b4998a2943cdb2dbe298f99459a76121b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/contract-manifest.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/correlation_identity.schema.json",
+    "sha256": "f7db85b8371f21d543a29917f6c0e74a7fb4b2c7256f2757cabcdbc093238e81",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/correlation_identity.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/envelope.schema.json",
+    "sha256": "1cdec8ecd9514cb28b8082d73c489414fbfa613cde560e08fa51fdbeb3cdb7a4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/envelope.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.delivery.target.schema.json",
+    "sha256": "5fda3f6d30ea4e12947e23c0e3b3a3e04e5408cecc4cc8faf36adc7c6cc963da",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.delivery.target.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.ended.schema.json",
+    "sha256": "526405d10d87dd7598d3b8ed8b66d31d73469209f0f9c507fc16eda9df712b61",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.ended.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.killed.schema.json",
+    "sha256": "013d04395c6a0e9850ffae760f0821b0e892f2b80a5f0f2138165abea3e5008c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.killed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.llm.input.summary.schema.json",
+    "sha256": "8af662c4c0e159d15d3f0f71d5ca01ff27205fbca508768cb56af66862494cea",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.llm.input.summary.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.llm.output.summary.schema.json",
+    "sha256": "ee601f246516a878360a6a4087fef53f5859d5e3349acc02f423683f423635b1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.llm.output.summary.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.model.ended.schema.json",
+    "sha256": "59dc2ebc644577fcbd9574f72cf5e7943bb0f64e051e6915c5157b08be418351",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.model.ended.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.model.started.schema.json",
+    "sha256": "2900ed52e393a3e1598a0ef06e4dd395d34e014cd0e163c8c339ab98bcb628c3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.model.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.progress.schema.json",
+    "sha256": "3cdd346c983fa89206fb7431f2596895e2064ef7ba26a56778b64bdd2c4f653e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.progress.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.session.ended.schema.json",
+    "sha256": "b4e8e8c3b1ba48dd6a924e48eeff619f8c2cd3503c2c135ee5fb03394fa1ab37",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.session.ended.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.session.started.schema.json",
+    "sha256": "8e0c52f86bf0f25237515e8a0bd9068065f90a30ff9af6a812c7d5680e6cec98",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.session.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.spawn.requested.schema.json",
+    "sha256": "39938ca16551a8091fcf8201458e2f0c632df63b409da076aeea5fe52b9edfe7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.spawn.requested.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.spawned.schema.json",
+    "sha256": "01115f556bc58853e5aa4d377ab8589899d54a9c849fe35f20a6eed01d82ed68",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.spawned.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.tool.finished.schema.json",
+    "sha256": "cbeb0d09525a7a496c72afac56495c97aaa426019b94b210631d43b4ce70c530",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.tool.finished.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.tool.started.schema.json",
+    "sha256": "bd70c3253614892fcd4818ea761c7bc63a9b65ab88de60e496986151ea1fe3e4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.tool.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/agent.transcript.schema.json",
+    "sha256": "e7233146c900ec78317710817d2cef3176b57206b6468f069cc6d6f238629697",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/agent.transcript.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/approval.requested.schema.json",
+    "sha256": "2a11bd235c55b568efd19accaf04a580c6493423f6d4dfeb9168261314940b52",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/approval.requested.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/approval.resolved.schema.json",
+    "sha256": "28de8d4d2e70147874692d87751570dea7c7995cc7f92e86973ba650396b9dde",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/approval.resolved.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/artifact.published.schema.json",
+    "sha256": "7926cfd83d105907ebd065fd3f4790af52ebcf3417c1ae9c6bf3ed40933f6903",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/artifact.published.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/budget.exceeded.schema.json",
+    "sha256": "e740cffc70cc9424b337dc114530cd41179ec130284ec9702c1267f369a7cc5f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/budget.exceeded.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/budget.warning.schema.json",
+    "sha256": "abc258c2e232f8abdeec934fc19251938791f20e0bf2d6d42c3d6b772dd7b426",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/budget.warning.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/command.accepted.schema.json",
+    "sha256": "7ade5dbb8bbaba44e2e7a2622066673fb3bc7910a410c5fb6e8a3f4437fa77d9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/command.accepted.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/command.completed.schema.json",
+    "sha256": "9d62c782c17ae9a30e8d660c0a67f606e8bf1bd196d2019d82ea59020dfad541",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/command.completed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/command.rejected.schema.json",
+    "sha256": "2bc901515224685ca55b111f8191a830a7aa18025096f0875285b5c81448e4e9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/command.rejected.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/command.requested.schema.json",
+    "sha256": "61534bf6843928c109dbb2d16144a1541f8caf8848cc87692b19ac1a2ee3b56c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/command.requested.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/cost.update.schema.json",
+    "sha256": "4fbb220f58d67d7e0eb1ea659110ed0727a1d8cc50eae763bce5e78b1c971159",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/cost.update.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/error.escalation.schema.json",
+    "sha256": "2aaaaa56782a943406bc80786824845dc6ccfbec2ce2dba8dde27d3088ca54b9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/error.escalation.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/evaluation.fact.schema.json",
+    "sha256": "0fbc6a63cbce01b78c17719f783ecc13ea350e843e2e4ab50c12f8056f772399",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/evaluation.fact.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/gate.started.schema.json",
+    "sha256": "a399e7516c8a16654bad573db9d8e63d1a60e14e5fa92b68f5b9f7fdb7fa7ef7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/gate.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/gate.verdict.schema.json",
+    "sha256": "79fcdcceb44775462d8a18768393084aaf68a039b658ae029b37959eb8ce120f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/gate.verdict.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/git.evidence.schema.json",
+    "sha256": "fcdad3cedc9c9949715f4a3cb9c621aec2528e2e162dd5b8473ea5a035d97a67",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/git.evidence.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/infrastructure.evidence.schema.json",
+    "sha256": "0a5f9da18be64251cf53f4d83147ba04bc542b499b8684c8f32f1aee5243f8e8",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/infrastructure.evidence.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/lifecycle.snapshot.schema.json",
+    "sha256": "584a4177240d2214bc81d3e3bc5619847b60956c290004334afeb9f894aafb76",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/lifecycle.snapshot.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/lifecycle.transition.schema.json",
+    "sha256": "4999e797e21ae80e32b8d5ffb0dbbe4db913b7f53b046c1638ed17f453980dc2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/lifecycle.transition.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/module.started.schema.json",
+    "sha256": "dc4810c75dedfc76ad88be9676d53c8d785b0d3461ad594ac160d29d7c7d5f3c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/module.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/module.status_changed.schema.json",
+    "sha256": "640b038d772932297bb3ab7837714702c30b7aaca4cedc660b04ead076fc34bc",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/module.status_changed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/observability.degraded.schema.json",
+    "sha256": "5fa4b1577706e467cf2271e43ec51747806e040b8cc9145517357b936d094350",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/observability.degraded.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/observability.restored.schema.json",
+    "sha256": "d5aa3486cabaddc619fe4b10d2a8e926137173ba3dc2fa242380eebf80a27fe4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/observability.restored.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/phase.completed.schema.json",
+    "sha256": "53630d774fb166d9168fbb0b25719627e723e3419c57671ffd79e56ea776b8b6",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/phase.completed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/phase.started.schema.json",
+    "sha256": "3bfc4302a30c35ab3d29248dc842fa2787ca128865a5dad6cf835d6df30fce49",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/phase.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/pipeline.completed.schema.json",
+    "sha256": "ecf33ea8619d05c4e00dab81e4b5b0a7fcb9fd3a799ecd9bf890564718d2face",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/pipeline.completed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/pipeline.halted.schema.json",
+    "sha256": "1b6b566a6a345f268321113e3975870a1b2053c668a7d147905307191efd85ac",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/pipeline.halted.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/pipeline.started.schema.json",
+    "sha256": "dbe24e5428f46a7ecbcef3a6f9e306f5b1e61cca1499558be14fbfcf6a5af834",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/pipeline.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/plugin.event.schema.json",
+    "sha256": "b442b00c0b4ee056e82a62aebbfde555efc103879eb9545222aeef9d52527d24",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/plugin.event.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/producer.health.schema.json",
+    "sha256": "cd3f4024a258294546c153ef3ff380fd4c95b49a7a628011bb896401f1f92da6",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/producer.health.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/quality.evidence.schema.json",
+    "sha256": "6878e2a3a27390f061b8a0d45e2bc35ee02217716a8250532eb00fc276339bc5",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/quality.evidence.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/rate_limit.detected.schema.json",
+    "sha256": "1ddd4a24e4a3436073bd68018f190321071970e7bb118f8f2251dc11fa7bdaf7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/rate_limit.detected.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/retry.exhausted.schema.json",
+    "sha256": "34b24fc7db8d9b6d6a3816fd1f1b4a9530930b3f669a0f2bfd827c867937b7f4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/retry.exhausted.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/retry.scheduled.schema.json",
+    "sha256": "ae7fd37231da63a924fe3736be62ce6af9c7f8e91f10837b882078be1b0cd3da",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/retry.scheduled.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/runtime.log.schema.json",
+    "sha256": "da3055838588d0b828fe0be4d7a3c34bd822374e1d028c221cf8354ad7782607",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/runtime.log.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/summary.completed.schema.json",
+    "sha256": "19327a1f1c03a3b21b97e0199ec4a53af9ac51e6bb147d488ea5949c7ba46826",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/summary.completed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/summary.started.schema.json",
+    "sha256": "3a2ec68256f104fc29d28d64a3267608252c663bb73d31ed20b40c74b16c6afd",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/summary.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/system.io_warning.schema.json",
+    "sha256": "292306ac619e87b263313550c9e0b976ec55fc9c83f9cb0ea3feb5a0d28387a8",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/system.io_warning.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/events/terminal.closure.schema.json",
+    "sha256": "334a07b37c0f7c7b31948fcaa26765a1ec769c5d9213f26d98e090af755eabbb",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/events/terminal.closure.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/fixtures/golden-event.json",
+    "sha256": "07a683d5ad25e467ada0988a8d927d9ad559b0d090f5da3132acf9bd97f227d8",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/fixtures/golden-event.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/fixtures/invalid/missing-run-id.json",
+    "sha256": "90156ee43ad26adc0c2ff9b321f5685b755e8dc9b130c24060c2f598e863429a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/fixtures/invalid/missing-run-id.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.delivery.target.schema.json",
+    "sha256": "98cafddc91ae4ef9095cecdbda70977e44a940ac54b21b2322314b6ecda2a2d5",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.delivery.target.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.ended.schema.json",
+    "sha256": "3acf9d158c07afd34a3ee345795092f24ace436685130f1b0271eb86ec8b2c2e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.ended.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.killed.schema.json",
+    "sha256": "efa60e35009dbd857e4cf5aa7e21b4ecf43101da36944fc27f2530b79f456762",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.killed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.llm.input.summary.schema.json",
+    "sha256": "3cf631dc7f15d5be72479f6da6a3f8507c19898fb7a69accf8f2ee690c1f2ecf",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.llm.input.summary.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.llm.output.summary.schema.json",
+    "sha256": "9099e4d6511fc80d65e18e1d5af53a31482f4aa7c14b22336a449be6ba3af1a2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.llm.output.summary.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.model.ended.schema.json",
+    "sha256": "f97cb5c2981b307d5bf57558acd6f1924a5fb1962b1c83470a5dbaec4603d652",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.model.ended.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.model.started.schema.json",
+    "sha256": "725b02e643b61d244976495714ce2613bf2b2e3eb3c6f3f1cc37af0962de3741",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.model.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.progress.schema.json",
+    "sha256": "a0a1e82c5f1a83880fc97b30c0ca814a115196d3f0b08a95232f2724aeec6add",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.progress.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.session.ended.schema.json",
+    "sha256": "60ad9db79040e26be3050fd9a9cd5ee8e3d6defef96a2540c1f396e309237203",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.session.ended.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.session.started.schema.json",
+    "sha256": "3e48e589f281b5cdb63ea88795b4c385f53c2759d4a0c2528d72dabc6b9c2ca2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.session.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.spawn.requested.schema.json",
+    "sha256": "b3a1b968aed1415307f65b00c0c07353aa05920c703d7b6cf6e41f8be99a9488",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.spawn.requested.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.spawned.schema.json",
+    "sha256": "b914110cd827d740403d95b4c738a0ce88d6ce388d7bb6bba85ebac5df35f1c9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.spawned.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.tool.finished.schema.json",
+    "sha256": "21d1bc6bf1909125bbae5aebea2f1d637dd65e22168c0338a993b1033ad2c435",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.tool.finished.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.tool.started.schema.json",
+    "sha256": "e1d212421f4dc150bf15f0ab38ca06ee90f8a3ba89874293f6ff51d1aa71a864",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.tool.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/agent.transcript.schema.json",
+    "sha256": "bb7bc33fe628755de5e498a3d748483ca606dba0ce106c51474d23f9a107b966",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/agent.transcript.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/approval.requested.schema.json",
+    "sha256": "956d46ca682fcebc63f204e01776fc097dafcf7d403e3ec819e602f6d3adada1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/approval.requested.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/approval.resolved.schema.json",
+    "sha256": "9a482c55f76bfb1ce0edf90148cc4292318b64bbb3c72726dae7546b184dbd13",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/approval.resolved.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/artifact.published.schema.json",
+    "sha256": "9efed728eed4efd584a8727d2e837fa373e209a9914a1d2956ec2a8ad30b9d52",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/artifact.published.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/budget.exceeded.schema.json",
+    "sha256": "c38781d6fb5900ac3db703330ab0e36a35fa6751c1a4cef0b438035c478c8940",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/budget.exceeded.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/budget.warning.schema.json",
+    "sha256": "7beb1acf50c43afe535907b253af267ba73845335db00bcdf64686cdb3cf8e06",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/budget.warning.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/command.accepted.schema.json",
+    "sha256": "60245f72e327fa41f9333bf530f2ea53c684639cda835a68121aac89fdd93977",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/command.accepted.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/command.completed.schema.json",
+    "sha256": "340381f72a808eb01dcfcbec394d47e265453d192acba47e90508893a2f94789",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/command.completed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/command.rejected.schema.json",
+    "sha256": "acfb847e4266091564fd3e29753fd0da4bf479dac1a737a249867b3d8e4187a9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/command.rejected.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/command.requested.schema.json",
+    "sha256": "295b85b51fc76dd9522f1d5cac9f6fb394920407b38b7ae3fc0301256d52470a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/command.requested.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/cost.update.schema.json",
+    "sha256": "ef41929a6e8b6bdaf828bdc1ad9598b07e518474d93def0008e14800816e4088",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/cost.update.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/error.escalation.schema.json",
+    "sha256": "1cd649f37dbf9dc01222bd72a85dca0301e38939c2eba0a6a4be92686647e2f2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/error.escalation.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/evaluation.fact.schema.json",
+    "sha256": "046eaa1ef1fba4b0499fae23108c82120685932720a611b087dcb81d3728fefc",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/evaluation.fact.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/gate.started.schema.json",
+    "sha256": "b593673500af1d1fe38d269c45ef143ba26f6ea6d1643609e7aec900e1d2ca18",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/gate.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/gate.verdict.schema.json",
+    "sha256": "a568d4207452056cfa90226f38d9fc2e518ce2094cfb19c9722cfee585d0ff14",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/gate.verdict.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/git.evidence.schema.json",
+    "sha256": "143b52aa4e1b7253ffd5de7a2e733a74645ac21f059aaa0b457c8d90a797c83b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/git.evidence.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/infrastructure.evidence.schema.json",
+    "sha256": "f300771825ce1a0e21fd77dff457644f0c4ed310a8b505551dbafdc4f72eca8c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/infrastructure.evidence.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/lifecycle.snapshot.schema.json",
+    "sha256": "7045e39c7f14972d801e5bc0494ee8f10a05f5d0c8afbf9f9207c8c3835cfefb",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/lifecycle.snapshot.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/lifecycle.transition.schema.json",
+    "sha256": "2b646965e8dddfc483021ecd36a431b9170ae31a4835ca5f9660bdc6525aa37f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/lifecycle.transition.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/module.started.schema.json",
+    "sha256": "28563dae29a7f3fd8f99986b15e1bd114f7999b08aeb92d9814acfd7f6956745",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/module.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/module.status_changed.schema.json",
+    "sha256": "1d28a8b334de84e713c941c209907ae6d4683be359695316dcac391ce5037122",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/module.status_changed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/observability.degraded.schema.json",
+    "sha256": "94cc7a8a84eb981710484b96256c4d79834d07312dfb2d71c5bbd72a50668a59",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/observability.degraded.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/observability.restored.schema.json",
+    "sha256": "a86ef2ba392dc1c273a987ffbc542beb2d363578cb80c757c72b842d072c3785",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/observability.restored.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/phase.completed.schema.json",
+    "sha256": "2891abfcdbfbeda9b03846658059caa67eb772e9f22c9faa6b50cd10dbd912d3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/phase.completed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/phase.started.schema.json",
+    "sha256": "3e0a063ab84d0be0cdb26a2e0f41ac80237bcaea66fcbfed11bbe965f96c7f37",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/phase.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/pipeline.completed.schema.json",
+    "sha256": "a43ddccfdd1c200ca1029ea9775f6751a5e47422cfa9a23d4db1cc40b17fdc61",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/pipeline.completed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/pipeline.halted.schema.json",
+    "sha256": "bc89745935df441aa03fa433ba5fc4d88edb036491dd22f2bd39dee94c0ad871",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/pipeline.halted.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/pipeline.started.schema.json",
+    "sha256": "afb905685a423e75d9875e066c2cd7bd28c825e6077eb35cc048ffa8585c1174",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/pipeline.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/plugin.event.schema.json",
+    "sha256": "beeb921f8b7acd4bc0b9fc8b113dc0474257e04d0e36d1839fe71fc48f4281e4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/plugin.event.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/producer.health.schema.json",
+    "sha256": "a85dca669415820e73bcd9f0ce6fed889443e522938e71ff058b9dd536b71c58",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/producer.health.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/quality.evidence.schema.json",
+    "sha256": "9b6f827595361dc86d99b726d890efa298cf150d010809614b98ca7cbebaa8fe",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/quality.evidence.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/rate_limit.detected.schema.json",
+    "sha256": "407b7512237a36589808e6136fe3565801c279c6e3b1d15831d38d046f246bfe",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/rate_limit.detected.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/retry.exhausted.schema.json",
+    "sha256": "8619a79e5d45cd51c650b30cbc8172d80595f9e365ca9ae9f8e54c476b5802c4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/retry.exhausted.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/retry.scheduled.schema.json",
+    "sha256": "405d17d84f88cef1d243d7bece335e66a9d62b661e026565ee8e1901114ab49f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/retry.scheduled.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/runtime.log.schema.json",
+    "sha256": "1e7c476ac25fb598fe4214fc36cb2413eee8abf6e494f274c18239cb2908558f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/runtime.log.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/summary.completed.schema.json",
+    "sha256": "59aa191582a03eabd788046e996f7a0925d85431f675c8e63aa9b0e4af1e5539",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/summary.completed.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/summary.started.schema.json",
+    "sha256": "ed688242ac058cca6c078a4e27be61a4a9b25de1c147d76a03dde5793b38f08f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/summary.started.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/system.io_warning.schema.json",
+    "sha256": "215a3c25973d0663d90108a4cc662c7db5a2ed18741036dcb8a7f4baf30a2358",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/system.io_warning.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/payloads/terminal.closure.schema.json",
+    "sha256": "820c014ab5046ae8efe464cd5ffb4bf9b1af16dd257a9f306c687e830dde067b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/payloads/terminal.closure.schema.json.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/telemetry-types.ts",
+    "sha256": "4860f50ef714e3aa22b63daed6f6ad16bce06cecf3792e955e5d0170ad2ec35d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/telemetry-types.ts.snapshot"
+  },
+  {
+    "path": "contracts/telemetry/v1/tests/contracts.test.mjs",
+    "sha256": "fc87751f917d91828b267cdaf273ff47d4238256f7c87a94cb61cfd630a1a857",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/contracts/telemetry/v1/tests/contracts.test.mjs.snapshot"
+  },
+  {
+    "path": "docker/Dockerfile.buster-runtime",
+    "sha256": "e7104051fd0b53b1169d2be70519c6c8d7b21c2b06ee86a1f176886fc3892688",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/docker/Dockerfile.buster-runtime.snapshot"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "sha256": "40c86542dcf8c55b5e7270fe889487a81e7257c90433bd62b4b36f0bd9abbbbf",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/docker/buster-runtime-entrypoint.sh.snapshot"
+  },
+  {
+    "path": "docs/operations/operator-configuration.md",
+    "sha256": "084a02de91bc2feaf92af099985775c51f8081703559c6f2ef7d94a7307930ac",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/docs/operations/operator-configuration.md.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-buster-admission-20260921.md",
+    "sha256": "d052b70c66fe36f00a26a0697334d405bee8ca8cbc1a6be27fc8b49c43ca926f",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/accepted-docs/docs/review/remediation/implementation/config-buster-admission-20260921.md.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "sha256": "f89c78d96f4a1fa041468890d8759d711514ea7ff9c45fd29c5239d8daa4c4fd",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/accepted-docs/docs/review/remediation/implementation/config-inventory-20260920.json.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "sha256": "bda676bced09deca0b852459eb0f936501a5856cbf93eb242fa7d3799d970bfb",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/accepted-docs-final/docs/review/remediation/implementation/config-inventory-20260920.md.snapshot"
+  },
+  {
+    "path": "package.json",
+    "sha256": "13c79c0063921195872a413448b05588ab66561050cb5fd0053683577105b3d3",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/package.json.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/js-yaml.d.ts",
+    "sha256": "1a722fd5cca5b94a7d62445465c42768fed895e0953d947facbb3bb8b896728f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/js-yaml.d.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/native-parent.ts",
+    "sha256": "fa7e09806acf55488d6741ea977fd3f1ac0450ddb9395c0d7bccc605150c4d2d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/native-parent.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/package.json",
+    "sha256": "053f442cfaf9cd15bead8a36cc98286b614443b03e1bf91057674431c3c1ec66",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/package.json.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/remote-plan-cli.ts",
+    "sha256": "f10d961a5d171f846d8f5d7dff11eb387ccbd36282c10c30d1b2b627fd2cfdfa",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/skills/buster/engine/remote-plan-cli.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/src/index.ts",
+    "sha256": "51c35b9e5455f1c1d253c769f1f020c23b1d1a0fe8e3b30abe4158e43be09f6a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/src/index.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/artifacts.ts",
+    "sha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/artifacts.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/browser-axe-runtime.ts",
+    "sha256": "7370bdf54556875b996cc0ac4c4219a8c9ddc11d25dfb72875f41806e82482c8",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/browser-axe-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+    "sha256": "a7af35a6b7df314129cf9150c3d44d2017c2bf47b9e529ef1ff6962129966b75",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/browser-lighthouse-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+    "sha256": "20e32c52051339237e14cf1bed0da9c690ece23297bec9bb77a628e8df211917",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/browser-playwright-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+    "sha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/browser-visual-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+    "sha256": "7f50b4c1c6c1e661319dd2f9ba1afecf27dd19a26c06ac51ef52abc0d97703f3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/buildkit-readiness.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/canonical-value.ts",
+    "sha256": "7158e326bb4b2622989af106ba49b664f90eccbe61df24a0d97e6400457c370e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/canonical-value.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+    "sha256": "9d8c2e2fee2a13c34dc00efe3a7ed7c4eb2047a7d496baf9c4c6b7c4cafcde78",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/capability-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/composite-capability-runtime.ts",
+    "sha256": "fbd71da7e0fe2e53801e60e36c3c13636b4fcb5be0e43503ef66571820b0810f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/composite-capability-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+    "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/container-build-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/dependency-process.ts",
+    "sha256": "c1f305fd3281328e1cd5714b1366cb946907e2a96af2bf6c3f629c2ab4ed354b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/dependency-process.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/direct-command-runtime.ts",
+    "sha256": "eaacae3a6c4b3110039b7134378b8eb114dc8cb2161c4bc593c405c967afa006",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/direct-command-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/exposure-generation.ts",
+    "sha256": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/exposure-generation.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/exposure-handoff.ts",
+    "sha256": "4e725c913e11f5eb11a4444c9a96373e423c06b2da33287e5269fbe1401b9e83",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/exposure-handoff.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/fixture-authority.ts",
+    "sha256": "b3fac0a68c4cab2d3c1abfabf10b38848cc6917512a6684e80a030656ee0a1f5",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/fixture-authority.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/generated-demo-credentials.ts",
+    "sha256": "0df7b344a3ccb3c27322a0381ca8f2cf891feca22140c9a5e1899fa520ae10da",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/generated-demo-credentials.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+    "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/historical-plan-store.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+    "sha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+    "sha256": "42f3533feab2fcf98a60e4fe570d9980c6d008785d65df6e73e15e3f2f54dc85",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/kubernetes-manifest.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+    "sha256": "01da0c323776cc8f9f4778d9ed2afb198133b79f7f2afbfa0850f657dda357b0",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/kubernetes-runtime-security.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/native-fixture-control.ts",
+    "sha256": "6d305ecd5509af0dc13b90e02d00339619822cb5551c17077b4503439bfd272d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/native-fixture-control.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+    "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/native-fixture-journal.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
+    "sha256": "fb755b6a559c3eb4f34e9a6151cc26dd4a6e14ff0e4c16d9e727964547497297",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/native-fixture-lifetime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/native-fixture-state.ts",
+    "sha256": "448417a808f5d630c24aba477af3fed88bc2a8f74e9a9c203c4f6f5bbd035b5e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/native-fixture-state.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+    "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/network-http-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/pngjs.d.ts",
+    "sha256": "cf251c5bf79b8a73db7b2c7010aa912bf4efc7448ebb06a27202be31a8664327",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/pngjs.d.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-archive.ts",
+    "sha256": "a3f47267addf5e371faff3896521eb3aac35b49523275a7766ed29c8d1d42f6a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-archive.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-channel.ts",
+    "sha256": "ab1ec1c5aae3c99cb56e33d1df3029ac5e72247a1db99b5f23d590f4d961d01d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-channel.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-binding.ts",
+    "sha256": "454c3f6a5a41e179776eddda24ff7a89e9ac959558cfb8343f6334861fc93901",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-cleanup-binding.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-envelope.ts",
+    "sha256": "837f2b0c6acf2ab0afb56e6a54857fefc15272f8c5c026a3c796e4fd55d9e166",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-cleanup-envelope.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-execution.ts",
+    "sha256": "7f68045db88cfea003fb204b06c61b5cef0d48ff0bb416fa060dceeb33249365",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-cleanup-execution.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+    "sha256": "0318f48456c8a36005e70c1272bcf63050b54d60b8cc252d1f902d2f1bb2d242",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-cleanup-host.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
+    "sha256": "8cc3b8d59fb38bcb04b6549a05bb7c95f153f7f603405724f84a9385a45ce134",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-cleanup-validation.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup.ts",
+    "sha256": "192c1954407e294483ea08389220eab128052ba57e9b7a72b26fcb768d608bc1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-cleanup.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-client.ts",
+    "sha256": "31b1bec56dc09daafb7e0ba425243009b86f7f73eb693ae0e74617c1cac6f6dd",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-client.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-command.ts",
+    "sha256": "dfa5137629af252882f586de99c178c2c46b8fe660fdbdbec0468224fe814bc6",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-command.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-config.ts",
+    "sha256": "f2b088c3fef62010e6d867f6610ccc2392fdb7d6fa6be2bd43ad8e320d099835",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-config.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-envelope.ts",
+    "sha256": "90112c33cc7ecd6f4c237e3234bb7ba9abc8cf07e17aa9deb882ffc5afdb17df",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-envelope.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-execution.ts",
+    "sha256": "e23033bcf78d19dfada0a25d7cffc9ba8133b97b686ffba24b362c601c8a6e93",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-execution.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-extraction.ts",
+    "sha256": "10f495344bc139291bfd127662682bd35b601d9643b915b5016e49334a3523ca",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-extraction.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-gate.ts",
+    "sha256": "7f3cb9aa8100a003713195cf3149f9097ea5f0cec18779e8deca92a0d2d894d7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-gate.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-header.ts",
+    "sha256": "921c13b2285ce3293ec2c2c75a0e42f576bb11300d527b7dd9640a270136f167",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-header.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-batch.ts",
+    "sha256": "44e38c453e1ab5a1118e54e7a4a855a2e40fce27bb9a0557c7b42808da88ee74",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-historical-batch.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-channel.ts",
+    "sha256": "2cb8b7a9960e5467b2bedf4bc45c55a12df26ea5c32545fa2fc42c6b5e468c1a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-historical-channel.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+    "sha256": "f8a008a3172e4bd4bdb84ea19f8435878a3c79d8f053d3a16a4f5ffcc084ea16",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-historical-host.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-import.ts",
+    "sha256": "4f6144633592a1e2dd11cac4b82c653982cddec50930a1d6d11694a5c3c74828",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-historical-import.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-ledger.ts",
+    "sha256": "74c8151a3a08b7e0d8c490cba83fe74ba4dfd9cc9f23417ebb59c4fa417177bb",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-historical-ledger.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-materialize.ts",
+    "sha256": "3fa603ff06977ffdecf435981fe392cf107e90752d97cb11a7fa3d869f484ee3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-historical-materialize.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-publication.ts",
+    "sha256": "53147aef26b51b977f07d9ab46fcee9a356ba9acfa19e041f8c3b99d1cbc0f19",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-historical-publication.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-reference.ts",
+    "sha256": "d034cac06fcd04b8a2583609b00a11375e404c65897c99a21a973f19d3ff7984",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-historical-reference.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-source.ts",
+    "sha256": "fdccb2ec89cad6824df4ebf5ce9475ecfe4a94cbf4b515bc2c9549fb204bffc0",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-historical-source.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-terminal.ts",
+    "sha256": "3ab3f547bf01134d9a2e9d14a12b919fbb4c8781c1035f3a4b21fc803cb7926a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-historical-terminal.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-host-channel.ts",
+    "sha256": "8383114bb82cfc3c38a7c65ebd8c2ea21fb88c7b25b1a185473b2f82c639fa08",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-host-channel.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-host.ts",
+    "sha256": "960f4605605171a5c1745144321995c91dc9f571926d497df278f9f2974c7fcc",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-host.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-input.ts",
+    "sha256": "b573c86f1f7b140baaae2d1cbcd3d6d381115688f30fe799a99b3999965c73c9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-input.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+    "sha256": "e37446c62e1e9a599a525c4203935b6b43ed093c8af612bc89e95b5c321c19b1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-ledger-state.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+    "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-ledger.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+    "sha256": "20362a6d9a4147be607c1006cd42a33465d5b56b7df5acfef04562009abba179",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-native-phase.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-parent-channel.ts",
+    "sha256": "9b6548ed266f22453044c813d31b60f1cd4bef9d85f5b0fe2cacec06fc48ada9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-parent-channel.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-published.ts",
+    "sha256": "0fbf0c57cfbf1e93e515e3bce2c6f24b64f607fa6001e80ed79cceb37d4f5c14",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-published.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-recovery.ts",
+    "sha256": "3bc1d7f6787a1917ea471b55c4f7075618ae16459b6f9d85825493bc98ca10de",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-recovery.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-reservations.ts",
+    "sha256": "2f079e6521872c056e44fad666efef8e38e4ba07ef9772aa4118d38c3c5df04d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-reservations.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-result-origin.ts",
+    "sha256": "ac56f5ca81b362b406e96c1d6177419e705b769913c8bb6883cb116710e9be58",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-result-origin.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-slots.ts",
+    "sha256": "cca405b4dac32f2292483815880fb2e0d1d58c5d5134957864fd1bf65f8ed897",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-slots.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-source.ts",
+    "sha256": "dd165bec2ad71b1664b7bec6c5d48a7a1b1602bd3824f8735e09292eb9b6ef22",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-source.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+    "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/preparation-supervisor.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/prepared-plan-paths.ts",
+    "sha256": "7130126f30a200aaa3a24f5df63e8df82fe9c468d2bee321b16dfc63b8d52ead",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/prepared-plan-paths.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+    "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/prepared-plan-store.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+    "sha256": "b45b50d0cfd2ae6a0aa091ba1e1edcb936b868490ae2a579f3ac561d24f8394e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/process-input-lifecycle.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/process-input.ts",
+    "sha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/process-input.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-browser-options.ts",
+    "sha256": "846a6488bf66ab4a84d8fb79db7cd88ddcaf69b77707bda9a116ed567fa38cdd",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/skills/buster/engine/test-gates/production-browser-options.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "sha256": "c2135bd4f48030b883e6c13749991a17e2e47e8b4db7272d8fa096081136d9d4",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/skills/buster/engine/test-gates/production-capability-sources.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+    "sha256": "7808623ea1d8bb3f838254a898f84807d04c40d4ae17042440eeae2bdee1492e",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/skills/buster/engine/test-gates/production-cluster-options.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-command-options.ts",
+    "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/skills/buster/engine/test-gates/production-command-options.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-config-values.ts",
+    "sha256": "771cf3a0105edc54bbca6af53d5761082374aab2be15c3df72e5f6e5ee6ec567",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/skills/buster/engine/test-gates/production-config-values.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "sha256": "e9508ea7274873e803ac2c43faedbb3172469a551292a794f9b40db2caadd6ed",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/skills/buster/engine/test-gates/production.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+    "sha256": "b7dc5260ba57dd177fcb2e1e40f85f39554bf261f3e99388a6d91d17d24879b1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/provider-capabilities.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-child.mjs",
+    "sha256": "ce2bd1ddef2b283e5f3ea866c4a03deabfbb36ff3fabe06d73836d1c71611977",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/provider-child.mjs.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-loader.ts",
+    "sha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/provider-loader.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-result-validation.ts",
+    "sha256": "1e5371e0528f03a73d1d24d8e0764d501d49c9d8c22d231315db5a3af5539631",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/provider-result-validation.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+    "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/registry-health-access.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+    "sha256": "e74b3fe2e8dca0157d22c6bd1b50f5cc69df91ec29eedbdbaef86d4ff05a42de",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/remote-plan-compaction.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+    "sha256": "324de9b8f48e607819b1616c67090b32ada8950c3e1d11dcb653e36f8edf3ac2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/remote-plan-http.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+    "sha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/remote-plan-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "9d2c6655c2eb411f3333cdf9d2b459970f10da44969318cc2eda3c26ed4c6660",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/skills/buster/engine/test-gates/remote-plan-service.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+    "sha256": "c30fd160cb458232e68f27eaae24d9e622a85184f65ad8fbde3135cf14e3355d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/remote-prepared-execution.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-child.mjs",
+    "sha256": "31a4f4435fbe9137521e8c610d6dac0905ce01fa0b2589062362270ae109c77c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/report-adapter-child.mjs.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-package.ts",
+    "sha256": "71cc3d1906a029b8d5e06067f26bda1fe6199f93cce8f523e351ea02eb43e104",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/report-adapter-package.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+    "sha256": "0c698666a99e51226b2bca2d8287ff491a7baf37dad47448c4574176ee65f569",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/report-adapter-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-artifact-reader.ts",
+    "sha256": "d3b4f8c4fae897876c8825cae357e9740de70ebd43686eaa85efcc94ed27b872",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/report-artifact-reader.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/report-finalizer.ts",
+    "sha256": "8cc0ff2562fd8b530c2a2e1b32b13aaccdec1a2ea9f398df0e7cd350b2cb9b7e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/report-finalizer.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "sha256": "ab67c1300cdca9e173b4c9014df2381fe22b9bfe4d5f19bdc68dfd0bc2cf7b7e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/runner.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+    "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/security-scan-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+    "sha256": "1616da65ba5dc6dfef24af3b849f3a6aadbf4761d4dc0a31e866765f632cd812",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/specialist-report-finalization.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+    "sha256": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
+    "sha256": "60264e4f91904b49c57225184cc86233778c5c7146039bdd783bdb86ba71a9b1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/terminal-workspace.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts",
+    "sha256": "55a07e1d9c1af556b0f17d94bcb3f0e48d101b85c3d8b38135c5ac8f41aeeeff",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tests/process-input.test.ts",
+    "sha256": "4da06b94873ceef22654527a6964c03a13002961884149257532de2bdecd766d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/tests/process-input.test.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tests/provider-capabilities.test.ts",
+    "sha256": "1e49ef570c2261f1339520df81e823bcd43aa2ee982532e21372e4f4c4dbab5d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/tests/provider-capabilities.test.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tests/report-adapter-package.test.ts",
+    "sha256": "161b6e39e30a95b9e084f1cd0cdf33d6d494020867d16698944dba6df63bc3fc",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/tests/report-adapter-package.test.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tests/specialist-boundary.test.ts",
+    "sha256": "b4180149b128763a832b957349fa325585a72e0e33e791e27af3b044119f0444",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/tests/specialist-boundary.test.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tests/terminal-workspace.test.ts",
+    "sha256": "b02702d27aedf1ec68ff08ecf6205748f23a4219eb7515f7d52ab87fb19a6b6c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/tests/terminal-workspace.test.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/trivy-database.ts",
+    "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/test-gates/trivy-database.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/tsconfig.json",
+    "sha256": "71e1f3e6a5bd5e27d005cdb1243a59819264b2bde8d01f537568b3c4681e52b9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/buster/engine/tsconfig.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+    "sha256": "4b4814b370a035668309df52af51dd138bc4c92ae3ec596393fb87b959dae605",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/config/platform.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+    "sha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/config/platform.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+    "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/config/published-pair.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "sha256": "6529733c4220ded5ef9b1482793ceadaf7f23d1a855bb9bd13de6454ec3c1a5a",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/skills/common/plugin-runtime/foundation/config/swarm.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "1ab81d8acff9b7b87d193964780c08f39350086bf60aee51771e312ad6ae8e6e",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/skills/common/plugin-runtime/foundation/config/swarm.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+    "sha256": "054104fb7041d0712721b94da5985a0f93540c0457bfe06ce601ce985a450737",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/isolation/cgroup.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+    "sha256": "2851d7491792b3c4831386346c8eac79abfe79c1e3f1f9f2d415a834aad59d8c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/isolation/child.mjs.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/isolation/memory-limit.ts",
+    "sha256": "2ee1b41fa611fcecd63b69e0d21c899644982e37fc4eac897f86e8b9bed09165",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/isolation/memory-limit.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+    "sha256": "48563d1740ff46022fc85132706e20c9a418bc185891704fca08b417df42e820",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/isolation/protocol.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+    "sha256": "36c9c5e668f4599f46524f5599898037bdb0600d4fdca7527985ef809af7587b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/isolation/runner.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/isolation/session.ts",
+    "sha256": "79bc9adc0cacb9fe00e27a567142377db46af92049abb685d5b2a61f6ba4cc7c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/isolation/session.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+    "sha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/admission-retirement.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+    "sha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+    "sha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+    "sha256": "5e59b793e4682e68a780952b2d15da28f9477611cd5041295517a111e21f6793",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/attempt-projection.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+    "sha256": "99b766563ae07230838fa85c4f60a3c6b0f9a4dde341885af679ce983ad8eb08",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/attempt-replay.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+    "sha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/attempt-results.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+    "sha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+    "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/attempt-state.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+    "sha256": "51264741ac619877d2154668d83aeedbb666d1dfeb524685936b2d90d3322c41",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/closure-projection.ts",
+    "sha256": "0c76760e141a63472111d2e930e8215b8336a3a9ed9bac1533dd2cd2c0cae69a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/closure-projection.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+    "sha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+    "sha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+    "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/durable-blobs.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+    "sha256": "b9d7866810eaa8b77681aa42c69b8f4651229317b0f73d0077b1866f97c1e73a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+    "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/durable-records.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+    "sha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/hash-journal.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+    "sha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/record-retirement.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+    "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/replay-validation.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+    "sha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/observability/wait-projection.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/package.json",
+    "sha256": "d2639c87351035eb4ed0d34569934d18151b4024ec81a7604680ad3a6ae71ae2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/package.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/packages/install.ts",
+    "sha256": "72e2212a2421f7738104c870fee746a64a8b12527d9662d409ca5c6048d4efc2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/packages/install.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+    "sha256": "4dd81ccecacfc3b71848d2cca20c4e83e31f14223d4320ba30c83c4650592388",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/processes/linux-process-group.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+    "sha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/activation.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+    "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/build.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+    "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/capabilities.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+    "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+    "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/configuration.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+    "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/digest.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+    "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/discovery.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/errors.ts",
+    "sha256": "148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/errors.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/frozen-map.ts",
+    "sha256": "b4d3f268b79917e962959420a6b7a9a598086ac5d3d87cfb5bc0f8ee2a7583f7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/frozen-map.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/frozen-set.ts",
+    "sha256": "94b7eb7f0ba2bd7ddb23d0e0dceb701395a5c2aa17bc67a14d8f53d0e9dce753",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/frozen-set.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+    "sha256": "a7a28379c6f8409576a12169c6bc23070dbb66a41e0f041fc8b95310b29eb42e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+    "sha256": "764ca496cd9bf406a26eed400777d61b239c6130fdf3b94204c4006d132458f3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/import-audit.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+    "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/schema.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+    "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/common/plugin-runtime/foundation/registry/types.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/cli.ts",
+    "sha256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/cli.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/effects/contracts.ts",
+    "sha256": "2214fa4a761a7e2b427df8b7578c76373377d27a021176e13a14e05e5ef606d3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/effects/contracts.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/effects/coordinator.ts",
+    "sha256": "e0a3408e2102507c5b8b0ffdc6833e2901afdf41c5bc1ef7fa22e98d7506ac89",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/effects/coordinator.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/effects/dependency-identity.ts",
+    "sha256": "13d0c12129bdd1bdc6eb5d8a4d103752bf266e459fcb20a672ee3c42fdfc2f81",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/effects/dependency-identity.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/effects/dependency-journal.ts",
+    "sha256": "dc0e567a573b822afb54353b04a4b58cd93fad1b155067d1173957ae6a5035a3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/effects/dependency-journal.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/effects/durable-invocation.ts",
+    "sha256": "6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/effects/durable-invocation.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/effects/identity.ts",
+    "sha256": "8d3e2f32b4fdb98f6159c989b41fe926fd5b518791b4b02246d633dff847bcb9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/effects/identity.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/effects/journal.ts",
+    "sha256": "1ab8839b77c51008973975a324d675af129e8aa45152ae0fde97c954d5af3b95",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/effects/journal.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/effects/locks.ts",
+    "sha256": "7ca675286800ee88314919f7c0d524c7b5cde99928b9e93c8036e566ecc4b793",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/effects/locks.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/effects/memory-locks.ts",
+    "sha256": "4e7a78b0c8ac9242c9ce5333e7c3fcc620cc4f174b4a9018509da3f3931e5797",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/effects/memory-locks.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/effects/resource-acquisition.ts",
+    "sha256": "d48a8c272050b230d9d83b9b8254df158454b6c0e7fb0eab950d0e89ff4cfb1c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/effects/resource-acquisition.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-invocation-phase.ts",
+    "sha256": "eaae9f5fd571a476b1b7ddbec709f1389c95e71189143ea23a87faa52847ae5f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/adapter-invocation-phase.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/adapter-startup.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-support.ts",
+    "sha256": "2eb72fdc7d7731b105807495697647b049c00c39e84b695db29a219a2ac1156d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/adapter-support.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/adapters.ts",
+    "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/adapters.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/administrative-repair.ts",
+    "sha256": "9ff829bc31a4602ecd1e52f3cc0ba8fb5db40f3e597306e4e401cf8f451fc137",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/administrative-repair.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/artifact-checkpoints.ts",
+    "sha256": "77272b94fa7a2c5c4968753fff902ff3ac88deb5f3ef2da4c87580fae5bc78f7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/artifact-checkpoints.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/authorization.ts",
+    "sha256": "3f04309435d4fe3eebe5a73bac5247b0d3c981ffd4a9580e52974cf46cf3942d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/authorization.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/context.ts",
+    "sha256": "3f61fc7b2e18d6c36bf9eaff5173a06d31dd06d14a07b05c6d8be7320098a288",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/context.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/effect-recovery.ts",
+    "sha256": "06ee56bce5fedf57518e39858b700278c33b81d4edb2177587007f392b0ce186",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/effect-recovery.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-admin.ts",
+    "sha256": "f3ba44d49baffa01ee74a4d749818e8f903feb48827eb9108f959c24c8a0a1f2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/engine-admin.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-run.ts",
+    "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/engine-run.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-runtime.ts",
+    "sha256": "35c238db98fe8e5ac9479773f3eaa3ad0b63f40d04a0e252e0a4030e84b6e27d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/engine-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-snapshots.ts",
+    "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/engine-snapshots.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/engine.ts",
+    "sha256": "a75ed99915780e157a54f684a7cb9202a13e6cdcea6229af7f2aceaf79710839",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/engine.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/graph-build.ts",
+    "sha256": "75ce0387330d8acc6d7217aa8539a41c7796fcfd1522c079c8585c55e765adc6",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/graph-build.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/graph-repair-budget.ts",
+    "sha256": "f5cd06815a0d7d631276b256fd80bcbd57e018f68326909d69b424f2e08a284e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/graph-repair-budget.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/graph.ts",
+    "sha256": "680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/graph.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/lease.ts",
+    "sha256": "1f2164d57fdfb15dd5d67f04398f1cc42366a11c862083a30eba7de1ac03e13b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/lease.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/pipeline-loop.ts",
+    "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/pipeline-loop.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/run-decisions.ts",
+    "sha256": "a509f00aa74367e90d396f338db55acff2610075ac0063d14fa8bec4ba9d1171",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/run-decisions.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/run-mutation.ts",
+    "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/run-mutation.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/run-root.ts",
+    "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/run-root.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/runner.ts",
+    "sha256": "9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/runner.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/stage-executor.ts",
+    "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/execution/stage-executor.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/lifecycle/recovery-state.ts",
+    "sha256": "bc20a1e3f27ba2f4f67ce0f33df0f41bc4ebadcc40dcce8606ba37213660c99f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/lifecycle/recovery-state.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/lifecycle/recovery.ts",
+    "sha256": "5095a92c809f1e19524687d44e227585edaf482a7024dfc41b72f264b28822c8",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/lifecycle/recovery.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/lifecycle/reducer.ts",
+    "sha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/lifecycle/reducer.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/lifecycle/remediation.ts",
+    "sha256": "49c26f15b12f2281bf86a10c5b21669f7e8ab423c5d0f7ce317ce546e1254535",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/lifecycle/remediation.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/lifecycle/repair-authorization.ts",
+    "sha256": "148d198ec0458ef5bdb95f1932ab7fc59db8f0ebbb7bcf31555cda901a27a283",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/lifecycle/repair-authorization.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/lifecycle/repair-budget.ts",
+    "sha256": "6bd3d5f44d67edf626ce45301a716d5a6ea06d1f0f870b47d6f071b7930872d4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/lifecycle/repair-budget.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/lifecycle/repair-projection.ts",
+    "sha256": "9721b421a4fa07f9da5c33915fe1ea3ea1b0daa9e8f299ca49547d89ece22c24",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/lifecycle/repair-projection.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/lifecycle/wait-request.ts",
+    "sha256": "0e9f41bd8e4a5ceb6e43d53e713e3fbbdacca2540ff31134d0409745252419de",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/lifecycle/wait-request.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/observability/reconciler.ts",
+    "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/observability/reconciler.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/package.json",
+    "sha256": "672638ea7fc44b67a60315b70e8709fa6bd5b78898fed7bfd5c26bfc696d29a5",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/package.json.snapshot"
+  },
+  {
+    "path": "skills/nova/core/src/index.ts",
+    "sha256": "2cd478afa23772e88241245bbab2f9f5bcd86fb75e216250a7a6364c19bac9b8",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/src/index.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/state/file-mutex.ts",
+    "sha256": "d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/state/file-mutex.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/state/journal.ts",
+    "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/state/journal.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/state/json-value.ts",
+    "sha256": "c99b7a8c16e3c8c6860e7e469d9feb454448fab311f8d5f7bbf6dd690e59a58b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/state/json-value.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/state/plugins.ts",
+    "sha256": "b55aa7f90c5a7a7df5c71e5624eacada23f2e98748ec4b962d3ad5b047fc7876",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/state/plugins.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/state/read-run-evidence.ts",
+    "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/state/read-run-evidence.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/state/wait-projection-reader.ts",
+    "sha256": "89975c862444e0ef55ba641afab5289243c0313cdbf392c7372ab3cda61e7dd7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/state/wait-projection-reader.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/state/wait-projection-source.ts",
+    "sha256": "006a789f21cae188bbd8b45a6c7558595b5f978c096f93990602edb94d87c055",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/state/wait-projection-source.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/telemetry/audit.ts",
+    "sha256": "59eb49b7c0e2e430b38c53572edb5d7563724957996bd2dfda261fe1a1569bfd",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/telemetry/audit.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/telemetry/observer-delivery.ts",
+    "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/telemetry/observer-delivery.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/telemetry/observer-recovery.ts",
+    "sha256": "9d97600debff727243d62fbad6c4a4616b056a4e4afb1098e1e19bbaa5f3edcb",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/telemetry/observer-recovery.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/telemetry/observers.ts",
+    "sha256": "b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/telemetry/observers.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/deadline.ts",
+    "sha256": "27bb55650cfa85943f64843b523b671460f86a93b173f2233ffe31cdf72d182b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/deadline.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/dispatch-operation.ts",
+    "sha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/dispatch-operation.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/dispatch-projection.ts",
+    "sha256": "0dcce75d3c75064638270d1405c287f58e51d27d82930b6ebb661d2edccaa8fd",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/dispatch-projection.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/http-response.ts",
+    "sha256": "03da46c89c22facbf8970a363288f29addc6171cea2b65d0286696e8ff9da74b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/http-response.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/pipeline.ts",
+    "sha256": "8e17514a8b9699f2f921f07b6f450b3c4357903ec4726f72099644d1703cd2ed",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/pipeline.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/production.ts",
+    "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/production.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+    "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/remote-dispatch-store.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+    "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/remote-dispatch.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/remote-gate-cli.ts",
+    "sha256": "e40718d15fff2d21f7fe60e920b968677321b5c318bf18476e7c0b1569f4690c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/remote-gate-cli.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/remote-result-authority.ts",
+    "sha256": "f32cda2218fb9fef4d3405bd3aef99b2f4c497750d9f7c5ff23bb2e36b799835",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/remote-result-authority.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/remote-result-import.ts",
+    "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/remote-result-import.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/resolver.ts",
+    "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/resolver.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/runtime-config.ts",
+    "sha256": "11cf39d73d5efce2328a38057063fdff4e12d1714ad2c2935203a0a53108604a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/runtime-config.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/secure-endpoint.ts",
+    "sha256": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/secure-endpoint.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/source-git.ts",
+    "sha256": "869044fecd888a1e4ded10059c8f6a5ec4510d1ca9c277507de545538f1fb90c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/source-git.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/source-process-lifecycle.ts",
+    "sha256": "5924d42b6b5140cd8148aba4d69e54eca84ba8883e0a2739420019f5b48f778b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/source-process-lifecycle.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/source-snapshot.ts",
+    "sha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/source-snapshot.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/transport-error.ts",
+    "sha256": "ad99cced693a08380f5c317de672eb5cf919c3abae2398eda5cc5e5770a4b195",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/transport-error.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/types.ts",
+    "sha256": "560f3edc4024f8c65d6857f90df837454f6554be9cc3c29c6d09b320af4f28a2",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/types.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/test-gates/verified-output.ts",
+    "sha256": "7e7294645409f8e8fe95cb27b300e85b75157763ed80be004f544e238b79712c",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/skills/nova/core/test-gates/verified-output.ts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-admission.mts",
+    "sha256": "8fca581a354470b14b6d7f3b04f51cc92cf6b0627e22c42a0c61efe430666a11",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/tests/fixtures/test-gate/buster-admission.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+    "sha256": "c22a1d78a63cb077a8eee9f3b34d349c6e40306b70d9a4a107e11754d77a0487",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/tests/fixtures/test-gate/buster-cli-profile.mjs.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/historical-import-child.mts",
+    "sha256": "4b93a17f922337a73d65417278c5d9355c2ef877f6ffb0da53e657afdf611ac4",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/historical-import-child.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "sha256": "426b54bed8e939d47fca1ec6c0872b27e178e8dbb410b3b3825a9a11f5fecb51",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/tests/fixtures/test-gate/modeled-preparation.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-crash.mts",
+    "sha256": "fad9d70dc16b12b993d20f5ae13997ecd8812f57495e52d989c9cf2de9d09ab9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-crash.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-delete-barrier.mts",
+    "sha256": "69cca3f3a9f30f3dc605334a11f9331fd4f384841e7d448d400b2b35d5e86d73",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-delete-barrier.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-delete-loader.mjs",
+    "sha256": "d563a75fd4204e00abe9d43d4673b2b859c11db4fe83d6b0593b846dfe6c86e6",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-delete-loader.mjs.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-descriptor-proof.mts",
+    "sha256": "fe48c040de5d391ae7acd071ea072a9ece9cfcb986930180d1dea06fb476691b",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-descriptor-proof.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-extract-write.mts",
+    "sha256": "a57c6931736281016f07a7efa857dea83b08cf1b25f9a040d5675911bd7f0903",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-extract-write.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-host-boundary.mts",
+    "sha256": "7c37d7b7134ce4257498b2646ccae31424083789287e96ed5edd57df6cb4c437",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-host-boundary.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-host-loader.mjs",
+    "sha256": "ea2e47e5141f467803bdf8922fbf96acb39d3c57e182a27be2da429aafd73acd",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-host-loader.mjs.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-partial-crash.mts",
+    "sha256": "7d991bee6cca6cff6c64486b370d3327d78810f0bd7ad42ed11787bf413c79d7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-partial-crash.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-permissions.mts",
+    "sha256": "834d38299345eaac1aa4e2a31c8b7862298bb976a6a239d0a4b917df312725f9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-permissions.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-quota.mts",
+    "sha256": "cf9255385f7ac3964d44914986fc35d5d1ab7c81611000f8d6c47b7fab965484",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-quota.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-release-crash.mts",
+    "sha256": "8a0917323ca5131a21a9e324efffac31c935530648fc9ec6c09665aef37bd123",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-release-crash.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-release-mutant.mjs",
+    "sha256": "9617e994481189cb914aac2ae1c85f3b0dc6d949e008c93dc458e8761e2e7959",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-release-mutant.mjs.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-retained-descriptor.mts",
+    "sha256": "aae057a5661a1b1cdcc1ad9fd94382155e76d2b73d4e60c84df7302f8d8d5a01",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-retained-descriptor.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation-stage-write.mts",
+    "sha256": "d351579ea596e08fe6ff3ed03e46e22cc6c1d06160a4f0ee9a7126f1361e69b9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation-stage-write.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation.mts",
+    "sha256": "38483633a7a5454dba0f527e16bd6a42bae36bf78077c03c7cf185ce9a9b5d9e",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/native-preparation.mts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/remote-plan.mts",
+    "sha256": "b4fa400d4354103d8648233048f5b5f0255770bdd01204ca28c3cfc9ed2b7a92",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/fixtures/test-gate/remote-plan.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "sha256": "13e698f7350ee9411a506620b354577f360c27a0b7a2dd35f40c4bf9a974cae7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "sha256": "00bdc96bce82bfb152937cde1376627bea4d18c49a281d5d006dcb236205f827",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/tests/verification/contracts/check-pipeline-remote-runtime-config.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/deployment/buster-admission-render.test.mjs",
+    "sha256": "3a96798b43af4ee80f72b68116c8750b9418d262a059fb8fd6c051e90974fe42",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/tests/verification/deployment/buster-admission-render.test.mjs.snapshot"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "sha256": "6ccdafc99fcd7396faa48247dc2b6d78892490a98bec777971006dd00e3d6347",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/tests/verification/deployment/prism-swarm-config.test.mjs.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-admission-cli.test.mjs",
+    "sha256": "78d6a992bd378d2bddae6306eaece2385d6ce730dc24a95621e43f9957e7307b",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/tests/verification/reliability/buster-admission-cli.test.mjs.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-admission-config.test.mts",
+    "sha256": "d5cb2e38a5e7935577c02bd2f8743812bcd3106090dbc31d16a1084a835e7088",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/tests/verification/reliability/buster-admission-config.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-atomic-cancellation.test.mts",
+    "sha256": "fe34b1a0d2d00920ff9db9b2ea82b15849f875680f2c194bbe3ea74bbd91c55d",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/corrected-source/tests/verification/reliability/buster-atomic-cancellation.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-prepared-store-cancellation.test.mts",
+    "sha256": "3584b88b0556f1b4c58cec877b788e99b40c658fff2bdf3e48c41b9eee13a3a5",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/verification/reliability/buster-prepared-store-cancellation.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "sha256": "7e317d3f65a874bcf615fc187d6128685ec3eb3b0468466057416b6d067901ed",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/tests/verification/reliability/buster-shutdown-storage.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/nova-remote-faults.mts",
+    "sha256": "b14c845886e702ea23d12ed7b8b9231ddc2abfbf8411eb34d78b5b088d975e9a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/verification/reliability/nova-remote-faults.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/tsconfig.buster-admission.json",
+    "sha256": "296c2bdeb88545d61394e42ead7b454638b55a117ab602e3a9eeb4e3508a3ec7",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/final-source/tests/verification/reliability/tsconfig.buster-admission.json.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/tsconfig.buster-cancellation.json",
+    "sha256": "5758e7bfb5321eecd932e72b5bea321be02a0df088b9775bdd4684674218a0a9",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/checked-source/tests/verification/reliability/tsconfig.buster-cancellation.json.snapshot"
+  }
+]

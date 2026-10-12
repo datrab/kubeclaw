@@ -1,0 +1,13 @@
+✔ result origin preserves explicit completed provenance and pending absence (1.484168ms)
+✔ historical result origin rejects coerced or malformed importId (0.286417ms)
+✔ historical result origin rejects coerced or malformed originalStoreDigest (0.183345ms)
+✔ historical result origin rejects coerced or malformed originalPayloadDigest (0.174115ms)
+✔ result origin rejects alternate selectors and extra keys (0.245516ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 125.463023

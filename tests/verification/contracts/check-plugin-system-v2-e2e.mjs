@@ -41,7 +41,7 @@ const effects = new core.EffectCoordinator(
   new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')),
   undefined,
   undefined,
-  new core.MemoryResourceLockManager(),
+  new core.MemoryResourceLockManager(), 300_000,
 );
 const adapters = new core.AdapterRuntime({
   granted,

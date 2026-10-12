@@ -1,0 +1,10 @@
+[
+  {
+    "path": "scripts/buster-legacy-store-verify.py",
+    "sha256": "9b71198c34f4a175206811c837ce709c5a5b7bebab0d8d75be28ff450bd3fe51"
+  },
+  {
+    "path": "my-values/buster-values.yaml",
+    "sha256": "cf9afa2f8340c53b50e98e4bbdb0109bec5b3ce2530c42fd2519c86f350fd2c8"
+  }
+]

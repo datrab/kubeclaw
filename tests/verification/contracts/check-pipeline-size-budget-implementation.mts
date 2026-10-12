@@ -1,3 +1,4 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -65,7 +66,8 @@ try {
     runtimeReadRoots: ['/usr/bin', '/usr/lib/x86_64-linux-gnu', '/usr/lib64'], maximumOutputBytes: 1024 * 1024,
     maximumExecutionMs: 60_000, maximumProcesses: 16, maximumMemoryBytes: 512 * 1024 * 1024,
     maximumCpuMillis: 30_000, terminationGraceMs: 100, allowSampledProcessLimit: true });
-  const runner = new TestPlanRunner({ plan, registry, workspaceRoot: workspace, repositoryRoot: repository,
+  const runner = new TestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: workspace, repositoryRoot: repository,
     artifactRoot: artifacts, observabilityRoot: path.join(temporary, 'observability'), maximumConcurrency: 2,
     grants: new Map(plan.nodes.map((node) => [node.id, node.id.endsWith('/artifact') ? ['command.execute'] : []])),
     capabilityInvoker: capability });

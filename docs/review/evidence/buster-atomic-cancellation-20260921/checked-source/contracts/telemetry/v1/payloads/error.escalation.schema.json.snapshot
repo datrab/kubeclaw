@@ -1,0 +1,152 @@
+{
+  "$id": "error.escalation.payload.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "agent_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/agent_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "$ref": "../envelope.schema.json#/properties/attempt"
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "dispatch_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/dispatch_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "extensions": {
+      "$ref": "../envelope.schema.json#/properties/extensions"
+    },
+    "fail_count": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "gate_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "gate_type": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_type"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "gateway_label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "last_failure": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_call_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/model_call_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "module_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/module_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "step_id": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "step_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "terminal_decision": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "terminal_status": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tool_call_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/tool_call_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    }
+  },
+  "required": [],
+  "type": "object"
+}

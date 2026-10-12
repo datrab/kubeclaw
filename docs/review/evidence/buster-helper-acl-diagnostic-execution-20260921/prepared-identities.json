@@ -1,0 +1,34 @@
+[
+  {
+    "path": "prepared-acl-diagnosis.mjs",
+    "sha256": "0c186105dd0cdbec37bad34342c4e71342f95056b5d03ef0ed090854a5d96af2"
+  },
+  {
+    "path": "prepared-artifact-manifest.json",
+    "sha256": "acfff2de04a4e519f0c30990ff6cc7f387599e7e2b7c81fee682446dc7b32cac"
+  },
+  {
+    "path": "prepared-baseline-author-source-identities.json",
+    "sha256": "6864e8e8251e907d3b73f59fd959f9080f476391b18ccfd0da0d79781d17e12e"
+  },
+  {
+    "path": "prepared-baseline-snapshot-delta.json",
+    "sha256": "eaff07be5a92bf3a5e015fe68715af3a7619852f8562bc966a2e047f3b1b0799"
+  },
+  {
+    "path": "prepared-credential-bridge.mjs",
+    "sha256": "9ae16f39ed1409c4593e799773159babe4098cd5bee6ac0c2dfce5d8f45eebb6"
+  },
+  {
+    "path": "prepared-execvp-observer.c",
+    "sha256": "d1a951fa9142784894db9823fb3d625d0425f9f30acbeb6c7436b467c2be5252"
+  },
+  {
+    "path": "prepared-guest-init.sh",
+    "sha256": "ad4bfe6df10148b57b1e44ab1c325ff25cc450730b70fdcc3009b21df9e087a4"
+  },
+  {
+    "path": "prepared-launch-command.json",
+    "sha256": "32ed87a36ed33337d965c48051eee3b685e0b55e165898c2ccc36cb9122d135d"
+  }
+]

@@ -1,0 +1,52 @@
+# Unabhängige Gegenprüfung der Bestandsaufnahme — 12. Oktober 2026
+
+Prüfer: frischer Subagent `independent_inventory`, ohne Implementierungstätigkeit in diesem Auftrag. Geprüftes Repository: `/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo`, HEAD `cd9f235345f5fd8736a2ffe75d806288e4d538db` mit uncommittetem Arbeitsbaum. Geprüfte Vorlage: `docs/review/remediation/assessment-20261012.md` in ihrer ersten vollständigen Fassung; weitere Änderungen sind gesondert zu vergleichen.
+
+## Ergebnis
+
+Die Vorlage beschreibt alle 14 ursprünglichen Punkte sowie REGISTER und CONFIG, unterscheidet Vorschläge von Freigaben und trennt integrierten Code, historische Teiltests, private Entwürfe und Live-Nachweise angemessen. Kein Gesamtabschluss der offenen Implementierungen und keine Live-Abnahme werden behauptet. Eine konkrete Kriterienkorrektur ist erforderlich: IFR-28-001 hat **O1/O2/O-DOC**, nicht M1/M2. Der Link auf `audit-20261012.json` war beim Lesen noch nicht auflösbar; die angekündigte Anlage muss vor Abschluss vorhanden und inhaltlich geprüft sein. Beide Hinweise wurden dem Hauptagenten sofort mitgeteilt.
+
+## Eigene Methoden und tatsächlich ausgeführte Prüfungen
+
+- September-Bewertung, gültige Abnahme, Entscheidungen D01–D17 und vollständige Findingobjekte des JSON-Registers gelesen; relevante Kriterien und DOC-IDs gegen Vorlage verglichen.
+- Produktionspfade eigenständig gelesen: Buster Servicekomposition, Prepared Execution, Runnerauswahl, Recovery und Löschpfade; Durable Record/Blob Stores; BuildKitentrypoint; Dockerfile-Lockintegration; Bootstrapguard; Ciliumscript und Runbook; Prism Konfigurationsconsumer; Backupscript und Testfixtures; Ops-/AX41-Dokumentation.
+- Vorhandene Rohdaten statt bloßer Agentzusammenfassungen geprüft: SPIRE `result.json`, Registeraudit, Browser-Testlog, RuntimeSecurity `security-runtime2/results.json` und kumulatives Integrationsmanifest.
+- Eigener frischer Lauf: `node scripts/review/remediation-register.mjs --check`, Exit 0.
+- Eigener frischer Lauf: `node --test scripts/tests/remediation-register.test.mjs`, **26/26 bestanden, null Fehler, null Skips**, einschließlich Status-/ID-/Beleg-/Zählermutationen und idempotenter Generierung in isolierten Testverzeichnissen.
+- Eigene Pythonzählung: 154 eindeutige historische IDs; 142 verifiziert, vier in Bearbeitung, zwei implementiert, sechs offen. Damit zwölf historische unvollständige Findings; fünf zusätzliche Integrationsfindings separat.
+- Eigener Inhaltsdigestvergleich: SPIREaudit sieben von acht Identitäten unverändert, Prism Peer-/Porttemplate geändert. Altes Registeraudit fünf von elf Identitäten unverändert; sechs Quellen geändert. Gegenwärtiger mechanischer Registercheck besteht unabhängig davon.
+- Eigenständiger Vergleich des kumulativen `cumulative-consumer-stop-corrections.json`: **84 Einträge, fünf aktuelle Inhaltsabweichungen**. Abweichend: `docs/architecture/buster-cluster-configuration.md`, `docs/architecture/buster-runtime-security-configuration.md`, `docs/architecture/pipeline-test-gate-security-error-reference.md`, `docs/review/remediation/implementation/config-buster-runtime-security-20260924.md`, `tests/verification/contracts/check-pipeline-security-implementation.mts`.
+- Eigenständige Zählung von `security-runtime2/results.json`: 17 Befehle, 16 mit erwartetem Exitcode; `verify:test-gate:security-cutover` scheitert mit Exit 1 bei erwartetem Exit 0.
+
+Keine Repositorydatei, kein Registerstatus und kein historischer Nachweis wurde von diesem Prüfer geändert. Dieser neue Bericht liegt ausschließlich im `work/`-Verzeichnis des aktuellen Chats.
+
+## Gegenprüfung der 16 Empfehlungen
+
+1. **ENGINE001:** Behebung richtig. Produktion übergibt keinen nativen `workerRuntime`; Prepared Execution erzeugt Parentcapabilities und Runner nutzt LocalWorkerRuntime. Native Vorbereitung ist kein gemeinsamer Attemptbudgetnachweis. Alte große remote-plan-service-Zeilennummern sind überholt.
+2. **ENGINE004:** Aufteilung nachvollziehbar. Recovery behält unbekannt ruhende Workspaces ausdrücklich; zusätzlich löschen aktuelle Staging-finally und `!retainFixture`-Pfad ohne dort verlangte positive Disposalbestätigung. Der private Entwurf besitzt sieben Kandidaten/sechs Vorherdateien und ist kein angenommener Fix. Cleanupfehler und fortlaufende Arbeit richtig getrennt.
+3. **OBS002:** Verbleibenden Umfang bearbeiten richtig. Recordretirement ist vorhanden; Blobstore hat nur put/get und Quote, keine koordinierte Referenzfreigabe. Gesamtabschluss lässt sich aus historischen Compactions nicht ableiten.
+4. **IFR21:** Schwerpunktverschiebung richtig. Browser-/Trivy-Locks sind tatsächlich in Dockerfiles integriert. Historische Fehlbeschreibung ungebundener Inputs nicht als aktuellen Zustand wiederholen. Volle Images, Architekturen und Funktions-/Rebuildvergleich bleiben unabhängig von Teiltests offen.
+5. **IFR29:** Mit CONFIG bündeln nachvollziehbar. Konkrete Betreiberwerte existieren, daraus folgt kein Secretfund. Bewusste öffentliche Profile und portable Beispiele benötigen unterschiedliche klare Verträge. Kein Remote-/Historyzustand hier neu bestätigt.
+6. **IFR04:** Lokale Vorbereitung von externem Zugriff trennen richtig. Renderfälle beweisen keine effektiven Tailnetgrants und keine Rotation. Keine erfundene aktuelle ACL-Abweichung.
+7. **IFR10:** Behebung unverändert notwendig. No-process-sandbox bleibt im Produktionsentrypoint; Rootless und andere Helperisolierung ersetzen diese Grenze nicht. Architekturentscheidung und echte Linuxwirkungstests nötig.
+8. **IFR01:** Vorhandene Stufen bündeln richtig. APIfehlerguard vorhanden, Setup setzt dennoch Cluster voraus. H1–H3 enthalten reale Host-/Wiederaufbauprüfungen. Geführten Ablauf statt umfassendem Installer nur als ausdrückliche Zieländerung beschließen.
+9. **IFR02:** Zurückstellung richtig. Früher fehlendes Runbook existiert inzwischen. Guard-/Vorbereitungsstatus ist keine abgeschlossene CNI-/Rollbackabnahme.
+10. **IFR05:** Historischen lokalen Abschluss belassen richtig; Änderungen verlangen Regression. Aktuelle Gesamtkette nicht unabhängig wiederholt. J-DOC ist die richtige DOC-ID. Live-Argo-Synczustand auf anderer Revision ist kein Urteil über diesen Arbeitsbaum.
+11. **IFR06:** Bedingte aktuelle Bestätigung angemessen. S1/S2-Dokumen­tations-/Renderabschluss und Live-Restore getrennt. Geändertes Template benötigt relevante Render-/Peer-/Portprüfung; bloßer Digestunterschied beweist keinen Trustdefekt.
+12. **IFR16:** Fokus auf Disk/Inodes plus integrierte Reservierung richtig. D1–D3 verlangen beide Rollen, echte schedulerwirksame Bindung und kombinierte Last. Nodekapazität oder PVCgrößen allein genügen nicht.
+13. **IFR26:** Vollständige Recoverybehebung richtig. Backupgruppen existieren; Testsource ersetzt PostgreSQLkommandos ausdrücklich. Kein voller DB-/Referenz-/Session-/Jobrestore oder externer Ausfallbereich dadurch bewiesen. Q1–Q4/Q-DOC passen.
+14. **IFR28:** Bündelung statt zusätzlichem Pod richtig. **Vorlagenkorrektur: O1/O2/O-DOC.** Außerhalb des ausgefallenen Clusters verfügbare Anleitung und realer unabhängiger Zugang sind getrennte Verpflichtungen.
+15. **REGISTER:** Mechanikabschluss vorschlagen durch eigene frische Prüfungen gestützt; Statuspromotion bleibt Auftraggeberentscheidung. G1–G3/G-DOC passen. 142/154 bezeichnet registrierte lokale Entscheidungen, nicht 142 heute neu verifizierte Findings.
+16. **CONFIG:** Gesamtziel erhalten und in Komponentenpaketen entscheiden richtig. Reale Loader und Migrationen vorhanden. Konkrete verbleibende Autoren: `PRISM_CONTROL_INTERNAL_URL ?? 'http://prism-control:8080'`, `PLAYWRIGHT_BROWSERS_PATH ?? '/ms-playwright'`. D17 erfordert Klassifizierung, keine mechanische Entfernung aller Optionalität/Secrets. F1–F6 plus F2a/F3a/F4a/F5a/F-DOCa passen; ursprüngliches F-DOC bleibt über den gemeinsamen Verweis gültig. Private Scannerkandidaten und spätere Oracle-/DOCdeltas dürfen das alte kumulative Manifest nicht als aktuellen Pass erscheinen lassen.
+
+## Grenzen und noch notwendige Abschlusskontrolle
+
+Dies ist eine unabhängige quellen- und rohbeleggestützte Bestandsaufnahme mit frischen Registerwirkungstests, keine unabhängige Gesamtabnahme aller Implementierungen. Keine Kernel-/Cgroup-, Image-/Browser-, PostgreSQL-, Netzwerk-/Tailnet-, Host-/Clusterausfall- oder Restoreversuche ausgeführt. Nicht jede historische Testquelle und jede alternative Produktionskomposition wurde vollständig verfolgt. Die übrigen 140 ursprünglichen Findings wurden strukturell, nicht fachlich neu geprüft. Die neun RuntimeSecurity-Gegenproben, spätere Lifecycle-/Oraclekontrollen und Scannerentwurfsentscheidungen wurden nicht alle erneut ausgeführt; aus den geprüften Rohdaten folgt dort kein aktueller Gesamtpass.
+
+Vor Finalisierung O-Kriterien korrigieren, die neue Auditanlage erstellen und auf die eigenen Registerläufe, 84/5-Abweichungen, SPIRE-/Registerdigestgrenzen und aktuelle Datenzahlen beziehen. Die Vorlage nach diesen Änderungen erneut auf unbeabsichtigte Status-/Freigabeformulierungen prüfen. Neue dokumentarische Berichte sind kein neues akzeptiertes kumulatives Implementierungsmanifest.
+
+## Abschließende Gegenprüfung der korrigierten Vorlage und Auditanlage
+
+Nach Rückmeldung des Hauptagenten erneut gelesen: Die Vorlage nennt jetzt korrekt **O1/O2/O-DOC** und ausdrücklich die außerhalb des Clusters verfügbare Anleitung. Die neue `audit-20261012.json` ist vorhanden. Ein weiterer eigener Python-Inhaltsvergleich bestätigt **79/79 dort geführte aktuelle Dateiidentitäten**, ohne neue Abweichung. Die Anlage enthält die 14 Originalfindingobjekte mit Originalberichtdigests und die getrennten kumulativen/SPIRE/Registervergleichslisten; ihre 84/5-, 7/8- und 5/11-Aussagen entsprechen den eigenen zuvor durchgeführten Vergleichen. Die behauptete Auflösung jedes Original-Gitblobs wurde in diesem letzten Schritt nicht nochmals unabhängig wiederholt; der frische Registertest prüfte bereits alle historischen Originalreferenzen.
+
+Der ergänzte GitOpsabsatz bezeichnet die Argo-Beobachtung korrekt als datierten realen Zustand auf anderer Revision, nicht als heutige Beobachtung oder Defektbeweis dieses Arbeitsbaums. Nach diesen Korrekturen sind **keine weiteren konkreten Korrekturen an der Bestandsaufnahme erforderlich**. Die genannten methodischen Grenzen und fehlenden Implementierungs-/Live-Nachweise bleiben vollständig bestehen. Das Urteil ist die Plausibilität und Quellentreue dieser Entscheidungsvorlage, keine Freigabe ihrer Umsetzung und keine Änderung bestehender Findingstatus.

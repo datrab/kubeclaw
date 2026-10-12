@@ -1,0 +1,23 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "Accept test-boundary correction for integration and fresh baseline/control execution; source-only approval",
+  "files": [
+    {
+      "path": "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+      "before": "49ecf52423dd615c241cddcf4fa241131704831026b334b4b7328de80f070021",
+      "draft": "1679d4e5fda07cf0832f2c42c558093332b6e8e5fd1077bc9436841229031622",
+      "live": "49ecf52423dd615c241cddcf4fa241131704831026b334b4b7328de80f070021"
+    }
+  ],
+  "reason": [
+    "Production rollback sends metadata.resourceVersion and spec purpose/exposure fields without metadata.annotations. Omission retains existing annotations under merge-patch behavior.",
+    "Draft merges annotations only when supplied, and derives owner from retained actual lease annotations. For the original prepare patch behavior is unchanged. For rollback no annotations read from an absent object occurs, retained owner and spec update follow the actual payload.",
+    "Metadata resourceVersion is present on both relevant production patches, so Object.hasOwn(patch.metadata, ...) has a valid object for the exercised route.",
+    "Diff changes only boundary state handling; original success/call-count/cadence assertions and 10000/1500 ms deadlines remain intact. No production source changes."
+  ],
+  "limits": [
+    "This small fake implements the two exercised merge-patch shapes, not arbitrary JSON Merge Patch (such as null-deletion). No broader API-fidelity claim.",
+    "Actual clean negative failure remains unproven until rerun; Controls1 TypeError evidence must remain historical.",
+    "CI2 full-production route and capture-mutation gaps remain separate open findings."
+  ]
+}

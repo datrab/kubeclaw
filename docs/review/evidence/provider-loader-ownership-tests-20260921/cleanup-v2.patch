@@ -1,0 +1,91 @@
+--- v1/provider-loader-ownership.test.mjs
++++ v2/provider-loader-ownership.test.mjs
+@@ -20,9 +20,6 @@
+ // Serial module only. Spawn arguments and environment are forwarded unchanged.
+ // Tests require the genuine compiled plugin sandbox, like the original Runner suite.
+ function fixture(t, source, options = {}) {
+-  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'provider-ownership-'));
+-  for (const name of ['repository', 'scratch', 'evidence']) fs.mkdirSync(path.join(directory, name));
+-  fs.writeFileSync(path.join(directory, 'provider.mjs'), source);
+   const realSpawn = childProcess.spawn;
+   const realKill = process.kill;
+   const realRead = fs.readFileSync;
+@@ -34,7 +31,40 @@
+   let signalErrors = 0;
+   let observationErrors = 0;
+   let session;
+-  const spawnMock = t.mock.method(childProcess, 'spawn', function (...args) {
++  let spawnMock;
++  let killMock;
++  let readMock;
++  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'provider-ownership-'));
++  t.after(async () => {
++    spawnMock?.mock.restore(); syncBuiltinESMExports();
++    killMock?.mock.restore(); readMock?.mock.restore();
++    if (child) {
++      let signalFailure;
++      if (!actualClose) {
++        try {
++          // Same detached group as the real session; never the injected kill.
++          if (process.platform !== 'win32' && child.pid) realKill(-child.pid, 'SIGKILL');
++          else child.kill('SIGKILL');
++        } catch (error) {
++          if (error.code !== 'ESRCH') signalFailure = error;
++        }
++        let timer;
++        try {
++          await Promise.race([closed.promise, new Promise((_, reject) => {
++            timer = setTimeout(() => reject(new Error('FIXTURE_CHILD_CLOSE_TIMEOUT')), 2000);
++          })]);
++        } finally { clearTimeout(timer); }
++      }
++      child.emit = emit;
++      if (withheldClose) Reflect.apply(emit, child, ['close', ...withheldClose]);
++      assert(actualClose, 'real child closure required before removing fixture');
++      if (signalFailure) throw signalFailure;
++    }
++    fs.rmSync(directory, { recursive: true, force: true });
++  });
++  for (const name of ['repository', 'scratch', 'evidence']) fs.mkdirSync(path.join(directory, name));
++  fs.writeFileSync(path.join(directory, 'provider.mjs'), source);
++  spawnMock = t.mock.method(childProcess, 'spawn', function (...args) {
+     assert.equal(child, undefined, 'exactly one actual provider spawn');
+     child = Reflect.apply(realSpawn, childProcess, args);
+     emit = child.emit;
+@@ -51,34 +81,19 @@
+     return child;
+   });
+   syncBuiltinESMExports();
+-  const killMock = t.mock.method(process, 'kill', function (pid, signal) {
++  killMock = t.mock.method(process, 'kill', function (pid, signal) {
+     if (options.signalFailure && child?.pid && pid === -child.pid && signal === 'SIGTERM') {
+       signalErrors++;
+       throw Object.assign(new Error('injected exact-child SIGTERM EPERM'), { code: 'EPERM' });
+     }
+     return Reflect.apply(realKill, process, [pid, signal]);
+   });
+-  const readMock = t.mock.method(fs, 'readFileSync', function (...args) {
++  readMock = t.mock.method(fs, 'readFileSync', function (...args) {
+     if (options.observationFailure && child?.pid && args[0] === `/proc/${child.pid}/status`) {
+       observationErrors++;
+       throw Object.assign(new Error('injected exact-child /proc EACCES'), { code: 'EACCES' });
+     }
+     return Reflect.apply(realRead, fs, args);
+-  });
+-  t.after(async () => {
+-    spawnMock.mock.restore(); syncBuiltinESMExports();
+-    killMock.mock.restore(); readMock.mock.restore();
+-    if (child) {
+-      if (!actualClose) {
+-        // Direct, original kill is cleanup, never the injected signaling path.
+-        if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
+-        await closed.promise;
+-      }
+-      child.emit = emit;
+-      if (withheldClose) Reflect.apply(emit, child, ['close', ...withheldClose]);
+-      assert(actualClose, 'real child closure required before removing fixture');
+-    }
+-    fs.rmSync(directory, { recursive: true, force: true });
+   });
+   const controller = new AbortController();
+   const context = { workspaceRoot: directory, signal: controller.signal, log() {},

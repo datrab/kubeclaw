@@ -1,0 +1,32 @@
+[
+  {
+    "source": "scripts/config/environment-readers.mjs",
+    "snapshot": "00-environment-readers.mjs.snapshot",
+    "sha256": "d118a6151f17ed41c33a6bf787c4f26f2f0fea515d521fc5276bd07406f738aa"
+  },
+  {
+    "source": "scripts/config/inventory-settings.mjs",
+    "snapshot": "01-inventory-settings.mjs.snapshot",
+    "sha256": "cf3882d8d768850c3839dd1b2cbd00e85b8baac6829d71fc58c0f1a6d1da37ca"
+  },
+  {
+    "source": "scripts/config/tests/environment-readers.test.mjs",
+    "snapshot": "02-environment-readers.test.mjs.snapshot",
+    "sha256": "68d14b8da54adfb1e6c391f9b21f0b3c2a6f9390f1b565e7f1023bbf63732de5"
+  },
+  {
+    "source": "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+    "snapshot": "03-config.ts.snapshot",
+    "sha256": "1617f4937214a1b601b66d2525309a780c9202e54666a4ac3ff9135e3216297c"
+  },
+  {
+    "source": "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
+    "snapshot": "04-redis-transport.ts.snapshot",
+    "sha256": "cc49831a1ff6eef51642fd47a0e4a1d00d6ad6bb6337c09f709d7cfd5a5f46da"
+  },
+  {
+    "source": "skills/prism/server/control-config.ts",
+    "snapshot": "05-control-config.ts.snapshot",
+    "sha256": "6e8747682057019b7dbe3350fcd3d9fe921a050dd6c90910b8d799e151dfb3b7"
+  }
+]

@@ -1,0 +1,196 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:buster:cluster-ownership"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-1",
+    "seconds": 12.986295725917444
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-2",
+    "seconds": 5.214429202955216
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-3",
+    "seconds": 6.3250321809900925
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:test-gate:security-cutover"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 0,
+    "name": "runtime-4",
+    "seconds": 166.56549133406952
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:buster:cluster-policy"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-5",
+    "seconds": 97.29678178194445
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-process-input-callers.test.mjs",
+      "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+      "tests/verification/deployment/buster-admission-render.test.mjs",
+      "tests/verification/deployment/buster-process-input-parity.test.mjs",
+      "tests/verification/deployment/buster-readiness-config.test.mjs",
+      "tests/verification/deployment/config-component-packaging.test.mjs",
+      "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+      "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+      "tests/verification/reliability/tailscale-generation.test.mjs"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-6",
+    "seconds": 66.90200358105358
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-7",
+    "seconds": 8.846517152967863
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-8",
+    "seconds": 2.198441386106424
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-9",
+    "seconds": 5.373637664015405
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-10",
+    "seconds": 1.5202390579506755
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-11",
+    "seconds": 5.303596427082084
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:buster:kubernetes-cleanup"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-12",
+    "seconds": 31.161192943924107
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:buster:scheduler-drain"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-13",
+    "seconds": 121.73573486902751
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:buster:execution-config"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-14",
+    "seconds": 73.57542487210594
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:config:components"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-15",
+    "seconds": 95.55004977295175
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:buster:readiness-config"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-16",
+    "seconds": 22.416164850932546
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:test-gate:tailscale-exposure-cutover"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "runtime-17",
+    "seconds": 40.85219089197926
+  }
+]

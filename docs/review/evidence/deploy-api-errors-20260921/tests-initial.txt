@@ -1,0 +1,10 @@
+test_delete_entrypoints (__main__.DeployObservations.test_delete_entrypoints) ... ok
+test_helm_idle_entrypoint (__main__.DeployObservations.test_helm_idle_entrypoint) ... ok
+test_oauth_entrypoint (__main__.DeployObservations.test_oauth_entrypoint) ... ok
+test_optional_status_errors_are_incomplete (__main__.DeployObservations.test_optional_status_errors_are_incomplete) ... ok
+test_uninstall_entrypoint (__main__.DeployObservations.test_uninstall_entrypoint) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 37.147s
+
+OK

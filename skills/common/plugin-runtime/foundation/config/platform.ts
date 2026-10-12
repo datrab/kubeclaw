@@ -19,7 +19,7 @@ export interface PlatformConfig {
   readonly isolation?: Readonly<{ readonly cgroupRoot: string }>;
   readonly storageRoot: string;
   readonly shutdownTimeoutMs: number;
-  readonly effectLockTtlMs?: number;
+  readonly effectLockTtlMs: number;
   readonly orchestratorIssuerId: string;
   readonly administrativeDecisionIssuers: readonly Readonly<{
     readonly type: 'operator' | 'administrator';

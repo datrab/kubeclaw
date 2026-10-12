@@ -1,0 +1,131 @@
+{
+  "$id": "command.rejected.payload.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actor": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "agent_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/agent_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "$ref": "../envelope.schema.json#/properties/attempt"
+    },
+    "command_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "command_type": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "dispatch_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/dispatch_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "extensions": {
+      "$ref": "../envelope.schema.json#/properties/extensions"
+    },
+    "gate_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "gate_type": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_type"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "model_call_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/model_call_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "module_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/module_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "reason_code": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "target": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "tool_call_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/tool_call_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    }
+  },
+  "required": [
+    "command_id",
+    "reason_code"
+  ],
+  "type": "object"
+}

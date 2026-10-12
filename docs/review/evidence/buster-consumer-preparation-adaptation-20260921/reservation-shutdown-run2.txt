@@ -1,0 +1,88 @@
+✖ durable shutdown failure ownership: during (637.294508ms)
+✖ durable shutdown failure ownership: after (480.619391ms)
+✖ durable shutdown failure ownership: queued (439.331918ms)
+✖ durable shutdown failure ownership: admission (449.291312ms)
+(node:164632) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 50)
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ durable shutdown failure ownership: read-failure (446.618824ms)
+✔ durable shutdown failure ownership: healthy-terminal (471.380455ms)
+✔ result admission reserves capacity across competing processes and reconstruction (5926.710798ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 3
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13899.354955
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:16:102
+✖ durable shutdown failure ownership: during (637.294508ms)
+  AssertionError [ERR_ASSERTION]: failed persistence cannot invent a terminal status
+  + actual - expected
+  
+  + 'accepted'
+  - 'running'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-shutdown-storage.test.mts:120:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'accepted',
+    expected: 'running',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:16:102
+✖ durable shutdown failure ownership: after (480.619391ms)
+  AssertionError [ERR_ASSERTION]: failed persistence cannot invent a terminal status
+  + actual - expected
+  
+  + 'accepted'
+  - 'running'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-shutdown-storage.test.mts:120:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'accepted',
+    expected: 'running',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:16:102
+✖ durable shutdown failure ownership: queued (439.331918ms)
+  AssertionError [ERR_ASSERTION]: failed persistence cannot invent a terminal status
+  + actual - expected
+  
+  + 'accepted'
+  - 'running'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-shutdown-storage.test.mts:120:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'accepted',
+    expected: 'running',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:16:102
+✖ durable shutdown failure ownership: admission (449.291312ms)
+  Error: DURABLE_RECORD_SIZE_EXCEEDED
+      at FileDurableRecordStore.transition (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-records.ts:189:13)
+      at ModeledPreparedPlanJobStore.transition (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/prepared-plan-store.ts:191:40)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async executeBusterPreparedJob (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/remote-prepared-execution.ts:75:5)
+      at async #execute (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/remote-plan-service.ts:282:5)

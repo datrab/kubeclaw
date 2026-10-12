@@ -1,0 +1,37 @@
+✖ final inventory verification rejects changed real bytes despite colliding metadata (11.799754ms)
+✔ repeated verification of unchanged bytes fits the original scan quota (66.449211ms)
+✔ final inventory verification rejects grow (1.55289ms)
+✔ final inventory verification rejects shrink (1.077648ms)
+✔ final inventory verification rejects remove (1.223472ms)
+✔ final inventory verification rejects replace (1.858698ms)
+✔ final inventory verification rejects symlink (1.14227ms)
+✔ insufficient initial hash quota never becomes an executable clean inventory (1.017166ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 325.011207
+
+✖ failing tests:
+
+test at ../../../../../tmp/inventory-old-guard-4eqbvecf/tests/verification/reliability/inventory-digest-guard.test.mjs:31:1
+✖ final inventory verification rejects changed real bytes despite colliding metadata (11.799754ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(inventory.blockers.some(item => item.code === 'SNAPSHOT_CHANGED' && item.subject === file))
+  
+      at TestContext.<anonymous> (file:///tmp/inventory-old-guard-4eqbvecf/tests/verification/reliability/inventory-digest-guard.test.mjs:37:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

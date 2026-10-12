@@ -1,0 +1,127 @@
+{
+  "at": "2026-09-21T19:11:24.160539+00:00",
+  "privateWorkInProgress": true,
+  "runtimeExecuted": false,
+  "files": [
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-result.ts",
+      "sha256": "9d8cfa063a73da1c7c90f861af13bd2b3303e7c999f925b660f9b065ab19a2f5",
+      "snapshot": "files/runner-attempt-result.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-execution.ts",
+      "sha256": "65902b12ace4ddf3f7d57749b4341e6f81ddf4339f35b355cfa8f7acb359a2c9",
+      "snapshot": "files/runner-attempt-execution.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-managed-evidence.ts",
+      "sha256": "6ba483ec81af52dce533911b5231b1cda3aa5c9825f244cd06156bab4c8b316c",
+      "snapshot": "files/runner-managed-evidence.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner.ts",
+      "sha256": "95c85b56a46c0f6d8efba412d0be7d9cfeba1fd579d8aa41c99ce06c13705513",
+      "snapshot": "files/runner.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-log-capture.ts",
+      "sha256": "ad5e07e980881a18fc5b4d3b68d888caa80bd988478908b2dd54daf478e5a3d1",
+      "snapshot": "files/runner-log-capture.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-provider-state.ts",
+      "sha256": "f599ef7ca3920c4a0d8425c8892465034db7db94c592f32c53d9b72778f00f17",
+      "snapshot": "files/runner-provider-state.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-preparation.ts",
+      "sha256": "b0f2a62cd1bd4179736bf2c9346a44bb946a1db28fdd661ad4ffee064814667d",
+      "snapshot": "files/runner-attempt-preparation.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-completion.ts",
+      "sha256": "75549dcedf29ce01d23657939ef4697c8eea7c33ca8015845ff36a7729022f25",
+      "snapshot": "files/runner-completion.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-fixtures.ts",
+      "sha256": "76a8a08a8ac7facae99e88882cb704cb041452d3dc2963f226c9b3b3d884b917",
+      "snapshot": "files/runner-fixtures.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-evidence.ts",
+      "sha256": "2613dc8b3a3f252d4afa13415b17e6345de726e8ccb2115e7551615a4578e174",
+      "snapshot": "files/runner-attempt-evidence.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-values.ts",
+      "sha256": "e0d381931d7e580113faaafb8ae05fa0e9431e15202a23b97bbc1fb974e27021",
+      "snapshot": "files/runner-values.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "sha256": "3e166c56a1aa0c33e82d917cf7e5824f8188d7eed1757ea2a7aebf1810fbed20",
+      "snapshot": "files/runner-attempt-envelope.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-types.ts",
+      "sha256": "b28e648f56ccf27cf8914891abb6afc470d00c56f01f5b7fdbfc71fc02c1eb1b",
+      "snapshot": "files/runner-types.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-scheduler.ts",
+      "sha256": "b18749b2b9b81eb8e0cbf824d61e4b96f117b0b00eebb502ceb6a7b788f62ce8",
+      "snapshot": "files/runner-scheduler.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-plan-identity.ts",
+      "sha256": "48f11e7aa0670b51fc72c07315401208729d16a3090d7e6781ee00440fd74b70",
+      "snapshot": "files/runner-plan-identity.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-node.ts",
+      "sha256": "f8dee4f5340d84b8be053ab13b9fce925eafcfd7e6e3a1125029ca5929608851",
+      "snapshot": "files/runner-node.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-setup.ts",
+      "sha256": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+      "snapshot": "files/runner-setup.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-paths.ts",
+      "sha256": "f683bb15cf53a7bf2216ade88088aa3f2ab04ad3d41fab16871d9e071cdd9827",
+      "snapshot": "files/runner-paths.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-worker-profile.ts",
+      "sha256": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648",
+      "snapshot": "files/runner-worker-profile.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "sha256": "331bfbfbf501192293154f2b237470374190365401630516e2e2f602ab1a022d",
+      "snapshot": "files/runner-provider-operation.ts"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/before/skills/buster/engine/test-gates/runner.ts",
+      "sha256": "724d95538646558ad3f1930899ee1cd905ab8b8727d1bc84469831b55ef979fb",
+      "snapshot": "before/runner.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "sha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+      "snapshot": "foundation/durable-attempts.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "sha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "snapshot": "foundation/attempt-results.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "sha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+      "snapshot": "foundation/attempt-completeness.ts"
+    }
+  ]
+}

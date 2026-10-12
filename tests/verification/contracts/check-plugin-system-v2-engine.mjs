@@ -13,7 +13,7 @@ try {
     path.resolve('skills/nova/plugins'),
   ];
   const result = await runPipelineV2({
-    schemaVersion: 'pipeline-platform.v2',
+    schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
     installationRoots: pluginRoots,
     trustedBuiltinRoots: pluginRoots,
     externalTrust: {

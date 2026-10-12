@@ -1,0 +1,151 @@
+--- /dev/null
++++ b/scripts/native-worker-node-policy.d.mts
+@@ -0,0 +1,28 @@
++export const nativePoolRoot: '/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service';
++export interface NativeNodeResources { cpuMillicores: number; memoryBytes: number; tasks: number }
++export interface NativeNodePolicy {
++  schemaVersion: 1;
++  nodeName: string;
++  systemReserve: NativeNodeResources;
++  kubernetesReserve: NativeNodeResources;
++  pools: Record<'buster' | 'prism', NativeNodeResources & { namespace: string; maximumActiveScopes: number }>;
++}
++export interface NativePoolPolicy {
++  schemaVersion: 1;
++  role: 'buster' | 'prism';
++  nodeName: string;
++  policyDigest: string;
++  cgroupRoot: string;
++  ownershipRoot: string;
++  nodeIdentityFile: string;
++  runtimeIdentityFile: string;
++  maximumActiveScopes: number;
++  limits: { memoryBytes: number; tasks: number; cpuQuotaMicroseconds: number; cpuPeriodMicroseconds: number };
++}
++export function validateNativeNodePolicy(policy: unknown): NativeNodePolicy;
++export function loadNativeNodePolicy(file: string): NativeNodePolicy;
++export function nativePoolPolicy(policy: unknown, role: 'buster' | 'prism'): NativePoolPolicy;
++export function nativeNodeReservation(policy: unknown): {
++  systemReserved: { cpu: string; memory: string; pid: string };
++  kubeReserved: { cpu: string; memory: string; pid: string };
++};
+--- /dev/null
++++ b/scripts/registry-client-config.d.mts
+@@ -0,0 +1,22 @@
++/** Runtime validation accepts untrusted input; credential values never enter the origin projection. */
++export interface RegistryRuntimeConfiguration {
++  registryBaseUrl: string;
++  registryReference: string;
++  registryCaFile?: string;
++  registryUsernameEnvironmentVariable?: string;
++  registryPasswordEnvironmentVariable?: string;
++}
++export interface RegistryClientConfiguration {
++  buildkit: string;
++  runtime: RegistryRuntimeConfiguration;
++  node: {
++    mirrors: Record<string, { endpoint: string[] }>;
++    configs: Record<string, { tls?: { ca_file: string }; auth?: { username: string; password: string } }>;
++  };
++  caFile: string;
++}
++export function registryClientOrigin(input: unknown): string;
++export function registryClientConfig(input: unknown,
++  environment?: Readonly<Record<string, string | undefined>>): RegistryClientConfiguration;
++export function writeRegistryClients(input: unknown, environment: Readonly<Record<string, string | undefined>>,
++  outputs: Partial<Record<'buildkit' | 'runtime' | 'node', string>>): RegistryClientConfiguration;
+--- a/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts
++++ b/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts
+@@ -1,3 +1,4 @@
++import { validateTailscaleOperationPolicy } from './tailscale-operation-policy.ts';
+ import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+ import { runProcessInput } from './process-input.ts';
+ import { assertHandoffSourceRequest,existingExposureHandoff,exposureHandoffPatch,observedExposureHandoff } from './exposure-handoff.ts';
+@@ -83,12 +84,7 @@
+ 
+   constructor(options: TailscaleExposureCapabilityInvokerOptions) {
+     const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);
+-    if (!Number.isSafeInteger(options.shortCommandTimeoutMs) || options.shortCommandTimeoutMs < 1
+-      || options.shortCommandTimeoutMs > MAX_TIMER_MS || !Number.isSafeInteger(options.maximumCommandOutputBytes)
+-      || options.maximumCommandOutputBytes < 1 || !Number.isSafeInteger(options.pollIntervalMs)
+-      || options.pollIntervalMs < 10 || options.pollIntervalMs > options.maximumExecutionMs) {
+-      throw new Error('TAILSCALE_EXPOSURE_OPERATION_POLICY_INVALID');
+-    }
++    validateTailscaleOperationPolicy(options);
+     this.#shortCommandTimeoutMs = options.shortCommandTimeoutMs;
+     this.#maximumCommandOutputBytes = options.maximumCommandOutputBytes;
+     if (!DNS_LABEL.test(options.controllerNamespace)) throw new Error('TAILSCALE_EXPOSURE_CONTROLLER_NAMESPACE_INVALID');
+--- /dev/null
++++ b/skills/buster/engine/test-gates/tailscale-operation-policy.ts
+@@ -0,0 +1,12 @@
++import type { TailscaleExposureCapabilityInvokerOptions } from './tailscale-exposure-runtime.ts';
++
++const MAX_TIMER_MS = 2_147_483_647;
++
++export function validateTailscaleOperationPolicy(options: TailscaleExposureCapabilityInvokerOptions): void {
++    if (!Number.isSafeInteger(options.shortCommandTimeoutMs) || options.shortCommandTimeoutMs < 1
++      || options.shortCommandTimeoutMs > MAX_TIMER_MS || !Number.isSafeInteger(options.maximumCommandOutputBytes)
++      || options.maximumCommandOutputBytes < 1 || !Number.isSafeInteger(options.pollIntervalMs)
++      || options.pollIntervalMs < 10 || options.pollIntervalMs > options.maximumExecutionMs) {
++      throw new Error('TAILSCALE_EXPOSURE_OPERATION_POLICY_INVALID');
++    }
++}
+--- a/tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts
+@@ -79,7 +79,9 @@
+     maximumConcurrencyLimits: { 'kubernetes-fixture': 2 } } });
+ assert.deepEqual(plan.nodes.map((node) => [node.id, node.kind]), [['deploy', 'fixture'], ['manifest', 'test']]);
+ assert.deepEqual(plan.nodes.find((node) => node.id === 'deploy')?.dependencies.map((item) => item.nodeId), ['manifest']);
+-assert.equal(plan.links[0]?.mediaType, 'application/vnd.kubeclaw.checked-kubernetes-yaml');
++const checkedManifestLink = plan.links[0];
++assert.ok(checkedManifestLink && checkedManifestLink.kind === 'artifact');
++assert.equal(checkedManifestLink.mediaType, 'application/vnd.kubeclaw.checked-kubernetes-yaml');
+ 
+ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-implementation-'));
+ try {
+--- a/tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts
++++ b/tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts
+@@ -34,10 +34,18 @@
+   throw new Error('KUBERNETES_FIXTURE_LIVE_CA_REQUIRED: start Node with NODE_EXTRA_CA_CERTS set to the configured registry CA');
+ }
+ const registryRuntime = registryConfig.runtime;
+-await verifyContainerManifest({ maximumManifestBytes: 4 * 1024 * 1024,
+-  ...(registryRuntime.registryUsernameEnvironmentVariable ? {
+-    registryUsername: process.env[registryRuntime.registryUsernameEnvironmentVariable],
+-    registryPassword: process.env[registryRuntime.registryPasswordEnvironmentVariable] } : {}) },
++const registryCredentials: { registryUsername?: string; registryPassword?: string } = {};
++if (registryRuntime.registryUsernameEnvironmentVariable !== undefined
++  || registryRuntime.registryPasswordEnvironmentVariable !== undefined) {
++  const username = registryRuntime.registryUsernameEnvironmentVariable === undefined ? undefined
++    : process.env[registryRuntime.registryUsernameEnvironmentVariable];
++  const password = registryRuntime.registryPasswordEnvironmentVariable === undefined ? undefined
++    : process.env[registryRuntime.registryPasswordEnvironmentVariable];
++  if (!username || !password) throw new Error('KUBERNETES_FIXTURE_LIVE_REGISTRY_CREDENTIALS_REQUIRED');
++  registryCredentials.registryUsername = username;
++  registryCredentials.registryPassword = password;
++}
++await verifyContainerManifest({ maximumManifestBytes: 4 * 1024 * 1024, ...registryCredentials },
+ new URL(target.origin), selectedImage.repository, selectedImage.digest, AbortSignal.timeout(30_000));
+ const repositoryName = selectedImage.repository;
+ const digest = selectedImage.digest;
+@@ -111,11 +119,11 @@
+     ['command.execute', direct], ['kubernetes.fixture', kubernetes],
+   ]));
+   const runner = new TestPlanRunner({
+-    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: generatedWorkspace.artifactRoot,
++    executionPolicy: { ...runnerExecutionPolicy, provider: { ...runnerExecutionPolicy.provider, cleanupTimeoutMs: 180_000 } }, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: generatedWorkspace.artifactRoot,
+     repositoryRoot: generatedWorkspace.worktreePath,
+     artifactRoot: liveArtifactRoot, observabilityRoot: liveObservabilityRoot, maximumConcurrency: 2,
+     grants: new Map([['checked-manifest', ['command.execute']], ['kubernetes-deployment', ['kubernetes.fixture']]]),
+-    capabilityInvoker: capabilities, cleanupTimeoutMs: 180_000 });
++    capabilityInvoker: capabilities });
+   const result = await runner.run();
+   assert.deepEqual(result.nodes.map((node) => node.outcome), ['passed', 'passed'], JSON.stringify(result));
+   assert.deepEqual(result.cleanupErrors, []);
+--- /dev/null
++++ b/tests/verification/e2e/registry-target.d.mts
+@@ -0,0 +1,4 @@
++export function realE2ERegistryTarget(environment?: Readonly<Record<string, string | undefined>>):
++  Readonly<{ origin: string; host: string }>;
++export function realE2EDeploymentImage(environment?: Readonly<Record<string, string | undefined>>):
++  Readonly<{ reference: string; repository: string; digest: string }>;

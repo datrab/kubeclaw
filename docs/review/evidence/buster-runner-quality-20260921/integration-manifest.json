@@ -1,0 +1,553 @@
+{
+  "status": "frozen-before-integration",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/charts/kubeclaw/files/config/buster-engine.config.json",
+      "beforeSha256": "a04de312879696876c9bf92b084b157155152d26e86bfa3023896ca8c53426f1",
+      "afterSha256": "fab3f9473ac2c7872dc338f8d8a144ad82815302db1621e69eaab725e5397a0e",
+      "targetLink": null,
+      "physicalPath": "charts/kubeclaw/files/config/buster-engine.config.json"
+    },
+    {
+      "path": "charts/prism/templates/_swarm-bundle.tpl",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/charts/prism/templates/_swarm-bundle.tpl",
+      "beforeSha256": "6f0742e73bb03100a5ef611b7a160a400f6383d7a36dc81ed341c5a493132c4e",
+      "afterSha256": "ab7b801b16ee4ef979cb2349857269f18892095ac5af979bbe700a284845335a",
+      "targetLink": "../../kubeclaw/templates/_swarm-config.tpl",
+      "physicalPath": "charts/kubeclaw/templates/_swarm-config.tpl"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/production.ts",
+      "beforeSha256": "bade10bab0cc111f8fec4e1c2166e949549b2880f0e800b8c61f455ad8885d92",
+      "afterSha256": "dd3b06c92a726cb2bcd68b61f8bc819e2b51101b10362bd043e92313f10fbc2a",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/production.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/provider-loader.ts",
+      "beforeSha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+      "afterSha256": "d42011b960e18b2100774ebf387e2789264a771f2be6b31b4365ac537373b302",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/provider-loader.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-result-validation.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/provider-result-validation.ts",
+      "beforeSha256": "1e5371e0528f03a73d1d24d8e0764d501d49c9d8c22d231315db5a3af5539631",
+      "afterSha256": "7063bd5db3614ad76adf2fa3dbdb9b430b34f1ae772e1c9c4b29848766c7ffcc",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/provider-result-validation.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/remote-plan-service.ts",
+      "beforeSha256": "39fae2ef7c97b92259f1e1193a91e969b405c31b6970d51c8c0f7765fbb1f2bb",
+      "afterSha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/remote-plan-service.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "beforeSha256": "47cc40152c08273b3dae3cc4e192f7662936d9f9b16f857a020eab89e4423c3f",
+      "afterSha256": "8408e7530b69f97164e3dec096ae5108db9d95ae5e0ffcd45936efd44576dc3c",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/remote-prepared-execution.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "beforeSha256": null,
+      "afterSha256": "3e166c56a1aa0c33e82d917cf7e5824f8188d7eed1757ea2a7aebf1810fbed20",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-attempt-envelope.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-evidence.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-evidence.ts",
+      "beforeSha256": null,
+      "afterSha256": "2613dc8b3a3f252d4afa13415b17e6345de726e8ccb2115e7551615a4578e174",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-attempt-evidence.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-execution.ts",
+      "beforeSha256": null,
+      "afterSha256": "9012607f67aeb7abe5aa29ae6687ea1e43b091b3bea3c1b57b0ed9d01fa6c705",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-attempt-execution.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-preparation.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-preparation.ts",
+      "beforeSha256": null,
+      "afterSha256": "b0f2a62cd1bd4179736bf2c9346a44bb946a1db28fdd661ad4ffee064814667d",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-attempt-preparation.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-result.ts",
+      "beforeSha256": null,
+      "afterSha256": "9d8cfa063a73da1c7c90f861af13bd2b3303e7c999f925b660f9b065ab19a2f5",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-attempt-result.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-completion.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-completion.ts",
+      "beforeSha256": null,
+      "afterSha256": "2281dc0ddf02338e1619f8710d10b42819a1641d5e850fd2c062f3f161e28c82",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-completion.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-fixtures.ts",
+      "beforeSha256": null,
+      "afterSha256": "76a8a08a8ac7facae99e88882cb704cb041452d3dc2963f226c9b3b3d884b917",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-fixtures.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-log-capture.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-log-capture.ts",
+      "beforeSha256": null,
+      "afterSha256": "ad5e07e980881a18fc5b4d3b68d888caa80bd988478908b2dd54daf478e5a3d1",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-log-capture.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-managed-evidence.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-managed-evidence.ts",
+      "beforeSha256": null,
+      "afterSha256": "6ba483ec81af52dce533911b5231b1cda3aa5c9825f244cd06156bab4c8b316c",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-managed-evidence.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-node.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-node.ts",
+      "beforeSha256": null,
+      "afterSha256": "f8dee4f5340d84b8be053ab13b9fce925eafcfd7e6e3a1125029ca5929608851",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-node.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-paths.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-paths.ts",
+      "beforeSha256": null,
+      "afterSha256": "f683bb15cf53a7bf2216ade88088aa3f2ab04ad3d41fab16871d9e071cdd9827",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-paths.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-plan-identity.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-plan-identity.ts",
+      "beforeSha256": null,
+      "afterSha256": "48f11e7aa0670b51fc72c07315401208729d16a3090d7e6781ee00440fd74b70",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-plan-identity.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "beforeSha256": null,
+      "afterSha256": "331bfbfbf501192293154f2b237470374190365401630516e2e2f602ab1a022d",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-provider-operation.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-state.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-provider-state.ts",
+      "beforeSha256": null,
+      "afterSha256": "f599ef7ca3920c4a0d8425c8892465034db7db94c592f32c53d9b72778f00f17",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-provider-state.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-scheduler.ts",
+      "beforeSha256": null,
+      "afterSha256": "b18749b2b9b81eb8e0cbf824d61e4b96f117b0b00eebb502ceb6a7b788f62ce8",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-scheduler.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-setup.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-setup.ts",
+      "beforeSha256": null,
+      "afterSha256": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-setup.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-types.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-types.ts",
+      "beforeSha256": null,
+      "afterSha256": "b28e648f56ccf27cf8914891abb6afc470d00c56f01f5b7fdbfc71fc02c1eb1b",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-types.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-values.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-values.ts",
+      "beforeSha256": null,
+      "afterSha256": "e0d381931d7e580113faaafb8ae05fa0e9431e15202a23b97bbc1fb974e27021",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-values.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-worker-profile.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-worker-profile.ts",
+      "beforeSha256": null,
+      "afterSha256": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner-worker-profile.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner.ts",
+      "beforeSha256": "724d95538646558ad3f1930899ee1cd905ab8b8727d1bc84469831b55ef979fb",
+      "afterSha256": "95c85b56a46c0f6d8efba412d0be7d9cfeba1fd579d8aa41c99ce06c13705513",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/runner.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "beforeSha256": "1616da65ba5dc6dfef24af3b849f3a6aadbf4761d4dc0a31e866765f632cd812",
+      "afterSha256": "2bc8ae28f2f2e9e65616681ba2e2b430b2d3378f6119f6bdc0b0aae5fd7b2d40",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/specialist-report-finalization.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/specialist-boundary.test.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/tests/specialist-boundary.test.ts",
+      "beforeSha256": "b4180149b128763a832b957349fa325585a72e0e33e791e27af3b044119f0444",
+      "afterSha256": "0a18dcb7d5d2836cd8ad677c596ada7e0fb17b0690d4af966c574e2a3d683e63",
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/tests/specialist-boundary.test.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "beforeSha256": null,
+      "afterSha256": "076cf80a40f30899eabebc0c838079fed1d76101d16d473b98af03fbc74d3fbc",
+      "targetLink": null,
+      "physicalPath": "skills/common/plugin-runtime/foundation/config/buster-execution.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "beforeSha256": "fbfddf5396dcb1ac90c7c2296613641b917d4d4a27468e4e7362c5a622ae1f8c",
+      "afterSha256": "209bbde26a9954d8f1e41a79332ae1cbd1af69e87d5b52b80535127263738ee9",
+      "targetLink": null,
+      "physicalPath": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "beforeSha256": "8e5398a1681bbb6c89ee519d45fe12db63b9871a37ab1bd49cb8ecb65c405602",
+      "afterSha256": "6eb99f6f053feee7debade1324f4044c2dd3820c5f51e6f081ebee406dff1700",
+      "targetLink": null,
+      "physicalPath": "skills/common/plugin-runtime/foundation/config/swarm.ts"
+    },
+    {
+      "path": "tests/fixtures/test-gate/buster-admission.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/fixtures/test-gate/buster-admission.mts",
+      "beforeSha256": "65a81daae9d2b924bd8ec33c36a443825a26afe862f77825259827fe3f5c9200",
+      "afterSha256": "4a837465298a2f4ce648af6ffeeadc21ef5aa749fb4458e2399a6c8ae306cc21",
+      "targetLink": null,
+      "physicalPath": "tests/fixtures/test-gate/buster-admission.mts"
+    },
+    {
+      "path": "tests/fixtures/test-gate/execution-policy.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/fixtures/test-gate/execution-policy.mts",
+      "beforeSha256": null,
+      "afterSha256": "940ec43a0bd64c208f54932421574d2edb8e972fa13786e2457f85015b0e1d76",
+      "targetLink": null,
+      "physicalPath": "tests/fixtures/test-gate/execution-policy.mts"
+    },
+    {
+      "path": "tests/fixtures/test-gate/runner-contract-fixture.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/fixtures/test-gate/runner-contract-fixture.mts",
+      "beforeSha256": null,
+      "afterSha256": "8a5ca1911223af5ac527bc7181a069da0ce6a4992e0656d88140f29b4c91bf36",
+      "targetLink": null,
+      "physicalPath": "tests/fixtures/test-gate/runner-contract-fixture.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-a11y-implementation.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-a11y-implementation.mts",
+      "beforeSha256": "23d3b579a090eb2bd027951ab6df4a7d01a4eeb2da0ecb21cff103f975c9cd11",
+      "afterSha256": "928f563240043531b1bad8e33929bac2580b3923f5ff097c29be1954c9a0de9f",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-a11y-implementation.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-api-implementation.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-api-implementation.mts",
+      "beforeSha256": "4f131ae15fd42e9b3bf5b51626d1d9997a2897a3a2ef6a2e301ea0e4b150e603",
+      "afterSha256": "f57cad959ef62433d04c8dc43d780d083706091d08d48ef4d22563f96ae64679",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-api-implementation.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-buster-execution-policy.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-buster-execution-policy.mts",
+      "beforeSha256": null,
+      "afterSha256": "9d7364333f7a15b08880ea5137d4e0461b0627bf115f791c26fab733b8e70baa",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-buster-execution-policy.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-container-build-production.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-container-build-production.mts",
+      "beforeSha256": "b46d220db76505a731c22a0465bf1ee2bd87c7378e865266472a02759b0bf4ee",
+      "afterSha256": "15d43ec1ffe4ce5501f0e2f0a9456f793bd52cf14187f941774185920f0f6dc1",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-container-build-production.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+      "beforeSha256": "33999fd059678e30e8e497b60283157eaa5bfae828bb8522b473ff006dfc4879",
+      "afterSha256": "7212b4f255504f2f083261442e2ce69e07cfc4655b84e5258ee478077d83beb3",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-http-implementation.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-http-implementation.mts",
+      "beforeSha256": "612a4b17c74ed61909a6edb757304a8cc6e5551b1f92e55225561ed1f949e770",
+      "afterSha256": "a7e83800086b9ce65d2a43aa8a923f24034e02653de1a7907fc322ef1d7a1349",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-http-implementation.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-http-live.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-http-live.mts",
+      "beforeSha256": "c828a11679a917b803921961a20510472387197a9a8c0567e2e704d6f1973530",
+      "afterSha256": "cd61db8167af96a7637b2e476c4171204b07aeda272fb6e5ee62ce79fcf74d8a",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-http-live.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-http-parity.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-http-parity.mts",
+      "beforeSha256": "2172c05f73569ec72ec99b0f43b37d0fe934e59c109117b83ac49908c3bf1905",
+      "afterSha256": "2562b896b0c87b5f3643fbcbba7f10c4a9e1d7f02cd80bdd9b3db9934cd236ee",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-http-parity.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "beforeSha256": "7608fc72844b708ed3bd6068d03230d558ce691fb1beeb8b16dd6f8da1965c45",
+      "afterSha256": "12e78fea5397329cd7918d90a41bccad7a3f01af4df524de974985efa95e802c",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-lighthouse-implementation.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-lighthouse-implementation.mts",
+      "beforeSha256": "9cdb82d6db864e5bdcfbb1d282ad1e97d5a6049208939b99ea8d9aa6df5acea6",
+      "afterSha256": "e3557cea4d9c391a9562280d37535c13e33f0d1764374cab38dcab3363a64c5c",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-lighthouse-implementation.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+      "beforeSha256": "354c548fa084428b3f9f44f7aa47d579617a61fffc480a465db45219e13d2f23",
+      "afterSha256": "9d1a9cde8215db81181d0b86efd6b253077c8b71320da47c654f5f244f712d53",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+      "beforeSha256": "0f60a8d996fbe02db074e2731b42f8a8e74548e13f718d219d632b2c622f71eb",
+      "afterSha256": "a59cff6c5b1fceb8ddaa81c311f7059097543647dc0d5430320090f2c5ee100c",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-phase10-vertical.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+      "beforeSha256": "d0068337fa1a3e3215f9089af80d7ac7f946855476c92bb49c561fd952ec8a68",
+      "afterSha256": "1d2129c888fa769bfd023b934f7381d9eb080e47c2ec08d513ac3555ddc1be99",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-phase8-vertical.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+      "beforeSha256": "53ee533eeb630a1dcb2ca3094dba406938d22026038e0ac7c02c9ed73a0e46df",
+      "afterSha256": "9b31584a78405ae2ee9501874f007b1d858c69edc86780d39f332881257a602f",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "beforeSha256": "ae543e13e21df5fc6b2616e9a2b637d6150577517bff58d1387cff5ab447191d",
+      "afterSha256": "e3ee66387ec2c36dd3bf779885819b7d2a84284afeab8ff4e56414d31e37a066",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "beforeSha256": "b702b32bef4db80aa1cf5b5f32e9e005c061dbbb177691d367f14ea47a6164e1",
+      "afterSha256": "bc0a7e29e1a39e2396749d9c7882a43eb1a387c9410269c0de37517f2e45b38b",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-remote-real-provider.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+      "beforeSha256": "b666effbfaa33240f82e837447c44e5772462c6de66830918628f8a828c3073a",
+      "afterSha256": "bef5d53264fe879e1776a3852f4a52e4b50d6c3d500bded41c6a07ea011d6b23",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+      "beforeSha256": "306435bbe92ae5de565beecf51b85bf03f09fcb5feb7f8de003415856f744cb6",
+      "afterSha256": "f5a2ccb691cbce0705e66b91eaec7369e0b71433afa60edad34b7789f7f51151",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-size-budget-implementation.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-size-budget-production.mts",
+      "beforeSha256": "9b95880bdc1e897250fff1200564e609652ea17be78f6495650fe3d10d3c98cf",
+      "afterSha256": "91a293cdf9f26f9e8c27fc58c57156edd27afd61ddfd4dd2e776c13a0a81e105",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-size-budget-production.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+      "beforeSha256": "b97f75c7cfc3fb043ac7af9d2f9e7fa24873a04518699b0103cc9778b23c3bbb",
+      "afterSha256": "0a3057084d8360b94c25f60c506fd237a13eb42751f8f3766dcbd62d92d596c7",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+      "beforeSha256": "c83192b39b688cd94bb997788f04fb4cd02d1ed8b458875ec197e2948b625615",
+      "afterSha256": "e4c0557df16d07ba9739ade1cc63cc0984c241e556fc2e2d3c79e59b1af5e90b",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "beforeSha256": "9fc8af9062b107a72c437f3e61d743b5794d96ed002b69170d3238942cae2a6a",
+      "afterSha256": "636c877577b946c1ddfd41e8e0e83faade5eacfb3bd5d7f1020430a951c3b4b5",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-provider-semantics-remediation.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/check-provider-semantics-remediation.mts",
+      "beforeSha256": "6588dc9049ef7987a18eac628de093736f523c6e3af87f348519984418ad3303",
+      "afterSha256": "2b1d87e39d05cbbdcb3b5337a70c2f76c542d0808178a7fe5d159a8d7e58ac29",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/check-provider-semantics-remediation.mts"
+    },
+    {
+      "path": "tests/verification/contracts/tsconfig.buster-execution-policy.json",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/contracts/tsconfig.buster-execution-policy.json",
+      "beforeSha256": null,
+      "afterSha256": "d6a016b5cc53db6e76389c47cf5b90297b474d510086cd8da6cfc474d47ddd16",
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/tsconfig.buster-execution-policy.json"
+    },
+    {
+      "path": "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/integration/direct-command-runner-artifacts.test.mts",
+      "beforeSha256": "e35780680d8572991bb6ae5ada62583c653e3892f6a6312192ddbe2ee98ad79c",
+      "afterSha256": "71f5df96d2888018eaf8f1291ffbb62011954271c2b5c65096ccd212c490053b",
+      "targetLink": null,
+      "physicalPath": "tests/verification/integration/direct-command-runner-artifacts.test.mts"
+    },
+    {
+      "path": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/reliability/buster-job-compaction.test.mts",
+      "beforeSha256": "16d7d9f94eb2e5140f94ab63da98540f4cde2c515ba35e8f5ea8b25d0fde3180",
+      "afterSha256": "78d31932a04baddf88178a9e3bbf2d558ae15bdba400860d805f90e7ac502515",
+      "targetLink": null,
+      "physicalPath": "tests/verification/reliability/buster-job-compaction.test.mts"
+    },
+    {
+      "path": "tests/verification/reliability/buster-readiness-consumer.test.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/reliability/buster-readiness-consumer.test.mts",
+      "beforeSha256": "34af0ed326455a7205835378cb9d202992c102d9d311e9e0989bd23d1f7ae392",
+      "afterSha256": "f307679213f151f0d42a187f4a07ca8cfc42bf73d9ca42f44386669d32a66a09",
+      "targetLink": null,
+      "physicalPath": "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    },
+    {
+      "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "beforeSha256": "9fad2a1206cf4b07003c29a6c5c10e108586f0de7d7577b9d49cb94b1006bff4",
+      "afterSha256": "40273b3b975c8d8d37bac9cb2fa19629da86fc02aafc4efafcce09fb507b5d1e",
+      "targetLink": null,
+      "physicalPath": "tests/verification/reliability/buster-shutdown-storage.test.mts"
+    },
+    {
+      "path": "tests/verification/reliability/coverage-remote.test.mts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/reliability/coverage-remote.test.mts",
+      "beforeSha256": "70a24aa0e2c342ec218b3b420982d003ab991f654a1a38efed42fed207759bc4",
+      "afterSha256": "712fad3e5b3c3f6faa217c9ff1f23ec36f3e41fa1dc910a584c05051f40761c5",
+      "targetLink": null,
+      "physicalPath": "tests/verification/reliability/coverage-remote.test.mts"
+    },
+    {
+      "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/files/tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "beforeSha256": "e66a6784aaf130ce1df92e6be934d00a57e6a16c83a96d100c67046108d9f5eb",
+      "afterSha256": "501bd977c14b12b1af01d75fe7e3b0667e6735386993b417c2a0cab07cda007d",
+      "targetLink": null,
+      "physicalPath": "tests/verification/reliability/nova-dispatch-projection.test.mjs"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "source": "docs/review/evidence/provider-child-session-simplicity-20260921/policy-files/skills/buster/engine/test-gates/provider-child.mjs",
+      "beforeSha256": "5dd41b92245c36b8e4d1d63d8a14f95f8647fda040ba2c3c60e20a088becfa50",
+      "afterSha256": "62a88c6c23e47440b05c62ea55453ba5b973a10fafc23e157e82bbd9ae526320",
+      "targetExists": true,
+      "targetLink": null,
+      "physicalPath": "skills/buster/engine/test-gates/provider-child.mjs"
+    },
+    {
+      "path": "tests/verification/contracts/provider-child-session.test.mjs",
+      "source": "docs/review/evidence/provider-child-session-simplicity-20260921/policy-files/tests/verification/contracts/provider-child-session.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "c355faab39ecbfd2dc488e5e91b98c8571c86e20183359d6da8503afe631a523",
+      "targetExists": false,
+      "targetLink": null,
+      "physicalPath": "tests/verification/contracts/provider-child-session.test.mjs"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint.config.mjs",
+      "source": "docs/review/evidence/provider-child-session-simplicity-20260921/boundary-files/charts/kubeclaw/files/config/eslint.config.mjs",
+      "beforeSha256": "d0bf5f5735be8ad26e7d7ab566d849c26801b9914248e8ad08c1b0a4d5e40d55",
+      "afterSha256": "e39eec75b7ac987c0391cc97b910a8ad9922a4475d9d20d897bf026bbaa36ccf",
+      "targetExists": true,
+      "targetLink": null,
+      "physicalPath": "charts/kubeclaw/files/config/eslint.config.mjs"
+    }
+  ],
+  "runtimeExecuted": false
+}

@@ -1,0 +1,8 @@
+{
+  "reviewer": "root",
+  "status": "source-accepted-for-integration-after-runtime-HOLD",
+  "afterSha256": "11e90bcbf276f32e5a808d957632272f66e5de072b65ee94c7786af7f6f9ebca",
+  "linksChecked": 43,
+  "missingLinks": [],
+  "evidence": "Read four independent reports referenced in corrected sections; bounded functional statuses, old lint failures and later scoped passes agree. No original finding status changed. Later cleanup runtime failures do not invalidate historical scoped passes; current whole-tree acceptance is not asserted."
+}

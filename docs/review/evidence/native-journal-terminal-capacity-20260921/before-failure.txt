@@ -1,0 +1,7 @@
+{
+  "maximumStateBytes": 8192,
+  "admitted": true,
+  "acceptedBytes": 1238,
+  "validTerminalWriteFailure": "DURABLE_RECORD_STORE_FULL",
+  "identityStillRetained": true
+}

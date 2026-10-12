@@ -1,0 +1,62 @@
+{
+  "runtimeTestsExecuted": false,
+  "files": [
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "expected": "02876cafd08f35c84b67d3c8972e45167074c226c928c53a81b190bd67071435",
+      "snapshot": "02876cafd08f35c84b67d3c8972e45167074c226c928c53a81b190bd67071435",
+      "current": "02876cafd08f35c84b67d3c8972e45167074c226c928c53a81b190bd67071435",
+      "bytes": 10134
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "expected": "ab67c1300cdca9e173b4c9014df2381fe22b9bfe4d5f19bdc68dfd0bc2cf7b7e",
+      "snapshot": "ab67c1300cdca9e173b4c9014df2381fe22b9bfe4d5f19bdc68dfd0bc2cf7b7e",
+      "current": "ab67c1300cdca9e173b4c9014df2381fe22b9bfe4d5f19bdc68dfd0bc2cf7b7e",
+      "bytes": 66165
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "expected": "e9508ea7274873e803ac2c43faedbb3172469a551292a794f9b40db2caadd6ed",
+      "snapshot": "e9508ea7274873e803ac2c43faedbb3172469a551292a794f9b40db2caadd6ed",
+      "current": "e9508ea7274873e803ac2c43faedbb3172469a551292a794f9b40db2caadd6ed",
+      "bytes": 6514
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "expected": "9d2c6655c2eb411f3333cdf9d2b459970f10da44969318cc2eda3c26ed4c6660",
+      "snapshot": "9d2c6655c2eb411f3333cdf9d2b459970f10da44969318cc2eda3c26ed4c6660",
+      "current": "9d2c6655c2eb411f3333cdf9d2b459970f10da44969318cc2eda3c26ed4c6660",
+      "bytes": 14120
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "expected": "c30fd160cb458232e68f27eaae24d9e622a85184f65ad8fbde3135cf14e3355d",
+      "snapshot": "c30fd160cb458232e68f27eaae24d9e622a85184f65ad8fbde3135cf14e3355d",
+      "current": "c30fd160cb458232e68f27eaae24d9e622a85184f65ad8fbde3135cf14e3355d",
+      "bytes": 4974
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-worker-local-runtime.mts",
+      "expected": "b451220e5a45cb77addcfc0dfb42ca048768b8b12e528de2f9c57d41e47027e9",
+      "snapshot": "b451220e5a45cb77addcfc0dfb42ca048768b8b12e528de2f9c57d41e47027e9",
+      "current": "b451220e5a45cb77addcfc0dfb42ca048768b8b12e528de2f9c57d41e47027e9",
+      "bytes": 9829
+    },
+    {
+      "path": "tests/verification/contracts/tsconfig.worker-local-runtime.json",
+      "expected": "e685b626bfdb6e75e45c697d2342ea152e4dfee3626142a73b193235d9a12274",
+      "snapshot": "e685b626bfdb6e75e45c697d2342ea152e4dfee3626142a73b193235d9a12274",
+      "current": "e685b626bfdb6e75e45c697d2342ea152e4dfee3626142a73b193235d9a12274",
+      "bytes": 218
+    },
+    {
+      "path": "tests/verification/reliability/worker-deadline.test.mts",
+      "expected": "410108ac2048d3d9ab1e949a7e8f387e53d0eb17b95b42fe1d0abcb15a372163",
+      "snapshot": "410108ac2048d3d9ab1e949a7e8f387e53d0eb17b95b42fe1d0abcb15a372163",
+      "current": "410108ac2048d3d9ab1e949a7e8f387e53d0eb17b95b42fe1d0abcb15a372163",
+      "bytes": 8013
+    }
+  ],
+  "authorReportSha256": "e33ad3d4fd242798d31eadd8a3863b4b139491d6061b3cda728078413f9695a8"
+}

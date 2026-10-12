@@ -1,0 +1,185 @@
+✔ CI03 original HTTP body boundary follows authored 64 bytes (50.202609ms)
+✔ CI03 original HTTP body boundary follows authored 128 bytes (12.735035ms)
+✔ CI04 production command and real host parser use assigned 64 bytes (1540.907097ms)
+✔ CI04 production command and real host parser use assigned 128 bytes (1451.309014ms)
+✔ CW01 canonical author values reach the actual production worker composition (3.12151ms)
+✔ CW02 every alternate author value reaches the actual consumer (1.910289ms)
+✔ CW03 unknown key at root (1.097538ms)
+✔ CW03 unknown key at operator (0.623076ms)
+✔ CW03 unknown key at operator.prism (0.516563ms)
+✔ CW03 unknown key at operator.prism.worker (0.615866ms)
+✔ CW04 maximumActiveRequests rejects 3 (0.740719ms)
+✔ CW04 maximumActiveRequests rejects null (0.403071ms)
+✔ CW04 maximumActiveRequests rejects -1 (0.473742ms)
+✔ CW04 maximumActiveRequests rejects 0 (0.553624ms)
+✔ CW04 maximumActiveRequests rejects 1.5 (0.439321ms)
+✔ CW04 maximumActiveRequests rejects 2147483648 (0.381519ms)
+✔ CW04 maximumActiveRequests rejects undefined (0.38478ms)
+✔ CW04 maximumProbeRequests rejects 3 (0.447372ms)
+✔ CW04 maximumProbeRequests rejects null (0.40963ms)
+✔ CW04 maximumProbeRequests rejects -1 (0.39643ms)
+✔ CW04 maximumProbeRequests rejects 0 (0.646526ms)
+✔ CW04 maximumProbeRequests rejects 1.5 (0.367999ms)
+✔ CW04 maximumProbeRequests rejects 2147483648 (0.39083ms)
+✔ CW04 maximumProbeRequests rejects undefined (0.38282ms)
+✔ CW04 maximumConnections rejects 3 (0.41409ms)
+✔ CW04 maximumConnections rejects null (0.539924ms)
+✔ CW04 maximumConnections rejects -1 (0.464712ms)
+✔ CW04 maximumConnections rejects 0 (0.38875ms)
+✔ CW04 maximumConnections rejects 1.5 (0.344519ms)
+✔ CW04 maximumConnections rejects 2147483648 (0.356669ms)
+✔ CW04 maximumConnections rejects undefined (0.373089ms)
+✔ CW04 requestTimeoutMs rejects 3 (0.346109ms)
+✔ CW04 requestTimeoutMs rejects null (0.36414ms)
+✔ CW04 requestTimeoutMs rejects -1 (0.35948ms)
+✔ CW04 requestTimeoutMs rejects 0 (0.359059ms)
+✔ CW04 requestTimeoutMs rejects 1.5 (0.344379ms)
+✔ CW04 requestTimeoutMs rejects 2147483648 (0.448981ms)
+✔ CW04 requestTimeoutMs rejects undefined (0.517603ms)
+✔ CW04 shutdownTimeoutMs rejects 3 (0.39541ms)
+✔ CW04 shutdownTimeoutMs rejects null (0.3922ms)
+✔ CW04 shutdownTimeoutMs rejects -1 (0.368ms)
+✔ CW04 shutdownTimeoutMs rejects 0 (0.37331ms)
+✔ CW04 shutdownTimeoutMs rejects 1.5 (0.352659ms)
+✔ CW04 shutdownTimeoutMs rejects 2147483648 (0.39053ms)
+✔ CW04 shutdownTimeoutMs rejects undefined (0.369159ms)
+✔ CW04 maximumInputBytes rejects 3 (1.890178ms)
+✔ CW04 maximumInputBytes rejects null (0.324658ms)
+✔ CW04 maximumInputBytes rejects -1 (0.313588ms)
+✔ CW04 maximumInputBytes rejects 0 (0.37538ms)
+✔ CW04 maximumInputBytes rejects 1.5 (0.322518ms)
+✔ CW04 maximumInputBytes rejects 2147483648 (0.310467ms)
+✔ CW04 maximumInputBytes rejects undefined (0.329888ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (0.223126ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (0.054212ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (0.048581ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (0.046961ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (0.046752ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_MAXIMUM_INPUT_BYTES (0.046781ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_ASSIGNED_INPUT_BYTES (0.050161ms)
+✔ CW06 rejects unsupported profile (0.545384ms)
+✔ CW06 rejects unsupported features (0.323278ms)
+✔ CW06 rejects unsupported tuning (0.317788ms)
+✔ CW06 rejects unsupported overrides (0.310398ms)
+✔ CW07 missing or broken authorship never falls back to defaults (7.491251ms)
+✔ CW08 maximumActiveRequests cannot exceed connection reservation (0.469192ms)
+✔ CW08 maximumProbeRequests cannot exceed connection reservation (0.308008ms)
+✔ CW09 shutdown budget remains independent of request admission deadline (0.490623ms)
+✔ CW10 effective settings omit secrets and original authentication still fails closed (0.430421ms)
+✔ CD01 original chart delivers the one canonical config to the worker mount (76.98227ms)
+✔ CD02 real Helm output from two author profiles drives the actual production loader (155.432979ms)
+✔ CD03 old Helm shutdown authority is rejected (47.791517ms)
+✔ CD04 maximumActiveRequests rejects 3 before rendering (51.780339ms)
+✔ CD04 maximumActiveRequests rejects null before rendering (52.802545ms)
+✔ CD04 maximumActiveRequests rejects -1 before rendering (50.823864ms)
+✔ CD04 maximumActiveRequests rejects 0 before rendering (51.294906ms)
+✔ CD04 maximumActiveRequests rejects 1.5 before rendering (50.63407ms)
+✔ CD04 maximumActiveRequests rejects 2147483648 before rendering (52.681101ms)
+✔ CD04 maximumActiveRequests rejects undefined before rendering (55.450742ms)
+✔ CD04 maximumProbeRequests rejects 3 before rendering (52.551818ms)
+✔ CD04 maximumProbeRequests rejects null before rendering (55.098414ms)
+✔ CD04 maximumProbeRequests rejects -1 before rendering (48.837944ms)
+✔ CD04 maximumProbeRequests rejects 0 before rendering (48.436213ms)
+✔ CD04 maximumProbeRequests rejects 1.5 before rendering (51.130123ms)
+✔ CD04 maximumProbeRequests rejects 2147483648 before rendering (50.216649ms)
+✔ CD04 maximumProbeRequests rejects undefined before rendering (50.633559ms)
+✔ CD04 maximumConnections rejects 3 before rendering (49.740726ms)
+✔ CD04 maximumConnections rejects null before rendering (53.330018ms)
+✔ CD04 maximumConnections rejects -1 before rendering (58.849559ms)
+✔ CD04 maximumConnections rejects 0 before rendering (49.84725ms)
+✔ CD04 maximumConnections rejects 1.5 before rendering (48.985617ms)
+✔ CD04 maximumConnections rejects 2147483648 before rendering (49.434909ms)
+✔ CD04 maximumConnections rejects undefined before rendering (54.252432ms)
+✔ CD04 requestTimeoutMs rejects 3 before rendering (51.656046ms)
+✔ CD04 requestTimeoutMs rejects null before rendering (54.95321ms)
+✔ CD04 requestTimeoutMs rejects -1 before rendering (56.345755ms)
+✔ CD04 requestTimeoutMs rejects 0 before rendering (47.090989ms)
+✔ CD04 requestTimeoutMs rejects 1.5 before rendering (49.325527ms)
+✔ CD04 requestTimeoutMs rejects 2147483648 before rendering (52.654411ms)
+✔ CD04 requestTimeoutMs rejects undefined before rendering (51.04965ms)
+✔ CD04 shutdownTimeoutMs rejects 3 before rendering (49.439909ms)
+✔ CD04 shutdownTimeoutMs rejects null before rendering (46.71942ms)
+✔ CD04 shutdownTimeoutMs rejects -1 before rendering (46.529745ms)
+✔ CD04 shutdownTimeoutMs rejects 0 before rendering (53.726228ms)
+✔ CD04 shutdownTimeoutMs rejects 1.5 before rendering (50.323261ms)
+✔ CD04 shutdownTimeoutMs rejects 2147483648 before rendering (51.239535ms)
+✔ CD04 shutdownTimeoutMs rejects undefined before rendering (48.347102ms)
+✔ CD04 maximumInputBytes rejects 3 before rendering (43.908348ms)
+✔ CD04 maximumInputBytes rejects null before rendering (56.276083ms)
+✔ CD04 maximumInputBytes rejects -1 before rendering (49.610383ms)
+✔ CD04 maximumInputBytes rejects 0 before rendering (54.57391ms)
+✔ CD04 maximumInputBytes rejects 1.5 before rendering (48.760262ms)
+✔ CD04 maximumInputBytes rejects 2147483648 before rendering (48.569037ms)
+✔ CD04 maximumInputBytes rejects undefined before rendering (48.010073ms)
+✔ CD04 unknown key root (44.74195ms)
+✔ CD04 unknown key operator (43.566179ms)
+✔ CD04 unknown key operator.prism (47.629843ms)
+✔ CD04 unknown key operator.prism.worker (46.775361ms)
+✔ CD04 connection overcommit fails Helm rendering (48.457994ms)
+✔ CD05 shutdown 100000 violates native-close or Pod grace (48.839504ms)
+✔ CD05 shutdown 150000 violates native-close or Pod grace (51.974723ms)
+✔ CD06 Helm packaging dereferences the canonical author/schema without manual synchronization (55.098653ms)
+✖ CI05 old Helm input authority worker.native.maximumInputBytes is rejected (42.269867ms)
+✖ CI05 old Helm input authority native.maximumInputBytes is rejected (38.929001ms)
+ℹ tests 123
+ℹ suites 0
+ℹ pass 121
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6978.96463
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:96:84
+✖ CI05 old Helm input authority worker.native.maximumInputBytes is rejected (42.269867ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /native.maximumInputBytes moved/. Input:
+  
+  'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\n' +
+    "Error: values don't meet the specifications of the schema(s) in the following chart(s):\n" +
+    'prism:\n' +
+    "- at '/worker/native': additional properties 'maximumInputBytes' not allowed\n" +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:98:45)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nError: values don't meet the specifications of the schema(s) in the following chart(s):\nprism:\n- at '/worker/native': additional properties 'maximumInputBytes' not allowed\n\n",
+    expected: /native.maximumInputBytes moved/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:96:84
+✖ CI05 old Helm input authority native.maximumInputBytes is rejected (38.929001ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /native.maximumInputBytes moved/. Input:
+  
+  'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\n' +
+    "Error: values don't meet the specifications of the schema(s) in the following chart(s):\n" +
+    'prism:\n' +
+    "- at '': additional properties 'native' not allowed\n" +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:98:45)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nError: values don't meet the specifications of the schema(s) in the following chart(s):\nprism:\n- at '': additional properties 'native' not allowed\n\n",
+    expected: /native.maximumInputBytes moved/,
+    operator: 'match',
+    diff: 'simple'
+  }

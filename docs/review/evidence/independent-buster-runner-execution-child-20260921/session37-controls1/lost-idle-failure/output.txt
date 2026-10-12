@@ -1,0 +1,53 @@
+✔ signal failure still drains capability settlement after actual child close (135.812358ms)
+✔ actual close with nonsettling capability reports bounded drain failure (1047.263283ms)
+✔ withheld close notification retains termination bound without entering capability drain (1042.081749ms)
+✔ constructor observation error is retained for later initialize (12.594086ms)
+▶ aborted initialization rejects and a distinct healthy session completes real cleanup
+  ✔ already aborted context (11.801976ms)
+  ✔ healthy positive control (48.152098ms)
+✔ aborted initialization rejects and a distinct healthy session completes real cleanup (60.96946ms)
+✔ real session termination bound 100 with delayed actual-close delivery (264.171314ms)
+✔ real session termination bound 500 with delayed actual-close delivery (264.088382ms)
+✔ actual session IPC consumes pending-capability count 1 (48.757514ms)
+✔ actual session IPC consumes pending-capability count 2 (143.885037ms)
+✔ actual session IPC consumes capability drain 10 (124.386473ms)
+✔ actual session IPC consumes capability drain 500 (125.965414ms)
+✖ initialized idle session retains actual protocol overflow at 512 bytes (158.957229ms)
+✔ initialized idle session retains actual protocol overflow at 4096 bytes (59.44309ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 14
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3856.835965
+
+✖ failing tests:
+
+test at tests/verification/contracts/provider-loader-ownership.test.mjs:274:49
+✖ initialized idle session retains actual protocol overflow at 512 bytes (158.957229ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: 'TEST_PROVIDER_PROCESS_CLOSED'
+  -   message: 'TEST_PROVIDER_PROTOCOL_LIMIT'
+    }
+  
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-loader-ownership.test.mjs:297:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: TEST_PROVIDER_PROCESS_CLOSED
+        at ProviderProcessSession.execute (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:147:54)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-loader-ownership.test.mjs:297:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { message: 'TEST_PROVIDER_PROTOCOL_LIMIT' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

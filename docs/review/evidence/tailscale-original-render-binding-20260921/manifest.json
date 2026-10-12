@@ -1,0 +1,6 @@
+{
+  "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+  "beforeSha256": "864828548885cf4199dab8d85c3bb4e101abafc4fc0c97c4a92653ab794de1e4",
+  "afterSha256": "3aa382dd6b81e8ac3736eee06a0ecfb8951e06e339c771367789f332921f5987",
+  "scope": "Supply genuine maintained Buster render values, generated namespace/node/policy binding and pinned fixture image to original CRD render. All original assertions and runtime bodies unchanged. No native or live deployment claim."
+}

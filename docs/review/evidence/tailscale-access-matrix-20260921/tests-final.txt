@@ -1,0 +1,13 @@
+✔ actual Nova Helm render exposes architecture only through its private authenticated service (93.928387ms)
+✔ actual Helm rejects credential omission and a carried-over legacy architecture NodePort (113.378263ms)
+✔ authored Argo ingress and operator values identify external OAuth and shared proxy tags (1.088798ms)
+✔ actual Prism render binds private Studio ingress to its Service and removes only ingress when disabled (175.672706ms)
+✔ actual Ops render exposes optional outbound SOCKS only and retains incoming deny policy (90.052316ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 558.242542

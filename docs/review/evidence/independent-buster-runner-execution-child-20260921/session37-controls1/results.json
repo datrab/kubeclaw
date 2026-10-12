@@ -1,0 +1,46 @@
+[
+  {
+    "name": "old-protocol-order",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/contracts/provider-loader-ownership.test.mjs"
+    ],
+    "exitCode": 1,
+    "candidateAssertionDetection": true,
+    "requiresManualOracleReview": true
+  },
+  {
+    "name": "lost-idle-failure",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/contracts/provider-loader-ownership.test.mjs"
+    ],
+    "exitCode": 1,
+    "candidateAssertionDetection": true,
+    "requiresManualOracleReview": true
+  },
+  {
+    "name": "force-grace-500",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/contracts/buster-provider-session-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "candidateAssertionDetection": true,
+    "requiresManualOracleReview": true
+  },
+  {
+    "name": "force-grace-50",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/contracts/buster-provider-session-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "candidateAssertionDetection": true,
+    "requiresManualOracleReview": true
+  }
+]

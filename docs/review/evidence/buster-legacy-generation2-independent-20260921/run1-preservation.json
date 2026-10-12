@@ -1,0 +1,10 @@
+{
+  "guest-root.ext4": "818750e18d70d66d0e1895966f9d2c711c858bea56e338aa9cff705d6018b8f1",
+  "second.ext4": "160a27a486b77f43ab09209d34a3fc0073f73e0556a311fae895f87ab51aed72",
+  "vm-console.txt": "cd6dcaccc70d0c8adbb9f7e5c28a214e2bde8ce8a1c1b3149ff275548fdec46d",
+  "vm-result.json": "f1f49cd9a9cae7718a1d4347d94571a9221722031736f4399575e03b79ae38c7",
+  "launcherSha256": "0f99289581fe576b1c41566adac4a6e19752e5a35216c07e9a24544ef02dd183",
+  "launcherOnlyGenerationPathsChanged": true,
+  "oldExportIntact": true,
+  "run1Passed": false
+}

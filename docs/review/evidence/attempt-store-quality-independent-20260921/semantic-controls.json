@@ -1,0 +1,18 @@
+[
+  {
+    "mutation": "quota",
+    "testLine": 27,
+    "failure": "OBSERVABILITY_CLOSURE_STORE_FULL",
+    "classification": "positive consumer operation unexpectedly rejects after real closure projection; semantic regression, not loader/setup failure"
+  },
+  {
+    "mutation": "generation",
+    "assertionLine": 65,
+    "failure": "ERR_ASSERTION: Missing expected rejection /ATTEMPT_ALREADY_COMPLETED/"
+  },
+  {
+    "mutation": "saving",
+    "assertionLine": 85,
+    "failure": "ERR_ASSERTION: Missing expected rejection /NOT_SMALLER/"
+  }
+]

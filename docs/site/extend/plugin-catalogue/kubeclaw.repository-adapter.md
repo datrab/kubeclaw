@@ -56,10 +56,13 @@ Run:
 npm test --prefix skills/nova/plugins/repository-adapter
 ```
 
-Package tests found: 0.
+Package tests found: 3.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/repository-adapter/plugin.json`
 - Package root: `skills/nova/plugins/repository-adapter`
 - Authored package guide: `skills/nova/plugins/repository-adapter/README.md`
+- Test: `skills/nova/plugins/repository-adapter/tests/live-function.test.ts`
+- Test: `skills/nova/plugins/repository-adapter/tests/package-boundary.test.mjs`
+- Test: `skills/nova/plugins/repository-adapter/tests/path-safety.test.ts`

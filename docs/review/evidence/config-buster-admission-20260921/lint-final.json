@@ -1,0 +1,23 @@
+{
+  "command": [
+    "node_modules/.bin/eslint",
+    "--config",
+    "charts/kubeclaw/files/config/eslint.config.mjs",
+    "skills/buster/engine/test-gates/production.ts",
+    "skills/buster/engine/test-gates/production-config-values.ts",
+    "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "skills/buster/engine/test-gates/production-command-options.ts",
+    "skills/buster/engine/test-gates/production-browser-options.ts",
+    "skills/buster/engine/test-gates/production-cluster-options.ts",
+    "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "skills/buster/engine/remote-plan-cli.ts",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "tests/fixtures/test-gate/buster-admission.mts",
+    "tests/fixtures/test-gate/modeled-preparation.mts",
+    "tests/verification/reliability/buster-admission-config.test.mts",
+    "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "tests/verification/deployment/buster-admission-render.test.mjs"
+  ],
+  "exitCode": 0
+}

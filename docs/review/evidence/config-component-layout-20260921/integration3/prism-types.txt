@@ -1,0 +1,4 @@
+skills/prism/tests/fixtures/native-process-boundary.mts(18,86): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'ArrayBuffer | Uint8Array<ArrayBufferLike> | Uint8ClampedArray<ArrayBufferLike> | Uint16Array<ArrayBufferLike> | ... 8 more ... | Float64Array<...>' is not assignable to parameter of type 'WithImplicitCoercion<string | ArrayLike<number>>'.
+      Type 'ArrayBuffer' is not assignable to type 'WithImplicitCoercion<string | ArrayLike<number>>'.

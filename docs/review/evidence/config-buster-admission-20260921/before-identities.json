@@ -1,0 +1,77 @@
+[
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "e9e7fef5fec4931e317985b27b07cb7b9a8fd18a23752137a07c59a91ca42c2d",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/0.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "sha256": "aae0cc4633ff1462efbc103d0529e68bdb103907a6511e9e40e6139a3575e3ed",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/1.snapshot"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "sha256": "991e0c6dfd683b484bbc132c3e6e60c67abdf7c88e53959e9d08b7e4e60c20da",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/2.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/remote-plan-cli.ts",
+    "sha256": "afbb68a13591ce7931156f57349a48865e469757de2157a74f0489de8161f971",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/3.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "sha256": "78ce156e0568a6d9410aacf4a29a948e279bdc612d22fb1c311ee9aa9e261585",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/4.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "982331e977de58db067eba433501e0b201760946690f6787c0302e5503e85577",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/5.snapshot"
+  },
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "sha256": "5af76659fd88a6c4632cd52c331bd3c5ea9eaf1a5a1ac1bd3706e9223aab20d9",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/6.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "sha256": "4d050f820990d6a18a6e82b580e25610c2211daabfb9b17d105ed57313958c01",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/7.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "sha256": "7a516bd9615ead9a85a37e51e75230e189000f38bd2863f6253d69e7b2953020",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/8.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "sha256": "098105c151618534a0df2be181a0a9ae509a11629f95e2433c232e33b416207e",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/9.snapshot"
+  },
+  {
+    "path": "docker/Dockerfile.buster-runtime",
+    "sha256": "99f6b837b4b15df27d54c03457f59c605a1d46ee758197c91d3a66c32389d76f",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/image.snapshot"
+  },
+  {
+    "path": "charts/kubeclaw/templates/_buster-native.tpl",
+    "sha256": "9151f8e237f3dfa164e3a05da4ed826cb4a0ad62a090a12988adbfb483e1c7a6",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/chart.snapshot"
+  },
+  {
+    "path": "package.json",
+    "sha256": "85962ce987591fd12c769c3df45c2ac824f878b769b0102c1d1c2581794a23dd",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/package.snapshot"
+  },
+  {
+    "path": "charts/prism/templates/_swarm-config.tpl",
+    "sha256": "ecbc31f41295ba0f0a4f3001586985e92cc67abb4c4f60990618750678a808e0",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/prism-_swarm-config.tpl.snapshot"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "sha256": "44823a345015647ceb1fd025ed11db8da2ef03f099df28193c0a5e5494b2266b",
+    "snapshot": "docs/review/evidence/config-buster-admission-20260921/before/prism-prism-swarm-config.test.mjs.snapshot"
+  }
+]

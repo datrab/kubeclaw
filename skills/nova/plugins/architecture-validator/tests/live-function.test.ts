@@ -81,7 +81,7 @@ try {
       ['kubeclaw.secret-resolver:secrets', { environment: { 'architecture.agent': secretName } }],
       ['kubeclaw.artifact-store:artifact-store', { artifactRoot: path.join(temporary, 'artifacts') }],
     ]),
-    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager()),
+    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
     shutdownTimeoutMs: 1000, async emitDomainEvent() {},
   });
   await adapters.start();

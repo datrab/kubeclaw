@@ -1,0 +1,61 @@
+[
+  {
+    "name": "setpriv-version",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root/lib/ld-musl-x86_64.so.1",
+      "--library-path",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root/usr/lib",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root/bin/setpriv",
+      "--version"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "getcap-help",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root/lib/ld-musl-x86_64.so.1",
+      "--library-path",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root/usr/lib",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root/usr/sbin/getcap",
+      "-h"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "compile-generic",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/root/usr/bin/gcc",
+      "--sysroot=/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-fPIE",
+      "-fstack-protector-strong",
+      "-D_FORTIFY_SOURCE=2",
+      "-fsyntax-only",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/repo-snapshot/skills/common/plugin-runtime/foundation/isolation/sandbox.c"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "compile-restricted",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/root/usr/bin/gcc",
+      "--sysroot=/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-fPIE",
+      "-fstack-protector-strong",
+      "-D_FORTIFY_SOURCE=2",
+      "-DKUBECLAW_BUSTER_BROWSER_IDENTITY=1",
+      "-fsyntax-only",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/repo-snapshot/skills/common/plugin-runtime/foundation/isolation/sandbox.c"
+    ],
+    "exitCode": 0
+  }
+]

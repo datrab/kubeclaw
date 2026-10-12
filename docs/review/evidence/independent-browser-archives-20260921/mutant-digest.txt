@@ -1,0 +1,47 @@
+✔ BA01 lock requires complete architecture and archive identities (3.94153ms)
+✔ BA02 installed package and registry drift rejected before download (2.255598ms)
+✔ BA03 corrupt size fails before extraction or publication (10.724462ms)
+✖ BA03 corrupt sha256 fails before extraction or publication (2.733239ms)
+✔ BA04 existing destinations and dangling symlinks preserved (2.191816ms)
+✔ BA04 only one concurrent installer may publish (6.385063ms)
+✔ BA05 prism publishes three verified directories with permissions and original markers (3.576561ms)
+✔ BA02 real CLI rejects authored/generated drift before loading downloader (47.640581ms)
+✔ BA06 both production Dockerfiles replace unverified archive installation (0.648347ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 161.001665
+
+✖ failing tests:
+
+test at scripts/tests/browser-archive-lock.test.mjs:40:44
+✖ BA03 corrupt sha256 fails before extraction or publication (2.733239ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /integrity mismatch/. Input:
+  
+  "Error: ENOENT: no such file or directory, stat '/tmp/browser-lock-test-bKbnIg/browsers.installing/browsers/chromium-1/bin/browser'"
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///tmp/browser-independent-mutant-rw_7fzl3/scripts/tests/browser-archive-lock.test.mjs:44:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, stat '/tmp/browser-lock-test-bKbnIg/browsers.installing/browsers/chromium-1/bin/browser'
+        at Object.statSync (node:fs:1794:25)
+        at installBrowsers (file:///tmp/browser-independent-mutant-rw_7fzl3/scripts/browser-archive-lock.mjs:77:15)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///tmp/browser-independent-mutant-rw_7fzl3/scripts/tests/browser-archive-lock.test.mjs:44:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /integrity mismatch/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+exit=1

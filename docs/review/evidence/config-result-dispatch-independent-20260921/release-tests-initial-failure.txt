@@ -1,0 +1,403 @@
+file:///tmp/deployment-selection-MbMKij/scripts/updates/release-configuration.mjs:54
+    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                             ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-MbMKij/scripts/updates/release-configuration.mjs:54:78)
+    at file:///tmp/deployment-selection-MbMKij/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-IAlcNA/scripts/updates/release-configuration.mjs:54
+    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                             ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-IAlcNA/scripts/updates/release-configuration.mjs:54:78)
+    at file:///tmp/deployment-selection-IAlcNA/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-MbFOkE/scripts/updates/release-configuration.mjs:54
+    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                             ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-MbFOkE/scripts/updates/release-configuration.mjs:54:78)
+    at file:///tmp/deployment-selection-MbFOkE/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-bAIepI/scripts/updates/release-configuration.mjs:54
+    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                             ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-bAIepI/scripts/updates/release-configuration.mjs:54:78)
+    at file:///tmp/deployment-selection-bAIepI/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-dbojgN/scripts/updates/release-configuration.mjs:54
+    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                             ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-dbojgN/scripts/updates/release-configuration.mjs:54:78)
+    at file:///tmp/deployment-selection-dbojgN/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-aBKipb/scripts/updates/release-configuration.mjs:54
+    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                             ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-aBKipb/scripts/updates/release-configuration.mjs:54:78)
+    at file:///tmp/deployment-selection-aBKipb/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-nKFFDg/scripts/updates/release-configuration.mjs:54
+    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                             ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-nKFFDg/scripts/updates/release-configuration.mjs:54:78)
+    at file:///tmp/deployment-selection-nKFFDg/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+file:///tmp/deployment-selection-JaDcKk/scripts/updates/release-configuration.mjs:54
+    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                             ^
+
+Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+    at verifyReleaseConfiguration (file:///tmp/deployment-selection-JaDcKk/scripts/updates/release-configuration.mjs:54:78)
+    at file:///tmp/deployment-selection-JaDcKk/scripts/updates/materialize-release.mjs:15:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (149.792508ms)
+✖ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (147.504659ms)
+✖ private operational overlays survive while replaced or removed runtime slots fail (139.618018ms)
+✖ Prism and Ops reject image overrides even when another value could conceal them (158.390988ms)
+✖ source configuration and materialized values are rechecked by actual deployment entrypoints (143.61694ms)
+✖ private bundle URL and authentication survive while the selected revision stays fixed (137.712429ms)
+✖ private extraEnv cannot shadow reserved runtime bundle controls (141.870275ms)
+✖ noncanonical alias and indirect controls cannot stand in for bundle consumers (153.368779ms)
+✔ actual validator accepts signed immutable-release contract fixture; no live acceptance claimed (54.462332ms)
+✔ actual validator rejects mutable tag in both expected and signed fixture identities (41.677005ms)
+✔ actual validator rejects malformed or mismatched immutable fixture identities (132.578328ms)
+✔ actual validator preserves signed-body tamper rejection (41.535161ms)
+✔ actual validator preserves clean-run image binding and required live-gate completeness (88.741687ms)
+fatal: not a tree object
+✔ unchanged release configuration survives unrelated later commits, but new chart or values cannot qualify old images (110.708569ms)
+✔ deleted, added, symlinked, and unavailable source configurations fail explicitly (39.847048ms)
+✔ ops chart has its own source binding, independent of runtime-only changes (56.559036ms)
+✔ canonical aliases bind both target bytes to the image source commit, including schema outside charts (277.518691ms)
+✔ canonical alias cannot be retargeted or replaced with an identical regular copy (162.410089ms)
+✔ source commit cannot introduce arbitrary or retargeted aliases (78.733152ms)
+✔ canonical schema cannot escape through a directory symlink or leaf symlink (108.737168ms)
+walk.go:75: found symbolic link in path: /tmp/release-helm-pMpNOP/charts/prism/files/config/swarm.config.json resolves to /tmp/release-helm-pMpNOP/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/release-helm-pMpNOP/charts/prism/files/config/swarm.schema.json resolves to /tmp/release-helm-pMpNOP/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+✔ release selection rejects missing, duplicate and cross-commit build receipts (2.426392ms)
+✔ generated release values render actual Helm charts with immutable role and sidecar references (1254.453222ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 14
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3943.296896
+
+✖ failing tests:
+
+test at tests/verification/deployment/deployment-release.test.mjs:48:1
+✖ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (149.792508ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-MbMKij/scripts/updates/release-configuration.mjs:54
+      if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                               ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-MbMKij/scripts/updates/release-configuration.mjs:54:78)
+      at file:///tmp/deployment-selection-MbMKij/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:13:24)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:33:7)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:48:114)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-MbMKij/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-MbMKij/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-MbMKij/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 37896,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-MbMKij/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-MbMKij/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-MbMKij/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:71:1
+✖ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (147.504659ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-IAlcNA/scripts/updates/release-configuration.mjs:54
+      if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                               ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-IAlcNA/scripts/updates/release-configuration.mjs:54:78)
+      at file:///tmp/deployment-selection-IAlcNA/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:13:24)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:33:7)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:71:134)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-IAlcNA/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-IAlcNA/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-IAlcNA/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 37914,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-IAlcNA/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-IAlcNA/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-IAlcNA/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:83:1
+✖ private operational overlays survive while replaced or removed runtime slots fail (139.618018ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-MbFOkE/scripts/updates/release-configuration.mjs:54
+      if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                               ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-MbFOkE/scripts/updates/release-configuration.mjs:54:78)
+      at file:///tmp/deployment-selection-MbFOkE/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:13:24)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:33:7)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:83:97)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-MbFOkE/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-MbFOkE/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-MbFOkE/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 37932,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-MbFOkE/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-MbFOkE/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-MbFOkE/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:94:1
+✖ Prism and Ops reject image overrides even when another value could conceal them (158.390988ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-bAIepI/scripts/updates/release-configuration.mjs:54
+      if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                               ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-bAIepI/scripts/updates/release-configuration.mjs:54:78)
+      at file:///tmp/deployment-selection-bAIepI/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:13:24)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:33:7)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:94:95)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-bAIepI/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-bAIepI/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-bAIepI/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 37948,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-bAIepI/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-bAIepI/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-bAIepI/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:112:1
+✖ source configuration and materialized values are rechecked by actual deployment entrypoints (143.61694ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-dbojgN/scripts/updates/release-configuration.mjs:54
+      if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                               ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-dbojgN/scripts/updates/release-configuration.mjs:54:78)
+      at file:///tmp/deployment-selection-dbojgN/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:13:24)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:33:7)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:112:107)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-dbojgN/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-dbojgN/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-dbojgN/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 37964,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-dbojgN/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-dbojgN/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-dbojgN/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:123:1
+✖ private bundle URL and authentication survive while the selected revision stays fixed (137.712429ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-aBKipb/scripts/updates/release-configuration.mjs:54
+      if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                               ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-aBKipb/scripts/updates/release-configuration.mjs:54:78)
+      at file:///tmp/deployment-selection-aBKipb/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:13:24)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:33:7)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:123:101)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-aBKipb/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-aBKipb/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-aBKipb/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 37980,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-aBKipb/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-aBKipb/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-aBKipb/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:134:1
+✖ private extraEnv cannot shadow reserved runtime bundle controls (141.870275ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-nKFFDg/scripts/updates/release-configuration.mjs:54
+      if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                               ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-nKFFDg/scripts/updates/release-configuration.mjs:54:78)
+      at file:///tmp/deployment-selection-nKFFDg/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:13:24)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:33:7)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:134:79)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-nKFFDg/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-nKFFDg/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-nKFFDg/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 37996,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-nKFFDg/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-nKFFDg/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-nKFFDg/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/deployment-release.test.mjs:149:1
+✖ noncanonical alias and indirect controls cannot stand in for bundle consumers (153.368779ms)
+  Error: Command failed: /usr/local/bin/node scripts/updates/materialize-release.mjs --family=runtime
+  file:///tmp/deployment-selection-JaDcKk/scripts/updates/release-configuration.mjs:54
+      if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);
+                                                                               ^
+  
+  Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json
+      at verifyReleaseConfiguration (file:///tmp/deployment-selection-JaDcKk/scripts/updates/release-configuration.mjs:54:78)
+      at file:///tmp/deployment-selection-JaDcKk/scripts/updates/materialize-release.mjs:15:27
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at node (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:13:24)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:33:7)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/deployment-release.test.mjs:149:93)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "file:///tmp/deployment-selection-JaDcKk/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-JaDcKk/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-JaDcKk/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n" ],
+    pid: 38012,
+    stdout: '',
+    stderr: "file:///tmp/deployment-selection-JaDcKk/scripts/updates/release-configuration.mjs:54\n    if (!target || git(['cat-file', 'blob', entry.digest]) !== target) throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${entry.name}`);\n                                                                             ^\n\nError: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: charts/prism/files/config/swarm.config.json\n    at verifyReleaseConfiguration (file:///tmp/deployment-selection-JaDcKk/scripts/updates/release-configuration.mjs:54:78)\n    at file:///tmp/deployment-selection-JaDcKk/scripts/updates/materialize-release.mjs:15:27\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.21.0\n"
+  }

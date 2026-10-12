@@ -1,0 +1,111 @@
+{
+  "status": "prepared-not-booted",
+  "packageHashes": "package-hashes.json",
+  "files": [
+    {
+      "path": "node_modules/.cache/native-test-vm-startup-20260921/root/usr/bin/qemu-system-x86_64",
+      "bytes": 27791496,
+      "sha256": "d0c183817a3044bc38e104f88ef56ee235c5d91a9413cba7255c1c1751c31fc1"
+    },
+    {
+      "path": "node_modules/.cache/native-test-vm-startup-20260921/root/boot/vmlinuz-virt",
+      "bytes": 12608512,
+      "sha256": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c"
+    },
+    {
+      "path": "node_modules/.cache/native-test-vm-startup-20260921/initrd.cpio.gz",
+      "bytes": 1899633,
+      "sha256": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2"
+    },
+    {
+      "path": "node_modules/.cache/native-test-vm-startup-20260921/guest-root.ext4",
+      "bytes": 8589934592,
+      "sha256": "229742ee6a61de9e9306c757d45e78e249aa67b2df44a19056efaaeadd3613b4"
+    },
+    {
+      "path": "node_modules/.cache/native-test-vm-startup-20260921/guest-root/usr/local/bin/node",
+      "bytes": 131391152,
+      "sha256": "78465b20b5455f64d2dbbd9e8b38470cfc23ad3abe4cdc9a00dc5e050eee70fb"
+    },
+    {
+      "path": "node_modules/.cache/native-test-vm-startup-20260921/repo-snapshot-manifest.json",
+      "bytes": 6537274,
+      "sha256": "04a29d1d0ea7f195aadd777cc1541b4cae01068c9ca2cfa416002eb429b0e89e"
+    },
+    {
+      "path": "node_modules/.cache/native-test-vm-startup-20260921/guest-root/etc/machine-id",
+      "bytes": 37,
+      "sha256": "93a46515fc73ab3fb45e9e44ebff67a7708d4cf68dfc6310f316ad8215078ec1"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/child-preload.mjs",
+      "bytes": 1078,
+      "sha256": "3d2d5f0e09fc63c9c66bcaac38c659ce7b508c8ef259d9a86bf6efb3da12088f"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/guest-diagnostic.mjs",
+      "bytes": 5778,
+      "sha256": "1e5043ec1fc64b7ddc6d8634270b20a284e0a3fafa9383896e95ec1b00a4c454"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/guest-identity.json",
+      "bytes": 171,
+      "sha256": "793dee42b11fdf34460a2b046391cab707275dcbd70d9d78739d78067b480f31"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/guest-init.sh",
+      "bytes": 1761,
+      "sha256": "6a8c80c8ab7acf97ed4395dfaa76f625c9a93d9ba55a595f1fe3a4132c9faa65"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/guest-packages.json",
+      "bytes": 1358,
+      "sha256": "00b03d491953ff1877f3f72b285851d147a2fcc6128fefc3c6580668862a8ccf"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/image-build.json",
+      "bytes": 1231,
+      "sha256": "aec2f096c368094807f6302a9a6e01dc7e82ec29cf1d0733d92927e242ea1548"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/initrd-init.sh",
+      "bytes": 842,
+      "sha256": "3c4544ab612cbdaafb77949c23e6bec5eede4ba34c37dd3d5b5cde088c7b8769"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/launch-approved.py",
+      "bytes": 9666,
+      "sha256": "59d99be19ba5a83a06f62408a828cc194cd6b28fe70acc16223482a02e37ce8d"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/launch-command.json",
+      "bytes": 1808,
+      "sha256": "35694c401829a482e96737e8c25b9451d062434ecafaffff4cc5b7732758c929"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/materialize.py",
+      "bytes": 2584,
+      "sha256": "1f212f2c66ff853f10a55dece50351f6a1116bf736ac633512d7269171013b45"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/package-hashes.json",
+      "bytes": 14809,
+      "sha256": "c0f79e74344ab74c0d604b4cc73688ccfb4f3d137eaed121befaa21b138883c9"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/prepare-images.py",
+      "bytes": 5588,
+      "sha256": "f633784a524396e58a57071b7f8ae94e802e056aac7cf640868ecb1b94fa6409"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/prepared-script-identities.json",
+      "bytes": 1442,
+      "sha256": "2969060d88eb893dbe5d6a1422f53e301baf69b6b567ff51bc8a0ba763a2f76a"
+    },
+    {
+      "path": "docs/review/remediation/implementation/native-vm-startup-storage-proposal-20260921.md",
+      "bytes": 3863,
+      "sha256": "12f96d7250b3b53c1f2e7e4f805856fc4c9ba135e38c7042631214b556f9a57a"
+    }
+  ]
+}

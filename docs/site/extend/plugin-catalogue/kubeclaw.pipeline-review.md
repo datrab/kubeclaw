@@ -71,10 +71,13 @@ Run:
 npm test --prefix skills/nova/plugins/pipeline-review
 ```
 
-Package tests found: 0.
+Package tests found: 3.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/pipeline-review/plugin.json`
 - Package root: `skills/nova/plugins/pipeline-review`
 - Authored package guide: `skills/nova/plugins/pipeline-review/README.md`
+- Test: `skills/nova/plugins/pipeline-review/tests/live-function.test.ts`
+- Test: `skills/nova/plugins/pipeline-review/tests/package-boundary.test.mjs`
+- Test: `skills/nova/plugins/pipeline-review/tests/protocol.test.mjs`

@@ -1,0 +1,220 @@
+{
+  "fieldPatterns": 21,
+  "registrations": [
+    {
+      "registration": "kubeclaw.demo-handoff:handoff",
+      "schema": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
+      "fields": [
+        {
+          "path": "candidateStageId",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        {
+          "path": "deliveryStageId",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        {
+          "path": "readyStageId",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        {
+          "path": "manifestStageId",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        {
+          "path": "endpoint",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        {
+          "path": "tokenPath",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        {
+          "path": "caPath",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        {
+          "path": "stateRoot",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        {
+          "path": "operatorTarget",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._:-]{0,127}$"
+          }
+        },
+        {
+          "path": "timeoutMs",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 60000
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    {
+      "registration": "kubeclaw.lint:executor",
+      "schema": "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+      "fields": [
+        {
+          "path": "allowedRepositoryRoots",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "path": "allowedPolicyRoots",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    {
+      "registration": "kubeclaw.pipeline-review:evidence",
+      "schema": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+      "fields": [
+        {
+          "path": "storageRoot",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "orchestratorIssuerId",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "maximumJournalBytes",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        {
+          "path": "maximumArtifactBytes",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        {
+          "path": "maximumBundleBytes",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    {
+      "registration": "kubeclaw.repository-adapter:repository",
+      "schema": "skills/nova/plugins/repository-adapter/schemas/config.schema.json",
+      "fields": [
+        {
+          "path": "repositoryRoot",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "maxFileBytes",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        {
+          "path": "maxChangedPaths",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        {
+          "path": "expectedHead",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+          }
+        }
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

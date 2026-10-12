@@ -1,0 +1,15 @@
+{
+  "manifestSha256": "4e4ba3a278f513f0105efabdf61d7053330b14dc7162e8fce94336acf08c3d25",
+  "identitiesMatch": true,
+  "decision": "source accepted for real verifier rerun after slot release",
+  "preserved": [
+    "same actual canonical ESLint",
+    "warning/fatal guards",
+    "exact allowed-path zero-diagnostics oracle",
+    "severity2 direct-env denial",
+    "severity2 env-default denial"
+  ],
+  "change": "negative lintText uses actual existing same-directory process-input.ts compatible with projectService; no source/module file write",
+  "limit": "one actual sibling proves same-directory exclusion; does not by itself cover every fabricated filename or prefix wildcard. Exact allowlist checked independently in config source. Old virtual-path parser failure should remain raw evidence.",
+  "runtime": "none"
+}

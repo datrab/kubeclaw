@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "path": "docs/review/remediation/implementation/buster-cleanup-scheduler-verification-20260924.md",
+      "beforeSha256": null,
+      "afterSha256": "a3074002e9b037ff4c1a1ca554bcac2aea2f5fc8e53ebdd34be2fa78d9e82f4d"
+    },
+    {
+      "path": "docs/review/remediation/implementation/provider-disposal-confirmation-20260921.md",
+      "beforeSha256": "83af647f827206ad1cd7aa7138a397e3a2e9fa1ac91fbcb16f97a815b731f8b1",
+      "afterSha256": "0d0cd3025200600a5f0c21df920291e444d14a10c6045b165ae62873a493a526"
+    },
+    {
+      "path": "docs/review/remediation/implementation/runner-scheduler-drain-20260921.md",
+      "beforeSha256": "0322993a243ff501d7200054f31fc1ab7abfbcec3f3cde1663abfc6c6c948019",
+      "afterSha256": "e545d34fc2b9d2488d7317ae292c3a85cb4c10c98c4733c051b66944eb6f902b"
+    },
+    {
+      "path": "docs/review/remediation/implementation/kubernetes-cleanup-disposition-20260921.md",
+      "beforeSha256": "8706f9529fd38cf37eaeecfe8df8c089c31891d85a05820b835db33676027de9",
+      "afterSha256": "48cd122452a35e474bb2b1feb1a0409ff03397c657b761d1f938ceeabad7695b"
+    }
+  ],
+  "status": "author final evidence update; independent review pending"
+}

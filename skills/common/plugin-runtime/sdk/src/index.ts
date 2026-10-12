@@ -1,3 +1,4 @@
+export type { RetainedWaitSource, RetainedWaitResolver } from './retained-wait.ts';
 export * from './generated/contracts.ts';
 export * from './values.ts';
 export * from './runtime-agent-task.ts';
@@ -16,6 +17,7 @@ export type {
   PluginInvocationContext,
   TestProviderCapabilityRequest,
   TestProviderExecutionContext,
+  TestProviderCleanupDisposition,
   TestProviderFactory,
   TestProviderInstance,
   ReportAdapterFunction,

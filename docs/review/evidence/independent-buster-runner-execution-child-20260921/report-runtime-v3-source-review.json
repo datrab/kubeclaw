@@ -1,0 +1,28 @@
+{
+  "status": "bounded source review accepted for integration; no runtime",
+  "files": [
+    {
+      "path": "docs/review/evidence/buster-report-runtime-policy-20260921/proofs-v3/files/tests/verification/contracts/buster-report-policy-parity.test.mjs",
+      "sha256": "2bf0ffe3fb27b0d86d4efbefdf4e359afd6d303287f3bfe887da0149ca906825"
+    },
+    {
+      "path": "docs/review/evidence/buster-report-runtime-policy-20260921/proofs-v3/files/tests/verification/contracts/buster-report-runner-policy.test.mjs",
+      "sha256": "e847925092333b30ce7bac60119623dbaee654c9144800cf018a794d9c8d7785"
+    }
+  ],
+  "manifestSha256": "b0e68f257338f7b62f903facb6cab6a662864de3881204c678d488cd9b8d1dc9",
+  "findings": [],
+  "checked": [
+    "Actual Default TestPlanRunner with actual registered report process; heap proof checks both actual argv and positive V8 heap growth, retained source association and real child closure.",
+    "Memory reserve/descriptor floor Runner cases assert early coherence rejection and absent Runnerroot; setup fixture effects are explicitly separate. Direct adapter narrower-request cases belong to V2, not these two new modules.",
+    "Cleanup registered before writes/spawn; provider/report only, privatecwd+detached ownership required before actualspawn, real childclose awaited, finite2000ms bound, fail/retain unknown ownership; no sharedroot deletion when retainedfixtures remain.",
+    "Chart fixtures detach copied aliases before writes and require private regular file, realpath containment, nlink1 and distinct device/inode.",
+    "Helm and strict validator invalid/missing/equalshape profiles plus raw valid exactConfigMap and coherence negatives; valid extreme heap is schema envelope only, not process feasibility.",
+    "Mutant recipes remain unexecuted; exact code substitutions and semantic assertion detection must be independently bound."
+  ],
+  "limits": [
+    "No runtime, lint or type result inferred.",
+    "No final CONFIG/native/image claim.",
+    "Full original report adapter/Runner regression remains required after production integration."
+  ]
+}

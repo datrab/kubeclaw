@@ -1,0 +1,42 @@
+{
+  "baselineManifestSha256": "04a29d1d0ea7f195aadd777cc1541b4cae01068c9ca2cfa416002eb429b0e89e",
+  "snapshotSha256": "ad55e2b1b8e8ae54b25d341212964e3fa2577ac0a7b7a8940993e6b84b6901b8",
+  "independentRegularInodes": 35441,
+  "changedPaths": [
+    "docker/Dockerfile.buster-runtime",
+    "docker/buster-runtime-entrypoint.sh",
+    "docs/review/remediation/implementation/buster-helper-authority-20260921.md",
+    "ha-proof",
+    "ha-proof/guest-proof.test.mjs",
+    "ha-proof/guest-tests.mjs",
+    "ha-proof/sandbox.before.c",
+    "scripts/build-plugin-sandbox.mjs",
+    "scripts/buster-runtime-config-root.mjs",
+    "scripts/buster-subordinate-ids.mjs",
+    "scripts/tests/buster-helper-authority-root.test.mjs",
+    "scripts/tests/buster-helper-authority.test.mjs",
+    "scripts/tests/buster-lock-inheritance.py",
+    "scripts/tests/run-buster-helper-authority.mjs",
+    "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+    "tests/verification/deployment/check-deployment-truth.mjs"
+  ],
+  "authorScope": [
+    "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+    "scripts/build-plugin-sandbox.mjs",
+    "scripts/buster-subordinate-ids.mjs",
+    "scripts/buster-runtime-config-root.mjs",
+    "docker/Dockerfile.buster-runtime",
+    "docker/buster-runtime-entrypoint.sh",
+    "tests/verification/deployment/check-deployment-truth.mjs",
+    "scripts/tests/buster-helper-authority.test.mjs",
+    "scripts/tests/buster-helper-authority-root.test.mjs",
+    "scripts/tests/buster-lock-inheritance.py",
+    "scripts/tests/run-buster-helper-authority.mjs",
+    "docs/review/remediation/implementation/buster-helper-authority-20260921.md"
+  ],
+  "proofFixtures": [
+    "ha-proof/guest-proof.test.mjs",
+    "ha-proof/guest-tests.mjs",
+    "ha-proof/sandbox.before.c"
+  ]
+}

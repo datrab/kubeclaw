@@ -116,7 +116,7 @@ async function run(id, guidance) {
       new core.FileEffectJournal(effectsPath),
       undefined,
       undefined,
-      new core.MemoryResourceLockManager(),
+      new core.MemoryResourceLockManager(), 300_000,
     ),
     shutdownTimeoutMs: 1_000,
     async emitDomainEvent() {},

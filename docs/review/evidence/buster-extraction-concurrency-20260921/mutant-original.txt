@@ -1,0 +1,33 @@
+✖ actual extraction rejects a same-input alias before reservation and captures caller input (75.307302ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 833.181074
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-extraction-concurrency.test.mts:45:1
+✖ actual extraction rejects a same-input alias before reservation and captures caller input (75.307302ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /BUSTER_PREPARATION_EXTRACTION_BUSY/u. Input:
+  
+  'Error: DUPLICATE_REACHED_RESERVATION'
+  
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-extraction-concurrency.test.mts:69:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: DUPLICATE_REACHED_RESERVATION
+        at other.ledger.reserveExtraction (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-extraction-concurrency.test.mts:64:58)
+        at extractBusterPreparation (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/preparation-extraction.ts:61:41)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-extraction-concurrency.test.mts:69:26)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3),
+    expected: /BUSTER_PREPARATION_EXTRACTION_BUSY/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }

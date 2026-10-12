@@ -1,0 +1,17 @@
+{
+  "designSha256": "6d530a83d89331d5c894ff8d483d1e120f79e86dc2f8913df7ebcb3811dc1662",
+  "snapshotIdentitiesMatch": true,
+  "decision": "bounded ownership and preimplementation criteria direction accepted with explicit decided bindings and implementation obligations",
+  "decisions": [
+    "Same shared endpoint/path forwarded to RuntimeSecurity; unrelated budgets remain open",
+    "Normal production uses explicit configured service-account names plus projected namespace; direct constructors require explicit full subjects preserving crossnamespace contract"
+  ],
+  "requiredPrecision": [
+    "Validate selected component policy and reject legacy aliases before actual entrypoint config-root helper/lock, registry temp writes and BuildKit spawn; constructor-only rejection insufficient",
+    "Resolve relative kubectl against the same captured physical component-generation directory, not retired runtime JSON directory or later re-resolved alias",
+    "Preserve one registry-client endpoint/auth authority and grants independent of configuration",
+    "Record timer clamping removal as deliberate acceptance-domain tightening and preserve original effective canonical profile"
+  ],
+  "runtime": "none",
+  "liveWrites": "none"
+}

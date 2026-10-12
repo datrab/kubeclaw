@@ -1,0 +1,69 @@
+{
+  "status": "execution pending",
+  "sourceCommand": "node --test tests/verification/reliability/worker-native-journal-capacity.test.mts tests/verification/reliability/native-process-policy.test.mts tests/verification/reliability/worker-native-cleanup.test.mts tests/verification/reliability/worker-native-cleanup-retry.test.mts tests/verification/reliability/worker-resource-reservations.test.mts tests/verification/reliability/worker-owned-children.test.mts tests/verification/reliability/worker-native-quiescence.test.mts tests/verification/reliability/worker-terminal-capacity.test.mts tests/verification/reliability/worker-ownership-store.test.mts tests/verification/reliability/worker-native-journal.test.mts tests/verification/deployment/native-worker-node.test.mjs",
+  "moduleCount": 11,
+  "modules": [
+    {
+      "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+      "sha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26",
+      "environment": "native-host-node-with-real-GNU-flock"
+    },
+    {
+      "path": "tests/verification/reliability/native-process-policy.test.mts",
+      "sha256": "dbfefa729c7d013bccf0fbdfa6653c22650d6fcda8f7f25e3c151031bc26e907",
+      "environment": "native-host-node-with-real-GNU-flock"
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-cleanup.test.mts",
+      "sha256": "e7e9640aa711086a55e2f4ac5d7260dad814d6d39a75eb5c6c221dadf86625ff",
+      "environment": "native-host-node-with-real-GNU-flock"
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-cleanup-retry.test.mts",
+      "sha256": "6ea10420088089cf5d1652cead3fbb0a4a68930ceaeb80b56fefe582c2860d72",
+      "environment": "native-host-node-with-real-GNU-flock"
+    },
+    {
+      "path": "tests/verification/reliability/worker-resource-reservations.test.mts",
+      "sha256": "78842d63696955e1129ae20cf8ee71c3ba3faa64a4d3ef098316e656446c07be",
+      "environment": "native-host-node-with-real-GNU-flock"
+    },
+    {
+      "path": "tests/verification/reliability/worker-owned-children.test.mts",
+      "sha256": "30a0f743173532480016e0db32a02fd90cbd3115d5ad366b7f1fe95ca8f0d797",
+      "environment": "native-host-node-with-real-GNU-flock"
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-quiescence.test.mts",
+      "sha256": "00cab46da97b3985e4117e5c49577dc12a25d1bdf134d498005ff87915d4c958",
+      "environment": "native-host-node-with-real-GNU-flock"
+    },
+    {
+      "path": "tests/verification/reliability/worker-terminal-capacity.test.mts",
+      "sha256": "f320d615c3e354d2f66d91f743f9bde189d0b2ca346867c8e5e38a27d640bf3d",
+      "environment": "native-host-node-with-real-GNU-flock"
+    },
+    {
+      "path": "tests/verification/reliability/worker-ownership-store.test.mts",
+      "sha256": "af2319b4a8c90b71b58cd6a3d46e7349fde0593151d4130af7d9c09a8765787b",
+      "environment": "native-host-node-with-real-GNU-flock"
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-journal.test.mts",
+      "sha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a",
+      "environment": "native-host-node-with-real-GNU-flock"
+    },
+    {
+      "path": "tests/verification/deployment/native-worker-node.test.mjs",
+      "sha256": "cc44b880bf366f9ac0153c80a41054379967946bee7d215fedf07644821fc6da",
+      "environment": "real-root-disposable-guest"
+    }
+  ],
+  "requirements": [
+    "All listed modules run completely; no test-name filters, skipped tests or changed internal deadlines.",
+    "Each original VM3 module remains represented; newly added capacity/reconciliation modules also run.",
+    "No translated root ownership, stub parser or unobserved kernel outcome.",
+    "A failed historical combined VM run remains failed.",
+    "These test-file identities are preliminary; actual runs must bind all relevant production dependencies."
+  ]
+}

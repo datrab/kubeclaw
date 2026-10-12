@@ -1,0 +1,9 @@
+{
+  "command": [
+    "node_modules/.bin/tsc",
+    "--noEmit",
+    "-p",
+    "skills/buster/engine/tsconfig.json"
+  ],
+  "exitCode": 0
+}

@@ -1,0 +1,10 @@
+test_bad_cri_lists_prevent_mutation (__main__.Guards.test_bad_cri_lists_prevent_mutation) ... ok
+test_bad_node_observations_prevent_mutation (__main__.Guards.test_bad_node_observations_prevent_mutation) ... ok
+test_cleanup_requires_observed_endpoint_revisions (__main__.Guards.test_cleanup_requires_observed_endpoint_revisions) ... ok
+test_inconsistent_or_unknown_inspection_prevents_mutation (__main__.Guards.test_inconsistent_or_unknown_inspection_prevents_mutation) ... ok
+test_valid_install_observations_reach_chart (__main__.Guards.test_valid_install_observations_reach_chart) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 23.357s
+
+OK

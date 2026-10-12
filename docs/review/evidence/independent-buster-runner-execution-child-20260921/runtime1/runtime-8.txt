@@ -1,0 +1,46 @@
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+  if (!validate || !validate(value)) throw new Error(error);
+                                           ^
+
+Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+    at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+    at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+    at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+    at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/execution-policy.mts:5:38
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-pipeline-buster-execution-policy.mts (1766.13315ms)
+✔ real child preserves detached invoke, concurrent replies, instance state and import logs (71.96566ms)
+✔ real child settles outstanding RPCs and ignores late replies; early reply=false (59.892828ms)
+✔ real child settles outstanding RPCs and ignores late replies; early reply=true (60.932305ms)
+✔ real child rejects an unawaited RPC and exits with failure (67.186677ms)
+✔ real child rejects invalid observation before provider import: undefined (64.938798ms)
+✔ real child rejects invalid observation before provider import: null (64.168419ms)
+✔ real child rejects invalid observation before provider import: {} (59.783296ms)
+✔ real child rejects invalid observation before provider import: [] (61.313515ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":0} (61.147221ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":1.5} (54.875628ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":"10"} (57.295571ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":2147483648} (53.511753ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":10,"extra":1} (55.250128ms)
+✔ real child uses authored sample interval 10 (304.527892ms)
+✔ real child uses authored sample interval 40 (303.035132ms)
+✔ real child reuses an identical sampling policy and rejects a changed policy (57.112707ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 16
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3311.227986
+
+✖ failing tests:
+
+test at tests/verification/contracts/check-pipeline-buster-execution-policy.mts:1:1
+✖ tests/verification/contracts/check-pipeline-buster-execution-policy.mts (1766.13315ms)
+  'test failed'

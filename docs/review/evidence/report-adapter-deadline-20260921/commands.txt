@@ -1,0 +1,7 @@
+node --test tests/verification/contracts/check-pipeline-report-adapter-runtime.mts tests/verification/contracts/check-pipeline-junit-report-adapter.mts
+exit 0: 2/2 original modules; actual sandbox, plain Node
+node node_modules/typescript/bin/tsc --noEmit -p skills/buster/engine/tsconfig.json
+exit 0
+python3 docs/review/evidence/report-adapter-deadline-20260921/run-mutant.py
+exit 0: original deadline defect detected in private-copy original test
+Canonical lint on runtime + contract: exit 1, same five baseline rule violations; logs retained.

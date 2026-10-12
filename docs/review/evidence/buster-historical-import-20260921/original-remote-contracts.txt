@@ -1,0 +1,19 @@
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:263
+    throw new Error(
+          ^
+
+Error: OBSERVABILITY_STORE_LOCK_FAILED:/tmp/nova-remote-plan-IPGmIh/records/store.json:OBSERVABILITY_STORE_LOCKED:1:/usr/bin/flock: unrecognized option: timeout
+BusyBox v1.37.0 (2026-01-10 15:38:28 UTC) multi-call binary.
+
+Usage: flock [-sxun] FD | { FILE [-c] PROG ARGS }
+
+[Un]lock file descriptor, or lock FILE, run PROG
+
+	-s	Shared lock
+	-x	Exclusive lock (default)
+	-u	Unlock FD
+	-n	Fail rather than wait
+    at withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:263:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0

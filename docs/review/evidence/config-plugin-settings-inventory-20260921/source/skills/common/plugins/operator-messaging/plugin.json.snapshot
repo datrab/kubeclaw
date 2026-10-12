@@ -1,0 +1,23 @@
+{
+  "id": "kubeclaw.operator-messaging",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "operator",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "operator.request",
+        "operator.receipt"
+      ],
+      "requiredCapabilities": [
+        "network.http",
+        "secrets.read"
+      ],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
+}

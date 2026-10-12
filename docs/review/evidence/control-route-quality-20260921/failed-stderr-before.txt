@@ -1,0 +1,22 @@
+✖ actual Control preserves HTTP errors and availability when the diagnostic sink fails (569.444009ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 848.596196
+
+✖ failing tests:
+
+test at skills/prism/tests/control-listener.test.mts:82:1
+✖ actual Control preserves HTTP errors and availability when the diagnostic sink fails (569.444009ms)
+  [TypeError: fetch failed] {
+    [cause]: Error: read ECONNRESET
+        at TCP.onStreamRead (node:internal/stream_base_commons:216:20) {
+      errno: -104,
+      code: 'ECONNRESET',
+      syscall: 'read'
+    }
+  }

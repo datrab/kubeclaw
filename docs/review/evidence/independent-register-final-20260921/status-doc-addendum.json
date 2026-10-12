@@ -1,0 +1,17 @@
+{
+  "manifestSha256": "3788840d0c9c5727fbc3b5d2943f64d4824b73b6493d9b328c91227e961d2ed1",
+  "decision": "accepted; two current-status prose changes accurately reflect bounded REGISTER acceptance and preserved A1 exception; generated blocks unchanged",
+  "maintainedCheck": {
+    "exitCode": 0,
+    "before": {
+      "docs/review/remediation/progress.md": "d4eb50084dfb57afae05a653d306d06cdd5031400785882b617dce0f85b92d91",
+      "docs/review/remediation/implementation/open-work-inventory-20260921.md": "7f0c67f2315c08232b7929b1ee6100b58ef6b209033d5226db941a7874628256"
+    },
+    "after": {
+      "docs/review/remediation/progress.md": "d4eb50084dfb57afae05a653d306d06cdd5031400785882b617dce0f85b92d91",
+      "docs/review/remediation/implementation/open-work-inventory-20260921.md": "7f0c67f2315c08232b7929b1ee6100b58ef6b209033d5226db941a7874628256"
+    },
+    "drift": []
+  },
+  "reviewerRuntime": "none"
+}

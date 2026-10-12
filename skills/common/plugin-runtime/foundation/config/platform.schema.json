@@ -14,6 +14,7 @@
     "observers",
     "storageRoot",
     "shutdownTimeoutMs",
+    "effectLockTtlMs",
     "orchestratorIssuerId",
     "administrativeDecisionIssuers"
   ],

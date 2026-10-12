@@ -1,0 +1,155 @@
+{
+  "$id": "command.requested.payload.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actor": {
+      "type": "string"
+    },
+    "agent_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/agent_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "artifact_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "$ref": "../envelope.schema.json#/properties/attempt"
+    },
+    "capability": {
+      "type": "string"
+    },
+    "command_id": {
+      "type": "string"
+    },
+    "command_type": {
+      "enum": [
+        "approval.resolve",
+        "pipeline.pause",
+        "pipeline.resume",
+        "pipeline.cancel"
+      ]
+    },
+    "content_completeness": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "decision": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dispatch_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/dispatch_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "expected_lifecycle_version": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "issued_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "reason": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "extensions": {
+      "$ref": "../envelope.schema.json#/properties/extensions"
+    },
+    "gate_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "gate_type": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/gate_type"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "model_call_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/model_call_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "module_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/module_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    },
+    "session_key": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "target": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "tool_call_id": {
+      "allOf": [
+        {
+          "$ref": "../envelope.schema.json#/properties/tool_call_id"
+        },
+        {
+          "minLength": 1
+        }
+      ]
+    }
+  },
+  "required": [
+    "command_id",
+    "command_type",
+    "actor",
+    "capability",
+    "expires_at",
+    "issued_at",
+    "reason",
+    "expected_lifecycle_version"
+  ],
+  "type": "object"
+}

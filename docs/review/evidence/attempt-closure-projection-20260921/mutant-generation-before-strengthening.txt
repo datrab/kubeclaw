@@ -1,0 +1,31 @@
+✖ read-only plan and actual CLI apply agree; finalization, changed intent and bounded metadata remain enforced (10905.083916ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13295.496427
+
+✖ failing tests:
+
+test at tests/verification/reliability/attempt-closure-projection.test.mjs:55:1
+✖ read-only plan and actual CLI apply agree; finalization, changed intent and bounded metadata remain enforced (10905.083916ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ATTEMPT_ALREADY_COMPLETED/. Input:
+  
+  'Error: OBSERVABILITY_RESULT_EVIDENCE_MISSING:evidence:1'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/attempt-closure-projection.test.mjs:65:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: OBSERVABILITY_RESULT_EVIDENCE_MISSING:evidence:1
+        at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts:446:17
+        at async withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:269:12),
+    expected: /ATTEMPT_ALREADY_COMPLETED/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

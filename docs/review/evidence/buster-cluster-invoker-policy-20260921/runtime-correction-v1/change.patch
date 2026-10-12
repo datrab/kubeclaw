@@ -1,0 +1,48 @@
+--- a/tests/verification/deployment/buster-cluster-invoker-parity.test.mjs
++++ b/tests/verification/deployment/buster-cluster-invoker-parity.test.mjs
+@@ -84,13 +84,27 @@
+     const checksums = documents => documents.filter(doc => doc?.spec?.template?.metadata?.annotations?.['checksum/swarm-config'])
+       .map(doc => doc.spec.template.metadata.annotations['checksum/swarm-config']);
+     assert(checksums(selectedDocuments).length > 0);
+-    // Mutating an inactive complete profile cannot change the selected bytes or checksum.
+-    const inactive = structuredClone(baseline);
+-    inactive['buster-engine'].settings.clusterInvokers.kubernetesFixture.diagnosticCodeUnits++;
+-    writePrivateBundle(entry, inactive);
+-    const inactiveRender = render(); assert.equal(inactiveRender.status, 0, inactiveRender.stderr);
+-    assert.deepEqual(checksums(yaml.loadAll(inactiveRender.stdout)), checksums(selectedDocuments));
+-    writePrivateBundle(entry, baseline);
++    // Change only the inactive file; every active input retains its original exact bytes.
++    const inactiveFile = path.join(chart, 'files/config/buster-engine.config.json');
++    const inactiveBytes = fs.readFileSync(inactiveFile);
++    const activeFiles = [...bundleNames.filter(item => item !== 'buster-engine.config.json'),
++      'profiles/buster-engine.runtime.config.json'];
++    const activeBytes = new Map(activeFiles.map(item => [item, fs.readFileSync(path.join(chart, 'files/config', item))]));
++    const inactive = JSON.parse(inactiveBytes.toString('utf8'));
++    inactive.settings.clusterInvokers.kubernetesFixture.diagnosticCodeUnits++;
++    assertPrivate(inactiveFile); fs.writeFileSync(inactiveFile, JSON.stringify(inactive));
++    try {
++      for (const [item, bytes] of activeBytes)
++        assert.deepEqual(fs.readFileSync(path.join(chart, 'files/config', item)), bytes, `active input unchanged: ${item}`);
++      const inactiveRender = render(); assert.equal(inactiveRender.status, 0, inactiveRender.stderr);
++      const inactiveDocuments = yaml.loadAll(inactiveRender.stdout);
++      const inactiveMap = inactiveDocuments.find(doc => doc?.kind === 'ConfigMap' && doc.data?.['swarm.config.json']);
++      assert.deepEqual(inactiveMap.data, selectedMap.data, 'all delivered active component bytes remain identical');
++      assert.deepEqual(checksums(inactiveDocuments), checksums(selectedDocuments));
++    } finally {
++      assertPrivate(inactiveFile); fs.writeFileSync(inactiveFile, inactiveBytes);
++    }
++    assert.deepEqual(fs.readFileSync(inactiveFile), inactiveBytes, 'restore exact inactive bytes');
+     const changedProfile = JSON.parse(selectedBytes);
+     changedProfile.settings.clusterInvokers.kubernetesFixture.diagnosticCodeUnits++;
+     assertPrivate(profileFile); fs.writeFileSync(profileFile, JSON.stringify(changedProfile));
+--- a/tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts
+@@ -37,7 +37,7 @@
+ assert.match(runtimeSource, /#releaseAfterPrepareFailure\(leaseName: string\)/u);
+ assert.match(runtimeSource, /new AbortController\(\)[\s\S]*#release\(leaseName, controller\.signal\)/u);
+ assert.match(runtimeSource, /\['get', 'service', serviceName[\s\S]*\['get', 'endpoints', serviceName/u);
+-assert.match(runtimeSource, /Math\.min\(15_000, deadline - Date\.now\(\)\)/u);
++assert.match(fixtureSources.get('readiness')!, /Math\.max\(1, Math\.min\(this\.#settings\.shortCommandTimeoutMs, deadline - Date\.now\(\)\)\)/u);
+ assert.match(runtimeSource, /NotFound[\s\S]*not found/u);
+ assert.match(runtimeSource, /readinessDeadline - Date\.now\(\)[\s\S]*readiness\.waitService/u);
+ assert.match(runtimeSource, /servicePortName[\s\S]*hasConfiguredPort/u);

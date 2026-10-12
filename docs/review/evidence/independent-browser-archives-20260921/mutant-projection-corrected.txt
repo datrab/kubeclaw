@@ -1,0 +1,32 @@
+✔ locked input installers and their locks trigger image and deployment selection (1.101337ms)
+✖ real Git input identities change for installer code and authored archive identities (51.385636ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 133.646008
+
+✖ failing tests:
+
+test at tests/verification/deployment/runtime-input-locks.test.mjs:17:1
+✖ real Git input identities change for installer code and authored archive identities (51.385636ms)
+  AssertionError [ERR_ASSERTION]: trivyDatabases
+      at TestContext.<anonymous> (file:///tmp/browser-rereview-z97ryop_/tests/verification/deployment/runtime-input-locks.test.mjs:40:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'f32eb763d10adc8f5314a62b0895129019a43c40f9cf13fd456521a42272a8fd',
+    expected: 'f32eb763d10adc8f5314a62b0895129019a43c40f9cf13fd456521a42272a8fd',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+exit=1

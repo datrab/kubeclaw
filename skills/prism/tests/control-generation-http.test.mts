@@ -1,7 +1,8 @@
+import {writeControlPolicy} from './fixtures/control-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {mkdtemp, rm} from 'node:fs/promises';
+import {mkdtemp, rm, readFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createServer, type Server} from 'node:http';
@@ -14,7 +15,6 @@ import {agentPrompt} from '../server/agent-prompt.mjs';
 import register from '../openclaw-plugin/index.mjs';
 
 const identity = 'operator@example.invalid';
-const subject = `user-${createHash('sha256').update(identity).digest('hex').slice(0,24)}`;
 const peer = 'spiffe://kubeclaw.test/prism-agent';
 const headers = {'x-forwarded-client-cert':`URI=${peer}`};
 async function listen(server:Server) {
@@ -25,9 +25,11 @@ async function listen(server:Server) {
 async function close(server:Server) {
   await new Promise<void>((resolve,reject)=>{server.close(error=>error?reject(error):resolve());server.closeAllConnections();});
 }
-async function setup() {
+async function setup(policy?: {identity: string; studioPublicUrl: string}) {
+  const selectedIdentity = policy?.identity ?? identity;
+  const selectedSubject = `user-${createHash('sha256').update(selectedIdentity).digest('hex').slice(0,24)}`;
   const root=await mkdtemp(join(tmpdir(),'prism-original-http-'));
-  const environment={ARTIFACT_ROOT:join(root,'artifacts'),PRISM_SESSION_SECRET:'local-session-secret',PRISM_INGRESS_SECRET:'local-ingress-secret',PRISM_INGESTION_SECRET:'local-ingestion-secret',WORKER_TRUST_SPIFFE_ENABLED:'true',PRISM_TRUSTED_NOVA_SPIFFE_ID:'spiffe://kubeclaw.test/nova',PRISM_TRUSTED_WORKER_SPIFFE_ID:'spiffe://kubeclaw.test/worker',PRISM_CONTROL_SPIFFE_ID:'spiffe://kubeclaw.test/control',PRISM_TRUSTED_AGENT_SPIFFE_ID:peer,PRISM_PIPELINE_PREFERENCE_SUBJECT:subject};
+  const environment={...writeControlPolicy(root,{artifactRoot:join(root,'artifacts'),pipelinePreferenceSubject:selectedSubject,...(policy ? {studioPublicUrl:policy.studioPublicUrl} : {})}),PRISM_SESSION_SECRET:'local-session-secret',PRISM_INGRESS_SECRET:'local-ingress-secret',PRISM_INGESTION_SECRET:'local-ingestion-secret',WORKER_TRUST_SPIFFE_ENABLED:'true',PRISM_TRUSTED_NOVA_SPIFFE_ID:'spiffe://kubeclaw.test/nova',PRISM_TRUSTED_WORKER_SPIFFE_ID:'spiffe://kubeclaw.test/worker',PRISM_CONTROL_SPIFFE_ID:'spiffe://kubeclaw.test/control',PRISM_TRUSTED_AGENT_SPIFFE_ID:peer};
   let db=new PGlite(join(root,'db'),{extensions:{vector}});await migrate(db);
   let server=await createControlServer(db,environment);let url=await listen(server);
   // This forwards real HTTP bytes to the original handler at its documented
@@ -46,7 +48,7 @@ async function setup() {
     const result=await fetch(new URL(path,url),{method,headers:{'content-type':'application/json',...extra},...(body===undefined?{}:{body:JSON.stringify(body)})});
     return {status:result.status,value:await result.json() as any,headers:result.headers};
   }
-  async function session(user=identity) {
+  async function session(user=selectedIdentity) {
     const result=await api('/v1/session',{}, {'x-prism-ingress-secret':environment.PRISM_INGRESS_SECRET,'tailscale-user-login':user});assert.equal(result.status,201);
     return {subject:result.value.userId,csrf:result.value.csrf,headers:{cookie:result.headers.getSetCookie().map(value=>value.split(';')[0]).join('; '),'x-prism-csrf':result.value.csrf}};
   }
@@ -60,7 +62,7 @@ async function setup() {
     return ['one','two','three'].map((key,index)=>{const document=structuredClone(fixture);document.meta.projectId=projectId;document.meta.title=`${label}-${key}`;document.theme.colors.action=['#123456','#654321','#abcdef'][index]!;document.theme.colors.background=['#111111','#222222','#333333'][index]!;document.theme.space.medium=20+index*5;return {key,title:document.meta.title,summary:label,document};});
   }
   async function deliver(job:any,label:string) {return tools.get('prism_create_design_set')!.execute('actual-tool-invocation',{jobId:job.id,fence:job.fence,generationId:job.id,projectId:job.request.projectId,designs:designs(job.request.projectId,label)},{config:{controlUrl:relayUrl}});}
-  return {api,session,dispatch,claim,deliver,db:()=>db,
+  return {api,session,dispatch,claim,deliver,root,designs,db:()=>db,
     restart:async()=>{await close(server);await db.close();db=new PGlite(join(root,'db'),{extensions:{vector}});await db.waitReady;server=await createControlServer(db,environment);url=await listen(server);},
     close:async()=>{await close(relay);await close(server);await db.close();await rm(root,{recursive:true,force:true});}};
 }
@@ -104,4 +106,26 @@ test('PATH-T02-002 diagnostic: original stale tool callback makes no successor m
     assert.equal(await context.claim(),null,'A2 acceptance is NOT proved; requires genuine predecessor lifecycle reconciliation');
     assert.equal((await context.api(`/v1/agent/jobs/${first.id}`,undefined,headers)).value.job.result,null);
   }finally{await context.close();}
+});
+
+for (const factor of [1, 2]) test(`CC3 real Control service profile ${factor} selects history, artifact root and Studio URL`, async () => {
+  const studioPublicUrl = `https://studio-${factor}.example.test/design`;
+  const context = await setup({identity: `operator-${factor}@example.invalid`, studioPublicUrl});
+  try {
+    const actor = await context.session();
+    assert.equal((await context.api('/v1/projects', {externalId:'origin',name:'Origin'}, actor.headers)).status, 201);
+    const event = {schema:'prism.preference-event.v1',eventId:`profile-${factor}`,userId:actor.subject,projectId:'origin',action:'liked',traits:['dense'],context:{domain:'tools'},source:'explicit',learningScope:'personal',occurredAt:new Date().toISOString()};
+    assert.equal((await context.api('/v1/preferences', event, actor.headers)).status, 201);
+    await context.dispatch(`selected-${factor}`, 1); const job = await context.claim();
+    assert.equal(job.request.preferences.snapshot.subjectId, actor.subject);
+    assert.deepEqual(job.request.preferences.snapshot.events, [event]);
+    const delivery = await context.api('/v1/agent/design-sets', {jobId:job.id,fence:job.fence,generationId:job.id,projectId:job.request.projectId,designs:context.designs(job.request.projectId,'Authored')}, headers);
+    assert.equal(delivery.status, 201, JSON.stringify(delivery.value));
+    assert.equal(delivery.value.studioUrl, `${studioPublicUrl}?project=${delivery.value.projectId}&document=${delivery.value.documentId}`);
+    const bytes = Buffer.from(`actual artifact profile ${factor}`);
+    const artifact = await context.api('/v1/artifacts', {base64:bytes.toString('base64')}, actor.headers);
+    assert.equal(artifact.status, 201, JSON.stringify(artifact.value));
+    const hex = createHash('sha256').update(bytes).digest('hex');
+    assert.deepEqual(await readFile(join(context.root,'artifacts',hex.slice(0,2),hex)), bytes);
+  } finally {await context.close();}
 });

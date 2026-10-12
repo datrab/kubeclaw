@@ -1,0 +1,100 @@
+{
+  "status": "proposal before review; registry binding and truncation semantics decisions outstanding",
+  "proposedComponentOwner": "buster-engine.config.json settings.securityScan",
+  "fields": [
+    {
+      "field": "trivyExecutable",
+      "initialValue": "/usr/local/bin/trivy",
+      "currentAuthority": "entrypoint/old runtime securityScan",
+      "consumer": "realpath+X_OK and actual spawn; resolve relative to captured component generation"
+    },
+    {
+      "field": "cacheDirectory",
+      "initialValue": "/home/builder/.cache/trivy",
+      "currentAuthority": "entrypoint/old runtime securityScan",
+      "consumer": "database bytes, HOME, TRIVY_CACHE_DIR and scoped credential-directory location"
+    },
+    {
+      "field": "registryRepositoryPrefixes",
+      "initialValue": [
+        "kubeclaw"
+      ],
+      "currentAuthority": "entrypoint `${registry}/kubeclaw`",
+      "consumer": "exact repository or slash-subpath immutable-image allowlist; shared origin resolution requires design decision"
+    },
+    {
+      "field": "maximumExecutionMs",
+      "initialValue": 900000,
+      "currentAuthority": "entrypoint/old runtime securityScan",
+      "consumer": "whole scan deadline includes both database fingerprints and command; positive timer-safe integer"
+    },
+    {
+      "field": "maximumOutputBytes",
+      "initialValue": 67108864,
+      "currentAuthority": "entrypoint/old runtime securityScan",
+      "consumer": "combined stdout+stderr per actual child; minimum1024 safe integer"
+    },
+    {
+      "field": "executableSearchPath",
+      "initialValue": [
+        "/usr/local/bin",
+        "/usr/bin",
+        "/bin"
+      ],
+      "currentAuthority": "execute env PATH literal",
+      "consumer": "ordered child PATH; initial trivy path remains explicit"
+    },
+    {
+      "field": "databasePolicy.maximumVulnerabilityAgeMs",
+      "initialValue": 172800000,
+      "currentAuthority": "entrypoint plus DEFAULT_TRIVY_DATABASE_POLICY",
+      "consumer": "actual vulnerability UpdatedAt source age before and after scan; range1..2592000000ms"
+    },
+    {
+      "field": "databasePolicy.maximumJavaAgeMs",
+      "initialValue": 604800000,
+      "currentAuthority": "entrypoint plus DEFAULT_TRIVY_DATABASE_POLICY",
+      "consumer": "actual Java UpdatedAt source age before and after scan; same1..2592000000ms range"
+    },
+    {
+      "field": "databasePolicy.maximumDatabaseBytes",
+      "initialValue": 8589934592,
+      "currentAuthority": "entrypoint plus DEFAULT_TRIVY_DATABASE_POLICY",
+      "consumer": "per-file vulnerability and Java DB admission+stream hashing;1..34359738368bytes, not combined store quota"
+    },
+    {
+      "field": "databasePolicy.maximumMetadataBytes",
+      "initialValue": 16384,
+      "currentAuthority": "inspectTrivyDatabases literal",
+      "consumer": "each metadata file admitted before retained-buffer hashing/JSON parse; operator memory quota"
+    },
+    {
+      "field": "findings.maximumTitleCodeUnits",
+      "initialValue": 2048,
+      "currentAuthority": "dependencyFindings/policyFindings literals",
+      "consumer": "rendered vulnerability and misconfiguration title truncation; both paths must share selected field"
+    },
+    {
+      "field": "findings.maximumMessageCodeUnits",
+      "initialValue": 4096,
+      "currentAuthority": "policyFindings literal",
+      "consumer": "rendered misconfiguration message truncation"
+    },
+    {
+      "field": "findings.maximumResolutionCodeUnits",
+      "initialValue": 4096,
+      "currentAuthority": "policyFindings literal",
+      "consumer": "rendered misconfiguration resolution truncation"
+    }
+  ],
+  "allProposedFieldsRequired": true,
+  "fallbackRemoval": [
+    "SecurityScanCapabilityInvokerOptions.databasePolicy?",
+    "optionalDatabasePolicy undefined branch",
+    "DEFAULT_TRIVY_DATABASE_POLICY",
+    "databasePolicy default parameter",
+    "entrypoint policy object",
+    "runtime JSON policy decoder"
+  ],
+  "notClosure": "No broad CONFIG/remaining finding/live claim"
+}

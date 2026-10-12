@@ -1,0 +1,66 @@
+{
+  "status": "Unwired work in progress. Maintained command still has exactly13 native cases, none executed here.",
+  "files": [
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-host-boundary.mts",
+      "sha256": "7c37d7b7134ce4257498b2646ccae31424083789287e96ed5edd57df6cb4c437",
+      "bytes": 3661,
+      "snapshot": "source/native-preparation-host-boundary.mts.snapshot",
+      "checks": "Typechecked transitively in native-test-extension-types-initial.txt; no lint/runtime execution."
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-host-loader.mjs",
+      "sha256": "ea2e47e5141f467803bdf8922fbf96acb39d3c57e182a27be2da429aafd73acd",
+      "bytes": 1338,
+      "snapshot": "source/native-preparation-host-loader.mjs.snapshot",
+      "checks": "No type/lint/import/runtime execution."
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-stage-write.mts",
+      "sha256": "d351579ea596e08fe6ff3ed03e46e22cc6c1d06160a4f0ee9a7126f1361e69b9",
+      "bytes": 224,
+      "snapshot": "source/native-preparation-stage-write.mts.snapshot",
+      "checks": "Typechecked in native-test-extension-types-initial.txt; no lint/runtime execution."
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-extract-write.mts",
+      "sha256": "a57c6931736281016f07a7efa857dea83b08cf1b25f9a040d5675911bd7f0903",
+      "bytes": 229,
+      "snapshot": "source/native-preparation-extract-write.mts.snapshot",
+      "checks": "Typechecked in native-test-extension-types-initial.txt; no lint/runtime execution."
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-retained-descriptor.mts",
+      "sha256": "aae057a5661a1b1cdcc1ad9fd94382155e76d2b73d4e60c84df7302f8d8d5a01",
+      "bytes": 235,
+      "snapshot": "source/native-preparation-retained-descriptor.mts.snapshot",
+      "checks": "Typechecked in native-test-extension-types-initial.txt; no lint/runtime execution."
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-partial-crash.mts",
+      "sha256": "7d991bee6cca6cff6c64486b370d3327d78810f0bd7ad42ed11787bf413c79d7",
+      "bytes": 3824,
+      "snapshot": "source/native-preparation-partial-crash.mts.snapshot",
+      "checks": "Not included in maintained native tsconfig; no type/lint/runtime execution; no parent test case."
+    },
+    {
+      "path": "tests/fixtures/test-gate/native-preparation-descriptor-proof.mts",
+      "sha256": "fe48c040de5d391ae7acd071ea072a9ece9cfcb986930180d1dea06fb476691b",
+      "bytes": 2766,
+      "snapshot": "source/native-preparation-descriptor-proof.mts.snapshot",
+      "checks": "Not included in maintained native tsconfig; no type/lint/runtime execution; no parent test case."
+    },
+    {
+      "path": "tests/verification/reliability/tsconfig.buster-preparation-native.json",
+      "sha256": "0ca7da87a1380548857a79f1a4dac3442d178a7a19c77bcc4b7aaa7d049a75b0",
+      "bytes": 696,
+      "snapshot": "source/tsconfig.buster-preparation-native.json.snapshot"
+    },
+    {
+      "path": "package.json",
+      "sha256": "85962ce987591fd12c769c3df45c2ac824f878b769b0102c1d1c2581794a23dd",
+      "bytes": 43710,
+      "snapshot": "source/package.json.snapshot"
+    }
+  ]
+}

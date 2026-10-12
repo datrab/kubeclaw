@@ -1,0 +1,18 @@
+{
+  "identities": {
+    "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+    "beforeSha256": "0a3057084d8360b94c25f60c506fd237a13eb42751f8f3766dcbd62d92d596c7",
+    "afterSha256": "a899db1a40e9c696629b9c10127839dd3d627ed7767e2fae8d0ab6c483a059d7",
+    "changes": [
+      "Bind the same observed artifact to a const so TypeScript can narrow the existing exact artifact-reference assertion.",
+      "Validate captured unknown Worker result with the existing actual contract before narrowing; preserve all original assertions and runtime return."
+    ],
+    "verified": false
+  },
+  "review": {
+    "beforeMatches": true,
+    "afterMatches": true,
+    "scope": "Independent static source review only; no new type/lint/runtime check",
+    "conclusion": "No blocker: same artifact assertion via stable binding; capturing runtime additionally validates actual contract before narrowing, preserving result return and parity assertions. This strengthens the fixture and is not runtime-equivalent to an unchecked cast. Full original runtime remains mandatory."
+  }
+}

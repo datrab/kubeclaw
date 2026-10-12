@@ -1,0 +1,114 @@
+# CONFIG Prism resource policy — 2026-09-21
+
+Criteria recorded before implementation. Scope: sole authored
+`operator.prism.native.resourcePolicy` with explicit `cpuTimeMs: 60000`,
+`memoryBytes: 8589934592`, `tasks: 2048`. Each is a positive safe integer;
+CPU is cumulative attempt-tree milliseconds, memory bytes, tasks Linux tasks
+(including threads), never historical process counts. No CPU-time/quota comparison.
+
+| Criterion | Required observation |
+| --- | --- |
+| CP01 | Strict required object and fields, positive safe integers, unknown/missing/null/coercible/unsafe values rejected by both startup loaders and Helm. |
+| CP02 | Old CPU, memory and tasks environment keys rejected even if equal/empty; old resolver removed; producer requires an explicit policy with no default or environment read. |
+| CP03 | Two authored snapshots drive actual Control operation production into persisted/dispatched V3 envelopes; later file/env changes do not alter captured budgets. Existing accepted identities preserve original budgets on retry. |
+| CP04 | Worker uses its same frozen startup policy for actual budget admission and process-limit mapping; excess new budgets rejected independently for CPU/memory/tasks; recovered accepted budgets retain existing semantics. |
+| CP05 | Policy memory/tasks must fit actual selected pool limits at supervisor composition; no invented CPU-time/quota relationship. Pure consistency/admission functions run without claiming root-owned pool/kernel execution. |
+| CP06 | Helm delivers the same authored bytes/checksums to both roles; former competing keys fail; all producer callers explicitly obtain policy through original author loader. |
+| CP07 | Appropriate original tests, typecheck, lint and meaningful mutant run; fresh nonimplementing reviewer required. |
+| CP-DOC | Operator docs, exact three inventory entries, units/defaults, startup/rollout/retry/pool limitations updated; full CONFIG/native closure remains open. |
+
+Implementation and local evidence are recorded below; fresh review is pending.
+No cluster, root-owned host policy, native
+launcher or cgroup evidence may be fabricated to satisfy this slice.
+
+## Implementation
+
+The strict author schema and loader now require the resource-policy object.
+Control and Worker capture deeply frozen policy snapshots. `prismNativeAttempt`
+requires the policy as its fourth argument; `prismNativePolicy` and its three
+environment reads/defaults are removed. All 33 current producer calls explicitly
+provide a policy; test/integration producers use a shared fixture that invokes
+the original author loader, not copied defaults. Production Control passes its
+startup snapshot directly.
+
+`prismAttemptResourceLimits` contains the existing admission semantics and is
+called by the real supervisor execution path: new budgets must fit the loaded
+policy, recovered accepted budgets retain their prior meaning, and all three
+budgets must still be requested. It maps V3 maximum-memory/task fields to actual
+process-limit names without changing their units. The new small pool-consistency
+function compares only memory bytes and Linux tasks; supervisor composition calls
+it after reading the trusted root-owned pool policy. It does not infer aggregate
+CPU-time capacity from CPU quota or period. Host/kernel admission remains separate.
+
+Helm validates the required nested object with safe-integer bounds, transports
+identical authored bytes to both roles, and rejects competing Control/Worker
+values. Resource limits are not constrained to the Node timer ceiling. Existing
+transport settings retain their original bounds.
+
+## Evidence
+
+Raw artifacts and 31 exact source snapshots are in
+[`config-resource-policy-20260921`](../../evidence/config-resource-policy-20260921/).
+
+| Execution | Result and boundary |
+| --- | --- |
+| `runtime-helm-final.txt` | 224/224 passed, no skips: original loader/transport tests plus strict resource values, both roles, real Helm render/package, safe-integer ceiling and competing keys. |
+| `resource-final.txt` | 32/32 passed; overlaps loader/admission cases above, plus actual Control operation, PGlite migrations/persistence and real HTTP dispatch/retry. HTTP peer deliberately returns 503; no native success receipt is invented. |
+| `original-consumers.txt` | 17/17 original engine, worker-service and cancellation cases passed. |
+| `journal-regression.txt` | 8/8 original journal cases passed using real GNU flock bound by Proot, including durable result-limit and crash/recovery tests. No lock stub. |
+| `e2e-reader.txt` | 5/5 existing shared E2E profile-reader cases passed. |
+| `release.txt` | 9/9 original release-configuration/image-selection cases passed with actual Git/Helm. |
+| `typecheck-final.txt` | Prism TypeScript check exit 0. |
+| `docs-schema.txt`, `docs-errors.txt` | Both existing reference gates exit 0; not a complete docs workflow claim. |
+| `mutations.txt`, `mutant-*.txt` | Three isolated unsafe changes detected by behavior assertions: producer CPU fallback, pool-fit bypass, new-budget admission bypass. Shared production source was not mutated. |
+
+The root agent additionally ran the original native PostgreSQL 18.6 operation
+journal test: **1/1 passed**, migration 017, exact source hashes unchanged before
+and after. Its new case proves a different freshly authored resource policy
+cannot rewrite the original committed envelope/budgets for the same accepted
+business identity. Evidence is
+[`native-postgresql-20260921/run.json`](../../evidence/native-postgresql-20260921/run.json)
+and its tested-source archive. This is native database/journal evidence, not a
+native process/cgroup proof. The root's first environment attempt failed because
+a client extension-path option required privilege; the successful run sets that
+option when starting the disposable server, without changing product/tests.
+
+Canonical lint on **all changed TS/JS files exits 1**, with three pre-existing
+violations reproduced from HEAD in `lint-head-baseline.txt`: a 68-line native
+integration callback (limit 60), and two existing `.native.mts` filenames rejected
+by the filename rule. `lint-final.txt` contains the same three violations and no
+new ones. These are preserved rather than hidden by exclusions or rule changes;
+this report does not claim CP07 has a completely green changed-set lint run.
+The parent explicitly retained these unrelated baseline limitations.
+
+The initial Helm run failed because the newly required native object still had
+the old two-key template count. The final implementation requires three keys;
+all 224 cases pass. Its failing log is retained. An initial private mutant runner
+could not resolve packages from its temporary directory; that failed harness run
+is retained separately. Linking the actual local dependencies into the temporary
+runner fixed the harness; only the subsequent semantic assertion failures count
+as detected mutations.
+
+## Documentation and remaining boundary
+
+CP-DOC updates the operator configuration guide, Prism guide, foundation README,
+and exactly the three matching historical inventory entries. They document
+explicit values and units, startup snapshots, two-role rollout, rejected legacy
+keys, pool fit, safe-integer versus timer bounds, historical process semantics and
+accepted-budget preservation on retry. No other inventory entry is marked done.
+
+A nonimplementing fresh reviewer is still required. Root-owned supervisor setup,
+actual launcher/cgroup enforcement, built images and a live cluster remain unrun
+in this slice. These tests do not authorize a host rollout or close CONFIG F1–F6.
+
+## Subsequent review and lint follow-up
+
+The [independent resource-policy review](independent-resource-policy-review-20260921.md)
+accepted the functional/documentation slice and explicitly preserved the then-red
+CP07 lint result. The separately recorded
+[native test quality follow-up](prism-native-test-quality-20260921.md) now removes
+those baseline violations by canonical renames and a coherent helper extraction,
+without changing lint rules or historical evidence. Its expanded complete
+changed-source lint is green; its original native-suite attempt remains a failed,
+interrupted run without an isolated host. Independent review of that mechanical
+follow-up is separate from the earlier resource acceptance.

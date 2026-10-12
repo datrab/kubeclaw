@@ -1,0 +1,6 @@
+{
+  "path": "docs/architecture/buster-fixture-cleanup.md",
+  "beforeSha256": "dd455285522761c5c9f26251291a7f7325d404e53b0e8b220c92c0d5484d63c4",
+  "afterSha256": "c58168504bfda58eeffab4868ffe74f8312306b1a4e22b563823d8b58c07af96",
+  "scope": "Correct obsolete finally wording to actual successful-stop snapshot deletion, including cleanup-failure boundary."
+}

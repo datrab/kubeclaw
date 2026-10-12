@@ -1,0 +1,54 @@
+test_helm_storage_history_is_authoritative (deploy_tests.DeployObservations.test_helm_storage_history_is_authoritative) ... 
+  test_helm_storage_history_is_authoritative (deploy_tests.DeployObservations.test_helm_storage_history_is_authoritative) (scenario={'helm': 'present', 'revisions': [1], 'decode_failure_revision': 1}) ... FAIL
+  test_helm_storage_history_is_authoritative (deploy_tests.DeployObservations.test_helm_storage_history_is_authoritative) (scenario={'helm': 'present', 'revisions': [1, 2], 'states': {'1': 'deployed', '2': 'pending-upgrade'}, 'decode_failure_revision': 2}) ... FAIL
+  test_helm_storage_history_is_authoritative (deploy_tests.DeployObservations.test_helm_storage_history_is_authoritative) (scenario={'helm': 'present', 'revisions': [1, 2], 'decode_failure_revision': 1}) ... FAIL
+
+======================================================================
+FAIL: test_helm_storage_history_is_authoritative (deploy_tests.DeployObservations.test_helm_storage_history_is_authoritative) (scenario={'helm': 'present', 'revisions': [1], 'decode_failure_revision': 1})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/deploy-api-errors.test.py", line 159, in test_helm_storage_history_is_authoritative
+    self.assertNotEqual(result.returncode,0,result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : 
+[0;34m═══════════════════════════════════════[0m
+[0;34m Agent Deploy: nova[0m
+[0;34m═══════════════════════════════════════[0m
+[0;34m[i][0m Deploying agent-nova (image)...
+[0;32m[✓][0m agent-nova deployed (image)
+
+
+======================================================================
+FAIL: test_helm_storage_history_is_authoritative (deploy_tests.DeployObservations.test_helm_storage_history_is_authoritative) (scenario={'helm': 'present', 'revisions': [1, 2], 'states': {'1': 'deployed', '2': 'pending-upgrade'}, 'decode_failure_revision': 2})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/deploy-api-errors.test.py", line 159, in test_helm_storage_history_is_authoritative
+    self.assertNotEqual(result.returncode,0,result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : 
+[0;34m═══════════════════════════════════════[0m
+[0;34m Agent Deploy: nova[0m
+[0;34m═══════════════════════════════════════[0m
+[0;34m[i][0m Deploying agent-nova (image)...
+[0;32m[✓][0m agent-nova deployed (image)
+
+
+======================================================================
+FAIL: test_helm_storage_history_is_authoritative (deploy_tests.DeployObservations.test_helm_storage_history_is_authoritative) (scenario={'helm': 'present', 'revisions': [1, 2], 'decode_failure_revision': 1})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/deploy-api-errors.test.py", line 159, in test_helm_storage_history_is_authoritative
+    self.assertNotEqual(result.returncode,0,result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : 
+[0;34m═══════════════════════════════════════[0m
+[0;34m Agent Deploy: nova[0m
+[0;34m═══════════════════════════════════════[0m
+[0;34m[i][0m Deploying agent-nova (image)...
+[0;32m[✓][0m agent-nova deployed (image)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 8.362s
+
+FAILED (failures=3)

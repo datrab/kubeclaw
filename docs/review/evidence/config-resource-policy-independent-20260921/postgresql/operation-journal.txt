@@ -1,0 +1,10 @@
+✔ real PostgreSQL commit, concurrent retries, writer death and original worker journal preserve one native attempt (7401.325912ms)
+ℹ Original PostgreSQL 18.6; original schema migration 017
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11293.158267

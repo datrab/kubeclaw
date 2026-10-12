@@ -1,0 +1,38 @@
+✔ recovery requires its own sealed cleanup archive and preserves the original failed receipt (508.940727ms)
+✔ cleanup recovery handles no-hook (332.029757ms)
+✔ cleanup recovery handles declined (317.337848ms)
+✔ cleanup recovery handles missing-result (182.749711ms)
+✔ cleanup recovery handles wrong-profile (284.671523ms)
+✔ cleanup recovery handles original-live (329.246375ms)
+✔ cleanup recovery handles cleanup-live (331.920835ms)
+✔ cleanup recovery handles missing-original (343.120484ms)
+✔ cleanup recovery handles missing-cleanup (349.419346ms)
+✔ cleanup recovery handles wrong-reference (306.99615ms)
+✔ cleanup recovery handles unknown-key (324.131083ms)
+✔ cleanup recovery handles bad-output (336.291107ms)
+✔ cleanup recovery handles different-accounting (325.600221ms)
+✔ cleanup recovery handles callback-mutation (328.006913ms)
+✔ cleanup cannot reconcile a foreign envelopeDigest (307.995696ms)
+✔ cleanup cannot reconcile a foreign attemptId (319.738289ms)
+✔ cleanup cannot reconcile a foreign attemptSpecDigest (306.102627ms)
+✔ cleanup cannot reconcile a foreign profileDigest (286.726226ms)
+✔ cleanup cannot reconcile a foreign claimId (307.940435ms)
+✔ cleanup cannot reconcile a foreign claimGeneration (344.93464ms)
+✔ cleanup cannot reconcile a foreign workerId (299.119107ms)
+✔ cleanup cannot reconcile a foreign resultDigest (331.019671ms)
+✔ cleanup cannot reconcile a foreign receiptId (349.683964ms)
+✔ cleanup cannot reconcile a foreign receiptDigest (325.97145ms)
+✔ new-admission rejection persists no accepted work and cannot block historical receipt replay (265.234512ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (777.601797ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (803.29116ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (125.844081ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (166.531912ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (5630.231941ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16704.485093

@@ -1,0 +1,105 @@
+CI2_MUTATION_APPLIED {"mutation":"restore-abort-before-output-cause","pid":164633,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts","beforeSha256":"de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004","afterSha256":"d410423ff04bfab08702adaf7c217562af004855771e6d5fd07e6d4f9e5c2eb5","replacements":[{"from":"finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED')); controller.abort();","to":"controller.abort(); finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED'));","count":1}]}
+✔ required RuntimeSecurity field allowedNamespacePrefixes before filesystem access (3.05252ms)
+✔ required RuntimeSecurity field maximumExecutionMs before filesystem access (0.419201ms)
+✔ required RuntimeSecurity field maximumOutputBytes before filesystem access (0.36498ms)
+✔ required RuntimeSecurity field pollIntervalMs before filesystem access (0.427991ms)
+✔ required RuntimeSecurity field maximumObservationAgeMs before filesystem access (0.356259ms)
+✔ required RuntimeSecurity field maximumFutureSkewMs before filesystem access (0.441282ms)
+✔ required RuntimeSecurity field diagnosticCodeUnits before filesystem access (0.448572ms)
+✔ required RuntimeSecurity field executableSearchPath before filesystem access (0.473263ms)
+✔ complete bundle requires allowedNamespacePrefixes even with route disabled (15.692151ms)
+✔ complete bundle requires maximumExecutionMs even with route disabled (2.714841ms)
+✔ complete bundle requires maximumOutputBytes even with route disabled (1.91171ms)
+✔ complete bundle requires pollIntervalMs even with route disabled (1.826168ms)
+✔ complete bundle requires maximumObservationAgeMs even with route disabled (1.765836ms)
+✔ complete bundle requires maximumFutureSkewMs even with route disabled (1.88129ms)
+✔ complete bundle requires diagnosticCodeUnits even with route disabled (1.670354ms)
+✔ complete bundle requires executableSearchPath even with route disabled (1.817868ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [] (0.392051ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [""] (0.268897ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [42] (0.259547ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 0 (0.35698ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 2147483648 (0.301078ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 1.5 (0.271547ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 1023 (0.305828ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 9007199254740992 (0.327909ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 9 (0.276187ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 10001 (0.266547ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 999 (0.251837ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 60001 (0.250586ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs -1 (0.264027ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs 2147483648 (0.320899ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 0 (0.272157ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 1.5 (0.254287ms)
+✔ reject invalid RuntimeSecurity executableSearchPath [] (0.303278ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["relative"] (0.290368ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin:/escape"] (0.334519ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin\u0000"] (0.321998ms)
+✔ retired RuntimeSecurity object null (0.308048ms)
+✔ retired RuntimeSecurity object {} (0.059681ms)
+✔ retired RuntimeSecurity object {"allowedNamespacePrefixes":["test"],"maximumExecutionMs":300000,"maximumOutputBytes":16777216,"pollIntervalMs":1000,"maximumObservationAgeMs":10000,"maximumFutureSkewMs":5000,"diagnosticCodeUnits":1024,"executableSearchPath":["/usr/local/bin","/usr/bin","/bin"]} (0.055051ms)
+✔ retired RuntimeSecurity object "invalid" (0.048791ms)
+✔ disabled RuntimeSecurity route has no binding or implicit activation (0.911334ms)
+✔ real execution deadline profile false (275.097736ms)
+✖ real combined output profile false (42.521864ms)
+✔ real observation age profile false (607.059522ms)
+✔ real future skew profile false (608.284434ms)
+✔ real diagnostic code units profile false (46.925849ms)
+✔ real PATH helper profile false (43.285193ms)
+✔ real execution deadline profile true (743.251549ms)
+✔ real combined output profile true (50.789881ms)
+✔ real observation age profile true (45.170243ms)
+✔ real future skew profile true (42.73813ms)
+✔ real diagnostic code units profile true (48.265334ms)
+✔ real PATH helper profile true (77.926501ms)
+▶ real polling profile changes command cadence; selected arrays and scalars captured
+  ✔ poll interval 50 (133.162178ms)
+  ✔ poll interval 1200 (1285.208236ms)
+✔ real polling profile changes command cadence; selected arrays and scalars captured (1419.046601ms)
+✔ real namespace profile false (16.013919ms)
+✔ real namespace profile true (43.385047ms)
+✔ preserve inspected namespace prefix aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (38.676763ms)
+✔ preserve inspected namespace prefix test- (39.503215ms)
+✔ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (188.593ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 60
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6295.04841
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:169:3
+✖ real combined output profile false (42.521864ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: 'KUBERNETES_RUNTIME_SECURITY_TIMEOUT'
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED'
+    }
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:173:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: KUBERNETES_RUNTIME_SECURITY_TIMEOUT
+        at ChildProcess.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:101:37)
+        at ChildProcess.emit (node:events:514:28)
+        at abortChildProcess (node:child_process:776:13)
+        at AbortSignal.onAbortListener (node:child_process:846:7)
+        at [nodejs.internal.kHybridDispatch] (node:internal/event_target:848:20)
+        at AbortSignal.dispatchEvent (node:internal/event_target:789:26)
+        at runAbort (node:internal/abort_controller:554:10)
+        at abortSignal (node:internal/abort_controller:524:5)
+        at AbortController.abort (node:internal/abort_controller:573:5)
+        at Socket.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:96:59),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

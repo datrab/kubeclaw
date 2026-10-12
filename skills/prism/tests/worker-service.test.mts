@@ -1,3 +1,4 @@
+import { nativeResourcePolicy } from './native/resource-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
@@ -40,7 +41,7 @@ async function setup(t: { after(callback: () => Promise<void>): void }, port = 0
     const document = structuredClone(fixture); document.views.home.root.children[0]!.props.content = title;
     const input = await artifacts.put(Buffer.from(JSON.stringify({ document, view: 'home', state: 'default', viewport: 'wide' })));
     return JSON.parse(JSON.stringify(prismNativeAttempt('render', { artifactId: input.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
-      contentDigest: input.digest, sizeBytes: input.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${input.digest}`, origin).href }, 'test-request'))) as import('@kubeclaw/pipeline-worker-core-contract').WorkerAttemptEnvelopeV3;
+      contentDigest: input.digest, sizeBytes: input.sizeBytes, storageUrl: new URL(`/v1/internal/artifacts/${input.digest}`, origin).href }, 'test-request', nativeResourcePolicy))) as import('@kubeclaw/pipeline-worker-core-contract').WorkerAttemptEnvelopeV3;
   }
   return { root, artifacts, client, engine, attempt, contacts: () => contacts };
 }
@@ -130,7 +131,7 @@ test('historical real receipts remain readable and cannot be reinterpreted as na
   const input = legacy.inputs[0]!;
   assert.equal(input.kind, 'artifact');
   if (input.kind !== 'artifact') throw new Error('test input must be the original retained artifact');
-  const native = prismNativeAttempt('render', input.artifact, 'version-boundary');
+  const native = prismNativeAttempt('render', input.artifact, 'version-boundary', nativeResourcePolicy);
   const before = f.contacts();
   await assert.rejects(hydrateWorkerResult(native, result, f.client));
   assert.equal(f.contacts(), before, 'a version mismatch must fail before artifact I/O');

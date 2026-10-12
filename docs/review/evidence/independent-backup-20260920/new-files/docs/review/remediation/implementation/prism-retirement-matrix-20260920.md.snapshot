@@ -1,0 +1,89 @@
+# Prism backup retirement: prerequisite coverage matrix
+
+Recorded before implementation. This slice extends the existing v1 group program;
+it does not change the backup format or claim IFR-26-001 completion.
+
+| Criterion | Required cases | This slice |
+| --- | --- | --- |
+| Q1 | Snapshot with concurrent writes; exhaustive DB references; keys, journals, image and schema binding | Existing DB/object format remains readable. Full recovery-set binding remains open. |
+| Q2 | Failed dump/copy, capacity exhaustion, interruption; missing/corrupt objects; wrong keys | Existing filesystem negatives retained; retirement adds corruption, wrong-group and interrupted-release negatives. Wrong-key coverage remains open. |
+| Q3 | Real PostgreSQL on fresh volumes; exhaustive inventory; actual application resume for completed/waiting/running/externally uncertain sessions; pipeline | Not established by mocked database tests. Remains open. |
+| Q4 | Repeated groups; quota; protected/latest group rejection; verified copied group; manual release; interruption/resume; incomplete groups; new backup and real restore | Implement and test manual filesystem release with explicit selection and digest pin, verified copied group and preservation of latest/protected groups. New backup is tested. Actual PostgreSQL/application restore and physical independent failure domain remain open. |
+| Q-DOC | Operator contract, commands, limitations and evidence | Add operation instructions and record exact executed evidence; retain open criteria explicitly. |
+
+A separate directory is a separately verified copy, not evidence of an independent
+physical failure domain. There is no automatic expiry. D07 project evidence is not
+deleted by these operations; complete groups require an identical verified copy.
+The operator must protect all additional recovery points required by policy.
+
+## Implemented result
+
+The canonical backup program now supports `retire` and `discard-incomplete`.
+Complete-group release requires an exact group name, the recorded digest of its
+checksum manifest and an intact same-named copy in a nonoverlapping root. It locks
+both roots, verifies both groups, refuses the latest/protected group, atomically
+renames to a retirement tombstone and removes only that selected directory.
+Interrupted removal can resume with the same independently reverified copy.
+Incomplete cleanup accepts only an exact incomplete-directory name under the root
+lock. No new CronJob, automatic expiry or alternate backup format was introduced.
+
+Operator instructions and limits are in
+[prism-backup-retention.md](../../../operations/prism-backup-retention.md).
+The earlier [checkpoint](pr6-prism-backup-groups.md) remains historical: its
+filesystem tests are still explicit DB fixtures. The new native gate is separate.
+
+Executed verification (no skips):
+
+- `prism-backup.test.mts`: 10/10. A real SIGKILL terminates the script after its
+  retirement rename; subsequent partial tombstone cleanup revalidates the pinned
+  copy. Wrong digest, protection, latest-group selection, corruption, symlinks,
+  invalid names, exhausted quota and failed captures are exercised.
+- `prism-backup-native.test.mts`: 1/1. Real PostgreSQL 18.6 and pgvector 0.8.1,
+  two freshly initialized server directories/system identifiers, original Prism
+  migrations and storage APIs, quota failure, manual release, subsequent capture,
+  actual `pg_restore`, all Prism table rows compared, original object directory
+  removed and copied object read, restored revision subsequently edited.
+- Bash syntax, ESLint for both tests and `git diff --check`: passed.
+
+Raw successful outputs are under
+[prism-retirement-20260920](../../evidence/prism-retirement-20260920/).
+The native gate uses a quiescent data set and a test image digest. It proves the
+storage roundtrip, not production image provenance, concurrent reference capture,
+key recovery, durable session/job reconciliation, complete application/pipeline
+restart or independent physical failure-domain recovery. IFR-26-001 remains open.
+No register statuses or acceptance criteria were changed.
+
+## Native tool environment
+
+The starting Alpine environment provides BusyBox. Unmodified baseline backup
+tests failed on GNU `timeout --signal` and `realpath --`; this was an environment
+mismatch, not a reason to loosen production behavior. Alpine packages were fetched
+without installation and extracted under `/tmp/prism-native-tools/root`:
+coreutils 9.11, findutils 4.10, flock/util-linux 2.42.3, PostgreSQL 18.6,
+pgvector 0.8.1 and their libraries. ICU data is selected via `ICU_DATA`.
+Initial PostgreSQL setup failed without ICU_DATA, and an initial migration test
+failed because `extension_control_path` incorrectly included `/extension`. Both
+were fixed in the disposable test environment, not by modifying the migrations.
+
+Environment used for native evidence:
+
+```sh
+export PATH=/tmp/prism-native-tools/root/usr/libexec/postgresql18:/tmp/prism-native-tools/root/usr/bin:/tmp/prism-native-tools/root/bin:$PATH
+export LD_LIBRARY_PATH=/tmp/prism-native-tools/root/usr/lib:/tmp/prism-native-tools/root/lib
+export ICU_DATA=/tmp/prism-native-tools/root/usr/share/icu/78.1
+export PGOPTIONS='-c extension_control_path=/tmp/prism-native-tools/root/usr/share/postgresql18'
+export PRISM_BACKUP_TEST_SOURCE_URL=postgresql://node@127.0.0.1:55432/postgres
+export PRISM_BACKUP_TEST_TARGET_URL=postgresql://node@127.0.0.1:55433/postgres
+node --experimental-transform-types --test tests/verification/deployment/prism-backup-native.test.mts
+```
+
+Servers were initialized with the original `initdb --auth=trust --no-locale
+--encoding=UTF8 -L /tmp/prism-native-tools/root/usr/share/postgresql18` into two
+new `/tmp/prism-backup-native-{source,target}` directories. They listen only on
+loopback with distinct ports and set
+`dynamic_library_path=/tmp/prism-native-tools/root/usr/lib/postgresql18`.
+These are test servers, not deployment targets. Filesystem-only tests used
+`TMPDIR=/dev/shm`; the real PG/artifact roundtrip used `/tmp` with successful
+fsync. This establishes syscall-level local behavior, not physical power-loss
+or storage-controller durability. Tool archive hashes and implementation/test
+file hashes are recorded with the evidence.

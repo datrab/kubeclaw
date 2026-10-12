@@ -1,0 +1,8 @@
+{
+  "afterSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+  "beforeSha256": "8bcd326786b45e9720c5bf3c95356c8bb1f9683aaf90681d4e7a0851a186b82e",
+  "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+  "runtimeStatus": "pending",
+  "sourceReview": "docs/review/remediation/implementation/independent-kubernetes-provider-config-simplicity-20260921.md",
+  "time": "2026-09-21T21:24:53.081524+00:00"
+}

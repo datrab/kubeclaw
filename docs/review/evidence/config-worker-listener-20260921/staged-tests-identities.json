@@ -1,0 +1,27 @@
+[
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "beforeSha256": "5e774a0b27a7e5dbf6112cde98035ae5d700b787d2f50ab696b7f088f6b74a2a",
+    "stagedSha256": "e17586a73f9df4a305d9f714eb07ef81367f0fd4f71188c15292baecdd4db8ee"
+  },
+  {
+    "path": "skills/prism/tests/control-listener.test.mts",
+    "beforeSha256": "a4eb9e781c22e3480e3bf0982cd38bec77cf66fca09d40a0bd08f617b31b2786",
+    "stagedSha256": "9de211954528ea017cd032e6abddd677f336adf1580e442b1dbfad305bbd1af5"
+  },
+  {
+    "path": "skills/prism/tests/control-image-environment.test.mts",
+    "beforeSha256": "986bc0c393447bd9d0b2a5ccacfaa463a293e6f71ea641676e880c08b8c652ed",
+    "stagedSha256": "72caacee4bd355a89206afbe8314502736d7beb151f4e1010bc6cbd890d59d1a"
+  },
+  {
+    "path": "skills/prism/tests/worker-process-shutdown-native.mts",
+    "beforeSha256": "a38fcc168f0ce723610ad65d14378514809c7d61610233a996263f7bd5bb36da",
+    "stagedSha256": "15a952627d9601c7ebbc935ad8b29cdb5cae569e8079bc86392d25e9e4e6f17c"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "beforeSha256": "3b6900687deed73fc7733bd4e1c5209b2bcedecb5896fb41bc127f10fa031cd0",
+    "stagedSha256": "beff2220bc401f26b1155f975d38c608919ee964f138a6e83094cee943d1c20f"
+  }
+]

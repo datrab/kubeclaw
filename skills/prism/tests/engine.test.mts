@@ -1,3 +1,4 @@
+import { nativeResourcePolicy } from './native/resource-policy.mts';
 import test from "node:test";
 import assert from "node:assert/strict";
 import fixture from "../../../contracts/prism/v1/fixtures/minimal-web.json" with { type: "json" };
@@ -154,7 +155,7 @@ test("an idempotency key cannot identify different requests", async () => {
 });
 
 test("Prism creates a valid neutral worker envelope", () => {
-  const attempt = prismNativeAttempt("render", {artifactId:"artifact:sha256:"+"a".repeat(64),type:"prism-engine-input",mediaType:"application/json",contentDigest:"sha256:"+"a".repeat(64),sizeBytes:128,storageUrl:"http://prism-control:8080/v1/internal/artifacts/sha256:"+"a".repeat(64)}, "render-one");
+  const attempt = prismNativeAttempt("render", {artifactId:"artifact:sha256:"+"a".repeat(64),type:"prism-engine-input",mediaType:"application/json",contentDigest:"sha256:"+"a".repeat(64),sizeBytes:128,storageUrl:"http://prism-control:8080/v1/internal/artifacts/sha256:"+"a".repeat(64)}, "render-one", nativeResourcePolicy);
   validateWorkerResourceContractV3("workerAttemptEnvelope", attempt);
   assert.equal(attempt.operation.contractId, "kubeclaw.prism-design-engine@1");
   assert.notEqual(prismRequestDigest(attempt.operation,`sha256:${"a".repeat(64)}`),prismRequestDigest(attempt.operation,`sha256:${"b".repeat(64)}`));

@@ -1,0 +1,1 @@
+Before any test launch, runner used the structured inventory object as an array and raised TypeError: string indices must be integers, not 'str'. Corrected to inventory['rows']; no runtime result was produced.

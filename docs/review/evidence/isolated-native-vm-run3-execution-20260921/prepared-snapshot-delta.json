@@ -1,0 +1,68 @@
+{
+  "baselineManifestSha256": "38f9e278cc33b49dcc0668d43c5019be36601879df07e81ad44b0b7039c11d67",
+  "run3ManifestSha256": "04a29d1d0ea7f195aadd777cc1541b4cae01068c9ca2cfa416002eb429b0e89e",
+  "independentRegularFileInodes": true,
+  "changedPaths": [
+    "package.json",
+    "skills/worker/core/worker/native-worker-process.ts",
+    "tests/verification/reliability/native-process-policy.test.mts",
+    "tests/verification/reliability/tsconfig.native-scope.json"
+  ],
+  "changes": [
+    {
+      "path": "package.json",
+      "before": {
+        "path": "package.json",
+        "bytes": 42573,
+        "sha256": "41c1df6745623e9035187c7627274ba4677cc24709d1e64d7c3fb8a56afa8531",
+        "type": "file"
+      },
+      "after": {
+        "path": "package.json",
+        "type": "file",
+        "bytes": 42635,
+        "sha256": "0e6be904cf9f5c06baf984a853586ca65704479e8e82e5148c6a0ddc5cf4dbdb"
+      }
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "before": {
+        "path": "skills/worker/core/worker/native-worker-process.ts",
+        "bytes": 6825,
+        "sha256": "d43bc3ce05976d77579dbc624cae8be1d3209732b023124e3eb6f0a8fd9860da",
+        "type": "file"
+      },
+      "after": {
+        "path": "skills/worker/core/worker/native-worker-process.ts",
+        "type": "file",
+        "bytes": 6875,
+        "sha256": "230bcb2eae21abc5d87187d682504155ef131a649b05f6662fb0d7a6db575182"
+      }
+    },
+    {
+      "path": "tests/verification/reliability/native-process-policy.test.mts",
+      "before": null,
+      "after": {
+        "path": "tests/verification/reliability/native-process-policy.test.mts",
+        "type": "file",
+        "bytes": 4031,
+        "sha256": "dbfefa729c7d013bccf0fbdfa6653c22650d6fcda8f7f25e3c151031bc26e907"
+      }
+    },
+    {
+      "path": "tests/verification/reliability/tsconfig.native-scope.json",
+      "before": {
+        "path": "tests/verification/reliability/tsconfig.native-scope.json",
+        "bytes": 299,
+        "sha256": "b11f6af094bcb0a80e46607ccca68c426ef4ce9754efca52804af11ef7b11e2b",
+        "type": "file"
+      },
+      "after": {
+        "path": "tests/verification/reliability/tsconfig.native-scope.json",
+        "type": "file",
+        "bytes": 333,
+        "sha256": "af435c6af87ee48e74a8458d251411d41a1be2f3d6d53bf94c90061a55839d6e"
+      }
+    }
+  ]
+}

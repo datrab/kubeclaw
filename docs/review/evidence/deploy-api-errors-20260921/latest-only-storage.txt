@@ -1,0 +1,26 @@
+test_helm_storage_history_is_authoritative (deploy_tests.DeployObservations.test_helm_storage_history_is_authoritative) ... FAIL
+
+======================================================================
+FAIL: test_helm_storage_history_is_authoritative (deploy_tests.DeployObservations.test_helm_storage_history_is_authoritative)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/deploy-api-errors.test.py", line 147, in test_helm_storage_history_is_authoritative
+    self.assertEqual(inspected,['1','2'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['2'] != ['1', '2']
+
+First differing element 0:
+'2'
+'1'
+
+Second list contains 1 additional elements.
+First extra element 1:
+'2'
+
+- ['2']
++ ['1', '2']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.971s
+
+FAILED (failures=1)

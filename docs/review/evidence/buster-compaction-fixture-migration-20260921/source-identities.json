@@ -1,0 +1,72 @@
+{
+  "at": "2026-09-21T19:08:37.852238+00:00",
+  "runtimeExecuted": false,
+  "scope": "read-only migration proposal; production gates remain open",
+  "files": [
+    {
+      "path": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "sha256": "16d7d9f94eb2e5140f94ab63da98540f4cde2c515ba35e8f5ea8b25d0fde3180",
+      "snapshot": "sources/tests/verification/reliability/buster-job-compaction.test.mts"
+    },
+    {
+      "path": "tests/verification/reliability/buster-historical-import.test.mts",
+      "sha256": "c40110774d150be2c7f997b48b05bc82b9d2062e72a519c6d8ff8303f1396c7b",
+      "snapshot": "sources/tests/verification/reliability/buster-historical-import.test.mts"
+    },
+    {
+      "path": "tests/fixtures/test-gate/historical-import-child.mts",
+      "sha256": "4b93a17f922337a73d65417278c5d9355c2ef877f6ffb0da53e657afdf611ac4",
+      "snapshot": "sources/tests/fixtures/test-gate/historical-import-child.mts"
+    },
+    {
+      "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+      "sha256": "b66faf6d4ceccf9326e2739dbcd517702d15f4d6ff454e21a1091b98584ecdfe",
+      "snapshot": "sources/tests/fixtures/test-gate/modeled-preparation.mts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+      "snapshot": "sources/skills/buster/engine/test-gates/historical-plan-store.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+      "snapshot": "sources/skills/buster/engine/test-gates/prepared-plan-store.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "39fae2ef7c97b92259f1e1193a91e969b405c31b6970d51c8c0f7765fbb1f2bb",
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-service.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+      "sha256": "e74b3fe2e8dca0157d22c6bd1b50f5cc69df91ec29eedbdbaef86d4ff05a42de",
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-compaction.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-import.ts",
+      "sha256": "4f6144633592a1e2dd11cac4b82c653982cddec50930a1d6d11694a5c3c74828",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-import.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-batch.ts",
+      "sha256": "44e38c453e1ab5a1118e54e7a4a855a2e40fce27bb9a0557c7b42808da88ee74",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-batch.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-materialize.ts",
+      "sha256": "3fa603ff06977ffdecf435981fe392cf107e90752d97cb11a7fa3d869f484ee3",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-materialize.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-source.ts",
+      "sha256": "fdccb2ec89cad6824df4ebf5ce9475ecfe4a94cbf4b515bc2c9549fb204bffc0",
+      "snapshot": "sources/skills/buster/engine/test-gates/preparation-historical-source.ts"
+    },
+    {
+      "path": "docs/review/remediation/implementation/buster-compaction-fixture-migration-20260921.md",
+      "sha256": "0261e84e9dc07d746c265fb8a46b992f0b87fba767c8aa0f6655ff2a5e834427",
+      "snapshot": "sources/docs/review/remediation/implementation/buster-compaction-fixture-migration-20260921.md"
+    }
+  ]
+}

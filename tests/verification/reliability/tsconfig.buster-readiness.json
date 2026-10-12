@@ -1,0 +1,8 @@
+{
+  "extends": "../../../skills/buster/engine/tsconfig.json",
+  "include": [
+    "buster-readiness-config.test.mts",
+    "buster-readiness-consumer.test.mts",
+    "../deployment/buster-readiness.test.mts"
+  ]
+}

@@ -1,0 +1,51 @@
+✖ registered Kubernetes provider retain, failed preparation true (1128.839312ms)
+✔ registered Kubernetes provider retain, failed preparation false (469.685807ms)
+✖ registered Kubernetes provider delete, failed preparation true (487.04142ms)
+✔ registered Kubernetes provider delete, failed preparation false (441.005608ms)
+✔ post-passed Worker measurement fault uses incomplete cleanup then allows later retained success (563.470156ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4471.686958
+
+✖ failing tests:
+
+test at tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:12:3
+✖ registered Kubernetes provider retain, failed preparation true (1128.839312ms)
+  AssertionError [ERR_ASSERTION]: failed cleanup blocks even explicitly accepted unsafe retry
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:25:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:12:3
+✖ registered Kubernetes provider delete, failed preparation true (487.04142ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'completed-fixture'
+  - 'incomplete'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:36:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'completed-fixture',
+    expected: 'incomplete',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

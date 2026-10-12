@@ -1,0 +1,52 @@
+{
+  "environment": {
+    "platform": "Linux-6.8.0-139-generic-x86_64-with-musl1",
+    "uid": "1000",
+    "osRelease": "NAME=\"Alpine Linux\"\nID=alpine\nVERSION_ID=3.24.1\nPRETTY_NAME=\"Alpine Linux v3.24\"\nHOME_URL=\"https://alpinelinux.org/\"\nBUG_REPORT_URL=\"https://gitlab.alpinelinux.org/alpine/aports/-/issues\"\n"
+  },
+  "sourceAndBinary": {
+    "skills/common/plugin-runtime/foundation/isolation/sandbox.c": "2102536656c01e861f612eb18967d7881b2993629de63b6d93e0ae8b70b70376",
+    "skills/common/plugin-runtime/foundation/isolation/plugin-sandbox": "3faba9a88eef6f4278c2cc11fef6fbdd246a898862cbe08eabbafee4b848376b",
+    "scripts/build-plugin-sandbox.mjs": "ea546fd31e572312986730c4f8c89aacf0943aeb37b560cc63281cf67a9f92ec"
+  },
+  "packages": {
+    "acl-libs-2.3.2-r1.apk": "3f02851d586c25d97ba8b5b845615aacc209ae7eaeb6f7843eca76d85da2249d",
+    "binutils-2.45.1-r1.apk": "15682887459d216585feb438bbfb7ec63e1f33e77c453f44637d2d9d8c35977d",
+    "busybox-1.37.0-r31.apk": "0e626fa97cf937fda7bba4ed4dde8e2f2dbb5083ac34e02180cec0c4eba9351b",
+    "busybox-binsh-1.37.0-r31.apk": "93f803ae5db6b729c0f66f4afba6e907ccc17d7d5f8b8c3d25bdb4636de2c48a",
+    "flock-2.42.3-r1.apk": "5e10c9d1d2844ed98359fa228625bcd23535fe95e66246623bccb0cc72877529",
+    "gcc-15.2.0-r5.apk": "d1d482472ed91240731c60dbae8176bc1e32e1dfb694856da6759f6d32716325",
+    "gmp-6.3.0-r4.apk": "85323ef5bce8ff234736dc2d6592ea37aebdc6348a531e27430bdfe38364d256",
+    "isl26-0.26-r2.apk": "30999fb66e296c8ea7aa102cad0d3095519b3022abb622d2951dd29367310ea9",
+    "jansson-2.15.0-r0.apk": "7681b41486e1f2b2efce11875c839533464ae8857d30fc49130f0039c6585fdb",
+    "libatomic-15.2.0-r5.apk": "c5ec550c73dd7b4e81e206fdff3cf4c46b0ae1b29fec1db5cd4e12d88416abbf",
+    "libblkid-2.42.3-r1.apk": "2512c2bff496ac2b8561a3c814d21d35ce10cda579b3d410f9f96da93a5aaac1",
+    "libeconf-0.8.3-r0.apk": "2a791c7957961f830cf31b04f35f814a63afcf633badc9052425ff1cf2f64380",
+    "libfdisk-2.42.3-r1.apk": "9775aae10e103c128e6b8424585f5d2dac6d8e8e386cc8365a46358ccd6aa7d0",
+    "libgcc-15.2.0-r5.apk": "393dcd32629f06d7d85409c272d142d0c082772d10b87ef55ee82f47de3be637",
+    "libgcc-static-15.2.0-r5.apk": "563244a562f5c48b921f7f0b4a571e373cfcba65175fe2d4f752c5f975738bcd",
+    "libgomp-15.2.0-r5.apk": "e7204aad00e31d544e0a34eac5a7eb7d3586d2b7b22afd6e5907189c4e0337cc",
+    "libmount-2.42.3-r1.apk": "e2ae003260f2c1ec13666c6e108d5e8e3d64974b0667166a02432bd3be263a7a",
+    "libncursesw-6.6_p20260516-r0.apk": "cf8caa8a88bc4ce9d9e395567fefaf9ef7fbd55c50ae6155b35c1b58f3755023",
+    "libsmartcols-2.42.3-r1.apk": "5e3a457257d9c0e6799ab5d544ca4f172c4e19e02adcde94c72343ed3f6d8b26",
+    "libstdc++-15.2.0-r5.apk": "14c987b556f5385a5db18376e788c75f37d85321b8dc1920d926ea7daac1d6f6",
+    "libuuid-2.42.3-r1.apk": "8306e5bb577696c9069fe1dfd9e1dcc39d2d481c6a1b0e707fd03c3e21aa6aa2",
+    "linux-headers-7.0.0-r1.apk": "c4535f3f0dc6fd4d80efa7ff2a7a72a2d3f8dae31e2587c0785cc3243889cdf2",
+    "mpc1-1.3.1-r1.apk": "c2247438e163f1c11646428f07576ceb3cf3167f9a9a5c6526021f778d77adb6",
+    "mpfr4-4.2.2-r0.apk": "93620a803d416e8c05150fb14413796df14ea370322dff6bd106455deab15646",
+    "musl-1.2.6-r2.apk": "573712e2f49c15bfc20a2699f204acdfc74c772722b15e7353d768057fae0e71",
+    "musl-dev-1.2.6-r2.apk": "6831e8b9e4821dae2c9121f0641f81e543f4ac27c03144c4876980ee84e6988f",
+    "ncurses-terminfo-base-6.6_p20260516-r0.apk": "ce83be6d0bd10584a53c3a5868cc1595ce5f0f8e0b621f8f7f70b6144e521fc9",
+    "proot-5.4.0-r2.apk": "6d24642dc42053c4115371d4f073f292a6b222930513ef5a90ef86acfa8b5b59",
+    "setarch-2.42.3-r1.apk": "14098fdd87c4247acbee0513147eb2defd17fb850913e45a6dad6cb3e9a4d6b1",
+    "skalibs-libs-2.15.0.0-r0.apk": "3301f6ccbeaea49cdd966c7e636898a8612fb8fe964a15f24f6d204b3944c3f3",
+    "talloc-2.4.4-r1.apk": "56004bfdd152fed426328f8a0870cad3e4e4fc99f3bbeb8c56c2e54d63c762d2",
+    "tar-1.35-r5.apk": "5dad2fe0c7d18394dd7ffb64682760ce63718a7a1552b661f6e63036ce8b4958",
+    "util-linux-misc-2.42.3-r1.apk": "8cba67c052d9932c61db6b32f3a6042b62cca642f16479ba066c59a5a97ffc55",
+    "utmps-libs-0.1.3.3-r0.apk": "497f0f1cb51f0e6c1acc338fded0dc7722b1d43ea17bdb749f0d556794f8b2d8",
+    "zlib-1.3.2-r0.apk": "b636306cbf8a0c15493b38de608ba11605fd8f11ade631f5ece6f7fdf5a1e09e",
+    "zstd-libs-1.5.7-r2.apk": "23c6065b0049b2406441564bcf0032515a43f78e80d76fcb85535a3803ef5d4e"
+  },
+  "buildResult": "original build-plugin-sandbox.mjs exit 0; binary built from original source, no host installation",
+  "runtimeResult": "HTTP cutover still fails TEST_PROVIDER_INITIALIZE_EXITED:null:SIGSEGV under proot. Not a passed sandbox or production gate."
+}

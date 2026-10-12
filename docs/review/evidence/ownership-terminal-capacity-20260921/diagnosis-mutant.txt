@@ -1,0 +1,35 @@
+✖ exact-fit owner admission covers actual persisted maximal terminal bytes; one byte less rejects before write (113.172719ms)
+✔ competing owner admissions cannot consume the same global terminal capacity (24.496967ms)
+✖ competing children on different owners reserve future binding and terminal bytes globally (144.290962ms)
+✔ terminal records retain actual bytes; all historical formats remain readable without rewriting (66.77707ms)
+✔ preexisting overcommit blocks admission but preserves reads, lifecycle attempts and host provenance fencing (50.613514ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 829.728405
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-terminal-capacity.test.mts:33:1
+✖ exact-fit owner admission covers actual persisted maximal terminal bytes; one byte less rejects before write (113.172719ms)
+  Error: WORKER_OWNERSHIP_CAPACITY_EXCEEDED
+      at #write (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/ownership-store.ts:215:13)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/ownership-store.ts:148:24
+      at async withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:269:12)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-terminal-capacity.test.mts:52:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/reliability/worker-terminal-capacity.test.mts:81:1
+✖ competing children on different owners reserve future binding and terminal bytes globally (144.290962ms)
+  Error: WORKER_OWNERSHIP_CAPACITY_EXCEEDED
+      at #write (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/ownership-store.ts:215:13)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/ownership-store.ts:148:24
+      at async withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:269:12)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-terminal-capacity.test.mts:108:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "/usr/local/bin/node",
+    "--test",
+    "tests/verification/reliability/admission-retirement.test.mjs",
+    "tests/verification/reliability/attempt-projection-review.test.mjs",
+    "tests/verification/reliability/attempt-closure-projection.test.mjs",
+    "tests/verification/reliability/observability-replay.test.mjs",
+    "tests/verification/reliability/observability-retirement-plan.test.mjs"
+  ],
+  "LD_LIBRARY_PATH": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/lib"
+}

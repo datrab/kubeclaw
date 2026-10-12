@@ -1,0 +1,17 @@
+✔ explicit entry required; old inline authorship is rejected (10.201127ms)
+✔ prism-control: missing file, wrong owner, unknown envelope and reference rejected (18.221078ms)
+✔ prism-studio: missing file, wrong owner, unknown envelope and reference rejected (6.218353ms)
+✔ prism-worker: missing file, wrong owner, unknown envelope and reference rejected (3.555653ms)
+✔ prism-execution: missing file, wrong owner, unknown envelope and reference rejected (3.644676ms)
+✔ buster-engine: missing file, wrong owner, unknown envelope and reference rejected (4.003845ms)
+✔ every authored setting is required, including explicit nullable values (46.53788ms)
+✔ both domains validate before selecting either and nested snapshots stay frozen (7.157137ms)
+✔ real ConfigMap-style entry symlink resolves component files within its physical generation (3.525862ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 389.531266

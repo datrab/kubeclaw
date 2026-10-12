@@ -1,0 +1,7 @@
+const VERSION = '1.0.0';
+const DEFAULT_TOOL_TIMEOUT = 30000;
+
+export {
+  DEFAULT_TOOL_TIMEOUT,
+  VERSION,
+};

@@ -1,0 +1,275 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: inlining helper restores every original non-trivia token
++ actual - expected
+... Skipped lines
+
+  [
+    'import',
+    '{',
+    'nativeResourcePolicy',
+    '}',
+...
+      '\n' +
++     '\n' +
++     '\n' +
+      "await test('native attempt receipt excludes real concurrent supervisor-process CPU', { timeout: 60000 }, async t => {\n" +
+      "  const root = await mkdtemp(join(tmpdir(), 'prism-native-attribution-'));\n" +
+      '  const store = new ContentAddressedArtifactStore(root);\n' +
+      '  await store.put(input);\n' +
+      '  let releaseRead!: () => void;\n' +
++     'let markReadStarted!: () => void;\n' +
++     'const readReleased = new Promise<void>(resolve => { releaseRead = resolve; });\n' +
++     'const readStarted = new Promise<void>(resolve => { markReadStarted = resolve; });\n' +
++     'const server = createServer((request, response) => {\n' +
+-     '  let markReadStarted!: () => void;\n' +
+-     '  const readReleased = new Promise<void>(resolve => { releaseRead = resolve; });\n' +
+-     '  const readStarted = new Promise<void>(resolve => { markReadStarted = resolve; });\n' +
+-     '  const server = createServer((request, response) => {\n' +
+      '    void (async () => {\n' +
+      "      if (request.method !== 'GET') {\n" +
+      "        await handleInternalArtifact(request, response, new URL(request.url!, 'http://control'), {\n" +
+      "          artifacts: store, spiffeEnabled: false, workerSecret: 'local', trustedControlSpiffeId: '', trustedWorkerSpiffeId: '',\n" +
+      '        }); return;\n' +
+...
+      '  });\n' +
++     "server.listen(0, '127.0.0.1');\n" +
++     "await once(server, 'listening');\n" +
++     't.after(async () => {\n' +
+-     "  server.listen(0, '127.0.0.1');\n" +
+-     "  await once(server, 'listening');\n" +
+-     '  t.after(async () => {\n' +
+      '    server.closeAllConnections();\n' +
+      '    await new Promise<void>(resolve => server.close(() => resolve()));\n' +
+      '  });\n' +
++     'const address = server.address();\n' +
++     "assert(address && typeof address !== 'string');\n" +
++     'const origin = new URL(`',
+-     '  const address = server.address();\n' +
+-     "  assert(address && typeof address !== 'string');\n" +
+-     '  const origin = new URL(`',
+    'http',
+    ':',
+    'const',
+    'artifact',
+    '=',
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/prism-native-test-quality-20260921/verify-equivalence.mjs:38:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'import',
+    '{',
+    'nativeResourcePolicy',
+    '}',
+    'from',
+    "'../tests/native/resource-policy.mts'",
+    ';',
+    'import',
+    'test',
+    'from',
+    "'node:test'",
+    ';',
+    'import',
+    'assert',
+    'from',
+    "'node:assert/strict'",
+    ';',
+    'import',
+    '{',
+    'pbkdf2Sync',
+    ',',
+    'createHash',
+    '}',
+    'from',
+    "'node:crypto'",
+    ';',
+    'import',
+    '{',
+    'createServer',
+    '}',
+    'from',
+    "'node:http'",
+    ';',
+    'import',
+    '{',
+    'once',
+    '}',
+    'from',
+    "'node:events'",
+    ';',
+    'import',
+    '{',
+    'mkdtemp',
+    ',',
+    'rm',
+    '}',
+    'from',
+    "'node:fs/promises'",
+    ';',
+    'import',
+    '{',
+    'tmpdir',
+    '}',
+    'from',
+    "'node:os'",
+    ';',
+    'import',
+    '{',
+    'join',
+    '}',
+    'from',
+    "'node:path'",
+    ';',
+    'import',
+    '{',
+    'ContentAddressedArtifactStore',
+    '}',
+    'from',
+    "'../storage/artifacts.ts'",
+    ';',
+    'import',
+    '{',
+    'handleInternalArtifact',
+    '}',
+    'from',
+    "'../server/internal-artifacts.ts'",
+    ';',
+    'import',
+    'fixture',
+    'from',
+    "'../../../contracts/prism/v1/fixtures/minimal-web.json'",
+    'with',
+    '{',
+    'type',
+    ':',
+    "'json'",
+    '}',
+    ';',
+    'import',
+    '{',
+    'prismNativeAttempt',
+    '}',
+    'from',
+    "'../engine/worker-envelope.ts'",
+    ';',
+    'import',
+    '{',
+    'nativeWorkerHarness',
+    '}',
+    'from',
+    ... 357 more items
+  ],
+  expected: [
+    'import',
+    '{',
+    'nativeResourcePolicy',
+    '}',
+    'from',
+    "'../tests/native/resource-policy.mts'",
+    ';',
+    'import',
+    'test',
+    'from',
+    "'node:test'",
+    ';',
+    'import',
+    'assert',
+    'from',
+    "'node:assert/strict'",
+    ';',
+    'import',
+    '{',
+    'pbkdf2Sync',
+    ',',
+    'createHash',
+    '}',
+    'from',
+    "'node:crypto'",
+    ';',
+    'import',
+    '{',
+    'createServer',
+    '}',
+    'from',
+    "'node:http'",
+    ';',
+    'import',
+    '{',
+    'once',
+    '}',
+    'from',
+    "'node:events'",
+    ';',
+    'import',
+    '{',
+    'mkdtemp',
+    ',',
+    'rm',
+    '}',
+    'from',
+    "'node:fs/promises'",
+    ';',
+    'import',
+    '{',
+    'tmpdir',
+    '}',
+    'from',
+    "'node:os'",
+    ';',
+    'import',
+    '{',
+    'join',
+    '}',
+    'from',
+    "'node:path'",
+    ';',
+    'import',
+    '{',
+    'ContentAddressedArtifactStore',
+    '}',
+    'from',
+    "'../storage/artifacts.ts'",
+    ';',
+    'import',
+    '{',
+    'handleInternalArtifact',
+    '}',
+    'from',
+    "'../server/internal-artifacts.ts'",
+    ';',
+    'import',
+    'fixture',
+    'from',
+    "'../../../contracts/prism/v1/fixtures/minimal-web.json'",
+    'with',
+    '{',
+    'type',
+    ':',
+    "'json'",
+    '}',
+    ';',
+    'import',
+    '{',
+    'prismNativeAttempt',
+    '}',
+    'from',
+    "'../engine/worker-envelope.ts'",
+    ';',
+    'import',
+    '{',
+    'nativeWorkerHarness',
+    '}',
+    'from',
+    ... 357 more items
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

@@ -1,0 +1,67 @@
+{
+  "proposedOwner": "buster-engine.config.json settings.clusterInvokers.runtimeSecurity",
+  "fields": [
+    {
+      "field": "allowedNamespacePrefixes",
+      "authoredInitialValue": [
+        "test"
+      ],
+      "currentAuthority": "runtime JSON entrypoint",
+      "actualEffect": "namespace must start with prefix plus hyphen; exact prefix alone stays denied",
+      "proposedDomain": "nonempty array of existing namespace-prefix strings; no widening"
+    },
+    {
+      "field": "maximumExecutionMs",
+      "authoredInitialValue": 300000,
+      "currentAuthority": "runtime JSON entrypoint",
+      "actualEffect": "whole inspection deadline; each kubectl request and poll uses remaining time",
+      "proposedDomain": "positive safe integer <=2147483647; representability rejection replaces unsafe timer overflow"
+    },
+    {
+      "field": "maximumOutputBytes",
+      "authoredInitialValue": 16777216,
+      "currentAuthority": "runtime JSON entrypoint",
+      "actualEffect": "combined stdout + stderr bytes across one kubectl child; not independent stream quotas",
+      "proposedDomain": "safe integer >=1024"
+    },
+    {
+      "field": "pollIntervalMs",
+      "authoredInitialValue": 1000,
+      "currentAuthority": "runtime JSON entrypoint plus constructor ??1000",
+      "actualEffect": "delay after unacceptable/unready observation, clamped by remaining inspection deadline",
+      "proposedDomain": "safe integer 10..10000; mandatory in direct and normal APIs"
+    },
+    {
+      "field": "maximumObservationAgeMs",
+      "authoredInitialValue": 10000,
+      "currentAuthority": "runtime JSON entrypoint",
+      "actualEffect": "maximum accepted past observation age, not controller refresh period",
+      "proposedDomain": "safe integer pollIntervalMs..60000"
+    },
+    {
+      "field": "maximumFutureSkewMs",
+      "authoredInitialValue": 5000,
+      "currentAuthority": "runtimeSecurityObservationIsFresh literal",
+      "actualEffect": "maximum admitted future observation skew relative to host clock",
+      "proposedDomain": "nonnegative safe integer <=2147483647; explicit zero is meaningful"
+    },
+    {
+      "field": "diagnosticCodeUnits",
+      "authoredInitialValue": 1024,
+      "currentAuthority": "kubectl nonzero-close stderr slice",
+      "actualEffect": "maximum rendered diagnostic JavaScript code units; output byte quota remains separate",
+      "proposedDomain": "positive safe integer"
+    },
+    {
+      "field": "executableSearchPath",
+      "authoredInitialValue": [
+        "/usr/local/bin",
+        "/usr/bin",
+        "/bin"
+      ],
+      "currentAuthority": "kubectl child env PATH literal",
+      "actualEffect": "explicit child PATH delivered to kubectl and any helpers it invokes; does not resolve initial executable",
+      "proposedDomain": "nonempty list of absolute path entries without path separator/NUL; keep order"
+    }
+  ]
+}

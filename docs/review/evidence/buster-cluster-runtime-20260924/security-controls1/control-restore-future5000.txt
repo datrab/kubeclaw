@@ -1,0 +1,81 @@
+CI2_MUTATION_APPLIED {"mutation":"restore-future5000","pid":163750,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts","beforeSha256":"de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004","afterSha256":"566bde084e570b4714ed25f028cc83dd0eab568ab7be893fdbcd0f830ac3c74b","replacements":[{"from":"nowMs + maximumFutureSkewMs","to":"nowMs + 5000","count":1}]}
+✔ required RuntimeSecurity field allowedNamespacePrefixes before filesystem access (3.04958ms)
+✔ required RuntimeSecurity field maximumExecutionMs before filesystem access (0.442332ms)
+✔ required RuntimeSecurity field maximumOutputBytes before filesystem access (0.412181ms)
+✔ required RuntimeSecurity field pollIntervalMs before filesystem access (0.444902ms)
+✔ required RuntimeSecurity field maximumObservationAgeMs before filesystem access (0.420961ms)
+✔ required RuntimeSecurity field maximumFutureSkewMs before filesystem access (0.483893ms)
+✔ required RuntimeSecurity field diagnosticCodeUnits before filesystem access (0.647527ms)
+✔ required RuntimeSecurity field executableSearchPath before filesystem access (0.397161ms)
+✔ complete bundle requires allowedNamespacePrefixes even with route disabled (17.340374ms)
+✔ complete bundle requires maximumExecutionMs even with route disabled (3.183974ms)
+✔ complete bundle requires maximumOutputBytes even with route disabled (2.879306ms)
+✔ complete bundle requires pollIntervalMs even with route disabled (2.544286ms)
+✔ complete bundle requires maximumObservationAgeMs even with route disabled (2.233929ms)
+✔ complete bundle requires maximumFutureSkewMs even with route disabled (2.533236ms)
+✔ complete bundle requires diagnosticCodeUnits even with route disabled (2.410663ms)
+✔ complete bundle requires executableSearchPath even with route disabled (2.29189ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [] (0.38592ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [""] (0.301998ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [42] (0.284658ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 0 (0.37985ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 2147483648 (0.314458ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 1.5 (0.292588ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 1023 (0.299707ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 9007199254740992 (0.324309ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 9 (0.304058ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 10001 (0.439512ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 999 (0.274458ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 60001 (0.278068ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs -1 (0.290148ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs 2147483648 (0.320219ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 0 (0.282688ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 1.5 (0.285327ms)
+✔ reject invalid RuntimeSecurity executableSearchPath [] (0.312028ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["relative"] (0.291717ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin:/escape"] (0.369ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin\u0000"] (0.355579ms)
+✔ retired RuntimeSecurity object null (0.257877ms)
+✔ retired RuntimeSecurity object {} (0.067302ms)
+✔ retired RuntimeSecurity object {"allowedNamespacePrefixes":["test"],"maximumExecutionMs":300000,"maximumOutputBytes":16777216,"pollIntervalMs":1000,"maximumObservationAgeMs":10000,"maximumFutureSkewMs":5000,"diagnosticCodeUnits":1024,"executableSearchPath":["/usr/local/bin","/usr/bin","/bin"]} (0.286267ms)
+✔ retired RuntimeSecurity object "invalid" (0.064122ms)
+✔ disabled RuntimeSecurity route has no binding or implicit activation (0.874853ms)
+✔ real execution deadline profile false (286.764594ms)
+✔ real combined output profile false (37.829782ms)
+✔ real observation age profile false (606.086261ms)
+✔ real future skew profile false (607.57605ms)
+✔ real diagnostic code units profile false (50.610946ms)
+✔ real PATH helper profile false (46.008226ms)
+✔ real execution deadline profile true (741.845518ms)
+✔ real combined output profile true (45.947094ms)
+✔ real observation age profile true (44.413664ms)
+✖ real future skew profile true (604.688234ms)
+✔ real diagnostic code units profile true (56.224783ms)
+✔ real PATH helper profile true (74.330208ms)
+▶ real polling profile changes command cadence; selected arrays and scalars captured
+  ✔ poll interval 50 (124.459181ms)
+  ✔ poll interval 1200 (1277.686297ms)
+✔ real polling profile changes command cadence; selected arrays and scalars captured (1402.890798ms)
+✔ real namespace profile false (17.390366ms)
+✔ real namespace profile true (45.229325ms)
+✔ preserve inspected namespace prefix aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (39.652999ms)
+✔ preserve inspected namespace prefix test- (38.478788ms)
+✔ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (178.414855ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 60
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6941.087723
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:188:3
+✖ real future skew profile true (604.688234ms)
+  Error: KUBERNETES_RUNTIME_SECURITY_TIMEOUT
+      at KubernetesRuntimeSecurityCapabilityInvoker.invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:182:11)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:191:29)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

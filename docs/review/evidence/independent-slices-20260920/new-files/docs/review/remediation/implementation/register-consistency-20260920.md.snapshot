@@ -1,0 +1,91 @@
+# Registerkonsistenz: Implementierung und Prüfumfang
+
+## Pflichtfälle und zeitliche Einordnung
+
+Diese Matrix wurde nach dem ersten Generatorentwurf, vor dessen weiterer
+Implementierung und vor den Regressionstests festgehalten. Sie ist kein
+rückwirkender Nachweis einer vorab eingefrorenen Matrix für den ersten Entwurf.
+
+| Kriterium | Pflichtfälle | Nachweis |
+|---|---|---|
+| G1 | Alle 154 historischen und fünf zusätzlichen IDs erhalten; Originaltexte, fachliche Status und Implementierungsbelege unverändert; neue Integrationsbefunde separat | Identitätsinventar, Vergleich mit Git-Ausgangsstand, Generator-Idempotenz |
+| G2 | Je ID gleicher Status; Status-/Familiensummen; alle drei aktuellen Übersichten generiert; historische Checkpoints unverändert | echter Generator/Checker gegen Repository und isolierte Kopien |
+| G3 | Manipulierter Markdownstatus, fehlende historische ID, doppelte ID, fehlende Integrations-ID, falsche JSON-/Markdownsumme, fehlender Original-/Implementierungsbeleg; Generator darf keinen Status hochstufen | jede Manipulation einzeln muss scheitern; validierte Generierung und Zweitlauf müssen bestehen |
+| G-DOC | Autorenquelle, Statussemantik, Update-/Checkbefehl, Grenzen und alle betroffenen Übersichten dokumentiert | dieses Verfahren, generiertes Register, Fortschritt und Übergabe |
+
+## Pflegeverfahren
+
+`docs/review/remediation/register.json` ist die Autorenquelle für Status,
+Einzelentscheidungen, Originalbelege, Implementierungsnachweise und Live-Grenzen.
+Die historischen Familienzahlen bleiben fest. `progress_counts`, das gesamte
+`register.md` und die markierten aktuellen Blöcke in `progress.md` und `handoff.md`
+werden daraus erzeugt:
+
+```sh
+node scripts/review/remediation-register.mjs --write
+node scripts/review/remediation-register.mjs --check
+node --test scripts/tests/remediation-register.test.mjs
+```
+
+Der Checkmodus ist Standard und verändert keine Datei. Schreiben validiert
+zuerst alle Einträge und erzeugt anschließend ausschließlich Darstellungen und
+Statuszähler; kein Findingstatus wird hergeleitet oder verändert. Historische
+Checkpoints außerhalb der Marker bleiben unangetastet. Neue Integrations-IDs
+werden ausdrücklich in JSON und im festen Identitätsinventar unter
+`scripts/review/remediation-identities.json` aufgenommen. Historische IDs dürfen
+nicht entfernt oder umbenannt werden. Das Inventar enthält keine zweite
+Statusquelle.
+
+`offen` bedeutet unbehandelt, `in Bearbeitung` laufende Umsetzung,
+`implementiert` teilweise beziehungsweise lokal unvollständig und `verifiziert`
+eine lokale Abschlussentscheidung nach D12. Live-Gates bleiben separat.
+Bei Statusänderungen müssen Entscheidung, betroffener Code und tatsächliche
+Prüfbelege je Finding fachlich geprüft werden. Ein gefundener Belegpfad beweist
+keine Fehlerbehebung. Der Konsistenzchecker prüft Struktur und Referenzauflösung;
+er bewertet weder Rohlogs noch historische Testergebnisse inhaltlich und ersetzt
+keine unabhängige Code-/Testprüfung. Er behauptet insbesondere keine heutige
+Neuverifikation der 141 bestehenden lokalen Abschlüsse.
+
+## Abgleich der vier alten Markdownabweichungen
+
+Das JSON bleibt maßgeblich; kein fachlicher Status wurde angehoben:
+
+| ID | Bisheriges Markdown | Unverändertes JSON | Vorhandene Entscheidung |
+|---|---|---|---|
+| PCR-PRISM-WORKER-002 | implementiert | verifiziert | [Prism-Abschluss](pr6-prism-native-local-closure.md) |
+| IFR-05-001 | offen | verifiziert | [GitOps-Abschluss](pr6-gitops-closure.md) |
+| IFR-11-001 | in Bearbeitung | verifiziert | [Redis-Abschluss](pr6-redis-migration-closure.md) |
+| IFR-26-001 | offen | in Bearbeitung | [Backup-Checkpoint](pr6-prism-backup-groups.md) |
+
+Der Abgleich erfolgte gegen `HEAD:docs/review/remediation/register.md` und
+unverändertes `register.json`. Der aktuelle Stand ist 141/154 lokal verifiziert,
+13 unvollständig (2 implementiert, 3 in Bearbeitung, 8 offen); zusätzlich fünf
+Integrationsbefunde. Der Generator macht aus diesen bereits vorhandenen
+Einzelentscheidungen eine konsistente Darstellung, keine neue Freigabe.
+
+## Lokale Prüfung
+
+`node --test scripts/tests/remediation-register.test.mjs`: **23/23 bestanden,
+keine Skips**. Die Negativkontrollen bearbeiten jeweils echte Eingabedaten bzw.
+Dateien; der normale Checker muss daran scheitern. Der erste Lauf hatte sieben
+Fehler, weil im temporären Testrepo der vorhandene historische `resume/`-
+Belegordner fehlte. Die Fixture wurde vervollständigt; Prüflogik und erwartete
+Fehler blieben unverändert. Positivtest, anschließend jede Mutation, und
+unveränderte Findings/Historien nach echter Generierung sind getrennt geprüft.
+
+`node scripts/review/remediation-register.mjs --check` bestanden.
+Rohausgaben: [Testlauf](../../evidence/register-consistency-20260920/tests.txt)
+und [Konsistenzcheck](../../evidence/register-consistency-20260920/check.txt).
+Commitfeste externe GitHub-Beleglinks werden ohne Netz über `git show SHA:Pfad`
+aufgelöst; ein Checkout braucht daher die referenzierten Gitobjekte. Ein flacher
+Checkout mit fehlenden Objekten scheitert sichtbar. Lokale Nachweise dürfen
+nichtleer befüllte Dateien oder historische Rohbelegverzeichnisse referenzieren.
+Das prüft Auflösbarkeit, keine Testsemantik.
+
+## Dokumentationsabschluss und Grenzen
+
+Geändert sind dieses Verfahren und die drei Register-/Fortschritts-/Übergabe-
+Darstellungen. Acceptance und Assessment bleiben unverändert. Historische
+Zähler bleiben ausdrücklich als historische Checkpoints erhalten.
+Keine Produktionsfunktion, kein Deployment und keine Live-Abnahme sind Teil
+von REGISTER. Eine unabhängige Endabnahme steht aus.

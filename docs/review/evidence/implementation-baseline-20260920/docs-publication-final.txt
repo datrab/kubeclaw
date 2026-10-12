@@ -1,0 +1,5 @@
+
+> docs:publication:check
+> node scripts/docs-publication.mjs check
+
+documentation publication passed (64 pages, 50 plugins)

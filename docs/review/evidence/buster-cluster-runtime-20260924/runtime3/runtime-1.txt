@@ -1,0 +1,65 @@
+
+> verify:buster:cluster-policy
+> npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-cluster-policy.json && node --test --test-concurrency=1 tests/verification/reliability/buster-cluster-entrypoint.test.mjs tests/verification/contracts/buster-cluster-output-consumers.test.mjs tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs tests/verification/contracts/buster-cluster-timing-consumers.test.mjs tests/verification/contracts/buster-cluster-poll-consumers.test.mjs tests/verification/deployment/buster-cluster-invoker-parity.test.mjs && node tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts && node tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts
+
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+✔ actual kubectl diagnostic captures 16 code units (8.602418ms)
+✔ actual kubectl diagnostic captures 80 code units (1.777695ms)
+✔ public invoker maximumManifestBytes, low true (1.343974ms)
+✔ public invoker maximumManifestBytes, low false (3.270233ms)
+✔ public invoker maximumResources, low true (1.624571ms)
+✔ public invoker maximumResources, low false (2.192376ms)
+✔ actual YAML consumer maximumNodes (0.659687ms)
+✔ actual YAML consumer maximumDepth (0.464522ms)
+✔ actual YAML consumer maximumAliases (0.518533ms)
+✔ actual List consumer maximumFlattenVisits (0.552514ms)
+✔ actual List consumer maximumFlattenPending (0.435591ms)
+✔ shared lease version domain reaches both actual constructors: v1 (1.433416ms)
+✔ shared lease version domain reaches both actual constructors: v2 (0.80895ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1 (0.890712ms)
+✔ shared lease version domain reaches both actual constructors: v2beta12 (0.872282ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha (0.971715ms)
+✔ shared lease version domain reaches both actual constructors: v1beta (0.654067ms)
+✔ shared lease version domain reaches both actual constructors: v1rc1 (0.604715ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1x (0.573854ms)
+✔ shared lease version domain reaches both actual constructors:  (0.607065ms)
+✔ real kubernetes.fixture output limit profile false (75.782496ms)
+✔ real kubernetes.fixture output limit profile true (38.670657ms)
+✔ real kubernetes.exposure output limit profile false (75.729114ms)
+✔ real kubernetes.exposure output limit profile true (43.261673ms)
+✔ actual kubernetes.fixture polling cadence 50 (109.490778ms)
+✔ actual kubernetes.fixture polling cadence 200 (405.054791ms)
+✔ actual kubernetes.exposure polling cadence 50 (109.366115ms)
+✔ actual kubernetes.exposure polling cadence 200 (404.050736ms)
+✔ kubernetes.fixture actual auth process uses short deadline 600 (619.347241ms)
+✔ kubernetes.fixture actual auth process uses short deadline 2000 (1039.783952ms)
+✔ kubernetes.exposure actual auth process uses short deadline 600 (610.416486ms)
+✔ kubernetes.exposure actual auth process uses short deadline 2000 (1039.627561ms)
+walk.go:75: found symbolic link in path: /tmp/cluster-invoker-chart-oDCckB/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used
+✔ actual kubeclaw Helm and loader enforce shared cluster invoker policy (12825.509299ms)
+✔ actual prism Helm and loader enforce shared cluster invoker policy (12652.867232ms)
+✔ actual entrypoint rejects missing before first runtime effect (376.153185ms)
+✔ actual entrypoint rejects invalid before first runtime effect (394.333016ms)
+✔ actual entrypoint rejects group-empty before first runtime effect (355.398691ms)
+✔ actual entrypoint rejects group-equal before first runtime effect (355.180685ms)
+✔ actual entrypoint rejects version-empty before first runtime effect (359.958236ms)
+✔ actual entrypoint rejects version-equal before first runtime effect (333.899026ms)
+✔ actual entrypoint rejects secrets-empty before first runtime effect (345.843828ms)
+✔ actual entrypoint rejects secrets-equal before first runtime effect (367.62834ms)
+✔ relative executable uses the captured physical generation; component aliases reject (38.823773ms)
+✔ actual read-only preflight accepts an explicit complete generation (355.316899ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 41753.761516
+{"ok":true,"phase":"kubernetes-fixture-implementation","authority":"replacement-only","providerKind":"fixture","typedManifestLink":true,"narrowCapability":true,"injectedExecutorVectors":true,"nativeCluster":false}
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+{"ok":true,"phase":"tailscale-exposure-implementation","providerKind":"fixture","typedLinks":true,"narrowCapability":true,"injectedExecutorVectors":true,"nativeCluster":false}

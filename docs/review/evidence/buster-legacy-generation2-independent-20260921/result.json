@@ -1,0 +1,54 @@
+{
+  "artifactCount": 17,
+  "artifacts": [
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/generation2/guest-root.ext4",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/generation2/second.ext4",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/generation2/vmlinuz-virt",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/generation2/initrd.cpio.gz",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/generation2/repo-snapshot-manifest.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation2/guest-init.sh",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation2/prepare-images.py",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation2/prepare-runtime.py",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation2/runtime-binding.py",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation2/tool-runtime-identities.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation2/source-export-identities.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation2/guest-payload-identities.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation2/image-build.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation2/prepared-artifacts.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation2/launch-smaller-as.py",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/generation2/launch-command-smaller-as.json",
+    "docs/review/remediation/implementation/independent-vm-fixed-corridor-20260921.md"
+  ],
+  "toolClosureEqual": true,
+  "payloadAndExportExact": true,
+  "originalThreeSourcesEqualIndependentInodes": true,
+  "initrdModules": [
+    "modules/virtio_blk.ko",
+    "modules/crc16.ko",
+    "modules/mbcache.ko",
+    "modules/jbd2.ko",
+    "modules/ext4.ko",
+    "modules/netfs.ko",
+    "modules/9pnet.ko",
+    "modules/9p.ko",
+    "modules/9pnet_virtio.ko",
+    "modules/rng-core.ko",
+    "modules/virtio-rng.ko"
+  ],
+  "readOnlyImageProbes": [
+    {
+      "disk": "guest-root.ext4",
+      "superblockUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+      "logicalBytes": 268435456
+    },
+    {
+      "disk": "second.ext4",
+      "superblockUuid": "509e0c59-9725-4ca8-a083-22e5275158db",
+      "logicalBytes": 16777216
+    }
+  ],
+  "diskInitInspection": "Unavailable: cached dumpe2fs/debugfs absent; mke2fs -d evidence and exact preimage manifest inspected, no mount performed.",
+  "concreteCommandExact": true,
+  "vmBooted": false,
+  "artifactManifestSha256": "cb498bf7c22692b1cff19d42dd37aed622e1138c876652efb0c8640e184a26cf"
+}

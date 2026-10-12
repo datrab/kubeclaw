@@ -1,0 +1,29 @@
+✔ genuine nested test lifetime OWN-TIMEOUT-CLEAN (2207.030217ms)
+✖ genuine nested test lifetime OWN-STOP-FAILURE (15187.564442ms)
+✔ genuine nested test lifetime OWN-DISPOSAL-TIMEOUT-LATE (10231.932884ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27717.147436
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-ownership.test.mjs:23:3
+✖ genuine nested test lifetime OWN-STOP-FAILURE (15187.564442ms)
+  AssertionError [ERR_ASSERTION]: missing exact teardown failure cause; evidence=/tmp/cluster-ownership-gate-jFklBd; stdout={"type":"test:fail","name":"OWN-STOP-FAILURE","error":{"name":"Error","message":"OWN_BODY_SENTINEL","code":"ERR_TEST_FAILURE","failureType":"testCodeFailure","cause":{"name":"Error","message":"OWN_BODY_SENTINEL"}}}
+  ; stderr=
+      at waitFor (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-ownership.test.mjs:76:9)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-ownership.test.mjs:96:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

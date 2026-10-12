@@ -1,0 +1,22 @@
+[
+  {
+    "path": "scripts/tests/buster-legacy-stop.test.py",
+    "sha256": "40f8eba27e66a55a2c874b249b21bb76a0476e4fa90c4aae2ee80b59576f079e"
+  },
+  {
+    "path": "scripts/buster_legacy_stop_transaction.py",
+    "sha256": "68cc8ac979694a40d5bc7aa1bfe04ddaab3350f2ba26beb29a16cbe81cea2eb4"
+  },
+  {
+    "path": "scripts/buster_legacy_stop_policy.py",
+    "sha256": "d88e4d8b6e9070ddd80be7ddf890cb5ce78efe394c969aac6ebc8f98e2983158"
+  },
+  {
+    "path": "scripts/buster_legacy_stop_files.py",
+    "sha256": "2c674ea367c0a45013893db18c4b0260f79ded257f9c08b8a6c46b8e004ed3b3"
+  },
+  {
+    "path": "scripts/buster_legacy_stop_runtime.py",
+    "sha256": "da13076f4cb8ef08c5e9e393da89b9f06b3f4675195c61960bd377a004ac1ef2"
+  }
+]

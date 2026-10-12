@@ -1,0 +1,12 @@
+{
+  "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+  "boundary": "const suite = JSON.parse",
+  "runtimeSuffixByteEqual": true,
+  "sha256": "0944eddc88a4e3b8d09168cec7051828a7999b1d851a61a2cd3751bf7280d7fa",
+  "sourceRegexAdjustments": [
+    "#waitService -> readiness.waitService actual receiver",
+    "this.#secretReferences -> settings.secretReferences in extracted request validation",
+    "this.#runnerSubject -> settings.runnerSubject in extracted lease construction"
+  ],
+  "sourceMapping": "actual imported module closure plus new import/call assertions; no replacement implementation or normalized fake source"
+}

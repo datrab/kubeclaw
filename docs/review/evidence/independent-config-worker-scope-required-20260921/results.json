@@ -1,0 +1,83 @@
+[
+  {
+    "name": "ownership",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/reliability/worker-ownership-store.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "quiescence",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/reliability/worker-native-quiescence.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "probe",
+    "command": [
+      "node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-worker-scope-required-20260921/probe.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "mutant",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-scope-required-20260921/mutate.mjs",
+      "--test",
+      "--test-name-pattern=requires explicit valid scope capacity",
+      "tests/verification/reliability/worker-ownership-store.test.mts"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "worker-types",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/worker/core/tsconfig.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "native-types",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.native-scope.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node_modules/.bin/eslint",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/worker/core/worker/native-worker-ownership.ts",
+      "tests/verification/reliability/worker-ownership-store.test.mts",
+      "tests/verification/reliability/worker-native-quiescence.test.mts",
+      "tests/verification/reliability/worker-native-scope-live.mts",
+      "tests/verification/reliability/worker-native-topology-live.mts"
+    ],
+    "exitCode": 0
+  }
+]

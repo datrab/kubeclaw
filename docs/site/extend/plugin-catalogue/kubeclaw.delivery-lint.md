@@ -56,10 +56,12 @@ Run:
 npm test --prefix skills/nova/plugins/delivery-lint
 ```
 
-Package tests found: 0.
+Package tests found: 2.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/delivery-lint/plugin.json`
 - Package root: `skills/nova/plugins/delivery-lint`
 - Authored package guide: `skills/nova/plugins/delivery-lint/README.md`
+- Test: `skills/nova/plugins/delivery-lint/tests/live-function.test.ts`
+- Test: `skills/nova/plugins/delivery-lint/tests/package-boundary.test.mjs`

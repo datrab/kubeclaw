@@ -1,3 +1,8 @@
+import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer as createTcpServer, type Socket } from 'node:net';
@@ -6,7 +11,13 @@ import { createManagedWorkerServer } from '../server/worker-lifecycle.ts';
 import { WorkerNonceDatabase } from '../server/worker-readiness.ts';
 import { loadWorkerConfig } from '../server/worker-config.ts';
 
-async function setup(t: { after(callback: () => Promise<void>): void }, connectTimeoutMs: number) {
+async function setup(t: { after(callback: () => Promise<void>): void }, connectTimeoutMs: number, shutdownTimeoutMs = 1500) {
+  const root = fs.mkdtempSync(path.join(tmpdir(), 'prism-shutdown-author-'));
+  t.after(async () => { fs.rmSync(root, { recursive: true, force: true }); });
+  const authored = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
+  authored['prism-worker'].settings.ingress.shutdownTimeoutMs = shutdownTimeoutMs;
+  const file = path.join(root, 'swarm.config.json'); writeTestBundle(file, authored);
+  const config = loadWorkerConfig({ SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' });
   const sockets = new Set<Socket>();
   const tcp = createTcpServer(socket => { sockets.add(socket); socket.on('data', () => {}); socket.on('close', () => sockets.delete(socket)); });
   tcp.listen(0, '127.0.0.1'); await once(tcp, 'listening');
@@ -20,14 +31,14 @@ async function setup(t: { after(callback: () => Promise<void>): void }, connectT
     try { await database.check(signal); response.writeHead(200); }
     catch { response.writeHead(503); }
     response.end();
-  }, () => database.close());
+  }, () => database.close(), config.ingress);
   worker.listen(0, '127.0.0.1'); await once(worker, 'listening');
   const listener = worker.address(); assert(listener && typeof listener !== 'string');
   t.after(async () => {
     worker.closeAllConnections(); await new Promise<void>(resolve => worker.close(() => resolve()));
     for (const socket of sockets) socket.destroy(); await new Promise<void>(resolve => tcp.close(() => resolve()));
   });
-  return { tcp, sockets, database, worker, origin: new URL(`http://127.0.0.1:${listener.port}`) };
+  return { tcp, sockets, database, worker, config, origin: new URL(`http://127.0.0.1:${listener.port}`) };
 }
 
 // The original pg client connects to an actual TCP peer that does not complete
@@ -39,8 +50,8 @@ test('shutdown waits for actual native pg acquisition settlement and closes the 
   const pending = fetch(new URL('/ready', f.origin));
   await connecting;
   assert.equal(f.database.openConnections, 1);
-  const shutdown = f.worker.shutdown(1500);
-  assert.equal(f.worker.shutdown(1500), shutdown);
+  const shutdown = f.worker.shutdown(f.config.shutdownTimeoutMs);
+  assert.equal(f.worker.shutdown(f.config.shutdownTimeoutMs), shutdown);
   const response = await pending; assert.equal(response.status, 503); await response.body?.cancel();
   await shutdown;
   assert.equal(f.database.openConnections, 0); assert.equal(f.database.pendingConnections, 0);
@@ -48,11 +59,11 @@ test('shutdown waits for actual native pg acquisition settlement and closes the 
 });
 
 test('one service deadline fails explicitly while the real pg startup remains unresolved', { timeout: 5000 }, async t => {
-  const f = await setup(t, 350);
+  const f = await setup(t, 350, 30);
   const connecting = once(f.tcp, 'connection');
   const pending = fetch(new URL('/ready', f.origin)).then(response => response.body?.cancel(), () => undefined);
   await connecting;
-  const shutdown = f.worker.shutdown(30);
+  const shutdown = f.worker.shutdown(f.config.shutdownTimeoutMs);
   await assert.rejects(shutdown, /PRISM_WORKER_SHUTDOWN_DEADLINE/u);
   assert.equal(f.worker.listening, false);
   assert.equal(f.database.openConnections, 1, 'deadline failure must not be described as native connection reaping');
@@ -70,8 +81,8 @@ test('invalid service deadline cannot stop a healthy listener; configuration own
     await assert.rejects(f.worker.shutdown(value), /Invalid Prism worker shutdown deadline/u);
     const response = await fetch(new URL('/bootstrap', f.origin)); assert.equal(response.status, 200); await response.body?.cancel();
   }
-  await f.worker.shutdown(1500);
-  const environment = { WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' };
+  await f.worker.shutdown(f.config.shutdownTimeoutMs);
+  const environment = { SWARM_CONFIG: fileURLToPath(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)), WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' };
   assert.equal(loadWorkerConfig(environment).shutdownTimeoutMs, 120_000);
   for (const value of ['', '0', '-1', '1.5', 'NaN', 'Infinity', '2147483648']) {
     assert.throws(() => loadWorkerConfig({ ...environment, PRISM_WORKER_SHUTDOWN_TIMEOUT_MS: value }), /PRISM_WORKER_SHUTDOWN_TIMEOUT_MS/u);

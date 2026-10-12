@@ -1,0 +1,48 @@
+[
+  {
+    "name": "bundle",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/config-component-bundle.test.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 0.432
+  },
+  {
+    "name": "prism-config",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/swarm-worker-config.test.mts",
+      "skills/prism/tests/swarm-native-settings.test.mts",
+      "skills/prism/tests/swarm-control-policy.test.mts",
+      "skills/prism/tests/studio-config.test.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 2.69
+  },
+  {
+    "name": "helm",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/prism-swarm-config.test.mjs"
+    ],
+    "exitCode": 1,
+    "seconds": 16.36
+  },
+  {
+    "name": "types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "seconds": 6.147
+  }
+]

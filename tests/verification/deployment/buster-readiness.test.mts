@@ -5,6 +5,8 @@ import os from 'node:os';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {parseAllDocuments} from 'yaml';
+import yaml from 'js-yaml';
+import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
 import {runDependencyProcess} from '../../../skills/buster/engine/test-gates/dependency-process.ts';
 import {BuildkitReadiness} from '../../../skills/buster/engine/test-gates/buildkit-readiness.ts';
 
@@ -45,8 +47,18 @@ test('missing native BuildKit fails closed; concurrent callers share one check a
  const stopped=await check.check();assert.equal(stopped.code,'DEPENDENCY_CANCELLED');assert.equal(stopped.errno,null);
  assert.throws(()=>new BuildkitReadiness({buildctlExecutable:'/usr/local/bin/buildctl',buildkitHost:'unix:///buildkit.sock',maximumExecutionMs:30001,maximumOutputBytes:1024}),/DEPENDENCY_PROCESS_LIMIT_INVALID/u);
 });
-test('actual Helm uses bootstrap and functional readiness separately from liveness',()=>{
- const rendered=spawnSync('helm',['template','readiness-test','charts/kubeclaw','-f','my-values/buster-values.yaml','--set','runtimeInfrastructure.registry.endpoint=https://registry.example.test','--set','runtimeInfrastructure.registry.transport=https','--set','runtimeInfrastructure.registry.authSecretName=registry-test'],{encoding:'utf8'});
+test('actual Helm uses bootstrap and functional readiness separately from liveness',t=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'readiness-helm-'));
+ t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ const values=yaml.load(fs.readFileSync('my-values/buster-values.yaml','utf8')) as { extraContainers: Array<{ name: string; image: string }>; busterNative?: unknown };
+ const policy=yaml.load(fs.readFileSync('my-values/infra/native-worker-pools.yaml','utf8')) as { nodeName: string; pools: { buster: { namespace: string } } };
+ policy.nodeName='readiness-render-only';policy.pools.buster.namespace='readiness-test';
+ const binding=nativePoolPolicy(policy,'buster');
+ values.busterNative={namespace:'readiness-test',nodeName:binding.nodeName,policyDigest:binding.policyDigest};
+ // Valid-shaped immutable reference is render-only; no image existence or activation claim.
+ values.extraContainers.find((item:{name:string})=>item.name==='buster-v2-runtime')!.image=`ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`;
+ const file=path.join(root,'values.yaml');fs.writeFileSync(file,yaml.dump(values));
+ const rendered=spawnSync('helm',['template','readiness-test','charts/kubeclaw','--namespace','readiness-test','-f',file,'--set','runtimeInfrastructure.registry.endpoint=https://registry.example.test','--set','runtimeInfrastructure.registry.transport=https','--set','runtimeInfrastructure.registry.authSecretName=registry-test'],{encoding:'utf8'});
  assert.equal(rendered.status,0,rendered.stderr);
  const deployment=parseAllDocuments(rendered.stdout).map(doc=>doc.toJSON()).find(doc=>doc?.kind==='Deployment'&&doc.spec.template.spec.containers.some((item:{name:string})=>item.name==='buster-v2-runtime'));
  const worker=deployment.spec.template.spec.containers.find((item:{name:string})=>item.name==='buster-v2-runtime');

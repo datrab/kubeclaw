@@ -1,0 +1,15 @@
+{
+  "reviewer": "root",
+  "criteriaSha256": "0778836653bbb72af2be1854b5260bf74acdbb3e0b3fbfbc3baeeb4085ffd3c9",
+  "status": "accepted-before-integration",
+  "requiredBoundaries": [
+    "actual close and successful capability drain jointly required for recovery",
+    "signal error must remain observable independently of disposal confirmation",
+    "withheld close and nonsettling capability remain unconfirmed",
+    "normal retained cleanup and explicitly forced replacement are distinct tests",
+    "execute IPC rollback marker and final cleanup-priority summary are distinct observations",
+    "failed cleanup cannot silently permit retry",
+    "historical provider safety and durable recovery remain open"
+  ],
+  "runtimeClaim": false
+}

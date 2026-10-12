@@ -1,0 +1,52 @@
+[
+  {
+    "source": "package.json",
+    "snapshot": "00-package.json.txt",
+    "sha256": "8daee864107192c5f031fa2a4808b1ae78b897bf438346f116f30805eebc64ff"
+  },
+  {
+    "source": "skills/prism/package.json",
+    "snapshot": "01-package.json.txt",
+    "sha256": "058d49e06546650649ae9922159c53a255a203819ee51a9a2b5b8902c897cb2c"
+  },
+  {
+    "source": "skills/prism/integration/worker-concurrent-resource-attribution.mts",
+    "snapshot": "02-worker-concurrent-resource-attribution.mts.txt",
+    "sha256": "cb128d51018d0388b914c9d36859620992e310ca53b181d60cf5c4b1c536a423"
+  },
+  {
+    "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "snapshot": "03-config-inventory-20260920.md.txt",
+    "sha256": "2077562b4b28ac9c3465da41e9cb6387b1102a7b4198a00257111294fb3e9ed3"
+  },
+  {
+    "source": "docs/review/remediation/implementation/config-resource-policy-20260921.md",
+    "snapshot": "04-config-resource-policy-20260921.md.txt",
+    "sha256": "61a78048c7cec02aa90c95f5ca94dee759913e2a354a0d948e52ab05fda31bee"
+  },
+  {
+    "source": "docs/review/remediation/implementation/prism-native-test-quality-20260921.md",
+    "snapshot": "05-prism-native-test-quality-20260921.md.txt",
+    "sha256": "ec4c8b0450f9d7c77665a57122462cc7fef20b4aec48776c213a3e819772114c"
+  },
+  {
+    "source": "skills/prism/tests/swarm-resource-operation.test.mts",
+    "snapshot": "06-swarm-resource-operation.test.mts.txt",
+    "sha256": "9a25f8052a7776b01cff113d699bf8460b79045c06435f97aaa7124566ad7d03"
+  },
+  {
+    "source": "skills/prism/tests/worker-http-cancellation-native.mts",
+    "snapshot": "07-worker-http-cancellation-native.mts.txt",
+    "sha256": "39be007e67b21e960dcdb11ee81c836bab597d26ca7a04a74827839cea1b2f6c"
+  },
+  {
+    "source": "skills/prism/tests/worker-process-shutdown-native.mts",
+    "snapshot": "08-worker-process-shutdown-native.mts.txt",
+    "sha256": "17d516b69f96cae527736e672d4ce33b34f39efe782d2cf0fb0c9ce6685a71ea"
+  },
+  {
+    "source": "skills/prism/tests/worker-readiness-native.mts",
+    "snapshot": "09-worker-readiness-native.mts.txt",
+    "sha256": "259c25b98529558bcdbc619fe086bbc9a5d91b4951733f09aa18413bf3337ef2"
+  }
+]

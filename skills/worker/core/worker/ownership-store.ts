@@ -3,9 +3,12 @@ import { constants } from 'node:fs';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { withDurableStoreLock, writeDurableState } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
+import { childNameValid, validateChildLimits, type WorkerScopeTopology } from './ownership-children.ts';
+import type { NativeWorkerScopeLimits } from './native-resource-scope.ts';
+import { ownershipTerminalCapacityBytes } from './ownership-capacity.ts';
 import { canonicalJson } from './digest.ts';
 import type { NativeWorkerResourceObservation } from './native-resource-observation.ts';
-import { transitions, identityValid, validateRecord, key, decodeOwnershipState, type WorkerOwnershipState as State } from './ownership-state.ts';
+import { transitions, validateOwnershipHostIdentity, identityValid, validateRecord, key, decodeOwnershipState, type WorkerOwnershipState as State } from './ownership-state.ts';
 
 export interface WorkerOwnershipIdentity {
   readonly workerId: string;
@@ -33,6 +36,7 @@ export interface WorkerOwnershipRecord {
   readonly binding: WorkerScopeBinding | null;
   readonly diagnosis: string | null;
   readonly finalObservation: NativeWorkerResourceObservation | null;
+  readonly topology: WorkerScopeTopology;
 }
 
 
@@ -73,7 +77,7 @@ export class FileWorkerOwnershipStore {
 
   /** A changed boot is only a reboot proof after this store is bound to one host. */
   async bindHostIdentity(hostIdentity: string, currentBootId: string): Promise<void> {
-    if (!/^[A-Za-z0-9][A-Za-z0-9:._-]{0,255}$/u.test(hostIdentity)) throw new Error('WORKER_OWNERSHIP_HOST_IDENTITY_INVALID');
+    validateOwnershipHostIdentity(hostIdentity);
     if (!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(currentBootId)) throw new Error('WORKER_OWNERSHIP_BOOT_IDENTITY_INVALID');
     await withDurableStoreLock(this.#file, async () => {
       const state = await this.#read();
@@ -112,8 +116,10 @@ export class FileWorkerOwnershipStore {
       if (previous.some(record => !['disposed', 'abandoned'].includes(record.phase))) throw new Error('WORKER_OWNERSHIP_RECONCILIATION_REQUIRED');
       const record: WorkerOwnershipRecord = {
         identity, scopeName: `worker-${randomUUID()}`, revision: 1, phase: 'reserved', binding: null, diagnosis: null, finalObservation: null,
+        topology: { kind: 'aggregate.v1', children: [] },
       };
       state.records.push(record);
+      ownershipTerminalCapacityBytes(state, this.#maximumBytes);
       await this.#write(state);
       return structuredClone(record);
     });
@@ -144,11 +150,53 @@ export class FileWorkerOwnershipStore {
     });
   }
 
+  /** The entire topology is CAS-bound and charged to the same durable metadata quota. */
+  async reserveChild(input: WorkerOwnershipRecord, name: string, limits: NativeWorkerScopeLimits): Promise<WorkerOwnershipRecord> {
+    validateChildLimits(limits);
+    if (!childNameValid(name)) throw new Error('WORKER_OWNERSHIP_CHILD_INVALID');
+    const child = { name, limits: { ...limits }, binding: null };
+    return this.#changeChildren(input, current => {
+      if (current.phase !== 'running' || current.topology.children.some(item => item.name === name)) {
+        throw new Error('WORKER_OWNERSHIP_CHILD_RESERVATION_INVALID');
+      }
+      return [...current.topology.children, child];
+    }, true);
+  }
+
+  async bindChild(input: WorkerOwnershipRecord, name: string, binding: WorkerScopeBinding): Promise<WorkerOwnershipRecord> {
+    const captured = { ...binding };
+    return this.#changeChildren(input, current => {
+      const child = current.topology.children.find(item => item.name === name);
+      if (!child || child.binding !== null || current.phase !== 'running') throw new Error('WORKER_OWNERSHIP_CHILD_REBIND_FORBIDDEN');
+      return current.topology.children.map(item => item.name === name ? { ...item, binding: captured } : item);
+    }, false);
+  }
+
+  async #changeChildren(input: WorkerOwnershipRecord,
+    update: (current: WorkerOwnershipRecord) => WorkerScopeTopology['children'], admission: boolean): Promise<WorkerOwnershipRecord> {
+    const expected = structuredClone(input);
+    validateRecord(expected);
+    return withDurableStoreLock(this.#file, async () => {
+      const state = await this.#read();
+      const index = state.records.findIndex(record => key(record.identity) === key(expected.identity));
+      const current = state.records[index];
+      if (!current || canonicalJson(current) !== canonicalJson(expected)) throw new Error('WORKER_OWNERSHIP_CAS_CONFLICT');
+      if (current.topology.kind !== 'aggregate.v1') throw new Error('WORKER_OWNERSHIP_LEGACY_LAUNCH_FORBIDDEN');
+      const updated = { ...current, revision: current.revision + 1,
+        topology: { kind: current.topology.kind, children: update(current) } };
+      validateRecord(updated);
+      state.records[index] = updated;
+      if (admission) ownershipTerminalCapacityBytes(state, this.#maximumBytes);
+      await this.#write(state);
+      return structuredClone(updated);
+    });
+  }
+
   async #read(): Promise<State> {
     let handle;
     try { handle = await fs.open(this.#file, constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK); }
     catch (error) {
-      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return { schemaVersion: 'worker-ownership-store.v2', hostIdentity: null, records: [] };
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return { schemaVersion: 'worker-ownership-store.v3', hostIdentity: null, records: [] };
       throw error;
     }
     let value: unknown;

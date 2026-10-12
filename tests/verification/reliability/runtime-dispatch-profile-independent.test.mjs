@@ -43,7 +43,7 @@ test('independent closed profile never consumes historical model keys on actual 
     allowedHeaders: ['content-type', 'idempotency-key', 'x-kubeclaw-signature']}});
   const journalFile = path.join(root, 'effects.jsonl');
   const coordinator = () => new EffectCoordinator(new FileEffectJournal(journalFile), undefined, undefined,
-    new FileResourceLockManager(path.join(root, 'locks')));
+    new FileResourceLockManager(path.join(root, 'locks')), 300_000);
   const adapter = dispatch({config: {targets: {forge: {endpoint: `${origin}/dispatch`, authentication: 'hmac', tokenSecret: 'review.secret'}}},
     invokeConfidential: async (capability, request) => {
       assert.ok(['network.http', 'secrets.read'].includes(capability));

@@ -1,8 +1,16 @@
 # Behebungsplan nach Inventar, Einzelreviews und Traces
 
+**Codex-Cloud-Checkpoint:** [aktueller Einstieg, Zielbranch und erhaltene Belege](CLOUD-READY.md). `codex/cloud-config-handoff-20261012` ist der zu prüfende Übergabebranch; `main` wird nicht überschrieben. Große reproduzierbare Tool-/DB-/Dependencycaches bleiben außerhalb Git, Originalresultate und Quellbindungen werden erhalten.
+
+**Aktive CONFIG-Definition (12. Oktober):** [vollständiger Scope, Eigentümer, Profile und Abnahme](config-definition-20261012.md), [48 Plugins / 57 Configschemas](config-scope-inventory-20261012.json), [unabhängige Prüfung](independent-config-definition-20261012.md). [Cloud-Wiedereinstieg und Übertragungsgrenzen](resume/CLOUD-HANDOFF-20261012.md). D20 bestätigt den Systemeinstieg `pipeline.json` mit Komponentenreferenzen und geeignete Änderungen ab dem nächsten Modulstart; keine neue Codeimplementation.
+
+**Aktuelle Entscheidung und Reihenfolge (12. Oktober 2026): [beschlossener Arbeitsplan](implementation-order-20261012.md), [D18/D19](decisions.md#d18--kubernetes-ausführung-statt-eigener-nativer-hostpools) und [detaillierte Workervereinfachung](worker-execution-simplification-20261012.md).** CONFIG → Test-Refactoring → Cgroup-/Worker-Ausführungsrefactoring → zwölf offene Findings. Zielwechsel akzeptiert unter der Bedingung wesentlicher Vereinfachung und besserer Skalierbarkeit; aktueller Auftrag ist Dokumentation ohne Codebeginn. [Neue Bestandsaufnahme](assessment-20261012.md).
+
+**Historischer Ausführungsstand (9. Oktober 2026): [exakter Stand und Restnachweise](resume/HANDOFF-20261009.md).** Seine Implementierungsreihenfolge ist durch die obige Entscheidung abgelöst. Ältere Laufmeldungen unten bleiben historisch.
+
 Planungsstand 2026-09-09. **154 historische Finding-Kennungen vollständig erfasst und 14 Arbeitspaketen zugeordnet. Planungsauftrag abgeschlossen; aktive Umsetzung auf `fix/remediation-foundations-20260909`, siehe [Fortschritt](progress.md).** Entscheidungen sind bestätigte Zielvorgaben, keine Beschreibung des gegenwärtigen Implementierungsstands.
 
-- [Bestätigte Entscheidungen D01–D12](decisions.md)
+- [Bestätigte Entscheidungen](decisions.md)
 - [Arbeitspakete, Reihenfolge und Abnahmekriterien](work-packages.md)
 - [Vollständiges Register mit Originalquellen](register.md)
 - [Maschinenlesbarer Prüf- und Fortschrittsstand](register.json)
@@ -37,11 +45,23 @@ Das Infrastrukturreview berücksichtigt zusätzlich Cilium-Code an `1313cc3a89d7
 | offen | Erfasst, aktuelle Ursache vor Umsetzung nochmals zu bestätigen. |
 | in Bearbeitung | Zuständiger Bearbeiter, aktueller Commit und konkrete Arbeit festgehalten. |
 | implementiert | Änderung vorhanden; Commit erforderlich, Verifikation kann noch offen sein. |
-| blockiert | Konkrete Voraussetzung/Entscheidung fehlt; nächster Schritt und Zuständigkeit genannt. |
 | verifiziert | Erforderliche Abnahmekriterien dieses Findings mit tatsächlichen Nachweisen erfüllt. |
-| widerlegt / durch Zielentscheidung ersetzt | Begründeter Abgleich mit Quellen und bestätigter Entscheidung; keine stille Löschung. |
 
-Verifikation separat: nicht ausgeführt / bestanden / fehlgeschlagen / blockiert. Bei nur lokaler Verifikation und erforderlichem offenen Clusterbeleg bleibt das Finding **implementiert** mit offener Betriebsprüfung. Dokumentationsfindings können durch konkret geprüfte korrigierte Dokumentation geschlossen werden; eine Betriebsfrage braucht den passenden realen Nachweis. Kein globales „alles gefixt“ bei offenen Kennungen.
+Das aktuelle Register akzeptiert genau diese vier Findingstatus. Blockierungen, Widerlegungen und Auswirkungen bestätigter Zielentscheidungen werden mit Begründung in den Prüfgrenzen, nächsten Schritten oder Entscheidungshinweisen dokumentiert; sie sind keine zusätzlichen Statuswerte des gepflegten Generators.
+
+Verifikation wird separat als nicht ausgeführt, bestanden, fehlgeschlagen oder blockiert geführt. Gemäß [D12](decisions.md#d12--lokaler-abschluss-und-separate-live-abnahme) darf ein Finding bei vollständig korrigiertem Code und ausreichender lokaler Testabdeckung **verifiziert** sein; ausstehende Live-/Cluster-Abnahmen werden ausdrücklich separat ausgewiesen. Fehlende Implementierung oder lokale Nachweise erlauben diesen Abschluss nicht. Maßgeblich für den aktuellen Auftrag sind die [Abnahmekriterien einschließlich Dokumentationspflicht](acceptance-20260920.md). Dokumentationsfindings benötigen konkret geprüfte Dokumentation; eine Betriebsfrage benötigt den jeweils geforderten realen Nachweis. Die frühere Vorgabe, jedes Finding bis zur Clusterabnahme auf **implementiert** zu belassen, ist durch D12 ersetzt.
+
+## Register pflegen und prüfen
+
+[register.json](register.json) ist die gepflegte Quelle für Einzelstatus, Belege und Prüfgrenzen. Nach einer belegten Einzelentscheidung werden die Darstellungen erzeugt und geprüft:
+
+```sh
+node scripts/review/remediation-register.mjs --write
+node scripts/review/remediation-register.mjs --check
+node --test scripts/tests/remediation-register.test.mjs
+```
+
+Der Generator aktualisiert Register-Markdown, aktuelle Zähler in Fortschritt und Übergabe sowie die JSON-Zählersumme. Er ändert keine fachlichen Einzelstatus und lässt historische Checkpoints erhalten. `--check` schreibt nichts. Die Prüfung erkennt Struktur-, Beleg- und Darstellungsfehler; sie ersetzt keine fachliche Abnahme der verlinkten Implementierung. Commitfeste historische Belege werden über lokale Gitobjekte aufgelöst; fehlende Objekte in einem flachen Checkout führen zu einem sichtbaren Fehler. Prüfumfang und Grenzen stehen im [Registerkonsistenznachweis](implementation/register-consistency-20260920.md).
 
 ## Grenzen des ursprünglichen Planungsauftrags
 

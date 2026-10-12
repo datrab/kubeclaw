@@ -1,0 +1,46 @@
+# Retirement inventory final digest verification
+
+Pre-edit criteria, 2026-09-21. The original retirement-plan test observed a
+same-size rewrite for which `text()` rejected the changed digest but the final
+`verifyUnchanged()` failed to add its blocker. Final verification currently trusts
+file timestamps and identity without comparing the inventoried content digest.
+A matching metadata stamp is not proof of unchanged bytes.
+
+| Criterion | Required observation |
+| --- | --- |
+| IG1 | Final verification rereads each previously hashed regular file and compares its original digest; a same-size rewrite with matching metadata is rejected. |
+| IG2 | Unchanged content passes; growth, shrinkage, disappearance, path replacement and existing directory/scan protections remain enforced. |
+| IG3 | Reads remain bounded by the original inventoried byte size; no configured quota increases and no unbounded content allocation. An already unhashable inventory remains blocked. |
+| IG4 | Original planner/retirement callers and a deterministic metadata-collision probe execute; restoring the old stat-only guard fails the probe. No sleeps are used to hide timing sensitivity. |
+| IG-DOC | Describe repeated digest verification, its bounded I/O cost and its role inside the existing writer fences. No claim of a transaction against arbitrary writers ignoring those fences. Fresh independent review required. |
+
+Implementation complete; final independent review is pending alongside the
+closure-retirement caller tests.
+
+`verifyUnchanged()` now uses the existing `hashFile()` for each previously hashed
+regular file and compares its original digest. The existing 64 KiB streaming
+buffer, exact inventoried-size bound, descriptor checks/closure and parent checks
+remain in use. No quota or scan limit changes. Files lacking an initial hash
+retain their original inventory blocker. Each verification can reread at most
+the original scan's configured total byte budget; `bytesHashed` continues to
+count unique initial-scan bytes rather than cumulative verification I/O.
+
+Eight focused tests pass, including a deterministic metadata-collision model
+with actual file mutation and content reads. All fifteen original retirement-plan
+tests pass using actual GNU flock; canonical lint for the module and new test
+passes. Restoring the old production module in a private copy fails exactly the
+new collision assertion (seven other cases still pass). Reproduction and raw
+logs: `docs/review/evidence/inventory-digest-guard-20260921/`.
+
+The independent reviewer additionally ran 1,000 real same-size rewrites before
+and after without metadata mocking. Before: 807 actual stamp collisions, all
+807 changes missed. After: 759 actual stamp collisions, zero missed changes.
+The differing collision count reflects observed filesystem timing, not a tuned
+limit. Both raw observations and the captured old method are retained under
+`docs/review/evidence/attempt-closure-projection-independent-20260921/`.
+
+The retention runbook describes repeated digest verification and its cost inside
+the existing writer fences. This correction is not a filesystem transaction
+against a writer that ignores those fences; no such guarantee is claimed. The deterministic probe models
+coarse metadata while mutating and rereading real file bytes; it does not claim
+to configure the filesystem timestamp resolution.

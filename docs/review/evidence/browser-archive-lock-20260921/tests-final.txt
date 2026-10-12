@@ -1,0 +1,17 @@
+✔ BA01 lock requires complete architecture and archive identities (5.540991ms)
+✔ BA02 installed package and registry drift rejected before download (2.876034ms)
+✔ BA03 corrupt size fails before extraction or publication (11.089752ms)
+✔ BA03 corrupt sha256 fails before extraction or publication (2.279688ms)
+✔ BA04 existing destinations and dangling symlinks preserved (1.425296ms)
+✔ BA04 only one concurrent installer may publish (77.459931ms)
+✔ BA05 prism publishes three verified directories with permissions and original markers (4.72001ms)
+✔ BA02 real CLI rejects authored/generated drift before loading downloader (113.711304ms)
+✔ BA06 both production Dockerfiles replace unverified archive installation (1.433147ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 567.39216

@@ -1,0 +1,156 @@
+{
+  "terminalExit": 130,
+  "reason": "Parent requested stop before further runs lacking explicit private-chart alias guard",
+  "newHelmCasesExecuted": false,
+  "canonicalConfigChecks": [
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/.semgrep.yml",
+      "sha256": "430adf26f8a72db1275e92061d33a2e1c66ef29199fcde647e3ac34ec51de58d",
+      "device": 2306,
+      "inode": 11701879,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/.tflint.hcl",
+      "sha256": "47c7d922abb5f4d1704e291c92964491dc74dae658b9278245a5341aad954b8a",
+      "device": 2306,
+      "inode": 11701880,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/.yamllint.yml",
+      "sha256": "32e922f3c1c45cbef3d46fe40a476460a10ee1c44794436bd8a3d3f10f62513c",
+      "device": 2306,
+      "inode": 11701881,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "a04de312879696876c9bf92b084b157155152d26e86bfa3023896ca8c53426f1",
+      "device": 2306,
+      "inode": 11702285,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+      "sha256": "224c23972669a3bf2fc06cfb16a16826a5fa9ec034deceaa56b3cd0aa15b6728",
+      "device": 2306,
+      "inode": 11701882,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs",
+      "sha256": "09530ef3214cb9186fb421e38898b7421576d87942f2fdb4784a87314c9cacae",
+      "device": 2306,
+      "inode": 11701883,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
+      "sha256": "ad76b2e0987bc7f8f8df9480d2fc11d8e123b229293811b0f2c4871b7884e138",
+      "device": 2306,
+      "inode": 11701884,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/eslint.config.mjs",
+      "sha256": "d0bf5f5735be8ad26e7d7ab566d849c26801b9914248e8ad08c1b0a4d5e40d55",
+      "device": 2306,
+      "inode": 11701885,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/jscpd-tests.json",
+      "sha256": "ad5863319bfcde746150cdd37f36664d82a84e075b0bdc341ff151a81b9838b5",
+      "device": 2306,
+      "inode": 11701886,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/jscpd.json",
+      "sha256": "0dc8789cd2cbf1341eed9bc43ae4991c60e80bb9825ecd843c0b6bc594fe6af9",
+      "device": 2306,
+      "inode": 11701887,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/knip.json",
+      "sha256": "f3b6ced7573925bf338b8d3c9789d794792af62364fae1f227c9c997624b5d23",
+      "device": 2306,
+      "inode": 11701888,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+      "sha256": "3c0e2815bc1154e89fdeca2623adbc5018a4b6348f966bdec6dadf82cbc32781",
+      "device": 2306,
+      "inode": 11701889,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/lint-baseline.json",
+      "sha256": "de99dfe709e8779d55b1079334cea0415b661f3933cc32bd36260fb3bc393ed7",
+      "device": 2306,
+      "inode": 11701890,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/lint-policy.json",
+      "sha256": "2c3a9eb507d31524d8718febaed5df780e12438037e0e61fcedf438748802993",
+      "device": 2306,
+      "inode": 11701891,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-control.config.json",
+      "sha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+      "device": 2306,
+      "inode": 11713445,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-execution.config.json",
+      "sha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+      "device": 2306,
+      "inode": 11713446,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-studio.config.json",
+      "sha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+      "device": 2306,
+      "inode": 11713447,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-worker.config.json",
+      "sha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834",
+      "device": 2306,
+      "inode": 11713448,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json",
+      "sha256": "1fd90067492b1a5cafd31d7618015a9cdd15fa3315f086eebcdb2a51338a5c58",
+      "device": 2306,
+      "inode": 11701892,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs",
+      "sha256": "e80eaa390bc2b0887e7f9d2380f38a1f9d394ec7bfab3f268cd3643b5cc95160",
+      "device": 2306,
+      "inode": 11701893,
+      "beforeAfterMatch": true
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/worker-core.config.json",
+      "sha256": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615",
+      "device": 2306,
+      "inode": 11714262,
+      "beforeAfterMatch": true
+    }
+  ],
+  "fullDrift": [],
+  "runnerAndInterruptedChildAbsent": true
+}

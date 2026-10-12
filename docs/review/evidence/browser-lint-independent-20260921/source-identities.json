@@ -1,0 +1,42 @@
+[
+  {
+    "source": "scripts/browser-archive-lock.mjs",
+    "snapshot": "00-browser-archive-lock.mjs.snapshot",
+    "sha256": "ec668e5b4658ed819410a301b8c25320ace2c2e6c457aa2cf0e1dc5e084997e9"
+  },
+  {
+    "source": "scripts/updates/runtime-inputs.mjs",
+    "snapshot": "01-runtime-inputs.mjs.snapshot",
+    "sha256": "d846f387b74d9cd71cb7b4515eb99da238fb1ce54b072525a075ec0ed299232a"
+  },
+  {
+    "source": "charts/kubeclaw/files/config/eslint.config.mjs",
+    "snapshot": "02-eslint.config.mjs.snapshot",
+    "sha256": "b0a2d3600378221e471e30240e82e511ead8f5c7019cb970957fd30e4bdd8587"
+  },
+  {
+    "source": "scripts/tests/browser-archive-lock.test.mjs",
+    "snapshot": "03-browser-archive-lock.test.mjs.snapshot",
+    "sha256": "6a8e55c013f8a99c34e152748314e36ebe41fe6030f038f57c2e18f28b8857bf"
+  },
+  {
+    "source": "tests/verification/deployment/runtime-input-locks.test.mjs",
+    "snapshot": "04-runtime-input-locks.test.mjs.snapshot",
+    "sha256": "e72d4da97379a33c9af72ff2c938d8d88bed46f75a77cee131dad3eeb64d39c3"
+  },
+  {
+    "source": "scripts/tests/trivy-database-lock.test.mjs",
+    "snapshot": "05-trivy-database-lock.test.mjs.snapshot",
+    "sha256": "6b41e748bb9b26a2753c9adfdf98e1be011db2f60f74020688f19254febe6fc2"
+  },
+  {
+    "source": "tests/verification/deployment/versions.test.mjs",
+    "snapshot": "06-versions.test.mjs.snapshot",
+    "sha256": "53e384c7c3b4a8925f49c570270ded1ca5ebb15dd82ef13290c38cee4e565f07"
+  },
+  {
+    "source": "docs/review/remediation/implementation/browser-lint-cleanup-20260921.md",
+    "snapshot": "07-browser-lint-cleanup-20260921.md.snapshot",
+    "sha256": "3bdc54e38b735fbb912a0a576ac03d958c64422663ec58fdbdc869989625d799"
+  }
+]

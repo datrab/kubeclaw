@@ -1,3 +1,4 @@
+busterComponentFile: files/config/profiles/buster-engine.runtime.config.json
 # Buster production values. The gateway owns Buster agent sessions; the
 # colocated v2 runtime owns deterministic suites and rootless BuildKit.
 agentRole: "buster"
@@ -106,16 +107,10 @@ extraContainers:
         value: /var/lib/buster-v2/plan-jobs
       - name: BUSTER_PLAN_RUN_DIR
         value: /var/lib/buster-v2/runs
-      - name: BUSTER_V2_MAX_ARCHIVE_BYTES
-        value: "67108864"
-      - name: BUSTER_V2_MAX_EXTRACTED_BYTES
-        value: "536870912"
       - name: BUSTER_V2_RESULT_ROOT
         value: /workspace/git-repo/.swarm/runtime-results
       - name: BUSTER_V2_KUBERNETES_CREDENTIALS
         value: /var/run/buster-worker/kubernetes
-      - name: BUSTER_ALLOWED_SOURCE_SECRETS
-        value: kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr
       - name: CONTAINER_BUILD_BUILDKIT_HOST
         value: unix:///run/user/1000/buildkit/buildkitd.sock
       - name: BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT
@@ -178,7 +173,7 @@ extraContainers:
         # The supervisor uses these only to prepare and enter the unprivileged
         # per-job identity. setpriv drops the complete capability set before
         # any submitted suite code starts.
-        add: ["CHOWN", "SETGID", "SETPCAP", "SETUID"]
+        add: ["CHOWN", "KILL", "SETGID", "SETPCAP", "SETUID"]
 extraVolumes:
   # Only the v2 sidecar mounts this authoritative receipt store. The Buster
   # gateway and submitted suite code cannot read or mutate worker state.

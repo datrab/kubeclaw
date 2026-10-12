@@ -25,7 +25,7 @@ PVC sizes. MiB/GiB denote powers of 1024.
 | --- | --- | --- |
 | Nova `platform.storageRoot/runs/v2-<sha256(runId UTF-8)>` | `events.jsonl`, `observer-checkpoints.jsonl`, `observer-deliveries.jsonl`, administrative decisions, signals and graph/registry snapshots. `FileJournal` has no retention deadline or total-byte quota. A legacy directory may be selected only after its event identity is verified by `runRoot()`. | Filesystem/inode exhaustion stops writes; deleting a prefix breaks the journal sequence/hash chain. |
 | Nova `<runRoot>/observability/admission/admission.json` | Up to 1,000,000 admitted records and 4 GiB snapshot bytes; ingress 16 MiB; quarantine 10,000 records/1 GiB within the enclosing snapshot budget. | `OBSERVABILITY_ADMISSION_FULL`; confirmed history has no admission compaction API. |
-| Nova `<runRoot>/observability/attempts` | `attempt-store.json` plus evidence blobs: 100,000 evidence objects, 10 GiB aggregate evidence, 1 GiB per object, 100,000 results, 100,000 closures and 1 GiB metadata. | Evidence, result, closure or metadata writes fail explicitly at their respective limits. |
+| Nova `<runRoot>/observability/attempts` | `attempt-store.json` plus evidence blobs: 100,000 evidence objects, 10 GiB aggregate evidence, 1 GiB per object, 100,000 resident results, 100,000 resident closures and 1 GiB metadata (including all retained projection references/receipts). | Evidence, result, closure or metadata writes fail explicitly at their respective limits. |
 | Buster `<runtimeRoot>/<sha256(jobId)>/observability` | Remote-plan job directory resolved by the service, with `admission` and `attempts` subdirectories. Admission: 10,000 records/256 MiB, ingress 16 MiB, quarantine 1,000 records/64 MiB. Attempts: 10,000 evidence objects/results/closures, 10 GiB evidence, 1 GiB per object, 256 MiB metadata. Injected stores must match the configured directories. | The same explicit admission/attempt capacity failures; a terminal job directory is not automatically deletable. |
 | Buster configured `artifactRoot` (remote jobs: `<jobRoot>/artifacts`) and remote job-store root | Original diagnostic files and reports; the remote store separately retains job identities and result blobs. Store ownership and limits come from the service/adapter configuration, not the demo namespace. | Preserve referenced result/artifact identities when diagnosing per-job storage. Removing the job directory does not retire shared job records. |
 | Artifact adapter configured `artifactRoot` | `records/store.json` metadata defaults to 100,000 records/256 MiB; content-addressed blobs have a separate 256 MiB aggregate bound and 16 MiB individual default. | `DURABLE_RECORD_STORE_FULL` or `DURABLE_BLOB_STORE_LIMIT_EXCEEDED`; an individual oversized blob fails separately. |
@@ -81,6 +81,25 @@ job. It preserves workspace diagnostics, scratch, evidence, artifacts,
 observability and durable records. These reproducible input copies are distinct
 from D07 retained logs.
 
+This cleanup requires Linux with `/proc/self/fd` available. It opens each parent
+directory without following symlinks and holds directory descriptors until the
+deletion finishes. Replacing the job or workspace pathname during deletion
+therefore cannot redirect cleanup into another directory. A symlink in any
+supplied ancestor fails with `BUSTER_TERMINAL_WORKSPACE_PARENT_INVALID`; inspect
+the configured root and the actual path components before retrying. There is no
+pathname-based fallback when descriptors cannot be opened.
+
+Descriptors protect the directory boundary; they do not prove process ownership
+or quiescence. The caller must establish that all writers and retained fixtures
+have stopped before calling cleanup. The current production service still
+preserves inputs after restart because terminal job metadata alone does not
+prove orphan termination. It also retains inputs after execution errors or
+unproven cleanup. Do not manually delete those roots based solely on a terminal
+status. The required native ownership/recovery integration remains
+[open in the cutover matrix](../review/remediation/implementation/buster-native-cutover-20260920.md).
+Embedded archives in durable job records are separate retained copies; deleting
+workspace inputs does not release their metadata quota or result/artifact quota.
+
 The [durable record/blob interfaces](../../skills/common/plugin-runtime/foundation/observability/durable-records.ts)
 provide append/read/transition and put/get. The concrete FileDurableRecordStore
 also has an explicit writer-fenced `retire` operation for owned v2 records. It
@@ -128,6 +147,69 @@ ACK. Run, store and journal writer fences protect the transition. See the
 [original acceptance and recovery tests](../../tests/verification/reliability/admission-retirement.test.mjs)
 and [independent consumer cases](../../tests/verification/reliability/attempt-projection-review.test.mjs).
 
+The public `FileDurableAttemptStore` entry point remains
+[`durable-attempts.ts`](../../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts).
+Its internal state owner (`attempt-state.ts`) owns the serialization queue,
+kernel writer fence, versioned snapshot I/O and projection maps. Evidence files
+and admission, result commit/completion, closure/completeness validation, and
+manual retirement are implemented in `attempt-evidence.ts`, `attempt-results.ts`,
+`attempt-completeness.ts`, and `attempt-retirement.ts`, respectively. This
+responsibility split changes no persisted format, quota, expiry, authorization or
+lock order. Retirement's final journal-fenced commit helpers remain synchronous.
+See the [quality extraction evidence](../review/remediation/implementation/attempt-store-quality-20260921.md).
+
+A separate manual closure projection is available after the selected Nova result
+has been projected by the preceding operation:
+
+```sh
+node scripts/retire-attempt-closure.mjs --plan /absolute/closure-scope.json
+node scripts/retire-attempt-closure.mjs --apply /absolute/closure-scope.json
+```
+
+The scope uses `schemaVersion: "attempt-closure-retirement-scope.v1"` and
+`action: "compact-imported-closure"`. Its remaining top-level fields are the
+original result scope's canonical `novaStorageRoot`, `attemptRoot`, unchanged
+`attemptLimits`, `inventoryLimits` and `intent`. In the intent, select the original
+`pipelineRunId`, `attemptId`, `claimGeneration`, `resultDigest`, `recordDigest`,
+`journalSequence` and `journalHash`; add the selected `closureDigest`, a distinct
+`operationId` and `actor`, the current run `runJournalHead`/`snapshotDigest`, and
+`expectedStoreDigest` of the current attempt-store bytes **after** result
+projection. `runRoot` remains the original canonical run. Retain this exact scope
+for idempotent replay; changing its intent is a conflict.
+
+`--plan` only reads and validates current files; its predicted release is advisory.
+`--apply` repeats authorization under the original run, attempt-store and import
+journal writer fences. Final inventory verification rehashes every originally
+hashed file through streaming reads of at most 64 KiB, with each read limited to
+the remaining inventoried bytes. It compares the content digest, original size,
+path identity and stat stamps. Rehashing existing inventoried files reads at most
+the original configured scan-byte budget per pass; scanning newly appearing files
+is separate work and blocks retirement. `bytesHashed` accounts for the unique
+initial scan, not cumulative verification I/O. This verification runs inside the existing writer fences; it is not a
+transaction against a writer that ignores those fences. Waiting/uncertain owners, stale identities or checkpoints,
+missing evidence and foreign sources block the operation. Small closures whose
+replacement is not smaller fail with `OBSERVABILITY_CLOSURE_RETIREMENT_NOT_SMALLER`
+and release no slot or bytes.
+
+Attempt-v3 retains the full original closure inside `completionIntent` and a
+strict direct reference in the closure array. That reference requires the existing
+validated imported-result projection; it cannot reference another closure
+reference. The receipt retains operator/operation identity and a digest of the
+complete retirement intent. All references and receipts count toward the original
+metadata-byte limit. A successful first apply reports actual net `releasedBytes`
+and `releasedClosures: 1`; exact replay reports zero, including after subsequent
+unrelated writes. The resident closure limit excludes only validated projected
+copies. Logical snapshots/completeness still reconstruct all closures, and their
+memory consumption remains bounded by retained metadata and the existing bounded
+journal reader rather than the resident closure count alone.
+
+Late completion delivery keeps its original Admission ACK/cursor, finalized
+attempt generations remain closed, and import replay remains `already-imported`.
+No evidence/blob bytes, logs, full completion intents or retained import history
+are deleted. Unknown/malformed references fail closed. This operation does not
+release evidence capacity, remove permanent identity metadata or make the global
+retirement planner executable. See the [bounded acceptance and evidence](../review/remediation/implementation/attempt-closure-projection-20260921.md).
+
 `node scripts/retire-nova-dispatch.mjs --apply /absolute/scope.json` removes only
 the redundant embedded archive after the original import/source authority and
 retained blob are verified. It preserves job identity, replay and the required
@@ -146,6 +228,116 @@ All scopes must be inventoried from actual configured stores and their unchanged
 limits. These explicit commands do not run automatically and are not executed
 on operational data by this remediation task. Their bounded capacity release
 does not authorize deleting canonical logs, final reports or history.
+
+## Completed human-approval Wait value: bounded implementation awaiting final review
+
+The new manual command is:
+
+```sh
+node scripts/retire-wait-value.mjs --apply /absolute/wait-scope.json
+```
+
+It is a local operator action, not a remote authorization API or an automatic
+retirement policy. Do not invoke it on operational data on the strength of the
+ongoing author checks. Its [implementation and current evidence](../review/remediation/implementation/wait-value-retirement-20260921.md)
+remain subject to the final unfiltered run and independent review.
+
+The scope file must be a regular file with one hard link, not a symlink, at
+most 1 MiB, and unchanged during the bounded read. `WAIT_RETENTION_USAGE`
+means the arguments or absolute scope path are invalid;
+`WAIT_RETENTION_SCOPE_FILE_INVALID` means type, link count or byte bound failed;
+`WAIT_RETENTION_SCOPE_CHANGED` means its observed length or timestamps changed
+during reading. A symlink refused at open can also surface the operating
+system's no-follow error. There is no `--help` or `--plan` mode.
+
+Prepare one scope from the actual owner-configured stores and the original
+completed human-approval-v1 run. This is the exact JSON shape; angle-bracket
+values are placeholders that must be replaced with observed identities and
+canonical digests, not copied as a runnable scope:
+
+```json
+{
+  "schemaVersion": "wait-value-retirement-scope.v1",
+  "action": "project-completed-human-approval-wait",
+  "novaStorageRoot": "/absolute/configured/nova-root",
+  "orchestratorIssuerId": "<configured issuer>",
+  "intent": {
+    "operationId": "<unique manual operation ID>",
+    "actor": "<operator audit identity>",
+    "waitRoot": "/absolute/configured/wait-root",
+    "deliveryRoot": "/absolute/configured/delivery-root",
+    "operatorEffectKey": "<original operator effect key>",
+    "terminalPayloadDigest": "sha256:<terminal record payload digest>",
+    "source": {
+      "schemaVersion": "retained-core-wait-source.v1",
+      "runId": "<original run ID>",
+      "runJournalHead": "sha256:<current original event-chain head>",
+      "snapshotDigest": "sha256:<original snapshot digest>",
+      "eventsPrefixBytes": 1,
+      "effectsPrefixBytes": 1,
+      "signalsPrefixBytes": 1,
+      "eventsDigest": "sha256:<raw complete event-prefix hash>",
+      "effectsDigest": "sha256:<raw complete effect-prefix hash>",
+      "signalsDigest": "sha256:<raw complete signal-prefix hash>",
+      "rootIdentityDigest": "sha256:<canonical original root and file identity digest>",
+      "effectKey": "<original Wait effect key>",
+      "waitId": "wait:<original Wait ID hash>",
+      "originalPayloadDigest": "sha256:<original Wait record payload digest>",
+      "inventoryLimits": {
+        "maximumFiles": 10000,
+        "maximumTotalBytes": 33554432,
+        "maximumSnapshotBytes": 4194304
+      }
+    }
+  }
+}
+```
+
+Replace all three example prefix lengths with the complete original journal
+byte lengths at apply time. Select explicit positive safe inventory limits for
+the manual scope; these example budgets are not new production quota defaults.
+Raw prefix hashes cover the original bytes, including complete line endings.
+The root identity digest uses the existing canonical `payloadDigest` over
+`{root, dev, ino, files}`; `files` contains `{name, dev, ino}` in fixed order:
+`run-snapshot.json`, `events.jsonl`, `effects.jsonl`, `signals.jsonl`.
+The maintained `waitScope` fixture in
+`tests/verification/reliability/wait-value-projection.test.mjs` demonstrates that
+exact construction using actual original producers. It is test code, not an
+alternative migration or authority producer. The owner derives the run path;
+the reference cannot supply an arbitrary source path.
+
+Apply holds the existing **Run → Wait → Delivery** writer fences and revalidates
+full current Core/approval/signal authority, current original or accepted
+projected Delivery request, and the exact terminal receipt through the actual
+CAS/persist. Aliased stores reject before nested acquisition. It replaces only
+the redundant Wait value; a record too small to fund its own reference and
+receipt is rejected unchanged. Output contains `newlyProjected` and
+`releasedBytes`. Exact repeated scope returns `false` and `0` while its current authority checks
+still pass; later Core appends can make that old scope stale and require
+rejection even though the projected Wait remains readable. Changed intent or
+original digest conflicts. Both original Wait-first → Operator retirement and
+Operator-first → Wait retirement remain required supported replay paths.
+Neither path sends another notification.
+
+Reads and identical creates reconstruct the exact original Wait from retained
+original prefixes. They remain independent of unrelated later suffix bytes;
+this does not authorize those suffixes or weaken the existing current-run
+reader. Changed, truncated or replaced original prefixes reject. Keep all
+referenced Core snapshots and history; this operation authorizes no deletion
+of that source evidence. A projected Wait without its owner resolver fails
+closed. The resolver is exposed only to the selected original Wait adapter and
+is revoked on shutdown.
+
+Only net **physical serialized Store bytes** are released, including all new
+reference/receipt overhead. Record count, logical read responses and their RAM
+cost do not decrease; aggregate returned values can exceed the smaller physical
+Store size. Each reconstructed value remains bounded by its original pinned
+entry limit. Existing byte/count quotas are unchanged. Active/waiting runs,
+uncertain or incomplete authority, unsupported Wait producers or delivery
+formats, ownerless/foreign bindings, and missing accepted receipts remain
+protected. Core logs, artifacts, project material and unique blobs are not
+retired. This bounded candidate does not close PCR-OBS-002 or the broader
+retirement contract below.
 
 ## Required broader manual retirement contract — not yet implemented
 

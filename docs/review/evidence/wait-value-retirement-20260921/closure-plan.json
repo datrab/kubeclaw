@@ -1,0 +1,39 @@
+{
+  "state": "Proposal; not a before-run identity manifest",
+  "roots": [
+    "skills",
+    "contracts",
+    "tests",
+    "scripts",
+    "charts/kubeclaw/files/config",
+    "node_modules",
+    "node_modules/.cache/native-host-tools/root"
+  ],
+  "excludedDirectories": [
+    ".git",
+    "node_modules/.cache except explicitly included native-host-tools/root"
+  ],
+  "explicit": [
+    "package.json",
+    "package-lock.json",
+    "tsconfig.base.json",
+    "skills/nova/tsconfig.json",
+    "skills/common/plugin-runtime/tsconfig.json",
+    "/usr/local/bin/node",
+    "/lib/ld-musl-x86_64.so.1",
+    "/usr/lib/libstdc++.so.6",
+    "/usr/lib/libgcc_s.so.1",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-value-retirement-20260921/mutant.mjs",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-value-retirement-20260921/independent-commands.json"
+  ],
+  "additionalRequirements": [
+    "Include reviewer runner and all own probes before capture; exact root entry sets/types/modes and regular hashes, no symlink following during enumeration.",
+    "Record symlink targets and ensure every actually resolved import/tool/library referent is also bound (external referents explicitly).",
+    "Native GNU flock and proot are from the explicit native-host-tools root; LD_LIBRARY_PATH uses that root usr/lib and lib. Include libraries actually resolved for node/proot/flock under this environment.",
+    "Record host Node/loader and Python runner identity as applicable; this is source/dependency provenance, not a full kernel/host safety proof.",
+    "Bind roots before and after, detect added/removed/type/mode/content changes; fail on drift.",
+    "Foundation tsconfig includes Buster engine and worker as well as SDK/Foundation/Nova; broad skills root deliberately includes these.",
+    "Registry discovers installed plugins under skills; include package metadata, README and schemas, not only edited TypeScript.",
+    "Preserve complete tracked diff and exact new source files if reproducing from repository HEAD."
+  ]
+}

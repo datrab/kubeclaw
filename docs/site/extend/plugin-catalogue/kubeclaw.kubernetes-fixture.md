@@ -67,10 +67,11 @@ Run:
 npm test --prefix skills/buster/plugins/kubernetes-fixture
 ```
 
-Package tests found: 0.
+Package tests found: 1.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/kubernetes-fixture/plugin.json`
 - Package root: `skills/buster/plugins/kubernetes-fixture`
 - Authored package guide: `skills/buster/plugins/kubernetes-fixture/README.md`
+- Test: `skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts`

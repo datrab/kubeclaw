@@ -1,0 +1,752 @@
+[
+  {
+    "file": "skills/common/plugins/agent-observability/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 2134,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/common/plugins/notification-observer/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 3770,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 6020,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 18891,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 14185,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 5898,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 4067,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 3537,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 5089,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 2591,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+    "edits": [
+      {
+        "at": 13140,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 9141,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/human-approval/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 4493,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 5780,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/lint/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 4098,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 3147,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 3653,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+    "edits": [
+      {
+        "at": 8606,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/review/tests/live-function.test.ts",
+    "edits": [
+      {
+        "at": 13882,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+    "edits": [
+      {
+        "at": 4398,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+    "edits": [
+      {
+        "at": 717,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+    "edits": [
+      {
+        "at": 2998,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+    "edits": [
+      {
+        "at": 10797,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "edits": [
+      {
+        "at": 4701,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+    "edits": [
+      {
+        "at": 16347,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 15022,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 13538,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 11769,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 9932,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 8619,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 6075,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 4083,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 2724,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+    "edits": [
+      {
+        "at": 2260,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-plugin-system-v2-e2e.mjs",
+    "edits": [
+      {
+        "at": 1904,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-plugin-system-v2-engine.mjs",
+    "edits": [
+      {
+        "at": 598,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+    "edits": [
+      {
+        "at": 2494,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-plugin-system-v2-live-crashes.mts",
+    "edits": [
+      {
+        "at": 10791,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+    "edits": [
+      {
+        "at": 5624,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+    "edits": [
+      {
+        "at": 12770,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 12135,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 9951,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 6019,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 5709,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-plugin-system-v2-resume.mjs",
+    "edits": [
+      {
+        "at": 446,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/check-project-compiler.mts",
+    "edits": [
+      {
+        "at": 12032,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/contracts/quality-provider-runtime.mts",
+    "edits": [
+      {
+        "at": 6627,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/e2e/run-v2-production-pipeline.mts",
+    "edits": [
+      {
+        "at": 20209,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/e2e/scenario-proof.mts",
+    "edits": [
+      {
+        "at": 1175,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/adapter-cleanup-scope.test.mts",
+    "edits": [
+      {
+        "at": 6181,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/adapter-dependency-identity.test.mts",
+    "edits": [
+      {
+        "at": 17067,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 6072,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 4524,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+    "edits": [
+      {
+        "at": 3042,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/admin-approval-fixture.mjs",
+    "edits": [
+      {
+        "at": 1869,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/admin-repair.test.mjs",
+    "edits": [
+      {
+        "at": 1225,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/approval-source-fixture.mjs",
+    "edits": [
+      {
+        "at": 4701,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/attempt-projection-recovery.test.mjs",
+    "edits": [
+      {
+        "at": 767,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs",
+    "edits": [
+      {
+        "at": 5400,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs",
+    "edits": [
+      {
+        "at": 38145,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 25731,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 15233,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/discord-delivery-receipt.test.mts",
+    "edits": [
+      {
+        "at": 4952,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/effect-identity-version.test.mts",
+    "edits": [
+      {
+        "at": 2982,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/external-effect-recovery.test.mts",
+    "edits": [
+      {
+        "at": 4114,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/fixtures/forge-runtime.mts",
+    "edits": [
+      {
+        "at": 9863,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/isolation-session.test.mjs",
+    "edits": [
+      {
+        "at": 6988,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      },
+      {
+        "at": 5921,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "edits": [
+      {
+        "at": 8504,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/observer-recovery.test.mts",
+    "edits": [
+      {
+        "at": 3399,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/operator-delivery.test.mts",
+    "edits": [
+      {
+        "at": 5750,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+    "edits": [
+      {
+        "at": 2742,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/prism-reader-fixture.mjs",
+    "edits": [
+      {
+        "at": 3785,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/redis-transport.test.mts",
+    "edits": [
+      {
+        "at": 4776,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      },
+      {
+        "at": 3867,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/repair-budget-fixture.mjs",
+    "edits": [
+      {
+        "at": 2115,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/report-identity-fixture.mjs",
+    "edits": [
+      {
+        "at": 2740,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/review-cache-storage-negative.test.mjs",
+    "edits": [
+      {
+        "at": 1375,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/review-report-crash-independent.test.mjs",
+    "edits": [
+      {
+        "at": 1264,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/review-report-locale-child.mjs",
+    "edits": [
+      {
+        "at": 1419,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/review-semantic-summary-child.mjs",
+    "edits": [
+      {
+        "at": 1417,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs",
+    "edits": [
+      {
+        "at": 3131,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "tests/verification/reliability/runtime-session-cleanup.test.mts",
+    "edits": [
+      {
+        "at": 9410,
+        "text": ", 300_000",
+        "kind": "explicit-constructor-ttl"
+      }
+    ]
+  },
+  {
+    "file": "scripts/tests/integration/repository-review-supervisor-start.mjs",
+    "edits": [
+      {
+        "at": 2438,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  },
+  {
+    "file": "scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
+    "edits": [
+      {
+        "at": 669,
+        "text": ", effectLockTtlMs: 300_000",
+        "kind": "explicit-platform-ttl"
+      }
+    ]
+  }
+]

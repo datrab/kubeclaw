@@ -1,0 +1,29 @@
+{
+  "status": "unexecuted source recipes; each mutation must match exactly once and preserve a before/after binding",
+  "recipes": [
+    {
+      "field": "minimumHeapMiB",
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "mutation": "Replace this.#policy.minimumHeapMiB in max-old-space calculation only with shipped literal16",
+      "requiredFailure": "DefaultRunner actual argv and V8 heap two-profile assertion"
+    },
+    {
+      "field": "heapFraction",
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "mutation": "Replace this.#policy.heapFraction in max-old-space calculation only with shipped literal0.7",
+      "requiredFailure": "DefaultRunner actual argv and V8 heap two-profile assertion"
+    },
+    {
+      "field": "runtimeMemoryReserveBytes",
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "mutation": "Replace policy.runtimeMemoryReserveBytes in validateLimits only with shipped literal67108864",
+      "requiredFailure": "Direct adapter128MiB reserve profile must reject before spawn"
+    },
+    {
+      "field": "minimumOpenFiles",
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "mutation": "Replace policy.minimumOpenFiles in validateLimits only with shipped literal16",
+      "requiredFailure": "Direct adapter selectedfloor96/request64 must reject before spawn"
+    }
+  ]
+}

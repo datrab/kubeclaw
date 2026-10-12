@@ -1,0 +1,1802 @@
+--- a/charts/kubeclaw/files/config/swarm.config.json
++++ b/charts/kubeclaw/files/config/swarm.config.json
+@@ -20,6 +20,7 @@
+     "prism-studio": "prism-studio.config.json",
+     "prism-worker": "prism-worker.config.json",
+     "prism-execution": "prism-execution.config.json",
+-    "buster-engine": "buster-engine.config.json"
++    "buster-engine": "buster-engine.config.json",
++    "worker-core": "worker-core.config.json"
+   }
+ }
+--- a/charts/kubeclaw/files/config/worker-core.config.json
++++ b/charts/kubeclaw/files/config/worker-core.config.json
+@@ -0,0 +1,11 @@
++{
++  "schemaVersion": "swarm-component.v1",
++  "owner": "worker-core",
++  "settings": {
++    "localRuntime": {
++      "drainTimeoutMs": 300000,
++      "cancellationTimeoutMs": 30000,
++      "replayLimit": 65536
++    }
++  }
++}
+--- a/charts/kubeclaw/templates/_swarm-config.tpl
++++ b/charts/kubeclaw/templates/_swarm-config.tpl
+@@ -17,8 +17,8 @@
+ {{- if ne (len $config.overrides) 0 -}}{{- fail "swarm overrides must be an empty object" -}}{{- end -}}
+ {{- if ne $config.schemaVersion "swarm-entry.v2" -}}{{- fail "swarm entry schemaVersion is invalid" -}}{{- end -}}
+ {{- if not (kindIs "map" $config.components) -}}{{- fail "swarm components must be an object" -}}{{- end -}}
+-{{- $owners := list "prism-control" "prism-studio" "prism-worker" "prism-execution" "buster-engine" -}}
+-{{- if ne (len $config.components) (len $owners) -}}{{- fail "swarm requires exactly five component references" -}}{{- end -}}
++{{- $owners := list "prism-control" "prism-studio" "prism-worker" "prism-execution" "buster-engine" "worker-core" -}}
++{{- if ne (len $config.components) (len $owners) -}}{{- fail "swarm requires exactly six component references" -}}{{- end -}}
+ {{- $components := dict -}}
+ {{- range $owner := $owners -}}
+ {{- $name := printf "%s.config.json" $owner -}}
+@@ -26,7 +26,7 @@
+ {{- $component := mustFromJson (required (printf "swarm component missing: %s" $owner) ($.Files.Get (printf "files/config/%s" $name))) -}}
+ {{- if not (kindIs "map" $component) -}}{{- fail "swarm component must be an object" -}}{{- end -}}
+ {{- if or (ne (len $component) 3) (ne $component.schemaVersion "swarm-component.v1") (ne $component.owner $owner) (not (hasKey $component "settings")) -}}{{- fail (printf "swarm component identity invalid: %s" $owner) -}}{{- end -}}
+-{{- $label := index (dict "prism-control" "control" "prism-worker" "worker" "prism-studio" "studio" "prism-execution" "native" "buster-engine" "buster") $owner -}}
++{{- $label := index (dict "prism-control" "control" "prism-worker" "worker" "prism-studio" "studio" "prism-execution" "native" "buster-engine" "buster" "worker-core" "worker-core") $owner -}}
+ {{- if not (kindIs "map" $component.settings) -}}{{- fail (printf "swarm %s settings must be an object" $label) -}}{{- end -}}
+ {{- $_ := set $components $owner $component.settings -}}
+ {{- end -}}
+@@ -41,6 +41,16 @@
+ {{- $_ := set $config "operator" (dict "prism" (dict "control" (omit $control "dispatchTimeoutMs") "studio" (index $components "prism-studio") "worker" $worker.ingress "native" $native) "buster" (index $components "buster-engine")) -}}
+ {{- $componentSchema := mustFromJson (required "component schema required" (.Files.Get "files/config/swarm-components.schema.json")) -}}
+ {{- $definitions := index $componentSchema "$defs" -}}
++{{- $core := index $components "worker-core" -}}
++{{- if or (ne (len $core) 1) (not (hasKey $core "localRuntime")) (not (kindIs "map" $core.localRuntime)) -}}{{- fail "worker-core.config.json settings.localRuntime is required" -}}{{- end -}}
++{{- $local := $core.localRuntime -}}
++{{- if ne (len $local) 3 -}}{{- fail "worker-core.config.json localRuntime requires exactly three settings" -}}{{- end -}}
++{{- range $key := list "drainTimeoutMs" "cancellationTimeoutMs" "replayLimit" -}}
++{{- $value := index $local $key -}}
++{{- $maximum := ternary (float64 1000000) (float64 2147483647) (eq $key "replayLimit") -}}
++{{- if not (kindIs "float64" $value) -}}{{- fail (printf "worker-core.config.json localRuntime.%s must be an integer" $key) -}}{{- end -}}
++{{- if or (lt $value (float64 1)) (gt $value $maximum) (ne $value (floor $value)) -}}{{- fail (printf "worker-core.config.json localRuntime.%s is out of range" $key) -}}{{- end -}}
++{{- end -}}
+ {{- if not (kindIs "map" $config.operator) -}}{{- fail "swarm operator must be an object" -}}{{- end -}}
+ {{- if not (hasKey $config.operator "prism") -}}{{- fail "swarm operator requires prism" -}}{{- end -}}
+ {{- range $key, $value := $config.operator -}}
+@@ -169,7 +179,7 @@
+ {{- if hasKey .Values "swarmConfigJson" -}}{{- fail "swarmConfigJson duplicates the component bundle author" -}}{{- end -}}
+ {{- $_ := include "kubeclaw.swarmConfig" . -}}
+ {{- $bundle := dict -}}
+-{{- range $name := list "swarm" "prism-control" "prism-studio" "prism-worker" "prism-execution" "buster-engine" -}}
++{{- range $name := list "swarm" "prism-control" "prism-studio" "prism-worker" "prism-execution" "buster-engine" "worker-core" -}}
+ {{- $file := printf "%s.config.json" $name -}}
+ {{- $_ := set $bundle $file ($.Files.Get (printf "files/config/%s" $file)) -}}
+ {{- end -}}
+--- a/docker/Dockerfile.buster-runtime
++++ b/docker/Dockerfile.buster-runtime
+@@ -104,7 +104,7 @@
+ # This copy is the production provider payload. The runtime discovers every
+ # role-approved provider below /app/skills/buster/plugins, including Axe.
+ COPY skills /app/skills
+-COPY charts/kubeclaw/files/config/swarm.config.json charts/kubeclaw/files/config/prism-control.config.json charts/kubeclaw/files/config/prism-studio.config.json charts/kubeclaw/files/config/prism-worker.config.json charts/kubeclaw/files/config/prism-execution.config.json charts/kubeclaw/files/config/buster-engine.config.json /etc/kubeclaw/swarm/
++COPY charts/kubeclaw/files/config/swarm.config.json charts/kubeclaw/files/config/prism-control.config.json charts/kubeclaw/files/config/prism-studio.config.json charts/kubeclaw/files/config/prism-worker.config.json charts/kubeclaw/files/config/prism-execution.config.json charts/kubeclaw/files/config/buster-engine.config.json charts/kubeclaw/files/config/worker-core.config.json /etc/kubeclaw/swarm/
+ COPY scripts/build-plugin-sandbox.mjs /app/scripts/build-plugin-sandbox.mjs
+ COPY tests/verification/contracts/check-pipeline-container-build-production.mts /app/tests/verification/contracts/check-pipeline-container-build-production.mts
+ COPY tests/verification/contracts/check-pipeline-container-build-recovery.mts /app/tests/verification/contracts/check-pipeline-container-build-recovery.mts
+--- a/docs/operations/operator-configuration.md
++++ b/docs/operations/operator-configuration.md
+@@ -3,7 +3,7 @@
+ Centralization is in progress. Six Prism worker settings, two shared native
+ transport settings, three resource-policy settings, nine supervisor settings and
+ three Control service-policy settings, the Control listener port and three Studio
+-settings now come from the five component files referenced by
++settings now come from the six component files referenced by
+ [`swarm.config.json`](../../charts/kubeclaw/files/config/swarm.config.json).
+ Remaining platform, native-worker, Buster, Nova and deployment settings still use
+ their existing loaders; this document does not claim a fully centralized system.
+@@ -17,9 +17,10 @@
+ | `prism-worker.config.json` | `ingress` and native `supervisor` |
+ | `prism-execution.config.json` | shared Prism `resourcePolicy` and `maximumResultBytes` |
+ | `buster-engine.config.json` | `preparation` and `admission` |
++| `worker-core.config.json` | `localRuntime.drainTimeoutMs`, `cancellationTimeoutMs`, and `replayLimit` |
+ 
+ Each document has `schemaVersion: "swarm-component.v1"`, the corresponding `owner`,
+-and `settings`. The entry has `schemaVersion: "swarm-entry.v2"` and five fixed
++and `settings`. The entry has `schemaVersion: "swarm-entry.v2"` and six fixed
+ relative references. Every configurable value is explicit, including nullable
+ values; neither schemas nor code fill missing settings. This migration preserves
+ all existing authored values and does not complete plugin/Orchestrator-Core/host configuration.
+@@ -102,7 +103,7 @@
+ is a separate lifecycle timer.
+ 
+ Edit the responsible component file and use the normal render/release/GitOps path.
+-Prism's chart references the entry and all five component files through explicit
++Prism's chart references the entry and all six component files through explicit
+ repository symlinks; `helm template` and `helm package` include the complete bundle. There is no manual
+ copy or second editable configuration. The generated ConfigMap is mounted
+ read-only in both Control and Worker; its checksum triggers both rollouts when
+@@ -111,7 +112,7 @@
+ 
+ Release materialization permits only the explicit relative aliases recorded in
+ [`release-configuration.mjs`](../../scripts/updates/release-configuration.mjs): the
+-Prism entry, five component files, both schemas and the shared Helm validator;
++Prism entry, six component files, both schemas and the shared Helm validator;
+ Kubeclaw also references both canonical schemas. Edit the canonical targets,
+ never independent chart copies. All linked target bytes must belong to the selected
+ image build's source commit; configuration changes require a matching successful build.
+@@ -120,7 +121,7 @@
+ `SWARM_CONFIG` is required and names an absolute entry path. Both deployed charts
+ select `/etc/kubeclaw/swarm/swarm.config.json`; there is no home-directory fallback.
+ The loader resolves the entry once to its physical ConfigMap generation and reads
+-all five references relative to that directory before activating any consumer.
++all six references relative to that directory before activating any consumer.
+ The snapshot is frozen and never hot-reloaded. Local operators must publish a
+ complete coherent bundle and keep it unchanged while loading. Observed changes
+ are rejected; a stable pre-existing manually mixed bundle cannot be identified
+@@ -310,7 +311,7 @@
+ `studio.controlUrl` are also rejected. Missing fields, extra keys, invalid types
+ or out-of-range values fail before the listener starts. Studio validates the
+ complete referenced bundle and captures its settings at startup; a later change
+-requires a rollout. The chart mounts the whole bundle and includes all six files
++requires a rollout. The chart mounts the whole bundle and includes all seven files
+ in the workload checksum.
+ 
+ The URL must not contain credentials, a non-root path, query, fragment,
+@@ -399,3 +400,10 @@
+ 
+ Local author checks passed at the documented boundaries; fresh combined review,
+ positive native entrypoint and built-image acceptance remain pending.
++
++
++### Local Worker Core policy
++
++`worker-core.config.json`, owner `worker-core`, authors `settings.localRuntime.drainTimeoutMs` (300000), `cancellationTimeoutMs` (30000), and `replayLimit` (65536). All three fields are required; timers accept integer milliseconds from 1 through 2147483647 and replay capacity accepts integers from 1 through 1000000. The entry references this sixth component and both charts deliver all seven bundle files under the same immutable ConfigMap generation. Changing this component participates in the actual workload rollout checksum. There is no environment override or low-level constructor default.
++
++Buster reads the complete bundle once before startup and passes the immutable policy through production service composition and prepared execution into the default Worker Core runtime. Replay capacity counts retained accepted attempt identities inside each prepared-job runtime until their claims expire; a second job receives a separate runtime. It is neither durable replay history nor a process-global admission queue. The existing Buster path does not call Core drain, so this migration does not add a Buster drain lifecycle. Core drain waits `drainTimeoutMs`, cancels remaining attempts, then waits `cancellationTimeoutMs`; its actual consumer tests are separate from Buster replay propagation. Custom low-level runtime injection still requires an explicit policy but does not prove that the injected runtime implements it.
+--- a/docs/operations/prism-operator-guide.md
++++ b/docs/operations/prism-operator-guide.md
+@@ -244,7 +244,7 @@
+ 
+ Set the Studio `settings` in
+ [`prism-studio.config.json`](../../charts/kubeclaw/files/config/prism-studio.config.json).
+-The explicit entry references all five components; Studio validates that complete
++The explicit entry references all six components; Studio validates that complete
+ bundle once before opening its listener. Missing or
+ invalid settings prevent startup. Changing the ConfigMap causes a checksum-based
+ rollout; an already running process retains its startup snapshot.
+--- a/scripts/deploy.sh
++++ b/scripts/deploy.sh
+@@ -1602,7 +1602,7 @@
+   kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- node /runtime-config/kubeclaw-health.mjs readiness
+   kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- test -d /app/skills
+   local config_file
+-  for config_file in swarm prism-control prism-studio prism-worker prism-execution buster-engine; do
++  for config_file in swarm prism-control prism-studio prism-worker prism-execution buster-engine worker-core; do
+     kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- test -f "/etc/kubeclaw/swarm/${config_file}.config.json"
+   done
+   log "${release} smoke passed"
+--- a/scripts/updates/release-configuration.mjs
++++ b/scripts/updates/release-configuration.mjs
+@@ -19,6 +19,7 @@
+   "charts/prism/files/config/prism-worker.config.json": "../../../kubeclaw/files/config/prism-worker.config.json",
+   "charts/prism/files/config/prism-execution.config.json": "../../../kubeclaw/files/config/prism-execution.config.json",
+   "charts/prism/files/config/buster-engine.config.json": "../../../kubeclaw/files/config/buster-engine.config.json",
++  "charts/prism/files/config/worker-core.config.json": "../../../kubeclaw/files/config/worker-core.config.json",
+ };
+ 
+ function assertNoLinkedAncestors(root, relative) {
+--- a/skills/buster/engine/remote-plan-cli.ts
++++ b/skills/buster/engine/remote-plan-cli.ts
+@@ -2,7 +2,7 @@
+ import path from 'node:path';
+ import { Socket } from 'node:net';
+ import { NativeWorkerControlChannel } from '@kubeclaw/worker-core';
+-import { loadBusterSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
++import { loadSwarmSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
+ import { preparationSourceRoot } from './test-gates/preparation-config.ts';
+ import { BusterPreparationClient } from './test-gates/preparation-client.ts';
+ import { preparationServiceChannelLimits } from './test-gates/preparation-channel.ts';
+@@ -18,11 +18,12 @@
+ 
+ try {
+   if (process.getuid?.() !== 1000 || process.getgid?.() !== 1000) throw new Error('BUSTER_SERVICE_IDENTITY_REQUIRED');
+-  const settings = loadBusterSettings(process.env);
++  const snapshot = loadSwarmSettings(process.env);
++  const settings = snapshot.buster;
+   const client = new BusterPreparationClient(new NativeWorkerControlChannel(
+     new Socket({ fd: 3, readable: true, writable: true, allowHalfOpen: true }),
+     preparationServiceChannelLimits(settings.preparation)), settings.preparation, preparationSourceRoot);
+-  const runtime = loadProductionBusterRemotePlanRuntime(configArgument(process.argv.slice(2)), client, settings, process.env);
++  const runtime = loadProductionBusterRemotePlanRuntime(configArgument(process.argv.slice(2)), client, settings, snapshot.workerCore.localRuntime, process.env);
+   const address = await runtime.start();
+   process.stdout.write(`${JSON.stringify({ schemaVersion: 'buster-remote-runtime-ready.v1',
+     host: address.address, port: address.port })}\n`);
+--- a/skills/buster/engine/test-gates/production.ts
++++ b/skills/buster/engine/test-gates/production.ts
+@@ -4,7 +4,7 @@
+ import { object, integer, validateRuntimeRoot, runtimeAuthority, runtimeRegistry } from './production-config-values.ts';
+ import { capabilitySources } from './production-capability-sources.ts';
+ import type { BusterPreparation } from './preparation-client.ts';
+-import type { BusterSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
++import type { BusterSettings, WorkerCoreSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import { BusterRemotePlanRuntime } from './remote-plan-runtime.ts';
+@@ -14,6 +14,7 @@
+   file: string,
+   preparation: BusterPreparation,
+   settings: BusterSettings,
++  workerLocalRuntime: WorkerCoreSettings['localRuntime'],
+   environment: Readonly<Record<string, string | undefined>>,
+ ): BusterRemotePlanRuntime {
+   const canonical = fs.realpathSync(file);
+@@ -25,12 +26,12 @@
+   const value = object(JSON.parse(fs.readFileSync(canonical, 'utf8')), 'root');
+   validateRuntimeRoot(value);
+   const authority = runtimeAuthority(value, environment);
+-  const service = configuredService(value, directory, environment, preparation, settings, workerRevision, authority.sourceAttestationPublicKey);
++  const service = configuredService(value, directory, environment, preparation, settings, workerLocalRuntime, workerRevision, authority.sourceAttestationPublicKey);
+   return configuredRuntime(value, directory, service, settings, authority);
+ }
+ 
+ function configuredService(value: Record<string, unknown>, directory: string, environment: NodeJS.ProcessEnv,
+-  preparation: BusterPreparation, settings: BusterSettings, workerRevision: string, sourceAttestationPublicKey: string) {
++  preparation: BusterPreparation, settings: BusterSettings, workerLocalRuntime: WorkerCoreSettings['localRuntime'], workerRevision: string, sourceAttestationPublicKey: string) {
+   const registry = runtimeRegistry(value, directory);
+   const records = object(value.recordLimits, 'recordLimits');
+   const allowedCapabilities = new Set(Array.isArray(value.allowedCapabilities)
+@@ -59,7 +60,7 @@
+     } }),
+     workerRevision,
+     runtimeRoot: path.resolve(directory, value.runtimeRoot as string),
+-    admission: settings.admission,
++    admission: settings.admission, workerLocalRuntime,
+     allowedCapabilities,
+     ...configuredCapabilities(sources, directory, environment),
+   });
+--- a/skills/buster/engine/test-gates/remote-plan-service.ts
++++ b/skills/buster/engine/test-gates/remote-plan-service.ts
+@@ -1,3 +1,4 @@
++import { validateLocalWorkerRuntimePolicy, type LocalWorkerRuntimePolicy } from "@kubeclaw/worker-core";
+ import { validateBusterAdmissionSettings, type BusterAdmissionSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+ import { executeBusterPreparedJob } from './remote-prepared-execution.ts';
+ import { preparedPlanRuntimeRoot } from './prepared-plan-paths.ts';
+@@ -26,6 +27,7 @@
+   readonly workerRevision: string;
+   readonly runtimeRoot: string;
+   readonly admission: BusterAdmissionSettings;
++  readonly workerLocalRuntime: LocalWorkerRuntimePolicy;
+   readonly dependencyReadiness?: { readonly maximumExecutionMs: number; readonly maximumOutputBytes: number };
+   readonly now?: () => Date;
+   readonly execute?: (
+@@ -61,9 +63,10 @@
+   readonly #maximumConcurrentAttempts: number;
+ 
+   constructor(options: BusterRemotePlanServiceOptions) {
++    const workerLocalRuntime = validateLocalWorkerRuntimePolicy(options.workerLocalRuntime);
+     if (!/^[a-f0-9]{40,64}$/u.test(options.workerRevision)) throw new Error('BUSTER_REMOTE_WORKER_REVISION_INVALID');
+     this.#buildkitReadiness = configuredBuildkitReadiness(options);
+-    this.#options = { ...options };
++    this.#options = { ...options, workerLocalRuntime };
+     this.#now = options.now ?? (() => new Date());
+     const admission = validateBusterAdmissionSettings(options.admission);
+     this.#maximumActiveJobs = admission.maximumActiveJobs;
+--- a/skills/buster/engine/test-gates/remote-prepared-execution.ts
++++ b/skills/buster/engine/test-gates/remote-prepared-execution.ts
+@@ -35,7 +35,7 @@
+     workspaceRoot: paths.workspaceRoot, repositoryRoot: paths.repositoryRoot,
+     sourceRepositoryRoot: paths.sourceRepositoryRoot, artifactRoot: paths.artifactRoot,
+     observabilityRoot: paths.observabilityRoot, maximumConcurrency: job.maximumConcurrency,
+-    grants: new Map(Object.entries(job.grants)),
++    grants: new Map(Object.entries(job.grants)), workerLocalRuntime: options.workerLocalRuntime,
+     ...(capabilities.invoker ? { capabilityInvoker: capabilities.invoker } : {}), signal,
+   }).run().finally(() => capabilities.shutdown());
+ }
+--- a/skills/buster/engine/test-gates/runner.ts
++++ b/skills/buster/engine/test-gates/runner.ts
+@@ -43,7 +43,7 @@
+   type WorkerAttemptOperation,
+   type WorkerAttemptOperationResult,
+ } from "@kubeclaw/worker-core";
+-import { LocalWorkerRuntime } from "@kubeclaw/worker-core";
++import { LocalWorkerRuntime, validateLocalWorkerRuntimePolicy, type LocalWorkerRuntimePolicy } from "@kubeclaw/worker-core";
+ import {
+   sha256Digest,
+   workerAttemptResultDigest,
+@@ -109,6 +109,7 @@
+   readonly artifactRoot: string;
+   readonly observabilityRoot: string;
+   readonly maximumConcurrency: number;
++  readonly workerLocalRuntime: LocalWorkerRuntimePolicy;
+   readonly grants?: ReadonlyMap<string, readonly string[]>;
+   readonly loader?: TestProviderLoader;
+   readonly evidenceStore?: EvidenceStore;
+@@ -552,6 +553,7 @@
+   }> = [];
+ 
+   constructor(options: TestPlanRunnerOptions) {
++    const workerLocalRuntime = validateLocalWorkerRuntimePolicy(options.workerLocalRuntime);
+     assertPlanIdentity(options.plan, options.registry);
+     if (
+       !Number.isSafeInteger(options.maximumConcurrency) ||
+@@ -637,7 +639,7 @@
+       || fs.realpathSync(options.sourceRepositoryRoot) !== options.sourceRepositoryRoot
+       || !fs.statSync(options.sourceRepositoryRoot).isDirectory()
+     )) throw new Error("TEST_RUNNER_SOURCE_REPOSITORY_INVALID");
+-    this.#options = { ...options, artifactRoot, observabilityRoot };
++    this.#options = { ...options, workerLocalRuntime, artifactRoot, observabilityRoot };
+     this.#loader = options.loader ?? new RegisteredTestProviderLoader();
+     this.#store = options.evidenceStore ?? new FileEvidenceStore(artifactRoot);
+     this.#reportAdapterRuntime = options.reportAdapterRuntime ?? new RegisteredReportAdapterRuntime(
+@@ -683,6 +685,9 @@
+           options.grants,
+         ),
+         capacity: options.maximumConcurrency,
++        drainTimeoutMs: workerLocalRuntime.drainTimeoutMs,
++        cancellationTimeoutMs: workerLocalRuntime.cancellationTimeoutMs,
++        replayLimit: workerLocalRuntime.replayLimit,
+         now: this.#now,
+       });
+       runtime.markReady();
+--- a/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
++++ b/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
+@@ -3,7 +3,7 @@
+ import { createHash } from 'node:crypto';
+ import Ajv2020 from 'ajv/dist/2020.js';
+ 
+-const owners = ['prism-control', 'prism-studio', 'prism-worker', 'prism-execution', 'buster-engine'] as const;
++const owners = ['prism-control', 'prism-studio', 'prism-worker', 'prism-execution', 'buster-engine', 'worker-core'] as const;
+ type Owner = typeof owners[number];
+ interface Validator { (value: unknown): boolean; errors?: unknown[] | null }
+ const AjvConstructor = Ajv2020 as unknown as new (options: { allErrors: boolean; strict: boolean }) => {
+--- a/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
++++ b/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
+@@ -640,6 +640,37 @@
+           "maximum": 9007199254740991
+         }
+       }
++    },
++    "worker-core": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "localRuntime"
++      ],
++      "properties": {
++        "localRuntime": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": [
++            "drainTimeoutMs",
++            "cancellationTimeoutMs",
++            "replayLimit"
++          ],
++          "properties": {
++            "drainTimeoutMs": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "cancellationTimeoutMs": {
++              "$ref": "#/$defs/positiveTimerInteger"
++            },
++            "replayLimit": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 1000000
++            }
++          }
++        }
++      }
+     }
+   },
+   "oneOf": [
+@@ -742,6 +773,26 @@
+           "$ref": "#/$defs/buster-engine"
+         }
+       }
++    },
++    {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "schemaVersion",
++        "owner",
++        "settings"
++      ],
++      "properties": {
++        "schemaVersion": {
++          "const": "swarm-component.v1"
++        },
++        "owner": {
++          "const": "worker-core"
++        },
++        "settings": {
++          "$ref": "#/$defs/worker-core"
++        }
++      }
+     }
+   ]
+ }
+--- a/skills/common/plugin-runtime/foundation/config/swarm.schema.json
++++ b/skills/common/plugin-runtime/foundation/config/swarm.schema.json
+@@ -49,7 +49,8 @@
+         "prism-studio",
+         "prism-worker",
+         "prism-execution",
+-        "buster-engine"
++        "buster-engine",
++        "worker-core"
+       ],
+       "properties": {
+         "prism-control": {
+@@ -66,6 +67,9 @@
+         },
+         "buster-engine": {
+           "const": "buster-engine.config.json"
++        },
++        "worker-core": {
++          "const": "worker-core.config.json"
+         }
+       }
+     }
+--- a/skills/common/plugin-runtime/foundation/config/swarm.ts
++++ b/skills/common/plugin-runtime/foundation/config/swarm.ts
+@@ -1,5 +1,13 @@
+ import path from 'node:path';
+ import { readSwarmBundle, validateComponentSettings, type SwarmBundleIdentity } from './swarm-bundle.ts';
++
++export interface WorkerCoreSettings {
++  readonly localRuntime: Readonly<{
++    drainTimeoutMs: number;
++    cancellationTimeoutMs: number;
++    replayLimit: number;
++  }>;
++}
+ 
+ export interface BusterAdmissionSettings {
+   readonly maximumActiveJobs: number;
+@@ -210,6 +218,7 @@
+ export function loadSwarmSettings(environment: NodeJS.ProcessEnv): Readonly<{
+   prism: PrismSettings;
+   buster: BusterSettings;
++  workerCore: WorkerCoreSettings;
+   identity: SwarmBundleIdentity;
+   profile: Readonly<Record<string, unknown>>;
+ }> {
+@@ -231,7 +240,8 @@
+   // Validate both domains before returning either: no partial bundle activation.
+   const prism = prismSettingsFromConfig(projection);
+   const buster = busterSettingsFromConfig(projection);
+-  return Object.freeze({ prism, buster, profile: bundle.profile, identity: bundle.identity });
++  return Object.freeze({ prism, buster, workerCore: bundle.components['worker-core'].settings as unknown as WorkerCoreSettings,
++    profile: bundle.profile, identity: bundle.identity });
+ }
+ 
+ function rejectLegacyAuthors(environment: NodeJS.ProcessEnv): void {
+--- a/skills/worker/core/src/index.ts
++++ b/skills/worker/core/src/index.ts
+@@ -1,5 +1,5 @@
+ export { WorkerAttemptExecutor } from '../worker/attempt-executor.ts';
+-export { LocalWorkerRuntime } from '../worker/local-runtime.ts';
++export { LocalWorkerRuntime, validateLocalWorkerRuntimePolicy } from '../worker/local-runtime.ts';
+ export { NativeWorkerResourceScope } from '../worker/native-resource-scope.ts';
+ export { NativeWorkerOwnership, NativeWorkerOwnershipLease } from '../worker/native-worker-ownership.ts';
+ export type { NativeWorkerOwnershipOptions, NativeWorkerLaunchAuthority, NativeWorkerLaunchCommand } from '../worker/native-worker-ownership.ts';
+@@ -23,7 +23,7 @@
+ export { FileWorkerOwnershipStore } from '../worker/ownership-store.ts';
+ export { readNativeWorkerNodeIdentity } from '../worker/native-node-identity.ts';
+ export type { WorkerOwnershipIdentity, WorkerOwnershipRecord, WorkerOwnershipPhase, WorkerScopeBinding } from '../worker/ownership-store.ts';
+-export type { LocalWorkerRuntimeOptions } from '../worker/local-runtime.ts';
++export type { LocalWorkerRuntimeOptions, LocalWorkerRuntimePolicy } from '../worker/local-runtime.ts';
+ export {
+   canonicalJson,
+   sha256Digest,
+--- a/skills/worker/core/worker/local-runtime.ts
++++ b/skills/worker/core/worker/local-runtime.ts
+@@ -10,16 +10,31 @@
+ 
+ const MAX_TIMER_MS = 2_147_483_647;
+ 
+-export interface LocalWorkerRuntimeOptions {
++export interface LocalWorkerRuntimePolicy {
++  readonly drainTimeoutMs: number;
++  readonly cancellationTimeoutMs: number;
++  readonly replayLimit: number;
++}
++
++export function validateLocalWorkerRuntimePolicy(options: LocalWorkerRuntimePolicy): Readonly<LocalWorkerRuntimePolicy> {
++  if (options === null || typeof options !== 'object') throw new Error('WORKER_LOCAL_POLICY_REQUIRED');
++  const drainTimeoutMs = positiveTimer(options.drainTimeoutMs, 'WORKER_LOCAL_DRAIN_TIMEOUT_INVALID');
++  const cancellationTimeoutMs = positiveTimer(options.cancellationTimeoutMs,
++    'WORKER_LOCAL_CANCELLATION_TIMEOUT_INVALID');
++  const replayLimit = options.replayLimit;
++  if (!Number.isSafeInteger(replayLimit) || replayLimit < 1 || replayLimit > 1_000_000) {
++    throw new Error('WORKER_LOCAL_REPLAY_LIMIT_INVALID');
++  }
++  return Object.freeze({ drainTimeoutMs, cancellationTimeoutMs, replayLimit });
++}
++
++export interface LocalWorkerRuntimeOptions extends LocalWorkerRuntimePolicy {
+   readonly workerId: string;
+   readonly workerType: string;
+   readonly coreVersion: string;
+   readonly protocolVersions: readonly WorkerProtocolVersion[];
+   readonly profiles: readonly WorkerProfileV1[];
+   readonly capacity: number;
+-  readonly drainTimeoutMs?: number;
+-  readonly cancellationTimeoutMs?: number;
+-  readonly replayLimit?: number;
+   readonly now?: () => Date;
+ }
+ 
+@@ -90,13 +105,7 @@
+     if (!Number.isSafeInteger(options.capacity) || options.capacity < 1 || options.capacity > 4096) {
+       throw new Error('WORKER_LOCAL_CAPACITY_INVALID');
+     }
+-    const drainTimeoutMs = positiveTimer(options.drainTimeoutMs ?? 300_000, 'WORKER_LOCAL_DRAIN_TIMEOUT_INVALID');
+-    const cancellationTimeoutMs = positiveTimer(options.cancellationTimeoutMs ?? 30_000,
+-      'WORKER_LOCAL_CANCELLATION_TIMEOUT_INVALID');
+-    const replayLimit = options.replayLimit ?? 65_536;
+-    if (!Number.isSafeInteger(replayLimit) || replayLimit < 1 || replayLimit > 1_000_000) {
+-      throw new Error('WORKER_LOCAL_REPLAY_LIMIT_INVALID');
+-    }
++    const { drainTimeoutMs, cancellationTimeoutMs, replayLimit } = validateLocalWorkerRuntimePolicy(options);
+     this.#profiles = freeze(structuredClone([...options.profiles]));
+     this.#protocolVersions = freeze([...new Set(options.protocolVersions)].sort());
+     this.#profileDigests = new Set(this.#profiles.map((profile) => profile.profileDigest));
+--- a/tests/fixtures/config/swarm-bundle.mjs
++++ b/tests/fixtures/config/swarm-bundle.mjs
+@@ -3,7 +3,7 @@
+ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ 
+-export const componentOwners = ['prism-control', 'prism-studio', 'prism-worker', 'prism-execution', 'buster-engine'];
++export const componentOwners = ['prism-control', 'prism-studio', 'prism-worker', 'prism-execution', 'buster-engine', 'worker-core'];
+ export const bundleNames = ['swarm.config.json', ...componentOwners.map(owner => `${owner}.config.json`)];
+ 
+ export function readTestBundle(entryFile) {
+@@ -38,7 +38,7 @@
+   } };
+ }
+ 
+-/** ConfigMap delivery remains six real raw files; no reconstruction of production input. */
++/** ConfigMap delivery remains seven real raw files; no reconstruction of production input. */
+ export function bundleFromConfigMap(data) {
+   /** @type {Record<string, any>} */
+   const documents = { entry: JSON.parse(data['swarm.config.json']) };
+--- a/tests/fixtures/test-gate/buster-admission.mts
++++ b/tests/fixtures/test-gate/buster-admission.mts
+@@ -46,7 +46,8 @@
+     maximumArchiveBytes: 1048576, maximumResultBytes: 65536, maximumResultStoreBytes: 1048576,
+     trustedSourceAuthority: 'nova:admission', sourceAttestationPublicKey: keys.publicKey.export({ type: 'spki', format: 'pem' }) });
+   const started = new Map<string, ReturnType<typeof Promise.withResolvers<void>>>();
+-  const service = new ModeledBusterRemotePlanService({ store, registry, admission: profile.settings.admission,
++  const service = new ModeledBusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, admission: profile.settings.admission,
+     workerRevision: 'a'.repeat(40), runtimeRoot: path.join(root, 'runs'), tarExecutable: '/usr/bin/tar',
+     maximumExtractedBytes: 1048576, allowedCapabilities: new Set(),
+     execute: async (job, _paths, signal) => {
+--- a/tests/verification/contracts/check-pipeline-a11y-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-a11y-implementation.mts
+@@ -35,7 +35,8 @@
+   maximumConcurrency: 1, maximumExecutionMs: 30_000, maximumResultBytes: 8 * 1024 * 1024,
+   maximumScreenshots: 4, maximumScreenshotBytes: 4 * 1024 * 1024 });
+ try {
+-  const run = await new TestPlanRunner({ plan, registry, workspaceRoot: path.join(root, 'workspace'), repositoryRoot: path.join(root, 'workspace/repository'),
++  const run = await new TestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: path.join(root, 'workspace'), repositoryRoot: path.join(root, 'workspace/repository'),
+     artifactRoot: path.join(root, 'artifacts'), observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1,
+     grants: new Map([['a11y/axe', ['browser.axe']]]), capabilityInvoker: capability }).run();
+   assert.equal(run.nodes[0]?.outcome, 'passed', JSON.stringify(run));
+--- a/tests/verification/contracts/check-pipeline-api-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-api-implementation.mts
+@@ -60,7 +60,8 @@
+ assert.deepEqual(plan.nodes.map((node) => node.provider.contractId).sort(), ['kubeclaw.api-flow@1', 'kubeclaw.http@1', 'kubeclaw.openapi@1']);
+ const capability = new NetworkHttpCapabilityInvoker({ allowedOrigins: [origin], allowedHostSuffixes: [], allowedPorts: [address.port], allowedMethods: ['GET', 'POST'], allowedRequestHeaders: ['accept', 'content-type'], maximumRequestBytes: 1024 * 1024, maximumResponseBytes: 1024 * 1024, maximumExecutionMs: 30_000 });
+ try {
+-  const run = await new TestPlanRunner({ plan, registry, workspaceRoot: path.join(root, 'workspace'), repositoryRoot: path.join(root, 'workspace/repository'), artifactRoot: path.join(root, 'artifacts'), observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1, grants: new Map(plan.nodes.map((node) => [node.id, ['network.http']])), capabilityInvoker: capability }).run();
++  const run = await new TestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: path.join(root, 'workspace'), repositoryRoot: path.join(root, 'workspace/repository'), artifactRoot: path.join(root, 'artifacts'), observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1, grants: new Map(plan.nodes.map((node) => [node.id, ['network.http']])), capabilityInvoker: capability }).run();
+   assert.equal(run.nodes.every((node) => node.outcome === 'passed'), true, JSON.stringify(run));
+   assert.equal(run.attempts.filter((attempt) => attempt.evidence.length > 0).length, 3);
+ } finally { await new Promise<void>((resolve) => server.close(() => resolve())); fs.rmSync(root, { recursive: true, force: true }); }
+--- a/tests/verification/contracts/check-pipeline-container-build-production.mts
++++ b/tests/verification/contracts/check-pipeline-container-build-production.mts
+@@ -58,6 +58,7 @@
+       defaultConcurrencyLimit: 1, maximumConcurrencyLimits: { 'container-build': 1 } } });
+ 
+   const makeService = () => new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+     store: new FileBusterPlanJobStore(busterState, { recordLimits: records, maximumArchiveBytes: 16 * 1024 * 1024,
+       maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
+       trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey: publicKey }),
+--- a/tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts
+@@ -10,7 +10,8 @@
+   const pluginRoot=path.resolve('skills/buster/plugins');const registry=buildRegistry(discoverPackages({installationRoots:[pluginRoot],trustPolicy:{trustedBuiltinRoots:[pluginRoot],allowedSourceDigests:new Map(),verifiedAttestations:new Map(),verifierId:'e2e-remote'}}));const limits={cpuMillis:120000,memoryBytes:4294967296,logBytes:4194304,artifactBytes:67108864,artifactFiles:32,processes:64};
+   const plan=resolveTestPlan({planId:'plan:e2e:remote',runId:'run:e2e:remote',project:'e2e-remote',scope:{moduleId:'e2e',gateId:null},createdAt:'2026-09-04T00:00:00.000Z',declaration:{tests:{playwright:{uses:'kubeclaw.playwright@1',mode:'blocking',retries:0,concurrencyGroup:'browser-playwright',config:{url:origin,projectDirectory:'.',configFile:'playwright.config.ts',workers:1,timeoutMs:60000}}},concurrencyLimits:{'browser-playwright':1}},suiteTemplates:[],registry,facts:{changedPaths:['specs/home.spec.ts'],moduleType:'service',pipelineStage:'test'},policy:{defaultTimeoutMs:90000,maximumTimeoutMs:90000,defaultLimits:limits,maximumLimits:limits,maximumRetryCount:1,maximumMatrixSize:1,maximumNodes:2,defaultConcurrencyLimit:1,maximumConcurrencyLimits:{'browser-playwright':1}}});
+   const records={maximumRecords:100,maximumBytes:134217728,maximumRecordBytes:67108864};const store=new FileBusterPlanJobStore(path.join(root,'buster-state'),{recordLimits:records,maximumArchiveBytes:8388608,maximumResultBytes:67108864,maximumResultStoreBytes:134217728,trustedSourceAuthority:'nova:production',sourceAttestationPublicKey:publicKey});
+-  const service=new BusterRemotePlanService({store,registry,workerRevision:'b'.repeat(40),runtimeRoot:path.join(root,'buster-runs'),tarExecutable:'/usr/bin/tar',maximumExtractedBytes:33554432,allowedCapabilities:new Set(['browser.playwright']),browserPlaywright:{allowedOrigins:[origin],allowedTargetPorts:[address.port],playwrightExecutable:path.join(sourceRoot,'node_modules/.bin/playwright'),sandboxExecutable:fileURLToPath(import.meta.resolve('@kubeclaw/plugin-foundation/isolation/plugin-sandbox')),runtimeNodeModules:path.join(sourceRoot,'node_modules'),browsersPath:'/ms-playwright',readOnlyRoots:['/app','/ms-playwright','/usr','/lib','/lib64','/etc/fonts','/etc/hosts','/etc/nsswitch.conf','/etc/resolv.conf','/etc/ssl','/proc','/sys','/dev'],maximumWorkers:2,maximumExecutionMs:120000,maximumOutputBytes:4194304,maximumResultBytes:67108864,maximumArtifactBytes:67108864,maximumArtifactFiles:32,maximumProcesses:64,maximumMemoryBytes:4294967296,maximumCpuMillis:120000,terminationGraceMs:5000,allowSampledResourceLimits:true}});
++  const service=new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },store,registry,workerRevision:'b'.repeat(40),runtimeRoot:path.join(root,'buster-runs'),tarExecutable:'/usr/bin/tar',maximumExtractedBytes:33554432,allowedCapabilities:new Set(['browser.playwright']),browserPlaywright:{allowedOrigins:[origin],allowedTargetPorts:[address.port],playwrightExecutable:path.join(sourceRoot,'node_modules/.bin/playwright'),sandboxExecutable:fileURLToPath(import.meta.resolve('@kubeclaw/plugin-foundation/isolation/plugin-sandbox')),runtimeNodeModules:path.join(sourceRoot,'node_modules'),browsersPath:'/ms-playwright',readOnlyRoots:['/app','/ms-playwright','/usr','/lib','/lib64','/etc/fonts','/etc/hosts','/etc/nsswitch.conf','/etc/resolv.conf','/etc/ssl','/proc','/sys','/dev'],maximumWorkers:2,maximumExecutionMs:120000,maximumOutputBytes:4194304,maximumResultBytes:67108864,maximumArtifactBytes:67108864,maximumArtifactFiles:32,maximumProcesses:64,maximumMemoryBytes:4294967296,maximumCpuMillis:120000,terminationGraceMs:5000,allowSampledResourceLimits:true}});
+   const runtime=new BusterRemotePlanRuntime({service,host:'127.0.0.1',port:0,token,maximumRequestBytes:16777216,maximumResponseBytes:65536,maximumResultBytes:67108864,shutdownTimeoutMs:5000});const runtimeAddress=await runtime.start();try{const gate=createProductionNovaTestGate({stateRoot:path.join(root,'nova-state'),endpoint:`http://127.0.0.1:${runtimeAddress.port}`,token,sourceAuthority:'nova:production',sourceAttestationPrivateKey:privateKey,pollMilliseconds:10,maximumResponseBytes:65536,maximumResultBytes:67108864,maximumArchiveBytes:8388608,maximumArchiveStoreBytes:33554432,maximumEvidenceBytes:67108864,maximumEvidenceStoreBytes:134217728,recordLimits:records});const gateRequest={idempotencyKey:'e2e:remote:vertical',pipelineStageId:'stage:e2e',plan,repositoryRoot:repository,repositoryId:'repository:e2e',maximumConcurrency:1,grants:new Map([['playwright',['browser.playwright']]]),submittedAt:'2026-09-04T00:00:00.000Z',timeoutMs:180000};const executed=await gate.execute(gateRequest);assert.equal(executed.remote.status.state,'completed');const reference=executed.remote.status.result!;const result=JSON.parse((await service.result(executed.remote.status.jobId,reference.contentDigest,reference.sizeBytes)).toString('utf8'));assert.equal(executed.remote.decision.state,'passed',JSON.stringify(result));assert.equal(result.attempts[0].providerDetails.values.browserProjects.includes('real-chromium'),true);assert.equal(result.attempts[0].providerDetails.values.resourceEnforcement,'sampled');assert.equal(result.attempts[0].evidence.some((item:any)=>item.type==='test-report'),true);const duplicate=await gate.execute(gateRequest);assert.equal(duplicate.remote.status.jobId,executed.remote.status.jobId);assert.equal(duplicate.remote.decision.decisionDigest,executed.remote.decision.decisionDigest);const imports=JSON.parse(fs.readFileSync(path.join(root,'nova-state/imports/records/store.json'),'utf8')).records;assert.equal(imports.some((record:any)=>record.payload?.decision?.decisionDigest===executed.remote.decision.decisionDigest),true);}finally{await runtime.stop();}
+ } finally { await new Promise<void>((resolve)=>server.close(()=>resolve())); fs.rmSync(root,{recursive:true,force:true}); }
+ console.log(JSON.stringify({ok:true,phase:'e2e-remote-vertical',scenarios:['exact-origin','authenticated-dispatch','durable-result','duplicate-delivery','evidence-import','nova-gate-decision'],authenticatedDispatch:true,evidenceImported:true,realChromium:true,mocks:0,wrappers:0}));
+--- a/tests/verification/contracts/check-pipeline-http-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-http-implementation.mts
+@@ -58,7 +58,8 @@
+     allowedPorts: [address.port], maximumResponseBytes: 1024 * 1024, maximumExecutionMs: 30_000 });
+   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-http-implementation-'));
+   for (const directory of ['workspace/repository', 'artifacts', 'observability']) fs.mkdirSync(path.join(root, directory), { recursive: true });
+-  const run = await new TestPlanRunner({ plan: livePlan, registry, workspaceRoot: path.join(root, 'workspace'),
++  const run = await new TestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan: livePlan, registry, workspaceRoot: path.join(root, 'workspace'),
+     repositoryRoot: path.join(root, 'workspace/repository'), artifactRoot: path.join(root, 'artifacts'),
+     observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1,
+     grants: new Map([['health', ['network.http']]]), capabilityInvoker: capability }).run();
+--- a/tests/verification/contracts/check-pipeline-http-live.mts
++++ b/tests/verification/contracts/check-pipeline-http-live.mts
+@@ -41,7 +41,8 @@
+   for (const directory of ['workspace/repository', 'artifacts', 'observability']) {
+     fs.mkdirSync(path.join(root, directory), { recursive: true });
+   }
+-  const run = await new TestPlanRunner({ plan, registry, workspaceRoot: path.join(root, 'workspace'),
++  const run = await new TestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: path.join(root, 'workspace'),
+     repositoryRoot: path.join(root, 'workspace/repository'), artifactRoot: path.join(root, 'artifacts'),
+     observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1,
+     grants: new Map([['in-cluster-service', ['network.http']]]), capabilityInvoker: capability }).run();
+--- a/tests/verification/contracts/check-pipeline-http-parity.mts
++++ b/tests/verification/contracts/check-pipeline-http-parity.mts
+@@ -44,7 +44,8 @@
+     for (const directory of ['workspace/repository', 'artifacts', 'observability']) {
+       fs.mkdirSync(path.join(root, directory), { recursive: true });
+     }
+-    return await new TestPlanRunner({ plan, registry, workspaceRoot: path.join(root, 'workspace'),
++    return await new TestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: path.join(root, 'workspace'),
+       repositoryRoot: path.join(root, 'workspace/repository'), artifactRoot: path.join(root, 'artifacts'),
+       observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1,
+       grants: new Map([['health', ['network.http']]]), capabilityInvoker: new NetworkHttpCapabilityInvoker({
+--- a/tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts
++++ b/tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts
+@@ -109,7 +109,8 @@
+   const capabilities = new CompositeTestProviderCapabilityInvoker(new Map<string, TestProviderCapabilityInvoker>([
+     ['command.execute', direct], ['kubernetes.fixture', kubernetes],
+   ]));
+-  const runner = new TestPlanRunner({ plan, registry, workspaceRoot: generatedWorkspace.artifactRoot,
++  const runner = new TestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: generatedWorkspace.artifactRoot,
+     repositoryRoot: generatedWorkspace.worktreePath,
+     artifactRoot: liveArtifactRoot, observabilityRoot: liveObservabilityRoot, maximumConcurrency: 2,
+     grants: new Map([['checked-manifest', ['command.execute']], ['kubernetes-deployment', ['kubernetes.fixture']]]),
+--- a/tests/verification/contracts/check-pipeline-lighthouse-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-lighthouse-implementation.mts
+@@ -70,7 +70,8 @@
+ const capability = new BrowserLighthouseCapabilityInvoker({ allowedOrigins: [origin], chromeExecutable,
+   maximumRuns: 4, maximumExecutionMs: 180_000, maximumResultBytes: 64 * 1024 * 1024 });
+ try {
+-  const run = await new TestPlanRunner({ plan, registry, workspaceRoot: path.join(root, 'workspace'),
++  const run = await new TestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: path.join(root, 'workspace'),
+     repositoryRoot: path.join(root, 'workspace/repository'), artifactRoot: path.join(root, 'artifacts'),
+     observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1,
+     grants: new Map([['seo', ['browser.lighthouse']]]), capabilityInvoker: capability }).run();
+--- a/tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts
+@@ -52,7 +52,8 @@
+     maximumArchiveBytes: 8 * 1024 * 1024, maximumResultBytes: 64 * 1024 * 1024,
+     maximumResultStoreBytes: 128 * 1024 * 1024, trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey: publicKey });
+   const chromeExecutable = '/ms-playwright/chromium_headless_shell-1228/chrome-headless-shell-linux64/chrome-headless-shell';
+-  const service = new BusterRemotePlanService({ store, registry, workerRevision: 'b'.repeat(40), runtimeRoot: path.join(root, 'buster-runs'),
++  const service = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'b'.repeat(40), runtimeRoot: path.join(root, 'buster-runs'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 32 * 1024 * 1024, allowedCapabilities: new Set(['browser.lighthouse']),
+     browserLighthouse: { allowedOrigins: [origin], chromeExecutable, maximumRuns: 4, maximumExecutionMs: 180_000,
+       maximumResultBytes: 64 * 1024 * 1024 } });
+--- a/tests/verification/contracts/check-pipeline-phase10-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-phase10-vertical.mts
+@@ -84,7 +84,8 @@
+     maximumArchiveBytes: 8 * 1024 * 1024, maximumResultBytes: 32 * 1024 * 1024,
+     maximumResultStoreBytes: 128 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
+     sourceAttestationPublicKey: publicKey });
+-  const service = new BusterRemotePlanService({ store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
++  const service = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 32 * 1024 * 1024,
+     allowedCapabilities: new Set(['command.execute']), directCommand: { executableCatalog: new Map([['node', process.execPath]]),
+       executableSearchPath: [path.dirname(process.execPath)], runtimeReadRoots: [path.dirname(process.execPath),
+--- a/tests/verification/contracts/check-pipeline-phase8-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-phase8-vertical.mts
+@@ -84,7 +84,8 @@
+     maximumArchiveBytes: 8 * 1024 * 1024, maximumResultBytes: 32 * 1024 * 1024,
+     maximumResultStoreBytes: 128 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
+     sourceAttestationPublicKey: publicKey });
+-  const service = new BusterRemotePlanService({ store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
++  const service = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 32 * 1024 * 1024,
+     allowedCapabilities: new Set(['command.execute']), directCommand: { executableCatalog: new Map([['node', process.execPath]]),
+       executableSearchPath: [path.dirname(process.execPath)],
+--- a/tests/verification/contracts/check-pipeline-phase9-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-phase9-vertical.mts
+@@ -63,7 +63,8 @@
+     maximumArchiveBytes: 8 * 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024,
+     maximumResultStoreBytes: 64 * 1024 * 1024, trustedSourceAuthority: 'nova:production',
+     sourceAttestationPublicKey: publicKey });
+-  const service = new BusterRemotePlanService({ store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
++  const service = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 32 * 1024 * 1024,
+     allowedCapabilities: new Set(['command.execute']), directCommand: { executableCatalog: new Map([['node', process.execPath]]),
+       executableSearchPath: [path.dirname(process.execPath)], runtimeReadRoots: [path.dirname(process.execPath),
+--- a/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts
++++ b/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts
+@@ -174,6 +174,7 @@
+   return { planId: job.plan.planId, runId: job.plan.runId, attempts: [], nodes: [nodeResult(job)], cleanupErrors: [] };
+ };
+ const service = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
+   tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024,
+   allowedCapabilities: new Set(), execute,
+@@ -203,6 +204,7 @@
+   trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
+ });
+ const unavailableService = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   store: unavailableStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'unavailable-buildkit-runs'),
+   tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['container.build']),
+   containerBuild: { buildctlExecutable: path.join(temporary, 'missing-native-buildctl-private-path'), buildkitHost: 'unix:///missing-buildkit.sock',
+@@ -433,6 +435,7 @@
+   await busterStore.accept(interruptedJob, '2026-08-10T01:00:00.000Z');
+   await busterStore.transition(interruptedJob.jobId, ['accepted'], 'running', '2026-08-10T01:00:01.000Z');
+   const restarted = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+     store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024,
+     allowedCapabilities: new Set(), execute,
+@@ -443,6 +446,7 @@
+   const changedRegistryJob = job('dispatch:registry-changed');
+   await busterStore.accept(changedRegistryJob, '2026-08-10T01:00:00.000Z');
+   const mismatched = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+     store: busterStore,
+     registry: { ...registry, snapshotDigest: `sha256:${'4'.repeat(64)}` },
+     workerRevision: 'a'.repeat(40),
+--- a/tests/verification/contracts/check-pipeline-remote-real-provider.mts
++++ b/tests/verification/contracts/check-pipeline-remote-real-provider.mts
+@@ -110,6 +110,7 @@
+     trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey,
+   });
+   const service = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+     store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'), tarExecutable: '/usr/bin/tar',
+     maximumExtractedBytes: 16 * 1024 * 1024, allowedCapabilities: new Set(),
+   });
+--- a/tests/verification/contracts/check-pipeline-remote-runtime-config.mts
++++ b/tests/verification/contracts/check-pipeline-remote-runtime-config.mts
+@@ -12,7 +12,7 @@
+   loadProductionBusterRemotePlanRuntime as productionRuntime,
+ } from '@kubeclaw/buster-engine';
+ 
+-import { loadBusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
++import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+ import type { BusterPreparation } from '../../../skills/buster/engine/test-gates/preparation-client.ts';
+ 
+ // This original configuration-only suite starts empty stores, never preparation.
+@@ -21,9 +21,9 @@
+   extract: async () => { throw new Error('UNEXPECTED_PREPARATION'); },
+   repository: async () => { throw new Error('UNEXPECTED_PREPARATION'); },
+ };
+-const settings = loadBusterSettings({ SWARM_CONFIG: path.resolve('charts/kubeclaw/files/config/swarm.config.json') });
++const snapshot = loadSwarmSettings({ SWARM_CONFIG: path.resolve('charts/kubeclaw/files/config/swarm.config.json') });
+ function loadProductionBusterRemotePlanRuntime(file: string, environment: NodeJS.ProcessEnv) {
+-  return productionRuntime(file, preparation, settings, environment);
++  return productionRuntime(file, preparation, snapshot.buster, snapshot.workerCore.localRuntime, environment);
+ }
+ 
+ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'remote-runtime-config-'));
+--- a/tests/verification/contracts/check-pipeline-security-remote-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-security-remote-vertical.mts
+@@ -23,7 +23,8 @@
+   const plan=resolveTestPlan({planId:'plan:security:remote',runId:'run:security:remote',project:'security-remote',scope:{moduleId:'security',gateId:null},createdAt:'2026-09-04T00:00:00.000Z',declaration:{tests:{dependency:{uses:'kubeclaw.dependency-scan-trivy@1',mode:'blocking',retries:0,concurrencyGroup:'security-dependency',config:{projectDirectory:'.',policy:{profile:'strict-v1'}}}},concurrencyLimits:{'security-dependency':1}},suiteTemplates:[],registry,facts:{changedPaths:['package-lock.json'],moduleType:'service',pipelineStage:'test'},policy:{defaultTimeoutMs:300000,maximumTimeoutMs:300000,defaultLimits:limits,maximumLimits:limits,maximumRetryCount:1,maximumMatrixSize:1,maximumNodes:2,defaultConcurrencyLimit:1,maximumConcurrencyLimits:{'security-dependency':1}}});
+   const records={maximumRecords:100,maximumBytes:134217728,maximumRecordBytes:67108864};const cacheCandidates=[...(process.env.KUBECLAW_SECURITY_TEST_CACHE?[process.env.KUBECLAW_SECURITY_TEST_CACHE]:[]),path.join(os.homedir(),'.cache/trivy'),path.join(os.homedir(),'.cache/.cache/trivy'),'/tmp/.cache/trivy'];const cache=cacheCandidates.find((item)=>fs.existsSync(item));assert.ok(cache,'real Trivy database is required');
+   const store=new FileBusterPlanJobStore(path.join(root,'buster-state'),{recordLimits:records,maximumArchiveBytes:8388608,maximumResultBytes:67108864,maximumResultStoreBytes:134217728,trustedSourceAuthority:'nova:production',sourceAttestationPublicKey:publicKey});
+-  const service=new BusterRemotePlanService({store,registry,workerRevision:'b'.repeat(40),runtimeRoot:path.join(root,'buster-runs'),tarExecutable:'/usr/bin/tar',maximumExtractedBytes:33554432,allowedCapabilities:new Set(['security.scan']),securityScan:{trivyExecutable:process.env.KUBECLAW_SECURITY_TEST_TRIVY??'/usr/local/bin/trivy',allowedRegistryPrefixes:['docker.io/library'],maximumExecutionMs:300000,maximumOutputBytes:67108864,cacheDirectory:cache}});
++  const service=new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },store,registry,workerRevision:'b'.repeat(40),runtimeRoot:path.join(root,'buster-runs'),tarExecutable:'/usr/bin/tar',maximumExtractedBytes:33554432,allowedCapabilities:new Set(['security.scan']),securityScan:{trivyExecutable:process.env.KUBECLAW_SECURITY_TEST_TRIVY??'/usr/local/bin/trivy',allowedRegistryPrefixes:['docker.io/library'],maximumExecutionMs:300000,maximumOutputBytes:67108864,cacheDirectory:cache}});
+   const runtime=new BusterRemotePlanRuntime({service,host:'127.0.0.1',port:0,token,maximumRequestBytes:16777216,maximumResponseBytes:65536,maximumResultBytes:67108864,shutdownTimeoutMs:5000});const address=await runtime.start();
+   try{const gate=createProductionNovaTestGate({stateRoot:path.join(root,'nova-state'),endpoint:`http://127.0.0.1:${address.port}`,token,sourceAuthority:'nova:production',sourceAttestationPrivateKey:privateKey,pollMilliseconds:10,maximumResponseBytes:65536,maximumResultBytes:67108864,maximumArchiveBytes:8388608,maximumArchiveStoreBytes:33554432,maximumEvidenceBytes:67108864,maximumEvidenceStoreBytes:134217728,recordLimits:records});
+     const executed=await gate.execute({idempotencyKey:'security:remote:vertical',pipelineStageId:'stage:security',plan,repositoryRoot:repository,repositoryId:'repository:security',maximumConcurrency:1,grants:new Map([['dependency',['security.scan']]]),submittedAt:'2026-09-04T00:00:00.000Z',timeoutMs:360000});assert.equal(executed.remote.status.state,'completed');
+--- a/tests/verification/contracts/check-pipeline-size-budget-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-size-budget-implementation.mts
+@@ -65,7 +65,8 @@
+     runtimeReadRoots: ['/usr/bin', '/usr/lib/x86_64-linux-gnu', '/usr/lib64'], maximumOutputBytes: 1024 * 1024,
+     maximumExecutionMs: 60_000, maximumProcesses: 16, maximumMemoryBytes: 512 * 1024 * 1024,
+     maximumCpuMillis: 30_000, terminationGraceMs: 100, allowSampledProcessLimit: true });
+-  const runner = new TestPlanRunner({ plan, registry, workspaceRoot: workspace, repositoryRoot: repository,
++  const runner = new TestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: workspace, repositoryRoot: repository,
+     artifactRoot: artifacts, observabilityRoot: path.join(temporary, 'observability'), maximumConcurrency: 2,
+     grants: new Map(plan.nodes.map((node) => [node.id, node.id.endsWith('/artifact') ? ['command.execute'] : []])),
+     capabilityInvoker: capability });
+--- a/tests/verification/contracts/check-pipeline-size-budget-production.mts
++++ b/tests/verification/contracts/check-pipeline-size-budget-production.mts
+@@ -48,6 +48,7 @@
+     suiteTemplates: [template], registry, facts: { changedPaths: ['dist/index.html'], moduleType: 'frontend',
+       pipelineStage: 'test' }, policy });
+   const makeService = () => new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+     store: new FileBusterPlanJobStore(busterState, { recordLimits: records, maximumArchiveBytes: 16 * 1024 * 1024,
+       maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
+       trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey: publicKey }),
+--- a/tests/verification/contracts/check-pipeline-test-plan-runner.mts
++++ b/tests/verification/contracts/check-pipeline-test-plan-runner.mts
+@@ -489,6 +489,7 @@
+ );
+ 
+ const main = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: mainPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -605,6 +606,7 @@
+   independent: { uses: "example.generic@1" },
+ });
+ const independent = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: independentPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -645,6 +647,7 @@
+   },
+ });
+ const admissionOutage = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: admissionOutagePlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -692,6 +695,7 @@
+ await assert.rejects(
+   () =>
+     new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+       plan: admissionOutagePlan,
+       registry,
+       workspaceRoot: workspace,
+@@ -715,6 +719,7 @@
+ await assert.rejects(
+   () =>
+     new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+       plan: admissionOutagePlan,
+       registry,
+       workspaceRoot: workspace,
+@@ -738,6 +743,7 @@
+ assert.throws(
+   () =>
+     new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+       plan: mainPlan,
+       registry,
+       workspaceRoot: workspace,
+@@ -751,6 +757,7 @@
+ assert.throws(
+   () =>
+     new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+       plan: mainPlan,
+       registry,
+       workspaceRoot: workspace,
+@@ -763,6 +770,7 @@
+ assert.throws(
+   () =>
+     new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+       plan: mainPlan,
+       registry,
+       workspaceRoot: workspace,
+@@ -785,6 +793,7 @@
+ assert.throws(
+   () =>
+     new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+       plan: mainPlan,
+       registry,
+       workspaceRoot: workspace,
+@@ -799,6 +808,7 @@
+ assert.throws(
+   () =>
+     new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+       plan: mainPlan,
+       registry,
+       workspaceRoot: workspace,
+@@ -816,6 +826,7 @@
+ assert.throws(
+   () =>
+     new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+       plan: mainPlan,
+       registry,
+       workspaceRoot: workspace,
+@@ -834,6 +845,7 @@
+   timeout: { uses: "example.generic@1", timeoutMs: 5, retries: 0 },
+ });
+ const timedOut = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: timeoutPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -866,6 +878,7 @@
+   cancelled: { uses: "example.generic@1", retries: 0 },
+ });
+ const cancelled = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: cancelPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -885,6 +898,7 @@
+   loadCancelled: { uses: "example.generic@1", retries: 0 },
+ });
+ const loadCancelled = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: loadCancelPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -934,6 +948,7 @@
+   resource: { uses: "example.generic@1", retries: 0, limits: { cpuMillis: 1 } },
+ });
+ const resourceFailure = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: resourcePlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -953,6 +968,7 @@
+   logLimit: { uses: "example.generic@1", retries: 0, limits: { logBytes: 1 } },
+ });
+ const logFailure = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: logPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -970,6 +986,7 @@
+ 
+ const logHangStarted = Date.now();
+ const logHang = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: logPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -990,6 +1007,7 @@
+ );
+ 
+ const reservedLogId = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: plan({ reservedLog: { uses: "example.generic@1", retries: 0 } }),
+   registry,
+   workspaceRoot: workspace,
+@@ -1024,6 +1042,7 @@
+ );
+ 
+ const duplicateEvidencePath = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: plan({
+     duplicateEvidencePath: { uses: "example.generic@1", retries: 0 },
+   }),
+@@ -1074,6 +1093,7 @@
+   },
+ });
+ const artifactFailure = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: artifactPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1109,6 +1129,7 @@
+ );
+ 
+ const artifactFailureWithDiagnostic = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: plan({
+     artifactFailureWithDiagnostic: {
+       uses: "example.generic@1",
+@@ -1166,6 +1187,7 @@
+ );
+ 
+ const symlinkEvidence = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: plan({ symlink: { uses: "example.generic@1", retries: 0 } }),
+   registry,
+   workspaceRoot: workspace,
+@@ -1201,6 +1223,7 @@
+ );
+ 
+ const cleanupDeletesEvidence = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: plan({
+     cleanupDeletesEvidence: { uses: "example.generic@1", retries: 0 },
+   }),
+@@ -1259,6 +1282,7 @@
+ 
+ const mutableProviderResult = result();
+ const cleanupMutatesResult = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: plan({
+     cleanupMutatesResult: { uses: "example.generic@1", retries: 0 },
+   }),
+@@ -1291,6 +1315,7 @@
+ );
+ 
+ const nestedEvidence = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: plan({ nestedEvidence: { uses: "example.generic@1", retries: 0 } }),
+   registry,
+   workspaceRoot: workspace,
+@@ -1326,6 +1351,7 @@
+ );
+ 
+ const parentSymlinkEvidence = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: plan({ parentSymlink: { uses: "example.generic@1", retries: 0 } }),
+   registry,
+   workspaceRoot: workspace,
+@@ -1364,6 +1390,7 @@
+ );
+ 
+ const unselectedErrorEvidence = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: plan({
+     diagnostics: {
+       uses: "example.generic@1",
+@@ -1409,6 +1436,7 @@
+   capability: { uses: "example.capability@1", retries: 0 },
+ });
+ const denied = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: capabilityPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1424,6 +1452,7 @@
+ );
+ let invokedCapability = "";
+ const allowed = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: capabilityPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1460,6 +1489,7 @@
+   cleanup: { uses: "example.generic@1", retries: 0 },
+ });
+ const cleanupFailure = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: cleanupPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1499,6 +1529,7 @@
+   },
+ });
+ const cleanupErrorEvidence = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: cleanupEvidencePlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1561,6 +1592,7 @@
+   },
+ });
+ const cleanupDependency = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: cleanupDependencyPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1598,6 +1630,7 @@
+ 
+ let cleanupTerminated = false;
+ const cleanupTimeout = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: cleanupPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1633,6 +1666,7 @@
+   terminationFailure: { uses: "example.generic@1", timeoutMs: 5 },
+ });
+ const terminationFailure = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: terminationFailurePlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1669,6 +1703,7 @@
+ );
+ let unsupportedFixtureCleaned = false;
+ const missingCleanup = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: missingCleanupPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1715,6 +1750,7 @@
+   { optional: { uses: "example.optional-report@1", retries: 0 } },
+ );
+ const missingOutput = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: missingOutputPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1744,6 +1780,7 @@
+ assert.throws(
+   () =>
+     new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+       plan: tampered,
+       registry,
+       workspaceRoot: workspace,
+@@ -1757,6 +1794,7 @@
+ const loadedPlan = plan({ loaded: { uses: "example.generic@1", retries: 0 } });
+ const registeredLoader = new RegisteredTestProviderLoader();
+ const loaded = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: loadedPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1783,6 +1821,7 @@
+   { isolatedProducer: { uses: "example.report@1", retries: 0 } },
+ );
+ const isolatedArtifact = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: isolatedArtifactPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1816,6 +1855,7 @@
+   isolatedProducer: { uses: "example.report@1", config: { invalidReport: true }, retries: 0 },
+ });
+ const invalidReport = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: invalidReportPlan, registry, workspaceRoot: workspace, repositoryRoot: repository,
+   artifactRoot: path.join(temporary, "invalid-report-store"), maximumConcurrency: 1,
+   loader: registeredLoader, id,
+@@ -1885,6 +1925,7 @@
+ const directRuntime = new CapturingRuntime();
+ let directSequence = 0;
+ const directResult = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: parityPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1897,6 +1938,7 @@
+ }).run();
+ let localSequence = 0;
+ const localResult = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: parityPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1918,6 +1960,7 @@
+   { report: { uses: "example.report@1", retries: 0 } },
+ );
+ const evidenceResult = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: evidencePlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -1975,6 +2018,7 @@
+ 
+ const rejectedArtifactRoot = path.join(temporary, "rejected-runtime-artifacts");
+ const rejectedRuntimeResult = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: evidencePlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -2039,6 +2083,7 @@
+ });
+ const lifecycleProfiles = createBusterWorkerProfiles(lifecyclePlan, registry);
+ const lifecycleWorker = new LocalWorkerRuntime({
++  replayLimit: 65_536,
+   workerId: "worker:buster:local",
+   workerType: "buster",
+   coreVersion: "1.0.0",
+@@ -2054,6 +2099,7 @@
+   lifecycleStarted = resolve;
+ });
+ const lifecycleRun = new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: lifecyclePlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -2094,6 +2140,7 @@
+   },
+ });
+ const cooperativeRun = new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: cooperativePlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -2132,6 +2179,7 @@
+     },
+   });
+   const forbiddenResult = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+     plan: forbiddenPlan,
+     registry,
+     workspaceRoot: workspace,
+@@ -2151,6 +2199,7 @@
+ const providerPath = path.join(packageRoot, "dist", "provider.js");
+ const verifiedProviderSource = fs.readFileSync(providerPath, "utf8");
+ const pinnedRunPromise = new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: loadedPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -2184,6 +2233,7 @@
+ });
+ const hardTimeoutStarted = Date.now();
+ const hardTimeout = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: hardTimeoutPlan,
+   registry,
+   workspaceRoot: workspace,
+@@ -2202,6 +2252,7 @@
+ 
+ fs.appendFileSync(providerPath, "\n// changed after registry freeze\n");
+ const changed = await new LocalTestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+   plan: loadedPlan,
+   registry,
+   workspaceRoot: workspace,
+--- a/tests/verification/contracts/check-pipeline-visual-remote-vertical.mts
++++ b/tests/verification/contracts/check-pipeline-visual-remote-vertical.mts
+@@ -34,7 +34,8 @@
+   const plan=resolveTestPlan({planId:'plan:visual:remote',runId:'run:visual:remote',project:'visual-remote',scope:{moduleId:'visual',gateId:null},createdAt:'2026-09-03T00:00:00.000Z',declaration:{tests:{visual:{uses:'kubeclaw.visual@1',mode:'blocking',retries:0,concurrencyGroup:'visual',config:{url:origin,manifestFile:'.swarm/visual/manifest.json',profileFile:'.swarm/visual/profiles.json',targets:['home'],comparisonProfile:'strict-v1'}}},concurrencyLimits:{visual:1}},suiteTemplates:[],registry,facts:{changedPaths:['.swarm/visual/manifest.json'],moduleType:'service',pipelineStage:'test'},policy:{defaultTimeoutMs:120000,maximumTimeoutMs:120000,defaultLimits:limits,maximumLimits:limits,maximumRetryCount:1,maximumMatrixSize:1,maximumNodes:2,defaultConcurrencyLimit:1,maximumConcurrencyLimits:{visual:1}}});
+   const records={maximumRecords:100,maximumBytes:134217728,maximumRecordBytes:67108864};
+   const store=new FileBusterPlanJobStore(path.join(root,'buster-state'),{recordLimits:records,maximumArchiveBytes:8388608,maximumResultBytes:67108864,maximumResultStoreBytes:134217728,trustedSourceAuthority:'nova:production',sourceAttestationPublicKey:publicKey});
+-  const service=new BusterRemotePlanService({store,registry,workerRevision:'b'.repeat(40),runtimeRoot:path.join(root,'buster-runs'),tarExecutable:'/usr/bin/tar',maximumExtractedBytes:33554432,allowedCapabilities:new Set(['browser.visual']),browserVisual:{allowedOrigins:[origin],allowedBrowsers:['chromium'],browserExecutables:{chromium:executable},maximumCombinations:2,maximumConcurrency:1,maximumExecutionMs:60000,maximumResultBytes:33554432,maximumScreenshotBytes:8388608,maximumMasksPerCombination:4}});
++  const service=new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },store,registry,workerRevision:'b'.repeat(40),runtimeRoot:path.join(root,'buster-runs'),tarExecutable:'/usr/bin/tar',maximumExtractedBytes:33554432,allowedCapabilities:new Set(['browser.visual']),browserVisual:{allowedOrigins:[origin],allowedBrowsers:['chromium'],browserExecutables:{chromium:executable},maximumCombinations:2,maximumConcurrency:1,maximumExecutionMs:60000,maximumResultBytes:33554432,maximumScreenshotBytes:8388608,maximumMasksPerCombination:4}});
+   const runtime=new BusterRemotePlanRuntime({service,host:'127.0.0.1',port:0,token,maximumRequestBytes:16777216,maximumResponseBytes:65536,maximumResultBytes:67108864,shutdownTimeoutMs:5000}); const runtimeAddress=await runtime.start();
+   try{
+     const gate=createProductionNovaTestGate({stateRoot:path.join(root,'nova-state'),endpoint:`http://127.0.0.1:${runtimeAddress.port}`,token,sourceAuthority:'nova:production',sourceAttestationPrivateKey:privateKey,pollMilliseconds:10,maximumResponseBytes:65536,maximumResultBytes:67108864,maximumArchiveBytes:8388608,maximumArchiveStoreBytes:33554432,maximumEvidenceBytes:67108864,maximumEvidenceStoreBytes:134217728,recordLimits:records});
+--- a/tests/verification/contracts/check-pipeline-worker-local-config.mts
++++ b/tests/verification/contracts/check-pipeline-worker-local-config.mts
+@@ -0,0 +1,255 @@
++// Preparation authority is modeled here; parser, extraction and durable service/store remain real.
++import { ModeledPreparation, ModeledPreparedPlanJobStore as FileBusterPlanJobStore } from '../../fixtures/test-gate/modeled-preparation.mts';
++import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
++import assert from 'node:assert/strict';
++import crypto from 'node:crypto';
++import { execFileSync } from 'node:child_process';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import {
++  buildRegistry,
++  createProductionNovaTestGate,
++  discoverPackages,
++} from '@kubeclaw/nova-core';
++import { TestPlanRunner, type TestPlanRunnerOptions } from '../../../skills/buster/engine/test-gates/runner.ts';
++import { BusterRemotePlanService, type BusterRemotePlanServiceOptions } from '../../../skills/buster/engine/test-gates/remote-plan-service.ts';
++import { loadProductionBusterRemotePlanRuntime } from '@kubeclaw/buster-engine';
++import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
++import { canonicalSwarmEntry, readTestBundle, writeTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
++import {
++  resolvedTestPlanDigest,
++  stableTestIdentity,
++  type ResolvedTestPlanV1,
++} from '@kubeclaw/pipeline-test-gate-contract';
++
++const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'worker-local-config-'));
++const installRoot = path.join(temporary, 'plugins');
++const packageRoot = path.join(installRoot, 'real-provider');
++const repository = path.join(temporary, 'repository');
++const token = 'phase-7-real-provider-token-00000000000';
++const sourceKeys = crypto.generateKeyPairSync('ed25519');
++const sourceAttestationPrivateKey = sourceKeys.privateKey.export({ type: 'pkcs8', format: 'pem' });
++const sourceAttestationPublicKey = sourceKeys.publicKey.export({ type: 'spki', format: 'pem' });
++const records = { maximumRecords: 100, maximumBytes: 64 * 1024 * 1024, maximumRecordBytes: 16 * 1024 * 1024 };
++
++try {
++  fs.mkdirSync(path.join(packageRoot, 'dist'), { recursive: true });
++  fs.mkdirSync(path.join(packageRoot, 'schemas'), { recursive: true });
++  fs.writeFileSync(path.join(packageRoot, 'package.json'), '{"type":"module"}\n');
++  fs.mkdirSync(repository, { recursive: true });
++  fs.writeFileSync(path.join(repository, 'README.md'), 'phase-7 real remote provider\n');
++  fs.mkdirSync(path.join(repository, 'module'));
++  fs.writeFileSync(path.join(repository, 'module', 'FORGE.md'), '```kubeclaw-deliverables\n' + JSON.stringify({schemaVersion:'forge-deliverables.v1',moduleId:'module',substep:null,deliverables:['README.md']}) + '\n```\n');
++  fs.writeFileSync(path.join(packageRoot, 'schemas', 'config.json'), JSON.stringify({
++    $schema: 'https://json-schema.org/draft/2020-12/schema', type: 'object', additionalProperties: false,
++  }));
++  fs.writeFileSync(path.join(packageRoot, 'dist', 'provider.js'), `
++export function provider() {
++  return { async execute(invocation, context) {
++    const fs = await import('node:fs');
++    const content = fs.readFileSync(context.workspaceRoot + '/' + invocation.workspace.repository + '/README.md', 'utf8');
++    const assert = await import('node:assert/strict');
++    let failure = null;
++    try { assert.default.equal(content, 'phase-7 real remote provider\\n'); }
++    catch (error) { failure = String(error); }
++    if (fs.existsSync(context.workspaceRoot + '/' + invocation.workspace.repository + '/UNTRACKED.md')) throw new Error('REMOTE_UNCOMMITTED_CONTENT_INCLUDED');
++    fs.writeFileSync(context.workspaceRoot + '/' + invocation.workspace.evidence + '/provider-proof.txt', invocation.nodeId + ':' + content);
++    return { schemaVersion: 'provider-result.v1', outcome: failure ? 'failed' : 'passed', summary: failure ?? 'real isolated provider passed',
++      counts: { total: 1, passed: failure ? 0 : 1, failed: failure ? 1 : 0, skipped: 0 }, findings: [], metrics: [],
++      evidenceFiles: [{ evidenceId: 'provider-proof', type: 'log', file: 'provider-proof.txt', mediaType: 'text/plain' }],
++      reports: [], outputs: [], exitCode: failure ? 1 : 0, signal: null, providerDetails: null };
++  }, async cleanup() {} };
++}
++`);
++  fs.writeFileSync(path.join(packageRoot, 'plugin.json'), JSON.stringify({
++    id: 'phase7.real-provider', apiVersion: 'pipeline-plugin-v2', packageVersion: '1.0.0',
++    stages: [], observers: [], adapters: [], testProviders: [{
++      id: 'real', contractId: 'phase7.real-provider@1', kind: 'test', module: 'dist/provider.js', export: 'provider',
++      configSchema: 'schemas/config.json', inputs: [], outputs: [], requiredCapabilities: [], retrySafe: true,
++      matrixFields: [], reportFormats: [], evidenceTypes: ['log'],
++      evidenceDefaults: { onPass: ['log'], onFail: ['log'], onError: ['log'] },
++    }],
++  }));
++  execFileSync('git', ['-C', repository, 'init', '-q']);
++  execFileSync('git', ['-C', repository, 'config', 'user.email', 'phase7@example.invalid']);
++  execFileSync('git', ['-C', repository, 'config', 'user.name', 'Phase 7 Proof']);
++  execFileSync('git', ['-C', repository, 'add', 'README.md', 'module/FORGE.md']);
++  execFileSync('git', ['-C', repository, 'commit', '-qm', 'committed source']);
++  fs.writeFileSync(path.join(repository, 'UNTRACKED.md'), 'must not cross the remote boundary\n');
++
++  const registry = buildRegistry(discoverPackages({
++    installationRoots: [installRoot],
++    trustPolicy: { trustedBuiltinRoots: [installRoot], allowedSourceDigests: new Map(),
++      verifiedAttestations: new Map(), verifierId: 'kubeclaw-platform-v2' },
++  }));
++  const entry = registry.testProviderContracts.get('phase7.real-provider@1');
++  assert.ok(entry);
++  const planUnsigned = {
++    schemaVersion: 'resolved-test-plan.v1' as const, planId: 'plan:phase7-real', runId: 'run:phase7-real',
++    project: 'phase7-real', scope: { moduleId: 'module', gateId: null },
++    registrySnapshotDigest: registry.snapshotDigest, createdAt: '2026-08-12T08:00:00.000Z', suites: [],
++    nodes: [{
++      id: 'real-provider', executionId: 'execution:real-provider', testIdentity: stableTestIdentity({ project: 'phase7-real',
++        moduleId: 'module', gateId: null, suiteInstanceId: null, nodeId: 'real-provider', variation: {} }), suiteInstanceId: null, kind: 'test' as const,
++      provider: { packageId: entry.registration.package.packageId,
++        packageVersion: entry.registration.package.packageVersion,
++        contentDigest: entry.registration.package.contentDigest,
++        registrationId: entry.registration.registrationId, contractId: entry.registration.contractId },
++      reportAdapters: [], mode: 'blocking' as const, reviewAgent: null,
++      configuration: { schemaVersion: 'provider-configuration.v1' as const,
++        contractId: entry.registration.contractId, schemaDigest: entry.configSchemaDigest, values: {} },
++      dependencies: [], timeoutMs: 20_000,
++      limits: { cpuMillis: 10_000, memoryBytes: 512 * 1024 * 1024, logBytes: 1024 * 1024,
++        artifactBytes: 4 * 1024 * 1024, artifactFiles: 16, processes: 16 },
++      retryCount: 0, concurrencyGroup: null, parentNodeId: null, variation: {},
++      evidence: { onPass: ['log'], onFail: ['log'], onError: ['log'] }, skipReason: null,
++    }], links: [], concurrencyLimits: {},
++  };
++
++  // Two genuinely distinct attempts, serialized inside one default job runtime.
++  // Provider loading/execution is real; only native preparation ownership is modeled.
++  for (const replayLimit of [1, 2]) {
++    const profileRoot = path.join(temporary, `replay-${replayLimit}`);
++    const entryFile = path.join(profileRoot, 'bundle', 'swarm.config.json');
++    const documents = readTestBundle(canonicalSwarmEntry);
++    documents['worker-core'].settings.localRuntime.replayLimit = replayLimit;
++    writeTestBundle(entryFile, documents);
++    const snapshot = loadSwarmSettings({ SWARM_CONFIG: entryFile });
++    assert.equal(snapshot.workerCore.localRuntime.replayLimit, replayLimit);
++    const platformConfig = path.join(profileRoot, 'platform.json');
++    fs.writeFileSync(platformConfig, JSON.stringify({
++      schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
++      installationRoots: [installRoot], trustedBuiltinRoots: [installRoot],
++      externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
++      providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {},
++      storageRoot: path.join(profileRoot, 'platform'), shutdownTimeoutMs: 5_000,
++      orchestratorIssuerId: 'worker-local-config', administrativeDecisionIssuers: [],
++    }));
++    const stateRoot = path.join(profileRoot, 'buster-state');
++    const options = { recordLimits: records, maximumArchiveBytes: 4 * 1024 * 1024,
++      maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
++      trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey };
++    const store = new FileBusterPlanJobStore(stateRoot, options);
++    const preparation = new ModeledPreparation(stateRoot, options);
++    preparation.configure({ tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 16 * 1024 * 1024 });
++
++    const validationRoot = path.join(profileRoot, 'constructor-boundary');
++    const validationPlan: ResolvedTestPlanV1 = { ...planUnsigned, planDigest: resolvedTestPlanDigest(planUnsigned) };
++    const runnerOptions = { plan: validationPlan, registry,
++      workspaceRoot: path.join(validationRoot, 'workspace'),
++      repositoryRoot: path.join(validationRoot, 'workspace', 'repository'),
++      sourceRepositoryRoot: repository,
++      artifactRoot: path.join(validationRoot, 'artifacts'),
++      observabilityRoot: path.join(validationRoot, 'observability'), maximumConcurrency: 1,
++      workerLocalRuntime: snapshot.workerCore.localRuntime };
++    const serviceOptions = { store, preparation, registry, workerRevision: 'a'.repeat(40),
++      runtimeRoot: path.join(validationRoot, 'service'), admission: snapshot.buster.admission,
++      allowedCapabilities: new Set<string>(), workerLocalRuntime: snapshot.workerCore.localRuntime };
++    for (const [policy, code] of [
++      [undefined, /WORKER_LOCAL_POLICY_REQUIRED/], [null, /WORKER_LOCAL_POLICY_REQUIRED/],
++      [{ ...snapshot.workerCore.localRuntime, replayLimit: 0 }, /WORKER_LOCAL_REPLAY_LIMIT_INVALID/],
++    ] as const) {
++      const invalidRunner: Record<string, unknown> = { ...runnerOptions, workerLocalRuntime: policy };
++      const invalidService: Record<string, unknown> = { ...serviceOptions, workerLocalRuntime: policy };
++      if (policy === undefined) { delete invalidRunner.workerLocalRuntime; delete invalidService.workerLocalRuntime; }
++      assert.equal(fs.existsSync(validationRoot), false);
++      assert.equal(fs.existsSync(`${stateRoot}-v2`), false);
++      assert.throws(() => new TestPlanRunner(invalidRunner as unknown as TestPlanRunnerOptions), code);
++      assert.throws(() => new BusterRemotePlanService(invalidService as unknown as BusterRemotePlanServiceOptions), code);
++      assert.equal(fs.existsSync(validationRoot), false, 'invalid policy must precede runner workspace/store creation');
++      assert.equal(fs.existsSync(`${stateRoot}-v2`), false, 'invalid service policy must not create its store');
++    }
++    // Same real plan/registry/path contract succeeds when the required policy is present.
++    assert.doesNotThrow(() => new TestPlanRunner(runnerOptions));
++    assert.equal(fs.existsSync(runnerOptions.workspaceRoot), true);
++    assert.doesNotThrow(() => new BusterRemotePlanService(serviceOptions));
++
++    const runtimeFile = path.join(profileRoot, 'runtime.json');
++    fs.writeFileSync(runtimeFile, JSON.stringify({
++      schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig,
++      host: '127.0.0.1', port: 0, tokenEnvironmentVariable: 'LC_TOKEN',
++      sourceAttestationPublicKeyEnvironmentVariable: 'LC_PUBLIC_KEY',
++      trustedSourceAuthority: 'nova:production', stateRoot,
++      runtimeRoot: path.join(profileRoot, 'runs'), tarExecutable: '/usr/bin/tar',
++      maximumResultStoreBytes: options.maximumResultStoreBytes,
++      maximumResponseBytes: 2 * 1024 * 1024, maximumResultBytes: options.maximumResultBytes,
++      shutdownTimeoutMs: 5_000, recordLimits: records, allowedCapabilities: [],
++    }));
++    const runtime = loadProductionBusterRemotePlanRuntime(runtimeFile, preparation,
++      snapshot.buster, snapshot.workerCore.localRuntime,
++      { LC_TOKEN: token, LC_PUBLIC_KEY: sourceAttestationPublicKey.toString(), KUBECLAW_BUILD_REVISION: 'a'.repeat(40) });
++    const address = await runtime.start();
++    try {
++      const novaState = path.join(profileRoot, 'nova-state');
++      const gate = createProductionNovaTestGate({ stateRoot: novaState,
++        endpoint: `http://127.0.0.1:${address.port}`, token,
++        sourceAuthority: 'nova:production', sourceAttestationPrivateKey,
++        pollMilliseconds: 10, maximumResponseBytes: 64 * 1024,
++        maximumResultBytes: 16 * 1024 * 1024, maximumArchiveBytes: 4 * 1024 * 1024,
++        maximumArchiveStoreBytes: 16 * 1024 * 1024, maximumEvidenceBytes: 4 * 1024 * 1024,
++        maximumEvidenceStoreBytes: 16 * 1024 * 1024, recordLimits: records });
++      const jobIds = new Set<string>();
++      for (const jobNumber of [1, 2]) {
++        const unsigned = { ...planUnsigned, planId: `plan:local:${replayLimit}:${jobNumber}`,
++          runId: `run:local:${replayLimit}:${jobNumber}`,
++          nodes: ['first', 'second'].map(id => ({ ...planUnsigned.nodes[0]!, id,
++            executionId: `execution:${replayLimit}:${jobNumber}:${id}`,
++            testIdentity: stableTestIdentity({ project: 'phase7-real', moduleId: 'module',
++              gateId: null, suiteInstanceId: null, nodeId: id, variation: {} }) })) };
++        const plan: ResolvedTestPlanV1 = { ...unsigned, planDigest: resolvedTestPlanDigest(unsigned) };
++        const executed = await gate.execute({ idempotencyKey: `lc:${replayLimit}:${jobNumber}`,
++          pipelineStageId: 'stage:test-gate', plan, repositoryRoot: repository,
++          repositoryId: 'repository:phase7-real', grants: new Map([['first', []], ['second', []]]),
++          maximumConcurrency: 1, submittedAt: new Date().toISOString(), timeoutMs: 30_000 });
++        const status = executed.remote.status;
++        assert.equal(status.state, 'completed', JSON.stringify(executed));
++        assert.ok(status.result);
++        assert.equal(jobIds.has(status.jobId), false);
++        jobIds.add(status.jobId);
++        const bytes = await store.result(status.jobId, status.result.contentDigest, status.result.sizeBytes);
++        assert.equal(`sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`, status.result.contentDigest);
++        const result = JSON.parse(bytes.toString('utf8'));
++        assert.equal(result.planDigest, plan.planDigest);
++        assert.equal(result.attempts.length, 2);
++        assert.equal(new Set(result.attempts.map((attempt: { attemptId: string }) => attempt.attemptId)).size, 2);
++        const providerEvidence = result.attempts.flatMap((attempt: { evidence: Array<{ evidenceId: string }> }) =>
++          attempt.evidence.filter(item => item.evidenceId === 'provider-proof'));
++        assert.equal(providerEvidence.length, replayLimit, 'Rejected second attempt must not run provider or write provider evidence');
++        const executedNodes = new Set<string>();
++        for (const attempt of result.attempts) for (const evidence of attempt.evidence) {
++          if (evidence.evidenceId !== 'provider-proof') continue;
++          const response = await fetch(`http://127.0.0.1:${address.port}/v1/plan-jobs/${encodeURIComponent(status.jobId)}/evidence/${encodeURIComponent(evidence.artifact.contentDigest)}`,
++            { headers: { authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(5_000) });
++          assert.equal(response.status, 200);
++          assert.equal(response.headers.get('content-digest'), evidence.artifact.contentDigest);
++          const proof = Buffer.from(await response.arrayBuffer());
++          assert.equal(proof.byteLength, evidence.artifact.sizeBytes);
++          assert.equal(`sha256:${crypto.createHash('sha256').update(proof).digest('hex')}`, evidence.artifact.contentDigest);
++          assert.equal(proof.toString('utf8'), `${attempt.nodeId}:phase-7 real remote provider\n`);
++          executedNodes.add(attempt.nodeId);
++        }
++        assert.deepEqual([...executedNodes].sort(), replayLimit === 1 ? ['first'] : ['first', 'second']);
++
++        if (replayLimit === 1) {
++          assert.notEqual(executed.remote.decision.state, 'passed');
++          assert.match(JSON.stringify(result), /WORKER_LOCAL_REPLAY_CAPACITY_EXHAUSTED/);
++        } else {
++          assert.equal(executed.remote.decision.state, 'passed', JSON.stringify(result));
++          assert.doesNotMatch(JSON.stringify(result), /WORKER_LOCAL_REPLAY_CAPACITY_EXHAUSTED/);
++        }
++        const imported = new FileNovaGateImportStore(path.join(novaState, 'imports'),
++          { recordLimits: records, maximumEvidenceStoreBytes: 16 * 1024 * 1024 });
++        const graph = (await imported.readExecutionGraphs()).find(value => value.jobId === status.jobId);
++        assert.ok(graph);
++        assert.deepEqual(graph.attempts, result.attempts);
++        assert.equal(graph.decisionDigest, executed.remote.decision.decisionDigest);
++      }
++      assert.equal(jobIds.size, 2, 'Replay capacity is per prepared-job runtime, not process global');
++    } finally { await runtime.stop(); }
++  }
++} finally {
++  fs.rmSync(temporary, { recursive: true, force: true });
++}
++console.log(JSON.stringify({ ok: true, profiles: [1, 2], jobsPerProfile: 2,
++  runtime: 'production-factory/default-runner/default-core', nativePreparation: 'modeled' }));
+--- a/tests/verification/contracts/check-pipeline-worker-local-policy.mts
++++ b/tests/verification/contracts/check-pipeline-worker-local-policy.mts
+@@ -0,0 +1,113 @@
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import { performance } from 'node:perf_hooks';
++import type { WorkerAttemptEnvelopeV1, WorkerProfileV1 } from '../../../contracts/pipeline-worker-core/v1/src/types.ts';
++import { workerAttemptSpecDigest, workerProfileDigest } from '../../../contracts/pipeline-worker-core/v1/src/digest.ts';
++import { LocalWorkerRuntime } from '../../../skills/worker/core/worker/local-runtime.ts';
++
++const contentDigest = `sha256:${'a'.repeat(64)}`;
++
++function profile(): WorkerProfileV1 {
++  const unsigned = {
++    schemaVersion: 'worker-profile.v1' as const,
++    profileId: 'buster.local',
++    workerType: 'buster',
++    coreContractId: 'kubeclaw.worker-core@1',
++    engine: { engineId: 'buster', contractId: 'kubeclaw.buster@1', engineVersion: '1.0.0', contentDigest },
++    capabilities: ['provider.execute'],
++  };
++  return { ...unsigned, profileDigest: workerProfileDigest(unsigned) };
++}
++
++let attemptNumber = 0;
++function envelope(workerProfile: WorkerProfileV1, workerId = 'worker:buster:local'): WorkerAttemptEnvelopeV1 {
++  attemptNumber += 1;
++  const attemptId = `attempt:local:${attemptNumber}`;
++  const unsigned = {
++    schemaVersion: 'worker-attempt-envelope.v1' as const,
++    protocolVersion: 'worker-protocol.v1' as const,
++    pipelineRunId: 'run:local', moduleId: 'app', gateId: null, planId: 'plan:local', nodeId: `node:${attemptNumber}`,
++    executionId: `execution:${attemptNumber}`, attemptId, attemptNumber,
++    claim: { schemaVersion: 'attempt-claim.v1' as const, claimId: `claim:${attemptNumber}`, attemptId,
++      generation: 1, workerId, claimedAt: '2026-08-05T12:00:00Z', expiresAt: '2026-08-05T14:00:00Z' },
++    profile: workerProfile, packages: [], grantedCapabilities: [],
++    limits: { timeoutMs: 1000, cleanupTimeoutMs: 1000, cpuMillis: 1000, memoryBytes: 1024,
++      processes: 1, logBytes: 1024, resultBytes: 1024, evidenceBytes: 1024, evidenceFiles: 1 },
++    inputs: [], operation: { contractId: 'kubeclaw.test@1', inputSchemaId: 'kubeclaw.test.v1',
++      inputSchemaDigest: contentDigest, values: {} },
++    cancellationId: `cancel:${attemptNumber}`, issuedAt: '2026-08-05T12:00:00Z',
++    queueDeadline: '2026-08-05T13:00:00Z',
++  };
++  return { ...unsigned, attemptSpecDigest: workerAttemptSpecDigest(unsigned) };
++}
++
++const workerProfile = profile();
++const options = { workerId: 'worker:buster:local', workerType: 'buster', coreVersion: '1.0.0',
++  protocolVersions: ['worker-protocol.v1'] as const, profiles: [workerProfile], capacity: 2,
++  drainTimeoutMs: 300000, cancellationTimeoutMs: 30000, replayLimit: 65536,
++  now: () => new Date('2026-08-05T12:30:00Z') };
++
++for (const [field, maximum, code] of [
++  ['drainTimeoutMs', 2_147_483_647, 'WORKER_LOCAL_DRAIN_TIMEOUT_INVALID'],
++  ['cancellationTimeoutMs', 2_147_483_647, 'WORKER_LOCAL_CANCELLATION_TIMEOUT_INVALID'],
++  ['replayLimit', 1_000_000, 'WORKER_LOCAL_REPLAY_LIMIT_INVALID'],
++] as const) {
++  test(`Core requires explicit valid ${field}`, () => {
++    for (const value of [undefined, null, true, '1', 0, -1, 1.5, maximum + 1, NaN, Infinity]) {
++      const candidate: Record<string, unknown> = { ...options, [field]: value };
++      if (value === undefined) delete candidate[field];
++      assert.throws(() => new LocalWorkerRuntime(candidate as unknown as typeof options),
++        new RegExp(code), `${field}=${String(value)}`);
++    }
++    for (const value of [1, maximum]) {
++      assert.doesNotThrow(() => new LocalWorkerRuntime({ ...options, [field]: value }));
++    }
++  });
++}
++
++for (const policy of [
++  { drainTimeoutMs: 10, cancellationTimeoutMs: 40, replayLimit: 1 },
++  { drainTimeoutMs: 40, cancellationTimeoutMs: 10, replayLimit: 2 },
++]) {
++  test(`real drain/cancellation ${policy.drainTimeoutMs}/${policy.cancellationTimeoutMs}`, { timeout: 5_000 }, async () => {
++    const runtime = new LocalWorkerRuntime({ ...options, ...policy });
++    runtime.markReady();
++    let release!: () => void;
++    let aborted!: () => void;
++    const abortedPromise = new Promise<void>(resolve => { aborted = resolve; });
++    let abortAt = 0;
++    const attempt = runtime.runAttempt(envelope(workerProfile), signal => new Promise<void>(resolve => {
++      release = resolve;
++      signal.addEventListener('abort', () => { abortAt = performance.now(); aborted(); }, { once: true });
++    }));
++    const start = performance.now();
++    const drain = assert.rejects(runtime.drain(), /WORKER_LOCAL_DRAIN_TIMEOUT/);
++    assert.equal(runtime.state, 'draining');
++    await abortedPromise;
++    assert(abortAt - start >= policy.drainTimeoutMs - 1, 'drain deadline must precede abort');
++    await drain;
++    assert.equal(runtime.state, 'unhealthy', 'unsettled real attempt exceeds cancellation budget');
++    assert(performance.now() - abortAt >= policy.cancellationTimeoutMs - 1);
++    release();
++    await attempt;
++    assert.equal(runtime.health().activeAttemptIds.length, 0);
++  });
++  test(`real replay saturation/reclaim ${policy.replayLimit}`, async () => {
++    let now = new Date('2026-08-05T12:30:00Z');
++    const runtime = new LocalWorkerRuntime({ ...options, ...policy, now: () => now });
++    runtime.markReady();
++    for (let index = 0; index < policy.replayLimit; index++) {
++      await runtime.runAttempt(envelope(workerProfile), async () => undefined);
++    }
++    assert.throws(() => runtime.runAttempt(envelope(workerProfile), async () => undefined),
++      /WORKER_LOCAL_REPLAY_CAPACITY_EXHAUSTED/);
++    now = new Date('2026-08-05T14:00:00Z');
++    const expired = envelope(workerProfile);
++    const renewed = { ...expired, claim: { ...expired.claim, claimedAt: now.toISOString(), expiresAt: '2026-08-05T15:00:00Z' },
++      issuedAt: now.toISOString(), queueDeadline: '2026-08-05T14:30:00Z' };
++    const fresh = { ...renewed, attemptSpecDigest: workerAttemptSpecDigest(renewed) };
++    await runtime.runAttempt(fresh, async () => undefined);
++    await runtime.drain();
++    assert.equal(runtime.state, 'stopped');
++  });
++}
+--- a/tests/verification/contracts/check-pipeline-worker-local-runtime.mts
++++ b/tests/verification/contracts/check-pipeline-worker-local-runtime.mts
+@@ -42,6 +42,7 @@
+ const workerProfile = profile();
+ const options = { workerId: 'worker:buster:local', workerType: 'buster', coreVersion: '1.0.0',
+   protocolVersions: ['worker-protocol.v1'] as const, profiles: [workerProfile], capacity: 2,
++  drainTimeoutMs: 300000, cancellationTimeoutMs: 30000, replayLimit: 65536,
+   now: () => new Date('2026-08-05T12:30:00Z') };
+ const worker = new LocalWorkerRuntime(options);
+ assert.equal(worker.state, 'starting');
+--- a/tests/verification/contracts/check-provider-semantics-remediation.mts
++++ b/tests/verification/contracts/check-provider-semantics-remediation.mts
+@@ -31,7 +31,8 @@
+   try {
+     for (const name of ['workspace/repository', 'artifacts', 'observability']) fs.mkdirSync(path.join(root, name), { recursive: true });
+     for (const [name, value] of Object.entries(files)) fs.writeFileSync(path.join(root, 'workspace/repository', name), JSON.stringify(value));
+-    const result = await new TestPlanRunner({ plan, registry, workspaceRoot: path.join(root, 'workspace'),
++    const result = await new TestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: path.join(root, 'workspace'),
+       repositoryRoot: path.join(root, 'workspace/repository'), artifactRoot: path.join(root, 'artifacts'),
+       observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1,
+       grants: new Map([['probe', ['network.http']]]), capabilityInvoker: new NetworkHttpCapabilityInvoker({
+--- a/tests/verification/contracts/tsconfig.worker-local-runtime.json
++++ b/tests/verification/contracts/tsconfig.worker-local-runtime.json
+@@ -1,7 +1,9 @@
+ {
+   "extends": "../../../tsconfig.base.json",
+   "include": [
+-    "check-pipeline-worker-local-runtime.mts"
++    "check-pipeline-worker-local-runtime.mts",
++    "check-pipeline-worker-local-policy.mts",
++    "check-pipeline-worker-local-config.mts"
+   ],
+   "compilerOptions": {
+     "exactOptionalPropertyTypes": true,
+--- a/tests/verification/deployment/config-component-packaging.test.mjs
++++ b/tests/verification/deployment/config-component-packaging.test.mjs
+@@ -62,6 +62,7 @@
+   'prism-worker': settings => { settings.ingress.maximumConnections++; },
+   'prism-execution': settings => { settings.maximumResultBytes++; },
+   'buster-engine': settings => { settings.admission.maximumQueuedJobs++; },
++  'worker-core': settings => { settings.localRuntime.replayLimit++; },
+ };
+ 
+ function checksums(documents) {
+@@ -124,3 +125,29 @@
+   assert.notEqual(mutated, dockerfile);
+   assert.throws(() => assertCopy(mutated), { code: 'ERR_ASSERTION' });
+ });
++
++
++for (const chart of ['prism', 'kubeclaw']) test(`${chart}: worker-core AJV/Helm integer-boundary parity`, async t => {
++  const { loadSwarmSettings } = await import('../../../skills/common/plugin-runtime/foundation/config/swarm.ts');
++  const fixture = isolatedChart(t, chart);
++  const file = path.join(fixture.chart, 'files/config/swarm.config.json');
++  const canonical = readTestBundle(file);
++  for (const [field, maximum] of [['drainTimeoutMs', 2147483647], ['cancellationTimeoutMs', 2147483647], ['replayLimit', 1000000]]) {
++    for (const value of [undefined, null, true, '1', 0, -1, 1.5, maximum + 1]) {
++      const invalid = structuredClone(canonical);
++      if (value === undefined) delete invalid['worker-core'].settings.localRuntime[field];
++      else invalid['worker-core'].settings.localRuntime[field] = value;
++      writeAuthoredBundle(file, invalid);
++      assert.throws(() => loadSwarmSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/,
++        `${chart}/${field}=${String(value)} must fail AJV`);
++      assert.throws(fixture.render, /worker-core/, `${chart}/${field}=${String(value)} must fail Helm`);
++    }
++    for (const value of [1, maximum]) {
++      const valid = structuredClone(canonical);
++      valid['worker-core'].settings.localRuntime[field] = value;
++      writeAuthoredBundle(file, valid);
++      assert.equal(loadSwarmSettings({ SWARM_CONFIG: file }).workerCore.localRuntime[field], value);
++      assert.doesNotThrow(fixture.render, `${chart}/${field}=${value} inclusive boundary`);
++    }
++  }
++});
+--- a/tests/verification/deployment/release-configuration.test.mjs
++++ b/tests/verification/deployment/release-configuration.test.mjs
+@@ -69,6 +69,7 @@
+   "charts/prism/files/config/prism-worker.config.json": "../../../kubeclaw/files/config/prism-worker.config.json",
+   "charts/prism/files/config/prism-execution.config.json": "../../../kubeclaw/files/config/prism-execution.config.json",
+   "charts/prism/files/config/buster-engine.config.json": "../../../kubeclaw/files/config/buster-engine.config.json",
++  "charts/prism/files/config/worker-core.config.json": "../../../kubeclaw/files/config/worker-core.config.json",
+ };
+ function withAliases(run) {
+   return repository(context => {
+--- a/tests/verification/integration/direct-command-runner-artifacts.test.mts
++++ b/tests/verification/integration/direct-command-runner-artifacts.test.mts
+@@ -31,7 +31,8 @@
+       policy: { defaultTimeoutMs: 5000, maximumTimeoutMs: 5000, defaultLimits: limits, maximumLimits: limits,
+         maximumRetryCount: 1, maximumMatrixSize: 1, maximumNodes: 1, defaultConcurrencyLimit: 1, maximumConcurrencyLimits: {} } });
+     const artifactRoot = path.join(temporary, `artifacts-${index}`);
+-    const result = await new TestPlanRunner({ plan, registry, workspaceRoot: workspace, repositoryRoot: repository,
++    const result = await new TestPlanRunner({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: workspace, repositoryRoot: repository,
+       artifactRoot, observabilityRoot: path.join(artifactRoot, 'observability'), maximumConcurrency: 1,
+       grants: new Map([[plan.nodes[0]!.id, ['command.execute']]]), capabilityInvoker: invoker }).run();
+     const diagnostics = result.attempts.flatMap((attempt) => attempt.evidence.filter((item) => item.type === 'log')
+--- a/tests/verification/reliability/buster-job-compaction.test.mts
++++ b/tests/verification/reliability/buster-job-compaction.test.mts
+@@ -38,7 +38,8 @@
+     maximumResultStoreBytes: 16 * 1024 * 1024, trustedSourceAuthority: 'nova:compaction', sourceAttestationPublicKey: publicKey };
+   const storeRoot = path.join(temporary, 'original-state'); const runtimeRoot = path.join(temporary, 'runtime');
+   const store = new FileBusterPlanJobStore(storeRoot, options);
+-  const serviceFor = (jobStore: FileBusterPlanJobStore) => new BusterRemotePlanService({ store: jobStore, registry,
++  const serviceFor = (jobStore: FileBusterPlanJobStore) => new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store: jobStore, registry,
+     workerRevision: 'a'.repeat(40), runtimeRoot, tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set() });
+   const runtimeFor = (service: BusterRemotePlanService) => new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token,
+     maximumRequestBytes: 2 * 1024 * 1024, maximumResponseBytes: 1024 * 1024, maximumResultBytes: 1024 * 1024, shutdownTimeoutMs: 5000 });
+@@ -196,7 +197,8 @@
+           } else {
+             const registry = buildRegistry(discoverPackages({ installationRoots: [input.pluginRoot], trustPolicy: {
+               trustedBuiltinRoots: [input.pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'fifo-test' } }));
+-            const service = new BusterRemotePlanService({ store, registry, runtimeRoot: input.runtimeRoot, workerRevision: 'a'.repeat(40),
++            const service = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, runtimeRoot: input.runtimeRoot, workerRevision: 'a'.repeat(40),
+               tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1048576, allowedCapabilities: new Set() });
+             const server = new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token: input.token,
+               maximumRequestBytes: 2097152, maximumResponseBytes: 1048576, maximumResultBytes: 1048576, shutdownTimeoutMs: 5000 });
+--- a/tests/verification/reliability/buster-shutdown-storage.test.mts
++++ b/tests/verification/reliability/buster-shutdown-storage.test.mts
+@@ -60,7 +60,8 @@
+     const limited = new FileBusterPlanJobStore(path.join(root, 'limited-state'), { ...options, recordLimits: { ...options.recordLimits, maximumRecordBytes: timing === 'healthy-terminal' ? 128 * 1024 : quota } });
+     const runtimeRoot = path.join(root, 'runtime-is-a-file');
+     fs.writeFileSync(preparedPlanRuntimeRoot(runtimeRoot), 'original filesystem ENOTDIR; no provider can start');
+-    const service = new BusterRemotePlanService({ store: limited, registry, workerRevision: 'a'.repeat(40), runtimeRoot,
++    const service = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store: limited, registry, workerRevision: 'a'.repeat(40), runtimeRoot,
+       tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['command.execute']), admission: { ...loadBusterSettings({ SWARM_CONFIG: canonicalSwarmEntry }).admission, maximumActiveJobs: 1 } });
+     const queued = job('reservation:other');
+     if (timing === 'queued') {
+--- a/tests/verification/reliability/coverage-remote.test.mts
++++ b/tests/verification/reliability/coverage-remote.test.mts
+@@ -31,7 +31,8 @@
+   const store = new FileBusterPlanJobStore(path.join(temporary, 'buster-state'), { recordLimits: records,
+     maximumArchiveBytes: 4 * 1024 * 1024, maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
+     trustedSourceAuthority: 'nova:coverage', sourceAttestationPublicKey: publicKey });
+-  const service = new BusterRemotePlanService({ store, registry, workerRevision: 'a'.repeat(40),
++  const service = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, workerRevision: 'a'.repeat(40),
+     runtimeRoot: path.join(temporary, 'buster-runs'), tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 16 * 1024 * 1024,
+     allowedCapabilities: new Set() });
+   const token = 'coverage-native-http-token-00000000000000';
+--- a/tests/verification/reliability/nova-dispatch-projection.test.mjs
++++ b/tests/verification/reliability/nova-dispatch-projection.test.mjs
+@@ -82,7 +82,8 @@
+   const buster = new FileBusterPlanJobStore(path.join(root, 'buster'), { recordLimits,
+     maximumArchiveBytes: 1024 ** 2, maximumResultBytes: 1024 ** 2, maximumResultStoreBytes: 4 * 1024 ** 2,
+     trustedSourceAuthority: 'nova:projection', sourceAttestationPublicKey: keys.publicKey.export({ type: 'spki', format: 'pem' }) });
+-  const service = new BusterRemotePlanService({ store: buster, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(root, 'buster-runtime'),
++  const service = new BusterRemotePlanService({
++    workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store: buster, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(root, 'buster-runtime'),
+     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 ** 2, allowedCapabilities: new Set(['network.http']),
+     networkHttp: { allowedOrigins: [origin], allowedHostSuffixes: [], allowedPorts: [target.address().port], maximumResponseBytes: 1024 ** 2, maximumExecutionMs: 30000 } });
+   const server = createBusterRemotePlanHttpServer({ service, token, maximumRequestBytes: 2 * 1024 ** 2, maximumResponseBytes: 1024 ** 2, maximumResultBytes: 1024 ** 2 });
+--- a/tests/verification/reliability/worker-deadline.test.mts
++++ b/tests/verification/reliability/worker-deadline.test.mts
+@@ -17,7 +17,7 @@
+   const root = await directory(t), attempt = envelope(320, 50), operation = fileOperation(root);
+   const execute = (signal?: AbortSignal) => new WorkerAttemptExecutor({ envelope: attempt, operation, ...(signal ? { signal } : {}),
+     storeFullLog: (_id, content, { signal }) => writeEvidence(root, 'log', content, signal) }).execute();
+-  const runtime = new LocalWorkerRuntime({ workerId: 'worker:file', workerType: 'file', coreVersion: '1.0.0',
++  const runtime = new LocalWorkerRuntime({ drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536, workerId: 'worker:file', workerType: 'file', coreVersion: '1.0.0',
+     protocolVersions: ['worker-protocol.v1'], profiles: [attempt.profile], capacity: 1 }); runtime.markReady();
+   const result = await (wrapper === 'direct' ? execute() : runtime.runAttempt(attempt, execute));
+   assert.equal(result.error?.code, 'WORKER_CLAIM_WINDOW_INSUFFICIENT');
+@@ -43,7 +43,7 @@
+     storeFullLog: (_id, content, { signal }) => writeEvidence(root, 'log', content, signal) }).execute();
+   if (wrapper === 'direct') assert.equal((await execute()).error?.code, 'WORKER_CLAIM_EXPIRED');
+   else {
+-    const runtime = new LocalWorkerRuntime({ workerId: 'worker:file', workerType: 'file', coreVersion: '1.0.0',
++    const runtime = new LocalWorkerRuntime({ drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536, workerId: 'worker:file', workerType: 'file', coreVersion: '1.0.0',
+       protocolVersions: ['worker-protocol.v1'], profiles: [attempt.profile], capacity: 1 }); runtime.markReady();
+     await assert.rejects(runtime.runAttempt(attempt, execute), /WORKER_LOCAL_CLAIM_EXPIRED/);
+   }

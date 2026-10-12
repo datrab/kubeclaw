@@ -1,0 +1,55 @@
+{
+  "selectedSources": [
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "9d2c6655c2eb411f3333cdf9d2b459970f10da44969318cc2eda3c26ed4c6660"
+    },
+    {
+      "path": "tests/verification/reliability/buster-atomic-cancellation.test.mts",
+      "sha256": "fe34b1a0d2d00920ff9db9b2ea82b15849f875680f2c194bbe3ea74bbd91c55d"
+    },
+    {
+      "path": "tests/verification/reliability/buster-prepared-store-cancellation.test.mts",
+      "sha256": "3584b88b0556f1b4c58cec877b788e99b40c658fff2bdf3e48c41b9eee13a3a5"
+    },
+    {
+      "path": "tests/fixtures/test-gate/buster-admission.mts",
+      "sha256": "8fca581a354470b14b6d7f3b04f51cc92cf6b0627e22c42a0c61efe430666a11"
+    },
+    {
+      "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+      "sha256": "426b54bed8e939d47fca1ec6c0872b27e178e8dbb410b3b3825a9a11f5fecb51"
+    },
+    {
+      "path": "tests/fixtures/test-gate/remote-plan.mts",
+      "sha256": "b4fa400d4354103d8648233048f5b5f0255770bdd01204ca28c3cfc9ed2b7a92"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "sha256": "13e698f7350ee9411a506620b354577f360c27a0b7a2dd35f40c4bf9a974cae7"
+    },
+    {
+      "path": "tests/verification/reliability/nova-remote-faults.mts",
+      "sha256": "b14c845886e702ea23d12ed7b8b9231ddc2abfbf8411eb34d78b5b088d975e9a"
+    },
+    {
+      "path": "docs/review/remediation/implementation/buster-atomic-cancellation-20260921.md",
+      "sha256": "739dc749289a172c764187eb9816ff1c8ba14337a09ad19e4fe60ecaec2213dd"
+    }
+  ],
+  "originalRemoteScope": [
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "byteIdenticalToBefore": true
+    },
+    {
+      "path": "tests/verification/reliability/nova-remote-faults.mts",
+      "byteIdenticalToBefore": true
+    }
+  ],
+  "runtimeScope": "Real store/fence/CAS/result bytes; preparation/native ownership modeled. No kernel proof."
+}

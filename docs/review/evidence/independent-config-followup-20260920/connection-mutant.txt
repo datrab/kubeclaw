@@ -1,0 +1,15 @@
+✖ CB02 actual TCP connection limit rejects the next socket and reopens after release (10004.570767ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 0
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10460.400984
+
+✖ failing tests:
+
+test at ../../../../../tmp/config-review-mutant-kzi33ig5/behavior.test.mts:63:1
+✖ CB02 actual TCP connection limit rejects the next socket and reopens after release (10004.570767ms)
+  'test timed out after 10000ms'

@@ -1,0 +1,126 @@
+# Deployment API absence handling — follow-up acceptance matrix
+
+Recorded before implementation. This extends the bounded namespace guard to the
+remaining text-based `is_not_found_error` callers in `scripts/deploy.sh`.
+No behavior change or passing result is claimed by this matrix.
+
+| Case | Production path | Required observation |
+| --- | --- | --- |
+| DA1 | `require_helm_release_idle` | Successful structured release observation distinguishes absent, idle and pending releases; failed lookup or malformed/ambiguous identity never admits Helm mutation. |
+| DA2 | `ensure_tailscale_oauth_secret` | Existing secret remains untouched; only a successful, exact absent-resource observation permits the existing creation flow. Failed credentials/API/discovery, including misleading `not found` text, never trigger secret apply. |
+| DA3 | Namespaced, cluster and manifested resource deletion helpers | Successful exact absence is idempotent; successful presence admits the intended existing deletion. Failed or invalid lookup stops rather than claiming absence or completion. |
+| DA4 | `uninstall_helm_release_if_present` | Successful exact absence is idempotent; presence admits uninstall; lookup failure cannot claim removal. |
+| DA5 | Optional status tables | Nonzero API results are reported as incomplete observations, never as a confirmed empty collection. |
+| DA6 | All migrated callers | Remove the generic error-text classifier and competing interpretation paths. Validate command status before interpreting stdout, including nonzero commands that emit plausible valid JSON. |
+| DA7 | Actual script entrypoints | Positive, empty, malformed, duplicate/wrong identity, pending and nonzero cases exercise the original orchestration with explicit CLI fixtures; meaningful mutations expose weakened guards. Any actual client/local HTTP probe remains identified as such, not a real cluster proof. |
+| DA-DOC | Setup, deployment and cleanup instructions | Document required read/list permissions, exact absence/error behavior, rerun semantics and residual host/live requirements. Record changed docs and independent review. |
+
+Inspect supported Helm/kubectl output before defining accepted structured shapes.
+Do not suppress server-side errors with `--ignore-not-found` to manufacture an
+empty result. Preserve existing ownership checks and deletion scope; this change
+does not authorize running deployment, secret writes or deletion against a live
+system. Real host preparation, installation and recovery remain separate H1–H3
+obligations.
+
+## Current implementation and independent finding
+
+The first implementation inferred release absence/latest status from decoded
+`helm list` output. Fresh review demonstrated with actual Helm 3.22.0 and a local
+HTTP fixture that this is unsafe: corrupt records are silently skipped, so a sole
+record appears absent and a corrupt latest record can expose an older deployed
+revision. The earlier 6/51 fixture pass did not cover this client behavior and is
+historical evidence only. That implementation was rejected and replaced.
+
+DA8, recorded before correction: establish absence from a successful raw backend
+collection; decode **every** observed revision through original Helm and reconcile
+identity, revision and status before using the latest state. Corrupt sole, latest
+and older records, mismatched decoded identity, and unsupported drivers must stop
+mutation. Preserve Secret confidentiality and independently recheck actual clients.
+
+The final `observe_helm_release` supports Helm Secret/ConfigMap storage explicitly,
+including Helm's plural aliases. It lists records with `owner=helm,name=<release>`
+and validates resource type, namespace, full record name, labels, nonempty payload
+and unique positive safe-integer revision. A validated empty collection means
+absent. All revisions are sorted oldest first and read with original
+`helm status --revision N -o json`; decoded name, namespace, revision and status
+must match the raw record. No duplicate release decoder, history cap or fallback
+to a readable older revision was introduced. This costs one raw list plus one
+Helm status read per stored revision. Busy/unknown deployment status remains denied.
+
+All old `is_not_found_error` callers and that generic classifier are removed.
+The small observation parser emits state tokens and fixed errors, never response
+bodies. Resource lookups retain exact-kind/API/name/namespace validation. Helm
+storage, generic resources and namespace setup accept only absent or empty-string
+continuation tokens. Those parser-boundary checks reject incomplete or malformed
+successful CLI output; actual kubectl ordinarily aggregates collection pages.
+
+A shared-connection guard rejects nonempty Helm-only context/API/auth/TLS overrides
+before cluster lookup in setup, deployment and teardown entrypoints. Both clients
+must use the shared KUBECONFIG context. The supported override names were read
+from Helm 3.22.0's actual EnvSettings source. Diagnostics name the setting without
+printing its value. Driver validation prevents silent SQL/memory fallback.
+
+The original GitOps ownership checks and mutation scope are retained. OAuth
+creation propagates pipeline failure explicitly because its conditional caller
+disables implicit Bash errexit. Optional status remains nonfatal but reports failed
+observations as incomplete. This does not fix every other API call in the large
+deploy script or separate ownership module. Observations remain point-in-time,
+not locks against concurrent operators or arbitrary storage tampering outside
+the selected backend's labelled release records.
+
+## Evidence and boundaries
+
+All author evidence is in `docs/review/evidence/deploy-api-errors-20260921/`.
+The original `tests-final.txt` (6 methods/51 scenarios), original two mutant logs,
+and original primary-source list investigation remain historical. Current results
+are explicitly named `*storage-final*`, `actual-storage-client*` and
+`namespace-actual-client-final.txt`; final counts are recorded below.
+
+The CLI-fixture test executes original entrypoints `agent nova`, `tailscale`,
+`teardown`, `teardown-agents` and `status`. kubectl/Helm are synthetic peers; only
+release selection/rendering and infrastructure archive acquisition are replaced
+at the Node boundary. Actual observation and GitOps ownership modules execute.
+No real cluster or credential is used. The expanded tests retain all 51 earlier
+scenarios and add history/storage, continuation and connection-override cases.
+
+`actual-storage-client.py` exercises original `teardown-agents`, actual kubectl
+collection reads, actual Helm revision GET/decoding and the actual parser against
+a local HTTP fixture. GitOps discovery is a CLI fixture and uninstall only records
+a requested action. It covers both backends with empty, valid, valid history,
+403, corrupt sole/latest/older and wrong decoded identity cases. Full command
+traces and HTTP request paths are retained; no actual uninstall is performed.
+The original namespace reviewer's actual-client probe is rerun separately.
+
+Primary source snapshots for configured Helm 3.18.4/3.22.0 list behavior are retained
+alongside 3.22.0 storage decoder/backend selection and environment source. The
+actual client executions use the installed Helm 3.22.0 and kubectl binaries; this
+is not a live cluster or separate native execution of every supported Helm version.
+
+DA-DOC: `docs/deployment/setup-flow.md` and
+`docs/deployment/tailscale-operator.md` describe permissions, explicit storage and
+connection contracts, error versus absence, all-history verification cost, safe
+reruns and residual live requirements. Repair broken history through reviewed
+recovery rather than deleting records to bypass the check. Earlier mutations may
+remain after a later failure. Fresh independent final review is required; no
+H1–H3 or finding-register closure is claimed.
+
+Final correction results: **8/8 fixture test methods, all 83 original-entrypoint
+scenarios passed** in 45.754 seconds (`tests-storage-final.txt`). The namespace
+suite passed **18/18**, retaining its original 14 plus four invalid-continuation
+cases (`bootstrap-storage-final.txt`). Actual kubectl/Helm with the local HTTP
+storage fixture passed **16/16** across both backends
+(`actual-storage-client-final.txt`, full trace `actual-storage-client.json`).
+The original namespace actual-client fixture passed **5/5** again
+(`namespace-actual-client-final.txt`). Installed client versions are retained.
+Canonical parser ESLint, Bash syntax and changed-file whitespace checks passed.
+`source-storage-final-sha256.json` binds final source/test/operator-doc identities.
+
+Final negative controls run isolated copies. Skipping corrupt revision errors
+causes three semantic assertion failures; checking only the newest revision
+violates the full-history oracle. A separate original-entrypoint probe demonstrates
+that the latest-only mutant actually admits Helm upgrade when an older record is
+corrupt (`latest-only-corrupt-old-admission.txt`), whereas the unchanged suite's
+same original scenario rejects it. The harness and named raw logs are retained.
+The initial storage-mutant harness had a Python quoting error before running any
+scenario; it is retained as `mutants-storage-initial-harness-error.txt` and is not
+counted as mutation detection. No production file was mutated by these controls.

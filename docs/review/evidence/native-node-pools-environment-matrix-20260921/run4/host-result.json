@@ -1,0 +1,42 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "/usr/local/bin/node",
+    "--test",
+    "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+    "tests/verification/reliability/native-process-policy.test.mts",
+    "tests/verification/reliability/worker-native-cleanup.test.mts",
+    "tests/verification/reliability/worker-native-cleanup-retry.test.mts",
+    "tests/verification/reliability/worker-resource-reservations.test.mts",
+    "tests/verification/reliability/worker-owned-children.test.mts",
+    "tests/verification/reliability/worker-native-quiescence.test.mts",
+    "tests/verification/reliability/worker-terminal-capacity.test.mts",
+    "tests/verification/reliability/worker-ownership-store.test.mts",
+    "tests/verification/reliability/worker-native-journal.test.mts"
+  ],
+  "versions": [
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--version"
+      ],
+      "stdout": "v24.21.0\n"
+    },
+    {
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock",
+        "--version"
+      ],
+      "stdout": "flock from util-linux 2.42.3\n"
+    }
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 48.895170870935544,
+  "stoppedReason": null,
+  "sourceDrift": [],
+  "sourceFiles": 31183,
+  "effectiveUid": 1000,
+  "kernelRootProof": false
+}

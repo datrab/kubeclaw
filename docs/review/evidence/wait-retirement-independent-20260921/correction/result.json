@@ -1,0 +1,21 @@
+{
+  "sourceDrift": [],
+  "identityCount": 36632,
+  "results": [
+    {
+      "name": "corrected-counterprobes",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "--test",
+        "--test-name-pattern=corrected independent: validly hashed",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-retirement-independent-20260921/correction/counterprobes.mjs"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "exitCode": 1,
+      "seconds": 6.6760672649834305
+    }
+  ]
+}

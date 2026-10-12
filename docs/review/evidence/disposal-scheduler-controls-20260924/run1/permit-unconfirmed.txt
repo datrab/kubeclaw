@@ -1,0 +1,72 @@
+✖ Loaded current close timeout cannot start another child (1853.426579ms)
+✖ Loaded current drain timeout cannot start another child (31418.401271ms)
+✖ Loaded replacement close timeout cannot start another child (1793.397259ms)
+✖ Loaded replacement drain timeout cannot start another child (31527.687527ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 67770.968088
+
+✖ failing tests:
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded current close timeout cannot start another child (1853.426579ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:99:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded current drain timeout cannot start another child (31418.401271ms)
+  AssertionError [ERR_ASSERTION]: negative must reach actual Loaded gating assertions
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:100:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded replacement close timeout cannot start another child (1793.397259ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:99:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded replacement drain timeout cannot start another child (31527.687527ms)
+  AssertionError [ERR_ASSERTION]: negative must reach actual Loaded gating assertions
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:100:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

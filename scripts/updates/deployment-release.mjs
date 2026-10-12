@@ -86,6 +86,31 @@ function validateBundleVariableShape(actual, expected, slot) {
   }
 }
 
+function validateSelectedCodeBundle(container, actual, prefix, slot, code) {
+  const url = actual.get(`${prefix}ARCHIVE_URL`)?.value;
+  const bundle = Object.values(code.bundles).find(item => item.url === url);
+  if (!bundle || actual.get(`${prefix}SHA256`)?.value !== bundle.sha256) throw new Error(`Unselected code bundle: ${slot}`);
+  const role = container.env?.find(item => item.name === 'AGENT_NAME')?.value;
+  if (!code.bundles[role] || code.bundles[role].url !== url) throw new Error(`Wrong code bundle role: ${slot}`);
+}
+
+function validateBundleRevision(actual, prefix, slot, receipt, enabled) {
+  const commit = receipt.code?.commit ?? receipt.commit;
+  const revision = actual.get(`${prefix}EXPECTED_COMMIT`)?.value;
+  if ((enabled === 'true' || revision !== '') && revision !== commit) throw new Error(`Bundle commit differs from selected runtime: ${slot}`);
+  if (actual.get(`${prefix}CONTRACT_VERSION`)?.value !== 'v2') throw new Error(`Unsupported bundle contract: ${slot}`);
+}
+
+function validateBundleControl(container, actual, name, slot, receipt, requireBundle) {
+  const enabled = actual.get(name)?.value;
+  if (!['true', 'false'].includes(enabled) || ((requireBundle || receipt.code) && enabled !== 'true')) throw new Error(`Canonical bundle consumer disabled: ${slot}/${name}`);
+  const prefix = name.slice(0, -'ENABLED'.length);
+  validateBundleRevision(actual, prefix, slot, receipt, enabled);
+  if (enabled === 'true' && receipt.code && prefix === 'CODE_BUNDLE_') {
+    validateSelectedCodeBundle(container, actual, prefix, slot, receipt.code);
+  }
+}
+
 function validateBundle(container, baseline, slot, receipt, requireBundle) {
   const actual = bundleVariables(container);
   const expected = bundleVariables(baseline);
@@ -93,20 +118,7 @@ function validateBundle(container, baseline, slot, receipt, requireBundle) {
   let consumers = 0;
   for (const name of ['CODE_BUNDLE_ENABLED', 'KUBECLAW_CODE_BUNDLE_ENABLED']) {
     if (!expected.has(name)) continue;
-    const enabled = actual.get(name)?.value;
-    if (!['true', 'false'].includes(enabled) || ((requireBundle || receipt.code) && enabled !== 'true')) throw new Error(`Canonical bundle consumer disabled: ${slot}/${name}`);
-    const prefix = name.slice(0, -'ENABLED'.length);
-    const commit = receipt.code?.commit ?? receipt.commit;
-    const revision = actual.get(`${prefix}EXPECTED_COMMIT`)?.value;
-    if ((enabled === 'true' || revision !== '') && revision !== commit) throw new Error(`Bundle commit differs from selected runtime: ${slot}`);
-    if (actual.get(`${prefix}CONTRACT_VERSION`)?.value !== 'v2') throw new Error(`Unsupported bundle contract: ${slot}`);
-    if (enabled === 'true' && receipt.code && prefix === 'CODE_BUNDLE_') {
-      const url = actual.get(`${prefix}ARCHIVE_URL`)?.value;
-      const bundle = Object.values(receipt.code.bundles).find(item => item.url === url);
-      if (!bundle || actual.get(`${prefix}SHA256`)?.value !== bundle.sha256) throw new Error(`Unselected code bundle: ${slot}`);
-      const role = container.env?.find(item => item.name === 'AGENT_NAME')?.value;
-      if (!receipt.code.bundles[role] || receipt.code.bundles[role].url !== url) throw new Error(`Wrong code bundle role: ${slot}`);
-    }
+    validateBundleControl(container, actual, name, slot, receipt, requireBundle);
     consumers += 1;
   }
   return consumers;
@@ -131,6 +143,15 @@ export function validateRenderedRelease(baseline, rendered, receipt, requireBund
   if (requireBundle && bundleConsumers === 0) throw new Error('Selected code bundle is missing from rendered workload');
 }
 
+function nativeDeploymentContext(values, role) {
+  const native = role === 'prism' ? values?.worker?.native : role === 'buster' ? values?.busterNative : undefined;
+  if (!native) return {};
+  const binding = Object.fromEntries(['nodeName', 'namespace', 'policyDigest']
+    .filter(key => native[key] !== undefined).map(key => [key, native[key]]));
+  if (!Object.keys(binding).length) return {};
+  return role === 'buster' ? { busterNative: binding } : { worker: { native: binding } };
+}
+
 // Private registry connectivity and the native host binding are needed even to
 // render a valid baseline. Never import images or bundle controls from overlays.
 function withDeploymentContext(args, role, run) {
@@ -141,13 +162,11 @@ function withDeploymentContext(args, role, run) {
       if (!['-f', '--values'].includes(args[index])) continue;
       const values = yaml.load(fs.readFileSync(args[++index], 'utf8'));
       const registry = values?.runtimeInfrastructure?.registry;
-      const native = role === 'prism' ? values?.worker?.native : undefined;
-      const binding = native && Object.fromEntries(['nodeName', 'namespace', 'policyDigest']
-        .filter(key => native[key] !== undefined).map(key => [key, native[key]]));
-      if (registry === undefined && (!binding || !Object.keys(binding).length)) continue;
+      const native = nativeDeploymentContext(values, role);
+      if (registry === undefined && !Object.keys(native).length) continue;
       const file = path.join(temporary, `${index}.yaml`);
       fs.writeFileSync(file, yaml.dump({ ...(registry === undefined ? {} : { runtimeInfrastructure: { registry } }),
-        ...(binding && Object.keys(binding).length ? { worker: { native: binding } } : {}) }), { mode: 0o600 });
+        ...native }), { mode: 0o600 });
       context.push('-f', file);
     }
     return run(context);

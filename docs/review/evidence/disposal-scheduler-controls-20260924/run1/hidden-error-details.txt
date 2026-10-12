@@ -1,0 +1,53 @@
+✔ real Loader confirmed-disposal recovery: signal failure false, retain (1216.260983ms)
+✔ real Loader confirmed-disposal recovery: signal failure false, delete (869.00197ms)
+✔ real Loader confirmed-disposal recovery: signal failure true, retain (997.521844ms)
+✔ real Loader confirmed-disposal recovery: signal failure true, delete (965.507438ms)
+✖ real Loader retains cleanup and stop failures in current session (536.058141ms)
+✖ real Loader retains cleanup and stop failures in recovery session (735.947886ms)
+✔ overlapping real Loaded terminate calls account one confirmed session exactly once (615.793261ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 5
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7501.728935
+
+✖ failing tests:
+
+test at tests/verification/contracts/provider-disposal-recovery.test.mjs:65:3
+✖ real Loader retains cleanup and stop failures in current session (536.058141ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(result.cleanupErrors.some(error => error.message.includes('TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED')
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-recovery.test.mjs:108:5)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/provider-disposal-recovery.test.mjs:65:3
+✖ real Loader retains cleanup and stop failures in recovery session (735.947886ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(result.cleanupErrors.some(error => error.message.includes('TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED')
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-recovery.test.mjs:108:5)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

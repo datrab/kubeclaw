@@ -1,0 +1,2405 @@
+{
+  "observedAtUtc": "2026-10-12T07:06:24.996733+00:00",
+  "mode": "read-only inventory; newly written documentation only",
+  "root": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+  "branch": "main",
+  "head": "cd9f235345f5fd8736a2ffe75d806288e4d538db",
+  "initialStatusLines": 1238,
+  "statusAtCaptureSha256": "e1bd5f120565358d53b6eed3f9f3b4e7afcbc97881ad850c405771ea1a699cbb",
+  "statusAtCaptureNote": "Already includes new assessment documentation. This is not a clean-tree or accepted-integration claim.",
+  "counts": {
+    "verifiziert": 142,
+    "in Bearbeitung": 4,
+    "implementiert": 2,
+    "offen": 6
+  },
+  "additionalIntegrationCount": 5,
+  "originalFindings": [
+    {
+      "id": "PCR-BUSTER-ENGINE-001",
+      "registerStatus": "in Bearbeitung",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md",
+      "originalReviewSha256": "e4b65276b8511276a6607cb13c3861275f4451a3fccff816eaf8c90eaa6c17e1",
+      "originalFindingText": "### PCR-BUSTER-ENGINE-001 — Capabilityarbeit fehlt im Attemptbudget\n\n**Hoch; nachgewiesener Verdrahtungsdefekt.** `runner.ts:1315–1326` measure liest ausschließlich instance.resources; `provider-loader.ts:236–252` misst /proc-Descendants des Providerchild. Capability-RPC (`:267–274`) führt im Busterparent z.B. Browser/Trivy/kubectl/buildctl/CommandRunner aus; diese sind keine Providerchild-Descendants. `remote-plan-service.ts:613–692` routed echte Parentinvoker, und Runner aggregiert deren Kosten nicht. Reportadapter läuft erst nach Measurement. Damit können CPU/RAM/Prozesszahl des Attempts deutlich über deklariertem Nodebudget liegen und als kleine Providerressourcen quittiert werden. Command/Playwright besitzen eigene Operatorlimits, Browser/Scanner teils nur Zeit-/Outputgrenzen; externe BuildKitkosten sind ausdrücklich zusätzlich operatorseitig. **Ursache beheben:** attemptgebundener Ausführungskontext mit gemeinsamer cgroup/Prozessregistrierung oder tatsächlich addierter, nicht providerberichteter Ressourcenmessung und harter Budgetdurchsetzung für alle lokalen Phasen. **Regression:** echter kleiner Provider mit speicher-/CPUverbrauchendem Capabilitychild und Reportadapter; Messwert/Budgetverletzung muss gesamte lokale Arbeit erfassen, einschließlich zweier paralleler RPCs."
+    },
+    {
+      "id": "PCR-BUSTER-ENGINE-004",
+      "registerStatus": "implementiert",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/buster.engine.md",
+      "originalReviewSha256": "e4b65276b8511276a6607cb13c3861275f4451a3fccff816eaf8c90eaa6c17e1",
+      "originalFindingText": "### PCR-BUSTER-ENGINE-004 — Terminale Jobs behalten vollständige Quellen und Arbeitsverzeichnisse\n\n**Mittel; nachgewiesener Retentions-/Dokumentationswiderspruch.** `remote-plan-service.ts:143,194,239` speichert/übernimmt vollständigen job inklusive Base64repositoryArchive in jedem terminalen Record; `#execute:592–610,714–726` entfernt nur temporären tar vor Ausführung, nicht extrahierten jobRoot/repository bei Terminalität. Nach Fehler vor Extraktionsende kann auch tar verbleiben. Anders als `buster-v2-runtime.md:43–47` bleiben Sources/Workspace und nicht nur kompakte Receipt erhalten. Record-/Resultquoten begrenzen Teile, wiederholte Jobs blockieren schließlich neue Admission; runtimeRoot hat keinen eigenen Gesamt-/GCvertrag. **Ursache beheben:** explizite Retention mit notwendigem Result/Evidencebezug und idempotentem terminalem GC; Jobrecord kann Sourceattestation/-digest statt dauerhaftem Archive halten, wenn Replayentscheidung dies erlaubt. **Regression:** realer kleiner completed/failed/cancelled Job samt Neustart: angegebene Retention prüfen, Sourceworkspace fristgerecht entfernen und alle noch gültigen Evidence-/Resultreceipts weiter abrufbar halten."
+    },
+    {
+      "id": "PCR-OBS-002",
+      "registerStatus": "implementiert",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/a9e080ab1e1981ec5713e9b742f94280835fd347/docs/review/components/foundation.observability.md",
+      "originalReviewSha256": "a43241d2ede9ff0b86a81316727322417ee73062f6bdd53d998aa1be6a268284",
+      "originalFindingText": "### PCR-OBS-002 — Aufbewahrungsstrategie für bestätigte Historie fehlt\n\n- **Mittel, offene Architekturfrage:** endliche Quoten verhindern unbeschränktes\n  Wachstum, nach Ausschöpfung steht aber kein sicherer Freigabeweg bereit.\n- **Beleg:** RecordStore hat append/read/transition ohne Delete; Admission ohne\n  Compaction; AttemptStore reclaimExpiredEvidence entfernt nur ohne Result\n  referenzierte Evidence. README benennt fehlende Admissioncompaction, W6 ebenso.\n- **Auslöser/Auswirkung:** fortlaufende Runs füllen globale Stores; weitere\n  notwendige Belege/Writes scheitern, keine automatische Wiederherstellung der\n  Kapazität. Manuelles Löschen könnte Idempotenz/Beweisketten verlieren.\n- **Ursache lösen:** explizite runbezogene Retention mit Consumercheckpoint,\n  referenziertem Evidenceabschluss und nötigen Idempotenz-Tombstones; erst danach\n  zusammenhängend freigeben. Größere Quoten allein verschieben das Problem.\n- **Verifikation:** mit kleinen echten Quoten abgeschlossene und aktive Runs\n  mischen; Retention gibt nur bestätigte Historie frei, Replay von alten\n  Zustellungen führt zu keiner erneuten externen Aktion. Policyentscheidung\n  und Umsetzung gehören zum späteren Reparatur-/Betriebsauftrag."
+    },
+    {
+      "id": "IFR-21-001",
+      "registerStatus": "in Bearbeitung",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/runtime-images.md",
+      "originalReviewSha256": "52bb56a08d81c8f871ef02cef020cf655f3e8e2342cb825a5c3fe816d1c0168c",
+      "originalFindingText": "## Befund IFR-21-001\n**Mittel; nachgewiesene unvollständige Reproduzierbarkeit.** Auslöser: erneuter Build desselben Source-Commits zu anderem Zeitpunkt. Base-Digest und Top-Level-Versionen sind gepinnt, aber Ops apt-Repositories und verschiedene transitive Python-/Go-Installationen werden zeitabhängig aufgelöst; manche Prüfsummen werden vom selben Upstream beim Build bezogen. Quellen: `ops/pod/Dockerfile:8–29`, Nova-Dockerfile pip/go-/Downloadblöcke, Prism-Worker Browser-OS-Installation. Ein Source-Pin ist deshalb keine Zusicherung bitidentischer Rebuilds.\n\nUrsachenbehebung: benötigte Reproduzierbarkeit definieren und verbleibende Installer über geprüfte Locks/Snapshots/Checksums binden; bis dahin immer den geprüften Output-Digest deployen. Test: zwei isolierte reale Builds mit identischem Input, Paket-/SBOM-/Digestvergleich, Abweichungen zuordnen. Kein Build hier ausgeführt."
+    },
+    {
+      "id": "IFR-29-001",
+      "registerStatus": "offen",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/public-config.md",
+      "originalReviewSha256": "7673eb71d1604645fe0875006c88c6093fa7510e3fce208db319a809abe6fb76",
+      "originalFindingText": "## Befund IFR-29-001\n**Mittel; nachgewiesene Dokumentations-/Betreibertrennungslücke.** Auslöser: spätere Veröffentlichung des jetzigen Repositoryzustands oder direkte Übernahme der Betreiber-Values durch Dritte. `my-values/nova-values.yaml`, weitere Rollen-Values und Infrastruktur-/Ops-Dateien enthalten betreiberspezifische Identitäts-/Routing-/Namespaceannahmen. Dockerignore schließt sie aus Images aus, aber nicht aus Git-Veröffentlichung. Es wurde kein Secretleak behauptet; die Verträge sind trotzdem nicht generische öffentliche Beispiele.\n\nUrsachenbehebung: private Konfiguration von dokumentierten anonymisierten Beispielen mit vollständiger Parameter-/Secret-Schnittstelle trennen, Git-Historie separat auf sensible Altbestände prüfen, ohne funktionale Änderungen im Review. Echter Test: frischer Clone der später vorgesehenen öffentlichen Oberfläche, Beispiel-Render mit fiktiven IDs/Secrets und Geheimnisprüfung von Git-/Buildkontext-/Artefaktinhalt. Keine Veröffentlichung oder History-Rewrite ausgeführt."
+    },
+    {
+      "id": "IFR-04-001",
+      "registerStatus": "in Bearbeitung",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/tailscale.md",
+      "originalReviewSha256": "06d6fa287e46886bbc235ba3d175744eee5701c983fddf2a8335fda61d1d3a63",
+      "originalFindingText": "## Befund IFR-04-001\n**Mittel; offene Frage.** Auslöser: Argo-/Ops-/Prism-Zugriff oder neue Broker-Preview wird als verfügbar betrachtet, obwohl ACL-/Grant-/TagOwner-Konfiguration nicht erfasst ist. Quellen: obige Values, Ingress-Templates und `docs/deployment/tailscale-operator.md`. Auswirkung: Zugriff fehlt oder ist breiter als erwartet. Ursachenbehebung: redigierten externen Zugriffsvertrag mit Tag-Eigentümern, zugelassenen Nutzern und Zweck je Ingress dokumentieren. Test: je ein erlaubter und verbotener echter Tailnet-Client, Proxy-Neustart und OAuth-/Zertifikatrotation.\n\nManifest- und Aufruferreview abgeschlossen; kein Operator-Chart installiert, keine Tailnet-Daten gelesen. Doku teilweise vorhanden, konkrete externe Konfiguration und Recovery ohne Operator offen. Optionaler Userspace-Tailscale im [Ops-Pod](ops-pod.md) ist ein anderer Zugriffsweg."
+    },
+    {
+      "id": "IFR-10-001",
+      "registerStatus": "offen",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/buildkit.md",
+      "originalReviewSha256": "d2773330787525cda24c7c2c6bb1ccd8bd4f6d51c686c64cc725a101c38d0459",
+      "originalFindingText": "## Befund IFR-10-001\n**Hoch; begründeter Sicherheitsverdacht.** Auslöser: bösartiger Dockerfile-RUN auf dem langlebigen BuildKit. Belege: Einstieg `--net=host` und `--oci-worker-no-process-sandbox` sowie gemeinsame Runtime-Konfiguration; BuildKit teilt die Container-Prozessumgebung statt separater Prozesssandbox. Offizielle [BuildKit-Rootless-Dokumentation](https://github.com/moby/buildkit/blob/v0.26.2/docs/rootless.md) warnt vor Prozessbeeinflussung/übrigbleibenden Exec-Prozessen. Zugriff auf Supervisor-Secrets ist damit **nicht** nachgewiesen; UID-/Dateirechte begrenzen ihn.\n\nUrsachenbehebung: Builds mit fremdem Projektcode in eigener kurzlebiger Sicherheits-/Prozessgrenze ausführen und langlebige Steuer-/Credential-Prozesse nicht in denselben Build-Kontext stellen. Echte Verifikation mit dem gepinnten Runtime-Image: unerlaubte Prozesssicht/Signale, Hintergrundprozesse nach Jobende, Cross-Job-Datei-/Cachezugriff und Netzabfluss negativ testen. Die versionsgenaue Upstream-Datei v0.26.2 wurde gelesen: Sie warnt ausdrücklich vor kill und gegebenenfalls ptrace gegen Prozesse im Daemon-Container sowie zurückbleibenden Prozessen. Das belegt die fehlende Prozessgrenze, nicht einen erfolgreichen Privilegienwechsel."
+    },
+    {
+      "id": "IFR-01-001",
+      "registerStatus": "offen",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/cluster-bootstrap.md",
+      "originalReviewSha256": "6097dcbcf34f6e2491cc54aad33c68549434fdf72668c4da2008a89b3bcddac5",
+      "originalFindingText": "## Review und Befund IFR-01-001\n**Mittel; offene Frage mit nachgewiesener Dokumentationslücke.** Auslöser: frischer Host oder Wiederaufbau nach Hostverlust. Der Name „setup“ kann zu einem vollständig reproduzierbaren Cluster-Bootstrap verleiten, doch `cmd_setup` beginnt mit bestehendem kubectl-Zugriff und richtet keinen Node ein. Folge: Version, Storage und Host-Voraussetzungen müssen extern rekonstruiert werden; für Paperless ist kein Wiederherstellungsvertrag im Repository vorhanden.\n\nUrsachenbehebung im Folgeauftrag: effektive, redigierte Ausgangsumgebung samt Versions-/API-Mindestanforderungen, Storage-Provisioner, Host-cgroup-Vorbereitung und Zuständigkeit für Host-Backups dokumentieren. Keine implizite Übernahme eines generischen K3s-Defaults. Echter Test: später auf isoliertem leeren Host ausschließlich dokumentierten Bootstrap und Restore durchführen; API/Storage/Pipeline prüfen."
+    },
+    {
+      "id": "IFR-02-001",
+      "registerStatus": "offen",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/cilium-migration.md",
+      "originalReviewSha256": "58554910f25f85b0a6b724106bcd8020bd8e0e028cb74be2319bd4929bafa2df",
+      "originalFindingText": "## Befund IFR-02-001\n**Hoch; offene Betriebsfrage.** Auslöser: Cutover bei einem tatsächlich anders benannten Paperless-Namespace, nicht inventarisierten DaemonSets oder nur clusterabhängigem Administrationsweg. Belege: `cilium-cluster-policies.yaml:25–58`, `deploy-cilium.sh:10–31`, Runbook §11.5 und §20. Die globale Baseline und das Recycling betreffen sämtliche Anwendungen. Der vorhandene Code blockiert viele unzulässige Ausgangszustände, beweist aber weder Paperless-Wiederaufnahme noch unabhängiges Recovery.\n\nUrsachenbehebung: konkreten Namespace/Abhängigkeiten, Wartungsfenster, Offline-Artefakte und phasenweisen Host-Rollback vor Ausführung erfassen. Live-Verifikation: Cilium-Endpoint-Zuordnung jedes Pods, Pipeline-Kommunikation, Paperless-Upload/OCR/Abruf, negative Netztests und Wiederholung nach Policy-Cleanup; den Abschlussmarker erst danach setzen."
+    },
+    {
+      "id": "IFR-05-001",
+      "registerStatus": "verifiziert",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/argocd.md",
+      "originalReviewSha256": "bd55b08fd1dd06eae027f9278aa2c25418ff1c200ce0278bda7a1dc81492a191",
+      "originalFindingText": "## Befund IFR-05-001\n**Mittel; nachgewiesene Implementierungslücke gegenüber vollständigem GitOps-Betrieb.** Auslöser: Erwartung, dass der Bootstrap bereits Pipeline-Releases verwaltet. Beleg: gesamtes Installationsskript; Suche nach `kind: Application`/`AppProject` in main liefert keine Produktionsressource. Es werden Argo und sein Ingress installiert, keine Release-Auswahl oder Deployment-Reihenfolge eingerichtet. Damit sind Ownership, Drift-/Prune-Verhalten und Health-Gates noch nicht implementiert.\n\nUrsachenbehebung: explizite Applications/Projects, einziger Eigentümer pro Ressource, Secret-Vorversorgung, Digest-Values und Verhalten persistenter Ressourcen festlegen. Skriptverwaltete Releases nicht gleichzeitig ungeregelt von Argo verwalten. Echter Test: später auf isoliertem Cluster Bootstrap, ersten Sync, fehlgeschlagenen Hook, Drift, Registry-/Git-Ausfall und Rollback unter Erhalt der PVCs prüfen."
+    },
+    {
+      "id": "IFR-06-001",
+      "registerStatus": "verifiziert",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/spire.md",
+      "originalReviewSha256": "dbbe1fc4db8e75cc794228e67a4902444b1f02521a1ed3bfb8d01d898ded7104",
+      "originalFindingText": "## Befund IFR-06-001\n**Mittel; offene Frage.** Auslöser: SPIRE-Server-/Agent-Ausfall oder CA-Verlust. Values und Runbook belegen Installation/Peer-Bindung, aber keinen getesteten Restore des CA-/Serverzustands, keine konkrete garantierte Ausfalldauer und keine dokumentierte Widerrufsfrist bereits ausgestellter SVIDs. Rotation per SDS ist implementierter Mechanismus; sofortiger Widerruf ist daraus nicht ableitbar.\n\nUrsachenbehebung: gepinnte Charts vollständig rendern und tatsächlichen Server-PVC-/CA-/TTL-Vertrag sowie Rotation/Recovery mit aktiven Jobs dokumentieren. Echter Test: gültige/ungültige Identität, fortlaufende SVID-Erneuerung, Server-/Agent-Ausfall über Zertifikatsablauf, Neustart/CA-Restore und erneute gegenseitige Authentifizierung. Kein Fail-open aktivieren."
+    },
+    {
+      "id": "IFR-16-001",
+      "registerStatus": "offen",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/storage.md",
+      "originalReviewSha256": "42df8c2ff401ecf1db779233370f613b9f0cd86cc254f066f1f15f65e9a2f480",
+      "originalFindingText": "## Befund IFR-16-001\n**Mittel; begründeter Kapazitätsverdacht.** Auslöser: vollständiger Default-Stack oder zeitgleiche Build-/Restore-/Browserlast auf gemeinsamem Node. Große Requests/Limits, zusätzliche Jobs und caches treffen auf nicht dokumentierte allocatable-/Disk-Budgets. Belege: obige Renderwerte, Buster-Values und 100Gi-PVCs für Prism-DB, Artefakte und Backups. Scheduler-Requests verhindern keinen gemeinsamen Disk-Druck.\n\nUrsachenbehebung: reale Allocatable-Werte und Paperless-Reserve erheben, Ephemeral-/PVC-/Cache-/Backupwachstum zusammen budgetieren, Quotas/Retention mit Lastmessungen abstimmen. Test: Scheduling aller Komponenten plus geplanter Jobs und gezielter Disk-Grenztest im isolierten Umfeld; Paperless-Latenz/Wiederanlauf beobachten."
+    },
+    {
+      "id": "IFR-26-001",
+      "registerStatus": "in Bearbeitung",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/backup-recovery.md",
+      "originalReviewSha256": "90c0d98eccedd563d001bc0af8920f70282332908f27ae6b03046d83be4d9ea9",
+      "originalFindingText": "## Befund IFR-26-001\n**Hoch; nachgewiesene unvollständige Wiederherstellungsabdeckung.** Auslöser: Verlust des Artefakt-/Host-Volumes oder Wiederaufbau mit ausschließlich vorhandenem DB-Dump. Belege: Backupjob mountet nur Backup-PVC und liest PostgreSQL; `workloads.yaml` mountet Artefakte ausschließlich im Control. `prism-recovery-observability-v1.md` beschreibt zusätzlich versionierten Artefaktspeicher, der im Chart nicht als entsprechender Backupdienst umgesetzt ist. DB-Referenzen können nach Restore auf fehlende Binär-/Designobjekte zeigen.\n\nUrsachenbehebung: konsistente Backupgruppe aus DB, Artefakten und erforderlichen Schlüsseln/Journals mit dokumentiertem Commit-/Quiesce-Punkt, externem Ausfallbereich und überprüfter Retention. Echter Test: vollständiger Wiederaufbau in anderem Namespace/Host aus gesicherten Artefakten; referenzierte Digests lesen, Sessions/Jobs sinnvoll wiederaufnehmen und Pipeline-/Prism-Pfad ausführen. Nicht nur pg_restore --list."
+    },
+    {
+      "id": "IFR-28-001",
+      "registerStatus": "offen",
+      "originalReview": "https://github.com/datrab/kubeclaw/blob/eac591fb060458ebb6c6ba34599309e8c424bd08/docs/review/infrastructure/ops-pod.md",
+      "originalReviewSha256": "29675c34575e1a1051e4d712a76cbc191839bad79630a0583e6350217f6e456c",
+      "originalFindingText": "## Review und Befund IFR-28-001\n**Mittel; offene Recovery-Voraussetzung.** Auslöser: CNI, Node oder Cluster-DNS fällt aus. Dieser Pod hängt trotz „Remote“ an Cluster-Scheduling/PVC/CNI/API; optionaler Tailscale-Sidecar teilt diese Grenze. Der zusätzliche Hostzugang ist laut Auftrag vorhanden, aber kein vom Chart bereitgestellter unabhängiger Wiederherstellungsweg.\n\nUrsachenbehebung: Ops-Pod als beobachtenden Komfortzugang und den separaten Host-/KVM-/externen Recoveryweg mit getrennten Voraussetzungen dokumentieren/prüfen. Echter Test später: Argo/Tailscale/CNI getrennt ausfallen lassen, Zugang über unabhängigen Hostpfad herstellen, gewünschte Konfiguration wiederherstellen; niemals nur Remote-Pairing-Status als DR-Test zählen."
+    }
+  ],
+  "currentIdentities": [
+    {
+      "path": "charts/prism/files/prism-backup.sh",
+      "kind": "file",
+      "bytes": 13123,
+      "sha256": "4a0209b0ec2c7b68811d856c85b9519d0ea12151e5e17409ba963e4fda961bef"
+    },
+    {
+      "path": "charts/prism/templates/backup.yaml",
+      "kind": "file",
+      "bytes": 4442,
+      "sha256": "c7fdc0b9524672ae49179eb258f0144c09774a56b5eb74a31f1a597ff2e88e9e"
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "kind": "file",
+      "bytes": 19487,
+      "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "kind": "file",
+      "bytes": 10474,
+      "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be"
+    },
+    {
+      "path": "docker/Dockerfile.prism-worker",
+      "kind": "file",
+      "bytes": 3067,
+      "sha256": "820d8c1b9cb0784113fbd4c2ceb206b40cb0e2381d3fad3df647d7dcc784bb80"
+    },
+    {
+      "path": "docker/browser-archives.lock.json",
+      "kind": "file",
+      "bytes": 3735,
+      "sha256": "6f82ae5a8f399c89067cb49625d32db08b5d08b6eafb19fe7fd4376e625b578a"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "kind": "file",
+      "bytes": 14866,
+      "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+    },
+    {
+      "path": "docker/trivy-databases.lock.json",
+      "kind": "file",
+      "bytes": 1512,
+      "sha256": "eb4de828de3d1afe277aad01925ab94a8ed2eb08fbe41c00fd3e16889d81569e"
+    },
+    {
+      "path": "docs/operations/ax41-rollout.md",
+      "kind": "file",
+      "bytes": 20173,
+      "sha256": "7d6a0ce4738ae0c0d40c80693cf850fed003a9744f750bb201af980494e5a80a"
+    },
+    {
+      "path": "docs/operations/observability-retention.md",
+      "kind": "file",
+      "bytes": 25371,
+      "sha256": "002dd2e9994fbb993e974567ce34778f0cb0b5bc829b2507c008ecde0d410de8"
+    },
+    {
+      "path": "docs/operations/spire-recovery.md",
+      "kind": "file",
+      "bytes": 14291,
+      "sha256": "8b614af9c1a31e356b8c2923b273dacf124ae7d6786ba229b997fe3389b6e13f"
+    },
+    {
+      "path": "docs/operations/worker-trust-runbook.md",
+      "kind": "file",
+      "bytes": 17670,
+      "sha256": "7fd30f671c14503da1ab25488eed007816e71e76f9ebeb52ddd1a71c502a0637"
+    },
+    {
+      "path": "docs/ops/cilium-networking.md",
+      "kind": "file",
+      "bytes": 11433,
+      "sha256": "2fdfdff2ac63d98f3f0b33dd419f1bbc07eac3cfcb26cc1d041ad6d0063c0d12"
+    },
+    {
+      "path": "docs/ops/ops-pod.md",
+      "kind": "file",
+      "bytes": 30660,
+      "sha256": "ea0c24c9f60f2b636dac3f4164dc32152082e84c0a9b78f2fd9d0db7a011eb50"
+    },
+    {
+      "path": "docs/review/components/buster.engine.md",
+      "kind": "file",
+      "bytes": 21512,
+      "sha256": "e4b65276b8511276a6607cb13c3861275f4451a3fccff816eaf8c90eaa6c17e1"
+    },
+    {
+      "path": "docs/review/components/foundation.observability.md",
+      "kind": "file",
+      "bytes": 11388,
+      "sha256": "0439f48e77736b2b6966a333d5390d9b708c628f5973daaf6445ffd1de0166f9"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/ci2-service2/results.json",
+      "kind": "file",
+      "bytes": 358,
+      "sha256": "d8dafa0f2e5f1390c7a06d5cab3a7aa13bccd352c6581dd0de9526e58325923f"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-doc-v2/result.json",
+      "kind": "file",
+      "bytes": 2056,
+      "sha256": "720f34186efea345374d214283ea80e50e4d2d3b7b9c44429868f2966e76fac5"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/integration-security-database-oracle/result.json",
+      "kind": "file",
+      "bytes": 937,
+      "sha256": "9bd6f661bd09df5af2bf76598285546baa3c183cb0bf6ba25134e6b809ebc19c"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/run-security-original.py",
+      "kind": "file",
+      "bytes": 10505,
+      "sha256": "0af5807855acd6221be6905bda7c0f343686e3969abdf2d05932da68211417b6"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/security-controls1/results.json",
+      "kind": "file",
+      "bytes": 2817,
+      "sha256": "6f122e0606e812fd4bd3f92abd58016cd58e0243acec1cf637db922fce5f543d"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/security-runtime2/drift.json",
+      "kind": "file",
+      "bytes": 147,
+      "sha256": "586950b4226c6450b59033bd1986209c9e2293c32189fddf69da348e4150de7a"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/security-runtime2/results.json",
+      "kind": "file",
+      "bytes": 4615,
+      "sha256": "70448c6a88359d8723720df16b8e07339d3179095c1474f5105299f90cc0396c"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/security-runtime2/runtime-4.txt",
+      "kind": "file",
+      "bytes": 27012,
+      "sha256": "c22c1f879dc19811265ed6d00f55a0993f75a4daf3af266ecbf3921cae9f1640"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation6/execution-first-result.json",
+      "kind": "file",
+      "bytes": 213,
+      "sha256": "0305b164d7bcca1c8a5c9e5c17f5014ed921a0d65d3d023e6a639d1995e99bca"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation6/preflight-memory-rejection.json",
+      "kind": "file",
+      "bytes": 1949,
+      "sha256": "028e00e057db3e2e077f3a641372ad5f9b911b27f7302e8ace33d68f3d12b838"
+    },
+    {
+      "path": "docs/review/evidence/buster-security-scan-policy-20260924/design-resolved-v3.md",
+      "kind": "file",
+      "bytes": 1365,
+      "sha256": "834e8a2f024a77141770404b1daa2716a6f5fcbefea5599ebe6a7266678534db"
+    },
+    {
+      "path": "docs/review/evidence/buster-security-scan-policy-20260924/manifest-v1.json",
+      "kind": "file",
+      "bytes": 1050,
+      "sha256": "556451800bd449e7629f718bd41b3e6a81588a7b2bb77014ace18e9d4320fc70"
+    },
+    {
+      "path": "docs/review/evidence/independent-register-current-audit-20260921/audit.json",
+      "kind": "file",
+      "bytes": 2336,
+      "sha256": "2062c58cd54e82fc30994d7480b75454a2066e51735cd954b7069a41c92f1917"
+    },
+    {
+      "path": "docs/review/evidence/pr6-gitops/local-tests.txt",
+      "kind": "file",
+      "bytes": 2495,
+      "sha256": "73f2f758e5d7e074a4d12c7f56a93efbd754f03fb4aa3bb9f773823f597695f7"
+    },
+    {
+      "path": "docs/review/evidence/runtime-security-test-tools-20260924/preparation-result.json",
+      "kind": "file",
+      "bytes": 6986,
+      "sha256": "cb06c0b35e8bcb8968d1163465f1de4a0c0fb4f3df604226fbffea6620041e4c"
+    },
+    {
+      "path": "docs/review/evidence/spire-current-audit-20260921/result.json",
+      "kind": "file",
+      "bytes": 1516,
+      "sha256": "7d67710dd27d26ffb7aa73262fcc108a21293df21c8a4509edde49e9455b1a80"
+    },
+    {
+      "path": "docs/review/infrastructure/argocd.md",
+      "kind": "file",
+      "bytes": 2936,
+      "sha256": "bd55b08fd1dd06eae027f9278aa2c25418ff1c200ce0278bda7a1dc81492a191"
+    },
+    {
+      "path": "docs/review/infrastructure/backup-recovery.md",
+      "kind": "file",
+      "bytes": 2870,
+      "sha256": "90c0d98eccedd563d001bc0af8920f70282332908f27ae6b03046d83be4d9ea9"
+    },
+    {
+      "path": "docs/review/infrastructure/buildkit.md",
+      "kind": "file",
+      "bytes": 3083,
+      "sha256": "d2773330787525cda24c7c2c6bb1ccd8bd4f6d51c686c64cc725a101c38d0459"
+    },
+    {
+      "path": "docs/review/infrastructure/cilium-migration.md",
+      "kind": "file",
+      "bytes": 3615,
+      "sha256": "58554910f25f85b0a6b724106bcd8020bd8e0e028cb74be2319bd4929bafa2df"
+    },
+    {
+      "path": "docs/review/infrastructure/cluster-bootstrap.md",
+      "kind": "file",
+      "bytes": 2996,
+      "sha256": "6097dcbcf34f6e2491cc54aad33c68549434fdf72668c4da2008a89b3bcddac5"
+    },
+    {
+      "path": "docs/review/infrastructure/ops-pod.md",
+      "kind": "file",
+      "bytes": 2683,
+      "sha256": "29675c34575e1a1051e4d712a76cbc191839bad79630a0583e6350217f6e456c"
+    },
+    {
+      "path": "docs/review/infrastructure/public-config.md",
+      "kind": "file",
+      "bytes": 2992,
+      "sha256": "7673eb71d1604645fe0875006c88c6093fa7510e3fce208db319a809abe6fb76"
+    },
+    {
+      "path": "docs/review/infrastructure/runtime-images.md",
+      "kind": "file",
+      "bytes": 3051,
+      "sha256": "52bb56a08d81c8f871ef02cef020cf655f3e8e2342cb825a5c3fe816d1c0168c"
+    },
+    {
+      "path": "docs/review/infrastructure/spire.md",
+      "kind": "file",
+      "bytes": 4975,
+      "sha256": "515b3fca30e9acd83c486d17a6247316b98882ec81c1fa672cf9a7e64908708a"
+    },
+    {
+      "path": "docs/review/infrastructure/storage.md",
+      "kind": "file",
+      "bytes": 2849,
+      "sha256": "42df8c2ff401ecf1db779233370f613b9f0cd86cc254f066f1f15f65e9a2f480"
+    },
+    {
+      "path": "docs/review/infrastructure/tailscale.md",
+      "kind": "file",
+      "bytes": 3563,
+      "sha256": "f0556a1beba0d32d4d1d85eff479f26fb95fc3b9c3cdafbb0f8e8ab10312ba1a"
+    },
+    {
+      "path": "docs/review/remediation/acceptance-20260920.md",
+      "kind": "file",
+      "bytes": 38637,
+      "sha256": "27942ef3c0f04c0b325d98f4cd2d0f70cd6060fef47d941d2e7bef3ec92b5cda"
+    },
+    {
+      "path": "docs/review/remediation/assessment-20260920.md",
+      "kind": "file",
+      "bytes": 12062,
+      "sha256": "88197e213dc6e50b7ff725b420ffcc6fed17cdc5fce196d4f7d01dfffac73b5c"
+    },
+    {
+      "path": "docs/review/remediation/decisions.md",
+      "kind": "file",
+      "bytes": 17093,
+      "sha256": "02529859f4848939c03efd38ed50149c9cea978229d7d2e3da2ff812d0e5386e"
+    },
+    {
+      "path": "docs/review/remediation/handoff.md",
+      "kind": "file",
+      "bytes": 10448,
+      "sha256": "a5a591dd80515058fb315ae0f6e96969cb423da15b3f547a9ba69a2d6feddc86"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-cluster-invokers-20260924.md",
+      "kind": "file",
+      "bytes": 7120,
+      "sha256": "e0f51031fe0b2faa9db60c6027f869f98ad0b87f038b12c9017a0b5e15ddfaf4"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "kind": "file",
+      "bytes": 7988,
+      "sha256": "b1d5466e73918f41702ca7cb58e1cdeacfa33111edbdf22ec45d839af081d2c1"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "kind": "file",
+      "bytes": 30352,
+      "sha256": "a2f88fff4701f78a694a7fa1a0ff8ad5e59c54357384cb2c2fa6cea4ee10ff54"
+    },
+    {
+      "path": "docs/review/remediation/implementation/pr6-gitops-closure.md",
+      "kind": "file",
+      "bytes": 12286,
+      "sha256": "e26f8da067bdc4b736577ea7d32bf96c0995b3b32ed08202806574f5d5ca203f"
+    },
+    {
+      "path": "docs/review/remediation/implementation/tailscale-access-matrix-20260921.md",
+      "kind": "file",
+      "bytes": 5632,
+      "sha256": "c8ec983be2c764d165044eac55c18071153c11fc0dd1afa23276133d196180d6"
+    },
+    {
+      "path": "docs/review/remediation/progress.md",
+      "kind": "file",
+      "bytes": 58071,
+      "sha256": "d4eb50084dfb57afae05a653d306d06cdd5031400785882b617dce0f85b92d91"
+    },
+    {
+      "path": "docs/review/remediation/register.json",
+      "kind": "file",
+      "bytes": 543792,
+      "sha256": "906e861f7ed13c4052e10f637e325848df16491ff1d0889b45b513cf5e9e4adf"
+    },
+    {
+      "path": "docs/review/remediation/register.md",
+      "kind": "file",
+      "bytes": 91568,
+      "sha256": "7f44049163a17d250f61aff7d01435ff354cb8658dff7ea630b692993ed0fdfa"
+    },
+    {
+      "path": "docs/review/remediation/resume/HANDOFF-20261009.md",
+      "kind": "file",
+      "bytes": 17807,
+      "sha256": "39312bd45d4f4b07ab129767d0c7e00302712303cb331f0289a87c0c894a6a0b"
+    },
+    {
+      "path": "scripts/browser-archive-lock.mjs",
+      "kind": "file",
+      "bytes": 8271,
+      "sha256": "ec668e5b4658ed819410a301b8c25320ace2c2e6c457aa2cf0e1dc5e084997e9"
+    },
+    {
+      "path": "scripts/deploy-cilium.sh",
+      "kind": "file",
+      "bytes": 2584,
+      "sha256": "4af44f0d25b4e24d6d3c044758ab9cd7d984b9577c171174dd1598683e35faa8"
+    },
+    {
+      "path": "scripts/deploy.sh",
+      "kind": "file",
+      "bytes": 150066,
+      "sha256": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960"
+    },
+    {
+      "path": "scripts/gitops.mjs",
+      "kind": "file",
+      "bytes": 15348,
+      "sha256": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c"
+    },
+    {
+      "path": "scripts/native-worker-node-capacity.mjs",
+      "kind": "file",
+      "bytes": 4800,
+      "sha256": "ad4635917bf9d1679eeb427e933fe423ed63f604b0cf57cc09c40be497d0e149"
+    },
+    {
+      "path": "scripts/review/remediation-identities.json",
+      "kind": "file",
+      "bytes": 3810,
+      "sha256": "2f6fbb58a790eab9a728f1f3378f89e56c4b91b17dcfbc41b2ab2288a886a3c1"
+    },
+    {
+      "path": "scripts/review/remediation-register.mjs",
+      "kind": "file",
+      "bytes": 9550,
+      "sha256": "3f04dd1da92874bd5d43d199fae6e103c967ac51f16ff1df9b1fd54ea5ebaf13"
+    },
+    {
+      "path": "scripts/tests/remediation-register.test.mjs",
+      "kind": "file",
+      "bytes": 7730,
+      "sha256": "5f4e1bc1fd1001e62212f24cc5711c373221aa68bb8a81fd9690667124490253"
+    },
+    {
+      "path": "scripts/trivy-database-lock.mjs",
+      "kind": "file",
+      "bytes": 9761,
+      "sha256": "7f86040766fd1cdc010302617217adbe58b862437259aea1cff03f992ca0d510"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "kind": "file",
+      "bytes": 18824,
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-recovery.ts",
+      "kind": "file",
+      "bytes": 6068,
+      "sha256": "3bc1d7f6787a1917ea471b55c4f7075618ae16459b6f9d85825493bc98ca10de"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "kind": "file",
+      "bytes": 8076,
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "kind": "file",
+      "bytes": 14852,
+      "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "kind": "file",
+      "bytes": 5102,
+      "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+      "kind": "file",
+      "bytes": 2513,
+      "sha256": "9012607f67aeb7abe5aa29ae6687ea1e43b091b3bea3c1b57b0ed9d01fa6c705"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+      "kind": "file",
+      "bytes": 9226,
+      "sha256": "cdba534f94cbf3fca17d16d40b196d5a303620e8809f1f419e996478dbfd0d69"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "kind": "file",
+      "bytes": 6299,
+      "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-setup.ts",
+      "kind": "file",
+      "bytes": 5000,
+      "sha256": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "kind": "file",
+      "bytes": 4631,
+      "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "kind": "file",
+      "bytes": 13630,
+      "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553"
+    },
+    {
+      "path": "skills/prism/config/native-worker.ts",
+      "kind": "file",
+      "bytes": 3841,
+      "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "kind": "file",
+      "bytes": 1949,
+      "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e"
+    },
+    {
+      "path": "tests/verification/deployment/prism-backup.test.mts",
+      "kind": "file",
+      "bytes": 18747,
+      "sha256": "6fc246ff8ee55e99f6d760d894ec5144ebfa5670d4ab4630dd9f93b06041751b"
+    }
+  ],
+  "prior84FileManifestComparison": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "expectedSha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "observed": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "kind": "file",
+        "bytes": 5319,
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+      "expectedSha256": "a042f53e55ca8438e2d2e1af7766c73063b5d34bfaa9c68ab8d21d0fdf4111f8",
+      "observed": {
+        "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+        "kind": "file",
+        "bytes": 6402,
+        "sha256": "a042f53e55ca8438e2d2e1af7766c73063b5d34bfaa9c68ab8d21d0fdf4111f8"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+      "expectedSha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b",
+      "observed": {
+        "path": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+        "kind": "file",
+        "bytes": 5501,
+        "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/_buster-native.tpl",
+      "expectedSha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+      "observed": {
+        "path": "charts/kubeclaw/templates/_buster-native.tpl",
+        "kind": "file",
+        "bytes": 2737,
+        "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "expectedSha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "observed": {
+        "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+        "kind": "file",
+        "bytes": 26278,
+        "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "expectedSha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+      "observed": {
+        "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+        "kind": "file",
+        "bytes": 12158,
+        "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "expectedSha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+      "observed": {
+        "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+        "kind": "file",
+        "bytes": 24943,
+        "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/rbac.yaml",
+      "expectedSha256": "45525f90703f76d3dbcfb67290599359b6366025bd6fdc77040c27d85da6f5e9",
+      "observed": {
+        "path": "charts/kubeclaw/templates/rbac.yaml",
+        "kind": "file",
+        "bytes": 4457,
+        "sha256": "45525f90703f76d3dbcfb67290599359b6366025bd6fdc77040c27d85da6f5e9"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "expectedSha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "observed": {
+        "path": "charts/kubeclaw/values.yaml",
+        "kind": "file",
+        "bytes": 18792,
+        "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/prism/files/config/profiles/buster-engine.runtime.config.json",
+      "expectedSha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b",
+      "observed": {
+        "path": "charts/prism/files/config/profiles/buster-engine.runtime.config.json",
+        "kind": "symlink",
+        "target": "../../../../kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+        "linkTargetSha256": "43e9c37e2af041012b944684e7530bfae5afa4937ec3a86696fe195c51fcff21",
+        "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/prism/values.schema.json",
+      "expectedSha256": "7588db4e045bc4d52c1b46b4bbffeac238f12c9bd074b71aa9592c4ed24589c3",
+      "observed": {
+        "path": "charts/prism/values.schema.json",
+        "kind": "file",
+        "bytes": 13136,
+        "sha256": "7588db4e045bc4d52c1b46b4bbffeac238f12c9bd074b71aa9592c4ed24589c3"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "expectedSha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+      "observed": {
+        "path": "charts/prism/values.yaml",
+        "kind": "file",
+        "bytes": 3362,
+        "sha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8"
+      },
+      "matches": true
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "expectedSha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be",
+      "observed": {
+        "path": "docker/Dockerfile.buster-runtime",
+        "kind": "file",
+        "bytes": 10474,
+        "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be"
+      },
+      "matches": true
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "expectedSha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029",
+      "observed": {
+        "path": "docker/buster-runtime-entrypoint.sh",
+        "kind": "file",
+        "bytes": 14866,
+        "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+      },
+      "matches": true
+    },
+    {
+      "path": "docs/architecture/buster-cluster-configuration.md",
+      "expectedSha256": "d31e4fdd6d65dd9bd988373ce7d3ec52b977d78b297884e6a4b518c5476d1201",
+      "observed": {
+        "path": "docs/architecture/buster-cluster-configuration.md",
+        "kind": "file",
+        "bytes": 12598,
+        "sha256": "13bf4962e4592e07e1313ad26ed14744b1b027ad7c8c7442fdcfeb5ac1acd20a"
+      },
+      "matches": false
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+      "expectedSha256": "85408643e05abf71cd6e163a026775b5486381ac972336343f266eef6b1a2155",
+      "observed": {
+        "path": "docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+        "kind": "file",
+        "bytes": 3131,
+        "sha256": "85408643e05abf71cd6e163a026775b5486381ac972336343f266eef6b1a2155"
+      },
+      "matches": true
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "expectedSha256": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f",
+      "observed": {
+        "path": "my-values/buster-values.yaml",
+        "kind": "file",
+        "bytes": 7546,
+        "sha256": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f"
+      },
+      "matches": true
+    },
+    {
+      "path": "package.json",
+      "expectedSha256": "63322d00421a359d4c310e2e8a59ac888dd869dd800db715612a032aa7e3d517",
+      "observed": {
+        "path": "package.json",
+        "kind": "file",
+        "bytes": 49824,
+        "sha256": "63322d00421a359d4c310e2e8a59ac888dd869dd800db715612a032aa7e3d517"
+      },
+      "matches": true
+    },
+    {
+      "path": "scripts/buster-cluster-preflight.mjs",
+      "expectedSha256": "8af3686b218937310a08b03ef31a5d63c60d6525551003e3d655e0bf28c5bb5f",
+      "observed": {
+        "path": "scripts/buster-cluster-preflight.mjs",
+        "kind": "file",
+        "bytes": 274,
+        "sha256": "8af3686b218937310a08b03ef31a5d63c60d6525551003e3d655e0bf28c5bb5f"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "expectedSha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+        "kind": "file",
+        "bytes": 9008,
+        "sha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "expectedSha256": "d39c0de3c0e245cc6dfe8845f984a4b36b31449a5a1e37faa414f2254aa3806c",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+        "kind": "file",
+        "bytes": 3247,
+        "sha256": "d39c0de3c0e245cc6dfe8845f984a4b36b31449a5a1e37faa414f2254aa3806c"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "expectedSha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+        "kind": "file",
+        "bytes": 10942,
+        "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "expectedSha256": "b93b8ffe1b0af18614e20bb16899afe4378be86e748f667fc3b3ebdd77853fd9",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+        "kind": "file",
+        "bytes": 7559,
+        "sha256": "b93b8ffe1b0af18614e20bb16899afe4378be86e748f667fc3b3ebdd77853fd9"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "expectedSha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+        "kind": "file",
+        "bytes": 5670,
+        "sha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "expectedSha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+        "kind": "file",
+        "bytes": 9922,
+        "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "expectedSha256": "a86a248f1bd72e949a6d2cf63811f48fb1974e417954eea0e4a9f5f2a1a9e8df",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+        "kind": "file",
+        "bytes": 2182,
+        "sha256": "a86a248f1bd72e949a6d2cf63811f48fb1974e417954eea0e4a9f5f2a1a9e8df"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "expectedSha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+        "kind": "file",
+        "bytes": 4578,
+        "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "expectedSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+        "kind": "file",
+        "bytes": 2913,
+        "sha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "expectedSha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/production-config-values.ts",
+        "kind": "file",
+        "bytes": 9852,
+        "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "expectedSha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/production.ts",
+        "kind": "file",
+        "bytes": 8076,
+        "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "expectedSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "kind": "file",
+        "bytes": 19873,
+        "sha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "expectedSha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+      "observed": {
+        "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+        "kind": "file",
+        "bytes": 4870,
+        "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "expectedSha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3",
+      "observed": {
+        "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+        "kind": "file",
+        "bytes": 5814,
+        "sha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "expectedSha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "observed": {
+        "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+        "kind": "file",
+        "bytes": 41591,
+        "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "expectedSha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "observed": {
+        "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+        "kind": "file",
+        "bytes": 14008,
+        "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+      "expectedSha256": "06ec94d5ba0e6f2db60cfb1574bc21a79fd8e2763abdf79fbc26650aac022ac1",
+      "observed": {
+        "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+        "kind": "file",
+        "bytes": 2039,
+        "sha256": "06ec94d5ba0e6f2db60cfb1574bc21a79fd8e2763abdf79fbc26650aac022ac1"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command.mjs",
+      "expectedSha256": "96236885439d14f24c14b4371afec426cc95d868aa19f3110fd21ace2c272271",
+      "observed": {
+        "path": "tests/fixtures/test-gate/cluster-command.mjs",
+        "kind": "file",
+        "bytes": 2247,
+        "sha256": "96236885439d14f24c14b4371afec426cc95d868aa19f3110fd21ace2c272271"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+      "expectedSha256": "e59433c5babd34e6c6fd07e68ab4e8012464fa54e418e163353dd6632baa603d",
+      "observed": {
+        "path": "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+        "kind": "file",
+        "bytes": 4338,
+        "sha256": "e59433c5babd34e6c6fd07e68ab4e8012464fa54e418e163353dd6632baa603d"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs",
+      "expectedSha256": "eed5abb2878b3dd7983859c6322994407a6ea31775529a2d2f5e11a6d2149b71",
+      "observed": {
+        "path": "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs",
+        "kind": "file",
+        "bytes": 7141,
+        "sha256": "eed5abb2878b3dd7983859c6322994407a6ea31775529a2d2f5e11a6d2149b71"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-output-consumers.test.mjs",
+      "expectedSha256": "75850db668b05cca4edc2eaccd141d13678178253cc5890eca194ccb2406df35",
+      "observed": {
+        "path": "tests/verification/contracts/buster-cluster-output-consumers.test.mjs",
+        "kind": "file",
+        "bytes": 5339,
+        "sha256": "75850db668b05cca4edc2eaccd141d13678178253cc5890eca194ccb2406df35"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+      "expectedSha256": "1679d4e5fda07cf0832f2c42c558093332b6e8e5fd1077bc9436841229031622",
+      "observed": {
+        "path": "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+        "kind": "file",
+        "bytes": 4420,
+        "sha256": "1679d4e5fda07cf0832f2c42c558093332b6e8e5fd1077bc9436841229031622"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs",
+      "expectedSha256": "70fa2b64df3e96c4035c893ae9bff368de6577d56be20bf5a05348674c0eba0c",
+      "observed": {
+        "path": "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs",
+        "kind": "file",
+        "bytes": 3157,
+        "sha256": "70fa2b64df3e96c4035c893ae9bff368de6577d56be20bf5a05348674c0eba0c"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-process-input-callers.test.mjs",
+      "expectedSha256": "118aaf312f9e6f6d00a4b20d57b5e2a9c1aaaf672db7d67c31a28027d35d02ee",
+      "observed": {
+        "path": "tests/verification/contracts/buster-process-input-callers.test.mjs",
+        "kind": "file",
+        "bytes": 4990,
+        "sha256": "118aaf312f9e6f6d00a4b20d57b5e2a9c1aaaf672db7d67c31a28027d35d02ee"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+      "expectedSha256": "daeedf2c76ea68a35b7ee527891cff707532785b923d25b9be5084ce2c5ec2c3",
+      "observed": {
+        "path": "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+        "kind": "file",
+        "bytes": 5713,
+        "sha256": "daeedf2c76ea68a35b7ee527891cff707532785b923d25b9be5084ce2c5ec2c3"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+      "expectedSha256": "644c286de8e40f31aaa7889b7fb956c6b3430c1ba7b75998df3226471b3134fb",
+      "observed": {
+        "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+        "kind": "file",
+        "bytes": 11661,
+        "sha256": "644c286de8e40f31aaa7889b7fb956c6b3430c1ba7b75998df3226471b3134fb"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "expectedSha256": "5cc4ec91787529dcd437e56d8cb1a22720a3b1569a32bafdc7ec9f372afba50d",
+      "observed": {
+        "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+        "kind": "file",
+        "bytes": 22417,
+        "sha256": "5cc4ec91787529dcd437e56d8cb1a22720a3b1569a32bafdc7ec9f372afba50d"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "expectedSha256": "c13bd9bf7f78ed834b17d78fd24ec147e7b21edbf90ae9152ae3e993e9ba924f",
+      "observed": {
+        "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+        "kind": "file",
+        "bytes": 15534,
+        "sha256": "c13bd9bf7f78ed834b17d78fd24ec147e7b21edbf90ae9152ae3e993e9ba924f"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "expectedSha256": "caa32846ed52fb2143c05aa0d5b1d9afda11f03c0ca7c7542bca5c8377ca0858",
+      "observed": {
+        "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+        "kind": "file",
+        "bytes": 17161,
+        "sha256": "caa32846ed52fb2143c05aa0d5b1d9afda11f03c0ca7c7542bca5c8377ca0858"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+      "expectedSha256": "1cdc3105bcf3a63a32a2a79f3ae6fe7d7214ac5c29a025d591b23c18834cb951",
+      "observed": {
+        "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+        "kind": "file",
+        "bytes": 15068,
+        "sha256": "1cdc3105bcf3a63a32a2a79f3ae6fe7d7214ac5c29a025d591b23c18834cb951"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+      "expectedSha256": "259143200677ba037d71eef8d0c569582c9fffd6841cae357d83a9bc0bc35a0d",
+      "observed": {
+        "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+        "kind": "file",
+        "bytes": 3195,
+        "sha256": "259143200677ba037d71eef8d0c569582c9fffd6841cae357d83a9bc0bc35a0d"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "expectedSha256": "e3b8462e1190467d9bc16f771f81f356ba78fe07accefec8cd4292cb519d7d60",
+      "observed": {
+        "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+        "kind": "file",
+        "bytes": 18425,
+        "sha256": "e3b8462e1190467d9bc16f771f81f356ba78fe07accefec8cd4292cb519d7d60"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/tsconfig.buster-cluster-policy.json",
+      "expectedSha256": "f7bba3d38694195f14c5b8021852fb7485d7e78f981c1eaae3043e97fa8f1e86",
+      "observed": {
+        "path": "tests/verification/contracts/tsconfig.buster-cluster-policy.json",
+        "kind": "file",
+        "bytes": 687,
+        "sha256": "f7bba3d38694195f14c5b8021852fb7485d7e78f981c1eaae3043e97fa8f1e86"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/buster-admission-render.test.mjs",
+      "expectedSha256": "880659b662e0dc3400c5e8f5cfb0b4d2ea6cfaeeefa25d8daf6e5bcc1b5aebc8",
+      "observed": {
+        "path": "tests/verification/deployment/buster-admission-render.test.mjs",
+        "kind": "file",
+        "bytes": 5451,
+        "sha256": "880659b662e0dc3400c5e8f5cfb0b4d2ea6cfaeeefa25d8daf6e5bcc1b5aebc8"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+      "expectedSha256": "2a281e5ced819cb8c0290a0e9e95cc9b2ed19633666e411fbde132c06b07c632",
+      "observed": {
+        "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+        "kind": "file",
+        "bytes": 16623,
+        "sha256": "2a281e5ced819cb8c0290a0e9e95cc9b2ed19633666e411fbde132c06b07c632"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/buster-process-input-parity.test.mjs",
+      "expectedSha256": "6a371ee2f232e195366c970a00d43052302f30db6974a8a5836e0f7a72d057c3",
+      "observed": {
+        "path": "tests/verification/deployment/buster-process-input-parity.test.mjs",
+        "kind": "file",
+        "bytes": 6189,
+        "sha256": "6a371ee2f232e195366c970a00d43052302f30db6974a8a5836e0f7a72d057c3"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/buster-readiness-config.test.mjs",
+      "expectedSha256": "2ebcfbb1fdb7e190a265d14ff0d03baaaed6ecd8106e567e5c02cc8a05ed9e53",
+      "observed": {
+        "path": "tests/verification/deployment/buster-readiness-config.test.mjs",
+        "kind": "file",
+        "bytes": 6889,
+        "sha256": "2ebcfbb1fdb7e190a265d14ff0d03baaaed6ecd8106e567e5c02cc8a05ed9e53"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/config-component-packaging.test.mjs",
+      "expectedSha256": "e54bf0bc008ab23503971efcf8cc037364b09cfcd9e47bee8a33455eb6328930",
+      "observed": {
+        "path": "tests/verification/deployment/config-component-packaging.test.mjs",
+        "kind": "file",
+        "bytes": 9946,
+        "sha256": "e54bf0bc008ab23503971efcf8cc037364b09cfcd9e47bee8a33455eb6328930"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "expectedSha256": "ba4bcd6bd8bc01379ef02ed7d8a9ff49a46f4da270ad6eba5247d4f7199f2a72",
+      "observed": {
+        "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+        "kind": "file",
+        "bytes": 34410,
+        "sha256": "ba4bcd6bd8bc01379ef02ed7d8a9ff49a46f4da270ad6eba5247d4f7199f2a72"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/buster-cluster-entrypoint.test.mjs",
+      "expectedSha256": "8d16efe7a4a17d8edfa0ccee8a762788924a6f42430e8cc784666f2eee9e5f0e",
+      "observed": {
+        "path": "tests/verification/reliability/buster-cluster-entrypoint.test.mjs",
+        "kind": "file",
+        "bytes": 5278,
+        "sha256": "8d16efe7a4a17d8edfa0ccee8a762788924a6f42430e8cc784666f2eee9e5f0e"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+      "expectedSha256": "3d370b6ab521d825db82f6a9d509ce3eb7c61766d193c4fe000541e4507fe27f",
+      "observed": {
+        "path": "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+        "kind": "file",
+        "bytes": 4350,
+        "sha256": "3d370b6ab521d825db82f6a9d509ce3eb7c61766d193c4fe000541e4507fe27f"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+      "expectedSha256": "28958d66a366909e6182d79024e52c9cb51e2d96f832b762277066a995219fe5",
+      "observed": {
+        "path": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+        "kind": "file",
+        "bytes": 4181,
+        "sha256": "28958d66a366909e6182d79024e52c9cb51e2d96f832b762277066a995219fe5"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/tailscale-generation.test.mjs",
+      "expectedSha256": "eeb00058cadb06726ef4292ef0b5fe9da2dfbb8992a96982b23521ad404f3691",
+      "observed": {
+        "path": "tests/verification/reliability/tailscale-generation.test.mjs",
+        "kind": "file",
+        "bytes": 5932,
+        "sha256": "eeb00058cadb06726ef4292ef0b5fe9da2dfbb8992a96982b23521ad404f3691"
+      },
+      "matches": true
+    },
+    {
+      "path": "scripts/native-worker-node-policy.d.mts",
+      "expectedSha256": "e769dd54e72b6b44dbbe1f29892d7a194ebb8f769385e260ae972779d318cb3e",
+      "observed": {
+        "path": "scripts/native-worker-node-policy.d.mts",
+        "kind": "file",
+        "bytes": 1267,
+        "sha256": "e769dd54e72b6b44dbbe1f29892d7a194ebb8f769385e260ae972779d318cb3e"
+      },
+      "matches": true
+    },
+    {
+      "path": "scripts/registry-client-config.d.mts",
+      "expectedSha256": "68d13e008e4f36947f8cb6f8074803cfa63ecac920abb5641e86887cbccf74ac",
+      "observed": {
+        "path": "scripts/registry-client-config.d.mts",
+        "kind": "file",
+        "bytes": 1054,
+        "sha256": "68d13e008e4f36947f8cb6f8074803cfa63ecac920abb5641e86887cbccf74ac"
+      },
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "expectedSha256": "cf35868ce909f53a05fae0e8a4bdf81f0e8c030850d569839f13d47f5efa4607",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+        "kind": "file",
+        "bytes": 726,
+        "sha256": "cf35868ce909f53a05fae0e8a4bdf81f0e8c030850d569839f13d47f5efa4607"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/e2e/registry-target.d.mts",
+      "expectedSha256": "829f30b8da14840f8ce821f0ebef09fa971c514a8270c3a24eee69204e116944",
+      "observed": {
+        "path": "tests/verification/e2e/registry-target.d.mts",
+        "kind": "file",
+        "bytes": 316,
+        "sha256": "829f30b8da14840f8ce821f0ebef09fa971c514a8270c3a24eee69204e116944"
+      },
+      "matches": true
+    },
+    {
+      "path": "scripts/tsconfig.json",
+      "expectedSha256": "dc37cbd2383d4c719721d0a1906bb36d48505ba32d9002441c70926a16c2c42b",
+      "observed": {
+        "path": "scripts/tsconfig.json",
+        "kind": "file",
+        "bytes": 202,
+        "sha256": "dc37cbd2383d4c719721d0a1906bb36d48505ba32d9002441c70926a16c2c42b"
+      },
+      "matches": true
+    },
+    {
+      "path": "docs/architecture/buster-runtime-security-configuration.md",
+      "expectedSha256": "f8b02af9d4242a34b30d483842b13eab43c896688f075f87694283f9fa1f3537",
+      "observed": {
+        "path": "docs/architecture/buster-runtime-security-configuration.md",
+        "kind": "file",
+        "bytes": 7947,
+        "sha256": "7551d656eda3cf7b72cf54289e075e652b4b2e1fad367244e723eff7f27d1d7e"
+      },
+      "matches": false
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "expectedSha256": "2b2f88102906e784e9038168ee8f8ad5b1866f04e8aeea255db1da0c65f10863",
+      "observed": {
+        "path": "docs/architecture/pipeline-test-gate-security-error-reference.md",
+        "kind": "file",
+        "bytes": 4971,
+        "sha256": "6282f331b991e6c9b21933138a98f3474d03e756655d46514a520a575dccdda1"
+      },
+      "matches": false
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "expectedSha256": "7d56f74725a675785d1c9d47de7a7069b10369485ca2886f4e81e76c9e0e9b71",
+      "observed": {
+        "path": "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+        "kind": "file",
+        "bytes": 7988,
+        "sha256": "b1d5466e73918f41702ca7cb58e1cdeacfa33111edbdf22ec45d839af081d2c1"
+      },
+      "matches": false
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "expectedSha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+        "kind": "file",
+        "bytes": 11676,
+        "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "expectedSha256": "f67e43a2be7ebc263274834ea4dc8e8083fa007043a522fbdb86e1380bd290ff",
+      "observed": {
+        "path": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+        "kind": "file",
+        "bytes": 18537,
+        "sha256": "f67e43a2be7ebc263274834ea4dc8e8083fa007043a522fbdb86e1380bd290ff"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-implementation.mts",
+      "expectedSha256": "a8b4cabada3ed10e3b67a37509e15b1c6f8d590b3e6f515149950b9c140a7a3a",
+      "observed": {
+        "path": "tests/verification/contracts/check-pipeline-security-implementation.mts",
+        "kind": "file",
+        "bytes": 6661,
+        "sha256": "c68c8676462f99c7c817af8abe53f5aa0cdbd83aaa7d473ff08fcd9a16c678c1"
+      },
+      "matches": false
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-command-environment.ts",
+      "expectedSha256": "8e4ac7b78cd9248aa14981bcc84c0c20b0334c1cae93385d6bd03d156fa7188f",
+      "observed": {
+        "path": "skills/buster/engine/test-gates/kubernetes-command-environment.ts",
+        "kind": "file",
+        "bytes": 376,
+        "sha256": "8e4ac7b78cd9248aa14981bcc84c0c20b0334c1cae93385d6bd03d156fa7188f"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
+      "expectedSha256": "09bdcf2ade20b9e19cd87eb0357cf606ebec349252d851dcfa5df070497db72d",
+      "observed": {
+        "path": "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
+        "kind": "file",
+        "bytes": 2120,
+        "sha256": "09bdcf2ade20b9e19cd87eb0357cf606ebec349252d851dcfa5df070497db72d"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-api.mjs",
+      "expectedSha256": "07749cccd627419e828243f57f4f939b1430c233d7cd8e99516fe4257ea1c4d6",
+      "observed": {
+        "path": "tests/fixtures/test-gate/cluster-command-api.mjs",
+        "kind": "file",
+        "bytes": 2052,
+        "sha256": "07749cccd627419e828243f57f4f939b1430c233d7cd8e99516fe4257ea1c4d6"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-program.cjs",
+      "expectedSha256": "502569a89a517e0f2f4f930c15d744e4e0ab9841c7d1dc7ddb394bcdcc4a88ae",
+      "observed": {
+        "path": "tests/fixtures/test-gate/cluster-command-program.cjs",
+        "kind": "file",
+        "bytes": 2607,
+        "sha256": "502569a89a517e0f2f4f930c15d744e4e0ab9841c7d1dc7ddb394bcdcc4a88ae"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-route-provider.mjs",
+      "expectedSha256": "3c14e02b7b1b0865f1accf0b45e5ad5584a29a1213aa75094fa5a93a02fd33c8",
+      "observed": {
+        "path": "tests/fixtures/test-gate/cluster-route-provider.mjs",
+        "kind": "file",
+        "bytes": 1791,
+        "sha256": "3c14e02b7b1b0865f1accf0b45e5ad5584a29a1213aa75094fa5a93a02fd33c8"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-test-ownership.mjs",
+      "expectedSha256": "021f3cf0f542c3de92befa39195c552ec2dad62e49fd2deb4cc4ec3287ac256d",
+      "observed": {
+        "path": "tests/fixtures/test-gate/cluster-test-ownership.mjs",
+        "kind": "file",
+        "bytes": 3233,
+        "sha256": "021f3cf0f542c3de92befa39195c552ec2dad62e49fd2deb4cc4ec3287ac256d"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-capture.test.mjs",
+      "expectedSha256": "19d95134df0a4509c4a1a655050945de9731c950cbc1120fca2bbfa105c54b48",
+      "observed": {
+        "path": "tests/verification/contracts/buster-cluster-capture.test.mjs",
+        "kind": "file",
+        "bytes": 6468,
+        "sha256": "19d95134df0a4509c4a1a655050945de9731c950cbc1120fca2bbfa105c54b48"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "expectedSha256": "6a9a37a9963c6677318287fe7678fe1807a606d2b18cf857768ba94d63b44081",
+      "observed": {
+        "path": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+        "kind": "file",
+        "bytes": 18004,
+        "sha256": "6a9a37a9963c6677318287fe7678fe1807a606d2b18cf857768ba94d63b44081"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-ownership-reporter.mjs",
+      "expectedSha256": "c84e680ad414d79e2b23bbfcc9460692e8dc631ed461a883bde6cd89a1a5f8e7",
+      "observed": {
+        "path": "tests/fixtures/test-gate/cluster-ownership-reporter.mjs",
+        "kind": "file",
+        "bytes": 634,
+        "sha256": "c84e680ad414d79e2b23bbfcc9460692e8dc631ed461a883bde6cd89a1a5f8e7"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-ownership-scenario.mjs",
+      "expectedSha256": "2733291320e51f7a1a08521d2ebb39d632815ab614260a1360a6cc7d62b9768d",
+      "observed": {
+        "path": "tests/fixtures/test-gate/cluster-ownership-scenario.mjs",
+        "kind": "file",
+        "bytes": 2969,
+        "sha256": "2733291320e51f7a1a08521d2ebb39d632815ab614260a1360a6cc7d62b9768d"
+      },
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "expectedSha256": "d71bfc2c3c468406deb05f0cf45582eff2786633e0570adfd336f3a36ba2f695",
+      "observed": {
+        "path": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+        "kind": "file",
+        "bytes": 8044,
+        "sha256": "d71bfc2c3c468406deb05f0cf45582eff2786633e0570adfd336f3a36ba2f695"
+      },
+      "matches": true
+    }
+  ],
+  "spireComparison": [
+    {
+      "path": "node_modules/.cache/spire-effective-20260921/spire-0.30.0.tgz",
+      "expectedSha256": "8e133a142915f4938328e2524f6262607e41f61e06f15cb06dc3d94f018be341",
+      "observed": {
+        "path": "node_modules/.cache/spire-effective-20260921/spire-0.30.0.tgz",
+        "kind": "file",
+        "bytes": 326483,
+        "sha256": "8e133a142915f4938328e2524f6262607e41f61e06f15cb06dc3d94f018be341"
+      },
+      "matches": true
+    },
+    {
+      "path": "my-values/infra/spire-values.yaml",
+      "expectedSha256": "dad3b9a5f3815773de1c49acfe1ea982f97bb076fcd312fb99155a5a083a06fd",
+      "observed": {
+        "path": "my-values/infra/spire-values.yaml",
+        "kind": "file",
+        "bytes": 1407,
+        "sha256": "dad3b9a5f3815773de1c49acfe1ea982f97bb076fcd312fb99155a5a083a06fd"
+      },
+      "matches": true
+    },
+    {
+      "path": "docs/operations/spire-recovery.md",
+      "expectedSha256": "8b614af9c1a31e356b8c2923b273dacf124ae7d6786ba229b997fe3389b6e13f",
+      "observed": {
+        "path": "docs/operations/spire-recovery.md",
+        "kind": "file",
+        "bytes": 14291,
+        "sha256": "8b614af9c1a31e356b8c2923b273dacf124ae7d6786ba229b997fe3389b6e13f"
+      },
+      "matches": true
+    },
+    {
+      "path": "docs/operations/worker-trust-runbook.md",
+      "expectedSha256": "7fd30f671c14503da1ab25488eed007816e71e76f9ebeb52ddd1a71c502a0637",
+      "observed": {
+        "path": "docs/operations/worker-trust-runbook.md",
+        "kind": "file",
+        "bytes": 17670,
+        "sha256": "7fd30f671c14503da1ab25488eed007816e71e76f9ebeb52ddd1a71c502a0637"
+      },
+      "matches": true
+    },
+    {
+      "path": "docs/review/infrastructure/spire.md",
+      "expectedSha256": "515b3fca30e9acd83c486d17a6247316b98882ec81c1fa672cf9a7e64908708a",
+      "observed": {
+        "path": "docs/review/infrastructure/spire.md",
+        "kind": "file",
+        "bytes": 4975,
+        "sha256": "515b3fca30e9acd83c486d17a6247316b98882ec81c1fa672cf9a7e64908708a"
+      },
+      "matches": true
+    },
+    {
+      "path": "docs/review/remediation/implementation/spire-recovery-matrix-20260921.md",
+      "expectedSha256": "b75823f50829c8862d4d65ef69ba8204991f82e365cea53704ea4dd1cd49acd9",
+      "observed": {
+        "path": "docs/review/remediation/implementation/spire-recovery-matrix-20260921.md",
+        "kind": "file",
+        "bytes": 2687,
+        "sha256": "b75823f50829c8862d4d65ef69ba8204991f82e365cea53704ea4dd1cd49acd9"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "expectedSha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be",
+      "observed": {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "kind": "file",
+        "bytes": 12202,
+        "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+      },
+      "matches": true
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "expectedSha256": "f84c715b0ffd6088dc996221a83987bc1711086785da5e5e0bb1f70c0a274f7c",
+      "observed": {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "kind": "file",
+        "bytes": 19487,
+        "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc"
+      },
+      "matches": false
+    }
+  ],
+  "registerPriorAuditComparison": [
+    {
+      "path": "docs/review/remediation/acceptance-20260920.md",
+      "expectedSha256": "27942ef3c0f04c0b325d98f4cd2d0f70cd6060fef47d941d2e7bef3ec92b5cda",
+      "observed": {
+        "path": "docs/review/remediation/acceptance-20260920.md",
+        "kind": "file",
+        "bytes": 38637,
+        "sha256": "27942ef3c0f04c0b325d98f4cd2d0f70cd6060fef47d941d2e7bef3ec92b5cda"
+      },
+      "matches": true
+    },
+    {
+      "path": "docs/review/remediation/register.json",
+      "expectedSha256": "cbd64533bd16c91928c21317b9d183969aff91c512cc32bcc7daf3102af95697",
+      "observed": {
+        "path": "docs/review/remediation/register.json",
+        "kind": "file",
+        "bytes": 543792,
+        "sha256": "906e861f7ed13c4052e10f637e325848df16491ff1d0889b45b513cf5e9e4adf"
+      },
+      "matches": false
+    },
+    {
+      "path": "docs/review/remediation/register.md",
+      "expectedSha256": "7f44049163a17d250f61aff7d01435ff354cb8658dff7ea630b692993ed0fdfa",
+      "observed": {
+        "path": "docs/review/remediation/register.md",
+        "kind": "file",
+        "bytes": 91568,
+        "sha256": "7f44049163a17d250f61aff7d01435ff354cb8658dff7ea630b692993ed0fdfa"
+      },
+      "matches": true
+    },
+    {
+      "path": "docs/review/remediation/progress.md",
+      "expectedSha256": "b5c7b9005c6be2cda96b5f52e0335bc710b7a461af74938d8d221a114b12b7eb",
+      "observed": {
+        "path": "docs/review/remediation/progress.md",
+        "kind": "file",
+        "bytes": 58071,
+        "sha256": "d4eb50084dfb57afae05a653d306d06cdd5031400785882b617dce0f85b92d91"
+      },
+      "matches": false
+    },
+    {
+      "path": "docs/review/remediation/handoff.md",
+      "expectedSha256": "92d54f37c376b78d64746e9dd6ea6b5e4542dd5c71e177dc8857525b3d86f6fb",
+      "observed": {
+        "path": "docs/review/remediation/handoff.md",
+        "kind": "file",
+        "bytes": 10448,
+        "sha256": "a5a591dd80515058fb315ae0f6e96969cb423da15b3f547a9ba69a2d6feddc86"
+      },
+      "matches": false
+    },
+    {
+      "path": "docs/review/remediation/README.md",
+      "expectedSha256": "36cd1363120e157da3506ed6e84d4faf9459507940d64a83ec2a33fe3a247eee",
+      "observed": {
+        "path": "docs/review/remediation/README.md",
+        "kind": "file",
+        "bytes": 8009,
+        "sha256": "6c93cd5ecf04932b4e6c48711f7504f08fbd5707434ce64fce0a8dbfb6d7e78e"
+      },
+      "matches": false
+    },
+    {
+      "path": "docs/review/remediation/implementation/register-consistency-20260920.md",
+      "expectedSha256": "429777e9481d13ba79a59e7bbdbefd461474d3e435889f86f43f23394d944fd7",
+      "observed": {
+        "path": "docs/review/remediation/implementation/register-consistency-20260920.md",
+        "kind": "file",
+        "bytes": 12820,
+        "sha256": "aca98d130b8722dbc70757c52053a8c60768ed0caf3cf5d6aee1cc188d619167"
+      },
+      "matches": false
+    },
+    {
+      "path": "docs/review/remediation/implementation/open-work-inventory-20260921.md",
+      "expectedSha256": "62725dd776d5aa407e9ca354184dfb07635080e3567d8b21882a65c15292ecea",
+      "observed": {
+        "path": "docs/review/remediation/implementation/open-work-inventory-20260921.md",
+        "kind": "file",
+        "bytes": 18115,
+        "sha256": "11e90bcbf276f32e5a808d957632272f66e5de072b65ee94c7786af7f6f9ebca"
+      },
+      "matches": false
+    },
+    {
+      "path": "scripts/review/remediation-register.mjs",
+      "expectedSha256": "3f04dd1da92874bd5d43d199fae6e103c967ac51f16ff1df9b1fd54ea5ebaf13",
+      "observed": {
+        "path": "scripts/review/remediation-register.mjs",
+        "kind": "file",
+        "bytes": 9550,
+        "sha256": "3f04dd1da92874bd5d43d199fae6e103c967ac51f16ff1df9b1fd54ea5ebaf13"
+      },
+      "matches": true
+    },
+    {
+      "path": "scripts/review/remediation-identities.json",
+      "expectedSha256": "2f6fbb58a790eab9a728f1f3378f89e56c4b91b17dcfbc41b2ab2288a886a3c1",
+      "observed": {
+        "path": "scripts/review/remediation-identities.json",
+        "kind": "file",
+        "bytes": 3810,
+        "sha256": "2f6fbb58a790eab9a728f1f3378f89e56c4b91b17dcfbc41b2ab2288a886a3c1"
+      },
+      "matches": true
+    },
+    {
+      "path": "scripts/tests/remediation-register.test.mjs",
+      "expectedSha256": "5f4e1bc1fd1001e62212f24cc5711c373221aa68bb8a81fd9690667124490253",
+      "observed": {
+        "path": "scripts/tests/remediation-register.test.mjs",
+        "kind": "file",
+        "bytes": 7730,
+        "sha256": "5f4e1bc1fd1001e62212f24cc5711c373221aa68bb8a81fd9690667124490253"
+      },
+      "matches": true
+    }
+  ],
+  "drafts": [
+    {
+      "directory": "docs/review/evidence/engine-attempt-source-safety-20260924",
+      "identities": [
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/files/skills/buster/engine/test-gates/runner-source-cleanup.ts",
+          "kind": "file",
+          "bytes": 1310,
+          "sha256": "eee936f0a78673c04780fe909c0a6919abe55460ac58177ebbc9f53f2a41caee"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/files/skills/buster/engine/test-gates/runner-attempt-result.ts",
+          "kind": "file",
+          "bytes": 9646,
+          "sha256": "5409bcf4aa48b21e99f4608945c2362b9869b10ba704238d9d1c7f7b9d3e8873"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/files/skills/buster/engine/test-gates/runner-attempt-execution.ts",
+          "kind": "file",
+          "bytes": 2375,
+          "sha256": "05e06555d225e56954060ce1360dedd8d23bc82ed737afa7ae4e855855576050"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/files/skills/buster/engine/test-gates/provider-loader.ts",
+          "kind": "file",
+          "bytes": 8275,
+          "sha256": "116fd3a779d40a035b939ffc79d0a9b909ad9f1cabc1fdc783f7121f4cca0d2e"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/files/skills/buster/engine/test-gates/runner.ts",
+          "kind": "file",
+          "bytes": 12281,
+          "sha256": "8af619ffab7a24902e28378b181c939adfa64121f5d1fc968911cc2920412ebf"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/files/skills/buster/engine/test-gates/runner-provider-state.ts",
+          "kind": "file",
+          "bytes": 2737,
+          "sha256": "66f6a9a278d444d7ded13804a62977e383a0ca98b81d983a69415d76757db939"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/files/skills/buster/engine/test-gates/runner-provider-operation.ts",
+          "kind": "file",
+          "bytes": 6547,
+          "sha256": "d7c5e47fe7eb4544802549d9ca123b83ccc2309ce70a48c3d080cb0a3ddedf62"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/before/skills/buster/engine/test-gates/runner-attempt-result.ts",
+          "kind": "file",
+          "bytes": 9226,
+          "sha256": "cdba534f94cbf3fca17d16d40b196d5a303620e8809f1f419e996478dbfd0d69"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/before/skills/buster/engine/test-gates/runner-attempt-execution.ts",
+          "kind": "file",
+          "bytes": 2513,
+          "sha256": "9012607f67aeb7abe5aa29ae6687ea1e43b091b3bea3c1b57b0ed9d01fa6c705"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/before/skills/buster/engine/test-gates/provider-loader.ts",
+          "kind": "file",
+          "bytes": 8062,
+          "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/before/skills/buster/engine/test-gates/runner.ts",
+          "kind": "file",
+          "bytes": 12294,
+          "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/before/skills/buster/engine/test-gates/runner-provider-state.ts",
+          "kind": "file",
+          "bytes": 2688,
+          "sha256": "f599ef7ca3920c4a0d8425c8892465034db7db94c592f32c53d9b72778f00f17"
+        },
+        {
+          "path": "docs/review/evidence/engine-attempt-source-safety-20260924/before/skills/buster/engine/test-gates/runner-provider-operation.ts",
+          "kind": "file",
+          "bytes": 6299,
+          "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+        }
+      ],
+      "status": "private historical candidates, no integration or acceptance asserted"
+    },
+    {
+      "directory": "docs/review/evidence/buster-security-scan-policy-20260924",
+      "identities": [
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/resolve-design.py",
+          "kind": "file",
+          "bytes": 3823,
+          "sha256": "566810ebd59e04df7d843626cd64cedf65a025407ca0d5c45319eda353f4d597"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/ownership-proposal-v1.json",
+          "kind": "file",
+          "bytes": 4013,
+          "sha256": "4445b61aeb9307f4690da498594dbb3e72738ddbee355f5334542f7dbf11894b"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/ownership-resolved-v3.json",
+          "kind": "file",
+          "bytes": 4968,
+          "sha256": "41e87f4aad1d3f061c4c70cb81b814735aabdadc418d308b39f867bb5895d52f"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/design-resolved-v2.md",
+          "kind": "file",
+          "bytes": 2383,
+          "sha256": "523e1428a1fcb09b90d444a01c287f03c4042a7e55f828a25b97e2198ea14031"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/ownership-resolved-v2.json",
+          "kind": "file",
+          "bytes": 4744,
+          "sha256": "6a50ae87b87759b198ea4acec5cc52a685b7e76f87d01c4e405cd546f2fa3df1"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/acceptance-and-verification-proposal-v1.md",
+          "kind": "file",
+          "bytes": 8340,
+          "sha256": "569f061b6735a7263e3d70e44184e8b097e44423da65ee5fb72d8d439b7c8988"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/manifest-v1.json",
+          "kind": "file",
+          "bytes": 1050,
+          "sha256": "556451800bd449e7629f718bd41b3e6a81588a7b2bb77014ace18e9d4320fc70"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/design-and-open-decisions-v1.md",
+          "kind": "file",
+          "bytes": 10670,
+          "sha256": "ae9f8a41b18b00b2a54eec8406a3aac07f29a9df8fe0dfa83602ebe205bbcd12"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/source-identities-v1.json",
+          "kind": "file",
+          "bytes": 5507,
+          "sha256": "470478f9e5873274d078060cfebf9064f955c92695d32b2803d58bc4920d1861"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/design-resolved-v3.md",
+          "kind": "file",
+          "bytes": 1365,
+          "sha256": "834e8a2f024a77141770404b1daa2716a6f5fcbefea5599ebe6a7266678534db"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/package.json",
+          "kind": "file",
+          "bytes": 49824,
+          "sha256": "63322d00421a359d4c310e2e8a59ac888dd869dd800db715612a032aa7e3d517"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/consumer-tests.py",
+          "kind": "file",
+          "bytes": 11918,
+          "sha256": "c263c30c9a9ce5c5f5e8415cc58c90fe0e72df8d9c4132694ffe39b559a89283"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/edit.py",
+          "kind": "file",
+          "bytes": 10476,
+          "sha256": "54174cc1987e52c701318ba67ca87b269e78ebf4f7f8cbfff8704d3e414d2055"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/fixture.py",
+          "kind": "file",
+          "bytes": 3201,
+          "sha256": "d044d634bad6974c8d435055f319ac1b2e060c86a90e9b57d84a0673157e0266"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/admission.py",
+          "kind": "file",
+          "bytes": 6187,
+          "sha256": "943e0556042e90bf2f292f76ff956f811b87eae26b81f10ddae03ee2592bf961"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/originals.py",
+          "kind": "file",
+          "bytes": 2928,
+          "sha256": "29bc9d5fea4f5cdfcebba00f477961c1d89e7a59264fcf344a84bd525b09855c"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/shared.py",
+          "kind": "file",
+          "bytes": 12123,
+          "sha256": "61e4e435546017ffd0f8b75abcbe3f715ada9518dd70225b38ef9155b4754dbc"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/docker/buster-runtime-entrypoint.sh",
+          "kind": "file",
+          "bytes": 14118,
+          "sha256": "e995a7ec1040ff2378735d1015499c2dd9738756b6390c26c838c26e437ff51c"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/tests/verification/contracts/buster-security-scan-policy.test.mjs",
+          "kind": "file",
+          "bytes": 11713,
+          "sha256": "6977416b64edd4af39beedc79919554f3e12132c51db031e4903a33eedebc7a5"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+          "kind": "file",
+          "bytes": 16875,
+          "sha256": "f8b678e7e82030344114f21943e36a002428079898c57cba7a8dcfe611b8114a"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+          "kind": "file",
+          "bytes": 6649,
+          "sha256": "2472e532bb0172a56f595373c3ca2dc8d151faff604dbc298d42f62e465d9040"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/tests/verification/contracts/buster-cluster-production-route.test.mjs",
+          "kind": "file",
+          "bytes": 17730,
+          "sha256": "91222adf1d2e4b11dfc3fdee719ab801579a7dcf3b38e590ea70a1fce0d775a6"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/tests/verification/deployment/registry-trivy-native.test.mts",
+          "kind": "file",
+          "bytes": 5056,
+          "sha256": "bbaf637b9c62800d44db917d45f58305814b0dbf0fe61d355fd63a83d3971283"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/tests/fixtures/test-gate/scan-command-program.cjs",
+          "kind": "file",
+          "bytes": 1280,
+          "sha256": "9e2ed99bf818f982327a1ee732c2539177a2f13d6e4527e796e7ed4f0755f34b"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/tests/fixtures/test-gate/scan-command-api.mjs",
+          "kind": "file",
+          "bytes": 1667,
+          "sha256": "a1ba2d2e5177e69a1cc90d2a178c7a8a43e21b72f3d15f6dd17ec98794a1f49e"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/tests/fixtures/test-gate/security-scan-policy.mjs",
+          "kind": "file",
+          "bytes": 318,
+          "sha256": "9b9856100c45f60531b218a024bce5b63ad4c402244098795b9820103157a264"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/buster/engine/test-gates/security-scan-runtime.ts",
+          "kind": "file",
+          "bytes": 15713,
+          "sha256": "89576914e5e7d3cedb02cc7c92fc74eabd27cc50a26e18c4173f3d11207e2424"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/buster/engine/test-gates/production-capability-sources.ts",
+          "kind": "file",
+          "bytes": 3846,
+          "sha256": "0b3863b2ad297fb493a969881ef2d48ba0bc541dc391f47d02f454353687ab22"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/buster/engine/test-gates/production.ts",
+          "kind": "file",
+          "bytes": 8381,
+          "sha256": "73dac5f9884a0ee9cfb2528ee5b697a66f6dcb926840d136cbc5545e2b00ad2e"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/buster/engine/test-gates/trivy-database.ts",
+          "kind": "file",
+          "bytes": 7273,
+          "sha256": "48f65fda629a70524a853ab958a5a5bc2bb47d8f4d99b378c73f96ba47adc3f6"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/buster/engine/test-gates/production-registry-client.ts",
+          "kind": "file",
+          "bytes": 3237,
+          "sha256": "2c4df7e662d373d2841696d00201a660fa5dde46a4c74593f1cf0b033b900007"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/buster/engine/test-gates/production-config-values.ts",
+          "kind": "file",
+          "bytes": 7633,
+          "sha256": "d0712d888a6ff18a69de21a99c6f78dcc79b681d47d5995a709c307a1e7e7332"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/buster/engine/test-gates/production-command-options.ts",
+          "kind": "file",
+          "bytes": 6422,
+          "sha256": "3a1da4392d0fbf33077a2ff0fd4c4aaefbfe606ec8c316e00e95d62729401ab0"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/buster/plugins/security-providers/tests/live-function.test.ts",
+          "kind": "file",
+          "bytes": 10726,
+          "sha256": "62aa35a3d2f6b45cba91dd6d3cb6e0eb71f209a55c78ca088543f08dd9fcdec4"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+          "kind": "file",
+          "bytes": 6581,
+          "sha256": "65538692aeb40f7800f3a14bf5002a676ba3b5024df1c4e9240fe1cecc551b61"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+          "kind": "file",
+          "bytes": 5870,
+          "sha256": "dae37029cf76552b4ce5b8b379a71b0db4099a7253813342823e37cd0a565f1b"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/common/plugin-runtime/foundation/config/swarm.ts",
+          "kind": "file",
+          "bytes": 14496,
+          "sha256": "36a5790d450d0c110017b3786fa5c6648160e6d5e2a553c3843aaed1454ecd80"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/common/plugin-runtime/foundation/config/buster-security-scan.ts",
+          "kind": "file",
+          "bytes": 1977,
+          "sha256": "96ab6b04e18784f63700d5518a928476e657b4e8ded2595d3ceaa80963a966a8"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+          "kind": "file",
+          "bytes": 47920,
+          "sha256": "7b1a14171be962849a6dc87342f734c6eb33245c162c4454e5f0dc795e995a16"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/charts/kubeclaw/templates/_swarm-config.tpl",
+          "kind": "file",
+          "bytes": 26490,
+          "sha256": "3b7cafd7205a568c368e876ce8c14d9415e4a45be2338983f7eb74417ac6e5e4"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/charts/kubeclaw/files/config/buster-engine.config.json",
+          "kind": "file",
+          "bytes": 6091,
+          "sha256": "26a08518c28d7d2e4da01b5badff75209f6bd1411d3d46000620eaaeeed79a43"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/files/charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+          "kind": "file",
+          "bytes": 6273,
+          "sha256": "9b715de25bf3797f9c919f3b732713360b8f99d95e7d886faaa33314aa0e418b"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/docker/buster-runtime-entrypoint.sh",
+          "kind": "file",
+          "bytes": 14866,
+          "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+          "kind": "file",
+          "bytes": 17161,
+          "sha256": "caa32846ed52fb2143c05aa0d5b1d9afda11f03c0ca7c7542bca5c8377ca0858"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+          "kind": "file",
+          "bytes": 6541,
+          "sha256": "bef5d53264fe879e1776a3852f4a52e4b50d6c3d500bded41c6a07ea011d6b23"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/tests/verification/contracts/buster-cluster-production-route.test.mjs",
+          "kind": "file",
+          "bytes": 18004,
+          "sha256": "6a9a37a9963c6677318287fe7678fe1807a606d2b18cf857768ba94d63b44081"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/tests/verification/deployment/registry-trivy-native.test.mts",
+          "kind": "file",
+          "bytes": 4925,
+          "sha256": "f44146efba4d2f9d8fb13e2be50f654d43bb710639f8ea54b7bacc3c703eb26e"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/skills/buster/engine/test-gates/security-scan-runtime.ts",
+          "kind": "file",
+          "bytes": 15184,
+          "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/skills/buster/engine/test-gates/production-capability-sources.ts",
+          "kind": "file",
+          "bytes": 4578,
+          "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/skills/buster/engine/test-gates/production.ts",
+          "kind": "file",
+          "bytes": 8076,
+          "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/skills/buster/engine/test-gates/trivy-database.ts",
+          "kind": "file",
+          "bytes": 7316,
+          "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/skills/buster/engine/test-gates/production-config-values.ts",
+          "kind": "file",
+          "bytes": 9852,
+          "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/skills/buster/engine/test-gates/production-command-options.ts",
+          "kind": "file",
+          "bytes": 6568,
+          "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/skills/buster/plugins/security-providers/tests/live-function.test.ts",
+          "kind": "file",
+          "bytes": 10602,
+          "sha256": "0581bde77436534084542396ff836e417532c9fffa314af56d52f8b094248162"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+          "kind": "file",
+          "bytes": 6425,
+          "sha256": "e37ea6086143c335c70c0fcc5ea7839b4e149a012fd6efbc22dd374c1af958c7"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+          "kind": "file",
+          "bytes": 5814,
+          "sha256": "8f29590beaa082f4bdb51741aebefca4f917c280e4fdbf153b7aca0f92d434b3"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/skills/common/plugin-runtime/foundation/config/swarm.ts",
+          "kind": "file",
+          "bytes": 14008,
+          "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+          "kind": "file",
+          "bytes": 41591,
+          "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/charts/kubeclaw/templates/_swarm-config.tpl",
+          "kind": "file",
+          "bytes": 26278,
+          "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/charts/kubeclaw/files/config/buster-engine.config.json",
+          "kind": "file",
+          "bytes": 5319,
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/private-v1/before/charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+          "kind": "file",
+          "bytes": 5501,
+          "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/docker/Dockerfile.buster-runtime",
+          "kind": "file",
+          "bytes": 10474,
+          "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/docker/trivy-databases.lock.json",
+          "kind": "file",
+          "bytes": 1512,
+          "sha256": "eb4de828de3d1afe277aad01925ab94a8ed2eb08fbe41c00fd3e16889d81569e"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/docker/buster-runtime-entrypoint.sh",
+          "kind": "file",
+          "bytes": 14866,
+          "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/scripts/registry-client-config.mjs",
+          "kind": "file",
+          "bytes": 7486,
+          "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/scripts/trivy-database-lock.mjs",
+          "kind": "file",
+          "bytes": 9761,
+          "sha256": "7f86040766fd1cdc010302617217adbe58b862437259aea1cff03f992ca0d510"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/tests/verification/contracts/check-pipeline-security-implementation.mts",
+          "kind": "file",
+          "bytes": 6183,
+          "sha256": "a8b4cabada3ed10e3b67a37509e15b1c6f8d590b3e6f515149950b9c140a7a3a"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+          "kind": "file",
+          "bytes": 17161,
+          "sha256": "caa32846ed52fb2143c05aa0d5b1d9afda11f03c0ca7c7542bca5c8377ca0858"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/tests/verification/contracts/check-pipeline-security-cutover.mts",
+          "kind": "file",
+          "bytes": 3182,
+          "sha256": "f75cd40e6acdaa6e19acb7ec4f7e297d89990c2de88d8d7f7adaf09acda8eb0e"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+          "kind": "file",
+          "bytes": 6541,
+          "sha256": "bef5d53264fe879e1776a3852f4a52e4b50d6c3d500bded41c6a07ea011d6b23"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/tests/verification/contracts/check-pipeline-security-parity.mts",
+          "kind": "file",
+          "bytes": 2138,
+          "sha256": "0a9a3a7fd2a404bcef3d978898835241159a4a628b6e59f2ffbd03f7b10f1b99"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/tests/verification/e2e/nova-security-production-preflight.mts",
+          "kind": "file",
+          "bytes": 10621,
+          "sha256": "23fda5ee402cefae2e402c16b7dd823eadf473ce7805443ce4e1ec614b7ad2b3"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/tests/verification/deployment/registry-trivy-native.test.mts",
+          "kind": "file",
+          "bytes": 4925,
+          "sha256": "f44146efba4d2f9d8fb13e2be50f654d43bb710639f8ea54b7bacc3c703eb26e"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/buster/engine/test-gates/security-scan-runtime.ts",
+          "kind": "file",
+          "bytes": 15184,
+          "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/buster/engine/test-gates/capability-runtime.ts",
+          "kind": "file",
+          "bytes": 5865,
+          "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/buster/engine/test-gates/production-capability-sources.ts",
+          "kind": "file",
+          "bytes": 4578,
+          "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/buster/engine/test-gates/production.ts",
+          "kind": "file",
+          "bytes": 8076,
+          "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/buster/engine/test-gates/trivy-database.ts",
+          "kind": "file",
+          "bytes": 7316,
+          "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/buster/engine/test-gates/production-config-values.ts",
+          "kind": "file",
+          "bytes": 9852,
+          "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/buster/engine/test-gates/production-command-options.ts",
+          "kind": "file",
+          "bytes": 6568,
+          "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/buster/plugins/security-providers/tests/live-function.test.ts",
+          "kind": "file",
+          "bytes": 10602,
+          "sha256": "0581bde77436534084542396ff836e417532c9fffa314af56d52f8b094248162"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+          "kind": "file",
+          "bytes": 6425,
+          "sha256": "e37ea6086143c335c70c0fcc5ea7839b4e149a012fd6efbc22dd374c1af958c7"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+          "kind": "file",
+          "bytes": 4870,
+          "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/common/plugin-runtime/foundation/config/swarm.ts",
+          "kind": "file",
+          "bytes": 14008,
+          "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+          "kind": "file",
+          "bytes": 41591,
+          "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/docs/operations/registry-clients.md",
+          "kind": "file",
+          "bytes": 12957,
+          "sha256": "46778fa3d1939ecb11dea2289ba789d98c04744d2ab1122502248ebf2fae4dde"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/docs/architecture/pipeline-test-gate-security-operator-guide.md",
+          "kind": "file",
+          "bytes": 1704,
+          "sha256": "b64b13a053ceade7962f9289d2a2b9e95700f56cca2d4ad0a60e46e66d19e92e"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/docs/architecture/pipeline-test-gate-security-configuration-reference.md",
+          "kind": "file",
+          "bytes": 1057,
+          "sha256": "4e017476552f21dc98208c0142cd3adf431bd618af35037e978a58106413157a"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/docs/architecture/pipeline-test-gate-security-security-model.md",
+          "kind": "file",
+          "bytes": 1027,
+          "sha256": "2bb339930cb3df84d4779d945c19d5f7a150a1ff11d1682a91e52eaceac7965f"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/charts/kubeclaw/templates/_swarm-config.tpl",
+          "kind": "file",
+          "bytes": 26278,
+          "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/charts/kubeclaw/files/config/buster-engine.config.json",
+          "kind": "file",
+          "bytes": 5319,
+          "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+        },
+        {
+          "path": "docs/review/evidence/buster-security-scan-policy-20260924/sources/charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+          "kind": "file",
+          "bytes": 5501,
+          "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+        }
+      ],
+      "status": "private historical candidates, no integration or acceptance asserted"
+    }
+  ],
+  "newChecks": [
+    {
+      "command": "node scripts/review/remediation-register.mjs --check",
+      "exitCode": 0,
+      "result": "Register konsistent: historische IDs, Integrationsbefunde, Status, Summen und Belegverweise. Keine fachliche Neuabnahme."
+    },
+    {
+      "command": "node --test scripts/tests/remediation-register.test.mjs tests/verification/deployment/runtime-tool-locks.test.mjs",
+      "exitCode": 0,
+      "tests": 27,
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "evidenceLimit": "Summary transcribed from actual execution tool output; not a full raw-log artifact. No runtime/image/live claims."
+    }
+  ],
+  "notPerformed": [
+    "implementation",
+    "register-status change",
+    "image build",
+    "new runtime/kernel/browser/DB tests",
+    "live tests",
+    "download",
+    "deployment",
+    "commit",
+    "push"
+  ]
+}

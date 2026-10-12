@@ -1,0 +1,144 @@
+# Cilium migration on the existing K3s host
+
+Status: preparation and acceptance runbook; no completed migration is claimed.
+Audience: the operator responsible for the host, cluster and existing applications.
+
+The [roadmap](../ROADMAP.md#near-term-sequence) places this maintenance after
+Argo adoption, required worker readiness, issue remediation, central configuration
+and real pipeline verification. This document does not change that order.
+
+## Scope and prerequisites
+
+`scripts/deploy-cilium.sh install` implements a disruptive, single-node,
+same-Pod-CIDR cutover. It does not prepare the host, stop workloads, recycle old
+sandboxes, restore host configuration or prove application connectivity. It keeps
+the node cordoned. Do not use it for a multi-node or different-CIDR migration.
+
+The selected values in `my-values/infra/cilium-values.yaml` retain kube-proxy,
+use VXLAN and cluster-pool IPv4 IPAM. Compare their actual CIDR and mask with
+the existing cluster before scheduling work. These are selected deployment
+values, not universal K3s defaults. The script selects the chart version explicitly;
+preserve that exact archive and its images for installation and recovery.
+
+Upstream documents disabling Flannel and the K3s network-policy controller when
+using another CNI. Disabling the controller does not remove its existing rules.
+Inspect effective service arguments as well as configuration files; saving one
+YAML file is not sufficient to reconstruct the host. See
+[K3s networking options](https://docs.k3s.io/networking/basic-network-options) and
+[network-policy cleanup](https://docs.k3s.io/networking/networking-services).
+The upstream [node-by-node migration](https://docs.cilium.io/en/stable/installation/k8s-install-migration/)
+uses a different procedure; do not combine its allocator/policy settings with
+this repository's single-node same-CIDR procedure.
+
+Before changing anything, record a private maintenance manifest containing:
+
+- Source revision, chart archive checksum, image digests and effective K3s,
+  containerd, Kubernetes, kernel and CNI versions.
+- Node identity, Pod/Service CIDRs, routes, interfaces, CNI configuration,
+  existing policy rules and the effective service/configuration files needed
+  to return to the previous state. Keep credentials out of shared logs.
+- Every namespace, workload owner, DaemonSet, Pod network mode, storage dependency,
+  required network edge and application owner. Resolve Paperless/HomeOS from
+  actual deployment; do not assume the literal `paperless` namespace is correct.
+- Verified independent host/KVM access, offline instructions, reachable local
+  recovery artifacts, tested data backups, maintenance window and recovery deadline.
+- Explicit workload stop/restart order, how each unmanaged Pod is recreated,
+  and a host-specific rollback procedure tested on an isolated equivalent host.
+
+An absent inventory, untested independent access or unspecified rollback is a
+stop condition. An exported kubeconfig that requires the failed CNI is not an
+independent recovery path. Do not infer approval for data loss from a maintenance
+window. Use the [AX41 host contract](../operations/ax41-rollout.md) only when it
+matches the actual selected host.
+
+## Host preflight and controlled installation
+
+1. Quiesce writes and stop affected workloads according to the approved inventory.
+   Preserve databases, PVCs and Secrets. Cordon the selected node and establish
+   the independent host session before interrupting networking.
+2. Apply the reviewed host configuration that disables the old CNI/controller
+   while retaining the chosen API, service and kube-proxy configuration. Reconcile
+   command-line overrides; use the host-specific restart/recovery procedure.
+3. Inspect the real CRI sandboxes. All old ordinary ready sandboxes must be gone
+   before the new allocator runs. Cordoning alone does not stop existing Pods or
+   DaemonSets. Unknown namespace mode is a failure, not an exemption.
+4. Confirm API access, preserved data, correct CIDRs and offline recovery ability.
+   Set `CILIUM_K3S_READY=true` only after recording these actual preflight results.
+   The variable is an operator assertion; the script cannot verify the entire host.
+5. Run `scripts/deploy-cilium.sh install` from the reviewed checkout on that host.
+   The script rechecks the flag, single cordoned node and ready CRI sandbox modes,
+   installs the selected chart and applies the cluster policy file. Failure keeps
+   the node cordoned; it does not roll back host state automatically.
+
+Do not copy a generic install or uninstall pipeline onto an existing host.
+Do not use a blanket iptables flush, remove all CNI state or delete arbitrary
+interfaces as a recovery shortcut. The maintenance manifest must name the exact
+state owned by each CNI and the verified phase-specific inverse operations.
+
+## Policies and workload restart
+
+`my-values/infra/cilium-cluster-policies.yaml` supplies the global baseline and
+DNS allowance. Its bootstrap namespace exclusions are explicit exceptions;
+excluded namespaces are not proven protected by the ordinary-workload baseline.
+The existing temporary Paperless exception requires a matching actual owner and
+namespace. No additional project exception is implied.
+
+Workload owners supply namespaced policies for their actual dependencies.
+Review API, DNS, model gateway, registry, Redis, databases, SPIRE, Tailscale and
+management routes before starting dependents. Hubble Relay/UI access must retain
+their selected private-access policy. Neither green agents nor a policy object's
+existence proves enforcement.
+
+Use `scripts/migrate-kubeclaw-network-policies-to-cilium.sh` only after inspecting
+its selected namespace and policy files. Its verification calls
+`scripts/verify-cilium-policies.py`, which compares source policy specs with live
+specs and checks reported Cilium endpoint state/revision. That verifier does not
+establish that every workload is managed or that a forbidden connection is denied.
+
+Before uncordoning, verify policy admission, installed specs and agent realization.
+Then deliberately resume scheduling and recreate inventoried workloads in their
+dependency order. Hubble Relay/UI readiness can require this scheduling step.
+Record each ordinary Pod UID and its matching Cilium endpoint; account explicitly
+for host-network Pods and reject missing, stale or unmanaged ordinary Pods.
+
+## Acceptance and evidence
+
+Bind results to the maintenance manifest, actual Pod/endpoint identities and
+source/configuration digests. The mandatory cases are:
+
+| Case | Required observation |
+| --- | --- |
+| Inventory coverage | Every current ordinary Pod is managed by the intended Cilium agent; no old allocator remains active. |
+| Policy realization | Installed specs match source, endpoint revisions are realized and no endpoint is in an error state. |
+| Positive connections | Actual application operations succeed across each inventoried required dependency. |
+| Negative connections | A working probe reaches the intended boundary and a forbidden peer/port is denied; a broken probe or absent server does not count. |
+| Pipeline | A real project completes its required delivery flow; failure and cleanup paths still behave correctly. |
+| Existing applications | Owners run their actual application operations; if Paperless is deployed, include upload, OCR and retrieval. |
+| Cleanup | Targeted removal of proven legacy policy/state does not change intended connectivity; repeat positive and negative cases afterward. |
+| Restart | Planned Pod/agent restarts retain connectivity, policy enforcement and data. |
+| Recovery | Independent host access works and the rehearsed rollback restores the former network and application operations. |
+
+Only after these results and legacy cleanup pass may the operator create the
+`kubeclaw-cutover-verified` ConfigMap in namespace `cilium`, attaching the exact
+evidence identity. The current upgrade script checks marker existence only;
+existence is not an independent verification of those results. Do not create a
+marker to bypass incomplete first-install acceptance.
+
+## Failure and rollback boundaries
+
+Before allocator activation, restore the exact saved effective host settings and
+verify the original CNI before restarting applications. After any Cilium-assigned
+Pod exists, prevent concurrent allocation first: quiesce affected workloads,
+inventory/remove their network sandboxes through the host's reviewed procedure,
+then restore the old allocator and recreate workloads. Do not leave old and new
+same-CIDR allocators active together.
+
+After the acceptance marker exists, a regression still invalidates the affected
+operational claim. Record the failing identities and suspend upgrade use of that
+marker until resolved. Do not delete PVCs, Secrets or SPIRE state as a networking
+repair. If the exact rollback cannot be established, keep dependent workloads
+stopped and use independent host recovery; do not uncordon merely to see whether
+the cluster recovers.
+
+The host-specific maintenance manifest and real acceptance results are still
+required. This runbook alone does not close IFR-02-001 or claim a rehearsed rollback.

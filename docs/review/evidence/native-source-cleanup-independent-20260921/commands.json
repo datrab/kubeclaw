@@ -1,0 +1,89 @@
+[
+  {
+    "name": "originals",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-native-journal.test.mts",
+      "tests/verification/reliability/worker-native-cleanup.test.mts"
+    ],
+    "exitCode": 0,
+    "expected": 0
+  },
+  {
+    "name": "probes",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-source-cleanup-independent-20260921/probes.mts"
+    ],
+    "exitCode": 0,
+    "expected": 0
+  },
+  {
+    "name": "phase-mutant",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-source-cleanup-independent-20260921/omit-disposed.mjs",
+      "--test",
+      "--test-name-pattern=abandoned",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-source-cleanup-independent-20260921/probes.mts"
+    ],
+    "exitCode": 1,
+    "expected": 1
+  },
+  {
+    "name": "archive-mutant",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-source-cleanup-reconciliation-20260921/omit-archive-check.mjs",
+      "--test",
+      "--test-name-pattern=bad-output|different-accounting",
+      "tests/verification/reliability/worker-native-cleanup.test.mts"
+    ],
+    "exitCode": 1,
+    "expected": 1
+  },
+  {
+    "name": "types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.native-scope.json"
+    ],
+    "exitCode": 0,
+    "expected": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "skills/worker/core/worker/native-attempt-recovery.ts",
+      "tests/verification/reliability/native-cleanup-fixture.mts",
+      "tests/verification/reliability/worker-native-cleanup.test.mts"
+    ],
+    "exitCode": 0,
+    "expected": 0
+  }
+]

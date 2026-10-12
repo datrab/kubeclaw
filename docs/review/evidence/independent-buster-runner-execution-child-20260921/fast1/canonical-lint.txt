@@ -1,0 +1,24 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/eslint.config.mjs
+    3:1  error  Use a lowercase kebab-case filename                    discipline/filename-case
+  327:1  error  File has too many lines (325). Maximum allowed is 300  max-lines
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts
+   92:9   error  Handle the error intentionally or rethrow it with context                    discipline/no-swallowed-error
+   98:50  error  Blocks are nested too deeply (4). Maximum allowed is 3                       max-depth
+  110:9   error  Handle the error intentionally or rethrow it with context                    discipline/no-swallowed-error
+  113:5   error  Handle the error intentionally or rethrow it with context                    discipline/no-swallowed-error
+  245:11  error  Handle the error intentionally or rethrow it with context                    discipline/no-swallowed-error
+  275:3   error  Private async method #message has a complexity of 30. Maximum allowed is 15  complexity
+  326:1   error  File has too many lines (392). Maximum allowed is 300                        max-lines
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-attempt-result.ts
+  107:1  error  Function 'unsignedAttemptResult' has a complexity of 21. Maximum allowed is 15          complexity
+  151:8  error  Async function 'finalizeRunnerAttempt' has a complexity of 26. Maximum allowed is 15    complexity
+  184:7  error  Use one explicit value and at most one fallback; longer fallback chains hide authority  discipline/no-fallback-chain
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-scheduler.ts
+  35:11  error  Blocks are nested too deeply (4). Maximum allowed is 3  max-depth
+
+✖ 13 problems (13 errors, 0 warnings)
+

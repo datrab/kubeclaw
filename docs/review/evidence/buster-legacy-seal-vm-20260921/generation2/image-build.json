@@ -1,0 +1,56 @@
+[
+  {
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-native-vm-20260921/root/sbin/mke2fs",
+      "-q",
+      "-t",
+      "ext4",
+      "-F",
+      "-U",
+      "0f39275a-fc69-40e9-9e16-62350e04961b",
+      "-E",
+      "root_owner=0:0",
+      "-d",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-legacy-seal-vm-20260921/generation2/guest-root",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-legacy-seal-vm-20260921/generation2/guest-root.ext4"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "filesystemUuid": "0f39275a-fc69-40e9-9e16-62350e04961b",
+    "logicalBytes": 268435456,
+    "allocatedBytes": 60985344,
+    "identity": {
+      "mode": 420,
+      "type": "file",
+      "bytes": 268435456,
+      "sha256": "761590aa660e1bd793e8a80fd07ab602c6a70ff79319e2abfb1ead8cc7626e79"
+    }
+  },
+  {
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-native-vm-20260921/root/sbin/mke2fs",
+      "-q",
+      "-t",
+      "ext4",
+      "-F",
+      "-U",
+      "509e0c59-9725-4ca8-a083-22e5275158db",
+      "-E",
+      "root_owner=0:0",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-legacy-seal-vm-20260921/generation2/second.ext4"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "filesystemUuid": "509e0c59-9725-4ca8-a083-22e5275158db",
+    "logicalBytes": 16777216,
+    "allocatedBytes": 1318912,
+    "identity": {
+      "mode": 420,
+      "type": "file",
+      "bytes": 16777216,
+      "sha256": "7e771f1e68fcdca161a993a26612288036e4eba0f731f279d7d387bb41f96cf2"
+    }
+  }
+]

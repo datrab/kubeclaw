@@ -1,0 +1,16 @@
+{
+  "roots": [
+    "skills",
+    "contracts",
+    "scripts",
+    "tests",
+    "charts",
+    "my-values",
+    "config",
+    "node_modules"
+  ],
+  "entries": 33976,
+  "independentFiles": 30463,
+  "manifestSha256": "8fbbd94c7fda494c5cbc54eb5ccc4bf2483c6673b8289047cd0e44dfa873bb23",
+  "source": "Current workspace copied once; no hardlinks; .cache/.git excluded"
+}

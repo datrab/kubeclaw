@@ -1,0 +1,177 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-buster-readiness-20260921/review-runner/tool-effects.mjs"
+    ],
+    "exitCode": 0,
+    "name": "real-tools",
+    "seconds": 0.11441836692392826
+  },
+  {
+    "command": [
+      "/usr/local/bin/npm",
+      "run",
+      "verify:buster:readiness-config"
+    ],
+    "exitCode": 0,
+    "name": "maintained-readiness",
+    "seconds": 21.863557294011116
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/verification/reliability/buster-admission-cli.test.mjs",
+      "tests/verification/deployment/buster-admission-render.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "admission",
+    "seconds": 22.453384449938312
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+    ],
+    "exitCode": 0,
+    "name": "remote-runtime",
+    "seconds": 21.600655406014994
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+    ],
+    "exitCode": 0,
+    "name": "remote-config",
+    "seconds": 3.749686487019062
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+    ],
+    "exitCode": 0,
+    "name": "production-replay",
+    "seconds": 5.453016386018135
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts"
+    ],
+    "exitCode": 0,
+    "name": "real-provider",
+    "seconds": 15.093483061064035
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "tests/verification/reliability/coverage-remote.test.mts",
+      "tests/verification/reliability/nova-dispatch-projection.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "local-callers",
+    "seconds": 79.26633201597724
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/deployment/check-deployment-truth.mjs"
+    ],
+    "exitCode": 0,
+    "name": "deployment-truth",
+    "seconds": 0.7149716460844502
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/deployment/config-component-packaging.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "packaging",
+    "seconds": 6.225465561030433
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.buster-readiness.json"
+    ],
+    "exitCode": 0,
+    "name": "readiness-types",
+    "seconds": 6.940542542957701
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "name": "foundation-types",
+    "seconds": 10.427385402028449
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/buster/engine/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "name": "engine-types",
+    "seconds": 13.297483462956734
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/buster/engine/test-gates/production-config-values.ts",
+      "skills/buster/engine/test-gates/production.ts",
+      "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "tests/fixtures/test-gate/buster-admission.mts",
+      "tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "tests/fixtures/test-gate/buster-readiness-profile.mts",
+      "tests/verification/contracts/check-pipeline-container-build-production.mts",
+      "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+      "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "tests/verification/deployment/buster-readiness-config.test.mjs",
+      "tests/verification/deployment/buster-readiness.test.mts",
+      "tests/verification/reliability/buster-job-compaction.test.mts",
+      "tests/verification/reliability/buster-readiness-config.test.mts",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "tests/verification/reliability/coverage-remote.test.mts",
+      "tests/verification/reliability/nova-dispatch-projection.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "canonical-lint",
+    "seconds": 12.54925929591991
+  }
+]

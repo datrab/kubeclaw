@@ -437,7 +437,7 @@ async function main(): Promise<void> {
   const platformPath = path.join(stateRoot, 'platform.json');
   const pipelinePath = path.join(stateRoot, 'pipeline.json');
   writeJson(platformPath, {
-    schemaVersion: 'pipeline-platform.v2',
+    schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
     installationRoots: pluginRoots,
     trustedBuiltinRoots: pluginRoots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },

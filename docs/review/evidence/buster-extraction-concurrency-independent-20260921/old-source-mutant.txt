@@ -1,0 +1,74 @@
+✖ actual extraction rejects a same-input alias before reservation and captures caller input (82.502199ms)
+✖ different inputs reach the actual reservation boundary in parallel within authored capacity (9999.991896ms)
+✖ actual extraction releases coordination after thrown reservation work (3.899632ms)
+✖ actual extraction releases coordination after aborted reservation work (2.936456ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11079.966293
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-extraction-concurrency.test.mts:45:1
+✖ actual extraction rejects a same-input alias before reservation and captures caller input (82.502199ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /BUSTER_PREPARATION_EXTRACTION_BUSY/u. Input:
+  
+  'Error: DUPLICATE_REACHED_RESERVATION'
+  
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-extraction-concurrency.test.mts:69:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: DUPLICATE_REACHED_RESERVATION
+        at other.ledger.reserveExtraction (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-extraction-concurrency.test.mts:64:58)
+        at extractBusterPreparation (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/preparation-extraction.ts:61:41)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-extraction-concurrency.test.mts:69:26)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3),
+    expected: /BUSTER_PREPARATION_EXTRACTION_BUSY/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-extraction-concurrency.test.mts:82:1
+✖ different inputs reach the actual reservation boundary in parallel within authored capacity (9999.991896ms)
+  'test timed out after 10000ms'
+
+test at tests/verification/reliability/buster-extraction-concurrency.test.mts:115:3
+✖ actual extraction releases coordination after thrown reservation work (3.899632ms)
+  AssertionError [ERR_ASSERTION]: already aborted work never reaches reservation
+  
+  3 !== 2
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-extraction-concurrency.test.mts:133:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-extraction-concurrency.test.mts:115:3
+✖ actual extraction releases coordination after aborted reservation work (2.936456ms)
+  AssertionError [ERR_ASSERTION]: already aborted work never reaches reservation
+  
+  3 !== 2
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-extraction-concurrency.test.mts:133:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

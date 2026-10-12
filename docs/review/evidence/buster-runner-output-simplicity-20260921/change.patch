@@ -1,0 +1,130 @@
+--- a/skills/buster/engine/test-gates/runner.ts
++++ b/skills/buster/engine/test-gates/runner.ts
+@@ -1,5 +1,6 @@
+ import { canonical } from './canonical-value.ts';
+-import { validateBusterProviderResult } from './provider-result-validation.ts';
++import { validateBusterProviderResult, validateAndMapOutputs } from './provider-result-validation.ts';
++export { validateAndMapOutputs } from './provider-result-validation.ts';
+ import { finalizeBusterReports, MAX_REPORT_RESULTS_BYTES, type ReportAdapterExecutor } from './specialist-report-finalization.ts';
+ export type { ReportAdapterExecutor } from './specialist-report-finalization.ts';
+ import crypto from "node:crypto";
+@@ -422,51 +423,6 @@
+     });
+ }
+ 
+-export function validateAndMapOutputs(
+-  entry: TestProviderRegistryEntry,
+-  result: ProviderResultV1,
+-  artifacts: ReadonlyMap<string, EvidenceRefV1>,
+-): ProducedOutputV1[] {
+-  const outputs: ProducedOutputV1[] = [];
+-  const seen = new Set<string>();
+-  for (const output of result.outputs) {
+-    if (seen.has(output.name))
+-      throw new Error(`TEST_PROVIDER_OUTPUT_DUPLICATE:${output.name}`);
+-    seen.add(output.name);
+-    const declaration = entry.registration.outputs.find(
+-      (item) => item.name === output.name,
+-    );
+-    if (!declaration || declaration.kind !== output.kind)
+-      throw new Error(`TEST_PROVIDER_OUTPUT_INVALID:${output.name}`);
+-    if (output.kind === "value" && declaration.kind === "value") {
+-      if (output.schemaId !== declaration.schemaId)
+-        throw new Error(`TEST_PROVIDER_OUTPUT_SCHEMA_INVALID:${output.name}`);
+-      outputs.push({
+-        name: output.name,
+-        kind: "value",
+-        schemaId: output.schemaId,
+-        value: structuredClone(output.value),
+-      });
+-    } else if (output.kind === "artifact" && declaration.kind === "artifact") {
+-      const evidence = artifacts.get(output.evidenceId);
+-      if (
+-        !evidence ||
+-        !declaration.mediaTypes.includes(evidence.artifact.mediaType)
+-      )
+-        throw new Error(`TEST_PROVIDER_OUTPUT_ARTIFACT_INVALID:${output.name}`);
+-      outputs.push({
+-        name: output.name,
+-        kind: "artifact",
+-        artifact: evidence.artifact,
+-      });
+-    }
+-  }
+-  for (const declaration of entry.registration.outputs) {
+-    if (result.outcome === "passed" && declaration.required && !seen.has(declaration.name))
+-      throw new Error(`TEST_PROVIDER_OUTPUT_REQUIRED:${declaration.name}`);
+-  }
+-  return outputs;
+-}
+ 
+ function busterWorkerSummary(value: string): string {
+   const mapped: Record<string, string> = {
+--- a/skills/buster/engine/test-gates/provider-result-validation.ts
++++ b/skills/buster/engine/test-gates/provider-result-validation.ts
+@@ -1,5 +1,5 @@
+ import { E2E_RESULT_SCHEMA_ID, validateE2eProviderDetails, validatePipelineTestGateContract,
+-  type DeclaredEvidenceV1, type ProviderResultV1 } from '@kubeclaw/pipeline-test-gate-contract';
++  type DeclaredEvidenceV1, type ProviderResultV1, type EvidenceRefV1, type ProducedOutputV1 } from '@kubeclaw/pipeline-test-gate-contract';
+ import type { TestProviderRegistryEntry } from '@kubeclaw/plugin-foundation/registry/types';
+ 
+ /** Validate the provider's serialized result before the runner stages any evidence. */
+@@ -60,3 +60,58 @@
+   }
+ }
+ 
++
++/** Map declared outputs only after their evidence has been staged and verified. */
++export function validateAndMapOutputs(
++  entry: TestProviderRegistryEntry,
++  result: ProviderResultV1,
++  artifacts: ReadonlyMap<string, EvidenceRefV1>,
++): ProducedOutputV1[] {
++  const outputs: ProducedOutputV1[] = [];
++  const seen = new Set<string>();
++  for (const output of result.outputs) {
++    if (seen.has(output.name))
++      throw new Error(`TEST_PROVIDER_OUTPUT_DUPLICATE:${output.name}`);
++    seen.add(output.name);
++    const declaration = entry.registration.outputs.find(
++      (item) => item.name === output.name,
++    );
++    if (!declaration || declaration.kind !== output.kind)
++      throw new Error(`TEST_PROVIDER_OUTPUT_INVALID:${output.name}`);
++    if (output.kind === "value" && declaration.kind === "value") {
++      if (output.schemaId !== declaration.schemaId)
++        throw new Error(`TEST_PROVIDER_OUTPUT_SCHEMA_INVALID:${output.name}`);
++      outputs.push({
++        name: output.name,
++        kind: "value",
++        schemaId: output.schemaId,
++        value: structuredClone(output.value),
++      });
++    } else if (output.kind === "artifact" && declaration.kind === "artifact") {
++      const evidence = artifacts.get(output.evidenceId);
++      if (
++        !evidence ||
++        !declaration.mediaTypes.includes(evidence.artifact.mediaType)
++      )
++        throw new Error(`TEST_PROVIDER_OUTPUT_ARTIFACT_INVALID:${output.name}`);
++      outputs.push({
++        name: output.name,
++        kind: "artifact",
++        artifact: evidence.artifact,
++      });
++    }
++  }
++  validateRequiredOutputs(entry, result, seen);
++  return outputs;
++}
++
++function validateRequiredOutputs(
++  entry: TestProviderRegistryEntry,
++  result: ProviderResultV1,
++  seen: ReadonlySet<string>,
++): void {
++  for (const declaration of entry.registration.outputs) {
++    if (result.outcome === "passed" && declaration.required && !seen.has(declaration.name))
++      throw new Error(`TEST_PROVIDER_OUTPUT_REQUIRED:${declaration.name}`);
++  }
++}

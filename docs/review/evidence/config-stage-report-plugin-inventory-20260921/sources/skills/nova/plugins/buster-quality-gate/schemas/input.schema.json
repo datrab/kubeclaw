@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "gateId",
+    "task",
+    "providerPlan"
+  ],
+  "properties": {
+    "gateId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "task": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32768
+    },
+    "providerPlan": {
+      "$ref": "#/$defs/providerPlan"
+    },
+    "expectedCoverage": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "providerPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repositoryRoot",
+        "repositoryId",
+        "plan",
+        "grants",
+        "maximumConcurrency",
+        "submittedAt",
+        "timeoutMs"
+      ],
+      "properties": {
+        "repositoryRoot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "repositoryId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plan": {
+          "type": "object"
+        },
+        "grants": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "maximumConcurrency": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "submittedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7200000
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "sourceStageId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "revision": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            }
+          },
+          "required": [
+            "revision"
+          ]
+        },
+        {
+          "properties": {
+            "sourceStageId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sourceStageId"
+          ]
+        }
+      ]
+    }
+  }
+}

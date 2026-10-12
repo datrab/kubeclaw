@@ -1,0 +1,106 @@
+{
+  "before": {
+    "skills/prism/server/studio-config.ts": "377f836f98c8d346a41a9eff4cbe1488a0451038ead95e0f941c66fdcfe35fad",
+    "skills/prism/tests/studio-service.test.mts": "4e32cbf75d5c4dff5cd7ae8bed97bc275f60adbae70f6da785c63512571abbe2",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts": "e9e7fef5fec4931e317985b27b07cb7b9a8fd18a23752137a07c59a91ca42c2d",
+    "skills/common/plugin-runtime/foundation/config/swarm.schema.json": "aae0cc4633ff1462efbc103d0529e68bdb103907a6511e9e40e6139a3575e3ed",
+    "charts/kubeclaw/files/config/swarm.config.json": "991e0c6dfd683b484bbc132c3e6e60c67abdf7c88e53959e9d08b7e4e60c20da",
+    "charts/prism/templates/_swarm-config.tpl": "ecbc31f41295ba0f0a4f3001586985e92cc67abb4c4f60990618750678a808e0",
+    "charts/prism/templates/workloads.yaml": "189fbbdc5755fb2e052a28a566410a9184297d0a1a2ed4adce24d19f3dc5f9c3",
+    "charts/prism/templates/services.yaml": "feea08cb2eaf89d5fb520c321a275a8550add0ca46337f4614d7384a7c1701df",
+    "charts/prism/templates/networkpolicy.yaml": "5e4e412c6dc3a6043620fcfa533b5881c9e9533b39632cdcca870c13d9cae838",
+    "docker/Dockerfile.prism-studio": "f8eb894af81e4e51ad8e2612b3a4edcf4696de5f18215c3ee587b59b5c77d659",
+    "scripts/check-built-runtime-image.sh": "f53fd34dc01160a7c26572be61059c57b5229766fd68289b29b4d6e176a3dfda",
+    "tests/verification/deployment/prism-swarm-image.mjs": "3330ef6686a396e4314f3eb99f5142d0708dfa78e58077db2f8a36ae648a353b",
+    "tests/verification/deployment/check-deployment-truth.mjs": "86b00bce7c607b695c1ce5f53e4745e412bec1e363bc4a419d3b813ad6b0920c",
+    "tests/verification/deployment/prism-swarm-config.test.mjs": "44823a345015647ceb1fd025ed11db8da2ef03f099df28193c0a5e5494b2266b",
+    ".dockerignore": "29c8a2f2b7249ece0f29276657794e4de7a18fe2909839ae20408a02f8f466fa",
+    "skills/prism/package.json": "8d07247f3bd986745352a20a0ee17696afde9b9b33637fe396c547d1a01a8c4d",
+    "skills/prism/tests/studio-config.test.mts": "9a602947f7938b6b72aa1074dc3593610a00d125a2535904cc71d488e5ec1a9b"
+  },
+  "after": {
+    "skills/prism/server/studio-config.ts": "377f836f98c8d346a41a9eff4cbe1488a0451038ead95e0f941c66fdcfe35fad",
+    "skills/prism/tests/studio-service.test.mts": "4e32cbf75d5c4dff5cd7ae8bed97bc275f60adbae70f6da785c63512571abbe2",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts": "e9e7fef5fec4931e317985b27b07cb7b9a8fd18a23752137a07c59a91ca42c2d",
+    "skills/common/plugin-runtime/foundation/config/swarm.schema.json": "aae0cc4633ff1462efbc103d0529e68bdb103907a6511e9e40e6139a3575e3ed",
+    "charts/kubeclaw/files/config/swarm.config.json": "991e0c6dfd683b484bbc132c3e6e60c67abdf7c88e53959e9d08b7e4e60c20da",
+    "charts/prism/templates/_swarm-config.tpl": "ecbc31f41295ba0f0a4f3001586985e92cc67abb4c4f60990618750678a808e0",
+    "charts/prism/templates/workloads.yaml": "189fbbdc5755fb2e052a28a566410a9184297d0a1a2ed4adce24d19f3dc5f9c3",
+    "charts/prism/templates/services.yaml": "feea08cb2eaf89d5fb520c321a275a8550add0ca46337f4614d7384a7c1701df",
+    "charts/prism/templates/networkpolicy.yaml": "5e4e412c6dc3a6043620fcfa533b5881c9e9533b39632cdcca870c13d9cae838",
+    "docker/Dockerfile.prism-studio": "f8eb894af81e4e51ad8e2612b3a4edcf4696de5f18215c3ee587b59b5c77d659",
+    "scripts/check-built-runtime-image.sh": "f53fd34dc01160a7c26572be61059c57b5229766fd68289b29b4d6e176a3dfda",
+    "tests/verification/deployment/prism-swarm-image.mjs": "3330ef6686a396e4314f3eb99f5142d0708dfa78e58077db2f8a36ae648a353b",
+    "tests/verification/deployment/check-deployment-truth.mjs": "86b00bce7c607b695c1ce5f53e4745e412bec1e363bc4a419d3b813ad6b0920c",
+    "tests/verification/deployment/prism-swarm-config.test.mjs": "44823a345015647ceb1fd025ed11db8da2ef03f099df28193c0a5e5494b2266b",
+    ".dockerignore": "29c8a2f2b7249ece0f29276657794e4de7a18fe2909839ae20408a02f8f466fa",
+    "skills/prism/package.json": "8d07247f3bd986745352a20a0ee17696afde9b9b33637fe396c547d1a01a8c4d",
+    "skills/prism/tests/studio-config.test.mts": "9a602947f7938b6b72aa1074dc3593610a00d125a2535904cc71d488e5ec1a9b"
+  },
+  "commands": [
+    {
+      "name": "tests-final",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "skills/prism/tests/studio-service.test.mts",
+        "skills/prism/tests/studio-config.test.mts",
+        "skills/prism/tests/studio-adapter.test.mts",
+        "skills/prism/tests/studio-flows.test.mts",
+        "skills/prism/tests/studio-roundtrip.test.mts",
+        "skills/prism/tests/preview-assets.test.mts",
+        "skills/prism/tests/product-decisions.test.mts",
+        "skills/prism/tests/control-image-environment.test.mts",
+        "skills/prism/tests/control-server-config.test.mts",
+        "skills/prism/tests/swarm-control-policy.test.mts",
+        "tests/verification/deployment/prism-swarm-config.test.mjs",
+        "tests/verification/deployment/prism-product-decisions.test.mjs",
+        "tests/verification/deployment/release-config.test.mjs",
+        "tests/verification/deployment/release-images.test.mjs",
+        "tests/verification/deployment/gitops-release.test.mjs"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 38.515894412994385
+    },
+    {
+      "name": "types-final",
+      "command": [
+        "npm",
+        "run",
+        "typecheck",
+        "--prefix",
+        "skills/prism"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.291484594345093
+    },
+    {
+      "name": "lint-final",
+      "command": [
+        "npx",
+        "eslint",
+        "--config",
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        "skills/prism/server/studio-config.ts",
+        "skills/prism/tests/studio-service.test.mts",
+        "skills/common/plugin-runtime/foundation/config/swarm.ts",
+        "tests/verification/deployment/prism-swarm-image.mjs",
+        "tests/verification/deployment/check-deployment-truth.mjs",
+        "tests/verification/deployment/prism-swarm-config.test.mjs",
+        "skills/prism/tests/studio-config.test.mts"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.734210729598999
+    },
+    {
+      "name": "deployment-truth-final",
+      "command": [
+        "node",
+        "tests/verification/deployment/check-deployment-truth.mjs"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 0.051825523376464844
+    }
+  ]
+}

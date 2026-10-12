@@ -1,0 +1,342 @@
+[
+  {
+    "path": "skills/common/plugins/agent-observability/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 2
+  },
+  {
+    "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 2
+  },
+  {
+    "path": "skills/nova/plugins/human-approval/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/lint/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/review/tests/live-function.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 9
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-e2e.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-engine.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-live-crashes.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 5
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-resume.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-project-compiler.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/contracts/quality-provider-runtime.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/e2e/run-v2-production-pipeline.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/e2e/scenario-proof.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/adapter-cleanup-scope.test.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/adapter-dependency-identity.test.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 3
+  },
+  {
+    "path": "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/admin-approval-fixture.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/admin-repair.test.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/approval-source-fixture.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/attempt-projection-recovery.test.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 3
+  },
+  {
+    "path": "tests/verification/reliability/discord-delivery-receipt.test.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/effect-identity-version.test.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/external-effect-recovery.test.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/fixtures/forge-runtime.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/isolation-session.test.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 2
+  },
+  {
+    "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/observer-recovery.test.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/operator-delivery.test.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/prism-reader-fixture.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/redis-transport.test.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 2
+  },
+  {
+    "path": "tests/verification/reliability/repair-budget-fixture.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/report-identity-fixture.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/review-cache-storage-negative.test.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/review-report-crash-independent.test.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/review-report-locale-child.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/review-semantic-summary-child.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/reliability/runtime-session-cleanup.test.mts",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "scripts/tests/integration/repository-review-supervisor-start.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary-child.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 2
+  },
+  {
+    "path": "tests/verification/historical-branch-acceptance/review-semantic-history-child.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  },
+  {
+    "path": "tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs",
+    "onlyExactTtlInsertions": true,
+    "insertions": 1
+  }
+]

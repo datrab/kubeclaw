@@ -1,0 +1,37 @@
+{
+  "review": "preparation recipes only; no materialization or boot",
+  "files": [
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation6/bind-artifacts.py",
+      "sha256": "dbc067bcefa4c2df5c9ce17aa3f2ee38d7a2a45ef9c094386f982ab6d86d7e9b"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation6/driver-source-identities.json",
+      "sha256": "35aaf5a54f24a8617cc6c7172d4bcc3b61175f9554da3b3081e036082b0ab823"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation6/guest-init.sh",
+      "sha256": "d554e25956ac6a28c96d2815704fb68d44131789bd420c33453943ca1544aae0"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation6/launch-smaller-as.py",
+      "sha256": "1972503c242d3fc5ea6346d42566ee3c0ec9738c1ac30aebf1fef41588ca7578"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation6/prepare-images.py",
+      "sha256": "30293d963e56218d249fb53573af59cb1e4bd05da35cd09c87861fac0e8fc0c6"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation6/prepare-runtime.py",
+      "sha256": "356ff172c6bbf793cef594b49c7e72e23bc7c6415762b1c4a3950023cd8f6d21"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation6/runtime-binding.py",
+      "sha256": "4f08c2420b9a1d8383c6904bdea0659c001b1e20e719c52f44546843c1927267"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/generation6/bind-artifacts.py",
+      "sha256": "79e0b856575f51550dc853758a4cf5520e18155b9f8d26c04f20f1040a3f2b1e"
+    }
+  ]
+}

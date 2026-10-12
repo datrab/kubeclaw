@@ -1,0 +1,63 @@
+CI2_MUTATION_APPLIED {"mutation":"production-runner-subject-wrong","pid":169437,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-cluster-options.ts","beforeSha256":"eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff","afterSha256":"4411eda9e94a9f1a07389a93554a137619f3e8dbcc38834f935dda68e682f0da","replacements":[{"from":"runnerSubject: `${binding.controllerNamespace}/${runnerServiceAccount}`,","to":"runnerSubject: `${binding.controllerNamespace}/wrong-account`,","count":1}]}
+✖ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (1405.745838ms)
+✔ production decoder/service/IPC first kubernetes.exposure, allowed and grant/route denied (1384.44943ms)
+✔ production decoder/service/IPC first kubernetes.runtime-security, allowed and grant/route denied (1784.975562ms)
+✖ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (952.890275ms)
+✔ production decoder/service/IPC second kubernetes.exposure, allowed and grant/route denied (1321.250685ms)
+✔ production decoder/service/IPC second kubernetes.runtime-security, allowed and grant/route denied (1735.827025ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10857.037739
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (1405.745838ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+        mode: 'deployer',
+  +     subject: 'control-first/wrong-account'
+  -     subject: 'control-first/runner-first'
+      }
+    ]
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:209:20
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { subject: 'control-first/wrong-account', mode: 'deployer' } ],
+    expected: [ { subject: 'control-first/runner-first', mode: 'deployer' } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (952.890275ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+        mode: 'deployer',
+  +     subject: 'control-second/wrong-account'
+  -     subject: 'control-second/runner-second'
+      }
+    ]
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:209:20
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { subject: 'control-second/wrong-account', mode: 'deployer' } ],
+    expected: [ { subject: 'control-second/runner-second', mode: 'deployer' } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

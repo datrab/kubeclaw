@@ -1,0 +1,2 @@
+skills/nova/core/state/wait-projection-reader.ts(34,36): error TS18048: 'config' is possibly 'undefined'.
+skills/nova/core/state/wait-projection-reader.ts(36,22): error TS18048: 'selected' is possibly 'undefined'.

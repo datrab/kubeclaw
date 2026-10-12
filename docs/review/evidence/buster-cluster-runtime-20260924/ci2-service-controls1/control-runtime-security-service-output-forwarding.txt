@@ -1,0 +1,47 @@
+CI2_MUTATION_APPLIED {"mutation":"runtime-security-service-output-forwarding","pid":182623,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-cluster-options.ts","beforeSha256":"eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff","afterSha256":"f3a2abc8a4a83f745016f42f6237d99d80c19f035abc0c03a6a8cf655f3f0c0a","replacements":[{"from":"...policy.runtimeSecurity, kubectlExecutable:","to":"...policy.runtimeSecurity, maximumOutputBytes: 16777216, kubectlExecutable:","count":1}]}
+✔ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (2075.183484ms)
+✔ production decoder/service/IPC first kubernetes.exposure, allowed and grant/route denied (1292.713837ms)
+✖ production decoder/service/IPC first kubernetes.runtime-security, allowed and grant/route denied (1728.73058ms)
+✔ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (1513.019862ms)
+✔ production decoder/service/IPC second kubernetes.exposure, allowed and grant/route denied (1306.688082ms)
+✖ production decoder/service/IPC second kubernetes.runtime-security, allowed and grant/route denied (1807.65811ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12020.222768
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC first kubernetes.runtime-security, allowed and grant/route denied (1728.73058ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+  
+  'passed'
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:171:18
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'passed',
+    expected: 'passed',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC second kubernetes.runtime-security, allowed and grant/route denied (1807.65811ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+  
+  'passed'
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:171:18
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'passed',
+    expected: 'passed',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }

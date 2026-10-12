@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { randomUUID } from 'node:crypto';
 import { NativeProcessLaunches } from './native-process-launches.ts';
 import type { ChildProcessWithoutNullStreams } from 'node:child_process';
 import { NativeWorkerResourceScope, type NativeWorkerScopeLimits } from './native-resource-scope.ts';
@@ -12,7 +13,7 @@ export interface NativeWorkerOwnershipOptions {
   readonly store: FileWorkerOwnershipStore;
   readonly nodeIdentity: string;
   readonly drainTimeoutMs: number;
-  readonly maximumActiveScopes?: number;
+  readonly maximumActiveScopes: number;
   readonly poolLimits: NativeWorkerPoolLimits;
 }
 
@@ -24,6 +25,7 @@ export interface NativeWorkerLaunchCommand {
   readonly arguments: readonly string[];
   readonly cwd: string;
   readonly environment: NodeJS.ProcessEnv;
+  readonly resourceLimits?: NativeWorkerScopeLimits;
 }
 
 export interface NativeWorkerLaunchAuthority {
@@ -49,6 +51,7 @@ export class NativeWorkerOwnershipLease {
   #launch: Promise<ChildProcessWithoutNullStreams> | undefined;
   #completion: Promise<NativeWorkerResourceObservation> | undefined;
   #launcher: string | undefined;
+  #childLaunches: Promise<unknown> = Promise.resolve();
   readonly #launchers = new NativeProcessLaunches();
 
   constructor(scope: NativeWorkerResourceScope, record: WorkerOwnershipRecord, options: NativeWorkerOwnershipOptions,
@@ -61,14 +64,15 @@ export class NativeWorkerOwnershipLease {
 
   /** Spawn is inside the launch fence; callers never receive a reusable admission path. */
   launch(command: NativeWorkerLaunchCommand & { readonly launcher: string }, controlPipe = false): Promise<ChildProcessWithoutNullStreams> {
+    if (this.#record.topology.kind !== 'aggregate.v1') return Promise.reject(new Error('WORKER_OWNERSHIP_LEGACY_LAUNCH_FORBIDDEN'));
     if (this.#started || this.#closing) return Promise.reject(new Error('WORKER_NATIVE_LAUNCH_FENCED'));
     const input = structuredClone(command);
     this.#launcher = input.launcher;
     this.#started = true;
-    this.#launch = this.#options.store.transition(this.#record, 'running').then(record => {
+    this.#launch = this.#options.store.transition(this.#record, 'running').then(async record => {
       this.#record = record;
       if (this.#closing) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
-      return this.#spawn(input, controlPipe);
+      return this.#startChild('host', input, controlPipe);
     });
     return this.#launch;
   }
@@ -80,16 +84,24 @@ export class NativeWorkerOwnershipLease {
       if (this.#closing || !this.#started || !this.#launch) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
       await this.#launch;
       if (this.#closing || this.#record.phase !== 'running') throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
-      // Check the durable binding before every start. The same launcher attaches
-      // the new process before exec and drops credentials before any role code.
-      this.#scope.observe();
-      return this.#spawn(input, false);
+      const pending = this.#childLaunches.then(() => this.#startChild(`helper-${randomUUID()}`, input, false));
+      this.#childLaunches = pending.catch(() => undefined);
+      return pending;
     } });
   }
 
-  #spawn(command: NativeWorkerLaunchCommand, controlPipe: boolean): ChildProcessWithoutNullStreams {
+  async #startChild(name: string, command: NativeWorkerLaunchCommand, controlPipe: boolean): Promise<ChildProcessWithoutNullStreams> {
     if (this.#closing || !this.#launcher) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
-    return this.#launchers.spawn(this.#launcher, [this.#scope.launcherPath(), String(command.uid), String(command.gid),
+    this.#scope.verifyChildren(this.#record.topology.children, false);
+    const limits = this.#scope.childLimits(command.resourceLimits);
+    this.#record = await this.#options.store.reserveChild(this.#record, name, limits);
+    if (this.#closing) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+    const reserved = this.#record.topology.children.find(child => child.name === name)!;
+    const binding = this.#scope.createChild(reserved);
+    this.#record = await this.#options.store.bindChild(this.#record, name, binding);
+    if (this.#closing) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+    const child = this.#record.topology.children.find(item => item.name === name)!;
+    return this.#launchers.spawn(this.#launcher, [...this.#scope.childLaunchArguments(child), String(command.uid), String(command.gid),
       command.executable, ...command.arguments], { cwd: command.cwd,
       env: { ...command.environment, KUBECLAW_NATIVE_SUPERVISOR_PID: String(process.pid) } }, controlPipe);
   }
@@ -108,19 +120,36 @@ export class NativeWorkerOwnershipLease {
     return this.#completion;
   }
 
-  async #finish(): Promise<NativeWorkerResourceObservation> {
-    // A concurrent fsync of the launch fence must settle before the terminal CAS.
-    await this.#launch?.catch(() => undefined);
+  async #drainOwnedSubtree(): Promise<NativeWorkerResourceObservation> {
+    const errors: unknown[] = [];
+    // A pre-entry launcher failure cannot strand already entered descendants.
+    try { await this.#launchers.drain(this.#options.drainTimeoutMs); }
+    catch (error) { errors.push(error); }
+    // Unknown/replaced groups are never adopted, killed or removed as owned work.
+    this.#scope.verifyChildren(this.#record.topology.children, this.#record.phase === 'empty');
     try {
-      // Include launchers that have not yet joined the cgroup. Reaping these
-      // closes the admission race before the final kernel drain and disposal.
-      await this.#launchers.drain(this.#options.drainTimeoutMs);
       if (this.#record.phase !== 'quiescing' && this.#record.phase !== 'empty') {
         const notLaunched = this.#record.phase === 'allocated' && !this.#started;
         this.#record = await this.#options.store.transition(this.#record, 'quiescing',
           notLaunched ? { diagnosis: 'WORKER_NATIVE_ALLOCATION_NOT_LAUNCHED' } : {});
       }
-      const observation = await this.#scope.terminateAndDrain(this.#options.drainTimeoutMs);
+    } catch (error) { errors.push(error); }
+    let observation: NativeWorkerResourceObservation | undefined;
+    // Quota/fsync failure must not make identity-checked kernel drain unreachable.
+    // Any failure still prevents finalization, deletion and reservation release.
+    try { observation = await this.#scope.terminateAndDrain(this.#options.drainTimeoutMs); }
+    catch (error) { errors.push(error); }
+    if (errors.length === 1) throw errors[0];
+    if (errors.length) throw new AggregateError(errors, 'WORKER_NATIVE_QUIESCENCE_INCOMPLETE');
+    return observation!;
+  }
+
+  async #finish(): Promise<NativeWorkerResourceObservation> {
+    // A concurrent fsync of the launch fence must settle before the terminal CAS.
+    await this.#launch?.catch(() => undefined);
+    await this.#childLaunches;
+    try {
+      const observation = await this.#drainOwnedSubtree();
       if (this.#record.finalObservation !== null && canonicalJson(this.#record.finalObservation) !== canonicalJson(observation)) {
         throw new Error('WORKER_NATIVE_TERMINAL_COUNTERS_CHANGED');
       }
@@ -129,6 +158,7 @@ export class NativeWorkerOwnershipLease {
         // empty phase. A crash after rmdir must not erase accounting evidence.
         this.#record = await this.#options.store.transition(this.#record, 'empty', { finalObservation: observation });
       }
+      this.#scope.disposeChildren(this.#record.topology.children);
       this.#scope.dispose();
       this.#record = await this.#options.store.transition(this.#record, 'disposed');
       return observation;
@@ -156,7 +186,7 @@ export class NativeWorkerOwnership {
 
   private constructor(options: NativeWorkerOwnershipOptions) {
     this.#options = options;
-    this.#pool = new NativeWorkerResourcePool(options.cgroupRoot, options.poolLimits, options.maximumActiveScopes ?? 128);
+    this.#pool = new NativeWorkerResourcePool(options.cgroupRoot, options.poolLimits, options.maximumActiveScopes);
   }
 
   isReady(): boolean {
@@ -181,7 +211,7 @@ export class NativeWorkerOwnership {
     if (!Number.isSafeInteger(options.drainTimeoutMs) || options.drainTimeoutMs < 1) {
       throw new Error('WORKER_NATIVE_DRAIN_LIMIT_INVALID');
     }
-    if (options.maximumActiveScopes !== undefined && (!Number.isSafeInteger(options.maximumActiveScopes) || options.maximumActiveScopes < 1)) {
+    if (!Number.isSafeInteger(options.maximumActiveScopes) || options.maximumActiveScopes < 1) {
       throw new Error('WORKER_NATIVE_CAPACITY_INVALID');
     }
     const captured = { ...options, poolLimits: { ...options.poolLimits }, cgroupRoot: fs.realpathSync(options.cgroupRoot) };
@@ -217,7 +247,7 @@ export class NativeWorkerOwnership {
     let record: WorkerOwnershipRecord | undefined;
     try {
       record = await this.#options.store.reserve(captured);
-      if (record.phase !== 'reserved') throw new Error('WORKER_NATIVE_IDENTITY_ALREADY_USED');
+      if (record.phase !== 'reserved' || record.topology.kind !== 'aggregate.v1') throw new Error('WORKER_NATIVE_IDENTITY_ALREADY_USED');
       const scope = NativeWorkerResourceScope.createReserved(this.#options.cgroupRoot, record.scopeName, requested);
       record = await this.#options.store.transition(record, 'allocated', { binding: scope.binding() });
       const lease = new NativeWorkerOwnershipLease(scope, record, this.#options, failed => {
@@ -272,11 +302,11 @@ export class NativeWorkerOwnership {
     if (!exists) throw new Error('WORKER_NATIVE_OWNED_SCOPE_MISSING');
     let scope: NativeWorkerResourceScope;
     if (record.phase === 'reserved') {
-      scope = NativeWorkerResourceScope.recoverEmptyReservation(this.#options.cgroupRoot, record.scopeName);
+      scope = NativeWorkerResourceScope.recoverEmptyReservation(this.#options.cgroupRoot, record.scopeName, record.topology.kind === 'aggregate.v1');
       record = await this.#options.store.transition(record, 'allocated', { binding: scope.binding() });
     } else {
       if (!record.binding) throw new Error('WORKER_NATIVE_UNBOUND_SCOPE_UNRESOLVED');
-      scope = NativeWorkerResourceScope.reopen(this.#options.cgroupRoot, record.binding);
+      scope = NativeWorkerResourceScope.reopen(this.#options.cgroupRoot, record.binding, record.topology.kind === 'aggregate.v1');
     }
     await new NativeWorkerOwnershipLease(scope, record, this.#options).finish();
   }

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prism-swarm-config
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+data:
+{{- $_ := include "prism.swarmConfig" . }}
+{{- range $name, $contents := (include "kubeclaw.swarmBundle" . | mustFromJson) }}
+  {{ $name }}: |
+{{ $contents | indent 4 }}
+{{- end }}

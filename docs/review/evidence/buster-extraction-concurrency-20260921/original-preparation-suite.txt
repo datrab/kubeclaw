@@ -1,0 +1,31 @@
+
+> verify:buster:preparation
+> tsc --noEmit -p tests/verification/reliability/tsconfig.buster-preparation.json && node --test --test-concurrency=1 tests/verification/reliability/buster-preparation-identities.test.mts tests/verification/reliability/buster-preparation-ledger.test.mts tests/verification/reliability/buster-result-origin.test.mts tests/verification/reliability/buster-prepared-store-cancellation.test.mts tests/verification/reliability/buster-extraction-concurrency.test.mts
+
+✔ actual extraction rejects a same-input alias before reservation and captures caller input (74.513731ms)
+✔ different inputs reach the actual reservation boundary in parallel within authored capacity (6.492601ms)
+✔ actual extraction releases coordination after thrown reservation work (4.452346ms)
+✔ actual extraction releases coordination after aborted reservation work (3.959134ms)
+✔ prepared source accepts valid identity and rejects JSON scalar coercion (1.444798ms)
+✔ staged input accepts valid identity and rejects JSON scalar coercion (67.272002ms)
+✔ cleanup effects accepts valid identity and rejects JSON scalar coercion (0.420421ms)
+✔ cleanup gate digest cannot be coerced from a JSON array (0.39346ms)
+✔ recovered source reference remains bound to the originally accepted extraction header (113.146043ms)
+✔ real ledger serializes competing admissions into exactly two fixed slots (127.525259ms)
+✔ admission reserves a future cleanup record inside the original record quota (62.320972ms)
+✔ profile, clock and settings ownership is captured before waiting on a real writer lock (36.498626ms)
+✔ malformed persisted cleanup association is rejected without rewriting bytes (39.871114ms)
+✔ source attachment and cancellation share the durable admission fence (371.286982ms)
+✔ result origin preserves explicit completed provenance and pending absence (1.570601ms)
+✔ historical result origin rejects coerced or malformed importId (0.281087ms)
+✔ historical result origin rejects coerced or malformed originalStoreDigest (0.188625ms)
+✔ historical result origin rejects coerced or malformed originalPayloadDigest (0.185344ms)
+✔ result origin rejects alternate selectors and extra keys (0.251377ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5185.238535

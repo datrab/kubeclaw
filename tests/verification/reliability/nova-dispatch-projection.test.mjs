@@ -1,3 +1,6 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
+// Preparation authority is modeled here; parser, extraction and durable service/store remain real.
+import { ModeledPreparedPlanJobStore as FileBusterPlanJobStore, ModeledBusterRemotePlanService as BusterRemotePlanService } from '../../fixtures/test-gate/modeled-preparation.mts';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -9,7 +12,7 @@ import { once } from 'node:events';
 import { setTimeout as delay } from 'node:timers/promises';
 import { test } from 'node:test';
 import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
-import { FileBusterPlanJobStore, BusterRemotePlanService } from '@kubeclaw/buster-engine';
+
 import { createBusterRemotePlanHttpServer } from '../../../skills/buster/engine/test-gates/remote-plan-http.ts';
 import { FileNovaRemotePlanStore, NovaRemotePlanDispatcher, HttpRemotePlanTransport } from '../../../skills/nova/core/test-gates/remote-dispatch.ts';
 import { FileNovaGateImportStore } from '../../../skills/nova/core/test-gates/remote-result-import.ts';
@@ -80,7 +83,9 @@ async function fixture(t, options = {}) {
   const buster = new FileBusterPlanJobStore(path.join(root, 'buster'), { recordLimits,
     maximumArchiveBytes: 1024 ** 2, maximumResultBytes: 1024 ** 2, maximumResultStoreBytes: 4 * 1024 ** 2,
     trustedSourceAuthority: 'nova:projection', sourceAttestationPublicKey: keys.publicKey.export({ type: 'spki', format: 'pem' }) });
-  const service = new BusterRemotePlanService({ store: buster, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(root, 'buster-runtime'),
+  const service = new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store: buster, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(root, 'buster-runtime'),
     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 ** 2, allowedCapabilities: new Set(['network.http']),
     networkHttp: { allowedOrigins: [origin], allowedHostSuffixes: [], allowedPorts: [target.address().port], maximumResponseBytes: 1024 ** 2, maximumExecutionMs: 30000 } });
   const server = createBusterRemotePlanHttpServer({ service, token, maximumRequestBytes: 2 * 1024 ** 2, maximumResponseBytes: 1024 ** 2, maximumResultBytes: 1024 ** 2 });
@@ -96,7 +101,7 @@ async function fixture(t, options = {}) {
   const artifactId = 'kubeclaw.artifact-store:artifact-store', remoteId = 'kubeclaw.remote-test-gate:plan';
   const runtimeId = 'kubeclaw.runtime-dispatch:runtime', networkId = 'kubeclaw.network-http:http', secretId = 'kubeclaw.secret-resolver:secrets';
   const gitId = 'kubeclaw.git-workspace:git';
-  const platform = { schemaVersion: 'pipeline-platform.v2', installationRoots: roots, trustedBuiltinRoots: roots,
+  const platform = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: { 'test.plan.execute': remoteId, 'runtime.dispatch': runtimeId, 'network.http': networkId,
       'secrets.read': secretId, 'artifacts.read': artifactId, 'artifacts.write': artifactId,

@@ -1,0 +1,52 @@
+# Setup Flow
+
+## Prerequisites
+
+`./scripts/deploy.sh setup` configures an **existing Kubernetes cluster**. It does
+not install K3s, initialize a control node, restore a datastore, or prepare worker
+hosts. Select and verify the intended kubectl context before running it. The
+selected API must be reachable with working credentials and permission to list
+namespaces and create the target namespace if absent. The lookup uses a name field
+selector; this still requires the Kubernetes `list` verb, not just `get` on a
+named namespace. Install kubectl, Node.js, Bash and Helm on
+the operator machine; Helm needs access to the configured chart repositories.
+
+Cluster version, CNI, DNS, StorageClasses and persistent-volume recovery must be
+prepared separately for the selected environment. Native worker host preparation
+and capacity checks are separate deployment steps; see
+[native worker node setup](../operations/native-worker-host-pools.md). An absent
+namespace is not evidence of a fresh or empty cluster. Do not reinstall the
+cluster in response to an API, credential or authorization failure.
+
+## Procedure
+
+Run `NAMESPACE=<workspace> ./scripts/deploy.sh setup`. The script lists namespaces
+with `--field-selector metadata.name=<workspace> -o json`. It validates the
+returned list and exact namespace identity. A successful one-item list preserves
+the existing namespace; a successful empty list requests its creation. Malformed
+or unexpected responses stop setup. No `--ignore-not-found` flag or error-text
+matching can turn an API error into an empty namespace list. Any failed lookup stops setup before namespace creation,
+Helm repository changes or secret setup; its kubectl diagnostic remains visible.
+A failed creation also stops the sequence, including a race in which another
+operator created the namespace first.
+
+After the namespace step, setup adds the configured Helm repositories, updates
+them and runs secret setup according to `KUBECLAW_RUN_SECRET_SETUP`. In a
+noninteractive session its default `auto` skips secret setup; explicitly provision
+and verify the required secrets before deploying workloads. Choose the reviewed
+image or code bundle, configure trusted plugin roots and deploy the Helm release.
+
+## Verify and repeat
+
+Check the intended context and namespace, then render the chart and run the
+deployment truth check before deployment. A lookup failure requires repairing
+connectivity, context, credentials or API permissions first. Rerun the same setup
+command after repair; an existing namespace is preserved. If a later repository
+or secret step failed, earlier successful changes remain. Setup does not roll
+back the namespace or delete its data. A rerun is not a host restore procedure.
+
+The automated namespace guard tests execute the original shell command with CLI
+fixtures. They prove command ordering and stopping on CLI failures; they do not
+prove real Kubernetes authorization, host installation, storage recovery or node
+admission. Those require an isolated environment and the full bootstrap and
+recovery acceptance checks.

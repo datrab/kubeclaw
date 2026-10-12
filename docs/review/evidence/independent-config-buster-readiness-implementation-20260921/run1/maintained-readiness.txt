@@ -1,0 +1,37 @@
+
+> verify:buster:readiness-config
+> tsc --noEmit -p tests/verification/reliability/tsconfig.buster-readiness.json && node --test --test-concurrency=1 tests/verification/reliability/buster-readiness-config.test.mts tests/verification/reliability/buster-readiness-consumer.test.mts tests/verification/deployment/buster-readiness-config.test.mjs tests/verification/deployment/buster-readiness.test.mts
+
+✔ actual kubeclaw Helm rejects malformed readiness policy and delivers both authored profiles (2184.543218ms)
+✔ actual prism Helm rejects malformed readiness policy and delivers both authored profiles (2685.916399ms)
+✔ bounded dependency process terminates actual child process groups and awaits closure (310.481499ms)
+✔ bounded process limits actual output and exports safe cause metadata without payload or inherited credentials (62.353621ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_SPAWN_FAILED","exitCode":-2,"signal":null,"errno":"ENOENT","outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":2}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_CANCELLED","exitCode":null,"signal":null,"errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":0}
+✔ missing native BuildKit fails closed; concurrent callers share one check and completed checks are never cached (5.179773ms)
+✔ actual Helm uses bootstrap and functional readiness separately from liveness (422.328861ms)
+✔ dependency shutdown cancels native descendants before returning and pre-aborted work never starts (36.905337ms)
+✔ readiness policy is required and strictly validated at file and direct boundaries (118.110712ms)
+✔ readiness policy captures immutable values rather than retaining the caller object (0.313628ms)
+✔ retired runtime JSON readiness author is rejected even when equal, empty or null (0.471542ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_TIMEOUT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":307}
+✔ real factory/service/process honors execution policy {"maximumExecutionMs":300,"maximumOutputBytes":4096} (865.049915ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":true,"code":"DEPENDENCY_OK","exitCode":0,"signal":null,"errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":1234}
+✔ real factory/service/process honors execution policy {"maximumExecutionMs":2500,"maximumOutputBytes":4096} (1531.140794ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_OUTPUT_LIMIT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":256,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":66}
+✔ real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":64} (260.122828ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":true,"code":"DEPENDENCY_OK","exitCode":0,"signal":null,"errno":null,"outputBytes":256,"outputDigest":"sha256:85e62acd750c4eb56b7b6a1d66dca5bfaac5f062608a1a893410d0288936c09a","durationMs":51}
+✔ real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":1024} (216.863957ms)
+✔ factory disabled capability does not execute configured dependency and rejects retired runtime authors (280.453799ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_TIMEOUT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":307}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_OUTPUT_LIMIT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":256,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":69}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_EXIT_FAILED","exitCode":7,"signal":null,"errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":76}
+✔ real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay (1512.830616ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15576.562523

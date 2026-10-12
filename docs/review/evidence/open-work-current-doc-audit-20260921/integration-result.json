@@ -1,0 +1,8 @@
+{
+  "time": "2026-09-21T21:33:42.577913+00:00",
+  "target": "docs/review/remediation/implementation/open-work-inventory-20260921.md",
+  "sha256": "11e90bcbf276f32e5a808d957632272f66e5de072b65ee94c7786af7f6f9ebca",
+  "review": "root-review.json",
+  "runtimeHold": "Nash session57949 terminal1 with no unexpected drift; explicit HOLD received",
+  "statusCountsChanged": false
+}

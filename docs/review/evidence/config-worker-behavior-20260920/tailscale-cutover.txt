@@ -1,0 +1,21 @@
+
+> verify:test-gate:tailscale-exposure-cutover
+> npm run verify:test-gate:tailscale-exposure-parity && node tests/verification/contracts/check-pipeline-tailscale-exposure-cutover.mts
+
+
+> verify:test-gate:tailscale-exposure-parity
+> npm run verify:test-gate:tailscale-exposure-implementation && node tests/verification/contracts/check-pipeline-tailscale-exposure-parity.mts
+
+
+> verify:test-gate:tailscale-exposure-implementation
+> npm run verify:test-gate:tailscale-exposure-baseline && npm run plugin-system:sandbox:build && npm test --prefix skills/buster/plugins/tailscale-exposure && npm test --prefix skills/buster/plugins/http && node tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts && npm run verify:test-gate:provider-registry && npx tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+
+
+> verify:test-gate:tailscale-exposure-baseline
+> node tests/verification/contracts/check-pipeline-tailscale-exposure-baseline.mjs
+
+{"ok":true,"suite":"tailscale-preview","successor":"kubeclaw.tailscale-exposure@1","items":38,"implementationProved":37,"productionPending":1}
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+

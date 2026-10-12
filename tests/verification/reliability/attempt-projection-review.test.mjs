@@ -4,7 +4,7 @@ import path from 'node:path';
 import {setTimeout as delay} from 'node:timers/promises';
 import {test} from 'node:test';
 import {FileJournal} from '../../../skills/nova/core/state/journal.ts';
-import {projectionFixture} from './admission-retirement.test.mjs';
+import {projectionFixture} from './attempt-retirement-fixture.mjs';
 import {retireAttemptResult} from '../../../scripts/retire-attempt-result.mjs';
 import {FileDurableAttemptStore} from '../../../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';
 import {hashJournalRecord} from '../../../skills/common/plugin-runtime/foundation/observability/hash-journal.ts';

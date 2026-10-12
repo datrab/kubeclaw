@@ -1,0 +1,70 @@
+{
+  "scope": "source assessment only; no execution evidence",
+  "sources": [
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "606b462f6e88e7e58f393e17d936353376a4095a89a93690f47a299b54c8e7ea",
+      "bytes": 16383
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "e9041c22bade59059c4d92de9035e9eacacf6d7b6a71ef5c4cdd5cadd1e4c0c2",
+      "bytes": 6688
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "eb4d8a252517506fdc096a017d1b807d194b88bfa21605900792ca4810efe148",
+      "bytes": 9473
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "2f4d8f0d305a1ad8f0404f03aca89b3d320d6df869c0d95833727fcae4fa9c0f",
+      "bytes": 14395
+    },
+    {
+      "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+      "sha256": "7f50b4c1c6c1e661319dd2f9ba1afecf27dd19a26c06ac51ef52abc0d97703f3",
+      "bytes": 1860
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "sha256": "c1f305fd3281328e1cd5714b1366cb946907e2a96af2bf6c3f629c2ab4ed354b",
+      "bytes": 3681
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "8a7f137964b58b6e97c7d7b2182dfd3365c4fd2cb06ba0eb493620a1b2133617",
+      "bytes": 12320
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "d0dc8f6348ffc8a46f8693632b45f26224eefaac96d844fee8f0357e4ad6258d",
+      "bytes": 21166
+    },
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "57f5f68231777a113c01773a33c350cbbb2746e97ad8aad4538b455427585ff4",
+      "bytes": 1304
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "eabc4f6e65db3e282269a063570397365cfb22547c22071bfd2c41a830b49fc1",
+      "bytes": 17212
+    },
+    {
+      "path": "tests/verification/deployment/buster-readiness.test.mts",
+      "sha256": "e9a61c6085469644632f508bb5acbbdc8110d4e041e2ac166b661a568b963f66",
+      "bytes": 6908
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "sha256": "e641b948846fe282f8aecfbd51ba3cacf6246de8385d4e1089ac0ebdaa16c850",
+      "bytes": 31556
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-readiness-20260921.md",
+      "sha256": "beb6c82af6eff6afc153eb57e65743b8a9ea8750635519f7b9277fe9f05a291f",
+      "bytes": 4903
+    }
+  ]
+}

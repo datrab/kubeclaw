@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import YAML from 'yaml';
+import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
 import { buildRegistry, discoverPackages } from '@kubeclaw/nova-core';
 import { containedRuntimeSecurityManifest, runtimeSecurityObservationHasValidAccounting, runtimeSecurityObservationIsFresh, runtimeSecurityResultDigest } from '../../../skills/buster/engine/test-gates/kubernetes-runtime-security.ts';
 
@@ -35,7 +37,21 @@ for (const token of ['--offline-scan', '--skip-db-update', '--skip-java-db-updat
   assert.match(scan, new RegExp(token));
 }
 
-const rendered = execFileSync('helm', ['template', 'security-proof', 'charts/kubeclaw', '--set', 'agentRole=buster', '--set', 'busterNamespaceBroker.enabled=true'], { encoding: 'utf8' });
+// Render prerequisites only: no running native-node claim.
+const renderPolicy = YAML.parse(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8'));
+renderPolicy.nodeName = 'security-render-only';
+renderPolicy.pools.buster.namespace = 'kubeclaw';
+const renderBinding = nativePoolPolicy(renderPolicy, 'buster');
+const rendered = execFileSync(process.env.KUBECLAW_TEST_HELM ?? 'helm', [
+  'template', 'security-proof', 'charts/kubeclaw', '--namespace', 'kubeclaw', '-f', 'my-values/buster-values.yaml',
+  '--set', 'busterNative.namespace=kubeclaw', '--set', `busterNative.nodeName=${renderBinding.nodeName}`,
+  '--set', `busterNative.policyDigest=${renderBinding.policyDigest}`,
+  '--set', 'agentRole=buster', '--set', 'busterNamespaceBroker.enabled=true',
+  '--set', 'extraContainers[0].name=buster-v2-runtime',
+  '--set', `extraContainers[0].image=ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`,
+  '--set', 'runtimeInfrastructure.registry.endpoint=http://registry.render-test:5000',
+  '--set', 'runtimeInfrastructure.registry.transport=http-lab',
+], { encoding: 'utf8', maxBuffer: 2 * 1024 * 1024 });
 for (const field of ['serviceTargetPort:', 'verifiedImage:', 'manifestDigest:', 'runtimeSecurity:']) {
   assert.match(rendered, new RegExp(field), `rendered CRD omits ${field}`);
 }
@@ -51,11 +67,14 @@ assert.match(controller, /runtimeSecurityStatus/u);
 assert.match(fs.readFileSync('cmd/buster-namespace-controller/main_test.go', 'utf8'), /TestInspectRuntimeSecurityStateUsesProductionControllerRules/u);
 assert.match(controller, /runtimeSecurityRefreshDue/u);
 const docker = fs.readFileSync('docker/Dockerfile.buster-runtime', 'utf8');
-assert.match(docker, /--download-java-db-only[\s\S]*java-db\/trivy-java\.db/u);
+assert.match(docker, /COPY docker\/trivy-databases\.lock\.json \/app\/docker\/trivy-databases\.lock\.json/u);
+assert.match(docker, /COPY scripts\/trivy-database-lock\.mjs \/app\/scripts\/trivy-database-lock\.mjs/u);
+assert.match(docker, /RUN node \/app\/scripts\/trivy-database-lock\.mjs --install \/home\/builder\/\.cache\/trivy "\$\(trivy --version[^\n]*\)"[\s\S]*test -s \/home\/builder\/\.cache\/trivy\/db\/trivy\.db[\s\S]*test -s \/home\/builder\/\.cache\/trivy\/java-db\/trivy-java\.db/u);
+assert.doesNotMatch(docker, /--download-(?:java-)?db-only/u);
 const now = Date.parse('2026-09-04T05:00:00.000Z');
-assert.equal(runtimeSecurityObservationIsFresh('2026-09-04T04:59:55.000Z', now, 10_000), true);
-assert.equal(runtimeSecurityObservationIsFresh('2026-09-04T04:59:49.999Z', now, 10_000), false);
-assert.equal(runtimeSecurityObservationIsFresh('2026-09-04T05:00:06.000Z', now, 10_000), false);
+assert.equal(runtimeSecurityObservationIsFresh('2026-09-04T04:59:55.000Z', now, 10_000, 5_000), true);
+assert.equal(runtimeSecurityObservationIsFresh('2026-09-04T04:59:49.999Z', now, 10_000, 5_000), false);
+assert.equal(runtimeSecurityObservationIsFresh('2026-09-04T05:00:06.000Z', now, 10_000, 5_000), false);
 const manifestPath = path.resolve('tests/verification/e2e/fixtures/nginx-project/k8s/deployment.yaml');
 assert.equal(containedRuntimeSecurityManifest(path.resolve('.'), manifestPath), manifestPath);
 assert.throws(() => containedRuntimeSecurityManifest(path.resolve('.'), '/etc/hosts'), /KUBERNETES_RUNTIME_SECURITY_PATH_DENIED/u);

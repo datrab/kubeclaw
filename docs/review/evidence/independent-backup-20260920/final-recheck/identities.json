@@ -1,0 +1,9 @@
+{
+  "charts/prism/files/prism-backup.sh": "4a0209b0ec2c7b68811d856c85b9519d0ea12151e5e17409ba963e4fda961bef",
+  "tests/verification/deployment/prism-backup.test.mts": "6fc246ff8ee55e99f6d760d894ec5144ebfa5670d4ab4630dd9f93b06041751b",
+  "tests/verification/deployment/prism-backup-native.test.mts": "a356a9a5e9c253745a7744462dfac646ab32decf2ce6538e7bdc1e08bad6b36a",
+  "scripts/review/remediation-register.mjs": "3f04dd1da92874bd5d43d199fae6e103c967ac51f16ff1df9b1fd54ea5ebaf13",
+  "scripts/tests/remediation-register.test.mjs": "652f9d7fd2acd56f951fa52a728258bea4e85f4cc0f46e22b29eb17f6a8df8d2",
+  "docs/operations/prism-backup-retention.md": "cdc4e3c9b234b04a385723806485399de060fb1ec804bc2b9ca0a806a93ed8ac",
+  "docs/review/remediation/implementation/prism-native-cleanup-20260920.md": "1ea576f656d013e5fd4f136e6ae3a195e918c0c4b7dc008285a4ca5de3f49502"
+}

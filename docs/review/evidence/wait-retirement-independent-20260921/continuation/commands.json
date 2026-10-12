@@ -1,0 +1,105 @@
+[
+  {
+    "name": "foundation-types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+    "exitCode": 0,
+    "seconds": 6.453980049001984
+  },
+  {
+    "name": "original-blob-and-foundation",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/blob-budget.test.mts",
+      "tests/verification/reliability/blob-read-boundary.test.mjs",
+      "tests/verification/reliability/blob-read-independent.test.mjs",
+      "tests/verification/reliability/record-transition-authority-independent.test.mjs",
+      "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+      "tests/verification/reliability/record-retained-transition.test.mjs"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+    "exitCode": 0,
+    "seconds": 7.902263121097349
+  },
+  {
+    "name": "original-durable-cutover",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+    "exitCode": 0,
+    "seconds": 1.6668223569868132
+  },
+  {
+    "name": "nova-types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/nova/tsconfig.json"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+    "exitCode": 0,
+    "seconds": 4.231338158017024
+  },
+  {
+    "name": "scoped-lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/common/plugins/wait-store/src/adapter.ts",
+      "skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "skills/common/plugin-runtime/sdk/src/index.ts",
+      "skills/nova/core/execution/engine-runtime.ts",
+      "skills/nova/core/execution/adapters.ts",
+      "skills/nova/core/execution/adapter-startup.ts",
+      "scripts/observability-retirement/operator-authority.mjs",
+      "scripts/retire-operator-request.mjs",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+      "skills/common/plugin-runtime/sdk/src/retained-wait.ts",
+      "skills/nova/core/state/wait-projection-reader.ts",
+      "scripts/retire-wait-value.mjs",
+      "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+      "skills/nova/core/state/wait-projection-source.ts",
+      "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+      "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+    "exitCode": 0,
+    "seconds": 6.447491661063395
+  },
+  {
+    "name": "corrected-counterprobes",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-name-pattern=corrected independent:",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-retirement-independent-20260921/continuation/counterprobes.mjs"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+    "exitCode": 1,
+    "seconds": 12.259745792020112
+  }
+]

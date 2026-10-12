@@ -1,0 +1,22 @@
+[
+  {
+    "registration": "kubeclaw.demo-handoff:handoff",
+    "fields": 10,
+    "exactSchemaEquality": true
+  },
+  {
+    "registration": "kubeclaw.lint:executor",
+    "fields": 2,
+    "exactSchemaEquality": true
+  },
+  {
+    "registration": "kubeclaw.pipeline-review:evidence",
+    "fields": 5,
+    "exactSchemaEquality": true
+  },
+  {
+    "registration": "kubeclaw.repository-adapter:repository",
+    "fields": 4,
+    "exactSchemaEquality": true
+  }
+]

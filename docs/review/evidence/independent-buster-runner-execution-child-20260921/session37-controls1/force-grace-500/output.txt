@@ -1,0 +1,41 @@
+✔ required session policy maximumProtocolBytes rejects before package/process access (3.062019ms)
+✔ required session policy terminationGraceMs rejects before package/process access (0.452991ms)
+✔ required session policy terminationTimeoutMs rejects before package/process access (0.580976ms)
+✔ required session policy capabilityDrainTimeoutMs rejects before package/process access (0.3877ms)
+✔ required session policy minimumHeapMiB rejects before package/process access (0.425671ms)
+✔ required session policy heapFraction rejects before package/process access (0.38471ms)
+✔ required session policy maximumPendingCapabilities rejects before package/process access (0.431711ms)
+✔ required session policy minimumOpenFiles rejects before package/process access (0.480592ms)
+✔ required session policy artifactFileDescriptorReserve rejects before package/process access (0.424781ms)
+✔ fractional heap selection and immutable complete runtime snapshot (0.482732ms)
+✔ actual child stdout uses protocol cap 1024 (464.258348ms)
+✔ actual child stdout uses protocol cap 65536 (130.129352ms)
+✔ actual V8 heap consumes selected minimumHeapMiB (236.112688ms)
+✔ actual V8 heap consumes selected heapFraction (247.960284ms)
+✔ actual descriptor exhaustion consumes minimumOpenFiles (243.809487ms)
+✔ actual descriptor exhaustion consumes artifactFileDescriptorReserve (264.094542ms)
+✖ real uncooperative child consumes selected SIGKILL escalation grace (282.664133ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 16
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4341.523371
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-provider-session-policy.test.mjs:88:1
+✖ real uncooperative child consumes selected SIGKILL escalation grace (282.664133ms)
+  AssertionError [ERR_ASSERTION]: 50ms parent escalation must actually signal KILL
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-provider-session-policy.test.mjs:126:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

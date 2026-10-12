@@ -11,6 +11,11 @@ Purpose: define supported Suite 7 fields
 - `hostname` requests one DNS label from the Tailscale operator.
 - `path` sets the Ingress path. The default is `/`.
 - `readinessTimeoutSeconds` sets a limit from 1 to 3600 seconds.
+- `retentionMode` is `release` (default) or `await-readiness`. The latter requests
+  a retained exposure handoff and requires an `awaiting-readiness` phase plus a
+  positive `exposureGeneration` in the capability result. Missing handoff fails
+  the attempt; it is not evidence that the endpoint is already ready. Retention
+  remains bounded by the owning fixture lease and its explicit release path.
 
 The provider requires one `deployment` input with schema
 `kubeclaw.kubernetes-deployment-fixture@1`.

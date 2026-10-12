@@ -1,0 +1,7 @@
+{
+  "command": [
+    "node",
+    "docs/review/evidence/config-buster-admission-20260921/check-preservation.mjs"
+  ],
+  "exitCode": 0
+}

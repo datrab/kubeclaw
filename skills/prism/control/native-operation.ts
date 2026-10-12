@@ -14,7 +14,7 @@ export async function runNativePrismOperation(database: Database, artifacts: Con
   const stored = await artifacts.put(Buffer.from(JSON.stringify(input)));
   const proposed = prismNativeAttempt(operation, { artifactId: stored.artifactId, type: 'prism-engine-input', mediaType: 'application/json',
     contentDigest: stored.digest, sizeBytes: stored.sizeBytes,
-    storageUrl: new URL(`/v1/internal/artifacts/${stored.digest}`, config.controlInternalUrl).toString() }, key);
+    storageUrl: new URL(`/v1/internal/artifacts/${stored.digest}`, config.controlInternalUrl).toString() }, key, config.nativeResourcePolicy);
   const reserved = await reserveNativePrismOperation(database, key, proposed);
   const client = new WorkerArtifactClient(config.controlInternalUrl, config.workerSecret, config.spiffeEnabled);
   if (reserved.result) {

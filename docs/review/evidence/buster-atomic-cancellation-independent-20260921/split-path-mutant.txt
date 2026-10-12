@@ -1,0 +1,44 @@
+{"fixture":"modeled-real-store-transition","jobId":"job:e39e47eebeea35ed8039ca8645d418c06cbc15b9def688117c810db7dce23eff","expected":["accepted","running","cancelling"],"target":"cancelling","error":"BUSTER_COMPACTED_JOB_TERMINAL"}
+✖ completion winning the real writer fence is returned without stale cancellation or abort (830.644707ms)
+✖ cancellation winning the real writer fence prevents a later completion (547.349018ms)
+{"fixture":"modeled-real-store-transition","jobId":"job:cc1524a8d8d9d2a83869930637c660900ca8c74c87f42b77b3338dd02ab598ce","expected":["accepted","running","cancelling"],"target":"cancelling","error":"BUSTER_COMPACTED_JOB_TERMINAL"}
+✔ concurrent queued cancellation converges and repeated terminal cancellation leaves bytes unchanged (780.230124ms)
+✔ parallel active cancellation converges and preserves terminal bytes (600.580475ms)
+✔ invalid persisted status and record shape remain rejected without writes (372.227229ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 3
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5985.645783
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-atomic-cancellation.test.mts:47:1
+✖ completion winning the real writer fence is returned without stale cancellation or abort (830.644707ms)
+  AssertionError [ERR_ASSERTION]: a terminal winner must not cause cancellation to reject
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-atomic-cancellation.test.mts:71:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-atomic-cancellation.test.mts:87:1
+✖ cancellation winning the real writer fence prevents a later completion (547.349018ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /BUSTER_REMOTE_JOB_STATE_CONFLICT:(?:cancelling|cancelled)/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }

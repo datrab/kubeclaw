@@ -1,0 +1,151 @@
+CI2_MUTATION_APPLIED {"mutation":"restore-diagnostic1024","pid":164089,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts","beforeSha256":"de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004","afterSha256":"6cd5e5b429f6a2865141b0c27976d9d33da55db15323b1e4dab615c3f3a0ff5a","replacements":[{"from":".slice(0, policy.diagnosticCodeUnits)","to":".slice(0, 1024)","count":1}]}
+✔ required RuntimeSecurity field allowedNamespacePrefixes before filesystem access (2.837655ms)
+✔ required RuntimeSecurity field maximumExecutionMs before filesystem access (0.515163ms)
+✔ required RuntimeSecurity field maximumOutputBytes before filesystem access (0.3769ms)
+✔ required RuntimeSecurity field pollIntervalMs before filesystem access (0.449032ms)
+✔ required RuntimeSecurity field maximumObservationAgeMs before filesystem access (0.490522ms)
+✔ required RuntimeSecurity field maximumFutureSkewMs before filesystem access (0.660578ms)
+✔ required RuntimeSecurity field diagnosticCodeUnits before filesystem access (0.726119ms)
+✔ required RuntimeSecurity field executableSearchPath before filesystem access (0.535634ms)
+✔ complete bundle requires allowedNamespacePrefixes even with route disabled (15.889366ms)
+✔ complete bundle requires maximumExecutionMs even with route disabled (2.839144ms)
+✔ complete bundle requires maximumOutputBytes even with route disabled (2.236409ms)
+✔ complete bundle requires pollIntervalMs even with route disabled (1.618202ms)
+✔ complete bundle requires maximumObservationAgeMs even with route disabled (1.706284ms)
+✔ complete bundle requires maximumFutureSkewMs even with route disabled (2.047154ms)
+✔ complete bundle requires diagnosticCodeUnits even with route disabled (1.634322ms)
+✔ complete bundle requires executableSearchPath even with route disabled (1.733466ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [] (0.37456ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [""] (0.293338ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [42] (0.274857ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 0 (0.328879ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 2147483648 (0.326349ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 1.5 (0.279548ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 1023 (0.276388ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 9007199254740992 (0.332259ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 9 (0.291858ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 10001 (0.278067ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 999 (0.285097ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 60001 (0.273057ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs -1 (0.276937ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs 2147483648 (0.294028ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 0 (0.289447ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 1.5 (0.279757ms)
+✔ reject invalid RuntimeSecurity executableSearchPath [] (0.306268ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["relative"] (0.322068ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin:/escape"] (0.342409ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin\u0000"] (0.295468ms)
+✔ retired RuntimeSecurity object null (0.298468ms)
+✔ retired RuntimeSecurity object {} (0.060042ms)
+✔ retired RuntimeSecurity object {"allowedNamespacePrefixes":["test"],"maximumExecutionMs":300000,"maximumOutputBytes":16777216,"pollIntervalMs":1000,"maximumObservationAgeMs":10000,"maximumFutureSkewMs":5000,"diagnosticCodeUnits":1024,"executableSearchPath":["/usr/local/bin","/usr/bin","/bin"]} (0.056102ms)
+✔ retired RuntimeSecurity object "invalid" (0.050112ms)
+✔ disabled RuntimeSecurity route has no binding or implicit activation (0.813871ms)
+✔ real execution deadline profile false (284.934016ms)
+✔ real combined output profile false (42.718709ms)
+✔ real observation age profile false (608.587145ms)
+✔ real future skew profile false (616.39502ms)
+✖ real diagnostic code units profile false (51.069748ms)
+✔ real PATH helper profile false (43.471689ms)
+✔ real execution deadline profile true (743.713035ms)
+✔ real combined output profile true (54.775035ms)
+✔ real observation age profile true (38.849048ms)
+✔ real future skew profile true (39.396872ms)
+✖ real diagnostic code units profile true (43.835339ms)
+✔ real PATH helper profile true (86.930058ms)
+▶ real polling profile changes command cadence; selected arrays and scalars captured
+  ✔ poll interval 50 (126.440743ms)
+  ✔ poll interval 1200 (1279.724747ms)
+✔ real polling profile changes command cadence; selected arrays and scalars captured (1406.829138ms)
+✔ real namespace profile false (10.098735ms)
+✔ real namespace profile true (44.902227ms)
+✔ preserve inspected namespace prefix aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (41.581499ms)
+✔ preserve inspected namespace prefix test- (38.91428ms)
+✖ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (116.555524ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 58
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6207.876936
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:196:3
+✖ real diagnostic code units profile false (51.069748ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: 'KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij'
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefg'
+    }
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:199:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij
+        at ChildProcess.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:107:52)
+        at ChildProcess.emit (node:events:526:24)
+        at maybeClose (node:internal/child_process:1141:16)
+        at ChildProcess._handle.onexit (node:internal/child_process:306:5),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefg' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:196:3
+✖ real diagnostic code units profile true (43.835339ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: 'KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij'
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefghijabcdefghijabcdefghijabcdefghij'
+    }
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:199:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij
+        at ChildProcess.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:107:52)
+        at ChildProcess.emit (node:events:526:24)
+        at maybeClose (node:internal/child_process:1141:16)
+        at ChildProcess._handle.onexit (node:internal/child_process:306:5),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefghijabcdefghijabcdefghijabcdefghij' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:249:1
+✖ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (116.555524ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: 'KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij'
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefghijabcdefghijabcdefghijabcdefghij'
+    }
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:254:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij
+        at ChildProcess.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:107:52)
+        at ChildProcess.emit (node:events:526:24)
+        at maybeClose (node:internal/child_process:1141:16)
+        at ChildProcess._handle.onexit (node:internal/child_process:306:5),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefghijabcdefghijabcdefghijabcdefghij' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

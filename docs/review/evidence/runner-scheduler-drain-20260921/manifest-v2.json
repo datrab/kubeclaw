@@ -1,0 +1,29 @@
+{
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "beforeSha256": "aa8c4a9e4b7adccfce6d4ee78d6b8e67d86171bb8651e3c90fb14b3d948e7521",
+      "afterSha256": "40cd4f0fc7a84079efe2a3fe026c214ef34cd48f278db5cbac45e250e6afc9b7",
+      "after": "docs/review/evidence/runner-scheduler-drain-20260921/files-v2/skills/buster/engine/test-gates/runner-scheduler.ts"
+    },
+    {
+      "path": "tests/fixtures/test-gate/scheduler-drain.mjs",
+      "beforeSha256": null,
+      "afterSha256": "98f591efdf707cc712b363de7b0d7687f455ea3b83eca756afe4abd519e598fd",
+      "after": "docs/review/evidence/runner-scheduler-drain-20260921/files-v2/tests/fixtures/test-gate/scheduler-drain.mjs"
+    },
+    {
+      "path": "tests/verification/contracts/runner-scheduler-drain.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "0164ff0f62d7dc00636a165b54ad812bdcd979c799700de75844d8232052d18e",
+      "after": "docs/review/evidence/runner-scheduler-drain-20260921/files-v2/tests/verification/contracts/runner-scheduler-drain.test.mjs"
+    },
+    {
+      "path": "tests/verification/contracts/runner-scheduler-provider-drain.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "7444c42a5d638da8e2ec745e64630633659f1b2193f059c8d29c10311194e1ae",
+      "after": "docs/review/evidence/runner-scheduler-drain-20260921/files-v2/tests/verification/contracts/runner-scheduler-provider-drain.test.mjs"
+    }
+  ],
+  "scope": "SD private V2; both test barriers released on every guarded exit; no runtime"
+}

@@ -209,6 +209,7 @@ const oldDocFiles = walk(path.join(root, 'docs'))
 
 function migration(filePath) {
   const name = path.basename(filePath);
+  if (filePath.startsWith('docs/review/')) return ['internal-only', 'engineering review and verification evidence', 'Preserve dated findings, decisions, raw evidence, and immutable source snapshots; publish current operator guidance separately, without treating historical verification as a current guarantee.'];
   if (filePath.startsWith('docs/diagrams/') && filePath.endsWith('.svg')) return ['replace-then-delete', '/architecture/interactive', 'Extract topology, labels, flows, and accessibility text; implement as responsive HTML.'];
   if (filePath.startsWith('docs/generated/inventory/')) return ['regenerate-internal', '/reference/generated', 'Keep source data in build output; publish rendered reference pages, not raw internal inventory navigation.'];
   if (filePath.startsWith('docs/generated/reference/')) return ['internal-only', 'documentation build pipeline', 'Retain generator documentation outside the published site.'];

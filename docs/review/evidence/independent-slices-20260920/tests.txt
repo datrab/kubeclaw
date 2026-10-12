@@ -1,0 +1,36 @@
+✔ all historical and integration identities and real evidence resolve; actual generated files match (103.884325ms)
+✔ missing historical ID (2.411051ms)
+✔ substituted historical ID with unchanged total (1.95167ms)
+✔ duplicate ID (2.143035ms)
+✔ missing integration ID (1.904988ms)
+✔ wrong status sum (1.950309ms)
+✔ wrong family sum (1.903269ms)
+✔ unknown status (2.275078ms)
+✔ missing original evidence (1.993471ms)
+✔ missing implementation evidence (2.236267ms)
+✔ missing evidence file (2.157345ms)
+✔ missing evidence object report (2.329289ms)
+✔ unresolvable commit evidence (38.416998ms)
+✔ missing integration evidence (32.841126ms)
+✔ status drift (84.150813ms)
+✔ missing Markdown ID (38.47278ms)
+✔ missing Markdown evidence (64.451571ms)
+✔ wrong register sum (41.764854ms)
+✔ wrong progress sum (41.853826ms)
+✔ wrong handoff sum (40.953103ms)
+✔ generation repairs only counters/views, preserves every finding and historical checkpoint, and is idempotent (298.147302ms)
+✔ malformed source prevents generation without touching generated files (11.38281ms)
+✔ all individual source statuses are rendered, not inferred from available evidence (46.37248ms)
+✔ terminal cleanup refuses linked parent directories and preserves another job source (10.855826ms)
+✔ terminal cleanup unlinks a leaf symlink without deleting its target and remains idempotent (37.673929ms)
+✔ terminal cleanup rejects symlinks in ancestors of the job root (1.648042ms)
+✔ terminal cleanup stays on original directory after job is replaced during deletion (5.366887ms)
+✔ terminal cleanup stays on original directory after workspace is replaced during deletion (3.721215ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1278.01476

@@ -1,0 +1,120 @@
+{
+  "scope": "Read-only mapping; terminalRecordKey literal has no honest operator-source mapping. No original assertion changed.",
+  "plugins": [
+    {
+      "plugin": "operator-messaging",
+      "files": [
+        {
+          "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+          "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785"
+        },
+        {
+          "path": "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+          "sha256": "25ce708f55dfd154d04f044edfac8f232989b2fbd59a7b644bb41aa65dfcbddc"
+        },
+        {
+          "path": "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+          "sha256": "db6ef5e755808975ba934fa20276b6ac04e40161c3b81607b2c254bb07e36541"
+        }
+      ],
+      "assertions": [
+        {
+          "pattern": "notification-delivery-request|transport-publication-request",
+          "matchingFiles": [
+            "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+            "skills/common/plugins/operator-messaging/src/delivery-projection.ts"
+          ]
+        },
+        {
+          "pattern": "terminalRecordKey",
+          "matchingFiles": []
+        },
+        {
+          "pattern": "records\\.transition",
+          "matchingFiles": [
+            "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+            "skills/common/plugins/operator-messaging/src/delivery-projection.ts"
+          ]
+        },
+        {
+          "pattern": "delivery-reservation|publication-reservation",
+          "matchingFiles": [
+            "skills/common/plugins/operator-messaging/src/delivery-records.ts"
+          ]
+        },
+        {
+          "pattern": "delivery-receipt|publication-receipt",
+          "matchingFiles": [
+            "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+            "skills/common/plugins/operator-messaging/src/delivery-projection.ts"
+          ]
+        },
+        {
+          "pattern": "delivery-failure|publication-failure",
+          "matchingFiles": [
+            "skills/common/plugins/operator-messaging/src/delivery-records.ts"
+          ]
+        },
+        {
+          "pattern": "idempotencyKey: request\\.idempotencyKey",
+          "matchingFiles": [
+            "skills/common/plugins/operator-messaging/src/delivery-projection.ts"
+          ]
+        }
+      ]
+    },
+    {
+      "plugin": "transport-publisher",
+      "files": [
+        {
+          "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+          "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31"
+        }
+      ],
+      "assertions": [
+        {
+          "pattern": "notification-delivery-request|transport-publication-request",
+          "matchingFiles": [
+            "skills/common/plugins/transport-publisher/src/adapter.ts"
+          ]
+        },
+        {
+          "pattern": "terminalRecordKey",
+          "matchingFiles": [
+            "skills/common/plugins/transport-publisher/src/adapter.ts"
+          ]
+        },
+        {
+          "pattern": "records\\.transition",
+          "matchingFiles": [
+            "skills/common/plugins/transport-publisher/src/adapter.ts"
+          ]
+        },
+        {
+          "pattern": "delivery-reservation|publication-reservation",
+          "matchingFiles": [
+            "skills/common/plugins/transport-publisher/src/adapter.ts"
+          ]
+        },
+        {
+          "pattern": "delivery-receipt|publication-receipt",
+          "matchingFiles": [
+            "skills/common/plugins/transport-publisher/src/adapter.ts"
+          ]
+        },
+        {
+          "pattern": "delivery-failure|publication-failure",
+          "matchingFiles": [
+            "skills/common/plugins/transport-publisher/src/adapter.ts"
+          ]
+        },
+        {
+          "pattern": "idempotencyKey: request\\.idempotencyKey",
+          "matchingFiles": [
+            "skills/common/plugins/transport-publisher/src/adapter.ts"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "source": "docker/Dockerfile.prism-control",
+    "snapshot": "Dockerfile.prism-control.snapshot",
+    "sha256": "e1f4e47108b12c7c4a67881f70a96a55a84ac68498d1de495fad372aaa31eb36"
+  },
+  {
+    "source": "tests/verification/deployment/prism-swarm-image.mjs",
+    "snapshot": "prism-swarm-image.mjs.snapshot",
+    "sha256": "6c59f288935c9a1487d643c84758c8eb042e213a09cb8d6d16a3ad55348f79b8"
+  },
+  {
+    "source": "skills/prism/tests/control-image-environment.test.mts",
+    "snapshot": "control-image-environment.test.mts.snapshot",
+    "sha256": "39c12c7ed9ec454a65ee20006d79f4d3ca8c35bb5acd5390b3775f959f622b11"
+  },
+  {
+    "source": "skills/prism/tests/fixtures/image-source-loader.mjs",
+    "snapshot": "image-source-loader.mjs.snapshot",
+    "sha256": "7c132d2e25dbd2e2ad64934f65ef49752812e8c7947d361d1bf7a237935c873a"
+  }
+]

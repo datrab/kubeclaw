@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["summary", "artifactId", "namespace"],
+  "properties": {
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])[\\s\\S]*\\S[\\s\\S]*$"
+    },
+    "artifactId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])[\\s\\S]*\\S[\\s\\S]*$"
+    },
+    "namespace": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "pattern": "^(?![\\s\\S]*[\\r\\n\\u0000])[\\s\\S]*\\S[\\s\\S]*$"
+    }
+  }
+}

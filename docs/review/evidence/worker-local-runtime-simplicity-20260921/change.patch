@@ -1,0 +1,26 @@
+--- a/skills/worker/core/worker/local-runtime.ts
++++ b/skills/worker/core/worker/local-runtime.ts
+@@ -172,9 +172,7 @@
+     if (now >= Date.parse(envelope.claim.expiresAt)) throw new Error('WORKER_LOCAL_CLAIM_EXPIRED');
+     if (!this.#protocolVersions.includes(envelope.protocolVersion)) throw new Error('WORKER_LOCAL_PROTOCOL_UNSUPPORTED');
+     if (!this.#profileDigests.has(envelope.profile.profileDigest)) throw new Error('WORKER_LOCAL_PROFILE_UNSUPPORTED');
+-    for (const [attemptId, expiresAt] of this.#acceptedAttemptIds) {
+-      if (expiresAt <= now && !this.#active.has(attemptId)) this.#acceptedAttemptIds.delete(attemptId);
+-    }
++    this.#reclaimExpiredAttempts(now);
+     if (this.#acceptedAttemptIds.has(envelope.attemptId)) throw new Error('WORKER_LOCAL_ATTEMPT_DUPLICATE');
+     if (this.#acceptedAttemptIds.size >= this.#options.replayLimit) {
+       throw new Error('WORKER_LOCAL_REPLAY_CAPACITY_EXHAUSTED');
+@@ -224,6 +222,12 @@
+     return this.health();
+   }
+ 
++  #reclaimExpiredAttempts(now: number): void {
++    for (const [attemptId, expiresAt] of this.#acceptedAttemptIds) {
++      if (expiresAt <= now && !this.#active.has(attemptId)) this.#acceptedAttemptIds.delete(attemptId);
++    }
++  }
++
+   #capacity() {
+     return { total: this.#options.capacity, available: this.#options.capacity - this.#active.size,
+       active: this.#active.size };

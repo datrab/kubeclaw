@@ -1,0 +1,42 @@
+✖ TD04: changed vulnerability manifest is rejected without publishing either database (205.249589ms)
+✖ TD04: changed java manifest is rejected without publishing either database (282.18495ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 809.553696
+
+✖ failing tests:
+
+test at ../../../../../tmp/trivy-verification-mutants-ui3epctl/scripts/tests/trivy-database-lock.test.mjs:71:3
+✖ TD04: changed vulnerability manifest is rejected without publishing either database (205.249589ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///tmp/trivy-verification-mutants-ui3epctl/scripts/tests/trivy-database-lock.test.mjs:73:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /MANIFEST_DIGEST_MISMATCH/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/trivy-verification-mutants-ui3epctl/scripts/tests/trivy-database-lock.test.mjs:71:3
+✖ TD04: changed java manifest is rejected without publishing either database (282.18495ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///tmp/trivy-verification-mutants-ui3epctl/scripts/tests/trivy-database-lock.test.mjs:73:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /MANIFEST_DIGEST_MISMATCH/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }

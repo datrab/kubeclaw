@@ -1,0 +1,11 @@
+PASS secret empty 0 absent
+PASS secret valid 0 deployed
+PASS secret pending 0 pending-upgrade
+PASS secret denied 1 
+PASS secret corrupt-only 1 
+PASS secret corrupt-latest 1 
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/deploy-api-errors-independent-20260921/storage-client-probe.py", line 55, in <module>
+    assert (result.returncode==0)==good,record
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'backend': 'secret', 'mode': 'corrupt-old', 'status': 0, 'stdout': 'deployed', 'stderr': '', 'calls': ['/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500', '/version', '/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v2']}

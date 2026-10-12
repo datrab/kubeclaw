@@ -1,0 +1,45 @@
+✔ actual Control image declarations and exact image proof accept authored profile one (428.304809ms)
+✔ actual Control image declarations and exact image proof accept authored profile two (425.459817ms)
+✔ CC1 Control pipelinePreferenceSubject rejects undefined (4.956417ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "" (0.681107ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "operator:test" (0.618466ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "user-abc" (0.689308ms)
+✔ CC1 Control pipelinePreferenceSubject rejects 1 (0.872033ms)
+✔ CC1 Control pipelinePreferenceSubject rejects false (0.731119ms)
+✔ CC1 Control artifactRoot rejects undefined (0.666657ms)
+✔ CC1 Control artifactRoot rejects null (0.657177ms)
+✔ CC1 Control artifactRoot rejects "" (0.656177ms)
+✔ CC1 Control artifactRoot rejects "/" (0.630566ms)
+✔ CC1 Control artifactRoot rejects "relative" (0.449151ms)
+✔ CC1 Control artifactRoot rejects "/tmp/../artifacts" (0.459652ms)
+✔ CC1 Control artifactRoot rejects "/tmp/artifacts/" (0.448681ms)
+✔ CC1 Control artifactRoot rejects "/tmp//artifacts" (0.487233ms)
+✔ CC1 Control artifactRoot rejects "/tmp/\u0000artifacts" (0.466742ms)
+✔ CC1 Control artifactRoot rejects 1 (0.512853ms)
+✔ CC1 Control studioPublicUrl rejects undefined (0.521783ms)
+✔ CC1 Control studioPublicUrl rejects null (0.464012ms)
+✔ CC1 Control studioPublicUrl rejects "" (0.531293ms)
+✔ CC1 Control studioPublicUrl rejects "relative" (0.485872ms)
+✔ CC1 Control studioPublicUrl rejects "file:///tmp" (0.438541ms)
+✔ CC1 Control studioPublicUrl rejects "https://" (0.453122ms)
+✔ CC1 Control studioPublicUrl rejects "https://user:pass@studio" (0.448081ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio?query=1" (0.498743ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio#fragment" (0.645797ms)
+✔ CC1 Control studioPublicUrl rejects "https://bad host" (0.464412ms)
+✔ CC1 Control studioPublicUrl rejects 1 (0.431381ms)
+✔ CC1 strict Control object (0.741419ms)
+✔ CC1 strict Control object (0.536794ms)
+✔ CC1 strict Control object (0.563975ms)
+✔ CC1 strict Control object (0.546474ms)
+✔ CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty (0.626336ms)
+✔ CC2 retired ARTIFACT_ROOT rejects even empty (0.554415ms)
+✔ CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty (0.418971ms)
+✔ CC2 authored Control snapshot survives file mutation (1.366925ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1380.394771

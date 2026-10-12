@@ -1,0 +1,36 @@
+✔ deploy bundle fields decode folded URLs and preserve overlay credential selection (682.999018ms)
+✔ agent changes and manifest changes do not rebuild tools; embedded service code does (1.447847ms)
+✔ code selection reuses images only across unchanged image inputs, including deleted inputs (320.614982ms)
+✔ bundle selection rejects missing hashes, mutable URLs and wrong role archives (3.838098ms)
+✔ push detector rebuilds an environment changed by an earlier unselected build (798.322262ms)
+✔ actual bootstrap checksum command rejects modified downloads before extraction (77.348238ms)
+✔ rendered code updates retain image digests and require selected URL, role, hash and revision (14.411861ms)
+✔ real materialization and Helm render enable pinned bundles for all three agents on retained images (6286.515068ms)
+✔ original deployment render entrypoints bind all roles, sidecars and bundles to the selected source (19004.741921ms)
+✔ deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access (6225.464858ms)
+✔ private operational overlays survive while replaced or removed runtime slots fail (5701.473946ms)
+✔ Prism and Ops reject image overrides even when another value could conceal them (8785.412963ms)
+✔ source configuration and materialized values are rechecked by actual deployment entrypoints (2262.830424ms)
+✔ private bundle URL and authentication survive while the selected revision stays fixed (5328.725598ms)
+✔ private extraEnv cannot shadow reserved runtime bundle controls (11721.413658ms)
+✔ noncanonical alias and indirect controls cannot stand in for bundle consumers (4584.154533ms)
+fatal: not a tree object
+✔ unchanged release configuration survives unrelated later commits, but new chart or values cannot qualify old images (182.736027ms)
+✔ deleted, added, symlinked, and unavailable source configurations fail explicitly (42.363479ms)
+✔ ops chart has its own source binding, independent of runtime-only changes (76.163498ms)
+✔ canonical aliases bind both target bytes to the image source commit, including schema outside charts (305.085822ms)
+✔ canonical alias cannot be retargeted or replaced with an identical regular copy (221.716739ms)
+✔ source commit cannot introduce arbitrary or retargeted aliases (141.839575ms)
+✔ canonical schema cannot escape through a directory symlink or leaf symlink (127.312222ms)
+walk.go:75: found symbolic link in path: /tmp/release-helm-iCmaJm/charts/prism/files/config/swarm.config.json resolves to /tmp/release-helm-iCmaJm/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/release-helm-iCmaJm/charts/prism/files/config/swarm.schema.json resolves to /tmp/release-helm-iCmaJm/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+✔ release selection rejects missing, duplicate and cross-commit build receipts (9.190286ms)
+✔ generated release values render actual Helm charts with immutable role and sidecar references (1880.621486ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 75481.326725

@@ -1,0 +1,30 @@
+[
+  {
+    "path": "skills/prism/tests/control.test.mts",
+    "sha256": "dc17224824de6e78e261f7fad905b5258bef457404dce377d1ccf3d0bcd89f52"
+  },
+  {
+    "path": "skills/prism/tests/control-generation-http.test.mts",
+    "sha256": "ba17d64ab0e08931963b7dbc5f68ba7d6a2d29ea5142cf2fadc7749d2b9d7f32"
+  },
+  {
+    "path": "skills/prism/tests/control-product-composition.test.mts",
+    "sha256": "01a1802ee788f4c79d2ac465cc0abb91f7bccc6703cf9b848694a19cd23b74c6"
+  },
+  {
+    "path": "skills/prism/tests/control-product-independent.test.mts",
+    "sha256": "8a6a4ede50868c639fc58505d55bd7c7b81a125a9cdda9b3507b5bc92e4e0392"
+  },
+  {
+    "path": "skills/prism/tests/control-decisions.test.mts",
+    "sha256": "3aa590b6779ea4755468de006c7762576073b8dbb692dfbf0e523a05ad54eae5"
+  },
+  {
+    "path": "skills/prism/tests/agent-job-http.test.mts",
+    "sha256": "293dd48bee6175d1eb467694e0a473ab3e86fe09a08ca9862cb5e8cc8e6c26fd"
+  },
+  {
+    "path": "skills/prism/tests/corpus.test.mts",
+    "sha256": "4eb46c91c2ada8e2ff3f9255017820bba55adc8ab5cfebb34bdd0a80a92f9639"
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "path": "docs/review/remediation/acceptance-20260920.md",
+    "sha256": "90e0fade7d2b26102f817900f800789a8efd25897f36b4f26c9338e7b1a343f2"
+  },
+  {
+    "path": "docs/review/infrastructure/tailscale.md",
+    "sha256": "06d6fa287e46886bbc235ba3d175744eee5701c983fddf2a8335fda61d1d3a63"
+  },
+  {
+    "path": "docs/deployment/tailscale-operator.md",
+    "sha256": "98a51508b6d769041318bd220b09782989102e8977bf00388ab9e31930f0d035"
+  },
+  {
+    "path": "docs/operators/final-preview-tailscale.md",
+    "sha256": "39f5ef221db3162dabf4f72a4df08ca9459b04df64ac23c96f1ec914c4832618"
+  },
+  {
+    "path": "docs/ops/ops-pod.md",
+    "sha256": "ea0c24c9f60f2b636dac3f4164dc32152082e84c0a9b78f2fd9d0db7a011eb50"
+  },
+  {
+    "path": "my-values/infra/tailscale-operator-values.yaml",
+    "sha256": "8c8f44a3f243b519973ea250d283da3c6a08b31a9224ee3b34012b4e28f36110"
+  },
+  {
+    "path": "gitops/platform/values/tailscale-operator.yaml",
+    "sha256": "6cc7ea4c8f9b0c29eb35d040dad23e9ecd4ac324bf8993e9bd43b2f8be5a160b"
+  },
+  {
+    "path": "gitops/platform/bootstrap/tailscale-operator.yaml",
+    "sha256": "9e3ffe47b3650d62633debc56b5dcf71b2f4d123b1e4c733e51ee3d7333dfb11"
+  },
+  {
+    "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+    "sha256": "eb86daeca77a9329d80d0f0f96b0b9a46ee5807a7b9bd9187cb6ebb2d1ece58e"
+  },
+  {
+    "path": "my-values/infra/argocd-values.yaml",
+    "sha256": "eb0a7cdadf4bab951724dafa6ec48f5d4e07152cb3d41929c59d3c2899247dac"
+  },
+  {
+    "path": "charts/prism/templates/services.yaml",
+    "sha256": "feea08cb2eaf89d5fb520c321a275a8550add0ca46337f4614d7384a7c1701df"
+  },
+  {
+    "path": "charts/prism/templates/networkpolicy.yaml",
+    "sha256": "5e4e412c6dc3a6043620fcfa533b5881c9e9533b39632cdcca870c13d9cae838"
+  },
+  {
+    "path": "my-values/prism-values.yaml",
+    "sha256": "9462337fa87add8927e3e4eb9888fa197a25dea40c1598fa5017b7e5d26b11d2"
+  },
+  {
+    "path": "charts/kubeclaw/templates/archviewer.yaml",
+    "sha256": "5a89affd7b25f63ff38a0de9bec61388927e06b5d20a7075f6af0a92d4c7cb2a"
+  },
+  {
+    "path": "my-values/nova-values.yaml",
+    "sha256": "0fcc239368db8830868f38d7be350580575e8c241bd6435f79c9f9b931ff6140"
+  },
+  {
+    "path": "docker/archviewer.nginx.conf",
+    "sha256": "4af2c8146b2c62534c271701986ca3eb531a605294886fafcc0f4c3cd09462c4"
+  },
+  {
+    "path": "charts/ops-pod/values.yaml",
+    "sha256": "9f1d58dfe213f13169fdd9f983878b688d5f42fcf9f5283e31eed329e82b8c79"
+  },
+  {
+    "path": "charts/ops-pod/templates/workload.yaml",
+    "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+  },
+  {
+    "path": "scripts/deploy-ops-pod.sh",
+    "sha256": "b7b114e886142185732eb285a59f5b2f8a5b509ffedfd23de2d1fbf67ea3e73e"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/main.go",
+    "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+  },
+  {
+    "path": "skills/prism/server/studio-request.ts",
+    "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+    "sha256": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d"
+  },
+  {
+    "path": "docs/architecture/pipeline-test-gate-tailscale-exposure-security-model.md",
+    "sha256": "777b9f41913b110b75d1afa08f56f5ad170a3f8db4c429343178f804761b4e5b"
+  },
+  {
+    "path": "docs/architecture/pipeline-test-gate-tailscale-exposure-operator-guide.md",
+    "sha256": "4e40a157bd29d90edff8167b2fe9f24e532c1ca2fd2a4504da575936ea4ba4dd"
+  },
+  {
+    "path": "tests/verification/contracts/infra-private-access.test.mjs",
+    "sha256": "5094a211eaf9624fee2ecf1bd1cfa2edd5d656397492c9364cde486365bd83ac"
+  }
+]

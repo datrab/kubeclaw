@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-name-pattern=actual Control image declarations",
+    "/tmp/control-image-mutant-208oc2yp/skills/prism/tests/control-image-environment.test.mts"
+  ],
+  "exitCode": 1,
+  "detected": true,
+  "scope": "private old Dockerfile ENV parsed by unchanged original image-boundary test; no Docker execution"
+}

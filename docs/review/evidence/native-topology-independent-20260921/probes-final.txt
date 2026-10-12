@@ -1,0 +1,17 @@
+✔ two genuinely concurrent same-revision child reservations produce exactly one durable winner (88.992036ms)
+✔ finish during durable host reservation prevents creation and launch, retaining reserved child (86.46387ms)
+✔ finish during helper binding waits for CAS and refuses that helper plus queued helper (129.043634ms)
+✔ concurrent lease helpers serialize durable reservations without lost children (251.874389ms)
+✔ historical lease launch refuses before touching any scope method (23.959365ms)
+✔ fixed full child metadata store drains but retains ownership and failure without disposal (98.381867ms)
+✔ quiescing I/O failure drains without a receipt; recovery completes only after persistence is restored (101.695431ms)
+✔ a launcher drain failure still attempts the known subtree and retains failed ownership (114.301185ms)
+✔ unknown child identity still forbids subtree drain and deletion in the failure path (73.872267ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1473.173514

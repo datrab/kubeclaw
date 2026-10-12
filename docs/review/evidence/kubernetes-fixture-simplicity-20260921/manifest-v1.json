@@ -1,0 +1,77 @@
+{
+  "schema": "private-source-draft.v1",
+  "capturedAt": "2026-09-21T20:37:47.703336+00:00",
+  "scope": "Private source only, no runtime/type/lint verification",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "beforeSha256": null,
+      "afterSha256": "2709b1a75b62d219b1c3771ee5698134e690343cb1d9df8063b3eaeea8881aec",
+      "liveSha256": null,
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "beforeSha256": null,
+      "afterSha256": "ea8247a2d440f65726372a71dcdc629be9dbcdf682a4b874c0d6288329cbc18e",
+      "liveSha256": null,
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-pods.ts",
+      "beforeSha256": null,
+      "afterSha256": "ac2baeb7fa0192730efe2f0a76edec948778806345d0d66b32fa1db97ca7b6f5",
+      "liveSha256": null,
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "beforeSha256": null,
+      "afterSha256": "b2a8cb4442d3243dec435a480f04506ab7e79438150169efb85d9ea01c3095ee",
+      "liveSha256": null,
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "beforeSha256": null,
+      "afterSha256": "5881e8bc25800a80f18a3377fc3fe66b11853a6e5aea51630dbd86e44c19d439",
+      "liveSha256": null,
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "beforeSha256": "3548e91e7383579fffd16f1c89e3eca83c0599be04c1c4f728d07fa9b8d41b53",
+      "afterSha256": "1572e13ce4ce41070867e8e0ff64a8b28772623fd1f693d2e25d0a43dede4288",
+      "liveSha256": "3548e91e7383579fffd16f1c89e3eca83c0599be04c1c4f728d07fa9b8d41b53",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "beforeSha256": null,
+      "afterSha256": "f1ce10ddd4574b8e735dd89e34b16dbb7401283e7f158cc24ffabf1af3ea4616",
+      "liveSha256": null,
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-storage.ts",
+      "beforeSha256": null,
+      "afterSha256": "da2858e192df14fc5d457ebd1f3414696c5a3be116f611216c214c0b6b194f1f",
+      "liveSha256": null,
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+      "beforeSha256": null,
+      "afterSha256": "b0fc410563b99da53603cca363dee4e8dd3552893ff13e96317ecdb4ee8570bf",
+      "liveSha256": null,
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "beforeSha256": "e8eccd63a75fd395f880eb6800a2e2205a6ef5aa098d2654f62b1f59c1559895",
+      "afterSha256": "0d6f36c0556fcf1231a984c10ee5dda14e728d1d2d3d70cc3bb49f182d104808",
+      "liveSha256": "e8eccd63a75fd395f880eb6800a2e2205a6ef5aa098d2654f62b1f59c1559895",
+      "baselineMatchesLive": true
+    }
+  ]
+}

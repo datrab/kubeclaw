@@ -1,0 +1,7 @@
+{
+  "generation": "Python uuid.uuid4 for fresh disposable run3 guest",
+  "uuid": "82eeb6fd-92d2-4a75-af2e-b1da9499ddd8",
+  "path": "/etc/machine-id",
+  "preparedMode": "0444",
+  "ownership": "guest initialization chowns only guest /etc before unchanged production-reader preflight"
+}

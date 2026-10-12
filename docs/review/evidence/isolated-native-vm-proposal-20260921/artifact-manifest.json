@@ -1,0 +1,214 @@
+{
+  "status": "prepared-not-booted",
+  "packageHashes": "package-hashes.json",
+  "files": [
+    {
+      "path": "node_modules/.cache/native-test-vm-20260921/root/usr/bin/qemu-system-x86_64",
+      "bytes": 27791496,
+      "allocatedBytes": 27795456,
+      "sha256": "d0c183817a3044bc38e104f88ef56ee235c5d91a9413cba7255c1c1751c31fc1"
+    },
+    {
+      "path": "node_modules/.cache/native-test-vm-20260921/root/boot/vmlinuz-virt",
+      "bytes": 12608512,
+      "allocatedBytes": 12611584,
+      "sha256": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c"
+    },
+    {
+      "path": "node_modules/.cache/native-test-vm-20260921/initrd.cpio.gz",
+      "bytes": 1899633,
+      "sha256": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2"
+    },
+    {
+      "path": "node_modules/.cache/native-test-vm-20260921/guest-root.ext4",
+      "bytes": 8589934592,
+      "sha256": "6bac358fd6d0c496219d99b6a88ecedfb5e53abefa0e221189ce379f725a2cc0"
+    },
+    {
+      "path": "node_modules/.cache/native-test-vm-20260921/guest-root/usr/local/bin/node",
+      "bytes": 131391152,
+      "allocatedBytes": 131395584,
+      "sha256": "78465b20b5455f64d2dbbd9e8b38470cfc23ad3abe4cdc9a00dc5e050eee70fb"
+    },
+    {
+      "path": "node_modules/.cache/native-test-vm-20260921/repo-snapshot-manifest.json",
+      "bytes": 6537098,
+      "sha256": "38f9e278cc33b49dcc0668d43c5019be36601879df07e81ad44b0b7039c11d67"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/extract-guest.txt",
+      "bytes": 8404,
+      "sha256": "ee484a3a42d6a01148c239c3d82b4ef5f4a0c86a3c12f42dda242fd16e4f1230"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/extract.txt",
+      "bytes": 8104,
+      "sha256": "2cf58eeff6498ab9272a475b7374d5409699a15c1c727c1a9b88de0e1a72f83f"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/fetch-command.json",
+      "bytes": 333,
+      "sha256": "f77fb962e1263ce2fc0091333c21a5694808ac41515ec2aacf4d8cd7e374e51d"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/fetch.txt",
+      "bytes": 2794,
+      "sha256": "cac3de671a04d636c9362ab6616f583dc4dbdabfcc0a0a5d9162be8a723f0f96"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/guest-init.sh",
+      "bytes": 3500,
+      "sha256": "2f0b614dabae9ac7fb25d56e8dff68cc047a245f03c5530fd05344fcd47425a0"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/guest-packages.json",
+      "bytes": 1358,
+      "sha256": "00b03d491953ff1877f3f72b285851d147a2fcc6128fefc3c6580668862a8ccf"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/image-build.json",
+      "bytes": 1207,
+      "sha256": "790e1462fc3d0ad4c10a84c89fd0f47c08d21a7002297e1ce3d1c9b41674b6b0"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/kernel-config.snapshot",
+      "bytes": 151985,
+      "sha256": "9220365aace72c511a2f7ec57d52dc2a40988486fd9d0e7b728a39f4fbd177d2"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/launch-approved.py",
+      "bytes": 9648,
+      "sha256": "e4d6380e382d8c90510b1e27af36919cd77716d86d8c5c642ec31a89d9ab98b7"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/launch-command.json",
+      "bytes": 1757,
+      "sha256": "1830298933a0794a50fab0ca581204e97d71ebd04e10e39d12a22da75c57d03f"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/mke2fs.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/package-hashes.json",
+      "bytes": 14809,
+      "sha256": "c0f79e74344ab74c0d604b4cc73688ccfb4f3d137eaed121befaa21b138883c9"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/package-urls.txt",
+      "bytes": 7460,
+      "sha256": "ec68738a91a6ef9653a0430c1a7457cc314d368f979ef23d6cd21701b7888c71"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/preparation-checks.json",
+      "bytes": 16107,
+      "sha256": "b48fbba929f071706c8314462eb1ca0fa4e60608e4b5466ace5a543dfcadf291"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/prepare-images.py",
+      "bytes": 5159,
+      "sha256": "4c23017d3c44b4d3df7799b84473d62efceaeb22ba1a8504f9805b7d599be573"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/prepare-source.py",
+      "bytes": 2600,
+      "sha256": "d79d260e29e7cf7969b019fbee1a275365adce289ef039342ac6c6bf7b72319c"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/qemu-version.txt",
+      "bytes": 101,
+      "sha256": "003eca241534a172accaeb53c7b8951f20d630db16139ac982b0687963016206"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/source-snapshot.txt",
+      "bytes": 133,
+      "sha256": "76fcb11efe9470cc33ee73910bb64469c279a23684373a10d9a436541931f5c4"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/trusted-apk-keys.json",
+      "bytes": 516,
+      "sha256": "c96f623babe722c1dc95d96dd0cd5600747a478bacec3a18962c0878bcf5cc5b"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/verify.txt",
+      "bytes": 7519,
+      "sha256": "b7bece3db951f856fb548709c379e8b7acea4d5d0cd35c225b80aafa847a5a92"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/guest-node-version.txt",
+      "bytes": 9,
+      "sha256": "f2ec568164f99546161909b0189b57bb5be3e80f8e2ccd8a51a4aed8c4055a04"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/qemu-cached-loader-version.txt",
+      "bytes": 101,
+      "sha256": "003eca241534a172accaeb53c7b8951f20d630db16139ac982b0687963016206"
+    },
+    {
+      "path": "docs/review/remediation/implementation/isolated-native-vm-proposal-20260921.md",
+      "bytes": 9396,
+      "sha256": "ff3d1f6f7aa4294460dd9687cbf38bdc037e15d76771ae7eaa9bc1d7f6eb85b6"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/initrd-entries.json",
+      "bytes": 2550,
+      "sha256": "523196fc93189c90d9afd7e55364b2e1fdac078cd0378375d708dfaabe401f46"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/initrd-init.sh",
+      "bytes": 842,
+      "sha256": "3c4544ab612cbdaafb77949c23e6bec5eede4ba34c37dd3d5b5cde088c7b8769"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/native-snapshot-current.json",
+      "bytes": 39488,
+      "sha256": "f7a93f4be22ca05966609708e6005272e0e6fd3ef7aa4fb82957fe2d3208e843"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/guest-flock-version.txt",
+      "bytes": 29,
+      "sha256": "dcbf5238a2618248e677c86209c8a1254a9b735861f758a84b7ea443d7dffb0f"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/launcher-compile-missing-headers.txt",
+      "bytes": 275,
+      "sha256": "aab70087bab2992c1acabacfcfe14ff8fe96abcf2d7112cb6a2600e048425efe"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/launcher-compile.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/extract-bash-headers-root.txt",
+      "bytes": 271,
+      "sha256": "7e3a4e6d45485ae40ae057eb5f92002d620046aad648356c50e19db0f480e9ae"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/extract-bash-headers-root-corrected.txt",
+      "bytes": 183,
+      "sha256": "62d0331aa8cd74a009f2a38b28eb2e54a3f73d71cefd77f13f79b26b8d1a56fe"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/extract-bash-headers-guest-root-corrected.txt",
+      "bytes": 268,
+      "sha256": "2c9f7d5a772e9077d511a2d0e4499964516dc831b105b2f8b2249307758a96aa"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/fetch-flock.txt",
+      "bytes": 28,
+      "sha256": "f25509407952d6d9931c7b17a41d6e137b4ba30d20615c8138ed88618dcc64e9"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/fetch-bash-headers.txt",
+      "bytes": 91,
+      "sha256": "8b083d3f9052aa8001347c63b16de532132a1742c4caeb69ecc7811a8bd82e66"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-proposal-20260921/launcher-compile-command.json",
+      "bytes": 835,
+      "sha256": "828ce10a125b2d583c7042900e0bf1b7bca3c725f47cf13707841c7101f6589c"
+    }
+  ]
+}

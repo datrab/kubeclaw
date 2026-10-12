@@ -1,0 +1,14 @@
+✔ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (5689.540213ms)
+✔ imperative ownership guard fails closed and permits only other namespaces (0.493583ms)
+✔ committed bundle corruption, switched selection and hidden image changes fail before activation (4567.048921ms)
+✔ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (4664.68441ms)
+✔ root claim and retained workload tracking block imperative adoption after partial GitOps transitions (0.596166ms)
+✔ original runtime teardown commands stop before any Helm mutation when Argo owns the namespace (274.573288ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15454.720429

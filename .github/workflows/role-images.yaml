@@ -49,7 +49,6 @@ jobs:
           tags: kubeclaw-${{ matrix.name }}:proof
           build-args: |
             KUBECLAW_BUILD_REVISION=${{ github.sha }}
-            TRIVY_DATABASE_REFRESH=${{ github.run_id }}.${{ github.run_attempt }}
           cache-from: type=gha,scope=runtime-acceptance-${{ matrix.name }}
           cache-to: type=gha,scope=runtime-acceptance-${{ matrix.name }},mode=min,ignore-error=true
       - name: Verify the built artifact

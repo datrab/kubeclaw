@@ -1,0 +1,7 @@
+{
+  "path": "docs/review/remediation/implementation/independent-buster-report-runtime-implementation-20260921.md",
+  "sha256": "067de98329e943487c21e7c74fc95139824d8f443173429f1a66da6d768ed0d7",
+  "positiveClosure": "report41-runtime1/after.json",
+  "controlClosure": "report41-controls-binding1/after.json",
+  "status": "bounded local41 evidence; Kubeclaw raw negatives open; HOLD"
+}

@@ -1,0 +1,33 @@
+{
+  "status": "private stop-failure oracle isolation; proposed scope clarification, not unchanged-oracle claim; unexecuted",
+  "files": [
+    {
+      "path": "tests/fixtures/test-gate/cluster-ownership-scenario.mjs",
+      "beforeSha256": "341c79995904955505607f309ec697d8508b282e0557b1a2ef66ecc31fc9c473",
+      "afterSha256": "2733291320e51f7a1a08521d2ebb39d632815ab614260a1360a6cc7d62b9768d"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "beforeSha256": "d71fb8decddcff431f4e67750516ad8886dad335cba63051d79fb1880149611d",
+      "afterSha256": "d71bfc2c3c468406deb05f0cf45582eff2786633e0570adfd336f3a36ba2f695"
+    }
+  ],
+  "unchangedCases": [
+    "OWN-TIMEOUT-CLEAN",
+    "OWN-DISPOSAL-TIMEOUT-LATE"
+  ],
+  "observed": [
+    {
+      "path": "observed-ownership2/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "observed-ownership2/reporter.jsonl",
+      "sha256": "b9b40dffba87ddb56d9b40e6d8b1057677ab91730c9ae6c09f5684aea0e2a038"
+    },
+    {
+      "path": "observed-ownership2/events.jsonl",
+      "sha256": "2b8d7b4ebe18745ffa452b77ca7ac4d0b11aef110c9ced2db273e529c456afa8"
+    }
+  ]
+}

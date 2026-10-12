@@ -1,0 +1,93 @@
+[
+  {
+    "name": "cancellation-run2",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-atomic-cancellation.test.mts",
+      "tests/verification/reliability/buster-prepared-store-cancellation.test.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 6.853104596957564
+  },
+  {
+    "name": "original-shutdown-admission",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "tests/verification/reliability/buster-admission-config.test.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 12.454864055034705
+  },
+  {
+    "name": "original-remote-runtime",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 22.998153122025542
+  },
+  {
+    "name": "types-final",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.buster-cancellation.json"
+    ],
+    "exitCode": 0,
+    "seconds": 7.35695880302228
+  },
+  {
+    "name": "lint-final",
+    "command": [
+      "node_modules/.bin/eslint",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "tests/verification/reliability/buster-atomic-cancellation.test.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 5.435193729936145
+  },
+  {
+    "name": "split-path-mutant",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--import",
+      "./docs/review/evidence/buster-atomic-cancellation-20260921/restore-split-cancel.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-atomic-cancellation.test.mts"
+    ],
+    "exitCode": 1,
+    "seconds": 6.075254571973346,
+    "detected": true
+  }
+]

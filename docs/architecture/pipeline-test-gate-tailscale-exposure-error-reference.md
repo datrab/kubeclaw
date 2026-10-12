@@ -5,6 +5,16 @@ Status: authoritative
 Audience: operators and project authors
 Purpose: explain Suite 7 failures
 
+- `TAILSCALE_EXPOSURE_RETENTION_INVALID` means `retentionMode` is neither
+  `release` nor `await-readiness`; correct project configuration before retrying.
+- `TAILSCALE_EXPOSURE_HANDOFF_MISSING` means retained exposure was requested but
+  the returned handoff has no `awaiting-readiness` phase or positive integer
+  generation. The attempt fails. Inspect the controller/capability handoff and
+  existing lease state before repeating creation.
+- `TAILSCALE_EXPOSURE_KUBECTL` is the process diagnostic prefix. The complete
+  suffix distinguishes timeout, output limit, stream/cleanup errors or failed
+  command exit. Inspect the full diagnostic and reconcile Ingress/lease state
+  after interrupted writes; the prefix alone is not a standalone error.
 - `TAILSCALE_EXPOSURE_DEPLOYMENT_INVALID` means the typed input is incomplete.
 - `TAILSCALE_EXPOSURE_DEPLOYMENT_INPUT_INVALID` means the deployment link uses the wrong schema.
 - `TAILSCALE_EXPOSURE_INPUT_UNKNOWN` means the fixture received an unsupported input name.

@@ -1,0 +1,29 @@
+{
+  "oldCommand": "helm lint charts/prism -f charts/prism/ci-values.yaml && helm template prism charts/prism -f charts/prism/ci-values.yaml >/dev/null",
+  "newCommand": "helm lint charts/prism --namespace default -f charts/prism/ci-values.yaml && helm template prism charts/prism --namespace default -f charts/prism/ci-values.yaml >/dev/null",
+  "onlyTwoExplicitNamespaceOptions": true,
+  "authorExecutionInspected": true,
+  "reviewerRepeatedHelm": false,
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "b5bcb32d2601bf273b291998ca2c0cc5b5ce27c6cd53dd338cd80be7b95e0556"
+    },
+    {
+      "path": "charts/prism/ci-values.yaml",
+      "sha256": "ab6d6dad564f99e90c2a9ec4260bc55640aa7e6bb39300922500f3e346cc290b"
+    },
+    {
+      "path": "docs/review/remediation/implementation/tailscale-access-matrix-20260921.md",
+      "sha256": "b4f91f681cc05774f50e845bb4afc53f80b5d78dee3a9c115ef308850450b9d8"
+    },
+    {
+      "path": "docs/review/evidence/tailscale-access-matrix-20260921/prism-helm-command-before.json",
+      "sha256": "86968b57d409ade854b88c05d53f136de6887b34485041419216bae0d97ce907"
+    },
+    {
+      "path": "docs/review/evidence/tailscale-access-matrix-20260921/prism-helm-command-final.txt",
+      "sha256": "fa352eade02a1fb5671c2a23fffdea48fe5a6fd1da9848b0d251e8a74987c001"
+    }
+  ]
+}

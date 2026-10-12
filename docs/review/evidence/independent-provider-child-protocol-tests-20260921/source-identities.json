@@ -1,0 +1,21 @@
+{
+  "scope": "read-only review; no child/test/runtime execution",
+  "files": [
+    {
+      "path": "docs/review/evidence/provider-child-session-simplicity-20260921/files/tests/verification/contracts/provider-child-session.test.mjs",
+      "sha256": "a23fb808f6a9bd6ac59332a1404e61fa9d219495004a3dc547927357622a650a"
+    },
+    {
+      "path": "docs/review/evidence/provider-child-session-simplicity-20260921/protocol-test-draft.json",
+      "sha256": "e23bee622f7e93e4a494ffc1fea0abb5228477b13d9e96b432cab9e797ecbfac"
+    },
+    {
+      "path": "docs/review/evidence/provider-child-session-simplicity-20260921/files/skills/buster/engine/test-gates/provider-child.mjs",
+      "sha256": "da937f52ae501a769e5a59ad67dc5a1ea96ce45352556815e2789e1bd14341e9"
+    },
+    {
+      "path": "docs/review/remediation/implementation/independent-provider-child-session-simplicity-20260921.md",
+      "sha256": "15e895ccdf60a2117c75dce5470d5fae8a8fec321d98462e9cd1d061061d4b94"
+    }
+  ]
+}

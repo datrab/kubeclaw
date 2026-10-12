@@ -1,0 +1,23 @@
+{"fixture":"terminal-persistence-cut","timing":"during","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"cancelled","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: during (637.288802ms)
+{"fixture":"terminal-persistence-cut","timing":"after","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"failed","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: after (416.337505ms)
+{"fixture":"terminal-persistence-cut","timing":"queued","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+{"fixture":"modeled-real-store-transition","jobId":"job:ae1450adf369e80a9761e37138f27ad15d2fec5eabb2b96a09b8bc7fab316e64","expected":["running"],"target":"failed","error":"DURABLE_RECORD_SIZE_EXCEEDED"}
+✔ durable shutdown failure ownership: queued (396.664378ms)
+{"fixture":"terminal-persistence-cut","timing":"admission","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: admission (422.145643ms)
+{"fixture":"terminal-persistence-cut","timing":"read-failure","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: read-failure (329.888306ms)
+{"fixture":"terminal-persistence-cut","timing":"healthy-terminal","acceptedBytes":4078,"runningBytes":4650,"quota":4652,"slack":2}
+✔ durable shutdown failure ownership: healthy-terminal (430.980537ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4480.226018

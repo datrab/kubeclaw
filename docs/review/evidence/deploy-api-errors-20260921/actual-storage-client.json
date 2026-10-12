@@ -1,0 +1,969 @@
+[
+  {
+    "driver": "secret",
+    "mode": "empty",
+    "status": 0,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n\u001b[0;32m[\u2713]\u001b[0m Agents removed. Infrastructure untouched.\n",
+    "stderr": "",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "secret",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "secret",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-buster",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api?timeout=32s",
+      "/apis?timeout=32s",
+      "/api/v1?timeout=32s",
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-buster&limit=500"
+    ]
+  },
+  {
+    "driver": "secret",
+    "mode": "valid",
+    "status": 0,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n\u001b[0;32m[\u2713]\u001b[0m Removed: agent-nova\n\u001b[0;32m[\u2713]\u001b[0m Agents removed. Infrastructure untouched.\n",
+    "stderr": "",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "secret",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "uninstall",
+        "agent-nova",
+        "-n",
+        "guard-test"
+      ],
+      [
+        "kubectl",
+        "get",
+        "secret",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-buster",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v1",
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-buster&limit=500"
+    ]
+  },
+  {
+    "driver": "secret",
+    "mode": "valid-history",
+    "status": 0,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n\u001b[0;32m[\u2713]\u001b[0m Removed: agent-nova\n\u001b[0;32m[\u2713]\u001b[0m Agents removed. Infrastructure untouched.\n",
+    "stderr": "",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "secret",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "2",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "uninstall",
+        "agent-nova",
+        "-n",
+        "guard-test"
+      ],
+      [
+        "kubectl",
+        "get",
+        "secret",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-buster",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v1",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v2",
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-buster&limit=500"
+    ]
+  },
+  {
+    "driver": "secret",
+    "mode": "denied",
+    "status": 1,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n",
+    "stderr": "Error from server (Forbidden): fixture credential not found\n\u001b[0;31m[\u2717]\u001b[0m Cannot inspect Helm storage for guard-test/agent-nova\n",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "secret",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500"
+    ]
+  },
+  {
+    "driver": "secret",
+    "mode": "corrupt",
+    "status": 1,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n",
+    "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x1cf0d39]\n\ngoroutine 1 [running]:\nhelm.sh/helm/v3/pkg/storage/driver.(*Secrets).Get(0x25241e3?, {0xcf15186bf60, 0x20})\n\thelm.sh/helm/v3/pkg/storage/driver/secrets.go:76 +0x319\nhelm.sh/helm/v3/pkg/storage.(*Storage).Get(0xcf1518af960, {0x7ffcaa61083c, 0xa}, 0x1)\n\thelm.sh/helm/v3/pkg/storage/storage.go:54 +0x1e8\nhelm.sh/helm/v3/pkg/action.(*Configuration).releaseContent(0xcf151e640a0, {0x7ffcaa61083c, 0xa}, 0x1)\n\thelm.sh/helm/v3/pkg/action/action.go:318 +0x7b\nhelm.sh/helm/v3/pkg/action.(*Status).Run(0xcf1519d03a8, {0x7ffcaa61083c, 0xa})\n\thelm.sh/helm/v3/pkg/action/status.go:63 +0xb0\nmain.newStatusCmd.func2(0xcf151821400?, {0xcf1519f02a0?, 0x4?, 0x2519b6a?})\n\thelm.sh/helm/v3/cmd/helm/status.go:75 +0x72\ngithub.com/spf13/cobra.(*Command).execute(0xcf151fdb808, {0xcf1519f0230, 0x7, 0x7})\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1015 +0xb14\ngithub.com/spf13/cobra.(*Command).ExecuteC(0xcf151acc308)\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1148 +0x465\ngithub.com/spf13/cobra.(*Command).Execute(...)\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1071\nmain.main()\n\thelm.sh/helm/v3/cmd/helm/helm.go:91 +0x205\n\u001b[0;31m[\u2717]\u001b[0m Cannot decode Helm revision guard-test/agent-nova/1\n",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "secret",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v1"
+    ]
+  },
+  {
+    "driver": "secret",
+    "mode": "corrupt-latest",
+    "status": 1,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n",
+    "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x1cf0d39]\n\ngoroutine 1 [running]:\nhelm.sh/helm/v3/pkg/storage/driver.(*Secrets).Get(0x25241e3?, {0x2c858f4c01e0, 0x20})\n\thelm.sh/helm/v3/pkg/storage/driver/secrets.go:76 +0x319\nhelm.sh/helm/v3/pkg/storage.(*Storage).Get(0x2c858f8af740, {0x7ffd153a183c, 0xa}, 0x2)\n\thelm.sh/helm/v3/pkg/storage/storage.go:54 +0x1e8\nhelm.sh/helm/v3/pkg/action.(*Configuration).releaseContent(0x2c858fa5a0a0, {0x7ffd153a183c, 0xa}, 0x2)\n\thelm.sh/helm/v3/pkg/action/action.go:318 +0x7b\nhelm.sh/helm/v3/pkg/action.(*Status).Run(0x2c858fa4a318, {0x7ffd153a183c, 0xa})\n\thelm.sh/helm/v3/pkg/action/status.go:63 +0xb0\nmain.newStatusCmd.func2(0x2c858f5e1600?, {0x2c858f6802a0?, 0x4?, 0x2519b6a?})\n\thelm.sh/helm/v3/cmd/helm/status.go:75 +0x72\ngithub.com/spf13/cobra.(*Command).execute(0x2c858fe69808, {0x2c858f680150, 0x7, 0x7})\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1015 +0xb14\ngithub.com/spf13/cobra.(*Command).ExecuteC(0x2c858f74a308)\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1148 +0x465\ngithub.com/spf13/cobra.(*Command).Execute(...)\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1071\nmain.main()\n\thelm.sh/helm/v3/cmd/helm/helm.go:91 +0x205\n\u001b[0;31m[\u2717]\u001b[0m Cannot decode Helm revision guard-test/agent-nova/2\n",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "secret",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "2",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v1",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v2"
+    ]
+  },
+  {
+    "driver": "secret",
+    "mode": "corrupt-older",
+    "status": 1,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n",
+    "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x1cf0d39]\n\ngoroutine 1 [running]:\nhelm.sh/helm/v3/pkg/storage/driver.(*Secrets).Get(0x25241e3?, {0xb3cb5054a60, 0x20})\n\thelm.sh/helm/v3/pkg/storage/driver/secrets.go:76 +0x319\nhelm.sh/helm/v3/pkg/storage.(*Storage).Get(0xb3cb4e57a20, {0x7fff7af6183c, 0xa}, 0x1)\n\thelm.sh/helm/v3/pkg/storage/storage.go:54 +0x1e8\nhelm.sh/helm/v3/pkg/action.(*Configuration).releaseContent(0xb3cb5288000, {0x7fff7af6183c, 0xa}, 0x1)\n\thelm.sh/helm/v3/pkg/action/action.go:318 +0x7b\nhelm.sh/helm/v3/pkg/action.(*Status).Run(0xb3cb4de2390, {0x7fff7af6183c, 0xa})\n\thelm.sh/helm/v3/pkg/action/status.go:63 +0xb0\nmain.newStatusCmd.func2(0xb3cb4dc9600?, {0xb3cb4f721c0?, 0x4?, 0x2519b6a?})\n\thelm.sh/helm/v3/cmd/helm/status.go:75 +0x72\ngithub.com/spf13/cobra.(*Command).execute(0xb3cb56ff808, {0xb3cb4f720e0, 0x7, 0x7})\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1015 +0xb14\ngithub.com/spf13/cobra.(*Command).ExecuteC(0xb3cb5002308)\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1148 +0x465\ngithub.com/spf13/cobra.(*Command).Execute(...)\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1071\nmain.main()\n\thelm.sh/helm/v3/cmd/helm/helm.go:91 +0x205\n\u001b[0;31m[\u2717]\u001b[0m Cannot decode Helm revision guard-test/agent-nova/1\n",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "secret",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v1"
+    ]
+  },
+  {
+    "driver": "secret",
+    "mode": "wrong-decoded-identity",
+    "status": 1,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n",
+    "stderr": "Invalid deployment observation; refusing to infer resource absence or permission to mutate\n",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "secret",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v1"
+    ]
+  },
+  {
+    "driver": "configmap",
+    "mode": "empty",
+    "status": 0,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n\u001b[0;32m[\u2713]\u001b[0m Agents removed. Infrastructure untouched.\n",
+    "stderr": "",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "configmap",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "configmap",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-buster",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/configmaps?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/api/v1/namespaces/guard-test/configmaps?labelSelector=owner%3Dhelm%2Cname%3Dagent-buster&limit=500"
+    ]
+  },
+  {
+    "driver": "configmap",
+    "mode": "valid",
+    "status": 0,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n\u001b[0;32m[\u2713]\u001b[0m Removed: agent-nova\n\u001b[0;32m[\u2713]\u001b[0m Agents removed. Infrastructure untouched.\n",
+    "stderr": "",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "configmap",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "uninstall",
+        "agent-nova",
+        "-n",
+        "guard-test"
+      ],
+      [
+        "kubectl",
+        "get",
+        "configmap",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-buster",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/configmaps?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/configmaps/sh.helm.release.v1.agent-nova.v1",
+      "/api/v1/namespaces/guard-test/configmaps?labelSelector=owner%3Dhelm%2Cname%3Dagent-buster&limit=500"
+    ]
+  },
+  {
+    "driver": "configmap",
+    "mode": "valid-history",
+    "status": 0,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n\u001b[0;32m[\u2713]\u001b[0m Removed: agent-nova\n\u001b[0;32m[\u2713]\u001b[0m Agents removed. Infrastructure untouched.\n",
+    "stderr": "",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "configmap",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "2",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "uninstall",
+        "agent-nova",
+        "-n",
+        "guard-test"
+      ],
+      [
+        "kubectl",
+        "get",
+        "configmap",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-buster",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/configmaps?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/configmaps/sh.helm.release.v1.agent-nova.v1",
+      "/version",
+      "/api/v1/namespaces/guard-test/configmaps/sh.helm.release.v1.agent-nova.v2",
+      "/api/v1/namespaces/guard-test/configmaps?labelSelector=owner%3Dhelm%2Cname%3Dagent-buster&limit=500"
+    ]
+  },
+  {
+    "driver": "configmap",
+    "mode": "denied",
+    "status": 1,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n",
+    "stderr": "Error from server (Forbidden): fixture credential not found\n\u001b[0;31m[\u2717]\u001b[0m Cannot inspect Helm storage for guard-test/agent-nova\n",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "configmap",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/configmaps?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500"
+    ]
+  },
+  {
+    "driver": "configmap",
+    "mode": "corrupt",
+    "status": 1,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n",
+    "stderr": "Error: illegal base64 data at input byte 7\n\u001b[0;31m[\u2717]\u001b[0m Cannot decode Helm revision guard-test/agent-nova/1\n",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "configmap",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/configmaps?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/configmaps/sh.helm.release.v1.agent-nova.v1"
+    ]
+  },
+  {
+    "driver": "configmap",
+    "mode": "corrupt-latest",
+    "status": 1,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n",
+    "stderr": "Error: illegal base64 data at input byte 7\n\u001b[0;31m[\u2717]\u001b[0m Cannot decode Helm revision guard-test/agent-nova/2\n",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "configmap",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "2",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/configmaps?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/configmaps/sh.helm.release.v1.agent-nova.v1",
+      "/version",
+      "/api/v1/namespaces/guard-test/configmaps/sh.helm.release.v1.agent-nova.v2"
+    ]
+  },
+  {
+    "driver": "configmap",
+    "mode": "corrupt-older",
+    "status": 1,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n",
+    "stderr": "Error: illegal base64 data at input byte 7\n\u001b[0;31m[\u2717]\u001b[0m Cannot decode Helm revision guard-test/agent-nova/1\n",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "configmap",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/configmaps?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/configmaps/sh.helm.release.v1.agent-nova.v1"
+    ]
+  },
+  {
+    "driver": "configmap",
+    "mode": "wrong-decoded-identity",
+    "status": 1,
+    "stdout": "\u001b[1;33m[!]\u001b[0m Removing KubeClaw agents from guard-test...\n",
+    "stderr": "Invalid deployment observation; refusing to infer resource absence or permission to mutate\n",
+    "commands": [
+      [
+        "kubectl",
+        "get",
+        "crd",
+        "applications.argoproj.io",
+        "--ignore-not-found",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "deployments,statefulsets,cronjobs",
+        "-n",
+        "guard-test",
+        "-o",
+        "json"
+      ],
+      [
+        "kubectl",
+        "get",
+        "configmap",
+        "-n",
+        "guard-test",
+        "-l",
+        "owner=helm,name=agent-nova",
+        "-o",
+        "json"
+      ],
+      [
+        "helm",
+        "status",
+        "agent-nova",
+        "-n",
+        "guard-test",
+        "--revision",
+        "1",
+        "-o",
+        "json"
+      ]
+    ],
+    "httpRequests": [
+      "/api/v1/namespaces/guard-test/configmaps?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/configmaps/sh.helm.release.v1.agent-nova.v1"
+    ]
+  }
+]

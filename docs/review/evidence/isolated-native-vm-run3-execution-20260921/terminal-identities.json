@@ -1,0 +1,56 @@
+{
+  "finalMutableDisk": {
+    "path": "node_modules/.cache/native-test-vm-run3-20260921/guest-root.ext4",
+    "sha256": "9a74a2f42ce6654799904336518f52c157e3e93386ef41649021c6d986be43dc"
+  },
+  "files": [
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/prepared-artifact-manifest.json",
+      "sha256": "630debe723934ac379cfd179584777940ebb6cdbabd98fab99593da01366db12"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/prepared-checkpoint-identities.json",
+      "sha256": "c1672dea59e82188f25d5c52934cfab67adf7fc71e28c4b160b6795e682bf912"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/prepared-current-existing-path-differences.json",
+      "sha256": "03a14550b720dc3144bafccf3f19df03e2ada669fc94d4ab03ec45e02234c39e"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/prepared-guest-identity.json",
+      "sha256": "a099dd43e41e8d318ae73822f3c32a34d4f4b22d85b125a1ae412c9f10c31286"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/prepared-image-build.json",
+      "sha256": "554958f03f81928da52b75baf4519b28dfcf90c4080afadd7c1a627a37541d19"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/prepared-launch-command.json",
+      "sha256": "475b1ba4863903ba70683c8670a5ab24aa2b7d3d2d6f328cd59fea0252692898"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/prepared-native-snapshot-current.json",
+      "sha256": "1f309388f944027a8c13152040efcef913baec1a1b50feaaac5bbe36e6d3574b"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/prepared-snapshot-delta.json",
+      "sha256": "ed76df23084de7a875be0bb3ea7054ebe71e03c71a995c5323bb9347e8211c10"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/prepared-verification-only.txt",
+      "sha256": "ef92796e1f5d2452c4f8b57d1bc412cc6cef66cfd390dadedd1ac1f5353e6b00"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/summary-lines.txt",
+      "sha256": "acc5173c0887c31e4886cc9d9938a8f4f611a1ffbba17ebfa27449025b78b61f"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/vm-console.txt",
+      "sha256": "4b44ed96f64f6a358f4cf633503137ab7f2362aa0a204684560ff08df1553df1"
+    },
+    {
+      "path": "docs/review/evidence/isolated-native-vm-run3-execution-20260921/vm-result.json",
+      "sha256": "739a359d0338cb9831ad27a6ff6c19507d7afb60a848b00d8b6cd31e3ebfa4d1"
+    }
+  ]
+}

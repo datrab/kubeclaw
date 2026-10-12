@@ -1,0 +1,31 @@
+{
+  "at": "2026-09-21T18:48:47.655590+00:00",
+  "runtimeExecuted": false,
+  "integrated": false,
+  "files": [
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/review-runner/README.md",
+      "sha256": "e6e98efc75aba35fb655f752f464655457a6d0a1b27436ca224608329d71102d"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/review-runner/commands.json",
+      "sha256": "abbf1c0e72db2952253af6c455d0aa7ece06ef40ed0464c64ad145088e7db347"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/review-runner/coverage.json",
+      "sha256": "ac70e200305523174003d3b2e9c4a22f50980db5c48ac2d824a76338286dc5be"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/review-runner/run.py",
+      "sha256": "1025076b6f15e1b9a8226bd2a4a20b21d752fe294ea5746b64ff374475386de9"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/review-runner/tool-effects.mjs",
+      "sha256": "97cdb111569b4c408a425df6c8f5655880d94cfc794ebd3a0437c6f1b39fd0ca"
+    },
+    {
+      "path": "docs/review/evidence/config-buster-readiness-20260921/review-runner/tool-paths.mjs",
+      "sha256": "1612e659afdfedccb13754005a1edd24e68255416a8505c2655e71e7ee800fd7"
+    }
+  ]
+}

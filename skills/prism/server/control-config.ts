@@ -1,6 +1,6 @@
 import { loadProductConfig, type ProductConfig } from '../control/product-decisions.ts';
 import { authorizePipelinePreferenceSubject } from '../control/pipeline-preference-subject.ts';
-import { prismNativeMaximumResultBytes, prismNativeDispatchTimeoutMs } from '../config/native-worker.ts';
+import { loadPrismSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';
 
 export interface ControlConfig {
   readonly pipelinePreferenceSubject: string | undefined;
@@ -8,7 +8,11 @@ export interface ControlConfig {
 
 /** Load and validate platform-owned Control configuration once at startup. */
 export function loadControlConfig(environment: NodeJS.ProcessEnv = process.env): ControlConfig {
-  const pipelinePreferenceSubject = environment.PRISM_PIPELINE_PREFERENCE_SUBJECT;
+  return controlPolicy(loadPrismSettings(environment).control);
+}
+
+function controlPolicy(settings: ReturnType<typeof loadPrismSettings>['control']): ControlConfig {
+  const pipelinePreferenceSubject = settings.pipelinePreferenceSubject ?? undefined;
   authorizePipelinePreferenceSubject(undefined, pipelinePreferenceSubject);
   return Object.freeze({pipelinePreferenceSubject});
 }
@@ -37,27 +41,26 @@ function loadTrustConfig(environment: NodeJS.ProcessEnv) {
   };
 }
 
-/** Resolve the original service defaults and credentials once, at composition. */
+/** Resolve authored native settings and service credentials once, at composition. */
 export function loadControlServerConfig(environment: NodeJS.ProcessEnv = process.env) {
+  if (environment.PORT !== undefined) throw new Error("SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use prism-control.config.json settings.port");
+  const { native: settings, control } = loadPrismSettings(environment);
   return Object.freeze({
-    ...loadControlConfig(environment),
-    maximumWorkerResponseBytes: prismNativeMaximumResultBytes(environment),
-    nativeWorkerDispatchTimeoutMs: prismNativeDispatchTimeoutMs(environment),
+    ...controlPolicy(control),
+    port: control.port,
+    nativeResourcePolicy: settings.resourcePolicy,
+    maximumWorkerResponseBytes: settings.maximumResultBytes,
+    nativeWorkerDispatchTimeoutMs: settings.dispatchTimeoutMs,
     sessionSecret: required(environment, 'PRISM_SESSION_SECRET'),
     ingressSecret: required(environment, 'PRISM_INGRESS_SECRET'),
     ...loadTrustConfig(environment),
     ingestionSecret: required(environment, 'PRISM_INGESTION_SECRET'),
-    artifactRoot: environment.ARTIFACT_ROOT ?? '/var/lib/prism/artifacts',
+    artifactRoot: control.artifactRoot,
     workerUrl: new URL(environment.PRISM_WORKER_URL ?? 'http://prism-worker:8080'),
     ingestionUrl: new URL(environment.PRISM_INGESTION_URL ?? 'http://prism-ingestion:8080'),
     controlInternalUrl: new URL(environment.PRISM_CONTROL_INTERNAL_URL ?? 'http://prism-control:8080'),
-    studioPublicUrl: environment.PRISM_STUDIO_PUBLIC_URL ?? 'https://prism-studio',
+    studioPublicUrl: control.studioPublicUrl,
   });
-}
-
-/** The production entrypoint remains a pg.Pool listener; no embedded-mode switch. */
-export function loadControlListenerConfig(environment: NodeJS.ProcessEnv = process.env) {
-  return {databaseUrl: environment.DATABASE_URL, port: Number(environment.PORT ?? 8080)};
 }
 
 export function loadProductAuthorityConfig(environment: NodeJS.ProcessEnv = process.env): Promise<ProductConfig | undefined> {
@@ -69,5 +72,5 @@ export async function loadControlCompositionConfig(environment: NodeJS.ProcessEn
   const snapshot = {...environment};
   const service = loadControlServerConfig(snapshot);
   const product = await loadProductAuthorityConfig(snapshot);
-  return {service, product};
+  return Object.freeze({service, product, listener: Object.freeze({port: service.port, databaseUrl: snapshot.DATABASE_URL})});
 }

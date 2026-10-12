@@ -1,0 +1,66 @@
+[
+  {
+    "name": "metadata-final",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-owned-children.test.mts",
+      "tests/verification/reliability/worker-ownership-store.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "native-typecheck-final",
+    "argv": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.native-scope.json"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "prism-typecheck-final",
+    "argv": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/prism/tsconfig.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "lint-final",
+    "argv": [
+      "node_modules/.bin/eslint",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/worker/core/worker/ownership-children.ts",
+      "skills/worker/core/worker/ownership-state.ts",
+      "skills/worker/core/worker/ownership-store.ts",
+      "skills/worker/core/worker/native-hierarchy-events.ts",
+      "skills/worker/core/worker/native-owned-children.ts",
+      "skills/worker/core/worker/native-resource-scope.ts",
+      "skills/worker/core/worker/native-worker-ownership.ts",
+      "tests/verification/reliability/worker-owned-children.test.mts",
+      "tests/verification/reliability/worker-native-topology-live.mts",
+      "tests/verification/reliability/worker-native-scope-live.mts",
+      "tests/verification/reliability/worker-native-launcher.test.mts",
+      "tests/verification/reliability/worker-observation-durability.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "native-gate-final",
+    "argv": [
+      "npm",
+      "run",
+      "verify:worker-core:native-scope"
+    ],
+    "exitCode": 2
+  }
+]

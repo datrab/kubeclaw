@@ -27,7 +27,7 @@ try {
   await assert.rejects(capabilities.handle('c', 'network.http', {} as never, context, send), /LIMIT/);
   while (received !== 2) await new Promise((resolve) => setImmediate(resolve));
   const reason = new Error('provider-ended'); capabilities.abort(reason);
-  await capabilities.drain(); await Promise.all([first, second]);
+  await capabilities.drain(1000); await Promise.all([first, second]);
   assert.equal(started, 2); assert.equal(received, 2); assert.equal(ended, 2); assert.equal(observed, reason); assert.equal(capabilities.pending, 0);
   assert.deepEqual(replies, []);
   await assert.rejects(capabilities.handle('d', 'network.http', {} as never, context, send), (error) => error === reason);

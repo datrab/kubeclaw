@@ -1,0 +1,22 @@
+[
+  {
+    "mutation": "stat-only",
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "/tmp/inventory-final-mutant-y13f21ci/tests/verification/reliability/inventory-digest-guard.test.mjs"
+    ],
+    "exitCode": 1,
+    "detected": true
+  },
+  {
+    "mutation": "unbounded-chunk",
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "/tmp/inventory-final-mutant-okv4v00o/tests/verification/reliability/inventory-digest-guard.test.mjs"
+    ],
+    "exitCode": 1,
+    "detected": true
+  }
+]

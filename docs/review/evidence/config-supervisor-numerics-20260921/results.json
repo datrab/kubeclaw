@@ -1,0 +1,46 @@
+{
+  "supervisorAndHelm": {
+    "exit": 0,
+    "passed": 255
+  },
+  "originalAffectedRuntime": {
+    "exit": 0,
+    "passed": 210
+  },
+  "release": {
+    "exit": 0,
+    "passed": 25
+  },
+  "ownershipJournalConsumersAndResultJournal": {
+    "exit": 0,
+    "passed": 8
+  },
+  "originalNativeJournal": {
+    "exit": 0,
+    "passed": 6
+  },
+  "fullOriginalControl": {
+    "exit": 0,
+    "passed": 22
+  },
+  "controlConfigE2E": {
+    "exit": 0,
+    "passed": 7
+  },
+  "nativeRuntime": {
+    "exit": 1,
+    "passed": 1,
+    "failed": 1,
+    "failure": "NATIVE_NRI_POLICY_NOT_TRUSTED: actual policy file UID1000"
+  },
+  "typecheckExit": 0,
+  "canonicalLintExit": 0,
+  "mutantsDetected": 2,
+  "finalDocsCheckExit": 0,
+  "finalDocsRefsExit": 0,
+  "docsInventoryCheckExit": 0,
+  "docsGenerateCheckExit": 0,
+  "docsPublicationCheckExit": 0,
+  "allSnapshotHashesMatch": true,
+  "privilegedHostProof": false
+}

@@ -1,0 +1,48 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import ts from 'typescript';
+import {test} from 'node:test';
+import {additionalEnvironmentReads} from '../environment-readers.mjs';
+
+function discover(text) {
+  return additionalEnvironmentReads(ts.createSourceFile('config.ts', text, ts.ScriptTarget.Latest, true));
+}
+
+test('computed literal environment reads are candidates without evaluating values', () => {
+  assert.deepEqual(discover("process.env['FIRST']; environment[`SECOND`]; env['THIRD']; other['FOURTH']; process.env[name];").map(read => read.name), ['FIRST', 'SECOND', 'THIRD']);
+});
+
+test('local environment helper parameter order identifies the actual name argument', () => {
+  const source = `function required(environment, name) { const value = environment[name]; return value; }
+    function reversed(name, environment) { return environment[name]; }
+    function third(prefix, env, name) { return env[name]; }
+    required(environment, 'SESSION_SECRET'); third('UNRELATED', process.env, 'PORT');
+    reversed('ALREADY_SCANNED', env); required(other, 'OTHER_OBJECT'); required(env, dynamicName);`;
+  assert.deepEqual(discover(source).map(read => read.name), ['SESSION_SECRET', 'PORT']);
+});
+
+test('unrelated and nested helper bodies do not authorize argument discovery', () => {
+  const source = `function unrelated(env, name) { return name; }
+    function nested(environment, name) { function inner(environment, name) { return environment[name]; } }
+    unrelated(environment, 'NOT_A_READ'); nested(env, 'NESTED_ONLY');`;
+  assert.deepEqual(discover(source), []);
+});
+
+test('actual Control required credentials omitted by first-argument discovery are found', () => {
+  const source = fs.readFileSync(new URL('../../../skills/prism/server/control-config.ts', import.meta.url), 'utf8');
+  const names = discover(source).map(read => read.name);
+  assert.deepEqual(names, ['PRISM_DISPATCH_SECRET', 'PRISM_WORKER_SECRET', 'PRISM_SESSION_SECRET', 'PRISM_INGRESS_SECRET', 'PRISM_INGESTION_SECRET']);
+});
+
+test('discovery never executes source or reads the named secret value', () => {
+  const key = 'CONFIG_DISCOVERY_TEST_SECRET';
+  const previous = process.env[key];
+  try {
+    process.env[key] = 'must-never-appear-in-discovery';
+    const reads = discover(`throw new Error('source must not run'); process.env['${key}'];`);
+    assert.equal(reads[0].name, key);
+    assert.equal(JSON.stringify(reads.map(({name, mechanism}) => ({name, mechanism}))).includes(process.env[key]), false);
+  } finally {
+    if (previous === undefined) delete process.env[key]; else process.env[key] = previous;
+  }
+});

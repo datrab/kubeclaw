@@ -19,6 +19,9 @@ ARG TRIVY_SHA256_AMD64=2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8
 ARG TRIVY_SHA256_ARM64=b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5
 
 COPY --from=buildkit /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY scripts/buster-subordinate-ids.mjs /usr/local/libexec/buster-subordinate-ids.mjs
+COPY scripts/buster-state-root.mjs /usr/local/libexec/buster-state-root.mjs
+COPY scripts/buster-runtime-config-root.mjs /usr/local/libexec/buster-runtime-config-root.mjs
 # The dated Debian snapshot pins the complete dependency graph coherently.
 # hadolint ignore=DL3008
 RUN printf '%s\n' \
@@ -68,11 +71,14 @@ RUN set -eux; \
     usermod --login builder --home /home/builder --move-home --shell /bin/bash node; \
     groupadd --gid 1001 buster-suite; \
     groupadd --gid 1002 buster-buildkit; \
+    groupadd --gid 1003 buster-preparation; \
     useradd --uid 1001 --gid 1001 --no-create-home --shell /usr/sbin/nologin buster-suite; \
+    useradd --system --uid 1003 --gid 1003 --no-create-home --shell /usr/sbin/nologin buster-preparation; \
+    groupadd --gid 1004 buster-preparation-second; \
+    useradd --system --uid 1004 --gid 1004 --no-create-home --shell /usr/sbin/nologin buster-preparation-second; \
     usermod --append --groups buster-suite,buster-buildkit builder; \
-    printf 'builder:100000:65536\n' >> /etc/subuid; \
-    printf 'builder:100000:65536\n' >> /etc/subgid; \
-    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /home/builder/.cache/trivy /run/user/1000/buildkit; \
+    node /usr/local/libexec/buster-subordinate-ids.mjs /etc/subuid /etc/subgid; \
+    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /run/user/1000/buildkit; \
     chown -R builder:builder /app /home/builder /run/user/1000; \
     chown root:builder /home/builder/.config /home/builder/.config/buildkit; \
     chmod 0750 /home/builder/.config /home/builder/.config/buildkit
@@ -98,45 +104,54 @@ COPY contracts /app/contracts
 # This copy is the production provider payload. The runtime discovers every
 # role-approved provider below /app/skills/buster/plugins, including Axe.
 COPY skills /app/skills
+COPY charts/kubeclaw/files/config/swarm.config.json charts/kubeclaw/files/config/prism-control.config.json charts/kubeclaw/files/config/prism-studio.config.json charts/kubeclaw/files/config/prism-worker.config.json charts/kubeclaw/files/config/prism-execution.config.json charts/kubeclaw/files/config/buster-engine.config.json charts/kubeclaw/files/config/worker-core.config.json /etc/kubeclaw/swarm/
 COPY scripts/build-plugin-sandbox.mjs /app/scripts/build-plugin-sandbox.mjs
 COPY tests/verification/contracts/check-pipeline-container-build-production.mts /app/tests/verification/contracts/check-pipeline-container-build-production.mts
 COPY tests/verification/contracts/check-pipeline-container-build-recovery.mts /app/tests/verification/contracts/check-pipeline-container-build-recovery.mts
 RUN npm ci --prefix /app --omit=dev --ignore-scripts --no-audit --no-fund \
     && cd /app \
+    && cc -std=c11 -O2 -Wall -Wextra -Werror -fstack-protector-strong -D_FORTIFY_SOURCE=2 \
+         -fPIE -pie -Wl,-z,relro,-z,now skills/worker/core/worker/native-worker-launcher.c \
+         -o /usr/local/libexec/kubeclaw-native-worker-launcher \
+    && chmod 0755 /usr/local/libexec/kubeclaw-native-worker-launcher \
     && node scripts/build-plugin-sandbox.mjs \
     && test -x /app/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox \
-    && install -D -o root -g builder -m 0750 /app/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox /opt/kubeclaw-trusted/plugin-sandbox \
+    && install -d -o root -g root -m 0755 /opt/kubeclaw-trusted /run/kubeclaw-buster \
+    && node scripts/build-plugin-sandbox.mjs --buster-browser-helper /opt/kubeclaw-trusted/plugin-sandbox \
+    && chown root:builder /opt/kubeclaw-trusted/plugin-sandbox \
+    && chmod 0750 /opt/kubeclaw-trusted/plugin-sandbox \
     && setcap cap_setuid,cap_setgid=ep /opt/kubeclaw-trusted/plugin-sandbox \
-    && chown -R builder:builder /app
+    && chown -R root:root /app \
+    && chmod -R go-w /app
 
-RUN node /app/node_modules/playwright/cli.js install --with-deps chromium firefox webkit \
+COPY versions.json /app/versions.json
+COPY docker/browser-archives.lock.json /app/docker/browser-archives.lock.json
+COPY scripts/browser-archive-lock.mjs /app/scripts/browser-archive-lock.mjs
+RUN node /app/node_modules/playwright/cli.js install-deps chromium firefox webkit \
+    && node /app/scripts/browser-archive-lock.mjs --install "$TARGETARCH" buster /ms-playwright \
     && chown -R builder:builder /ms-playwright
 
-# Freeze the vulnerability database into this immutable worker image. A new
-# worker image is the controlled database update unit; execution stays offline.
-# Existing release workflows provide a distinct value for each build attempt.
-ARG TRIVY_DATABASE_REFRESH=manual
-RUN test -n "$TRIVY_DATABASE_REFRESH" && setpriv --reuid=1000 --regid=1000 --init-groups \
-      env TRIVY_CACHE_DIR=/home/builder/.cache/trivy trivy image --download-db-only \
-    && setpriv --reuid=1000 --regid=1000 --init-groups \
-      env TRIVY_CACHE_DIR=/home/builder/.cache/trivy trivy image --download-java-db-only \
+# Database bytes are resolved only by the explicit update procedure. Build
+# retries consume identical OCI manifests/layers and never resolve mutable tags.
+COPY versions.json /app/versions.json
+COPY docker/trivy-databases.lock.json /app/docker/trivy-databases.lock.json
+COPY scripts/trivy-database-lock.mjs /app/scripts/trivy-database-lock.mjs
+RUN node /app/scripts/trivy-database-lock.mjs --install /home/builder/.cache/trivy "$(trivy --version | sed -n 's/^Version: //p')" \
+    && chown -R builder:builder /home/builder/.cache/trivy \
     && test -s /home/builder/.cache/trivy/db/trivy.db \
     && test -s /home/builder/.cache/trivy/java-db/trivy-java.db
 
 COPY scripts/registry-client-config.mjs /app/scripts/registry-client-config.mjs
+COPY scripts/buster-cluster-preflight.mjs /app/scripts/buster-cluster-preflight.mjs
 COPY docker/buster-runtime-entrypoint.sh /usr/local/bin/buster-runtime-entrypoint
 RUN chmod 0755 /usr/local/bin/buster-runtime-entrypoint
 
-ENV HOME=/home/builder \
+ENV SWARM_CONFIG=/etc/kubeclaw/swarm/swarm.config.json \
+    HOME=/home/builder \
     XDG_RUNTIME_DIR=/run/user/1000 \
     NODE_PATH=/app/node_modules \
     BUILDKIT_HOST=unix:///run/user/1000/buildkit/buildkitd.sock \
     BUILDKIT_STATE_DIR=/home/builder/.local/share/buildkit \
-    BUSTER_V2_STATE_DIR=/home/builder/.openclaw/v2-jobs \
-    BUSTER_V2_RUN_DIR=/tmp/buster-v2-runs \
-    BUSTER_V2_MAX_ARCHIVE_BYTES=67108864 \
-    BUSTER_V2_MAX_EXTRACTED_BYTES=536870912 \
-    BUSTER_V2_MAX_QUEUED_JOBS=8 \
     BUSTER_V2_RESULT_ROOT=/workspace/git-repo/.swarm/runtime-results \
     BUSTER_V2_RUNNER_UID=1001 \
     BUSTER_V2_RUNNER_GID=1001 \

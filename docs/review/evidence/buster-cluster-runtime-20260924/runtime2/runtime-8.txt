@@ -1,0 +1,71 @@
+
+> verify:buster:kubernetes-cleanup
+> npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-execution-policy.json && node --test --test-concurrency=1 tests/verification/contracts/kubernetes-cleanup-errors.test.mjs tests/verification/contracts/kubernetes-cleanup-runner.test.mjs tests/verification/contracts/provider-disposal-recovery.test.mjs tests/verification/contracts/provider-disposal-unconfirmed.test.mjs tests/verification/contracts/provider-child-session.test.mjs tests/verification/contracts/provider-loader-ownership.test.mjs skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts
+
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+{"ok":true,"provider":"kubernetes-fixture","deterministicIdentity":true,"mocks":0}
+✔ skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts (118.896285ms)
+✔ real preparation rollback preserves errors; delete failure false (8.308547ms)
+✔ real preparation rollback preserves errors; delete failure true (1.5277ms)
+✔ registered Kubernetes provider retain, failed preparation true (766.718951ms)
+✔ registered Kubernetes provider retain, failed preparation false (399.995005ms)
+✔ registered Kubernetes provider delete, failed preparation true (429.211418ms)
+✔ registered Kubernetes provider delete, failed preparation false (416.792514ms)
+✔ post-passed Worker measurement fault uses incomplete cleanup then allows later retained success (554.347455ms)
+✔ real child preserves detached invoke, concurrent replies, instance state and import logs (72.390411ms)
+✔ real child settles outstanding RPCs and ignores late replies; early reply=false (62.255405ms)
+✔ real child settles outstanding RPCs and ignores late replies; early reply=true (67.482133ms)
+✔ real child rejects an unawaited RPC and exits with failure (65.052659ms)
+✔ real child rejects invalid observation before provider import: undefined (63.914639ms)
+✔ real child rejects invalid observation before provider import: null (63.111438ms)
+✔ real child rejects invalid observation before provider import: {} (56.406572ms)
+✔ real child rejects invalid observation before provider import: [] (55.303395ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":0} (54.520103ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":1.5} (61.732182ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":"10"} (62.368469ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":2147483648} (62.04165ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":10,"extra":1} (66.580429ms)
+✔ real child uses authored sample interval 10 (313.037854ms)
+✔ real child uses authored sample interval 40 (311.134184ms)
+✔ real child reuses an identical sampling policy and rejects a changed policy (67.503623ms)
+✔ child rejects invalid cleanup authority {"kind":"cleanup"} (60.208883ms)
+✔ child rejects invalid cleanup authority {"kind":"cleanup","schemaVersion":"provider-cleanup.v1","disposition":"passed"} (63.478607ms)
+✔ child rejects invalid cleanup authority {"kind":"cleanup","schemaVersion":"provider-cleanup.v0","disposition":"completed-fixture"} (60.853049ms)
+✔ real Loader confirmed-disposal recovery: signal failure false, retain (837.325015ms)
+✔ real Loader confirmed-disposal recovery: signal failure false, delete (596.169137ms)
+✔ real Loader confirmed-disposal recovery: signal failure true, retain (1001.115943ms)
+✔ real Loader confirmed-disposal recovery: signal failure true, delete (1001.42265ms)
+✔ real Loader retains cleanup and stop failures in current session (421.579868ms)
+✔ real Loader retains cleanup and stop failures in recovery session (570.331303ms)
+✔ overlapping real Loaded terminate calls account one confirmed session exactly once (552.495317ms)
+✔ Loaded current close timeout cannot start another child (1646.400002ms)
+✔ Loaded current drain timeout cannot start another child (1446.367058ms)
+✔ Loaded replacement close timeout cannot start another child (1587.873883ms)
+✔ Loaded replacement drain timeout cannot start another child (1571.822454ms)
+✔ signal failure still drains capability settlement after actual child close (168.853289ms)
+✔ actual close with nonsettling capability reports bounded drain failure (1055.324107ms)
+✔ withheld close notification retains termination bound without entering capability drain (1046.930838ms)
+✔ constructor observation error is retained for later initialize (11.49119ms)
+▶ aborted initialization rejects and a distinct healthy session completes real cleanup
+  ✔ already aborted context (11.381357ms)
+  ✔ healthy positive control (45.560619ms)
+✔ aborted initialization rejects and a distinct healthy session completes real cleanup (58.044376ms)
+✔ real session termination bound 100 with delayed actual-close delivery (262.987157ms)
+✔ real session termination bound 500 with delayed actual-close delivery (263.583613ms)
+✔ actual session IPC consumes pending-capability count 1 (45.255231ms)
+✔ actual session IPC consumes pending-capability count 2 (147.339127ms)
+✔ actual session IPC consumes capability drain 10 (123.532986ms)
+✔ actual session IPC consumes capability drain 500 (132.189881ms)
+✔ initialized idle session retains actual protocol overflow at 512 bytes (157.492173ms)
+✔ initialized idle session retains actual protocol overflow at 4096 bytes (54.987026ms)
+ℹ tests 53
+ℹ suites 0
+ℹ pass 53
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23314.41108

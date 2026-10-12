@@ -1,0 +1,30 @@
+{
+  "constructorCallsBefore": 69,
+  "fourArgumentCallsBefore": 60,
+  "platformObjectsBefore": 33,
+  "platformObjectsMissingBefore": 29,
+  "templateScripts": [
+    {
+      "file": "tests/verification/reliability/adapter-dependency-identity.test.mts",
+      "line": 74,
+      "policy": "already explicit 1000 ms; unchanged"
+    },
+    {
+      "file": "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+      "line": 46,
+      "policy": "already explicit 1000 ms; unchanged"
+    }
+  ],
+  "maintainedHistoricalRunners": "four calls import the current checkout; explicit old 300000 supplied after parent review; old source snapshots retained",
+  "immutableHistoricalArtifacts": "tests/verification/reliability/fixtures/legacy-effects and embedded legacy source snapshots unchanged",
+  "currentMissingConstructorCalls": [
+    {
+      "file": "tests/verification/reliability/effect-lock-configuration.test.mjs",
+      "line": 53,
+      "arguments": 4,
+      "source": "new EffectCoordinator(untouched, undefined, undefined, untouched)"
+    }
+  ],
+  "currentPlatformMissing": [],
+  "generatedPlatformAuthor": "docker/buster-runtime-entrypoint.sh explicitly authors 300000 ms; no new ENV override"
+}

@@ -1,0 +1,17 @@
+# Independent protocol-order source review
+
+Bounded Root delta inspected and bound; no live edits or runtime. This reviewer authored the earlier Loader baseline, so this is specifically a review of Root's new byte-order correction, not independent baseline acceptance.
+
+The byte counter is now subscribed before readline, so a chunk taking the cumulative total over maximumProtocolBytes first fails pending work and starts existing termination. The line entry guard prevents every line delivered from that overflowing chunk from being parsed, logging, updating reported resources, issuing capabilities or resolving initialization/result/cleanup. At or below the threshold, existing dispatch and concurrency remain unchanged. Stop, signal-error-after-drain, actual-close and timer behavior are unchanged. This is conservatively chunk-based: even a complete earlier line within an overflowing chunk is discarded. It does not undo effects already dispatched from earlier accepted chunks.
+
+One retained diagnostic gap prevents claiming all protocol-limit errors are preserved: after initialization has succeeded but between operations, #fail has no pending reject callback and only persists failures while initialized is null. An over-limit child log at that point terminates the process but a subsequent execute uses cached initialize, cannot send, and rejects PROCESS_CLOSED. Thus the patch fixes the observed pending-result ordering race but not every idle-session protocol-limit diagnostic. Root was asked to decide/repair narrowly if complete specific error retention is required; avoid making ordinary provider execution errors generically sticky and blocking otherwise-supported cleanup.
+
+Required actual follow-up: overflowing single chunk containing result/log/capability messages must not resolve or execute them; exact-boundary positive dispatch; initialization overflow; and the successful-initialize/idle-overflow/later-execute case. Preserve existing real termination/drain regression tests. No runtime pass or full CONFIG acceptance is claimed.
+
+Evidence: `../../evidence/independent-buster-provider-protocol-order-20260921/source-comparison.json` and exact before/after copies.
+
+## V2 source decision
+
+V2 resolves the reported idle diagnostic gap narrowly: only cumulative overflow creates protocolFailure; initialize checks it before cached success, cleanup before its closed-session rejection, and execute reaches the same initialize check. The saved Error is reused. Ordinary execution failures do not become sticky. The byte-first registration and line guard remain, and termination/drain are unchanged. V2 is suitable for controlled integration and actual regression execution, not runtime-accepted. source-comparison-v2.json binds the exact Root source.
+
+A separate reviewer-authored private regression is provided under buster-provider-protocol-order-20260921/idle-regression. It preserves the existing Ownership tests and adds two profiles512/4096. The real child waits for a scratch trigger created only after successful initialize; it then writes an actual valid log frame above512bytes. Low requires actual close, measured byte overflow, no dispatched log and exact PROTOCOL_LIMIT on late execute/cleanup/initialize. High requires the same log plus successful execute/cleanup. Spawn instrumentation only counts actual bytes, and the existing exact-process-group bounded cleanup remains. This test itself requires Root independent review; no source-review selfacceptance of the test or runtime claim is made.

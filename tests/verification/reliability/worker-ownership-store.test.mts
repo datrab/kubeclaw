@@ -149,13 +149,31 @@ test('supervisor holds a separate real kernel lock and SIGKILL releases it witho
   }
 });
 
+test('native supervision requires explicit valid scope capacity before filesystem access or admission', async () => {
+  const f = await fixture();
+  try {
+    await f.store.reserve(identity);
+    const before = await fs.readFile(path.join(f.root, 'owners.json'));
+    let entered = false;
+    for (const value of [undefined, null, 0, -1, 1.5, Number.NaN, Infinity, Number.MAX_SAFE_INTEGER + 1, '128']) {
+      await assert.rejects(NativeWorkerOwnership.supervise({
+        cgroupRoot: path.join(f.root, 'absent-cgroup'), store: f.store, nodeIdentity: 'storage-test-node',
+        drainTimeoutMs: 1000, maximumActiveScopes: value as unknown as number,
+        poolLimits: { memoryBytes: 1073741824, tasks: 1024, cpuQuotaMicroseconds: 100000, cpuPeriodMicroseconds: 100000 },
+      }, async () => { entered = true; }), /WORKER_NATIVE_CAPACITY_INVALID/u);
+    }
+    assert.equal(entered, false);
+    assert.deepEqual(await fs.readFile(path.join(f.root, 'owners.json')), before);
+  } finally { await f.cleanup(); }
+});
+
 test('native recovery rejects ordinary directories before exposing admission or modifying existing ownership', async () => {
   const f = await fixture();
   try {
     await f.store.reserve(identity);
     const before = await fs.readFile(path.join(f.root, 'owners.json'));
     let entered = false;
-    await assert.rejects(NativeWorkerOwnership.supervise({ cgroupRoot: f.root, store: f.store, nodeIdentity: 'storage-test-node', drainTimeoutMs: 1000,
+    await assert.rejects(NativeWorkerOwnership.supervise({ cgroupRoot: f.root, store: f.store, nodeIdentity: 'storage-test-node', drainTimeoutMs: 1000, maximumActiveScopes: 128,
       poolLimits: { memoryBytes: 1073741824, tasks: 1024, cpuQuotaMicroseconds: 100000, cpuPeriodMicroseconds: 100000 } }, async () => {
       entered = true;
     }), /WORKER_NATIVE_ROOT_INVALID/u);

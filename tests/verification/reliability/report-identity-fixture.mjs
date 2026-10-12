@@ -39,7 +39,7 @@ async function transport(valid) {
 function platform(root, origin, plugin, registration) {
   const roots = ['common', 'nova', 'buster'].map(role => path.join(repository, `skills/${role}/plugins`));
   const artifact = 'kubeclaw.artifact-store:artifact-store';
-  return { schemaVersion: 'pipeline-platform.v2', installationRoots: roots, trustedBuiltinRoots: roots,
+  return { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: roots, trustedBuiltinRoots: roots,
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
     providers: { 'runtime.dispatch': 'kubeclaw.runtime-dispatch:runtime', 'network.http': 'kubeclaw.network-http:http',
       'secrets.read': 'kubeclaw.secret-resolver:secrets', 'artifacts.write': artifact, 'artifacts.read': artifact, 'report.evidence.read': 'kubeclaw.pipeline-review:evidence' },

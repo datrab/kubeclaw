@@ -1,0 +1,63 @@
+{
+  "reviewer": "/root/cluster_security_doc_review",
+  "scope": "Independent documentation source review only; no runtime execution or production writes",
+  "decision": "changes_requested_one_precision_correction",
+  "candidateManifestSha256": "7fd0fc2c3378f588415ed8ca541b94d63b49cce9dcf5850498ce44f0a30e6d13",
+  "checkedFiles": [
+    {
+      "path": "docs/architecture/buster-cluster-configuration.md",
+      "beforeSha256": "d31e4fdd6d65dd9bd988373ce7d3ec52b977d78b297884e6a4b518c5476d1201",
+      "afterSha256": "13bf4962e4592e07e1313ad26ed14744b1b027ad7c8c7442fdcfeb5ac1acd20a"
+    },
+    {
+      "path": "docs/architecture/buster-runtime-security-configuration.md",
+      "beforeSha256": "f8b02af9d4242a34b30d483842b13eab43c896688f075f87694283f9fa1f3537",
+      "afterSha256": "008b8380449b5fb0c53fe0e69c1234152974e435025e7988b9c560a6f6f6db8c"
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-security-error-reference.md",
+      "beforeSha256": "2b2f88102906e784e9038168ee8f8ad5b1866f04e8aeea255db1da0c65f10863",
+      "afterSha256": "6282f331b991e6c9b21933138a98f3474d03e756655d46514a520a575dccdda1"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-cluster-invokers-20260924.md",
+      "beforeSha256": "1a14db0dc32723c9a66ae34afae27e9fcc02d3e93447c3395245f2687d59b36c",
+      "afterSha256": "2566c04a356fc3a9f750bce64b5b1705ff7715a4b44d62c4764e38d801a27db3"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+      "beforeSha256": "7d56f74725a675785d1c9d47de7a7069b10369485ca2886f4e81e76c9e0e9b71",
+      "afterSha256": "c8aede0670b6f7db455bd055e314cc7c93121f3afce3b7206844484b83286c77"
+    }
+  ],
+  "checks": {
+    "allFiveLiveBaselinesMatch": true,
+    "allFiveBeforeSnapshotsMatch": true,
+    "allFiveCandidateHashesMatch": true,
+    "allLocalLinksExist": true,
+    "inventoryLeafCount": 39,
+    "all39KeysAndAuthoredDefaultValuesMatch": true,
+    "schemaRequirednessDomainsAndCoherenceInspected": true,
+    "typedForwardingAndActualConsumersInspected": true,
+    "namespaceAndApiVersionDistinctionsAccurate": true,
+    "retiredRuntimeObjectsRejectByPresence": true,
+    "errorsMatchProductionBranches": true,
+    "historicalFailuresRetained": true,
+    "noGlobalConfigOriginalIssueOrLiveAcceptanceClaim": true
+  },
+  "findings": [
+    {
+      "id": "DOC-RS-DEADLINE",
+      "priority": "P2",
+      "file": "docs/architecture/buster-runtime-security-configuration.md",
+      "section": "maximumExecutionMs table row",
+      "claim": "Milliseconds for the entire inspection.",
+      "evidence": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts invoke computes contained manifest realpath/stat, readFileSync and SHA256 before creating deadline. The selected bound covers the subsequent kubectl/poll loop, not the entire inspection wall-clock lifetime.",
+      "requiredCorrection": "Describe common kubectl/poll deadline after synchronous manifest validation and explicitly exclude manifest read/hash from that timer. Retain open unbounded-manifest and child-ownership limitations."
+    }
+  ],
+  "acceptanceLimits": [
+    "Only DOC integration may be approved after correction; complete regression, security ninth-control rerun, lifecycle controls and final evidence checkpoint still pending.",
+    "Current-run checkpoint must be updated after terminal results; it is intentionally not a passing full-run claim."
+  ]
+}

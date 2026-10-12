@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "storageRoot",
+    "orchestratorIssuerId",
+    "maximumJournalBytes",
+    "maximumArtifactBytes",
+    "maximumBundleBytes"
+  ],
+  "properties": {
+    "storageRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "orchestratorIssuerId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "maximumJournalBytes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "maximumArtifactBytes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "maximumBundleBytes": {
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}

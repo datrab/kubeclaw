@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import { registerHooks } from 'node:module';
+registerHooks({ load(url, context, next) {
+ const result = next(url, context);
+ if (!url.endsWith('/tests/verification/reliability/effect-lock-configuration.test.mjs')) return result;
+ const source = String(result.source);
+ const anchor = "assert.ok(history.includes('released'), 'actual lock persistence and release remain exercised');";
+ assert.equal(source.split(anchor).length, 2);
+ return {...result, source:source.replace(anchor, `${anchor}
+      const persisted = history.trim().split('\\n').map(line => JSON.parse(line).entry).filter(entry => entry.status === 'active');
+      assert.ok(persisted.length > 0, 'independent: actual active locks persisted');
+      const seen = new Set();
+      for (const entry of persisted) {
+        if (seen.has(entry.lockId)) continue;
+        seen.add(entry.lockId);
+        assert.equal(Date.parse(entry.expiresAt) - Date.parse(entry.acquiredAt), ttl, 'independent: initial persisted lock lifetime matches authored profile');
+      }
+      console.log('INDEPENDENT_PERSISTED_TTL', ttl, persisted.length);
+ `)};
+}});

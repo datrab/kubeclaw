@@ -1,0 +1,14 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/nova-source-deadline.test.mts",
+      "tests/verification/reliability/nova-source-cleanup-errors.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "original-deadline-and-new-regressions",
+    "seconds": 6.615791141986847
+  }
+]

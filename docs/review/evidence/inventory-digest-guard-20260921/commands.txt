@@ -1,0 +1,18 @@
+node --test tests/verification/reliability/inventory-digest-guard.test.mjs
+8/8 pass
+LD_LIBRARY_PATH="$PWD/node_modules/.cache/native-host-tools/root/usr/lib:$PWD/node_modules/.cache/native-host-tools/root/lib" node_modules/.cache/native-host-tools/root/usr/bin/proot -b "$PWD/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!" /usr/local/bin/node --test tests/verification/reliability/observability-retirement-plan.test.mjs
+15/15 pass (no kernel-isolation claim).
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs scripts/observability-retirement/files.mjs tests/verification/reliability/inventory-digest-guard.test.mjs
+exit0
+python3 docs/review/evidence/inventory-digest-guard-20260921/run-mutant.py
+exit0: old stat-only guard fails exactly one assertion
+
+Final exact-bound guard:
+node --test tests/verification/reliability/inventory-digest-guard.test.mjs
+9/9 pass; tests-final.txt
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs scripts/observability-retirement/files.mjs tests/verification/reliability/inventory-digest-guard.test.mjs
+exit0; lint-final-canonical.txt
+python3 docs/review/evidence/inventory-digest-guard-20260921/run-final-mutants.py
+exit0; final-mutants.json; each isolated mutation fails1/passes8
+python3 docs/review/evidence/inventory-digest-guard-20260921/run-final-combined.py
+exit0; original43/43; selected source hashes unchanged

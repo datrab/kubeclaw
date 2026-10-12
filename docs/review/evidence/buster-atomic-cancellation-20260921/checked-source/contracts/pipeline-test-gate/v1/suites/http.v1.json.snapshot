@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "test-suite-template.v1",
+  "contractId": "kubeclaw.http-suite@1",
+  "tests": {},
+  "fixtures": {},
+  "concurrencyLimits": {
+    "http": 8
+  }
+}

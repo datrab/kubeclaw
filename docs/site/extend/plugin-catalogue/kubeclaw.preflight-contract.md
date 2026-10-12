@@ -71,10 +71,13 @@ Run:
 npm test --prefix skills/nova/plugins/preflight-contract
 ```
 
-Package tests found: 0.
+Package tests found: 3.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/preflight-contract/plugin.json`
 - Package root: `skills/nova/plugins/preflight-contract`
 - Authored package guide: `skills/nova/plugins/preflight-contract/README.md`
+- Test: `skills/nova/plugins/preflight-contract/tests/declarations.unit.test.mjs`
+- Test: `skills/nova/plugins/preflight-contract/tests/live-function.test.ts`
+- Test: `skills/nova/plugins/preflight-contract/tests/package-boundary.test.mjs`

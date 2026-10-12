@@ -1,0 +1,236 @@
+{{- $swarm := include "prism.swarmConfig" . | fromJson }}
+{{- $shutdownTimeoutMs := $swarm.operator.prism.worker.shutdownTimeoutMs }}
+{{- if ne (int .Values.control.replicas) 1 }}
+{{- fail "control.replicas must be 1 while prism-artifacts uses ReadWriteOnce storage" }}
+{{- end }}
+{{- include "prism.productDecisions.validate" . }}
+{{- if or (ne (int .Values.worker.replicas) 1) (ne .Values.worker.native.namespace .Release.Namespace) (not .Values.worker.native.nodeName) (not (regexMatch "^[a-f0-9]{64}$" .Values.worker.native.policyDigest)) }}
+{{- fail "native Prism requires one worker, its selected namespace/node and generated policy digest" }}
+{{- end }}
+{{- if or (le (int $shutdownTimeoutMs) (add (int $swarm.operator.prism.native.supervisor.closeTimeoutMs) (int $swarm.operator.prism.native.supervisor.drainTimeoutMs))) (le (mul (int .Values.worker.terminationGracePeriodSeconds) 1000) (int $shutdownTimeoutMs)) }}
+{{- fail "worker shutdown must cover native close plus scope drain, and fit within pod termination grace" }}
+{{- end }}
+{{- range $name := list "control" "studio" "worker" }}
+{{- $image := index $.Values.images $name }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prism-{{ $name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  replicas: {{ (index $.Values $name).replicas }}
+  {{- if or (eq $name "control") (eq $name "worker") }}
+  strategy: { type: Recreate }
+  {{- end }}
+  selector: { matchLabels: { app: prism-{{ $name }} } }
+  template:
+    metadata:
+      labels:
+        app: prism-{{ $name }}
+        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
+        kubeclaw.dev/worker-trust: "true"
+        {{- end }}
+      {{- if or (and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker"))) (eq $name "control") (eq $name "worker") }}
+      annotations:
+        {{- if or (eq $name "control") (eq $name "worker") }}
+        checksum/swarm-config: {{ include "prism.swarmConfig" $ | sha256sum }}
+        {{- end }}
+        {{- if eq $name "worker" }}
+        kubeclaw.dev/native-worker-role: prism
+        kubeclaw.dev/native-worker-policy: {{ $.Values.worker.native.policyDigest | quote }}
+        {{- end }}
+        {{- if and (eq $name "control") $.Values.control.productDecisions.enabled }}
+        checksum/product-decisions: {{ toJson $.Values.control.productDecisions | sha256sum }}
+        {{- end }}
+        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
+        checksum/worker-trust: {{ index ((include (print $.Template.BasePath "/configmap-worker-trust.yaml") $) | fromYaml).data (printf "%s.yaml" $name) | sha256sum }}
+        {{- end }}
+      {{- end }}
+    spec:
+      serviceAccountName: prism-{{ $name }}
+      {{- if eq $name "worker" }}
+      terminationGracePeriodSeconds: {{ $.Values.worker.terminationGracePeriodSeconds }}
+      {{- end }}
+      imagePullSecrets: {{ toYaml $.Values.imagePullSecrets | nindent 8 }}
+      automountServiceAccountToken: false
+      # The Prism images use the named `node` image user. Kubernetes cannot prove
+      # that a named image user is non-root when runAsNonRoot is set, so make the
+      # image's numeric runtime identity explicit for every Prism application pod.
+      {{- if eq $name "worker" }}
+      securityContext: { runAsNonRoot: false, runAsUser: 0, runAsGroup: 0, seccompProfile: { type: RuntimeDefault } }
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchFields:
+                  - { key: metadata.name, operator: In, values: [{{ $.Values.worker.native.nodeName | quote }}] }
+      {{- else }}
+      securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, fsGroup: 1000, seccompProfile: { type: RuntimeDefault } }
+      {{- end }}
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector: { matchLabels: { app: prism-{{ $name }} } }
+      containers:
+        - name: {{ $name }}
+          image: {{ include "prism.imageRef" $image | quote }}
+          imagePullPolicy: {{ $image.pullPolicy }}
+          {{- if eq $name "worker" }}
+          command: ["node", "skills/prism/server/worker.ts"]
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"], add: ["SETUID", "SETGID", "KILL"] } }
+          {{- else }}
+          securityContext: { allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+          {{- end }}
+          env:
+            - { name: PORT, value: "8080" }
+            {{- if or (eq $name "control") (eq $name "worker") }}
+            - { name: PRISM_ENGINE_CONTENT_DIGEST, value: {{ $.Values.images.worker.digest | quote }} }
+            - { name: SWARM_CONFIG, value: /etc/kubeclaw/swarm/swarm.config.json }
+            {{- end }}
+            {{- if and (or (eq $name "control") (eq $name "worker")) (not $.Values.workerTrust.spiffe.enabled) }}
+            - name: PRISM_WORKER_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: worker-secret } }
+            {{- end }}
+            {{- if eq $name "control" }}
+            {{- include "prism.productDecisions.env" $ | nindent 12 }}
+            {{- if $.Values.workerTrust.spiffe.enabled }}
+            - { name: PRISM_WORKER_URL, value: "http://127.0.0.1:18081" }
+            - { name: PRISM_CONTROL_INTERNAL_URL, value: "http://127.0.0.1:18080" }
+            - { name: PRISM_AGENT_URL, value: "http://127.0.0.1:18082" }
+            {{- end }}
+            - name: DATABASE_URL
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
+            - name: PRISM_SESSION_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: session-secret } }
+            - name: PRISM_INGRESS_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }
+            {{- if not $.Values.workerTrust.spiffe.enabled }}
+            - name: PRISM_DISPATCH_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: dispatch-secret } }
+            {{- end }}
+            - { name: PRISM_INGESTION_URL, value: "http://prism-ingestion:8080" }
+            - name: PRISM_INGESTION_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingestion-secret } }
+            {{- end }}
+            {{- if eq $name "studio" }}
+            - { name: PRISM_CONTROL_URL, value: "http://prism-control:8080" }
+            - name: PRISM_INGRESS_SECRET
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.runtime }}, key: ingress-secret } }
+            {{- end }}
+            {{- if eq $name "worker" }}
+            - { name: PRISM_CONTROL_INTERNAL_URL, value: {{ ternary "http://127.0.0.1:18080" "http://prism-control:8080" $.Values.workerTrust.spiffe.enabled | quote }} }
+            - name: DATABASE_URL
+              valueFrom: { secretKeyRef: { name: {{ $.Values.secrets.database }}, key: runtime-url } }
+            {{- end }}
+            {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
+            - { name: SPIFFE_ENDPOINT_SOCKET, value: {{ printf "unix://%s" $.Values.workerTrust.spiffe.socketPath | quote }} }
+            - { name: WORKER_TRUST_SPIFFE_ENABLED, value: "true" }
+            {{- if eq $name "control" }}
+            - { name: PRISM_TRUSTED_NOVA_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/%s" $.Values.workerTrust.spiffe.trustDomain $.Values.workerTrust.spiffe.novaNamespace $.Values.workerTrust.spiffe.novaServiceAccount | quote }} }
+            - { name: PRISM_TRUSTED_TEST_RUNNER_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-test-runner" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
+            - { name: PRISM_TRUSTED_WORKER_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-worker" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
+            - { name: PRISM_CONTROL_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-control" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
+            - { name: PRISM_TRUSTED_AGENT_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/%s" $.Values.workerTrust.spiffe.trustDomain $.Values.workerTrust.spiffe.agentNamespace $.Values.workerTrust.spiffe.agentServiceAccount | quote }} }
+            {{- else }}
+            - { name: PRISM_TRUSTED_CONTROL_SPIFFE_ID, value: {{ printf "spiffe://%s/ns/%s/sa/prism-control" $.Values.workerTrust.spiffe.trustDomain $.Release.Namespace | quote }} }
+            {{- end }}
+            {{- end }}
+          resources: {{ toYaml (index $.Values $name).resources | nindent 12 }}
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
+            {{- if or (eq $name "control") (eq $name "worker") }}
+            - { name: swarm-config, mountPath: /etc/kubeclaw/swarm, readOnly: true }
+            {{- end }}
+            {{- if eq $name "worker" }}
+            - { name: native-pool, mountPath: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism }
+            - { name: native-ownership, mountPath: /var/lib/kubeclaw/native/prism }
+            - { name: native-policy, mountPath: /etc/kubeclaw/prism-pool.json, readOnly: true }
+            - { name: native-node-identity, mountPath: /etc/kubeclaw/native-node-id, readOnly: true }
+            - { name: native-runtime-identity, mountPath: /etc/kubeclaw/native-runtime-identity.json, readOnly: true }
+            {{- end }}
+            {{- if eq $name "control" }}
+            - { name: artifacts, mountPath: {{ $swarm.operator.prism.control.artifactRoot | quote }} }
+            {{- if $.Values.control.productDecisions.enabled }}
+            - { name: product-decision-signing, mountPath: /var/run/prism/product-signing, readOnly: true }
+            - { name: product-decision-controller, mountPath: /var/run/prism/product-controller, readOnly: true }
+            {{- end }}
+            {{- end }}
+          {{- if eq $name "worker" }}
+          # The migration is a post-install hook. On the first install the worker
+          # must become ready before that hook can create its nonce table.
+          {{- end }}
+          readinessProbe: { httpGet: { path: {{ ternary "/bootstrap" "/ready" (eq $name "worker") | quote }}, port: 8080 }, initialDelaySeconds: 3 }
+          livenessProbe: { httpGet: { path: /health, port: 8080 }, initialDelaySeconds: 10 }
+        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
+        - name: worker-trust-proxy
+          image: "{{ $.Values.workerTrust.spiffe.envoy.repository }}:{{ $.Values.workerTrust.spiffe.envoy.tag }}@{{ $.Values.workerTrust.spiffe.envoy.digest }}"
+          imagePullPolicy: {{ $.Values.workerTrust.spiffe.envoy.pullPolicy }}
+          args: ["-c", {{ printf "/etc/kubeclaw-worker-trust/%s.yaml" $name | quote }}, "--service-cluster", {{ printf "prism-%s" $name | quote }}]
+          ports: [{ name: worker-trust, containerPort: 8443, protocol: TCP }, { name: envoy-health, containerPort: 19000, protocol: TCP }]
+          startupProbe:
+            httpGet: { path: /bootstrap, port: envoy-health }
+            periodSeconds: 2
+            failureThreshold: 30
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet: { path: /ready, port: envoy-health }
+            initialDelaySeconds: 3
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet: { path: /health, port: envoy-health }
+            initialDelaySeconds: 10
+            timeoutSeconds: 3
+          securityContext: { runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: { drop: ["ALL"] } }
+          resources: {{ toYaml $.Values.workerTrust.spiffe.envoy.resources | nindent 12 }}
+          volumeMounts:
+            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }
+            - { name: spiffe-workload-api, mountPath: /run/spire/sockets, readOnly: true }
+            - { name: worker-trust-tmp, mountPath: /tmp }
+        {{- end }}
+      volumes:
+        - { name: tmp, emptyDir: { sizeLimit: 4Gi } }
+        {{- if or (eq $name "control") (eq $name "worker") }}
+        - { name: swarm-config, configMap: { name: prism-swarm-config, defaultMode: 0444 } }
+        {{- end }}
+        {{- if eq $name "worker" }}
+        - { name: native-pool, hostPath: { path: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism, type: Directory } }
+        - { name: native-ownership, hostPath: { path: /var/lib/kubeclaw/native/prism, type: Directory } }
+        - { name: native-policy, hostPath: { path: /etc/kubeclaw/prism-pool.json, type: File } }
+        - { name: native-node-identity, hostPath: { path: /etc/kubeclaw/native-node-id, type: File } }
+        - { name: native-runtime-identity, hostPath: { path: /etc/kubeclaw/native-runtime-identity.json, type: File } }
+        {{- end }}
+        {{- if eq $name "control" }}
+        - { name: artifacts, persistentVolumeClaim: { claimName: prism-artifacts } }
+        {{- include "prism.productDecisions.volumes" $ | nindent 8 }}
+        {{- end }}
+        {{- if and $.Values.workerTrust.spiffe.enabled (or (eq $name "control") (eq $name "worker")) }}
+        - { name: worker-trust-envoy, configMap: { name: prism-worker-trust, defaultMode: 0444 } }
+        - name: spiffe-workload-api
+          csi: { driver: {{ $.Values.workerTrust.spiffe.csiDriver | quote }}, readOnly: true }
+        - { name: worker-trust-tmp, emptyDir: { sizeLimit: 64Mi } }
+        {{- end }}
+---
+{{- end }}
+{{- range $name := list "studio" "worker" }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata: { name: prism-{{ $name }} }
+spec: { minAvailable: 1, selector: { matchLabels: { app: prism-{{ $name }} } } }
+---
+{{- end }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prism-artifacts
+  annotations:
+    helm.sh/resource-policy: keep
+    argocd.argoproj.io/sync-options: Prune=false,Delete=false
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  accessModes: [ReadWriteOnce]
+  {{- if .Values.artifactStorage.storageClass }}
+  storageClassName: {{ .Values.artifactStorage.storageClass | quote }}
+  {{- end }}
+  resources: { requests: { storage: {{ .Values.artifactStorage.storage }} } }

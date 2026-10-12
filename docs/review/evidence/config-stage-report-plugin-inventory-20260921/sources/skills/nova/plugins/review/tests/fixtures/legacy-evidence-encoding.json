@@ -1,0 +1,107 @@
+{
+  "remoteCommit": "9628872976da8d43c3a17faa89962f9e32d88979",
+  "sourceTree": "cda01987c1112063875cbfefb9ea1723ccbbea47",
+  "sources": [
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+      "gitBlob": "8c929f75a7eb22830fffc39347f541ffc8d89eb6"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-stage-input.ts",
+      "gitBlob": "ea06207d44611dfec38ea81b9b7ddb31ef934a0f"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-parser.ts",
+      "gitBlob": "8aa1094de7b926a3e83fd9687146c84e256a5910"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-bounds.ts",
+      "gitBlob": "1b179009de6f11418d84bb935772862dbb1904c3"
+    },
+    {
+      "path": "skills/nova/plugins/review/src/review-bundle-snapshot.ts",
+      "gitBlob": "8b9750f494bb1ef7e1168fa1e48b6623377bbc76"
+    }
+  ],
+  "original": {
+    "locale": "en-US",
+    "input": {
+      "task": {
+        "id": "task:old",
+        "statement": "Inspect original evidence."
+      },
+      "revisions": {
+        "base": "1111111111111111111111111111111111111111"
+      },
+      "scope": {
+        "allowedPrefixes": [
+          "src"
+        ]
+      },
+      "requirements": [
+        {
+          "id": "req:old",
+          "statement": "Preserve exact evidence."
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "test",
+          "digest": "sha256:597a8244534226f771781ce0ca794742e42396ae5a6761e182ae8c16ba485e0f",
+          "content": {
+            "ä": 1,
+            "z": 2
+          }
+        }
+      ],
+      "contextCandidates": []
+    },
+    "snapshot": {
+      "bundle": {
+        "schemaVersion": "review-bundle.v1",
+        "task": {
+          "id": "task:old",
+          "statement": "Inspect original evidence."
+        },
+        "revisions": {
+          "base": "1111111111111111111111111111111111111111",
+          "head": "2222222222222222222222222222222222222222",
+          "changedManifestDigest": "sha256:30b4c86321032968d8bd5485d967cf0e11fc33b099fee6527cff8fb023a628e7"
+        },
+        "scope": {
+          "changedPaths": [
+            {
+              "path": "src/index.ts",
+              "status": "modified"
+            }
+          ],
+          "allowedPrefixes": [
+            "src"
+          ]
+        },
+        "requirements": [
+          {
+            "id": "req:old",
+            "statement": "Preserve exact evidence."
+          }
+        ],
+        "evidence": [
+          {
+            "kind": "test",
+            "digest": "sha256:597a8244534226f771781ce0ca794742e42396ae5a6761e182ae8c16ba485e0f",
+            "content": "{\"ä\":1,\"z\":2}"
+          }
+        ],
+        "context": [],
+        "selection": {
+          "version": "focused-context.v1",
+          "candidateManifestDigest": "sha256:dda18a0e21ae47c53b4309434cbc02ae8bf764fa83a6defbb719431242722aa7",
+          "expansionRound": 0
+        },
+        "policyDigest": "sha256:823412d1eacb67956220e532959f0104603057c88704863ca38e7cd188fda812"
+      },
+      "digest": "sha256:881f6d8a058711f71f311a640e379ac6794a75845845d36682e40b407c3cdc92"
+    }
+  },
+  "boundary": "Original locale-dependent serializer/parser/snapshot produced this untagged fixture. No gateway or approval is represented; current reader must not reinterpret stored legacy canonical bytes."
+}

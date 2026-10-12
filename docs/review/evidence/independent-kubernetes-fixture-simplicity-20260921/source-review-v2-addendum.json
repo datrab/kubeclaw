@@ -1,0 +1,7 @@
+{
+  "status": "V2 overall integration withheld pending V3 source oracle correction",
+  "finding": "Author follow-up confirmed unchanged structural assertion still uses removed #secretReferences.has(name), while actual extracted readRequest uses settings.secretReferences.has(name).",
+  "correction": "third narrow receiver remapping required; original predicate and SECRET_REFERENCE_DENIED oracle preserved",
+  "priorDecisionLimit": "Earlier V2 review closed nested-export blocker; this additive finding supersedes overall integration readiness.",
+  "runtime": "none"
+}

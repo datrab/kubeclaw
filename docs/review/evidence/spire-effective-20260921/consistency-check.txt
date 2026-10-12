@@ -1,0 +1,1 @@
+PASS: actual rendered server/agent persistence, keys, TTL, image, bootstrap and registration facts match operator inventory. This is manifest consistency, not runtime proof.

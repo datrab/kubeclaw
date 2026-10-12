@@ -1,0 +1,51 @@
+{"ok":true,"adapter":"junit","isolated":true,"cases":2}
+✔ tests/verification/contracts/check-pipeline-junit-report-adapter.mts (3158.441668ms)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /REPORT_ADAPTER_TIMEOUT/u. Input:
+
+'Error: REPORT_ADAPTER_CANCELLED'
+
+    at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-report-adapter-runtime.mts:185:1 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: Error: REPORT_ADAPTER_CANCELLED
+      at AbortSignal.abort (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/process-input.ts:69:36)
+      at [nodejs.internal.kHybridDispatch] (node:internal/event_target:848:20)
+      at AbortSignal.dispatchEvent (node:internal/event_target:789:26)
+      at runAbort (node:internal/abort_controller:554:10)
+      at abortSignal (node:internal/abort_controller:518:3)
+      at AbortController.abort (node:internal/abort_controller:573:5)
+      at Timeout.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:257:45)
+      at listOnTimeout (node:internal/timers:685:17)
+      at process.processTimers (node:internal/timers:618:7) {
+    stdout: '',
+    stderr: '',
+    [cause]: Error: REPORT_ADAPTER_TIMEOUT
+        at Timeout.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:257:51)
+        at listOnTimeout (node:internal/timers:685:17)
+        at process.processTimers (node:internal/timers:618:7)
+  },
+  expected: /REPORT_ADAPTER_TIMEOUT/u,
+  operator: 'rejects',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-pipeline-report-adapter-runtime.mts (6983.115888ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10156.611002
+
+✖ failing tests:
+
+test at tests/verification/contracts/check-pipeline-report-adapter-runtime.mts:1:1
+✖ tests/verification/contracts/check-pipeline-report-adapter-runtime.mts (6983.115888ms)
+  'test failed'

@@ -14,6 +14,27 @@ does not call an agent or forward to a retained v1 lint service.
 
 ## Configuration
 
+The canonical ESLint policy is
+`charts/kubeclaw/files/config/eslint-config.mjs`. It selects rule levels,
+thresholds and explicit infrastructure boundaries. The adjacent
+`discipline-eslint-plugin.mjs` implements the repository-specific rules; it
+contains no alternative policy values. Change operator policy in the configuration
+module and rule behavior in the plugin module.
+
+The Kubeclaw chart delivers the configuration as `eslint.config.mjs`, the
+standard runtime filename, with `discipline-eslint-plugin.mjs` beside it. Both
+files must reach the config volume and the runtime config directory together.
+A missing plugin is an import error; no inline or alternate implementation is
+used as a fallback. `eslintConfigMjs` still replaces the complete configuration
+module when explicitly supplied. Its relative imports must be available in that
+runtime directory.
+
+For repository checks, pass the canonical source explicitly:
+
+```sh
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint-config.mjs <paths>
+```
+
 Stage configuration:
 
 - `policyPath`: canonical lint-policy JSON path.

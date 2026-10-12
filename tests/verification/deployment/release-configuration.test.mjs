@@ -56,3 +56,81 @@ test('ops chart has its own source binding, independent of runtime-only changes'
   assert.throws(() => verifyReleaseConfiguration(root, source, 'ops'), /RELEASE_CONFIGURATION_CHANGED/u);
   verifyReleaseConfiguration(root, source, 'runtime');
 }));
+
+const aliases = {
+  'charts/prism/files/config/swarm.config.json': '../../../kubeclaw/files/config/swarm.config.json',
+  'charts/prism/files/config/swarm.schema.json': '../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json',
+  "charts/prism/templates/_swarm-bundle.tpl": "../../kubeclaw/templates/_swarm-config.tpl",
+  "charts/kubeclaw/files/config/swarm.schema.json": "../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+  "charts/kubeclaw/files/config/swarm-components.schema.json": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+  "charts/prism/files/config/swarm-components.schema.json": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+  "charts/prism/files/config/prism-control.config.json": "../../../kubeclaw/files/config/prism-control.config.json",
+  "charts/prism/files/config/prism-studio.config.json": "../../../kubeclaw/files/config/prism-studio.config.json",
+  "charts/prism/files/config/prism-worker.config.json": "../../../kubeclaw/files/config/prism-worker.config.json",
+  "charts/prism/files/config/prism-execution.config.json": "../../../kubeclaw/files/config/prism-execution.config.json",
+  "charts/prism/files/config/buster-engine.config.json": "../../../kubeclaw/files/config/buster-engine.config.json",
+  "charts/prism/files/config/worker-core.config.json": "../../../kubeclaw/files/config/worker-core.config.json",
+};
+function withAliases(run) {
+  return repository(context => {
+    for (const [name, target] of Object.entries(aliases)) {
+      context.write(path.posix.normalize(path.posix.join(path.posix.dirname(name), target)), '{}\n');
+      fs.mkdirSync(path.dirname(path.join(context.root, name)), { recursive: true });
+      fs.symlinkSync(target, path.join(context.root, name));
+    }
+    context.source = context.commit();
+    run(context);
+  });
+}
+
+test('canonical aliases bind both target bytes to the image source commit, including schema outside charts', () => withAliases(({ root, write, commit, source }) => {
+  verifyReleaseConfiguration(root, source, 'runtime');
+  write('docs/new.md', 'unrelated'); commit();
+  verifyReleaseConfiguration(root, source, 'runtime');
+  for (const [name, target] of Object.entries(aliases)) {
+    const canonical = path.posix.normalize(path.posix.join(path.posix.dirname(name), target));
+    write(canonical, JSON.stringify({ changed: name }) + '\n'); commit();
+    assert.throws(() => verifyReleaseConfiguration(root, source, 'runtime'), /RELEASE_CONFIGURATION_CHANGED/u);
+    verifyReleaseConfiguration(root, source, 'ops');
+    write(canonical, '{}\n');
+  }
+  verifyReleaseConfiguration(root, source, 'runtime');
+}));
+
+test('canonical alias cannot be retargeted or replaced with an identical regular copy', () => withAliases(({ root, source }) => {
+  for (const [name, target] of Object.entries(aliases)) {
+    const link = path.join(root, name);
+    const absolute = path.resolve(path.dirname(link), target);
+    for (const replacement of [absolute, '../../../../../outside.json']) {
+      fs.unlinkSync(link); fs.symlinkSync(replacement, link);
+      assert.throws(() => verifyReleaseConfiguration(root, source, 'runtime'), /RELEASE_CONFIGURATION_SYMLINK/u);
+      fs.unlinkSync(link); fs.symlinkSync(target, link);
+    }
+    fs.unlinkSync(link); fs.copyFileSync(absolute, link);
+    assert.throws(() => verifyReleaseConfiguration(root, source, 'runtime'), /RELEASE_CONFIGURATION_ALIAS_CHANGED/u);
+    fs.unlinkSync(link); fs.symlinkSync(target, link);
+  }
+}));
+
+test('source commit cannot introduce arbitrary or retargeted aliases', () => withAliases(({ root, commit }) => {
+  const link = path.join(root, Object.keys(aliases)[0]);
+  fs.unlinkSync(link); fs.symlinkSync('/tmp/outside', link);
+  assert.throws(() => verifyReleaseConfiguration(root, commit(), 'runtime'), /RELEASE_CONFIGURATION_SOURCE_FILE_INVALID/u);
+  fs.unlinkSync(link); fs.symlinkSync(Object.values(aliases)[0], link);
+  fs.symlinkSync('values.yaml', path.join(root, 'charts/prism/unknown.yaml'));
+  assert.throws(() => verifyReleaseConfiguration(root, commit(), 'runtime'), /RELEASE_CONFIGURATION_SOURCE_FILE_INVALID/u);
+}));
+
+test('canonical schema cannot escape through a directory symlink or leaf symlink', () => withAliases(({ root, source }) => {
+  const directory = path.join(root, 'skills/common');
+  const outside = fs.mkdtempSync(path.join(os.tmpdir(), 'release-outside-'));
+  try {
+    fs.renameSync(directory, path.join(outside, 'common'));
+    fs.symlinkSync(path.join(outside, 'common'), directory);
+    assert.throws(() => verifyReleaseConfiguration(root, source, 'runtime'), /RELEASE_CONFIGURATION_DIRECTORY_REQUIRED/u);
+    fs.unlinkSync(directory); fs.renameSync(path.join(outside, 'common'), directory);
+    const schema = path.join(directory, 'plugin-runtime/foundation/config/swarm.schema.json');
+    fs.renameSync(schema, path.join(outside, 'schema.json')); fs.symlinkSync(path.join(outside, 'schema.json'), schema);
+    assert.throws(() => verifyReleaseConfiguration(root, source, 'runtime'), /RELEASE_CONFIGURATION_FILE_REQUIRED/u);
+  } finally { fs.rmSync(outside, { recursive: true, force: true }); }
+}));

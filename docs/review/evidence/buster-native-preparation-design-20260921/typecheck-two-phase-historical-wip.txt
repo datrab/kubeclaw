@@ -1,0 +1,15 @@
+skills/buster/engine/test-gates/preparation-ledger.ts(134,89): error TS2339: Property 'importId' does not exist on type 'HistoricalInputReference | StagedInputReference'.
+  Property 'importId' does not exist on type 'StagedInputReference'.
+skills/buster/engine/test-gates/preparation-ledger.ts(141,89): error TS2339: Property 'admissionId' does not exist on type 'HistoricalInputReference | StagedInputReference'.
+  Property 'admissionId' does not exist on type 'HistoricalInputReference'.
+skills/buster/engine/test-gates/preparation-reservations.ts(24,48): error TS2552: Cannot find name 'BusterStagedAdmission'. Did you mean 'StagedAdmission'?
+skills/buster/engine/test-gates/preparation-reservations.ts(33,52): error TS2552: Cannot find name 'BusterStagedAdmission'. Did you mean 'StagedAdmission'?
+skills/buster/engine/test-gates/prepared-plan-store.ts(106,11): error TS2322: Type '{ schemaVersion: "buster-plan-job-record.v2"; job: PreparedPlanJob; input: HistoricalInputReference | StagedInputReference; source: null; status: RemotePlanStatusV1; }' is not assignable to type 'PreparedPlanJobRecord'.
+  Type '{ schemaVersion: "buster-plan-job-record.v2"; job: PreparedPlanJob; input: HistoricalInputReference | StagedInputReference; source: null; status: RemotePlanStatusV1; }' is not assignable to type 'StagedAdmission & { readonly schemaVersion: "buster-plan-job-record.v2"; readonly source: PreparedSourceReference | null; readonly status: RemotePlanStatusV1; }'.
+    Type '{ schemaVersion: "buster-plan-job-record.v2"; job: PreparedPlanJob; input: HistoricalInputReference | StagedInputReference; source: null; status: RemotePlanStatusV1; }' is not assignable to type 'StagedAdmission'.
+      Types of property 'input' are incompatible.
+        Type 'HistoricalInputReference | StagedInputReference' is not assignable to type 'StagedInputReference'.
+          Property 'admissionId' is missing in type 'HistoricalInputReference' but required in type 'StagedInputReference'.
+skills/buster/engine/test-gates/remote-plan-service.ts(61,37): error TS2552: Cannot find name 'BusterStagedAdmission'. Did you mean 'StagedAdmission'?
+skills/buster/engine/test-gates/remote-plan-service.ts(258,20): error TS2552: Cannot find name 'BusterStagedAdmission'. Did you mean 'StagedAdmission'?
+skills/buster/engine/test-gates/remote-plan-service.ts(286,28): error TS2552: Cannot find name 'BusterStagedAdmission'. Did you mean 'StagedAdmission'?

@@ -1,0 +1,32 @@
+Commands run from repository root. Logs retain stdout and stderr. Earlier incomplete combined runs are retained and explicitly not counted as suite passes.
+
+policy-http-helm.txt (244/244; test names later escaped JSON values only):
+node --test skills/prism/tests/swarm-control-policy.test.mts skills/prism/tests/control-generation-http.test.mts tests/verification/deployment/prism-swarm-config.test.mjs
+
+runtime.txt (209/209):
+node --test skills/prism/tests/swarm-worker-config.test.mts skills/prism/tests/swarm-native-settings.test.mts skills/prism/tests/swarm-resource-policy.test.mts skills/prism/tests/swarm-worker-behavior.test.mts skills/prism/tests/swarm-input-limit.test.mts skills/prism/tests/swarm-supervisor-config.test.mts
+
+control-serial.txt (34/34):
+node --test --test-concurrency=1 skills/prism/tests/control*.test.mts skills/prism/tests/e2e.test.mts skills/prism/tests/pipeline-preference-subject.test.mts skills/prism/tests/artifact-durability.test.mts
+
+release-serial.txt (25/25):
+node --test --test-concurrency=1 tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/code-release.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/runtime-inputs.test.mjs tests/verification/deployment/deployment-release.test.mjs
+
+typecheck-completed.txt:
+node node_modules/typescript/bin/tsc --noEmit -p skills/prism/tsconfig.json
+
+lint-completed.txt:
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugin-runtime/foundation/config/swarm.ts skills/prism/server/control-config.ts skills/prism/tests/fixtures/control-policy.mts skills/prism/tests/control-server-config.test.mts skills/prism/tests/pipeline-preference-subject.test.mts skills/prism/tests/control-product-composition.test.mts skills/prism/tests/control-generation-http.test.mts skills/prism/tests/swarm-control-policy.test.mts tests/verification/deployment/prism-swarm-config.test.mjs
+
+Three semantic mutants, run serially; each expected to fail both actual HTTP profile assertions:
+CONTROL_POLICY_MUTANT=subject node --import ./docs/review/evidence/config-control-policy-20260921/mutant-hook.mjs --test --test-concurrency=1 --test-name-pattern='CC3 real Control service profile' skills/prism/tests/control-generation-http.test.mts
+CONTROL_POLICY_MUTANT=root node --import ./docs/review/evidence/config-control-policy-20260921/mutant-hook.mjs --test --test-concurrency=1 --test-name-pattern='CC3 real Control service profile' skills/prism/tests/control-generation-http.test.mts
+CONTROL_POLICY_MUTANT=studio node --import ./docs/review/evidence/config-control-policy-20260921/mutant-hook.mjs --test --test-concurrency=1 --test-name-pattern='CC3 real Control service profile' skills/prism/tests/control-generation-http.test.mts
+
+Documentation:
+node scripts/docs-inventory.mjs
+node scripts/docs-generate.mjs
+node scripts/docs-check.mjs
+node scripts/docs-check-refs.mjs
+
+No privileged native, cluster, commit, push or deployment action was performed.

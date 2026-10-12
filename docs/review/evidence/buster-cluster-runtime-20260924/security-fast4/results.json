@@ -1,0 +1,151 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/buster/engine/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "types-1",
+    "seconds": 6.808023534016684
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "types-2",
+    "seconds": 6.1051277060760185
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/nova/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "types-3",
+    "seconds": 4.287300900090486
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "scripts/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "types-4",
+    "seconds": 7.096581042045727
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/contracts/tsconfig.buster-cluster-policy.json"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "types-5",
+    "seconds": 6.050641694106162
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint-config.mjs",
+      "charts/kubeclaw/files/config/eslint-config.mjs",
+      "scripts/buster-cluster-preflight.mjs",
+      "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "skills/buster/engine/test-gates/production-config-values.ts",
+      "skills/buster/engine/test-gates/production.ts",
+      "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "tests/fixtures/test-gate/buster-cli-profile.mjs",
+      "tests/fixtures/test-gate/cluster-command.mjs",
+      "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+      "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs",
+      "tests/verification/contracts/buster-cluster-output-consumers.test.mjs",
+      "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+      "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs",
+      "tests/verification/contracts/buster-process-input-callers.test.mjs",
+      "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+      "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "tests/verification/deployment/buster-admission-render.test.mjs",
+      "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+      "tests/verification/deployment/buster-process-input-parity.test.mjs",
+      "tests/verification/deployment/buster-readiness-config.test.mjs",
+      "tests/verification/deployment/config-component-packaging.test.mjs",
+      "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "tests/verification/reliability/buster-cluster-entrypoint.test.mjs",
+      "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+      "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+      "tests/verification/reliability/tailscale-generation.test.mjs",
+      "scripts/native-worker-node-policy.d.mts",
+      "scripts/registry-client-config.d.mts",
+      "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "tests/verification/e2e/registry-target.d.mts",
+      "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "tests/verification/contracts/check-pipeline-security-implementation.mts",
+      "skills/buster/engine/test-gates/kubernetes-command-environment.ts",
+      "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
+      "tests/fixtures/test-gate/cluster-command-api.mjs",
+      "tests/fixtures/test-gate/cluster-command-program.cjs",
+      "tests/fixtures/test-gate/cluster-route-provider.mjs",
+      "tests/fixtures/test-gate/cluster-test-ownership.mjs",
+      "tests/verification/contracts/buster-cluster-capture.test.mjs",
+      "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "tests/fixtures/test-gate/cluster-ownership-reporter.mjs",
+      "tests/fixtures/test-gate/cluster-ownership-scenario.mjs",
+      "tests/verification/contracts/buster-cluster-ownership.test.mjs"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "canonical-lint",
+    "seconds": 7.193672690074891
+  },
+  {
+    "command": [
+      "sh",
+      "-n",
+      "docker/buster-runtime-entrypoint.sh"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "shell-syntax",
+    "seconds": 0.00177474704105407
+  }
+]

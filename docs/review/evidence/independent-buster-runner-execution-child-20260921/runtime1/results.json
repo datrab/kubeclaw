@@ -1,0 +1,103 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/nova/plugins/lint/tests/eslint-discipline.test.mjs",
+      "tests/verification/deployment/eslint-policy-delivery.test.mjs"
+    ],
+    "exitCode": 1,
+    "name": "runtime-1",
+    "seconds": 1.6245677899569273
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    ],
+    "exitCode": 1,
+    "name": "runtime-2",
+    "seconds": 1.5667962959269062
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts"
+    ],
+    "exitCode": 1,
+    "name": "runtime-3",
+    "seconds": 1.7843375790398568
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-deadline.test.mts",
+      "tests/verification/reliability/provider-completion.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "runtime-4",
+    "seconds": 5.806902920012362
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-worker-local-runtime.mts"
+    ],
+    "exitCode": 0,
+    "name": "runtime-5",
+    "seconds": 0.4147388990968466
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-worker-attempt-executor.mts"
+    ],
+    "exitCode": 0,
+    "name": "runtime-6",
+    "seconds": 8.431998341111466
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-observability-durable-attempts.mts"
+    ],
+    "exitCode": 0,
+    "name": "runtime-7",
+    "seconds": 0.9655748469522223
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/check-pipeline-buster-execution-policy.mts",
+      "tests/verification/contracts/provider-child-session.test.mjs"
+    ],
+    "exitCode": 1,
+    "name": "runtime-8",
+    "seconds": 3.369824929977767
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/integration/direct-command-output-contract.test.mts"
+    ],
+    "exitCode": 0,
+    "name": "runtime-9",
+    "seconds": 1.2863731780089438
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:config:components"
+    ],
+    "exitCode": 1,
+    "name": "runtime-10",
+    "seconds": 48.65981533692684
+  }
+]

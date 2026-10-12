@@ -1,0 +1,44 @@
+{
+  "gitStatusSnapshotBeforeHandoffSha256": "9631f91681e8b9ba8b983b117c005c4203620548e085c4cab79f7341f3f65c70",
+  "untrackedNonignoredFiles": 33146,
+  "untrackedLogicalBytes": 10168236228,
+  "groups": {
+    ".kube": {
+      "files": 144,
+      "bytes": 54504
+    },
+    "charts": {
+      "files": 26,
+      "bytes": 58420
+    },
+    "docker": {
+      "files": 2,
+      "bytes": 5247
+    },
+    "docs": {
+      "files": 9,
+      "bytes": 105403
+    },
+    "docs/review/evidence": {
+      "files": 32371,
+      "bytes": 10162837153
+    },
+    "docs/review/remediation": {
+      "files": 260,
+      "bytes": 3196211
+    },
+    "scripts": {
+      "files": 49,
+      "bytes": 328210
+    },
+    "skills": {
+      "files": 154,
+      "bytes": 808495
+    },
+    "tests": {
+      "files": 131,
+      "bytes": 842585
+    }
+  },
+  "note": "Only untracked nonignored files counted; tracked modifications/deletions and ignored artifacts need their own transfer. Does not prove cloud availability."
+}

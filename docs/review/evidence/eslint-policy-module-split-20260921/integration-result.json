@@ -1,0 +1,53 @@
+{
+  "integrated": true,
+  "runtimeVerified": false,
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+      "beforeSha256": null,
+      "afterSha256": "5fe7ac0657744ce6039b702a2d435fd870916e6e32b78fb90addb3e75606611a"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/discipline-eslint-plugin.mjs",
+      "beforeSha256": null,
+      "afterSha256": "a16377f89b37d78f46e5dfad8108264a8858a17ca991ea2b984cc1b9f729516e"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/eslint-discipline.test.mjs",
+      "beforeSha256": "a81828e20d0bc2729d00687acef72a4e5196dace43c110e44b88a77de8cc58de",
+      "afterSha256": "7c0d58c5c3893334450c3cdbc5b86456ab4791f23b5107f82955d654cef2790a"
+    },
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "beforeSha256": "6f3860e7ac7719f8530a67631828af83f098a298250ce007e3b5911c8f4df796",
+      "afterSha256": "cb4aca9459d3eb545425da701f0abb20196ff54bb00101287e4e9cf53e6bd729"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "beforeSha256": "2bacf41f7a19cf66267cd8dfd70b4e87b565943f258955efd7200cd6c473d03d",
+      "afterSha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875"
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "beforeSha256": "90ac3b592d6e1ae3b5b535251af3540cdfeeb311dc237d6cd2760b0f1b430bd4",
+      "afterSha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+    },
+    {
+      "path": "skills/nova/plugins/lint/README.md",
+      "beforeSha256": "95b6617ebe1ea090c7ac550f269ee82b17dfb82159eb777c6e25007fae95320c",
+      "afterSha256": "dcee7f5e346f1334379b0cd99a6c83f1beb1c87239bbe85592cd6b07eb0f3925"
+    },
+    {
+      "path": "tests/verification/deployment/eslint-policy-delivery.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "35a565762ba1d6d7e022dc9c4399ee67cbe612a3c1112927745a104caa4300ad"
+    }
+  ],
+  "retired": [
+    {
+      "path": "charts/kubeclaw/files/config/eslint.config.mjs",
+      "beforeSha256": "e39eec75b7ac987c0391cc97b910a8ad9922a4475d9d20d897bf026bbaa36ccf"
+    }
+  ],
+  "oldSourceAbsent": true
+}

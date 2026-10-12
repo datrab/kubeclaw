@@ -1,0 +1,19 @@
+{
+  "headCommit": "cd9f235345f5fd8736a2ffe75d806288e4d538db",
+  "files": [
+    {
+      "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+      "headSha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+      "currentSha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+      "byteIdenticalToHead": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+      "headSha256": "caae066464f5c9488a78371613bb02eea4242d5db1630fe3566da0963196c9b2",
+      "currentSha256": "caae066464f5c9488a78371613bb02eea4242d5db1630fe3566da0963196c9b2",
+      "byteIdenticalToHead": true
+    }
+  ],
+  "unchangedAdapterMatchesUnchangedStaticPattern": false,
+  "scope": "Source comparison only; no baseline full runtime pass claimed. Current unchanged script is red and retained. Its real earlier record/blob assertions executed before this failed assertion."
+}

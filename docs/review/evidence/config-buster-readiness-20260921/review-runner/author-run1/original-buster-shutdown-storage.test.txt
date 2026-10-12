@@ -1,0 +1,94 @@
+✖ durable shutdown failure ownership: during (408.180408ms)
+✖ durable shutdown failure ownership: after (240.89159ms)
+✖ durable shutdown failure ownership: queued (187.031421ms)
+✖ durable shutdown failure ownership: admission (190.910752ms)
+✖ durable shutdown failure ownership: read-failure (177.7716ms)
+✖ durable shutdown failure ownership: healthy-terminal (187.464722ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 0
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3160.975251
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:19:102
+✖ durable shutdown failure ownership: during (408.180408ms)
+  Error: spawn /usr/bin/tar ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:287:19)
+      at onErrorNT (node:internal/child_process:525:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /usr/bin/tar',
+    path: '/usr/bin/tar',
+    spawnargs: [ '--numeric-owner', '-tvzf', '/tmp/result-reservation-HafNCb/state-modeled-preparation/extract-dchfIp/repository.tar.gz' ]
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:19:102
+✖ durable shutdown failure ownership: after (240.89159ms)
+  Error: spawn /usr/bin/tar ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:287:19)
+      at onErrorNT (node:internal/child_process:525:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /usr/bin/tar',
+    path: '/usr/bin/tar',
+    spawnargs: [ '--numeric-owner', '-tvzf', '/tmp/result-reservation-aNmdNp/state-modeled-preparation/extract-JmClPG/repository.tar.gz' ]
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:19:102
+✖ durable shutdown failure ownership: queued (187.031421ms)
+  Error: spawn /usr/bin/tar ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:287:19)
+      at onErrorNT (node:internal/child_process:525:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /usr/bin/tar',
+    path: '/usr/bin/tar',
+    spawnargs: [ '--numeric-owner', '-tvzf', '/tmp/result-reservation-KddNdG/state-modeled-preparation/extract-KFMGCM/repository.tar.gz' ]
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:19:102
+✖ durable shutdown failure ownership: admission (190.910752ms)
+  Error: spawn /usr/bin/tar ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:287:19)
+      at onErrorNT (node:internal/child_process:525:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /usr/bin/tar',
+    path: '/usr/bin/tar',
+    spawnargs: [ '--numeric-owner', '-tvzf', '/tmp/result-reservation-FiplFM/state-modeled-preparation/extract-OILAod/repository.tar.gz' ]
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:19:102
+✖ durable shutdown failure ownership: read-failure (177.7716ms)
+  Error: spawn /usr/bin/tar ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:287:19)
+      at onErrorNT (node:internal/child_process:525:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /usr/bin/tar',
+    path: '/usr/bin/tar',
+    spawnargs: [ '--numeric-owner', '-tvzf', '/tmp/result-reservation-enfNCe/state-modeled-preparation/extract-hfHlHj/repository.tar.gz' ]
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:19:102
+✖ durable shutdown failure ownership: healthy-terminal (187.464722ms)
+  Error: spawn /usr/bin/tar ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:287:19)
+      at onErrorNT (node:internal/child_process:525:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /usr/bin/tar',
+    path: '/usr/bin/tar',
+    spawnargs: [ '--numeric-owner', '-tvzf', '/tmp/result-reservation-fCHCMj/state-modeled-preparation/extract-iPaGlo/repository.tar.gz' ]
+  }

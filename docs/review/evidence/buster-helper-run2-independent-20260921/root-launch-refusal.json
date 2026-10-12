@@ -1,0 +1,18 @@
+{
+  "at": "2026-09-21T12:03:27.846338+00:00",
+  "command": "python3 docs/review/evidence/isolated-buster-helper-vm-run2-proposal-20260921/launch-approved.py --execute-reviewed-proposal --confirm-no-heavy-tests",
+  "exitCode": 1,
+  "stderr": "Fixed host memory envelope unavailable; do not raise guest budget automatically.",
+  "booted": false,
+  "subsequentMemoryStat": "anon 217792512\nfile 587956224\nkernel 314298368\nkernel_stack 786432\npagetables 2154496\nsec_pagetables 0\npercpu 2072\nsock 0\nvmalloc 16384\nshmem 0\nzswap 0\nzswapped 0\nfile_mapped 479232\nfile_dirty 1482752\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 0\nshmem_thp 0\ninactive_anon 0\nactive_anon 217710592\ninactive_file 193253376\nactive_file 394702848\nunevictable 0\nslab_reclaimable 309903968\nslab_unreclaimable 1337120\nslab 311241088\nworkingset_refault_anon 0\nworkingset_refault_file 2941576\nworkingset_activate_anon 0\nworkingset_activate_file 2883097\nworkingset_restore_anon 0\nworkingset_restore_file 88369\nworkingset_nodereclaim 8960\npgscan 55703780\npgsteal 55703681\npgscan_kswapd 0\npgscan_direct 55703780\npgscan_khugepaged 0\npgsteal_kswapd 0\npgsteal_direct 55703681\npgsteal_khugepaged 0\npgfault 298751115\npgmajfault 2460\npgrefill 354663\npgactivate 28\npgdeactivate 0\npglazyfree 0\npglazyfreed 0\nzswpin 0\nzswpout 0\nzswpwb 0\nthp_fault_alloc 1284\nthp_collapse_alloc 0\nthp_swpout 0\nthp_swpout_fallback 0\n",
+  "secondIdenticalRefusal": {
+    "exitCode": 1,
+    "booted": false,
+    "guardChanged": false
+  },
+  "thirdIdenticalRefusal": {
+    "exitCode": 1,
+    "booted": false,
+    "guardChanged": false
+  }
+}

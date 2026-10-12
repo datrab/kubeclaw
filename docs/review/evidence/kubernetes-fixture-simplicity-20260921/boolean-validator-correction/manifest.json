@@ -1,0 +1,6 @@
+{
+  "path": "skills/buster/engine/test-gates/kubernetes-fixture-values.ts",
+  "beforeSha256": "b0fc410563b99da53603cca363dee4e8dd3552893ff13e96317ecdb4ee8570bf",
+  "afterSha256": "bf0d1b34c387395c58be0b171741e2e338ec6f25449bdad4fbf2aeb3ff40f6ad",
+  "reason": "Boolean validator is explicitly typed boolean; conventional is-prefix lets existing lint rule distinguish boolean disjunction from value fallback. No rule or behavior changes."
+}

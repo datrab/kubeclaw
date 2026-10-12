@@ -1,0 +1,29 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/nova/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "name": "types-nova",
+    "seconds": 4.3673446589382365
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint-config.mjs",
+      "skills/nova/core/test-gates/source-process-lifecycle.ts",
+      "skills/nova/core/test-gates/source-git.ts",
+      "tests/verification/reliability/nova-source-cleanup-errors.test.mjs",
+      "tests/verification/reliability/nova-source-deadline.test.mts"
+    ],
+    "exitCode": 0,
+    "name": "canonical-lint",
+    "seconds": 3.598043911042623
+  }
+]

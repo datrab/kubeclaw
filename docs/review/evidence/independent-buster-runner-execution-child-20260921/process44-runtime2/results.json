@@ -1,0 +1,142 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:buster:execution-config"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-1",
+    "seconds": 85.48766717198305
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/buster/engine/test-gates/tests/process-input.test.ts",
+      "skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-2",
+    "seconds": 5.937466538976878
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-3",
+    "seconds": 2.017329433001578
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-4",
+    "seconds": 1.970378699945286
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/http-authority.test.mts",
+      "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+      "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+      "tests/verification/reliability/tailscale-generation.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-5",
+    "seconds": 10.399412569007836
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-6",
+    "seconds": 3.5069836010225117
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-junit-report-adapter.mts"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-7",
+    "seconds": 2.5687779949512333
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:lint:policy-delivery"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-8",
+    "seconds": 13.670045315055177
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "skills/buster/engine/test-gates/tests/provider-capabilities.test.ts"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-9",
+    "seconds": 0.2644251239253208
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-10",
+    "seconds": 98.9055319930194
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-11",
+    "seconds": 14.740397087996826
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:config:components"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-12",
+    "seconds": 102.73373606102541
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "scripts/tests/remediation-register.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-13",
+    "seconds": 5.450128691969439
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "scripts/review/remediation-register.mjs",
+      "--check"
+    ],
+    "exitCode": 0,
+    "name": "report-runtime-14",
+    "seconds": 0.36453450191766024
+  }
+]

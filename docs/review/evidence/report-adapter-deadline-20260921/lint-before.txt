@@ -1,0 +1,10 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts
+   97:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                    max-depth
+  141:3   error  Async method 'read' has a complexity of 18. Maximum allowed is 15                         complexity
+  266:3   error  Private async method #adaptWithinDeadline has too many lines (61). Maximum allowed is 60  max-lines-per-function
+  266:3   error  Private async method #adaptWithinDeadline has a complexity of 22. Maximum allowed is 15   complexity
+  320:1   error  File has too many lines (345). Maximum allowed is 300                                     max-lines
+
+✖ 5 problems (5 errors, 0 warnings)
+

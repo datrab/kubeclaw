@@ -1,0 +1,36 @@
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (10416.858985ms)
+✔ independent conflicting original signal idempotency key cannot authorize projection even under another waitId (6705.750441ms)
+✔ independent original wait fence preserves immutable operator scope despite caller mutation across await (9097.335176ms)
+{"proof":"genuine-historical-approval-retained-after-original-expiry","timeoutMinutes":1,"originalHistoryUnchanged":true,"posts":1}
+✔ independent genuinely resolved historical wait remains eligible after original one-minute expiry without clock replacement (64712.396668ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (20875.320854ms)
+{"proof":"original-Core-approved-request-projection","releasedBytes":7358,"records":2,"posts":1}
+✔ genuine original terminal human approval projects only duplicate request bytes and keeps exact original stale receipt replay (9595.013868ms)
+✔ actual persisted authority corruption refuses selected request, wait and signal mismatches without changing metadata (7514.026643ms)
+✔ actual separate-process run and wait fences block retention; SIGKILL releases owner and stale producers preserve accepted receipt (9229.481109ms)
+{"realByteQuota":23000,"realRecordQuota":5,"releasedBytes":7358,"firstQuotaResult":"blocked","admitted":"waiting","recordQuotaResult":"blocked","posts":2}
+✔ real small byte quota admits later original Core notification after net savings but unchanged record count still bounds new work (16808.569623ms)
+✔ real missing/conflicting receipts, unsupported v2 records, alias roots and foreign Core owner remain unprojected (18365.681483ms)
+✔ small genuine original request cannot fund projection overhead and stays atomically unchanged (9235.641735ms)
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (21548.183667ms)
+✔ real terminal approval projects Wait bytes, uses actual Core-owned adapter reader and keeps late duplicate identity (22798.223175ms)
+✔ retained original prefix mutation, truncation and same-byte inode replacement fail without rewriting the projected Wait (17638.984169ms)
+{"proof":"actual-wait-adapter-byte-and-count-quota","originalInitialQuota":268435456,"fixedLaterQuota":9440,"fixedLaterRecordQuota":2,"originalSerializedBytes":9312,"projectedSerializedBytes":3186,"finalSerializedBytesIncludingMetadata":5052,"releasedBytes":6126,"rejected":"blocked","admitted":"waiting","recordRejected":"blocked"}
+✔ fixed real Wait byte quota admits original Core work only after measured savings and record quota is unchanged (23001.978215ms)
+✔ real separate delivery writer fence blocks Wait commit and late original writers retain the accepted receipt (11806.827641ms)
+✔ actual SIGKILL before-rename leaves one atomic Wait state and retry never reinflates original bytes (9788.356702ms)
+✔ actual SIGKILL after-rename leaves one atomic Wait state and retry never reinflates original bytes (6296.118355ms)
+✔ wrong source/receipt identities, aliased/reversed domains and changed intent cannot authorize Wait replacement (6100.588971ms)
+✔ a small original Wait cannot fund projection metadata and remains byte-identical (5937.999195ms)
+✔ the existing operator projection receipt replays after Wait projection using the original logical Wait digest (6888.641963ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 318027.417623

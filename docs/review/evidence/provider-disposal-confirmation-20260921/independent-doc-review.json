@@ -1,0 +1,14 @@
+{
+  "status": "bounded source DOC accepted; runtime pending",
+  "files": [
+    {
+      "path": "docs/architecture/buster-fixture-cleanup.md",
+      "sha256": "c58168504bfda58eeffab4868ffe74f8312306b1a4e22b563823d8b58c07af96"
+    },
+    {
+      "path": "docs/review/remediation/implementation/provider-disposal-confirmation-20260921.md",
+      "sha256": "83af647f827206ad1cd7aa7138a397e3a2e9fa1ac91fbcb16f97a815b731f8b1"
+    }
+  ],
+  "review": "Snapshot deletion now accurately follows successful terminate even when cleanup failed; stop failure preserves snapshot. Confirmed close+drain is distinguished from signal diagnostic and timeout; no historical/durable/native acceptance. All linked files exist. No runtime claim accepted."
+}

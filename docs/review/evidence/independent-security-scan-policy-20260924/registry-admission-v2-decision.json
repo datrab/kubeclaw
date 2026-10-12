@@ -1,0 +1,75 @@
+{
+  "reviewer": "/root/runtime_security_policy_review",
+  "decision": "accept_14_field_private_implementation_design_with_explicit_logical_registry_grants",
+  "scope": "Independent source-design supplement only. No production edits or runtime execution. Does not approve integration, tests, CONFIG closure or overall goal closure.",
+  "supersedes": "design-review-v1.json: 13-field inventory, requirement for full literals in canonical profiles, and blanket prohibition on permission changes following a transport binding are revised here. All other migration, validation, original test and open-boundary requirements remain.",
+  "evidence": [
+    "docker/buster-runtime-entrypoint.sh:295-299 currently constructs allowedRegistryPrefixes from the explicit configured registry plus /kubeclaw.",
+    "charts/kubeclaw/values.yaml:46-60 leaves both private registry and Docker Hub mirror endpoints empty. Neither is an authority for inventing a universal private registry hostname.",
+    "skills/buster/engine/test-gates/security-scan-runtime.ts:168 requires at least one effective full prefix; :197-200 matches immutable image repository by exact equality or slash-child. Host-only full prefixes also authorize repositories and must not silently be rejected.",
+    "docs/operations/registry-clients.md requires operator-supplied private endpoint and distinguishes the Docker Hub mirror."
+  ],
+  "owner": {
+    "path": "buster-engine.config.json settings.securityScan",
+    "fieldCount": 14,
+    "requiredArrays": [
+      "allowedRegistryPrefixes",
+      "registryClientRepositoryPrefixes"
+    ],
+    "remainingFields": "The other 12 inventoried fields retain their owner and explicit required values. Rename original proposed registryRepositoryPrefixes; reject retired spelling rather than treating it as an alias."
+  },
+  "minimalAlgorithm": [
+    "Validate the complete required component policy and any present shared generated descriptor before filesystem/store/registry-construction effects. Each of the two explicit arrays may be empty; missing arrays are errors, not defaults.",
+    "Capture the one optional descriptor and its named external credential values exactly once. Present malformed descriptor always rejects, even if a route is disabled or full-only grants would otherwise work. Absence is explicit, not an anonymous fallback after a validation failure.",
+    "For an enabled security.scan route, nonempty registryClientRepositoryPrefixes requires that captured binding. Derive each full prefix as captured registryReference + slash + explicitly authored relative prefix. Append to authored allowedRegistryPrefixes. Do not infer a default grant from descriptor presence.",
+    "Feed the resulting captured full-prefix array to the existing direct invoker contract. Keep its nonempty effective policy requirement. Both arrays empty for enabled scanning therefore remains invalid; enabling deny-all image policy for dependency-only use would be a separate explicit contract extension, not required for preserving existing dependency/config-only profiles.",
+    "A disabled scan route does not require an absent binding merely because its stored relative grants are nonempty. Do not instantiate its consumer. Route-independent schema and supplied-descriptor validation still apply.",
+    "Preserve exact/slash-child matching, immutable digest requirements, original full-prefix domain and direct constructor callers. Relative values are literal repository prefixes, not URLs, absolute paths, host substitutions, templates or wildcards. Validate their grammar against the existing accepted repository identity domain; do not introduce a stricter Docker repository grammar incidentally.",
+    "Only exact configured host image requests receive configured private credentials/CA. Full grants for other hosts remain anonymous. Multiple admitted hosts do not imply support for multiple private credential sets."
+  ],
+  "explicitScopeDecision": {
+    "canonicalProfiles": {
+      "allowedRegistryPrefixes": [],
+      "registryClientRepositoryPrefixes": [
+        "kubeclaw"
+      ]
+    },
+    "compatibility": "With the same valid binding this resolves to exactly the old entrypoint policy. No hardcoded host, credential fallback, imageEnabled switch, BuildKit prerequisite or new editable endpoint is introduced.",
+    "logicalGrant": "The relative grant is permission to use a named logical registry configured by the operator. Changing that binding deliberately moves this explicitly authored permission to its new host; the old host loses that logical grant unless separately authorized by a full literal prefix.",
+    "literalGrant": "Full allowedRegistryPrefixes remain unchanged across transport changes. A descriptor alone grants no image permission. Mixed policies are the explicit union of both independent admission declarations.",
+    "previousRule": "The earlier blanket transport-change prohibition was this review/design recommendation, not a user requirement. This documented revision restores the existing generated-entrypoint semantics while preserving full-prefix public/multiple-registry support.",
+    "noBindingProfiles": "Explicit full grants plus an empty relative array permit dependency/config and authorized anonymous image scans without shared binding or containerBuild. No operation-specific exception to missing required logical binding is needed."
+  },
+  "requiredOracles": [
+    "Canonical profile plus binding A resolves only A/kubeclaw with exact/slash-boundary denial; changing binding to B in a newly loaded generation moves that relative grant to B and rejects A unless an explicit literal permits A.",
+    "Mixed full grants at two independent hosts plus a relative grant preserve all three policies; changing binding leaves literal grants unchanged. Host-only and existing valid full-prefix callers keep their original behavior.",
+    "Full-only profile plus absent binding executes genuine production service dependency/config and anonymous admitted image flows without containerBuild. Relative enabled profile plus absent binding fails before child/store effects; disabled scan with absent binding remains valid.",
+    "Both arrays required; invalid elements and retired spelling reject. Both empty enabled policy rejects. Valid descriptor without a grant does not implicitly authorize its host. Supplied malformed binding never falls back to anonymous.",
+    "After load, mutate source file, both arrays, nested descriptor and credential environment: existing consumer retains old capture. Newly loaded consumer captures new explicit generation, with old/new allowed and denied counterparts.",
+    "Actual private TLS success, credential failure, unrelated-host no-credential exposure and HTTP-lab denial retain original oracles. No mock invoker, replacement factory, substituted registry or self-fulfilling expected prefix is sufficient.",
+    "All original SS1-SS8/SSDOC and original native/provider/freshness/remote/controller/parity/chart/packaging gates stay in scope; this is no substitute for their execution."
+  ],
+  "migrationAndDocs": "Retain all coordinated v1 migrations: entrypoint emits descriptor once; remove old scanner runtime author and duplicate Build transport/credential fields with presence rejection; Build, scanner, Kube fixture and registryHealth consume the shared captured descriptor without Build dependency. Both charts, required schema, complete profiles, selected exact-byte delivery, config reference, registry-client operations and migration documentation must explain both arrays, canonical logical grant, host-move semantics, absence/errors and single-private-origin auth limit. Update author proposal/count and acceptance matrix to14, without rewriting historical13-field evidence.",
+  "reviewedSourceIdentities": [
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+      "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+    },
+    {
+      "path": "docs/operations/registry-clients.md",
+      "sha256": "46778fa3d1939ecb11dea2289ba789d98c04744d2ab1122502248ebf2fae4dde"
+    },
+    {
+      "path": "docs/review/evidence/buster-security-scan-policy-20260924/ownership-proposal-v1.json",
+      "sha256": "4445b61aeb9307f4690da498594dbb3e72738ddbee355f5334542f7dbf11894b"
+    }
+  ]
+}

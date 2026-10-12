@@ -1,0 +1,12 @@
+✔ kubernetes-command-environment alone is an environment boundary and still rejects defaults (4337.586976ms)
+✔ tailscale-exposure-runtime alone is an environment boundary and still rejects defaults (95.997585ms)
+✔ kubernetes-fixture-runtime forwards transport through the adapter; direct reads remain denied (44.898991ms)
+✔ kubernetes-runtime-security forwards transport through the adapter; direct reads remain denied (44.653325ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5132.595498

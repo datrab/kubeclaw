@@ -16,6 +16,14 @@ function object(value, label) {
 
 function configuration(invocation) {
   const value = object(invocation.configuration.values, 'root');
+  const image = imageConfiguration(invocation, value);
+  const service = serviceConfiguration(value);
+  const retention = retentionConfiguration(value);
+  const credentials = credentialConfiguration(value);
+  return { ...image, ...service, ...retention, ...credentials };
+}
+
+function imageConfiguration(invocation, value) {
   const imageInputs = invocation.inputs.filter((item) => item.name === 'image');
   if (invocation.inputs.some((item) => !['image', 'checked-manifest'].includes(item.name))) {
     throw new Error('KUBERNETES_FIXTURE_INPUT_UNKNOWN');
@@ -29,6 +37,10 @@ function configuration(invocation) {
   if (!matched || typeof image.digest !== 'string' || !DIGEST.test(image.digest) || matched[1] !== image.digest) {
     throw new Error('KUBERNETES_FIXTURE_IMAGE_INVALID');
   }
+  return { immutableImage: image.reference, imageDigest: image.digest };
+}
+
+function serviceConfiguration(value) {
   if (typeof value.serviceName !== 'string' || !DNS_LABEL.test(value.serviceName)) throw new Error('KUBERNETES_FIXTURE_SERVICE_NAME_INVALID');
   if (!Number.isSafeInteger(value.servicePort) || value.servicePort < 1 || value.servicePort > 65535) throw new Error('KUBERNETES_FIXTURE_SERVICE_PORT_INVALID');
   const serviceTargetPort = value.serviceTargetPort;
@@ -37,6 +49,11 @@ function configuration(invocation) {
   if (typeof namespacePrefix !== 'string' || namespacePrefix.length > MAX_NAMESPACE_PREFIX_LENGTH || !DNS_LABEL.test(namespacePrefix)) {
     throw new Error('KUBERNETES_FIXTURE_NAMESPACE_PREFIX_INVALID');
   }
+  return { serviceName: value.serviceName, servicePort: value.servicePort, namespacePrefix,
+    ...(serviceTargetPort === undefined ? {} : { serviceTargetPort }) };
+}
+
+function retentionConfiguration(value) {
   const retention = value.retention === undefined ? {} : object(value.retention, 'retention');
   const retentionMode = retention.mode ?? 'delete';
   const retentionSeconds = retention.seconds ?? 1800;
@@ -46,6 +63,10 @@ function configuration(invocation) {
   if (!Number.isSafeInteger(readinessTimeoutSeconds) || readinessTimeoutSeconds < 1 || readinessTimeoutSeconds > 3600) {
     throw new Error('KUBERNETES_FIXTURE_READINESS_TIMEOUT_INVALID');
   }
+  return { retentionMode, retentionSeconds, readinessTimeoutSeconds };
+}
+
+function credentialConfiguration(value) {
   const secretReferences = value.secretReferences ?? [];
   if (!Array.isArray(secretReferences) || secretReferences.length > 32
     || secretReferences.some((item) => typeof item !== 'string' || !SECRET.test(item))) {
@@ -56,10 +77,7 @@ function configuration(invocation) {
     || typeof testCredentials.secretName !== 'string' || !DNS_LABEL.test(testCredentials.secretName))) {
     throw new Error('KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID');
   }
-  return { immutableImage: image.reference, imageDigest: image.digest, serviceName: value.serviceName,
-    servicePort: value.servicePort, namespacePrefix, retentionMode, retentionSeconds,
-    readinessTimeoutSeconds, secretReferences: [...new Set(secretReferences)],
-    ...(serviceTargetPort === undefined ? {} : { serviceTargetPort }),
+  return { secretReferences: [...new Set(secretReferences)],
     ...(testCredentials ? { testCredentials: { mode: 'generate', secretName: testCredentials.secretName } } : {}) };
 }
 
@@ -131,9 +149,10 @@ export function provider() {
           manifestDigest: manifest.artifact.contentDigest, immutableImage: config.immutableImage,
           retentionMode: config.retentionMode, expiresAt: result.expiresAt }) };
     },
-    async cleanup(invocation, context) {
+    async cleanup(invocation, context, disposition) {
+      if (disposition !== 'incomplete' && disposition !== 'completed-fixture') throw new Error('TEST_PROVIDER_CLEANUP_DISPOSITION_INVALID');
       const config = configuration(invocation);
-      if (config.retentionMode === 'retain') return;
+      if (config.retentionMode === 'retain' && disposition === 'completed-fixture') return;
       const names = identity(invocation, config.namespacePrefix);
       const released = await context.invoke('kubernetes.fixture', { operation: 'release',
         resource: { type: 'kubernetes.fixture', canonicalId: `kubernetes-fixture:${invocation.attemptId}` },

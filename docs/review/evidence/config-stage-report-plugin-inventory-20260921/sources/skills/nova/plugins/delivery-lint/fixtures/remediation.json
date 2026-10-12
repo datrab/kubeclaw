@@ -1,0 +1,13 @@
+{
+  "input": {
+    "moduleId": "example",
+    "repositoryPath": "Dockerfile",
+    "serve": {
+      "dockerfile": "Dockerfile",
+      "staticPath": "/app/public"
+    }
+  },
+  "dockerfile": "COPY public /srv/public\n",
+  "expectedOutcome": "request_fix",
+  "expectedReasonCode": "delivery_lint.static_path_mismatch"
+}

@@ -1,0 +1,19 @@
+{
+  "status": "private source candidate; not integrated or executed",
+  "files": [
+    {
+      "path": "skills/nova/core/test-gates/source-process-lifecycle.ts",
+      "beforeSha256": "5924d42b6b5140cd8148aba4d69e54eca84ba8883e0a2739420019f5b48f778b",
+      "afterSha256": "bab5042e77413e7ce8d0b681f767b7e39328cd50c2fc57a70fc12df4f8b31b1f",
+      "afterFile": "after.ts"
+    },
+    {
+      "path": "tests/verification/reliability/nova-source-cleanup-errors.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "4032cfa9da54e8e3d4525e74e48b1abc4b6c9ce6172036416aad00d56437f093",
+      "afterFile": "nova-source-cleanup-errors.test.mjs"
+    }
+  ],
+  "scope": "Record TERM failure and still install actual close wait; immediately retain group failure while waiting for close; reject after observed signal/group failure even if close succeeds. Existing timing values remain unchanged and uncentralized.",
+  "tests": "Three real owned Node children; narrowly injected TERM/KILL/proc failures, same 1500/250/10 production constants and no descendants. Actual close retained and test teardown owns captured group. Original Nova source deadline tests unchanged and still required."
+}

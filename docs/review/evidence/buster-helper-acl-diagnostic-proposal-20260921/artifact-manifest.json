@@ -1,0 +1,125 @@
+{
+  "status": "prepared-not-booted",
+  "files": [
+    {
+      "path": "node_modules/.cache/buster-helper-acl-vm-20260921/root/usr/bin/qemu-system-x86_64",
+      "bytes": 27791496,
+      "sha256": "d0c183817a3044bc38e104f88ef56ee235c5d91a9413cba7255c1c1751c31fc1"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-acl-vm-20260921/root/boot/vmlinuz-virt",
+      "bytes": 12608512,
+      "sha256": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-acl-vm-20260921/initrd.cpio.gz",
+      "bytes": 1899633,
+      "sha256": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-acl-vm-20260921/guest-root.ext4",
+      "bytes": 8589934592,
+      "sha256": "deeabee22e0c451117d62581f3ffa8531a757d2d7e5f5f3880a6459676469826"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-acl-vm-20260921/guest-root/usr/local/bin/node",
+      "bytes": 131391152,
+      "sha256": "78465b20b5455f64d2dbbd9e8b38470cfc23ad3abe4cdc9a00dc5e050eee70fb"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-acl-vm-20260921/repo-snapshot-manifest.json",
+      "bytes": 6538870,
+      "sha256": "ad55e2b1b8e8ae54b25d341212964e3fa2577ac0a7b7a8940993e6b84b6901b8"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-acl-vm-20260921/guest-root/etc/machine-id",
+      "bytes": 37,
+      "sha256": "3c288240a671c6d12a9525591f32c251d86bad05f4e008529e7343f687f537b8"
+    },
+    {
+      "path": "docs/review/evidence/buster-setpriv-diagnosis-20260921/execvp-observer.c",
+      "bytes": 1274,
+      "sha256": "d1a951fa9142784894db9823fb3d625d0425f9f30acbeb6c7436b467c2be5252"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/acl-diagnosis.mjs",
+      "bytes": 4101,
+      "sha256": "0c186105dd0cdbec37bad34342c4e71342f95056b5d03ef0ed090854a5d96af2"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/baseline-added-packages.json",
+      "bytes": 1465,
+      "sha256": "5e62a0ad06b1e330d211b43796aec4eab71dd582de888021d89d23fbee2f826b"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/baseline-author-source-identities.json",
+      "bytes": 3770,
+      "sha256": "6864e8e8251e907d3b73f59fd959f9080f476391b18ccfd0da0d79781d17e12e"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/baseline-snapshot-delta.json",
+      "bytes": 1792,
+      "sha256": "eaff07be5a92bf3a5e015fe68715af3a7619852f8562bc966a2e047f3b1b0799"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/credential-bridge.mjs",
+      "bytes": 442,
+      "sha256": "9ae16f39ed1409c4593e799773159babe4098cd5bee6ac0c2dfce5d8f45eebb6"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/guest-identity.json",
+      "bytes": 139,
+      "sha256": "a8209c141b3c98b0dcc43cf74ee4ff770eb92a8741d15b1528b8445dc05e928d"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/guest-init.sh",
+      "bytes": 2256,
+      "sha256": "ad4bfe6df10148b57b1e44ab1c325ff25cc450730b70fdcc3009b21df9e087a4"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/image-build.json",
+      "bytes": 1225,
+      "sha256": "87b5d187e4d1d84276130a8e1e621c62731c61fbf180c15af4973b9fe23cf5c6"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/initrd-init.sh",
+      "bytes": 842,
+      "sha256": "3c4544ab612cbdaafb77949c23e6bec5eede4ba34c37dd3d5b5cde088c7b8769"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/launch-approved.py",
+      "bytes": 9670,
+      "sha256": "94ae093ddeee7a86c2a82be5d9acf5171814a108e3ab1f49a5c511cc05e6fad8"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/launch-command.json",
+      "bytes": 1799,
+      "sha256": "32ed87a36ed33337d965c48051eee3b685e0b55e165898c2ccc36cb9122d135d"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/materialize.py",
+      "bytes": 2750,
+      "sha256": "445511127583d0043ece5b9133f7c93a9a95e72ab4a363a4c3be4c6a3ca5267d"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/prepare-images.py",
+      "bytes": 5589,
+      "sha256": "6d9b9c33ed6ce0fec7215b546b9ecd950bd8a21c480bdfd7059711f3abd59081"
+    },
+    {
+      "path": "docs/review/remediation/implementation/buster-helper-acl-diagnostic-proposal-20260921.md",
+      "bytes": 3366,
+      "sha256": "fde4737baa0036686bcfc8b997a375551ea55f44528c80261ee4fc2f8c6fea59"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/observer-build.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-acl-vm-20260921/observer-build-proof.so",
+      "bytes": 16784,
+      "sha256": "4431de52ccf598495a659707c1f214cf159f58cabd10aac8aafbf6b1631dbfb6"
+    }
+  ]
+}

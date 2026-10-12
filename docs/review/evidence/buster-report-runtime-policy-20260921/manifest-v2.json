@@ -1,0 +1,75 @@
+{
+  "status": "private-source-review-candidate-unexecuted",
+  "version": 2,
+  "executionFieldCount": 41,
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "beforeSha256": "a8ed6c31613a155caba92792bbe4763fcb0eacf093dc8f41695a238105a8bdb7",
+      "afterSha256": "38e44551945028e5b532f035d7ab583009965491a9ed9ef3378e0390a6a09467"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "beforeSha256": "4eecd519cfe89e737a80054c99e50ecf4b8fb068bd7fc1763339e7cce5137df7",
+      "afterSha256": "1ac6a3f69d2a7498ef2b1a63f25ac02dbcc29d7703789856daf4612de3764a04"
+    },
+    {
+      "path": "docs/architecture/buster-execution-configuration.md",
+      "beforeSha256": "1a6e7e5f49841ecfe45cc7f62a6110da872fdaca2771bfd52ce8262ad7113f55",
+      "afterSha256": "f4f2c8c1cce8409352b002cb38b2160dc031381251a072d8a9f1460d5b755409"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "beforeSha256": "0c698666a99e51226b2bca2d8287ff491a7baf37dad47448c4574176ee65f569",
+      "afterSha256": "56b073cf7743c417f622cde0cde4df62e56f76b9dd22c075078f54646f114cd5"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "beforeSha256": "e2960d464717d819653c1b379db904b050455d4b23be03aa93105ad7dfc7c6c1",
+      "afterSha256": "ab2678f0d56c0c6bd4d7554af6cadccfe3703e6e8b4c8ae7ff60218ed35194d8"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "beforeSha256": "47a8f9dfe764a207a41dea94873ac67c474de3cc428f0ecc06237222b54a6bd8",
+      "afterSha256": "de407a177017ce5739501947289e9c934eee209e16722ce2cbb9d23000db862b"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "beforeSha256": "8cf8391f4e77b6522e8ea9a37859732168e171c228ff31fc152799d0ea205990",
+      "afterSha256": "e3b3fade1e88b1e814dca06d90c07a4e308d0a30780f5061c26ef6a2654c4123"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "beforeSha256": "2460dd23e97cae74194d4c72255fea3e77a9b711a2de413a9d07893362646711",
+      "afterSha256": "21d135b1c0c6f2b52a1abcb60e0c9f43ac6c76a098b2e7bee2d52fc1248e5582"
+    },
+    {
+      "path": "tests/verification/contracts/buster-report-runtime-policy.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "9bda92a445d13a201a0e6968b2021b752c64243eeab5bc371fe7d8eb6a5f02e8"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+      "beforeSha256": "c95fedf0775d6c5c7089386256c40253c23613dde6c00d7e02c3ebdad410b358",
+      "afterSha256": "9e93442e6fff39c0c70529efa8fbc6380cee67facebbab53fd237e35203c921e"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+      "beforeSha256": "8756a9643c5439696b7355dbbf90d5f9c05af1908183b25dfaa5a5921fe627c4",
+      "afterSha256": "26a66b2ffc32c3dfae2f50e022a7850ce012449d2205dac99829965fd4895446"
+    }
+  ],
+  "runtimeEvidence": false,
+  "remainingProofGates": [
+    "Original adapter/JUnit and default Runner regressions",
+    "New real adapter heap/reserve/descriptor/selected-cap consumers",
+    "Schema/Helm invalid-type and exact-bound parity including runtimeMemoryReserveBytes",
+    "Default Runner forwarding mutants for the four new report fields",
+    "Canonical types and lint",
+    "Fresh independent review and current-live baseline rebase before integration"
+  ],
+  "separateOpenAuthors": [
+    "ProcessInputLifecycle cleanup1500/force250/poll10 shared caller migration",
+    "Native sandbox supervisor20x5ms stop policy"
+  ]
+}

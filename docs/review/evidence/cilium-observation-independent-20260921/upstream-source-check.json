@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/k3s-io/k3s/v1.36.4%2Bk3s1/go.mod",
+    "sha256": "e46938bc44e8e21492d9f4c36b257e2207444f7e61ae629623d05119365439a7",
+    "matches_author_snapshot": true
+  },
+  {
+    "url": "https://raw.githubusercontent.com/k3s-io/cri-tools/v1.36.0-k3s1/cmd/crictl/util.go",
+    "sha256": "bdaed23c562b0853285ed5c1edeb842838f8c556ea5c1be97835b59aca7434e6",
+    "matches_author_snapshot": true
+  },
+  {
+    "url": "https://raw.githubusercontent.com/k3s-io/cri-tools/v1.36.0-k3s1/cmd/crictl/sandbox.go",
+    "sha256": "bd9a1237e12232139a338373184d43c9c7b8f26ffa8c90a7cb5fabd2d6a7558d",
+    "matches_author_snapshot": true
+  }
+]

@@ -1,0 +1,278 @@
+scripts/deploy.sh:1604:  kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- test -f /home/node/.openclaw/swarm.config.json
+skills/prism/tests/swarm-worker-config.test.mts:9:const canonical = fileURLToPath(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
+skills/prism/tests/swarm-worker-config.test.mts:15:  const value = structuredClone(authored); mutate(value); const file = path.join(dir, 'swarm.config.json');
+skills/prism/tests/swarm-worker-config.test.mts:16:  fs.writeFileSync(file, JSON.stringify(value)); return { ...trusted, SWARM_CONFIG: file };
+skills/prism/tests/swarm-worker-config.test.mts:19:  const runtime = loadWorkerConfig({ ...trusted, SWARM_CONFIG: canonical });
+skills/prism/tests/swarm-worker-config.test.mts:31:  assert.throws(() => loadWorkerConfig(env), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-worker-config.test.mts:35:  assert.throws(() => loadWorkerConfig(env), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-worker-config.test.mts:38:  assert.throws(() => loadWorkerConfig({ ...trusted, SWARM_CONFIG: canonical, [key]: key.includes('INPUT_BYTES') ? String(authored.operator.prism.worker.maximumInputBytes) : '120000' }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+skills/prism/tests/swarm-worker-config.test.mts:42:  assert.throws(() => loadWorkerConfig(env), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-worker-config.test.mts:46:  fs.writeFileSync(env.SWARM_CONFIG, '{'); assert.throws(() => loadWorkerConfig(env), SyntaxError);
+skills/prism/tests/swarm-worker-config.test.mts:47:  fs.unlinkSync(env.SWARM_CONFIG); assert.throws(() => loadWorkerConfig(env), /ENOENT/);
+skills/prism/tests/swarm-worker-config.test.mts:59:  const env = { SWARM_CONFIG: canonical, PRISM_WORKER_SECRET: 'sensitive' };
+skills/prism/tests/swarm-worker-config.test.mts:61:  assert.throws(() => loadWorkerConfig({ SWARM_CONFIG: canonical }), /PRISM_WORKER_SECRET is required/);
+skills/prism/tests/swarm-worker-config.test.mts:63:  assert.throws(() => loadWorkerConfig({ SWARM_CONFIG: canonical, WORKER_TRUST_SPIFFE_ENABLED: 'true' }), /SPIFFE trust policy is incomplete/);
+skills/prism/tests/studio-config.test.mts:13:  const value = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/studio-config.test.mts:17:  return {value, write, environment:{SWARM_CONFIG:file}};
+skills/prism/tests/studio-config.test.mts:38:      assert.throws(() => loadStudioConfig({...f.environment,[key]:value}),/SWARM_CONFIG_LEGACY_OVERRIDE/u);
+skills/prism/tests/studio-config.test.mts:52:      assert.throws(() => loadStudioConfig(f.environment),/SWARM_CONFIG_INVALID/u,JSON.stringify(value));
+skills/prism/tests/studio-config.test.mts:58:  assert.throws(() => loadStudioConfig(f.environment),/SWARM_CONFIG_INVALID/u);
+skills/prism/tests/studio-config.test.mts:61:  assert.equal(result.status,1,result.stderr); assert.match(result.stderr,/SWARM_CONFIG_INVALID/u);
+skills/prism/tests/studio-config.test.mts:73:  assert.throws(() => loadStudioConfig({...environment,PORT:'8080'}),/SWARM_CONFIG_LEGACY_OVERRIDE/u);
+skills/prism/tests/swarm-result-journal.test.mts:13:const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/swarm-result-journal.test.mts:23:  const file = path.join(root, 'swarm.config.json'); fs.writeFileSync(file, JSON.stringify(config));
+skills/prism/tests/swarm-result-journal.test.mts:24:  const worker = loadWorkerConfig({ SWARM_CONFIG: file, PRISM_WORKER_SECRET: 'test', DATABASE_URL: 'postgresql://not-opened' });
+skills/prism/tests/swarm-control-policy.test.mts:18:    assert.throws(() => loadControlServerConfig({...credentials,...env}), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-control-policy.test.mts:22:  const env = controlPolicyFixture(t, {}), config = JSON.parse(fs.readFileSync(env.SWARM_CONFIG,'utf8'));
+skills/prism/tests/swarm-control-policy.test.mts:23:  config.operator.prism.control = value; fs.writeFileSync(env.SWARM_CONFIG,JSON.stringify(config));
+skills/prism/tests/swarm-control-policy.test.mts:24:  assert.throws(() => loadPrismSettings(env), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-control-policy.test.mts:29:    for (const value of ['', 'old']) assert.throws(() => loadControlServerConfig({...env,[key]:value}), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+skills/prism/tests/control-product-composition.test.mts:22:const shared = {SWARM_CONFIG: fileURLToPath(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)), PRISM_SESSION_SECRET: 'session-composition-test', PRISM_INGRESS_SECRET: 'ingress-composition-test',
+skills/prism/tests/swarm-resource-operation.test.mts:14:const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/swarm-resource-operation.test.mts:27:    const file = path.join(root, 'swarm.config.json'), artifacts = new ContentAddressedArtifactStore(path.join(root, 'artifacts'));
+skills/prism/tests/swarm-resource-operation.test.mts:31:      const config = loadControlServerConfig({ SWARM_CONFIG: file, PRISM_SESSION_SECRET: 'test', PRISM_INGRESS_SECRET: 'test', PRISM_INGESTION_SECRET: 'test',
+skills/prism/tests/swarm-input-limit.test.mts:17:  const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/swarm-input-limit.test.mts:19:  const file = path.join(root, 'swarm.config.json'); fs.writeFileSync(file, JSON.stringify(authored));
+skills/prism/tests/swarm-input-limit.test.mts:20:  return loadWorkerConfig({ SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' });
+skills/prism/tests/native/resource-policy.mts:4:export const nativeResourcePolicy = loadPrismSettings({ SWARM_CONFIG:
+skills/prism/tests/native/resource-policy.mts:5:  fileURLToPath(new URL('../../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)) }).native.resourcePolicy;
+skills/prism/tests/native/operation-http.mts:33:    const config = loadControlServerConfig({ SWARM_CONFIG: fileURLToPath(new URL('../../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)), PRISM_WORKER_SECRET: 'local-native-dispatch-http',
+skills/prism/tests/native/operation-journal.mts:53:      const changedAuthor = JSON.parse(await fs.readFile(new URL('../../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/native/operation-journal.mts:56:      const changedFile = path.join(directory, 'changed-swarm.config.json'); await fs.writeFile(changedFile, JSON.stringify(changedAuthor));
+skills/prism/tests/native/operation-journal.mts:57:      const changedPolicy = loadPrismSettings({ SWARM_CONFIG: changedFile }).native.resourcePolicy;
+skills/prism/tests/swarm-resource-policy.test.mts:11:const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/swarm-resource-policy.test.mts:19:  const file = path.join(root, 'swarm.config.json'); fs.writeFileSync(file, JSON.stringify(value));
+skills/prism/tests/swarm-resource-policy.test.mts:20:  return { file, value, env: { ...credentials, SWARM_CONFIG: file } };
+skills/prism/tests/swarm-resource-policy.test.mts:25:    for (const load of [loadControlServerConfig, loadWorkerConfig]) assert.throws(() => load(f.env), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-resource-policy.test.mts:31:    for (const load of [loadControlServerConfig, loadWorkerConfig]) assert.throws(() => load(f.env), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-resource-policy.test.mts:37:    assert.throws(() => load({ ...f.env, [key]: value }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+skills/prism/tests/control-image-environment.test.mts:33:    const {SWARM_CONFIG} = controlPolicyFixture(t, expected);
+skills/prism/tests/control-image-environment.test.mts:34:    const environment = {...declaredFinalEnvironment(), SWARM_CONFIG,
+skills/prism/tests/control-image-environment.test.mts:52:    assert.match(conflict.stderr, /SWARM_CONFIG_LEGACY_OVERRIDE:ARTIFACT_ROOT/u);
+skills/prism/tests/control-image-environment.test.mts:55:    assert.match(portConflict.stderr, /SWARM_CONFIG_LEGACY_OVERRIDE:PORT/u);
+skills/prism/tests/control-image-environment.test.mts:60:  const {SWARM_CONFIG} = controlPolicyFixture(t, {});
+skills/prism/tests/control-image-environment.test.mts:63:  const environment: NodeJS.ProcessEnv = {...process.env, SWARM_CONFIG, PORT: '23458'};
+skills/prism/tests/control-server-config.test.mts:8:  SWARM_CONFIG: fileURLToPath(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)),
+skills/prism/tests/control-server-config.test.mts:27:  assert.throws(() => loadControlServerConfig({...shared, PORT: '28080'}), /SWARM_CONFIG_LEGACY_OVERRIDE:PORT/);
+skills/prism/tests/worker-shutdown-boundaries.test.mts:16:  const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/worker-shutdown-boundaries.test.mts:18:  const file = path.join(root, 'swarm.config.json'); fs.writeFileSync(file, JSON.stringify(authored));
+skills/prism/tests/worker-shutdown-boundaries.test.mts:19:  const config = loadWorkerConfig({ SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' });
+skills/prism/tests/worker-shutdown-boundaries.test.mts:84:  const environment = { SWARM_CONFIG: fileURLToPath(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)), WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' };
+skills/prism/tests/swarm-supervisor-consumers.test.mts:12:const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/swarm-supervisor-consumers.test.mts:17:  const file = path.join(root, 'swarm.config.json'); fs.writeFileSync(file, JSON.stringify(value));
+skills/prism/tests/swarm-supervisor-consumers.test.mts:18:  const config = loadWorkerConfig({ SWARM_CONFIG: file, PRISM_WORKER_SECRET: 'test', DATABASE_URL: 'postgresql://not-opened' });
+skills/prism/tests/pipeline-preference-subject.test.mts:47: assert.throws(()=>loadControlConfig(controlPolicyFixture(t,{pipelinePreferenceSubject:'operator:wrong'})),/SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-worker-behavior.test.mts:16:  const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/swarm-worker-behavior.test.mts:18:  const file = path.join(root, 'swarm.config.json'); fs.writeFileSync(file, JSON.stringify(authored));
+skills/prism/tests/swarm-worker-behavior.test.mts:19:  return loadWorkerConfig({ SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://local/control' });
+skills/prism/tests/studio-canonical-image.mts:6:  const authored = JSON.parse(fs.readFileSync(process.env.SWARM_CONFIG ?? new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/control-listener.test.mts:28:    assert.throws(() => loadControlServerConfig(environment), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/control-listener.test.mts:45:    assert.throws(() => loadControlServerConfig({...environment, PORT}), /SWARM_CONFIG_LEGACY_OVERRIDE:PORT/);
+skills/prism/tests/control-listener.test.mts:67:      env: {...process.env, ...credentials, SWARM_CONFIG: fixture.SWARM_CONFIG}, stdio: ['ignore', 'pipe', 'pipe'],
+skills/prism/tests/control-listener.test.mts:76:    fs.writeFileSync(fixture.SWARM_CONFIG, '{}');
+skills/prism/tests/control-listener.test.mts:86:    env: {...process.env, ...credentials, SWARM_CONFIG: fixture.SWARM_CONFIG}, stdio: ['ignore', 'pipe', 'pipe'],
+skills/prism/tests/worker-process-shutdown-native.mts:21:  const config = JSON.parse(await readFile(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/worker-process-shutdown-native.mts:23:  const file = join(root, 'swarm.config.json'); await writeFile(file, JSON.stringify(config)); return file;
+skills/prism/tests/worker-process-shutdown-native.mts:68:      PRISM_WORKER_SECRET: 'local', DATABASE_URL: '', PRISM_CONTROL_INTERNAL_URL: origin.href, SWARM_CONFIG: await authoredConfig(t, 1500) },
+skills/prism/tests/worker-process-shutdown-native.mts:126:        SWARM_CONFIG: await authoredConfig(t, 30) }, stdio: ['ignore', 'pipe', 'pipe'],
+skills/prism/tests/swarm-supervisor-config.test.mts:10:const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/swarm-supervisor-config.test.mts:18:  const file = path.join(root, 'swarm.config.json'); fs.writeFileSync(file, JSON.stringify(value));
+skills/prism/tests/swarm-supervisor-config.test.mts:19:  return { root, file, value, env: { SWARM_CONFIG: file, PRISM_WORKER_SECRET: 'test', DATABASE_URL: 'postgresql://not-opened' } };
+skills/prism/tests/swarm-supervisor-config.test.mts:25:    assert.throws(() => loadWorkerConfig(f.env), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-supervisor-config.test.mts:29:  assert.throws(() => loadWorkerConfig(fixture(t, value).env), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-supervisor-config.test.mts:33:  for (const value of ['', '1']) assert.throws(() => loadWorkerConfig({ ...f.env, [key]: value }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+skills/prism/tests/swarm-native-settings.test.mts:16:const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/swarm-native-settings.test.mts:25:  const file = path.join(root, 'swarm.config.json'); fs.writeFileSync(file, JSON.stringify(value));
+skills/prism/tests/swarm-native-settings.test.mts:26:  return { root, file, value, environment: { ...credentials, SWARM_CONFIG: file } };
+skills/prism/tests/swarm-native-settings.test.mts:48:    for (const load of [loadWorkerConfig, loadControlServerConfig]) assert.throws(() => load(f.environment), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-native-settings.test.mts:53:  for (const load of [loadWorkerConfig, loadControlServerConfig]) assert.throws(() => load(f.environment), /SWARM_CONFIG_INVALID/);
+skills/prism/tests/swarm-native-settings.test.mts:58:  for (const load of [loadWorkerConfig, loadControlServerConfig]) assert.throws(() => load({ ...f.environment, [key]: String(value) }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+scripts/updates/release-configuration.mjs:11:  'charts/prism/files/config/swarm.config.json': '../../../kubeclaw/files/config/swarm.config.json',
+scripts/updates/release-configuration.mjs:12:  'charts/prism/files/config/swarm.schema.json': '../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json',
+skills/prism/tests/fixtures/studio-service.mts:30:  const authored = JSON.parse(fs.readFileSync(process.env.SWARM_CONFIG ?? new URL('../../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/fixtures/studio-service.mts:32:  const configFile = path.join(root, 'swarm.config.json');
+skills/prism/tests/fixtures/studio-service.mts:35:    env: { ...process.env, SWARM_CONFIG: configFile, STUDIO_ROOT: root,
+skills/prism/tests/fixtures/control-policy.mts:8:  const value = JSON.parse(fs.readFileSync(new URL('../../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/fixtures/control-policy.mts:10:  const file = path.join(root, 'swarm.config.json');
+skills/prism/tests/fixtures/control-policy.mts:12:  return { SWARM_CONFIG: file };
+skills/prism/tests/worker-ingress-capacity.test.mts:27:  const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+skills/prism/tests/worker-ingress-capacity.test.mts:29:  const file = path.join(root, 'swarm.config.json'); fs.writeFileSync(file, JSON.stringify(authored));
+skills/prism/tests/worker-ingress-capacity.test.mts:39:  }, async () => {}, workerIngressLimits({ SWARM_CONFIG: file }));
+skills/prism/config/native-worker.ts:18:  if (environment.PRISM_NATIVE_MAXIMUM_INPUT_BYTES !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_NATIVE_MAXIMUM_INPUT_BYTES');
+scripts/check-built-runtime-image.sh:45:      -e SWARM_CONFIG=/etc/kubeclaw/swarm/swarm.config.json \
+scripts/check-built-runtime-image.sh:46:      -v "$PWD/charts/kubeclaw/files/config/swarm.config.json:/etc/kubeclaw/swarm/swarm.config.json:ro" \
+scripts/check-built-runtime-image.sh:51:        -e SWARM_CONFIG=/etc/kubeclaw/swarm/swarm.config.json \
+scripts/check-built-runtime-image.sh:52:        -v "$PWD/charts/kubeclaw/files/config/swarm.config.json:/etc/kubeclaw/swarm/swarm.config.json:ro" \
+skills/prism/server/studio-config.ts:8:    if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use operator.prism.studio`);
+skills/prism/server/control-config.ts:46:  if (environment.PORT !== undefined) throw new Error("SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use operator.prism.control.port");
+docker/Dockerfile.prism-studio:30:    --mount=type=bind,source=charts/kubeclaw/files/config/swarm.config.json,target=/tmp/studio-authored.json \
+docker/Dockerfile.prism-studio:31:    SWARM_CONFIG=/tmp/studio-authored.json node --test --test-concurrency=1 /app/prism/skills/prism/tests/studio-service.test.mts /app/prism/skills/prism/tests/studio-canonical-image.mts
+docker/Dockerfile.buster-runtime:107:COPY charts/kubeclaw/files/config/swarm.config.json /etc/kubeclaw/swarm.config.json
+docker/Dockerfile.buster-runtime:148:ENV SWARM_CONFIG=/etc/kubeclaw/swarm.config.json \
+skills/buster/engine/test-gates/production-config-values.ts:174:      throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use operator.buster.preparation`);
+skills/buster/engine/test-gates/production-config-values.ts:177:    if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use operator.buster.admission`);
+skills/buster/engine/test-gates/preparation-config.ts:62:  const file = environment.SWARM_CONFIG;
+skills/buster/engine/test-gates/preparation-config.ts:63:  if (!file || !path.isAbsolute(file) || path.resolve(file) !== file) throw new Error('BUSTER_NATIVE_SWARM_CONFIG_REQUIRED');
+skills/buster/engine/test-gates/preparation-config.ts:70:        throw new Error('BUSTER_NATIVE_SWARM_CONFIG_NOT_TRUSTED');
+skills/buster/engine/test-gates/preparation-config.ts:76:    throw new Error('BUSTER_NATIVE_SWARM_CONFIG_NOT_TRUSTED');
+skills/common/plugin-runtime/foundation/config/swarm.ts:97:const schema = JSON.parse(fs.readFileSync(new URL('./swarm.schema.json', import.meta.url), 'utf8')) as object;
+skills/common/plugin-runtime/foundation/config/swarm.ts:116:    if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use operator.prism`);
+skills/common/plugin-runtime/foundation/config/swarm.ts:118:  const file = environment.SWARM_CONFIG ?? '/home/node/.openclaw/swarm.config.json';
+skills/common/plugin-runtime/foundation/config/swarm.ts:124:  if (!validate(value)) throw new Error(`SWARM_CONFIG_INVALID:${JSON.stringify(validate.errors ?? [])}`);
+skills/common/plugin-runtime/foundation/config/swarm.ts:127:    throw new Error('SWARM_CONFIG_INVALID:control.artifactRoot must be a normalized absolute non-root path');
+skills/common/plugin-runtime/foundation/config/swarm.ts:130:  catch { throw new Error('SWARM_CONFIG_INVALID:control.studioPublicUrl must be an absolute HTTP(S) URL'); }
+skills/common/plugin-runtime/foundation/config/swarm.ts:135:    throw new Error('SWARM_CONFIG_WORKER_CONNECTION_BUDGET_INVALID');
+skills/common/plugin-runtime/foundation/config/swarm.ts:139:    throw new Error('SWARM_CONFIG_WORKER_SHUTDOWN_BUDGET_INVALID');
+skills/common/plugin-runtime/foundation/config/swarm.ts:152:  } catch { throw new Error('SWARM_CONFIG_INVALID:studio.controlUrl must be an absolute HTTP(S) origin'); }
+skills/common/plugin-runtime/foundation/config/swarm.ts:167:    if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use operator.buster`);
+skills/common/plugin-runtime/foundation/config/swarm.ts:169:  const file = environment.SWARM_CONFIG ?? '/home/node/.openclaw/swarm.config.json';
+skills/common/plugin-runtime/foundation/config/swarm.ts:182:  if (!validateSettings(value)) throw new Error('SWARM_CONFIG_BUSTER_ADMISSION_INVALID');
+skills/common/plugin-runtime/foundation/config/swarm.ts:192:  if (!validate(value)) throw new Error(`SWARM_CONFIG_INVALID:${JSON.stringify(validate.errors ?? [])}`);
+skills/common/plugin-runtime/foundation/config/swarm.ts:194:  if (!settings) throw new Error('SWARM_CONFIG_BUSTER_PREPARATION_REQUIRED');
+skills/common/plugin-runtime/foundation/config/swarm.ts:202:  if (!validateSettings(value)) throw new Error('SWARM_CONFIG_BUSTER_PREPARATION_INVALID');
+skills/common/plugin-runtime/foundation/config/swarm.ts:206:    if (bytes > 2_147_483_647) throw new Error('SWARM_CONFIG_BUSTER_BUFFER_LIMIT_INVALID');
+skills/common/plugin-runtime/foundation/config/swarm.ts:214:    throw new Error('SWARM_CONFIG_BUSTER_STORAGE_BUDGET_INVALID');
+skills/common/plugin-runtime/foundation/config/swarm.ts:217:  if (settings.closeTimeoutMs <= settings.drainTimeoutMs) throw new Error('SWARM_CONFIG_BUSTER_CLOSE_BUDGET_INVALID');
+skills/common/plugin-runtime/foundation/config/swarm.ts:220:    throw new Error('SWARM_CONFIG_BUSTER_SOURCE_RESERVATION_INVALID');
+skills/common/plugin-runtime/foundation/config/swarm.ts:229:    || settings.maximumArchiveEntries + 7 > settings.maximumSourceEntries) throw new Error('SWARM_CONFIG_BUSTER_SOURCE_RESERVATION_INVALID');
+tests/verification/reliability/buster-preparation-native-recovery-live.mts:124:    const document = JSON.parse(await fs.readFile(requiredNativeInput('SWARM_CONFIG'), 'utf8'));
+tests/verification/reliability/buster-preparation-native-recovery-live.mts:128:    const environment: NodeJS.ProcessEnv = { ...process.env, SWARM_CONFIG: config };
+tests/verification/reliability/buster-preparation-identities.test.mts:64:    new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8')));
+tests/verification/reliability/buster-preparation-ledger.test.mts:11:const authored = JSON.parse(await fs.readFile(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+tests/verification/deployment/deployment-release.test.mjs:16:    const schema = 'skills/common/plugin-runtime/foundation/config/swarm.schema.json';
+tests/verification/deployment/check-deployment-truth.mjs:23:const swarmConfig = read('charts/kubeclaw/files/config/swarm.config.json');
+tests/verification/deployment/check-deployment-truth.mjs:292:  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts[\s\S]*source=skills\/prism\/tests\/fixtures\/studio-service\.mts,target=\/app\/prism\/skills\/prism\/tests\/fixtures\/studio-service\.mts[\s\S]*source=skills\/prism\/tests\/studio-canonical-image\.mts,target=\/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts[\s\S]*SWARM_CONFIG=\/tmp\/studio-authored\.json node --test --test-concurrency=1 \/app\/prism\/skills\/prism\/tests\/studio-service\.test\.mts \/app\/prism\/skills\/prism\/tests\/studio-canonical-image\.mts/,
+tests/verification/deployment/prism-swarm-config.test.mjs:11:const canonical = path.join(root, 'charts/kubeclaw/files/config/swarm.config.json');
+tests/verification/deployment/prism-swarm-config.test.mjs:18:  for (const name of ['swarm.config.json', 'swarm.schema.json']) {
+tests/verification/deployment/prism-swarm-config.test.mjs:36:  assert.equal(env.SWARM_CONFIG, '/etc/kubeclaw/swarm/swarm.config.json');
+tests/verification/deployment/prism-swarm-config.test.mjs:42:  return config.data['swarm.config.json'];
+tests/verification/deployment/prism-swarm-config.test.mjs:53:    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(authored));
+tests/verification/deployment/prism-swarm-config.test.mjs:55:    const file = path.join(chart, 'mounted-swarm.config.json'); fs.writeFileSync(file, rendered);
+tests/verification/deployment/prism-swarm-config.test.mjs:56:    const actual = loadWorkerConfig({ SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://test/control' });
+tests/verification/deployment/prism-swarm-config.test.mjs:68:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:74:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:79:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:84:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:91:  const contents = execFileSync('tar', ['-xzOf', archive, 'prism/files/config/swarm.config.json'], { encoding: 'utf8' });
+tests/verification/deployment/prism-swarm-config.test.mjs:93:  const schema = execFileSync('tar', ['-xzOf', archive, 'prism/files/config/swarm.schema.json'], { encoding: 'utf8' });
+tests/verification/deployment/prism-swarm-config.test.mjs:94:  assert.deepEqual(JSON.parse(schema), JSON.parse(fs.readFileSync(path.join(root, 'skills/common/plugin-runtime/foundation/config/swarm.schema.json'))));
+tests/verification/deployment/prism-swarm-config.test.mjs:104:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:109:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:116:    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:119:    const file = path.join(chart, 'mounted-swarm.config.json'); fs.writeFileSync(file, controlBytes);
+tests/verification/deployment/prism-swarm-config.test.mjs:120:    const actual = loadControlServerConfig({ SWARM_CONFIG: file, PRISM_SESSION_SECRET: 'test', PRISM_INGRESS_SECRET: 'test',
+tests/verification/deployment/prism-swarm-config.test.mjs:122:    const worker = loadWorkerConfig({ SWARM_CONFIG: file, PRISM_WORKER_SECRET: 'test', DATABASE_URL: 'postgresql://not-opened' });
+tests/verification/deployment/prism-swarm-config.test.mjs:137:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:142:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:153:    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:165:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:174:      fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:187:    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:200:    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:204:      const loaded = loadWorkerConfig({ SWARM_CONFIG: file, PRISM_WORKER_SECRET: 'test', DATABASE_URL: 'postgresql://not-opened' });
+tests/verification/deployment/prism-swarm-config.test.mjs:218:    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:229:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:234:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:248:    fs.writeFileSync(path.join(chart,'files/config/swarm.config.json'),JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:254:    const loaded = loadControlServerConfig({...environment,SWARM_CONFIG:file,PRISM_SESSION_SECRET:'test',PRISM_INGRESS_SECRET:'test',PRISM_INGESTION_SECRET:'test'});
+tests/verification/deployment/prism-swarm-config.test.mjs:273:      fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(authored));
+tests/verification/deployment/prism-swarm-config.test.mjs:313:    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(authored));
+tests/verification/deployment/prism-swarm-config.test.mjs:329:    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(authored));
+tests/verification/deployment/prism-swarm-config.test.mjs:354:    fs.writeFileSync(path.join(chart,'files/config/swarm.config.json'),JSON.stringify(authored));
+tests/verification/deployment/prism-swarm-config.test.mjs:364:    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:373:      fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:381:    fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/deployment/prism-swarm-config.test.mjs:387:  fs.writeFileSync(path.join(chart, 'files/config/swarm.config.json'), JSON.stringify(config));
+tests/verification/reliability/buster-extraction-concurrency.test.mts:17:const authored = JSON.parse(await fs.readFile(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+tests/verification/deployment/prism-swarm-image.mjs:4:const file = process.env.SWARM_CONFIG;
+tests/verification/deployment/prism-swarm-image.mjs:11:const actual = loadWorkerConfig({ ...process.env, SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://image-proof/control' });
+tests/verification/deployment/prism-swarm-image.mjs:15:assert.throws(() => loadWorkerConfig({ ...process.env, SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://image-proof/control', PRISM_WORKER_SHUTDOWN_TIMEOUT_MS: String(shutdownTimeoutMs) }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+tests/verification/deployment/prism-swarm-image.mjs:20:const control = loadControlServerConfig({ ...process.env, SWARM_CONFIG: file, PRISM_SESSION_SECRET: 'image-proof', PRISM_INGRESS_SECRET: 'image-proof',
+tests/verification/deployment/prism-swarm-image.mjs:31:const actual = loadStudioConfig({...process.env, SWARM_CONFIG: file});
+tests/verification/deployment/prism-swarm-image.mjs:36:  assert.throws(() => loadStudioConfig({...process.env, SWARM_CONFIG: file, [key]: ''}), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+tests/verification/reliability/buster-admission-config.test.mts:19:        assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);
+tests/verification/reliability/buster-admission-config.test.mts:23:      assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);
+tests/verification/reliability/buster-admission-config.test.mts:28:      assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);
+tests/verification/reliability/buster-admission-config.test.mts:33:        assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file, [name]: value }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+tests/verification/reliability/buster-admission-config.test.mts:40:    assert.equal(loadBusterSettings({ SWARM_CONFIG: file }).admission.maximumActiveJobs, 7);
+tests/verification/reliability/buster-admission-config.test.mts:57:      assert.equal(loadBusterSettings({ SWARM_CONFIG: f.profile.file }).admission.maximumActiveJobs, 10);
+tests/verification/deployment/release-images.test.mjs:37:    const schema = 'skills/common/plugin-runtime/foundation/config/swarm.schema.json';
+tests/verification/deployment/prism-native-runtime.test.mjs:33:    assert.equal(supervisor.env.find(item => item.name === 'SWARM_CONFIG').value, '/etc/kubeclaw/swarm/swarm.config.json');
+tests/verification/deployment/prism-native-runtime.test.mjs:34:    const authored = JSON.parse(docs.find(doc => doc?.kind === 'ConfigMap' && doc.metadata.name === 'prism-swarm-config').data['swarm.config.json']);
+tests/verification/deployment/release-configuration.test.mjs:61:  'charts/prism/files/config/swarm.config.json': '../../../kubeclaw/files/config/swarm.config.json',
+tests/verification/deployment/release-configuration.test.mjs:62:  'charts/prism/files/config/swarm.schema.json': '../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json',
+tests/verification/deployment/release-configuration.test.mjs:122:    const schema = path.join(directory, 'plugin-runtime/foundation/config/swarm.schema.json');
+tests/verification/deployment/code-release.test.mjs:137:    const schema = 'skills/common/plugin-runtime/foundation/config/swarm.schema.json';
+tests/verification/reliability/buster-shutdown-storage.test.mts:63:      tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['command.execute']), admission: { ...busterSettingsFromConfig(JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/swarm.config.json', 'utf8'))).admission, maximumActiveJobs: 1 } });
+tests/verification/deployment/gitops-release.test.mjs:22:    const schema = 'skills/common/plugin-runtime/foundation/config/swarm.schema.json';
+tests/verification/deployment/buster-admission-render.test.mjs:32:      const document = JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/swarm.config.json', 'utf8'));
+tests/verification/deployment/buster-admission-render.test.mjs:37:      const map = docs.find(doc => doc?.kind === 'ConfigMap' && doc.data?.['swarm.config.json']);
+tests/verification/deployment/buster-admission-render.test.mjs:38:      fs.writeFileSync(config, map.data['swarm.config.json']);
+tests/verification/deployment/buster-admission-render.test.mjs:39:      assert.equal(loadBusterSettings({ SWARM_CONFIG: config }).admission.maximumQueuedJobs, maximumQueuedJobs);
+tests/verification/deployment/buster-admission-render.test.mjs:44:      assert.equal(actual.env.find(item => item.name === 'SWARM_CONFIG').value, '/etc/kubeclaw/swarm.config.json');
+tests/verification/deployment/buster-admission-render.test.mjs:45:      assert.ok(actual.volumeMounts.some(item => item.name === 'init-swarm-config' && item.subPath === 'swarm.config.json' && item.readOnly));
+tests/verification/deployment/buster-admission-render.test.mjs:66:    const environment = { ...process.env, SWARM_CONFIG: path.resolve('charts/kubeclaw/files/config/swarm.config.json'), [name]: '2' };
+tests/verification/deployment/buster-admission-render.test.mjs:71:    assert.ok(result.stderr.includes(`SWARM_CONFIG_LEGACY_OVERRIDE:${name}`), result.stderr);
+tests/verification/reliability/buster-historical-import.test.mts:61:  const config = JSON.parse(await fs.readFile('charts/kubeclaw/files/config/swarm.config.json', 'utf8'));
+tests/verification/e2e/run-real-pipeline-failure-matrix.mjs:1460:    && text.includes('ACP monitor requires integer gateway.invoke.session_status.max_retries from swarm.config.json')
+tests/verification/e2e/run-real-pipeline-e2e.mjs:1034:    SWARM_CONFIG: workspace.runConfigPath,
+tests/verification/e2e/support/platform-config.ts:174:  if (!isPlainObject(rawConfig)) throw new Error('swarm.config.json: required object');
+tests/verification/e2e/swarm-author-profile.test.mjs:5:const authored = JSON.parse(fs.readFileSync(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url), 'utf8'));
+tests/verification/e2e/swarm-author-profile.test.mjs:20:  assert.throws(() => pipelineProfileFromSwarm(invalid), /SWARM_CONFIG_INVALID/);
+tests/verification/e2e/swarm-author-profile.test.mjs:21:  assert.throws(() => expandSwarmConfig(invalid), /SWARM_CONFIG_INVALID/);
+tests/verification/e2e/audit-failure-matrix-contracts.mjs:171:    writeJson(path.join(rootDir, suiteId, scenarioId, mode, 'swarm.config.json'), config);
+tests/verification/e2e/real-run-workspace.mjs:29:const DEPLOYED_COMPACT_CONFIG_PATH = path.join(REPO_ROOT, 'charts', 'kubeclaw', 'files', 'config', 'swarm.config.json');
+tests/verification/e2e/real-run-workspace.mjs:1592:  const runConfigPath = path.join(artifactRoot, 'swarm.config.json');
+tests/verification/e2e/run-real-pipeline-e2e.test.mjs:37:  const workspace = { worktreePath: '/tmp/worktree', runConfigPath: '/tmp/swarm.config.json' };
+tests/verification/e2e/run-real-pipeline-e2e.test.mjs:57:        runConfigPath: '/tmp/swarm.config.json',
+tests/verification/e2e/run-real-pipeline-e2e.test.mjs:167:    runConfigPath: path.join(root, 'swarm.config.json'),
+tests/verification/e2e/run-real-pipeline-e2e.test.mjs:214:    runConfigPath: path.join(root, 'swarm.config.json'),
+tests/verification/e2e/run-real-pipeline-e2e.test.mjs:256:    runConfigPath: path.join(root, 'swarm.config.json'),
+tests/fixtures/test-gate/native-preparation.mts:66:  const settings = loadBusterPreparationSettings({ ...process.env, SWARM_CONFIG: requiredNativeInput('SWARM_CONFIG') });
+tests/fixtures/test-gate/native-preparation.mts:91:  const settings = loadBusterPreparationSettings({ ...process.env, SWARM_CONFIG: requiredNativeInput('SWARM_CONFIG') });
+tests/fixtures/test-gate/buster-cli-profile.mjs:6:  const document = JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/swarm.config.json', 'utf8'));
+tests/fixtures/test-gate/buster-cli-profile.mjs:22:  return { runtime, environment: { ...process.env, SWARM_CONFIG: swarm, KUBECLAW_BUILD_REVISION: 'a'.repeat(40),
+tests/fixtures/test-gate/buster-admission.mts:13:  const document = JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/swarm.config.json', 'utf8'));
+tests/fixtures/test-gate/buster-admission.mts:17:  return { file, document, settings: loadBusterSettings({ SWARM_CONFIG: file }) };
+tests/verification/contracts/infra-private-access.test.mjs:54:  const settings = JSON.parse(readFileSync('charts/kubeclaw/files/config/swarm.config.json', 'utf8'));
+tests/fixtures/test-gate/modeled-preparation.mts:54:        "../../../charts/kubeclaw/files/config/swarm.config.json",
+tests/fixtures/test-gate/modeled-preparation.mts:259:        new URL("../../../charts/kubeclaw/files/config/swarm.config.json", import.meta.url), "utf8"))).admission });
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts:24:const settings = loadBusterSettings({ SWARM_CONFIG: path.resolve('charts/kubeclaw/files/config/swarm.config.json') });
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts:105:        { KUBECLAW_BUILD_REVISION: 'a'.repeat(40) }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+charts/prism/templates/workloads.yaml:93:            - { name: SWARM_CONFIG, value: /etc/kubeclaw/swarm/swarm.config.json }
+charts/prism/templates/configmap-swarm-config.yaml:8:  swarm.config.json: |
+charts/prism/templates/_swarm-config.tpl:3:{{- if hasKey .Values.control "port" -}}{{- fail "control.port moved to swarm.config.json operator.prism.control.port" -}}{{- end -}}
+charts/prism/templates/_swarm-config.tpl:4:{{- if hasKey .Values.control "pipelinePreferenceSubject" -}}{{- fail "control.pipelinePreferenceSubject moved to swarm.config.json operator.prism.control" -}}{{- end -}}
+charts/prism/templates/_swarm-config.tpl:6:{{- fail "Control result and dispatch limits must be authored under swarm.config.json operator.prism.native" -}}
+charts/prism/templates/_swarm-config.tpl:9:{{- fail "Control resource policy must be authored under swarm.config.json operator.prism.native.resourcePolicy" -}}
+charts/prism/templates/_swarm-config.tpl:12:{{- fail "worker.shutdownTimeoutMs moved to swarm.config.json operator.prism.worker.shutdownTimeoutMs" -}}
+charts/prism/templates/_swarm-config.tpl:14:{{- if hasKey .Values.worker.native "closeTimeoutMs" -}}{{- fail "worker.native.closeTimeoutMs moved to swarm.config.json operator.prism.native.supervisor" -}}{{- end -}}
+charts/prism/templates/_swarm-config.tpl:15:{{- $raw := required "canonical swarm.config.json is required" (.Files.Get "files/config/swarm.config.json") -}}
+charts/prism/templates/_swarm-config.tpl:17:{{- $schema := mustFromJson (.Files.Get "files/config/swarm.schema.json") -}}
+charts/prism/templates/_swarm-config.tpl:75:{{- if hasKey $.Values.studio $key -}}{{- fail (printf "studio.%s moved to swarm.config.json operator.prism.studio" $key) -}}{{- end -}}
+charts/kubeclaw/values.yaml:460:# Copied to the config PVC and mounted at /home/node/.openclaw/swarm.config.json.
+charts/kubeclaw/values.yaml:461:# Pipeline reads /home/node/.openclaw/swarm.config.json first; SWARM_CONFIG is a secondary candidate.
+charts/kubeclaw/values.yaml:463:# Default is loaded from charts/kubeclaw/files/config/swarm.config.json.
+charts/kubeclaw/templates/deployment.yaml:280:            - name: SWARM_CONFIG
+charts/kubeclaw/templates/deployment.yaml:281:              value: "/home/node/.openclaw/swarm.config.json"
+charts/kubeclaw/templates/deployment.yaml:639:              if [ -f "/init-swarm-config/swarm.config.json" ]; then
+charts/kubeclaw/templates/deployment.yaml:640:                cp -Lf "/init-swarm-config/swarm.config.json" "/config/swarm.config.json"
+charts/kubeclaw/templates/deployment.yaml:641:                echo "    swarm.config.json written from chart source"
+charts/kubeclaw/templates/deployment.yaml:643:              if [ -f "/config/swarm.config.json" ]; then
+charts/kubeclaw/templates/deployment.yaml:644:                node -e 'const fs=require("fs"); const p="/config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(p,"utf8")); if (Object.prototype.hasOwnProperty.call(config,"discord_webhook_url")) { delete config.discord_webhook_url; const temporaryPath=`${p}.kubeclaw-normalize.tmp`; fs.writeFileSync(temporaryPath, JSON.stringify(config,null,2)+"\n", { mode: 0o600 }); fs.renameSync(temporaryPath,p); } console.log("    swarm.config.json source normalized without runtime webhook secrets");'
+charts/kubeclaw/templates/deployment.yaml:647:                if [ "${OVERRIDE_SWARM_CONFIG}" = "true" ] || [ ! -f "/config/.semgrep.yml" ]; then
+charts/kubeclaw/templates/deployment.yaml:655:                if [ "${OVERRIDE_SWARM_CONFIG}" = "true" ] || [ ! -f "/config/eslint.config.mjs" ]; then
+charts/kubeclaw/templates/deployment.yaml:685:              if [ -f /config/swarm.config.json ]; then
+charts/kubeclaw/templates/deployment.yaml:686:                node -e 'const fs=require("fs"); const source="/config/swarm.config.json"; const target="/runtime-config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(source,"utf8")); if (process.env.DISCORD_WEBHOOK) config.discord_webhook_url=process.env.DISCORD_WEBHOOK; fs.writeFileSync(target, JSON.stringify(config,null,2)+"\n");'
+charts/kubeclaw/templates/deployment.yaml:687:                echo "    swarm.config.json rendered into runtime config"
+charts/kubeclaw/templates/deployment.yaml:912:                await check('runtime swarm config', () => requirePath(process.env.SWARM_CONFIG, 'file'));
+charts/kubeclaw/templates/deployment.yaml:1168:            - name: OVERRIDE_SWARM_CONFIG
+charts/kubeclaw/templates/deployment.yaml:1369:            - name: SWARM_CONFIG
+charts/kubeclaw/templates/deployment.yaml:1370:              value: "/home/node/.openclaw/swarm.config.json"
+charts/kubeclaw/templates/deployment.yaml:1426:              mountPath: /home/node/.openclaw/swarm.config.json
+charts/kubeclaw/templates/deployment.yaml:1427:              subPath: swarm.config.json
+charts/kubeclaw/templates/_buster-native.tpl:11:{{- if has $entry.name (list "BUSTER_NATIVE_POOL_POLICY_FILE" "BUSTER_ENGINE_CONTENT_DIGEST" "SWARM_CONFIG" "BUSTER_V2_MAX_ARCHIVE_BYTES" "BUSTER_V2_MAX_EXTRACTED_BYTES" "BUSTER_V2_MAX_REQUEST_BYTES" "BUSTER_V2_MAX_ACTIVE_JOBS" "BUSTER_V2_MAX_QUEUED_JOBS" "BUSTER_V2_MAX_CONCURRENT_ATTEMPTS") -}}
+charts/kubeclaw/templates/_buster-native.tpl:18:  (dict "name" "SWARM_CONFIG" "value" "/etc/kubeclaw/swarm.config.json")) -}}
+charts/kubeclaw/templates/_buster-native.tpl:31:  (dict "name" "init-swarm-config" "mountPath" "/etc/kubeclaw/swarm.config.json" "subPath" "swarm.config.json" "readOnly" true)) -}}
+charts/kubeclaw/templates/configmap-swarm-config.yaml:10:  swarm.config.json: |
+charts/kubeclaw/templates/configmap-swarm-config.yaml:14:{{ .Files.Get "files/config/swarm.config.json" | indent 4 }}

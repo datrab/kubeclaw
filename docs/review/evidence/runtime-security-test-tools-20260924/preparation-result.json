@@ -1,0 +1,148 @@
+{
+  "status": "genuine pinned scanner and separately freshly resolved DB cache available; no security tests/scans executed",
+  "evaluatedAt": "2026-09-24T14:29:55.429704+00:00",
+  "scanner": {
+    "source": "https://github.com/aquasecurity/trivy/releases/download/v0.74.0/trivy_0.74.0_Linux-64bit.tar.gz",
+    "archiveSha256": "2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a",
+    "binarySha256": "d89bcc6510a267f11b773398cbf1be5520ce39f9e8b6633178c4487f05b7d791",
+    "versionAuthority": "versions.json buildArgs.TRIVY_VERSION/TRIVY_SHA256_AMD64",
+    "observedVersionOutput": "Version: 0.74.0",
+    "versionCommandExitCode": 0,
+    "archiveBytes": 50419107,
+    "binaryBytes": 168456354
+  },
+  "lockInstall": {
+    "exitCode": 0,
+    "cache": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/runtime-security-test-tools-20260924/tooling/locked-cache",
+    "verification": "scripts/trivy-database-lock.mjs verifies locked manifests/layers/extracted DB files and metadata hashes; freshness result locked-freshness.json",
+    "usableForFreshnessPositive": false
+  },
+  "freshResolve": {
+    "exitCode": 0,
+    "cache": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/runtime-security-test-tools-20260924/tooling/fresh-resolved-cache",
+    "verification": "Original resolver resolves each upstream tag once, refetches manifest by digest, verifies layer digest and size, validates archive members, fingerprints both original extracted files. No metadata rewriting.",
+    "databases": [
+      {
+        "kind": "vulnerability",
+        "originalMetadata": {
+          "Version": 2,
+          "NextUpdate": "2026-09-25T13:23:01.282626041Z",
+          "UpdatedAt": "2026-09-24T13:23:01.282626422Z",
+          "DownloadedAt": "0001-01-01T00:00:00Z"
+        },
+        "ageHours": 1.115040855,
+        "maximumAgeHours": 48,
+        "fresh": true,
+        "verifiedOciIdentity": {
+          "repository": "ghcr.io/aquasecurity/trivy-db",
+          "manifest": {
+            "digest": "sha256:5a67ad9f182bbe566ce7fa8c228753662e2b06c63509959d783660489ecef349",
+            "size": 616
+          },
+          "layer": {
+            "digest": "sha256:f0d9106ce5a217682195a38af9549c1a50144f0b5a69fd81e20af04e26315bbf",
+            "size": 122458396
+          },
+          "files": {
+            "metadata.json": {
+              "digest": "sha256:8369ef48448c5a71c84cd714cf1235df56d55230ffa874081c970409702cbb75",
+              "size": 143
+            },
+            "trivy.db": {
+              "digest": "sha256:3f1a32827a978e8610b59edf42b071abf0e39948a0d72ad51c7849de7b63ee92",
+              "size": 1438150656
+            }
+          }
+        }
+      },
+      {
+        "kind": "java",
+        "originalMetadata": {
+          "Version": 1,
+          "NextUpdate": "2026-09-22T01:01:52.688391023Z",
+          "UpdatedAt": "2026-09-19T01:01:52.688391724Z",
+          "DownloadedAt": "0001-01-01T00:00:00Z"
+        },
+        "ageHours": 133.46742814249998,
+        "maximumAgeHours": 168,
+        "fresh": true,
+        "verifiedOciIdentity": {
+          "repository": "ghcr.io/aquasecurity/trivy-java-db",
+          "manifest": {
+            "digest": "sha256:d83c6dd4d525be30ffecc92e5be679392be56547c29cf70f76a7478b08981c9c",
+            "size": 624
+          },
+          "layer": {
+            "digest": "sha256:cf45b46809a5759bf7b4478c52ea2b4e7f31d44ea35a2fd467cfd88af6ac3830",
+            "size": 968473554
+          },
+          "files": {
+            "metadata.json": {
+              "digest": "sha256:764a408240c9a1c6f26649eb4372624bdf95dcffb52f1314904bdb59707426c3",
+              "size": 143
+            },
+            "trivy-java.db": {
+              "digest": "sha256:1fce16f732df52f325d9922f5a8ff7221719a7819cdb5ba1dc76fe32b4a36e4c",
+              "size": 1529786368
+            }
+          }
+        }
+      }
+    ]
+  },
+  "testEnvironment": {
+    "KUBECLAW_SECURITY_TEST_TRIVY": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/runtime-security-test-tools-20260924/tooling/trivy",
+    "KUBECLAW_SECURITY_TEST_CACHE": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/runtime-security-test-tools-20260924/tooling/fresh-resolved-cache"
+  },
+  "remaining": [
+    "No provider, image, freshness, remote-vertical or cutover tests were run.",
+    "Original image scan still requires real DockerHub access to its fixed alpine digest; availability not proven by database download.",
+    "Original loopback HTTP and native process/build prerequisites remain.",
+    "Cache freshness is time-dependent: recheck actual source UpdatedAt before later runs; Java current upstream tag is unchanged from lock and expires under 7-day policy on 2026-09-26T01:01:52Z.",
+    "Separate fresh cache is test preparation, not an update or acceptance of production versions/DB lock."
+  ],
+  "protectedInputIntegrity": [
+    {
+      "path": "scripts/trivy-database-lock.mjs",
+      "beforeSha256": "7f86040766fd1cdc010302617217adbe58b862437259aea1cff03f992ca0d510",
+      "afterSha256": "7f86040766fd1cdc010302617217adbe58b862437259aea1cff03f992ca0d510",
+      "unchanged": true
+    },
+    {
+      "path": "versions.json",
+      "beforeSha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "afterSha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+      "unchanged": true
+    },
+    {
+      "path": "docker/trivy-databases.lock.json",
+      "beforeSha256": "eb4de828de3d1afe277aad01925ab94a8ed2eb08fbe41c00fd3e16889d81569e",
+      "afterSha256": "eb4de828de3d1afe277aad01925ab94a8ed2eb08fbe41c00fd3e16889d81569e",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/trivy-database.ts",
+      "beforeSha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+      "afterSha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+      "beforeSha256": "0581bde77436534084542396ff836e417532c9fffa314af56d52f8b094248162",
+      "afterSha256": "0581bde77436534084542396ff836e417532c9fffa314af56d52f8b094248162",
+      "unchanged": true
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+      "beforeSha256": "e37ea6086143c335c70c0fcc5ea7839b4e149a012fd6efbc22dd374c1af958c7",
+      "afterSha256": "e37ea6086143c335c70c0fcc5ea7839b4e149a012fd6efbc22dd374c1af958c7",
+      "unchanged": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+      "beforeSha256": "bef5d53264fe879e1776a3852f4a52e4b50d6c3d500bded41c6a07ea011d6b23",
+      "afterSha256": "bef5d53264fe879e1776a3852f4a52e4b50d6c3d500bded41c6a07ea011d6b23",
+      "unchanged": true
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "manifestSha256": "4317c3ce2f61bf53548ab05efaff84959f8a6cb881bd03bc6842fee2515f10db",
+  "beforeAfterMatch": true,
+  "decision": "source accepted; D12 semantics/actual CLI and marker generation correctly described; no status/count changes",
+  "mode": "no runtime"
+}

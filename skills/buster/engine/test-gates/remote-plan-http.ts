@@ -1,7 +1,6 @@
 import crypto from 'node:crypto';
 import http from 'node:http';
 import https from 'node:https';
-import { validatePipelineTestGateContract, type RemotePlanJobV1 } from '@kubeclaw/pipeline-test-gate-contract';
 import type { BusterRemotePlanService } from './remote-plan-service.ts';
 import { authorizeProxiedSpiffePeer } from '@kubeclaw/worker-core';
 
@@ -27,21 +26,6 @@ function authorize(request: http.IncomingMessage, options: {
     }
   }
   return options.token !== undefined && authorized(request, options.token);
-}
-
-async function requestBody(request: http.IncomingMessage, maximumBytes: number): Promise<unknown> {
-  const declared = Number(request.headers['content-length']);
-  if (Number.isFinite(declared) && declared > maximumBytes) throw new Error('BUSTER_REMOTE_REQUEST_SIZE_EXCEEDED');
-  const chunks: Buffer[] = [];
-  let total = 0;
-  for await (const chunk of request) {
-    const bytes = Buffer.from(chunk);
-    total += bytes.byteLength;
-    if (total > maximumBytes) throw new Error('BUSTER_REMOTE_REQUEST_SIZE_EXCEEDED');
-    chunks.push(bytes);
-  }
-  try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); }
-  catch (error) { throw new Error('BUSTER_REMOTE_REQUEST_INVALID', { cause: error }); }
 }
 
 function send(response: http.ServerResponse, status: number, body: unknown, maximumBytes: number): void {
@@ -127,9 +111,9 @@ export function createBusterRemotePlanHttpServer(options: {
         return;
       }
       if (request.method === 'POST' && request.url === '/v1/plan-jobs') {
-        const value = await requestBody(request, options.maximumRequestBytes);
-        validatePipelineTestGateContract('remotePlanJob', value);
-        const status = await options.service.submit(value as RemotePlanJobV1);
+        const declared = Number(request.headers['content-length']);
+        if (Number.isFinite(declared) && declared > options.maximumRequestBytes) throw new Error('BUSTER_REMOTE_REQUEST_SIZE_EXCEEDED');
+        const status = await options.service.submit(request);
         send(response, status.state === 'accepted' ? 202 : 200, status, options.maximumResponseBytes);
         return;
       }

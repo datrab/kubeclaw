@@ -38,7 +38,26 @@ PROFILE
       -v "$PWD/tests/verification/deployment/check-buster-build.sh:/proof.sh:ro" \
       "$image" /proof.sh
     ;;
-  namespace-controller|archviewer|prism-control|prism-studio|prism-worker|prism-ingestion)
+  prism-worker|prism-control|prism-studio)
+    # Prove the shipped loader, schema and runtime Ajv dependency against the
+    # same authored snapshot that Helm packages, without starting native work.
+    docker run --rm --network none --entrypoint node \
+      -e SWARM_CONFIG=/etc/kubeclaw/swarm/swarm.config.json \
+      -v "$PWD/tests/fixtures/config/swarm-bundle.mjs:/app/prism/tests/fixtures/config/swarm-bundle.mjs:ro" \
+      -v "$PWD/charts/kubeclaw/files/config:/etc/kubeclaw/swarm:ro" \
+      -v "$PWD/tests/verification/deployment/prism-swarm-image.mjs:/swarm-proof.mjs:ro" \
+      "$image" /swarm-proof.mjs "$role"
+    if [[ "$role" == prism-studio ]]; then
+      docker run --rm --network none --entrypoint node \
+        -e SWARM_CONFIG=/etc/kubeclaw/swarm/swarm.config.json \
+      -v "$PWD/tests/fixtures/config/swarm-bundle.mjs:/app/prism/tests/fixtures/config/swarm-bundle.mjs:ro" \
+        -v "$PWD/charts/kubeclaw/files/config:/etc/kubeclaw/swarm:ro" \
+        -v "$PWD/skills/prism/tests/studio-canonical-image.mts:/app/prism/skills/prism/tests/studio-canonical-image.mts:ro" \
+        -v "$PWD/skills/prism/tests/fixtures/studio-service.mts:/app/prism/skills/prism/tests/fixtures/studio-service.mts:ro" \
+        "$image" --test /app/prism/skills/prism/tests/studio-canonical-image.mts
+    fi
+    ;;
+  namespace-controller|archviewer|prism-ingestion)
     # These Dockerfiles execute their acceptance gates during the build.
     docker image inspect "$image" >/dev/null
     ;;

@@ -1,0 +1,31 @@
+{
+  "status": "private V2; root-authorized dedicated transport boundary relocation; no runtime; source review required",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+      "beforeSha256": "8a59464fa85d16b6d7cecda632413b3b0c59eb015b17f8dc8034a61e5b5181d2",
+      "afterSha256": "a042f53e55ca8438e2d2e1af7766c73063b5d34bfaa9c68ab8d21d0fdf4111f8"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-command-environment.ts",
+      "beforeSha256": null,
+      "afterSha256": "8e4ac7b78cd9248aa14981bcc84c0c20b0334c1cae93385d6bd03d156fa7188f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "beforeSha256": "d940cbaed6bf4f86cd1b03d3654b2483464d9e187caf04383a39398f283496fc",
+      "afterSha256": "e3aba99f6637b5d2987d78c12034391562e1e9f59d91e7e33e629e70064d5cdd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "beforeSha256": "d877da689ad67653723eebab1c57bf5972ea9928430a652b7e57881e49f880a2",
+      "afterSha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004"
+    },
+    {
+      "path": "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
+      "beforeSha256": "54bb3a32574fb06d835bd3ac04614c6cc18d2286949003dd5ea3b97f27dcf714",
+      "afterSha256": "09bdcf2ade20b9e19cd87eb0357cf606ebec349252d851dcfa5df070497db72d"
+    }
+  ],
+  "previousManifestSha256": "fbce2338108e2f7553b334c5a05a6695272419bb2fc0c1fb4c3f13a455c0cee5"
+}

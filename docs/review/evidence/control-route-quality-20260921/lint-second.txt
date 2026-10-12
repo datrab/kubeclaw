@@ -1,0 +1,18 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/agent-routes.ts
+  95:1  error  Async function 'reviseAgentDocument' has too many lines (61). Maximum allowed is 60  max-lines-per-function
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/baseline-previews.ts
+  40:1  error  Async function 'renderBaselinePreview' has too many parameters (8). Maximum allowed is 7  max-params
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/baseline-specification.ts
+  4:8  error  Async function 'baselineSpecification' has too many lines (63). Maximum allowed is 60  max-lines-per-function
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/dispatch-route.ts
+  28:1  error  Async function 'dispatchDesign' has too many lines (73). Maximum allowed is 60  max-lines-per-function
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/engine-route.ts
+  171:9  error  Blocks are nested too deeply (4). Maximum allowed is 3  max-depth
+
+✖ 5 problems (5 errors, 0 warnings)
+

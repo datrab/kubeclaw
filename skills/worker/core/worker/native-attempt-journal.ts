@@ -9,8 +9,10 @@ import type { NativeWorkerProcessResult } from './native-worker-process.ts';
 import { journalIdentity, journalKey, validateJournalState, usedJournalBytes,
   type NativeAttemptJournalLimits, type NativeAttemptJournalState } from './native-journal-state.ts';
 
+import { nativeJournalStream, nativeJournalMaximumRecordBytes, reserveNativeJournalMetadata } from './native-journal-capacity.ts';
+
 export type { NativeAttemptJournalLimits } from './native-journal-state.ts';
-const stream = 'native-worker-attempts.v1';
+const stream = nativeJournalStream;
 export class NativeWorkerAttemptBusy extends Error {
   constructor() { super('WORKER_NATIVE_ATTEMPT_BUSY'); }
 }
@@ -28,7 +30,7 @@ export class NativeAttemptJournal {
     }
     this.#root = path.resolve(root); this.#limits = { ...limits };
     this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {
-      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: 65536,
+      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: nativeJournalMaximumRecordBytes,
     });
     this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);
   }
@@ -174,11 +176,14 @@ export class NativeAttemptJournal {
       const payload: NativeAttemptJournalState = { schemaVersion: 'native-attempt-journal.v1', identity: journalIdentity(envelope),
         envelopeDigest: sha256Digest(envelope), envelope: { digest: sha256Digest(envelope), sizeBytes: bytes.byteLength },
         acceptedAt: new Date().toISOString(), reservationBytes, process: null, processCompletedAt: null, result: null };
+      const owner = `native-worker:${sha256Digest(envelope.claim.workerId).slice(7)}`;
+      await reserveNativeJournalMetadata(path.join(this.#root, 'metadata', 'records', 'store.json'),
+        payload, journalKey(envelope), owner, this.#limits);
       // The global admission lock holds the checked disk reservation while the
       // input is fsynced. A crash can leave an unreferenced original blob, which
       // remains counted, but never an accepted identity with no recoverable input.
       await this.#blobs.put(bytes);
-      const appended = await this.#records.append(stream, journalKey(envelope), payload, `native-worker:${sha256Digest(envelope.claim.workerId).slice(7)}`);
+      const appended = await this.#records.append(stream, journalKey(envelope), payload, owner);
       return { newlyAccepted: true, record: appended.record };
     });
   }

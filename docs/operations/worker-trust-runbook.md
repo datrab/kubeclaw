@@ -5,7 +5,7 @@ Audience: Kubernetes operator, security operator, incident responder
 Owner: platform operations
 Evidence: `scripts/deploy.sh`; `tests/verification/live/worker-trust-cluster-e2e.sh`
 Applies to: the current KubeClaw production values
-Last verified: source checks on 2026-08-29
+Last verified: source checks on 2026-08-29; SPIRE recovery render on 2026-09-21
 
 ## Objective
 
@@ -525,28 +525,17 @@ in terminal output.
 | `Prism SPIFFE trust policy is incomplete` | Prism control lacks one required trusted identity. | Inspect rendered Prism environment variables. |
 | `Prism worker SPIFFE trust policy is incomplete` | Prism worker lacks the trusted control identity. | Inspect rendered Prism environment variables. |
 
-## SPIRE Recovery
+## SPIRE Recovery and X.509-SVID Rotation
 
-1. Pause new deployments that require fresh SVIDs.
-2. Preserve the current SPIRE server state.
-3. Inspect the failed SPIRE component.
-4. Restore that component through its Helm release.
-5. Wait for the CSI driver and agents.
-6. Wait for protected workload proxies.
-7. Run the complete live acceptance.
-8. Resume normal deployment activity.
-
+Use the [SPIRE state, backup and recovery procedure](spire-recovery.md) for the
+rendered server PVC and disk-key inventory, coherent cold backups, component
+failures, CA loss and restore. It also defines the limits of certificate expiry
+for new handshakes versus existing connections and the outstanding live tests.
 Do not delete SPIRE server state as a diagnostic action.
 
-## X.509-SVID Rotation
-
-SPIRE rotates X.509-SVIDs automatically. Envoy receives updates through SDS.
-
-Normal SVID rotation does not require a worker restart. Do not restart every
-worker to force routine rotation.
-
-The current live command confirms loaded SVIDs. It does not wait for a timed
-certificate rotation.
+Routine SVID renewal uses SPIRE and SDS and does not require restarting every
+worker. The existing live command confirms loaded SVIDs; timed renewal, expiry
+and coherent server/CA restore remain separate live acceptance gates.
 
 ## Ed25519 Source-Key Rotation
 

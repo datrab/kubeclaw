@@ -1,0 +1,60 @@
+[
+  {
+    "applied": true,
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/contracts/check-pipeline-worker-local-policy.mts"
+    ],
+    "exitCode": 1,
+    "name": "drainTimeoutMs-fallback",
+    "seconds": 0.6163906990550458,
+    "semanticDetection": true
+  },
+  {
+    "applied": true,
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/contracts/check-pipeline-worker-local-policy.mts"
+    ],
+    "exitCode": 1,
+    "name": "cancellationTimeoutMs-fallback",
+    "seconds": 0.5152383509557694,
+    "semanticDetection": true
+  },
+  {
+    "applied": true,
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/contracts/check-pipeline-worker-local-policy.mts"
+    ],
+    "exitCode": 1,
+    "name": "replayLimit-fallback",
+    "seconds": 0.6342075529973954,
+    "semanticDetection": true
+  },
+  {
+    "applied": true,
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+    ],
+    "exitCode": 1,
+    "name": "lost-production-replay",
+    "seconds": 3.0697465009288862,
+    "semanticDetection": true
+  },
+  {
+    "applied": true,
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    ],
+    "exitCode": 1,
+    "name": "removed-term-handler",
+    "seconds": 97.34902066097129,
+    "semanticDetection": true
+  }
+]

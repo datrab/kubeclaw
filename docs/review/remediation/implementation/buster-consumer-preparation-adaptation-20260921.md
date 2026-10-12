@@ -1,0 +1,25 @@
+# Buster caller adaptation: pre-change contract and progress
+
+This package adapts the original caller tests to the two-phase preparation API. It does not claim native preparation ownership. Original test files, case names and every assertion expression were captured first in `buster-consumer-preparation-adaptation-20260921/original-assertion-inventory.json`, with full snapshots.
+
+The explicit test-only adapters wrap the actual PreparedBusterPlanJobStore and BusterRemotePlanService. Object-based fixture submissions become snapshotted JSON byte ingress; actual HTTP streams pass through unchanged. Preparation uses the real input decoder and archive extractor, and all status, result, idempotency, quota and storage operations still delegate to production. Slot UID, envelope digests and publication are modeled; no UID monkeypatch, cgroup or root proof is implied. Source files are read via sourceRepositoryRoot, while mutable workspace writes retain their original workspace authority.
+
+Internal path adaptation follows the production helpers: V2 records/locks in the state sibling and runtime fault injection in the runtime sibling. Legacy result/compaction truth is not simulated. The compaction suite remains separately pending the actual historical-to-V2 import fixture/current result-authority seam.
+
+## Shutdown fault calibration approved before editing
+
+The initial seven-case slice is retained: the reservation race passed; shutdown cases first exposed the missing genuine tar binding and old namespace paths. After the actual cached GNU tar and explicit sibling paths, read-failure and healthy-terminal cases pass. The remaining terminal-capacity cases observe accepted instead of the original required running state: V2 now persists a source reference before running, while the old artificial quota was accepted-payload bytes plus two.
+
+The approved adaptation measures an actual production source-attached/running payload and retains exactly the same two bytes of slack. It must show the store reaches running, then the original terminal transition exceeds the injected quota. Original expected error, repeated shutdown rejection, retained running state and null error remain unchanged. This moves the artificial fault to the original semantic boundary; no production quota, case deadline or acceptance assertion is raised or removed. Exact measured bytes are emitted in the test evidence.
+
+## Current execution checkpoint
+
+Final shared-fixture caller typecheck and explicit canonical fixture lint passed. Final real-filesystem slice passed all eight original tests: result reservation, six shutdown cases and coverage. The original authenticated HTTP runtime contract script passed after the production author serialized source publication and status transitions under the existing admission lock. Its two earlier CAS failures remain in the evidence. The measured artificial shutdown boundary is running payload 4,650 bytes plus the unchanged two-byte slack, quota 4,652; terminal overflow is independently asserted.
+
+All thirteen remaining executable consumer modules were actually invoked, without filtering. The original Nova dispatch projection suite passed 11/11 and security parity passed. Nova projection explicitly imported a provider initialization SIGSEGV result: this demonstrates storage/dispatch behavior, not successful provider execution. Other original verticals failed on current provider/environment requirements: absent Chromium, real Trivy database or live container configuration; missing glibc library path; provider initialization SIGSEGV; and resulting absent terminal result references. Raw failures remain; they are not waived or counted as passes.
+
+The original compaction test remains byte-for-byte unchanged and was invoked separately. It fails 0/1 at the unadapted service preparation seam (HTTP400, missing stage). Historical-to-V2 authority/import/result-read integration remains necessary before its original HTTP replay assertion can run. No historical service shim, fake compaction, removed case or V1 production fallback was introduced.
+
+`assertion-comparison.json` compares all eighteen original test files: every original case name remains. Only three original assertion expressions changed, solely to map two fault-file reads into the V2 runtime sibling and one source-content read into sourceRepositoryRoot. The shutdown boundary adds two assertions; the real-provider result guard adds another. The separate quality-provider helper changed only four Map generic annotations, with a before snapshot. The modeled fixture uses unique per-stage admission identities to avoid a fixture-only concurrent partial-file read; UID, envelope and storage-accounting authority remain explicitly modeled.
+
+This is an adaptation checkpoint with documented failed prerequisites, not acceptance of all callers, historical migration, native preparation, or production provider execution. Source identities bind the final adapted files; earlier exploratory runs predate the final unique admission-ID fixture change and are labeled accordingly. The final eight-test and HTTP runtime runs use that final fixture.

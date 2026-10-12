@@ -1,0 +1,12 @@
+--- a/skills/buster/engine/test-gates/provider-child.mjs
++++ b/skills/buster/engine/test-gates/provider-child.mjs
+@@ -8,6 +8,9 @@
+ let invocation;
+ let context;
+ const contextController = new AbortController();
++// Group TERM may arrive before the IPC abort, and the supervisor may forward it again.
++// Keep this handler installed; AbortController is idempotent. Parent stop bounds remain authoritative.
++process.on('SIGTERM', () => contextController.abort(new Error('TEST_PROVIDER_TERMINATED')));
+ let maximumMemoryBytes = process.memoryUsage().rss;
+ const memoryTimer = setInterval(() => { maximumMemoryBytes = Math.max(maximumMemoryBytes, process.memoryUsage().rss); }, 10);
+ const lines = readline.createInterface({ input: process.stdin, crlfDelay: Infinity });

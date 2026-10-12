@@ -1,5 +1,5 @@
 export { WorkerAttemptExecutor } from '../worker/attempt-executor.ts';
-export { LocalWorkerRuntime } from '../worker/local-runtime.ts';
+export { LocalWorkerRuntime, validateLocalWorkerRuntimePolicy } from '../worker/local-runtime.ts';
 export { NativeWorkerResourceScope } from '../worker/native-resource-scope.ts';
 export { NativeWorkerOwnership, NativeWorkerOwnershipLease } from '../worker/native-worker-ownership.ts';
 export type { NativeWorkerOwnershipOptions, NativeWorkerLaunchAuthority, NativeWorkerLaunchCommand } from '../worker/native-worker-ownership.ts';
@@ -12,7 +12,9 @@ export { runNativeWorkerProcess } from '../worker/native-worker-process.ts';
 export type { NativeWorkerProcessLimits, NativeWorkerProcessOptions, NativeWorkerProcessResult } from '../worker/native-worker-process.ts';
 export { executeNativeWorkerAttempt } from '../worker/native-attempt-executor.ts';
 export { NativeAttemptJournal, NativeWorkerAttemptBusy } from '../worker/native-attempt-journal.ts';
-export { recoverNativeWorkerAttempts } from '../worker/native-attempt-recovery.ts';
+export { recoverNativeWorkerAttempts, recoverNativeAttempt } from '../worker/native-attempt-recovery.ts';
+export { nativeSourceCleanupOperation, nativeSourceCleanupResultSchema, verifyNativeSourceCleanupResult } from '../worker/native-cleanup-reconciliation.ts';
+export type { NativeCleanupReconciliation } from '../worker/native-cleanup-reconciliation.ts';
 export type { NativeAttemptJournalLimits } from '../worker/native-attempt-journal.ts';
 export type { NativeWorkerAttemptExecutorOptions } from '../worker/native-attempt-executor.ts';
 export { observeNativeWorkerResources } from '../worker/native-resource-observation.ts';
@@ -21,7 +23,7 @@ export type { NativeWorkerResourceObservation } from '../worker/native-resource-
 export { FileWorkerOwnershipStore } from '../worker/ownership-store.ts';
 export { readNativeWorkerNodeIdentity } from '../worker/native-node-identity.ts';
 export type { WorkerOwnershipIdentity, WorkerOwnershipRecord, WorkerOwnershipPhase, WorkerScopeBinding } from '../worker/ownership-store.ts';
-export type { LocalWorkerRuntimeOptions } from '../worker/local-runtime.ts';
+export type { LocalWorkerRuntimeOptions, LocalWorkerRuntimePolicy } from '../worker/local-runtime.ts';
 export {
   canonicalJson,
   sha256Digest,

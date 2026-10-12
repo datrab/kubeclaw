@@ -1,0 +1,60 @@
+{
+  "at": "2026-09-21T20:09:00.519828+00:00",
+  "runtimeExecuted": false,
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "bfbcd125d72d5f45dc06f9aefc4ffa87e2d2a2b478b8f887b410dc6edc3ccfea",
+      "matchesV1": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "ff6e6a3591e673c8faf261083114512fe6d88244a3222dfff94717e5ddc86128",
+      "matchesV1": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "fa90d28396175bda15dbbce14bd257075c4ba5154397da4cca0947953c5550eb",
+      "matchesV1": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "sha256": "e3b3fade1e88b1e814dca06d90c07a4e308d0a30780f5061c26ef6a2654c4123",
+      "matchesV1": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "sha256": "eb17081a7db983e783d6445bc773dc409984d04a0b308bf5ff68c60d3330f3d7",
+      "matchesV1": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "sha256": "f458e9d345e9bae66ec8d7a185d260e0680a273e062260de61dc2e80c5c106a0",
+      "matchesV1": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "ab2678f0d56c0c6bd4d7554af6cadccfe3703e6e8b4c8ae7ff60218ed35194d8",
+      "matchesV1": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+      "sha256": "9e93442e6fff39c0c70529efa8fbc6380cee67facebbab53fd237e35203c921e",
+      "matchesV1": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+      "sha256": "26a66b2ffc32c3dfae2f50e022a7850ce012449d2205dac99829965fd4895446",
+      "matchesV1": true
+    },
+    {
+      "path": "docs/architecture/buster-execution-configuration.md",
+      "sha256": "7e96e6b56921337c8cff469b2ac1a89fee4495569a0ec254599dcd5d1f010881",
+      "matchesV1": true
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "sha256": "e97aedc52818a5f89f2fc88090b99e7b7339966603f686b64c69459270a655df"
+    }
+  ]
+}

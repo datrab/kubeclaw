@@ -1,3 +1,6 @@
+import { resolveWaitValue } from '@kubeclaw/plugin-foundation/observability/wait-projection';
+import type { DurableRecord } from '@kubeclaw/plugin-foundation/observability/durable-records';
+import type { RetainedWaitResolver } from '@kubeclaw/plugin-sdk';
 import crypto from 'node:crypto';
 import {
   canonicalJson,
@@ -154,18 +157,15 @@ function validateRecord(record: WaitRecord): WaitRecord {
   catch { throw new Error('WAIT_RECORD_INVALID'); }
 }
 
-function storedRecord(record: {
-  readonly sequence: number;
-  readonly idempotencyKey: string;
-  readonly committedAt: string;
-  readonly payload: StoredWait;
-}): WaitRecord {
-  if (record.payload.schemaVersion !== 'wait-value.v1') throw new Error('WAIT_RECORD_INVALID');
+function storedRecord(record: DurableRecord<unknown>, resolve?: RetainedWaitResolver): WaitRecord {
+  const schema = (record.payload as { schemaVersion?: unknown })?.schemaVersion;
+  if (schema !== 'wait-value.v1' && schema !== 'wait-value-projected.v1') throw new Error('WAIT_RECORD_INVALID');
+  const payload = resolveWaitValue(record as DurableRecord<Readonly<Record<string, unknown>>>, resolve);
   return validateRecord({
     schemaVersion: 'wait-record.v2',
     idempotencyKey: record.idempotencyKey,
     createdAt: record.committedAt,
-    wait: record.payload.wait,
+    wait: payload.wait,
   });
 }
 
@@ -183,6 +183,16 @@ function assertAuthorized(
     fence.assertCurrent();
   }
   if (signal.aborted) throw new Error('ADAPTER_CANCELLED');
+}
+
+/** A concurrent projection changes physical bytes, never the logical duplicate. */
+async function concurrentDuplicate(store: FileDurableRecordStore, key: string, wait: WaitRequest,
+  resolve: RetainedWaitResolver | undefined, assertCurrent: () => void,
+): Promise<{ created: false; wait: WaitRequest }> {
+  const current = (await store.read('waits/all')).find(record => record.idempotencyKey === key);
+  assertCurrent();
+  if (current && canonicalJson(storedRecord(current, resolve).wait) === canonicalJson(wait)) return { created: false, wait };
+  throw new Error('WAIT_IDEMPOTENCY_CONFLICT');
 }
 
 export function activate(context: AdapterActivationContext): AdapterInstance {
@@ -205,7 +215,7 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
     async invoke({ request, signal, confidential, fence }) {
       assertAuthorized(confidential, fence, signal);
       if (request.capability !== 'signal.wait') throw new Error('WAIT_OPERATION_UNSUPPORTED');
-      const existing = (await store.read<StoredWait>(waitStream)).map(storedRecord);
+      const existing = (await store.read<StoredWait>(waitStream)).map(record => storedRecord(record, context.resolveRetainedWait));
       assertAuthorized(confidential, fence, signal);
       if (request.operation === 'read') {
         return { waits: existing.map((record) => record.wait) };
@@ -229,10 +239,13 @@ export function activate(context: AdapterActivationContext): AdapterInstance {
       };
       try {
         const committed = await store.append(waitStream, request.idempotencyKey, value);
-        return { created: committed.appended, wait: storedRecord(committed.record).wait };
+        return { created: committed.appended, wait: storedRecord(committed.record, context.resolveRetainedWait).wait };
       } catch (error) {
         if (error instanceof Error && error.message === 'DURABLE_RECORD_SIZE_EXCEEDED') throw new Error('WAIT_ENTRY_SIZE_EXCEEDED');
-        if (error instanceof Error && error.message === 'DURABLE_RECORD_IDEMPOTENCY_CONFLICT') throw new Error('WAIT_IDEMPOTENCY_CONFLICT');
+        if (error instanceof Error && error.message === 'DURABLE_RECORD_IDEMPOTENCY_CONFLICT') {
+          return concurrentDuplicate(store, request.idempotencyKey, wait, context.resolveRetainedWait,
+            () => assertAuthorized(confidential, fence, signal));
+        }
         throw error;
       }
     },

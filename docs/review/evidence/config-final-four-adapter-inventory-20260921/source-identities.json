@@ -1,0 +1,446 @@
+{
+  "runtimeExecuted": false,
+  "scope": "Bounded named inventory; source copies include package backend modules for future inspection, not a claim that every lint scanner option is inventoried or runtime closure executed",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/lint-policy.json",
+      "sha256": "2c3a9eb507d31524d8718febaed5df780e12438037e0e61fcedf438748802993",
+      "bytes": 25145
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-final-four-adapter-inventory-20260921.md",
+      "sha256": "37e4445d35b4f29cb23df6d8aadcf3cedf8cf26551b035f652c5d96a31ec6ed6",
+      "bytes": 16494
+    },
+    {
+      "path": "scripts/tests/integration/repository-review-supervisor-start.mjs",
+      "sha256": "313005efd0676832fed1a2dc44557ffc418059feb6cf3e5b2a52cc5bbd8642f1",
+      "bytes": 5431
+    },
+    {
+      "path": "scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
+      "sha256": "ab6ea4e9dd6f84bbfe99c93ff86d041ec82b6f0a9093c55d8caa84ae73972b00",
+      "bytes": 4377
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "bytes": 9110
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+      "bytes": 9371
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+      "bytes": 4047
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+      "bytes": 5817
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b",
+      "bytes": 6731
+    },
+    {
+      "path": "skills/nova/core/execution/authorization.ts",
+      "sha256": "3f04309435d4fe3eebe5a73bac5247b0d3c981ffd4a9580e52974cf46cf3942d",
+      "bytes": 10287
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+      "bytes": 8372
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+      "bytes": 12185
+    },
+    {
+      "path": "skills/nova/core/state/read-run-evidence.ts",
+      "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+      "bytes": 15217
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/README.md",
+      "sha256": "5a80c23923eecb0361cd60ae3eec9ee72560eaecc73ef4b99dc459e5448561e0",
+      "bytes": 4864
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/package.json",
+      "sha256": "0862144204d32c406fb2248b09dff87582d2a67234b2a05a8614d7393167dcf4",
+      "bytes": 440
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/plugin.json",
+      "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e",
+      "bytes": 1679
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
+      "sha256": "908e54cafb1d4edac6aeffe49ded47dc578f87e3d37952b247b7520aa4560fa4",
+      "bytes": 1338
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+      "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+      "bytes": 6529
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/binding.ts",
+      "sha256": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+      "bytes": 4343
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/candidate.ts",
+      "sha256": "0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3",
+      "bytes": 1499
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+      "sha256": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+      "bytes": 3384
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/delivery.ts",
+      "sha256": "a1dfb3d6fef144d5f11e3546039ba4a291c97ad4f5fcf7ee0279b83fdfadaff7",
+      "bytes": 1119
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+      "sha256": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+      "bytes": 3683
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/src/ready.ts",
+      "sha256": "ae78a23722ab515d539b8ad4c0950ee8d487c5ff02a4b5f851f249f2026ffb82",
+      "bytes": 1211
+    },
+    {
+      "path": "skills/nova/plugins/lint/README.md",
+      "sha256": "95b6617ebe1ea090c7ac550f269ee82b17dfb82159eb777c6e25007fae95320c",
+      "bytes": 5513
+    },
+    {
+      "path": "skills/nova/plugins/lint/package.json",
+      "sha256": "9364645f3e17721c2df5dcf9d6047ef28d1cf735272dd12d881a9025217a07c5",
+      "bytes": 608
+    },
+    {
+      "path": "skills/nova/plugins/lint/plugin.json",
+      "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04",
+      "bytes": 1226
+    },
+    {
+      "path": "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+      "sha256": "07d9497e85246c310e93213a90ff22d7b1323302051902e6a75e3e0f6bb46b24",
+      "bytes": 523
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/adapter.ts",
+      "sha256": "7d525ef53fc8a187eba48e7ee15ca7f8f2df1d00a4e23823de15bae47a1b49e4",
+      "bytes": 3275
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/candidate.ts",
+      "sha256": "cb87e62587a7bad9f2d63a305870e85bdbf439440e02e4dfed5d91475ba6560e",
+      "bytes": 1513
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/architecture-tools.ts",
+      "sha256": "42720f0013e983cf28b693f2cd709b3fec3470c45ec1637d832eff7430fd0d03",
+      "bytes": 11604
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/constants.ts",
+      "sha256": "03e18f020b7e416463dc333c06d7ad24628e5105fa5ee10a457e364baa7bf058",
+      "bytes": 109
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
+      "sha256": "7a97ff6e62bc9e431c7dd1c8123bad9afa36fb797f0891edf879924ea5429cbc",
+      "bytes": 7066
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/discovery.ts",
+      "sha256": "ef94db8bda63eb74abe47cefabea3f3b64ef1e8848b868f61bb885059e8e4b16",
+      "bytes": 8109
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/evidence-file-partition.ts",
+      "sha256": "00caab4a144b1f76962249f6bc2098424540efd644686154eeeeb62e6ae8e9bb",
+      "bytes": 2040
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/execution.ts",
+      "sha256": "9aa2e64b50e9a9f7bb3bf1d181860f772c70dfc9c4ce058f376e4d56f2a675f4",
+      "bytes": 3180
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/finding-fingerprints.ts",
+      "sha256": "1a0e06f7bcb937839a43e5025e47831a173661240d9cce91125df3f3ff7ce317",
+      "bytes": 2325
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/go-terraform-tools.ts",
+      "sha256": "559229928d17cd3eff2c201eae78e705eb36b4d5c9f231a15faab2b917b00a9d",
+      "bytes": 112
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/go-tools.ts",
+      "sha256": "2ca058762435596a50dcddecc8e33a65d6f5638aa01bbe74140bd7d89b808d3d",
+      "bytes": 13971
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/helm-render.ts",
+      "sha256": "acafef0f53da08c16d9836dea2f243999bd9fdd347220d47c68310191b0ffb2c",
+      "bytes": 705
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/index.ts",
+      "sha256": "b7c408dc76e87aada6047264734c766b259a24254d7a3bb59e5fb735229c5214",
+      "bytes": 6167
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubeconform-tool.ts",
+      "sha256": "b7b24ece9566c430c480795b916f094faed7dbb372520b58da3b5a99ff56a0fc",
+      "bytes": 6632
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-manifests.ts",
+      "sha256": "16709307fb3b7b954902e20d3e8c7a8485ff4cd2160ac7944b8904a9ae7e6608",
+      "bytes": 7774
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts",
+      "sha256": "c449ee445791ed4c7e3e2fde96139bb46e1407e6898d4ab698203314f0a70171",
+      "bytes": 6832
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts",
+      "sha256": "a09beb82bd8db595e9467dcfe61bfa4bdaa07a09e8828dd83fda01f72150b002",
+      "bytes": 9053
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/kubernetes-security-tools.ts",
+      "sha256": "70b9625b994b9d210734941fdfd6cb6b663dbd5b4dd20db9ded0a144af8dfc4e",
+      "bytes": 5123
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/lint-governance.ts",
+      "sha256": "7904cc32edb9304644c02a705669624c224c87be0a176d1babc5cb0016bc6145",
+      "bytes": 4869
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/linux-process-group.ts",
+      "sha256": "83696b7511173f21e5af38f238758fc087afc0b3d84d8c62017aefa3527e6ea2",
+      "bytes": 2783
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/openapi-tool.ts",
+      "sha256": "5bf93fd93ea7e29019ea77fab78eeb365715c57504013ad82526d4db32dc9c61",
+      "bytes": 3902
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/output.ts",
+      "sha256": "cb405a9b8166ff3c6ea08d26a2eede788c0b3cbd007f06a5c09aef7340b7903c",
+      "bytes": 731
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/parsers.ts",
+      "sha256": "4948bf6d3e1ce744d436ebf9e4e3b289d7bced8782d5364bb0ea54f4580ab638",
+      "bytes": 277
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/paths.ts",
+      "sha256": "c84ba218c0185216e3e6eb1b4e348015e60833a761059f6388f0166eee347b83",
+      "bytes": 1964
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy-paths.ts",
+      "sha256": "4e7723eb14813fe5d594222d8a9b69809f809abaa379fbb44041793f28aa66e3",
+      "bytes": 4839
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy-patterns.ts",
+      "sha256": "7403829fae95019d046086f596f58035dae315c1b3def61e9849565b1c06584e",
+      "bytes": 1312
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy-validation.ts",
+      "sha256": "1c6f1e831d24a8df17557fe9919425042b995de3d28d92a0c6b8afb25293633e",
+      "bytes": 1836
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy-version.ts",
+      "sha256": "6324eb9a75f6151eaede8fae9ec4c48c61f2fe8265e4be64ec9fd6ce90db1d24",
+      "bytes": 69
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/policy.ts",
+      "sha256": "9b48e0b8de2714bde16f58a667ac9356ec2b8a8f9ccd364673000dec076feb53",
+      "bytes": 19438
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/process-termination.ts",
+      "sha256": "47199969a22d1415bee97247400c9dfaf33ea843a41e5b68d13646febda59ed9",
+      "bytes": 2598
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/process.ts",
+      "sha256": "81320777e32a2af656cbb6f22903918d8c8a48074c0e33f47b4ae87b7bfeaca3",
+      "bytes": 3114
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/report-contract.ts",
+      "sha256": "a0acf232699b954e74e35f3c075d68f5559576eda588e48a4e36f47c51d05893",
+      "bytes": 14404
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/report.ts",
+      "sha256": "62246dd40865be23329e9c0ba091cfb97b41fabb8e26981a52713c1006d1244b",
+      "bytes": 11216
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/terraform-tools.ts",
+      "sha256": "b189a72a067325eca719e5c3a2c863aa8b8401938b590e258dc67fcc2ef9978c",
+      "bytes": 9271
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-core.ts",
+      "sha256": "766fba947b149d80b78789743b65d0e427804ae08e39f47d862f5163a583203d",
+      "bytes": 5174
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts",
+      "sha256": "4c1e54233cc2af3e0e110937433c6258923f6d15d7a991317d7a07add38ba577",
+      "bytes": 2388
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts",
+      "sha256": "85b1c25c238682acce0fcea59ceea75ba1b2d7aa91f95a8308194a0602cbd184",
+      "bytes": 10979
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts",
+      "sha256": "6148c63c63ab2b8ad4fa258790e95bb89121d4e844969b7a91020f6803527de5",
+      "bytes": 3333
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-registry.ts",
+      "sha256": "3e49b2dfecee85df614db7d2e89e9f1087ef31c412cf0dfecc7959c220d2fa28",
+      "bytes": 947
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/engine/tool-summary.ts",
+      "sha256": "e53ec5b5468aecffbe2ca0efd366c00e1eb585b7d1d8b0d34e9c7e13fd893904",
+      "bytes": 767
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/request.ts",
+      "sha256": "68d31dbdfb0a48764b436307be6998cd21700091f9f06f306bdef34532fb2453",
+      "bytes": 2289
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/stage.ts",
+      "sha256": "6ba5172934f59d7b806e90ff1ce114feb8efe386a61ccedd8b86afc46b07d864",
+      "bytes": 4003
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/support/optional-absence.ts",
+      "sha256": "09944ef955b43f0d1bd2e33ceed7d1655c1fc0bff100fc9c7e8053651b84a7d4",
+      "bytes": 113
+    },
+    {
+      "path": "skills/nova/plugins/lint/src/support/value-boundary.ts",
+      "sha256": "d5982b5b79fce71aa8c61bfabbf5fc233c1afc3b73414f9df6f316c6439a16e0",
+      "bytes": 125
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/README.md",
+      "sha256": "acdf524d2b206d0f6152b537375a69b07b0abf5ad3ce6e57942a5e64ebde9141",
+      "bytes": 3229
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/package.json",
+      "sha256": "1f587ae529db6a8c3ede69be6ca14651d989a80e884d111888469bd5b30da888",
+      "bytes": 412
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/plugin.json",
+      "sha256": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+      "bytes": 892
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+      "sha256": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530",
+      "bytes": 682
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+      "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+      "bytes": 3858
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+      "sha256": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+      "bytes": 5615
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/protocol.ts",
+      "sha256": "df3e02fd4c7a13aa38ce93292a55da9cb6c712799e813cbe0c8a283fd769081f",
+      "bytes": 5871
+    },
+    {
+      "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+      "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+      "bytes": 2662
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/README.md",
+      "sha256": "e0d8e4885ec3f72abdeebf8f6d1b8f94618e7f4bb69bb24f91809195b9da8138",
+      "bytes": 2528
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/package.json",
+      "sha256": "5e3ecf2c7ae4905f39ed7942676ad359605c84f2639d724faf25a0225b99bf6c",
+      "bytes": 335
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/plugin.json",
+      "sha256": "91fe75d56133722d51c62bb2b06f729cdf3ee35735f471857fb324aab34501bd",
+      "bytes": 421
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/schemas/config.schema.json",
+      "sha256": "f41b62a39c7f0dd5f959e94807d8bb60352fc4bbdab28929214c9199106978a2",
+      "bytes": 438
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+      "sha256": "657ec9c38069eead03aa531e5d5b60041c8fe34b643e2bab838eb0a80e12afcd",
+      "bytes": 4414
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+      "sha256": "a6d8442958b8d90132a23d69449058c6d146aa170ad5f63a11433e42fb73277e",
+      "bytes": 3348
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/src/revision-parsers.ts",
+      "sha256": "de1770df42f8bcb5451b9b23cfa539c1f7d8fc0716d105e389ce95309a8fd295",
+      "bytes": 3370
+    },
+    {
+      "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+      "sha256": "35aadab83485ed1dcf370ce2136a67d892b6026ba594d0d12d8c739dc3f0c71f",
+      "bytes": 17116
+    }
+  ]
+}

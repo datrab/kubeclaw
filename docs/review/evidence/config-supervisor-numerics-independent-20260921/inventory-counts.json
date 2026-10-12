@@ -1,0 +1,98 @@
+{
+  "historicalRows": 23,
+  "distinctSettings": 20,
+  "rows": [
+    {
+      "name": "worker.native.closeTimeoutMs",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.supervisor.closeTimeoutMs"
+    },
+    {
+      "name": "PRISM_NATIVE_MAXIMUM_RESULT_BYTES",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.maximumResultBytes"
+    },
+    {
+      "name": "PRISM_NATIVE_DISPATCH_TIMEOUT_MS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.dispatchTimeoutMs"
+    },
+    {
+      "name": "PRISM_NATIVE_CPU_TIME_MS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.resourcePolicy.cpuTimeMs"
+    },
+    {
+      "name": "PRISM_NATIVE_MEMORY_BYTES",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.resourcePolicy.memoryBytes"
+    },
+    {
+      "name": "PRISM_NATIVE_TASKS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.resourcePolicy.tasks"
+    },
+    {
+      "name": "PRISM_NATIVE_MAXIMUM_INPUT_BYTES",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.worker.maximumInputBytes"
+    },
+    {
+      "name": "PRISM_NATIVE_UID",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.supervisor.uid"
+    },
+    {
+      "name": "PRISM_NATIVE_GID",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.supervisor.gid"
+    },
+    {
+      "name": "PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.supervisor.maximumOwnershipRecords"
+    },
+    {
+      "name": "PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.supervisor.maximumOwnershipBytes"
+    },
+    {
+      "name": "PRISM_NATIVE_MAXIMUM_INPUT_BYTES",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.worker.maximumInputBytes"
+    },
+    {
+      "name": "PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.supervisor.maximumOutputBytes"
+    },
+    {
+      "name": "PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.supervisor.maximumJournalBytes"
+    },
+    {
+      "name": "PRISM_NATIVE_POLL_INTERVAL_MS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.supervisor.pollIntervalMs"
+    },
+    {
+      "name": "PRISM_NATIVE_DRAIN_TIMEOUT_MS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.supervisor.drainTimeoutMs"
+    },
+    {
+      "name": "PRISM_NATIVE_CLOSE_TIMEOUT_MS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.native.supervisor.closeTimeoutMs"
+    },
+    {
+      "name": "PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.worker.maximumActiveRequests"
+    },
+    {
+      "name": "PRISM_WORKER_MAXIMUM_PROBE_REQUESTS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.worker.maximumProbeRequests"
+    },
+    {
+      "name": "PRISM_WORKER_MAXIMUM_CONNECTIONS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.worker.maximumConnections"
+    },
+    {
+      "name": "PRISM_NATIVE_MAXIMUM_INPUT_BYTES",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.worker.maximumInputBytes"
+    },
+    {
+      "name": "PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.worker.requestTimeoutMs"
+    },
+    {
+      "name": "PRISM_WORKER_SHUTDOWN_TIMEOUT_MS",
+      "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.worker.shutdownTimeoutMs"
+    }
+  ]
+}

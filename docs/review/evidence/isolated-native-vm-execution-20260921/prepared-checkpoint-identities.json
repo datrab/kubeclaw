@@ -1,0 +1,26 @@
+[
+  {
+    "path": "prepared-artifact-manifest.json",
+    "sha256": "2393896ccba2139b0d78a4846bf51a5f2ee42872063156e50683f97b12479827"
+  },
+  {
+    "path": "prepared-launch-command.json",
+    "sha256": "1830298933a0794a50fab0ca581204e97d71ebd04e10e39d12a22da75c57d03f"
+  },
+  {
+    "path": "prepared-verification-only.txt",
+    "sha256": "4baca2e7cdb9133635fcd65422315b86aed3c6b5e0b5ec3afdffc08af3571b96"
+  },
+  {
+    "path": "prepared-native-snapshot-current.json",
+    "sha256": "f7a93f4be22ca05966609708e6005272e0e6fd3ef7aa4fb82957fe2d3208e843"
+  },
+  {
+    "path": "prepared-package-hashes.json",
+    "sha256": "c0f79e74344ab74c0d604b4cc73688ccfb4f3d137eaed121befaa21b138883c9"
+  },
+  {
+    "path": "prepared-image-build.json",
+    "sha256": "790e1462fc3d0ad4c10a84c89fd0f47c08d21a7002297e1ce3d1c9b41674b6b0"
+  }
+]

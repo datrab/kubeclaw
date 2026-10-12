@@ -1,0 +1,6 @@
+{
+  "uniqueFileHashes": 230,
+  "outsideBeforeManifest": [],
+  "hashMismatches": [],
+  "note": "Trace hashes underlying file bytes. In-memory mutant bytes are separately bound by exact hook source, applied marker and assertion failures; they are not presented as unmodified execution."
+}

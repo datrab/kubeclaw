@@ -1,0 +1,38 @@
+✔ same-journal retry resolves immutable predecessor, cleanup inserted first=false (927.031306ms)
+✔ same-journal retry resolves immutable predecessor, cleanup inserted first=true (766.066271ms)
+✔ same-journal cleanup resolution rejects missing-lookup (570.24122ms)
+✔ same-journal cleanup resolution rejects missing-association (525.412228ms)
+✖ same-journal cleanup resolution rejects wrong-effect (585.267207ms)
+✔ same-journal cleanup resolution rejects wrong-original (613.177733ms)
+✔ same-journal cleanup resolution rejects predecessor-as-success (588.057457ms)
+✔ same-journal cleanup resolution rejects missing-retry (437.217123ms)
+✔ same-journal cleanup resolution rejects failed-retry (511.621794ms)
+✔ same-journal cleanup resolution rejects unarchived-retry (710.270497ms)
+✔ same-journal cleanup resolution rejects bad-output (609.376495ms)
+✔ same-journal cleanup resolution rejects live-predecessor (566.781651ms)
+✔ same-journal cleanup resolution rejects live-retry (562.87572ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8647.153542
+
+✖ failing tests:
+
+test at ../../../../../tmp/native-cleanup-retry-mutant-qt__nhwz/retry.test.mts:61:3
+✖ same-journal cleanup resolution rejects wrong-effect (585.267207ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///tmp/native-cleanup-retry-mutant-qt__nhwz/retry.test.mts:84:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /RECONCILIATION/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

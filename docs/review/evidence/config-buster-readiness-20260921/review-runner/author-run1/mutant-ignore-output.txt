@@ -1,0 +1,58 @@
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_TIMEOUT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":307}
+✔ real factory/service/process honors execution policy {"maximumExecutionMs":300,"maximumOutputBytes":4096} (639.798106ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":true,"code":"DEPENDENCY_OK","exitCode":0,"signal":null,"errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":1237}
+✔ real factory/service/process honors execution policy {"maximumExecutionMs":2500,"maximumOutputBytes":4096} (1386.364812ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":true,"code":"DEPENDENCY_OK","exitCode":0,"signal":null,"errno":null,"outputBytes":256,"outputDigest":"sha256:85e62acd750c4eb56b7b6a1d66dca5bfaac5f062608a1a893410d0288936c09a","durationMs":36}
+✖ real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":64} (173.578427ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":true,"code":"DEPENDENCY_OK","exitCode":0,"signal":null,"errno":null,"outputBytes":256,"outputDigest":"sha256:85e62acd750c4eb56b7b6a1d66dca5bfaac5f062608a1a893410d0288936c09a","durationMs":37}
+✔ real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":1024} (161.733462ms)
+✔ factory disabled capability does not execute configured dependency and rejects retired runtime authors (140.789248ms)
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":false,"code":"DEPENDENCY_TIMEOUT","exitCode":null,"signal":"SIGKILL","errno":null,"outputBytes":0,"outputDigest":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","durationMs":306}
+{"event":"buster.dependency-readiness","dependency":"buildkit","ok":true,"code":"DEPENDENCY_OK","exitCode":0,"signal":null,"errno":null,"outputBytes":256,"outputDigest":"sha256:85e62acd750c4eb56b7b6a1d66dca5bfaac5f062608a1a893410d0288936c09a","durationMs":35}
+✖ real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay (641.074621ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5061.531449
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-readiness-consumer.test.mts:21:3
+✖ real factory/service/process honors output policy {"maximumExecutionMs":2500,"maximumOutputBytes":64} (173.578427ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 503
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-readiness-consumer.test.mts:37:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 503,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-readiness-consumer.test.mts:73:1
+✖ real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay (641.074621ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-readiness-consumer.test.mts:125:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

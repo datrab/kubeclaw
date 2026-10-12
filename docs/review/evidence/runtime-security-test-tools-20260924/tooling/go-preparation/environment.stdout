@@ -1,0 +1,13 @@
+{
+	"CGO_ENABLED": "0",
+	"GOARCH": "amd64",
+	"GOCACHE": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/runtime-security-test-tools-20260924/tooling/go-build-cache",
+	"GOFLAGS": "-mod=readonly",
+	"GOMOD": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/go.mod",
+	"GOMODCACHE": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/runtime-security-test-tools-20260924/tooling/go-module-cache",
+	"GOOS": "linux",
+	"GOROOT": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/runtime-security-test-tools-20260924/tooling/go",
+	"GOTOOLCHAIN": "local",
+	"GOVERSION": "go1.26.5",
+	"GOWORK": "off"
+}

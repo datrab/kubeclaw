@@ -1,0 +1,37 @@
+{
+  "count": 23,
+  "entries": [
+    "HEALTH-ARCH-006",
+    "HEALTH-CONF-002",
+    "HEALTH-CONF-003",
+    "HEALTH-CONF-004",
+    "HEALTH-CONF-005",
+    "HEALTH-CONF-006",
+    "HEALTH-CONF-009",
+    "HEALTH-CONF-012",
+    "HEALTH-CONF-014",
+    "HEALTH-HTTP-002",
+    "HEALTH-HTTP-003",
+    "HEALTH-HTTP-004",
+    "HEALTH-HTTP-005",
+    "HEALTH-HTTP-008",
+    "HEALTH-HTTP-015",
+    "HEALTH-RES-006",
+    "HEALTH-RES-007",
+    "HEALTH-DEFECT-001",
+    "HEALTH-DEFECT-002",
+    "TSX-HTTP-002",
+    "TSX-HTTP-003",
+    "TSX-MIG-004",
+    "API-HTTP-005"
+  ],
+  "sha256": {
+    "docs/architecture/pipeline-test-gate-http-parity-ledger.json": "11172d6dfd73442bc42fe48c3021bf809d8de69f9505d0b87d83e86df2eb39aa",
+    "docs/architecture/pipeline-test-gate-tailscale-exposure-parity-ledger.json": "1481751d9ee378f807b182a11723ba0c772ca275a9e246a29b7a0123eba89309",
+    "docs/architecture/pipeline-test-gate-api-parity-ledger.json": "bd2632a2dc4c5158c95eff7443d8f35ff4a0df5975aa2eb37f653141b6ac8ee2",
+    "tests/verification/integration/http-provider-live.test.ts": "9bdd5c08192e8d73ec0cfe1cefa3d6807228a2bc5da7980a05ba92c526fd13ff",
+    "tests/verification/contracts/check-pipeline-manifest-lint-cutover.mts": "773ae5ee97404f219b39f36ff90f32c074bf836b37aaad055198363e558e9a6d",
+    "skills/buster/plugins/http/src/provider.js": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186",
+    "skills/buster/engine/test-gates/network-http-runtime.ts": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+  }
+}

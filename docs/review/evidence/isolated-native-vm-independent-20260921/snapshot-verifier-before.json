@@ -1,0 +1,17 @@
+{
+  "actualFunction": "def verify_snapshot():\n    for item in json.loads((cache / 'repo-snapshot-manifest.json').read_text()):\n        file = export / item['path']\n        if 'symlink' in item:\n            if not file.is_symlink() or os.readlink(file) != item['symlink']:\n                raise SystemExit('Snapshot symlink changed: ' + item['path'])\n        else:\n            digest = checksum_file(file)\n            if digest != item['sha256']:\n                raise SystemExit('Snapshot bytes changed: ' + item['path'])",
+  "results": [
+    {
+      "case": "unchanged",
+      "accepted": true
+    },
+    {
+      "case": "extra-file",
+      "accepted": true
+    },
+    {
+      "case": "regular-replaced-by-escaping-symlink",
+      "accepted": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production.ts
+  118:8   error  Function 'loadProductionBusterRemotePlanRuntime' has too many lines (310). Maximum allowed is 60  max-lines-per-function
+  118:8   error  Function 'loadProductionBusterRemotePlanRuntime' has a complexity of 97. Maximum allowed is 15    complexity
+  122:63  error  Read environment variables only in a declared configuration or infrastructure adapter             discipline/no-direct-env-access
+  314:1   error  File has too many lines (414). Maximum allowed is 300                                             max-lines
+
+✖ 4 problems (4 errors, 0 warnings)
+

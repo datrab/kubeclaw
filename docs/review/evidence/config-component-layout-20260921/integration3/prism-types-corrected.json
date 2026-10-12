@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node",
+    "node_modules/typescript/bin/tsc",
+    "--noEmit",
+    "-p",
+    "skills/prism/tsconfig.json"
+  ],
+  "exitCode": 0
+}

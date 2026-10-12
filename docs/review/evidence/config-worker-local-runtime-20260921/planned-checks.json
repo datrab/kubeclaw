@@ -1,0 +1,56 @@
+{
+  "status": "Unexecuted staging plan; all runtime commands await coordinated integration",
+  "originals": [
+    "npm run verify:worker-core:local-runtime",
+    "node --test tests/verification/reliability/worker-deadline.test.mts",
+    "npm run verify:test-gate:plan-runner",
+    "npm run verify:config:components",
+    "node tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "node tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+  ],
+  "new": [
+    "node --test tests/verification/contracts/check-pipeline-worker-local-policy.mts",
+    "node tests/verification/contracts/check-pipeline-worker-local-config.mts"
+  ],
+  "toolContract": "same verified GNU flock and /usr/bin/tar mounts, sandbox runtime/installed tools as original Buster consumer suite; no native proof",
+  "packageAdditiveProposal": {
+    "verify:worker-core:local-config": "npm run verify:worker-core:local-runtime && node --test tests/verification/contracts/check-pipeline-worker-local-policy.mts && node tests/verification/contracts/check-pipeline-worker-local-config.mts"
+  },
+  "mutants": [
+    {
+      "name": "drainTimeoutMs-fallback",
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "from": "positiveTimer(options.drainTimeoutMs, 'WORKER_LOCAL_DRAIN_TIMEOUT_INVALID')",
+      "to": "positiveTimer(options.drainTimeoutMs ?? 300_000, 'WORKER_LOCAL_DRAIN_TIMEOUT_INVALID')",
+      "occurrence": "validator only, require exactly one replaced read",
+      "command": "node --test tests/verification/contracts/check-pipeline-worker-local-policy.mts",
+      "requiredFailure": "matching explicit missing-field assertion, not build/harness failure"
+    },
+    {
+      "name": "cancellationTimeoutMs-fallback",
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "from": "positiveTimer(options.cancellationTimeoutMs,",
+      "to": "positiveTimer(options.cancellationTimeoutMs ?? 30_000,",
+      "occurrence": "validator only, require exactly one replaced read",
+      "command": "node --test tests/verification/contracts/check-pipeline-worker-local-policy.mts",
+      "requiredFailure": "matching explicit missing-field assertion, not build/harness failure"
+    },
+    {
+      "name": "replayLimit-fallback",
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "from": "const replayLimit = options.replayLimit;",
+      "to": "const replayLimit = options.replayLimit ?? 65_536;",
+      "occurrence": "validator only, require exactly one replaced read",
+      "command": "node --test tests/verification/contracts/check-pipeline-worker-local-policy.mts",
+      "requiredFailure": "matching explicit missing-field assertion, not build/harness failure"
+    },
+    {
+      "name": "lost-production-replay",
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "from": "replayLimit: workerLocalRuntime.replayLimit",
+      "to": "replayLimit: 65_536",
+      "command": "node tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "requiredFailure": "capacity-1 profile incorrectly executes second provider; actual default remote result assertion"
+    }
+  ]
+}

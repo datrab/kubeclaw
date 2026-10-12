@@ -1,0 +1,40 @@
+✔ BA01 lock requires complete architecture and archive identities (4.021262ms)
+✔ BA02 installed package and registry drift rejected before download (1.18842ms)
+✔ BA03 corrupt size fails before extraction or publication (9.172093ms)
+✔ BA03 corrupt sha256 fails before extraction or publication (1.59243ms)
+✔ BA04 existing destinations and dangling symlinks preserved (0.990255ms)
+✔ BA04 only one concurrent installer may publish (5.977062ms)
+✔ BA05 prism publishes three verified directories with permissions and original markers (3.426617ms)
+✔ BA02 real CLI rejects authored/generated drift before loading downloader (62.55801ms)
+✔ BA06 both production Dockerfiles replace unverified archive installation (0.77516ms)
+✔ TD01/07: exact locked files publish together without rewriting metadata or resolving tags (49.103938ms)
+✔ TD02/13: malformed inputs and scanner mismatch fail before registry access (7.921231ms)
+✔ TD04: changed vulnerability manifest is rejected without publishing either database (7.002648ms)
+✔ TD05: changed vulnerability archive is rejected before extraction (7.385598ms)
+✔ TD04: changed java manifest is rejected without publishing either database (13.838892ms)
+✔ TD05: changed java archive is rejected before extraction (13.473092ms)
+✔ TD06: correct archive with wrong locked extracted bytes fails (18.299565ms)
+✔ TD06: duplicate archive members are rejected before publication (19.791733ms)
+✔ TD06: symlink archive members are rejected before publication (50.395081ms)
+tar: removing leading '../' from member names
+tar: removing leading '../' from member names
+✔ TD06: traversal archive members are rejected before publication (46.319428ms)
+✔ TD08: registry failure has no fallback or partial cache publication (6.757091ms)
+✔ TD09/14: existing directory and dangling symlink remain untouched (6.32076ms)
+✔ TD14: two installers cannot publish or merge into the same destination (21.868696ms)
+✔ TD02: actual CLI rejects authored database lock drift before registry access (53.033627ms)
+✔ TD02: actual CLI rejects generated database lock drift before registry access (50.232146ms)
+✔ TD13: actual CLI checks installed scanner against the consistent authored lock (100.72341ms)
+✔ TD11: production Dockerfile wires authored inputs and installer; obsolete refresh paths are absent (0.759159ms)
+✔ locked input installers and their locks trigger image and deployment selection (1.102678ms)
+✔ real Git input identities change for installer code and authored archive identities (227.84822ms)
+✔ central versions update actual build/deployment files and reject drift without repairing it (92.985873ms)
+✔ every central base requires a digest, including non-OpenClaw runtimes (0.325638ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1174.409688

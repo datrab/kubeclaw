@@ -1,0 +1,33 @@
+{
+  "controls": [
+    {
+      "name": "fixed-interval",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "/tmp/child-observation-control-o4dapfju/provider-child-session.test.mjs"
+      ],
+      "exitCode": 1,
+      "candidateSemanticDetection": true,
+      "originalChildSha256": "62a88c6c23e47440b05c62ea55453ba5b973a10fafc23e157e82bbd9ae526320",
+      "mutatedChildSha256": "2a2d0169773db583d509c3ba58dd9db49c7ed14526f48cc5375a02b5d147ca85",
+      "requiredManualReview": "Inspect exact actual/expected values and rule out unrelated failures."
+    },
+    {
+      "name": "missing-policy-default",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "/tmp/child-observation-control-sac7x5ib/provider-child-session.test.mjs"
+      ],
+      "exitCode": 1,
+      "candidateSemanticDetection": true,
+      "originalChildSha256": "62a88c6c23e47440b05c62ea55453ba5b973a10fafc23e157e82bbd9ae526320",
+      "mutatedChildSha256": "2084c362ba336c84cfca43f0c09bc2c9c88d42e645ee1f708de38a10e53414e6",
+      "requiredManualReview": "Inspect exact actual/expected values and rule out unrelated failures."
+    }
+  ],
+  "sourceDrift": []
+}

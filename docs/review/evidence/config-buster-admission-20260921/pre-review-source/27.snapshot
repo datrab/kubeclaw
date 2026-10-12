@@ -1,0 +1,65 @@
+# Buster service admission configuration
+
+Status: implementation in progress; no acceptance or full CONFIG closure.
+
+## Preimplementation criteria
+
+- BA1: `operator.buster.admission` solely authors required positive safe integers `maximumActiveJobs` (2 jobs), `maximumQueuedJobs` (8 waiting jobs), and `maximumConcurrentAttempts` (64 declared concurrent attempts). Strict unknown/missing/type/range rejection; no PID-to-task reinterpretation.
+- BA2: Actual CLI loads one immutable startup snapshot for preparation and admission. Production composition passes explicit required admission policy to the service. No per-request reload, duplicated default or optional production fallback.
+- BA3: Remove three entrypoint ENV authors and runtime JSON authors. Reject the three retired ENV keys and JSON fields even when equal to canonical values. Keep credentials, trust, version and other unconverted settings separate.
+- BA4: Two authored profiles exercise actual service queue admission, active-job and weighted attempt scheduling, replay and restart rejection through the production loader. Preserve original shutdown, reservation and remote-runtime assertions; explicit modeled preparation does not prove native isolation.
+- BA5: Meaningful private mutations detect restored local admission defaults or ignored queue/concurrency policy. Preserve original cases and record any fixture adaptation. Canonical chart config remains the mounted author without a second values override.
+- BA6: Required scoped types/lint and relevant originals pass; source snapshots, failures and limitations retained. Fresh nonauthor review required. Preparation slot limits and service job lifetime differ; no arbitrary active-jobs-to-slot comparison or global F6 claim.
+- BA-DOC: Document units/defaults, consumers, restart effects, migration errors and exact inventory lineage without rewriting historical counts. No cluster/native/live CONFIG acceptance.
+
+## Baseline and scope
+
+The baseline manifest is `docs/review/evidence/config-buster-admission-20260921/before-identities.json`.
+There are three author layers: entrypoint ENV-to-runtime JSON, production runtime JSON fallback, and optional service constructor defaults. Consumers are submit admission, weighted queue drain and startup recovery. The constructor validates positive safe integers already. The shared Buster preparation policy remains a separate responsibility.
+
+No AGENTS.md was found in this checkout or its parent scan. Acceptance F1–F6/F-DOC in `acceptance-20260920.md` governs this bounded migration. Shared source edits wait for the independently running Wait/Operator provenance-bound test run to finish.
+
+## Preimplementation default correction from the image author
+
+Before changing the canonical value, a complete image/entrypoint search found
+`docker/Dockerfile.buster-runtime` sets `BUSTER_V2_MAX_QUEUED_JOBS=8`. This overrode
+all three fallback values of 16 in actual image startup. Root authorized preserving
+the effective image value 8, removing that ENV author, and documenting 16 only as
+the displaced historical fallback. BA1 therefore requires 8; no capacity is raised.
+The image baseline is added to the before manifest before its ENV removal.
+
+## Coherent decoder extraction and fixture changes
+
+The canonical baseline lint found four production.ts violations (310-line loader,
+complexity 97, 414 logical file lines and implicit environment access). The
+configuration assembly now calls direct decoders for command/network/scanner,
+browser and cluster capabilities. Shared scalar/secret validators and capability
+source-presence checks retain their original policy. No generic execution
+framework, alternate production constructor or capability-policy migration is
+introduced. The CLI explicitly supplies its environment for external secrets and
+build revision. Canonical admission fields remain separate from those inputs.
+
+The original runtime-configuration test predates the already-required preparation
+argument. Its configuration-only adapter supplies a rejecting preparation object
+(no preparation operation is expected), the canonical startup settings and the
+original explicit secret environment. Retired archive fields are removed from
+that fixture, not re-enabled in production. PEM exports are converted to strings
+for strict typing, and a duplicate identical maximumResultBytes property is
+removed. Original assertions are retained. Shutdown's deliberate active-job=1
+profile now derives from the canonical admission policy; its assertions/deadlines
+are unchanged. Existing modeled service fixtures obtain canonical admission via
+the original author loader, without hand-copied defaults.
+
+Initial admission execution failed before startup because the private proot
+runtime needed its retained libtalloc search directory. Run2 reached all four
+cases, but the controlled execution fixture incorrectly granted command.execute
+without its invoker settings; two cases timed out at their unchanged 30-second
+bounds. Run3 fixes that fixture by granting no external capability and invokes
+the same actual service callback: 4/4 pass, zero skips/cancellations. These
+failures are retained. None is native execution evidence.
+
+The first new Helm probe selected the separate namespace-controller Deployment,
+which has no Buster swarm checksum, and failed before its checksum assertion. The
+selector now identifies the actual Deployment containing `buster-v2-runtime`;
+production rendering is unchanged. The same run's actual unprivileged CLI
+probes passed all three retired ENV rejections before opening fd3.

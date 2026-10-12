@@ -1,0 +1,29 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "One ownership correction required before integration; otherwise requested three failure-flow cases are represented",
+  "manifestSha256": "8db6053e5cf61d3f365da7d1427bd0f1e20606c49566d1b82600aeafa306c619",
+  "allFourFileHashesVerified": true,
+  "findings": [
+    {
+      "id": "OWN-GATE-01",
+      "priority": "P2",
+      "file": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "problem": "terminate sends SIGKILL to -child.pid whenever !passed, even after child exit/close. Assertions after await closed can fail, invoking t.after and signaling a PGID for which this process generation is no longer confirmed. Late-root-removal mutant specifically exercises such an after-close assertion failure.",
+      "required": "Only signal the still-owned running process generation; stop signaling after observed exit as well as close (track exit or check exitCode/signalCode plus terminal). On unconfirmed/terminal generation retain evidence instead of blindly using stale pid. Preserve real child/IPC barriers and all original oracles."
+    }
+  ],
+  "positiveSourceFindings": [
+    "Nested real node:test timeout is identified by exact failureType/message while expected nested exit1 is retained; parent does not turn arbitrary errors into positive pass.",
+    "Timeout-clean observes body/stop/child barriers separately and requires root present at actual close, removed only after completed nested process.",
+    "Stop failure inspects preserved cause tree for FILES_RETAINED, SHUTDOWN_FAILED and both sentinel errors.",
+    "Disposal-timeout-late uses unchanged10000ms helper bound, waits precise failure before releasing child, then checks retained root after actual close and nested process exit.",
+    "Reporter serializes nonenumerable causes/AggregateError errors; complete lines must parse; strict unhandled-rejections and uncaught monitor prevent silently swallowed promise failures.",
+    "Controls target actual helper early deletion and late-inner deletion, with exact source hashes/unique anchors. Controls remain unexecuted and require intended filesystem assertion failures.",
+    "Existing helper and original cluster command unchanged; new separate maintained ownership command added."
+  ],
+  "limitations": [
+    "No tests/lint/runtime executed.",
+    "Observed helper ownership is not production process ownership acceptance.",
+    "Keep failed gate artifacts on failure; fix stale-PGID cleanup before running negative controls."
+  ]
+}

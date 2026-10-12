@@ -1,0 +1,1 @@
+{"type":"test:fail","name":"OWN-STOP-FAILURE","error":{"name":"Error","message":"OWN_BODY_SENTINEL","code":"ERR_TEST_FAILURE","failureType":"testCodeFailure","cause":{"name":"Error","message":"OWN_BODY_SENTINEL"}}}

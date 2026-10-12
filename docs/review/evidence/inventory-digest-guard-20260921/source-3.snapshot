@@ -1,0 +1,256 @@
+# Observability retention and operator cleanup
+
+Disk and Git logs remain until the operator explicitly requests their cleanup.
+There is no automatic log expiry. Code, final reports, decisions and acceptance
+history remain until explicit project deletion. Runs waiting for a decision keep
+the evidence needed for inspection and continuation. These are the approved
+[D01/D07 rules](../review/remediation/decisions.md); D09 separately requires durable
+worker recovery independent of Clawdeck. The seven-day demo namespace/exposure
+lifetime in D06 does not expire logs or run history.
+
+Clawdeck owns central log collection. Existing local journals, artifact files,
+result records and delivery state retain their own recovery responsibilities.
+A displayed Clawdeck event or an observer delivery acknowledgement does not prove
+that every required source artifact is durably archived or authorize its deletion.
+No Clawdeck-internal deletion interval is established by the approved decisions.
+
+## Existing roots and capacity limits
+
+Resolve roots from the running configuration and exact run/job identity. A name
+that resembles a run directory is insufficient ownership evidence. Limits below
+are embedded defaults, not claims about actual free disk capacity or configured
+PVC sizes. MiB/GiB denote powers of 1024.
+
+| Owner and root | Stored data and current bounds | Capacity consequence |
+| --- | --- | --- |
+| Nova `platform.storageRoot/runs/v2-<sha256(runId UTF-8)>` | `events.jsonl`, `observer-checkpoints.jsonl`, `observer-deliveries.jsonl`, administrative decisions, signals and graph/registry snapshots. `FileJournal` has no retention deadline or total-byte quota. A legacy directory may be selected only after its event identity is verified by `runRoot()`. | Filesystem/inode exhaustion stops writes; deleting a prefix breaks the journal sequence/hash chain. |
+| Nova `<runRoot>/observability/admission/admission.json` | Up to 1,000,000 admitted records and 4 GiB snapshot bytes; ingress 16 MiB; quarantine 10,000 records/1 GiB within the enclosing snapshot budget. | `OBSERVABILITY_ADMISSION_FULL`; confirmed history has no admission compaction API. |
+| Nova `<runRoot>/observability/attempts` | `attempt-store.json` plus evidence blobs: 100,000 evidence objects, 10 GiB aggregate evidence, 1 GiB per object, 100,000 resident results, 100,000 resident closures and 1 GiB metadata (including all retained projection references/receipts). | Evidence, result, closure or metadata writes fail explicitly at their respective limits. |
+| Buster `<runtimeRoot>/<sha256(jobId)>/observability` | Remote-plan job directory resolved by the service, with `admission` and `attempts` subdirectories. Admission: 10,000 records/256 MiB, ingress 16 MiB, quarantine 1,000 records/64 MiB. Attempts: 10,000 evidence objects/results/closures, 10 GiB evidence, 1 GiB per object, 256 MiB metadata. Injected stores must match the configured directories. | The same explicit admission/attempt capacity failures; a terminal job directory is not automatically deletable. |
+| Buster configured `artifactRoot` (remote jobs: `<jobRoot>/artifacts`) and remote job-store root | Original diagnostic files and reports; the remote store separately retains job identities and result blobs. Store ownership and limits come from the service/adapter configuration, not the demo namespace. | Preserve referenced result/artifact identities when diagnosing per-job storage. Removing the job directory does not retire shared job records. |
+| Artifact adapter configured `artifactRoot` | `records/store.json` metadata defaults to 100,000 records/256 MiB; content-addressed blobs have a separate 256 MiB aggregate bound and 16 MiB individual default. | `DURABLE_RECORD_STORE_FULL` or `DURABLE_BLOB_STORE_LIMIT_EXCEEDED`; an individual oversized blob fails separately. |
+| Telemetry adapter configured `root` | `records/store.json`, stream `telemetry/plugin-events`: 100,000 records/256 MiB by default, 1 MiB per record. This is a telemetry projection, not a second canonical log archive. | `DURABLE_RECORD_STORE_FULL` or `TELEMETRY_RECORD_SIZE_EXCEEDED`; no automatic ring buffer or deletion. |
+
+Source owners: [Nova run-root resolution](../../skills/nova/core/execution/run-root.ts),
+[Nova runtime journals](../../skills/nova/core/execution/engine-runtime.ts),
+[Nova reconciliation limits](../../skills/nova/core/observability/reconciler.ts),
+[Buster runner limits](../../skills/buster/engine/test-gates/runner.ts),
+[Buster remote job storage](../../skills/buster/engine/test-gates/remote-plan-service.ts),
+[artifact adapter](../../skills/common/plugins/artifact-store/src/adapter.ts),
+and [telemetry adapter](../../skills/common/plugins/telemetry-store/src/adapter.ts).
+
+For a read-only capacity check, use the resolved configured root, for example:
+
+```bash
+OBS_ROOT=/absolute/configured/root
+realpath -- "$OBS_ROOT"
+df -h -- "$OBS_ROOT"
+df -i -- "$OBS_ROOT"
+du -sh -- "$OBS_ROOT"
+```
+
+Record the affected root, exact run/job IDs, configured limits, snapshot/file
+sizes, free bytes/inodes and original error code in the operator diagnosis.
+Inspection of shared store records must preserve their run/job/attempt identities;
+an aggregate directory size does not establish which records can be retired.
+Reading a Nova `FileJournal` through its runtime class can repair an incomplete
+append tail, so use ordinary filesystem inspection when read-only measurement is
+required. Tail repair is not historical compaction.
+
+At a quota failure, do not submit additional work to the affected store until the
+operator has resolved the capacity condition. Retain the original failed result
+and pending delivery/recovery state. Repeated retries do not create capacity.
+Changing a quota alone postpones exhaustion and does not supply a safe release
+operation. This document requests no new capacity and performs no cleanup.
+
+## What existing cleanup actually does
+
+The producer outbox exposes explicit `compact()`: it removes acknowledged local
+copies only after a matching durable admission acknowledgement was recorded.
+It neither compacts admission nor proves Clawdeck consumer completion. No
+production invocation of this method was found in the inspected source.
+
+The attempt store's `reclaimExpiredEvidence` removes staging evidence older than
+its one-hour configured age only when no committed result references it. It does
+not retire confirmed results, closures or run history. Its staging-age test is
+not a general proof that an active/waiting run no longer needs an artifact.
+
+Buster's existing `cleanupTerminalWorkspace` removes only `repository.tar.gz`,
+`workspace/repository`, and `workspace/test-provider-snapshots` from its terminal
+job. It preserves workspace diagnostics, scratch, evidence, artifacts,
+observability and durable records. These reproducible input copies are distinct
+from D07 retained logs.
+
+This cleanup requires Linux with `/proc/self/fd` available. It opens each parent
+directory without following symlinks and holds directory descriptors until the
+deletion finishes. Replacing the job or workspace pathname during deletion
+therefore cannot redirect cleanup into another directory. A symlink in any
+supplied ancestor fails with `BUSTER_TERMINAL_WORKSPACE_PARENT_INVALID`; inspect
+the configured root and the actual path components before retrying. There is no
+pathname-based fallback when descriptors cannot be opened.
+
+Descriptors protect the directory boundary; they do not prove process ownership
+or quiescence. The caller must establish that all writers and retained fixtures
+have stopped before calling cleanup. The current production service still
+preserves inputs after restart because terminal job metadata alone does not
+prove orphan termination. It also retains inputs after execution errors or
+unproven cleanup. Do not manually delete those roots based solely on a terminal
+status. The required native ownership/recovery integration remains
+[open in the cutover matrix](../review/remediation/implementation/buster-native-cutover-20260920.md).
+Embedded archives in durable job records are separate retained copies; deleting
+workspace inputs does not release their metadata quota or result/artifact quota.
+
+The [durable record/blob interfaces](../../skills/common/plugin-runtime/foundation/observability/durable-records.ts)
+provide append/read/transition and put/get. The concrete FileDurableRecordStore
+also has an explicit writer-fenced `retire` operation for owned v2 records. It
+releases payload/count capacity while retaining permanent identity tombstones;
+this is currently connected to selected telemetry projections. It does not
+authorize applying the same deletion to arbitrary state/wait/artifact consumers. The
+[Clawdeck observation view](../../skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts)
+projects admission/attempt state with cursors and completeness; it is not a durable
+consumer checkpoint or storage-deletion acknowledgement.
+
+## Manual telemetry projection cleanup
+
+An explicit local operator command now releases selected telemetry projection
+payloads from completed runs, with owned record headers, permanent idempotency
+tombstones and original run/store writer fences. It preserves canonical run
+history, artifacts, results and acceptance evidence. See the exact
+[scope, replay contract and verification](../review/remediation/implementation/wave47-telemetry-retirement.md).
+It performs no automatic log deletion and cannot retire historical unowned
+telemetry records, admission records, attempt evidence, shared artifacts or jobs.
+
+## Manual admission completion compaction
+
+`node scripts/retire-admission.mjs --apply /absolute/scope.json` now releases a
+redundant completion copy in a canonical Nova run's admission store. The original
+attempt completion, result, closure and evidence remain retained and readable.
+Permanent references preserve original cursor/ACK identity; all raw consumers
+resolve the verified original record. Missing sources fail before duplicate ACK.
+The command uses run, attempt and admission writer fences and refuses waiting
+runs or unbound external store paths. See the exact
+[scope and local verification](../review/remediation/implementation/wave47-admission-retirement.md).
+This does not release attempt-result or evidence capacity or delete log history.
+
+## Manual imported-result, dispatch and operator-request compaction
+
+The original Attempt store also supports
+`node scripts/retire-attempt-result.mjs --apply /absolute/scope.json`. Its
+`attempt-result-retirement-scope.v1` names the exact canonical run, store,
+unchanged limits, import journal sequence/hash, result digest and expected store
+snapshot. It projects a completed result only after a verified durable Nova
+import. The original result, Admission ACK, Clawdeck view and replay consumer
+reconstruct it from that retained journal. One resident result slot and actual
+net metadata bytes are released; completion intents, closures, unique evidence
+and permanent references remain. Missing/corrupt source history fails before an
+ACK. Run, store and journal writer fences protect the transition. See the
+[original acceptance and recovery tests](../../tests/verification/reliability/admission-retirement.test.mjs)
+and [independent consumer cases](../../tests/verification/reliability/attempt-projection-review.test.mjs).
+
+A separate manual closure projection is available after the selected Nova result
+has been projected by the preceding operation:
+
+```sh
+node scripts/retire-attempt-closure.mjs --plan /absolute/closure-scope.json
+node scripts/retire-attempt-closure.mjs --apply /absolute/closure-scope.json
+```
+
+The scope uses `schemaVersion: "attempt-closure-retirement-scope.v1"` and
+`action: "compact-imported-closure"`. Its remaining top-level fields are the
+original result scope's canonical `novaStorageRoot`, `attemptRoot`, unchanged
+`attemptLimits`, `inventoryLimits` and `intent`. In the intent, select the original
+`pipelineRunId`, `attemptId`, `claimGeneration`, `resultDigest`, `recordDigest`,
+`journalSequence` and `journalHash`; add the selected `closureDigest`, a distinct
+`operationId` and `actor`, the current run `runJournalHead`/`snapshotDigest`, and
+`expectedStoreDigest` of the current attempt-store bytes **after** result
+projection. `runRoot` remains the original canonical run. Retain this exact scope
+for idempotent replay; changing its intent is a conflict.
+
+`--plan` only reads and validates current files; its predicted release is advisory.
+`--apply` repeats authorization under the original run, attempt-store and import
+journal writer fences. Final inventory verification rehashes every originally
+hashed file through bounded 64 KiB streaming reads up to its inventoried size,
+comparing the content digest as well as path identity and stat stamps. Each
+verification pass reads at most the original configured scan-byte budget;
+`bytesHashed` accounts for the unique initial scan, not cumulative verification
+I/O. This verification runs inside the existing writer fences; it is not a
+transaction against a writer that ignores those fences. Waiting/uncertain owners, stale identities or checkpoints,
+missing evidence and foreign sources block the operation. Small closures whose
+replacement is not smaller fail with `OBSERVABILITY_CLOSURE_RETIREMENT_NOT_SMALLER`
+and release no slot or bytes.
+
+Attempt-v3 retains the full original closure inside `completionIntent` and a
+strict direct reference in the closure array. That reference requires the existing
+validated imported-result projection; it cannot reference another closure
+reference. The receipt retains operator/operation identity and a digest of the
+complete retirement intent. All references and receipts count toward the original
+metadata-byte limit. A successful first apply reports actual net `releasedBytes`
+and `releasedClosures: 1`; exact replay reports zero, including after subsequent
+unrelated writes. The resident closure limit excludes only validated projected
+copies. Logical snapshots/completeness still reconstruct all closures, and their
+memory consumption remains bounded by retained metadata and the existing bounded
+journal reader rather than the resident closure count alone.
+
+Late completion delivery keeps its original Admission ACK/cursor, finalized
+attempt generations remain closed, and import replay remains `already-imported`.
+No evidence/blob bytes, logs, full completion intents or retained import history
+are deleted. Unknown/malformed references fail closed. This operation does not
+release evidence capacity, remove permanent identity metadata or make the global
+retirement planner executable. See the [bounded acceptance and evidence](../review/remediation/implementation/attempt-closure-projection-20260921.md).
+
+`node scripts/retire-nova-dispatch.mjs --apply /absolute/scope.json` removes only
+the redundant embedded archive after the original import/source authority and
+retained blob are verified. It preserves job identity, replay and the required
+source blob; it releases metadata bytes, not unique archive capacity or a job
+record slot. See [dispatch acceptance](../review/remediation/implementation/run7-dispatch-root-review.md).
+
+`node scripts/retire-operator-request.mjs --apply /absolute/scope.json` projects
+only supported completed JSON-v1 human-approval requests. It binds the original
+wait, single-use operator signal and terminal receipt under run/wait/delivery
+fences. Existing accepted receipts and no-repeat behavior remain authoritative.
+It releases net request bytes, not record count; uncertain, externalized,
+Discord and unsupported producer histories remain protected. See
+[operator-request acceptance](../review/remediation/implementation/run9-operator-root-review.md).
+
+All scopes must be inventoried from actual configured stores and their unchanged
+limits. These explicit commands do not run automatically and are not executed
+on operational data by this remediation task. Their bounded capacity release
+does not authorize deleting canonical logs, final reports or history.
+
+## Required broader manual retirement contract — not yet implemented
+
+PCR-OBS-002 remains partially addressed: policy is decided, but a safe capacity
+release operation is missing for the remaining stores. Beyond the bounded
+telemetry, admission, imported-result, dispatch and operator-request operations above,
+no supported command selectively deletes
+confirmed history from these stores. Do not edit
+`store.json`, `admission.json`, `attempt-store.json`, journal prefixes or referenced
+blob files to make quota space. That would remove sequence, digest, result or
+idempotency facts without the required retirement transition.
+
+A future manual operation must produce a reviewable plan naming the operator,
+project/run/job IDs, canonical roots, affected bytes and every cross-store
+reference. Active, waiting, administratively reopenable and externally uncertain
+work stays protected. An explicit decision to end future continuation must be
+recorded before any of its required data can be released. Final project reports,
+code, decisions and acceptance history remain protected until project deletion.
+
+Execution must hold the existing writer/run fences and recheck the planned
+identities and digests. Durable consumer completion and a checked archive are
+proposed safeguards for preserving downstream availability, not additional user
+conditions on explicitly requested manual log deletion under D07. The operation
+must state whether it preserves or intentionally deletes those logs. Final
+project material and required continuation evidence remain protected as above.
+Producer admission ACK alone does not prove downstream archival. Shared
+artifact/result references must remain valid. Permanent retirement/idempotency
+facts must survive outside the released portion so late deliveries and retries
+cannot recreate work or repeat an external action. Recovery, archival state and
+byte release must tolerate a crash at each boundary and report exactly what was
+retained or released. Unknown references or missing consumer evidence keep the
+plan non-executable.
+
+Acceptance requires small real store quotas with completed and active runs mixed,
+old delivery replay, pending/uncertain jobs and crashes at retirement boundaries.
+Only explicitly retired data may be released; surviving runs must recover with
+their original evidence and late deliveries must not execute again. This is a
+separate functional slice, not a new central log store or an automatic TTL.

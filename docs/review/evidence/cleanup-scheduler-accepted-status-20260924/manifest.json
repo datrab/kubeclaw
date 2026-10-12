@@ -1,0 +1,31 @@
+{
+  "scope": "Status-only update after independent acceptance; no register or production changes",
+  "review": "docs/review/evidence/independent-cleanup-scheduler-final-20260924/decision.json",
+  "files": [
+    {
+      "path": "docs/review/remediation/implementation/buster-cleanup-scheduler-verification-20260924.md",
+      "beforeSha256": "a3074002e9b037ff4c1a1ca554bcac2aea2f5fc8e53ebdd34be2fa78d9e82f4d",
+      "afterSha256": "f9620ba9ab351681814e44a1b2960e72c408371c651bcfc895db65bbec7cca74"
+    },
+    {
+      "path": "docs/review/remediation/implementation/provider-disposal-confirmation-20260921.md",
+      "beforeSha256": "0d0cd3025200600a5f0c21df920291e444d14a10c6045b165ae62873a493a526",
+      "afterSha256": "e382ae49d4196859065cabfbe5856a70ac463ed43ddb4bb1b782df0824998f75"
+    },
+    {
+      "path": "docs/review/remediation/implementation/runner-scheduler-drain-20260921.md",
+      "beforeSha256": "e545d34fc2b9d2488d7317ae292c3a85cb4c10c98c4733c051b66944eb6f902b",
+      "afterSha256": "3258f71f627815abb136f20e63751cfd01a7cefe4b9f9ae20fa2db4deefd82d1"
+    },
+    {
+      "path": "docs/review/remediation/implementation/kubernetes-cleanup-disposition-20260921.md",
+      "beforeSha256": "48cd122452a35e474bb2b1feb1a0409ff03397c657b761d1f938ceeabad7695b",
+      "afterSha256": "50bff468992c2cc190367e83f869d494d0047f25099eb75b3984b82726359de2"
+    }
+  ],
+  "registerCheck": {
+    "command": "node scripts/review/remediation-register.mjs --check",
+    "exitCode": 0,
+    "stdout": "Register konsistent: historische IDs, Integrationsbefunde, Status, Summen und Belegverweise. Keine fachliche Neuabnahme."
+  }
+}

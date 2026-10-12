@@ -1,0 +1,20 @@
+{
+  "acceptedFixtureOnly": true,
+  "launcherOnlyRunPathChanges": true,
+  "sourceDelta": [
+    "package.json",
+    "skills/worker/core/worker/native-worker-process.ts",
+    "tests/verification/reliability/native-process-policy.test.mts",
+    "tests/verification/reliability/tsconfig.native-scope.json"
+  ],
+  "independentRegularInodesChecked": 35441,
+  "packageOnlyAddsMaintainedPolicyTest": true,
+  "guestInitOnlyAddsSameTest": true,
+  "identityMode": "0444",
+  "initialDiskHash": "707ed827cecc3124b7af44ef069389b982859892ed25ccf3066f5ea2111a6d9e",
+  "snapshotSha256": "04a29d1d0ea7f195aadd777cc1541b4cae01068c9ca2cfa416002eb429b0e89e",
+  "smallArtifactHashesChecked": 19,
+  "fullDiskHashByAuthorPreflightNotRepeated": true,
+  "productionFixReviewedBy": "attempt_store_extraction_fresh_review",
+  "limit": "Reviewer authored production fix; this acceptance concerns VM fixture only."
+}

@@ -1,0 +1,4 @@
+skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts(166,50): error TS2304: Cannot find name 'key'.
+skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts(181,25): error TS2304: Cannot find name 'key'.
+skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts(222,16): error TS2304: Cannot find name 'key'.
+skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts(223,5): error TS18004: No value exists in scope for the shorthand property 'closureDigest'. Either declare one or provide an initializer.

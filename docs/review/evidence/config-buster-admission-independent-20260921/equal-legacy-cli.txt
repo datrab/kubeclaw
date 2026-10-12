@@ -1,0 +1,3 @@
+{"name":"BUSTER_V2_MAX_ACTIVE_JOBS","value":"2","exitCode":1,"error":"{\"status\":\"error\",\"error\":\"SWARM_CONFIG_LEGACY_OVERRIDE:BUSTER_V2_MAX_ACTIVE_JOBS:use operator.buster\"}"}
+{"name":"BUSTER_V2_MAX_QUEUED_JOBS","value":"8","exitCode":1,"error":"{\"status\":\"error\",\"error\":\"SWARM_CONFIG_LEGACY_OVERRIDE:BUSTER_V2_MAX_QUEUED_JOBS:use operator.buster\"}"}
+{"name":"BUSTER_V2_MAX_CONCURRENT_ATTEMPTS","value":"64","exitCode":1,"error":"{\"status\":\"error\",\"error\":\"SWARM_CONFIG_LEGACY_OVERRIDE:BUSTER_V2_MAX_CONCURRENT_ATTEMPTS:use operator.buster\"}"}

@@ -1,0 +1,17 @@
+✖ exact future metadata fit completes valid maximal diagnostics; one byte short admits no blob (369.277171ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 976.786249
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-native-journal-capacity.test.mts:16:1
+✖ exact future metadata fit completes valid maximal diagnostics; one byte short admits no blob (369.277171ms)
+  Error: DURABLE_RECORD_STORE_FULL
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-records.ts:214:15
+      at async withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:269:12)

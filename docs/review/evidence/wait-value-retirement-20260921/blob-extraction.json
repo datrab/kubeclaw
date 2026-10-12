@@ -1,0 +1,10 @@
+{
+  "beforeSha256": "64c7e473e1a16d8115a56d964fa3fa19bc3ad9788ebc194eb63eed24e51a348f",
+  "oldModuleSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+  "newModuleSha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+  "classAndSyncHelperByteIdentical": true,
+  "interfaceByteIdentical": true,
+  "positiveIntegerHelperByteIdentical": true,
+  "publicEntry": "durable-records.ts reexports FileDurableBlobStore and DurableBlobStore",
+  "packageExport": "foundation/package.json ./observability/* wildcard already covers the new relative module; no package change"
+}

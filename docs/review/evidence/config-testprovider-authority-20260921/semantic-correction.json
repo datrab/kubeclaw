@@ -1,0 +1,13 @@
+{
+  "at": "2026-09-21T18:44:33.716968+00:00",
+  "originalIdentitiesPreserved": "source-identities-final.json",
+  "originalSnapshotsPreserved": true,
+  "scope": "HTTP acceptance rule and coverage parser/read ordering; no runtime or production changes",
+  "originalSourceCount": 284,
+  "currentSourceDifferencesOtherThanReport": [],
+  "machineAuthorities": {
+    "path": "code-authorities-v2.json",
+    "sha256": "480dc8f08381d80ad7d430440a10d7e749c7944d122fad65a5c474286e2fc7d7"
+  },
+  "reportSha256": "1474af440789f5d2fa0f1b6daa56e6a8726b8a9c8b012ff519127fabda5fdb5a"
+}

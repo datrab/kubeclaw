@@ -11,7 +11,7 @@ import {
   realE2EScenarioModuleIds,
   validateRealE2EScenarioSetup,
 } from './failure-scenarios.mjs';
-import { expandSwarmConfig } from './support/platform-config.ts';
+import { expandSwarmConfig, pipelineProfileFromSwarm } from './support/platform-config.ts';
 import { realE2ERegistryTarget, realE2EDeploymentImage } from './registry-target.mjs';
 import { fixtureCoverage } from './fixture-coverage.mjs';
 
@@ -1498,7 +1498,7 @@ async function currentBranch(cwd = REPO_ROOT) {
 }
 
 export function buildRunConfig({ runId, worktreePath, scenarioId = 'success' }) {
-  const compactConfig = readJson(DEPLOYED_COMPACT_CONFIG_PATH);
+  const compactConfig = pipelineProfileFromSwarm(DEPLOYED_COMPACT_CONFIG_PATH);
   compactConfig._doc = 'Run-scoped real E2E swarm config generated from the deployed standard profile with repo-local test tool paths.';
   compactConfig.profile = 'standard';
   compactConfig.repo_root = worktreePath;

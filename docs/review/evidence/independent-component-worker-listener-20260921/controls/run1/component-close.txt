@@ -1,0 +1,35 @@
+CONFIG_MUTANT_APPLIED:close
+✔ CS3 real ownership store enforces 1 authored records with representation-sized capacity (157.181436ms)
+✔ CS3 real ownership store enforces 2 authored records with representation-sized capacity (121.630085ms)
+✔ CS3 real ownership store enforces 1 authored bytes (19.104475ms)
+✔ CS3 real ownership store enforces 8192 authored bytes (17.992427ms)
+✔ CS3 actual execution journal admission and process boundary profile 1 (108.000251ms)
+✖ CS3 actual execution journal admission and process boundary profile 2 (150.410171ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2356.067072
+
+✖ failing tests:
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:56:30
+✖ CS3 actual execution journal admission and process boundary profile 2 (150.410171ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 22
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:80:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 22,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

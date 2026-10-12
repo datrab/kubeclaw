@@ -1,0 +1,8 @@
+{"scenario": "empty", "exit": 0, "stdout": "{\n    \"apiVersion\": \"v1\",\n    \"items\": [],\n    \"kind\": \"List\",\n    \"metadata\": {\n        \"resourceVersion\": \"\"\n    }\n}\n", "stderr": ""}
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/bootstrap-api-guard-20260921/client-probe.py", line 51, in <module>
+    assert json.loads(result.stdout) == {'apiVersion': 'v1', 'kind': 'NamespaceList',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                        'items': [], 'metadata': {'resourceVersion': ''}}
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,12 @@
+{
+  "manifestSha256": "dd4ffc2aa585b40741794147e885a52d22d2c64de7bcddb838f135607084a6c1",
+  "testHashMatches": true,
+  "packageBeforeMatches": true,
+  "packageAfterMatches": true,
+  "scriptChanges": [
+    "verify:lint:policy-delivery"
+  ],
+  "decision": "source accepted for integration and real canonical lintText execution",
+  "mode": "not executed",
+  "reason": "Actual ESLint config with ignore:false; parser/ignored-file false positive guards; exact adapter positive plus adjacent filename negative and env default negative. No rule changes in test package."
+}

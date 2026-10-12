@@ -1,0 +1,20 @@
+{
+  "node": "v24.21.0",
+  "scope": "Minimal runtime counterexample; not an HTTP integration or acceptance test",
+  "results": [
+    {
+      "name": "original-console",
+      "source": "const fs=require(\"node:fs\"); const stream=process.stderr; fs.closeSync(2); console.error(\"test log\"); setTimeout(()=>process.stdout.write(\"alive\\n\"),20);",
+      "exitCode": 0,
+      "stdout": "alive\n",
+      "stderr": ""
+    },
+    {
+      "name": "replacement-stream",
+      "source": "const fs=require(\"node:fs\"); const stream=process.stderr; fs.closeSync(2); process.stderr.write(\"test log\\n\"); setTimeout(()=>process.stdout.write(\"alive\\n\"),20);",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

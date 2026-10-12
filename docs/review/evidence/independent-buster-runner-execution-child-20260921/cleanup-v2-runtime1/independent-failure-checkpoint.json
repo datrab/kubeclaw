@@ -1,0 +1,173 @@
+{
+  "status": "failed independent runtime checkpoint; no cleanup acceptance; HOLD",
+  "sessions": {
+    "fast1": 73987,
+    "fast2": 60175,
+    "runtime1": 57949
+  },
+  "fast1": "four types0; provider configuration complexity49 lint failure retained",
+  "fast2": "four types0 and complete canonical lint0 after reviewed provider extraction",
+  "runtimeResults": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:buster:kubernetes-cleanup"
+      ],
+      "exitCode": 1,
+      "name": "cleanup-runtime-1",
+      "seconds": 22.233457119902596
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:buster:execution-config"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-2",
+      "seconds": 92.69338793400675
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "skills/buster/engine/test-gates/tests/process-input.test.ts",
+        "skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-3",
+      "seconds": 6.9580044590402395
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-4",
+      "seconds": 2.5873855570098385
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-5",
+      "seconds": 2.0329701969167218
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/reliability/http-authority.test.mts",
+        "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+        "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+        "tests/verification/reliability/tailscale-generation.test.mjs"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-6",
+      "seconds": 10.697807941003703
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-7",
+      "seconds": 4.300007337005809
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-junit-report-adapter.mts"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-8",
+      "seconds": 3.545545032946393
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:lint:policy-delivery"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-9",
+      "seconds": 21.150081422994845
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "skills/buster/engine/test-gates/tests/provider-capabilities.test.ts"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-10",
+      "seconds": 0.34829584404360503
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-11",
+      "seconds": 100.75526768399868
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "tests/verification/contracts/check-pipeline-remote-real-provider.mts"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-12",
+      "seconds": 20.542929250979796
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:config:components"
+      ],
+      "exitCode": 0,
+      "name": "cleanup-runtime-13",
+      "seconds": 115.89740599296056
+    }
+  ],
+  "cleanupCases": {
+    "passed": 37,
+    "failed": 5,
+    "total": 42
+  },
+  "broaderMaintained": 193,
+  "components": 649,
+  "failures": [
+    {
+      "cases": "retain/delete failed preparation (2)",
+      "observed": "summary TEST_PROVIDER_FAILED:KUBERNETES_FIXTURE_KUBECTL_FAILED:external delete fault",
+      "expected": "KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED marker"
+    },
+    {
+      "cases": "retain/delete successful preparation (2)",
+      "observed": "execute and cleanup same actual PID",
+      "expected": "new test demanded replacement PID unconditionally",
+      "sourceFinding": "Ordinary successful retained cleanup can legitimately use existing live session; blanket replacement oracle needs explicit path distinction."
+    },
+    {
+      "cases": "post-provider termination fault (1)",
+      "observed": "TEST_PROVIDER_SIGNAL_FAILED (EPERM cause) escapes run via cleanupRetainedProvider and repeated terminate",
+      "expected": "bounded attempt result with incomplete cleanup, then real successful retained later attempt",
+      "sourceFinding": "cleanupRetainedProvider catch awaits instance.terminate; original memoized termination rejection propagates. No correction inferred/executed."
+    }
+  ],
+  "controlsExecuted": false,
+  "unexpectedSourceDrift": [],
+  "sandboxBuildDelta": "sandbox-build-delta.json",
+  "sourceDocumentsRead": "architecture/README/implementation included explicitly; implementation runtime pending remains appropriate",
+  "rawFailureSha256": "438bfc2ab1774eed8c76606b3aa219a5954c7152c644644a95fc60ab3a5bbedc"
+}

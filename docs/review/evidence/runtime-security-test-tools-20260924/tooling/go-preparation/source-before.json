@@ -1,0 +1,122 @@
+[
+  {
+    "path": "go.mod",
+    "sha256": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f",
+    "state": "present"
+  },
+  {
+    "path": "go.sum",
+    "sha256": null,
+    "state": "absent"
+  },
+  {
+    "path": "versions.json",
+    "sha256": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d",
+    "state": "present"
+  },
+  {
+    "path": "docker/Dockerfile.namespace-controller",
+    "sha256": "7d11f9ddce2ba3c5083645531a59b298a1996743306fbadb7f3b47819ab68384",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-auth-credentials_test.go",
+    "sha256": "a324477b985ee607ffa0fcec24d9f6647572426acfcf79699a1b743f2a9e955b",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-credentials.go",
+    "sha256": "170356e6abad1547a973b34211fea24a10ad51e00a93906bce3bee12b6f78f26",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-credentials_test.go",
+    "sha256": "04342c4375a4ee0ce955261816fc35ed613a8b73883771109a8744c65d7a2740",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-producer-interop_test.go",
+    "sha256": "e39ea612f49e0ec0772a6d8a1b5f12015168ca2a4291312a93b6c8368e425399",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-product-native_test.go",
+    "sha256": "0aab5821defb70732461302c56dd976b76ba2e3fefa1f9b2786cc9d209ea2983",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-product.go",
+    "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-product_test.go",
+    "sha256": "8c497590d088d7c41a3432d02d628471374074569ebfd47655cb61710b17d831",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+    "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-readiness-sources.go",
+    "sha256": "d1aca629a3c5c739e84a9116a95af6d0a0bbc7b0782cc0b0ee680a004f621628",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-readiness.go",
+    "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-readiness_test.go",
+    "sha256": "74749508416be24525cf5713fd771760517499d254dcfd064c4030b8bc4c6e42",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-retention.go",
+    "sha256": "4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/demo-retention_test.go",
+    "sha256": "e18feb7d60cc661f22bd072aa215d90b8a4a3507fb259550bf788a6a7a9f5655",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/exposure-generation.go",
+    "sha256": "063922ee15724270e88a63edd93e1817330804f04aebce448204f8baf5ee1fea",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/exposure-generation_test.go",
+    "sha256": "da67ce54efe34f3777ff278893396962b41faf333866f7de6332b980bb8a2f24",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/exposure-handoff_test.go",
+    "sha256": "82e502ea73483f56476baa6540e8525328d056127a186d31b81a687c192df30d",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/main.go",
+    "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/main_test.go",
+    "sha256": "0006d84a5753bb50ac16c2d7cd05ace3cd53c373590cb99043740261edc62d7c",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/rbac.go",
+    "sha256": "8269bc44ca1cfec92d5eefa4a9f6915cbd22f31ac6b3a91657829ddbe5542086",
+    "state": "present"
+  },
+  {
+    "path": "cmd/buster-namespace-controller/remediation_test.go",
+    "sha256": "0303dd2f51273a702710ea615da4f04184fe4c0b4564f8aa201b5aaada4e6cd8",
+    "state": "present"
+  }
+]

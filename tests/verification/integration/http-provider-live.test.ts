@@ -3,11 +3,15 @@ import http from 'node:http';
 import { fileURLToPath } from 'node:url';
 import { buildRegistry, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
 import { NetworkHttpCapabilityInvoker } from '@kubeclaw/buster-engine';
-import { provider } from '../../../skills/buster/plugins/http/src/provider.js';
+import { provider, testContract } from '../../../skills/buster/plugins/http/src/provider.js';
 
 let contacts = 0;
+let lastAccept: string | undefined;
+let onContact: (() => void) | undefined;
 const server = http.createServer((request, response) => {
   contacts++;
+  lastAccept = request.headers.accept;
+  onContact?.();
   if (request.url === '/ok') {
     response.setHeader('content-type', 'text/html; charset=utf-8');
     response.end('healthy marker');
@@ -18,6 +22,14 @@ const server = http.createServer((request, response) => {
     response.writeHead(302, { location: '/ok' }).end();
   } else if (request.url === '/large') {
     response.end('x'.repeat(4096));
+  } else if (request.url === '/stream') {
+    response.write('x'.repeat(128));
+    setTimeout(() => response.end('y'.repeat(128)), 50);
+  } else if (request.url === '/body-wait') {
+    response.write('first');
+    setTimeout(() => response.end('last'), 250);
+  } else if (request.url === '/disconnect') {
+    request.socket.destroy();
   } else if (request.url === '/slow') {
     setTimeout(() => response.end('late'), 250);
   } else response.writeHead(503).end('unavailable');
@@ -47,6 +59,86 @@ function context(signal = new AbortController().signal) {
 }
 
 try {
+  assert.equal(testContract.configuration(invocation({ url: origin }, 'default-timeout')).requestTimeoutMs, 10_000);
+  const acceptResult = await provider().execute(invocation({ url: origin, path: '/ok', accept: 'text/html' }, 'accept'), context());
+  assert.equal(acceptResult.outcome, 'passed');
+  assert.equal(lastAccept, 'text/html');
+  const beforeInvalid = contacts;
+  for (const [values, code] of [
+    [{ accept: '' }, 'HTTP_CONFIG_ACCEPT_INVALID'],
+    [{ accept: 'x'.repeat(513) }, 'HTTP_CONFIG_ACCEPT_INVALID'],
+    [{ accept: 'text/html\r\nInjected: yes' }, 'HTTP_CONFIG_ACCEPT_INVALID'],
+    [{ expectedText: '' }, 'HTTP_CONFIG_EXPECTED_TEXT_INVALID'],
+    [{ expectedText: 42 }, 'HTTP_CONFIG_EXPECTED_TEXT_INVALID'],
+    [{ expectedStatuses: [] }, 'HTTP_CONFIG_STATUSES_INVALID'],
+    [{ path: 'relative' }, 'HTTP_CONFIG_PATH_INVALID'],
+    [{ path: '/' + 'x'.repeat(2048) }, 'HTTP_CONFIG_PATH_INVALID'],
+    [{ path: '//example.invalid/' }, 'HTTP_CONFIG_PATH_INVALID'],
+  ] as const) {
+    await assert.rejects(() => provider().execute(invocation({ url: origin, ...values }, 'invalid'), context()),
+      { message: code });
+  }
+  assert.equal(contacts, beforeInvalid, 'invalid configuration must fail before TCP contact');
+  const disconnected = await provider().execute(invocation({ url: origin, path: '/disconnect' }, 'connection'), context());
+  assert.equal(disconnected.outcome, 'failed');
+  assert.equal(disconnected.findings[0].rule, 'http.connection');
+  assert.equal(disconnected.findings[0].severity, 'high');
+  await assert.rejects(() => provider().execute(invocation({ url: origin, path: '/stream', maximumResponseBytes: 64 }, 'stream'), context()),
+    /HTTP_RESPONSE_SIZE_EXCEEDED/u);
+  // Cancel before headers only after the real server accepted the request.
+  {
+    const controller = new AbortController();
+    onContact = () => { onContact = undefined; controller.abort(); };
+    await assert.rejects(() => provider().execute(invocation({ url: origin, path: '/slow' }, 'in-flight-cancel'), context(controller.signal)),
+      /HTTP_REQUEST_CANCELLED/u);
+  }
+  // Observe the original reader consuming real socket bytes, then cancel its
+  // second, still-pending read. Instrument scheduling only; no synthetic fetch,
+  // response, chunk, rejection or reader result authorizes this assertion.
+  {
+    const controller = new AbortController();
+    const originalFetch = globalThis.fetch;
+    let consumedFirstChunk = false, pendingBodyRead = false, bodyReadRejected = false;
+    globalThis.fetch = async (...args) => {
+      const response = await originalFetch(...args);
+      assert(response.body);
+      const originalGetReader = response.body.getReader.bind(response.body);
+      response.body.getReader = (() => {
+        const reader = originalGetReader();
+        const originalRead = reader.read.bind(reader);
+        reader.read = async () => {
+          const pending = originalRead();
+          if (consumedFirstChunk) {
+            pendingBodyRead = true;
+            queueMicrotask(() => controller.abort());
+          }
+          const next = await pending.catch(error => {
+            if (consumedFirstChunk) {
+              assert(controller.signal.aborted);
+              assert.equal((error as Error).name, 'AbortError');
+              bodyReadRejected = true;
+            }
+            throw error;
+          });
+          if (!consumedFirstChunk) {
+            assert.equal(next.done, false);
+            assert.equal(Buffer.from(next.value!).toString(), 'first');
+            consumedFirstChunk = true;
+          }
+          return next;
+        };
+        return reader;
+      }) as typeof response.body.getReader;
+      return response;
+    };
+    try {
+      await assert.rejects(() => provider().execute(invocation({ url: origin, path: '/body-wait' }, 'body-cancel'), context(controller.signal)),
+        /HTTP_REQUEST_CANCELLED/u);
+      assert(consumedFirstChunk && pendingBodyRead && bodyReadRejected,
+        'cancellation must abort the real pending read after first-chunk consumption');
+    } finally { globalThis.fetch = originalFetch; }
+  }
+
   const passed = await provider().execute(invocation({ url: origin, path: '/ok', expectedText: 'healthy',
     expectedContentType: 'text/html' }, 'passed'), context());
   assert.equal(passed.outcome, 'passed');
@@ -58,9 +150,19 @@ try {
   assert.equal(assertion.outcome, 'failed');
   assert.equal(assertion.findings[0].rule, 'http.response-text');
 
+  const wrongContentType = await provider().execute(invocation({ url: origin, path: '/ok',
+    expectedContentType: 'application/json' }, 'content-type'), context());
+  assert.equal(wrongContentType.outcome, 'failed');
+  assert.equal(wrongContentType.findings[0].rule, 'http.content-type');
+
   const expected404 = await provider().execute(invocation({ url: origin, path: '/missing', expectedStatuses: [404],
     expectedText: 'not found' }, 'status'), context());
   assert.equal(expected404.outcome, 'passed');
+  for (const values of [{ path: '/missing' }, { path: '/ok', expectedStatuses: [404] }]) {
+    const rejectedStatus = await provider().execute(invocation({ url: origin, ...values }, 'wrong-status'), context());
+    assert.equal(rejectedStatus.outcome, 'failed');
+    assert.equal(rejectedStatus.findings[0].rule, 'http.status');
+  }
 
   const deployment = { name: 'deployment', kind: 'value', schemaId: 'kubeclaw.kubernetes-deployment-fixture@1',
     value: { schemaVersion: 'kubernetes-deployment-fixture.v1', expiresAt: new Date(Date.now() + 60_000).toISOString(), endpoints: [{ name: 'web', url: origin }] } };
@@ -185,4 +287,5 @@ try {
   await new Promise<void>((resolve) => server.close(() => resolve()));
 }
 
-console.log(JSON.stringify({ ok: true, provider: 'http', boundary: 'real-local-http-server', mocks: 0, wrappers: 0 }));
+console.log(JSON.stringify({ ok: true, provider: 'http', boundary: 'real-local-http-server', syntheticResponses: 0,
+  instrumentation: 'body-cancel observes original fetch/reader and schedules abort after first real chunk' }));

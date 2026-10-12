@@ -1,0 +1,1 @@
+First private draft construction stopped at an assertion because the expected three provider template endings also matched the protocol send template. Production unchanged; child draft already written, test/manifest not yet written. Corrected matching anchors the template ending to its own line. No test execution or successful validation inferred.

@@ -71,7 +71,7 @@ for(const mode of ['success','origin','capability','method','timeout','lifecycle
       runtime=new core.AdapterRuntime({granted,activated,configs,shutdownTimeoutMs:1000,async emitDomainEvent(){},
         effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,
           {requested(request){observed.push(request as unknown as Record<string,unknown>);},accepted(){},completed(){}},
-          new core.FileResourceLockManager(path.join(root,'locks')))});
+          new core.FileResourceLockManager(path.join(root,'locks')), 300_000)});
       await runtime.start();
       const attempt={runId:'run:scope',stageId:'stage:scope',attemptId:'attempt:scope',attemptNumber:1};
       const start=Date.now();

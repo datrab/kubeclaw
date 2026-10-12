@@ -1,0 +1,188 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "author": "fadea7ca86b4e95a57c66316ac9fce27c6b45925ef1e7a5fbe45fbfd8211ca53",
+    "current": "fadea7ca86b4e95a57c66316ac9fce27c6b45925ef1e7a5fbe45fbfd8211ca53",
+    "snapshot": "fadea7ca86b4e95a57c66316ac9fce27c6b45925ef1e7a5fbe45fbfd8211ca53"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "author": "08fb95a81317456d8ce7559ef805e943ccecb80a3c33a9910591ff983dc64dab",
+    "current": "08fb95a81317456d8ce7559ef805e943ccecb80a3c33a9910591ff983dc64dab",
+    "snapshot": "08fb95a81317456d8ce7559ef805e943ccecb80a3c33a9910591ff983dc64dab"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "author": "cf3878c6d437a77e0e57c834d3b176841cdedfee2140a016cd899e0a807b6b90",
+    "current": "cf3878c6d437a77e0e57c834d3b176841cdedfee2140a016cd899e0a807b6b90",
+    "snapshot": "cf3878c6d437a77e0e57c834d3b176841cdedfee2140a016cd899e0a807b6b90"
+  },
+  {
+    "path": "skills/prism/config/native-worker.ts",
+    "author": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+    "current": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+    "snapshot": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6"
+  },
+  {
+    "path": "charts/prism/values.yaml",
+    "author": "60bdf1ce7f54bf22b443d3fe76342a8c9211106a800effa4f019256609d53a48",
+    "current": "60bdf1ce7f54bf22b443d3fe76342a8c9211106a800effa4f019256609d53a48",
+    "snapshot": "60bdf1ce7f54bf22b443d3fe76342a8c9211106a800effa4f019256609d53a48"
+  },
+  {
+    "path": "charts/prism/values.schema.json",
+    "author": "400d1399071ed7487728201e7e0573cc33de2339af8f08288a6612e7142fa2a8",
+    "current": "400d1399071ed7487728201e7e0573cc33de2339af8f08288a6612e7142fa2a8",
+    "snapshot": "400d1399071ed7487728201e7e0573cc33de2339af8f08288a6612e7142fa2a8"
+  },
+  {
+    "path": "charts/prism/templates/_swarm-config.tpl",
+    "author": "b970d911ca47dad2f1f1e279d31c9c763ca7436ee9e0c8213e0ef21127989ddd",
+    "current": "b970d911ca47dad2f1f1e279d31c9c763ca7436ee9e0c8213e0ef21127989ddd",
+    "snapshot": "b970d911ca47dad2f1f1e279d31c9c763ca7436ee9e0c8213e0ef21127989ddd"
+  },
+  {
+    "path": "charts/prism/templates/workloads.yaml",
+    "author": "b56ff401cf974f9601ad90624b8dd9930c9a2690495575547edaebd4110eacf9",
+    "current": "b56ff401cf974f9601ad90624b8dd9930c9a2690495575547edaebd4110eacf9",
+    "snapshot": "b56ff401cf974f9601ad90624b8dd9930c9a2690495575547edaebd4110eacf9"
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "author": "67ca022a61121f0c55d335eddaca3de78c56755a2f4dbdd1dad0f838d95e2f66",
+    "current": "67ca022a61121f0c55d335eddaca3de78c56755a2f4dbdd1dad0f838d95e2f66",
+    "snapshot": "67ca022a61121f0c55d335eddaca3de78c56755a2f4dbdd1dad0f838d95e2f66"
+  },
+  {
+    "path": "skills/prism/tests/swarm-native-settings.test.mts",
+    "author": "28a94e0757755c8f43476277ac895a178f973e23fb0e8d2c40ed4a6fbf41f136",
+    "current": "28a94e0757755c8f43476277ac895a178f973e23fb0e8d2c40ed4a6fbf41f136",
+    "snapshot": "28a94e0757755c8f43476277ac895a178f973e23fb0e8d2c40ed4a6fbf41f136"
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-config.test.mts",
+    "author": "101745720ae655ea9b10cfd28770f13e9b9cc9722c3db63d933607239d002d8b",
+    "current": "101745720ae655ea9b10cfd28770f13e9b9cc9722c3db63d933607239d002d8b",
+    "snapshot": "101745720ae655ea9b10cfd28770f13e9b9cc9722c3db63d933607239d002d8b"
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "author": "d350f535284a1917f8b4cfb1906ac3d367bf94c6d97ec648abe1d053b4b9d5d1",
+    "current": "d350f535284a1917f8b4cfb1906ac3d367bf94c6d97ec648abe1d053b4b9d5d1",
+    "snapshot": "d350f535284a1917f8b4cfb1906ac3d367bf94c6d97ec648abe1d053b4b9d5d1"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "author": "b1d02aae243017ef64bfbd58ce3f5f179942b58d45797ea4da0ee8755f4fbcbb",
+    "current": "b1d02aae243017ef64bfbd58ce3f5f179942b58d45797ea4da0ee8755f4fbcbb",
+    "snapshot": "b1d02aae243017ef64bfbd58ce3f5f179942b58d45797ea4da0ee8755f4fbcbb"
+  },
+  {
+    "path": "tests/verification/deployment/prism-native-runtime.test.mjs",
+    "author": "17e9ade95b47c7d9d91708ed6a7b3cc94e1d90e5fc6f9d8c74ed4d5da81b568a",
+    "current": "17e9ade95b47c7d9d91708ed6a7b3cc94e1d90e5fc6f9d8c74ed4d5da81b568a",
+    "snapshot": "17e9ade95b47c7d9d91708ed6a7b3cc94e1d90e5fc6f9d8c74ed4d5da81b568a"
+  },
+  {
+    "path": "docs/operations/operator-configuration.md",
+    "author": "1c836b0ee91d882f204a77726e6587252a32f8f8dad5742a8affaed7e5d8ab86",
+    "current": "1c836b0ee91d882f204a77726e6587252a32f8f8dad5742a8affaed7e5d8ab86",
+    "snapshot": "1c836b0ee91d882f204a77726e6587252a32f8f8dad5742a8affaed7e5d8ab86"
+  },
+  {
+    "path": "docs/operations/prism-operator-guide.md",
+    "author": "a99d057236b398fd3924f2f3523bde4ea6c4dbdcd3ec847ca0f194d4d10f2be3",
+    "current": "a99d057236b398fd3924f2f3523bde4ea6c4dbdcd3ec847ca0f194d4d10f2be3",
+    "snapshot": "a99d057236b398fd3924f2f3523bde4ea6c4dbdcd3ec847ca0f194d4d10f2be3"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/README.md",
+    "author": "60811bf451041ce10fb28e1f1dbb954a96866e3f06d34b676c817b2cd21770f1",
+    "current": "60811bf451041ce10fb28e1f1dbb954a96866e3f06d34b676c817b2cd21770f1",
+    "snapshot": "60811bf451041ce10fb28e1f1dbb954a96866e3f06d34b676c817b2cd21770f1"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "author": "8f747f91863f6636c5d2774d267d0fedf47eeba559d0e7377d91541e871bbca1",
+    "current": "8f747f91863f6636c5d2774d267d0fedf47eeba559d0e7377d91541e871bbca1",
+    "snapshot": "8f747f91863f6636c5d2774d267d0fedf47eeba559d0e7377d91541e871bbca1"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "author": "99f611d3bed6967f6c826390dd337065a6f7248b1900a6d8edce42af00bfdc3a",
+    "current": "99f611d3bed6967f6c826390dd337065a6f7248b1900a6d8edce42af00bfdc3a",
+    "snapshot": "99f611d3bed6967f6c826390dd337065a6f7248b1900a6d8edce42af00bfdc3a"
+  },
+  {
+    "path": "skills/prism/server/worker.ts",
+    "author": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+    "current": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+    "snapshot": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+  },
+  {
+    "path": "skills/prism/server/native-worker-execution.ts",
+    "author": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+    "current": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+    "snapshot": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"
+  },
+  {
+    "path": "skills/prism/server/worker-config.ts",
+    "author": "249ea80da729fd1edcc149798ef343ba7e7f1e789528acedd540fabad4e9e337",
+    "current": "249ea80da729fd1edcc149798ef343ba7e7f1e789528acedd540fabad4e9e337",
+    "snapshot": "249ea80da729fd1edcc149798ef343ba7e7f1e789528acedd540fabad4e9e337"
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "author": "58c27c7ab5b69dd586c033b4f41ae8f3f73b4909045a52f25906bba125b656cb",
+    "current": "58c27c7ab5b69dd586c033b4f41ae8f3f73b4909045a52f25906bba125b656cb",
+    "snapshot": "58c27c7ab5b69dd586c033b4f41ae8f3f73b4909045a52f25906bba125b656cb"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-process.ts",
+    "author": "d43bc3ce05976d77579dbc624cae8be1d3209732b023124e3eb6f0a8fd9860da",
+    "current": "d43bc3ce05976d77579dbc624cae8be1d3209732b023124e3eb6f0a8fd9860da",
+    "snapshot": "d43bc3ce05976d77579dbc624cae8be1d3209732b023124e3eb6f0a8fd9860da"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "author": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd",
+    "current": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd",
+    "snapshot": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-journal.ts",
+    "author": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4",
+    "current": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4",
+    "snapshot": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "author": "d784b4196a6103a0ad1e1eaa086640d89ea3205db74be0b0d569045183d20b79",
+    "current": "d784b4196a6103a0ad1e1eaa086640d89ea3205db74be0b0d569045183d20b79",
+    "snapshot": "d784b4196a6103a0ad1e1eaa086640d89ea3205db74be0b0d569045183d20b79"
+  },
+  {
+    "path": "skills/worker/core/worker/native-output-spool.ts",
+    "author": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+    "current": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+    "snapshot": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7"
+  },
+  {
+    "path": "skills/worker/core/worker/native-pool-policy.ts",
+    "author": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+    "current": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+    "snapshot": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+  },
+  {
+    "path": "skills/worker/core/worker/native-runtime-identity.ts",
+    "author": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+    "current": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+    "snapshot": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-supervisor-numerics-20260921.md",
+    "author": "514b523396dfe4786e5c47d3c012d95ec53e9e8e59ccb22abf367caf4cb8d91f",
+    "current": "514b523396dfe4786e5c47d3c012d95ec53e9e8e59ccb22abf367caf4cb8d91f",
+    "snapshot": "514b523396dfe4786e5c47d3c012d95ec53e9e8e59ccb22abf367caf4cb8d91f"
+  }
+]

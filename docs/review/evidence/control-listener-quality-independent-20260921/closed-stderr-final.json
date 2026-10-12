@@ -1,0 +1,36 @@
+[
+  {
+    "name": "corrected",
+    "command": [
+      "node",
+      "docs/review/evidence/control-listener-quality-independent-20260921/closed-stderr-child.mts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"closedStderr\":true,\"statuses\":[422,400,200],\"alive\":true}\n",
+    "stderr": "review logger stream initialized\n"
+  },
+  {
+    "name": "original-monolith",
+    "command": [
+      "node",
+      "--import",
+      "./docs/review/evidence/control-listener-quality-independent-20260921/original-monolith.mjs",
+      "docs/review/evidence/control-listener-quality-independent-20260921/closed-stderr-child.mts"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"closedStderr\":true,\"statuses\":[422,400,200],\"alive\":true}\n",
+    "stderr": "review logger stream initialized\n"
+  },
+  {
+    "name": "old-logger",
+    "command": [
+      "node",
+      "--import",
+      "./docs/review/evidence/control-listener-quality-independent-20260921/old-logger.mjs",
+      "docs/review/evidence/control-listener-quality-independent-20260921/closed-stderr-child.mts"
+    ],
+    "exitCode": 1,
+    "stdout": "Error: write EBADF\n    at afterWriteDispatched (node:internal/stream_base_commons:159:15)\n    at writeGeneric (node:internal/stream_base_commons:150:3)\n    at Socket._writeGeneric (node:net:1262:11)\n    at Socket._write (node:net:1274:8)\n    at writeOrBuffer (node:internal/streams/writable:574:12)\n    at _write (node:internal/streams/writable:503:10)\n    at Writable.write (node:internal/streams/writable:512:10)\n    at handle (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-server.ts:39:20)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async dispatch (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/product-decisions.ts:98:5)\n",
+    "stderr": "review logger stream initialized\n"
+  }
+]

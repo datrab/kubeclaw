@@ -1,0 +1,40 @@
+"""Exercise the actual service-launch redirections against Linux flock ownership."""
+import fcntl
+import os
+from pathlib import Path
+import subprocess
+import tempfile
+
+
+def contender(lock_path):
+    command = "import fcntl,sys; f=open(sys.argv[1]); fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB)"
+    return subprocess.run(["python3", "-c", command, lock_path], capture_output=True).returncode
+
+
+source = Path("docker/buster-runtime-entrypoint.sh").read_text()
+launches = [line.strip() for line in source.splitlines()
+            if "node /app/skills/buster/engine/remote-plan-cli.ts --config" in line]
+assert len(launches) == 2
+unlock = "import fcntl; fcntl.flock(9,fcntl.LOCK_UN)"
+with tempfile.TemporaryDirectory(prefix="buster-parent-lock-") as directory:
+    lock_path = os.path.join(directory, "lifetime.lock")
+    with open(lock_path, "w") as parent:
+        os.dup2(parent.fileno(), 9)
+        try:
+            for launch in launches:
+                assert launch.endswith("9>&- &"), launch
+                fcntl.flock(9, fcntl.LOCK_EX)
+                assert contender(lock_path) != 0
+                # Use the exact descriptor redirection from each production branch.
+                redirection = launch.removesuffix(" &").split('"$runtime_config_root/runtime.json"', 1)[1]
+                child = subprocess.run(["sh", "-c", 'python3 -c "$1"' + redirection, "child", unlock],
+                                       pass_fds=(9,), capture_output=True)
+                assert child.returncode != 0, child
+                assert contender(lock_path) != 0, "child released the parent's still-open lock"
+                # Negative control: inherited descriptor unlocks the same open file description.
+                old_child = subprocess.run(["python3", "-c", unlock], pass_fds=(9,), capture_output=True)
+                assert old_child.returncode == 0
+                assert contender(lock_path) == 0
+        finally:
+            os.close(9)
+print("Both actual launch redirections preserve parent lock; inherited-FD negative controls unlock it.")

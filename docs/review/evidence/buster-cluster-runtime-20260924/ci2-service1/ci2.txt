@@ -1,0 +1,55 @@
+✔ captured file kubernetes.fixture namespace governs actual commands after mutation (1097.750672ms)
+✔ captured file kubernetes.fixture registry governs actual commands after mutation (1347.702744ms)
+✔ captured file kubernetes.fixture secret governs actual commands after mutation (1138.192761ms)
+✔ captured file kubernetes.fixture storage governs actual commands after mutation (1049.289296ms)
+✔ captured file kubernetes.fixture manifest governs actual commands after mutation (1060.581499ms)
+✔ captured file kubernetes.exposure namespace governs actual commands after mutation (540.786931ms)
+✔ captured file kubernetes.exposure host governs actual commands after mutation (820.587887ms)
+✔ captured caller kubernetes.fixture namespace governs actual commands after mutation (739.544665ms)
+✔ captured caller kubernetes.fixture registry governs actual commands after mutation (762.537702ms)
+✔ captured caller kubernetes.fixture secret governs actual commands after mutation (707.72775ms)
+✔ captured caller kubernetes.fixture storage governs actual commands after mutation (728.681864ms)
+✔ captured caller kubernetes.fixture manifest governs actual commands after mutation (702.475524ms)
+✔ captured caller kubernetes.exposure namespace governs actual commands after mutation (345.923679ms)
+✔ captured caller kubernetes.exposure host governs actual commands after mutation (601.234459ms)
+✖ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (114.157817ms)
+✔ production decoder/service/IPC first kubernetes.exposure, allowed and grant/route denied (1945.745896ms)
+✔ production decoder/service/IPC first kubernetes.runtime-security, allowed and grant/route denied (1830.047426ms)
+✖ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (39.96197ms)
+✔ production decoder/service/IPC second kubernetes.exposure, allowed and grant/route denied (1300.146763ms)
+✔ production decoder/service/IPC second kubernetes.runtime-security, allowed and grant/route denied (1906.929069ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 18
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22960.176775
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (114.157817ms)
+  Error: HTTP_REGISTRY_HEALTH_AUTH_INVALID
+      at validateRegistryHealth (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/registry-health-access.ts:15:11)
+      at registryHealthConfiguration (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-config-values.ts:133:3)
+      at configuredClusterCapabilities (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production.ts:103:9)
+      at configuredCapabilities (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production.ts:84:8)
+      at configuredService (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production.ts:49:24)
+      at loadProductionBusterRemotePlanRuntime (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production.ts:34:19)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:149:23
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (39.96197ms)
+  Error: HTTP_REGISTRY_HEALTH_AUTH_INVALID
+      at validateRegistryHealth (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/registry-health-access.ts:15:11)
+      at registryHealthConfiguration (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-config-values.ts:133:3)
+      at configuredClusterCapabilities (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production.ts:103:9)
+      at configuredCapabilities (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production.ts:84:8)
+      at configuredService (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production.ts:49:24)
+      at loadProductionBusterRemotePlanRuntime (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production.ts:34:19)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:149:23
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/cluster-test-ownership.mjs:43:45
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)

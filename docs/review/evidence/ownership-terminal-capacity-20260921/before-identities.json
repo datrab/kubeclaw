@@ -1,0 +1,62 @@
+[
+  {
+    "path": "skills/worker/core/worker/ownership-state.ts",
+    "snapshot": "before/skills/worker/core/worker/ownership-state.ts",
+    "sha256": "2c8a8648a692cc4c6f235e7eeecf3f18dae785c6d1ce7340521e0f7c102b26a9"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "snapshot": "before/skills/worker/core/worker/ownership-store.ts",
+    "sha256": "5b68cd3733ded1fa5739f9b93e181268b38e8164c14152244f786e7f0113dfeb"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-children.ts",
+    "snapshot": "before/skills/worker/core/worker/ownership-children.ts",
+    "sha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "snapshot": "before/skills/worker/core/worker/native-worker-ownership.ts",
+    "sha256": "b13dcae622c5aef5a533d659e0671ef923ae7138fbfbcaa827af8bed24a700f8"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-quiescence.test.mts",
+    "snapshot": "before/tests/verification/reliability/worker-native-quiescence.test.mts",
+    "sha256": "8fba24b6274af383b2eef976f881f03e5008c57b61e9a428ad32b744e6f9e9cb"
+  },
+  {
+    "path": "tests/verification/reliability/worker-owned-children.test.mts",
+    "snapshot": "before/tests/verification/reliability/worker-owned-children.test.mts",
+    "sha256": "30a0f743173532480016e0db32a02fd90cbd3115d5ad366b7f1fe95ca8f0d797"
+  },
+  {
+    "path": "tests/verification/reliability/worker-ownership-store.test.mts",
+    "snapshot": "before/tests/verification/reliability/worker-ownership-store.test.mts",
+    "sha256": "af2319b4a8c90b71b58cd6a3d46e7349fde0593151d4130af7d9c09a8765787b"
+  },
+  {
+    "path": "tests/verification/reliability/tsconfig.native-scope.json",
+    "snapshot": "before/tests/verification/reliability/tsconfig.native-scope.json",
+    "sha256": "995f6c14da4cba473f72293f175b12f2623b555cc4559d7ec921ed193a6c9bd0"
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "snapshot": "before/skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "sha256": "d350f535284a1917f8b4cfb1906ac3d367bf94c6d97ec648abe1d053b4b9d5d1"
+  },
+  {
+    "path": "package.json",
+    "snapshot": "before/package.json",
+    "sha256": "d19e448ba68b31cc3ee511f3e35bb48a1eefd5513512625c725540ef4cb2f6f4"
+  },
+  {
+    "path": "docs/operations/native-worker-host-pools.md",
+    "snapshot": "before/docs/operations/native-worker-host-pools.md.snapshot",
+    "sha256": "51def3dd2fa4aa51bdc5dcdc350b1def0e10793fb95740cc864841cac3d7ebba"
+  },
+  {
+    "path": "docs/review/remediation/implementation/ownership-terminal-capacity-20260921.md",
+    "snapshot": "before/docs/review/remediation/implementation/ownership-terminal-capacity-20260921.md.snapshot",
+    "sha256": "f9d063ddcc4e8f8b5d75ca21bc12cb0bfca0a19d7426ef34ad3083ac220c18b2"
+  }
+]

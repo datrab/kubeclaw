@@ -1,0 +1,22 @@
+{
+  "timeUnix": 1790000079.7410495,
+  "reviewedLauncher": "docs/review/evidence/buster-legacy-seal-vm-20260921/launch.py",
+  "launcherSha256": "4c2500d666ee1922a3ce469db9ddeccbf6f2b30799d8e2e1f55a81e25725daf0",
+  "old": {
+    "baselineBytes": 536870912,
+    "qemuAddressSpaceBytes": 2147483648
+  },
+  "proposed": {
+    "baselineBytes": 805306368,
+    "qemuAddressSpaceBytes": 1879048192
+  },
+  "sumBytes": 2684354560,
+  "stopBytes": 2952790016,
+  "spareBeforeStopBytes": 268435456,
+  "cgroupBytes": 3221225472,
+  "guestBytes": 1073741824,
+  "vcpus": 2,
+  "tcgCacheMiB": 64,
+  "implemented": false,
+  "vmStarted": false
+}

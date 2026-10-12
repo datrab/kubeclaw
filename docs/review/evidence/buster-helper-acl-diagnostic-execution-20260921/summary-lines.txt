@@ -1,0 +1,22 @@
+VM_BOOTED=1
+VM_PHASE=prerequisites
+VM_PHASE=compile
+VM_COMPILE_STATUS=0
+PREEXEC_DAC_OVERRIDE true
+ACL_DIAGNOSTIC_STATUS 0
+VM_PHASE=ha-service
+ℹ tests 3
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+VM_HA_SERVICE_STATUS=0
+VM_PHASE=ha-root
+ℹ tests 4
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+VM_HA_ROOT_STATUS=1
+UNCHANGED_SEVEN_CASE_STATUS 1 null
+VM_REVIEW_EXIT=1

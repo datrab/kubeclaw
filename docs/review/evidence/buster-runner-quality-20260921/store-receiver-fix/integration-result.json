@@ -1,0 +1,6 @@
+{
+  "status": "integrated-runtime-unverified",
+  "path": "tests/verification/contracts/buster-default-store-policy.test.mjs",
+  "beforeSha256": "c71296152b0d6974f7d42d5a9ae338807b587c21809656bd6d4d781d05722ff7",
+  "afterSha256": "d857630229c976b41e462ee9a1a5150305ddfd8ddd91e21c0467257ec33eca7c"
+}

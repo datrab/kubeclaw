@@ -1,0 +1,6 @@
+{
+  "status": "V2 production correction integrated; regression integration and runtime pending",
+  "beforeSha256": "8a6565565db5683e8da2c7bb17eb7a1d5f474b43d336fe1d6856219a193c3179",
+  "afterSha256": "bf991d76d146f17e8807c58133bd29f5a5b4f76a32beba3a592dc990badcfe11",
+  "review": "independent-buster-provider-protocol-order-20260921.md V2"
+}

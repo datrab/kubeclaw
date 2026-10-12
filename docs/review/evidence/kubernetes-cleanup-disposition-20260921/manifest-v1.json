@@ -1,0 +1,263 @@
+{
+  "version": 1,
+  "status": "private source review; unexecuted",
+  "createdAt": "2026-09-21T21:07:49.184967+00:00",
+  "files": [
+    {
+      "path": "docs/architecture/buster-fixture-cleanup.md",
+      "before": null,
+      "beforeSha256": null,
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/docs/architecture/buster-fixture-cleanup.md",
+      "sha256": "5ec0fe3c6e7997f4cd49c6c9db87b70088978db9f72f14a95db2e7d4833a578f"
+    },
+    {
+      "path": "package.json",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/package.json",
+      "beforeSha256": "99ac01cb9b46bd2d2fe1475873a5b79f85be7a7d3359f94fcffb4375800e1f3f",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/package.json",
+      "sha256": "3015e8abc149554659fd9794d15e8d5d45ac5c20351a564a48f57865540529bf"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "beforeSha256": "b2a8cb4442d3243dec435a480f04506ab7e79438150169efb85d9ea01c3095ee",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "sha256": "b52c8ccc2762abe5a43a75434f989b983e7fab81d16e5e0ae235bb0f7a3e042c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/provider-child.mjs",
+      "beforeSha256": "62a88c6c23e47440b05c62ea55453ba5b973a10fafc23e157e82bbd9ae526320",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/skills/buster/engine/test-gates/provider-child.mjs",
+      "sha256": "391a4186a4dc048829eb6bcf0ea0c125107031897c25f0c069394fc8ae544e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/provider-loader.ts",
+      "beforeSha256": "24ffa41ad944b28b7c40bfe5509548017623e488206f9f0db0005b8485fb3b84",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "03c227b06bc5d6e5b967d8ddfd519816bfffce45007f0e52b50dd49347606f50"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/provider-process-session.ts",
+      "beforeSha256": "bf991d76d146f17e8807c58133bd29f5a5b4f76a32beba3a592dc990badcfe11",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "21f71e7885deec3faedaf8ff374a27522d9ca929aa2c320de175096213ba9787"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/runner-fixtures.ts",
+      "beforeSha256": "76a8a08a8ac7facae99e88882cb704cb041452d3dc2963f226c9b3b3d884b917",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/skills/buster/engine/test-gates/runner-fixtures.ts",
+      "sha256": "10c02adcf2a5975eeab7759cffd9ba6d9cbf38dce76971dfe1789554197ec239"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "beforeSha256": "331bfbfbf501192293154f2b237470374190365401630516e2e2f602ab1a022d",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/runner.ts",
+      "beforeSha256": "7142ddfd65353299a563de13aa92c32d5e9b21e2579eb719bd5eaaf2a98cc585",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/skills/buster/engine/test-gates/runner.ts",
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "beforeSha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "sha256": "8bcd326786b45e9720c5bf3c95356c8bb1f9683aaf90681d4e7a0851a186b82e"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+      "beforeSha256": "59f85c44388dd5e8ae8659a88b4f6edd8585bd5afc0a154d52f9cbe21406c6eb",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+      "sha256": "3d629d313ebba550be79fcd2881122229667d6412658a0db8bef25567ecd5604"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/common/plugin-runtime/sdk/src/index.ts",
+      "beforeSha256": "6da0067cf8425a14e40a045d8c77f8b68536034d4abd2cc64e14565cb68852af",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/skills/common/plugin-runtime/sdk/src/index.ts",
+      "sha256": "5a547cfbd92044f0767cb40d5329e4807e8df70feb50869ed8170c9392b77225"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "beforeSha256": "c5e03953d44d1b6324db203f081ee989bf1a78afc45b946c9cf50e3757917c16",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "sha256": "565e8f321d742cdb36411381eff8aafc9c49b97f6c3cd6a3453cc472874001c3"
+    },
+    {
+      "path": "tests/fixtures/test-gate/kubernetes-cleanup-children.mjs",
+      "before": null,
+      "beforeSha256": null,
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/tests/fixtures/test-gate/kubernetes-cleanup-children.mjs",
+      "sha256": "eb61b0545649031ea3e0b418722018fa0456c5c1fcaa19fd549c1528ce0fd7e3"
+    },
+    {
+      "path": "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+      "before": null,
+      "beforeSha256": null,
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+      "sha256": "bcaaee2be2131b4508110a4f60370b02541b86eb9962cc60d8ec4b82d069706f"
+    },
+    {
+      "path": "tests/fixtures/test-gate/kubernetes-cleanup-runner.mjs",
+      "before": null,
+      "beforeSha256": null,
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/tests/fixtures/test-gate/kubernetes-cleanup-runner.mjs",
+      "sha256": "461c9be7b1efe9e8ee7adcb03dab0a3b4f877372177859053951f7763ce866b3"
+    },
+    {
+      "path": "tests/verification/contracts/kubernetes-cleanup-errors.test.mjs",
+      "before": null,
+      "beforeSha256": null,
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/tests/verification/contracts/kubernetes-cleanup-errors.test.mjs",
+      "sha256": "5d0989a35c72696941217ed33f4d4645468e11c9f1816c6b225725fdc6f33901"
+    },
+    {
+      "path": "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+      "before": null,
+      "beforeSha256": null,
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+      "sha256": "562cc8ca7b402549964dc6d6dbcefc17c42d7f575e48acf3aadfacf9c1a5abcb"
+    },
+    {
+      "path": "tests/verification/contracts/provider-child-session.test.mjs",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/tests/verification/contracts/provider-child-session.test.mjs",
+      "beforeSha256": "c355faab39ecbfd2dc488e5e91b98c8571c86e20183359d6da8503afe631a523",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/tests/verification/contracts/provider-child-session.test.mjs",
+      "sha256": "d45b58ffd9e7a37d8301fe8569df691a945073d66374b0d85073b377e905f2b6"
+    },
+    {
+      "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "before": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "beforeSha256": "42b57809fc91e208790ec00f7a01226b1890e291762dcc843d652601a9421c77",
+      "after": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/files/tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "sha256": "5fb8ada78a1aacde27cd7af1c23ecc359ee783b29067734bf62766d33d676fd6"
+    }
+  ],
+  "beforeContext": [
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/types.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/contracts/pipeline-test-gate/v1/src/types.ts",
+      "sha256": "704d87007fce75e3f6d8eafd73273478de08c0bf6b1d0ee753f3da31b9fc010c"
+    },
+    {
+      "path": "package.json",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/package.json",
+      "sha256": "99ac01cb9b46bd2d2fe1475873a5b79f85be7a7d3359f94fcffb4375800e1f3f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "sha256": "b2a8cb4442d3243dec435a480f04506ab7e79438150169efb85d9ea01c3095ee"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/provider-child.mjs",
+      "sha256": "62a88c6c23e47440b05c62ea55453ba5b973a10fafc23e157e82bbd9ae526320"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "24ffa41ad944b28b7c40bfe5509548017623e488206f9f0db0005b8485fb3b84"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "bf991d76d146f17e8807c58133bd29f5a5b4f76a32beba3a592dc990badcfe11"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/runner-attempt-result.ts",
+      "sha256": "cdba534f94cbf3fca17d16d40b196d5a303620e8809f1f419e996478dbfd0d69"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/runner-fixtures.ts",
+      "sha256": "76a8a08a8ac7facae99e88882cb704cb041452d3dc2963f226c9b3b3d884b917"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-node.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/runner-node.ts",
+      "sha256": "f8dee4f5340d84b8be053ab13b9fce925eafcfd7e6e3a1125029ca5929608851"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "sha256": "331bfbfbf501192293154f2b237470374190365401630516e2e2f602ab1a022d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/runner-scheduler.ts",
+      "sha256": "aa8c4a9e4b7adccfce6d4ee78d6b8e67d86171bb8651e3c90fb14b3d948e7521"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-types.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/runner-types.ts",
+      "sha256": "b28e648f56ccf27cf8914891abb6afc470d00c56f01f5b7fdbfc71fc02c1eb1b"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/engine/test-gates/runner.ts",
+      "sha256": "7142ddfd65353299a563de13aa92c32d5e9b21e2579eb719bd5eaaf2a98cc585"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "sha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+      "sha256": "59f85c44388dd5e8ae8659a88b4f6edd8585bd5afc0a154d52f9cbe21406c6eb"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/common/plugin-runtime/sdk/src/index.ts",
+      "sha256": "6da0067cf8425a14e40a045d8c77f8b68536034d4abd2cc64e14565cb68852af"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "sha256": "c5e03953d44d1b6324db203f081ee989bf1a78afc45b946c9cf50e3757917c16"
+    },
+    {
+      "path": "tests/verification/contracts/provider-child-session.test.mjs",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/tests/verification/contracts/provider-child-session.test.mjs",
+      "sha256": "c355faab39ecbfd2dc488e5e91b98c8571c86e20183359d6da8503afe631a523"
+    },
+    {
+      "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "snapshot": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/before/tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "sha256": "42b57809fc91e208790ec00f7a01226b1890e291762dcc843d652601a9421c77"
+    }
+  ],
+  "helpers": [
+    {
+      "path": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/README.md",
+      "sha256": "7a67f54643bba64879e3daa28644fb5f820205386e8c689d15a5ddf989cdff77"
+    },
+    {
+      "path": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/contract-proposal.md",
+      "sha256": "29a6eaa8cfc52e4bcc4f90c4eafc201dc814a5a8c969eca2b4e560ca0d7421af"
+    },
+    {
+      "path": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/mutate.mjs",
+      "sha256": "7671398893e0b1f83bdfb566376600c34d83335fbae6558d4aab4a3471883563"
+    },
+    {
+      "path": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/change.patch",
+      "sha256": "4733a6a3967f13004b04f4be2c4625926deda9b8a135e7ae3d8caa46035445a1"
+    }
+  ],
+  "liveBaselineDrift": []
+}

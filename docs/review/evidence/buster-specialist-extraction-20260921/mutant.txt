@@ -1,0 +1,40 @@
+✔ serialized provider results retain size, schema, count and declaration checks (16.33509ms)
+✔ serialized finalization data binds retained source, adapter, limits and cancellation signal (1.308794ms)
+✖ missing retained evidence and mismatched adapter package fail before adapter execution (0.891643ms)
+✔ exit-code and absent reports bypass adapters; adapter rejection remains authoritative (0.267917ms)
+✔ combined adapter output is bounded even if a fake adapter ignores its allowance (53.885884ms)
+✔ blocking JUnit with only skipped cases fails; advisory mode preserves its result (0.635557ms)
+✔ non-command provider retains provider verdict and receives copied reports (0.492672ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 875.851281
+
+✖ failing tests:
+
+test at docs/review/evidence/buster-specialist-extraction-20260921/mutant-pznovlc9/mutant.test.ts:85:1
+✖ missing retained evidence and mismatched adapter package fail before adapter execution (0.891643ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ADAPTER_MISSING/u. Input:
+  
+  'Error: ADAPTER_MUST_NOT_RUN'
+  
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-specialist-extraction-20260921/mutant-pznovlc9/mutant.test.ts:90:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ADAPTER_MUST_NOT_RUN
+        at Object.never [as adapt] (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-specialist-extraction-20260921/mutant-pznovlc9/mutant.test.ts:86:69)
+        at finalizeBusterReports (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-specialist-extraction-20260921/mutant-pznovlc9/mutant.ts:61:45)
+        at run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-specialist-extraction-20260921/mutant-pznovlc9/mutant.test.ts:51:10)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-specialist-extraction-20260921/mutant-pznovlc9/mutant.test.ts:90:24)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /ADAPTER_MISSING/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }

@@ -1,0 +1,238 @@
+test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) ... 
+  test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={}) ... FAIL
+  test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': {}}) ... FAIL
+  test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': 'sandbox'}]}) ... FAIL
+  test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': 'sandbox', 'state': 'UNKNOWN'}]}) ... FAIL
+  test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': 'sandbox', 'state': 0}]}) ... FAIL
+  test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': 'sandbox', 'state': None}]}) ... FAIL
+  test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': '', 'state': 'SANDBOX_NOTREADY'}]}) ... FAIL
+  test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': 'x', 'state': 'SANDBOX_NOTREADY'}, {'id': 'x', 'state': 'SANDBOX_NOTREADY'}]}) ... FAIL
+
+======================================================================
+FAIL: test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 101, in test_bad_cri_lists_prevent_mutation
+    data = observation(); data['pods'] = pods; self.assert_install_rejected(data)
+                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 68, in assert_install_rejected
+    self.assertNotEqual(result.returncode, 0, result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : {}
+{}
+{}
+{}
+{}
+{}
+{}
+Dataplane rollout and baseline apply completed. This is NOT workload/cutover approval.
+The node is still cordoned. Before uncordon:
+  * Apply and verify KubeClaw, Ops, SPIRE and other required dependency policies.
+  * Verify agent policy import and endpoint realization; run the migration verifier.
+  * Paperless alone has an owner-approved temporary baseline exemption.
+Then uncordon deliberately, check all recreated pods and run the pipeline/Paperless
+and negative connectivity checks in docs/ops/cilium-networking.md. Check Relay/UI
+readiness only after scheduling resumes. Create the cutover marker only after
+those tests and legacy cleanup have passed. A failed run leaves the node cordoned.
+
+
+======================================================================
+FAIL: test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': {}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 101, in test_bad_cri_lists_prevent_mutation
+    data = observation(); data['pods'] = pods; self.assert_install_rejected(data)
+                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 68, in assert_install_rejected
+    self.assertNotEqual(result.returncode, 0, result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : {}
+{}
+{}
+{}
+{}
+{}
+{}
+Dataplane rollout and baseline apply completed. This is NOT workload/cutover approval.
+The node is still cordoned. Before uncordon:
+  * Apply and verify KubeClaw, Ops, SPIRE and other required dependency policies.
+  * Verify agent policy import and endpoint realization; run the migration verifier.
+  * Paperless alone has an owner-approved temporary baseline exemption.
+Then uncordon deliberately, check all recreated pods and run the pipeline/Paperless
+and negative connectivity checks in docs/ops/cilium-networking.md. Check Relay/UI
+readiness only after scheduling resumes. Create the cutover marker only after
+those tests and legacy cleanup have passed. A failed run leaves the node cordoned.
+
+
+======================================================================
+FAIL: test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': 'sandbox'}]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 101, in test_bad_cri_lists_prevent_mutation
+    data = observation(); data['pods'] = pods; self.assert_install_rejected(data)
+                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 68, in assert_install_rejected
+    self.assertNotEqual(result.returncode, 0, result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : {}
+{}
+{}
+{}
+{}
+{}
+{}
+Dataplane rollout and baseline apply completed. This is NOT workload/cutover approval.
+The node is still cordoned. Before uncordon:
+  * Apply and verify KubeClaw, Ops, SPIRE and other required dependency policies.
+  * Verify agent policy import and endpoint realization; run the migration verifier.
+  * Paperless alone has an owner-approved temporary baseline exemption.
+Then uncordon deliberately, check all recreated pods and run the pipeline/Paperless
+and negative connectivity checks in docs/ops/cilium-networking.md. Check Relay/UI
+readiness only after scheduling resumes. Create the cutover marker only after
+those tests and legacy cleanup have passed. A failed run leaves the node cordoned.
+
+
+======================================================================
+FAIL: test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': 'sandbox', 'state': 'UNKNOWN'}]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 101, in test_bad_cri_lists_prevent_mutation
+    data = observation(); data['pods'] = pods; self.assert_install_rejected(data)
+                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 68, in assert_install_rejected
+    self.assertNotEqual(result.returncode, 0, result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : {}
+{}
+{}
+{}
+{}
+{}
+{}
+Dataplane rollout and baseline apply completed. This is NOT workload/cutover approval.
+The node is still cordoned. Before uncordon:
+  * Apply and verify KubeClaw, Ops, SPIRE and other required dependency policies.
+  * Verify agent policy import and endpoint realization; run the migration verifier.
+  * Paperless alone has an owner-approved temporary baseline exemption.
+Then uncordon deliberately, check all recreated pods and run the pipeline/Paperless
+and negative connectivity checks in docs/ops/cilium-networking.md. Check Relay/UI
+readiness only after scheduling resumes. Create the cutover marker only after
+those tests and legacy cleanup have passed. A failed run leaves the node cordoned.
+
+
+======================================================================
+FAIL: test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': 'sandbox', 'state': 0}]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 101, in test_bad_cri_lists_prevent_mutation
+    data = observation(); data['pods'] = pods; self.assert_install_rejected(data)
+                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 68, in assert_install_rejected
+    self.assertNotEqual(result.returncode, 0, result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : {}
+{}
+{}
+{}
+{}
+{}
+{}
+Dataplane rollout and baseline apply completed. This is NOT workload/cutover approval.
+The node is still cordoned. Before uncordon:
+  * Apply and verify KubeClaw, Ops, SPIRE and other required dependency policies.
+  * Verify agent policy import and endpoint realization; run the migration verifier.
+  * Paperless alone has an owner-approved temporary baseline exemption.
+Then uncordon deliberately, check all recreated pods and run the pipeline/Paperless
+and negative connectivity checks in docs/ops/cilium-networking.md. Check Relay/UI
+readiness only after scheduling resumes. Create the cutover marker only after
+those tests and legacy cleanup have passed. A failed run leaves the node cordoned.
+
+
+======================================================================
+FAIL: test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': 'sandbox', 'state': None}]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 101, in test_bad_cri_lists_prevent_mutation
+    data = observation(); data['pods'] = pods; self.assert_install_rejected(data)
+                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 68, in assert_install_rejected
+    self.assertNotEqual(result.returncode, 0, result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : {}
+{}
+{}
+{}
+{}
+{}
+{}
+Dataplane rollout and baseline apply completed. This is NOT workload/cutover approval.
+The node is still cordoned. Before uncordon:
+  * Apply and verify KubeClaw, Ops, SPIRE and other required dependency policies.
+  * Verify agent policy import and endpoint realization; run the migration verifier.
+  * Paperless alone has an owner-approved temporary baseline exemption.
+Then uncordon deliberately, check all recreated pods and run the pipeline/Paperless
+and negative connectivity checks in docs/ops/cilium-networking.md. Check Relay/UI
+readiness only after scheduling resumes. Create the cutover marker only after
+those tests and legacy cleanup have passed. A failed run leaves the node cordoned.
+
+
+======================================================================
+FAIL: test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': '', 'state': 'SANDBOX_NOTREADY'}]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 101, in test_bad_cri_lists_prevent_mutation
+    data = observation(); data['pods'] = pods; self.assert_install_rejected(data)
+                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 68, in assert_install_rejected
+    self.assertNotEqual(result.returncode, 0, result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : {}
+{}
+{}
+{}
+{}
+{}
+{}
+Dataplane rollout and baseline apply completed. This is NOT workload/cutover approval.
+The node is still cordoned. Before uncordon:
+  * Apply and verify KubeClaw, Ops, SPIRE and other required dependency policies.
+  * Verify agent policy import and endpoint realization; run the migration verifier.
+  * Paperless alone has an owner-approved temporary baseline exemption.
+Then uncordon deliberately, check all recreated pods and run the pipeline/Paperless
+and negative connectivity checks in docs/ops/cilium-networking.md. Check Relay/UI
+readiness only after scheduling resumes. Create the cutover marker only after
+those tests and legacy cleanup have passed. A failed run leaves the node cordoned.
+
+
+======================================================================
+FAIL: test_bad_cri_lists_prevent_mutation (guard_tests.Guards.test_bad_cri_lists_prevent_mutation) (pods={'items': [{'id': 'x', 'state': 'SANDBOX_NOTREADY'}, {'id': 'x', 'state': 'SANDBOX_NOTREADY'}]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 101, in test_bad_cri_lists_prevent_mutation
+    data = observation(); data['pods'] = pods; self.assert_install_rejected(data)
+                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 68, in assert_install_rejected
+    self.assertNotEqual(result.returncode, 0, result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : {}
+{}
+{}
+{}
+{}
+{}
+{}
+Dataplane rollout and baseline apply completed. This is NOT workload/cutover approval.
+The node is still cordoned. Before uncordon:
+  * Apply and verify KubeClaw, Ops, SPIRE and other required dependency policies.
+  * Verify agent policy import and endpoint realization; run the migration verifier.
+  * Paperless alone has an owner-approved temporary baseline exemption.
+Then uncordon deliberately, check all recreated pods and run the pipeline/Paperless
+and negative connectivity checks in docs/ops/cilium-networking.md. Check Relay/UI
+readiness only after scheduling resumes. Create the cutover marker only after
+those tests and legacy cleanup have passed. A failed run leaves the node cordoned.
+
+
+----------------------------------------------------------------------
+Ran 1 test in 8.386s
+
+FAILED (failures=8)

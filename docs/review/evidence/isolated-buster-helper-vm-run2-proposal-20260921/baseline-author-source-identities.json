@@ -1,0 +1,65 @@
+{
+  "scope": "Local implemented helper boundary, guest and independent acceptance pending; Buster integration remains WIP",
+  "files": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/skills/common/plugin-runtime/foundation/isolation/sandbox.c.snapshot"
+    },
+    {
+      "path": "scripts/build-plugin-sandbox.mjs",
+      "sha256": "8d209ed77632f9dbfea28782b43eb27441a7508ca54682d33b7b151eefd34a78",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/scripts/build-plugin-sandbox.mjs.snapshot"
+    },
+    {
+      "path": "scripts/buster-subordinate-ids.mjs",
+      "sha256": "43d96aab5e0d1405e86f59c32d2f2e68a83058cbfdf57b7bbf97d09761ac16f7",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/scripts/buster-subordinate-ids.mjs.snapshot"
+    },
+    {
+      "path": "scripts/buster-runtime-config-root.mjs",
+      "sha256": "a199f7bad7ee7d91205035588a7958c6d2b589d6be64f0c27f930c0ba0d51674",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/scripts/buster-runtime-config-root.mjs.snapshot"
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "sha256": "1c25f459624394c4484154b728d93ec6f1e04002a99219aeebea4ea7ef2297b3",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/docker/Dockerfile.buster-runtime.snapshot"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "ac187283d7f0815ba2c1db8622dd81667a523aa1239c96a049c3638c3cc26ceb",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/docker/buster-runtime-entrypoint.sh.snapshot"
+    },
+    {
+      "path": "tests/verification/deployment/check-deployment-truth.mjs",
+      "sha256": "0483f5a11ea8358b048d03cf09203509dc31c18f6ec46deda3c001fadd7f43b0",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/tests/verification/deployment/check-deployment-truth.mjs.snapshot"
+    },
+    {
+      "path": "scripts/tests/buster-helper-authority.test.mjs",
+      "sha256": "cb997c944d9a86264dae79813a224460ef8cdc5fe0ac6542429338e8ec5c9a72",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/scripts/tests/buster-helper-authority.test.mjs.snapshot"
+    },
+    {
+      "path": "scripts/tests/buster-helper-authority-root.test.mjs",
+      "sha256": "f8c3c3dcc76912c36525d6d0b8287f34c7bd44e952336e8f26c5ad7b09adbfb5",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/scripts/tests/buster-helper-authority-root.test.mjs.snapshot"
+    },
+    {
+      "path": "scripts/tests/buster-lock-inheritance.py",
+      "sha256": "09202cd80196b443daeb01daa4ebdc7cf02dcf3c4ed0cdab613640437b9a6ec1",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/scripts/tests/buster-lock-inheritance.py.snapshot"
+    },
+    {
+      "path": "scripts/tests/run-buster-helper-authority.mjs",
+      "sha256": "f63727e89695b1b7daf92b4c5331d2716565c205ef6f6ab0b5ae44b766265fd3",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/scripts/tests/run-buster-helper-authority.mjs.snapshot"
+    },
+    {
+      "path": "docs/review/remediation/implementation/buster-helper-authority-20260921.md",
+      "sha256": "1cd9731ebf4f74d8449abcbf8b0e7adb6b94ce00c357d5cfc2f944ff7bba5228",
+      "snapshot": "docs/review/evidence/buster-helper-authority-20260921/local-source/docs/review/remediation/implementation/buster-helper-authority-20260921.md.snapshot"
+    }
+  ]
+}

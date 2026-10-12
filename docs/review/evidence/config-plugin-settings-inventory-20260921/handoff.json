@@ -1,0 +1,44 @@
+{
+  "status": "bounded read-only inventory; independent review pending",
+  "schemaFieldPatterns": 31,
+  "selectedPackages": 7,
+  "selectedRegistrations": 8,
+  "remainingAdapterObserverRegistrations": 18,
+  "allRepositoryManifests": 48,
+  "currentDriftFromInspectedSnapshot": [
+    "docker/buster-runtime-entrypoint.sh",
+    "docs/review/remediation/implementation/config-platform-inventory-20260921.md",
+    "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+    "skills/common/plugin-runtime/foundation/config/platform.ts",
+    "skills/common/plugins/notification-observer/tests/live-function.test.ts",
+    "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+    "skills/nova/core/execution/engine-runtime.ts"
+  ],
+  "runtimeTestsExecuted": false,
+  "files": [
+    {
+      "path": "docs/review/remediation/implementation/config-plugin-settings-inventory-20260921.md",
+      "sha256": "415c996fdb48f1e4cb198277f38255469ccf4e4c205814151d857f6bce5fd6c0"
+    },
+    {
+      "path": "docs/review/evidence/config-plugin-settings-inventory-20260921/settings.json",
+      "sha256": "16bcb01e07d08ccb63b52f078522625245c3e7b2628abb202e5d9ae87a096716"
+    },
+    {
+      "path": "docs/review/evidence/config-plugin-settings-inventory-20260921/registrations.json",
+      "sha256": "5e1a141bc8564c6669c37d8962b521ae235b8b4aa9e501692bc83c4a036797c1"
+    },
+    {
+      "path": "docs/review/evidence/config-plugin-settings-inventory-20260921/schema-coverage.json",
+      "sha256": "ca452bbc19503214d5d39b8deb63777d37e81fc2d5259953348e3ead0bd4e885"
+    },
+    {
+      "path": "docs/review/evidence/config-plugin-settings-inventory-20260921/schema-field-coverage-check.json",
+      "sha256": "d7e9ca311e940ba3a8c1260c70ecee89e0a01a04fecc5befae7c9239b29a6e38"
+    },
+    {
+      "path": "docs/review/evidence/config-plugin-settings-inventory-20260921/historical-rows.json",
+      "sha256": "4d548e1a543a1190cb404783ea328c9e4cb8f75309ee949ebac7ccf2342410fb"
+    }
+  ]
+}

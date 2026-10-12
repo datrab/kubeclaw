@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "features",
+    "tuning",
+    "overrides",
+    "schemaVersion",
+    "components"
+  ],
+  "properties": {
+    "_doc": {
+      "type": "string"
+    },
+    "profile": {
+      "const": "standard"
+    },
+    "features": {
+      "const": {
+        "observability": true,
+        "buster": true,
+        "discord_alerts": true
+      }
+    },
+    "tuning": {
+      "const": {
+        "safety_margins": "high",
+        "retention": "high",
+        "alerts": "rich",
+        "logs": "verbose",
+        "checks": "strict",
+        "determinism": "strict"
+      }
+    },
+    "overrides": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "schemaVersion": {
+      "const": "swarm-entry.v2"
+    },
+    "components": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prism-control",
+        "prism-studio",
+        "prism-worker",
+        "prism-execution",
+        "buster-engine",
+        "worker-core"
+      ],
+      "properties": {
+        "prism-control": {
+          "const": "prism-control.config.json"
+        },
+        "prism-studio": {
+          "const": "prism-studio.config.json"
+        },
+        "prism-worker": {
+          "const": "prism-worker.config.json"
+        },
+        "prism-execution": {
+          "const": "prism-execution.config.json"
+        },
+        "buster-engine": {
+          "const": "buster-engine.config.json"
+        },
+        "worker-core": {
+          "const": "worker-core.config.json"
+        }
+      }
+    }
+  }
+}

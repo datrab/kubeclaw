@@ -1,0 +1,8 @@
+[
+  {
+    "path": "skills/nova/core/state/wait-projection-reader.ts",
+    "sha256": "89975c862444e0ef55ba641afab5289243c0313cdbf392c7372ab3cda61e7dd7",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/review-addendum/wait-projection-reader.ts.snapshot",
+    "purpose": "Third maxEntryBytes interpreter: pinned historical run-snapshot retained-value resolver"
+  }
+]

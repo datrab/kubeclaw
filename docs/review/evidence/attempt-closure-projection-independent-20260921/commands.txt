@@ -1,0 +1,48 @@
+All commands run from repository root. No live infrastructure or operational data.
+
+Real-lock prefix used for filesystem/CLI/lock suites:
+LD_LIBRARY_PATH="$PWD/node_modules/.cache/native-host-tools/root/usr/lib:$PWD/node_modules/.cache/native-host-tools/root/lib" node_modules/.cache/native-host-tools/root/usr/bin/proot -b "$PWD/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!" /usr/local/bin/node
+The bound executable reports flock from util-linux 2.42.3 (flock-version.txt), not a lock stub.
+
+Final combined (prefix above):
+--test tests/verification/reliability/attempt-closure-projection.test.mjs tests/verification/reliability/admission-retirement.test.mjs tests/verification/reliability/attempt-projection-review.test.mjs tests/verification/reliability/observability-retirement-plan.test.mjs
+exit0;40/40;final-combined-tests.txt
+
+Final independent probes (sameprefix):
+--test --test-name-pattern='independent (closure|operator)' docs/review/evidence/attempt-closure-projection-independent-20260921/decoder-probe.test.mjs
+exit0;2/2 including13malformedcases;final-probes.txt
+
+Double-slot negative control (sameprefix):
+--import ./docs/review/evidence/attempt-closure-projection-independent-20260921/quota-mutant-hook.mjs --test --test-name-pattern='independent operator' docs/review/evidence/attempt-closure-projection-independent-20260921/decoder-probe.test.mjs
+expectedexit1;missingexpectedrejection at forbidden extra closure;quota-mutant.txt
+
+node --test tests/verification/reliability/inventory-digest-guard.test.mjs
+exit0;8/8;inventory-tests.txt
+node --import ./docs/review/evidence/attempt-closure-projection-independent-20260921/inventory-mutant-hook.mjs --test tests/verification/reliability/inventory-digest-guard.test.mjs
+expectedexit1;changedrealcontentnotblocked;inventory-mutant.txt
+node docs/review/evidence/attempt-closure-projection-independent-20260921/inventory-before-probe.mjs
+beforeguard:807actualcollisions/807misses;afterguard:759actualcollisions/0misses;1000iterations each, real timestamps/bytes without mocks. Saved JSON includes loadedmethod.
+node docs/review/evidence/attempt-closure-projection-independent-20260921/check-test-preservation.mjs
+exit0;14testbodies+4fixturefunctions preserved;test-preservation.txt
+
+node node_modules/typescript/bin/tsc --noEmit -p skills/nova/tsconfig.json
+exit0;typecheck.txt
+node node_modules/typescript/bin/tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+exit0;plugin-typecheck.txt
+
+Canonical lint: node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs
+Fullclosurechangedset=>exit1;10existingdurable-attempts violations;lint.txt,lint-before.json,lint-after.json,lint-comparison.json.
+Inventoryfiles.mjs+inventory-digest-guard.test.mjs=>exit0;inventory-lint.txt.
+No lint rules/thresholds/exclusions changed by reviewer.
+
+Final exact-read guard followup (after tightening remaining-byte bound):
+Real-lock prefix --test tests/verification/reliability/attempt-closure-projection.test.mjs tests/verification/reliability/observability-retirement-plan.test.mjs
+exit0;21/21;exact-bound-closure-planner.txt
+Real-lock prefix --test --test-name-pattern='independent (closure|operator)' docs/review/evidence/attempt-closure-projection-independent-20260921/decoder-probe.test.mjs
+exit0;2/2;exact-bound-probes.txt
+node --test docs/review/evidence/attempt-closure-projection-independent-20260921/inventory-read-bound.test.mjs tests/verification/reliability/inventory-digest-guard.test.mjs
+exit0;11/11;final-inventory-tests.txt
+node --import ./docs/review/evidence/attempt-closure-projection-independent-20260921/inventory-read-mutant-hook.mjs --test docs/review/evidence/attempt-closure-projection-independent-20260921/inventory-read-bound.test.mjs
+expectedexit1;growthactualread65536vs8;inventory-read-mutant.txt
+Real-write1000iterationprobe:796actualcollisions/0misses;inventory-final-probe.json.
+Final Inventory source/test canonical lint exit0;inventory-final-lint.txt.

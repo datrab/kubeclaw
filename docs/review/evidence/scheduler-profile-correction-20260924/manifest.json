@@ -1,0 +1,7 @@
+{
+  "path": "tests/fixtures/test-gate/scheduler-drain.mjs",
+  "beforeSha256": "98f591efdf707cc712b363de7b0d7687f455ea3b83eca756afe4abd519e598fd",
+  "afterSha256": "e50770fcd688b2a8fba758f5426445d74d4acc2f415f2ce790aa12e0d4039875",
+  "reason": "Actual runtime failed TEST_PLAN_POLICY_INVALID before Runner start: resolver requires positive maximumRetryCount. Set admissible ceiling1; all node retries remain explicitly0. No deadline/assertion change.",
+  "status": "private correction; runtime freeze intact"
+}

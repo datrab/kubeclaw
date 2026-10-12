@@ -1,0 +1,13 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "resolveJsonModule": true
+  },
+  "include": [
+    "config-component-bundle.test.mts",
+    "../../fixtures/config/swarm-bundle.d.mts",
+    "../../../skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "../../../skills/common/plugin-runtime/foundation/config/swarm-bundle.ts"
+  ]
+}

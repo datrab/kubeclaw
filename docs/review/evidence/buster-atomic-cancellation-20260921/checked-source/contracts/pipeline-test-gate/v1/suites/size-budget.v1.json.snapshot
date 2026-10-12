@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "test-suite-template.v1",
+  "contractId": "kubeclaw.size-budget-suite@1",
+  "tests": {},
+  "fixtures": {},
+  "concurrencyLimits": {
+    "size-budget": 4
+  }
+}

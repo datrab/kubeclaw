@@ -1,0 +1,128 @@
+[
+  {
+    "name": "gdbm-1.26-r0.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/gdbm-1.26-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "libbz2-1.0.8-r6.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/libbz2-1.0.8-r6.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "libcrypto3-3.5.8-r0.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/libcrypto3-3.5.8-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "libexpat-2.8.4-r0.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/libexpat-2.8.4-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "libffi-3.5.2-r1.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/libffi-3.5.2-r1.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "libgcc-15.2.0-r5.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/libgcc-15.2.0-r5.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "libncursesw-6.6_p20260516-r0.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/libncursesw-6.6_p20260516-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "libpanelw-6.6_p20260516-r0.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/libpanelw-6.6_p20260516-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "libssl3-3.5.8-r0.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/libssl3-3.5.8-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "libstdc++-15.2.0-r5.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/libstdc++-15.2.0-r5.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "mpdecimal-4.0.1-r0.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/mpdecimal-4.0.1-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "musl-1.2.6-r2.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/musl-1.2.6-r2.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "ncurses-terminfo-base-6.6_p20260516-r0.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/ncurses-terminfo-base-6.6_p20260516-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "pyc-3.14.7-r1.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/pyc-3.14.7-r1.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "python3-3.14.7-r1.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/python3-3.14.7-r1.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "python3-pyc-3.14.7-r1.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/python3-pyc-3.14.7-r1.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "python3-pycache-pyc0-3.14.7-r1.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/python3-pycache-pyc0-3.14.7-r1.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "readline-8.3.3-r1.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/readline-8.3.3-r1.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "sqlite-libs-3.53.4-r0.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/sqlite-libs-3.53.4-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "xz-libs-5.8.4-r0.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/xz-libs-5.8.4-r0.apk: OK\n",
+    "stderr": ""
+  },
+  {
+    "name": "zlib-1.3.2-r0.apk",
+    "exitCode": 0,
+    "stdout": "node_modules/.cache/buster-legacy-python-20260921/packages/zlib-1.3.2-r0.apk: OK\n",
+    "stderr": ""
+  }
+]

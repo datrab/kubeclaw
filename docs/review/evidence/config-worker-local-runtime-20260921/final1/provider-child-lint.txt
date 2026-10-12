@@ -1,0 +1,17 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-child.mjs
+    6:1   error  Module-level mutable state is forbidden; keep state inside an explicit owner  discipline/no-top-level-mutable-state
+    7:1   error  Module-level mutable state is forbidden; keep state inside an explicit owner  discipline/no-top-level-mutable-state
+    8:1   error  Module-level mutable state is forbidden; keep state inside an explicit owner  discipline/no-top-level-mutable-state
+    9:1   error  Module-level mutable state is forbidden; keep state inside an explicit owner  discipline/no-top-level-mutable-state
+   14:1   error  Module-level mutable state is forbidden; keep state inside an explicit owner  discipline/no-top-level-mutable-state
+   57:24  error  Dynamic module loading is allowed only in a declared loader boundary          discipline/no-dynamic-module-loading
+  110:1   error  Unexpected console statement                                                  no-console
+  111:1   error  Unexpected console statement                                                  no-console
+  111:16  error  Unexpected console statement                                                  no-console
+  112:1   error  Unexpected console statement                                                  no-console
+  113:1   error  Unexpected console statement                                                  no-console
+  113:17  error  Unexpected console statement                                                  no-console
+
+✖ 12 problems (12 errors, 0 warnings)
+

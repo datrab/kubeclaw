@@ -1,0 +1,17 @@
+{
+  "nodeVersion": "v24.21.0",
+  "tools": [
+    {
+      "path": "/usr/local/bin/node",
+      "sha256": "78465b20b5455f64d2dbbd9e8b38470cfc23ad3abe4cdc9a00dc5e050eee70fb"
+    },
+    {
+      "path": "node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "sha256": "85b1d3ca881bece0b8fe5f3a5dd195a0419bf67bbe4c5d737159d2bc2ba2d8a7"
+    },
+    {
+      "path": "node_modules/.cache/native-host-tools/root/usr/bin/flock",
+      "sha256": "ca14a07466e61d72cb360e5aa0dd50e6a03e3a62feed8baa60e78e5a24f9cb96"
+    }
+  ]
+}

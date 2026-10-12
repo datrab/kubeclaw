@@ -1,3 +1,4 @@
+import type { RetainedWaitResolver } from './retained-wait.ts';
 import type {
   ArtifactRef,
   EffectRequest,
@@ -80,6 +81,8 @@ export interface AdapterCleanupContext {
 }
 
 export interface AdapterActivationContext {
+  /** Owner-bound historical wait reconstruction; absent outside the selected Core wait adapter. */
+  readonly resolveRetainedWait?: RetainedWaitResolver;
   readonly registration: RegistrationProvenance;
   readonly config: Readonly<Record<string, unknown>>;
   invoke(
@@ -138,6 +141,9 @@ export interface TestProviderExecutionContext {
   ): Promise<Readonly<Record<string, unknown>>>;
 }
 
+/** Host-selected cleanup authority; never inferred from requested retention. */
+export type TestProviderCleanupDisposition = 'incomplete' | 'completed-fixture';
+
 export interface TestProviderInstance {
   execute(
     invocation: ProviderInvocationV1,
@@ -146,6 +152,7 @@ export interface TestProviderInstance {
   cleanup?(
     invocation: ProviderInvocationV1,
     context: TestProviderExecutionContext,
+    disposition: TestProviderCleanupDisposition,
   ): Promise<void>;
 }
 

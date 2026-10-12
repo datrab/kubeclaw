@@ -1,0 +1,382 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-21T12:21:25.608Z",
+  "scope": "Read-only MCP projection, no node/pod execution or changes; not an acceptance gate",
+  "queries": [
+    "platform_cluster_state(resource=nodes)",
+    "list_argocd_applications(limit=100)",
+    "platform_network_state(resource=daemonsets,namespace=kube-system)"
+  ],
+  "nodes": {
+    "partial": false,
+    "items": [
+      {
+        "name": "ax41-production",
+        "conditions": [
+          {
+            "type": "EtcdIsVoter",
+            "status": "True",
+            "lastHeartbeatTime": "2026-09-21T12:16:08Z"
+          },
+          {
+            "type": "MemoryPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2026-09-21T12:17:20Z"
+          },
+          {
+            "type": "DiskPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2026-09-21T12:17:20Z"
+          },
+          {
+            "type": "PIDPressure",
+            "status": "False",
+            "lastHeartbeatTime": "2026-09-21T12:17:20Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastHeartbeatTime": "2026-09-21T12:17:20Z"
+          }
+        ],
+        "nodeInfo": {
+          "kernelVersion": "6.8.0-139-generic",
+          "osImage": "Ubuntu 24.04.5 LTS",
+          "containerRuntimeVersion": "containerd://2.3.4-k3s1.36",
+          "kubeletVersion": "v1.36.4+k3s1",
+          "architecture": "amd64"
+        },
+        "capacity": {
+          "cpu": "12",
+          "ephemeral-storage": "456943168Ki",
+          "hugepages-1Gi": "0",
+          "hugepages-2Mi": "0",
+          "memory": "65765232Ki",
+          "pods": "110"
+        }
+      }
+    ]
+  },
+  "applications": {
+    "namespace": "argocd",
+    "applications": [
+      {
+        "name": "alloy",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-15T13:09:47Z",
+        "project": "monitoring",
+        "destinationNamespace": "monitoring",
+        "sync": "Synced",
+        "revision": null,
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "argocd",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-15T11:55:41Z",
+        "project": "infra",
+        "destinationNamespace": "argocd",
+        "sync": "Synced",
+        "revision": null,
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "codex-ops",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-15T12:21:54Z",
+        "project": "infra",
+        "destinationNamespace": "kubeclaw-ops",
+        "sync": "Synced",
+        "revision": "c93b21da179d0cfc65a20b894bfa74759edcb0e5",
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "csi-driver-smb",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-16T09:17:41Z",
+        "project": "storage-drivers",
+        "destinationNamespace": "kube-system",
+        "sync": "Synced",
+        "revision": null,
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "kubeclaw",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-18T10:04:06Z",
+        "project": "kubeclaw-bootstrap",
+        "destinationNamespace": "argocd",
+        "sync": "OutOfSync",
+        "revision": "6f6fe343dd85bf52a0a79f4e8d4a412057c2401b",
+        "health": "Degraded",
+        "healthMessage": null,
+        "operationPhase": "Failed",
+        "operationMessage": "one or more synchronization tasks completed unsuccessfully (retried 5 times)."
+      },
+      {
+        "name": "kubeclaw-buster",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-18T10:04:05Z",
+        "project": "kubeclaw",
+        "destinationNamespace": "kubeclaw",
+        "sync": "Synced",
+        "revision": "6f6fe343dd85bf52a0a79f4e8d4a412057c2401b",
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "kubeclaw-nova",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-18T10:04:05Z",
+        "project": "kubeclaw",
+        "destinationNamespace": "kubeclaw",
+        "sync": "Synced",
+        "revision": "6f6fe343dd85bf52a0a79f4e8d4a412057c2401b",
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "kubeclaw-prism",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-18T10:04:05Z",
+        "project": "kubeclaw",
+        "destinationNamespace": "kubeclaw",
+        "sync": "Synced",
+        "revision": "6f6fe343dd85bf52a0a79f4e8d4a412057c2401b",
+        "health": "Degraded",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "litellm",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-16T09:17:41Z",
+        "project": "infra",
+        "destinationNamespace": "kubeclaw",
+        "sync": "Synced",
+        "revision": "6f6fe343dd85bf52a0a79f4e8d4a412057c2401b",
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "loki",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-15T13:09:47Z",
+        "project": "monitoring",
+        "destinationNamespace": "monitoring",
+        "sync": "Synced",
+        "revision": null,
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "platform",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-15T12:15:36Z",
+        "project": "infra",
+        "destinationNamespace": "argocd",
+        "sync": "OutOfSync",
+        "revision": "6f6fe343dd85bf52a0a79f4e8d4a412057c2401b",
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "postgresql",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-16T07:59:45Z",
+        "project": "data-services",
+        "destinationNamespace": "kubeclaw",
+        "sync": "Synced",
+        "revision": null,
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "prometheus",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-15T13:09:47Z",
+        "project": "monitoring",
+        "destinationNamespace": "monitoring",
+        "sync": "Synced",
+        "revision": null,
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (no more tasks)"
+      },
+      {
+        "name": "promtail",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-15T13:09:47Z",
+        "project": "monitoring",
+        "destinationNamespace": "monitoring",
+        "sync": "Synced",
+        "revision": null,
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "redis",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-15T12:27:30Z",
+        "project": "data-services",
+        "destinationNamespace": "kubeclaw",
+        "sync": "Synced",
+        "revision": null,
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "registry-local",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-15T12:51:55Z",
+        "project": "infra",
+        "destinationNamespace": "kubeclaw",
+        "sync": "Synced",
+        "revision": "6f6fe343dd85bf52a0a79f4e8d4a412057c2401b",
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "registry-mirror",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-15T12:47:54Z",
+        "project": "infra",
+        "destinationNamespace": "kubeclaw",
+        "sync": "Synced",
+        "revision": "6f6fe343dd85bf52a0a79f4e8d4a412057c2401b",
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "spire",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-16T09:17:41Z",
+        "project": "identity",
+        "destinationNamespace": "spire-server",
+        "sync": "Synced",
+        "revision": null,
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "spire-crds",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-16T09:17:41Z",
+        "project": "identity",
+        "destinationNamespace": "spire-server",
+        "sync": "Synced",
+        "revision": null,
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      },
+      {
+        "name": "tailscale-operator",
+        "namespace": "argocd",
+        "creationTimestamp": "2026-09-15T12:03:09Z",
+        "project": "infra",
+        "destinationNamespace": "tailscale",
+        "sync": "Synced",
+        "revision": null,
+        "health": "Healthy",
+        "healthMessage": null,
+        "operationPhase": "Succeeded",
+        "operationMessage": "successfully synced (all tasks run)"
+      }
+    ],
+    "pagesScanned": 1,
+    "nextContinueToken": null,
+    "partial": false
+  },
+  "kubeSystemDaemonsets": {
+    "partial": false,
+    "items": [
+      {
+        "name": "csi-smb-node",
+        "namespace": "kube-system",
+        "images": [
+          {
+            "name": "liveness-probe",
+            "image": "registry.k8s.io/sig-storage/livenessprobe:v2.17.0"
+          },
+          {
+            "name": "node-driver-registrar",
+            "image": "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.15.0"
+          },
+          {
+            "name": "smb",
+            "image": "registry.k8s.io/sig-storage/smbplugin:v1.20.0"
+          }
+        ],
+        "status": {
+          "currentNumberScheduled": 1,
+          "numberMisscheduled": 0,
+          "desiredNumberScheduled": 1,
+          "numberReady": 1,
+          "observedGeneration": 1,
+          "updatedNumberScheduled": 1,
+          "numberAvailable": 1
+        }
+      },
+      {
+        "name": "csi-smb-node-win",
+        "namespace": "kube-system",
+        "images": [
+          {
+            "name": "node-driver-registrar",
+            "image": "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.15.0"
+          },
+          {
+            "name": "smb",
+            "image": "registry.k8s.io/sig-storage/smbplugin:v1.20.0-windows-hp"
+          }
+        ],
+        "status": {
+          "currentNumberScheduled": 0,
+          "numberMisscheduled": 0,
+          "desiredNumberScheduled": 0,
+          "numberReady": 0,
+          "observedGeneration": 1
+        }
+      }
+    ]
+  },
+  "omitted": "Node machine/system/boot IDs and unrelated detailed workload spec omitted from this projection; allocatable/usage were not returned."
+}

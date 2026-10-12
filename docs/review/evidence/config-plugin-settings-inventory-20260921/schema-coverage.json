@@ -1,0 +1,158 @@
+[
+  {
+    "plugin": "kubeclaw.operator-messaging",
+    "schema": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+    "topLevelProperties": [
+      "deliveryRoot",
+      "maximumDeliveryRecords",
+      "maximumDeliveryBytes",
+      "targets"
+    ],
+    "required": [
+      "targets",
+      "deliveryRoot"
+    ],
+    "additionalProperties": false,
+    "defaults": {
+      "maximumDeliveryRecords": 100000,
+      "maximumDeliveryBytes": 268435456
+    },
+    "targetProperties": [
+      "receiptEndpoint",
+      "endpoint",
+      "endpointOrigin",
+      "endpointSecret",
+      "tokenSecret",
+      "maxPayloadBytes",
+      "format"
+    ],
+    "targetDefaults": {
+      "maxPayloadBytes": 65536,
+      "format": "json"
+    },
+    "targetRequiredModes": [
+      {
+        "properties": {
+          "endpoint": {},
+          "tokenSecret": {}
+        },
+        "required": [
+          "endpoint",
+          "tokenSecret"
+        ]
+      },
+      {
+        "properties": {
+          "endpointOrigin": {},
+          "endpointSecret": {}
+        },
+        "required": [
+          "endpointOrigin",
+          "endpointSecret"
+        ]
+      }
+    ]
+  },
+  {
+    "plugin": "kubeclaw.wait-store",
+    "schema": "skills/common/plugins/wait-store/schemas/config.schema.json",
+    "topLevelProperties": [
+      "root",
+      "maxEntryBytes",
+      "maximumRecords",
+      "maximumStoreBytes"
+    ],
+    "required": [
+      "root"
+    ],
+    "additionalProperties": false,
+    "defaults": {
+      "maxEntryBytes": 1048576,
+      "maximumRecords": 100000,
+      "maximumStoreBytes": 268435456
+    }
+  },
+  {
+    "plugin": "kubeclaw.notification-observer",
+    "schema": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+    "topLevelProperties": [
+      "target",
+      "pipelineLabel",
+      "modelLabel",
+      "stageLabels",
+      "maxMessageChars",
+      "suppressEventTypes"
+    ],
+    "required": [],
+    "additionalProperties": false,
+    "defaults": {}
+  },
+  {
+    "plugin": "kubeclaw.telemetry-observer",
+    "schema": "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
+    "topLevelProperties": [],
+    "required": [],
+    "additionalProperties": false,
+    "defaults": {}
+  },
+  {
+    "plugin": "kubeclaw.network-http",
+    "schema": "skills/common/plugins/network-http/schemas/config.schema.json",
+    "topLevelProperties": [
+      "allowedOrigins",
+      "allowedMethods",
+      "allowedHeaders",
+      "maxRequestBytes",
+      "maxResponseBytes",
+      "timeoutMs"
+    ],
+    "required": [
+      "allowedOrigins"
+    ],
+    "additionalProperties": false,
+    "defaults": {
+      "allowedMethods": [
+        "GET"
+      ],
+      "allowedHeaders": [
+        "accept",
+        "content-type",
+        "idempotency-key"
+      ],
+      "maxRequestBytes": 1048576,
+      "maxResponseBytes": 1048576,
+      "timeoutMs": 30000
+    }
+  },
+  {
+    "plugin": "kubeclaw.secret-resolver",
+    "schema": "skills/common/plugins/secret-resolver/schemas/config.schema.json",
+    "topLevelProperties": [
+      "environment"
+    ],
+    "required": [
+      "environment"
+    ],
+    "additionalProperties": false,
+    "defaults": {}
+  },
+  {
+    "plugin": "kubeclaw.telemetry-store",
+    "schema": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
+    "topLevelProperties": [
+      "root",
+      "maxRecordBytes",
+      "maximumRecords",
+      "maximumStoreBytes"
+    ],
+    "required": [
+      "root"
+    ],
+    "additionalProperties": false,
+    "defaults": {
+      "maxRecordBytes": 1048576,
+      "maximumRecords": 100000,
+      "maximumStoreBytes": 268435456
+    }
+  }
+]

@@ -63,7 +63,7 @@ export function assertDeliveryProjectionIntent(intent: DeliveryProjectionIntent)
       && path.isAbsolute(value) && path.resolve(value) === value)
     || ![intent.expectedPayloadDigest, intent.terminalPayloadDigest, intent.runJournalHead, intent.snapshotDigest].every(digest)) fail();
 }
-function retainedTerminal(records: ReadonlyArray<DurableRecord>, request: EffectRequest): DurableRecord<Payload> {
+export function retainedTerminal(records: ReadonlyArray<DurableRecord>, request: EffectRequest): DurableRecord<Payload> {
   const stream = `notifications/${request.resource.canonicalId}`, suffix = `:${hash(request.idempotencyKey)}`;
   const selected = records.filter(record => record.stream === stream && record.idempotencyKey.endsWith(suffix)
     && record.idempotencyKey !== deliveryRequestKey(request));

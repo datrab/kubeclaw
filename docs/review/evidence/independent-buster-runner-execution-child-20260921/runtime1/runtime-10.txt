@@ -1,0 +1,1606 @@
+
+> verify:config:components
+> tsc --noEmit -p tests/verification/reliability/tsconfig.config-components.json && node --test --test-concurrency=1 tests/verification/reliability/config-component-bundle.test.mts tests/verification/reliability/config-component-generation.test.mjs tests/verification/deployment/config-component-packaging.test.mjs tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/buster-admission-render.test.mjs skills/prism/tests/swarm-*.test.mts skills/prism/tests/studio-config.test.mts skills/prism/tests/studio-service.test.mts
+
+✖ Studio loads authored operator values and keeps installation inputs outside JSON (15.302426ms)
+✔ Studio rejects retired PORT="" (1.738675ms)
+✔ Studio rejects retired PORT="8080" (1.241762ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="" (1.266782ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="8080" (1.395546ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="" (1.379036ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080" (1.289433ms)
+✔ Studio rejects invalid port through original shared validation (9.201078ms)
+✔ Studio rejects invalid controlTimeoutMs through original shared validation (8.53214ms)
+✔ Studio rejects invalid controlUrl through original shared validation (18.807886ms)
+✔ Studio rejects unknown settings and invalid startup terminates before serving (370.840945ms)
+✖ production Studio Docker environment does not reintroduce a retired author (4.493626ms)
+✖ actual Studio survives refused Control and malformed URL with explicit responses (552.997583ms)
+✖ actual Studio retains proxy bytes, cookies and upstream status (508.829361ms)
+✖ actual Studio forwards direction idempotency keys and retry payloads to Control (546.085615ms)
+✖ actual Studio bounds upstream headers wait and remains healthy (323.862261ms)
+✖ actual Studio bounds upstream empty-body wait and remains healthy (453.706907ms)
+✖ actual Studio bounds upstream partial-body wait and remains healthy (474.960506ms)
+✖ actual Studio cancels upstream streaming when the client disconnects (410.569222ms)
+✖ authored Studio timeout 150 reaches the live proxy and startup snapshot (338.261603ms)
+✖ authored Studio timeout 600 reaches the live proxy and startup snapshot (343.897999ms)
+✖ missing Studio ingress secret retains 503 proxy response and static availability (344.052053ms)
+✔ CC1 Control pipelinePreferenceSubject rejects undefined (9.986728ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "" (42.55146ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "operator:test" (1.761355ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "user-abc" (1.975681ms)
+✔ CC1 Control pipelinePreferenceSubject rejects 1 (1.853398ms)
+✔ CC1 Control pipelinePreferenceSubject rejects false (2.136795ms)
+✔ CC1 Control artifactRoot rejects undefined (2.148416ms)
+✔ CC1 Control artifactRoot rejects null (1.848348ms)
+✔ CC1 Control artifactRoot rejects "" (1.799377ms)
+✔ CC1 Control artifactRoot rejects "/" (1.584261ms)
+✔ CC1 Control artifactRoot rejects "relative" (1.644752ms)
+✔ CC1 Control artifactRoot rejects "/tmp/../artifacts" (4.531987ms)
+✔ CC1 Control artifactRoot rejects "/tmp/artifacts/" (2.143055ms)
+✔ CC1 Control artifactRoot rejects "/tmp//artifacts" (2.109885ms)
+✔ CC1 Control artifactRoot rejects "/tmp/\u0000artifacts" (1.756996ms)
+✔ CC1 Control artifactRoot rejects 1 (1.589741ms)
+✔ CC1 Control studioPublicUrl rejects undefined (2.127015ms)
+✔ CC1 Control studioPublicUrl rejects null (1.603982ms)
+✔ CC1 Control studioPublicUrl rejects "" (1.972161ms)
+✔ CC1 Control studioPublicUrl rejects "relative" (1.642333ms)
+✔ CC1 Control studioPublicUrl rejects "file:///tmp" (1.724075ms)
+✔ CC1 Control studioPublicUrl rejects "https://" (1.801077ms)
+✔ CC1 Control studioPublicUrl rejects "https://user:pass@studio" (2.072163ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio?query=1" (1.703584ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio#fragment" (2.028502ms)
+✔ CC1 Control studioPublicUrl rejects "https://bad host" (2.129505ms)
+✔ CC1 Control studioPublicUrl rejects 1 (1.899469ms)
+✔ CC1 strict Control object (10.115581ms)
+✔ CC1 strict Control object (2.088664ms)
+✔ CC1 strict Control object (2.175276ms)
+✔ CC1 strict Control object (2.002312ms)
+✔ CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty (1.339855ms)
+✔ CC2 retired ARTIFACT_ROOT rejects even empty (1.670533ms)
+✔ CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty (1.428637ms)
+✖ CC2 authored Control snapshot survives file mutation (5.088171ms)
+✖ CI03 original HTTP body boundary follows authored 64 bytes (19.192087ms)
+✖ CI03 original HTTP body boundary follows authored 128 bytes (3.770137ms)
+✖ CI04 production command and real host parser use assigned 64 bytes (2.409072ms)
+✖ CI04 production command and real host parser use assigned 128 bytes (2.123485ms)
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+  if (!validate || !validate(value)) throw new Error(error);
+                                           ^
+
+Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+    at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+    at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+    at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+    at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+    at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/native/resource-policy.mts:4:37
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-native-settings.test.mts (699.11208ms)
+✖ CP03 original Control persists and dispatches startup budgets and preserves admitted retry identity (4846.16616ms)
+✔ CP01 both roles reject cpuTimeMs=undefined (13.400577ms)
+✔ CP01 both roles reject cpuTimeMs=null (3.066209ms)
+✔ CP01 both roles reject cpuTimeMs=5 (2.911045ms)
+✔ CP01 both roles reject cpuTimeMs=0 (2.842223ms)
+✔ CP01 both roles reject cpuTimeMs=-1 (2.472344ms)
+✔ CP01 both roles reject cpuTimeMs=1.5 (2.645359ms)
+✔ CP01 both roles reject cpuTimeMs=9007199254740992 (2.428553ms)
+✔ CP01 both roles reject memoryBytes=undefined (2.391942ms)
+✔ CP01 both roles reject memoryBytes=null (1.706825ms)
+✔ CP01 both roles reject memoryBytes=5 (1.684194ms)
+✔ CP01 both roles reject memoryBytes=0 (1.672833ms)
+✔ CP01 both roles reject memoryBytes=-1 (1.694404ms)
+✔ CP01 both roles reject memoryBytes=1.5 (1.585071ms)
+✔ CP01 both roles reject memoryBytes=9007199254740992 (2.028163ms)
+✔ CP01 both roles reject tasks=undefined (1.597581ms)
+✔ CP01 both roles reject tasks=null (1.685204ms)
+✔ CP01 both roles reject tasks=5 (1.883578ms)
+✔ CP01 both roles reject tasks=0 (1.55029ms)
+✔ CP01 both roles reject tasks=-1 (1.53983ms)
+✔ CP01 both roles reject tasks=1.5 (1.53127ms)
+✔ CP01 both roles reject tasks=9007199254740992 (1.57235ms)
+✔ CP01 missing or competing resource policy fails (1.626932ms)
+✔ CP01 missing or competing resource policy fails (1.810136ms)
+✔ CP01 missing or competing resource policy fails (2.162946ms)
+✔ CP02 rejects PRISM_NATIVE_CPU_TIME_MS even empty (1.595061ms)
+✔ CP02 rejects PRISM_NATIVE_MEMORY_BYTES even empty (1.241742ms)
+✔ CP02 rejects PRISM_NATIVE_TASKS even empty (1.038937ms)
+✖ CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7} (6.997411ms)
+✖ CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11} (1.843958ms)
+✖ CP01 resource safe-integer ceiling is independent of transport timer ceiling (1.55065ms)
+✖ CP02 a loaded producer never consults later legacy environment changes (1.862038ms)
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+  if (!validate || !validate(value)) throw new Error(error);
+                                           ^
+
+Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+    at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+    at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+    at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+    at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+    at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/native/resource-policy.mts:4:37
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ skills/prism/tests/swarm-result-journal.test.mts (461.212941ms)
+✔ CS1 supervisor uid rejects undefined (10.713607ms)
+✔ CS1 supervisor uid rejects null (2.447003ms)
+✔ CS1 supervisor uid rejects 1 (2.286429ms)
+✔ CS1 supervisor uid rejects 0 (2.173896ms)
+✔ CS1 supervisor uid rejects -1 (2.182776ms)
+✔ CS1 supervisor uid rejects 1.5 (2.414403ms)
+✔ CS1 supervisor uid rejects 2147483648 (3.08559ms)
+✔ CS1 supervisor gid rejects undefined (2.411352ms)
+✔ CS1 supervisor gid rejects null (2.490104ms)
+✔ CS1 supervisor gid rejects 1 (2.081193ms)
+✔ CS1 supervisor gid rejects 0 (1.720625ms)
+✔ CS1 supervisor gid rejects -1 (1.671904ms)
+✔ CS1 supervisor gid rejects 1.5 (1.745715ms)
+✔ CS1 supervisor gid rejects 2147483648 (1.853518ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects undefined (1.812947ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects null (1.763475ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects 1 (1.570681ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects 0 (1.617652ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects -1 (1.875739ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects 1.5 (1.93296ms)
+✔ CS1 supervisor maximumOwnershipRecords rejects 2147483648 (1.512719ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects undefined (1.705694ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects null (1.750825ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects 1 (1.839357ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects 0 (1.486999ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects -1 (16.174348ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects 1.5 (2.094034ms)
+✔ CS1 supervisor maximumOwnershipBytes rejects 2147483648 (1.568131ms)
+✔ CS1 supervisor maximumOutputBytes rejects undefined (1.721225ms)
+✔ CS1 supervisor maximumOutputBytes rejects null (1.908839ms)
+✔ CS1 supervisor maximumOutputBytes rejects 1 (1.849448ms)
+✔ CS1 supervisor maximumOutputBytes rejects 0 (1.670514ms)
+✔ CS1 supervisor maximumOutputBytes rejects -1 (1.786496ms)
+✔ CS1 supervisor maximumOutputBytes rejects 1.5 (1.462758ms)
+✔ CS1 supervisor maximumOutputBytes rejects 2147483648 (2.068173ms)
+✔ CS1 supervisor maximumJournalBytes rejects undefined (2.151426ms)
+✔ CS1 supervisor maximumJournalBytes rejects null (1.56493ms)
+✔ CS1 supervisor maximumJournalBytes rejects 1 (1.499929ms)
+✔ CS1 supervisor maximumJournalBytes rejects 0 (1.602662ms)
+✔ CS1 supervisor maximumJournalBytes rejects -1 (1.824457ms)
+✔ CS1 supervisor maximumJournalBytes rejects 1.5 (1.477778ms)
+✔ CS1 supervisor maximumJournalBytes rejects 9007199254740992 (1.486599ms)
+✔ CS1 supervisor pollIntervalMs rejects undefined (1.494079ms)
+✔ CS1 supervisor pollIntervalMs rejects null (1.651943ms)
+✔ CS1 supervisor pollIntervalMs rejects 1 (1.466328ms)
+✔ CS1 supervisor pollIntervalMs rejects 0 (1.482018ms)
+✔ CS1 supervisor pollIntervalMs rejects -1 (1.523719ms)
+✔ CS1 supervisor pollIntervalMs rejects 1.5 (1.386845ms)
+✔ CS1 supervisor pollIntervalMs rejects 2147483648 (1.524239ms)
+✔ CS1 supervisor drainTimeoutMs rejects undefined (1.414257ms)
+✔ CS1 supervisor drainTimeoutMs rejects null (1.54338ms)
+✔ CS1 supervisor drainTimeoutMs rejects 1 (3.574472ms)
+✔ CS1 supervisor drainTimeoutMs rejects 0 (1.361805ms)
+✔ CS1 supervisor drainTimeoutMs rejects -1 (1.262733ms)
+✔ CS1 supervisor drainTimeoutMs rejects 1.5 (1.257013ms)
+✔ CS1 supervisor drainTimeoutMs rejects 2147483648 (1.306834ms)
+✔ CS1 supervisor closeTimeoutMs rejects undefined (1.54984ms)
+✔ CS1 supervisor closeTimeoutMs rejects null (1.313894ms)
+✔ CS1 supervisor closeTimeoutMs rejects 1 (1.238092ms)
+✔ CS1 supervisor closeTimeoutMs rejects 0 (1.357485ms)
+✔ CS1 supervisor closeTimeoutMs rejects -1 (1.846448ms)
+✔ CS1 supervisor closeTimeoutMs rejects 1.5 (1.982991ms)
+✔ CS1 supervisor closeTimeoutMs rejects 2147483648 (1.441077ms)
+✔ CS1 strict supervisor object (1.708304ms)
+✔ CS1 strict supervisor object (1.344124ms)
+✔ CS1 strict supervisor object (1.349395ms)
+✔ CS2 old PRISM_NATIVE_UID is rejected even empty (1.252112ms)
+✔ CS2 old PRISM_NATIVE_GID is rejected even empty (1.109928ms)
+✔ CS2 old PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS is rejected even empty (1.108839ms)
+✔ CS2 old PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES is rejected even empty (1.100298ms)
+✔ CS2 old PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES is rejected even empty (1.114238ms)
+✔ CS2 old PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES is rejected even empty (1.229142ms)
+✔ CS2 old PRISM_NATIVE_POLL_INTERVAL_MS is rejected even empty (1.319984ms)
+✔ CS2 old PRISM_NATIVE_DRAIN_TIMEOUT_MS is rejected even empty (1.194551ms)
+✔ CS2 old PRISM_NATIVE_CLOSE_TIMEOUT_MS is rejected even empty (1.254032ms)
+✖ CS4 combined close plus drain 14999 (25.53078ms)
+✔ CS4 combined close plus drain 15000 (1.92847ms)
+✔ CS4 combined close plus drain 15001 (1.624672ms)
+✖ CS3 production mapping and actual output spool profile 1 (1.948551ms)
+✖ CS3 production mapping and actual output spool profile 2 (1.96716ms)
+✖ CS2 startup snapshot ignores later legacy environment changes (1.879849ms)
+✖ CS1 journal safe-integer ceiling and timer/identity integer ceilings remain distinct (1.791587ms)
+✖ CS3 real ownership store enforces 1 authored records with representation-sized capacity (14.443303ms)
+✖ CS3 real ownership store enforces 2 authored records with representation-sized capacity (4.847275ms)
+✖ CS3 real ownership store enforces 1 authored bytes (2.207247ms)
+✖ CS3 real ownership store enforces 8192 authored bytes (1.897329ms)
+✖ CS3 actual execution journal admission and process boundary profile 1 (2.165696ms)
+✖ CS3 actual execution journal admission and process boundary profile 2 (2.179116ms)
+✖ CB01 real probe reservation overflows and recovers while work remains active (14.158936ms)
+✖ CB02 actual TCP connection limit rejects the next socket and reopens after release (2.732601ms)
+✖ CB03 original Node body deadline sends 408 without shortening its checking interval (2.384091ms)
+✖ CW01 canonical author values reach the actual production worker composition (13.307334ms)
+✖ CW02 every alternate author value reaches the actual consumer (3.657845ms)
+✔ CW03 unknown key at entry (2.002072ms)
+✔ CW03 unknown key at prism-worker (1.613261ms)
+✔ CW03 unknown key at prism-worker.settings (1.509169ms)
+✔ CW03 unknown key at prism-worker.settings.ingress (1.444407ms)
+✔ CW04 port rejects 3 (48.967315ms)
+✔ CW04 port rejects null (1.52479ms)
+✔ CW04 port rejects -1 (1.371315ms)
+✔ CW04 port rejects 0 (1.431766ms)
+✔ CW04 port rejects 1.5 (1.420987ms)
+✔ CW04 port rejects 2147483648 (1.291853ms)
+✔ CW04 port rejects undefined (1.297054ms)
+✔ CW04 maximumActiveRequests rejects 3 (1.371036ms)
+✔ CW04 maximumActiveRequests rejects null (1.314414ms)
+✔ CW04 maximumActiveRequests rejects -1 (1.337085ms)
+✔ CW04 maximumActiveRequests rejects 0 (1.285383ms)
+✔ CW04 maximumActiveRequests rejects 1.5 (1.434187ms)
+✔ CW04 maximumActiveRequests rejects 2147483648 (1.701644ms)
+✔ CW04 maximumActiveRequests rejects undefined (1.52429ms)
+✔ CW04 maximumProbeRequests rejects 3 (1.55781ms)
+✔ CW04 maximumProbeRequests rejects null (1.435607ms)
+✔ CW04 maximumProbeRequests rejects -1 (1.356695ms)
+✔ CW04 maximumProbeRequests rejects 0 (1.362045ms)
+✔ CW04 maximumProbeRequests rejects 1.5 (1.404986ms)
+✔ CW04 maximumProbeRequests rejects 2147483648 (2.659449ms)
+✔ CW04 maximumProbeRequests rejects undefined (1.281164ms)
+✔ CW04 maximumConnections rejects 3 (1.16518ms)
+✔ CW04 maximumConnections rejects null (1.390376ms)
+✔ CW04 maximumConnections rejects -1 (1.153399ms)
+✔ CW04 maximumConnections rejects 0 (1.13986ms)
+✔ CW04 maximumConnections rejects 1.5 (1.14505ms)
+✔ CW04 maximumConnections rejects 2147483648 (1.432567ms)
+✔ CW04 maximumConnections rejects undefined (1.440668ms)
+✔ CW04 requestTimeoutMs rejects 3 (1.240912ms)
+✔ CW04 requestTimeoutMs rejects null (1.370305ms)
+✔ CW04 requestTimeoutMs rejects -1 (1.220751ms)
+✔ CW04 requestTimeoutMs rejects 0 (1.241872ms)
+✔ CW04 requestTimeoutMs rejects 1.5 (1.17164ms)
+✔ CW04 requestTimeoutMs rejects 2147483648 (1.179911ms)
+✔ CW04 requestTimeoutMs rejects undefined (1.18408ms)
+✔ CW04 shutdownTimeoutMs rejects 3 (1.262313ms)
+✔ CW04 shutdownTimeoutMs rejects null (1.238041ms)
+✔ CW04 shutdownTimeoutMs rejects -1 (1.16405ms)
+✔ CW04 shutdownTimeoutMs rejects 0 (1.14437ms)
+✔ CW04 shutdownTimeoutMs rejects 1.5 (1.13516ms)
+✔ CW04 shutdownTimeoutMs rejects 2147483648 (1.136539ms)
+✔ CW04 shutdownTimeoutMs rejects undefined (1.194731ms)
+✔ CW04 maximumInputBytes rejects 3 (1.15774ms)
+✔ CW04 maximumInputBytes rejects null (1.15007ms)
+✔ CW04 maximumInputBytes rejects -1 (1.232622ms)
+✔ CW04 maximumInputBytes rejects 0 (1.413237ms)
+✔ CW04 maximumInputBytes rejects 1.5 (1.469387ms)
+✔ CW04 maximumInputBytes rejects 2147483648 (1.240262ms)
+✔ CW04 maximumInputBytes rejects undefined (1.293524ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS (0.188815ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_PROBE_REQUESTS (0.064441ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_MAXIMUM_CONNECTIONS (0.063552ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS (0.056492ms)
+✔ CW05 rejects legacy authority PRISM_WORKER_SHUTDOWN_TIMEOUT_MS (0.060772ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_MAXIMUM_INPUT_BYTES (0.057892ms)
+✔ CW05 rejects legacy authority PRISM_NATIVE_ASSIGNED_INPUT_BYTES (0.069292ms)
+✔ CW06 rejects unsupported profile (33.589088ms)
+✔ CW06 rejects unsupported features (1.097538ms)
+✔ CW06 rejects unsupported tuning (1.069687ms)
+✔ CW06 rejects unsupported overrides (1.074548ms)
+✔ CW07 missing or broken authorship never falls back to defaults (13.806836ms)
+✔ CW08 maximumActiveRequests cannot exceed connection reservation (2.208877ms)
+✔ CW08 maximumProbeRequests cannot exceed connection reservation (1.773846ms)
+✖ CW09 shutdown budget remains independent of request admission deadline (1.728015ms)
+✖ CW10 effective settings omit secrets and original authentication still fails closed (0.941344ms)
+✖ actual Buster chart mounts both authored admission profiles and rejects retired ENV authors (147.089822ms)
+✔ actual service CLI rejects inherited retired ENV before opening its parent channel (6559.72929ms)
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/buster-engine.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-control.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-control.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-execution.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-execution.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-studio.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-studio.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-worker.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-worker.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/worker-core.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/worker-core.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+Error: execution error at (prism/templates/workloads.yaml:1:14): swarm component missing: prism-execution
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): swarm component missing: prism-execution
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime requires exactly three settings
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (prism/templates/workloads.yaml:1:14): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime requires exactly three settings
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs must be an integer
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+Error: execution error at (kubeclaw/templates/deployment.yaml:32:34): worker-core.config.json localRuntime.drainTimeoutMs is out of range
+
+Use --debug flag to render out invalid YAML
+✔ prism package contains the complete canonical bundle and shared validator (77.393951ms)
+✔ kubeclaw package contains the complete canonical bundle and shared validator (77.947635ms)
+✔ prism: each component changes real rollout checksum; omitted checksum is detected (936.232659ms)
+✔ kubeclaw: each component changes real rollout checksum; omitted checksum is detected (941.222228ms)
+✔ prism: real archive missing a required component fails the complete delivery oracle (106.01145ms)
+✔ kubeclaw: real archive missing a required component fails the complete delivery oracle (109.86725ms)
+✔ Buster image COPY contains all authored files; removing one source fails the same structural oracle (0.648167ms)
+✖ prism: worker-core AJV/Helm integer-boundary parity (705.319851ms)
+✖ kubeclaw: worker-core AJV/Helm integer-boundary parity (441.862351ms)
+✔ CD01 original chart delivers the one canonical config to the worker mount (111.711847ms)
+✖ CD02 real Helm output from two author profiles drives the actual production loader (133.295205ms)
+✔ CD03 old Helm shutdown authority is rejected (58.642085ms)
+✔ CD04 port rejects 3 before rendering (68.86788ms)
+✔ CD04 port rejects null before rendering (57.66069ms)
+✔ CD04 port rejects -1 before rendering (64.366724ms)
+✔ CD04 port rejects 0 before rendering (57.246049ms)
+✔ CD04 port rejects 1.5 before rendering (53.952095ms)
+✔ CD04 port rejects 2147483648 before rendering (62.353141ms)
+✔ CD04 port rejects undefined before rendering (53.236736ms)
+✔ CD04 maximumActiveRequests rejects 3 before rendering (51.84613ms)
+✔ CD04 maximumActiveRequests rejects null before rendering (51.582583ms)
+✔ CD04 maximumActiveRequests rejects -1 before rendering (54.404706ms)
+✔ CD04 maximumActiveRequests rejects 0 before rendering (56.597803ms)
+✔ CD04 maximumActiveRequests rejects 1.5 before rendering (57.981948ms)
+✔ CD04 maximumActiveRequests rejects 2147483648 before rendering (54.607881ms)
+✔ CD04 maximumActiveRequests rejects undefined before rendering (59.088257ms)
+✔ CD04 maximumProbeRequests rejects 3 before rendering (58.385499ms)
+✔ CD04 maximumProbeRequests rejects null before rendering (54.414516ms)
+✔ CD04 maximumProbeRequests rejects -1 before rendering (50.783692ms)
+✔ CD04 maximumProbeRequests rejects 0 before rendering (57.949698ms)
+✔ CD04 maximumProbeRequests rejects 1.5 before rendering (50.530036ms)
+✔ CD04 maximumProbeRequests rejects 2147483648 before rendering (51.399639ms)
+✔ CD04 maximumProbeRequests rejects undefined before rendering (55.663459ms)
+✔ CD04 maximumConnections rejects 3 before rendering (55.433473ms)
+✔ CD04 maximumConnections rejects null before rendering (59.863808ms)
+✔ CD04 maximumConnections rejects -1 before rendering (59.122778ms)
+✔ CD04 maximumConnections rejects 0 before rendering (57.762693ms)
+✔ CD04 maximumConnections rejects 1.5 before rendering (58.318487ms)
+✔ CD04 maximumConnections rejects 2147483648 before rendering (58.977084ms)
+✔ CD04 maximumConnections rejects undefined before rendering (58.528043ms)
+✔ CD04 requestTimeoutMs rejects 3 before rendering (51.146533ms)
+✔ CD04 requestTimeoutMs rejects null before rendering (54.298743ms)
+✔ CD04 requestTimeoutMs rejects -1 before rendering (55.635748ms)
+✔ CD04 requestTimeoutMs rejects 0 before rendering (51.316077ms)
+✔ CD04 requestTimeoutMs rejects 1.5 before rendering (69.65869ms)
+✔ CD04 requestTimeoutMs rejects 2147483648 before rendering (64.649531ms)
+✔ CD04 requestTimeoutMs rejects undefined before rendering (64.791534ms)
+✔ CD04 shutdownTimeoutMs rejects 3 before rendering (69.427985ms)
+✔ CD04 shutdownTimeoutMs rejects null before rendering (59.399386ms)
+✔ CD04 shutdownTimeoutMs rejects -1 before rendering (54.124369ms)
+✔ CD04 shutdownTimeoutMs rejects 0 before rendering (52.899027ms)
+✔ CD04 shutdownTimeoutMs rejects 1.5 before rendering (50.413663ms)
+✔ CD04 shutdownTimeoutMs rejects 2147483648 before rendering (59.883348ms)
+✔ CD04 shutdownTimeoutMs rejects undefined before rendering (55.172356ms)
+✔ CD04 maximumInputBytes rejects 3 before rendering (52.894877ms)
+✔ CD04 maximumInputBytes rejects null before rendering (56.912571ms)
+✔ CD04 maximumInputBytes rejects -1 before rendering (61.89941ms)
+✔ CD04 maximumInputBytes rejects 0 before rendering (58.401439ms)
+✔ CD04 maximumInputBytes rejects 1.5 before rendering (55.060233ms)
+✔ CD04 maximumInputBytes rejects 2147483648 before rendering (58.917383ms)
+✔ CD04 maximumInputBytes rejects undefined before rendering (57.787144ms)
+✔ CD04 unknown key entry (95.114309ms)
+✔ CD04 unknown key prism-worker (102.164761ms)
+✔ CD04 unknown key prism-worker.settings (67.063544ms)
+✔ CD04 unknown key prism-worker.settings.ingress (53.230686ms)
+✔ CD04 connection overcommit fails Helm rendering (78.248532ms)
+✔ CD05 shutdown 100000 violates native-close or Pod grace (73.378957ms)
+✔ CD05 shutdown 150000 violates native-close or Pod grace (52.794115ms)
+✔ CD06 Helm packaging dereferences the canonical author/schema without manual synchronization (66.346445ms)
+✔ CI05 old Helm input authority worker.native.maximumInputBytes is rejected (53.131533ms)
+✔ CI05 old Helm input authority native.maximumInputBytes is rejected (42.724564ms)
+✔ CR06 native maximumResultBytes rejects 3 before rendering (53.544374ms)
+✔ CR06 native maximumResultBytes rejects null before rendering (61.469139ms)
+✔ CR06 native maximumResultBytes rejects -1 before rendering (61.676605ms)
+✔ CR06 native maximumResultBytes rejects 0 before rendering (60.705248ms)
+✔ CR06 native maximumResultBytes rejects 1.5 before rendering (49.745595ms)
+✔ CR06 native maximumResultBytes rejects 2147483648 before rendering (52.565689ms)
+✔ CR06 native maximumResultBytes rejects undefined before rendering (58.805459ms)
+✔ CR06 native dispatchTimeoutMs rejects 3 before rendering (49.767826ms)
+✔ CR06 native dispatchTimeoutMs rejects null before rendering (55.408552ms)
+✔ CR06 native dispatchTimeoutMs rejects -1 before rendering (56.943172ms)
+✔ CR06 native dispatchTimeoutMs rejects 0 before rendering (54.968711ms)
+✔ CR06 native dispatchTimeoutMs rejects 1.5 before rendering (58.238266ms)
+✔ CR06 native dispatchTimeoutMs rejects 2147483648 before rendering (59.766325ms)
+✔ CR06 native dispatchTimeoutMs rejects undefined before rendering (55.463473ms)
+✔ CR06 missing or unknown native section fails rendering (51.877571ms)
+✔ CR06 missing or unknown native section fails rendering (58.765829ms)
+✔ CR06 missing or unknown native section fails rendering (49.975361ms)
+✖ CR06 two real authored profiles deliver identical bytes and changing checksums to both roles (97.49495ms)
+✔ CR06 old Helm authority worker.native.maximumResultBytes rejected (46.510952ms)
+✔ CR06 old Helm authority control.nativeWorkerDispatchTimeoutMs rejected (43.635998ms)
+✔ CR06 old Helm authority control.maximumWorkerResponseBytes rejected (46.766888ms)
+✔ CP01 resource cpuTimeMs rejects 3 in Helm (66.138359ms)
+✔ CP01 resource cpuTimeMs rejects null in Helm (54.119549ms)
+✔ CP01 resource cpuTimeMs rejects -1 in Helm (61.320555ms)
+✔ CP01 resource cpuTimeMs rejects 0 in Helm (56.847489ms)
+✔ CP01 resource cpuTimeMs rejects 1.5 in Helm (56.811368ms)
+✔ CP01 resource cpuTimeMs rejects 9007199254740992 in Helm (57.607819ms)
+✔ CP01 resource cpuTimeMs rejects undefined in Helm (58.602355ms)
+✔ CP01 resource memoryBytes rejects 3 in Helm (57.26162ms)
+✔ CP01 resource memoryBytes rejects null in Helm (57.26205ms)
+✔ CP01 resource memoryBytes rejects -1 in Helm (53.507383ms)
+✔ CP01 resource memoryBytes rejects 0 in Helm (65.753039ms)
+✔ CP01 resource memoryBytes rejects 1.5 in Helm (64.959929ms)
+✔ CP01 resource memoryBytes rejects 9007199254740992 in Helm (59.286963ms)
+✔ CP01 resource memoryBytes rejects undefined in Helm (54.124469ms)
+✔ CP01 resource tasks rejects 3 in Helm (54.992242ms)
+✔ CP01 resource tasks rejects null in Helm (51.510451ms)
+✔ CP01 resource tasks rejects -1 in Helm (54.601241ms)
+✔ CP01 resource tasks rejects 0 in Helm (57.901327ms)
+✔ CP01 resource tasks rejects 1.5 in Helm (49.972261ms)
+✔ CP01 resource tasks rejects 9007199254740992 in Helm (55.445443ms)
+✔ CP01 resource tasks rejects undefined in Helm (55.129135ms)
+✔ CP01 unsupported resource policy rejected in Helm (55.223637ms)
+✔ CP01 unsupported resource policy rejected in Helm (58.744959ms)
+✔ CP01 unsupported resource policy rejected in Helm (53.640726ms)
+✔ CP06 competing Helm worker.native.resourcePolicy.tasks is rejected (44.553991ms)
+✔ CP06 competing Helm control.nativeResourcePolicy.tasks is rejected (46.161643ms)
+✔ CP06 two resource policies change both rendered snapshots and checksums (190.492344ms)
+✔ CP01 Helm accepts the resource safe-integer ceiling without timer coercion (96.409812ms)
+✔ CS5 Helm rejects supervisor uid=undefined (52.967399ms)
+✔ CS5 Helm rejects supervisor uid=null (56.301195ms)
+✔ CS5 Helm rejects supervisor uid=1 (58.391289ms)
+✔ CS5 Helm rejects supervisor uid=0 (52.019735ms)
+✔ CS5 Helm rejects supervisor uid=-1 (53.579175ms)
+✔ CS5 Helm rejects supervisor uid=1.5 (53.553805ms)
+✔ CS5 Helm rejects supervisor uid=2147483648 (60.576766ms)
+✔ CS5 Helm rejects supervisor gid=undefined (57.880796ms)
+✔ CS5 Helm rejects supervisor gid=null (56.685375ms)
+✔ CS5 Helm rejects supervisor gid=1 (74.27195ms)
+✔ CS5 Helm rejects supervisor gid=0 (73.686565ms)
+✔ CS5 Helm rejects supervisor gid=-1 (56.8646ms)
+✔ CS5 Helm rejects supervisor gid=1.5 (55.970336ms)
+✔ CS5 Helm rejects supervisor gid=2147483648 (52.424675ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=undefined (50.320351ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=null (57.174858ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=1 (57.539287ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=0 (65.071402ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=-1 (56.288955ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=1.5 (64.130938ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=2147483648 (50.175837ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=undefined (67.625918ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=null (59.331244ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=1 (51.105641ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=0 (54.186051ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=-1 (56.594823ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=1.5 (53.318188ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=2147483648 (64.107787ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=undefined (63.248725ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=null (61.395477ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=1 (57.898667ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=0 (53.812841ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=-1 (57.222209ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=1.5 (57.960818ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=2147483648 (57.597799ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=undefined (53.493193ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=null (56.590183ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=1 (58.054341ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=0 (53.261107ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=-1 (58.783939ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=1.5 (50.700231ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=9007199254740992 (52.905177ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=undefined (51.503841ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=null (51.4672ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=1 (54.532229ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=0 (66.110619ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=-1 (65.36684ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=1.5 (67.453484ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=2147483648 (60.626986ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=undefined (51.314766ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=null (54.801037ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=1 (50.022323ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=0 (53.093192ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=-1 (61.13166ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=1.5 (58.329597ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=2147483648 (59.655882ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=undefined (60.013451ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=null (61.648673ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=1 (60.093913ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=0 (60.942675ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=-1 (59.498878ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=1.5 (58.763669ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=2147483648 (58.224605ms)
+✔ CS5 old Helm supervisor close author is rejected (45.306821ms)
+✔ CS4 Helm uses authored drain as well as close in shutdown budget (239.277764ms)
+✖ CS5 both actual mounts and checksums deliver two supervisor profiles without old environment authors (126.824948ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (64.751094ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (57.387034ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (60.535735ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=undefined (57.947507ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject="" (60.241477ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject="operator:test" (58.179314ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=1 (69.819254ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=false (99.369749ms)
+✔ CC4 Helm rejects Control artifactRoot=undefined (82.083162ms)
+✔ CC4 Helm rejects Control artifactRoot=null (72.433622ms)
+✔ CC4 Helm rejects Control artifactRoot="" (94.038691ms)
+✔ CC4 Helm rejects Control artifactRoot="/" (67.088814ms)
+✔ CC4 Helm rejects Control artifactRoot="relative" (67.074634ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/../artifacts" (51.490831ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/artifacts/" (55.938866ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp//artifacts" (62.031593ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/\u0000artifacts" (61.383676ms)
+✔ CC4 Helm rejects Control artifactRoot=1 (58.638615ms)
+✔ CC4 Helm rejects Control studioPublicUrl=undefined (51.900251ms)
+✔ CC4 Helm rejects Control studioPublicUrl=null (51.804379ms)
+✔ CC4 Helm rejects Control studioPublicUrl="" (51.43349ms)
+✔ CC4 Helm rejects Control studioPublicUrl="relative" (54.119949ms)
+✔ CC4 Helm rejects Control studioPublicUrl="file:///tmp" (63.800199ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://" (61.346065ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://user:pass@studio" (57.151767ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://studio?query=1" (59.233561ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://studio#fragment" (58.728158ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://bad host" (60.860893ms)
+✔ CC4 Helm rejects Control studioPublicUrl=1 (64.387774ms)
+✔ CC4 Helm strict Control object (53.031071ms)
+✔ CC4 Helm strict Control object (53.058902ms)
+✔ CC4 Helm strict Control object (59.16313ms)
+✔ CC4 Helm strict Control object (59.676003ms)
+✔ CC4 retired Helm subject author rejects even disabled value (103.347722ms)
+✖ CC4 two real mounted Control profiles align PVC and checksum while retaining generated trust topology (117.23334ms)
+✔ CL chart listener 23456 keeps every Control destination coherent (SPIFFE true) (116.918202ms)
+✔ CL chart listener 23456 keeps every Control destination coherent (SPIFFE false) (94.454322ms)
+✔ CL chart listener 23457 keeps every Control destination coherent (SPIFFE true) (112.437186ms)
+✔ CL chart listener 23457 keeps every Control destination coherent (SPIFFE false) (104.936452ms)
+✔ CL Helm rejects invalid listener undefined (61.949511ms)
+✔ CL Helm rejects invalid listener null (66.120849ms)
+✔ CL Helm rejects invalid listener 8080 (54.296933ms)
+✔ CL Helm rejects invalid listener 0 (51.248265ms)
+✔ CL Helm rejects invalid listener 65536 (70.548803ms)
+✔ CL Helm rejects invalid listener 3.5 (78.970841ms)
+✔ CL Helm rejects invalid listener true (93.919147ms)
+✔ CL Helm rejects second listener author (55.31934ms)
+✔ Studio authored profiles bind loader and all rendered listener edges (480.643224ms)
+✔ Studio chart rejects competing values and unsupported upstream topology (981.338695ms)
+✔ BA Prism chart preserves two Buster admission profiles through the mounted canonical document (180.909216ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=undefined (55.272389ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=null (53.582755ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=2 (61.223543ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=0 (64.273091ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=-1 (59.458396ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=1.5 (59.059746ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=9007199254740992 (55.555256ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=undefined (55.809173ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=null (51.541462ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=2 (54.884999ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=0 (61.815498ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=-1 (51.07793ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=1.5 (50.634059ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=9007199254740992 (58.319467ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=undefined (54.881619ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=null (64.083007ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=2 (58.283247ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=0 (65.984486ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=-1 (62.29446ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=1.5 (53.991616ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=9007199254740992 (76.496868ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (66.992692ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (58.125493ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (51.776228ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (53.276817ms)
+✖ BA Prism chart retains strict Buster sibling rejection (65.089562ms)
+✔ WL Worker topology follows 23458, SPIFFE=false (99.43352ms)
+✔ WL Worker topology follows 23458, SPIFFE=true (152.243675ms)
+✔ WL Worker topology follows 23459, SPIFFE=false (122.549947ms)
+✔ WL Worker topology follows 23459, SPIFFE=true (116.755548ms)
+✔ WL legacy Worker Helm port rejects "8080" (50.628259ms)
+✔ WL legacy Worker Helm port rejects "" (47.165849ms)
+✔ explicit entry required; old inline authorship is rejected (4.761943ms)
+✔ prism-control: missing file, wrong owner, unknown envelope and reference rejected (11.954639ms)
+✔ prism-studio: missing file, wrong owner, unknown envelope and reference rejected (6.886328ms)
+✔ prism-worker: missing file, wrong owner, unknown envelope and reference rejected (6.701463ms)
+✔ prism-execution: missing file, wrong owner, unknown envelope and reference rejected (7.650438ms)
+✔ buster-engine: missing file, wrong owner, unknown envelope and reference rejected (9.943948ms)
+✔ worker-core: missing file, wrong owner, unknown envelope and reference rejected (9.68614ms)
+✔ every authored setting is required, including explicit nullable values (102.815127ms)
+✖ both domains validate before selecting either and nested snapshots stay frozen (4.535318ms)
+✖ real ConfigMap-style entry symlink resolves component files within its physical generation (4.117146ms)
+✖ actual data symlink replacement after entry read retains one complete old generation (20.649644ms)
+✔ removing a selected generation component after reading entry rejects (4.770754ms)
+✔ changing an already read component during later reads rejects the local bundle (4.64379ms)
+ℹ tests 540
+ℹ suites 0
+ℹ pass 487
+ℹ fail 53
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46917.036902
+
+✖ failing tests:
+
+test at skills/prism/tests/studio-config.test.mts:21:1
+✖ Studio loads authored operator values and keeps installation inputs outside JSON (15.302426ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-config.test.mts:25:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+
+test at skills/prism/tests/studio-config.test.mts:64:1
+✖ production Studio Docker environment does not reintroduce a retired author (4.493626ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-config.test.mts:73:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/studio-service.test.mts:6:1
+✖ actual Studio survives refused Control and malformed URL with explicit responses (552.997583ms)
+  AssertionError [ERR_ASSERTION]: file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+    if (!validate || !validate(value)) throw new Error(error);
+                                             ^
+  
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio.ts:5:17
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:46:12
+      at until (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:21:17)
+      at async studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:45:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:8:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:21:1
+✖ actual Studio retains proxy bytes, cookies and upstream status (508.829361ms)
+  AssertionError [ERR_ASSERTION]: file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+    if (!validate || !validate(value)) throw new Error(error);
+                                             ^
+  
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio.ts:5:17
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:46:12
+      at until (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:21:17)
+      at async studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:45:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:28:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:35:1
+✖ actual Studio forwards direction idempotency keys and retry payloads to Control (546.085615ms)
+  AssertionError [ERR_ASSERTION]: file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+    if (!validate || !validate(value)) throw new Error(error);
+                                             ^
+  
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio.ts:5:17
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:46:12
+      at until (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:21:17)
+      at async studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:45:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:46:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:64:3
+✖ actual Studio bounds upstream headers wait and remains healthy (323.862261ms)
+  AssertionError [ERR_ASSERTION]: file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+    if (!validate || !validate(value)) throw new Error(error);
+                                             ^
+  
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio.ts:5:17
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:46:12
+      at until (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:21:17)
+      at async studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:45:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:72:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:64:3
+✖ actual Studio bounds upstream empty-body wait and remains healthy (453.706907ms)
+  AssertionError [ERR_ASSERTION]: file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+    if (!validate || !validate(value)) throw new Error(error);
+                                             ^
+  
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio.ts:5:17
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:46:12
+      at until (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:21:17)
+      at async studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:45:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:72:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:64:3
+✖ actual Studio bounds upstream partial-body wait and remains healthy (474.960506ms)
+  AssertionError [ERR_ASSERTION]: file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+    if (!validate || !validate(value)) throw new Error(error);
+                                             ^
+  
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio.ts:5:17
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:46:12
+      at until (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:21:17)
+      at async studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:45:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:72:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:81:1
+✖ actual Studio cancels upstream streaming when the client disconnects (410.569222ms)
+  AssertionError [ERR_ASSERTION]: file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+    if (!validate || !validate(value)) throw new Error(error);
+                                             ^
+  
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio.ts:5:17
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:46:12
+      at until (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:21:17)
+      at async studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:45:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:87:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:96:3
+✖ authored Studio timeout 150 reaches the live proxy and startup snapshot (338.261603ms)
+  AssertionError [ERR_ASSERTION]: file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+    if (!validate || !validate(value)) throw new Error(error);
+                                             ^
+  
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio.ts:5:17
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:46:12
+      at until (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:21:17)
+      at async studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:45:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:99:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:96:3
+✖ authored Studio timeout 600 reaches the live proxy and startup snapshot (343.897999ms)
+  AssertionError [ERR_ASSERTION]: file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+    if (!validate || !validate(value)) throw new Error(error);
+                                             ^
+  
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio.ts:5:17
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:46:12
+      at until (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:21:17)
+      at async studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:45:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:99:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/studio-service.test.mts:111:1
+✖ missing Studio ingress secret retains 503 proxy response and static availability (344.052053ms)
+  AssertionError [ERR_ASSERTION]: file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42
+    if (!validate || !validate(value)) throw new Error(error);
+                                             ^
+  
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadStudioConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio-config.ts:10:20)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/studio.ts:5:17
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:46:12
+      at until (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:21:17)
+      at async studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/fixtures/studio-service.mts:45:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:112:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-control-policy.test.mts:33:1
+✖ CC2 authored Control snapshot survives file mutation (5.088171ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-control-policy.test.mts:35:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+
+test at skills/prism/tests/swarm-input-limit.test.mts:24:44
+✖ CI03 original HTTP body boundary follows authored 64 bytes (19.192087ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at settings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit.test.mts:21:10)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit.test.mts:25:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-input-limit.test.mts:24:44
+✖ CI03 original HTTP body boundary follows authored 128 bytes (3.770137ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at settings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit.test.mts:21:10)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit.test.mts:25:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-input-limit.test.mts:47:44
+✖ CI04 production command and real host parser use assigned 64 bytes (2.409072ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at settings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit.test.mts:21:10)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit.test.mts:48:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-input-limit.test.mts:47:44
+✖ CI04 production command and real host parser use assigned 128 bytes (2.123485ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at settings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit.test.mts:21:10)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit.test.mts:48:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-native-settings.test.mts:1:1
+✖ skills/prism/tests/swarm-native-settings.test.mts (699.11208ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-resource-operation.test.mts:16:1
+✖ CP03 original Control persists and dispatches startup budgets and preserves admitted retry identity (4846.16616ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:47:41)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-resource-operation.test.mts:32:22)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at skills/prism/tests/swarm-resource-policy.test.mts:42:3
+✖ CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7} (6.997411ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:47:41)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-resource-policy.test.mts:43:45)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/swarm-resource-policy.test.mts:42:3
+✖ CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11} (1.843958ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:47:41)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-resource-policy.test.mts:43:45)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/swarm-resource-policy.test.mts:64:1
+✖ CP01 resource safe-integer ceiling is independent of transport timer ceiling (1.55065ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:47:41)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-resource-policy.test.mts:66:43)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/swarm-resource-policy.test.mts:71:1
+✖ CP02 a loaded producer never consults later legacy environment changes (1.862038ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:47:41)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-resource-policy.test.mts:72:87)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/swarm-result-journal.test.mts:1:1
+✖ skills/prism/tests/swarm-result-journal.test.mts (461.212941ms)
+  'test failed'
+
+test at skills/prism/tests/swarm-supervisor-config.test.mts:36:53
+✖ CS4 combined close plus drain 14999 (25.53078ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-config.test.mts:38:44)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/swarm-supervisor-config.test.mts:41:30
+✖ CS3 production mapping and actual output spool profile 1 (1.948551ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-config.test.mts:45:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/swarm-supervisor-config.test.mts:41:30
+✖ CS3 production mapping and actual output spool profile 2 (1.96716ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-config.test.mts:45:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/swarm-supervisor-config.test.mts:67:1
+✖ CS2 startup snapshot ignores later legacy environment changes (1.879849ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-config.test.mts:68:44)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/swarm-supervisor-config.test.mts:79:1
+✖ CS1 journal safe-integer ceiling and timer/identity integer ceilings remain distinct (1.791587ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-config.test.mts:83:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:37:47
+✖ CS3 real ownership store enforces 1 authored records with representation-sized capacity (14.443303ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:25:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:41:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:37:47
+✖ CS3 real ownership store enforces 2 authored records with representation-sized capacity (4.847275ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:25:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:41:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:50:48
+✖ CS3 real ownership store enforces 1 authored bytes (2.207247ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:25:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:51:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:50:48
+✖ CS3 real ownership store enforces 8192 authored bytes (1.897329ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:25:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:51:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:56:30
+✖ CS3 actual execution journal admission and process boundary profile 1 (2.165696ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:25:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:57:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-supervisor-consumers.test.mts:56:30
+✖ CS3 actual execution journal admission and process boundary profile 2 (2.179116ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:25:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-supervisor-consumers.test.mts:57:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-worker-behavior.test.mts:35:1
+✖ CB01 real probe reservation overflows and recovers while work remains active (14.158936ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at settings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-behavior.test.mts:20:10)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-behavior.test.mts:36:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-worker-behavior.test.mts:64:1
+✖ CB02 actual TCP connection limit rejects the next socket and reopens after release (2.732601ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at settings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-behavior.test.mts:20:10)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-behavior.test.mts:65:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-worker-behavior.test.mts:84:1
+✖ CB03 original Node body deadline sends 408 without shortening its checking interval (2.384091ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at settings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-behavior.test.mts:20:10)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-behavior.test.mts:85:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+
+test at skills/prism/tests/swarm-worker-config.test.mts:19:1
+✖ CW01 canonical author values reach the actual production worker composition (13.307334ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-config.test.mts:20:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+
+test at skills/prism/tests/swarm-worker-config.test.mts:25:1
+✖ CW02 every alternate author value reaches the actual consumer (3.657845ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-config.test.mts:27:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/swarm-worker-config.test.mts:56:1
+✖ CW09 shutdown budget remains independent of request admission deadline (1.728015ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-config.test.mts:58:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at skills/prism/tests/swarm-worker-config.test.mts:61:1
+✖ CW10 effective settings omit secrets and original authentication still fails closed (0.941344ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadPrismWorkerSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:163:10)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-worker-config.test.mts:63:29)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at tests/verification/deployment/buster-admission-render.test.mjs:13:1
+✖ actual Buster chart mounts both authored admission profiles and rejects retired ENV authors (147.089822ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadBusterSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:168:10)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/buster-admission-render.test.mjs:41:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/verification/deployment/config-component-packaging.test.mjs:130:44
+✖ prism: worker-core AJV/Helm integer-boundary parity (705.319851ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/config-component-packaging.test.mjs:149:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/config-component-packaging.test.mjs:130:44
+✖ kubeclaw: worker-core AJV/Helm integer-boundary parity (441.862351ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/config-component-packaging.test.mjs:149:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:53:1
+✖ CD02 real Helm output from two author profiles drives the actual production loader (133.295205ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:61:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:122:1
+✖ CR06 two real authored profiles deliver identical bytes and changing checksums to both roles (97.49495ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:47:41)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:133:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:206:1
+✖ CS5 both actual mounts and checksums deliver two supervisor profiles without old environment authors (126.824948ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadWorkerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/worker-config.ts:14:20)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:217:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:256:1
+✖ CC4 two real mounted Control profiles align PVC and checksum while retaining generated trust topology (117.23334ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at loadPrismSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:127:10)
+      at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:47:41)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:267:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:398:1
+✖ BA Prism chart retains strict Buster sibling rejection (65.089562ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /buster requires preparation and admission only/. Input:
+  
+  'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm buster requires preparation, admission, dependencyReadiness and execution only\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:401:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm buster requires preparation, admission, dependencyReadiness and execution only\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /buster requires preparation and admission only/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/config-component-bundle.test.mts:63:1
+✖ both domains validate before selecting either and nested snapshots stay frozen (4.535318ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/config-component-bundle.test.mts:64:36)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+
+test at tests/verification/reliability/config-component-bundle.test.mts:77:1
+✖ real ConfigMap-style entry symlink resolves component files within its physical generation (4.117146ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/config-component-bundle.test.mts:86:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+
+test at tests/verification/reliability/config-component-generation.test.mjs:43:1
+✖ actual data symlink replacement after entry read retains one complete old generation (20.649644ms)
+  Error: SWARM_CONFIG_BUSTER_EXECUTION_INVALID
+      at validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:42:44)
+      at validateBusterExecutionSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:49:3)
+      at busterSettingsFromConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:175:21)
+      at loadSwarmSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.ts:257:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/config-component-generation.test.mjs:45:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

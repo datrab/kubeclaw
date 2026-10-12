@@ -1,0 +1,26 @@
+{
+  "reviewer": "bootstrap_guard_fresh_review",
+  "status": "bounded source draft suitable for tests; no concrete blocking flaw found; no runtime acceptance",
+  "beforeSha256": "aa8c4a9e4b7adccfce6d4ee78d6b8e67d86171bb8651e3c90fb14b3d948e7521",
+  "draftSha256": "40cd4f0fc7a84079efe2a3fe026c214ef34cd48f278db5cbac45e250e6afc9b7",
+  "criteriaAddendumSha256": "ac25103ab96c3f42de8fd817036eca2ee36c9bfb0799e78f9d775b417eb3887f",
+  "liveStillBefore": true,
+  "findings": [
+    "The original scheduling/dependency/cancellation/group reservation methods are byte-identical.",
+    "After the first observed scheduling/race rejection, catch takes a snapshot of all remaining started tasks and awaits allSettled before fixture cleanup; no new scheduling pass occurs.",
+    "Successful race winner is removed before recording; drain records only remaining entries once. Late fulfilled fixtures reach the same retention callback before cleanup.",
+    "All settled failures are collected; distinct identities preserved. The original rejection appearing again in the running map is deduplicated. A single execution or cleanup-only failure is thrown unchanged, including undefined as an allowed rejection value.",
+    "Cleanup exception joins existing failures instead of masking them. Individual recordExecution failures during drain are captured and do not prevent other settled entries from being processed.",
+    "No new stop/abort/deadline authority, unbounded retry or new lifecycle layer. Existing node owners must settle their own promises."
+  ],
+  "requiredRuntimeProofs": [
+    "All SD1-SD6/SD-DOC, including real rejected default Runner path with owned provider peers",
+    "Synchronous scheduling/reservation rejection while a peer is already started",
+    "Late fixture exactly once, primary plus peer plus cleanup failures, single cleanup identity, no new launch after observed fault",
+    "Complete unchanged original concurrency/group/dependency/retry/cancellation/Runner/provider suites and actual old-source control"
+  ],
+  "limitations": [
+    "No runtime, type or lint check executed.",
+    "Does not authorize cleanup retry, native ownership or durable historical recovery."
+  ]
+}

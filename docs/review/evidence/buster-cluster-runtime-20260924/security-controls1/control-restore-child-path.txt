@@ -1,0 +1,113 @@
+CI2_MUTATION_APPLIED {"mutation":"restore-child-path","pid":164369,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts","beforeSha256":"de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004","afterSha256":"be2b8df8a894f4903aec5889954b4aa993c63503735f4848be1373013bddfb74","replacements":[{"from":"PATH: policy.executableSearchPath.join(path.delimiter)","to":"PATH: '/usr/local/bin:/usr/bin:/bin'","count":1}]}
+✔ required RuntimeSecurity field allowedNamespacePrefixes before filesystem access (3.015599ms)
+✔ required RuntimeSecurity field maximumExecutionMs before filesystem access (0.462943ms)
+✔ required RuntimeSecurity field maximumOutputBytes before filesystem access (0.38739ms)
+✔ required RuntimeSecurity field pollIntervalMs before filesystem access (0.444582ms)
+✔ required RuntimeSecurity field maximumObservationAgeMs before filesystem access (0.40064ms)
+✔ required RuntimeSecurity field maximumFutureSkewMs before filesystem access (0.475373ms)
+✔ required RuntimeSecurity field diagnosticCodeUnits before filesystem access (0.634887ms)
+✔ required RuntimeSecurity field executableSearchPath before filesystem access (0.502423ms)
+✔ complete bundle requires allowedNamespacePrefixes even with route disabled (18.403442ms)
+✔ complete bundle requires maximumExecutionMs even with route disabled (2.568067ms)
+✔ complete bundle requires maximumOutputBytes even with route disabled (1.834368ms)
+✔ complete bundle requires pollIntervalMs even with route disabled (1.876269ms)
+✔ complete bundle requires maximumObservationAgeMs even with route disabled (1.965131ms)
+✔ complete bundle requires maximumFutureSkewMs even with route disabled (2.074024ms)
+✔ complete bundle requires diagnosticCodeUnits even with route disabled (1.735295ms)
+✔ complete bundle requires executableSearchPath even with route disabled (1.787787ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [] (0.39841ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [""] (0.286937ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [42] (0.276987ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 0 (0.340869ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 2147483648 (0.325338ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 1.5 (0.289477ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 1023 (0.280837ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 9007199254740992 (0.306438ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 9 (0.313108ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 10001 (0.282688ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 999 (0.265087ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 60001 (0.271097ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs -1 (0.303828ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs 2147483648 (0.301558ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 0 (0.274957ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 1.5 (0.284908ms)
+✔ reject invalid RuntimeSecurity executableSearchPath [] (0.300478ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["relative"] (0.303858ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin:/escape"] (0.365559ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin\u0000"] (0.342029ms)
+✔ retired RuntimeSecurity object null (0.356419ms)
+✔ retired RuntimeSecurity object {} (0.058212ms)
+✔ retired RuntimeSecurity object {"allowedNamespacePrefixes":["test"],"maximumExecutionMs":300000,"maximumOutputBytes":16777216,"pollIntervalMs":1000,"maximumObservationAgeMs":10000,"maximumFutureSkewMs":5000,"diagnosticCodeUnits":1024,"executableSearchPath":["/usr/local/bin","/usr/bin","/bin"]} (0.054852ms)
+✔ retired RuntimeSecurity object "invalid" (0.048042ms)
+✔ disabled RuntimeSecurity route has no binding or implicit activation (0.903374ms)
+✔ real execution deadline profile false (276.382351ms)
+✔ real combined output profile false (43.637204ms)
+✔ real observation age profile false (606.084058ms)
+✔ real future skew profile false (608.312036ms)
+✔ real diagnostic code units profile false (56.391538ms)
+✖ real PATH helper profile false (49.937918ms)
+✔ real execution deadline profile true (746.63362ms)
+✔ real combined output profile true (45.847561ms)
+✔ real observation age profile true (44.987459ms)
+✔ real future skew profile true (44.933897ms)
+✔ real diagnostic code units profile true (41.685372ms)
+✖ real PATH helper profile true (41.744983ms)
+▶ real polling profile changes command cadence; selected arrays and scalars captured
+  ✔ poll interval 50 (126.200346ms)
+  ✔ poll interval 1200 (1285.837675ms)
+✔ real polling profile changes command cadence; selected arrays and scalars captured (1412.75796ms)
+✔ real namespace profile false (16.072221ms)
+✔ real namespace profile true (46.288233ms)
+✔ preserve inspected namespace prefix aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (46.273493ms)
+✔ preserve inspected namespace prefix test- (45.196104ms)
+✖ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (48.576993ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 58
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6191.959294
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:203:3
+✖ real PATH helper profile false (49.937918ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   '/usr/local/bin',
+  +   '/usr/bin',
+  +   '/bin'
+  -   '/nonexistent-policy-directory'
+    ]
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:211:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ '/usr/local/bin', '/usr/bin', '/bin' ],
+    expected: [ '/nonexistent-policy-directory' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:203:3
+✖ real PATH helper profile true (41.744983ms)
+  Error: KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:helper-unavailable
+      at ChildProcess.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:107:52)
+      at ChildProcess.emit (node:events:526:24)
+      at maybeClose (node:internal/child_process:1141:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:306:5)
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:249:1
+✖ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (48.576993ms)
+  Error: KUBERNETES_RUNTIME_SECURITY_EXECUTION_FAILED:abcdefg
+      at ChildProcess.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:107:52)
+      at ChildProcess.emit (node:events:526:24)
+      at maybeClose (node:internal/child_process:1141:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:306:5)

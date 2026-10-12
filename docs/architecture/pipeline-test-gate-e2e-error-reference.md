@@ -4,6 +4,8 @@ Each error stops the current provider attempt. A blocking node stops the gate. A
 
 | Error | Cause | Effect | Correction | Retry | Evidence |
 | --- | --- | --- | --- | --- | --- |
+| `PLAYWRIGHT_CASE_STATUS_INVALID` | A reported case status is not expected, unexpected, flaky or skipped. | The attempt errors; no valid case result is emitted. | Check the pinned reporter/provider contract and captured JSON. | After correction | JSON report |
+| `PLAYWRIGHT_CASE_RESULT_INVALID` | A case attempt result has an unsupported status instead of passed, failed, timedOut, skipped or interrupted. | The attempt errors. | Repair the reporter/capability result; do not discard malformed attempts. | After correction | JSON report |
 | `PLAYWRIGHT_CONFIG_INVALID` | Configuration is malformed or has an unknown field. | No browser starts. | Correct `.swarm/pipeline.json`. | After correction | Runner log |
 | `PLAYWRIGHT_PROJECT_DIRECTORY_INVALID` | The project path is missing, unsafe, or outside the repository. | No browser starts. | Use one contained relative path. | After correction | Runner log |
 | `PLAYWRIGHT_CONFIG_FILE_INVALID` | The config path is missing, unsafe, or not a file. | No browser starts. | Point to the project Playwright config. | After correction | Runner log |

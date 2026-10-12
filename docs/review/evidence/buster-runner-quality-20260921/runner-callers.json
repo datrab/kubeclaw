@@ -1,0 +1,78 @@
+[
+  {
+    "path": "skills/buster/engine/src/index.ts",
+    "sha256": "51c35b9e5455f1c1d253c769f1f020c23b1d1a0fe8e3b30abe4158e43be09f6a"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+    "sha256": "47cc40152c08273b3dae3cc4e192f7662936d9f9b16f857a020eab89e4423c3f"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "sha256": "724d95538646558ad3f1930899ee1cd905ab8b8727d1bc84469831b55ef979fb"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-a11y-implementation.mts",
+    "sha256": "23d3b579a090eb2bd027951ab6df4a7d01a4eeb2da0ecb21cff103f975c9cd11"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-api-implementation.mts",
+    "sha256": "4f131ae15fd42e9b3bf5b51626d1d9997a2897a3a2ef6a2e301ea0e4b150e603"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-implementation.mts",
+    "sha256": "612a4b17c74ed61909a6edb757304a8cc6e5551b1f92e55225561ed1f949e770"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-live.mts",
+    "sha256": "c828a11679a917b803921961a20510472387197a9a8c0567e2e704d6f1973530"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-parity.mts",
+    "sha256": "2172c05f73569ec72ec99b0f43b37d0fe934e59c109117b83ac49908c3bf1905"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+    "sha256": "7608fc72844b708ed3bd6068d03230d558ce691fb1beeb8b16dd6f8da1965c45"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-implementation.mts",
+    "sha256": "9cdb82d6db864e5bdcfbb1d282ad1e97d5a6049208939b99ea8d9aa6df5acea6"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-runtime-role-surfaces.mts",
+    "sha256": "45298472fb04ac27cf3f6bf1630a7eb7b081d17ff23dce15cc667fc9e443f659"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+    "sha256": "306435bbe92ae5de565beecf51b85bf03f09fcb5feb7f8de003415856f744cb6"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+    "sha256": "b97f75c7cfc3fb043ac7af9d2f9e7fa24873a04518699b0103cc9778b23c3bbb"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+    "sha256": "7f82532f841843d098d45122c9f1ab404e48b9077851b7d417460c31ad436b2f"
+  },
+  {
+    "path": "tests/verification/contracts/check-provider-semantics-remediation.mts",
+    "sha256": "6588dc9049ef7987a18eac628de093736f523c6e3af87f348519984418ad3303"
+  },
+  {
+    "path": "tests/verification/contracts/check-runtime-bundle-builder.mjs",
+    "sha256": "30500c5d47fadf0e04b88c21a78276c5cf4fba9f4257ca2b42f5b43bbea59282"
+  },
+  {
+    "path": "tests/verification/contracts/check-runtime-bundle-isolation.mjs",
+    "sha256": "4f1175eddf6d6348bc22be7346db13765e55dcb446c72953d3b6ee2379fe260b"
+  },
+  {
+    "path": "tests/verification/contracts/check-runtime-package-cutover.mjs",
+    "sha256": "06991c62fc29a95517b45511845bcf2ca2275bb06f7311d5bd768748051c1cc0"
+  },
+  {
+    "path": "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+    "sha256": "e35780680d8572991bb6ae5ada62583c653e3892f6a6312192ddbe2ee98ad79c"
+  }
+]

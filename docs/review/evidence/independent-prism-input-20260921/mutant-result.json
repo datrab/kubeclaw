@@ -1,0 +1,6 @@
+{
+  "mutation": "HTTP service ignores captured input setting and uses former 16MiB constant",
+  "exitCode": 1,
+  "control": "unchanged independent UTF8 probe except service import",
+  "assertionFailure": true
+}

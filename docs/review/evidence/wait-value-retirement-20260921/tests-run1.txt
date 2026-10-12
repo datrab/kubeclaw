@@ -1,0 +1,12 @@
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (11554.912674ms)
+✔ real terminal approval projects Wait bytes, uses actual Core-owned adapter reader and keeps late duplicate identity (11108.460218ms)
+✔ retained original prefix mutation, truncation and same-byte inode replacement fail without rewriting the projected Wait (11698.859799ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35133.899312

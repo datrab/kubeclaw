@@ -1,0 +1,8 @@
+{
+  "driverSha256": "d571b72b9f936e059782fb5cbdd5926e3077568cea2ab67c0019b254b78d8292",
+  "outsideTmpfsBlockAstIdentical": true,
+  "expectedRejectionUnchanged": "EXT4_REQUIRED",
+  "cases": 27,
+  "helpExit": 0,
+  "privilegedExecution": false
+}

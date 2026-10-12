@@ -1,0 +1,8 @@
+{
+  "scripts/deploy.sh": "3fdb31cf16f9d164233620dadd468d9ae220c8fa2731c4380e4a78a82e0ea44a",
+  "scripts/deploy-observation.mjs": "802ebb7e04fe414f6c56c05436bd287752469d2dda55a13458050eb8b59cbfcd",
+  "scripts/tests/deploy-api-errors.test.py": "0966e547b662105b0056783b71be0a8d5133b9120547d8f15d044ebc2fc16c4a",
+  "tests/verification/deployment/bootstrap-api-guard.test.mjs": "f1ca734a2ad2a6707f0729b34b51f8920f2b1a108af67fd82b5b12ec30d76546",
+  "docs/deployment/setup-flow.md": "e874088ef8c4c3253d71d7dfddf145c8167d73550e85b11ffcaaf6d89622e8a6",
+  "docs/deployment/tailscale-operator.md": "6c36d94514271c05325568d1e644ad2a797d221373c82244e3c2c1eebe7b8d8b"
+}

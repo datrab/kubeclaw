@@ -1,0 +1,8 @@
+{
+  "path": "docs/review/remediation/implementation/config-final-four-adapter-inventory-20260921.md",
+  "sha256": "6df65c08d46b277bb8f018dbc22c40910a6b2fc026244945b25dbaaf71f98179",
+  "originalSnapshotsUnchanged": 88,
+  "remainingLiveSourcesUnchanged": 87,
+  "addendumMatches": true,
+  "change": "Handoff caller signal applies to invoke only; receipt combines stopping and timeout"
+}

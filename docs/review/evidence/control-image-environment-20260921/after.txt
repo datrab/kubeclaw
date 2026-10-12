@@ -1,0 +1,13 @@
+✔ actual Control image declarations and exact image proof accept authored profile one (425.095275ms)
+✔ actual Control image declarations and exact image proof accept authored profile two (434.18314ms)
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (3.49901ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (1.410316ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (1.607142ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1344.475207

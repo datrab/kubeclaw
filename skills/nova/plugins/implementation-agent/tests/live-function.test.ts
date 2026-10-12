@@ -72,7 +72,7 @@ try {
     ['kubeclaw.git-workspace:git',{allowedRepositoryRoots:[temporary],workspaceRoot:path.join(temporary,'worktrees'),
       gitExecutable:fs.realpathSync(execFileSync('sh',['-lc','command -v git'],{encoding:'utf8'}).trim()),
       authorName:'KubeClaw Test',authorEmail:'test@kubeclaw.invalid',maxExecutionMs:5000,maxOutputBytes:65536,terminationGraceMs:100}],
-  ]), effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager()), shutdownTimeoutMs:1000, async emitDomainEvent(){} });
+  ]), effects: new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager(), 300_000), shutdownTimeoutMs:1000, async emitDomainEvent(){} });
   await adapters.start();
   try {
     const runner = new core.PipelineRunner({ definition:{schemaVersion:'pipeline-definition.v2',id:'pipeline:implementation',maxConcurrency:1,stages:[{

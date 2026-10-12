@@ -1,0 +1,51 @@
+# Control route quality (2026-09-21)
+
+Implementation complete; fresh independent review pending. Criteria below were recorded before edits. Linked follow-up for [listener CL6](config-control-listener-20260921.md); no independent acceptance yet.
+
+- CQ1: cohesive session/dispatch, agent callbacks, projects/documents/directions, engine execution, approval/publication, corpus/artifact and preferences modules. Explicit dispatcher, no generic routing framework. All files/functions obey unchanged canonical lint limits using conventional formatting.
+- CQ2: exact original path/method/route order and authentication boundary. Internal artifacts/session/signeddispatch/agentcallbacks remain before authenticated application routes; unknown application routes still authenticate. Each matched handler explicitly reports handled, independent of response.end/json return values.
+- CQ3: original raw signed-dispatch bytes, crypto inputs, CSRF/session/SPIFFE checks, status and central error mapping preserved (SyntaxError400, other422). No shared per-request mutable state or second startup resolver.
+- CQ4: original SQL statements, transaction boundaries, idempotency/approval/generation checks, native operation budgets, asset limits and corpus cleanup/error precedence remain. Existing-baseline return precedes any new publication work.
+- CQ5: original Control suites and listener334 regression membership retained; tests kept unchanged except explicitly documented listener contract changes. Targeted auth/error/cross-request preservation and meaningful negative controls. Source snapshots and assertion inventory bind evidence.
+- CQ6: full canonical lint for all changed/new sources and relevant typechecks pass without suppressions/baseline additions/threshold changes; fresh nonauthor review inspects API/context simplicity and boundaries, not just passing lint.
+- DOC: update architecture responsibilities and evidence/results/limitations, link to listener migration, and leave unrelated CONFIG/native/cluster claims open.
+
+Baseline: the captured Control monolith has24 canonical violations, including797-line handle/complexity202 and932 logical file lines after the listener composition addition. Exact baseline source and lint log are retained in the evidence directories. None are accepted as final quality.
+
+## Implemented responsibilities and evidence
+
+The original monolith is replaced by 17 conventionally formatted modules: the HTTP
+composer/dispatcher, frozen context and HTTP helpers; session, dispatch, agent,
+project, document/history, direction, engine, approval, baseline, corpus, preference
+and artifact routes; baseline validation/specification and archive rendering.
+The largest module remains below the unchanged 300-line rule. Request handlers use
+narrow typed context properties. Module helpers are concrete functions rather than a route registry or callback
+framework; internal exports do not introduce a second composition or policy path.
+
+All 356 tests in the original combined 11-module invocation pass with zero skips,
+cancellations or failures. The 75-case intermediate Control subset passed before
+final consolidation. Both runs include actual Control HTTP behavior and production
+listener children. `final-run.json` records exact command, stable before/after hashes
+and exit0. Canonical lint on every changed production/test file passes; Prism and
+shared foundation typechecks pass. No lint baseline/rule changed.
+
+`check-preservation.mjs` compares parsed source inventories: all 27 SQL literals,
+62 Error expressions, 16 route strings and 12 regular expressions remain identical.
+This is a specific preservation oracle, not whole-program equivalence. The original
+catch, response headers and request-failure diagnostics remain; `process.stderr.write`
+with Node's `format` preserves the console error formatting without a prohibited
+console call. The authenticated application phase is awaited inside the original
+catch so asynchronous failures retain the 400/422 response mapping.
+
+Initial extraction failures are retained: TypeScript detected nullable/redeclared
+route matches and a captured fallback response; these were corrected before any
+positive extraction claim. Regex match values are passed explicitly to matched
+handlers. Subsequent cleanup narrowed context and consolidated small baseline
+helpers into their actual validation/archive/publication responsibilities.
+
+The original persisted generation/product-authority HTTP tests use PGlite and real
+migrations. Local child listeners use the original production entrypoint and health
+route without claiming a PostgreSQL readiness connection. Fresh reviewer probes
+and mutants are recorded in the independent report; author listener/chart/image
+negative controls are in the linked CONFIG evidence. No native kernel, live Envoy,
+cluster deployment or full CONFIG closure is claimed.

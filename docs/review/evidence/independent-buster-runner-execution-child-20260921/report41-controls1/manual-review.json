@@ -1,0 +1,9 @@
+{
+  "session": 85106,
+  "exitCode": 0,
+  "sourceDrift": [],
+  "allFourApplied": true,
+  "heapControls": "Actual child argv assertion at buster-report-runner-policy169 fails; positive realV8growth separately passed.",
+  "reserveControl": "Missing expected rejection REPORT_ADAPTER_MEMORY_LIMIT_INCOMPATIBLE at143.",
+  "descriptorControl": "Missing expected rejection REPORT_ADAPTER_OPEN_FILE_LIMIT_TOO_LOW at112."
+}

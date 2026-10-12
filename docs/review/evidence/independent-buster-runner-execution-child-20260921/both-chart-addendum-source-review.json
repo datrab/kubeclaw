@@ -1,0 +1,19 @@
+{
+  "status": "source accepted for integration only; runtime required",
+  "manifest": {
+    "status": "private-source-only-unexecuted",
+    "file": "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+    "beforeSha256": "2bf0ffe3fb27b0d86d4efbefdf4e359afd6d303287f3bfe887da0149ca906825",
+    "afterSha256": "5b2558a440a50ba57221cd3a4ec2d2924d42c86635746c4af505d87833526f69",
+    "originalAssertionSequenceUnchanged": true,
+    "profilesAndInvalidValuesUnchanged": true,
+    "fixtureSource": "tests/verification/deployment/config-component-packaging.test.mjs",
+    "fixtureSourceSha256": "a3a7ded6a76afdfa59ff5723419cc0f5367308de7c2b241ed17b7c1ad12b5aa5",
+    "scope": "5 original cases per chart,10 total; pinned image is a render-only prerequisite, not image execution evidence"
+  },
+  "notes": [
+    "Before/after+fixtureSource hashes verified. Five original cases per chart; assertion/value bodies preserved.",
+    "Kubeclaw prerequisites match existing real nativePoolPolicy fixture, explicit namespace/registry/pinnedrenderimage; production guards retained.",
+    "Private detached copies before writes, realpath/nlink/devino checks retained. No image claim."
+  ]
+}

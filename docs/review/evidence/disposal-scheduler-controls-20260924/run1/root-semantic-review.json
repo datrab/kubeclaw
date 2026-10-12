@@ -1,0 +1,79 @@
+{
+  "reviewer": "root",
+  "independentAcceptance": false,
+  "unexpectedSourceDrift": [],
+  "controls": [
+    {
+      "name": "recovery-completed",
+      "exitCode": 1,
+      "logSha256": "50d50f8af1277b4c039bed6a632e9de4e0cb6cf5dab94299bd598c9896cab42d",
+      "applications": 1,
+      "status": "actual named semantic failure reviewed by root",
+      "observed": "Real failed retain attempt improperly retries (2 rather than1); delete path sees completed-fixture instead of incomplete."
+    },
+    {
+      "name": "faulted-completed",
+      "exitCode": 1,
+      "logSha256": "337c7431eedb4db7d3e5d4ed4148cef0cca6ad21338cab86a9eba26e8cb97278",
+      "applications": 1,
+      "status": "actual named semantic failure reviewed by root",
+      "observed": "Actual post-passed Worker fault cleanup IPC disposition becomes completed-fixture instead of incomplete."
+    },
+    {
+      "name": "rollback-suppressed",
+      "exitCode": 1,
+      "logSha256": "7f6cb2a711fe3e69b0b0bf6e8ce0662b57ffdd9145dfcf9bbd2d79402e64bdf1",
+      "applications": 2,
+      "status": "actual named semantic failure reviewed by root",
+      "observed": "Original AggregateError assertion and real execute IPC marker assertions fail."
+    },
+    {
+      "name": "success-only-confirmation",
+      "exitCode": 1,
+      "logSha256": "4a1d8d883e2ce41cea76a12a79f668eaa19b92feae4b1a165620bb0be8016ee5",
+      "applications": 1,
+      "status": "actual named semantic failure reviewed by root",
+      "observed": "Real signal-error cases cannot recover: original closed session yields TEST_PROVIDER_PROCESS_NOT_AVAILABLE, retained cleanup rejects; healthy stop cases pass."
+    },
+    {
+      "name": "permit-unconfirmed",
+      "exitCode": 1,
+      "logSha256": "a4db3f5bc0c3bf3b3d7fc5e2440d4352d220a2ee532b96f8e6786bb704f05697",
+      "applications": 1,
+      "status": "detected but clearer inner-assertion diagnostics required; pending rerun",
+      "observed": "Original run only exposes caught-test completion flag or outer rejection; preserve failed record and improve diagnostics."
+    },
+    {
+      "name": "duplicate-accounting",
+      "exitCode": 1,
+      "logSha256": "c354c9a3605cfe1926061fa9c7f6173c8d6fa304069b587352af497575613462",
+      "applications": 1,
+      "status": "detected but clearer inner-assertion diagnostics required; pending rerun",
+      "observed": "Original run only exposes caught-test completion flag or outer rejection; preserve failed record and improve diagnostics."
+    },
+    {
+      "name": "hidden-error-details",
+      "exitCode": 1,
+      "logSha256": "3fc02692884f982850f59a3486098df28cd3be524188530376b901f2684d28dd",
+      "applications": 1,
+      "status": "actual named semantic failure reviewed by root",
+      "observed": "Immediate nested causes retained, but final Runner cleanupErrors lacks both required failure markers."
+    },
+    {
+      "name": "old-scheduler",
+      "exitCode": 1,
+      "logSha256": "a31d31a48863f6a8dc790f5fd69e0b4ccf3b1fe54d192a7f31751df8d1ac2ce0",
+      "applications": 2,
+      "status": "actual named semantic failure reviewed by root",
+      "observed": "Both direct settlement assertions and actual Runner must-wait assertion fail; aggregate failure preservation fails. Cleanup-only identity positive remains."
+    },
+    {
+      "name": "retain-unconditional",
+      "exitCode": 1,
+      "logSha256": "901fe7f78b57cf9e6bada401f39c093e05350cbc95294314ae6952405db01073",
+      "applications": "private-plugin mutation before discovery; no host-hook claim",
+      "status": "actual named semantic failure reviewed by root",
+      "observed": "Actual private plugin permits unwanted retry and leaves incomplete namespace unreleased (delete0 instead1)."
+    }
+  ]
+}

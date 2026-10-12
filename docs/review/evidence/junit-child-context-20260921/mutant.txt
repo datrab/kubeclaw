@@ -1,0 +1,33 @@
+node:fs:621
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/tmp/junit-execution-required-dEdbHg/all-skipped.xml'
+    at Object.openSync (node:fs:621:18)
+    at Object.readFileSync (node:fs:487:35)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/.junit-context-mutant-u4eux9pd.mts:124:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/tmp/junit-execution-required-dEdbHg/all-skipped.xml'
+}
+
+Node.js v24.21.0
+✖ /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/.junit-context-mutant-u4eux9pd.mts (1197.452038ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1211.85271
+
+✖ failing tests:
+
+test at tests/verification/contracts/.junit-context-mutant-u4eux9pd.mts:1:1
+✖ /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/.junit-context-mutant-u4eux9pd.mts (1197.452038ms)
+  'test failed'

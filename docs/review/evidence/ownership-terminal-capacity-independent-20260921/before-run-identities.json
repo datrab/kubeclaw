@@ -1,0 +1,58 @@
+[
+  {
+    "path": "skills/worker/core/worker/ownership-capacity.ts",
+    "sha256": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-state.ts",
+    "sha256": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-children.ts",
+    "sha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "sha256": "b13dcae622c5aef5a533d659e0671ef923ae7138fbfbcaa827af8bed24a700f8"
+  },
+  {
+    "path": "tests/verification/reliability/worker-ownership-store.test.mts",
+    "sha256": "af2319b4a8c90b71b58cd6a3d46e7349fde0593151d4130af7d9c09a8765787b"
+  },
+  {
+    "path": "tests/verification/reliability/worker-owned-children.test.mts",
+    "sha256": "30a0f743173532480016e0db32a02fd90cbd3115d5ad366b7f1fe95ca8f0d797"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-quiescence.test.mts",
+    "sha256": "00cab46da97b3985e4117e5c49577dc12a25d1bdf134d498005ff87915d4c958"
+  },
+  {
+    "path": "tests/verification/reliability/worker-terminal-capacity.test.mts",
+    "sha256": "f320d615c3e354d2f66d91f743f9bde189d0b2ca346867c8e5e38a27d640bf3d"
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "sha256": "bcfae27446f1de541b80d5669b7d34b8548880130779bedb7a1ccc856167b72b"
+  },
+  {
+    "path": "tests/verification/reliability/tsconfig.native-scope.json",
+    "sha256": "b11f6af094bcb0a80e46607ccca68c426ef4ce9754efca52804af11ef7b11e2b"
+  },
+  {
+    "path": "package.json",
+    "sha256": "41c1df6745623e9035187c7627274ba4677cc24709d1e64d7c3fb8a56afa8531"
+  },
+  {
+    "path": "docs/operations/native-worker-host-pools.md",
+    "sha256": "8e536e2633114e7d05e06ac8338768aa9efa5b89a87c99416f523a7e1845ea0f"
+  },
+  {
+    "path": "docs/review/remediation/implementation/ownership-terminal-capacity-20260921.md",
+    "sha256": "8ad8ebce26c4a429dfe3e885898e2bd5793801cf047abb900d5ac5809023a6a4"
+  }
+]

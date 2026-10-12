@@ -1,0 +1,18 @@
+✖ closure projection frees actual resident quota and net bytes while all original consumers retain full identities (2685.367392ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3428.41805
+
+✖ failing tests:
+
+test at tests/verification/reliability/attempt-closure-projection.test.mjs:27:1
+✖ closure projection frees actual resident quota and net bytes while all original consumers retain full identities (2685.367392ms)
+  Error: OBSERVABILITY_CLOSURE_STORE_FULL
+      at storeClosureUnlocked (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts:68:11)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts:85:12
+      at async withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:269:12)

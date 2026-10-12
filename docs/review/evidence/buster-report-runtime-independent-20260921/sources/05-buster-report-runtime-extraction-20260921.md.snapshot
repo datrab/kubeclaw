@@ -1,0 +1,89 @@
+# Buster report runtime extraction — 2026-09-21
+
+Pre-edit criteria for a bounded lint-maintenance extraction. The active independent
+deadline-classification review must release its source freeze before production
+edits begin. No native cutover, ownership change, budget change or lint-rule
+exception is included.
+
+| Criterion | Required observation |
+| --- | --- |
+| RR1 | Package snapshot traversal, ordering, hashing, file/byte/time bounds, no-follow opening, change detection and descriptor closure remain equivalent. Single-file read becomes a coherent helper, not nested walk complexity. |
+| RR2 | File artifact reader API remains exported from its original module; root/path/descriptor/size/digest checks, cancellation and descriptor closure retain order and semantics. |
+| RR3 | Result binding, schema validation, detail limits, clone and freeze move together; adapter output cannot substitute its source or registration. |
+| RR4 | Runtime retains own-deadline identity classification and caller-cancellation distinction; snapshot removal still depends on confirmed process cleanup. No renamed error or catch-all timeout conversion. |
+| RR5 | Whole runtime and new modules pass canonical lint without exceptions; Buster typecheck and original actual report-adapter/JUnit tests pass. Meaningful negative controls detect weakened binding or validation. |
+| RR-DOC | Document the production modules, preserved cleanup/deadline behavior, exact test evidence and remaining native ownership limits; a fresh independent reviewer is required. |
+
+These criteria were declared before implementation; the prior source freeze was respected.
+
+## Implemented responsibility split
+
+The deadline reviewer explicitly released the freeze before edits began. The
+pre-edit runtime snapshot and hash are preserved in the evidence directory.
+
+- `report-adapter-package.ts` owns sorted package traversal, bounded file reads,
+  the registry-compatible digest and private snapshot writing. The walker delegates
+  each descriptor read to `readPackageFile`, whose `finally` closes the descriptor.
+  All existing 2,048-file, 64 MiB and 30-second bounds remain unchanged. Accounting
+  and appending the completed file occur when that helper successfully returns;
+  a failed read or close still rejects the whole package without a snapshot result.
+- `report-artifact-reader.ts` owns the existing `FileReportArtifactReader` and
+  `ReportArtifactReader` interface. A small internal descriptor reader retains
+  the extra-byte growth check and abort checks. Root, opened descriptor, size and
+  digest validation remain in the same order. The runtime re-exports the original
+  public names, so existing consumers retain their import path.
+- `report-adapter-runtime.ts` retains orchestration, runtime-root identity checks,
+  process invocation, own-deadline classification and snapshot disposal. Its
+  `#readSource` method keeps artifact-kind/media-type checks and revalidates every
+  storage-driver response. A local `bindReportResult` function assigns authoritative
+  adapter/source identity, validates the result schema and detail limits, then
+  clones/freezes the result. No third helper module or new public result API is
+  introduced.
+
+The process helper's cleanup failure remains authoritative: the existing inner
+catch sets `disposalConfirmed = false` only for `ProcessInputCleanupError`, and
+its finally removes the snapshot only when disposal is confirmed. The outer
+own-deadline correction remains exactly as independently reviewed. This extraction
+does not make snapshot I/O transactionally cancellable or complete whole-attempt
+native accounting; those existing lifecycle boundaries are not reclassified.
+
+## Evidence and reproduction
+
+Directory: `docs/review/evidence/buster-report-runtime-extraction-20260921/`.
+
+- `original-before.txt`: unchanged actual report-adapter runtime and JUnit tests,
+  **2/2 pass** with plain Node after the separately reviewed deadline correction.
+- `tests.txt`: the same two original tests plus four real-filesystem package tests,
+  **6/6 pass**. Tests cover registry-compatible digest and snapshot independence,
+  private modes, symlink rejection, byte and file bounds, and cancellation reason
+  identity. They do not claim worker cgroup accounting or full Buster execution.
+- `lint-before.txt`: five original canonical lint errors. `lint.txt`: the whole
+  runtime, both new modules and the new test now exit 0 without rule changes or
+  exclusions. `typecheck.txt`: Buster engine typecheck exits 0.
+- `check-preserved.mjs` / `preserved.txt`: the actual AST declarations for `adapt`,
+  `#run`, `#assertRuntimeRoot`, `abortable`, `validateLimits` and `runtimePaths`,
+  plus the phase's cleanup catch/finally, remain byte-identical to the pre-edit
+  snapshot. This is targeted preservation evidence, not a whole-program proof.
+- `probe.txt`: reran the prior independent deadline reviewer's original harness
+  against the extracted production runtime. Both caller/internal abort orderings
+  still preserve identity after real drain and delayed settlement. Injecting a
+  cleanup failure after real drain still preserves `ProcessInputCleanupError` and
+  retains the snapshot. This declared injection is not an actual kernel-drain
+  failure. Earlier independent evidence was not overwritten.
+- `run-mutant.py` / `mutant.txt`: a private-copy mutant lets a child substitute
+  its own source artifact. The unchanged actual adapter contract test reaches
+  the spoofed result and detects `artifact:fake`; the real source is never edited
+  by this control.
+
+```sh
+node --test skills/buster/engine/test-gates/tests/report-adapter-package.test.ts tests/verification/contracts/check-pipeline-report-adapter-runtime.mts tests/verification/contracts/check-pipeline-junit-report-adapter.mts
+node node_modules/typescript/bin/tsc --noEmit -p skills/buster/engine/tsconfig.json
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/buster/engine/test-gates/report-adapter-runtime.ts skills/buster/engine/test-gates/report-adapter-package.ts skills/buster/engine/test-gates/report-artifact-reader.ts skills/buster/engine/test-gates/tests/report-adapter-package.test.ts
+REVIEW_OUTPUT="$PWD/docs/review/evidence/buster-report-runtime-extraction-20260921" node docs/review/evidence/report-adapter-deadline-independent-20260921/probe.mjs
+node docs/review/evidence/buster-report-runtime-extraction-20260921/check-preserved.mjs
+python3 docs/review/evidence/buster-report-runtime-extraction-20260921/run-mutant.py
+```
+
+No original tests were weakened or changed. The original runner's broader lint
+and execution gaps remain separate; these passing adapter tests do not close
+B1–B5/W1–W5. A fresh independent review of this extraction remains required.

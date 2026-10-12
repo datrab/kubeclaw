@@ -1,0 +1,157 @@
+[
+  {
+    "source": "tests/fixtures/buster-fixture-protocol.mts",
+    "snapshot": "00-buster-fixture-protocol.mts.snapshot",
+    "sha256": "584317a1480e90be21b908f5c81cf20e4f9be8234546d8cdb9176f3f5d33cc6a"
+  },
+  {
+    "source": "skills/prism/tests/worker-service.test.mts",
+    "snapshot": "01-worker-service.test.mts.snapshot",
+    "sha256": "0dc455dd6d42da3d218f99399e20e2b77744253e4b44ec756a1624b92d7940da"
+  },
+  {
+    "source": "skills/prism/tests/swarm-result-journal.test.mts",
+    "snapshot": "02-swarm-result-journal.test.mts.snapshot",
+    "sha256": "bc004d6f8f5fc130205dfd1bb952f6f7beb118b4fad96eaa07a9dd512505bda6"
+  },
+  {
+    "source": "skills/prism/tests/native/resource-policy.mts",
+    "snapshot": "03-resource-policy.mts.snapshot",
+    "sha256": "87a51b65935045a98f9992ed8b6360f45100760d8cb4d9a8c05c123e2a718d1b"
+  },
+  {
+    "source": "skills/prism/tests/native/operation-journal.mts",
+    "snapshot": "04-operation-journal.mts.snapshot",
+    "sha256": "39da7dff64c7a3a4a121060f8288075bcf060c8479ddcbaad095793e9964294b"
+  },
+  {
+    "source": "skills/prism/tests/swarm-resource-policy.test.mts",
+    "snapshot": "05-swarm-resource-policy.test.mts.snapshot",
+    "sha256": "48b1e26bdc4b7347c70e96b91045298403052fa0e92754b7c3e1bd09b62b95f7"
+  },
+  {
+    "source": "skills/prism/tests/worker-cancellation.test.mts",
+    "snapshot": "06-worker-cancellation.test.mts.snapshot",
+    "sha256": "3a3cb700d84ccb1d85d6545baa86ce52dba4eda0949d73485fd457d702ebcdd3"
+  },
+  {
+    "source": "skills/prism/tests/worker-http-cancellation.native.mts",
+    "snapshot": "07-worker-http-cancellation.native.mts.snapshot",
+    "sha256": "39be007e67b21e960dcdb11ee81c836bab597d26ca7a04a74827839cea1b2f6c"
+  },
+  {
+    "source": "skills/prism/tests/worker-process-shutdown.native.mts",
+    "snapshot": "08-worker-process-shutdown.native.mts.snapshot",
+    "sha256": "17d516b69f96cae527736e672d4ce33b34f39efe782d2cf0fb0c9ce6685a71ea"
+  },
+  {
+    "source": "skills/prism/tests/swarm-native-settings.test.mts",
+    "snapshot": "09-swarm-native-settings.test.mts.snapshot",
+    "sha256": "eebb5274a970835245ab5a1d8ff956e499d956f9c1ea84459339aad56fd2190e"
+  },
+  {
+    "source": "skills/prism/tests/engine.test.mts",
+    "snapshot": "10-engine.test.mts.snapshot",
+    "sha256": "243d59f110453cfdc09d8ccdf848f456fc84b3b9fbce8f12232bd5b2f5c2c02f"
+  },
+  {
+    "source": "tests/verification/reliability/worker-native-journal.test.mts",
+    "snapshot": "11-worker-native-journal.test.mts.snapshot",
+    "sha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a"
+  },
+  {
+    "source": "skills/prism/server/control-config.ts",
+    "snapshot": "12-control-config.ts.snapshot",
+    "sha256": "58c27c7ab5b69dd586c033b4f41ae8f3f73b4909045a52f25906bba125b656cb"
+  },
+  {
+    "source": "skills/prism/integration/worker-concurrent-resource-attribution.mts",
+    "snapshot": "13-worker-concurrent-resource-attribution.mts.snapshot",
+    "sha256": "c6acf7bf9cca3ee1766099da0d2cf161726df495214669e6c62a322f559f4bb9"
+  },
+  {
+    "source": "tests/verification/reliability/worker-native-contract.test.mts",
+    "snapshot": "14-worker-native-contract.test.mts.snapshot",
+    "sha256": "06ae7e8015b6b4675b595817bbe889f37643cb36fe93fb1797c0f1a8230ce05e"
+  },
+  {
+    "source": "tests/verification/reliability/worker-native-scope-live.mts",
+    "snapshot": "15-worker-native-scope-live.mts.snapshot",
+    "sha256": "f675bd6333d8fe3191e5b0d15ae11db3621cbaf8a457db79635dfb3de8ca7e45"
+  },
+  {
+    "source": "skills/prism/control/native-operation.ts",
+    "snapshot": "16-native-operation.ts.snapshot",
+    "sha256": "1c394e56baaddf1a338f4194e26391333a490f53278e12aeda70a1924a4486ac"
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "snapshot": "17-swarm.ts.snapshot",
+    "sha256": "ae09a5b19f5843bf28e561ec193a37f8a8f5294c68669b261403802039dfa76c"
+  },
+  {
+    "source": "skills/prism/config/native-worker.ts",
+    "snapshot": "18-native-worker.ts.snapshot",
+    "sha256": "1bdb354549cbfd49f3be2e77d913854caf040c0ddafe7fadc4cc0bc20b25ad8c"
+  },
+  {
+    "source": "skills/prism/config/resource-policy.ts",
+    "snapshot": "19-resource-policy.ts.snapshot",
+    "sha256": "46d4daca088d7f716a202abc5e94794830d601db47518479da19056ed5fc652f"
+  },
+  {
+    "source": "skills/prism/server/native-worker-execution.ts",
+    "snapshot": "20-native-worker-execution.ts.snapshot",
+    "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"
+  },
+  {
+    "source": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "snapshot": "21-prism-swarm-config.test.mjs.snapshot",
+    "sha256": "6a4f716ea5334a94ea22c1f8d8e0156686172060c685f94b8bd0754012d10171"
+  },
+  {
+    "source": "skills/prism/engine/worker-envelope.ts",
+    "snapshot": "22-worker-envelope.ts.snapshot",
+    "sha256": "56ddb558742228e8c828b98b83916dcdcd1c46f355f2061bfc0c4bdac0290941"
+  },
+  {
+    "source": "charts/kubeclaw/files/config/swarm.config.json",
+    "snapshot": "23-swarm.config.json.snapshot",
+    "sha256": "9af314fd976381b48cc72ccda03d2f7e1928f9f6227383899d68efbc0fa88bd1"
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "snapshot": "24-swarm.schema.json.snapshot",
+    "sha256": "2e295e52ee25424c296ff312e18756d4e42e9c9c9d49855a82c2a20535da2a0e"
+  },
+  {
+    "source": "charts/prism/templates/_swarm-config.tpl",
+    "snapshot": "25-_swarm-config.tpl.snapshot",
+    "sha256": "d7607399cb8ec74a781d7e1957b57b53c9d7e7b439aa6d226a02f8bb79bfda5e"
+  },
+  {
+    "source": "docs/operations/operator-configuration.md",
+    "snapshot": "26-operator-configuration.md.snapshot",
+    "sha256": "1b26c021237225214344e70591c7b9b0922091fe1aff2ee2f41e12aef4278d02"
+  },
+  {
+    "source": "docs/operations/prism-operator-guide.md",
+    "snapshot": "27-prism-operator-guide.md.snapshot",
+    "sha256": "79b67ae296e8753c69387be09db6e12b75d33e9f94b4693dcfbf205aa7e71957"
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/config/README.md",
+    "snapshot": "28-README.md.snapshot",
+    "sha256": "df6770812744b71668a9ee3d2a40bb53eb0e0cc308e5b3b1713547a23c5da012"
+  },
+  {
+    "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "snapshot": "29-config-inventory-20260920.md.snapshot",
+    "sha256": "36fb7b0518a4a2a34cee1d93f2561b4ffbe511b78777244c7ae2ddf571f16d29"
+  },
+  {
+    "source": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "snapshot": "30-config-inventory-20260920.json.snapshot",
+    "sha256": "07fb51eb52aafb986c0427073e4468643d53ce406a0e66e6a5fed99bc7c65b78"
+  }
+]

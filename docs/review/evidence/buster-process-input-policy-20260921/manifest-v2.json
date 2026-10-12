@@ -1,0 +1,236 @@
+{
+  "schema": "private-source-draft.v1",
+  "capturedAt": "2026-09-21T20:25:53.381359+00:00",
+  "afterRoot": "files-v2",
+  "beforeRoot": "before",
+  "scope": "Private source only; no runtime executed",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "beforeSha256": "38e44551945028e5b532f035d7ab583009965491a9ed9ef3378e0390a6a09467",
+      "afterSha256": "999649fb834be3763eecda6735a2fc65b610c0e47ed8e4b66477771bdd5894c6",
+      "liveSha256": "38e44551945028e5b532f035d7ab583009965491a9ed9ef3378e0390a6a09467",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "beforeSha256": "1ac6a3f69d2a7498ef2b1a63f25ac02dbcc29d7703789856daf4612de3764a04",
+      "afterSha256": "48254682f1b9d7edbf1546dd1c285a4e67815042062e906be514095c1bbedd20",
+      "liveSha256": "1ac6a3f69d2a7498ef2b1a63f25ac02dbcc29d7703789856daf4612de3764a04",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "docs/architecture/buster-execution-configuration.md",
+      "beforeSha256": "f4f2c8c1cce8409352b002cb38b2160dc031381251a072d8a9f1460d5b755409",
+      "afterSha256": "96ace80a6e11ca27418a605b9ec19f3ab8c3eb0320e0571ed5e7b572d7d64a08",
+      "liveSha256": "f4f2c8c1cce8409352b002cb38b2160dc031381251a072d8a9f1460d5b755409",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "package.json",
+      "beforeSha256": "a77c649fd18ba52ced09fae142bcc74c8a230fde268085b13d7d21624eeff6e1",
+      "afterSha256": "c655c39c9780b39d559d9ad817ca1de0e5ebbad35bbe70ffb2dca2289bfea883",
+      "liveSha256": "a77c649fd18ba52ced09fae142bcc74c8a230fde268085b13d7d21624eeff6e1",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "beforeSha256": "9d8c2e2fee2a13c34dc00efe3a7ed7c4eb2047a7d496baf9c4c6b7c4cafcde78",
+      "afterSha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11",
+      "liveSha256": "9d8c2e2fee2a13c34dc00efe3a7ed7c4eb2047a7d496baf9c4c6b7c4cafcde78",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "beforeSha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "afterSha256": "3548e91e7383579fffd16f1c89e3eca83c0599be04c1c4f728d07fa9b8d41b53",
+      "liveSha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "beforeSha256": "b45b50d0cfd2ae6a0aa091ba1e1edcb936b868490ae2a579f3ac561d24f8394e",
+      "afterSha256": "35a4be02b927eca37c9cc68725c53a8987e6d73b0915dcfd9fd173b641833972",
+      "liveSha256": "b45b50d0cfd2ae6a0aa091ba1e1edcb936b868490ae2a579f3ac561d24f8394e",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "beforeSha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620",
+      "afterSha256": "321c30cda2cd5d0d417a21947ad2a4535b1a04904a83eeea4484a92116e9b1c8",
+      "liveSha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "beforeSha256": "8408e7530b69f97164e3dec096ae5108db9d95ae5e0ffcd45936efd44576dc3c",
+      "afterSha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde",
+      "liveSha256": "8408e7530b69f97164e3dec096ae5108db9d95ae5e0ffcd45936efd44576dc3c",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "beforeSha256": "56b073cf7743c417f622cde0cde4df62e56f76b9dd22c075078f54646f114cd5",
+      "afterSha256": "47e65214958d6df49a39d71cef89c660bdb730a3cdee0a450006d83dafdaaf3d",
+      "liveSha256": "56b073cf7743c417f622cde0cde4df62e56f76b9dd22c075078f54646f114cd5",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "beforeSha256": "ab2678f0d56c0c6bd4d7554af6cadccfe3703e6e8b4c8ae7ff60218ed35194d8",
+      "afterSha256": "7142ddfd65353299a563de13aa92c32d5e9b21e2579eb719bd5eaaf2a98cc585",
+      "liveSha256": "ab2678f0d56c0c6bd4d7554af6cadccfe3703e6e8b4c8ae7ff60218ed35194d8",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "beforeSha256": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d",
+      "afterSha256": "916fbe54e491c216e50fc3b20c81f0e114c918724ca327908a8fbd51cdbd8d86",
+      "liveSha256": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts",
+      "beforeSha256": "55a07e1d9c1af556b0f17d94bcb3f0e48d101b85c3d8b38135c5ac8f41aeeeff",
+      "afterSha256": "068950efbe447f1aae0fbcbe119ebb74200fac3571f4e0ba3ff350058869df13",
+      "liveSha256": "55a07e1d9c1af556b0f17d94bcb3f0e48d101b85c3d8b38135c5ac8f41aeeeff",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/process-input.test.ts",
+      "beforeSha256": "4da06b94873ceef22654527a6964c03a13002961884149257532de2bdecd766d",
+      "afterSha256": "dfd9647dfb4c903d7b061c0fd25216796ae720d6f50ad215fed16ee0e7a8fc4a",
+      "liveSha256": "4da06b94873ceef22654527a6964c03a13002961884149257532de2bdecd766d",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "beforeSha256": "de407a177017ce5739501947289e9c934eee209e16722ce2cbb9d23000db862b",
+      "afterSha256": "5d6b78d0ab9da185827f35d25c5f2c6da68a4f7e1de8e815b48641b935c298d5",
+      "liveSha256": "de407a177017ce5739501947289e9c934eee209e16722ce2cbb9d23000db862b",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "beforeSha256": "e3b3fade1e88b1e814dca06d90c07a4e308d0a30780f5061c26ef6a2654c4123",
+      "afterSha256": "d1f283c7d9bd53e0385c36d20bd89d290371fd04b092401b98363acd6a551eef",
+      "liveSha256": "e3b3fade1e88b1e814dca06d90c07a4e308d0a30780f5061c26ef6a2654c4123",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "beforeSha256": "21d135b1c0c6f2b52a1abcb60e0c9f43ac6c76a098b2e7bee2d52fc1248e5582",
+      "afterSha256": "df566aa6c12fda5943c736ec0babd4dff62113cc99e74128c488a551bb3efeef",
+      "liveSha256": "21d135b1c0c6f2b52a1abcb60e0c9f43ac6c76a098b2e7bee2d52fc1248e5582",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-process-input-callers.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "16c94f356e98005e5ac05d309c9bcad8111cf64d4c87243473936a2396a2f870",
+      "liveSha256": null,
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-process-input-policy.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "41fc956c9c1c15c83e829404b61ac2f6fb2455d54b4dc44804ec5a60ea125a80",
+      "liveSha256": null,
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-report-runtime-policy.test.mjs",
+      "beforeSha256": "9bda92a445d13a201a0e6968b2021b752c64243eeab5bc371fe7d8eb6a5f02e8",
+      "afterSha256": "331ced8251a72cbcfbdf25079e0b7132cf14e821c25cb113878460c34c99e27c",
+      "liveSha256": "9bda92a445d13a201a0e6968b2021b752c64243eeab5bc371fe7d8eb6a5f02e8",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+      "beforeSha256": "9e93442e6fff39c0c70529efa8fbc6380cee67facebbab53fd237e35203c921e",
+      "afterSha256": "8d1f981fb05073b07b8b93070cad6247a40d2db7210f09d0fd0e1c0b7560bbe0",
+      "liveSha256": "9e93442e6fff39c0c70529efa8fbc6380cee67facebbab53fd237e35203c921e",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "beforeSha256": "facea82c343abb0b450c0cbfadab7589fdae98b50984a0763cb4325b4ce6b36a",
+      "afterSha256": "e8eccd63a75fd395f880eb6800a2e2205a6ef5aa098d2654f62b1f59c1559895",
+      "liveSha256": "facea82c343abb0b450c0cbfadab7589fdae98b50984a0763cb4325b4ce6b36a",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "beforeSha256": "12e78fea5397329cd7918d90a41bccad7a3f01af4df524de974985efa95e802c",
+      "afterSha256": "915caa76b6eca542ac0336db6119685b069d4face68e2778f4aa0fdf876963ac",
+      "liveSha256": "12e78fea5397329cd7918d90a41bccad7a3f01af4df524de974985efa95e802c",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+      "beforeSha256": "26a66b2ffc32c3dfae2f50e022a7850ce012449d2205dac99829965fd4895446",
+      "afterSha256": "1490083876b3780fd25f62d8c8615f1d9ff36f1cd02c5ab1faa1d38aab078f22",
+      "liveSha256": "26a66b2ffc32c3dfae2f50e022a7850ce012449d2205dac99829965fd4895446",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+      "beforeSha256": "9bd745f622329fc4a13dd5b3608dd9137476c1fa238e354c8b332f3fef401930",
+      "afterSha256": "864828548885cf4199dab8d85c3bb4e101abafc4fc0c97c4a92653ab794de1e4",
+      "liveSha256": "9bd745f622329fc4a13dd5b3608dd9137476c1fa238e354c8b332f3fef401930",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+      "beforeSha256": "75462979e1630a5d09e64aed3b2aa169743012613bebc20bf2ef260e60c4562a",
+      "afterSha256": "6a4b0f3b041550a794010ca954281eabbc8a7c4f64ff598a7f84b0b56c609799",
+      "liveSha256": "75462979e1630a5d09e64aed3b2aa169743012613bebc20bf2ef260e60c4562a",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/deployment/buster-process-input-parity.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "a0fa942758dde1118015f3fd8255656c6fe4e31045e96837b75a05f11afd9247",
+      "liveSha256": null,
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+      "beforeSha256": "bd783b24ac94e0a7c80230a97933ee4a085a1a136fbdf3ad0ea877f10d0b9197",
+      "afterSha256": "1c61acfc0bea18e60f76c924603905e06e77335867606ced211cf971249ca6d1",
+      "liveSha256": "bd783b24ac94e0a7c80230a97933ee4a085a1a136fbdf3ad0ea877f10d0b9197",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/reliability/http-authority.test.mts",
+      "beforeSha256": "50b7bb580ae081d451efdf62a1445a2367200a3968b81a6856bcbb44a3a74cbd",
+      "afterSha256": "bdc8b78148ba388164e122f8bf398066f42bd915e63ba6ab80f972571da80018",
+      "liveSha256": "50b7bb580ae081d451efdf62a1445a2367200a3968b81a6856bcbb44a3a74cbd",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+      "beforeSha256": "ba0c63cf74adba1649b3b7491655979ca234b363a67ee8e9b72d3d34670e3c24",
+      "afterSha256": "994692a35f36897e515c3f1594b6a6cfbbec38eb70758a26643252e192bed618",
+      "liveSha256": "ba0c63cf74adba1649b3b7491655979ca234b363a67ee8e9b72d3d34670e3c24",
+      "baselineMatchesLive": true
+    },
+    {
+      "path": "tests/verification/reliability/tailscale-generation.test.mjs",
+      "beforeSha256": "b5cff588c588225c89e43dffba3900b66b74c0c1fb13a6beccf7b492ec8c9e5a",
+      "afterSha256": "3a754d1094691461b50c928846b45768fc853354f4dcd12579054c5ed26a15a2",
+      "liveSha256": "b5cff588c588225c89e43dffba3900b66b74c0c1fb13a6beccf7b492ec8c9e5a",
+      "baselineMatchesLive": true
+    }
+  ],
+  "proofHelpers": [
+    {
+      "path": "extensions-v2/mutate-forwarding.mjs",
+      "sha256": "49f9b3a719431b5b5aa2347f311849786c8308d8d8b29fc36e521c9128c3dcf5"
+    },
+    {
+      "path": "extensions-v2/mutate-lifecycle.mjs",
+      "sha256": "41a58c74b9b8d743f5c6c6c37ca95fba72ac5697fa793dc01ffedb419fcae4d4"
+    }
+  ]
+}

@@ -17,7 +17,7 @@ for (const wrapper of ['direct', 'runtime']) test(`${wrapper}: actual optional p
   const root = await directory(t), attempt = envelope(320, 50), operation = fileOperation(root);
   const execute = (signal?: AbortSignal) => new WorkerAttemptExecutor({ envelope: attempt, operation, ...(signal ? { signal } : {}),
     storeFullLog: (_id, content, { signal }) => writeEvidence(root, 'log', content, signal) }).execute();
-  const runtime = new LocalWorkerRuntime({ workerId: 'worker:file', workerType: 'file', coreVersion: '1.0.0',
+  const runtime = new LocalWorkerRuntime({ drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536, workerId: 'worker:file', workerType: 'file', coreVersion: '1.0.0',
     protocolVersions: ['worker-protocol.v1'], profiles: [attempt.profile], capacity: 1 }); runtime.markReady();
   const result = await (wrapper === 'direct' ? execute() : runtime.runAttempt(attempt, execute));
   assert.equal(result.error?.code, 'WORKER_CLAIM_WINDOW_INSUFFICIENT');
@@ -43,7 +43,7 @@ for (const wrapper of ['direct', 'runtime']) test(`${wrapper}: final claim fence
     storeFullLog: (_id, content, { signal }) => writeEvidence(root, 'log', content, signal) }).execute();
   if (wrapper === 'direct') assert.equal((await execute()).error?.code, 'WORKER_CLAIM_EXPIRED');
   else {
-    const runtime = new LocalWorkerRuntime({ workerId: 'worker:file', workerType: 'file', coreVersion: '1.0.0',
+    const runtime = new LocalWorkerRuntime({ drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536, workerId: 'worker:file', workerType: 'file', coreVersion: '1.0.0',
       protocolVersions: ['worker-protocol.v1'], profiles: [attempt.profile], capacity: 1 }); runtime.markReady();
     await assert.rejects(runtime.runAttempt(attempt, execute), /WORKER_LOCAL_CLAIM_EXPIRED/);
   }

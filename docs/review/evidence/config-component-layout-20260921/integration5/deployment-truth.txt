@@ -1,0 +1,268 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the supervisor must be able to enter the job UID and then drop the complete capability set
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/check-deployment-truth.mjs:824:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '# Buster production values. The gateway owns Buster agent sessions; the\n' +
+    '# colocated v2 runtime owns deterministic suites and rootless BuildKit.\n' +
+    'agentRole: "buster"\n' +
+    '\n' +
+    'gateway:\n' +
+    '  startupDoctor:\n' +
+    '    enabled: true\n' +
+    '    nodeOptions: "--max-old-space-size=3072"\n' +
+    '    resources:\n' +
+    '      requests: { cpu: 100m, memory: 256Mi }\n' +
+    '      limits: { cpu: "2", memory: 4Gi }\n' +
+    '  resources:\n' +
+    '    requests: { cpu: 1000m, memory: 12288Mi, ephemeral-storage: 1Gi }\n' +
+    '    limits: { cpu: "6", memory: 24576Mi, ephemeral-storage: 50Gi }\n' +
+    '\n' +
+    'initSetup:\n' +
+    '  resources:\n' +
+    '    requests: { cpu: 500m, memory: 1Gi }\n' +
+    '    limits: { cpu: "2", memory: 8Gi }\n' +
+    '\n' +
+    'image:\n' +
+    '  repository: ghcr.io/datrab/kubeclaw-buster-gateway\n' +
+    '  tag: "latest"\n' +
+    '  pullPolicy: Always\n' +
+    'imagePullSecrets:\n' +
+    '  - name: ghcr-secret\n' +
+    '\n' +
+    'codeBundle:\n' +
+    '  enabled: false\n' +
+    '  archiveUrl: ""\n' +
+    '  expectedCommit: ""\n' +
+    '  contractVersion: "v2"\n' +
+    '  auth:\n' +
+    '    existingSecret: "github-bundle-reader"\n' +
+    '    existingSecretKey: "token"\n' +
+    '\n' +
+    'auth:\n' +
+    '  existingSecret: "openclaw-shared-secrets"\n' +
+    '  existingSecretKey: "gatewayToken-buster"\n' +
+    '\n' +
+    'litellm:\n' +
+    '  existingSecret: "openclaw-shared-secrets"\n' +
+    '  existingSecretKey: "litellmApiKey"\n' +
+    '\n' +
+    'discord:\n' +
+    '  enabled: true\n' +
+    '  existingSecret: "openclaw-shared-secrets"\n' +
+    '  existingSecretKey: "discordToken-buster"\n' +
+    '  channelId: "1473692599125540985"\n' +
+    '  execApprovers:\n' +
+    '    - "user:849379821536804864"\n' +
+    '\n' +
+    'commands:\n' +
+    '  ownerAllowFrom:\n' +
+    '    - "discord:849379821536804864"\n' +
+    '  allowFromDiscord:\n' +
+    '    - "849379821536804864"\n' +
+    '    - "user:849379821536804864"\n' +
+    '\n' +
+    'discordWebhook:\n' +
+    '  secretName: "openclaw-shared-secrets"\n' +
+    '  secretKey: "discordWebhook"\n' +
+    '\n' +
+    'agent:\n' +
+    '  project: "clawdeck"\n' +
+    '  git:\n' +
+    '    enabled: true\n' +
+    '    secretName: "git-deploy-key-buster"\n' +
+    '    repoUrl: "git@github.com:datrab/kubeclaw.git"\n' +
+    '\n' +
+    'serviceAccount:\n' +
+    '  create: true\n' +
+    '  automount: false\n' +
+    '\n' +
+    'workerTrust:\n' +
+    '  spiffe:\n' +
+    '    enabled: true\n' +
+    '    trustDomain: kubeclaw.internal\n' +
+    '\n' +
+    'service:\n' +
+    '  extraPorts:\n' +
+    '    - name: buster-plan\n' +
+    '      port: 18891\n' +
+    '      targetPort: buster-plan\n' +
+    '\n' +
+    'extraContainers:\n' +
+    '  - name: buster-v2-runtime\n' +
+    '    image: ghcr.io/datrab/kubeclaw-buster-runtime:latest\n' +
+    '    imagePullPolicy: Always\n' +
+    '    env:\n' +
+    '      - name: BUSTER_V2_TOKEN\n' +
+    '        valueFrom:\n' +
+    '          secretKeyRef:\n' +
+    '            name: openclaw-shared-secrets\n' +
+    '            key: busterV2Token\n' +
+    '      - name: BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY\n' +
+    '        valueFrom:\n' +
+    '          secretKeyRef:\n' +
+    '            name: pipeline-test-gate-source-attestation\n' +
+    '            key: publicKey\n' +
+    '      - name: BUSTER_TRUSTED_PEER_SPIFFE_ID\n' +
+    '        value: spiffe://kubeclaw.internal/ns/kubeclaw/sa/agent-nova\n' +
+    '      - name: BUSTER_PLAN_PORT\n' +
+    '        value: "28891"\n' +
+    '      - name: BUSTER_PLAN_STATE_DIR\n' +
+    '        value: /var/lib/buster-v2/plan-jobs\n' +
+    '      - name: BUSTER_PLAN_RUN_DIR\n' +
+    '        value: /var/lib/buster-v2/runs\n' +
+    '      - name: BUSTER_V2_RESULT_ROOT\n' +
+    '        value: /workspace/git-repo/.swarm/runtime-results\n' +
+    '      - name: BUSTER_V2_KUBERNETES_CREDENTIALS\n' +
+    '        value: /var/run/buster-worker/kubernetes\n' +
+    '      - name: BUSTER_ALLOWED_SOURCE_SECRETS\n' +
+    '        value: kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr\n' +
+    '      - name: CONTAINER_BUILD_BUILDKIT_HOST\n' +
+    '        value: unix:///run/user/1000/buildkit/buildkitd.sock\n' +
+    '      - name: BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT\n' +
+    '        value: /var/run/kubeclaw-browser-cgroup\n' +
+    '    ports:\n' +
+    '      - name: plan-runtime\n' +
+    '        containerPort: 28891\n' +
+    '        protocol: TCP\n' +
+    '    startupProbe:\n' +
+    '      httpGet:\n' +
+    '        scheme: HTTP\n' +
+    '        path: /bootstrapz\n' +
+    '        port: 28891\n' +
+    '      periodSeconds: 2\n' +
+    '      timeoutSeconds: 2\n' +
+    '      failureThreshold: 60\n' +
+    '    readinessProbe:\n' +
+    '      httpGet:\n' +
+    '        scheme: HTTP\n' +
+    '        path: /readyz\n' +
+    '        port: 28891\n' +
+    '      initialDelaySeconds: 5\n' +
+    '      periodSeconds: 5\n' +
+    '      timeoutSeconds: 2\n' +
+    '      failureThreshold: 6\n' +
+    '    livenessProbe:\n' +
+    '      httpGet:\n' +
+    '        scheme: HTTP\n' +
+    '        path: /healthz\n' +
+    '        port: 28891\n' +
+    '      initialDelaySeconds: 30\n' +
+    '      periodSeconds: 15\n' +
+    '      timeoutSeconds: 2\n' +
+    '      failureThreshold: 3\n' +
+    '    volumeMounts:\n' +
+    '      - name: workspace\n' +
+    '        mountPath: /workspace\n' +
+    '      - name: buster-v2-state\n' +
+    '        mountPath: /var/lib/buster-v2\n' +
+    '      - name: buster-api-token\n' +
+    '        mountPath: /var/run/buster-worker/kubernetes\n' +
+    '        readOnly: true\n' +
+    '      - name: buster-browser-cgroup\n' +
+    '        mountPath: /var/run/kubeclaw-browser-cgroup\n' +
+    '    resources:\n' +
+    '      requests: { cpu: "2", memory: 8Gi, ephemeral-storage: 8Gi }\n' +
+    '      limits: { cpu: "8", memory: 24Gi, ephemeral-storage: 60Gi }\n' +
+    '    securityContext:\n' +
+    '      # A narrowly-capable supervisor starts BuildKit as UID 1000 and enters\n' +
+    '      # UID 1001 for each submitted suite before dropping every capability.\n' +
+    '      runAsUser: 0\n' +
+    '      runAsGroup: 0\n' +
+    '      runAsNonRoot: false\n' +
+    '      privileged: false\n' +
+    '      allowPrivilegeEscalation: true\n' +
+    '      appArmorProfile: { type: Unconfined }\n' +
+    '      seccompProfile: { type: Unconfined }\n' +
+    '      capabilities:\n' +
+    '        drop: ["ALL"]\n' +
+    '        # The supervisor uses these only to prepare and enter the unprivileged\n' +
+    '        # per-job identity. setpriv drops the complete capability set before\n' +
+    '        # any submitted suite code starts.\n' +
+    '        add: ["CHOWN", "KILL", "SETGID", "SETPCAP", "SETUID"]\n' +
+    'extraVolumes:\n' +
+    '  # Only the v2 sidecar mounts this authoritative receipt store. The Buster\n' +
+    '  # gateway and submitted suite code cannot read or mutate worker state.\n' +
+    '  - name: buster-v2-state\n' +
+    '    persistentVolumeClaim:\n' +
+    '      claimName: agent-buster-runtime-state\n' +
+    '  - name: buster-api-token\n' +
+    "    # The chart's pod security context fixes fsGroup at 1000. Kubernetes\n" +
+    '    # therefore presents these 0440 projected files to the non-root worker as\n' +
+    '    # root:1000; submitted jobs run with different groups and cannot read them.\n' +
+    '    projected:\n' +
+    '      defaultMode: 288\n' +
+    '      sources:\n' +
+    '        - serviceAccountToken:\n' +
+    '            path: token\n' +
+    '            expirationSeconds: 3600\n' +
+    '        - configMap:\n' +
+    '            name: kube-root-ca.crt\n' +
+    '            items:\n' +
+    '              - key: ca.crt\n' +
+    '                path: ca.crt\n' +
+    '        - downwardAPI:\n' +
+    '            items:\n' +
+    '              - path: namespace\n' +
+    '                fieldRef:\n' +
+    '                  apiVersion: v1\n' +
+    '                  fieldPath: metadata.namespace\n' +
+    '  - name: buster-browser-cgroup\n' +
+    '    hostPath:\n' +
+    '      # This is one dedicated subtree. Never mount /sys/fs/cgroup into Buster.\n' +
+    '      path: /sys/fs/cgroup/kubeclaw-buster-browser\n' +
+    '      type: DirectoryOrCreate\n' +
+    'busterNamespaceBroker:\n' +
+    '  enabled: true\n' +
+    '  controller:\n' +
+    '    allowedAccess:\n' +
+    '      - subject: kubeclaw/agent-nova\n' +
+    '        modes: [deployer]\n' +
+    '      - subject: kubeclaw/agent-buster\n' +
+    '        modes: [deployer, tester]\n' +
+    '    allowedSourceSecrets:\n' +
+    '      # Test-only values. Never copy production Prism credentials to a fixture.\n' +
+    '      - kubeclaw-fixture-preflight\n' +
+    '      - prism-test-provider\n' +
+    '      - prism-test-runtime\n' +
+    '      - prism-test-postgresql-auth\n' +
+    '      - prism-test-ghcr\n' +
+    '    image:\n' +
+    '      repository: ghcr.io/datrab/kubeclaw-namespace-controller\n' +
+    '      tag: "latest"\n' +
+    '      pullPolicy: Always\n' +
+    '\n' +
+    'resources:\n' +
+    '  requests: { cpu: 500m, memory: 4096Mi }\n' +
+    '  limits: { cpu: 4000m, memory: 24576Mi }\n' +
+    '\n' +
+    'workspace:\n' +
+    '  enabled: false\n' +
+    '  soul: |\n' +
+    '    You are Buster. Hunt for bugs, report exact reproduction evidence, and\n' +
+    '    never repair product code. Pipeline lifecycle authority stays in v2 core.\n' +
+    '  identity: |\n' +
+    '    Buster 💥 — Destructive tester. Cold, precise, relentless.\n' +
+    '\n' +
+    '# Dedicated authoritative job and evidence storage, mounted only by the runtime.\n' +
+    'busterRuntimePersistence:\n' +
+    '  enabled: true\n' +
+    '  claimName: agent-buster-runtime-state\n' +
+    '  size: 64Gi\n' +
+    '  storageClass: ""\n' +
+    '\n' +
+    '# Supply runtimeInfrastructure.registry in your private overlay before rendering\n' +
+    '# this runtime. See docs/operations/registry-clients.md for HTTPS/auth/node trust\n' +
+    '# and the explicitly selected anonymous HTTP lab alternative.\n',
+  expected: /name:\s*buster-v2-runtime[\s\S]*runAsUser:\s*0[\s\S]*runAsGroup:\s*0[\s\S]*runAsNonRoot:\s*false[\s\S]*add:\s*\["CHOWN",\s*"SETGID",\s*"SETPCAP",\s*"SETUID"\]/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

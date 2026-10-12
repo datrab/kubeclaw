@@ -1,0 +1,32 @@
+✔ child reservations are durable, CAS-fenced, immutable after binding and charged to metadata quota (117.562246ms)
+✔ strict topology decoder rejects unknown fields, names, duplicates and mismatched child identity (49.10293ms)
+✔ v1 and v2 ownership decode explicitly as drain-only legacy leaves; child admission is forbidden (55.272068ms)
+✖ mountinfo parser requires hierarchical events on the actual covering mount (1.404456ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 622.882057
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-owned-children.test.mts:87:1
+✖ mountinfo parser requires hierarchical events on the actual covering mount (1.404456ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-owned-children.test.mts:92:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /HIERARCHICAL_EVENTS_REQUIRED/,
+    operator: 'throws',
+    diff: 'simple'
+  }

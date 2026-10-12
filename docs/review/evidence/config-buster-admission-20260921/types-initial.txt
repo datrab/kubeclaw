@@ -1,0 +1,38 @@
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(55,27): error TS2418: Type of computed property's value is 'string | NonSharedBuffer', which is not assignable to type 'string | undefined'.
+  Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(59,27): error TS2418: Type of computed property's value is 'string | NonSharedBuffer', which is not assignable to type 'string | undefined'.
+  Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(77,27): error TS2418: Type of computed property's value is 'string | NonSharedBuffer', which is not assignable to type 'string | undefined'.
+  Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(110,27): error TS2418: Type of computed property's value is 'string | NonSharedBuffer', which is not assignable to type 'string | undefined'.
+  Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(118,68): error TS2418: Type of computed property's value is 'string | NonSharedBuffer', which is not assignable to type 'string | undefined'.
+  Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(125,68): error TS2418: Type of computed property's value is 'string | NonSharedBuffer', which is not assignable to type 'string | undefined'.
+  Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(132,68): error TS2418: Type of computed property's value is 'string | NonSharedBuffer', which is not assignable to type 'string | undefined'.
+  Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(139,68): error TS2418: Type of computed property's value is 'string | NonSharedBuffer', which is not assignable to type 'string | undefined'.
+  Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(145,68): error TS2418: Type of computed property's value is 'string | NonSharedBuffer', which is not assignable to type 'string | undefined'.
+  Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(150,68): error TS2418: Type of computed property's value is 'string | NonSharedBuffer', which is not assignable to type 'string | undefined'.
+  Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(158,75): error TS2345: Argument of type '{ KUBECLAW_BUILD_REVISION: string; PHASE7_REMOTE_TOKEN: string; PHASE7_SOURCE_ATTESTATION_PUBLIC_KEY: string | NonSharedBuffer; }' is not assignable to parameter of type 'ProcessEnv'.
+  Property '[sourcePublicKeyName]' is incompatible with index signature.
+    Type 'string | NonSharedBuffer' is not assignable to type 'string | undefined'.
+      Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(166,75): error TS2345: Argument of type '{ KUBECLAW_BUILD_REVISION: string; PHASE7_REMOTE_TOKEN: string; PHASE7_SOURCE_ATTESTATION_PUBLIC_KEY: string | NonSharedBuffer; }' is not assignable to parameter of type 'ProcessEnv'.
+  Property '[sourcePublicKeyName]' is incompatible with index signature.
+    Type 'string | NonSharedBuffer' is not assignable to type 'string | undefined'.
+      Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(168,80): error TS2345: Argument of type '{ REGISTRY_HEALTH_USER: string; REGISTRY_HEALTH_PASSWORD: string; KUBECLAW_BUILD_REVISION: string; PHASE7_REMOTE_TOKEN: string; PHASE7_SOURCE_ATTESTATION_PUBLIC_KEY: string | NonSharedBuffer; }' is not assignable to parameter of type 'ProcessEnv'.
+  Property '[sourcePublicKeyName]' is incompatible with index signature.
+    Type 'string | NonSharedBuffer' is not assignable to type 'string | undefined'.
+      Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(171,75): error TS2345: Argument of type '{ REGISTRY_HEALTH_USER: string; REGISTRY_HEALTH_PASSWORD: string; KUBECLAW_BUILD_REVISION: string; PHASE7_REMOTE_TOKEN: string; PHASE7_SOURCE_ATTESTATION_PUBLIC_KEY: string | NonSharedBuffer; }' is not assignable to parameter of type 'ProcessEnv'.
+  Property '[sourcePublicKeyName]' is incompatible with index signature.
+    Type 'string | NonSharedBuffer' is not assignable to type 'string | undefined'.
+      Type 'NonSharedBuffer' is not assignable to type 'string'.
+tests/verification/contracts/check-pipeline-remote-runtime-config.mts(175,68): error TS2418: Type of computed property's value is 'string | NonSharedBuffer', which is not assignable to type 'string | undefined'.
+  Type 'NonSharedBuffer' is not assignable to type 'string'.

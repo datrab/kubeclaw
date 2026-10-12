@@ -71,7 +71,7 @@ async function scenario(mode: 'transient' | 'lost_ack' | 'permanent' | 'unresolv
     occurredAt: new Date().toISOString(), causationId: null, payload: { summary: 'Actual diagnostic\nnext line' } });
   const create = (interrupt = false) => {
     const adapters = new core.AdapterRuntime({ granted, activated, configs,
-      effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl')), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks'))),
+      effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl')), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks')), 300_000),
       shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
     const checkpoints = new core.FileJournal<any>(path.join(root, 'checkpoints.jsonl'));
     const deliveries = new core.FileJournal<any>(path.join(root, 'deliveries.jsonl'));

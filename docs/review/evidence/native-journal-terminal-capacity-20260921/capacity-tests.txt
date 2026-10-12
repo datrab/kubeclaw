@@ -1,0 +1,11 @@
+✔ exact future metadata fit completes valid maximal diagnostics; one byte short admits no blob (428.103989ms)
+✔ all pending rows reserve metadata and concurrent independent journals cannot over-admit (457.581902ms)
+✔ historical pending overcommit remains readable and replayable while growth fails closed (167.594124ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1633.622941

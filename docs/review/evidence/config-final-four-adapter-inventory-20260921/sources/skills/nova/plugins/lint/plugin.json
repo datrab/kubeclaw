@@ -1,0 +1,48 @@
+{
+  "id": "kubeclaw.lint",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "pre-check",
+      "type": "kubeclaw.lint.pre-check",
+      "module": "src/stage.ts",
+      "export": "executePreCheck",
+      "requiredCapabilities": [
+        "lint.execute",
+        "artifacts.write",
+        "artifacts.read"
+      ],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    },
+    {
+      "id": "full",
+      "type": "kubeclaw.lint.full",
+      "module": "src/stage.ts",
+      "export": "executeFull",
+      "requiredCapabilities": [
+        "lint.execute",
+        "artifacts.write",
+        "artifacts.read"
+      ],
+      "configSchema": "schemas/config.schema.json",
+      "inputSchema": "schemas/input.schema.json",
+      "resultSchema": "schemas/result.schema.json"
+    }
+  ],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "executor",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "lint.execute"
+      ],
+      "requiredCapabilities": [],
+      "configSchema": "schemas/adapter-config.schema.json"
+    }
+  ]
+}

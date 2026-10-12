@@ -1,0 +1,319 @@
+--- a/charts/kubeclaw/files/config/buster-engine.config.json
++++ b/charts/kubeclaw/files/config/buster-engine.config.json
+@@ -39,6 +39,10 @@
+       "maximumActiveJobs": 2,
+       "maximumQueuedJobs": 8,
+       "maximumConcurrentAttempts": 64
++    },
++    "dependencyReadiness": {
++      "maximumExecutionMs": 1000,
++      "maximumOutputBytes": 65536
+     }
+   }
+ }
+--- a/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
++++ b/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
+@@ -202,7 +202,8 @@
+       "additionalProperties": false,
+       "required": [
+         "preparation",
+-        "admission"
++        "admission",
++        "dependencyReadiness"
+       ],
+       "properties": {
+         "preparation": {
+@@ -421,6 +422,9 @@
+               "maximum": 9007199254740991
+             }
+           }
++        },
++        "dependencyReadiness": {
++          "$ref": "#/$defs/buster-dependency-readiness"
+         }
+       }
+     },
+@@ -671,6 +675,26 @@
+           }
+         }
+       }
++    },
++    "buster-dependency-readiness": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "maximumExecutionMs",
++        "maximumOutputBytes"
++      ],
++      "properties": {
++        "maximumExecutionMs": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 30000
++        },
++        "maximumOutputBytes": {
++          "type": "integer",
++          "minimum": 1,
++          "maximum": 1048576
++        }
++      }
+     }
+   },
+   "oneOf": [
+--- a/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
++++ b/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
+@@ -16,7 +16,7 @@
+ };
+ const validateEntry = ajv.compile(entrySchema);
+ const validateComponent = ajv.compile(componentSchema);
+-const settingsValidators = new Map(['buster-preparation', 'buster-admission'].map(name => [name, ajv.compile({
++const settingsValidators = new Map(['buster-preparation', 'buster-admission', 'buster-dependency-readiness'].map(name => [name, ajv.compile({
+   $defs: componentSchema.$defs, $ref: `#/$defs/${name}`,
+ })]));
+ interface Component {
+@@ -37,7 +37,7 @@
+ }
+ 
+ /** Envelope validators are also used at the existing owned-host boundary. */
+-export function validateComponentSettings(name: 'buster-preparation' | 'buster-admission', value: unknown, error: string): void {
++export function validateComponentSettings(name: 'buster-preparation' | 'buster-admission' | 'buster-dependency-readiness', value: unknown, error: string): void {
+   const validate = settingsValidators.get(name);
+   if (!validate || !validate(value)) throw new Error(error);
+ }
+--- a/skills/common/plugin-runtime/foundation/config/swarm.ts
++++ b/skills/common/plugin-runtime/foundation/config/swarm.ts
+@@ -14,9 +14,14 @@
+   readonly maximumQueuedJobs: number;
+   readonly maximumConcurrentAttempts: number;
+ }
++export interface BusterDependencyReadinessSettings {
++  readonly maximumExecutionMs: number;
++  readonly maximumOutputBytes: number;
++}
+ export interface BusterSettings {
+   readonly preparation: BusterPreparationSettings;
+   readonly admission: BusterAdmissionSettings;
++  readonly dependencyReadiness: BusterDependencyReadinessSettings;
+ }
+ 
+ export interface BusterPreparationSettings {
+@@ -155,7 +160,7 @@
+   return loadPrismSettings(environment).worker;
+ }
+ 
+-/** Capture both Buster policies once before constructing service consumers. */
++/** Capture Buster policies once before constructing service consumers. */
+ export function loadBusterSettings(environment: NodeJS.ProcessEnv): BusterSettings {
+   return loadSwarmSettings(environment).buster;
+ }
+@@ -163,7 +168,13 @@
+ function busterSettingsFromConfig(value: unknown): BusterSettings {
+   const preparation = busterPreparationSettingsFromConfig(value);
+   const admission = validateBusterAdmissionSettings((value as SwarmConfig).operator.buster?.admission);
+-  return Object.freeze({ preparation, admission });
++  const dependencyReadiness = validateBusterDependencyReadinessSettings((value as SwarmConfig).operator.buster?.dependencyReadiness);
++  return Object.freeze({ preparation, admission, dependencyReadiness });
++}
++
++export function validateBusterDependencyReadinessSettings(value: unknown): BusterDependencyReadinessSettings {
++  validateComponentSettings('buster-dependency-readiness', value, 'SWARM_CONFIG_BUSTER_DEPENDENCY_READINESS_INVALID');
++  return Object.freeze({ ...value as BusterDependencyReadinessSettings });
+ }
+ 
+ export function validateBusterAdmissionSettings(value: unknown): BusterAdmissionSettings {
+--- a/skills/buster/engine/test-gates/remote-plan-service.ts
++++ b/skills/buster/engine/test-gates/remote-plan-service.ts
+@@ -1,5 +1,5 @@
+ import { validateLocalWorkerRuntimePolicy, type LocalWorkerRuntimePolicy } from "@kubeclaw/worker-core";
+-import { validateBusterAdmissionSettings, type BusterAdmissionSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
++import { validateBusterAdmissionSettings, validateBusterDependencyReadinessSettings, type BusterAdmissionSettings, type BusterDependencyReadinessSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+ import { executeBusterPreparedJob } from './remote-prepared-execution.ts';
+ import { preparedPlanRuntimeRoot } from './prepared-plan-paths.ts';
+ import type { BusterStagedAdmission } from './preparation-input.ts';
+@@ -28,7 +28,7 @@
+   readonly runtimeRoot: string;
+   readonly admission: BusterAdmissionSettings;
+   readonly workerLocalRuntime: LocalWorkerRuntimePolicy;
+-  readonly dependencyReadiness?: { readonly maximumExecutionMs: number; readonly maximumOutputBytes: number };
++  readonly dependencyReadiness: BusterDependencyReadinessSettings;
+   readonly now?: () => Date;
+   readonly execute?: (
+     job: PreparedPlanJob,
+@@ -42,8 +42,8 @@
+   if (!options.allowedCapabilities.has('container.build')) return undefined;
+   if (!options.containerBuild) throw new Error('BUSTER_READINESS_BUILDKIT_CONFIG_REQUIRED');
+   return new BuildkitReadiness({ buildctlExecutable: options.containerBuild.buildctlExecutable,
+-    buildkitHost: options.containerBuild.buildkitHost, maximumExecutionMs: options.dependencyReadiness?.maximumExecutionMs ?? 1000,
+-    maximumOutputBytes: options.dependencyReadiness?.maximumOutputBytes ?? 65536 });
++    buildkitHost: options.containerBuild.buildkitHost, maximumExecutionMs: options.dependencyReadiness.maximumExecutionMs,
++    maximumOutputBytes: options.dependencyReadiness.maximumOutputBytes });
+ }
+ 
+ export class BusterRemotePlanService {
+@@ -64,9 +64,10 @@
+ 
+   constructor(options: BusterRemotePlanServiceOptions) {
+     const workerLocalRuntime = validateLocalWorkerRuntimePolicy(options.workerLocalRuntime);
++    const dependencyReadiness = validateBusterDependencyReadinessSettings(options.dependencyReadiness);
+     if (!/^[a-f0-9]{40,64}$/u.test(options.workerRevision)) throw new Error('BUSTER_REMOTE_WORKER_REVISION_INVALID');
+-    this.#buildkitReadiness = configuredBuildkitReadiness(options);
+-    this.#options = { ...options, workerLocalRuntime };
++    this.#options = { ...options, workerLocalRuntime, dependencyReadiness };
++    this.#buildkitReadiness = configuredBuildkitReadiness(this.#options);
+     this.#now = options.now ?? (() => new Date());
+     const admission = validateBusterAdmissionSettings(options.admission);
+     this.#maximumActiveJobs = admission.maximumActiveJobs;
+--- a/skills/buster/engine/test-gates/production.ts
++++ b/skills/buster/engine/test-gates/production.ts
+@@ -4,7 +4,7 @@
+ import { object, integer, validateRuntimeRoot, runtimeAuthority, runtimeRegistry } from './production-config-values.ts';
+ import { capabilitySources } from './production-capability-sources.ts';
+ import type { BusterPreparation } from './preparation-client.ts';
+-import type { BusterSettings, WorkerCoreSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
++import { validateBusterDependencyReadinessSettings, type BusterSettings, type WorkerCoreSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import { BusterRemotePlanRuntime } from './remote-plan-runtime.ts';
+@@ -32,6 +32,7 @@
+ 
+ function configuredService(value: Record<string, unknown>, directory: string, environment: NodeJS.ProcessEnv,
+   preparation: BusterPreparation, settings: BusterSettings, workerLocalRuntime: WorkerCoreSettings['localRuntime'], workerRevision: string, sourceAttestationPublicKey: string) {
++  const dependencyReadiness = validateBusterDependencyReadinessSettings(settings.dependencyReadiness);
+   const registry = runtimeRegistry(value, directory);
+   const records = object(value.recordLimits, 'recordLimits');
+   const allowedCapabilities = new Set(Array.isArray(value.allowedCapabilities)
+@@ -54,10 +55,7 @@
+       sourceAttestationPublicKey,
+     }),
+     registry,
+-    ...(value.dependencyReadiness === undefined ? {} : { dependencyReadiness: {
+-      maximumExecutionMs: integer(object(value.dependencyReadiness, 'dependencyReadiness').maximumExecutionMs, 'dependencyReadiness.maximumExecutionMs'),
+-      maximumOutputBytes: integer(object(value.dependencyReadiness, 'dependencyReadiness').maximumOutputBytes, 'dependencyReadiness.maximumOutputBytes'),
+-    } }),
++    dependencyReadiness,
+     workerRevision,
+     runtimeRoot: path.resolve(directory, value.runtimeRoot as string),
+     admission: settings.admission, workerLocalRuntime,
+--- a/skills/buster/engine/test-gates/production-config-values.ts
++++ b/skills/buster/engine/test-gates/production-config-values.ts
+@@ -169,6 +169,9 @@
+ 
+ export function validateRuntimeRoot(value: Record<string, unknown>): void {
+   if (value.schemaVersion !== 'buster-remote-plan-runtime.v1') throw new Error('BUSTER_REMOTE_CONFIG_VERSION_INVALID');
++  if (Object.hasOwn(value, 'dependencyReadiness')) {
++    throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:dependencyReadiness:use buster-engine.config.json settings.dependencyReadiness');
++  }
+   for (const key of ['maximumArchiveBytes', 'maximumExtractedBytes', 'maximumRequestBytes']) {
+     if (Object.hasOwn(value, key))
+       throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}:use buster-engine.config.json settings.preparation`);
+--- a/docker/buster-runtime-entrypoint.sh
++++ b/docker/buster-runtime-entrypoint.sh
+@@ -225,7 +225,6 @@
+     terminationGraceMs: 2000,
+     allowSampledProcessLimit: true,
+   },
+-  dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+   containerBuild: {
+     buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: process.env.BUILDKIT_HOST,
+     ...JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),
+--- a/charts/kubeclaw/templates/_swarm-config.tpl
++++ b/charts/kubeclaw/templates/_swarm-config.tpl
+@@ -59,17 +59,19 @@
+ {{- if hasKey $config.operator "buster" -}}
+ {{- $buster := $config.operator.buster -}}
+ {{- if not (kindIs "map" $buster) -}}{{- fail "swarm buster must be an object" -}}{{- end -}}
+-{{- if or (ne (len $buster) 2) (not (hasKey $buster "preparation")) (not (hasKey $buster "admission")) -}}{{- fail "swarm buster requires preparation and admission only" -}}{{- end -}}
+-{{- $admission := $buster.admission -}}
+-{{- $admissionDefinition := (index $definitions "buster-admission") -}}
+-{{- if not (kindIs "map" $admission) -}}{{- fail "swarm buster admission must be an object" -}}{{- end -}}
+-{{- if ne (len $admission) (len $admissionDefinition.required) -}}{{- fail "swarm buster admission requires exactly supported keys" -}}{{- end -}}
+-{{- range $key := $admissionDefinition.required -}}
+-{{- if not (hasKey $admission $key) -}}{{- fail (printf "required buster admission key %s" $key) -}}{{- end -}}
+-{{- $value := index $admission $key -}}
+-{{- if not (kindIs "float64" $value) -}}{{- fail (printf "buster admission %s must be an integer" $key) -}}{{- end -}}
+-{{- $limit := index $admissionDefinition.properties $key -}}
+-{{- if or (lt $value (float64 $limit.minimum)) (gt $value (float64 $limit.maximum)) (ne $value (floor $value)) -}}{{- fail (printf "buster admission %s is outside its integer bounds" $key) -}}{{- end -}}
++{{- if or (ne (len $buster) 3) (not (hasKey $buster "preparation")) (not (hasKey $buster "admission")) (not (hasKey $buster "dependencyReadiness")) -}}{{- fail "swarm buster requires preparation, admission and dependencyReadiness only" -}}{{- end -}}
++{{- range $section, $schema := dict "admission" "buster-admission" "dependencyReadiness" "buster-dependency-readiness" -}}
++{{- $policy := index $buster $section -}}
++{{- $policyDefinition := index $definitions $schema -}}
++{{- if not (kindIs "map" $policy) -}}{{- fail (printf "swarm buster %s must be an object" $section) -}}{{- end -}}
++{{- if ne (len $policy) (len $policyDefinition.required) -}}{{- fail (printf "swarm buster %s requires exactly supported keys" $section) -}}{{- end -}}
++{{- range $key := $policyDefinition.required -}}
++{{- if not (hasKey $policy $key) -}}{{- fail (printf "required buster %s key %s" $section $key) -}}{{- end -}}
++{{- $value := index $policy $key -}}
++{{- if not (kindIs "float64" $value) -}}{{- fail (printf "buster %s %s must be an integer" $section $key) -}}{{- end -}}
++{{- $limit := index $policyDefinition.properties $key -}}
++{{- if or (lt $value (float64 $limit.minimum)) (gt $value (float64 $limit.maximum)) (ne $value (floor $value)) -}}{{- fail (printf "buster %s %s is outside its integer bounds" $section $key) -}}{{- end -}}
++{{- end -}}
+ {{- end -}}
+ {{- $preparation := $buster.preparation -}}
+ {{- $definition := (index $definitions "buster-preparation") -}}
+--- /dev/null
++++ b/tests/verification/reliability/buster-readiness-config.test.mts
+@@ -0,0 +1,65 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { loadBusterSettings, validateBusterDependencyReadinessSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
++import { validateRuntimeRoot } from '../../../skills/buster/engine/test-gates/production-config-values.ts';
++import { canonicalSwarmEntry, readTestBundle, writeTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
++
++const bounds = { maximumExecutionMs: 30000, maximumOutputBytes: 1048576 };
++
++test('readiness policy is required and strictly validated at file and direct boundaries', () => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-readiness-config-'));
++  const file = path.join(root, 'swarm.config.json');
++  const baseline = readTestBundle(canonicalSwarmEntry);
++  const original = baseline['buster-engine'].settings.dependencyReadiness;
++  try {
++    for (const [field, maximum] of Object.entries(bounds)) {
++      for (const value of [undefined, null, false, true, '1000', [], {}, 0, -1, 1.5, maximum + 1, Number.MAX_SAFE_INTEGER + 1]) {
++        const documents = structuredClone(baseline);
++        const policy = { ...original, [field]: value };
++        if (value === undefined) delete policy[field];
++        documents['buster-engine'].settings.dependencyReadiness = policy;
++        writeTestBundle(file, documents);
++        assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);
++        assert.throws(() => validateBusterDependencyReadinessSettings(policy), /SWARM_CONFIG_BUSTER_DEPENDENCY_READINESS_INVALID/);
++      }
++      for (const value of [1, maximum]) {
++        const documents = structuredClone(baseline);
++        const policy = { ...original, [field]: value };
++        documents['buster-engine'].settings.dependencyReadiness = policy;
++        writeTestBundle(file, documents);
++        assert.deepEqual(loadBusterSettings({ SWARM_CONFIG: file }).dependencyReadiness, policy);
++        assert.deepEqual(validateBusterDependencyReadinessSettings(policy), policy);
++      }
++    }
++    for (const policy of [undefined, null, [], {}, { ...original, extra: 1 }]) {
++      const documents = structuredClone(baseline);
++      documents['buster-engine'].settings.dependencyReadiness = policy;
++      writeTestBundle(file, documents);
++      assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);
++      assert.throws(() => validateBusterDependencyReadinessSettings(policy), /SWARM_CONFIG_BUSTER_DEPENDENCY_READINESS_INVALID/);
++    }
++  } finally { fs.rmSync(root, { recursive: true, force: true }); }
++});
++
++test('readiness policy captures immutable values rather than retaining the caller object', () => {
++  const input = { maximumExecutionMs: 1000, maximumOutputBytes: 65536 };
++  const captured = validateBusterDependencyReadinessSettings(input);
++  input.maximumExecutionMs = 2000;
++  input.maximumOutputBytes = 131072;
++  assert.deepEqual(captured, { maximumExecutionMs: 1000, maximumOutputBytes: 65536 });
++  assert.ok(Object.isFrozen(captured));
++});
++
++test('retired runtime JSON readiness author is rejected even when equal, empty or null', () => {
++  const runtime = { schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig: '/fixture/platform.json',
++    host: '127.0.0.1', sourceAttestationPublicKeyEnvironmentVariable: 'FIXTURE_PUBLIC_KEY',
++    trustedSourceAuthority: 'fixture:source', stateRoot: '/fixture/state', runtimeRoot: '/fixture/runtime',
++    tarExecutable: '/usr/bin/tar' };
++  assert.doesNotThrow(() => validateRuntimeRoot(runtime));
++  for (const dependencyReadiness of [undefined, null, {}, { maximumExecutionMs: 1000, maximumOutputBytes: 65536 }]) {
++    assert.throws(() => validateRuntimeRoot({ ...runtime, dependencyReadiness }), /SWARM_CONFIG_LEGACY_OVERRIDE:dependencyReadiness/);
++  }
++});

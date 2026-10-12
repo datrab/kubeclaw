@@ -1,0 +1,275 @@
+diff --git a/.github/workflows/build-images.yaml b/.github/workflows/build-images.yaml
+index 97e4214f..4cf664b2 100644
+--- a/.github/workflows/build-images.yaml
++++ b/.github/workflows/build-images.yaml
+@@ -80,7 +80,6 @@ jobs:
+           labels: ${{ steps.meta.outputs.labels }}
+           build-args: |
+             KUBECLAW_BUILD_REVISION=${{ github.sha }}
+-            TRIVY_DATABASE_REFRESH=${{ github.run_id }}.${{ github.run_attempt }}
+           provenance: mode=max
+           sbom: true
+       - name: Verify the exact published artifact
+diff --git a/.github/workflows/role-images.yaml b/.github/workflows/role-images.yaml
+index 5182902a..50f90660 100644
+--- a/.github/workflows/role-images.yaml
++++ b/.github/workflows/role-images.yaml
+@@ -49,7 +49,6 @@ jobs:
+           tags: kubeclaw-${{ matrix.name }}:proof
+           build-args: |
+             KUBECLAW_BUILD_REVISION=${{ github.sha }}
+-            TRIVY_DATABASE_REFRESH=${{ github.run_id }}.${{ github.run_attempt }}
+           cache-from: type=gha,scope=runtime-acceptance-${{ matrix.name }}
+           cache-to: type=gha,scope=runtime-acceptance-${{ matrix.name }},mode=min,ignore-error=true
+       - name: Verify the built artifact
+diff --git a/docker/Dockerfile.buster-runtime b/docker/Dockerfile.buster-runtime
+index f9dc1b67..c34836d2 100644
+--- a/docker/Dockerfile.buster-runtime
++++ b/docker/Dockerfile.buster-runtime
+@@ -72,7 +72,7 @@ RUN set -eux; \
+     usermod --append --groups buster-suite,buster-buildkit builder; \
+     printf 'builder:100000:65536\n' >> /etc/subuid; \
+     printf 'builder:100000:65536\n' >> /etc/subgid; \
+-    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /home/builder/.cache/trivy /run/user/1000/buildkit; \
++    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /run/user/1000/buildkit; \
+     chown -R builder:builder /app /home/builder /run/user/1000; \
+     chown root:builder /home/builder/.config /home/builder/.config/buildkit; \
+     chmod 0750 /home/builder/.config /home/builder/.config/buildkit
+@@ -112,14 +112,13 @@ RUN npm ci --prefix /app --omit=dev --ignore-scripts --no-audit --no-fund \
+ RUN node /app/node_modules/playwright/cli.js install --with-deps chromium firefox webkit \
+     && chown -R builder:builder /ms-playwright
+ 
+-# Freeze the vulnerability database into this immutable worker image. A new
+-# worker image is the controlled database update unit; execution stays offline.
+-# Existing release workflows provide a distinct value for each build attempt.
+-ARG TRIVY_DATABASE_REFRESH=manual
+-RUN test -n "$TRIVY_DATABASE_REFRESH" && setpriv --reuid=1000 --regid=1000 --init-groups \
+-      env TRIVY_CACHE_DIR=/home/builder/.cache/trivy trivy image --download-db-only \
+-    && setpriv --reuid=1000 --regid=1000 --init-groups \
+-      env TRIVY_CACHE_DIR=/home/builder/.cache/trivy trivy image --download-java-db-only \
++# Database bytes are resolved only by the explicit update procedure. Build
++# retries consume identical OCI manifests/layers and never resolve mutable tags.
++COPY versions.json /app/versions.json
++COPY docker/trivy-databases.lock.json /app/docker/trivy-databases.lock.json
++COPY scripts/trivy-database-lock.mjs /app/scripts/trivy-database-lock.mjs
++RUN node /app/scripts/trivy-database-lock.mjs --install /home/builder/.cache/trivy "$(trivy --version | sed -n 's/^Version: //p')" \
++    && chown -R builder:builder /home/builder/.cache/trivy \
+     && test -s /home/builder/.cache/trivy/db/trivy.db \
+     && test -s /home/builder/.cache/trivy/java-db/trivy-java.db
+ 
+diff --git a/docs/operations/local-image-vulnerability-scan.md b/docs/operations/local-image-vulnerability-scan.md
+index c3188c1d..2d964fe7 100644
+--- a/docs/operations/local-image-vulnerability-scan.md
++++ b/docs/operations/local-image-vulnerability-scan.md
+@@ -73,11 +73,51 @@ deployment time. Operator-controlled runtime JSON can set all three
+ Ages must be positive integers up to 30 days; size must be positive and at most
+ 32 GiB. Job configuration cannot waive this policy.
+ 
+-Refresh by rebuilding the Buster image and completing the existing immutable
+-image verification and release/promotion process before the source-age bound.
+-The existing image workflows use a unique `TRIVY_DATABASE_REFRESH` build argument
+-for every run and attempt. For a manual build, supply a unique value for that
+-argument or disable the cached database layer. A reused image keeps aging, and
+-an upstream stale snapshot still fails after rebuilding. No job downloads a new
+-advisory database. `NextUpdate` is retained as scheduling evidence; a current
+-`DownloadedAt` does not renew an old snapshot.
++Database inputs are authored in `versions.json` under `trivyDatabases` and
++generated into `docker/trivy-databases.lock.json` by `npm run versions:sync`.
++The Buster build verifies the selected scanner version, OCI manifest, compressed
++layer, extracted database and metadata bytes. It installs both databases together
++into a new cache. Builds consume immutable digests; rerunning a workflow or
++disabling its cache does not select newer advisory data.
++
++Before the source-age bound, explicitly select fresh inputs and rebuild:
++
++```sh
++mkdir -p dist/trivy-inputs
++node scripts/trivy-database-lock.mjs --resolve dist/trivy-inputs/update-20260921
++```
++
++Use a new directory name for every update. The resolver downloads both official
++GHCR database artifacts, verifies their bytes, and writes a proposed
++`trivy-databases.json` only after both pass. Review the preserved manifests,
++`db/metadata.json` and `java-db/metadata.json`, including upstream source dates.
++Copy the complete proposal object into `versions.json`'s `trivyDatabases` field,
++then run:
++
++```sh
++npm run versions:sync
++npm run versions:check
++node --test scripts/tests/trivy-database-lock.test.mjs
++```
++
++Review and commit the authored and generated lock together. Keep the resolver
++receipt and selected input identities with build evidence; downloaded database
++archives are large and do not belong in Git. Complete the immutable image
++verification, current scan, and release/promotion process before deployment.
++Schedule this update and promotion often enough to remain within the configured
++source-age policy, allowing for upstream publishing and build delays.
++
++An unavailable or mismatching object fails the build without a tag or mirror
++fallback. The installer rejects an existing cache and uses an exclusive sibling
++`CACHE.installing` directory. After an interrupted manual installation, confirm
++no installer still runs and remove only that attempt's abandoned guard and
++`.trivy-lock-*` staging directory before retrying into an absent cache. Normal
++Docker retries use a fresh failed layer. This publication guard is not a
++power-loss durability guarantee or a shared-cache garbage collector.
++
++A reused image keeps aging, and an upstream stale snapshot still fails after
++rebuilding. No job downloads a new advisory database. `NextUpdate` is retained
++as scheduling evidence; a current `DownloadedAt` does not renew an old snapshot.
++The loader preserves the original metadata bytes, including upstream's zero
++`DownloadedAt`. Trivy's offline mode accepts them; the runtime freshness gate
++continues to use `UpdatedAt`.
+diff --git a/docs/operations/runtime-versions-and-images.md b/docs/operations/runtime-versions-and-images.md
+index e64c1504..a84e6b6b 100644
+--- a/docs/operations/runtime-versions-and-images.md
++++ b/docs/operations/runtime-versions-and-images.md
+@@ -206,9 +206,14 @@ These tests compare two actual isolated Python installations and two actual Go
+ builds, and reject deliberately wrong hashes. They are not two complete image
+ builds. ARM64 wheel resolution/installation does not prove ARM64 execution.
+ Playwright's npm version fixes browser revisions, but independently verified
+-browser archive hashes remain unfinished. Trivy's deliberate database refresh
+-also remains a separate data input: its freshness gate and observed database
+-hashes do not make two different refreshes identical. IFR-21-001 stays open.
++browser archive hashes remain unfinished. Trivy database manifests, layers,
++database files and metadata are now pinned in `versions.json`; the generated
++`docker/trivy-databases.lock.json` binds them to the scanner version. The Buster
++build verifies these bytes without resolving mutable tags. Follow the
++[explicit database update procedure](local-image-vulnerability-scan.md#offline-buster-job-databases)
++before their source-age limit. Different reviewed database updates intentionally
++select different bytes. Complete image comparisons and tools exercised inside
++those images remain outstanding; IFR-21-001 stays open.
+ 
+ For complete image acceptance, preserve the architecture and builder settings,
+ selected browser/database bytes, complete package inventory/SBOM and output
+diff --git a/scripts/versions.mjs b/scripts/versions.mjs
+index 3904bc9a..459392e8 100644
+--- a/scripts/versions.mjs
++++ b/scripts/versions.mjs
+@@ -3,6 +3,7 @@ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ import { validateInfrastructureChartLock } from './infrastructure-chart-lock.mjs';
+ import { checkRuntimeToolLocks } from './runtime-tool-locks.mjs';
++import { databaseLock } from './trivy-database-lock.mjs';
+ 
+ function validateVersionEntries(entries) {
+     for (const [key, value] of Object.entries(entries)) {
+@@ -30,7 +31,6 @@ function dockerfileVersions(name, source, args, overrides, used) {
+     const usedOverrides = new Set();
+     const content = source.replace(/^ARG ([A-Z0-9_]+)=(\S+)$/gm, (line, key) => {
+       if (['KUBECLAW_BUILD_REVISION', 'TARGETARCH'].includes(key)) return line;
+-      if (name === 'docker/Dockerfile.buster-runtime' && key === 'TRIVY_DATABASE_REFRESH') return line;
+       if (!Object.hasOwn(args, key)) throw new Error(`${name}: unmanaged version argument ${key}`);
+       used.add(key);
+       if (Object.hasOwn(overrides, key)) usedOverrides.add(key);
+@@ -164,12 +164,13 @@ export function versionOutputs(root) {
+   bindInfrastructureVersions(manifest, replaceOne);
+   bindApplicationVersions(manifest, args, replaceOne);
+   bindRuntimeToolInputs(manifest, args, outputs);
++  outputs.set('docker/trivy-databases.lock.json', JSON.stringify(databaseLock(manifest), null, 2) + '\n');
+   return outputs;
+ }
+ 
+ export function syncVersions(root, check = true) {
+   const outputs = versionOutputs(root);
+-  const changed = [...outputs].filter(([file, content]) => fs.readFileSync(path.join(root, file), 'utf8') !== content);
++  const changed = [...outputs].filter(([file, content]) => (!fs.existsSync(path.join(root, file)) || fs.readFileSync(path.join(root, file), 'utf8') !== content));
+   if (check && changed.length) throw new Error(`Version drift; run npm run versions:sync:\n${changed.map(([file]) => file).join('\n')}`);
+   if (!check) for (const [file, content] of changed) fs.writeFileSync(path.join(root, file), content);
+   return { checked: outputs.size, changed: changed.map(([file]) => file) };
+diff --git a/tests/verification/deployment/versions.test.mjs b/tests/verification/deployment/versions.test.mjs
+index c5a8ec5f..8203d771 100644
+--- a/tests/verification/deployment/versions.test.mjs
++++ b/tests/verification/deployment/versions.test.mjs
+@@ -17,9 +17,14 @@ test('central versions update actual build/deployment files and reject drift wit
+     assert.equal(syncVersions(copy).changed.length, 0);
+     const busterPath = path.join(copy, 'docker/Dockerfile.buster-runtime');
+     const buster = fs.readFileSync(busterPath, 'utf8');
+-    assert.match(buster, /^ARG TRIVY_DATABASE_REFRESH=manual$/m);
+-    assert.match(buster, /^RUN test -n "\$TRIVY_DATABASE_REFRESH" && setpriv /m);
+-    assert.equal((buster.match(/TRIVY_DATABASE_REFRESH/g) ?? []).length, 2);
++    assert.doesNotMatch(buster, /TRIVY_DATABASE_REFRESH/);
++    const databaseLockPath = path.join(copy, 'docker/trivy-databases.lock.json');
++    const originalDatabaseLock = fs.readFileSync(databaseLockPath, 'utf8');
++    fs.writeFileSync(databaseLockPath, originalDatabaseLock.replace('trivy-database-lock.v1', 'invalid-lock'));
++    assert.throws(() => syncVersions(copy), /Version drift/);
++    assert.match(fs.readFileSync(databaseLockPath, 'utf8'), /invalid-lock/);
++    assert.deepEqual(syncVersions(copy, false).changed, ['docker/trivy-databases.lock.json']);
++    assert.equal(fs.readFileSync(databaseLockPath, 'utf8'), originalDatabaseLock);
+     fs.appendFileSync(busterPath, '\nARG TRIVY_DATABASE_REFRESH_VERSION=1.0\n');
+     assert.throws(() => versionOutputs(copy), /unmanaged version argument/);
+     fs.writeFileSync(busterPath, buster.replace(/^FROM \S+/m, 'FROM ${TRIVY_DATABASE_REFRESH}'));
+@@ -32,6 +37,8 @@ test('central versions update actual build/deployment files and reject drift wit
+     manifest.monitoringCharts.loki.version = '99.1.2';
+     manifest.redisProduction.image = `registry-1.docker.io/bitnami/redis:latest@sha256:${'a'.repeat(64)}`;
+     manifest.buildArgs.KUBECTL_VERSION = '1.99.9';
++    manifest.buildArgs.TRIVY_VERSION = '0.99.9';
++    manifest.trivyDatabases.java.files['metadata.json'].size++;
+     manifest.buildArgs.BUILDKIT_BASE = `moby/buildkit:v99.0.0-rootless@sha256:${'c'.repeat(64)}`;
+     manifest.imageOverrides['ops-pod'].HELM_VERSION = 'v3.99.9';
+     fs.writeFileSync(path.join(copy, 'versions.json'), JSON.stringify(manifest));
+@@ -66,6 +73,9 @@ test('central versions update actual build/deployment files and reject drift wit
+     manifest.imageOverrides['buster-runtime'].BUILDKIT_BASE = `moby/buildkit:v99.1.0-rootless@sha256:${'d'.repeat(64)}`;
+     fs.writeFileSync(path.join(copy, 'versions.json'), JSON.stringify(manifest));
+     syncVersions(copy, false);
++    const generatedLock = JSON.parse(fs.readFileSync(databaseLockPath, 'utf8'));
++    assert.equal(generatedLock.scannerVersion, manifest.buildArgs.TRIVY_VERSION);
++    assert.deepEqual(generatedLock.databases, manifest.trivyDatabases);
+     const effectiveBuildkit = manifest.imageOverrides['buster-runtime'].BUILDKIT_BASE;
+     assert.ok(fs.readFileSync(path.join(copy, 'scripts/deploy.sh'), 'utf8')
+       .includes(`BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${'${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-'}${effectiveBuildkit}}"`));
+diff --git a/versions.json b/versions.json
+index b68e91bc..3855b890 100644
+--- a/versions.json
++++ b/versions.json
+@@ -138,5 +138,49 @@
+   },
+   "litellmProduction": {
+     "image": "ghcr.io/berriai/litellm:main-latest@sha256:a79320760af8df488074ab3fbc830883856c7f952976aad00f039d3a43ffe4b2"
++  },
++  "trivyDatabases": {
++    "vulnerability": {
++      "repository": "ghcr.io/aquasecurity/trivy-db",
++      "manifest": {
++        "digest": "sha256:4d431c680d01e396a20899ec027c95e5736bed4294aeb40a1648c58aed5d1f7b",
++        "size": 616
++      },
++      "layer": {
++        "digest": "sha256:d42d90efdb7ecc49abcf2c796cf6478f3bab596e907fd74c786ec8070dbf6bca",
++        "size": 120435408
++      },
++      "files": {
++        "metadata.json": {
++          "digest": "sha256:0986f927c4f9f08ee08387dff92074f3cb64c652032ae6a3602179763f33b3d2",
++          "size": 143
++        },
++        "trivy.db": {
++          "digest": "sha256:e783fe142a8425c25c6e61be54f61698a405510057a94bfdd2253a4ded9ca0cc",
++          "size": 1413980160
++        }
++      }
++    },
++    "java": {
++      "repository": "ghcr.io/aquasecurity/trivy-java-db",
++      "manifest": {
++        "digest": "sha256:d83c6dd4d525be30ffecc92e5be679392be56547c29cf70f76a7478b08981c9c",
++        "size": 624
++      },
++      "layer": {
++        "digest": "sha256:cf45b46809a5759bf7b4478c52ea2b4e7f31d44ea35a2fd467cfd88af6ac3830",
++        "size": 968473554
++      },
++      "files": {
++        "metadata.json": {
++          "digest": "sha256:764a408240c9a1c6f26649eb4372624bdf95dcffb52f1314904bdb59707426c3",
++          "size": 143
++        },
++        "trivy-java.db": {
++          "digest": "sha256:1fce16f732df52f325d9922f5a8ff7221719a7819cdb5ba1dc76fe32b4a36e4c",
++          "size": 1529786368
++        }
++      }
++    }
+   }
+ }

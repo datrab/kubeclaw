@@ -1,0 +1,2 @@
+docs check failed:
+- docs/deployment/setup-flow.md is missing one of required sections: ## Common Failures | ## Troubleshooting | ## Recovery | ## Escalation

@@ -1,0 +1,60 @@
+[
+  {
+    "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+    "sha256": "b97f75c7cfc3fb043ac7af9d2f9e7fa24873a04518699b0103cc9778b23c3bbb",
+    "authorBeforeSha256": "efeca0daa7740816cec5ae99b42694c0226b9f89a771c871d62818d56aecf5fd"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "sha256": "b0945a115cf4db8c8914e7c43d78593c2ca1171f0c16d0a18b4012a2348bda0f",
+    "authorBeforeSha256": "014cf0c18f1b14ae391a8c3c834053c48d25270e43ebc6175cbc3f2a693f9011"
+  },
+  {
+    "path": "tests/verification/reliability/worker-deadline.test.mts",
+    "sha256": "5348356de9a6fdc020bba87675941cb80bd594a2d2272b61a659b24c72dfde9c",
+    "authorBeforeSha256": "410108ac2048d3d9ab1e949a7e8f387e53d0eb17b95b42fe1d0abcb15a372163"
+  },
+  {
+    "path": "skills/worker/core/worker/local-runtime.ts",
+    "sha256": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+    "authorBeforeSha256": "02876cafd08f35c84b67d3c8972e45167074c226c928c53a81b190bd67071435"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/provider-child.mjs",
+    "sha256": "5dd41b92245c36b8e4d1d63d8a14f95f8647fda040ba2c3c60e20a088becfa50"
+  },
+  {
+    "path": "skills/buster/engine/remote-plan-cli.ts",
+    "sha256": "2f5e47619915feede36cf8909c860b9cd7e4dd4378eeaf2f9b8b72a61a8d5670",
+    "authorBeforeSha256": "f10d961a5d171f846d8f5d7dff11eb387ccbd36282c10c30d1b2b627fd2cfdfa"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "sha256": "e2da22b17dc8e7a26d52650d46e81e30c97f42c04254f9a454c2abc957011f83",
+    "authorBeforeSha256": "e9508ea7274873e803ac2c43faedbb3172469a551292a794f9b40db2caadd6ed"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "2f4d8f0d305a1ad8f0404f03aca89b3d320d6df869c0d95833727fcae4fa9c0f",
+    "authorBeforeSha256": "9d2c6655c2eb411f3333cdf9d2b459970f10da44969318cc2eda3c26ed4c6660"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+    "sha256": "47cc40152c08273b3dae3cc4e192f7662936d9f9b16f857a020eab89e4423c3f",
+    "authorBeforeSha256": "c30fd160cb458232e68f27eaae24d9e622a85184f65ad8fbde3135cf14e3355d"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "sha256": "724d95538646558ad3f1930899ee1cd905ab8b8727d1bc84469831b55ef979fb",
+    "authorBeforeSha256": "ab67c1300cdca9e173b4c9014df2381fe22b9bfe4d5f19bdc68dfd0bc2cf7b7e"
+  },
+  {
+    "path": "docs/operations/operator-configuration.md",
+    "sha256": "08b9eebb134be85c0a941a56f711c958ea1c2916bc987d82345e8a906a574e4d",
+    "authorBeforeSha256": "f6bb72c4e10b2be71dbe7eb4e815a06774da6495493367d4c549b1fdf94a120b"
+  },
+  {
+    "path": "skills/buster/engine/BOUNDARIES.md",
+    "sha256": "f0210ef19a9c09164f09f140f5dd7e83ed2aa32cca5fa24fe3667e6b0dec4e8c"
+  }
+]

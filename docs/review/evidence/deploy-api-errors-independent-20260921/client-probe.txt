@@ -1,0 +1,5 @@
+empty 0 [] parser absent
+valid 0 [{"name":"agent-nova","namespace":"guard-test","revision":"1","updated":"-","status":"deployed","chart":"fixture-1.0.0","app_version":""}] parser deployed
+denied 1  parser 
+corrupt 0 [] parser absent
+corrupt-latest 0 [{"name":"agent-nova","namespace":"guard-test","revision":"1","updated":"-","status":"deployed","chart":"fixture-1.0.0","app_version":""}] parser deployed

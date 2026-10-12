@@ -1,0 +1,24 @@
+[
+  {
+    "mode": "original",
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern=diagnostic sink fails",
+      "skills/prism/tests/control-listener.test.mts"
+    ],
+    "exitCode": 0,
+    "expected": true
+  },
+  {
+    "mode": "regressed",
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern=diagnostic sink fails",
+      "skills/prism/tests/control-listener.test.mts"
+    ],
+    "exitCode": 1,
+    "expected": true
+  }
+]

@@ -1,0 +1,85 @@
+[
+  {
+    "backend": "secret",
+    "mode": "empty",
+    "status": 0,
+    "stdout": "absent",
+    "stderr": "",
+    "calls": [
+      "/api?timeout=32s",
+      "/apis?timeout=32s",
+      "/api/v1?timeout=32s",
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500"
+    ]
+  },
+  {
+    "backend": "secret",
+    "mode": "valid",
+    "status": 0,
+    "stdout": "deployed",
+    "stderr": "",
+    "calls": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v1"
+    ]
+  },
+  {
+    "backend": "secret",
+    "mode": "pending",
+    "status": 0,
+    "stdout": "pending-upgrade",
+    "stderr": "",
+    "calls": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v1"
+    ]
+  },
+  {
+    "backend": "secret",
+    "mode": "denied",
+    "status": 1,
+    "stdout": "",
+    "stderr": "Error from server (Forbidden): fixture credentials not found\nCannot inspect Helm storage for guard-test/agent-nova\n",
+    "calls": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500"
+    ]
+  },
+  {
+    "backend": "secret",
+    "mode": "corrupt-only",
+    "status": 1,
+    "stdout": "",
+    "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x1cf0d39]\n\ngoroutine 1 [running]:\nhelm.sh/helm/v3/pkg/storage/driver.(*Secrets).Get(0x25241e3?, {0x164d30a38080, 0x20})\n\thelm.sh/helm/v3/pkg/storage/driver/secrets.go:76 +0x319\nhelm.sh/helm/v3/pkg/storage.(*Storage).Get(0x164d30a1bbc0, {0x7fff96ceea95, 0xa}, 0x1)\n\thelm.sh/helm/v3/pkg/storage/storage.go:54 +0x1e8\nhelm.sh/helm/v3/pkg/action.(*Configuration).releaseContent(0x164d30b7c0a0, {0x7fff96ceea95, 0xa}, 0x1)\n\thelm.sh/helm/v3/pkg/action/action.go:318 +0x7b\nhelm.sh/helm/v3/pkg/action.(*Status).Run(0x164d30b6a318, {0x7fff96ceea95, 0xa})\n\thelm.sh/helm/v3/pkg/action/status.go:63 +0xb0\nmain.newStatusCmd.func2(0x164d30a67600?, {0x164d307064d0?, 0x4?, 0x2519b6a?})\n\thelm.sh/helm/v3/cmd/helm/status.go:75 +0x72\ngithub.com/spf13/cobra.(*Command).execute(0x164d30e7f808, {0x164d30706460, 0x7, 0x7})\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1015 +0xb14\ngithub.com/spf13/cobra.(*Command).ExecuteC(0x164d3074a308)\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1148 +0x465\ngithub.com/spf13/cobra.(*Command).Execute(...)\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1071\nmain.main()\n\thelm.sh/helm/v3/cmd/helm/helm.go:91 +0x205\nCannot decode Helm revision guard-test/agent-nova/1\n",
+    "calls": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v1"
+    ]
+  },
+  {
+    "backend": "secret",
+    "mode": "corrupt-latest",
+    "status": 1,
+    "stdout": "",
+    "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x1cf0d39]\n\ngoroutine 1 [running]:\nhelm.sh/helm/v3/pkg/storage/driver.(*Secrets).Get(0x25241e3?, {0x18f7125ca0c0, 0x20})\n\thelm.sh/helm/v3/pkg/storage/driver/secrets.go:76 +0x319\nhelm.sh/helm/v3/pkg/storage.(*Storage).Get(0x18f712599a60, {0x7ffe3c8c3a95, 0xa}, 0x2)\n\thelm.sh/helm/v3/pkg/storage/storage.go:54 +0x1e8\nhelm.sh/helm/v3/pkg/action.(*Configuration).releaseContent(0x18f7125de000, {0x7ffe3c8c3a95, 0xa}, 0x2)\n\thelm.sh/helm/v3/pkg/action/action.go:318 +0x7b\nhelm.sh/helm/v3/pkg/action.(*Status).Run(0x18f7122503a8, {0x7ffe3c8c3a95, 0xa})\n\thelm.sh/helm/v3/pkg/action/status.go:63 +0xb0\nmain.newStatusCmd.func2(0x18f712163600?, {0x18f712360460?, 0x4?, 0x2519b6a?})\n\thelm.sh/helm/v3/cmd/helm/status.go:75 +0x72\ngithub.com/spf13/cobra.(*Command).execute(0x18f71235d808, {0x18f712360380, 0x7, 0x7})\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1015 +0xb14\ngithub.com/spf13/cobra.(*Command).ExecuteC(0x18f7124e6308)\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1148 +0x465\ngithub.com/spf13/cobra.(*Command).Execute(...)\n\tgithub.com/spf13/cobra@v1.10.2/command.go:1071\nmain.main()\n\thelm.sh/helm/v3/cmd/helm/helm.go:91 +0x205\nCannot decode Helm revision guard-test/agent-nova/2\n",
+    "calls": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v2"
+    ]
+  },
+  {
+    "backend": "secret",
+    "mode": "corrupt-old",
+    "status": 0,
+    "stdout": "deployed",
+    "stderr": "",
+    "calls": [
+      "/api/v1/namespaces/guard-test/secrets?labelSelector=owner%3Dhelm%2Cname%3Dagent-nova&limit=500",
+      "/version",
+      "/api/v1/namespaces/guard-test/secrets/sh.helm.release.v1.agent-nova.v2"
+    ]
+  }
+]

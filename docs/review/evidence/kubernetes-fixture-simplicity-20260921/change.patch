@@ -1,0 +1,1786 @@
+--- /dev/null
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts
+@@ -0,0 +1,165 @@
++import { boundedManifestDocuments } from './kubernetes-manifest.ts';
++import { flattenDocuments } from './kubernetes-fixture-manifest-files.ts';
++import { podSpecs, validatePodSecurity } from './kubernetes-fixture-pods.ts';
++import { persistentVolumeClaims, validatePersistentVolumeClaim, type PersistentVolumePolicy } from './kubernetes-fixture-storage.ts';
++import { object, text, IMMUTABLE_IMAGE, type JsonObject } from './kubernetes-fixture-values.ts';
++const CLUSTER_SCOPED_KINDS = new Set([
++    'APIService', 'CertificateSigningRequest', 'ClusterRole', 'ClusterRoleBinding',
++    'CSIDriver', 'CSINode', 'CustomResourceDefinition', 'FlowSchema', 'IngressClass',
++    'MutatingWebhookConfiguration', 'Namespace', 'Node', 'PersistentVolume',
++    'PriorityClass', 'PriorityLevelConfiguration', 'RuntimeClass', 'StorageClass',
++    'ValidatingAdmissionPolicy', 'ValidatingAdmissionPolicyBinding',
++    'ValidatingWebhookConfiguration', 'VolumeSnapshotClass',
++]);
++const ALLOWED_NAMESPACED_KINDS = new Set([
++    'ConfigMap', 'CronJob', 'Deployment', 'Job', 'PersistentVolumeClaim', 'Pod', 'Service', 'StatefulSet',
++]);
++interface ManifestPolicy {
++    readonly immutableImage: string;
++    readonly maximumResources: number;
++    readonly allowedRegistryPrefixes: readonly string[];
++    readonly serviceName: string;
++    readonly servicePort: number;
++    readonly expectedServiceTargetPort: number | null;
++    readonly persistentVolumePolicy: PersistentVolumePolicy;
++}
++interface InspectionState {
++    workloads: number;
++    matchedImage: boolean;
++    matchedService: boolean;
++    serviceTargetPortName: string | null;
++    resolvedServiceTargetPort: number | null;
++    namedContainerPorts: Map<string, Set<number>>;
++    persistentVolumeTotalBytes: bigint;
++}
++export function inspectManifest(bytes: Buffer, policy: ManifestPolicy): {
++    resources: number;
++    workloads: number;
++    serviceTargetPort: number;
++} {
++    const loaded = boundedManifestDocuments(bytes);
++    const documents = flattenDocuments(loaded, policy.maximumResources);
++    if (documents.length < 1 || documents.length > policy.maximumResources)
++        throw new Error('KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID');
++    const state: InspectionState = { workloads: 0, matchedImage: false, matchedService: false,
++        serviceTargetPortName: null, resolvedServiceTargetPort: null,
++        namedContainerPorts: new Map(), persistentVolumeTotalBytes: 0n };
++    for (const document of documents)
++        inspectDocument(document, policy, state);
++    return finishInspection(documents.length, policy, state);
++}
++function inspectDocument(document: JsonObject, policy: ManifestPolicy, state: InspectionState): void {
++    const apiVersion = text(document.apiVersion, 'apiVersion', 128);
++    const kind = text(document.kind, 'kind', 128);
++    const metadata = object(document.metadata, 'metadata');
++    text(metadata.name, 'metadata.name', 253);
++    if (CLUSTER_SCOPED_KINDS.has(kind))
++        throw new Error(`KUBERNETES_FIXTURE_CLUSTER_SCOPE_DENIED:${kind}`);
++    if (!ALLOWED_NAMESPACED_KINDS.has(kind))
++        throw new Error(`KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED:${kind}`);
++    if (metadata.namespace !== undefined)
++        throw new Error(`KUBERNETES_FIXTURE_NAMESPACE_FIELD_DENIED:${kind}`);
++    if (!apiVersion.includes('/') && apiVersion !== 'v1')
++        throw new Error('KUBERNETES_FIXTURE_API_VERSION_INVALID');
++    for (const claim of persistentVolumeClaims(document)) {
++        state.persistentVolumeTotalBytes += validatePersistentVolumeClaim(claim.name, claim.spec, policy.persistentVolumePolicy)
++            * claim.copies;
++        if (state.persistentVolumeTotalBytes > policy.persistentVolumePolicy.maximumTotalBytes) {
++            throw new Error('KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED');
++        }
++    }
++    if (kind === 'Service')
++        inspectService(document, metadata, policy, state);
++    inspectPods(document, policy, state);
++}
++function inspectService(document: JsonObject, metadata: JsonObject, policy: ManifestPolicy, state: InspectionState): void {
++    const spec = object(document.spec, 'service.spec');
++    const type = spec.type ?? 'ClusterIP';
++    const annotations = object(metadata.annotations ?? {}, 'service.metadata.annotations');
++    const externalIPs = spec.externalIPs;
++    const hasExternalIPs = externalIPs !== undefined && (!Array.isArray(externalIPs) || externalIPs.length > 0);
++    const externalName = spec.externalName;
++    const hasExternalName = externalName !== undefined
++        && (typeof externalName !== 'string' || externalName.trim().length > 0);
++    if (type !== 'ClusterIP' || hasExternalIPs || hasExternalName) {
++        throw new Error('KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED');
++    }
++    if (annotations['tailscale.com/expose'] !== undefined) {
++        throw new Error('KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED');
++    }
++    selectService(spec, metadata, policy, state);
++}
++function selectService(spec: JsonObject, metadata: JsonObject, policy: ManifestPolicy, state: InspectionState): void {
++    if (metadata.name === policy.serviceName) {
++        if (state.matchedService)
++            throw new Error('KUBERNETES_FIXTURE_SERVICE_DUPLICATE');
++        state.matchedService = true;
++        const ports = Array.isArray(spec.ports) ? spec.ports.map((entry) => object(entry, 'service.port')) : [];
++        const selected = ports.filter((entry) => entry.port === policy.servicePort);
++        if (selected.length !== 1)
++            throw new Error('KUBERNETES_FIXTURE_SERVICE_PORT_MISMATCH');
++        const target = selected[0]!.targetPort ?? policy.servicePort;
++        if (typeof target === 'number')
++            state.resolvedServiceTargetPort = target;
++        if (typeof target === 'string')
++            state.serviceTargetPortName = target;
++    }
++}
++function inspectPods(document: JsonObject, policy: ManifestPolicy, state: InspectionState): void {
++    for (const spec of podSpecs(document)) {
++        state.workloads += 1;
++        validatePodSecurity(spec);
++        for (const field of ['initContainers', 'containers']) {
++            const containers = spec[field];
++            if (containers === undefined)
++                continue;
++            if (!Array.isArray(containers))
++                throw new Error('KUBERNETES_FIXTURE_CONTAINERS_INVALID');
++            for (const container of containers) {
++                inspectContainer(container, policy, state);
++            }
++        }
++    }
++}
++function inspectContainer(container: unknown, policy: ManifestPolicy, state: InspectionState): void {
++    const containerObject = object(container, 'container');
++    const image = text(containerObject.image, 'container.image', 2048);
++    const parsed = IMMUTABLE_IMAGE.exec(image);
++    if (!parsed)
++        throw new Error(`KUBERNETES_FIXTURE_MUTABLE_IMAGE_DENIED:${image}`);
++    if (!policy.allowedRegistryPrefixes.some((prefix) => parsed[1] === prefix || parsed[1]!.startsWith(`${prefix}/`))) {
++        throw new Error(`KUBERNETES_FIXTURE_IMAGE_REGISTRY_DENIED:${image}`);
++    }
++    if (image === policy.immutableImage)
++        state.matchedImage = true;
++    recordContainerPorts(containerObject, state);
++}
++function recordContainerPorts(containerObject: JsonObject, state: InspectionState): void {
++    for (const rawPort of Array.isArray(containerObject.ports) ? containerObject.ports : []) {
++        const port = object(rawPort, 'container.port');
++        if (typeof port.name === 'string' && Number.isSafeInteger(port.containerPort)) {
++            const values = state.namedContainerPorts.get(port.name) ?? new Set<number>();
++            values.add(Number(port.containerPort));
++            state.namedContainerPorts.set(port.name, values);
++        }
++    }
++}
++function finishInspection(resources: number, policy: ManifestPolicy, state: InspectionState) {
++    if (state.workloads < 1)
++        throw new Error('KUBERNETES_FIXTURE_WORKLOAD_REQUIRED');
++    if (!state.matchedImage)
++        throw new Error('KUBERNETES_FIXTURE_IMAGE_NOT_USED');
++    if (!state.matchedService)
++        throw new Error('KUBERNETES_FIXTURE_SERVICE_REQUIRED');
++    if (state.serviceTargetPortName !== null) {
++        const ports = state.namedContainerPorts.get(state.serviceTargetPortName);
++        if (ports?.size !== 1)
++            throw new Error('KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH');
++        state.resolvedServiceTargetPort = [...ports][0]!;
++    }
++    if (state.resolvedServiceTargetPort === null || state.resolvedServiceTargetPort < 1 || state.resolvedServiceTargetPort > 65_535
++        || (policy.expectedServiceTargetPort !== null && state.resolvedServiceTargetPort !== policy.expectedServiceTargetPort)) {
++        throw new Error('KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH');
++    }
++    return { resources, workloads: state.workloads, serviceTargetPort: state.resolvedServiceTargetPort };
++}
+--- /dev/null
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts
+@@ -0,0 +1,67 @@
++import crypto from 'node:crypto';
++import fs from 'node:fs';
++import path from 'node:path';
++import { text, object, type JsonObject } from './kubernetes-fixture-values.ts';
++export function contained(root: string, value: unknown): string {
++    const requested = text(value, 'manifestPath', 4096);
++    if (!path.isAbsolute(requested))
++        throw new Error('KUBERNETES_FIXTURE_MANIFEST_PATH_INVALID');
++    const canonical = fs.realpathSync(requested);
++    if (canonical !== root && !canonical.startsWith(`${root}${path.sep}`)) {
++        throw new Error('KUBERNETES_FIXTURE_MANIFEST_PATH_DENIED');
++    }
++    if (!fs.statSync(canonical).isFile())
++        throw new Error('KUBERNETES_FIXTURE_MANIFEST_NOT_FILE');
++    return canonical;
++}
++export function manifestBytes(file: string, expectedDigest: string, maximumBytes: number): Buffer {
++    const handle = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
++    try {
++        const before = fs.fstatSync(handle);
++        if (before.size < 1 || before.size > maximumBytes)
++            throw new Error('KUBERNETES_FIXTURE_MANIFEST_SIZE_INVALID');
++        const bytes = Buffer.alloc(before.size);
++        let offset = 0;
++        while (offset < bytes.length) {
++            const count = fs.readSync(handle, bytes, offset, bytes.length - offset, offset);
++            if (count === 0)
++                throw new Error('KUBERNETES_FIXTURE_MANIFEST_READ_INCOMPLETE');
++            offset += count;
++        }
++        const after = fs.fstatSync(handle);
++        if (after.size !== before.size || after.mtimeMs !== before.mtimeMs) {
++            throw new Error('KUBERNETES_FIXTURE_MANIFEST_CHANGED');
++        }
++        const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
++        if (digest !== expectedDigest)
++            throw new Error('KUBERNETES_FIXTURE_MANIFEST_DIGEST_MISMATCH');
++        return bytes;
++    }
++    finally {
++        fs.closeSync(handle);
++    }
++}
++export function flattenDocuments(values: unknown[], maximumResources: number): JsonObject[] {
++    const out: JsonObject[] = [];
++    const pending = values.filter(value => value !== null && value !== undefined).reverse();
++    let visits = 0;
++    while (pending.length) {
++        if (++visits > 100_000)
++            throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
++        const document = object(pending.pop(), 'manifestDocument');
++        if (document.kind === 'List') {
++            if (!Array.isArray(document.items))
++                throw new Error('KUBERNETES_FIXTURE_MANIFEST_LIST_INVALID');
++            if (pending.length + document.items.length > 100_000)
++                throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
++            for (let index = document.items.length - 1; index >= 0; index -= 1)
++                pending.push(document.items[index]);
++        }
++        else {
++            if (out.length >= maximumResources)
++                throw new Error('KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID');
++            out.push(document);
++        }
++    }
++    return out;
++}
+--- /dev/null
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-pods.ts
+@@ -0,0 +1,82 @@
++import { object, type JsonObject } from './kubernetes-fixture-values.ts';
++function isObject(value: unknown): value is JsonObject {
++    return !!value && typeof value === 'object' && !Array.isArray(value);
++}
++export function podSpecs(document: JsonObject): JsonObject[] {
++    const spec = document.spec;
++    if (!isObject(spec))
++        return [];
++    const typed = spec as JsonObject;
++    if (document.kind === 'Pod')
++        return [typed];
++    const template = typed.template;
++    if (isObject(template)) {
++        const templateSpec = (template as JsonObject).spec;
++        if (isObject(templateSpec))
++            return [templateSpec as JsonObject];
++    }
++    const jobTemplate = typed.jobTemplate;
++    if (isObject(jobTemplate)) {
++        const jobSpec = (jobTemplate as JsonObject).spec;
++        const jobTemplateValue = isObject(jobSpec)
++            ? (jobSpec as JsonObject).template : null;
++        const jobPodSpec = isObject(jobTemplateValue)
++            ? (jobTemplateValue as JsonObject).spec : null;
++        if (isObject(jobPodSpec))
++            return [jobPodSpec as JsonObject];
++    }
++    return [];
++}
++export function validatePodSecurity(spec: JsonObject): void {
++    if (spec.hostNetwork === true || spec.hostPID === true || spec.hostIPC === true) {
++        throw new Error('KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED');
++    }
++    const podSecurity = object(spec.securityContext ?? {}, 'pod.securityContext');
++    if (podSecurity.runAsNonRoot !== true)
++        throw new Error('KUBERNETES_FIXTURE_RUN_AS_NON_ROOT_REQUIRED');
++    const seccomp = object(podSecurity.seccompProfile ?? {}, 'pod.seccompProfile');
++    if (seccomp.type !== 'RuntimeDefault' && seccomp.type !== 'Localhost') {
++        throw new Error('KUBERNETES_FIXTURE_SECCOMP_REQUIRED');
++    }
++    const volumes = Array.isArray(spec.volumes) ? spec.volumes : [];
++    if (volumes.some((volume) => object(volume, 'pod.volume').hostPath !== undefined)) {
++        throw new Error('KUBERNETES_FIXTURE_HOST_PATH_DENIED');
++    }
++    if (volumes.some((volume) => object(volume, 'pod.volume').ephemeral !== undefined)) {
++        throw new Error('KUBERNETES_FIXTURE_GENERIC_EPHEMERAL_VOLUME_DENIED');
++    }
++    validatePodContainers(spec, podSecurity);
++}
++function validateContainerSecurity(raw: unknown, podSecurity: JsonObject): void {
++    export const container = object(raw, 'container');
++    export const security = object(container.securityContext ?? {}, 'container.securityContext');
++    if (security.privileged === true || security.allowPrivilegeEscalation !== false
++        || (security.runAsNonRoot !== true && podSecurity.runAsNonRoot !== true)) {
++        throw new Error('KUBERNETES_FIXTURE_CONTAINER_SECURITY_INVALID');
++    }
++    export const capabilities = object(security.capabilities ?? {}, 'container.capabilities');
++    if (!Array.isArray(capabilities.drop) || !capabilities.drop.includes('ALL')) {
++        throw new Error('KUBERNETES_FIXTURE_CAPABILITY_DROP_REQUIRED');
++    }
++    export const ports = Array.isArray(container.ports) ? container.ports : [];
++    if (ports.some((port) => {
++        const hostPort = object(port, 'container.port').hostPort;
++        return hostPort !== undefined && hostPort !== 0;
++    })) {
++        throw new Error('KUBERNETES_FIXTURE_HOST_PORT_DENIED');
++    }
++}
++
++function validatePodContainers(spec: JsonObject, podSecurity: JsonObject): void {
++    for (const field of ['initContainers', 'containers']) {
++        const containers = spec[field];
++        if (containers === undefined)
++            continue;
++        if (!Array.isArray(containers) || (field === 'containers' && containers.length < 1)) {
++            throw new Error('KUBERNETES_FIXTURE_CONTAINERS_INVALID');
++        }
++        for (const raw of containers) {
++            validateContainerSecurity(raw, podSecurity);
++        }
++    }
++}
+--- /dev/null
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts
+@@ -0,0 +1,149 @@
++import { object, text, integer, stringArray, DNS_LABEL, IMMUTABLE_IMAGE, DIGEST, SECRET_NAME, MAX_NAMESPACE_PREFIX_LENGTH, type JsonObject } from './kubernetes-fixture-values.ts';
++import { contained, manifestBytes } from './kubernetes-fixture-manifest-files.ts';
++import { inspectManifest } from './kubernetes-fixture-inspection.ts';
++import type { KubernetesFixtureSettings } from './kubernetes-fixture-settings.ts';
++import type { KubernetesFixtureReadiness, KubectlRun } from './kubernetes-fixture-readiness.ts';
++import type { generatedDemoCredentials } from './generated-demo-credentials.ts';
++import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
++interface PreparationOperations {
++    readonly run: KubectlRun;
++    readonly readiness: KubernetesFixtureReadiness;
++    readonly generatedCredentials: (expected: Parameters<typeof generatedDemoCredentials>[2], signal: AbortSignal) => Promise<ReturnType<typeof generatedDemoCredentials>>;
++    readonly releaseAfterPrepareFailure: (leaseName: string) => Promise<void>;
++}
++export class KubernetesFixturePreparation {
++    readonly #settings: KubernetesFixtureSettings;
++    readonly #operations: PreparationOperations;
++    constructor(settings: KubernetesFixtureSettings, operations: PreparationOperations) {
++        this.#settings = settings;
++        this.#operations = operations;
++    }
++    async #activate(prepared: ReturnType<typeof readRequest>, selected: ReturnType<typeof leaseRequest>, signal: AbortSignal) {
++        const { leaseName, namespaceName, immutableImage, manifestDigest, bytes, serviceName, servicePort, secretReferences, facts } = prepared;
++        const { retentionSeconds, readinessTimeoutMs, testCredentials } = selected;
++        const status = await this.#operations.readiness.waitLease(leaseName, signal, readinessTimeoutMs);
++        const actualNamespace = text(status.namespaceName, 'status.namespaceName', 63);
++        if (actualNamespace !== namespaceName)
++            throw new Error('KUBERNETES_FIXTURE_NAMESPACE_MISMATCH');
++        await this.#operations.run(['apply', '--namespace', namespaceName, '-f', '-'], bytes, signal, readinessTimeoutMs);
++        const readinessDeadline = Date.now() + readinessTimeoutMs;
++        const podCount = await this.#operations.readiness.waitPods(namespaceName, signal, readinessTimeoutMs);
++        const serviceReadinessMs = readinessDeadline - Date.now();
++        if (serviceReadinessMs <= 0)
++            throw new Error('KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT:Readiness deadline expired.');
++        await this.#operations.readiness.waitService(namespaceName, serviceName, servicePort, signal, serviceReadinessMs);
++        const createdAt = text(status.createdAt, 'status.createdAt', 64);
++        if (!Number.isFinite(Date.parse(createdAt)))
++            throw new Error('KUBERNETES_FIXTURE_CREATED_AT_INVALID');
++        const expiresAt = typeof status.expiresAt === 'string' ? status.expiresAt : new Date(Date.parse(createdAt) + retentionSeconds * 1_000).toISOString();
++        const generatedCredentials = testCredentials ? await this.#operations.generatedCredentials({ leaseName, namespace: namespaceName,
++            secretName: String(testCredentials.secretName), immutableImage, manifestDigest }, signal) : undefined;
++        return Object.freeze({ ok: true, leaseName, namespace: namespaceName, createdAt, expiresAt,
++            endpoint: `http://${serviceName}.${namespaceName}.svc.cluster.local:${servicePort}`,
++            releaseAction: `kubectl delete busternamespacelease ${leaseName} -n ${this.#settings.controllerNamespace}`,
++            manifestDigest, immutableImage, secretReferences,
++            ...(testCredentials ? { credentialsRef: testCredentials.secretName } : {}),
++            ...(generatedCredentials ? { generatedCredentials } : {}),
++            resourceCount: facts.resources, workloadCount: facts.workloads, podCount });
++    }
++    async prepare(request: TestProviderCapabilityRequest, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
++        const prepared = readRequest(this.#settings, request);
++        const selected = leaseRequest(this.#settings, request, prepared);
++        const { leaseName } = prepared;
++        const { lease } = selected;
++        const leaseBytes = `${JSON.stringify(lease)}\n`;
++        const resource = `busternamespaceleases.${this.#settings.apiGroup}`;
++        for (const verb of ['create', 'get', 'delete']) {
++            const allowed = (await this.#operations.run(['auth', 'can-i', verb, resource, '-n', this.#settings.controllerNamespace], null, signal, 15_000)).trim();
++            if (allowed !== 'yes')
++                throw new Error(`KUBERNETES_FIXTURE_RBAC_DENIED:${verb}`);
++        }
++        await this.#operations.run(['apply', '--dry-run=server', '-f', '-'], leaseBytes, signal, 15_000);
++        await this.#operations.run(['apply', '-f', '-'], leaseBytes, signal, 15_000);
++        try {
++            return await this.#activate(prepared, selected, signal);
++        }
++        catch (error) {
++            await this.#operations.releaseAfterPrepareFailure(leaseName).catch(() => undefined);
++            throw error;
++        }
++    }
++}
++
++function readRequest(settings: KubernetesFixtureSettings, request: TestProviderCapabilityRequest) {
++    const payload = object(request.payload, 'payload');
++    const leaseName = text(payload.leaseName, 'leaseName', 63);
++    if (!DNS_LABEL.test(leaseName))
++        throw new Error('KUBERNETES_FIXTURE_LEASE_NAME_INVALID');
++    const namespacePrefix = text(payload.namespacePrefix, 'namespacePrefix', MAX_NAMESPACE_PREFIX_LENGTH);
++    if (!settings.namespacePrefixes.has(namespacePrefix))
++        throw new Error('KUBERNETES_FIXTURE_NAMESPACE_PREFIX_DENIED');
++    const namespaceName = text(payload.namespaceName, 'namespaceName', 63);
++    if (!DNS_LABEL.test(namespaceName) || !namespaceName.startsWith(`${namespacePrefix}-`)) {
++        throw new Error('KUBERNETES_FIXTURE_NAMESPACE_NAME_INVALID');
++    }
++    const immutableImage = text(payload.immutableImage, 'immutableImage', 2048);
++    const image = IMMUTABLE_IMAGE.exec(immutableImage);
++    if (!image || !settings.registryPrefixes.some((prefix) => image[1] === prefix || image[1]!.startsWith(`${prefix}/`))) {
++        throw new Error('KUBERNETES_FIXTURE_IMAGE_DENIED');
++    }
++    if (payload.imageDigest !== image[2] || !DIGEST.test(String(payload.imageDigest))) {
++        throw new Error('KUBERNETES_FIXTURE_IMAGE_DIGEST_INVALID');
++    }
++    const manifestDigest = text(payload.manifestDigest, 'manifestDigest', 71);
++    if (!DIGEST.test(manifestDigest))
++        throw new Error('KUBERNETES_FIXTURE_MANIFEST_DIGEST_INVALID');
++    const manifestPath = contained(settings.root, payload.manifestPath);
++    const bytes = manifestBytes(manifestPath, manifestDigest, settings.maximumManifestBytes);
++    const serviceName = text(payload.serviceName, 'serviceName', 63);
++    if (!DNS_LABEL.test(serviceName))
++        throw new Error('KUBERNETES_FIXTURE_SERVICE_NAME_INVALID');
++    const servicePort = integer(payload.servicePort, 'servicePort', 1, 65_535);
++    const expectedServiceTargetPort = payload.serviceTargetPort === undefined
++        ? null : integer(payload.serviceTargetPort, 'serviceTargetPort', 1, 65_535);
++    const secretReferences = stringArray(payload.secretReferences ?? [], 'secretReferences', 32, SECRET_NAME);
++    if (secretReferences.some((name) => !settings.secretReferences.has(name))) {
++        throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED');
++    }
++    const facts = inspectManifest(bytes, { immutableImage, maximumResources: settings.maximumResources,
++        allowedRegistryPrefixes: settings.registryPrefixes, serviceName, servicePort, expectedServiceTargetPort,
++        persistentVolumePolicy: {
++            allowedStorageClasses: settings.allowedStorageClasses,
++            allowDefaultStorageClass: settings.allowDefaultStorageClass,
++            maximumClaimBytes: settings.maximumPersistentVolumeClaimBytes,
++            maximumTotalBytes: settings.maximumPersistentVolumeTotalBytes,
++        } });
++    return { payload, leaseName, namespaceName, namespacePrefix, immutableImage, manifestDigest, bytes, serviceName, servicePort, secretReferences, facts };
++}
++
++function leaseRequest(settings: KubernetesFixtureSettings, request: TestProviderCapabilityRequest, prepared: ReturnType<typeof readRequest>) {
++    const { payload, leaseName, namespaceName, namespacePrefix, immutableImage, manifestDigest, serviceName, servicePort, secretReferences, facts } = prepared;
++    const retentionSeconds = integer(payload.retentionSeconds, 'retentionSeconds', 60, settings.maximumRetentionSeconds);
++    const retentionMode = text(payload.retentionMode, 'retentionMode', 6);
++    if (retentionMode !== 'delete' && retentionMode !== 'retain') {
++        throw new Error('KUBERNETES_FIXTURE_RETENTION_MODE_INVALID');
++    }
++    const readinessTimeoutMs = integer(payload.readinessTimeoutMs, 'readinessTimeoutMs', 1_000, settings.maximumExecutionMs);
++    const credentialsValue = payload.testCredentials === undefined ? null : object(payload.testCredentials, 'testCredentials');
++    let testCredentials: JsonObject | null = null;
++    if (credentialsValue) {
++        const mode = text(credentialsValue.mode, 'testCredentials.mode', 16);
++        const secretName = text(credentialsValue.secretName, 'testCredentials.secretName', 253);
++        if (mode !== 'generate' || !SECRET_NAME.test(secretName)) {
++            throw new Error('KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID');
++        }
++        testCredentials = { mode, secretName, keys: ['username', 'password'],
++            readers: [...new Set([settings.credentialReaderSubject, settings.runnerSubject])] };
++    }
++    const lease = {
++        apiVersion: `${settings.apiGroup}/${settings.apiVersion}`, kind: 'BusterNamespaceLease',
++        metadata: { name: leaseName, namespace: settings.controllerNamespace,
++            labels: { 'openclaw.io/buster-scope': request.resource.canonicalId.replace(/[^A-Za-z0-9._-]/gu, '-').slice(0, 63) } },
++        spec: { namespaceName, namespacePrefix, runId: leaseName, project: text(payload.project, 'project', 253),
++            purpose: 'gate', serviceName, servicePort, serviceTargetPort: facts.serviceTargetPort, cleanupPolicy: retentionMode,
++            verifiedImage: immutableImage, manifestDigest,
++            ttlSeconds: retentionSeconds, access: [{ subject: settings.runnerSubject, mode: 'deployer' }],
++            secretsToCopy: secretReferences, ...(testCredentials ? { testCredentials } : {}), exposure: { provider: 'off' } },
++    };
++    return { lease, retentionSeconds, readinessTimeoutMs, testCredentials };
++}
+--- /dev/null
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts
+@@ -0,0 +1,132 @@
++import { object, type JsonObject } from './kubernetes-fixture-values.ts';
++import type { KubernetesFixtureSettings } from './kubernetes-fixture-settings.ts';
++export type KubectlRun = (args: readonly string[], input: Buffer | string | null, signal: AbortSignal, timeout?: number) => Promise<string>;
++function waitForPoll(milliseconds: number, signal: AbortSignal): Promise<void> {
++    return new Promise((resolve, reject) => {
++        const finish = (): void => {
++            signal.removeEventListener('abort', abort);
++            resolve();
++        };
++        const timer = setTimeout(finish, milliseconds);
++        const abort = (): void => {
++            clearTimeout(timer);
++            signal.removeEventListener('abort', abort);
++            reject(new Error('KUBERNETES_FIXTURE_CANCELLED'));
++        };
++        if (signal.aborted)
++            abort();
++        else
++            signal.addEventListener('abort', abort, { once: true });
++    });
++}
++export class KubernetesFixtureReadiness {
++    readonly #settings: KubernetesFixtureSettings;
++    readonly #run: KubectlRun;
++    constructor(settings: KubernetesFixtureSettings, run: KubectlRun) {
++        this.#settings = settings;
++        this.#run = run;
++    }
++    async waitLease(leaseName: string, signal: AbortSignal, timeoutMs: number): Promise<JsonObject> {
++        const deadline = Date.now() + timeoutMs;
++        let last = 'Pending';
++        while (Date.now() < deadline) {
++            const requestTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
++            const raw = await this.#run(['get', 'busternamespacelease', leaseName, '-n', this.#settings.controllerNamespace, '-o', 'json'], null, signal, requestTimeoutMs);
++            const value = object(JSON.parse(raw), 'lease');
++            const status = object(value.status ?? {}, 'lease.status');
++            const phase = typeof status.phase === 'string' ? status.phase : 'Pending';
++            last = typeof status.message === 'string' ? status.message : phase;
++            if (phase === 'Ready')
++                return status;
++            if (phase === 'Rejected')
++                throw new Error(`KUBERNETES_FIXTURE_LEASE_REJECTED:${last}`);
++            if (phase === 'Failed')
++                throw new Error(`KUBERNETES_FIXTURE_LEASE_FAILED:${last}`);
++            const pollMs = Math.min(this.#settings.pollIntervalMs, Math.max(0, deadline - Date.now()));
++            if (pollMs > 0)
++                await waitForPoll(pollMs, signal);
++        }
++        throw new Error(`KUBERNETES_FIXTURE_LEASE_TIMEOUT:${last}`);
++    }
++    async waitPods(namespace: string, signal: AbortSignal, timeoutMs: number): Promise<number> {
++        const deadline = Date.now() + timeoutMs;
++        let last = 'No pods found.';
++        while (Date.now() < deadline) {
++            const requestTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
++            const raw = await this.#run(['get', 'pods', '-n', namespace, '-o', 'json'], null, signal, requestTimeoutMs);
++            const value = object(JSON.parse(raw), 'pods');
++            const items = Array.isArray(value.items) ? value.items : [];
++            if (items.length > 0) {
++                const pending: string[] = [];
++                collectPendingPods(items, pending);
++                if (pending.length === 0)
++                    return items.length;
++                last = `Pods not ready: ${pending.join(', ')}`;
++            }
++            const pollMs = Math.min(this.#settings.pollIntervalMs, Math.max(0, deadline - Date.now()));
++            if (pollMs > 0)
++                await waitForPoll(pollMs, signal);
++        }
++        throw new Error(`KUBERNETES_FIXTURE_READINESS_TIMEOUT:${last}`);
++    }
++    async waitService(namespace: string, serviceName: string, servicePort: number, signal: AbortSignal, timeoutMs: number): Promise<void> {
++        const deadline = Date.now() + timeoutMs;
++        let last = 'Service endpoints not ready.';
++        while (Date.now() < deadline) {
++            const serviceTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
++            const serviceRaw = await this.#run(['get', 'service', serviceName, '-n', namespace, '-o', 'json'], null, signal, serviceTimeoutMs);
++            const service = object(JSON.parse(serviceRaw), 'service');
++            const spec = object(service.spec, 'service.spec');
++            const ports = Array.isArray(spec.ports) ? spec.ports : [];
++            const servicePortEntry = ports.map((entry) => object(entry, 'service.port'))
++                .find((entry) => entry.port === servicePort);
++            if (!servicePortEntry)
++                throw new Error('KUBERNETES_FIXTURE_SERVICE_PORT_MISMATCH');
++            const servicePortName = typeof servicePortEntry.name === 'string' ? servicePortEntry.name : null;
++            const targetPort = servicePortEntry.targetPort ?? servicePortEntry.port;
++            if (Date.now() >= deadline)
++                break;
++            try {
++                const endpointsTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
++                const endpointsRaw = await this.#run(['get', 'endpoints', serviceName, '-n', namespace, '-o', 'json'], null, signal, endpointsTimeoutMs);
++                const endpoints = object(JSON.parse(endpointsRaw), 'endpoints');
++                const subsets = Array.isArray(endpoints.subsets) ? endpoints.subsets : [];
++                const ready = subsets.some((entry) => {
++                    const subset = object(entry, 'endpoints.subset');
++                    const endpointPorts = Array.isArray(subset.ports) ? subset.ports.map((port) => object(port, 'endpoints.port')) : [];
++                    const hasConfiguredPort = endpointPorts.some((port) => servicePortName
++                        ? port.name === servicePortName
++                        : (Number.isSafeInteger(targetPort) ? port.port === targetPort : ports.length === 1));
++                    return Array.isArray(subset.addresses) && subset.addresses.length > 0
++                        && hasConfiguredPort;
++                });
++                if (ready && Date.now() < deadline)
++                    return;
++            }
++            catch (error) {
++                const message = error instanceof Error ? error.message : String(error);
++                if (!/\bNotFound\b|\bnot found\b/iu.test(message))
++                    throw error;
++            }
++            last = `Service ${serviceName} has no ready endpoints.`;
++            const pollMs = Math.min(this.#settings.pollIntervalMs, Math.max(0, deadline - Date.now()));
++            if (pollMs > 0)
++                await waitForPoll(pollMs, signal);
++        }
++        throw new Error(`KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT:${last}`);
++    }
++}
++function collectPendingPods(items: unknown[], pending: string[]): void {
++    for (const rawPod of items) {
++        const pod = object(rawPod, 'pod');
++        const metadata = object(pod.metadata, 'pod.metadata');
++        const status = object(pod.status ?? {}, 'pod.status');
++        const conditions = Array.isArray(status.conditions) ? status.conditions : [];
++        const ready = conditions.some((condition) => {
++            const item = condition && typeof condition === 'object' && !Array.isArray(condition) ? condition as JsonObject : {};
++            return item.type === 'Ready' && item.status === 'True';
++        });
++        if (!ready)
++            pending.push(String(metadata.name ?? 'unknown'));
++    }
++}
+--- a/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts
+@@ -1,762 +1,92 @@
+-import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+-import crypto from 'node:crypto';
+-import { assertGeneratedCredentialLease,generatedDemoCredentials } from './generated-demo-credentials.ts';
+-import { runProcessInput } from './process-input.ts';
+-import fs from 'node:fs';
+ import path from 'node:path';
+-import { boundedManifestDocuments } from './kubernetes-manifest.ts';
++import { assertGeneratedCredentialLease, generatedDemoCredentials } from './generated-demo-credentials.ts';
++import { object, text, DNS_LABEL } from './kubernetes-fixture-values.ts';
++import { KubernetesFixtureSettings, type KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-settings.ts';
++import { KubernetesFixtureReadiness } from './kubernetes-fixture-readiness.ts';
++import { KubernetesFixturePreparation } from './kubernetes-fixture-preparation.ts';
+ import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
+ import type { TestProviderCapabilityInvoker } from './runner.ts';
+-
+-const DNS_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u;
+-const SECRET_NAME = /^[A-Za-z0-9._-]+$/u;
+-const DIGEST = /^sha256:[a-f0-9]{64}$/u;
+-const IMMUTABLE_IMAGE = /^([A-Za-z0-9.-]+(?::[0-9]{1,5})?\/[a-z0-9]+(?:[._/-][a-z0-9]+)*)@(sha256:[a-f0-9]{64})$/u;
+-const MAX_TIMER_MS = 2_147_483_647;
+-const MAX_NAMESPACE_PREFIX_LENGTH = 42;
+-const STORAGE_CLASS_NAME = /^[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)*$/u;
+-const STORAGE_QUANTITY = /^(?:\+)?([0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:(Ki|Mi|Gi|Ti|Pi|Ei)|(n|u|m|k|K|M|G|T|P|E)|([eE][+-]?[0-9]+))?$/u;
+-const CLUSTER_SCOPED_KINDS = new Set([
+-  'APIService', 'CertificateSigningRequest', 'ClusterRole', 'ClusterRoleBinding',
+-  'CSIDriver', 'CSINode', 'CustomResourceDefinition', 'FlowSchema', 'IngressClass',
+-  'MutatingWebhookConfiguration', 'Namespace', 'Node', 'PersistentVolume',
+-  'PriorityClass', 'PriorityLevelConfiguration', 'RuntimeClass', 'StorageClass',
+-  'ValidatingAdmissionPolicy', 'ValidatingAdmissionPolicyBinding',
+-  'ValidatingWebhookConfiguration', 'VolumeSnapshotClass',
+-]);
+-const ALLOWED_NAMESPACED_KINDS = new Set([
+-  'ConfigMap', 'CronJob', 'Deployment', 'Job', 'PersistentVolumeClaim', 'Pod', 'Service', 'StatefulSet',
+-]);
+-
+-type Execute = (command: string, args: readonly string[], options: Readonly<Record<string, unknown>>)
+-  => Promise<{ stdout?: string; stderr?: string }>;
+-type JsonObject = Record<string, unknown>;
+-
+-async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>, processInputPolicy: BusterProcessInputSettings): Promise<{ stdout: string; stderr: string }> {
+-  const result = await runProcessInput(command, args, {
+-    processInputPolicy,
+-    ...(options.env ? { env: options.env as NodeJS.ProcessEnv } : {}),
+-    ...(options.signal ? { signal: options.signal as AbortSignal } : {}),
+-    input: options.input as string | Buffer | null ?? null,
+-    timeoutMs: options.timeout as number, maximumOutputBytes: options.maxBuffer as number,
+-    prefix: 'KUBERNETES_FIXTURE_KUBECTL',
+-  });
+-  const stdout = result.stdout.toString('utf8'); const stderr = result.stderr.toString('utf8');
+-  if (result.code !== 0) throw Object.assign(new Error(`Command failed with code ${String(result.code)} and signal ${String(result.signal)}`), { stdout, stderr });
+-  return { stdout, stderr };
++export type { KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-settings.ts';
++function detail(error: unknown): string {
++    if (error && typeof error === 'object') {
++        const stderr = (error as Record<string, unknown>).stderr;
++        if (typeof stderr === 'string' && stderr.trim())
++            return stderr.trim().slice(0, 4096);
++    }
++    return (error instanceof Error ? error.message : String(error)).slice(0, 4096);
+ }
+-
+-export interface KubernetesFixtureCapabilityInvokerOptions {
+-  readonly processInputPolicy: BusterProcessInputSettings;
+-  readonly workspaceRoot: string;
+-  readonly kubectlExecutable: string;
+-  readonly controllerNamespace: string;
+-  readonly leaseApiGroup: string;
+-  readonly leaseApiVersion: string;
+-  readonly allowedNamespacePrefixes: readonly string[];
+-  readonly allowedRegistryPrefixes: readonly string[];
+-  readonly allowedSecretReferences: readonly string[];
+-  readonly allowedStorageClasses: readonly string[];
+-  readonly allowDefaultStorageClass: boolean;
+-  readonly runnerSubject?: string;
+-  readonly credentialReaderSubject?: string;
+-  readonly maximumManifestBytes: number;
+-  readonly maximumResources: number;
+-  readonly maximumPersistentVolumeClaimBytes: number;
+-  readonly maximumPersistentVolumeTotalBytes: number;
+-  readonly maximumRetentionSeconds: number;
+-  readonly maximumExecutionMs: number;
+-  readonly pollIntervalMs?: number;
+-  readonly execute?: Execute;
+-  readonly now?: () => Date;
++export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilityInvoker {
++    readonly #settings: KubernetesFixtureSettings;
++    readonly #preparation: KubernetesFixturePreparation;
++    constructor(options: KubernetesFixtureCapabilityInvokerOptions) {
++        this.#settings = new KubernetesFixtureSettings(options);
++        const run = this.#kubectlRun.bind(this);
++        const readiness = new KubernetesFixtureReadiness(this.#settings, run);
++        this.#preparation = new KubernetesFixturePreparation(this.#settings, {
++            run, readiness,
++            generatedCredentials: this.#generatedCredentials.bind(this),
++            releaseAfterPrepareFailure: this.#releaseAfterPrepareFailure.bind(this),
++        });
++    }
++    async #kubectlRun(args: readonly string[], input: Buffer | string | null, signal: AbortSignal, timeout = this.#settings.maximumExecutionMs): Promise<string> {
++        try {
++            const result = await this.#settings.execute(this.#settings.kubectl, args, {
++                encoding: 'utf8', maxBuffer: this.#settings.maximumManifestBytes * 2, timeout: Math.min(timeout, this.#settings.maximumExecutionMs),
++                signal, ...(input === null ? {} : { input }),
++                env: { PATH: path.dirname(this.#settings.kubectl), HOME: process.env.HOME, KUBECONFIG: process.env.KUBECONFIG,
++                    KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,
++                    KUBERNETES_SERVICE_PORT: process.env.KUBERNETES_SERVICE_PORT },
++            });
++            return result.stdout ?? '';
++        }
++        catch (error) {
++            if (signal.aborted)
++                throw new Error('KUBERNETES_FIXTURE_CANCELLED', { cause: error });
++            throw new Error(`KUBERNETES_FIXTURE_KUBECTL_FAILED:${detail(error)}`, { cause: error });
++        }
++    }
++    async #releaseAfterPrepareFailure(leaseName: string): Promise<void> {
++        const controller = new AbortController();
++        const timer = setTimeout(() => controller.abort(), this.#settings.maximumExecutionMs);
++        try {
++            await this.#release(leaseName, controller.signal);
++        }
++        finally {
++            clearTimeout(timer);
++        }
++    }
++    async #generatedCredentials(expected: Parameters<typeof generatedDemoCredentials>[2], signal: AbortSignal) {
++        const resource = `busternamespaceleases.${this.#settings.apiGroup}`;
++        const freshLease = JSON.parse(await this.#kubectlRun(['get', resource, expected.leaseName, '-n', this.#settings.controllerNamespace, '-o', 'json'], null, signal, 15_000));
++        assertGeneratedCredentialLease(freshLease, expected);
++        let secret;
++        // Until UID and bytes are verified, subprocess diagnostics must not expose Secret content.
++        try {
++            secret = JSON.parse(await this.#kubectlRun(['get', 'secret', expected.secretName, '-n', expected.namespace, '-o', 'json'], null, signal, 15_000));
++        }
++        catch {
++            throw new Error('DEMO_CREDENTIAL_SECRET_READ_FAILED');
++        }
++        return generatedDemoCredentials(freshLease, secret, expected);
++    }
++    async #release(leaseName: string, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
++        if (!DNS_LABEL.test(leaseName))
++            throw new Error('KUBERNETES_FIXTURE_LEASE_NAME_INVALID');
++        await this.#kubectlRun(['delete', 'busternamespacelease', leaseName, '-n', this.#settings.controllerNamespace,
++            '--ignore-not-found=true', '--wait=true', `--timeout=${Math.ceil(this.#settings.maximumExecutionMs / 1_000)}s`], null, signal);
++        return Object.freeze({ ok: true, leaseName, released: true });
++    }
++    async invoke(capability: string, request: TestProviderCapabilityRequest, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
++        if (capability !== 'kubernetes.fixture' || request.resource.type !== 'kubernetes.fixture'
++            || !/^kubernetes-fixture:attempt:[A-Za-z0-9._:-]+$/u.test(request.resource.canonicalId)) {
++            throw new Error('KUBERNETES_FIXTURE_CAPABILITY_REQUEST_INVALID');
++        }
++        if (request.operation === 'prepare')
++            return this.#preparation.prepare(request, signal);
++        if (request.operation === 'release') {
++            const payload = object(request.payload, 'payload');
++            return this.#release(text(payload.leaseName, 'leaseName', 63), signal);
++        }
++        throw new Error('KUBERNETES_FIXTURE_OPERATION_INVALID');
++    }
+ }
+-
+-function object(value: unknown, label: string): JsonObject {
+-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+-    throw new Error(`KUBERNETES_FIXTURE_REQUEST_INVALID:${label}`);
+-  }
+-  return value as JsonObject;
+-}
+-
+-function text(value: unknown, label: string, maximum = 1024): string {
+-  if (typeof value !== 'string' || value.length < 1 || value.length > maximum || value.includes('\0')) {
+-    throw new Error(`KUBERNETES_FIXTURE_REQUEST_INVALID:${label}`);
+-  }
+-  return value;
+-}
+-
+-function integer(value: unknown, label: string, minimum: number, maximum: number): number {
+-  if (!Number.isSafeInteger(value) || Number(value) < minimum || Number(value) > maximum) {
+-    throw new Error(`KUBERNETES_FIXTURE_REQUEST_INVALID:${label}`);
+-  }
+-  return Number(value);
+-}
+-
+-function stringArray(value: unknown, label: string, maximum: number, pattern?: RegExp): string[] {
+-  if (!Array.isArray(value) || value.length > maximum
+-    || value.some((item) => typeof item !== 'string' || item.length < 1 || item.length > 253
+-      || item.includes('\0') || (pattern ? !pattern.test(item) : false))) {
+-    throw new Error(`KUBERNETES_FIXTURE_REQUEST_INVALID:${label}`);
+-  }
+-  return [...new Set(value as string[])];
+-}
+-
+-function contained(root: string, value: unknown): string {
+-  const requested = text(value, 'manifestPath', 4096);
+-  if (!path.isAbsolute(requested)) throw new Error('KUBERNETES_FIXTURE_MANIFEST_PATH_INVALID');
+-  const canonical = fs.realpathSync(requested);
+-  if (canonical !== root && !canonical.startsWith(`${root}${path.sep}`)) {
+-    throw new Error('KUBERNETES_FIXTURE_MANIFEST_PATH_DENIED');
+-  }
+-  if (!fs.statSync(canonical).isFile()) throw new Error('KUBERNETES_FIXTURE_MANIFEST_NOT_FILE');
+-  return canonical;
+-}
+-
+-function manifestBytes(file: string, expectedDigest: string, maximumBytes: number): Buffer {
+-  const handle = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
+-  try {
+-    const before = fs.fstatSync(handle);
+-    if (before.size < 1 || before.size > maximumBytes) throw new Error('KUBERNETES_FIXTURE_MANIFEST_SIZE_INVALID');
+-    const bytes = Buffer.alloc(before.size);
+-    let offset = 0;
+-    while (offset < bytes.length) {
+-      const count = fs.readSync(handle, bytes, offset, bytes.length - offset, offset);
+-      if (count === 0) throw new Error('KUBERNETES_FIXTURE_MANIFEST_READ_INCOMPLETE');
+-      offset += count;
+-    }
+-    const after = fs.fstatSync(handle);
+-    if (after.size !== before.size || after.mtimeMs !== before.mtimeMs) {
+-      throw new Error('KUBERNETES_FIXTURE_MANIFEST_CHANGED');
+-    }
+-    const digest = `sha256:${crypto.createHash('sha256').update(bytes).digest('hex')}`;
+-    if (digest !== expectedDigest) throw new Error('KUBERNETES_FIXTURE_MANIFEST_DIGEST_MISMATCH');
+-    return bytes;
+-  } finally {
+-    fs.closeSync(handle);
+-  }
+-}
+-
+-function flattenDocuments(values: unknown[], maximumResources: number): JsonObject[] {
+-  const out: JsonObject[] = [];
+-  const pending = values.filter(value => value !== null && value !== undefined).reverse();
+-  let visits = 0;
+-  while (pending.length) {
+-    if (++visits > 100_000) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
+-    const document = object(pending.pop(), 'manifestDocument');
+-    if (document.kind === 'List') {
+-      if (!Array.isArray(document.items)) throw new Error('KUBERNETES_FIXTURE_MANIFEST_LIST_INVALID');
+-      if (pending.length + document.items.length > 100_000) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
+-      for (let index = document.items.length - 1; index >= 0; index -= 1) pending.push(document.items[index]);
+-    } else {
+-      if (out.length >= maximumResources) throw new Error('KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID');
+-      out.push(document);
+-    }
+-  }
+-  return out;
+-}
+-
+-function podSpecs(document: JsonObject): JsonObject[] {
+-  const spec = document.spec;
+-  if (!spec || typeof spec !== 'object' || Array.isArray(spec)) return [];
+-  const typed = spec as JsonObject;
+-  if (document.kind === 'Pod') return [typed];
+-  const template = typed.template;
+-  if (template && typeof template === 'object' && !Array.isArray(template)) {
+-    const templateSpec = (template as JsonObject).spec;
+-    if (templateSpec && typeof templateSpec === 'object' && !Array.isArray(templateSpec)) return [templateSpec as JsonObject];
+-  }
+-  const jobTemplate = typed.jobTemplate;
+-  if (jobTemplate && typeof jobTemplate === 'object' && !Array.isArray(jobTemplate)) {
+-    const jobSpec = (jobTemplate as JsonObject).spec;
+-    const jobTemplateValue = jobSpec && typeof jobSpec === 'object' && !Array.isArray(jobSpec)
+-      ? (jobSpec as JsonObject).template : null;
+-    const jobPodSpec = jobTemplateValue && typeof jobTemplateValue === 'object' && !Array.isArray(jobTemplateValue)
+-      ? (jobTemplateValue as JsonObject).spec : null;
+-    if (jobPodSpec && typeof jobPodSpec === 'object' && !Array.isArray(jobPodSpec)) return [jobPodSpec as JsonObject];
+-  }
+-  return [];
+-}
+-
+-function storageBytes(value: unknown): bigint {
+-  const quantity = text(value, 'persistentVolumeClaim.storage', 64);
+-  const parsed = STORAGE_QUANTITY.exec(quantity);
+-  if (!parsed) throw new Error(`KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:${quantity}`);
+-  const mantissa = parsed[1]!;
+-  const decimalPlaces = mantissa.includes('.') ? mantissa.length - mantissa.indexOf('.') - 1 : 0;
+-  let numerator = BigInt(mantissa.replace('.', ''));
+-  let denominator = 10n ** BigInt(decimalPlaces);
+-  const binaryPowers = new Map([['Ki', 10n], ['Mi', 20n], ['Gi', 30n], ['Ti', 40n], ['Pi', 50n], ['Ei', 60n]]);
+-  const decimalPowers = new Map([['n', -9], ['u', -6], ['m', -3], ['k', 3], ['K', 3],
+-    ['M', 6], ['G', 9], ['T', 12], ['P', 15], ['E', 18]]);
+-  if (parsed[2]) numerator *= 1n << binaryPowers.get(parsed[2])!;
+-  const exponent = parsed[3] ? decimalPowers.get(parsed[3])!
+-    : parsed[4] ? Number.parseInt(parsed[4].slice(1), 10) : 0;
+-  if (!Number.isSafeInteger(exponent) || Math.abs(exponent) > 63) {
+-    throw new Error(`KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:${quantity}`);
+-  }
+-  if (exponent >= 0) numerator *= 10n ** BigInt(exponent);
+-  else denominator *= 10n ** BigInt(-exponent);
+-  if (numerator < 1n || numerator % denominator !== 0n) {
+-    throw new Error(`KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:${quantity}`);
+-  }
+-  return numerator / denominator;
+-}
+-
+-function persistentVolumeClaims(document: JsonObject): { name: string; spec: JsonObject; copies: bigint }[] {
+-  if (document.kind === 'PersistentVolumeClaim') {
+-    const metadata = object(document.metadata, 'persistentVolumeClaim.metadata');
+-    return [{ name: text(metadata.name, 'persistentVolumeClaim.metadata.name', 253),
+-      spec: object(document.spec, 'persistentVolumeClaim.spec'), copies: 1n }];
+-  }
+-  if (document.kind !== 'StatefulSet') return [];
+-  const spec = object(document.spec, 'statefulSet.spec');
+-  const replicas = spec.replicas ?? 1;
+-  if (!Number.isSafeInteger(replicas) || Number(replicas) < 0) {
+-    throw new Error('KUBERNETES_FIXTURE_STATEFULSET_REPLICAS_INVALID');
+-  }
+-  const templates = spec.volumeClaimTemplates ?? [];
+-  if (!Array.isArray(templates)) throw new Error('KUBERNETES_FIXTURE_PVC_TEMPLATES_INVALID');
+-  return templates.map((raw) => {
+-    const template = object(raw, 'statefulSet.volumeClaimTemplate');
+-    const metadata = object(template.metadata, 'statefulSet.volumeClaimTemplate.metadata');
+-    return { name: text(metadata.name, 'statefulSet.volumeClaimTemplate.metadata.name', 253),
+-      spec: object(template.spec, 'statefulSet.volumeClaimTemplate.spec'), copies: BigInt(Number(replicas)) };
+-  });
+-}
+-
+-interface PersistentVolumePolicy {
+-  readonly allowedStorageClasses: ReadonlySet<string>;
+-  readonly allowDefaultStorageClass: boolean;
+-  readonly maximumClaimBytes: bigint;
+-  readonly maximumTotalBytes: bigint;
+-}
+-
+-function validatePersistentVolumeClaim(name: string, spec: JsonObject, policy: PersistentVolumePolicy): bigint {
+-  if (spec.volumeName !== undefined || spec.selector !== undefined
+-    || spec.dataSource !== undefined || spec.dataSourceRef !== undefined) {
+-    throw new Error(`KUBERNETES_FIXTURE_PVC_SOURCE_DENIED:${name}`);
+-  }
+-  if (spec.volumeMode !== undefined && spec.volumeMode !== 'Filesystem') {
+-    throw new Error(`KUBERNETES_FIXTURE_PVC_VOLUME_MODE_DENIED:${name}`);
+-  }
+-  const storageClass = spec.storageClassName;
+-  if (storageClass === undefined) {
+-    if (!policy.allowDefaultStorageClass) throw new Error('KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_DENIED');
+-  } else {
+-    const selected = text(storageClass, 'persistentVolumeClaim.storageClassName', 253);
+-    if (!policy.allowedStorageClasses.has(selected)) {
+-      throw new Error(`KUBERNETES_FIXTURE_STORAGE_CLASS_DENIED:${selected}`);
+-    }
+-  }
+-  const resources = object(spec.resources, 'persistentVolumeClaim.resources');
+-  const requests = object(resources.requests, 'persistentVolumeClaim.resources.requests');
+-  const bytes = storageBytes(requests.storage);
+-  if (bytes > policy.maximumClaimBytes) throw new Error(`KUBERNETES_FIXTURE_PVC_SIZE_DENIED:${name}`);
+-  return bytes;
+-}
+-
+-function validatePodSecurity(spec: JsonObject): void {
+-  if (spec.hostNetwork === true || spec.hostPID === true || spec.hostIPC === true) {
+-    throw new Error('KUBERNETES_FIXTURE_HOST_NAMESPACE_DENIED');
+-  }
+-  const podSecurity = object(spec.securityContext ?? {}, 'pod.securityContext');
+-  if (podSecurity.runAsNonRoot !== true) throw new Error('KUBERNETES_FIXTURE_RUN_AS_NON_ROOT_REQUIRED');
+-  const seccomp = object(podSecurity.seccompProfile ?? {}, 'pod.seccompProfile');
+-  if (seccomp.type !== 'RuntimeDefault' && seccomp.type !== 'Localhost') {
+-    throw new Error('KUBERNETES_FIXTURE_SECCOMP_REQUIRED');
+-  }
+-  const volumes = Array.isArray(spec.volumes) ? spec.volumes : [];
+-  if (volumes.some((volume) => object(volume, 'pod.volume').hostPath !== undefined)) {
+-    throw new Error('KUBERNETES_FIXTURE_HOST_PATH_DENIED');
+-  }
+-  if (volumes.some((volume) => object(volume, 'pod.volume').ephemeral !== undefined)) {
+-    throw new Error('KUBERNETES_FIXTURE_GENERIC_EPHEMERAL_VOLUME_DENIED');
+-  }
+-  for (const field of ['initContainers', 'containers']) {
+-    const containers = spec[field];
+-    if (containers === undefined) continue;
+-    if (!Array.isArray(containers) || (field === 'containers' && containers.length < 1)) {
+-      throw new Error('KUBERNETES_FIXTURE_CONTAINERS_INVALID');
+-    }
+-    for (const raw of containers) {
+-      const container = object(raw, 'container');
+-      const security = object(container.securityContext ?? {}, 'container.securityContext');
+-      if (security.privileged === true || security.allowPrivilegeEscalation !== false
+-        || (security.runAsNonRoot !== true && podSecurity.runAsNonRoot !== true)) {
+-        throw new Error('KUBERNETES_FIXTURE_CONTAINER_SECURITY_INVALID');
+-      }
+-      const capabilities = object(security.capabilities ?? {}, 'container.capabilities');
+-      if (!Array.isArray(capabilities.drop) || !capabilities.drop.includes('ALL')) {
+-        throw new Error('KUBERNETES_FIXTURE_CAPABILITY_DROP_REQUIRED');
+-      }
+-      const ports = Array.isArray(container.ports) ? container.ports : [];
+-      if (ports.some((port) => {
+-        const hostPort = object(port, 'container.port').hostPort;
+-        return hostPort !== undefined && hostPort !== 0;
+-      })) {
+-        throw new Error('KUBERNETES_FIXTURE_HOST_PORT_DENIED');
+-      }
+-    }
+-  }
+-}
+-
+-function inspectManifest(bytes: Buffer, immutableImage: string, maximumResources: number,
+-  allowedRegistryPrefixes: readonly string[], serviceName: string, servicePort: number,
+-  expectedServiceTargetPort: number | null, persistentVolumePolicy: PersistentVolumePolicy):
+-  { resources: number; workloads: number; serviceTargetPort: number } {
+-  const loaded = boundedManifestDocuments(bytes);
+-  const documents = flattenDocuments(loaded, maximumResources);
+-  if (documents.length < 1 || documents.length > maximumResources) throw new Error('KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID');
+-  let workloads = 0;
+-  let matchedImage = false;
+-  let matchedService = false;
+-  let serviceTargetPortName: string | null = null;
+-  let resolvedServiceTargetPort: number | null = null;
+-  const namedContainerPorts = new Map<string, Set<number>>();
+-  let persistentVolumeTotalBytes = 0n;
+-  for (const document of documents) {
+-    const apiVersion = text(document.apiVersion, 'apiVersion', 128);
+-    const kind = text(document.kind, 'kind', 128);
+-    const metadata = object(document.metadata, 'metadata');
+-    text(metadata.name, 'metadata.name', 253);
+-    if (CLUSTER_SCOPED_KINDS.has(kind)) throw new Error(`KUBERNETES_FIXTURE_CLUSTER_SCOPE_DENIED:${kind}`);
+-    if (!ALLOWED_NAMESPACED_KINDS.has(kind)) throw new Error(`KUBERNETES_FIXTURE_RESOURCE_KIND_DENIED:${kind}`);
+-    if (metadata.namespace !== undefined) throw new Error(`KUBERNETES_FIXTURE_NAMESPACE_FIELD_DENIED:${kind}`);
+-    if (!apiVersion.includes('/') && apiVersion !== 'v1') throw new Error('KUBERNETES_FIXTURE_API_VERSION_INVALID');
+-    for (const claim of persistentVolumeClaims(document)) {
+-      persistentVolumeTotalBytes += validatePersistentVolumeClaim(claim.name, claim.spec, persistentVolumePolicy)
+-        * claim.copies;
+-      if (persistentVolumeTotalBytes > persistentVolumePolicy.maximumTotalBytes) {
+-        throw new Error('KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED');
+-      }
+-    }
+-    if (kind === 'Service') {
+-      const spec = object(document.spec, 'service.spec');
+-      const type = spec.type ?? 'ClusterIP';
+-      const annotations = object(metadata.annotations ?? {}, 'service.metadata.annotations');
+-      const externalIPs = spec.externalIPs;
+-      const hasExternalIPs = externalIPs !== undefined && (!Array.isArray(externalIPs) || externalIPs.length > 0);
+-      const externalName = spec.externalName;
+-      const hasExternalName = externalName !== undefined
+-        && (typeof externalName !== 'string' || externalName.trim().length > 0);
+-      if (type !== 'ClusterIP' || hasExternalIPs || hasExternalName) {
+-        throw new Error('KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED');
+-      }
+-      if (annotations['tailscale.com/expose'] !== undefined) {
+-        throw new Error('KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED');
+-      }
+-      if (metadata.name === serviceName) {
+-        if (matchedService) throw new Error('KUBERNETES_FIXTURE_SERVICE_DUPLICATE');
+-        matchedService = true;
+-        const ports = Array.isArray(spec.ports) ? spec.ports.map((entry) => object(entry, 'service.port')) : [];
+-        const selected = ports.filter((entry) => entry.port === servicePort);
+-        if (selected.length !== 1) throw new Error('KUBERNETES_FIXTURE_SERVICE_PORT_MISMATCH');
+-        const target = selected[0]!.targetPort ?? servicePort;
+-        if (typeof target === 'number') resolvedServiceTargetPort = target;
+-        if (typeof target === 'string') serviceTargetPortName = target;
+-      }
+-    }
+-    for (const spec of podSpecs(document)) {
+-      workloads += 1;
+-      validatePodSecurity(spec);
+-      for (const field of ['initContainers', 'containers']) {
+-        const containers = spec[field];
+-        if (containers === undefined) continue;
+-        if (!Array.isArray(containers)) throw new Error('KUBERNETES_FIXTURE_CONTAINERS_INVALID');
+-        for (const container of containers) {
+-          const containerObject = object(container, 'container');
+-          const image = text(containerObject.image, 'container.image', 2048);
+-          const parsed = IMMUTABLE_IMAGE.exec(image);
+-          if (!parsed) throw new Error(`KUBERNETES_FIXTURE_MUTABLE_IMAGE_DENIED:${image}`);
+-          if (!allowedRegistryPrefixes.some((prefix) => parsed[1] === prefix || parsed[1]!.startsWith(`${prefix}/`))) {
+-            throw new Error(`KUBERNETES_FIXTURE_IMAGE_REGISTRY_DENIED:${image}`);
+-          }
+-          if (image === immutableImage) matchedImage = true;
+-          for (const rawPort of Array.isArray(containerObject.ports) ? containerObject.ports : []) {
+-            const port = object(rawPort, 'container.port');
+-            if (typeof port.name === 'string' && Number.isSafeInteger(port.containerPort)) {
+-              const values = namedContainerPorts.get(port.name) ?? new Set<number>();
+-              values.add(Number(port.containerPort));
+-              namedContainerPorts.set(port.name, values);
+-            }
+-          }
+-        }
+-      }
+-    }
+-  }
+-  if (workloads < 1) throw new Error('KUBERNETES_FIXTURE_WORKLOAD_REQUIRED');
+-  if (!matchedImage) throw new Error('KUBERNETES_FIXTURE_IMAGE_NOT_USED');
+-  if (!matchedService) throw new Error('KUBERNETES_FIXTURE_SERVICE_REQUIRED');
+-  if (serviceTargetPortName !== null) {
+-    const ports = namedContainerPorts.get(serviceTargetPortName);
+-    if (ports?.size !== 1) throw new Error('KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH');
+-    resolvedServiceTargetPort = [...ports][0]!;
+-  }
+-  if (resolvedServiceTargetPort === null || resolvedServiceTargetPort < 1 || resolvedServiceTargetPort > 65_535
+-    || (expectedServiceTargetPort !== null && resolvedServiceTargetPort !== expectedServiceTargetPort)) {
+-    throw new Error('KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH');
+-  }
+-  return { resources: documents.length, workloads, serviceTargetPort: resolvedServiceTargetPort };
+-}
+-
+-function detail(error: unknown): string {
+-  if (error && typeof error === 'object') {
+-    const stderr = (error as Record<string, unknown>).stderr;
+-    if (typeof stderr === 'string' && stderr.trim()) return stderr.trim().slice(0, 4096);
+-  }
+-  return (error instanceof Error ? error.message : String(error)).slice(0, 4096);
+-}
+-
+-function waitForPoll(milliseconds: number, signal: AbortSignal): Promise<void> {
+-  return new Promise((resolve, reject) => {
+-    const finish = (): void => {
+-      signal.removeEventListener('abort', abort);
+-      resolve();
+-    };
+-    const timer = setTimeout(finish, milliseconds);
+-    const abort = (): void => {
+-      clearTimeout(timer);
+-      signal.removeEventListener('abort', abort);
+-      reject(new Error('KUBERNETES_FIXTURE_CANCELLED'));
+-    };
+-    if (signal.aborted) abort();
+-    else signal.addEventListener('abort', abort, { once: true });
+-  });
+-}
+-
+-export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilityInvoker {
+-  readonly #root: string;
+-  readonly #kubectl: string;
+-  readonly #controllerNamespace: string;
+-  readonly #apiGroup: string;
+-  readonly #apiVersion: string;
+-  readonly #namespacePrefixes: ReadonlySet<string>;
+-  readonly #registryPrefixes: readonly string[];
+-  readonly #secretReferences: ReadonlySet<string>;
+-  readonly #allowedStorageClasses: ReadonlySet<string>;
+-  readonly #allowDefaultStorageClass: boolean;
+-  readonly #runnerSubject: string;
+-  readonly #credentialReaderSubject: string;
+-  readonly #maximumManifestBytes: number;
+-  readonly #maximumResources: number;
+-  readonly #maximumPersistentVolumeClaimBytes: bigint;
+-  readonly #maximumPersistentVolumeTotalBytes: bigint;
+-  readonly #maximumRetentionSeconds: number;
+-  readonly #maximumExecutionMs: number;
+-  readonly #pollIntervalMs: number;
+-  readonly #execute: Execute;
+-  readonly #now: () => Date;
+-
+-  constructor(options: KubernetesFixtureCapabilityInvokerOptions) {
+-    const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);
+-    this.#root = fs.realpathSync(options.workspaceRoot);
+-    this.#kubectl = fs.realpathSync(options.kubectlExecutable);
+-    fs.accessSync(this.#kubectl, fs.constants.X_OK);
+-    if (!DNS_LABEL.test(options.controllerNamespace)) throw new Error('KUBERNETES_FIXTURE_CONTROLLER_NAMESPACE_INVALID');
+-    if (!/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/u.test(options.leaseApiGroup)) throw new Error('KUBERNETES_FIXTURE_API_GROUP_INVALID');
+-    if (!/^v[0-9]+(?:alpha|beta)?[0-9]*$/u.test(options.leaseApiVersion)) throw new Error('KUBERNETES_FIXTURE_API_VERSION_INVALID');
+-    if (options.allowedNamespacePrefixes.length < 1
+-      || options.allowedNamespacePrefixes.some((item) => item.length > MAX_NAMESPACE_PREFIX_LENGTH || !DNS_LABEL.test(item))) {
+-      throw new Error('KUBERNETES_FIXTURE_NAMESPACE_PREFIXES_INVALID');
+-    }
+-    if (options.allowedRegistryPrefixes.length < 1
+-      || options.allowedRegistryPrefixes.some((item) => !/^[A-Za-z0-9.-]+(?::[0-9]{1,5})?\/[a-z0-9]+(?:[._/-][a-z0-9]+)*$/u.test(item))) {
+-      throw new Error('KUBERNETES_FIXTURE_REGISTRY_PREFIXES_INVALID');
+-    }
+-    if (options.allowedSecretReferences.some((item) => !SECRET_NAME.test(item))) {
+-      throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCES_INVALID');
+-    }
+-    if (options.allowedStorageClasses.some((item) => item.length > 253 || !STORAGE_CLASS_NAME.test(item))) {
+-      throw new Error('KUBERNETES_FIXTURE_STORAGE_CLASSES_INVALID');
+-    }
+-    if (typeof options.allowDefaultStorageClass !== 'boolean') {
+-      throw new Error('KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_POLICY_INVALID');
+-    }
+-    const runnerSubject = options.runnerSubject ?? `${options.controllerNamespace}/agent-buster`;
+-    const credentialReaderSubject = options.credentialReaderSubject ?? `${options.controllerNamespace}/agent-nova`;
+-    if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(runnerSubject)
+-      || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(credentialReaderSubject)) {
+-      throw new Error('KUBERNETES_FIXTURE_SUBJECT_INVALID');
+-    }
+-    for (const [value, label] of [[options.maximumManifestBytes, 'MANIFEST_SIZE'], [options.maximumResources, 'RESOURCE_COUNT'],
+-      [options.maximumPersistentVolumeClaimBytes, 'PVC_SIZE'], [options.maximumPersistentVolumeTotalBytes, 'PVC_TOTAL_SIZE'],
+-      [options.maximumRetentionSeconds, 'RETENTION'], [options.maximumExecutionMs, 'EXECUTION']] as const) {
+-      if (!Number.isSafeInteger(value) || value < 1) throw new Error(`KUBERNETES_FIXTURE_${label}_LIMIT_INVALID`);
+-    }
+-    this.#controllerNamespace = options.controllerNamespace;
+-    this.#apiGroup = options.leaseApiGroup;
+-    this.#apiVersion = options.leaseApiVersion;
+-    this.#namespacePrefixes = new Set(options.allowedNamespacePrefixes);
+-    this.#registryPrefixes = [...options.allowedRegistryPrefixes];
+-    this.#secretReferences = new Set(options.allowedSecretReferences);
+-    this.#allowedStorageClasses = new Set(options.allowedStorageClasses);
+-    this.#allowDefaultStorageClass = options.allowDefaultStorageClass;
+-    this.#runnerSubject = runnerSubject;
+-    this.#credentialReaderSubject = credentialReaderSubject;
+-    this.#maximumManifestBytes = options.maximumManifestBytes;
+-    this.#maximumResources = options.maximumResources;
+-    this.#maximumPersistentVolumeClaimBytes = BigInt(options.maximumPersistentVolumeClaimBytes);
+-    this.#maximumPersistentVolumeTotalBytes = BigInt(options.maximumPersistentVolumeTotalBytes);
+-    if (this.#maximumPersistentVolumeTotalBytes < this.#maximumPersistentVolumeClaimBytes) {
+-      throw new Error('KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_LIMIT_INVALID');
+-    }
+-    this.#maximumRetentionSeconds = options.maximumRetentionSeconds;
+-    this.#maximumExecutionMs = Math.min(options.maximumExecutionMs, MAX_TIMER_MS);
+-    this.#pollIntervalMs = options.pollIntervalMs ?? 1_000;
+-    if (!Number.isSafeInteger(this.#pollIntervalMs) || this.#pollIntervalMs < 50 || this.#pollIntervalMs > 10_000) {
+-      throw new Error('KUBERNETES_FIXTURE_POLL_INTERVAL_INVALID');
+-    }
+-    this.#execute = options.execute ?? ((command, args, operation) => executeProcess(command, args, operation, processInputPolicy));
+-    this.#now = options.now ?? (() => new Date());
+-  }
+-
+-  async #kubectlRun(args: readonly string[], input: Buffer | string | null, signal: AbortSignal, timeout = this.#maximumExecutionMs): Promise<string> {
+-    try {
+-      const result = await this.#execute(this.#kubectl, args, {
+-        encoding: 'utf8', maxBuffer: this.#maximumManifestBytes * 2, timeout: Math.min(timeout, this.#maximumExecutionMs),
+-        signal, ...(input === null ? {} : { input }),
+-        env: { PATH: path.dirname(this.#kubectl), HOME: process.env.HOME, KUBECONFIG: process.env.KUBECONFIG,
+-          KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,
+-          KUBERNETES_SERVICE_PORT: process.env.KUBERNETES_SERVICE_PORT },
+-      });
+-      return result.stdout ?? '';
+-    } catch (error) {
+-      if (signal.aborted) throw new Error('KUBERNETES_FIXTURE_CANCELLED', { cause: error });
+-      throw new Error(`KUBERNETES_FIXTURE_KUBECTL_FAILED:${detail(error)}`, { cause: error });
+-    }
+-  }
+-
+-  async #waitLease(leaseName: string, signal: AbortSignal, timeoutMs: number): Promise<JsonObject> {
+-    const deadline = Date.now() + timeoutMs;
+-    let last = 'Pending';
+-    while (Date.now() < deadline) {
+-      const requestTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
+-      const raw = await this.#kubectlRun(['get', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace, '-o', 'json'], null, signal, requestTimeoutMs);
+-      const value = object(JSON.parse(raw), 'lease');
+-      const status = object(value.status ?? {}, 'lease.status');
+-      const phase = typeof status.phase === 'string' ? status.phase : 'Pending';
+-      last = typeof status.message === 'string' ? status.message : phase;
+-      if (phase === 'Ready') return status;
+-      if (phase === 'Rejected') throw new Error(`KUBERNETES_FIXTURE_LEASE_REJECTED:${last}`);
+-      if (phase === 'Failed') throw new Error(`KUBERNETES_FIXTURE_LEASE_FAILED:${last}`);
+-      const pollMs = Math.min(this.#pollIntervalMs, Math.max(0, deadline - Date.now()));
+-      if (pollMs > 0) await waitForPoll(pollMs, signal);
+-    }
+-    throw new Error(`KUBERNETES_FIXTURE_LEASE_TIMEOUT:${last}`);
+-  }
+-
+-  async #waitPods(namespace: string, signal: AbortSignal, timeoutMs: number): Promise<number> {
+-    const deadline = Date.now() + timeoutMs;
+-    let last = 'No pods found.';
+-    while (Date.now() < deadline) {
+-      const requestTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
+-      const raw = await this.#kubectlRun(['get', 'pods', '-n', namespace, '-o', 'json'], null, signal, requestTimeoutMs);
+-      const value = object(JSON.parse(raw), 'pods');
+-      const items = Array.isArray(value.items) ? value.items : [];
+-      if (items.length > 0) {
+-        const pending: string[] = [];
+-        for (const rawPod of items) {
+-          const pod = object(rawPod, 'pod');
+-          const metadata = object(pod.metadata, 'pod.metadata');
+-          const status = object(pod.status ?? {}, 'pod.status');
+-          const conditions = Array.isArray(status.conditions) ? status.conditions : [];
+-          const ready = conditions.some((condition) => {
+-            const item = condition && typeof condition === 'object' && !Array.isArray(condition) ? condition as JsonObject : {};
+-            return item.type === 'Ready' && item.status === 'True';
+-          });
+-          if (!ready) pending.push(String(metadata.name ?? 'unknown'));
+-        }
+-        if (pending.length === 0) return items.length;
+-        last = `Pods not ready: ${pending.join(', ')}`;
+-      }
+-      const pollMs = Math.min(this.#pollIntervalMs, Math.max(0, deadline - Date.now()));
+-      if (pollMs > 0) await waitForPoll(pollMs, signal);
+-    }
+-    throw new Error(`KUBERNETES_FIXTURE_READINESS_TIMEOUT:${last}`);
+-  }
+-
+-  async #waitService(namespace: string, serviceName: string, servicePort: number,
+-    signal: AbortSignal, timeoutMs: number): Promise<void> {
+-    const deadline = Date.now() + timeoutMs;
+-    let last = 'Service endpoints not ready.';
+-    while (Date.now() < deadline) {
+-      const serviceTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
+-      const serviceRaw = await this.#kubectlRun(['get', 'service', serviceName, '-n', namespace, '-o', 'json'], null, signal, serviceTimeoutMs);
+-      const service = object(JSON.parse(serviceRaw), 'service');
+-      const spec = object(service.spec, 'service.spec');
+-      const ports = Array.isArray(spec.ports) ? spec.ports : [];
+-      const servicePortEntry = ports.map((entry) => object(entry, 'service.port'))
+-        .find((entry) => entry.port === servicePort);
+-      if (!servicePortEntry) throw new Error('KUBERNETES_FIXTURE_SERVICE_PORT_MISMATCH');
+-      const servicePortName = typeof servicePortEntry.name === 'string' ? servicePortEntry.name : null;
+-      const targetPort = servicePortEntry.targetPort ?? servicePortEntry.port;
+-      if (Date.now() >= deadline) break;
+-      try {
+-        const endpointsTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
+-        const endpointsRaw = await this.#kubectlRun(['get', 'endpoints', serviceName, '-n', namespace, '-o', 'json'], null, signal, endpointsTimeoutMs);
+-        const endpoints = object(JSON.parse(endpointsRaw), 'endpoints');
+-        const subsets = Array.isArray(endpoints.subsets) ? endpoints.subsets : [];
+-        const ready = subsets.some((entry) => {
+-          const subset = object(entry, 'endpoints.subset');
+-          const endpointPorts = Array.isArray(subset.ports) ? subset.ports.map((port) => object(port, 'endpoints.port')) : [];
+-          const hasConfiguredPort = endpointPorts.some((port) => servicePortName
+-            ? port.name === servicePortName
+-            : (Number.isSafeInteger(targetPort) ? port.port === targetPort : ports.length === 1));
+-          return Array.isArray(subset.addresses) && subset.addresses.length > 0
+-            && hasConfiguredPort;
+-        });
+-        if (ready && Date.now() < deadline) return;
+-      } catch (error) {
+-        const message = error instanceof Error ? error.message : String(error);
+-        if (!/\bNotFound\b|\bnot found\b/iu.test(message)) throw error;
+-      }
+-      last = `Service ${serviceName} has no ready endpoints.`;
+-      const pollMs = Math.min(this.#pollIntervalMs, Math.max(0, deadline - Date.now()));
+-      if (pollMs > 0) await waitForPoll(pollMs, signal);
+-    }
+-    throw new Error(`KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT:${last}`);
+-  }
+-
+-  async #releaseAfterPrepareFailure(leaseName: string): Promise<void> {
+-    const controller = new AbortController();
+-    const timer = setTimeout(() => controller.abort(), this.#maximumExecutionMs);
+-    try {
+-      await this.#release(leaseName, controller.signal);
+-    } finally {
+-      clearTimeout(timer);
+-    }
+-  }
+-
+-  async #generatedCredentials(expected:Parameters<typeof generatedDemoCredentials>[2],signal:AbortSignal) {
+-    const resource=`busternamespaceleases.${this.#apiGroup}`;
+-    const freshLease=JSON.parse(await this.#kubectlRun(['get',resource,expected.leaseName,'-n',this.#controllerNamespace,'-o','json'],null,signal,15_000));
+-    assertGeneratedCredentialLease(freshLease,expected);
+-    let secret;
+-    // Until UID and bytes are verified, subprocess diagnostics must not expose Secret content.
+-    try { secret=JSON.parse(await this.#kubectlRun(['get','secret',expected.secretName,'-n',expected.namespace,'-o','json'],null,signal,15_000)); }
+-    catch { throw new Error('DEMO_CREDENTIAL_SECRET_READ_FAILED'); }
+-    return generatedDemoCredentials(freshLease,secret,expected);
+-  }
+-
+-  async #prepare(request: TestProviderCapabilityRequest, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+-    const payload = object(request.payload, 'payload');
+-    const leaseName = text(payload.leaseName, 'leaseName', 63);
+-    if (!DNS_LABEL.test(leaseName)) throw new Error('KUBERNETES_FIXTURE_LEASE_NAME_INVALID');
+-    const namespacePrefix = text(payload.namespacePrefix, 'namespacePrefix', MAX_NAMESPACE_PREFIX_LENGTH);
+-    if (!this.#namespacePrefixes.has(namespacePrefix)) throw new Error('KUBERNETES_FIXTURE_NAMESPACE_PREFIX_DENIED');
+-    const namespaceName = text(payload.namespaceName, 'namespaceName', 63);
+-    if (!DNS_LABEL.test(namespaceName) || !namespaceName.startsWith(`${namespacePrefix}-`)) {
+-      throw new Error('KUBERNETES_FIXTURE_NAMESPACE_NAME_INVALID');
+-    }
+-    const immutableImage = text(payload.immutableImage, 'immutableImage', 2048);
+-    const image = IMMUTABLE_IMAGE.exec(immutableImage);
+-    if (!image || !this.#registryPrefixes.some((prefix) => image[1] === prefix || image[1]!.startsWith(`${prefix}/`))) {
+-      throw new Error('KUBERNETES_FIXTURE_IMAGE_DENIED');
+-    }
+-    if (payload.imageDigest !== image[2] || !DIGEST.test(String(payload.imageDigest))) {
+-      throw new Error('KUBERNETES_FIXTURE_IMAGE_DIGEST_INVALID');
+-    }
+-    const manifestDigest = text(payload.manifestDigest, 'manifestDigest', 71);
+-    if (!DIGEST.test(manifestDigest)) throw new Error('KUBERNETES_FIXTURE_MANIFEST_DIGEST_INVALID');
+-    const manifestPath = contained(this.#root, payload.manifestPath);
+-    const bytes = manifestBytes(manifestPath, manifestDigest, this.#maximumManifestBytes);
+-    const serviceName = text(payload.serviceName, 'serviceName', 63);
+-    if (!DNS_LABEL.test(serviceName)) throw new Error('KUBERNETES_FIXTURE_SERVICE_NAME_INVALID');
+-    const servicePort = integer(payload.servicePort, 'servicePort', 1, 65_535);
+-    const expectedServiceTargetPort = payload.serviceTargetPort === undefined
+-      ? null : integer(payload.serviceTargetPort, 'serviceTargetPort', 1, 65_535);
+-    const secretReferences = stringArray(payload.secretReferences ?? [], 'secretReferences', 32, SECRET_NAME);
+-    if (secretReferences.some((name) => !this.#secretReferences.has(name))) {
+-      throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED');
+-    }
+-    const facts = inspectManifest(bytes, immutableImage, this.#maximumResources, this.#registryPrefixes,
+-      serviceName, servicePort, expectedServiceTargetPort, {
+-        allowedStorageClasses: this.#allowedStorageClasses,
+-        allowDefaultStorageClass: this.#allowDefaultStorageClass,
+-        maximumClaimBytes: this.#maximumPersistentVolumeClaimBytes,
+-        maximumTotalBytes: this.#maximumPersistentVolumeTotalBytes,
+-      });
+-    const retentionSeconds = integer(payload.retentionSeconds, 'retentionSeconds', 60, this.#maximumRetentionSeconds);
+-    const retentionMode = text(payload.retentionMode, 'retentionMode', 6);
+-    if (retentionMode !== 'delete' && retentionMode !== 'retain') {
+-      throw new Error('KUBERNETES_FIXTURE_RETENTION_MODE_INVALID');
+-    }
+-    const readinessTimeoutMs = integer(payload.readinessTimeoutMs, 'readinessTimeoutMs', 1_000, this.#maximumExecutionMs);
+-    const credentialsValue = payload.testCredentials === undefined ? null : object(payload.testCredentials, 'testCredentials');
+-    let testCredentials: JsonObject | null = null;
+-    if (credentialsValue) {
+-      const mode = text(credentialsValue.mode, 'testCredentials.mode', 16);
+-      const secretName = text(credentialsValue.secretName, 'testCredentials.secretName', 253);
+-      if (mode !== 'generate' || !SECRET_NAME.test(secretName)) {
+-        throw new Error('KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID');
+-      }
+-      testCredentials = { mode, secretName, keys: ['username', 'password'],
+-        readers: [...new Set([this.#credentialReaderSubject, this.#runnerSubject])] };
+-    }
+-    const lease = {
+-      apiVersion: `${this.#apiGroup}/${this.#apiVersion}`, kind: 'BusterNamespaceLease',
+-      metadata: { name: leaseName, namespace: this.#controllerNamespace,
+-        labels: { 'openclaw.io/buster-scope': request.resource.canonicalId.replace(/[^A-Za-z0-9._-]/gu, '-').slice(0, 63) } },
+-      spec: { namespaceName, namespacePrefix, runId: leaseName, project: text(payload.project, 'project', 253),
+-        purpose: 'gate', serviceName, servicePort, serviceTargetPort: facts.serviceTargetPort, cleanupPolicy: retentionMode,
+-        verifiedImage: immutableImage, manifestDigest,
+-        ttlSeconds: retentionSeconds, access: [{ subject: this.#runnerSubject, mode: 'deployer' }],
+-        secretsToCopy: secretReferences, ...(testCredentials ? { testCredentials } : {}), exposure: { provider: 'off' } },
+-    };
+-    const leaseBytes = `${JSON.stringify(lease)}\n`;
+-    const resource = `busternamespaceleases.${this.#apiGroup}`;
+-    for (const verb of ['create', 'get', 'delete']) {
+-      const allowed = (await this.#kubectlRun(['auth', 'can-i', verb, resource, '-n', this.#controllerNamespace], null, signal, 15_000)).trim();
+-      if (allowed !== 'yes') throw new Error(`KUBERNETES_FIXTURE_RBAC_DENIED:${verb}`);
+-    }
+-    await this.#kubectlRun(['apply', '--dry-run=server', '-f', '-'], leaseBytes, signal, 15_000);
+-    await this.#kubectlRun(['apply', '-f', '-'], leaseBytes, signal, 15_000);
+-    let status: JsonObject;
+-    try {
+-      status = await this.#waitLease(leaseName, signal, readinessTimeoutMs);
+-      const actualNamespace = text(status.namespaceName, 'status.namespaceName', 63);
+-      if (actualNamespace !== namespaceName) throw new Error('KUBERNETES_FIXTURE_NAMESPACE_MISMATCH');
+-      await this.#kubectlRun(['apply', '--namespace', namespaceName, '-f', '-'], bytes, signal, readinessTimeoutMs);
+-      const readinessDeadline = Date.now() + readinessTimeoutMs;
+-      const podCount = await this.#waitPods(namespaceName, signal, readinessTimeoutMs);
+-      const serviceReadinessMs = readinessDeadline - Date.now();
+-      if (serviceReadinessMs <= 0) throw new Error('KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT:Readiness deadline expired.');
+-      await this.#waitService(namespaceName, serviceName, servicePort, signal, serviceReadinessMs);
+-      const createdAt = text(status.createdAt, 'status.createdAt', 64);
+-      if (!Number.isFinite(Date.parse(createdAt))) throw new Error('KUBERNETES_FIXTURE_CREATED_AT_INVALID');
+-      const expiresAt = typeof status.expiresAt === 'string' ? status.expiresAt : new Date(Date.parse(createdAt) + retentionSeconds * 1_000).toISOString();
+-      const generatedCredentials = testCredentials ? await this.#generatedCredentials({leaseName, namespace:namespaceName,
+-        secretName:String(testCredentials.secretName), immutableImage, manifestDigest},signal) : undefined;
+-      return Object.freeze({ ok: true, leaseName, namespace: namespaceName, createdAt, expiresAt,
+-        endpoint: `http://${serviceName}.${namespaceName}.svc.cluster.local:${servicePort}`,
+-        releaseAction: `kubectl delete busternamespacelease ${leaseName} -n ${this.#controllerNamespace}`,
+-        manifestDigest, immutableImage, secretReferences,
+-        ...(testCredentials ? { credentialsRef: testCredentials.secretName } : {}),
+-        ...(generatedCredentials ? { generatedCredentials } : {}),
+-        resourceCount: facts.resources, workloadCount: facts.workloads, podCount });
+-    } catch (error) {
+-      await this.#releaseAfterPrepareFailure(leaseName).catch(() => undefined);
+-      throw error;
+-    }
+-  }
+-
+-  async #release(leaseName: string, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+-    if (!DNS_LABEL.test(leaseName)) throw new Error('KUBERNETES_FIXTURE_LEASE_NAME_INVALID');
+-    await this.#kubectlRun(['delete', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
+-      '--ignore-not-found=true', '--wait=true', `--timeout=${Math.ceil(this.#maximumExecutionMs / 1_000)}s`], null, signal);
+-    return Object.freeze({ ok: true, leaseName, released: true });
+-  }
+-
+-  async invoke(capability: string, request: TestProviderCapabilityRequest, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
+-    if (capability !== 'kubernetes.fixture' || request.resource.type !== 'kubernetes.fixture'
+-      || !/^kubernetes-fixture:attempt:[A-Za-z0-9._:-]+$/u.test(request.resource.canonicalId)) {
+-      throw new Error('KUBERNETES_FIXTURE_CAPABILITY_REQUEST_INVALID');
+-    }
+-    if (request.operation === 'prepare') return this.#prepare(request, signal);
+-    if (request.operation === 'release') {
+-      const payload = object(request.payload, 'payload');
+-      return this.#release(text(payload.leaseName, 'leaseName', 63), signal);
+-    }
+-    throw new Error('KUBERNETES_FIXTURE_OPERATION_INVALID');
+-  }
+-}
+--- /dev/null
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-settings.ts
+@@ -0,0 +1,148 @@
++import fs from 'node:fs';
++import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
++import { runProcessInput } from './process-input.ts';
++import { DNS_LABEL, SECRET_NAME, MAX_TIMER_MS, MAX_NAMESPACE_PREFIX_LENGTH, STORAGE_CLASS_NAME } from './kubernetes-fixture-values.ts';
++type Execute = (command: string, args: readonly string[], options: Readonly<Record<string, unknown>>) => Promise<{
++    stdout?: string;
++    stderr?: string;
++}>;
++async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>, processInputPolicy: BusterProcessInputSettings): Promise<{
++    stdout: string;
++    stderr: string;
++}> {
++    const result = await runProcessInput(command, args, {
++        processInputPolicy,
++        ...(options.env ? { env: options.env as NodeJS.ProcessEnv } : {}),
++        ...(options.signal ? { signal: options.signal as AbortSignal } : {}),
++        input: options.input as string | Buffer | null ?? null,
++        timeoutMs: options.timeout as number, maximumOutputBytes: options.maxBuffer as number,
++        prefix: 'KUBERNETES_FIXTURE_KUBECTL',
++    });
++    const stdout = result.stdout.toString('utf8');
++    const stderr = result.stderr.toString('utf8');
++    if (result.code !== 0)
++        throw Object.assign(new Error(`Command failed with code ${String(result.code)} and signal ${String(result.signal)}`), { stdout, stderr });
++    return { stdout, stderr };
++}
++export interface KubernetesFixtureCapabilityInvokerOptions {
++    readonly processInputPolicy: BusterProcessInputSettings;
++    readonly workspaceRoot: string;
++    readonly kubectlExecutable: string;
++    readonly controllerNamespace: string;
++    readonly leaseApiGroup: string;
++    readonly leaseApiVersion: string;
++    readonly allowedNamespacePrefixes: readonly string[];
++    readonly allowedRegistryPrefixes: readonly string[];
++    readonly allowedSecretReferences: readonly string[];
++    readonly allowedStorageClasses: readonly string[];
++    readonly allowDefaultStorageClass: boolean;
++    readonly runnerSubject?: string;
++    readonly credentialReaderSubject?: string;
++    readonly maximumManifestBytes: number;
++    readonly maximumResources: number;
++    readonly maximumPersistentVolumeClaimBytes: number;
++    readonly maximumPersistentVolumeTotalBytes: number;
++    readonly maximumRetentionSeconds: number;
++    readonly maximumExecutionMs: number;
++    readonly pollIntervalMs?: number;
++    readonly execute?: Execute;
++    readonly now?: () => Date;
++}
++export class KubernetesFixtureSettings {
++    readonly root: string;
++    readonly kubectl: string;
++    readonly controllerNamespace: string;
++    readonly apiGroup: string;
++    readonly apiVersion: string;
++    readonly namespacePrefixes: ReadonlySet<string>;
++    readonly registryPrefixes: readonly string[];
++    readonly secretReferences: ReadonlySet<string>;
++    readonly allowedStorageClasses: ReadonlySet<string>;
++    readonly allowDefaultStorageClass: boolean;
++    readonly runnerSubject: string;
++    readonly credentialReaderSubject: string;
++    readonly maximumManifestBytes: number;
++    readonly maximumResources: number;
++    readonly maximumPersistentVolumeClaimBytes: bigint;
++    readonly maximumPersistentVolumeTotalBytes: bigint;
++    readonly maximumRetentionSeconds: number;
++    readonly maximumExecutionMs: number;
++    readonly pollIntervalMs: number;
++    readonly execute: Execute;
++    readonly now: () => Date;
++    constructor(options: KubernetesFixtureCapabilityInvokerOptions) {
++        const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);
++        this.root = fs.realpathSync(options.workspaceRoot);
++        this.kubectl = fs.realpathSync(options.kubectlExecutable);
++        fs.accessSync(this.kubectl, fs.constants.X_OK);
++        validateAddresses(options);
++        const runnerSubject = options.runnerSubject ?? `${options.controllerNamespace}/agent-buster`;
++        const credentialReaderSubject = options.credentialReaderSubject ?? `${options.controllerNamespace}/agent-nova`;
++        if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(runnerSubject)
++            || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(credentialReaderSubject)) {
++            throw new Error('KUBERNETES_FIXTURE_SUBJECT_INVALID');
++        }
++        validateLimits(options);
++        this.controllerNamespace = options.controllerNamespace;
++        this.apiGroup = options.leaseApiGroup;
++        this.apiVersion = options.leaseApiVersion;
++        this.namespacePrefixes = new Set(options.allowedNamespacePrefixes);
++        this.registryPrefixes = [...options.allowedRegistryPrefixes];
++        this.secretReferences = new Set(options.allowedSecretReferences);
++        this.allowedStorageClasses = new Set(options.allowedStorageClasses);
++        this.allowDefaultStorageClass = options.allowDefaultStorageClass;
++        this.runnerSubject = runnerSubject;
++        this.credentialReaderSubject = credentialReaderSubject;
++        this.maximumManifestBytes = options.maximumManifestBytes;
++        this.maximumResources = options.maximumResources;
++        this.maximumPersistentVolumeClaimBytes = BigInt(options.maximumPersistentVolumeClaimBytes);
++        this.maximumPersistentVolumeTotalBytes = BigInt(options.maximumPersistentVolumeTotalBytes);
++        if (this.maximumPersistentVolumeTotalBytes < this.maximumPersistentVolumeClaimBytes) {
++            throw new Error('KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_LIMIT_INVALID');
++        }
++        this.maximumRetentionSeconds = options.maximumRetentionSeconds;
++        this.maximumExecutionMs = Math.min(options.maximumExecutionMs, MAX_TIMER_MS);
++        this.pollIntervalMs = options.pollIntervalMs ?? 1_000;
++        if (!Number.isSafeInteger(this.pollIntervalMs) || this.pollIntervalMs < 50 || this.pollIntervalMs > 10000) {
++            throw new Error('KUBERNETES_FIXTURE_POLL_INTERVAL_INVALID');
++        }
++        this.execute = options.execute ?? ((command, args, operation) => executeProcess(command, args, operation, processInputPolicy));
++        this.now = options.now ?? (() => new Date());
++    }
++}
++function validateAddresses(options: KubernetesFixtureCapabilityInvokerOptions): void {
++    if (!DNS_LABEL.test(options.controllerNamespace))
++        throw new Error('KUBERNETES_FIXTURE_CONTROLLER_NAMESPACE_INVALID');
++    if (!/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/u.test(options.leaseApiGroup))
++        throw new Error('KUBERNETES_FIXTURE_API_GROUP_INVALID');
++    if (!/^v[0-9]+(?:alpha|beta)?[0-9]*$/u.test(options.leaseApiVersion))
++        throw new Error('KUBERNETES_FIXTURE_API_VERSION_INVALID');
++    if (options.allowedNamespacePrefixes.length < 1
++        || options.allowedNamespacePrefixes.some((item) => item.length > MAX_NAMESPACE_PREFIX_LENGTH || !DNS_LABEL.test(item))) {
++        throw new Error('KUBERNETES_FIXTURE_NAMESPACE_PREFIXES_INVALID');
++    }
++    if (options.allowedRegistryPrefixes.length < 1
++        || options.allowedRegistryPrefixes.some((item) => !/^[A-Za-z0-9.-]+(?::[0-9]{1,5})?\/[a-z0-9]+(?:[._/-][a-z0-9]+)*$/u.test(item))) {
++        throw new Error('KUBERNETES_FIXTURE_REGISTRY_PREFIXES_INVALID');
++    }
++    validateStorageOptions(options);
++}
++function validateStorageOptions(options: KubernetesFixtureCapabilityInvokerOptions): void {
++    if (options.allowedSecretReferences.some((item) => !SECRET_NAME.test(item))) {
++        throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCES_INVALID');
++    }
++    if (options.allowedStorageClasses.some((item) => item.length > 253 || !STORAGE_CLASS_NAME.test(item))) {
++        throw new Error('KUBERNETES_FIXTURE_STORAGE_CLASSES_INVALID');
++    }
++    if (typeof options.allowDefaultStorageClass !== 'boolean') {
++        throw new Error('KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_POLICY_INVALID');
++    }
++}
++function validateLimits(options: KubernetesFixtureCapabilityInvokerOptions): void {
++    for (const [value, label] of [[options.maximumManifestBytes, 'MANIFEST_SIZE'], [options.maximumResources, 'RESOURCE_COUNT'],
++        [options.maximumPersistentVolumeClaimBytes, 'PVC_SIZE'], [options.maximumPersistentVolumeTotalBytes, 'PVC_TOTAL_SIZE'],
++        [options.maximumRetentionSeconds, 'RETENTION'], [options.maximumExecutionMs, 'EXECUTION']] as const) {
++        if (!Number.isSafeInteger(value) || value < 1)
++            throw new Error(`KUBERNETES_FIXTURE_${label}_LIMIT_INVALID`);
++    }
++}
+--- /dev/null
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-storage.ts
+@@ -0,0 +1,89 @@
++import { text, object, type JsonObject } from './kubernetes-fixture-values.ts';
++const STORAGE_QUANTITY = /^(?:\+)?([0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:(Ki|Mi|Gi|Ti|Pi|Ei)|(n|u|m|k|K|M|G|T|P|E)|([eE][+-]?[0-9]+))?$/u;
++function storageBytes(value: unknown): bigint {
++    const quantity = text(value, 'persistentVolumeClaim.storage', 64);
++    const parsed = STORAGE_QUANTITY.exec(quantity);
++    if (!parsed)
++        throw new Error(`KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:${quantity}`);
++    const mantissa = parsed[1]!;
++    const decimalPlaces = mantissa.includes('.') ? mantissa.length - mantissa.indexOf('.') - 1 : 0;
++    let numerator = BigInt(mantissa.replace('.', ''));
++    let denominator = 10n ** BigInt(decimalPlaces);
++    const binaryPowers = new Map([['Ki', 10n], ['Mi', 20n], ['Gi', 30n], ['Ti', 40n], ['Pi', 50n], ['Ei', 60n]]);
++    const decimalPowers = new Map([['n', -9], ['u', -6], ['m', -3], ['k', 3], ['K', 3],
++        ['M', 6], ['G', 9], ['T', 12], ['P', 15], ['E', 18]]);
++    if (parsed[2])
++        numerator *= 1n << binaryPowers.get(parsed[2])!;
++    const exponent = parsed[3] ? decimalPowers.get(parsed[3])!
++        : parsed[4] ? Number.parseInt(parsed[4].slice(1), 10) : 0;
++    if (!Number.isSafeInteger(exponent) || Math.abs(exponent) > 63) {
++        throw new Error(`KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:${quantity}`);
++    }
++    if (exponent >= 0)
++        numerator *= 10n ** BigInt(exponent);
++    else
++        denominator *= 10n ** BigInt(-exponent);
++    if (numerator < 1n || numerator % denominator !== 0n) {
++        throw new Error(`KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID:${quantity}`);
++    }
++    return numerator / denominator;
++}
++export function persistentVolumeClaims(document: JsonObject): {
++    name: string;
++    spec: JsonObject;
++    copies: bigint;
++}[] {
++    if (document.kind === 'PersistentVolumeClaim') {
++        const metadata = object(document.metadata, 'persistentVolumeClaim.metadata');
++        return [{ name: text(metadata.name, 'persistentVolumeClaim.metadata.name', 253),
++                spec: object(document.spec, 'persistentVolumeClaim.spec'), copies: 1n }];
++    }
++    if (document.kind !== 'StatefulSet')
++        return [];
++    const spec = object(document.spec, 'statefulSet.spec');
++    const replicas = spec.replicas ?? 1;
++    if (!Number.isSafeInteger(replicas) || Number(replicas) < 0) {
++        throw new Error('KUBERNETES_FIXTURE_STATEFULSET_REPLICAS_INVALID');
++    }
++    const templates = spec.volumeClaimTemplates ?? [];
++    if (!Array.isArray(templates))
++        throw new Error('KUBERNETES_FIXTURE_PVC_TEMPLATES_INVALID');
++    return templates.map((raw) => {
++        const template = object(raw, 'statefulSet.volumeClaimTemplate');
++        const metadata = object(template.metadata, 'statefulSet.volumeClaimTemplate.metadata');
++        return { name: text(metadata.name, 'statefulSet.volumeClaimTemplate.metadata.name', 253),
++            spec: object(template.spec, 'statefulSet.volumeClaimTemplate.spec'), copies: BigInt(Number(replicas)) };
++    });
++}
++export interface PersistentVolumePolicy {
++    readonly allowedStorageClasses: ReadonlySet<string>;
++    readonly allowDefaultStorageClass: boolean;
++    readonly maximumClaimBytes: bigint;
++    readonly maximumTotalBytes: bigint;
++}
++export function validatePersistentVolumeClaim(name: string, spec: JsonObject, policy: PersistentVolumePolicy): bigint {
++    if (spec.volumeName !== undefined || spec.selector !== undefined
++        || spec.dataSource !== undefined || spec.dataSourceRef !== undefined) {
++        throw new Error(`KUBERNETES_FIXTURE_PVC_SOURCE_DENIED:${name}`);
++    }
++    if (spec.volumeMode !== undefined && spec.volumeMode !== 'Filesystem') {
++        throw new Error(`KUBERNETES_FIXTURE_PVC_VOLUME_MODE_DENIED:${name}`);
++    }
++    const storageClass = spec.storageClassName;
++    if (storageClass === undefined) {
++        if (!policy.allowDefaultStorageClass)
++            throw new Error('KUBERNETES_FIXTURE_DEFAULT_STORAGE_CLASS_DENIED');
++    }
++    else {
++        const selected = text(storageClass, 'persistentVolumeClaim.storageClassName', 253);
++        if (!policy.allowedStorageClasses.has(selected)) {
++            throw new Error(`KUBERNETES_FIXTURE_STORAGE_CLASS_DENIED:${selected}`);
++        }
++    }
++    const resources = object(spec.resources, 'persistentVolumeClaim.resources');
++    const requests = object(resources.requests, 'persistentVolumeClaim.resources.requests');
++    const bytes = storageBytes(requests.storage);
++    if (bytes > policy.maximumClaimBytes)
++        throw new Error(`KUBERNETES_FIXTURE_PVC_SIZE_DENIED:${name}`);
++    return bytes;
++}
+--- /dev/null
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-values.ts
+@@ -0,0 +1,39 @@
++export const DNS_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u;
++export const SECRET_NAME = /^[A-Za-z0-9._-]+$/u;
++export const DIGEST = /^sha256:[a-f0-9]{64}$/u;
++export const IMMUTABLE_IMAGE = /^([A-Za-z0-9.-]+(?::[0-9]{1,5})?\/[a-z0-9]+(?:[._/-][a-z0-9]+)*)@(sha256:[a-f0-9]{64})$/u;
++export const MAX_TIMER_MS = 2_147_483_647;
++export const MAX_NAMESPACE_PREFIX_LENGTH = 42;
++export const STORAGE_CLASS_NAME = /^[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)*$/u;
++export type JsonObject = Record<string, unknown>;
++export function object(value: unknown, label: string): JsonObject {
++    if (!value || typeof value !== 'object' || Array.isArray(value)) {
++        throw new Error(`KUBERNETES_FIXTURE_REQUEST_INVALID:${label}`);
++    }
++    return value as JsonObject;
++}
++export function text(value: unknown, label: string, maximum = 1024): string {
++    if (typeof value !== 'string' || value.length < 1 || value.length > maximum || value.includes('\0')) {
++        throw new Error(`KUBERNETES_FIXTURE_REQUEST_INVALID:${label}`);
++    }
++    return value;
++}
++export function integer(value: unknown, label: string, minimum: number, maximum: number): number {
++    if (!Number.isSafeInteger(value) || Number(value) < minimum || Number(value) > maximum) {
++        throw new Error(`KUBERNETES_FIXTURE_REQUEST_INVALID:${label}`);
++    }
++    return Number(value);
++}
++export function stringArray(value: unknown, label: string, maximum: number, pattern?: RegExp): string[] {
++    if (!Array.isArray(value) || value.length > maximum
++        || value.some((item) => typeof item !== 'string' || item.length < 1 || item.length > 253
++            || invalidArrayEntry(item, pattern))) {
++        throw new Error(`KUBERNETES_FIXTURE_REQUEST_INVALID:${label}`);
++    }
++    return [...new Set(value as string[])];
++}
++function invalidArrayEntry(item: string, pattern?: RegExp): boolean {
++    if (item.includes('\0'))
++        return true;
++    return pattern !== undefined && !pattern.test(item);
++}
+--- a/tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts
+@@ -21,7 +21,17 @@
+ assert.equal(entry.registration.outputs.find(output => output.name === 'deployment')?.schemaId, 'kubeclaw.kubernetes-deployment-fixture@1');
+ const controllerChart = fs.readFileSync('charts/kubeclaw/templates/buster-namespace-controller.yaml', 'utf8');
+ const controllerSource = fs.readFileSync('cmd/buster-namespace-controller/main.go', 'utf8');
+-const runtimeSource = fs.readFileSync('skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', 'utf8');
++const fixtureModuleNames = ['runtime', 'settings', 'readiness', 'preparation', 'inspection', 'pods', 'storage', 'manifest-files', 'values'];
++const fixtureSources = new Map(fixtureModuleNames.map(name => [name,
++  fs.readFileSync(`skills/buster/engine/test-gates/kubernetes-fixture-${name}.ts`, 'utf8')]));
++const runtimeSource = fixtureModuleNames.map(name => fixtureSources.get(name)!).join('\n');
++for (const [owner, dependency] of [['runtime', 'settings'], ['runtime', 'readiness'], ['runtime', 'preparation'],
++  ['preparation', 'inspection'], ['inspection', 'pods'], ['inspection', 'storage'], ['inspection', 'manifest-files']]) {
++  assert(fixtureSources.get(owner!)!.includes(`from './kubernetes-fixture-${dependency}.ts'`), 'real extracted module import');
++}
++assert.match(fixtureSources.get('runtime')!, /this\.#preparation\.prepare\(request, signal\)/u);
++assert.match(fixtureSources.get('preparation')!, /inspectManifest\(bytes,/u);
++assert.match(fixtureSources.get('inspection')!, /validatePodSecurity\(spec\)/u);
+ assert.doesNotMatch(controllerChart, /pods\/portforward/u);
+ assert.doesNotMatch(controllerSource, /pods\/portforward/u);
+ assert.match(runtimeSource, /#releaseAfterPrepareFailure\(leaseName: string\)/u);
+@@ -29,7 +39,7 @@
+ assert.match(runtimeSource, /\['get', 'service', serviceName[\s\S]*\['get', 'endpoints', serviceName/u);
+ assert.match(runtimeSource, /Math\.min\(15_000, deadline - Date\.now\(\)\)/u);
+ assert.match(runtimeSource, /NotFound[\s\S]*not found/u);
+-assert.match(runtimeSource, /readinessDeadline - Date\.now\(\)[\s\S]*#waitService/u);
++assert.match(runtimeSource, /readinessDeadline - Date\.now\(\)[\s\S]*readiness\.waitService/u);
+ assert.match(runtimeSource, /servicePortName[\s\S]*hasConfiguredPort/u);
+ assert.match(runtimeSource, /retentionMode[\s\S]*cleanupPolicy: retentionMode/u);
+ assert.match(runtimeSource, /status\.createdAt[\s\S]*KUBERNETES_FIXTURE_CREATED_AT_INVALID/u);
+@@ -41,7 +51,7 @@
+ assert.match(controllerSource, /expireLease\([\s\S]*deleteOwnedNamespace/u);
+ assert.match(controllerSource, /allowedSourceSecrets\[name\][\s\S]*not approved for test namespace copying/u);
+ assert.match(controllerSource, /generated testCredentials keys must be username and password/u);
+-assert.match(runtimeSource, /access: \[\{ subject: this\.#runnerSubject, mode: 'deployer' \}\]/u);
++assert.match(runtimeSource, /access: \[\{ subject: settings\.runnerSubject, mode: 'deployer' \}\]/u);
+ const legacyExecutionPath = 'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-execution.ts';
+ if (fs.existsSync(legacyExecutionPath)) {
+   const legacyExecution = fs.readFileSync(legacyExecutionPath, 'utf8');

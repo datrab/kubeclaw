@@ -1,0 +1,113 @@
+{
+  "before": {
+    "skills/prism/server/studio-config.ts": "377f836f98c8d346a41a9eff4cbe1488a0451038ead95e0f941c66fdcfe35fad",
+    "skills/prism/tests/studio-service.test.mts": "76cbed3809741d2b42a0892d11573f661be82452f886ede13ed3aacb2dbff291",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts": "e9e7fef5fec4931e317985b27b07cb7b9a8fd18a23752137a07c59a91ca42c2d",
+    "skills/common/plugin-runtime/foundation/config/swarm.schema.json": "aae0cc4633ff1462efbc103d0529e68bdb103907a6511e9e40e6139a3575e3ed",
+    "charts/kubeclaw/files/config/swarm.config.json": "991e0c6dfd683b484bbc132c3e6e60c67abdf7c88e53959e9d08b7e4e60c20da",
+    "charts/prism/templates/_swarm-config.tpl": "ecbc31f41295ba0f0a4f3001586985e92cc67abb4c4f60990618750678a808e0",
+    "charts/prism/templates/workloads.yaml": "189fbbdc5755fb2e052a28a566410a9184297d0a1a2ed4adce24d19f3dc5f9c3",
+    "charts/prism/templates/services.yaml": "feea08cb2eaf89d5fb520c321a275a8550add0ca46337f4614d7384a7c1701df",
+    "charts/prism/templates/networkpolicy.yaml": "5e4e412c6dc3a6043620fcfa533b5881c9e9533b39632cdcca870c13d9cae838",
+    "docker/Dockerfile.prism-studio": "7236981dff3fd9008e1156d810041df3a5b8f00311362978912446e33a2bad0c",
+    "scripts/check-built-runtime-image.sh": "0e5a5c3516bec7669e744208d80bf9727625346845a52eff69b1388230b690d0",
+    "tests/verification/deployment/prism-swarm-image.mjs": "3330ef6686a396e4314f3eb99f5142d0708dfa78e58077db2f8a36ae648a353b",
+    "tests/verification/deployment/check-deployment-truth.mjs": "d58e76a4f11ae95bbf5cd90534f6937a1dc68810e52264a81314d4a0cdf0c933",
+    "tests/verification/deployment/prism-swarm-config.test.mjs": "44823a345015647ceb1fd025ed11db8da2ef03f099df28193c0a5e5494b2266b",
+    ".dockerignore": "29c8a2f2b7249ece0f29276657794e4de7a18fe2909839ae20408a02f8f466fa",
+    "skills/prism/package.json": "8d07247f3bd986745352a20a0ee17696afde9b9b33637fe396c547d1a01a8c4d",
+    "skills/prism/tests/studio-config.test.mts": "9a602947f7938b6b72aa1074dc3593610a00d125a2535904cc71d488e5ec1a9b",
+    "skills/prism/tests/fixtures/studio-service.mts": "42a941fef8378dda81237345cb783c14ae663ec1aa3c62cea5b3910b7e235bf9",
+    "skills/prism/tests/studio-canonical-image.mts": "ae7a69a37ec6c36ce63de2f9f6765db57d07d5af5bf9ee11a58993b03ca537de"
+  },
+  "after": {
+    "skills/prism/server/studio-config.ts": "377f836f98c8d346a41a9eff4cbe1488a0451038ead95e0f941c66fdcfe35fad",
+    "skills/prism/tests/studio-service.test.mts": "76cbed3809741d2b42a0892d11573f661be82452f886ede13ed3aacb2dbff291",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts": "e9e7fef5fec4931e317985b27b07cb7b9a8fd18a23752137a07c59a91ca42c2d",
+    "skills/common/plugin-runtime/foundation/config/swarm.schema.json": "aae0cc4633ff1462efbc103d0529e68bdb103907a6511e9e40e6139a3575e3ed",
+    "charts/kubeclaw/files/config/swarm.config.json": "991e0c6dfd683b484bbc132c3e6e60c67abdf7c88e53959e9d08b7e4e60c20da",
+    "charts/prism/templates/_swarm-config.tpl": "ecbc31f41295ba0f0a4f3001586985e92cc67abb4c4f60990618750678a808e0",
+    "charts/prism/templates/workloads.yaml": "189fbbdc5755fb2e052a28a566410a9184297d0a1a2ed4adce24d19f3dc5f9c3",
+    "charts/prism/templates/services.yaml": "feea08cb2eaf89d5fb520c321a275a8550add0ca46337f4614d7384a7c1701df",
+    "charts/prism/templates/networkpolicy.yaml": "5e4e412c6dc3a6043620fcfa533b5881c9e9533b39632cdcca870c13d9cae838",
+    "docker/Dockerfile.prism-studio": "7236981dff3fd9008e1156d810041df3a5b8f00311362978912446e33a2bad0c",
+    "scripts/check-built-runtime-image.sh": "0e5a5c3516bec7669e744208d80bf9727625346845a52eff69b1388230b690d0",
+    "tests/verification/deployment/prism-swarm-image.mjs": "3330ef6686a396e4314f3eb99f5142d0708dfa78e58077db2f8a36ae648a353b",
+    "tests/verification/deployment/check-deployment-truth.mjs": "d58e76a4f11ae95bbf5cd90534f6937a1dc68810e52264a81314d4a0cdf0c933",
+    "tests/verification/deployment/prism-swarm-config.test.mjs": "44823a345015647ceb1fd025ed11db8da2ef03f099df28193c0a5e5494b2266b",
+    ".dockerignore": "29c8a2f2b7249ece0f29276657794e4de7a18fe2909839ae20408a02f8f466fa",
+    "skills/prism/package.json": "8d07247f3bd986745352a20a0ee17696afde9b9b33637fe396c547d1a01a8c4d",
+    "skills/prism/tests/studio-config.test.mts": "9a602947f7938b6b72aa1074dc3593610a00d125a2535904cc71d488e5ec1a9b",
+    "skills/prism/tests/fixtures/studio-service.mts": "42a941fef8378dda81237345cb783c14ae663ec1aa3c62cea5b3910b7e235bf9",
+    "skills/prism/tests/studio-canonical-image.mts": "ae7a69a37ec6c36ce63de2f9f6765db57d07d5af5bf9ee11a58993b03ca537de"
+  },
+  "commands": [
+    {
+      "name": "tests-final",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "skills/prism/tests/studio-service.test.mts",
+        "skills/prism/tests/studio-config.test.mts",
+        "skills/prism/tests/studio-adapter.test.mts",
+        "skills/prism/tests/studio-flows.test.mts",
+        "skills/prism/tests/studio-roundtrip.test.mts",
+        "skills/prism/tests/preview-assets.test.mts",
+        "skills/prism/tests/product-decisions.test.mts",
+        "skills/prism/tests/control-image-environment.test.mts",
+        "skills/prism/tests/control-server-config.test.mts",
+        "skills/prism/tests/swarm-control-policy.test.mts",
+        "tests/verification/deployment/prism-swarm-config.test.mjs",
+        "tests/verification/deployment/prism-product-decisions.test.mjs",
+        "tests/verification/deployment/release-config.test.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 30.33353281021118
+    },
+    {
+      "name": "types-final",
+      "command": [
+        "npm",
+        "run",
+        "typecheck",
+        "--prefix",
+        "skills/prism"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.3382556438446045
+    },
+    {
+      "name": "lint-final",
+      "command": [
+        "npx",
+        "eslint",
+        "--config",
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        "skills/prism/server/studio-config.ts",
+        "skills/prism/tests/studio-service.test.mts",
+        "skills/common/plugin-runtime/foundation/config/swarm.ts",
+        "tests/verification/deployment/prism-swarm-image.mjs",
+        "tests/verification/deployment/check-deployment-truth.mjs",
+        "tests/verification/deployment/prism-swarm-config.test.mjs",
+        "skills/prism/tests/studio-config.test.mts",
+        "skills/prism/tests/fixtures/studio-service.mts",
+        "skills/prism/tests/studio-canonical-image.mts"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.752109527587891
+    },
+    {
+      "name": "helm-lint-final",
+      "command": [
+        "helm",
+        "lint",
+        "charts/prism",
+        "-f",
+        "charts/prism/ci-values.yaml"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.12228822708129883
+    }
+  ]
+}

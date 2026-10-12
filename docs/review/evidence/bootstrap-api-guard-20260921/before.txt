@@ -1,0 +1,178 @@
+✖ existing namespace continues without create (28.600917ms)
+✖ successful empty lookup creates namespace before Helm (23.431815ms)
+✖ lookup failure stops all mutation: exec: executable credential-helper not found (23.303612ms)
+✖ lookup failure stops all mutation: Error from server (Forbidden): namespaces is forbidden (17.360771ms)
+✖ lookup failure stops all mutation: The connection to the server was refused (17.027633ms)
+✖ lookup failure stops all mutation: Error from server (NotFound): the server could not find the requested resource (22.600774ms)
+✖ create failure stops before Helm without a fallback (21.815674ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 237.755692
+
+✖ failing tests:
+
+test at tests/verification/deployment/bootstrap-api-guard.test.mjs:41:1
+✖ existing namespace continues without create (28.600917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'kubectl get namespace guard-test'
+  - 'kubectl get namespace guard-test --ignore-not-found -o name'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/bootstrap-api-guard.test.mjs:44:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'kubectl get namespace guard-test',
+    expected: 'kubectl get namespace guard-test --ignore-not-found -o name',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/bootstrap-api-guard.test.mjs:48:1
+✖ successful empty lookup creates namespace before Helm (23.431815ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'kubectl get namespace guard-test',
+  +   'helm repo add bitnami https://charts.bitnami.com/bitnami'
+  -   'kubectl get namespace guard-test --ignore-not-found -o name',
+  -   'kubectl create namespace guard-test'
+    ]
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/bootstrap-api-guard.test.mjs:51:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'kubectl get namespace guard-test', 'helm repo add bitnami https://charts.bitnami.com/bitnami' ],
+    expected: [ 'kubectl get namespace guard-test --ignore-not-found -o name', 'kubectl create namespace guard-test' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/bootstrap-api-guard.test.mjs:60:3
+✖ lookup failure stops all mutation: exec: executable credential-helper not found (23.303612ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/bootstrap-api-guard.test.mjs:62:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/bootstrap-api-guard.test.mjs:60:3
+✖ lookup failure stops all mutation: Error from server (Forbidden): namespaces is forbidden (17.360771ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'kubectl get namespace guard-test'
+  -   'kubectl get namespace guard-test --ignore-not-found -o name'
+    ]
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/bootstrap-api-guard.test.mjs:63:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'kubectl get namespace guard-test' ],
+    expected: [ 'kubectl get namespace guard-test --ignore-not-found -o name' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/bootstrap-api-guard.test.mjs:60:3
+✖ lookup failure stops all mutation: The connection to the server was refused (17.027633ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'kubectl get namespace guard-test'
+  -   'kubectl get namespace guard-test --ignore-not-found -o name'
+    ]
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/bootstrap-api-guard.test.mjs:63:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'kubectl get namespace guard-test' ],
+    expected: [ 'kubectl get namespace guard-test --ignore-not-found -o name' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/bootstrap-api-guard.test.mjs:60:3
+✖ lookup failure stops all mutation: Error from server (NotFound): the server could not find the requested resource (22.600774ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/bootstrap-api-guard.test.mjs:62:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/bootstrap-api-guard.test.mjs:67:1
+✖ create failure stops before Helm without a fallback (21.815674ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/bootstrap-api-guard.test.mjs:69:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,16 @@
+{
+  "id": "CLUSTER-V1-02",
+  "mode": "source-only addendum",
+  "status": "scope correction required under enabled-route binding decision",
+  "source": "snapshot-v1/skills/buster/engine/test-gates/production.ts:75",
+  "sourceSha256": "2bf42cf527b3df53b41c075b91f87a23c325c205472e894e13311fd7721512f0",
+  "fact": "clusterRuntimeBinding(bindingSource, policy) called unconditionally before route flags are destructured; missing binding rejects even when KubernetesFixture, TailscaleExposure and RuntimeSecurity are disabled.",
+  "decisionBoundary": "Central component policy remains mandatory for all routes; external projected namespace has no consumer with all three cluster routes disabled. Previous independent preimplementation decision did not expressly authorize a new namespace requirement on noncluster runtimes. Parent supplied enabled-route binding scope during this review.",
+  "requiredCases": [
+    "all cluster routes disabled and binding omitted: original otherwise valid runtime loads without invented namespace",
+    "each enabled cluster route plus missing binding rejects before effects",
+    "present malformed/extra bindings reject, including disabled routes",
+    "central invalid policy rejects even with all routes disabled"
+  ],
+  "runtime": "none"
+}

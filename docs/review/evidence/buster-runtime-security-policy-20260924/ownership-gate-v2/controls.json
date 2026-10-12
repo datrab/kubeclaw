@@ -1,0 +1,21 @@
+{
+  "status": "prepared only; isolated source import hooks in nested test workers must prove application; no live helper edits",
+  "controls": [
+    {
+      "name": "premature-root-removal",
+      "file": "tests/fixtures/test-gate/cluster-test-ownership.mjs",
+      "sha256": "021f3cf0f542c3de92befa39195c552ec2dad62e49fd2deb4cc4ec3287ac256d",
+      "old": "  t.after(async () => {\n    abort();",
+      "new": "  t.after(async () => {\n    abort(); fs.rmSync(root, { recursive: true, force: true });",
+      "requiredFailureOracle": "Held body/stop/child phases must retain root; first case fails real filesystem oracle."
+    },
+    {
+      "name": "late-inner-removal",
+      "file": "tests/fixtures/test-gate/cluster-test-ownership.mjs",
+      "sha256": "021f3cf0f542c3de92befa39195c552ec2dad62e49fd2deb4cc4ec3287ac256d",
+      "old": "          await Promise.all(children.map(({ closed }) => closed));",
+      "new": "          await Promise.all(children.map(({ closed }) => closed));\n          fs.rmSync(root, { recursive: true, force: true });",
+      "requiredFailureOracle": "After disposal deadline failure, late genuine child close must not delete retained root; third case fails after-close filesystem oracle."
+    }
+  ]
+}

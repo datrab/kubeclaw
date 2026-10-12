@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+    "/usr/local/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "tests/verification/reliability/result-reservation.test.mts",
+    "skills/prism/tests/swarm-worker-config.test.mts",
+    "skills/prism/tests/swarm-supervisor-config.test.mts",
+    "skills/prism/tests/control-server-config.test.mts",
+    "skills/prism/tests/studio-config.test.mts"
+  ],
+  "exitCode": 0
+}

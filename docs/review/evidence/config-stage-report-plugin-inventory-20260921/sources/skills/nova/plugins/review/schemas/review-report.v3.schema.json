@@ -1,0 +1,488 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kubeclaw.dev/contracts/review-report.v3.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "attemptId",
+    "taskId",
+    "profile",
+    "policyDigest",
+    "bundleDigest",
+    "revision",
+    "governor",
+    "outcome",
+    "omitted",
+    "items"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "review-report.v3"
+    },
+    "attemptId": {
+      "$ref": "#/$defs/identifier"
+    },
+    "taskId": {
+      "$ref": "#/$defs/identifier"
+    },
+    "profile": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,191}(?![\\s\\S])"
+    },
+    "policyDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "bundleDigest": {
+      "$ref": "#/$defs/digest"
+    },
+    "revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base",
+        "head",
+        "changedManifestDigest"
+      ],
+      "properties": {
+        "base": {
+          "$ref": "#/$defs/gitObject"
+        },
+        "head": {
+          "$ref": "#/$defs/gitObject"
+        },
+        "changedManifestDigest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "governor": {
+      "$ref": "#/$defs/governor"
+    },
+    "outcome": {
+      "enum": [
+        "passed",
+        "request_fix",
+        "blocked",
+        "orchestrator_required"
+      ]
+    },
+    "omitted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blocker",
+        "advisory",
+        "follow_up",
+        "ignored"
+      ],
+      "properties": {
+        "blocker": {
+          "$ref": "#/$defs/count"
+        },
+        "advisory": {
+          "$ref": "#/$defs/count"
+        },
+        "follow_up": {
+          "$ref": "#/$defs/count"
+        },
+        "ignored": {
+          "$ref": "#/$defs/count"
+        }
+      }
+    },
+    "items": {
+      "type": "object",
+      "maxProperties": 2048,
+      "propertyNames": {
+        "$ref": "#/$defs/digest"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/item"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "passed"
+          }
+        },
+        "required": [
+          "outcome"
+        ]
+      },
+      "then": {
+        "properties": {
+          "omitted": {
+            "type": "object",
+            "properties": {
+              "blocker": {
+                "const": 0
+              }
+            },
+            "required": [
+              "blocker"
+            ]
+          },
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/$defs/nonBlockerItem"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "request_fix"
+          }
+        },
+        "required": [
+          "outcome"
+        ]
+      },
+      "then": {
+        "anyOf": [
+          {
+            "properties": {
+              "omitted": {
+                "type": "object",
+                "properties": {
+                  "blocker": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "required": [
+                  "blocker"
+                ]
+              }
+            }
+          },
+          {
+            "not": {
+              "properties": {
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/nonBlockerItem"
+                  }
+                }
+              },
+              "required": [
+                "items"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,191}(?![\\s\\S])"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}(?![\\s\\S])"
+    },
+    "gitObject": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})(?![\\s\\S])"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?(?![\\s\\S])"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "stringList": {
+      "type": "array",
+      "maxItems": 2048,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "governor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "baselineId",
+        "baseline",
+        "current",
+        "decision"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "review-governor.v2"
+        },
+        "baselineId": {
+          "$ref": "#/$defs/digest"
+        },
+        "decision": {
+          "enum": [
+            "within_scope",
+            "cycle_exhausted",
+            "file_growth",
+            "non_test_loc_growth",
+            "ownership_crossing",
+            "invalid_state"
+          ]
+        },
+        "baseline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "base",
+            "head",
+            "changedManifestDigest",
+            "policyDigest",
+            "allowedPrefixes",
+            "ownershipPrefixes",
+            "changedFileCount",
+            "nonTestLoc",
+            "ownerKeys"
+          ],
+          "properties": {
+            "base": {
+              "$ref": "#/$defs/gitObject"
+            },
+            "head": {
+              "$ref": "#/$defs/gitObject"
+            },
+            "changedManifestDigest": {
+              "$ref": "#/$defs/digest"
+            },
+            "policyDigest": {
+              "$ref": "#/$defs/digest"
+            },
+            "allowedPrefixes": {
+              "$ref": "#/$defs/stringList"
+            },
+            "ownershipPrefixes": {
+              "$ref": "#/$defs/stringList"
+            },
+            "ownerKeys": {
+              "$ref": "#/$defs/stringList"
+            },
+            "changedFileCount": {
+              "$ref": "#/$defs/count"
+            },
+            "nonTestLoc": {
+              "$ref": "#/$defs/count"
+            }
+          }
+        },
+        "current": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "head",
+            "changedManifestDigest",
+            "remediationCyclesUsed",
+            "changedFileCount",
+            "nonTestLoc",
+            "ownerKeys",
+            "outsideOwnershipPaths",
+            "fileLimit",
+            "nonTestLocLimit"
+          ],
+          "properties": {
+            "head": {
+              "$ref": "#/$defs/gitObject"
+            },
+            "changedManifestDigest": {
+              "$ref": "#/$defs/digest"
+            },
+            "remediationCyclesUsed": {
+              "$ref": "#/$defs/count"
+            },
+            "changedFileCount": {
+              "$ref": "#/$defs/count"
+            },
+            "nonTestLoc": {
+              "$ref": "#/$defs/count"
+            },
+            "ownerKeys": {
+              "$ref": "#/$defs/stringList"
+            },
+            "outsideOwnershipPaths": {
+              "$ref": "#/$defs/stringList"
+            },
+            "fileLimit": {
+              "$ref": "#/$defs/count"
+            },
+            "nonTestLocLimit": {
+              "$ref": "#/$defs/count"
+            }
+          }
+        }
+      }
+    },
+    "nonBlockerItem": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/item"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "disposition": {
+              "not": {
+                "const": "blocker"
+              }
+            }
+          },
+          "required": [
+            "disposition"
+          ]
+        }
+      ]
+    },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disposition",
+        "origin",
+        "priority",
+        "category",
+        "message",
+        "recommendedFix",
+        "reason"
+      ],
+      "properties": {
+        "disposition": {
+          "enum": [
+            "blocker",
+            "advisory",
+            "follow_up",
+            "ignored"
+          ]
+        },
+        "origin": {
+          "enum": [
+            "verified_finding",
+            "echo_proposal"
+          ]
+        },
+        "priority": {
+          "enum": [
+            "P0",
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "category": {
+          "enum": [
+            "correctness",
+            "security",
+            "contract",
+            "architecture",
+            "simplification"
+          ]
+        },
+        "message": {
+          "$ref": "#/$defs/text"
+        },
+        "recommendedFix": {
+          "$ref": "#/$defs/text"
+        },
+        "reason": {
+          "$ref": "#/$defs/text"
+        },
+        "findingFingerprint": {
+          "$ref": "#/$defs/digest"
+        },
+        "proposalId": {
+          "$ref": "#/$defs/digest"
+        },
+        "rootCauseId": {
+          "$ref": "#/$defs/digest"
+        },
+        "candidateIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/digest"
+          }
+        },
+        "governorClass": {
+          "enum": [
+            "in_scope_blocker",
+            "follow_up",
+            "scope_break"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "origin": {
+                "const": "verified_finding"
+              }
+            },
+            "required": [
+              "origin"
+            ]
+          },
+          "then": {
+            "required": [
+              "findingFingerprint"
+            ],
+            "properties": {
+              "findingFingerprint": {
+                "$ref": "#/$defs/digest"
+              },
+              "proposalId": false,
+              "candidateIds": false
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "origin": {
+                "const": "echo_proposal"
+              }
+            },
+            "required": [
+              "origin"
+            ]
+          },
+          "then": {
+            "required": [
+              "proposalId"
+            ],
+            "properties": {
+              "proposalId": {
+                "$ref": "#/$defs/digest"
+              },
+              "findingFingerprint": false,
+              "rootCauseId": false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

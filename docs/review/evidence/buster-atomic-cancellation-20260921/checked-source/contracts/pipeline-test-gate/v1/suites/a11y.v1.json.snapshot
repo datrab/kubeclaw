@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "test-suite-template.v1",
+  "contractId": "kubeclaw.a11y-suite@1",
+  "tests": {
+    "axe": {
+      "uses": "kubeclaw.axe@1",
+      "mode": "blocking",
+      "retries": 0,
+      "concurrencyGroup": "browser-axe",
+      "config": {
+        "routes": ["/"],
+        "profiles": ["desktop", "mobile"],
+        "tags": ["wcag2a", "wcag2aa"]
+      }
+    }
+  },
+  "fixtures": {},
+  "concurrencyLimits": { "browser-axe": 2 }
+}

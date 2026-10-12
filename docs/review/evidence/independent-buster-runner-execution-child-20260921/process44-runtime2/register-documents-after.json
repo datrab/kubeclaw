@@ -1,0 +1,2338 @@
+{
+  "capturedAt": "2026-09-21T21:06:58.390711+00:00",
+  "files": {
+    "docs/review/remediation/acceptance-audit-20260920.md": {
+      "sha256": "26217ed76964e386c9017798fee1761b0c55e1f4506d9c616ed9c4befe9834e5",
+      "size": 13302
+    },
+    "docs/review/remediation/pr6-local-acceptance.json": {
+      "sha256": "9533863352efb3588279fd40e587246b141e7022df6ff2e02fa0642f3e09545d",
+      "size": 50072
+    },
+    "docs/review/remediation/handoff.md": {
+      "sha256": "92d54f37c376b78d64746e9dd6ea6b5e4542dd5c71e177dc8857525b3d86f6fb",
+      "size": 10206
+    },
+    "docs/review/remediation/README.md": {
+      "sha256": "57be44d8996f1d4102f131e41825690335376d5112780b62fafd33f00df1255e",
+      "size": 7767
+    },
+    "docs/review/remediation/work-packages.md": {
+      "sha256": "85a57af9f2219b15858587c8e2a7661fde2a6d1ca3b2b90a9cbe6d0f4c32a8df",
+      "size": 16467
+    },
+    "docs/review/remediation/register.json": {
+      "sha256": "906e861f7ed13c4052e10f637e325848df16491ff1d0889b45b513cf5e9e4adf",
+      "size": 543792
+    },
+    "docs/review/remediation/pr6-seven-progress.json": {
+      "sha256": "7c4ead500e5c6596d29dc9fff52a69063a4fc7a500c5e2168ddc99792089234a",
+      "size": 2476
+    },
+    "docs/review/remediation/assessment-20260920.md": {
+      "sha256": "88197e213dc6e50b7ff725b420ffcc6fed17cdc5fce196d4f7d01dfffac73b5c",
+      "size": 12062
+    },
+    "docs/review/remediation/register.md": {
+      "sha256": "7f44049163a17d250f61aff7d01435ff354cb8658dff7ea630b692993ed0fdfa",
+      "size": 91568
+    },
+    "docs/review/remediation/partial-47-scope.json": {
+      "sha256": "10a3ba40ab492d6f987510b005e43b17ea907e281c50f2c64693dd49e2bf4a5f",
+      "size": 1190
+    },
+    "docs/review/remediation/decisions.md": {
+      "sha256": "02529859f4848939c03efd38ed50149c9cea978229d7d2e3da2ff812d0e5386e",
+      "size": 17093
+    },
+    "docs/review/remediation/acceptance-20260920.md": {
+      "sha256": "27942ef3c0f04c0b325d98f4cd2d0f70cd6060fef47d941d2e7bef3ec92b5cda",
+      "size": 38637
+    },
+    "docs/review/remediation/partial-47-progress.json": {
+      "sha256": "a7661e40bd64b8f2670aeecc3227197bf24f509805334d61400286447708aea7",
+      "size": 75252
+    },
+    "docs/review/remediation/validation.md": {
+      "sha256": "bac1e366ec8f7dd42dbfbdae07cd065e92483418e75d86d6d05db791bc30fe70",
+      "size": 2210
+    },
+    "docs/review/remediation/partial-39-20260911-scope.json": {
+      "sha256": "e42a623168c4a837a2b9cc5ccdda266a5523471ae68c83b4e4184e483dba8669",
+      "size": 1278
+    },
+    "docs/review/remediation/progress.md": {
+      "sha256": "b5c7b9005c6be2cda96b5f52e0335bc710b7a461af74938d8d221a114b12b7eb",
+      "size": 57513
+    },
+    "docs/review/remediation/design/sdk-canonical-consumers.json": {
+      "sha256": "6b05340fe780b86d8e0748e0104d24cd1028b3ced507184bebc0d413182120f4",
+      "size": 56753
+    },
+    "docs/review/remediation/candidates/worker-trust-native-unverified.patch": {
+      "sha256": "2e173ec0fea18866e39afaa66e8449b3ce1a8278e6146d1310a31cfac47911c9",
+      "size": 36346
+    },
+    "docs/review/remediation/implementation/pr6-sdk-local-verification.md": {
+      "sha256": "d917a32b62a47ab5db0dbbdef35cfa0ac0eadbc408c4e83684db726ab7b5e7f8",
+      "size": 5019
+    },
+    "docs/review/remediation/implementation/prism-retirement-matrix-20260920.md": {
+      "sha256": "4ec5c5c8d981b39bb758ffa76a9b38bccae352781f24d2b5b41ee57eba74bc7d",
+      "size": 8907
+    },
+    "docs/review/remediation/implementation/independent-isolated-buster-helper-vm-20260921.md": {
+      "sha256": "4cfbfc92394cd72a3b78e587e624f706b4fd46a3bd3a10e846fbaeb6aeae591c",
+      "size": 2680
+    },
+    "docs/review/remediation/implementation/pr6-native-runtime-checkpoint.md": {
+      "sha256": "482895aeb384e18aa5bf8174e9e8ab3a2ca542cf6b8bcdb9982b12f2679179f1",
+      "size": 5181
+    },
+    "docs/review/remediation/implementation/registry-client-scope.json": {
+      "sha256": "9252b208f852e1c5b9d20b0a8bf16e6d3c702624c605738568d93ecf4c21ef70",
+      "size": 2750
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-run2-20260921.md": {
+      "sha256": "91e6239dd364b828b83027086f0e57a904490f22c3b94c8f899d956415ff9e05",
+      "size": 3558
+    },
+    "docs/review/remediation/implementation/config-command-git-plugin-inventory-20260921.md": {
+      "sha256": "7b2bfdd020ce859150a488e7e6c56a53d561e176687a76f2757235a6f9953c49",
+      "size": 13956
+    },
+    "docs/review/remediation/implementation/studio-service.md": {
+      "sha256": "d2de6ea468a86365c1757ecb09eb181602e08c8c9a074ccf100d380016620614",
+      "size": 3021
+    },
+    "docs/review/remediation/implementation/wave47-project-cli-execution-entry.md": {
+      "sha256": "890b4d76d147c31e564c402363fea36658bd3c56acf4384a283c3e6fc8648e47",
+      "size": 3871
+    },
+    "docs/review/remediation/implementation/isolated-buster-helper-vm-run2-proposal-20260921.md": {
+      "sha256": "577df34c5268af4c941b103dd9762257138d7934b8ec8c2eb055ccef77a0f985",
+      "size": 3066
+    },
+    "docs/review/remediation/implementation/buster-native-cases-20260920.md": {
+      "sha256": "7b4f1826c0f88aa0cccfdd6ec3463e80c120abdd3118904b881159550cb1178e",
+      "size": 21014
+    },
+    "docs/review/remediation/implementation/run15-report-independent-current.md": {
+      "sha256": "d32aab84a84fd7ba1ac383cd138ef10b0cd3f29de20a2e4626f4890dd3a3dc5f",
+      "size": 2796
+    },
+    "docs/review/remediation/implementation/review-supervisor.md": {
+      "sha256": "e33ce0e5c8300f884f082375a5bda80ba39484ac09ec02b066ab1c9cf389388d",
+      "size": 2308
+    },
+    "docs/review/remediation/implementation/buster-legacy-seal-mount-correction-20260921.md": {
+      "sha256": "52281d685864c01225978b4c76702c0bbd087e6a4f3760a5dc907e665d0d8d8f",
+      "size": 2081
+    },
+    "docs/review/remediation/implementation/independent-vm-smaller-as-implementation-20260921.md": {
+      "sha256": "4e503fb84bf46c4cab3653c621c4b42795de365858e5b6dfe21db413111448c7",
+      "size": 2675
+    },
+    "docs/review/remediation/implementation/run3-review-evidence-encoding.md": {
+      "sha256": "4107948f147b6cd2a7287693cd3029d634626237d31823ff58c4f0ae0eb72b97",
+      "size": 7258
+    },
+    "docs/review/remediation/implementation/independent-native-source-cleanup-reconciliation-20260921.md": {
+      "sha256": "5a8406ca7dcb2d0afe14942790e96fe15cd1f06fa1d390fafc5ed92a3fb5ef17",
+      "size": 3301
+    },
+    "docs/review/remediation/implementation/sdk-portability-plan.md": {
+      "sha256": "d0812528227e6d093cbc7d6d476d51508814e350b277642834c3d7c218bdbb6a",
+      "size": 14358
+    },
+    "docs/review/remediation/implementation/pr6-private-access.md": {
+      "sha256": "d4a8f7f2ca3d61e89bddd3e91e140812d7a011ed5e6ce65f9a2970ffbb47edc1",
+      "size": 4113
+    },
+    "docs/review/remediation/implementation/run7-envoy-root-review.md": {
+      "sha256": "d4dfe91c2f853ed526c957b68c7cfbc0e8fcbd8a2ec13d664aebbad9e6a63c99",
+      "size": 2864
+    },
+    "docs/review/remediation/implementation/prism-agent-jobs.md": {
+      "sha256": "38e784f9f4633c280afb8663df2cbabc9ecc6b9d396811ed5bc2f340fc5a6a98",
+      "size": 8224
+    },
+    "docs/review/remediation/implementation/isolated-native-vm-run2-proposal-20260921.md": {
+      "sha256": "29049668d19bd767ecd627355a1fd4059a69efe9a813c1d75cc11f2b95a2efe6",
+      "size": 3069
+    },
+    "docs/review/remediation/implementation/visual-browser-identity.md": {
+      "sha256": "bce638b53fc40ce1b0a8410aa94e6ca7ea8dcde22b50726b6cf6ca8b4e492c40",
+      "size": 3547
+    },
+    "docs/review/remediation/implementation/independent-native-topology-20260921.md": {
+      "sha256": "26e0813cb345f6c36ac5157ffbc844f633214959f730c85845c457cefe04bd83",
+      "size": 8571
+    },
+    "docs/review/remediation/implementation/pr6-buster-launch-authority-decision.md": {
+      "sha256": "9f10f089905dbf2fc74354a022c7acc84b7224a2237f6bfe58c3f47d7e0b7c4b",
+      "size": 4137
+    },
+    "docs/review/remediation/implementation/native-journal-terminal-capacity-20260921.md": {
+      "sha256": "8af102bfd1c76fbf9282c226184ff9bb4687ffd74b425edd86fdd1030f10baba",
+      "size": 4906
+    },
+    "docs/review/remediation/implementation/run6-nova-dispatch-causal-wip.md": {
+      "sha256": "133e800e25af953fa56d6ffccfcdf032c5a1275869b57d80f8bcad06e1139a5c",
+      "size": 2359
+    },
+    "docs/review/remediation/implementation/run5-blob-reader-independent-review.md": {
+      "sha256": "bafebff43c780619fb27b87ac1cf55d71267746af84a51a7a1b8b77563e6ba68",
+      "size": 3361
+    },
+    "docs/review/remediation/implementation/buster-early-cancel-20260920.md": {
+      "sha256": "b359c9d2ca99a8ae6f39cf1ce707970e90b5bf829cbc035f51a7d0d402c18544",
+      "size": 4515
+    },
+    "docs/review/remediation/implementation/independent-deploy-api-errors-20260921.md": {
+      "sha256": "f1574811a5310e74ba61d6ee2d8289a5495c4fee4ec3732e9eaf4b3c6d6bc0ef",
+      "size": 10861
+    },
+    "docs/review/remediation/implementation/run9-cache-reader-root-review.md": {
+      "sha256": "72c003df811e34e1c1904463841f0a7db2d4a2406b492a9a94f650fffe2f2e0b",
+      "size": 5385
+    },
+    "docs/review/remediation/implementation/config-inventory-20260920.md": {
+      "sha256": "a2f88fff4701f78a694a7fa1a0ff8ad5e59c54357384cb2c2fa6cea4ee10ff54",
+      "size": 30352
+    },
+    "docs/review/remediation/implementation/config-control-listener-20260921.md": {
+      "sha256": "9c40125e8b17d8a9c7e18a86be3f782e03c4d3e8e33391cab5baa64d902b811b",
+      "size": 8025
+    },
+    "docs/review/remediation/implementation/config-control-policy-20260921.md": {
+      "sha256": "63ffabe0f7f71cc094a91213da238339b8bed153882cfbb4fc4b984a2916cb67",
+      "size": 10181
+    },
+    "docs/review/remediation/implementation/independent-trivy-lock-20260921.md": {
+      "sha256": "0af8fc291a1ce25e8af8826dcac3a02ee8f0a7c80a9902c705eca8eab78636ba",
+      "size": 5438
+    },
+    "docs/review/remediation/implementation/prism-engine-cache.md": {
+      "sha256": "c6bf5e48fcfe06780a85f5f33972fbce4822cd291a4d072dea15762ddb4581c0",
+      "size": 4180
+    },
+    "docs/review/remediation/implementation/independent-buster-execution-configuration-doc-20260921.md": {
+      "sha256": "419635b660849e908398ec0dd41bec609ff80d7a8db898af043df227bba6de2e",
+      "size": 2121
+    },
+    "docs/review/remediation/implementation/resume-20260912-supervisor-lease.md": {
+      "sha256": "f9a7f9eeeb538d9b65ebb74bf98a76e934fa6043570a268e4e8f6f9084cac191",
+      "size": 6280
+    },
+    "docs/review/remediation/implementation/tailscale-access-matrix-20260921.md": {
+      "sha256": "c8ec983be2c764d165044eac55c18071153c11fc0dd1afa23276133d196180d6",
+      "size": 5632
+    },
+    "docs/review/remediation/implementation/resume-84-prism-independent-review.md": {
+      "sha256": "d196d2a8e871283c8fc99877e9db13d7d3cb4a519fb780f187c4c7e35e196289",
+      "size": 5281
+    },
+    "docs/review/remediation/implementation/run9-sdk-root-review.md": {
+      "sha256": "f63f6f02240cd5cf25bc02ef4f618dae114d6803a65bfb82154fefef5eb7548e",
+      "size": 4235
+    },
+    "docs/review/remediation/implementation/independent-eslint-policy-module-split-20260921.md": {
+      "sha256": "eb8c7fb7ed3a6ffe3ad297c533f6dbb6d46368c2c339275b171695f5c113979e",
+      "size": 2255
+    },
+    "docs/review/remediation/implementation/observer-ingress.md": {
+      "sha256": "1f8663767ac63fb939d3b6b9ac1c5d3eb905c635d654c6c5cd9609bad5150c5d",
+      "size": 4995
+    },
+    "docs/review/remediation/implementation/demo-handoff-independent-review.md": {
+      "sha256": "97ab8b8ed2002c5516127bcb919ccad74f41a6acb127ceac1e54e1a500597ee9",
+      "size": 9834
+    },
+    "docs/review/remediation/implementation/resume-84-supervisor-launch-root.md": {
+      "sha256": "81c13e8dd4f33dded50e73b024220347408b223144a7afa7fd6a93efc684c931",
+      "size": 1740
+    },
+    "docs/review/remediation/implementation/config-final-four-adapter-inventory-20260921.md": {
+      "sha256": "43f0bbc6dee9ec5582b8315cab0d3360617a39ba8da573e9838b7ecac0d62db8",
+      "size": 16667
+    },
+    "docs/review/remediation/implementation/independent-spire-register-promotion-20260921.md": {
+      "sha256": "f761da4069c15233cdd306183d74262732acd57415e22ff63df8c44933780682",
+      "size": 3911
+    },
+    "docs/review/remediation/implementation/registry-clients.md": {
+      "sha256": "46b2ee09451402664c41a9aed4059878997eafa9322edf8f900746937f2cdeb4",
+      "size": 6274
+    },
+    "docs/review/remediation/implementation/resume-84-prism-remaining-triage.md": {
+      "sha256": "8b226e8862c008a96a28efc2fedd96fa75cadd59fd0dc980c6e37d8742c77e3e",
+      "size": 7684
+    },
+    "docs/review/remediation/implementation/release-configuration.md": {
+      "sha256": "911b5d1f69f90e346d9c410d590cc9b31a9e7e651984f4e1d389a847fe95b7db",
+      "size": 2320
+    },
+    "docs/review/remediation/implementation/effects.md": {
+      "sha256": "1c65f5d7621326f104875d984ba924963e11f7b0a240f85f5d72787c4097bb79",
+      "size": 3699
+    },
+    "docs/review/remediation/implementation/independent-isolated-native-vm-proposal-20260921.md": {
+      "sha256": "64ade550143e77d493d1cdf0e236b71486cffe58e987e157a567bcfd70032596",
+      "size": 7527
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-generation4-20260921.md": {
+      "sha256": "d0d71f3b21b695b73096a62f0d884ecd88d99a7923b2a005582308bf49241c3a",
+      "size": 2481
+    },
+    "docs/review/remediation/implementation/run5-legacy-cli-fixture-order.md": {
+      "sha256": "19bbef22ed1f3ec14fe53bd80609c623e0ceaae67d3341956e5aa6c202c83457",
+      "size": 1991
+    },
+    "docs/review/remediation/implementation/independent-config-runtime-remote-plugin-inventory-20260921.md": {
+      "sha256": "2df52ead32026960f568f661135eca2cd856df8e1aca68c1f1800de27aba2b70",
+      "size": 4123
+    },
+    "docs/review/remediation/implementation/buster-report-runtime-extraction-20260921.md": {
+      "sha256": "3f8c6a3d9b4037c353b508dd1edf845251cd8cee2180d0ccf51068a948f32c92",
+      "size": 6868
+    },
+    "docs/review/remediation/implementation/attempt-store-quality-20260921.md": {
+      "sha256": "dce8ce02f59c183a2a51eb5b0e3530600bf3c03f4d722373d6d17decf0e43627",
+      "size": 10546
+    },
+    "docs/review/remediation/implementation/worker-terminal-resources-independent-review.md": {
+      "sha256": "fae9cdb906338988256415a09c7416ef61ec0c142aada764f886efa5b7e5b33b",
+      "size": 5032
+    },
+    "docs/review/remediation/implementation/version-generator-integration.md": {
+      "sha256": "4de67772114d727af234b18111f12683bd7eaa0b41f3c19c32d137e49805778f",
+      "size": 2407
+    },
+    "docs/review/remediation/implementation/independent-config-worker-local-runtime-inventory-20260921.md": {
+      "sha256": "88107e41a3769918fba2b7e5e5bcc7a13af1a9bc21ce8ea002c7581d8f98f84e",
+      "size": 3312
+    },
+    "docs/review/remediation/implementation/prism-domain.md": {
+      "sha256": "5dd60cb3746188ba1cf232d7c85fde38aa8a66fac5163d195bfed4bcfa6c391c",
+      "size": 4499
+    },
+    "docs/review/remediation/implementation/preflight-declarations.md": {
+      "sha256": "97ecc12f524efc2d790402d2d076e5f8c3c347260aed412bedb39047f74607ca",
+      "size": 4840
+    },
+    "docs/review/remediation/implementation/run8-sdk-cache-wip-checkpoint.md": {
+      "sha256": "cd2d52fbe7337f06c54d32533d1ade6672a5f2b96a734c67bde00b28ec2f2f36",
+      "size": 2767
+    },
+    "docs/review/remediation/implementation/buster-job-compaction.md": {
+      "sha256": "8730cdb843f1e7d951f46173c79e52a630ecb1a773eb1381bc97857c6d7df9f0",
+      "size": 11170
+    },
+    "docs/review/remediation/implementation/config-testprovider-authority-20260921.md": {
+      "sha256": "1474af440789f5d2fa0f1b6daa56e6a8726b8a9c8b012ff519127fabda5fdb5a",
+      "size": 20140
+    },
+    "docs/review/remediation/implementation/pr6-oci-identity.md": {
+      "sha256": "b357c117cfa216ee6250ec9d6ec1086ebb290e7486be334ed7db5d7197a9c374",
+      "size": 3011
+    },
+    "docs/review/remediation/implementation/run3-sdk-remaining-domains.md": {
+      "sha256": "2fb62122c67569ecf7a2d5fd1d47c5eadd07833dae5c656461fe12b46de24b32",
+      "size": 10619
+    },
+    "docs/review/remediation/implementation/wave47-retirement-snapshot-integration.md": {
+      "sha256": "3a6ddadfe3bc8087055dbc041d3dffc8d4b4706ce3ba0063431f2c0d6fab3804",
+      "size": 2473
+    },
+    "docs/review/remediation/implementation/scaffold-regeneration.md": {
+      "sha256": "acbbffd458ad1094e81f481f99f4bd173c0ddbcb22c63e8ddc6dc2f72b826c0c",
+      "size": 2717
+    },
+    "docs/review/remediation/implementation/nova-gate-deadlines.md": {
+      "sha256": "7385b0e56419711da33cf57bda7928925e75f2cb5899845dc49b79f7a823f72d",
+      "size": 11905
+    },
+    "docs/review/remediation/implementation/registry-startup-latency.md": {
+      "sha256": "e8b5bf7f18ebdfd01a46d66e72f4b620ad9c8a1a67d3008f6fca0c3ad52ce865",
+      "size": 5230
+    },
+    "docs/review/remediation/implementation/isolation.md": {
+      "sha256": "8fb6948da1dc1ea0a7425f77ccc055bb2dc198e7829356e57b715561f03583e3",
+      "size": 7661
+    },
+    "docs/review/remediation/implementation/independent-backup-review-20260920.md": {
+      "sha256": "205684b45ab7697a7e1a6fe3d563ee361206058f8e1dca500e2ce494a629a362",
+      "size": 10737
+    },
+    "docs/review/remediation/implementation/prism-control.md": {
+      "sha256": "3107232fa18adfbe80bfbf1acf277c24c550352579083e867daa95734226516c",
+      "size": 5299
+    },
+    "docs/review/remediation/implementation/buster-readiness.md": {
+      "sha256": "76f5c3ae997876b604a7f1c0b5db54b99823eb59ed4b07fdf22af9b3f9194f99",
+      "size": 9258
+    },
+    "docs/review/remediation/implementation/independent-buster-specialist-extraction-20260921.md": {
+      "sha256": "4a257d62d0e45b2e9a82f44f084844f5bae43d4637c23d07acdcfb40c451e873",
+      "size": 8450
+    },
+    "docs/review/remediation/implementation/independent-buster-legacy-python-20260921.md": {
+      "sha256": "d8e2ee00c5a63160204e7826d4e9c41bc3fc6b7c325a7a78e567c55870000302",
+      "size": 1760
+    },
+    "docs/review/remediation/implementation/pr6-node-pools-checkpoint.md": {
+      "sha256": "58472c30ade434c3342d777e6a86bddaa882e7f4b671c39fce8231928bce7489",
+      "size": 4548
+    },
+    "docs/review/remediation/implementation/nova-remote-boundaries.md": {
+      "sha256": "a32cbc1ca28ab715b370ea6565b35c3a8b1bf4a4506dc32819441eb0fa31e359",
+      "size": 3456
+    },
+    "docs/review/remediation/implementation/independent-native-cleanup-retry-resolution-20260921.md": {
+      "sha256": "75aa06b9b9d7fa63340f94cf59c553425f25e047216b39df778c598ef2e21d8c",
+      "size": 5154
+    },
+    "docs/review/remediation/implementation/wave47-sdk-independent-review.md": {
+      "sha256": "0d674a44a6ae1e444c0eee54345880c3bcb8d3cf605d1d8971b127eeba0d4c36",
+      "size": 6570
+    },
+    "docs/review/remediation/implementation/github-action-pins.md": {
+      "sha256": "d7046c19596230215570a0e1ccd67752a1bf09dbe4b1866c7cb62331c8ea8ae8",
+      "size": 4799
+    },
+    "docs/review/remediation/implementation/run3-product-control-port.md": {
+      "sha256": "4ab06d32f05cfdba0ce762b4a5bd989def9dc6d0c642d96ae5765a1d1872f919",
+      "size": 5686
+    },
+    "docs/review/remediation/implementation/independent-release-alias-review-20260921.md": {
+      "sha256": "bf2a89de2220e7d5f4d9e345056e2361d033befa86f06e0db0218227fed4d7ab",
+      "size": 3461
+    },
+    "docs/review/remediation/implementation/scaffold-publication.md": {
+      "sha256": "817ca722034aa10a44d2363b70b2c6ed785024526a885025aa4aaa90cd4cbe6e",
+      "size": 2484
+    },
+    "docs/review/remediation/implementation/native-process-scope-limits-20260921.md": {
+      "sha256": "d8d088bcbaa9f7efffdca5ee583431c6bf3ad5ac62f16cc2423f92477efb5c91",
+      "size": 3282
+    },
+    "docs/review/remediation/implementation/run9-sdk-cache-independent-final.md": {
+      "sha256": "bb7a966ea6420588cd611b2d7751641fbc9994f20cc93cc7b0ae2385c6e1550f",
+      "size": 7599
+    },
+    "docs/review/remediation/implementation/independent-buster-legacy-seal-capabilities-20260921.md": {
+      "sha256": "af4e7a152f4d0f8346a331af42548ae0c8acf0b968f0618aceec5ef10244cb7b",
+      "size": 1312
+    },
+    "docs/review/remediation/implementation/recovery.md": {
+      "sha256": "e4b91baf6f6ff25719a2667f82bbe146202804815128c989864ae263e85084cf",
+      "size": 5539
+    },
+    "docs/review/remediation/implementation/independent-native-node-pools-environment-matrix-20260921.md": {
+      "sha256": "9c513135e2bb906528640d31f26f3ac3efb6ae39c642dde4c3afa793a9b07f35",
+      "size": 3462
+    },
+    "docs/review/remediation/implementation/pr6-buster-fixture-control.md": {
+      "sha256": "dd7c254ea037d33ae7337cdddb541dc805736132bcb843b478d0a4832fdfe736",
+      "size": 2829
+    },
+    "docs/review/remediation/implementation/config-discovery-readers-20260921.md": {
+      "sha256": "912728bdf5b741b927b474a39e7f1bec4d841b007008dac349df93b79266776f",
+      "size": 4187
+    },
+    "docs/review/remediation/implementation/config-transport-observers-plugin-inventory-20260921.md": {
+      "sha256": "118d5a721c4a84a3773d6daf670712c71da968bb1857ff0dbf8ca3e5f7e9ab01",
+      "size": 15001
+    },
+    "docs/review/remediation/implementation/run13-prism-reader-independent-review.md": {
+      "sha256": "80680a746244b93c6777a779c403c44cb8f6d0ae962946a122400d26a69faab0",
+      "size": 5590
+    },
+    "docs/review/remediation/implementation/buster-consumer-preparation-adaptation-20260921.md": {
+      "sha256": "8bfb6f1993b210300624f59f1f983a984e9bc9a50c8d98043ca1240449fa1238",
+      "size": 5150
+    },
+    "docs/review/remediation/implementation/state.md": {
+      "sha256": "26efcb31b531b3a0b32b088d79d2bf31abf16948275f9b18a36fe46b4a1b4ecc",
+      "size": 6764
+    },
+    "docs/review/remediation/implementation/independent-native-journal-terminal-capacity-20260921.md": {
+      "sha256": "a51d2cdd5589c4fa0fcd29742a5863c05afda81c5e35e823a2af76be70563c07",
+      "size": 3540
+    },
+    "docs/review/remediation/implementation/resume-84-integration-independent-review.md": {
+      "sha256": "00a9f40d1e2955601450a829ed3b7728426a2b391d8b7a8995ee5775dfecc2f1",
+      "size": 3126
+    },
+    "docs/review/remediation/implementation/independent-buster-strace-prerequisite-20260921.md": {
+      "sha256": "83e0a5225d848a563861c7007ab9a3a7b446ef57145f6812e07395d4a29f1683",
+      "size": 2005
+    },
+    "docs/review/remediation/implementation/independent-control-listener-quality-20260921.md": {
+      "sha256": "afa2d42392c90e03f258834a7fd7a331029c790192e712a46801f4d76cfb164a",
+      "size": 8741
+    },
+    "docs/review/remediation/implementation/pr6-stateful-upgrade-checkpoint.md": {
+      "sha256": "8093b3012437578d84fc8e97bab1cc31252aeb0615cbd00c921fde2a08681e19",
+      "size": 5592
+    },
+    "docs/review/remediation/implementation/buster-runner-quality-20260921.md": {
+      "sha256": "b601a7abf334d2ddc6289dd43748a1a89c4420d2c8a7d57bfcabd767f149adf0",
+      "size": 16895
+    },
+    "docs/review/remediation/implementation/run5-adapter-independent-review.md": {
+      "sha256": "1994951f087cf07b11f7d9c8cafd3641ca7b9fd37d21791ca96857356cd80949",
+      "size": 6325
+    },
+    "docs/review/remediation/implementation/native-vm-startup-storage-execution-20260921.md": {
+      "sha256": "9854d88eeb4f5d669d76f586ee5503e11d5c66b5bedf3f13d9a168b529080603",
+      "size": 2908
+    },
+    "docs/review/remediation/implementation/independent-cilium-observation-20260921.md": {
+      "sha256": "383f0aa7e7aa75ada52bcefb60a4871596a61b02ae91649c111fc206c467c21a",
+      "size": 4624
+    },
+    "docs/review/remediation/implementation/project-source-v2.md": {
+      "sha256": "53a7a59574e3d53a30f66b9cebbf6e8c629e93216b4570930b607878a013c011",
+      "size": 5896
+    },
+    "docs/review/remediation/implementation/buster-legacy-stop-producer-contract-20260921.md": {
+      "sha256": "1416e712c0b9ef7a00b459c401c87df2eab13f2bd4cc28d7fd4d5ca709cf9db5",
+      "size": 16717
+    },
+    "docs/review/remediation/implementation/workflow-trust-split.md": {
+      "sha256": "0d24aa031ab6e98450d48aba807536ede0aee9f6b5061ad65bb4a143136642b9",
+      "size": 5473
+    },
+    "docs/review/remediation/implementation/trivy-database-lock-20260920.md": {
+      "sha256": "dafeb586bcbda5d48f4658dae85675de1604c7cd6ffc0f370da12c383b37ea24",
+      "size": 12663
+    },
+    "docs/review/remediation/implementation/contracts.md": {
+      "sha256": "32e6645cfd3a56edcd100b1929aee428952649c076e48a35eb180eaf1996b9f6",
+      "size": 7334
+    },
+    "docs/review/remediation/implementation/buster-orphan-recovery-boundary.md": {
+      "sha256": "5044c95b7a8ea68b0959f10caa50db77742a7e1acf34ceae872bb30cde813ee4",
+      "size": 5678
+    },
+    "docs/review/remediation/implementation/demo-role-packaging.md": {
+      "sha256": "7f369f0dad57ee36fe22bb671c299ec8687aee2a53ba95e360fe7cfee7b1df15",
+      "size": 2401
+    },
+    "docs/review/remediation/implementation/independent-systemd-parser-20260921.md": {
+      "sha256": "75df95f4a2d7a68cafa0b40893f173481d8a1d00ce98e80fbb6b83e2e313f79a",
+      "size": 2223
+    },
+    "docs/review/remediation/implementation/run5-nova-dispatch-projection-design.md": {
+      "sha256": "5b1db6038b2cf24d4bbedc56e65acb8d0f36f86a972f4c87865692bafb64a3c1",
+      "size": 5160
+    },
+    "docs/review/remediation/implementation/independent-config-command-git-plugin-inventory-20260921.md": {
+      "sha256": "e31695ebf7728cf27adaccdc321e3f5557e7b6c46490bd164c3a8649a0b6137a",
+      "size": 2806
+    },
+    "docs/review/remediation/implementation/run7-dispatch-root-review.md": {
+      "sha256": "3e383f9840df168035bede69437cac350da3899918a0b9ae5e3827f3cc1c2f2b",
+      "size": 3493
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-criteria-audit-20260921.md": {
+      "sha256": "c4d7112871c6d2114872103c41b0f877f9b2d178cea266d740061e99ea051cfd",
+      "size": 5008
+    },
+    "docs/review/remediation/implementation/resume-84-nonprism-triage.md": {
+      "sha256": "87342413a61ea420836e26e4afa2c45dec96e1edcf392e10eb2f07f5c2cd8c2e",
+      "size": 6435
+    },
+    "docs/review/remediation/implementation/config-worker-local-runtime-20260921.md": {
+      "sha256": "a79fb6e688db7f12fd01e3fed1602872422b391a4f1793521c745904b8256857",
+      "size": 10983
+    },
+    "docs/review/remediation/implementation/worker-trust-operational-readiness.md": {
+      "sha256": "af4171c215f9aee8e8bff05c239edc093f302d2d5313f92c244431ce0fd985ef",
+      "size": 7128
+    },
+    "docs/review/remediation/implementation/bootstrap-api-guard-20260921.md": {
+      "sha256": "8bb3983d7571fa54b792478c364d9ce232ea60e476d07288340a1c6b96bb07d0",
+      "size": 2882
+    },
+    "docs/review/remediation/implementation/resume-20260914-gitops-handoff.md": {
+      "sha256": "a092db1d4c67842c967b6903ca7f53e2f208caf94b87c690fed5920fd86fcea4",
+      "size": 6217
+    },
+    "docs/review/remediation/implementation/independent-buster-release-context-20260921.md": {
+      "sha256": "e3e3eb0fa1943ccb64989b3f25dfe6575eef3458312e9f042e07c264306b2e5e",
+      "size": 3277
+    },
+    "docs/review/remediation/implementation/buster-compaction-prepared-migration-gap-20260921.md": {
+      "sha256": "ffb7e57ee65303bef6c8ab2d2dbbe8cc76aa3322c82de2ca230289a4f0e4b278",
+      "size": 4875
+    },
+    "docs/review/remediation/implementation/native-source-cleanup-reconciliation-20260921.md": {
+      "sha256": "98b7cbaf6640dc7681b4ba8642eec8115a6e4fdb8b064bea276ba155d888fe48",
+      "size": 12610
+    },
+    "docs/review/remediation/implementation/buster-process-input-quality-20260921.md": {
+      "sha256": "24e7f7b23616ad55ef579633109a4cf343242f0720eaf92b4ed93b832b648c17",
+      "size": 5110
+    },
+    "docs/review/remediation/implementation/wave47-prism-reverification.md": {
+      "sha256": "b00cad0de774c283a69dd473d085fd956cd508f70e083df77379375a16adb3d1",
+      "size": 11098
+    },
+    "docs/review/remediation/implementation/run7-sdk-cache-context-checkpoint.md": {
+      "sha256": "0a6f5bb5dba254af149884770e66d923ae382d23112e6dbd507f7c977074ea57",
+      "size": 3756
+    },
+    "docs/review/remediation/implementation/open-work-inventory-20260921.md": {
+      "sha256": "62725dd776d5aa407e9ca354184dfb07635080e3567d8b21882a65c15292ecea",
+      "size": 17777
+    },
+    "docs/review/remediation/implementation/resume-84-native-gates-root-review.md": {
+      "sha256": "47e5ab9837bd60b82abc88af8b946aa13bba108df92bc46ef71e2b67e0bd020e",
+      "size": 3873
+    },
+    "docs/review/remediation/implementation/pr6-local-acceptance.md": {
+      "sha256": "80f3876cd7292e2b87c3ea97b1a84dfad9c6361627603367d244c1dc3f1676e9",
+      "size": 14043
+    },
+    "docs/review/remediation/implementation/gate-coverage.md": {
+      "sha256": "01498110742de0960b1e4cdabf2a26827712a5b78990536fa01a0ff81d6d827f",
+      "size": 8107
+    },
+    "docs/review/remediation/implementation/rollout-health.md": {
+      "sha256": "7b29d01f870ae9c070b9aabc85efd3a87b9f59eb32a73eceafa4db11a8882ecb",
+      "size": 5260
+    },
+    "docs/review/remediation/implementation/pr6-native-scope-checkpoint.md": {
+      "sha256": "dee38b61d1026338cf4061dee5b0a3dcafa8af998c231e3e2acfdf1f907a6d8f",
+      "size": 9686
+    },
+    "docs/review/remediation/implementation/run3-attempt-result-independent-review.md": {
+      "sha256": "34dad524ff1e05c8f51c2669eff64762e6bc70d3f651156a2b6fc88d080efe5c",
+      "size": 6630
+    },
+    "docs/review/remediation/implementation/independent-runner-completion-scheduler-20260921.md": {
+      "sha256": "24bbc4206fb04a6e3004432377e487b7707b2340d756574dd2ba98abc8ae3c66",
+      "size": 7332
+    },
+    "docs/review/remediation/implementation/discord-delivery-receipt.md": {
+      "sha256": "f2b795fd351d2c7f43dc8278684286e82981498f9390418fbad06040f885adac",
+      "size": 7075
+    },
+    "docs/review/remediation/implementation/independent-isolated-native-vm-run3-20260921.md": {
+      "sha256": "36043a277d37d4adcd1f65ba37756f4d72b69cccb8ca7326bbfdf92bed86227c",
+      "size": 2066
+    },
+    "docs/review/remediation/implementation/independent-buster-helper-authority-design-20260921.md": {
+      "sha256": "2ff2eea4de0e6f1785ac810e63775b3b79c44518e2e38be5711b2f4cde5c27a6",
+      "size": 5001
+    },
+    "docs/review/remediation/implementation/run6-sdk-transport-profile.md": {
+      "sha256": "5c930d4fbb882b275725a953a15a3949183b8170ccda7e5ef335ede0494eb58d",
+      "size": 8788
+    },
+    "docs/review/remediation/implementation/run10-runtime-admission-root-review.md": {
+      "sha256": "8754763d357e18911991fcf04499dfe04378e1ef3ca03fc2248bc52575bc2502",
+      "size": 5236
+    },
+    "docs/review/remediation/implementation/independent-buster-report-policy-consumers-20260921.md": {
+      "sha256": "e461880cbf560faf8da9bdf8933c97fc7675829dc0c02d2323e3272f8a5c1510",
+      "size": 6724
+    },
+    "docs/review/remediation/implementation/registry-health.md": {
+      "sha256": "e6c5da83de55281be136ebc0a258a8e09bdeb7ad138aa161484128b2114aaa59",
+      "size": 5243
+    },
+    "docs/review/remediation/implementation/run10-prism-baseline-acceptance.md": {
+      "sha256": "d21c173596d9a5bc797bac6889b16688867654a8902108a85aeb39f526947ab4",
+      "size": 4599
+    },
+    "docs/review/remediation/implementation/migration-gates-20260921.md": {
+      "sha256": "d576685d9ba58418d57c8ad767ffd58a5a454fc5f69e7baabe66141744741b72",
+      "size": 10237
+    },
+    "docs/review/remediation/implementation/run12-prism-reader-acceptance.md": {
+      "sha256": "49da61a84fbcf25ce5cf1472b5a832ffde5785caa80cef5771a784ca2df1c899",
+      "size": 4966
+    },
+    "docs/review/remediation/implementation/resume-84-supervisor-state-root.md": {
+      "sha256": "594435d0ddf9846050ed84fb9d0bd0bb64f7f9da92a354e632a1ef2f91051bf6",
+      "size": 2470
+    },
+    "docs/review/remediation/implementation/forge-workspace.md": {
+      "sha256": "f41f5d5032ce9d7c745291ba5124a32887c43fdf955b0c9492090fe266554a5e",
+      "size": 7201
+    },
+    "docs/review/remediation/implementation/run5-coupled-candidate.md": {
+      "sha256": "1602c51505e708e24b36f36a4b72577ec27f0c5710ae0559f6888423a97a9c62",
+      "size": 2779
+    },
+    "docs/review/remediation/implementation/buster-legacy-descendant-cases-20260921.md": {
+      "sha256": "1760198d6d2927718f0f8b37c1c0d1aba13bc171036065736eb323756529596f",
+      "size": 2821
+    },
+    "docs/review/remediation/implementation/wave47-admission-independent-review.md": {
+      "sha256": "f1dac79f9dff8aaa6486c67820e6faafaba32fa6fc771601863c5fc3f7ecb674",
+      "size": 4637
+    },
+    "docs/review/remediation/implementation/independent-buster-legacy-replaced-store-20260921.md": {
+      "sha256": "5e5f75ee07c44d6c4dc8af869bc685471f382624b6aa7dc6c273c3cdecbd6345",
+      "size": 2026
+    },
+    "docs/review/remediation/implementation/pr6-native-dispatch-checkpoint.md": {
+      "sha256": "8ba76dd166b4a259178053ff7fa0d2e727ebd0db101f2ac0552f193e3b175924",
+      "size": 3701
+    },
+    "docs/review/remediation/implementation/run3-review-evidence-independent-review.md": {
+      "sha256": "780d7c8ba3912035371dba2670962d0241f4c3e66fabafd5d9faf4f0bbd2f329",
+      "size": 6229
+    },
+    "docs/review/remediation/implementation/independent-vm-memory-guard-20260921.md": {
+      "sha256": "bc3ae65a5d44de689ae4deb84ae261e9307f5e095c95f7a51750745fd4c8e176",
+      "size": 4461
+    },
+    "docs/review/remediation/implementation/wait-value-retirement-20260921.md": {
+      "sha256": "9c6baff90f48b93a63dd2644daa017b8b2e1ad3316e724d58f125d11ecc73b9b",
+      "size": 12426
+    },
+    "docs/review/remediation/implementation/prism-operational-readiness.md": {
+      "sha256": "02333cc7fc9f3e9f42892faf64d79422bc142596c8c21d5636ad8a4b32f33916",
+      "size": 7170
+    },
+    "docs/review/remediation/implementation/registry.md": {
+      "sha256": "67f87aa6c38a689e4ea163c11f7139584487bcc8fbfb293bc900004e03cb97f8",
+      "size": 5755
+    },
+    "docs/review/remediation/implementation/independent-resource-policy-review-20260921.md": {
+      "sha256": "68514d68d2fd139bfe80ae6cbfdeece20a9e0c47eed040d273d985cf92f8ad9b",
+      "size": 8543
+    },
+    "docs/review/remediation/implementation/prism-design-rounds.md": {
+      "sha256": "b914228a7cbdf06d73be339760916e354f1d7b5c8cf7b6b3ca12ea8762e06d02",
+      "size": 7651
+    },
+    "docs/review/remediation/implementation/run9-runtime-profile-independent-review.md": {
+      "sha256": "68993279fa5f38fa3b5a4fa7d4e1043f2837a5ed07a16e5fe6b966871e9c9f12",
+      "size": 4195
+    },
+    "docs/review/remediation/implementation/independent-slices-review-20260920.md": {
+      "sha256": "fd292a015cb00256465a2e02bf12a3609c574a0e66c0a72850e506757411dd96",
+      "size": 8959
+    },
+    "docs/review/remediation/implementation/run8-envoy-reconciliation.md": {
+      "sha256": "3a15005f8a1688874953d8f52cd31929e812230ae66ca882bcd9e3eb3a6885ce",
+      "size": 3154
+    },
+    "docs/review/remediation/implementation/buster-legacy-seal-guest-proposal-20260921.md": {
+      "sha256": "5e7bb8a0ab76813069a1f28bc2ff75120597a89880c287693f29654d4039fc84",
+      "size": 28463
+    },
+    "docs/review/remediation/implementation/resume-84-buster-read-independent-review.md": {
+      "sha256": "d99568843a924bfc42a73a4da77f5b1752e470dba0510589fc9ee227f3deea3c",
+      "size": 1485
+    },
+    "docs/review/remediation/implementation/independent-buster-provider-session-policy-20260921.md": {
+      "sha256": "dc1477d225fd8fd85e2fa9b428049fe3193362eb7fa7b2f9226dc0bd2c768295",
+      "size": 3526
+    },
+    "docs/review/remediation/implementation/sdk-remaining-digest-matrix.md": {
+      "sha256": "dc60b5db0f8e8057354d6e70e189968681a8e8a843d5a54ea1c6a49a6a923270",
+      "size": 3931
+    },
+    "docs/review/remediation/implementation/telemetry-store.md": {
+      "sha256": "3f9d37fe63aba417ab7efaef947e612da37380817e684ba6887f1d296f7459a5",
+      "size": 4933
+    },
+    "docs/review/remediation/implementation/run8-sdk-cache-independent-final.md": {
+      "sha256": "c679c6678b639fb71c7cd36ec3e166bdb931f4e62527f29ac9a2a88317e98bb6",
+      "size": 7438
+    },
+    "docs/review/remediation/implementation/independent-studio-complete-20260921.md": {
+      "sha256": "a7543dd656c90bbece7cb49f14cff3be2542024db703bb5c774b0667e0a1f66c",
+      "size": 4452
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-generation5-20260921.md": {
+      "sha256": "abe707a52587b5ac4a3816da794df0bd80152442bcdaa8162abc172eccc589e6",
+      "size": 2480
+    },
+    "docs/review/remediation/implementation/independent-buster-report-runtime-implementation-20260921.md": {
+      "sha256": "067de98329e943487c21e7c74fc95139824d8f443173429f1a66da6d768ed0d7",
+      "size": 5244
+    },
+    "docs/review/remediation/implementation/independent-buster-helper-vm-run2-20260921.md": {
+      "sha256": "504bfdf70b85862d2450eff91a07fddf85e468b77b91fce797316caeec42aa6c",
+      "size": 3529
+    },
+    "docs/review/remediation/implementation/independent-buster-atomic-cancellation-20260921.md": {
+      "sha256": "9be81fa151cea40fe36fe02d25f4fb98dd52f17018e2e4b6eccf4fb807a88ee7",
+      "size": 4175
+    },
+    "docs/review/remediation/implementation/run7-envoy-corrected-native-readiness.md": {
+      "sha256": "39c6a307aa0de5455b072475c5b44955a0a2745b1624d9f66c60d0334c0192e3",
+      "size": 3546
+    },
+    "docs/review/remediation/implementation/buster-historical-import-design-20260921.md": {
+      "sha256": "611f8ab5a5832428e7f6c275ad17003b4002b47269fcd0170e17bd2764513b0b",
+      "size": 8887
+    },
+    "docs/review/remediation/implementation/independent-buster-helper-acl-diagnostic-20260921.md": {
+      "sha256": "7a97c58ee166c27fd467a8c69980bbd32b0c38d607ad969d48f81cb09ef80321",
+      "size": 5026
+    },
+    "docs/review/remediation/implementation/independent-buster-process-input-policy-20260921.md": {
+      "sha256": "a4e17557e084a804451705f09f3a463f9ca72b3ca23788cbfd9bc56d18e2c7bf",
+      "size": 7494
+    },
+    "docs/review/remediation/implementation/buster-atomic-cancellation-20260921.md": {
+      "sha256": "253b3826d60e9cfb1bfff6105e37d8f2f52c00940c4a4e8a69565476189ef1ca",
+      "size": 9460
+    },
+    "docs/review/remediation/implementation/run9-runtime-profile-final-checkpoint.md": {
+      "sha256": "1816e4dab10364d6d670e4ff31d93346c2a81b4b1c972590bb9c62a6aba977a4",
+      "size": 2538
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-descendants-20260921.md": {
+      "sha256": "46a46e0ae282d7c9fceb95f420762db38fb15d3e265caf6147906854a85c2b26",
+      "size": 3239
+    },
+    "docs/review/remediation/implementation/run15-report-runtime-reconciliation.md": {
+      "sha256": "fa4e52038126c1446342138199432e025fe1be7eeb0e3d7cf36735976178ad55",
+      "size": 2640
+    },
+    "docs/review/remediation/implementation/register-consistency-20260920.md": {
+      "sha256": "aca98d130b8722dbc70757c52053a8c60768ed0caf3cf5d6aee1cc188d619167",
+      "size": 12820
+    },
+    "docs/review/remediation/implementation/deploy-api-errors-20260921.md": {
+      "sha256": "0aded9a011d64524db49690eee1f1b583009da2d832cfbd4f7998fbc98c3ac57",
+      "size": 9579
+    },
+    "docs/review/remediation/implementation/spire-recovery-matrix-20260921.md": {
+      "sha256": "b75823f50829c8862d4d65ef69ba8204991f82e365cea53704ea4dd1cd49acd9",
+      "size": 2687
+    },
+    "docs/review/remediation/implementation/run7-operator-retention-design.md": {
+      "sha256": "70998698eedef862c3d76e34c5f79905eb30f888c457e4a1767150b34cf83cff",
+      "size": 11046
+    },
+    "docs/review/remediation/implementation/buster-preparation-native-proof-20260921.md": {
+      "sha256": "f5f1ee8d1f66416bc9072b40d3df8a4053d2bd8772aa7caee2e9df71fdb7a37d",
+      "size": 11609
+    },
+    "docs/review/remediation/implementation/pr6-infrastructure-checkpoint.md": {
+      "sha256": "ae5f20c0daae5359f540962b33d372873dbf7988454a6506c12f0917f09955c3",
+      "size": 2301
+    },
+    "docs/review/remediation/implementation/observability-retirement-inventory-20260921.md": {
+      "sha256": "fbf78664a65e69d5437119616d974cfc06707bc0cc23edafb8499e9c26ba4e00",
+      "size": 10965
+    },
+    "docs/review/remediation/implementation/run6-coupled-candidate.md": {
+      "sha256": "65f4d68dca07188261d9a8510201cf6dd74e0d6d3472450a75fd74c61fa031e4",
+      "size": 3513
+    },
+    "docs/review/remediation/implementation/pr6-qdrant-checkpoint.md": {
+      "sha256": "38b2feed9a277a7ee71aaaab713441656a820f2c27381f5c9e0a50d04b37e030",
+      "size": 2951
+    },
+    "docs/review/remediation/implementation/independent-buster-extraction-concurrency-20260921.md": {
+      "sha256": "16380c889788826413532b10a615d2d7041e7bebeb2cf86e25fbe10f0814455f",
+      "size": 3240
+    },
+    "docs/review/remediation/implementation/buster-native-preparation-20260921.md": {
+      "sha256": "d039db4723e06983cfa80c00741e8fe44a149039c38efb90690269d16756563b",
+      "size": 26962
+    },
+    "docs/review/remediation/implementation/independent-prism-native-test-quality-20260921.md": {
+      "sha256": "74753754ca1c3877d6d8d193d9831efe26ecbe3d3ad7179bd5c2e8e337a6178f",
+      "size": 3625
+    },
+    "docs/review/remediation/implementation/independent-config-plugin-inventory-20260921.md": {
+      "sha256": "bd8f96abd704dfc7bb9dad53e2f7b9c2d4a330dbe067f308f297f43302fec73e",
+      "size": 3144
+    },
+    "docs/review/remediation/implementation/independent-buster-runner-execution-child-20260921.md": {
+      "sha256": "ba3e46f17e4942972f321e5e26ca368b69edf8ed441d6d4b5efcacd64cd3eeff",
+      "size": 11197
+    },
+    "docs/review/remediation/implementation/prism-native-cleanup-20260920.md": {
+      "sha256": "24718bdb3d30381b836d80bd71c70139bd3ca452adf856f6ca212808614dadd7",
+      "size": 5606
+    },
+    "docs/review/remediation/implementation/native-node-pools-environment-matrix-20260921.md": {
+      "sha256": "186f448f8b53abf6dfa046b16b4e6ac23be05a87c57c23e32808d890fb472882",
+      "size": 5907
+    },
+    "docs/review/remediation/implementation/prism-corpus.md": {
+      "sha256": "54b43024e71c22183ab01501ea693c6be7467746d11eeaf5f16d1a4e54a3378f",
+      "size": 3817
+    },
+    "docs/review/remediation/implementation/config-wait-history-design-20260921.md": {
+      "sha256": "f776b534b107230ae51e11846ff5abbd2d4d58686848d9091ebbf876dbb9fe86",
+      "size": 11657
+    },
+    "docs/review/remediation/implementation/independent-native-vm-startup-storage-20260921.md": {
+      "sha256": "c6e776a7cd493e054358a20e16bcd8615f536c01a916d642fc617c389061c678",
+      "size": 4888
+    },
+    "docs/review/remediation/implementation/config-effect-lock-ttl-20260921.md": {
+      "sha256": "b200d7708eaeb4eb10cdbc2145d08ecc48aaf12e418f71e9e86f1abfc591f890",
+      "size": 7622
+    },
+    "docs/review/remediation/implementation/run10-prism-baseline-wip.md": {
+      "sha256": "5bdbe15cdb48ddea9fa2e9c9d0a1bc6a64ac82bef725fe67f85164a3f09e7d8e",
+      "size": 1421
+    },
+    "docs/review/remediation/implementation/run3-product-port-independent-review.md": {
+      "sha256": "d11f68f0e909080d4fd3d5b8f30cb6f47cf294caae226bb7e365f12444700f3c",
+      "size": 5283
+    },
+    "docs/review/remediation/implementation/pr6-prism-backup-groups.md": {
+      "sha256": "b35f3097450b197fb02c2e661ccc8c66e37487dbd3db7c69e49bbd730ed44a55",
+      "size": 4493
+    },
+    "docs/review/remediation/implementation/independent-buster-legacy-guest-driver-20260921.md": {
+      "sha256": "d8290002b39d330a087b0e3a1ed831c4e08ef445ec97e858040e1be526c37401",
+      "size": 3657
+    },
+    "docs/review/remediation/implementation/isolated-buster-helper-vm-execution-20260921.md": {
+      "sha256": "28b99c9fefde0f913693e795ce0b787e089b9c57a179d759217fce6aa3ab24e6",
+      "size": 2293
+    },
+    "docs/review/remediation/implementation/attempt-resource-accountability-boundary.md": {
+      "sha256": "4d5bc1e3fb6850c4f5c71c6f7ec3611b0a32459f8c70e52f58e3ba248c8906c1",
+      "size": 14342
+    },
+    "docs/review/remediation/implementation/pr6-native-entry-types.md": {
+      "sha256": "84bcf23f3f7dc3b2c15102bc18201824d495c23b038d4ee45e4ea682f739a484",
+      "size": 1698
+    },
+    "docs/review/remediation/implementation/evidence-resource-lock.md": {
+      "sha256": "c7fb0010b1c2bdaebe8942a56f6bf31b0ec12e29ece227cffc2d386449da5f11",
+      "size": 1896
+    },
+    "docs/review/remediation/implementation/resume-84-buster-status-read-residual.md": {
+      "sha256": "43888e5b91658ff03c18a29d5a4de4bcc079bcad524a0e7cae38c007af14dbff",
+      "size": 4088
+    },
+    "docs/review/remediation/implementation/pr6-redis-durability.md": {
+      "sha256": "3ba8eff51a2181eb1eebfdc920580e51d862e601b6ae5a57a59adf83a76a8d44",
+      "size": 2813
+    },
+    "docs/review/remediation/implementation/run3-sdk-repair-identity.md": {
+      "sha256": "529903c37f1dcf6033b22087fd91301c8519d44752485d9023416f1ce9185bf3",
+      "size": 4831
+    },
+    "docs/review/remediation/implementation/independent-eslint-policy-delivery-20260921.md": {
+      "sha256": "56a2331148d41e5bd0bfa6632eaa1821c52953314ba2206537f19c297c681c2e",
+      "size": 2703
+    },
+    "docs/review/remediation/implementation/run8-sdk-cache-independent-early.md": {
+      "sha256": "425e1cd83d65c70cb0f9d76d6f1b02825fb2bd2ae4b0a7c206f2e721f015f91d",
+      "size": 2133
+    },
+    "docs/review/remediation/implementation/buster-helper-authority-20260921.md": {
+      "sha256": "1cd9731ebf4f74d8449abcbf8b0e7adb6b94ce00c357d5cfc2f944ff7bba5228",
+      "size": 7002
+    },
+    "docs/review/remediation/implementation/pr6-knip.md": {
+      "sha256": "3a01148cc6d7ec54bb2995b6e475030fbdee6063d71bbcf3f3358d6a7cf01553",
+      "size": 2396
+    },
+    "docs/review/remediation/implementation/buster-helper-acl-diagnostic-proposal-20260921.md": {
+      "sha256": "fde4737baa0036686bcfc8b997a375551ea55f44528c80261ee4fc2f8c6fea59",
+      "size": 3366
+    },
+    "docs/review/remediation/implementation/sdk-source-resume-recheck.md": {
+      "sha256": "adeb1b9dc8e0f3c3721331b2cde67866e8299d3ad1eace4ee2b3b285b1308c88",
+      "size": 1729
+    },
+    "docs/review/remediation/implementation/resume-84-worker-http.md": {
+      "sha256": "a10f592afcf0c0a9e4295399d900a8ac0374e686ad137697c02d7d516c1ed568",
+      "size": 2077
+    },
+    "docs/review/remediation/implementation/wave48-attempt-retirement-boundary.md": {
+      "sha256": "8b397040da14d6b120ae9ecf88d882813644bc4cc1314d093712989bd0e0f88f",
+      "size": 7183
+    },
+    "docs/review/remediation/implementation/run3-attempt-result-projection.md": {
+      "sha256": "801a02d04c1e0a7ac41fab9f70064f03d86060a35b9bf4d8d3a56967a25f2f61",
+      "size": 6193
+    },
+    "docs/review/remediation/implementation/sdk-json-compatibility.md": {
+      "sha256": "fd3797a6d25308149eb76473dfc9ee73b9f47c51412ff3bf81c6ba1003864d6f",
+      "size": 20870
+    },
+    "docs/review/remediation/implementation/run8-envoy-independent-review.md": {
+      "sha256": "2be67e6f05cd7da170317da071c40277f2dea0f38b6c859089fcd8ad10cab4d8",
+      "size": 2635
+    },
+    "docs/review/remediation/implementation/demo-credential-handoff.md": {
+      "sha256": "3359732a6d0e4ef72c840d45f784f07e15145941898782628c664e31f279ac5e",
+      "size": 5700
+    },
+    "docs/review/remediation/implementation/prism-product-decisions.md": {
+      "sha256": "05ad9002c85051989c36c4da2673f19a78cfeb33509bf22a8f06855f96e12470",
+      "size": 6441
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-generation6-20260921.md": {
+      "sha256": "1a4ea812686fbff6d086638d691551838f5962d02f0fb8a088618ac3891868dc",
+      "size": 4740
+    },
+    "docs/review/remediation/implementation/observability-retirement-inventory-20260921.json": {
+      "sha256": "809ab022d99f974f673a83c208c642183bafedf944e45d459f8464913892e48b",
+      "size": 31893
+    },
+    "docs/review/remediation/implementation/independent-buster-provider-protocol-order-20260921.md": {
+      "sha256": "ec7382c1aac5fc7052f57f5abe538e21843ca35ec58494e87423f10b89e10737",
+      "size": 3531
+    },
+    "docs/review/remediation/implementation/tailscale-exposure.md": {
+      "sha256": "8126c6b266139d7b4eea2100371641bfffe6bb4b7124f046ae9cf2a1bf3f431b",
+      "size": 5954
+    },
+    "docs/review/remediation/implementation/review.md": {
+      "sha256": "6ab5e77b3873943c2da176d607741612caa7c8be1ccbd73763c35041d84c6a12",
+      "size": 8305
+    },
+    "docs/review/remediation/implementation/sdk-source-identity.md": {
+      "sha256": "2d07871cc1864210095662d692a4207eba74a56d043d351a44c51986c447d779",
+      "size": 8091
+    },
+    "docs/review/remediation/implementation/junit-child-context-20260921.md": {
+      "sha256": "2e4caf86c0b2135c9d42d13ebc4a9b8a05116ae042d22fe73a9384a3cb15060d",
+      "size": 2743
+    },
+    "docs/review/remediation/implementation/independent-browser-archive-review-20260921.md": {
+      "sha256": "bdc280de481f99e16062bcf160fee0d012029d931bf858af2306ff1e1645cedd",
+      "size": 7046
+    },
+    "docs/review/remediation/implementation/buster-historical-authority-reader-design-20260921.md": {
+      "sha256": "bf6b016ec91c6fe6ac829a1146962391482ad08c0c58dfbb1eae5353f524ee5d",
+      "size": 7900
+    },
+    "docs/review/remediation/implementation/test-provider-semantics.md": {
+      "sha256": "beffff50e7d24f5557ba6fa4192931fe9b6bbdf6b1db00c9274816bc9e1be35b",
+      "size": 5255
+    },
+    "docs/review/remediation/implementation/run6-envoy-independent-review.md": {
+      "sha256": "c21046edc50a927c0a23ebbd8e6bd6f7936b749b120813418a8c717128032aaa",
+      "size": 3388
+    },
+    "docs/review/remediation/implementation/wave47-product-gates.md": {
+      "sha256": "7457bc792e1e5c501f3d72c1e1b89a20bb589b4c9ca45f26e540aba5bc815e61",
+      "size": 11700
+    },
+    "docs/review/remediation/implementation/pr6-launch-ownership-checkpoint.md": {
+      "sha256": "4fcd5fb0b39f28f02c1b89c7bebe486225cf3928f201750fae92f0d8319c0b2c",
+      "size": 2653
+    },
+    "docs/review/remediation/implementation/independent-legacy-image-cache-hygiene-20260921.md": {
+      "sha256": "deda2df348a037dfcd82fe9248556613b26aec109938013d59154f56e8b5b96d",
+      "size": 4327
+    },
+    "docs/review/remediation/implementation/pr6-supervisor-ownership-io.md": {
+      "sha256": "7236224225f0356f3cebdb05a47ef7b8ca5a73d741e01ac61085e8230dcc774a",
+      "size": 3026
+    },
+    "docs/review/remediation/implementation/pr6-gitops-closure.md": {
+      "sha256": "e26f8da067bdc4b736577ea7d32bf96c0995b3b32ed08202806574f5d5ca203f",
+      "size": 12286
+    },
+    "docs/review/remediation/implementation/independent-buster-preparation-native-harness-20260921.md": {
+      "sha256": "ed6304e98ff088186f4e011caa3feeaa7b0bcbf7809725602a2a9f5d45c91989",
+      "size": 4905
+    },
+    "docs/review/remediation/implementation/resume-84-buster-independent-review.md": {
+      "sha256": "26ed0d2aceb39fa2121bd75e8d89ffc6b6b15d19c085b68baf30c342aa28942e",
+      "size": 3784
+    },
+    "docs/review/remediation/implementation/lint.md": {
+      "sha256": "68df80d6799d4b5f5af8abef7db4a3fa9bca2a278d086cc4be0dde70b2a03243",
+      "size": 6939
+    },
+    "docs/review/remediation/implementation/nova-repair-budget.md": {
+      "sha256": "220c2d5f5567e2620b1c920981ffba5dd599ef6ae5c33089a9fd2e17806824c9",
+      "size": 5308
+    },
+    "docs/review/remediation/implementation/independent-config-buster-readiness-implementation-20260921.md": {
+      "sha256": "b11f4e26d03c3df8e1ea7a9037affc1fdd169d02a705ab853922d175694b558e",
+      "size": 8321
+    },
+    "docs/review/remediation/implementation/namespace-broker.md": {
+      "sha256": "18a94ca51070136ef9dfecacb6809fdce347cd66bf599eb330148e062cce35e7",
+      "size": 5198
+    },
+    "docs/review/remediation/implementation/studio-config-cutover-review-20260921.md": {
+      "sha256": "120dc686c4eda06d2f2bcf8aa260fba623f2e259b7f2a210abebe47c1abb3884",
+      "size": 8208
+    },
+    "docs/review/remediation/implementation/pr6-prism-completion-cpu.md": {
+      "sha256": "16f9f287ed55d4d359f505f9e53a7636444a6f9d38b7048a1c821b2e43859f44",
+      "size": 3009
+    },
+    "docs/review/remediation/implementation/run11-prism-baseline-independent-review.md": {
+      "sha256": "68d4a977d79462a2f2e67e0a19f3f60d6d6dfa17c2145a40fdff9ff42bf5103c",
+      "size": 4221
+    },
+    "docs/review/remediation/implementation/config-supervisor-numerics-independent-20260921.md": {
+      "sha256": "fb0450ddd475aa0918e3314b4fbf34d59c96d583d97b2a24cc1919132ef63fd9",
+      "size": 7345
+    },
+    "docs/review/remediation/implementation/independent-prism-input-review-20260921.md": {
+      "sha256": "89927d471b940012806e1b31b653190e78ec937e5a459bdb3b9ad227c324c49f",
+      "size": 4476
+    },
+    "docs/review/remediation/implementation/independent-buster-legacy-seal-image-20260921.md": {
+      "sha256": "381e5ffbadf7732884c59cb0269eea92c0dde343e2ad0963e9cc9c65b3fd33b0",
+      "size": 4197
+    },
+    "docs/review/remediation/implementation/isolated-native-vm-execution-20260921.md": {
+      "sha256": "e0dcd25acaa4342388202e118d04d25bf480a0ed3ed9463e638d6c57e5f017a7",
+      "size": 2201
+    },
+    "docs/review/remediation/implementation/worker-terminal-resource-measurement.md": {
+      "sha256": "8ae16d037663f13838eeeea64e334e8e06806f37e94926aaa3ceed7dd6e5421f",
+      "size": 6555
+    },
+    "docs/review/remediation/implementation/report-evidence.md": {
+      "sha256": "822cab1ecd6d84071f225e5d0c520131f4a422aaf581aaf71654e0e042f33e87",
+      "size": 11223
+    },
+    "docs/review/remediation/implementation/isolated-native-vm-run2-execution-20260921.md": {
+      "sha256": "ce5244ebd1db7728ea71469da2d7b6788d41134156b47d4deb8122ae9eb67108",
+      "size": 2633
+    },
+    "docs/review/remediation/implementation/release-config-aliases-20260921.md": {
+      "sha256": "ceb3bf323b8bf34672eac289034ecc444d8dedc55d0107e4e66cc7de3e4b3783",
+      "size": 3301
+    },
+    "docs/review/remediation/implementation/verification-secret-rbac.md": {
+      "sha256": "0eae49d9cf91babf66a2e64d4a716e4ab54023cbd2ccedf7507ce45e9406b2e2",
+      "size": 3184
+    },
+    "docs/review/remediation/implementation/independent-attempt-closure-projection-20260921.md": {
+      "sha256": "ec3897c26c80e02426c4efee72edfeb0e486c1ae26f16ec465a39a1432b9f9c2",
+      "size": 9013
+    },
+    "docs/review/remediation/implementation/run9-runtime-profile-no-trap.md": {
+      "sha256": "b0b5217c0c8ce321cbd71451bc99d5ae14d6e76637a484df95544366652207dc",
+      "size": 7673
+    },
+    "docs/review/remediation/implementation/run5-nova-dispatch-projection-wip.md": {
+      "sha256": "7fe2710031b9ef11b85876e5113f2f7adbeaa7c4c4a7561833bf24f3cfdd4856",
+      "size": 1838
+    },
+    "docs/review/remediation/implementation/run7-dispatch-independent-review.md": {
+      "sha256": "99d72f6096587206f8c161dffd35636d316b6f4cf5fb670e8eaf94694218c612",
+      "size": 4690
+    },
+    "docs/review/remediation/implementation/trivy-freshness.md": {
+      "sha256": "c318c5f513d3b10c36eaf9ba57e9c21d62f9c90e154b16cf7f0a643cd7be397d",
+      "size": 10974
+    },
+    "docs/review/remediation/implementation/prism-native-test-quality-20260921.md": {
+      "sha256": "ec4c8b0450f9d7c77665a57122462cc7fef20b4aec48776c213a3e819772114c",
+      "size": 4924
+    },
+    "docs/review/remediation/implementation/independent-spire-review-20260921.md": {
+      "sha256": "4601e643c468a5ea2b26caa3a5fd9820b991ad1cf6e1737e09c861fef8f105c5",
+      "size": 3373
+    },
+    "docs/review/remediation/implementation/independent-tailscale-current-inventory-20260921.md": {
+      "sha256": "eb63fb1f897c679901319ae8cfe6cbd36588f0730960035ebe7cc8d09095c64c",
+      "size": 5726
+    },
+    "docs/review/remediation/implementation/wave47-project-cli-independent-review.md": {
+      "sha256": "8a384a7981dd4121261de3fad439655ce8a67a86e42d6017825d57e08adafaf3",
+      "size": 6868
+    },
+    "docs/review/remediation/implementation/resume-84-supervisor-stop.md": {
+      "sha256": "517724b5cab0af309d9c3b79f9d733c3d4d8440e869288ac421dce79b42f0fbe",
+      "size": 3065
+    },
+    "docs/review/remediation/implementation/role-git.md": {
+      "sha256": "9c9d7d833b6f9661e2cc868ec0d282be5f6323804f451a445a7f3e1bf7c3bb43",
+      "size": 2089
+    },
+    "docs/review/remediation/implementation/independent-config-buster-admission-20260921.md": {
+      "sha256": "9487fcc2d2ea2018175c53ecf118707fecf50cc4958a11a8632c66ce1aabf332",
+      "size": 6063
+    },
+    "docs/review/remediation/implementation/wave49-prism-control-http.md": {
+      "sha256": "32d54cdfb9ce29b90a86fe6d7a0bab93e5bda6ee3e529e85c88d62a17ea3de67",
+      "size": 8217
+    },
+    "docs/review/remediation/implementation/config-storage-plugin-inventory-20260921.md": {
+      "sha256": "8e82c739c8cd2cedd68ba804e04f269836b3db1046bde98c4705c0587f9cec91",
+      "size": 5973
+    },
+    "docs/review/remediation/implementation/config-studio-20260921.md": {
+      "sha256": "7e0d3f1504403af193b1f0e62b0612a51db2525a2b10f74c0927744bd7a660ae",
+      "size": 11829
+    },
+    "docs/review/remediation/implementation/config-runtime-remote-plugin-inventory-20260921.md": {
+      "sha256": "a9620138373b148aaa976ec797425687953777bf075c0d2e837fcd0a76fe8745",
+      "size": 18368
+    },
+    "docs/review/remediation/implementation/independent-config-studio-20260921.md": {
+      "sha256": "70e96c4be92a9d286b60880bbf04beb796d3d7c7d5d9d9f4499f211169056932",
+      "size": 2773
+    },
+    "docs/review/remediation/implementation/run9-operator-sdk-reconciliation.md": {
+      "sha256": "7365dc2839ffb72bfad4780b342eece724ae3b5c04eb6a926146f50844ebba33",
+      "size": 2859
+    },
+    "docs/review/remediation/implementation/resume-84-worker-http-independent-review.md": {
+      "sha256": "bd4c1371e3c56c775b88bd168ee6576896040cd562e4272d128920e95015cfc0",
+      "size": 4074
+    },
+    "docs/review/remediation/implementation/config-platform-inventory-20260921.md": {
+      "sha256": "229a18c0705451ffbd039334bc9950b517ef5fe6cf70479943aebd177cb68538",
+      "size": 6830
+    },
+    "docs/review/remediation/implementation/isolated-buster-helper-vm-proposal-20260921.md": {
+      "sha256": "1553076069d541b91aaba74c62eff823ada0614d7a235316c97ef514b34d37ec",
+      "size": 8637
+    },
+    "docs/review/remediation/implementation/run9-supervisor-original-start.md": {
+      "sha256": "c711eb48b5a2a01ef939fcd7cf7f6092409f6647bf4e90900bfd938b4145bbc2",
+      "size": 4232
+    },
+    "docs/review/remediation/implementation/resume-84-supervisor-independent-review.md": {
+      "sha256": "c24ad031ca1b4dbc540fda1adf1bb1945f170e49f59192616527aaa396719eee",
+      "size": 2459
+    },
+    "docs/review/remediation/implementation/implementation-20260920.md": {
+      "sha256": "3423a2ca9c329450bd2bd93b4417600a345a057414b8bccf47381943edbbcc66",
+      "size": 50869
+    },
+    "docs/review/remediation/implementation/independent-buster-provider-session-implementation-20260921.md": {
+      "sha256": "d1d977f08abbff10f4e73dc082f61e11e0546928af191d22dd68283c30293539",
+      "size": 7103
+    },
+    "docs/review/remediation/implementation/run5-adapter-canonical-identity.md": {
+      "sha256": "53cfaac10f01f2a2361395b848a9a0775d93cec133b3b93b7cdd44255ffa6cf4",
+      "size": 6877
+    },
+    "docs/review/remediation/implementation/buster-legacy-completed-association-20260921.md": {
+      "sha256": "b56cd407ae1ace78f0383aa37c5a18b4a7380c14f16ab77a7c0ca0a214c5987c",
+      "size": 3018
+    },
+    "docs/review/remediation/implementation/independent-studio-doc-correction-20260921.md": {
+      "sha256": "d991a95e6d03267258d3a2f7ed8b36f86ea7fe3654ec46cf8786fd6ff160c643",
+      "size": 2908
+    },
+    "docs/review/remediation/implementation/config-worker-local-runtime-inventory-20260921.md": {
+      "sha256": "064793d4723bc280bdfc9242d6939d3f5e1c2fe57c25bc24f0cc391f449fcfce",
+      "size": 5982
+    },
+    "docs/review/remediation/implementation/run8-operator-projection-wip.md": {
+      "sha256": "5c6173565ef389088320603643837ef94a963ed6180c5dfa193d12d4a0b65d86",
+      "size": 2090
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-mount-correction-20260921.md": {
+      "sha256": "d703e803801e6e8aa33d5b2ec0392df333f914db7ef1fa28c667c5be007579d6",
+      "size": 2003
+    },
+    "docs/review/remediation/implementation/git-repository.md": {
+      "sha256": "844de9b2935f833d9369394ab36423360be61cce26589621bca03d5d160edbc6",
+      "size": 6868
+    },
+    "docs/review/remediation/implementation/buster-legacy-seal-driver-20260921.md": {
+      "sha256": "55c56c25b26aa100e80b5effcdf1c371d8b8ba1e8451d021431fa31a268b6d44",
+      "size": 4387
+    },
+    "docs/review/remediation/implementation/runtime-session-cleanup.md": {
+      "sha256": "ea489a974660d6c6506ba36b04141de6d3151a884ff103f4883292a7ed241067",
+      "size": 9057
+    },
+    "docs/review/remediation/implementation/buster-legacy-seal-verification-20260921.md": {
+      "sha256": "026fff6e2c960a117573056f66398033c62a69bdb90095d662f4818f135dfb81",
+      "size": 8947
+    },
+    "docs/review/remediation/implementation/pr6-registry-target.md": {
+      "sha256": "c3473da85629cf36f3cb1638119a7daef85277c59f05148c13f78cd022cb0d4e",
+      "size": 2911
+    },
+    "docs/review/remediation/implementation/independent-vm-fixed-corridor-20260921.md": {
+      "sha256": "928aeeb5e1080359aa8b7d867ad2158cd7d75371831699e367901f794530f8bd",
+      "size": 3901
+    },
+    "docs/review/remediation/implementation/independent-ownership-terminal-capacity-20260921.md": {
+      "sha256": "b1da8b609d92ab143f3e7896284494a3143d22f51036327d367b260df805c122",
+      "size": 7687
+    },
+    "docs/review/remediation/implementation/observer-build.md": {
+      "sha256": "82018f3f4ecb250c631e4fdfbe31fa36db161c4ce43f0af58277c72d84fc5abd",
+      "size": 3039
+    },
+    "docs/review/remediation/implementation/config-plugin-settings-inventory-20260921.md": {
+      "sha256": "07cbf7c8aaf463ef123f3fdf795b107f6700fd3029dd0bb55459e01ac8fc4df6",
+      "size": 19610
+    },
+    "docs/review/remediation/implementation/wave48-product-controller.md": {
+      "sha256": "987ca96b9ca6ee005f392b2ed68c8649be5c9a63663b749bc6a87ba9d50eb689",
+      "size": 8168
+    },
+    "docs/review/remediation/implementation/independent-buster-execution-doc37-20260921.md": {
+      "sha256": "5ad937b9f8901f521f15f0650fec49640bb11b78d3056549f32c218e31a53503",
+      "size": 2531
+    },
+    "docs/review/remediation/implementation/run8-sdk-cache-author.md": {
+      "sha256": "b3f1cfb9caf1a9f9222ca9e3c69024c65b3e2f5be8951291d9a0cd0148e7b01f",
+      "size": 6579
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-run5-20260921.md": {
+      "sha256": "ca1f55219e610d37b49d1109509dc1f5c79560c0dfb13a39cd18e72ed8ad105d",
+      "size": 3015
+    },
+    "docs/review/remediation/implementation/wave47-store-independent-review.md": {
+      "sha256": "dbc5dc721612b984043a0f3786020fd9bffe120b1c23955d5a255107ccd90706",
+      "size": 6084
+    },
+    "docs/review/remediation/implementation/wave49-prism-control-independent-review.md": {
+      "sha256": "b9729e8a74b5718af92fbed418de0842e0201a4be34fd7d8cd262736b20fe1e8",
+      "size": 6953
+    },
+    "docs/review/remediation/implementation/independent-config-transport-observers-plugin-inventory-20260921.md": {
+      "sha256": "e8aea3e8cc5556af5d063e6b94a0aa9bec308cb8cc0c64acedfe52db88c1b692",
+      "size": 3638
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-tmpfs-correction-20260921.md": {
+      "sha256": "a782d28eee49e5a6b41500008937737629a900377c495159c2bdb10c60ab78ee",
+      "size": 1663
+    },
+    "docs/review/remediation/implementation/approval-source-binding.md": {
+      "sha256": "60796308334565ebda4df347a82d23acc3fb5a7e22b04337027ec84ee83c49fb",
+      "size": 10963
+    },
+    "docs/review/remediation/implementation/wave47-root-review.md": {
+      "sha256": "e824d7c76fea43c91e2210d23fbb322859c927be69f7da5f8ea56ae8eea5811b",
+      "size": 4781
+    },
+    "docs/review/remediation/implementation/native-aggregate-topology-20260921.md": {
+      "sha256": "b5bf490f5bf549c1b7e45e00903b3a6e976b22300a7bb60072a091f469df529f",
+      "size": 10722
+    },
+    "docs/review/remediation/implementation/native-vm-startup-storage-proposal-20260921.md": {
+      "sha256": "9548ace8409aff0f9f408ebcb8a62662ce8e78557326a28aa324d9cfbf2adccb",
+      "size": 4150
+    },
+    "docs/review/remediation/implementation/observability-replay.md": {
+      "sha256": "9032a9cbede7a96fb916b48d8b9ad879d48377b9a5a0e791751d504ad1396c04",
+      "size": 9503
+    },
+    "docs/review/remediation/implementation/run6-coupled-independent-review.md": {
+      "sha256": "f5cf326f1e3066ad56e048efc6f5076e65b8ecbcbba00a4944a4a533e4dcd230",
+      "size": 7023
+    },
+    "docs/review/remediation/implementation/run5-native-fence-status.md": {
+      "sha256": "7dcf56a088798dba957a83b97b42a8787f440912dafc64f0655a49fad3aed791",
+      "size": 3941
+    },
+    "docs/review/remediation/implementation/independent-buster-session-additional-proofs-20260921.md": {
+      "sha256": "2195926e3101eab6ae9fe340c3fd959aa646f8a13a6fc8f7e9206134a8458ca7",
+      "size": 2989
+    },
+    "docs/review/remediation/implementation/run9-operator-independent-sdk-final.md": {
+      "sha256": "a75f2691c2aec9a2d5c817c92d93283d75d5e59fbdc3ed17b5e10879785b7a0f",
+      "size": 2717
+    },
+    "docs/review/remediation/implementation/ownership-terminal-capacity-20260921.md": {
+      "sha256": "75e825c92c80a772811d8ed32951e21adaba9bab4880a1cd4f0d72302275d23d",
+      "size": 10480
+    },
+    "docs/review/remediation/implementation/independent-bootstrap-api-guard-20260921.md": {
+      "sha256": "afe933cb53867665c0fc62f81b162f0324ffbf10f3af3659ff77f6194076303e",
+      "size": 4422
+    },
+    "docs/review/remediation/implementation/run8-operator-request-retention.md": {
+      "sha256": "a1dae846d23e0d662ed6ec27e72d80f16a0ef9937d7620a1da7439cce416d305",
+      "size": 7762
+    },
+    "docs/review/remediation/implementation/prism-preferences.md": {
+      "sha256": "11035999546d646d763837a2caf21a1d0e33e9f13a31adc7cc493dabd55b1c97",
+      "size": 6462
+    },
+    "docs/review/remediation/implementation/run6-coupled-root-review.md": {
+      "sha256": "f7bf11df0e70eb3e68f5eb4e72a36aa3a2ce7dafd96d12ab9cfa2304caa63571",
+      "size": 4199
+    },
+    "docs/review/remediation/implementation/independent-config-d17-20260921.md": {
+      "sha256": "87e3c562e171a3a3a86d0e2d843de748a5bf63af7ef32fddcd5a4469af33c77b",
+      "size": 1888
+    },
+    "docs/review/remediation/implementation/buster-legacy-replaced-store-20260921.md": {
+      "sha256": "f23dc7250142abc141ea650ed843a9e1d6a938f5a4b909f4ce8e59ac59459b4b",
+      "size": 4559
+    },
+    "docs/review/remediation/implementation/readonly-operations-inventory-20260921.md": {
+      "sha256": "89bde627eb9d5af9f3598774c70a540323c636b92fc6c45e5fbabdf353347b99",
+      "size": 2680
+    },
+    "docs/review/remediation/implementation/buster-native-cutover-20260920.md": {
+      "sha256": "3eb17560839ee4213eaa5980af2b183cbaa1fe4fee83fec165d220a412fb7c38",
+      "size": 8622
+    },
+    "docs/review/remediation/implementation/config-worker-scope-required-20260921.md": {
+      "sha256": "36a672aaa5b4969629157df708606a6b9f0169337910da451b8b12f6c58a0a65",
+      "size": 4497
+    },
+    "docs/review/remediation/implementation/independent-config-worker-local-runtime-20260921.md": {
+      "sha256": "4b65fbc89e40a6467264f7c06d532cd21b44259270cfacc9d469d96cdd2e6615",
+      "size": 8345
+    },
+    "docs/review/remediation/implementation/config-buster-provider-session-20260921.md": {
+      "sha256": "a9a1125c7ae4904223a5276ccddfe9892ce5ef8f2135805647e30e86be023347",
+      "size": 5283
+    },
+    "docs/review/remediation/implementation/systemd-parser-isolated-proposal-20260921.md": {
+      "sha256": "16f24e608fa0feb5ada4421601ac7f3705f8abc2f31dc35443d04b7a4c345ed7",
+      "size": 9271
+    },
+    "docs/review/remediation/implementation/independent-buster-report-runtime-extraction-20260921.md": {
+      "sha256": "77e3221aebc8fbab569ffa560e1f0d2640309be80d43a6cf72f9a06a150f32a5",
+      "size": 4903
+    },
+    "docs/review/remediation/implementation/prism-renderer-studio.md": {
+      "sha256": "5fb1629d15927c7f1e858cd8739fa9a59eb1cb2fd7c71ae6eeb171d1edf6499e",
+      "size": 5691
+    },
+    "docs/review/remediation/implementation/independent-config-worker-scope-required-20260921.md": {
+      "sha256": "ed51494848406f1ee706523d7b4f06e086012ef2c5e2c4d8e0dd527998688f1b",
+      "size": 5190
+    },
+    "docs/review/remediation/implementation/telemetry.md": {
+      "sha256": "9f3cf284b1b2f075259b0c0bffbb1728227d7a53711618ad8d15adae82327659",
+      "size": 6435
+    },
+    "docs/review/remediation/implementation/run9-operator-root-review.md": {
+      "sha256": "62a070429df017ef51c2628a1a7c7eb0eb4ed35e8035c05549efed4185baa7f9",
+      "size": 3704
+    },
+    "docs/review/remediation/implementation/sdk-checkpoint-encoding.md": {
+      "sha256": "84de369b78b3067b352400aee6eb6ae45e90aed405ba1973bff7bc648cf4be2e",
+      "size": 4716
+    },
+    "docs/review/remediation/implementation/run5-dispatch-independent-plan.md": {
+      "sha256": "bf57c0de5285ebc24ca5f1299cb709aabe67f60ffe5be7895041a5136299e9bc",
+      "size": 4063
+    },
+    "docs/review/remediation/implementation/telemetry-release-identities.md": {
+      "sha256": "a8d91b1218261c21de44b8ed03d4258886001aa2ed11fadc11364816a34ae864",
+      "size": 1886
+    },
+    "docs/review/remediation/implementation/independent-config-final-four-adapter-inventory-20260921.md": {
+      "sha256": "0182ff6b0f6ad81f8a3068a0625c7628b1b994e29c23345d615b19950f128895",
+      "size": 3333
+    },
+    "docs/review/remediation/implementation/attempt-owner-launcher-admission-design.md": {
+      "sha256": "5ac7483b68dbf2a03739e4015f431c09311361421deddd73f0a5192e5b6a8f13",
+      "size": 6201
+    },
+    "docs/review/remediation/implementation/prism-ingestion-resources.md": {
+      "sha256": "63c554b0f7eae7c73375ddd6139b8420b7624669fff54d08dc8d1242aedc0472",
+      "size": 5246
+    },
+    "docs/review/remediation/implementation/config-input-limit-20260921.md": {
+      "sha256": "41c9c5e311e6093a533927052f8a8d4ac92673d7cd514c99abb21d0235dff547",
+      "size": 6140
+    },
+    "docs/review/remediation/implementation/independent-provider-child-protocol-tests-20260921.md": {
+      "sha256": "c85a38bfabeb1dc83156ab671f33e2ba413ef11d28e8c8e9b28fbbdc1b7d1db5",
+      "size": 4925
+    },
+    "docs/review/remediation/implementation/run7-sdk-transport-independent-final.md": {
+      "sha256": "98c3abb24796d2cba50cc5d69dcd0bb62696a76f990dc4a74c1846129d386294",
+      "size": 6704
+    },
+    "docs/review/remediation/implementation/buster-specialist-extraction-20260921.md": {
+      "sha256": "474fce2f6113c499f32e0ac2bd3946ffc505a9e6042a6a77f29a8f7e5db12ff9",
+      "size": 6790
+    },
+    "docs/review/remediation/implementation/pr6-stateful-migration-closure.md": {
+      "sha256": "ef464bc715a396552eb4b756ba1af4b0ccc46c1d178d85b8894c4a45d7a49a9a",
+      "size": 6668
+    },
+    "docs/review/remediation/implementation/resume-84-prism-shutdown-independent-review.md": {
+      "sha256": "a3b41fd3207c9f2b8667b2adec0f84496cedc92f0d97bb5afcd28e7236ff01e8",
+      "size": 3987
+    },
+    "docs/review/remediation/implementation/pr6-risk-and-registry.md": {
+      "sha256": "d5f267eca4000787fc34cd166847249125a3d625262cde1db6622066a5eab300",
+      "size": 5938
+    },
+    "docs/review/remediation/implementation/independent-buster-legacy-seal-runtime-20260921.md": {
+      "sha256": "ae142b149a75045d801242093a3502a02fa7aa24b982a357211bf5907667cf05",
+      "size": 2552
+    },
+    "docs/review/remediation/implementation/resume-84-worker-shutdown.md": {
+      "sha256": "85b38a798113a556434d30a4faf835e283b5c2dbb04e6eaa1201d9f89350e3b0",
+      "size": 3926
+    },
+    "docs/review/remediation/implementation/independent-config-platform-inventory-20260921.md": {
+      "sha256": "cec1c38b4a4e1e5bedebbab92c85658296b04aa2fe6f8e64045657f24c2f76fd",
+      "size": 1879
+    },
+    "docs/review/remediation/implementation/run12-prism-reader-wip.md": {
+      "sha256": "b2d5a0cd9ab98f89a6bc84e4675289f5712b57d99343df3f2e378702824ea0de",
+      "size": 1899
+    },
+    "docs/review/remediation/implementation/resume-84-buster-root-review.md": {
+      "sha256": "ffdef8c543d2cbec785749d2c4a6984f076150685dfc9944fd8d354d11542d5f",
+      "size": 3770
+    },
+    "docs/review/remediation/implementation/config-worker-listener-20260921.md": {
+      "sha256": "e923e0148afebad0088b91605e8962a000bc2bdce77384b4be9f48d91e09876b",
+      "size": 10142
+    },
+    "docs/review/remediation/implementation/run7-envoy-independent-review.md": {
+      "sha256": "deca486ad8aecd7f81f13e5ddcb13afc3cc1d4faf0eaeefb3e460501ed1f1d81",
+      "size": 4306
+    },
+    "docs/review/remediation/implementation/sdk-checkpoint-encoding-independent-review.md": {
+      "sha256": "e2560c0e37f4c3e881274be69416d7e085ee97b02746c2d9cd779f61b70ba1ba",
+      "size": 4584
+    },
+    "docs/review/remediation/implementation/buster-engine.md": {
+      "sha256": "3557da7cdd4527ad9723e43adfffc981283ae86b1b62177f965736dc239ea770",
+      "size": 7154
+    },
+    "docs/review/remediation/implementation/independent-report-adapter-deadline-20260921.md": {
+      "sha256": "7ced535e75171b49aa24b6031d33e46a419826444514f480bf9616d30fe138c8",
+      "size": 4314
+    },
+    "docs/review/remediation/implementation/buster-legacy-seal-generation6-20260921.md": {
+      "sha256": "fe150311b75cf2f904697aecc6707944f0cf8eaabc67a7e5bfb35ca781811329",
+      "size": 5374
+    },
+    "docs/review/remediation/implementation/run8-operator-independent-final.md": {
+      "sha256": "eb9c9f6300e7dbd2ad9c16024257033340ab3c2ecd77bc4c8ba91bd8a131fab0",
+      "size": 6043
+    },
+    "docs/review/remediation/implementation/prism-worker-cancellation.md": {
+      "sha256": "7e53781c868133a6d6d0ec5fe50c556b79749b1936ddcf096f804172f330050f",
+      "size": 5440
+    },
+    "docs/review/remediation/implementation/prism-agent-resource-v2.md": {
+      "sha256": "cdac22ffbd4940c37eb3755a47f7d47bfbca96190fab59783c8dda1640a4febd",
+      "size": 7799
+    },
+    "docs/review/remediation/implementation/pr6-prism-single-runtime.md": {
+      "sha256": "2520697ee0e8abe0be506668e7c6f5fd9c9ea341c8856176058af365700f3972",
+      "size": 2381
+    },
+    "docs/review/remediation/implementation/independent-config-final-20260921.md": {
+      "sha256": "8ca106fb2700a78b51eeb787b99b5328262226c83bb156d17addd71b75e301a9",
+      "size": 6328
+    },
+    "docs/review/remediation/implementation/independent-attempt-store-quality-20260921.md": {
+      "sha256": "05d61aef4ece905a824bbf6307ac87428929712018f7eaaeb35f28d0363136e3",
+      "size": 7295
+    },
+    "docs/review/remediation/implementation/resume-84-supervisor-state-independent-review.md": {
+      "sha256": "eaccb249432764757ef8a8756745ef2d2d6cd3336dca9cebd9a76db413be427c",
+      "size": 3076
+    },
+    "docs/review/remediation/implementation/buster-historical-consumer-boundary-20260921.md": {
+      "sha256": "2c76ff373125d9b46b30c247769deafe7b3e0839dc8ee34e365b52440c394a37",
+      "size": 6694
+    },
+    "docs/review/remediation/implementation/control-image-environment-20260921.md": {
+      "sha256": "7a7e2cef36287e4907b8232c538504fdd5f59f5d754adc6c05ae96a976620748",
+      "size": 3497
+    },
+    "docs/review/remediation/implementation/redis-transport.md": {
+      "sha256": "bb2d28aa53d197c251278915623aa47837e38dc6f8c2da7ef3d4c291a90b4087",
+      "size": 5215
+    },
+    "docs/review/remediation/implementation/independent-config-effect-lock-ttl-20260921.md": {
+      "sha256": "28f6b594282cc36a0b44844a378fabcaf90806d448dfabb11235729011e66f2f",
+      "size": 6058
+    },
+    "docs/review/remediation/implementation/inventory-digest-guard-20260921.md": {
+      "sha256": "a64b1b49eaca780bfa4c6057ae1dc495b62b7a186ff7c4fdcb15f96532b8c36f",
+      "size": 5094
+    },
+    "docs/review/remediation/implementation/buster-legacy-stop-kernel-boundary-20260921.md": {
+      "sha256": "419f20cae8cde8f8074c7928cc5b5df137ada4a326aa5cf434539dc87bad1bca",
+      "size": 9347
+    },
+    "docs/review/remediation/implementation/config-inventory-20260920.json": {
+      "sha256": "816f867443f71c0fe908b188b1aa1e67956735b26c70ea51a6ab2dcbdf4b31c3",
+      "size": 738087
+    },
+    "docs/review/remediation/implementation/run14-report-author-checkpoint.md": {
+      "sha256": "582fb9c47f2426108068b311aec0aca353aef55b3c1083bed04934d4e16b3f89",
+      "size": 5136
+    },
+    "docs/review/remediation/implementation/config-buster-admission-20260921.md": {
+      "sha256": "d052b70c66fe36f00a26a0697334d405bee8ca8cbc1a6be27fc8b49c43ca926f",
+      "size": 13991
+    },
+    "docs/review/remediation/implementation/independent-native-process-scope-limits-20260921.md": {
+      "sha256": "00f8db21717beee09f81f0b0d97a6d878a93157b438b90d5d33af388e4026163",
+      "size": 3441
+    },
+    "docs/review/remediation/implementation/independent-reference-docs-20260921.md": {
+      "sha256": "0b559ded78ac60051fa295d80374540546e8d8ba890d1c8af2895538e3d5acef",
+      "size": 3832
+    },
+    "docs/review/remediation/implementation/resume-84-delivery-independent-review.md": {
+      "sha256": "8b32d461c1d6a3c3b439a30037a17f6eb7fb101a36fafb8432fa4db7b93b2ca0",
+      "size": 8768
+    },
+    "docs/review/remediation/implementation/resume-84-release-evidence-review.md": {
+      "sha256": "0aa93b9a3c98c7511c9e7e715c4199df73b2d2b2c30dcdde9daa53eaa51098f5",
+      "size": 5288
+    },
+    "docs/review/remediation/implementation/config-component-layout-20260921.md": {
+      "sha256": "c3d3847cf5c7989f018233115b7a233d4c6dc36a82951c0fb205fc05c5775440",
+      "size": 31014
+    },
+    "docs/review/remediation/implementation/ingestion-service.md": {
+      "sha256": "717f9e5e7358855490105e23802a71f23600d677443bbb2d8b798c0da7a2a4d1",
+      "size": 1740
+    },
+    "docs/review/remediation/implementation/pr6-api-network-contract.md": {
+      "sha256": "98a9e6bafaac1916c659aec6497f928f8f0292c3db9abbe11d9725421e4028ec",
+      "size": 3921
+    },
+    "docs/review/remediation/implementation/prism-worker-control.md": {
+      "sha256": "4d9600b11e4dde5982fad6ef21ea4ad17b4941344da3d831e5390a9c328d5f66",
+      "size": 6442
+    },
+    "docs/review/remediation/implementation/buster-native-integration-seam-20260921.md": {
+      "sha256": "6c597c33842f85a9437e7b6af0ca6512829b62877557cb93bf4c5a2c03923c3b",
+      "size": 25651
+    },
+    "docs/review/remediation/implementation/independent-component-worker-listener-20260921.md": {
+      "sha256": "10e0b1c162032af7aa1bbcbdea42d901b9caea1fa396418d6f1c0c3f7d1d6903",
+      "size": 12200
+    },
+    "docs/review/remediation/implementation/capability-redis-import.md": {
+      "sha256": "e6595c929ae744fc57596063044af5ee59f955183498927db9f365ee84f1368c",
+      "size": 2926
+    },
+    "docs/review/remediation/implementation/resume-84-prism-native-retention-gate.md": {
+      "sha256": "fbdcb6ad9fc4c7cc55a9dd6807736d88a7e5d49daf76232220f7da51359e7448",
+      "size": 5678
+    },
+    "docs/review/remediation/implementation/buildkit-preflight-version.md": {
+      "sha256": "3bb30d78caba8f2f42b2c819d862fbbbc1b53ef4d0574696eefdd014e04554de",
+      "size": 936
+    },
+    "docs/review/remediation/implementation/control-discovery-independent-20260921.md": {
+      "sha256": "9735a99c6651b873f0fac60f17440538f03ead148d135ac1332543903315bf1a",
+      "size": 5086
+    },
+    "docs/review/remediation/implementation/build-command.md": {
+      "sha256": "31cb11cface46147198a2ed3ecc37ef7e9aac0f2e02f1ecadba5701ed3be1aa2",
+      "size": 5981
+    },
+    "docs/review/remediation/implementation/pr6-postgresql-recovery-checkpoint.md": {
+      "sha256": "7b15c96b964c0a69f6729ebbb4970ddb2f750a074955e0a9aef8633277c0f5ae",
+      "size": 4495
+    },
+    "docs/review/remediation/implementation/isolated-native-vm-proposal-20260921.md": {
+      "sha256": "ff3d1f6f7aa4294460dd9687cbf38bdc037e15d76771ae7eaa9bc1d7f6eb85b6",
+      "size": 9396
+    },
+    "docs/review/remediation/implementation/wave47-telemetry-retirement.md": {
+      "sha256": "9d63439590d52fa17cf2476280aa820906b07dded4f2b8767ef38f6643838b29",
+      "size": 10013
+    },
+    "docs/review/remediation/implementation/pr6-runtime-tool-locks.md": {
+      "sha256": "fc4b92091ebe21fb3a3da616ff4e562a15bff69b5207e6db94be0b3003e23c8f",
+      "size": 3792
+    },
+    "docs/review/remediation/implementation/run3-sdk-repair-independent-review.md": {
+      "sha256": "5c1eb0e74a55f74bcdbbe9bf9445fa2df9647adb37c7cef86b97d01c150c2a34",
+      "size": 5509
+    },
+    "docs/review/remediation/implementation/process-network.md": {
+      "sha256": "e72002460ca5c1e388ea99d44332a85a57e0a893a9ac239760bb45ce35048c7b",
+      "size": 8364
+    },
+    "docs/review/remediation/implementation/pr6-buster-cleanup-parent.md": {
+      "sha256": "ed3614283823286b0ac86ec9e3428fbcbf1597949839c835fba1dc35fe35c9f7",
+      "size": 1933
+    },
+    "docs/review/remediation/implementation/demo-handoff.md": {
+      "sha256": "d83519d68fd13462bbbfefbd8b33461b51046d43e7f3bab2f0545cb64cb02f36",
+      "size": 9985
+    },
+    "docs/review/remediation/implementation/resume-84-release-root-review.md": {
+      "sha256": "53e8749a6cfb749dd6d646569c2ffd10f7a9bb1146497aba2a15fc691fc78c9f",
+      "size": 1999
+    },
+    "docs/review/remediation/implementation/resume-84-buster-shutdown-storage.md": {
+      "sha256": "b9c54fa5680f20002eb213dd6ffbfe5b36768f03dce00f2d681f063aebef058c",
+      "size": 7527
+    },
+    "docs/review/remediation/implementation/buster-compaction-fixture-migration-20260921.md": {
+      "sha256": "0261e84e9dc07d746c265fb8a46b992f0b87fba767c8aa0f6655ff2a5e834427",
+      "size": 8213
+    },
+    "docs/review/remediation/implementation/buster-helper-acl-diagnostic-execution-20260921.md": {
+      "sha256": "c73bd0b24fa4f1083a8613307118e369ac4b6d5503b5b79d76b5ad97287fc7d0",
+      "size": 2626
+    },
+    "docs/review/remediation/implementation/independent-provider-child-observation-policy-20260921.md": {
+      "sha256": "984b2cdf29e896a8145e3dba88570d0033cb7571b8a5973f009f0122c5f9861e",
+      "size": 4763
+    },
+    "docs/review/remediation/implementation/config-release-images-fixture-20260921.md": {
+      "sha256": "dac5848b93a4a61780af4716c6824ad7d8d35b641ea3da4f390052d64c8a306e",
+      "size": 1357
+    },
+    "docs/review/remediation/implementation/native-cleanup-retry-resolution-20260921.md": {
+      "sha256": "eb9ac9cfef1767b6499634069772e81f04b744d1f73622fbd596a7de53c60715",
+      "size": 6010
+    },
+    "docs/review/remediation/implementation/run3-observability-next-package.md": {
+      "sha256": "e77c16b84884f33277a714051b5710472f1563f1a0d184d32823b0a4fb266e1c",
+      "size": 6811
+    },
+    "docs/review/remediation/implementation/demo-retention-policy-design.md": {
+      "sha256": "91ed26e72c1fe782c7f7bb9f2ec86385cf024ebc2eaedede980befed92446f3a",
+      "size": 5165
+    },
+    "docs/review/remediation/implementation/resume-84-supervisor-launch-independent-review.md": {
+      "sha256": "2dbbf19f7ebe19e08b6576d15c06485cc04beaf758b03b764ac582330aeae6ef",
+      "size": 1821
+    },
+    "docs/review/remediation/implementation/junit-executed-required.md": {
+      "sha256": "154a138f8f17ef3f3d69cf06f64fad7f9132a8f2881b90ff456e8795180fd56a",
+      "size": 3556
+    },
+    "docs/review/remediation/implementation/report-identity.md": {
+      "sha256": "044bb54b4a52777a483c5cdbb53620b32b1931566fd462595905f5f66d7bd66f",
+      "size": 4045
+    },
+    "docs/review/remediation/implementation/config-buster-readiness-20260921.md": {
+      "sha256": "7cf124feda938a7ec68a843d52047604d5bf5276f2ec77d6a8c06fb3ee31dabb",
+      "size": 11317
+    },
+    "docs/review/remediation/implementation/resume-84-integration-root-review.md": {
+      "sha256": "d2443d5f53757024b52e7a7f85740658d6eb887c92f82517e147625da9df3657",
+      "size": 3828
+    },
+    "docs/review/remediation/implementation/pr6-buster-fixture-checkpoint.md": {
+      "sha256": "4bc548b66596860782e327da111ff589a058fc218e079e34aaa081a9d4c7bf52",
+      "size": 1702
+    },
+    "docs/review/remediation/implementation/isolated-native-vm-run3-execution-20260921.md": {
+      "sha256": "9fbcc5f16272dbe68cff0ea8e68be32e0f67b85a9570e3d25dfb029966725463",
+      "size": 2736
+    },
+    "docs/review/remediation/implementation/pr6-redis-migration-closure.md": {
+      "sha256": "e7d341e0e76ab34e3b3082d9d5a3e954182b3dedbbe5bb6e6bcc2ed10df0e97c",
+      "size": 3412
+    },
+    "docs/review/remediation/implementation/report-adapter-deadline-20260921.md": {
+      "sha256": "eccf9ea62a6840418dfde73b7bd3c72732442847751547e98f4411b288c0b87f",
+      "size": 3495
+    },
+    "docs/review/remediation/implementation/resume-84-prism-final-independent-review.md": {
+      "sha256": "e4ba4e5aa353632c2bdc33d8b499606024406a3c97a4cd853f211e7d8099f784",
+      "size": 2199
+    },
+    "docs/review/remediation/implementation/pr6-prism-native-local-closure.md": {
+      "sha256": "988d555662711398a24b55fd021217c3f193c6afe5419f7da377d706a3f11cad",
+      "size": 3862
+    },
+    "docs/review/remediation/implementation/sdk-effect-identity.md": {
+      "sha256": "540c3f45b0034f4486d5966222f1831ca2bb3f781272ba91d978de063078f152",
+      "size": 7546
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-generation3-20260921.md": {
+      "sha256": "2a474c5351ce7d47b78d5415e156cd9a8e80eef8319940eafd18fe7e9cdc4c8f",
+      "size": 2577
+    },
+    "docs/review/remediation/implementation/run8-supervisor-root-review.md": {
+      "sha256": "a85ea9d930cce1c9e0efd19bd6fdd919076f2140f46e646d995febb3be24ee8a",
+      "size": 2095
+    },
+    "docs/review/remediation/implementation/independent-config-component-generation-20260921.md": {
+      "sha256": "0e00628da326cbc081d76874d1bd35473abacd40abb076d4750f9d71c5cf4ea6",
+      "size": 1638
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-driver-source-20260921.md": {
+      "sha256": "b3fc37a3ab9ef82f9b666af920784188301fb12d875a28ad71a50f41f1bd9bd8",
+      "size": 4297
+    },
+    "docs/review/remediation/implementation/independent-spire-current-scope-20260921.md": {
+      "sha256": "7e487cd56f192cf15496902be87f7dc46d00465b8dd6e6b8401d989b1d1d0475",
+      "size": 4588
+    },
+    "docs/review/remediation/implementation/independent-config-storage-plugin-inventory-20260921.md": {
+      "sha256": "2fe2433bb6471f82e95507163facea9c50857330a19249cf915ce673ecf7657e",
+      "size": 3328
+    },
+    "docs/review/remediation/implementation/isolated-native-vm-run3-proposal-20260921.md": {
+      "sha256": "fbd3176b22db4b67ca9058632f34afbe3101982afa11ae5eba31984b2329eb6c",
+      "size": 3393
+    },
+    "docs/review/remediation/implementation/wave47-admission-retirement.md": {
+      "sha256": "4f3bd57f11fa581e164d9292aa734555c382fa8372fa3cb959e02843f9b075e0",
+      "size": 7956
+    },
+    "docs/review/remediation/implementation/worker-deadline.md": {
+      "sha256": "5e88231127eb8cea418f6b67bad6efa9f2e3ae76372aa8048b1c57d9d4c282a1",
+      "size": 4596
+    },
+    "docs/review/remediation/implementation/independent-config-result-dispatch-20260921.md": {
+      "sha256": "24a7f199c1eedebfe46f930acc4a39f8217b83bdecdc54c04380db7ef5561aa2",
+      "size": 5799
+    },
+    "docs/review/remediation/implementation/demo-auth-evidence.md": {
+      "sha256": "d82f05f7fb47168dccceccbda3d216b9c6cb23625b7608c9f3e0ae28e5b68dce",
+      "size": 8991
+    },
+    "docs/review/remediation/implementation/buster-provider-cancellation-20260921.md": {
+      "sha256": "7732f3585cb7da6ddd86b497fd146f49f46c7e52f7d35e5191e3b6461fd478c9",
+      "size": 4343
+    },
+    "docs/review/remediation/implementation/independent-buster-legacy-seal-verification-20260921.md": {
+      "sha256": "7040b2f1fb829c73e5cc7efd520bd8b64ed7e5c21e9a6bcb870f4ff54d955764",
+      "size": 6132
+    },
+    "docs/review/remediation/implementation/readiness-independent-review.md": {
+      "sha256": "1519946ccec01d9c0546dbfc38f37003b71d29f9bcb5c27f1b8a5e423a89a9af",
+      "size": 4990
+    },
+    "docs/review/remediation/implementation/resume-20260909.md": {
+      "sha256": "e71a321c6310162f2f25e475d3cf049f637725936b1cfea8b325d4bf48cef961",
+      "size": 7969
+    },
+    "docs/review/remediation/implementation/run9-prism-retag-portability.md": {
+      "sha256": "9015701c6e34b56981b602898538540dba7d8ce7ab1cb42ede457084a819101a",
+      "size": 2298
+    },
+    "docs/review/remediation/implementation/run6-nova-dispatch-retention.md": {
+      "sha256": "0ed1c7afc3a8204da461647971a048205e5bf64569b1c6a149ef528d5d2d5b11",
+      "size": 5359
+    },
+    "docs/review/remediation/implementation/buster-extraction-concurrency-20260921.md": {
+      "sha256": "8f7fd3f7e13f30accae144b85633de1b90b93abd4107997a3158b3c34cbbbfba",
+      "size": 5465
+    },
+    "docs/review/remediation/implementation/isolated-buster-helper-vm-run2-execution-20260921.md": {
+      "sha256": "87fe48de6a7870d46a6d80f817c7b3bb60931939a6b27726b500b38d8c000745",
+      "size": 2255
+    },
+    "docs/review/remediation/implementation/demo-generation-receipt-context.md": {
+      "sha256": "7cccd4d96456f49f528d14d1fcbeb66341e77e26d58786f78f05982e94d868f1",
+      "size": 4743
+    },
+    "docs/review/remediation/implementation/product-decisions-independent-review.md": {
+      "sha256": "d119c667aa0b9d94b6e7c582f5ab5b1db1803f7d84c4128195c5dc5cf1902711",
+      "size": 8989
+    },
+    "docs/review/remediation/implementation/observability-retirement-planner.md": {
+      "sha256": "2c7f9e81af985bb517a43eb0a9a21d8719350f9175b51e4c7f281eeaa35706f0",
+      "size": 9425
+    },
+    "docs/review/remediation/implementation/config-result-dispatch-20260921.md": {
+      "sha256": "02ad70d024f87bebaa733a436e22af07f8d1b19f8835b486915ca82c25865671",
+      "size": 8662
+    },
+    "docs/review/remediation/implementation/run7-operator-independent-audit.md": {
+      "sha256": "4a60cd3f65ac2a3c147e48cca82294dc4cf00d63f3270514725501634fcf94af",
+      "size": 5617
+    },
+    "docs/review/remediation/implementation/config-stage-report-plugin-inventory-20260921.md": {
+      "sha256": "f8cedc9aacbc816e289e98fe5ccce98c392843ba71eb95886d1a3c0377694806",
+      "size": 17124
+    },
+    "docs/review/remediation/implementation/prism-artifacts.md": {
+      "sha256": "7cd00954fa63cd6171fedcbd087825c59551aca9f19db59eda153a4d515e9ea2",
+      "size": 2792
+    },
+    "docs/review/remediation/implementation/wave47-legacy-independent-review.md": {
+      "sha256": "8aea192ca25926982634ab1a14e3f5df89d70105bbf7d48b03b4a2644ac5a4b3",
+      "size": 5405
+    },
+    "docs/review/remediation/implementation/run9-runtime-profile-reconciled.md": {
+      "sha256": "8e7781234a93b19c39a57f2ba785d5b4314ea84dee099716247461b2cfb66da8",
+      "size": 4888
+    },
+    "docs/review/remediation/implementation/operator-notification.md": {
+      "sha256": "e218707228585077bbe3ddb392e8fb6eecc499593cb14f3b4e579377aac87120",
+      "size": 6392
+    },
+    "docs/review/remediation/implementation/pr6-native-preparation.md": {
+      "sha256": "344d5c6e0a9945352ebf8b8c03e82b2a80e8f2fc62ebffc4006dbc8f0f660cc1",
+      "size": 2370
+    },
+    "docs/review/remediation/implementation/pr6-fixture-lifecycle-boundary.md": {
+      "sha256": "7f8ce1423b80259789c9c1d967b0c05766d085f2bb93a5b81b02673077261b22",
+      "size": 3897
+    },
+    "docs/review/remediation/implementation/run13-report-independent-checkpoint.md": {
+      "sha256": "db79eb54f025dfca799b5f9f1a170973f20bbc2d5efd47177cdb1161965e383d",
+      "size": 592
+    },
+    "docs/review/remediation/implementation/control-image-environment-independent-20260921.md": {
+      "sha256": "0b3371071b825b87f8b802b069bb213b23184ea4f750892531043c02ce9e4370",
+      "size": 3955
+    },
+    "docs/review/remediation/implementation/studio-types.md": {
+      "sha256": "b4fd44d795d0479e5ee659be0d4b3d1c144112ba14cbf368b6d3c8f6d134b389",
+      "size": 3593
+    },
+    "docs/review/remediation/implementation/demo-ready-controller-contract.md": {
+      "sha256": "1e49300693b80ba1225f5af82d0c48e29b71504ade11d32b1da44c7379eacc03",
+      "size": 16620
+    },
+    "docs/review/remediation/implementation/independent-wait-retirement-final-20260921.md": {
+      "sha256": "bda9fb16a08626d40d1b1b73515af441b0a9fef06b9c5f70518909c8ba5f3d97",
+      "size": 7525
+    },
+    "docs/review/remediation/implementation/independent-junit-child-context-20260921.md": {
+      "sha256": "b5a5e57fccec15da282e3de8f7ee99d6b64e6b456b343b7793249ca802567ce9",
+      "size": 1327
+    },
+    "docs/review/remediation/implementation/independent-buster-report-runtime-policy-20260921.md": {
+      "sha256": "0fa060e1aafa806ce2cecb07871c85f4c422b29ae1a9ecb50221fe1059c62b74",
+      "size": 4197
+    },
+    "docs/review/remediation/implementation/attempt-closure-projection-20260921.md": {
+      "sha256": "3a03335ea5605f84c48aae983c27ad36d8cc75d3decb0118489e1cf0f69648bb",
+      "size": 10881
+    },
+    "docs/review/remediation/implementation/contracts-2.md": {
+      "sha256": "f3ec7b75151367def830ba71443945d80ffbbc148ae69b00aa23c0009205850f",
+      "size": 7807
+    },
+    "docs/review/remediation/implementation/independent-browser-lint-cleanup-20260921.md": {
+      "sha256": "af7dbb186ece5822863b4c4f052209d2cec1c76fb7344bc7476bb25a722ca1cc",
+      "size": 3909
+    },
+    "docs/review/remediation/implementation/config-studio-operator-doc-correction-20260921.md": {
+      "sha256": "d8bb697c961cc83059e40251ac79b7b28f953ea1cbaf58cbf5b4090ac16b67ad",
+      "size": 1761
+    },
+    "docs/review/remediation/implementation/config-resource-policy-20260921.md": {
+      "sha256": "2d692db5de6e6851f3f6ca7fe3344c3ffd48f8fd74578dfe8b51acfcd2d1e042",
+      "size": 8557
+    },
+    "docs/review/remediation/implementation/run13-report-cutover-wip.md": {
+      "sha256": "4a3a47ee5af7bf2a265f355d73e4bd12aafba62ac11c773fdd50f7d7436cb164",
+      "size": 2066
+    },
+    "docs/review/remediation/implementation/independent-buster-execution-policy-20260921.md": {
+      "sha256": "d9f4cb7b1fd62a0c43330ac62d8bfbc61fb3c94186bf4d2e1547dc6b9507802f",
+      "size": 3400
+    },
+    "docs/review/remediation/implementation/approval-invalidation.md": {
+      "sha256": "6a08231769f88d207e01b9dccb55c73aea47b757b351d1ac0079d3e2977d93b7",
+      "size": 5922
+    },
+    "docs/review/remediation/implementation/wave47-sdk-subject-independent-review.md": {
+      "sha256": "e79e46554b2b22f39892e1659ce72f25aecc0c1cf2b71cef389c5b080806d84d",
+      "size": 6328
+    },
+    "docs/review/remediation/implementation/run9-prism-baseline-root-review.md": {
+      "sha256": "9186028d544665ce7de8abc03158492afa316bbda4d1ce229e638a85d8363f79",
+      "size": 3865
+    },
+    "docs/review/remediation/implementation/run11-report-root-review.md": {
+      "sha256": "3f48b54a9712b2f0f11c30083172b3c2a2e13cfe4cae7e394c2b53fd4befcc87",
+      "size": 5738
+    },
+    "docs/review/remediation/implementation/run5-blob-reader-boundary.md": {
+      "sha256": "16ee4fc06d20ca9f76e677708c24576a4eb3e05e41a8aa98d42b1e3e603ee9bd",
+      "size": 2328
+    },
+    "docs/review/remediation/implementation/wave47-sdk-effect-independent-review.md": {
+      "sha256": "d9c7ccf7dc9a1ae3ea891a86931e37c6206db9ee6e68c73172224aaa25aa5f55",
+      "size": 5078
+    },
+    "docs/review/remediation/implementation/independent-provider-child-boundary-policy-20260921.md": {
+      "sha256": "a1a2916fb1b83b8bd334d2d8e0cd95ef2e2abacba0fa15634d2a072cc3f59708",
+      "size": 2856
+    },
+    "docs/review/remediation/implementation/independent-buster-legacy-completed-association-20260921.md": {
+      "sha256": "80954a1fa32cbf39a8faf70a3cca3876665c3c48712a38608e37eed0670e1844",
+      "size": 2553
+    },
+    "docs/review/remediation/implementation/registration-contract-boundary.md": {
+      "sha256": "0a6ca72b53cc63142e2b9f286fd99b1368872e303c6c1019665ff9ae6d503af2",
+      "size": 5387
+    },
+    "docs/review/remediation/implementation/integration-resume.md": {
+      "sha256": "b9e1bb3ee4b8c707406b771c5fe7ba9d5b6bc17e20a89f00b2978798a0db78aa",
+      "size": 4913
+    },
+    "docs/review/remediation/implementation/run6-sdk-profile-independent-early.md": {
+      "sha256": "e9f62be16ed8cb4785105cca351cfb5bf3b74da56aedb52a0c91cc497b364a26",
+      "size": 3644
+    },
+    "docs/review/remediation/implementation/systemd-native-guest-proposal-20260921.md": {
+      "sha256": "7efc0e19d4ec388b4aac9cf66d99ac2851ee58c34352bd82dc8c90b94bfd4a54",
+      "size": 5348
+    },
+    "docs/review/remediation/implementation/run3-adapter-dependency-identity.md": {
+      "sha256": "7a94de79aa907726f815f83f19398fdc9fbd1946ad2b7a5f86ebc02d24d9e167",
+      "size": 3871
+    },
+    "docs/review/remediation/implementation/deployment-release-selection.md": {
+      "sha256": "638d3732448ff608250b4ea0f88c59c7123d326d1bd7af42353d734a5c62c90e",
+      "size": 5776
+    },
+    "docs/review/remediation/implementation/independent-buster-cancel-20260921.md": {
+      "sha256": "d9e11f1bae0a0d9f83f2ab61a58b85ad94251b8d2c3a212f37202f5743a00cc1",
+      "size": 4843
+    },
+    "docs/review/remediation/implementation/run9-runtime-profile-independent-final.md": {
+      "sha256": "18b8322e5396fe457aaeb28936b7e719a10d46a0429455ab1e1f49a576e138ce",
+      "size": 5531
+    },
+    "docs/review/remediation/implementation/pr6-native-durability-checkpoint.md": {
+      "sha256": "7f530ba0afda8fff77bb2b041df1c34d9783513f45c942dfe5519a37f7065c51",
+      "size": 4631
+    },
+    "docs/review/remediation/implementation/observability-retention.md": {
+      "sha256": "fd47b71fcf386cb924e0972e26f795bf0f2a780005c7d35b20ba127283002105",
+      "size": 2650
+    },
+    "docs/review/remediation/implementation/run5-native-controller-transitions.md": {
+      "sha256": "4708ef351d84f010ae540b228f536d954aedfec26ea4692d3d2d9a450281214d",
+      "size": 4708
+    },
+    "docs/review/remediation/implementation/adapter-dependency-identity.md": {
+      "sha256": "f63bcb95e36c8e6bceaa99cefd651db118368058d4d9a4574dba91aa1eaae83e",
+      "size": 6285
+    },
+    "docs/review/remediation/implementation/run14-report-independent-review.md": {
+      "sha256": "0e860e0aa3a1ccd13c0a49c9cb4433a9af164a54dbd4e12414f4d95e1e403bb3",
+      "size": 7452
+    },
+    "docs/review/remediation/implementation/independent-migration-gates-20260921.md": {
+      "sha256": "1e8832d229bb5851ecd81514d487185a2e7a89b18334048b3e47a0039daa8666",
+      "size": 11238
+    },
+    "docs/review/remediation/implementation/buster-release-context-20260921.md": {
+      "sha256": "2ac682cc3240832e9e48602a4bd525063d8387d805c21efb245b5e24a457f951",
+      "size": 3722
+    },
+    "docs/review/remediation/implementation/resume-84-native-followup-matrix.md": {
+      "sha256": "86f877160399bc9014f0075c473714a6cba904e00391b6f13ab59a8a9c5eeb5b",
+      "size": 7927
+    },
+    "docs/review/remediation/implementation/run6-envoy-native-readiness.md": {
+      "sha256": "af0322537ee80a0099c4daa9d9b4e97f8e72ee8c147a6332e9a393cf72301131",
+      "size": 4697
+    },
+    "docs/review/remediation/implementation/independent-isolated-native-vm-run2-20260921.md": {
+      "sha256": "d16ddf589a945b87af45733b3f69f32dd376311bc6dfb457b5cbe6cf26dfa472",
+      "size": 4558
+    },
+    "docs/review/remediation/implementation/independent-config-buster-readiness-20260921.md": {
+      "sha256": "3ccea5cee78e278b488a503fb7f2df580d5dfffd4c0dcbc26ddb6fcf2825dacf",
+      "size": 5688
+    },
+    "docs/review/remediation/implementation/browser-archive-lock-20260921.md": {
+      "sha256": "bcf49f04dd084ab6ccf2d545ebe04c261254bb47965d7f4a856d9ea43b609c18",
+      "size": 7914
+    },
+    "docs/review/remediation/implementation/buster-legacy-stop-boundary-proposal-20260921.md": {
+      "sha256": "d97c6b9fb5f237ef5f27dc53431f5be0984a777c695ac1608c75a42e1a8f89af",
+      "size": 10625
+    },
+    "docs/review/remediation/implementation/cilium-observation-guards-20260921.md": {
+      "sha256": "4363eab6cef5bb6ef906854a04d2d4d53abe32ccc63c01e6ed89f5791e5da93d",
+      "size": 4837
+    },
+    "docs/review/remediation/implementation/pr6-node-accounting-decision.md": {
+      "sha256": "e8240f0c7745d0fbb386413bc9e3061c88c27e4bd5a2e6d11abb2ae1e7b7c3cb",
+      "size": 5082
+    },
+    "docs/review/remediation/implementation/independent-provider-child-session-simplicity-20260921.md": {
+      "sha256": "15e895ccdf60a2117c75dce5470d5fae8a8fec321d98462e9cd1d061061d4b94",
+      "size": 5006
+    },
+    "docs/review/remediation/implementation/registry-health-scope.json": {
+      "sha256": "a79edad652de9ac335ebc95d67809c02c105fe791d911f4a71576c8f3225dc9e",
+      "size": 2514
+    },
+    "docs/review/remediation/implementation/offline-generator-gates.md": {
+      "sha256": "02d8ecd4dfc61e24c6db990540c5fa2f39d391fedd1d4d14857519259a76ab75",
+      "size": 9878
+    },
+    "docs/review/remediation/implementation/independent-legacy-seal-generation2-20260921.md": {
+      "sha256": "25840e607d5aef40d6e5f45daa92ea60027cb9eb77c15b8771d495fbbcf10a39",
+      "size": 3081
+    },
+    "docs/review/remediation/implementation/independent-config-review-20260920.md": {
+      "sha256": "6897d5020d074cae92807666f541ac5bef7500f4a1c9f801839ba9a7196318a8",
+      "size": 7793
+    },
+    "docs/review/remediation/implementation/browser-lint-cleanup-20260921.md": {
+      "sha256": "42abf9dd27638764622ad3e0245c8df95c2fa8f3b2947afc21da0579af57f17e",
+      "size": 3097
+    },
+    "docs/review/remediation/implementation/wave47-infrastructure.md": {
+      "sha256": "33d81f41619372854482f577d0ec3a2c5dc121eac2d7c160e78af4bee1a67f13",
+      "size": 8809
+    },
+    "docs/review/remediation/implementation/resume-84-prism-cpu-ownership-direction.md": {
+      "sha256": "afc0467962c4319df8d9214f62a663fefec975c95807b3ca11f035ab9ba16b82",
+      "size": 11189
+    },
+    "docs/review/remediation/implementation/config-supervisor-numerics-20260921.md": {
+      "sha256": "9eb96b070075d1fed8dc8de0123643a02df7f799fb9219ac4fee4bcc32191e52",
+      "size": 8575
+    },
+    "docs/review/remediation/implementation/resume-84-worker-pg-native-entry.md": {
+      "sha256": "9cfe3a099e8e950c44ce0bb8e1d795f74d5c2171221b7f3106daa4e0edeed7af",
+      "size": 3266
+    },
+    "docs/review/remediation/implementation/independent-tailscale-access-preparation-20260921.md": {
+      "sha256": "32a2f9d65a859cccd68b955daf4a05b0e87d64cde2f312b1e54f3f6672d02b2f",
+      "size": 4654
+    },
+    "docs/review/remediation/implementation/control-route-quality-20260921.md": {
+      "sha256": "c4e98b78bf54a4c988d793de2ebf66bc1ccbfedb9dc93dddae0204c1851997f6",
+      "size": 8227
+    },
+    "docs/review/remediation/implementation/independent-wait-retirement-source-review-20260921.md": {
+      "sha256": "b65ce99242fb69f970597b9166e33eee2edfdbcf032397397a32d0056139af9d",
+      "size": 2966
+    },
+    "docs/review/remediation/resume/root-checkpoint.md": {
+      "sha256": "830073859540c54a0166c557bb2abd1cc87baad667085235313b229ef5d15fce",
+      "size": 8226
+    },
+    "docs/review/remediation/resume/README.md": {
+      "sha256": "ea5171ac2fd45dc568761aabbcb7bb1601aac99f9fa51ee363845cb620435973",
+      "size": 4970
+    },
+    "docs/review/remediation/resume/work-items.json": {
+      "sha256": "eda985c8fb39a420e88112bb6337b32ab8431659af9ca4cea7cb6e5bb0f16b75",
+      "size": 56375
+    },
+    "docs/review/remediation/resume/run5-active-packages.json": {
+      "sha256": "18ca7a6c3ecd77fa0eee534e06f62d238646974409ae5ff7fb70afccaa6ff107",
+      "size": 21180
+    },
+    "docs/review/remediation/resume/run-20260909t225913.md": {
+      "sha256": "2466c81a3dc90dd0fbd544c93b048fce5753bb1d0b0955a8b9629150c161f3bc",
+      "size": 4544
+    },
+    "docs/review/remediation/resume/package-checkpoints.json": {
+      "sha256": "eb9c21038eb33b53432eefc215c6d4202000edb184814381dc54227fc3ca5413",
+      "size": 3985
+    },
+    "docs/review/remediation/resume/remaining-40-scheduling.md": {
+      "sha256": "6861757671ebfff2a42b8a03f0a740a5c819ec8004ad1d0b7eb4477028e675e5",
+      "size": 6546
+    },
+    "docs/review/remediation/resume/run-20260909t2114.md": {
+      "sha256": "eca5b7dee0a323cf924b47db46120b238c06292856fa132db28d1ef1bc8bf22a",
+      "size": 4938
+    },
+    "docs/review/remediation/resume/run3-package-checkpoints.json": {
+      "sha256": "2d01a090a2404be6ef90a3967bb76188758e8be870bb3d43ae7b4a645a1fc95b",
+      "size": 1525
+    },
+    "docs/review/remediation/resume/run-20260911-a51d-resumed.md": {
+      "sha256": "a5efb096189dfb45579972bdc25d38c6d3c733c92aaaece73122683413778a21",
+      "size": 7031
+    },
+    "docs/review/remediation/resume/run-20260909t2146.md": {
+      "sha256": "25bb9321b96225ca47e789d0bb6130beb378b92c19c4b3f22ca7dddf72722255",
+      "size": 6250
+    },
+    "docs/review/remediation/resume/run9-supervisor-checkpoint.json": {
+      "sha256": "454b96639ed96d4b6950ceb543ccd28210c32e9daa9cd5ada5521abd2db86374",
+      "size": 783
+    },
+    "docs/review/remediation/resume/run-20260909t2220.md": {
+      "sha256": "bf5307a1df9902a4b083c15f2ab0c88e41bc3675d6f4ed106a035c36eab37eef",
+      "size": 4964
+    },
+    "docs/review/remediation/resume/run-20260911-a51d-resumed-state.json": {
+      "sha256": "f44288171cf57aa1be54790602e2d15a1023437aa87adbc0d3a1d62bfbef519d",
+      "size": 26658
+    },
+    "docs/review/remediation/resume/remaining-40-scheduling.json": {
+      "sha256": "547875e230ad89275602ddef73af356901c2b4890599870656026aec7c4cf9ed",
+      "size": 36020
+    },
+    "docs/review/remediation/resume/run-20260910t050054.md": {
+      "sha256": "f564f2d5f23b6bd4e80999f465cf15571a39001b8dda6fc2b51058c8002e26b9",
+      "size": 4364
+    },
+    "docs/review/remediation/resume/run2-package-backups.json": {
+      "sha256": "d60267e0b08f56ca6caf408fb970850aea8330e6eb08ac111889c54c65138348",
+      "size": 18826
+    },
+    "docs/review/remediation/resume/run6-capacity-and-next-packages.md": {
+      "sha256": "18c2c544e97883d99228b2f8c3e102b428e1f5ef01446ec262533e59090b9b1b",
+      "size": 3783
+    },
+    "docs/review/remediation/resume/run-20260910t025258.md": {
+      "sha256": "7b4f47d01c77f9b8bc9da858ac6addd0ed50a5e4ec2d0fb8d93df5f8a3a7e478",
+      "size": 10471
+    },
+    "docs/review/remediation/resume/run-20260909t233622.md": {
+      "sha256": "1e0f03fc4befdf46e42bab1fac6d59decd7223f5bd1e1e5c5d7345a57600876b",
+      "size": 6233
+    },
+    "docs/review/remediation/resume/run-20260910t015007.md": {
+      "sha256": "875a7009309e2d97034d45ed51761c5fea2fb65029bbac234aa778d6d38cdee4",
+      "size": 8012
+    },
+    "docs/review/remediation/resume/run-20260910t004317.md": {
+      "sha256": "804d894f37e213f4cab742150f9a46a3b37a93b110d650a0d77ecdd8c0744361",
+      "size": 3106
+    },
+    "docs/review/remediation/resume/run-20260909t223837.md": {
+      "sha256": "f3a5ec63b788ddd576e8b0597ae2dc09ae82d8bf13835d380476ada4ddcb7805",
+      "size": 3467
+    },
+    "docs/review/remediation/resume/run-20260910t000837.md": {
+      "sha256": "49639001ac047b8c7661e3607e3f83ccc5d5063669204996cef356eb88001abd",
+      "size": 3816
+    },
+    "docs/review/remediation/resume/run-20260910t021800.md": {
+      "sha256": "e4d7a4b61459935b590610b159b6b619ea72bc9bf2cc019cc4a8b420bb53a4a5",
+      "size": 10160
+    },
+    "docs/review/remediation/resume/native-followup-39-20260911.json": {
+      "sha256": "a520c76da57a1c7820eb1db296a7c625546d6ba15a9c4dea98195c33a4478bfc",
+      "size": 100957
+    },
+    "docs/review/remediation/resume/run-20260911-a51d-2h.md": {
+      "sha256": "a847edbd3848c27c59445ba3696b97230ce22120fd694a3313f886620fb160de",
+      "size": 5727
+    },
+    "docs/review/remediation/resume/run4-active-packages.json": {
+      "sha256": "88db7b1032736e236e2b7bc3e28c2d19ea91491c075cf241635d0e72dde1f9a8",
+      "size": 2327
+    },
+    "docs/review/remediation/resume/initial-recovery-review.md": {
+      "sha256": "93a9739ee3333d9f07bb694ceb7285314986512f2314bb81e8a83add5afc80dd",
+      "size": 1779
+    },
+    "docs/review/remediation/resume/run2-proof-backups.json": {
+      "sha256": "6b0ac5499ad2b5491af3ba377bb682413fa08fc8b2b877482158972960cf4ec5",
+      "size": 2877
+    },
+    "docs/review/remediation/resume/run-20260911-a51d-2h-state.json": {
+      "sha256": "266f98b6a73c8d4ca90dc24bfdd98aeb82c92231722aded4e2abfbb57a52bec0",
+      "size": 22620
+    },
+    "docs/review/remediation/resume/run-20260911-a51d.md": {
+      "sha256": "726289905e92fa81d1a8e4e979b77fca68e232f34e466b9722871a6998e5c582",
+      "size": 4026
+    },
+    "docs/review/remediation/resume/native-followup-current-resolution.json": {
+      "sha256": "cf1483ddbe8cda98d8fae911d727843576ca6143a0aef8cd075ff370e5f5a185",
+      "size": 13182
+    },
+    "docs/review/remediation/resume/run-20260912-pr6-5h.json": {
+      "sha256": "14d3c9c5732fac8f32e45dce5deb565efc4bb0216dd33d2be121fb6b9234bdaa",
+      "size": 4765
+    },
+    "docs/review/remediation/evidence/run9-runtime-profile-reconciled-dependencies.txt": {
+      "sha256": "74a98d026cba6d39a63ef0a724126db83673e4a72619035bd4cb6dfb808e88ef",
+      "size": 7991
+    },
+    "docs/review/remediation/evidence/run14-report-independent-supplement.txt": {
+      "sha256": "a5b4a039484e95a8bbaa528ded54c41b6cb2aaa9f2b0fbd8a80c40fe2a4a7040",
+      "size": 3319
+    },
+    "docs/review/remediation/evidence/run9-runtime-profile-checks.txt": {
+      "sha256": "a1cfe839194d0cc9e39ae8c2999374a8bf9ef3d7f82025dede8e3787b8678c40",
+      "size": 2279
+    },
+    "docs/review/remediation/evidence/run9-runtime-profile-reconciled-review-quiet.txt": {
+      "sha256": "af8125afaefc3331a973e2a1056148faed51f876295a635a26d85ee3956a6ba1",
+      "size": 9529
+    },
+    "docs/review/remediation/evidence/run14-report-independent-checks.txt": {
+      "sha256": "dc65d13d5937c27079f9e4ff8f8d5f51c3c71733d1029a8264c3f4f4fa0485ea",
+      "size": 1821
+    },
+    "docs/review/remediation/evidence/run14-report-independent-before.txt": {
+      "sha256": "1bc0c550a3d6901c9def0f6afa42b0b29927ab32e781e9019132c44a28ba3f84",
+      "size": 16973
+    },
+    "docs/review/remediation/evidence/run15-report-independent-current.txt": {
+      "sha256": "f85ac424f18fe867197b331580579709cfed7c7283d599cf5f22ecdd29157876",
+      "size": 3735
+    },
+    "docs/review/remediation/evidence/run14-report-independent-quiet.txt": {
+      "sha256": "493b2e58338e3d4cbe8a1180bf66dd5ed975fc91f5c691911798b4ca5b62e02f",
+      "size": 38746
+    },
+    "docs/review/remediation/evidence/run8-operator-sibling-regression.txt": {
+      "sha256": "689b77b16c2ebebdc0ecbfa15b761d030e049b0e4b836226d86aaceecefbe457",
+      "size": 5416
+    },
+    "docs/review/remediation/evidence/run13-report-independent-extra.txt": {
+      "sha256": "dd2665686ea116a0a270fde5d79f59aafc8ef8b09f4c692abed1ca31892e563f",
+      "size": 4166
+    },
+    "docs/review/remediation/evidence/run8-operator-initial-runtime.txt": {
+      "sha256": "35dd45866b647e6c0d45c1b72b7043760135339448003f2b49777c32697eaa45",
+      "size": 3184
+    },
+    "docs/review/remediation/evidence/run9-operator-sdk-sibling.txt": {
+      "sha256": "8159c024b17b6a416581a5ab8cc8f311ab11365a8b32fea4490af3d1f9be456b",
+      "size": 9438
+    },
+    "docs/review/remediation/evidence/run7-operator-authority-fixture.txt": {
+      "sha256": "887ae8f8ca5f0d4e743dd06600336d7c5d81f9a450ad94d75f8c11bb6ef2fb43",
+      "size": 3750
+    },
+    "docs/review/remediation/evidence/run9-runtime-profile-final-matrix.txt": {
+      "sha256": "30eab9363e023ac7d2ce04a9c3bed889a510023d83fcd0c85c75faf2482ebefe",
+      "size": 13343
+    },
+    "docs/review/remediation/evidence/run9-operator-sdk-checks.txt": {
+      "sha256": "9b9d642d087b0e420005806652a8e22c8033ba9ead673e00a14c9f19c9559144",
+      "size": 1757
+    },
+    "docs/review/remediation/evidence/run9-runtime-profile-before.txt": {
+      "sha256": "edd518e7edeb1b8ed16216804c64075f0593edfcebd70424d1b4f756b5bbbaa8",
+      "size": 2997
+    },
+    "docs/review/remediation/evidence/run8-operator-author-matrix.txt": {
+      "sha256": "203979fc89e0728789357e1f92a56b048bf023c8bb6430b842fe27e29a3c8d85",
+      "size": 3917
+    },
+    "docs/review/remediation/evidence/run9-runtime-profile-reconciled-checks.txt": {
+      "sha256": "d638a7b6fd54150b9699f82650dc97cfbe29ec1a917b9819e23d32c07be06681",
+      "size": 1689
+    },
+    "docs/review/remediation/evidence/run9-runtime-profile-reconciled-matrix.txt": {
+      "sha256": "68df2195fd6db34ab81dd2de825ee6860a14d376a3c71f58e376195115a1a761",
+      "size": 16440
+    },
+    "docs/review/remediation/evidence/run9-runtime-profile-legacy-cli.txt": {
+      "sha256": "8450e723a799bed3bb3f3ea06fd7b1c6162cda5057ddb359681085815650c87f",
+      "size": 1101
+    },
+    "docs/review/remediation/evidence/run9-operator-sdk-matrix.txt": {
+      "sha256": "09402ff78b53bd402d64aaf90b799ed184b9b1f185e43a3ed5b641022888feb5",
+      "size": 3234
+    },
+    "docs/review/remediation/evidence/run9-runtime-profile-reconciled-review-first.txt": {
+      "sha256": "d7b88643bbb6919387479b1df2028dade599ffaf3c7a299daa5b25f28a793249",
+      "size": 7845
+    },
+    "docs/review/remediation/evidence/run9-runtime-profile-first-matrix.txt": {
+      "sha256": "ead14e4f1ce88718689b328ef457170d2f84dc2d139a14544b76760e7b59bcfe",
+      "size": 24476
+    }
+  },
+  "drift": []
+}

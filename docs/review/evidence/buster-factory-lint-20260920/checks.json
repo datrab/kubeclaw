@@ -1,0 +1,46 @@
+{
+  "engine-types": {
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/buster/engine/tsconfig.json"
+    ],
+    "exitCode": 0
+  },
+  "fixture-types": {
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.buster-fixture.json"
+    ],
+    "exitCode": 0
+  },
+  "http-types": {
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "--module",
+      "nodenext",
+      "--target",
+      "esnext",
+      "--allowImportingTsExtensions",
+      "--skipLibCheck",
+      "tests/verification/reliability/http-authority.test.mts"
+    ],
+    "exitCode": 0
+  },
+  "changed-code-lint": {
+    "command": [
+      "node_modules/.bin/eslint",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/buster/engine/test-gates/capability-runtime.ts",
+      "skills/buster/engine/test-gates/terminal-workspace.ts",
+      "tests/verification/reliability/http-authority.test.mts",
+      "tests/verification/reliability/buster-terminal-workspace-native.test.mts"
+    ],
+    "exitCode": 0
+  }
+}

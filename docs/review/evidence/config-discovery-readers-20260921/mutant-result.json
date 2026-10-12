@@ -1,0 +1,9 @@
+{
+  "command": [
+    "/usr/local/bin/node",
+    "--test",
+    "/tmp/config-reader-mutant-fdich8ew/scripts/config/tests/environment-readers.test.mjs"
+  ],
+  "exitCode": 1,
+  "secondArgumentOmissionDetected": true
+}

@@ -1,0 +1,26 @@
+{
+  "head": "cd9f235345f5fd8736a2ffe75d806288e4d538db",
+  "node": "v24.21.0",
+  "command": [
+    "/tmp/prism-native-tools/root/usr/bin/proot",
+    "-b",
+    "/tmp/prism-native-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "-b",
+    "/tmp/prism-native-tools/root/bin/tar:/usr/bin/tar!",
+    "node",
+    "--test",
+    "tests/verification/reliability/buster-terminal-workspace-native.test.mts",
+    "skills/buster/engine/test-gates/tests/terminal-workspace.test.ts",
+    "tests/verification/reliability/http-authority.test.mts",
+    "tests/verification/reliability/buster-fixture-control.test.mts",
+    "tests/verification/reliability/buster-fixture-journal.test.mts",
+    "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+  ],
+  "files": {
+    "skills/buster/engine/test-gates/remote-plan-service.ts": "c70d3c30a194563557bf553ff6872e34ae212536acc3531402a483e1638314cc",
+    "skills/buster/engine/test-gates/capability-runtime.ts": "9d8c2e2fee2a13c34dc00efe3a7ed7c4eb2047a7d496baf9c4c6b7c4cafcde78",
+    "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts": "e19e110923ce651414e7e2b46ca8c664874ec6e1dcdaeab2b1a4069f2fcd34e7",
+    "tests/verification/reliability/nova-remote-faults.mts": "45833fcf648bd0a8e154b3b8cdea961bff0e0b0bf3c84411e3dc3a50dbed19cf"
+  },
+  "LD_LIBRARY_PATH": "/tmp/prism-native-tools/root/usr/lib:/tmp/prism-native-tools/root/lib"
+}

@@ -1,0 +1,17 @@
+✔ final inventory verification rejects changed real bytes despite colliding metadata (6.004395ms)
+✔ repeated verification of unchanged bytes fits the original scan quota (1.825847ms)
+✔ final inventory verification rejects grow (0.835091ms)
+✔ final inventory verification rejects shrink (0.848692ms)
+✔ final inventory verification rejects remove (0.950205ms)
+✔ final inventory verification rejects replace (1.089918ms)
+✔ final inventory verification rejects symlink (4.421323ms)
+✔ insufficient initial hash quota never becomes an executable clean inventory (0.694618ms)
+✔ growth by a real competing process cannot exceed the inventoried read size (32.690891ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 132.273181

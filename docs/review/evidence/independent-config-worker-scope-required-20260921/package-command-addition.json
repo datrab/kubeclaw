@@ -1,0 +1,6 @@
+{
+  "boundBefore": "e671e811a288eebd2b18dcd6c2eb889a1708da523319021bca7335798710e784",
+  "current": "1f6ecbe906b3d978b1dddc26cfd06bcdababf9188cf7bf55b400e25546fffeb8",
+  "removedLine": "    \"verify:config:components\": \"node --test --test-concurrency=1 tests/verification/reliability/config-component-bundle.test.mts tests/verification/reliability/config-component-generation.test.mjs tests/verification/deployment/config-component-packaging.test.mjs tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/buster-admission-render.test.mjs skills/prism/tests/swarm-*.test.mts skills/prism/tests/studio-config.test.mts skills/prism/tests/studio-service.test.mts\",",
+  "removingOnlyAddedCommandRestoresExactBoundBytes": true
+}

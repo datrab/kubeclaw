@@ -1,0 +1,15 @@
+✔ serialized provider results retain size, schema, count and declaration checks (17.382336ms)
+✔ serialized finalization data binds retained source, adapter, limits and cancellation signal (1.481148ms)
+✔ missing retained evidence and mismatched adapter package fail before adapter execution (0.538214ms)
+✔ exit-code and absent reports bypass adapters; adapter rejection remains authoritative (0.346629ms)
+✔ combined adapter output is bounded even if a fake adapter ignores its allowance (50.822585ms)
+✔ blocking JUnit with only skipped cases fails; advisory mode preserves its result (0.679048ms)
+✔ non-command provider retains provider verdict and receives copied reports (0.418861ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 916.60534

@@ -1,0 +1,157 @@
+
+> verify:buster:kubernetes-cleanup
+> npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-execution-policy.json && node --test --test-concurrency=1 tests/verification/contracts/kubernetes-cleanup-errors.test.mjs tests/verification/contracts/kubernetes-cleanup-runner.test.mjs tests/verification/contracts/provider-child-session.test.mjs tests/verification/contracts/provider-loader-ownership.test.mjs skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts
+
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+{"ok":true,"provider":"kubernetes-fixture","deterministicIdentity":true,"mocks":0}
+✔ skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts (146.077646ms)
+✔ real preparation rollback preserves errors; delete failure false (9.857477ms)
+✔ real preparation rollback preserves errors; delete failure true (1.710034ms)
+✖ registered Kubernetes provider retain, failed preparation true (1057.55723ms)
+✖ registered Kubernetes provider retain, failed preparation false (440.599799ms)
+✖ registered Kubernetes provider delete, failed preparation true (489.415927ms)
+✖ registered Kubernetes provider delete, failed preparation false (439.250553ms)
+✖ post-provider termination fault has incomplete cleanup authority despite retained provider success (419.660324ms)
+✔ real child preserves detached invoke, concurrent replies, instance state and import logs (88.593082ms)
+✔ real child settles outstanding RPCs and ignores late replies; early reply=false (79.323871ms)
+✔ real child settles outstanding RPCs and ignores late replies; early reply=true (75.035229ms)
+✔ real child rejects an unawaited RPC and exits with failure (60.870882ms)
+✔ real child rejects invalid observation before provider import: undefined (66.895768ms)
+✔ real child rejects invalid observation before provider import: null (66.980851ms)
+✔ real child rejects invalid observation before provider import: {} (57.402421ms)
+✔ real child rejects invalid observation before provider import: [] (65.354138ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":0} (73.734846ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":1.5} (58.454499ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":"10"} (84.141297ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":2147483648} (72.455483ms)
+✔ real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":10,"extra":1} (57.833182ms)
+✔ real child uses authored sample interval 10 (316.277408ms)
+✔ real child uses authored sample interval 40 (309.547673ms)
+✔ real child reuses an identical sampling policy and rejects a changed policy (55.924073ms)
+✔ child rejects invalid cleanup authority {"kind":"cleanup"} (74.044254ms)
+✔ child rejects invalid cleanup authority {"kind":"cleanup","schemaVersion":"provider-cleanup.v1","disposition":"passed"} (75.092181ms)
+✔ child rejects invalid cleanup authority {"kind":"cleanup","schemaVersion":"provider-cleanup.v0","disposition":"completed-fixture"} (89.412113ms)
+✔ signal failure still drains capability settlement after actual child close (169.456573ms)
+✔ actual close with nonsettling capability reports bounded drain failure (1046.303607ms)
+✔ withheld close notification retains termination bound without entering capability drain (1075.437233ms)
+✔ constructor observation error is retained for later initialize (11.774946ms)
+▶ aborted initialization rejects and a distinct healthy session completes real cleanup
+  ✔ already aborted context (10.219386ms)
+  ✔ healthy positive control (47.954596ms)
+✔ aborted initialization rejects and a distinct healthy session completes real cleanup (59.026364ms)
+✔ real session termination bound 100 with delayed actual-close delivery (260.995861ms)
+✔ real session termination bound 500 with delayed actual-close delivery (264.568964ms)
+✔ actual session IPC consumes pending-capability count 1 (47.407102ms)
+✔ actual session IPC consumes pending-capability count 2 (149.360241ms)
+✔ actual session IPC consumes capability drain 10 (124.514496ms)
+✔ actual session IPC consumes capability drain 500 (129.778482ms)
+✔ initialized idle session retains actual protocol overflow at 512 bytes (159.902464ms)
+✔ initialized idle session retains actual protocol overflow at 4096 bytes (56.161669ms)
+ℹ tests 42
+ℹ suites 0
+ℹ pass 37
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11440.414283
+
+✖ failing tests:
+
+test at tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:12:3
+✖ registered Kubernetes provider retain, failed preparation true (1057.55723ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED/. Input:
+  
+  'TEST_PROVIDER_FAILED:KUBERNETES_FIXTURE_KUBECTL_FAILED:external delete fault'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:38:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'TEST_PROVIDER_FAILED:KUBERNETES_FIXTURE_KUBECTL_FAILED:external delete fault',
+    expected: /KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:12:3
+✖ registered Kubernetes provider retain, failed preparation false (440.599799ms)
+  AssertionError [ERR_ASSERTION]: actual replacement cleanup session required
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:31:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 835160,
+    expected: 835160,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:12:3
+✖ registered Kubernetes provider delete, failed preparation true (489.415927ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED/. Input:
+  
+  'TEST_PROVIDER_FAILED:KUBERNETES_FIXTURE_KUBECTL_FAILED:external delete fault'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:38:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'TEST_PROVIDER_FAILED:KUBERNETES_FIXTURE_KUBECTL_FAILED:external delete fault',
+    expected: /KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:12:3
+✖ registered Kubernetes provider delete, failed preparation false (439.250553ms)
+  AssertionError [ERR_ASSERTION]: actual replacement cleanup session required
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:31:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 835231,
+    expected: 835231,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:62:1
+✖ post-provider termination fault has incomplete cleanup authority despite retained provider success (419.660324ms)
+  Error: TEST_PROVIDER_SIGNAL_FAILED
+      at signal (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:179:43)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:187:80
+      ... 6 lines matching cause stack trace ...
+      at async cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:50:7)
+      at async cleanupRetainedFixtures (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:72:12) {
+    [cause]: Error: TEST_PROVIDER_PROCESS_SIGNAL_FAILED
+        at signalProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-observation.ts:60:11)
+        at signal (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:178:15)
+        ... 5 lines matching cause stack trace ...
+        at IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:88:28)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async cleanupRetainedProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner-fixtures.ts:50:7) {
+      [cause]: Error: injected exact owned group TERM failure
+          at process.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/kubernetes-cleanup-children.mjs:102:27)
+          at Object.apply (node:internal/test_runner/mock/mock:805:20)
+          at signalProvider (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-observation.ts:56:60)
+          at signal (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:178:15)
+          at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:187:80
+          at new Promise (<anonymous>)
+          at #terminate (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:176:11)
+          at ProviderProcessSession.terminate (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-process-session.ts:168:42)
+          at IsolatedLoadedProvider.terminate (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:114:31)
+          at IsolatedLoadedProvider.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/provider-loader.ts:88:28) {
+        code: 'EPERM'
+      }
+    }
+  }

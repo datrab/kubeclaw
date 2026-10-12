@@ -1,0 +1,156 @@
+{
+  "sourceCount": 26,
+  "allCurrentAndSnapshotsMatch": true,
+  "authorBeforeAfterMatch": true,
+  "generatedCopiesExact": true,
+  "originalServiceLoaderExit": 0,
+  "originalServiceLoaderTests": 22,
+  "fallbackMutantExit": 1,
+  "fallbackActualAssertionFailure": true,
+  "lockClosure": {
+    "ajv": {
+      "fast-deep-equal": "^3.1.3",
+      "fast-uri": "^3.0.1",
+      "json-schema-traverse": "^1.0.0",
+      "require-from-string": "^2.0.2"
+    },
+    "fast-deep-equal": {},
+    "fast-uri": {},
+    "json-schema-traverse": {},
+    "require-from-string": {}
+  },
+  "sources": [
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "sha256": "377f836f98c8d346a41a9eff4cbe1488a0451038ead95e0f941c66fdcfe35fad",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/skills__prism__server__studio-config.ts.snapshot"
+    },
+    {
+      "path": "skills/prism/tests/studio-service.test.mts",
+      "sha256": "76cbed3809741d2b42a0892d11573f661be82452f886ede13ed3aacb2dbff291",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/skills__prism__tests__studio-service.test.mts.snapshot"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "e9e7fef5fec4931e317985b27b07cb7b9a8fd18a23752137a07c59a91ca42c2d",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/skills__common__plugin-runtime__foundation__config__swarm.ts.snapshot"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "sha256": "aae0cc4633ff1462efbc103d0529e68bdb103907a6511e9e40e6139a3575e3ed",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/skills__common__plugin-runtime__foundation__config__swarm.schema.json.snapshot"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm.config.json",
+      "sha256": "991e0c6dfd683b484bbc132c3e6e60c67abdf7c88e53959e9d08b7e4e60c20da",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/charts__kubeclaw__files__config__swarm.config.json.snapshot"
+    },
+    {
+      "path": "charts/prism/templates/_swarm-config.tpl",
+      "sha256": "ecbc31f41295ba0f0a4f3001586985e92cc67abb4c4f60990618750678a808e0",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/charts__prism__templates___swarm-config.tpl.snapshot"
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "189fbbdc5755fb2e052a28a566410a9184297d0a1a2ed4adce24d19f3dc5f9c3",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/charts__prism__templates__workloads.yaml.snapshot"
+    },
+    {
+      "path": "charts/prism/templates/services.yaml",
+      "sha256": "feea08cb2eaf89d5fb520c321a275a8550add0ca46337f4614d7384a7c1701df",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/charts__prism__templates__services.yaml.snapshot"
+    },
+    {
+      "path": "charts/prism/templates/networkpolicy.yaml",
+      "sha256": "5e4e412c6dc3a6043620fcfa533b5881c9e9533b39632cdcca870c13d9cae838",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/charts__prism__templates__networkpolicy.yaml.snapshot"
+    },
+    {
+      "path": "docker/Dockerfile.prism-studio",
+      "sha256": "7236981dff3fd9008e1156d810041df3a5b8f00311362978912446e33a2bad0c",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/docker__Dockerfile.prism-studio.snapshot"
+    },
+    {
+      "path": "scripts/check-built-runtime-image.sh",
+      "sha256": "0e5a5c3516bec7669e744208d80bf9727625346845a52eff69b1388230b690d0",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/scripts__check-built-runtime-image.sh.snapshot"
+    },
+    {
+      "path": "tests/verification/deployment/prism-swarm-image.mjs",
+      "sha256": "3330ef6686a396e4314f3eb99f5142d0708dfa78e58077db2f8a36ae648a353b",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/tests__verification__deployment__prism-swarm-image.mjs.snapshot"
+    },
+    {
+      "path": "tests/verification/deployment/check-deployment-truth.mjs",
+      "sha256": "d58e76a4f11ae95bbf5cd90534f6937a1dc68810e52264a81314d4a0cdf0c933",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/tests__verification__deployment__check-deployment-truth.mjs.snapshot"
+    },
+    {
+      "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "sha256": "44823a345015647ceb1fd025ed11db8da2ef03f099df28193c0a5e5494b2266b",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/tests__verification__deployment__prism-swarm-config.test.mjs.snapshot"
+    },
+    {
+      "path": ".dockerignore",
+      "sha256": "29c8a2f2b7249ece0f29276657794e4de7a18fe2909839ae20408a02f8f466fa",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/.dockerignore.snapshot"
+    },
+    {
+      "path": "skills/prism/package.json",
+      "sha256": "8d07247f3bd986745352a20a0ee17696afde9b9b33637fe396c547d1a01a8c4d",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/skills__prism__package.json.snapshot"
+    },
+    {
+      "path": "skills/prism/tests/studio-config.test.mts",
+      "sha256": "9a602947f7938b6b72aa1074dc3593610a00d125a2535904cc71d488e5ec1a9b",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/skills__prism__tests__studio-config.test.mts.snapshot"
+    },
+    {
+      "path": "skills/prism/tests/fixtures/studio-service.mts",
+      "sha256": "42a941fef8378dda81237345cb783c14ae663ec1aa3c62cea5b3910b7e235bf9",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/skills__prism__tests__fixtures__studio-service.mts.snapshot"
+    },
+    {
+      "path": "skills/prism/tests/studio-canonical-image.mts",
+      "sha256": "ae7a69a37ec6c36ce63de2f9f6765db57d07d5af5bf9ee11a58993b03ca537de",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/skills__prism__tests__studio-canonical-image.mts.snapshot"
+    },
+    {
+      "path": "charts/prism/files/config/swarm.config.json",
+      "sha256": "991e0c6dfd683b484bbc132c3e6e60c67abdf7c88e53959e9d08b7e4e60c20da",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/charts__prism__files__config__swarm.config.json.snapshot",
+      "symlink": "../../../kubeclaw/files/config/swarm.config.json"
+    },
+    {
+      "path": "charts/prism/files/config/swarm.schema.json",
+      "sha256": "aae0cc4633ff1462efbc103d0529e68bdb103907a6511e9e40e6139a3575e3ed",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/charts__prism__files__config__swarm.schema.json.snapshot",
+      "symlink": "../../../../skills/common/plugin-runtime/foundation/config/swarm.schema.json"
+    },
+    {
+      "path": "docs/operations/prism-operator-guide.md",
+      "sha256": "5251a03afde86796dfc7942fec123b507b9876f764c89f43d93876559cb639cb",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/docs__operations__prism-operator-guide.md.snapshot"
+    },
+    {
+      "path": "docs/architecture/prism-openclaw-runtime.md",
+      "sha256": "1c74c0d9c69aa8e5a0696bd20f8b8927d2aaf14942388d7c8005918360bb80dc",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/docs__architecture__prism-openclaw-runtime.md.snapshot"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-studio-20260921.md",
+      "sha256": "7e0d3f1504403af193b1f0e62b0612a51db2525a2b10f74c0927744bd7a660ae",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/docs__review__remediation__implementation__config-studio-20260921.md.snapshot"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "sha256": "370a1cc0b919756622cf710be02d9b098bc34e46b016acfc6deb5e7660099280",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/docs__review__remediation__implementation__config-inventory-20260920.md.snapshot"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+      "sha256": "141e257b956baae3408373ba120ba0e77f7812bd62023a5b11190f110bb95962",
+      "snapshot": "docs/review/evidence/config-studio-20260921/source/docs__review__remediation__implementation__config-inventory-20260920.json.snapshot"
+    }
+  ]
+}

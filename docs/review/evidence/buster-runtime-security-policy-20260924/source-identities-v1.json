@@ -1,0 +1,111 @@
+{
+  "status": "design-only-no-execution",
+  "sources": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sha256": "01da0c323776cc8f9f4778d9ed2afb198133b79f7f2afbfa0850f657dda357b0"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sha256": "dc7ce158497dddbda0d814d35d2d5297d31706fcbdec08950a0d12e31e0ca5b7"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "457bc4de3ee01804091f576efa6963dcccda53fd89f39d19b3e235cfd35e179a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "f386f4f5edf80c54e3679bbfa6f4fc4df6bfaea3793640c8cbd871a44827af61"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "94b3d29e9f1b3a238d9cf3015ed8d5a364231f1aa3a47690419967931b2e6c46"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "sha256": "adb3a2a5cad33278860f8c45e1b104157e81deda9834cf7e95ffd7fabe2fbfbd"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "115c19a963ae45e1ca2be1e30dcd9b4f1cba7e73a38a8c700777c64f89f8b4b9"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "f65d34e681f541f27b8b15d88cc5c2550325638118e45df5e71da0df9d78264d"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+      "sha256": "0aaf28d95a6922eba26888a6a0471fbe3a1cb3518a792b35e00c9d3b8f8f5ce7"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "1f597fc57f3cf5dc7d39d317f7009fdcb8c5cbc73f6191907ac01df67b0ecade"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "0b725285b971344b45ac4d0cba933679e6ca432d78e1b0249d7e310f10bc9280"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+      "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/common.js",
+      "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/plugin.json",
+      "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+      "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-implementation.mts",
+      "sha256": "ab51c9a424d0381026a2bf7a876c748f1b091f41d773375d827d03fe7f3eaacc"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-parity.mts",
+      "sha256": "0a9a3a7fd2a404bcef3d978898835241159a4a628b6e59f2ffbd03f7b10f1b99"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-cutover.mts",
+      "sha256": "f75cd40e6acdaa6e19acb7ec4f7e297d89990c2de88d8d7f7adaf09acda8eb0e"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "sha256": "606c566c00541111a4f76544bea70b79aa794fd7f3502fa901e1a1428c135ebd"
+    },
+    {
+      "path": "tests/verification/e2e/nova-security-production-preflight.mts",
+      "sha256": "23fda5ee402cefae2e402c16b7dd823eadf473ce7805443ce4e1ec614b7ad2b3"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main_test.go",
+      "sha256": "0006d84a5753bb50ac16c2d7cd05ace3cd53c373590cb99043740261edc62d7c"
+    }
+  ],
+  "documents": [
+    {
+      "path": "ownership.json",
+      "sha256": "24cd7acfbd98d4a12e8154a59a178b3d111e2efccb8921fecf8e50cf103ead13"
+    },
+    {
+      "path": "ownership-and-criteria-v1.md",
+      "sha256": "47e7183a498482e03dc09060b1336c538cd797345f5280d57386f2c24e42d2af"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "beforeSha256": "00eab0f8704399826a723bf36ea5be2d9ead710777b3c1b47431461485beace7",
+  "afterSha256": "f8c7f535103cd16f37ce8ab8c9dbc192262ff786f54fdfab7bad0a504c9e09f1",
+  "originalAssertions": [
+    "assert.equal(source.includes('/pipeline/'), false);",
+    "assert.equal(source.includes('../'), false);",
+    "assert.equal(source.includes('runtime.dispatch'), false);",
+    "assert.match(source, /FileDurableRecordStore/);",
+    "assert.match(durable, /handle\\.sync\\(\\)/);"
+  ],
+  "allFiveOriginalAssertionsByteIdentical": true,
+  "newAssertion": "Actual public reexport points to the blob module being read",
+  "scope": "Source fixture follows cohesive module extraction; not a runtime persistence proof. Original failed run4 retained; real unmodified Blob and legacy-cutover cases remain required."
+}

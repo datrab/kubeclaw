@@ -56,10 +56,12 @@ Run:
 npm test --prefix skills/nova/plugins/project-summary
 ```
 
-Package tests found: 0.
+Package tests found: 2.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/project-summary/plugin.json`
 - Package root: `skills/nova/plugins/project-summary`
 - Authored package guide: `skills/nova/plugins/project-summary/README.md`
+- Test: `skills/nova/plugins/project-summary/tests/live-function.test.ts`
+- Test: `skills/nova/plugins/project-summary/tests/package-boundary.test.mjs`

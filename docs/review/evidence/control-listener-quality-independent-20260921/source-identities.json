@@ -1,0 +1,242 @@
+[
+  {
+    "path": "skills/prism/server/control-server.ts",
+    "snapshot": "source/skills/prism/server/control-server.ts",
+    "sha256": "5d2f664e02f966f0e7e7ce1d65d29bfd24fd28708040b416a8e469e6caf6ef5d"
+  },
+  {
+    "path": "skills/prism/server/control-context.ts",
+    "snapshot": "source/skills/prism/server/control-context.ts",
+    "sha256": "2444e6f0f22860aea6f109c984be4747a13421da2d33dd738ef7c29b71f04d02"
+  },
+  {
+    "path": "skills/prism/server/control-http.ts",
+    "snapshot": "source/skills/prism/server/control-http.ts",
+    "sha256": "df12e64c95c890f5f4cc9c3a0452f3802552d36995f0b8629cb47679879482c1"
+  },
+  {
+    "path": "skills/prism/server/session-routes.ts",
+    "snapshot": "source/skills/prism/server/session-routes.ts",
+    "sha256": "b89c1f560738fc6a990baa80eea255624eed2078b5b58205fff18ae7c95fd644"
+  },
+  {
+    "path": "skills/prism/server/dispatch-route.ts",
+    "snapshot": "source/skills/prism/server/dispatch-route.ts",
+    "sha256": "407b0befbe8cbf6009f2cef6fe80ab10a2213258d4be5bddc578f24abdb47382"
+  },
+  {
+    "path": "skills/prism/server/agent-routes.ts",
+    "snapshot": "source/skills/prism/server/agent-routes.ts",
+    "sha256": "55c4c77fc4ff7b981287c433c126d9754dffd3df1de464ec0d83bb0294caec17"
+  },
+  {
+    "path": "skills/prism/server/project-routes.ts",
+    "snapshot": "source/skills/prism/server/project-routes.ts",
+    "sha256": "fb836dcb2897eb0e8e55e2da3602c6ef72ec9e43fcb366b4b55064d308be2fc8"
+  },
+  {
+    "path": "skills/prism/server/document-routes.ts",
+    "snapshot": "source/skills/prism/server/document-routes.ts",
+    "sha256": "8436e9f50895e18b9d9eada4a78913ec6e5dd21bfc506fd9bfa51647e5d120a4"
+  },
+  {
+    "path": "skills/prism/server/direction-routes.ts",
+    "snapshot": "source/skills/prism/server/direction-routes.ts",
+    "sha256": "91e731766e8da39e82ce264dba3f9d904fdf77b211e480a3f56365aeef166812"
+  },
+  {
+    "path": "skills/prism/server/engine-route.ts",
+    "snapshot": "source/skills/prism/server/engine-route.ts",
+    "sha256": "6093e0f6ea9476db40d388a1d1cd1b0ee865c440723e5df05e4703a8aa360ebf"
+  },
+  {
+    "path": "skills/prism/server/approval-route.ts",
+    "snapshot": "source/skills/prism/server/approval-route.ts",
+    "sha256": "302c0e9844dcce2c84f3240632adea81562d077b4efee5eb54a7488ef6993466"
+  },
+  {
+    "path": "skills/prism/server/baseline-route.ts",
+    "snapshot": "source/skills/prism/server/baseline-route.ts",
+    "sha256": "1bb7412a0e7fe082cb836c7d6357c7d5bd317e38a84c5665270ea91ee3293c42"
+  },
+  {
+    "path": "skills/prism/server/corpus-routes.ts",
+    "snapshot": "source/skills/prism/server/corpus-routes.ts",
+    "sha256": "3f02fab3d0b41ed9a1074193e0312db0176be504f5d510a1c7a35d967eff77bf"
+  },
+  {
+    "path": "skills/prism/server/preference-routes.ts",
+    "snapshot": "source/skills/prism/server/preference-routes.ts",
+    "sha256": "df2302a68f58536dfb496b8b63199b76c69721f3f2de775ca0c2edcbc0b7ede7"
+  },
+  {
+    "path": "skills/prism/server/artifact-route.ts",
+    "snapshot": "source/skills/prism/server/artifact-route.ts",
+    "sha256": "98c7c96d3e024d96888dfeda5ae7755dd3d56c86662dee85104e2b0235adaa85"
+  },
+  {
+    "path": "skills/prism/server/baseline-validation.ts",
+    "snapshot": "source/skills/prism/server/baseline-validation.ts",
+    "sha256": "e0b03764ced2ced6968b7003f84d6aad409df8c5ac8d239d4a188007a0a55b0f"
+  },
+  {
+    "path": "skills/prism/server/baseline-archive.ts",
+    "snapshot": "source/skills/prism/server/baseline-archive.ts",
+    "sha256": "5b0a0eca87a986e5a01306e6d9741a8e18948eb87caab2e06f465269a43f0416"
+  },
+  {
+    "path": "skills/prism/tests/control-listener.test.mts",
+    "snapshot": "source/skills/prism/tests/control-listener.test.mts",
+    "sha256": "11c179e53b7d45d172f4483ed614ed5cdf35d1c741566eb372c56165831506bf"
+  },
+  {
+    "path": "skills/prism/tests/control-server-config.test.mts",
+    "snapshot": "source/skills/prism/tests/control-server-config.test.mts",
+    "sha256": "81e0b5caae2b338bc7ab54c3619a1b2514a09f0edbf7862fbb838e69432aac5a"
+  },
+  {
+    "path": "skills/prism/tests/control-image-environment.test.mts",
+    "snapshot": "source/skills/prism/tests/control-image-environment.test.mts",
+    "sha256": "986bc0c393447bd9d0b2a5ccacfaa463a293e6f71ea641676e880c08b8c652ed"
+  },
+  {
+    "path": "skills/prism/tests/swarm-control-policy.test.mts",
+    "snapshot": "source/skills/prism/tests/swarm-control-policy.test.mts",
+    "sha256": "0176a786730f0a46c0ff5e309a4b302c2897ea58b201cd766131199f4f523322"
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "snapshot": "source/skills/prism/tests/swarm-worker-config.test.mts",
+    "sha256": "67ca022a61121f0c55d335eddaca3de78c56755a2f4dbdd1dad0f838d95e2f66"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "snapshot": "source/tests/verification/deployment/prism-swarm-config.test.mjs",
+    "sha256": "6c1cbee1cceffa8c7ca97a718839cdbdae17917ea96d4bc388569bd253db8188"
+  },
+  {
+    "path": "skills/prism/tests/control.test.mts",
+    "snapshot": "source/skills/prism/tests/control.test.mts",
+    "sha256": "dc17224824de6e78e261f7fad905b5258bef457404dce377d1ccf3d0bcd89f52"
+  },
+  {
+    "path": "skills/prism/tests/control-decisions.test.mts",
+    "snapshot": "source/skills/prism/tests/control-decisions.test.mts",
+    "sha256": "3aa590b6779ea4755468de006c7762576073b8dbb692dfbf0e523a05ad54eae5"
+  },
+  {
+    "path": "skills/prism/tests/control-product-composition.test.mts",
+    "snapshot": "source/skills/prism/tests/control-product-composition.test.mts",
+    "sha256": "01a1802ee788f4c79d2ac465cc0abb91f7bccc6703cf9b848694a19cd23b74c6"
+  },
+  {
+    "path": "skills/prism/tests/control-product-independent.test.mts",
+    "snapshot": "source/skills/prism/tests/control-product-independent.test.mts",
+    "sha256": "8a6a4ede50868c639fc58505d55bd7c7b81a125a9cdda9b3507b5bc92e4e0392"
+  },
+  {
+    "path": "skills/prism/tests/control-generation-http.test.mts",
+    "snapshot": "source/skills/prism/tests/control-generation-http.test.mts",
+    "sha256": "ba17d64ab0e08931963b7dbc5f68ba7d6a2d29ea5142cf2fadc7749d2b9d7f32"
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "snapshot": "source/skills/prism/server/control-config.ts",
+    "sha256": "b36d7c699625b10c9b4d8f912f6435310cafc92cb27bec72fbf37fcc0bb550bb"
+  },
+  {
+    "path": "skills/prism/server/control.ts",
+    "snapshot": "source/skills/prism/server/control.ts",
+    "sha256": "d723c04698afa8bd6306beca93dd9daf5cde75b710129975642591688ec0fcac"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "snapshot": "source/skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "3bf2b64274f32e765aac2412d45fdcd626eab8b568dd9c3395dcb84df5f3f292"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "snapshot": "source/skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "sha256": "1aaccbf8f550c953772fc26755470c521733e0aeef81f6a00af15650b66c64ed"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "snapshot": "source/charts/kubeclaw/files/config/swarm.config.json",
+    "sha256": "cdbcba913f26b7ceadccb5bbd0181e8bb05cc1bce0a00ade719dc9c300b90355"
+  },
+  {
+    "path": "charts/prism/templates/_swarm-config.tpl",
+    "snapshot": "source/charts/prism/templates/_swarm-config.tpl",
+    "sha256": "07103322abfbcffa21ac3c2649b4acc367d4bdf758b23f111a6e6cc3cd6ec0c6"
+  },
+  {
+    "path": "charts/prism/templates/workloads.yaml",
+    "snapshot": "source/charts/prism/templates/workloads.yaml",
+    "sha256": "ba85394c794635799b5e37d634304a958db999671c9263b37870e379db8d315e"
+  },
+  {
+    "path": "charts/prism/templates/services.yaml",
+    "snapshot": "source/charts/prism/templates/services.yaml",
+    "sha256": "d569b8f72b5423d58caf05b78daccf7f5844623392abf6cedfb8fec8432edcc4"
+  },
+  {
+    "path": "charts/prism/templates/configmap-worker-trust.yaml",
+    "snapshot": "source/charts/prism/templates/configmap-worker-trust.yaml",
+    "sha256": "f84c715b0ffd6088dc996221a83987bc1711086785da5e5e0bb1f70c0a274f7c"
+  },
+  {
+    "path": "charts/prism/templates/networkpolicy.yaml",
+    "snapshot": "source/charts/prism/templates/networkpolicy.yaml",
+    "sha256": "198d4274a7d755838427c78e3dd72aca58a9691bc996a5245e72af89904831b6"
+  },
+  {
+    "path": "docker/Dockerfile.prism-control",
+    "snapshot": "source/docker/Dockerfile.prism-control",
+    "sha256": "ec29c4c71cbc374b4f15a100aeb7bb3181013b34a0ad9da6e07fcbee8227e853"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-image.mjs",
+    "snapshot": "source/tests/verification/deployment/prism-swarm-image.mjs",
+    "sha256": "c7e307aaa60109e78c1d7237067bc50ba2427c5a9f913668ef73ee2a4ab45bb9"
+  },
+  {
+    "path": "scripts/check-built-runtime-image.sh",
+    "snapshot": "source/scripts/check-built-runtime-image.sh",
+    "sha256": "648697535df8cf99193c361e3865a091e7febfe4e91dd9e2a972bc6ddf9b3f82"
+  },
+  {
+    "path": ".dockerignore",
+    "snapshot": "source/.dockerignore",
+    "sha256": "7befebeee56215798aa7e9243afdf1772e4982d896bc2285d818d595694ff908"
+  },
+  {
+    "path": "docs/architecture/prism-openclaw-runtime.md",
+    "snapshot": "source/docs/architecture/prism-openclaw-runtime.md.snapshot",
+    "sha256": "f7397b72520d707981d180fc1531feb615572146ee4a715b3f7bbff468bf09f5"
+  },
+  {
+    "path": "docs/operations/operator-configuration.md",
+    "snapshot": "source/docs/operations/operator-configuration.md.snapshot",
+    "sha256": "5fd0a2f9c0567ce19f5ee163ef9458aa5c2221cbe8b91474e9e8df06a7783589"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-control-listener-20260921.md",
+    "snapshot": "source/docs/review/remediation/implementation/config-control-listener-20260921.md.snapshot",
+    "sha256": "efe974bb31389c7d061096fb3ac21713c3171259f1ce58c2c0205ebfced7b297"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "snapshot": "source/docs/review/remediation/implementation/config-inventory-20260920.json",
+    "sha256": "239c4abb440e868506bff0f8da2f7a58df558d6ba2c9ae60e370caf37b12ab9d"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "snapshot": "source/docs/review/remediation/implementation/config-inventory-20260920.md.snapshot",
+    "sha256": "4be4aecd1b934811248d50d94b3e3cb6c79e8211e6327ed355ef89f1009bd72b"
+  },
+  {
+    "path": "docs/review/remediation/implementation/control-route-quality-20260921.md",
+    "snapshot": "source/docs/review/remediation/implementation/control-route-quality-20260921.md.snapshot",
+    "sha256": "7edbd2ab852cdf5ef723b5d3964da6945eb5d4472c54be7a98787e30361833c6"
+  }
+]

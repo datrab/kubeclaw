@@ -1,0 +1,86 @@
+{
+  "runs": [
+    {
+      "name": "originals",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/deployment/gitops-release.test.mjs",
+        "tests/verification/deployment/release-images.test.mjs"
+      ],
+      "hook": null,
+      "exitCode": 0,
+      "expectedExit": 0,
+      "elapsedSeconds": 23.61463743506465
+    },
+    {
+      "name": "assertions",
+      "command": [
+        "node",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-release-context-20260921/verify-original-assertions.mjs"
+      ],
+      "hook": null,
+      "exitCode": 0,
+      "expectedExit": 0,
+      "elapsedSeconds": 0.4148049559444189
+    },
+    {
+      "name": "extraction",
+      "command": [
+        "node",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-release-context-20260921/verify-extraction.mjs"
+      ],
+      "hook": null,
+      "exitCode": 0,
+      "expectedExit": 0,
+      "elapsedSeconds": 0.4646629609633237
+    },
+    {
+      "name": "missing-context",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/deployment/gitops-release.test.mjs",
+        "tests/verification/deployment/release-images.test.mjs"
+      ],
+      "hook": "missing-buster-context-mutant.mjs",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "elapsedSeconds": 8.29088354401756
+    },
+    {
+      "name": "missing-committed-check",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/deployment/gitops-release.test.mjs",
+        "tests/verification/deployment/release-images.test.mjs"
+      ],
+      "hook": "missing-gitops-check-mutant.mjs",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "elapsedSeconds": 22.82003625202924
+    }
+  ],
+  "before": {
+    "scripts/updates/deployment-release.mjs": "b7c0d0f8ea9d1fc216817f5974b91b26b43578a59fc5e02aaeba04eaeb09ebc6",
+    "scripts/gitops.mjs": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+    "scripts/native-buster-deployment-preflight.mjs": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9",
+    "tests/verification/deployment/gitops-release.test.mjs": "a48397a9abf16a3bc66e39fbb611cab4e982e13eb14b739334424dcd3cf0bb8a",
+    "tests/verification/deployment/release-images.test.mjs": "9afd3f5e826b015a998c1969416b5622c444e9dfacfdc8db7054b69a032447dc",
+    "docs/operations/native-worker-host-pools.md": "a34e3c48c234432b08ea0af836ee6d182762ebdc1fadf28bc69bb67e7af3aa88",
+    "docs/review/remediation/implementation/buster-release-context-20260921.md": "2ac682cc3240832e9e48602a4bd525063d8387d805c21efb245b5e24a457f951"
+  },
+  "after": {
+    "scripts/updates/deployment-release.mjs": "b7c0d0f8ea9d1fc216817f5974b91b26b43578a59fc5e02aaeba04eaeb09ebc6",
+    "scripts/gitops.mjs": "89f2a70a70a3e4900f034d03a5be8a598a468f0ad512024f52b8a80fcd13c62c",
+    "scripts/native-buster-deployment-preflight.mjs": "23b5f629c97ea478a3a943b937548c9cf00f1f1348b9e405f24fb955a85991c9",
+    "tests/verification/deployment/gitops-release.test.mjs": "a48397a9abf16a3bc66e39fbb611cab4e982e13eb14b739334424dcd3cf0bb8a",
+    "tests/verification/deployment/release-images.test.mjs": "9afd3f5e826b015a998c1969416b5622c444e9dfacfdc8db7054b69a032447dc",
+    "docs/operations/native-worker-host-pools.md": "a34e3c48c234432b08ea0af836ee6d182762ebdc1fadf28bc69bb67e7af3aa88",
+    "docs/review/remediation/implementation/buster-release-context-20260921.md": "2ac682cc3240832e9e48602a4bd525063d8387d805c21efb245b5e24a457f951"
+  }
+}

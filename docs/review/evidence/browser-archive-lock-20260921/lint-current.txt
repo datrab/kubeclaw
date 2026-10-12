@@ -1,0 +1,16 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/browser-archive-lock.mjs
+   18:113  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+   21:8    error  Function 'browserLock' has a complexity of 22. Maximum allowed is 15                   complexity
+  112:23   error  Dynamic module loading is allowed only in a declared loader boundary                   discipline/no-dynamic-module-loading
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/runtime-inputs.mjs
+  29:38  error  Read environment variables only in a declared configuration or infrastructure adapter   discipline/no-direct-env-access
+  30:44  error  Read environment variables only in a declared configuration or infrastructure adapter   discipline/no-direct-env-access
+  32:18  error  Read environment variables only in a declared configuration or infrastructure adapter   discipline/no-direct-env-access
+  33:32  error  Use one explicit value and at most one fallback; longer fallback chains hide authority  discipline/no-fallback-chain
+  40:59  error  Read environment variables only in a declared configuration or infrastructure adapter   discipline/no-direct-env-access
+  42:21  error  Read environment variables only in a declared configuration or infrastructure adapter   discipline/no-direct-env-access
+
+✖ 9 problems (9 errors, 0 warnings)
+

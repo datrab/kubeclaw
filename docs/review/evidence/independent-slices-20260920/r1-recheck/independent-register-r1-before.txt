@@ -1,0 +1,90 @@
+✔ all historical and integration identities and real evidence resolve; actual generated files match (88.126913ms)
+✔ missing historical ID (2.499924ms)
+✔ substituted historical ID with unchanged total (2.040092ms)
+✔ duplicate ID (2.275868ms)
+✔ missing integration ID (1.880548ms)
+✔ wrong status sum (1.922359ms)
+✔ wrong family sum (1.911389ms)
+✔ unknown status (2.709219ms)
+✔ missing original evidence (2.826152ms)
+✖ unresolvable original commit (35.407141ms)
+✖ unresolvable original path (32.207279ms)
+✔ missing implementation evidence (2.229866ms)
+✔ missing evidence file (1.97998ms)
+✔ missing evidence object report (2.580105ms)
+✔ unresolvable commit evidence (4.885865ms)
+✔ missing integration evidence (36.521679ms)
+✔ status drift (48.666529ms)
+✔ missing Markdown ID (40.543162ms)
+✔ missing Markdown evidence (38.754136ms)
+✔ wrong register sum (42.82633ms)
+✔ wrong progress sum (42.236415ms)
+✔ wrong handoff sum (38.47483ms)
+✔ generation repairs only counters/views, preserves every finding and historical checkpoint, and is idempotent (162.931987ms)
+✔ malformed source prevents generation without touching generated files (11.930284ms)
+✖ unresolvable original prevents generation without touching any register files (64.261616ms)
+✔ all individual source statuses are rendered, not inferred from available evidence (3.173561ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 23
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 808.218702
+
+✖ failing tests:
+
+test at ../../../../../tmp/register-r1-old-x9ehohh2/review.test.mjs:37:4
+✖ unresolvable original commit (35.407141ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///tmp/register-r1-old-x9ehohh2/review.test.mjs:37:60)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Command failed/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/register-r1-old-x9ehohh2/review.test.mjs:37:4
+✖ unresolvable original path (32.207279ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///tmp/register-r1-old-x9ehohh2/review.test.mjs:37:60)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Command failed/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at ../../../../../tmp/register-r1-old-x9ehohh2/review.test.mjs:86:1
+✖ unresolvable original prevents generation without touching any register files (64.261616ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///tmp/register-r1-old-x9ehohh2/review.test.mjs:92:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /Command failed/,
+    operator: 'throws',
+    diff: 'simple'
+  }

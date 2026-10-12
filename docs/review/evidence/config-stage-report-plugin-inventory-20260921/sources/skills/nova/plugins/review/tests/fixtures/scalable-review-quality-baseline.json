@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "scalable-review-quality-baseline.v1",
+  "recordedAt": "2026-08-22",
+  "model": "gpt-5.6-terra",
+  "reasoning": "high",
+  "codexBinary": "/app/node_modules/.bin/codex",
+  "codexVersion": "0.144.3",
+  "componentTaskDigest": "sha256:717cb9aae42ced8b557434bbe05ac723c4295d08b6c317f10784011bf7dddd7c",
+  "promptDigests": {
+    "focused": "sha256:6407006b303c968dbe7b932a72a7e52d864c69b2810c391c2d855a66d330bf32",
+    "balanced": "sha256:0297993b349082c4abbccc3ec498ab7fce5417bac776a4afc06c189d791710b7",
+    "dense": "sha256:a4d09a307241d20478b039e58b00076548ebf61728343bca2ce8c8e3719567c1"
+  },
+  "cases": 14,
+  "defects": 7,
+  "cleanControls": 7,
+  "variants": {
+    "focused": {
+      "casesPerJob": 2,
+      "jobs": 7,
+      "invalidJobs": 0,
+      "defectRecall": 1,
+      "cleanPrecision": 1,
+      "eligiblePriorityRecall": 1
+    },
+    "balanced": {
+      "casesPerJob": 4,
+      "jobs": 4,
+      "invalidJobs": 0,
+      "defectRecall": 1,
+      "cleanPrecision": 1,
+      "eligiblePriorityRecall": 1
+    },
+    "dense": {
+      "casesPerJob": 14,
+      "jobs": 1,
+      "invalidJobs": 0,
+      "defectRecall": 1,
+      "cleanPrecision": 1,
+      "eligiblePriorityRecall": 1
+    }
+  }
+}

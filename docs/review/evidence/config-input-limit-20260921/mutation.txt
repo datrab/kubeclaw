@@ -1,0 +1,98 @@
+✖ CI03 original HTTP body boundary follows authored 64 bytes (35.621246ms)
+✖ CI03 original HTTP body boundary follows authored 128 bytes (10.823706ms)
+✖ CI04 production command and real host parser use assigned 64 bytes (1.116378ms)
+✖ CI04 production command and real host parser use assigned 128 bytes (0.496123ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 567.251494
+
+✖ failing tests:
+
+test at skills/prism/tests/swarm-input-limit-mutant-179a274ca9dd4a52b881efa51591184c.test.mts:23:44
+✖ CI03 original HTTP body boundary follows authored 64 bytes (35.621246ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'WORKER_TRUST_PEER_MISSING'
+  - 'Prism attempt request is too large'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit-mutant-179a274ca9dd4a52b881efa51591184c.test.mts:39:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'WORKER_TRUST_PEER_MISSING',
+    expected: 'Prism attempt request is too large',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-input-limit-mutant-179a274ca9dd4a52b881efa51591184c.test.mts:23:44
+✖ CI03 original HTTP body boundary follows authored 128 bytes (10.823706ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'WORKER_TRUST_PEER_MISSING'
+  - 'Prism attempt request is too large'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit-mutant-179a274ca9dd4a52b881efa51591184c.test.mts:39:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'WORKER_TRUST_PEER_MISSING',
+    expected: 'Prism attempt request is too large',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-input-limit-mutant-179a274ca9dd4a52b881efa51591184c.test.mts:46:44
+✖ CI04 production command and real host parser use assigned 64 bytes (1.116378ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '16777216' !== '64'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit-mutant-179a274ca9dd4a52b881efa51591184c.test.mts:59:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '16777216',
+    expected: '64',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/swarm-input-limit-mutant-179a274ca9dd4a52b881efa51591184c.test.mts:46:44
+✖ CI04 production command and real host parser use assigned 128 bytes (0.496123ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '16777216' !== '128'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/swarm-input-limit-mutant-179a274ca9dd4a52b881efa51591184c.test.mts:59:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '16777216',
+    expected: '128',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

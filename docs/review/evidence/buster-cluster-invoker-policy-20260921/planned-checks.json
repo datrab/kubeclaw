@@ -1,0 +1,52 @@
+{
+  "status": "planned only; no execution; runner must provide previously reviewed real tool mappings and exclusive slot",
+  "newModules": [
+    "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs",
+    "tests/verification/contracts/buster-cluster-output-consumers.test.mjs",
+    "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+    "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs",
+    "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+    "tests/verification/reliability/buster-cluster-entrypoint.test.mjs"
+  ],
+  "originalModules": [
+    "tests/verification/contracts/buster-process-input-callers.test.mjs",
+    "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+    "tests/verification/deployment/buster-admission-render.test.mjs",
+    "tests/verification/deployment/buster-process-input-parity.test.mjs",
+    "tests/verification/deployment/buster-readiness-config.test.mjs",
+    "tests/verification/deployment/config-component-packaging.test.mjs",
+    "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+    "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+    "tests/verification/reliability/tailscale-generation.test.mjs"
+  ],
+  "originalScripts": [
+    "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+    "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+    "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+    "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+  ],
+  "fixtureConsumers": [
+    "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+    "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs",
+    "tests/verification/contracts/kubernetes-cleanup-errors.test.mjs",
+    "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs"
+  ],
+  "types": [
+    "tests/verification/contracts/tsconfig.buster-cluster-policy.json",
+    "skills/common/plugin-runtime/tsconfig.json"
+  ],
+  "lint": "canonical scoped full changed TS/MJS plus actual shell/Helm checks; no rule changes",
+  "mutants": {
+    "kube-output": "output",
+    "tail-output": "output",
+    "kube-short": "timing",
+    "tail-short": "timing",
+    "diagnostic": "manifest",
+    "kube-poll": "poll",
+    "tail-poll": "poll",
+    "manifest-depth": "manifest",
+    "manifest-alias": "manifest"
+  }
+}

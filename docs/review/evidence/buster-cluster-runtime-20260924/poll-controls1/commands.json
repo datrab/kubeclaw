@@ -1,0 +1,20 @@
+[
+  [
+    "control-kube-poll",
+    [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+    ]
+  ],
+  [
+    "control-tail-poll",
+    [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+    ]
+  ]
+]

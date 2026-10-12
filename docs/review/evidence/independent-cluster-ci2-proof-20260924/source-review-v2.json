@@ -1,0 +1,71 @@
+{
+  "reviewer": "/root/runtime_security_policy_review",
+  "scope": "Fresh read-only V2 correction review against V1 finding and original CI2 criteria; no tests, lint, integration or runtime execution",
+  "manifestSha256": "53cc58e8e935f2ce19bf0db7af522aa10d8ee3396a3ea0854f8e983c3387a0fc",
+  "decision": "accept_source_integration_and_exact_stand_verification_only",
+  "findings": [],
+  "resolved": [
+    {
+      "id": "CI2-TEARDOWN-01",
+      "evidence": "Both test modules now enter ownedClusterTest before asynchronous setup; no early independent root deletion. Invokes and Nova gate receive owner abort signal. Production runtime is registered before start, start is inside try/finally, and stop is idempotently owned. after hook cancels, starts runtime shutdown, joins observed test body and stops, awaits genuine observed child close, then removes files. Disposal timeout or shutdown rejection retains root and fails explicitly."
+    }
+  ],
+  "reviewChecks": [
+    "All eight files and available before-v2 hashes verified against supplied manifest.",
+    "All seven semantic control source hashes match current integrated production, with exactly one occurrence of each old anchor.",
+    "Transparent spawn observation delegates original arguments/options and returns original ChildProcess; no mocked command result, abort, process signal, or close event. syncBuiltinESMExports makes imported spawn bindings observe the same delegate.",
+    "Body rejection has an immediate observer while original body promise still propagates to node:test; initial concurrent shutdown uses allSettled to observe rejection during body join. Promise.race observes both disposal branches; timeout branch cannot subsequently delete retained files because deletion is outside the raced cleanup coroutine.",
+    "No runtime registration can follow cancellation because owner.runtime throws when aborted; joined body and runtime stops precede final child snapshot wait.",
+    "Original 15000/60000 test, 1000 readiness, 20000 attempt and 30000 gate deadlines retained. New 10000 disposal deadline does not convert a failed test into a pass.",
+    "V1 behavior oracles and complete two-profile, denied route/grant and 14 capture case scope are retained. Original production classes, discovery, factory and forwarding are used unchanged.",
+    "Package and architecture rebase preserves RuntimeSecurity content; modeled preparation and local CLI/API boundaries remain disclosed."
+  ],
+  "limitations": [
+    "Source integration approval only. No positive or mutation run is claimed.",
+    "Run canonical affected checks, all maintained/original scopes and semantic controls at bound integrated hashes; independently inspect raw assertion causes and retained-file failures.",
+    "The observer covers actual exported spawn calls; synchronous setup subprocesses already settle before return, and production executors continue owning their own cancellation/disposal. This is a test lifetime guard, not proof of all production process ownership.",
+    "Full CONFIG, original issue closure and live/native acceptance remain separate and open."
+  ],
+  "boundFiles": [
+    {
+      "path": "docs/architecture/buster-cluster-configuration.md",
+      "beforeSha256": "0f7707aa744d175433d9fdcae6ea558f9f86eb0e18b56f31f30b5de5ecd8cf48",
+      "afterSha256": "d31e4fdd6d65dd9bd988373ce7d3ec52b977d78b297884e6a4b518c5476d1201"
+    },
+    {
+      "path": "package.json",
+      "beforeSha256": "c74f7d27125a467724456d795cebb99a1f7b3b199fc663847b765c7af388d568",
+      "afterSha256": "f8196926199327a52aea2dd050a870f9d9952182989dd00099ec19b01f23baf0"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-api.mjs",
+      "beforeSha256": null,
+      "afterSha256": "d40e348ef9372cc013391e27f4f4be20c636116fe1b6fc0fc9af83e15fa3c7f0"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command-program.cjs",
+      "beforeSha256": null,
+      "afterSha256": "499dc5c951bb3fdc956205b2bd19271313abc446363da99fa1611ebf50e0c0b1"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-route-provider.mjs",
+      "beforeSha256": null,
+      "afterSha256": "4a6d0c1cc263bb964a25c4a0a5fe2a8c8e940aa127990b5be4369d67c65b1888"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-test-ownership.mjs",
+      "beforeSha256": null,
+      "afterSha256": "021f3cf0f542c3de92befa39195c552ec2dad62e49fd2deb4cc4ec3287ac256d"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-capture.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "19d95134df0a4509c4a1a655050945de9731c950cbc1120fca2bbfa105c54b48"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "1210ffe9c2680b584b01778643a959386d9e0d80f1cf14a79d90a39199637c4c"
+    }
+  ]
+}

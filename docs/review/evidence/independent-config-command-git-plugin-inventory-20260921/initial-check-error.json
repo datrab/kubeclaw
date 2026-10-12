@@ -1,0 +1,6 @@
+{
+  "error": "FileNotFoundError",
+  "cause": "Reviewer initially assumed all v2 snapshots were copied; manifest says unchanged rows retain original snapshots.",
+  "path": "sources-v2/skills/common/plugins/command-runner/plugin.json",
+  "productionIssue": false
+}

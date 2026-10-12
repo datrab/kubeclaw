@@ -1,0 +1,345 @@
+[
+  {
+    "name": "real-tool-effects",
+    "command": [
+      "node",
+      "docs/review/evidence/config-buster-readiness-20260921/review-runner/tool-effects.mjs"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "planned-1",
+    "command": [
+      "npm",
+      "run",
+      "verify:buster:readiness-config"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "planned-2",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/verification/reliability/buster-admission-cli.test.mjs",
+      "tests/verification/deployment/buster-admission-render.test.mjs"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "planned-3",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "planned-4",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "planned-5",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "planned-6",
+    "command": [
+      "node",
+      "tests/verification/deployment/check-deployment-truth.mjs"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "planned-7",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/deployment/config-component-packaging.test.mjs"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-check-pipeline-container-build-production",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-container-build-production.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-check-pipeline-e2e-remote-vertical",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-check-pipeline-lighthouse-remote-vertical",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-check-pipeline-phase10-vertical",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-phase10-vertical.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-check-pipeline-phase8-vertical",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-phase8-vertical.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-check-pipeline-phase9-vertical",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-check-pipeline-remote-real-provider",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-check-pipeline-security-remote-vertical",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-security-remote-vertical.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-check-pipeline-size-budget-production",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-size-budget-production.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-check-pipeline-visual-remote-vertical",
+    "command": [
+      "node",
+      "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-buster-job-compaction.test",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-job-compaction.test.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-buster-shutdown-storage.test",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-coverage-remote.test",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/coverage-remote.test.mts"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "original-nova-dispatch-projection.test",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/nova-dispatch-projection.test.mjs"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "types-1",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.buster-readiness.json"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "types-2",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "types-3",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/buster/engine/tsconfig.json"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "canonical-lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/buster/engine/test-gates/production-config-values.ts",
+      "skills/buster/engine/test-gates/production.ts",
+      "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "tests/fixtures/test-gate/buster-admission.mts",
+      "tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "tests/fixtures/test-gate/buster-readiness-profile.mts",
+      "tests/verification/contracts/check-pipeline-container-build-production.mts",
+      "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+      "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "tests/verification/deployment/buster-readiness-config.test.mjs",
+      "tests/verification/deployment/buster-readiness.test.mts",
+      "tests/verification/reliability/buster-job-compaction.test.mts",
+      "tests/verification/reliability/buster-readiness-config.test.mts",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "tests/verification/reliability/coverage-remote.test.mts",
+      "tests/verification/reliability/nova-dispatch-projection.test.mjs"
+    ],
+    "env": {},
+    "mutation": false
+  },
+  {
+    "name": "mutant-restore-policy-default",
+    "command": [
+      "node",
+      "--import",
+      "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "--test",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "env": {
+      "BUSTER_READINESS_MUTATION": "restore-policy-default"
+    },
+    "mutation": true
+  },
+  {
+    "name": "mutant-restore-field-defaults",
+    "command": [
+      "node",
+      "--import",
+      "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "--test",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "env": {
+      "BUSTER_READINESS_MUTATION": "restore-field-defaults"
+    },
+    "mutation": true
+  },
+  {
+    "name": "mutant-ignore-execution",
+    "command": [
+      "node",
+      "--import",
+      "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "--test",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "env": {
+      "BUSTER_READINESS_MUTATION": "ignore-execution"
+    },
+    "mutation": true
+  },
+  {
+    "name": "mutant-ignore-output",
+    "command": [
+      "node",
+      "--import",
+      "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "--test",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "env": {
+      "BUSTER_READINESS_MUTATION": "ignore-output"
+    },
+    "mutation": true
+  }
+]

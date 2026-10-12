@@ -1,0 +1,50 @@
+[
+  {
+    "mutation": "override",
+    "command": [
+      "node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-studio-20260921/mutation-hook.mjs",
+      "--test",
+      "skills/prism/tests/studio-config.test.mts"
+    ],
+    "exitCode": 1,
+    "semanticAssertionFailure": true
+  },
+  {
+    "mutation": "port",
+    "command": [
+      "node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-studio-20260921/mutation-hook.mjs",
+      "--test",
+      "skills/prism/tests/studio-config.test.mts"
+    ],
+    "exitCode": 1,
+    "semanticAssertionFailure": true
+  },
+  {
+    "mutation": "timeout",
+    "command": [
+      "node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-studio-20260921/mutation-hook.mjs",
+      "--test",
+      "skills/prism/tests/studio-config.test.mts"
+    ],
+    "exitCode": 1,
+    "semanticAssertionFailure": true
+  },
+  {
+    "mutation": "upstream",
+    "command": [
+      "node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-studio-20260921/mutation-hook.mjs",
+      "--test",
+      "skills/prism/tests/studio-config.test.mts"
+    ],
+    "exitCode": 1,
+    "semanticAssertionFailure": true
+  }
+]

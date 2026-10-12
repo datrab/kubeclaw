@@ -1,0 +1,15 @@
+✖ CB03 original Node body deadline sends 408 without shortening its checking interval (45064.135517ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 0
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 45514.31135
+
+✖ failing tests:
+
+test at ../../../../../tmp/config-review-mutant-dhvjo98t/behavior.test.mts:83:1
+✖ CB03 original Node body deadline sends 408 without shortening its checking interval (45064.135517ms)
+  'test timed out after 45000ms'

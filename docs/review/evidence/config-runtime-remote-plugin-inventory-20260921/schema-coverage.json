@@ -1,0 +1,644 @@
+{
+  "scope": "All four registration schemas including map containers, target properties and nested/conditional constraints",
+  "fieldPatterns": 42,
+  "registrations": [
+    {
+      "plugin": "skills/common/plugins/runtime-dispatch",
+      "registration": "runtime",
+      "schema": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "fields": [
+        {
+          "path": "targets",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "endpoint"
+              ],
+              "properties": {
+                "endpoint": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "authentication": {
+                  "enum": [
+                    "hmac",
+                    "spiffe-proxy"
+                  ],
+                  "default": "hmac"
+                },
+                "tokenSecret": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "maxRequestBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8388608,
+                  "default": 1048576
+                },
+                "maxResponseBytes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8388608,
+                  "default": 1048576
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "authentication": {
+                        "const": "spiffe-proxy"
+                      }
+                    },
+                    "required": [
+                      "authentication"
+                    ]
+                  },
+                  "then": {
+                    "properties": {
+                      "endpoint": {
+                        "type": "string",
+                        "pattern": "^http://(127\\.0\\.0\\.1|localhost|\\[::1\\]):"
+                      }
+                    },
+                    "not": {
+                      "properties": {
+                        "tokenSecret": {}
+                      },
+                      "required": [
+                        "tokenSecret"
+                      ]
+                    }
+                  },
+                  "else": {
+                    "properties": {
+                      "tokenSecret": {}
+                    },
+                    "required": [
+                      "tokenSecret"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "path": "targets.*.endpoint",
+          "requiredInTarget": true,
+          "schema": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        {
+          "path": "targets.*.authentication",
+          "requiredInTarget": false,
+          "schema": {
+            "enum": [
+              "hmac",
+              "spiffe-proxy"
+            ],
+            "default": "hmac"
+          }
+        },
+        {
+          "path": "targets.*.tokenSecret",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "targets.*.maxRequestBytes",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8388608,
+            "default": 1048576
+          }
+        },
+        {
+          "path": "targets.*.maxResponseBytes",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8388608,
+            "default": 1048576
+          }
+        }
+      ],
+      "conditionalConstraints": []
+    },
+    {
+      "plugin": "skills/common/plugins/runtime-dispatch",
+      "registration": "openclaw",
+      "schema": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "fields": [
+        {
+          "path": "targets",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "endpoint",
+                "tokenSecret",
+                "runtime",
+                "model",
+                "cwd",
+                "repositoryRoot",
+                "resultPathPrefix"
+              ],
+              "properties": {
+                "endpoint": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "tokenSecret": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "runtime": {
+                  "enum": [
+                    "acp",
+                    "subagent"
+                  ]
+                },
+                "agentId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "agentRole": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "model": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "thinking": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "controllerSessionKey": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 512
+                },
+                "collectorMode": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "spawnIntervalMs": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 60000,
+                  "default": 1500
+                },
+                "tokenizerEncoding": {
+                  "const": "o200k_base",
+                  "default": "o200k_base"
+                },
+                "maxPromptBytes": {
+                  "const": 900000,
+                  "default": 900000
+                },
+                "maxInputTokens": {
+                  "const": 120000,
+                  "default": 120000
+                },
+                "maxOutputTokens": {
+                  "const": 6000,
+                  "default": 6000
+                },
+                "maxContextTokens": {
+                  "const": 128000,
+                  "default": 128000
+                },
+                "cwd": {
+                  "type": "string",
+                  "pattern": "^/"
+                },
+                "repositoryRoot": {
+                  "type": "string",
+                  "pattern": "^/"
+                },
+                "workspaceRoot": {
+                  "type": "string",
+                  "pattern": "^/",
+                  "description": "Trusted Git workspace root required for attempt-owned runtime workspaces."
+                },
+                "pollMs": {
+                  "type": "integer",
+                  "minimum": 10,
+                  "default": 1000
+                },
+                "maxPollMs": {
+                  "type": "integer",
+                  "minimum": 10,
+                  "default": 15000
+                },
+                "maxPolls": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 1800
+                },
+                "sessionTimeoutMs": {
+                  "type": "integer",
+                  "minimum": 10,
+                  "maximum": 86400000,
+                  "default": 1800000
+                },
+                "resultPathPrefix": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+                },
+                "resultEndpoint": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "resultTokenSecret": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "dependentRequired": {
+                "resultEndpoint": [
+                  "resultTokenSecret"
+                ],
+                "resultTokenSecret": [
+                  "resultEndpoint"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "path": "targets.*.endpoint",
+          "requiredInTarget": true,
+          "schema": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        {
+          "path": "targets.*.tokenSecret",
+          "requiredInTarget": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "targets.*.runtime",
+          "requiredInTarget": true,
+          "schema": {
+            "enum": [
+              "acp",
+              "subagent"
+            ]
+          }
+        },
+        {
+          "path": "targets.*.agentId",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "targets.*.agentRole",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "targets.*.model",
+          "requiredInTarget": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "targets.*.thinking",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "targets.*.controllerSessionKey",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        },
+        {
+          "path": "targets.*.collectorMode",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        {
+          "path": "targets.*.spawnIntervalMs",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 60000,
+            "default": 1500
+          }
+        },
+        {
+          "path": "targets.*.tokenizerEncoding",
+          "requiredInTarget": false,
+          "schema": {
+            "const": "o200k_base",
+            "default": "o200k_base"
+          }
+        },
+        {
+          "path": "targets.*.maxPromptBytes",
+          "requiredInTarget": false,
+          "schema": {
+            "const": 900000,
+            "default": 900000
+          }
+        },
+        {
+          "path": "targets.*.maxInputTokens",
+          "requiredInTarget": false,
+          "schema": {
+            "const": 120000,
+            "default": 120000
+          }
+        },
+        {
+          "path": "targets.*.maxOutputTokens",
+          "requiredInTarget": false,
+          "schema": {
+            "const": 6000,
+            "default": 6000
+          }
+        },
+        {
+          "path": "targets.*.maxContextTokens",
+          "requiredInTarget": false,
+          "schema": {
+            "const": 128000,
+            "default": 128000
+          }
+        },
+        {
+          "path": "targets.*.cwd",
+          "requiredInTarget": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^/"
+          }
+        },
+        {
+          "path": "targets.*.repositoryRoot",
+          "requiredInTarget": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^/"
+          }
+        },
+        {
+          "path": "targets.*.workspaceRoot",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "string",
+            "pattern": "^/",
+            "description": "Trusted Git workspace root required for attempt-owned runtime workspaces."
+          }
+        },
+        {
+          "path": "targets.*.pollMs",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 10,
+            "default": 1000
+          }
+        },
+        {
+          "path": "targets.*.maxPollMs",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 10,
+            "default": 15000
+          }
+        },
+        {
+          "path": "targets.*.maxPolls",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1800
+          }
+        },
+        {
+          "path": "targets.*.sessionTimeoutMs",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 86400000,
+            "default": 1800000
+          }
+        },
+        {
+          "path": "targets.*.resultPathPrefix",
+          "requiredInTarget": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+          }
+        },
+        {
+          "path": "targets.*.resultEndpoint",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        {
+          "path": "targets.*.resultTokenSecret",
+          "requiredInTarget": false,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      ],
+      "conditionalConstraints": []
+    },
+    {
+      "plugin": "skills/nova/plugins/remote-test-gate",
+      "registration": "plan",
+      "schema": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
+      "fields": [
+        {
+          "path": "endpoint",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https?://"
+          }
+        },
+        {
+          "path": "authentication",
+          "required": true,
+          "schema": {
+            "enum": [
+              "bearer",
+              "spiffe-proxy"
+            ]
+          }
+        },
+        {
+          "path": "tokenSecret",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "sourcePrivateKeySecret",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "sourceAuthority",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "stateRoot",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "allowedRepositoryRoots",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ],
+      "conditionalConstraints": [
+        {
+          "if": {
+            "properties": {
+              "authentication": {
+                "const": "bearer"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "tokenSecret": {}
+            },
+            "required": [
+              "tokenSecret"
+            ]
+          },
+          "else": {
+            "properties": {
+              "endpoint": {
+                "type": "string",
+                "pattern": "^http://(127\\.0\\.0\\.1|localhost|\\[::1\\]):"
+              }
+            },
+            "not": {
+              "properties": {
+                "tokenSecret": {}
+              },
+              "required": [
+                "tokenSecret"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "plugin": "skills/nova/plugins/remote-test-gate",
+      "registration": "evidence",
+      "schema": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json",
+      "fields": [
+        {
+          "path": "stateRoot",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "manifestStageId",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "path": "gateStageId",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      ],
+      "conditionalConstraints": []
+    }
+  ]
+}

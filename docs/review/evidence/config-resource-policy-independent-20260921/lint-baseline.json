@@ -1,0 +1,47 @@
+[
+  {
+    "file": "skills/prism/integration/worker-concurrent-resource-attribution.mts",
+    "messages": [
+      {
+        "ruleId": "max-lines-per-function",
+        "severity": 2,
+        "message": "Async arrow function has too many lines (68). Maximum allowed is 60.",
+        "line": 24,
+        "column": 114,
+        "messageId": "exceed",
+        "endLine": 24,
+        "endColumn": 116
+      }
+    ]
+  },
+  {
+    "file": "skills/prism/tests/worker-http-cancellation.native.mts",
+    "messages": [
+      {
+        "ruleId": "discipline/filename-case",
+        "severity": 2,
+        "message": "Use a lowercase kebab-case filename.",
+        "line": 1,
+        "column": 1,
+        "messageId": "invalid",
+        "endLine": 119,
+        "endColumn": 1
+      }
+    ]
+  },
+  {
+    "file": "skills/prism/tests/worker-process-shutdown.native.mts",
+    "messages": [
+      {
+        "ruleId": "discipline/filename-case",
+        "severity": 2,
+        "message": "Use a lowercase kebab-case filename.",
+        "line": 1,
+        "column": 1,
+        "messageId": "invalid",
+        "endLine": 137,
+        "endColumn": 1
+      }
+    ]
+  }
+]

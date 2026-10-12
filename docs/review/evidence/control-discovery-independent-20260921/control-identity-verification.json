@@ -1,0 +1,140 @@
+[
+  {
+    "source": "charts/kubeclaw/files/config/swarm.config.json",
+    "sha256": "d25e065ab4f7bd2c1f79f5cac7a387ecb0fd7380030e4da88332d33e06da451c",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "sha256": "b67022f23315e203895aaa15c4963848918f51c33f831598834de8ac11a22ba5",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "40ea5718592029ca8b40b2d0b78a17c1ca579d02ff0d0c554d1359f2222ff0c8",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/prism/server/control-config.ts",
+    "sha256": "6e8747682057019b7dbe3350fcd3d9fe921a050dd6c90910b8d799e151dfb3b7",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "charts/prism/values.yaml",
+    "sha256": "169e3416ba511dd3743850358ac0d6caf6a957318568af316f242355c32722b7",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "charts/prism/values.schema.json",
+    "sha256": "116be07db791452f8ab6333fa0a9d5f76c8ed540e24c39c5f8dd76c9bec9b4e5",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "charts/prism/templates/_swarm-config.tpl",
+    "sha256": "1b35a24d29982ec5546edf118c24b55e9b6ff0a2bb56dd05dec50c2889c840ed",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "charts/prism/templates/workloads.yaml",
+    "sha256": "76fef3e614228e00669e7c923f06a9f0e5d0a311dfe0a9400019e1bd933f6db7",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/prism/tests/fixtures/control-policy.mts",
+    "sha256": "2f34288687f06986f9a119a9ea099d673078deb9ee2e294a3f32d66d5b5fa642",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/prism/tests/swarm-control-policy.test.mts",
+    "sha256": "0176a786730f0a46c0ff5e309a4b302c2897ea58b201cd766131199f4f523322",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/prism/tests/control-server-config.test.mts",
+    "sha256": "1d4b7d3b2dfbae9f4697e13209d3dd1c4e447f345aeeb3668d9775e1f3e25140",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/prism/tests/pipeline-preference-subject.test.mts",
+    "sha256": "49479739fe2cf28c1327aa84987b0699c320cd186f4a587875e055c5e7a61193",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/prism/tests/control-product-composition.test.mts",
+    "sha256": "047c1d78f847c0fc012cfb40a73008b826858845ccd766fbe8648b986ee71ee4",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/prism/tests/control-generation-http.test.mts",
+    "sha256": "ba17d64ab0e08931963b7dbc5f68ba7d6a2d29ea5142cf2fadc7749d2b9d7f32",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "sha256": "041c5f1a73079c3f1fc76f746e2d1123e57b2cc3e9c9d4491be77e944935f9d4",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "docs/operations/operator-configuration.md",
+    "sha256": "bee5d41a79a8ffef315c109e2fa2beb46765af78c6c4197570cf846fdec8d082",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "sha256": "741a4355b966c735cb4be0d5764a7d94b48ca9fed7993fd187d9cf2e4a0a3011",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "sha256": "b5530200ba457c866103976747b56d0a751abe08998541f0b741f9c142b7ed35",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/prism/server/control-server.ts",
+    "sha256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/prism/server/control.ts",
+    "sha256": "b99be63fc90f0096a6acfef54c26c86b247ae7b1ad85066df064abca60600cd3",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/prism/storage/artifacts.ts",
+    "sha256": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "skills/prism/control/pipeline-preference-subject.ts",
+    "sha256": "ded8597750c0e6fb3de823cceb31ecbbff7ece03143f4cdd30037ceff0a77eb3",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  },
+  {
+    "source": "charts/prism/templates/services.yaml",
+    "sha256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b",
+    "authorHashMatches": true,
+    "snapshotMatches": true
+  }
+]

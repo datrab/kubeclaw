@@ -1,0 +1,101 @@
+{
+  "authorManifestChecks": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "tests/verification/reliability/attempt-closure-projection.test.mjs",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "tests/verification/reliability/observability-replay.test.mjs",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "tests/verification/reliability/attempt-store-input-ownership.test.mjs",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "tests/verification/contracts/check-junit-executed-required.mts",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "docs/review/remediation/implementation/attempt-store-quality-20260921.md",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    },
+    {
+      "path": "docs/operations/observability-retention.md",
+      "currentMatchesAuthorHash": true,
+      "snapshotMatchesAuthorHash": true
+    }
+  ],
+  "originalTestPreservation": [
+    {
+      "path": "tests/verification/reliability/admission-retirement.test.mjs",
+      "byteIdenticalToPriorAcceptedSnapshot": true
+    },
+    {
+      "path": "tests/verification/reliability/attempt-projection-review.test.mjs",
+      "byteIdenticalToPriorAcceptedSnapshot": true
+    },
+    {
+      "path": "tests/verification/reliability/attempt-closure-projection.test.mjs",
+      "byteIdenticalToPriorAcceptedSnapshot": true
+    },
+    {
+      "path": "tests/verification/reliability/observability-replay.test.mjs",
+      "byteIdenticalToHEAD": true
+    },
+    {
+      "path": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "byteIdenticalToHEAD": true
+    }
+  ]
+}

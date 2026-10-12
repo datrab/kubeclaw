@@ -44,12 +44,14 @@ def verify(namespace, paths):
         raise RuntimeError('No Cilium agents found')
     for agent in agents:
         endpoints = json.loads(run('kubectl', '-n', 'cilium', 'exec', agent['metadata']['name'], '-c', 'cilium-agent', '--', 'cilium-dbg', 'endpoint', 'list', '-o', 'json'))
+        if not isinstance(endpoints, list) or not endpoints:
+            raise RuntimeError('Missing Cilium endpoint observations')
         for ep in endpoints:
             status = ep.get('status', {})
             policy = status.get('policy', {})
-            desired = policy['spec'].get('policy-revision', 0) if 'spec' in policy else None
-            realized = policy['realized'].get('policy-revision', 0) if 'realized' in policy else None
-            if status.get('state') != 'ready' or desired is None or realized != desired:
+            desired = policy['spec'].get('policy-revision') if 'spec' in policy else None
+            realized = policy['realized'].get('policy-revision') if 'realized' in policy else None
+            if status.get('state') != 'ready' or type(desired) is not int or desired < 0 or type(realized) is not int or realized != desired:
                 raise RuntimeError(f"Endpoint not ready/realized on {agent['metadata']['name']}: {ep.get('id')}")
     print('Desired policy specs match and current agent endpoints are ready at their desired revisions.')
     print('This does not replace unmanaged-pod checks, negative probes or the pipeline test.')

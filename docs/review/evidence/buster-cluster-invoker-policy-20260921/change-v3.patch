@@ -1,0 +1,2847 @@
+--- a/charts/kubeclaw/files/config/buster-engine.config.json
++++ b/charts/kubeclaw/files/config/buster-engine.config.json
+@@ -103,6 +103,55 @@
+         "terminationGraceMs": 250,
+         "acknowledgementPollMs": 10
+       }
++    },
++    "clusterInvokers": {
++      "shared": {
++        "kubectlExecutable": "/usr/local/bin/kubectl",
++        "leaseApiGroup": "kubeclaw.forgestack.ai",
++        "leaseApiVersion": "v1alpha1"
++      },
++      "kubernetesFixture": {
++        "allowedNamespacePrefixes": [
++          "test"
++        ],
++        "registryRepositoryPrefixes": [
++          "kubeclaw"
++        ],
++        "allowedSecretReferences": [],
++        "allowedStorageClasses": [],
++        "allowDefaultStorageClass": true,
++        "runnerServiceAccount": "agent-buster",
++        "credentialReaderServiceAccount": "agent-nova",
++        "maximumManifestBytes": 1048576,
++        "maximumResources": 64,
++        "maximumPersistentVolumeClaimBytes": 10737418240,
++        "maximumPersistentVolumeTotalBytes": 21474836480,
++        "maximumRetentionSeconds": 604800,
++        "maximumExecutionMs": 900000,
++        "pollIntervalMs": 1000,
++        "shortCommandTimeoutMs": 15000,
++        "commandOutputManifestMultiplier": 2,
++        "diagnosticCodeUnits": 4096,
++        "manifest": {
++          "maximumNodes": 100000,
++          "maximumDepth": 64,
++          "maximumAliases": 1000,
++          "maximumFlattenVisits": 100000,
++          "maximumFlattenPending": 100000
++        }
++      },
++      "tailscaleExposure": {
++        "allowedNamespacePrefixes": [
++          "test"
++        ],
++        "allowedHostSuffixes": [
++          ".ts.net"
++        ],
++        "maximumExecutionMs": 900000,
++        "pollIntervalMs": 1000,
++        "shortCommandTimeoutMs": 15000,
++        "maximumCommandOutputBytes": 1048576
++      }
+     }
+   }
+ }
+--- a/charts/kubeclaw/files/config/eslint-config.mjs
++++ b/charts/kubeclaw/files/config/eslint-config.mjs
+@@ -34,6 +34,8 @@
+ ];
+ 
+ const ENVIRONMENT_BOUNDARIES = [
++  // Read-only startup preflight validates and pins the selected component generation before effects.
++  'scripts/buster-cluster-preflight.mjs',
+   // Kubernetes command adapters forward the platform's existing transport environment.
+   'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts',
+   'skills/buster/engine/test-gates/tailscale-exposure-runtime.ts',
+--- /dev/null
++++ b/charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json
+@@ -0,0 +1,163 @@
++{
++  "schemaVersion": "swarm-component.v1",
++  "owner": "buster-engine",
++  "settings": {
++    "preparation": {
++      "resourcePolicy": {
++        "cpuTimeMs": 120000,
++        "memoryBytes": 8589934592,
++        "tasks": 64
++      },
++      "timeoutMs": 300000,
++      "cleanupTimeoutMs": 10000,
++      "maximumActivePreparations": 2,
++      "maximumPendingAdmissions": 16,
++      "maximumRequestBytes": 100663296,
++      "maximumArchiveBytes": 67108864,
++      "maximumExtractedBytes": 536870912,
++      "maximumHeaderBytes": 3145728,
++      "maximumSourceBytes": 1073741824,
++      "maximumMetadataBytes": 67108864,
++      "maximumRecords": 10000,
++      "maximumOwnershipBytes": 16777216,
++      "maximumJournalBytes": 268435456,
++      "maximumInputBytes": 65536,
++      "maximumOutputBytes": 8388608,
++      "maximumResultBytes": 4194304,
++      "pollIntervalMs": 25,
++      "drainTimeoutMs": 5000,
++      "closeTimeoutMs": 10000,
++      "tarTimeoutMs": 120000,
++      "maximumArchiveEntries": 200000,
++      "maximumListingLineBytes": 1048576,
++      "maximumTarStderrBytes": 65536,
++      "maximumSourceEntries": 400014,
++      "sourceEntryReservationBytes": 256,
++      "maximumOpenFiles": 64
++    },
++    "admission": {
++      "maximumActiveJobs": 2,
++      "maximumQueuedJobs": 8,
++      "maximumConcurrentAttempts": 64
++    },
++    "dependencyReadiness": {
++      "maximumExecutionMs": 1000,
++      "maximumOutputBytes": 65536
++    },
++    "execution": {
++      "provider": {
++        "cleanupTimeoutMs": 30000,
++        "maximumResultBytes": 16777216,
++        "claimGraceMs": 60000,
++        "queueTimeoutMs": 60000,
++        "workerResultWrapperBytes": 4096,
++        "maximumProtocolBytes": 16777216,
++        "terminationGraceMs": 500,
++        "terminationTimeoutMs": 1000,
++        "capabilityDrainTimeoutMs": 1000,
++        "minimumHeapMiB": 16,
++        "heapFraction": 0.7,
++        "maximumPendingCapabilities": 32,
++        "minimumOpenFiles": 64,
++        "artifactFileDescriptorReserve": 32
++      },
++      "reports": {
++        "maximumAggregateResultBytes": 16777216,
++        "maximumSourceBytes": 67108864,
++        "maximumCases": 5000,
++        "maximumFindings": 5000,
++        "maximumCaseFindings": 100,
++        "maximumTimeoutMs": 300000,
++        "memoryBytes": 536870912,
++        "minimumCpuTimeMs": 1000,
++        "maximumOpenFiles": 64,
++        "minimumOpenFiles": 16,
++        "minimumHeapMiB": 16,
++        "heapFraction": 0.7,
++        "runtimeMemoryReserveBytes": 67108864
++      },
++      "observation": {
++        "resourceSampleIntervalMs": 10,
++        "processSampleIntervalMs": 50
++      },
++      "stores": {
++        "attempts": {
++          "maximumEvidenceObjects": 10000,
++          "maximumEvidenceBytes": 10737418240,
++          "maximumEvidenceObjectBytes": 1073741824,
++          "maximumResults": 10000,
++          "maximumClosures": 10000,
++          "maximumMetadataBytes": 268435456,
++          "maximumPendingEvidenceAgeMs": 3600000
++        },
++        "admission": {
++          "maximumIngressBytes": 16777216,
++          "maximumRecords": 10000,
++          "maximumBytes": 268435456,
++          "maximumQuarantineRecords": 1000,
++          "maximumQuarantineBytes": 67108864
++        }
++      },
++      "processInput": {
++        "cleanupTimeoutMs": 1500,
++        "terminationGraceMs": 250,
++        "acknowledgementPollMs": 10
++      }
++    },
++    "clusterInvokers": {
++      "shared": {
++        "kubectlExecutable": "/usr/local/bin/kubectl",
++        "leaseApiGroup": "kubeclaw.forgestack.ai",
++        "leaseApiVersion": "v1alpha1"
++      },
++      "kubernetesFixture": {
++        "allowedNamespacePrefixes": [
++          "test"
++        ],
++        "registryRepositoryPrefixes": [
++          "kubeclaw"
++        ],
++        "allowedSecretReferences": [
++          "kubeclaw-fixture-preflight",
++          "prism-test-provider",
++          "prism-test-runtime",
++          "prism-test-postgresql-auth",
++          "prism-test-ghcr"
++        ],
++        "allowedStorageClasses": [],
++        "allowDefaultStorageClass": true,
++        "runnerServiceAccount": "agent-buster",
++        "credentialReaderServiceAccount": "agent-nova",
++        "maximumManifestBytes": 1048576,
++        "maximumResources": 64,
++        "maximumPersistentVolumeClaimBytes": 10737418240,
++        "maximumPersistentVolumeTotalBytes": 21474836480,
++        "maximumRetentionSeconds": 604800,
++        "maximumExecutionMs": 900000,
++        "pollIntervalMs": 1000,
++        "shortCommandTimeoutMs": 15000,
++        "commandOutputManifestMultiplier": 2,
++        "diagnosticCodeUnits": 4096,
++        "manifest": {
++          "maximumNodes": 100000,
++          "maximumDepth": 64,
++          "maximumAliases": 1000,
++          "maximumFlattenVisits": 100000,
++          "maximumFlattenPending": 100000
++        }
++      },
++      "tailscaleExposure": {
++        "allowedNamespacePrefixes": [
++          "test"
++        ],
++        "allowedHostSuffixes": [
++          ".ts.net"
++        ],
++        "maximumExecutionMs": 900000,
++        "pollIntervalMs": 1000,
++        "shortCommandTimeoutMs": 15000,
++        "maximumCommandOutputBytes": 1048576
++      }
++    }
++  }
++}
+--- a/charts/kubeclaw/templates/_buster-native.tpl
++++ b/charts/kubeclaw/templates/_buster-native.tpl
+@@ -8,7 +8,7 @@
+ {{- if not (regexMatch "@sha256:[a-f0-9]{64}$" $container.image) -}}{{- fail "native Buster requires its existing release image pinned by digest" -}}{{- end -}}
+ {{- $env := $container.env | default list -}}
+ {{- range $entry := $env -}}
+-{{- if has $entry.name (list "BUSTER_NATIVE_POOL_POLICY_FILE" "BUSTER_ENGINE_CONTENT_DIGEST" "SWARM_CONFIG" "BUSTER_V2_MAX_ARCHIVE_BYTES" "BUSTER_V2_MAX_EXTRACTED_BYTES" "BUSTER_V2_MAX_REQUEST_BYTES" "BUSTER_V2_MAX_ACTIVE_JOBS" "BUSTER_V2_MAX_QUEUED_JOBS" "BUSTER_V2_MAX_CONCURRENT_ATTEMPTS") -}}
++{{- if has $entry.name (list "BUSTER_NATIVE_POOL_POLICY_FILE" "BUSTER_ENGINE_CONTENT_DIGEST" "SWARM_CONFIG" "BUSTER_V2_MAX_ARCHIVE_BYTES" "BUSTER_V2_MAX_EXTRACTED_BYTES" "BUSTER_V2_MAX_REQUEST_BYTES" "BUSTER_V2_MAX_ACTIVE_JOBS" "BUSTER_V2_MAX_QUEUED_JOBS" "BUSTER_V2_MAX_CONCURRENT_ATTEMPTS" "BUSTER_LEASE_API_GROUP" "BUSTER_LEASE_API_VERSION" "BUSTER_ALLOWED_SOURCE_SECRETS") -}}
+ {{- fail (printf "%s duplicates the native Buster startup author" $entry.name) -}}
+ {{- end -}}
+ {{- end -}}
+--- a/charts/kubeclaw/templates/_swarm-config.tpl
++++ b/charts/kubeclaw/templates/_swarm-config.tpl
+@@ -1,4 +1,4 @@
+-{{/* One fixed component bundle; no alternate authored settings. */}}
++{{/* One selected complete Buster owner document; no keywise settings merges. */}}
+ {{- define "kubeclaw.swarmConfig" -}}
+ {{- $raw := required "canonical swarm.config.json is required" (.Files.Get "files/config/swarm.config.json") -}}
+ {{- $config := mustFromJson $raw -}}
+@@ -23,7 +23,9 @@
+ {{- range $owner := $owners -}}
+ {{- $name := printf "%s.config.json" $owner -}}
+ {{- if ne (index $config.components $owner) $name -}}{{- fail (printf "swarm component reference invalid: %s" $owner) -}}{{- end -}}
+-{{- $component := mustFromJson (required (printf "swarm component missing: %s" $owner) ($.Files.Get (printf "files/config/%s" $name))) -}}
++{{- $componentRaw := $.Files.Get (printf "files/config/%s" $name) -}}
++{{- if eq $owner "buster-engine" -}}{{- $componentRaw = include "kubeclaw.busterComponentRaw" $ -}}{{- end -}}
++{{- $component := mustFromJson (required (printf "swarm component missing: %s" $owner) $componentRaw) -}}
+ {{- if not (kindIs "map" $component) -}}{{- fail "swarm component must be an object" -}}{{- end -}}
+ {{- if or (ne (len $component) 3) (ne $component.schemaVersion "swarm-component.v1") (ne $component.owner $owner) (not (hasKey $component "settings")) -}}{{- fail (printf "swarm component identity invalid: %s" $owner) -}}{{- end -}}
+ {{- $label := index (dict "prism-control" "control" "prism-worker" "worker" "prism-studio" "studio" "prism-execution" "native" "buster-engine" "buster" "worker-core" "worker-core") $owner -}}
+@@ -59,7 +61,13 @@
+ {{- if hasKey $config.operator "buster" -}}
+ {{- $buster := $config.operator.buster -}}
+ {{- if not (kindIs "map" $buster) -}}{{- fail "swarm buster must be an object" -}}{{- end -}}
+-{{- if or (ne (len $buster) 4) (not (hasKey $buster "preparation")) (not (hasKey $buster "admission")) (not (hasKey $buster "dependencyReadiness")) (not (hasKey $buster "execution")) -}}{{- fail "swarm buster requires preparation, admission, dependencyReadiness and execution only" -}}{{- end -}}
++{{- if or (ne (len $buster) 5) (not (hasKey $buster "preparation")) (not (hasKey $buster "admission")) (not (hasKey $buster "dependencyReadiness")) (not (hasKey $buster "execution")) (not (hasKey $buster "clusterInvokers")) -}}{{- fail "swarm buster requires preparation, admission, dependencyReadiness, execution and clusterInvokers only" -}}{{- end -}}
++{{- $cluster := $buster.clusterInvokers -}}
++{{- include "kubeclaw.validateClusterPolicy" (dict "value" $cluster "schema" (index $definitions "buster-cluster-invokers") "name" "clusterInvokers") -}}
++{{- if or (gt $cluster.kubernetesFixture.maximumPersistentVolumeClaimBytes $cluster.kubernetesFixture.maximumPersistentVolumeTotalBytes) (gt $cluster.tailscaleExposure.pollIntervalMs $cluster.tailscaleExposure.maximumExecutionMs) (gt (mulf $cluster.kubernetesFixture.maximumManifestBytes $cluster.kubernetesFixture.commandOutputManifestMultiplier) (float64 9007199254740991)) -}}{{- fail "buster cluster policy coherence invalid" -}}{{- end -}}
++{{- range $suffix := $cluster.tailscaleExposure.allowedHostSuffixes -}}
++{{- if contains ".." $suffix -}}{{- fail "buster cluster host suffix invalid" -}}{{- end -}}
++{{- end -}}
+ {{- $execution := $buster.execution -}}
+ {{- if not (kindIs "map" $execution) -}}{{- fail "buster-engine.config.json execution must be an object" -}}{{- end -}}
+ {{- if ne (len $execution) 5 -}}{{- fail "buster execution requires provider, reports, observation, stores and processInput" -}}{{- end -}}
+@@ -218,7 +226,51 @@
+ {{- $bundle := dict -}}
+ {{- range $name := list "swarm" "prism-control" "prism-studio" "prism-worker" "prism-execution" "buster-engine" "worker-core" -}}
+ {{- $file := printf "%s.config.json" $name -}}
+-{{- $_ := set $bundle $file ($.Files.Get (printf "files/config/%s" $file)) -}}
++{{- $raw := $.Files.Get (printf "files/config/%s" $file) -}}
++{{- if eq $name "buster-engine" -}}{{- $raw = include "kubeclaw.busterComponentRaw" $ -}}{{- end -}}
++{{- $_ := set $bundle $file $raw -}}
+ {{- end -}}
+ {{- toJson $bundle -}}
+ {{- end -}}
++
++{{/* Validates only the explicit cluster policy schema vocabulary; no defaults. */}}
++{{- define "kubeclaw.validateClusterPolicy" -}}
++{{- $value := .value -}}{{- $schema := .schema -}}{{- $name := .name -}}
++{{- if eq $schema.type "object" -}}
++{{- if not (kindIs "map" $value) -}}{{- fail (printf "%s must be an object" $name) -}}{{- end -}}
++{{- if ne (len $value) (len $schema.required) -}}{{- fail (printf "%s requires exactly declared fields" $name) -}}{{- end -}}
++{{- range $key := $schema.required -}}
++{{- if not (hasKey $value $key) -}}{{- fail (printf "%s.%s required" $name $key) -}}{{- end -}}
++{{- include "kubeclaw.validateClusterPolicy" (dict "value" (index $value $key) "schema" (index $schema.properties $key) "name" (printf "%s.%s" $name $key)) -}}
++{{- end -}}
++{{- else if eq $schema.type "array" -}}
++{{- if not (kindIs "slice" $value) -}}{{- fail (printf "%s must be an array" $name) -}}{{- end -}}
++{{- if or (lt (len $value) (int $schema.minItems)) (gt (len $value) (int $schema.maxItems)) -}}{{- fail (printf "%s array bounds invalid" $name) -}}{{- end -}}
++{{- range $item := $value -}}{{- include "kubeclaw.validateClusterPolicy" (dict "value" $item "schema" $schema.items "name" $name) -}}{{- end -}}
++{{- else if eq $schema.type "string" -}}
++{{- if not (kindIs "string" $value) -}}{{- fail (printf "%s must be a string" $name) -}}{{- end -}}
++{{- if lt (len $value) (int $schema.minLength) -}}{{- fail (printf "%s cannot be empty" $name) -}}{{- end -}}
++{{- if and (hasKey $schema "maxLength") (gt (len $value) (int $schema.maxLength)) -}}{{- fail (printf "%s string too long" $name) -}}{{- end -}}
++{{- if and (hasKey $schema "pattern") (not (regexMatch $schema.pattern $value)) -}}{{- fail (printf "%s string invalid" $name) -}}{{- end -}}
++{{- else if eq $schema.type "boolean" -}}
++{{- if not (kindIs "bool" $value) -}}{{- fail (printf "%s must be boolean" $name) -}}{{- end -}}
++{{- else if eq $schema.type "integer" -}}
++{{- if not (kindIs "float64" $value) -}}{{- fail (printf "%s must be a number" $name) -}}{{- end -}}
++{{- if or (ne $value (floor $value)) (lt $value (float64 $schema.minimum)) (gt $value (float64 $schema.maximum)) -}}{{- fail (printf "%s integer bounds invalid" $name) -}}{{- end -}}
++{{- else -}}{{- fail "unsupported cluster policy schema type" -}}{{- end -}}
++{{- end -}}
++
++{{- define "kubeclaw.busterComponentRaw" -}}
++{{- if not (hasKey .Values "busterComponentFile") -}}{{- fail "busterComponentFile is required" -}}{{- end -}}
++{{- $file := .Values.busterComponentFile -}}
++{{- if not (kindIs "string" $file) -}}{{- fail "busterComponentFile must be a string" -}}{{- end -}}
++{{- if not (regexMatch "^files/config/(profiles/)?buster-engine([.][a-z0-9-]+)?[.]config[.]json$" $file) -}}{{- fail "busterComponentFile path invalid" -}}{{- end -}}
++{{- if hasKey .Values "busterNamespaceBroker" -}}
++{{- range $key := list "leaseApiGroup" "leaseApiVersion" -}}
++{{- if hasKey $.Values.busterNamespaceBroker $key -}}{{- fail (printf "retired busterNamespaceBroker.%s; use selected Buster component" $key) -}}{{- end -}}
++{{- end -}}{{- end -}}
++{{- $raw := required "selected Buster component file missing or empty" (.Files.Get $file) -}}
++{{- $component := mustFromJson $raw -}}
++{{- if or (ne $component.owner "buster-engine") (ne $component.schemaVersion "swarm-component.v1") -}}{{- fail "selected Buster component identity invalid" -}}{{- end -}}
++{{- $raw -}}
++{{- end -}}
+--- a/charts/kubeclaw/templates/buster-namespace-controller.yaml
++++ b/charts/kubeclaw/templates/buster-namespace-controller.yaml
+@@ -1,3 +1,4 @@
++{{- $clusterShared := (include "kubeclaw.swarmConfig" . | mustFromJson).operator.buster.clusterInvokers.shared -}}
+ {{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") -}}
+ ---
+ apiVersion: v1
+@@ -67,10 +68,10 @@
+     resources: ["tokenreviews"]
+     verbs: ["create"]
+   {{- end }}
+-  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
++  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
+     resources: ["busternamespaceleases"]
+     verbs: ["get", "list", "watch", "patch", "update"]
+-  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
++  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
+     resources: ["busternamespaceleases/status"]
+     verbs: ["get", "patch", "update"]
+   - apiGroups: [""]
+@@ -209,9 +210,9 @@
+             - name: BUSTER_ALLOWED_SOURCE_SECRETS
+               value: {{ join "," .Values.busterNamespaceBroker.controller.allowedSourceSecrets | quote }}
+             - name: BUSTER_LEASE_API_GROUP
+-              value: {{ .Values.busterNamespaceBroker.leaseApiGroup | quote }}
++              value: {{ $clusterShared.leaseApiGroup | quote }}
+             - name: BUSTER_LEASE_API_VERSION
+-              value: {{ .Values.busterNamespaceBroker.leaseApiVersion | quote }}
++              value: {{ $clusterShared.leaseApiVersion | quote }}
+             - name: BUSTER_ALLOWED_NAMESPACE_PREFIXES
+               value: {{ join "," .Values.busterNamespaceBroker.allowedPrefixes | quote }}
+             - name: BUSTER_DEFAULT_TTL_SECONDS
+--- a/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml
++++ b/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml
+@@ -1,12 +1,13 @@
++{{- $clusterShared := (include "kubeclaw.swarmConfig" . | mustFromJson).operator.buster.clusterInvokers.shared -}}
+ {{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") -}}
+ apiVersion: apiextensions.k8s.io/v1
+ kind: CustomResourceDefinition
+ metadata:
+-  name: busternamespaceleases.{{ .Values.busterNamespaceBroker.leaseApiGroup }}
++  name: busternamespaceleases.{{ $clusterShared.leaseApiGroup }}
+   labels:
+     {{- include "kubeclaw.labels" . | nindent 4 }}
+ spec:
+-  group: {{ .Values.busterNamespaceBroker.leaseApiGroup }}
++  group: {{ $clusterShared.leaseApiGroup }}
+   scope: Namespaced
+   names:
+     plural: busternamespaceleases
+@@ -15,7 +16,7 @@
+     shortNames:
+       - bnl
+   versions:
+-    - name: {{ .Values.busterNamespaceBroker.leaseApiVersion }}
++    - name: {{ $clusterShared.leaseApiVersion }}
+       served: true
+       storage: true
+       subresources:
+--- a/charts/kubeclaw/templates/rbac.yaml
++++ b/charts/kubeclaw/templates/rbac.yaml
+@@ -1,3 +1,4 @@
++{{- $clusterShared := (include "kubeclaw.swarmConfig" . | mustFromJson).operator.buster.clusterInvokers.shared -}}
+ {{- $leaseClientEnabled := and .Values.busterNamespaceBroker.enabled (or (eq .Values.agentRole "buster") .Values.busterNamespaceBroker.leaseClient.enabled) -}}
+ {{- $verificationReadEnabled := and $leaseClientEnabled .Values.busterNamespaceBroker.leaseClient.verificationRead.enabled -}}
+ {{- if and .Values.serviceAccount.create $leaseClientEnabled }}
+@@ -14,10 +15,10 @@
+   labels:
+     {{- include "kubeclaw.labels" . | nindent 4 }}
+ rules:
+-  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
++  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
+     resources: ["busternamespaceleases"]
+     verbs: ["create", "get", "list", "watch", "patch", "update", "delete"]
+-  - apiGroups: ["{{ .Values.busterNamespaceBroker.leaseApiGroup }}"]
++  - apiGroups: ["{{ $clusterShared.leaseApiGroup }}"]
+     resources: ["busternamespaceleases/status"]
+     verbs: ["get"]
+   - apiGroups: ["apps"]
+--- a/charts/kubeclaw/values.yaml
++++ b/charts/kubeclaw/values.yaml
+@@ -1,3 +1,4 @@
++busterComponentFile: files/config/buster-engine.config.json
+ # =============================================================================
+ # KubeClaw Helm Chart — Default Values
+ # =============================================================================
+@@ -398,8 +399,6 @@
+     endpoint: ""
+     audience: ""
+     caSecretName: ""
+-  leaseApiGroup: kubeclaw.forgestack.ai
+-  leaseApiVersion: v1alpha1
+   allowedPrefixes:
+     - test
+   defaultTtlSeconds: 7200
+diff --git a/charts/prism/files/config/profiles/buster-engine.runtime.config.json b/charts/prism/files/config/profiles/buster-engine.runtime.config.json
+new file mode 120000
+--- /dev/null
++++ b/charts/prism/files/config/profiles/buster-engine.runtime.config.json
+@@ -0,0 +1 @@
++../../../../kubeclaw/files/config/profiles/buster-engine.runtime.config.json
+\ No newline at end of file
+--- a/charts/prism/values.schema.json
++++ b/charts/prism/values.schema.json
+@@ -64,7 +64,8 @@
+     "worker",
+     "postgresql",
+     "secrets",
+-    "artifactStorage"
++    "artifactStorage",
++    "busterComponentFile"
+   ],
+   "properties": {
+     "images": {
+@@ -509,6 +510,10 @@
+           "maxLength": 128
+         }
+       }
++    },
++    "busterComponentFile": {
++      "type": "string",
++      "pattern": "^files/config/(profiles/)?buster-engine([.][a-z0-9-]+)?[.]config[.]json$"
+     }
+   },
+   "additionalProperties": false
+--- a/charts/prism/values.yaml
++++ b/charts/prism/values.yaml
+@@ -1,3 +1,4 @@
++busterComponentFile: files/config/buster-engine.config.json
+ images:
+   control: { repository: ghcr.io/datrab/kubeclaw-prism-control, digest: "", pullPolicy: IfNotPresent }
+   studio: { repository: ghcr.io/datrab/kubeclaw-prism-studio, digest: "", pullPolicy: IfNotPresent }
+--- a/docker/Dockerfile.buster-runtime
++++ b/docker/Dockerfile.buster-runtime
+@@ -142,6 +142,7 @@
+     && test -s /home/builder/.cache/trivy/java-db/trivy-java.db
+ 
+ COPY scripts/registry-client-config.mjs /app/scripts/registry-client-config.mjs
++COPY scripts/buster-cluster-preflight.mjs /app/scripts/buster-cluster-preflight.mjs
+ COPY docker/buster-runtime-entrypoint.sh /usr/local/bin/buster-runtime-entrypoint
+ RUN chmod 0755 /usr/local/bin/buster-runtime-entrypoint
+ 
+--- a/docker/buster-runtime-entrypoint.sh
++++ b/docker/buster-runtime-entrypoint.sh
+@@ -5,6 +5,9 @@
+   echo "BUSTER_PLAN_CONFIG_ROOT is retired; runtime configuration uses the fixed root-owned image namespace" >&2
+   exit 1
+ fi
++# Capture a validated physical generation before the first runtime effect.
++SWARM_CONFIG="$(node /app/scripts/buster-cluster-preflight.mjs)"
++export SWARM_CONFIG
+ runtime_config_root="$(node /usr/local/libexec/buster-runtime-config-root.mjs)"
+ exec 9<>/run/kubeclaw-buster/lifetime.lock
+ flock -n 9 || { echo "Buster runtime is already active" >&2; exit 1; }
+@@ -165,7 +168,6 @@
+ EOF
+ 
+ RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_CLIENT_RUNTIME="$registry_client_dir/runtime.json" REGISTRY_REFERENCE="$registry" CONTROLLER_NAMESPACE="$kube_namespace" \
+-  BUSTER_ALLOWED_SOURCE_SECRETS="${BUSTER_ALLOWED_SOURCE_SECRETS:-}" \
+   BUSTER_NETWORK_HTTP_EXACT_ORIGINS="${BUSTER_NETWORK_HTTP_EXACT_ORIGINS:-}" \
+   BUSTER_BROWSER_AXE_EXACT_ORIGINS="${BUSTER_BROWSER_AXE_EXACT_ORIGINS:-}" \
+   BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET="${BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET:-false}" \
+@@ -232,24 +234,7 @@
+     allowedBuildArguments: ['NODE_ENV'], maximumLogBytes: 8388608,
+     maximumExecutionMs: 900000, maximumManifestBytes: 16777216,
+   },
+-  kubernetesFixture: {
+-    kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace: process.env.CONTROLLER_NAMESPACE,
+-    leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',
+-    leaseApiVersion: process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1', allowedNamespacePrefixes: ['test'],
+-    allowedRegistryPrefixes: [`${registry}/kubeclaw`],
+-    allowedSecretReferences: (process.env.BUSTER_ALLOWED_SOURCE_SECRETS || '').split(',').filter(Boolean),
+-    allowedStorageClasses: [], allowDefaultStorageClass: true,
+-    maximumManifestBytes: 1048576,
+-    maximumResources: 64, maximumPersistentVolumeClaimBytes: 10737418240,
+-    maximumPersistentVolumeTotalBytes: 21474836480,
+-    maximumRetentionSeconds: 604800, maximumExecutionMs: 900000, pollIntervalMs: 1000,
+-  },
+-  tailscaleExposure: {
+-    kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace: process.env.CONTROLLER_NAMESPACE,
+-    leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',
+-    leaseApiVersion: process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1', allowedNamespacePrefixes: ['test'],
+-    allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 900000, pollIntervalMs: 1000,
+-  },
++  clusterBindings: { controllerNamespace: process.env.CONTROLLER_NAMESPACE },
+   networkHttp: {
+     registryHealth: true,
+     allowedOrigins: exactHttpOrigins, allowedHostSuffixes: ['.svc.cluster.local', '.ts.net'], allowedPorts: [80, 443],
+@@ -321,9 +306,6 @@
+     },
+   },
+   kubernetesRuntimeSecurity: {
+-    kubectlExecutable: '/usr/local/bin/kubectl',
+-    controllerNamespace: process.env.CONTROLLER_NAMESPACE,
+-    leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',
+     allowedNamespacePrefixes: ['test'],
+     maximumExecutionMs: 300000,
+     maximumOutputBytes: 16777216,
+--- /dev/null
++++ b/docs/architecture/buster-cluster-configuration.md
+@@ -0,0 +1,65 @@
++# Buster cluster invoker configuration
++
++The selected complete `buster-engine` component owns Kubernetes fixture and Tailscale exposure invoker policy under `settings.clusterInvokers`. Every field is required. Missing values are not filled by schemas, code, runtime JSON or environment variables. Capability grants and `allowedCapabilities` still independently govern access.
++
++## Select the complete component
++
++Both charts require the explicit `busterComponentFile` value. Their checked-in values select `files/config/buster-engine.config.json`; `my-values/buster-values.yaml` selects `files/config/profiles/buster-engine.runtime.config.json`. The latter is a whole Buster component with the five previously selected test-secret references. The default profile retains an empty list. No merge or keywise override occurs. Edit the selected file; editing the inactive file has no intended effect.
++
++The selected document must identify owner `buster-engine`, use the supported schema, and be packaged under the permitted config path. Missing/empty files, foreign owners and traversal paths reject. The same bytes feed validation, ConfigMap delivery and workload checksum. Delivery retains the name `buster-engine.config.json` and the fixed swarm entry reference; loaders read regular component files from one resolved physical generation and reject component symlinks. Prism's packaged profile has the same physical source author as Kubeclaw's profile.
++
++The entrypoint validates the full bundle and rejects retired environment keys before runtime-root setup, locks, temporary registry files, state/chown/kubeconfig writes or BuildKit launch. It pins the physical entry path for subsequent processes. Each later process validates a fresh snapshot of that physical generation; this is not a claim of one held file descriptor or atomic bytes spanning all processes. Relative kubectl paths resolve from the component generation directory captured with that process's snapshot, never from runtime JSON or a later re-resolution of the entry alias.
++
++## Fields
++
++The following values describe the checked-in default profile, not fallback values. Byte quotas are whole bytes, timer and polling values are milliseconds, retention is seconds, `diagnosticCodeUnits` counts JavaScript string code units, other manifest/resource fields counts. All numeric fields are positive safe integers; command timers are at most 2,147,483,647 ms. Kubernetes polling intervals range from 50 to 10,000 ms. Tailscale polling intervals range from 10 ms to `maximumExecutionMs`. PVC total must cover an individual claim; output multiplication must remain a safe integer.
++
++| Field | Authored default-profile value |
++|---|---|
++| `shared.kubectlExecutable` | `"/usr/local/bin/kubectl"` |
++| `shared.leaseApiGroup` | `"kubeclaw.forgestack.ai"` |
++| `shared.leaseApiVersion` | `"v1alpha1"` |
++| `kubernetesFixture.allowedNamespacePrefixes` | `["test"]` |
++| `kubernetesFixture.registryRepositoryPrefixes` | `["kubeclaw"]` |
++| `kubernetesFixture.allowedSecretReferences` | `[]` |
++| `kubernetesFixture.allowedStorageClasses` | `[]` |
++| `kubernetesFixture.allowDefaultStorageClass` | `true` |
++| `kubernetesFixture.runnerServiceAccount` | `"agent-buster"` |
++| `kubernetesFixture.credentialReaderServiceAccount` | `"agent-nova"` |
++| `kubernetesFixture.maximumManifestBytes` | `1048576` |
++| `kubernetesFixture.maximumResources` | `64` |
++| `kubernetesFixture.maximumPersistentVolumeClaimBytes` | `10737418240` |
++| `kubernetesFixture.maximumPersistentVolumeTotalBytes` | `21474836480` |
++| `kubernetesFixture.maximumRetentionSeconds` | `604800` |
++| `kubernetesFixture.maximumExecutionMs` | `900000` |
++| `kubernetesFixture.pollIntervalMs` | `1000` |
++| `kubernetesFixture.shortCommandTimeoutMs` | `15000` |
++| `kubernetesFixture.commandOutputManifestMultiplier` | `2` |
++| `kubernetesFixture.diagnosticCodeUnits` | `4096` |
++| `kubernetesFixture.manifest.maximumNodes` | `100000` |
++| `kubernetesFixture.manifest.maximumDepth` | `64` |
++| `kubernetesFixture.manifest.maximumAliases` | `1000` |
++| `kubernetesFixture.manifest.maximumFlattenVisits` | `100000` |
++| `kubernetesFixture.manifest.maximumFlattenPending` | `100000` |
++| `tailscaleExposure.allowedNamespacePrefixes` | `["test"]` |
++| `tailscaleExposure.allowedHostSuffixes` | `[".ts.net"]` |
++| `tailscaleExposure.maximumExecutionMs` | `900000` |
++| `tailscaleExposure.pollIntervalMs` | `1000` |
++| `tailscaleExposure.shortCommandTimeoutMs` | `15000` |
++| `tailscaleExposure.maximumCommandOutputBytes` | `1048576` |
++
++Namespace prefixes admit only the existing exact/prefix namespace relation. Registry repository prefixes are joined to the single existing registry-client endpoint; secret names are references, never secret values. The installation namespace remains the actual projected deployment binding. Explicit service-account names are combined with it for normal production. Direct invoker APIs require full namespace/account subjects and still support cross-namespace subjects; no constructor supplies agent-buster/agent-nova implicitly.
++
++The shared kubectl and lease endpoint also feed RuntimeSecurity and broker CRD/RBAC/controller delivery. Generated controller environment variables deliver this same endpoint; they are not independent worker overrides. Controller access lists, other controller budgets and RuntimeSecurity budgets remain separate policies outside this migration.
++
++Kubernetes command output is `maximumManifestBytes` times `commandOutputManifestMultiplier`, preserving the existing relationship. Both stdout and stderr have the lower process reader's independent cap. Short command deadlines still clamp to the operation/request remainder and `maximumExecutionMs`. Polling still respects the original readiness deadline. Manifest bytes are checked on the opened file before buffer allocation; YAML listener work, expanded alias graph and flattened List work have separate stated limits. These parser limits do not promise bounds on every internal library allocation. PVC totals retain StatefulSet replica multiplication.
++
++## Migrate retired authors
++
++Remove runtime JSON `kubernetesFixture` and `tailscaleExposure` policy sections. Runtime JSON carries the projected installation namespace as `clusterBindings.controllerNamespace`; a `registryReference` in that object is rejected. When KubernetesFixture is enabled, the existing `containerBuild` registry endpoint/reference pair passes the existing registry-health validation before store construction, and its origin is forwarded directly to construct allowed repository prefixes. This introduces no second serialized endpoint author and requires no build configuration for disabled KubernetesFixture. It does not override component policy. RuntimeSecurity's duplicate kubectl/namespace/group/version fields also reject. Remove worker `BUSTER_LEASE_API_GROUP`, `BUSTER_LEASE_API_VERSION`, `BUSTER_ALLOWED_SOURCE_SECRETS`, and old `busterNamespaceBroker.leaseApiGroup/leaseApiVersion` Helm values. Presence rejects even equal or empty values. The five existing Buster profile secret references move into its selected complete component.
++
++KUBECONFIG and Kubernetes service host/port remain transport/credential inputs; this change does not expand cluster authorization. Provider request-schema defaults and old immutable invocation/snapshot interpretation remain a separate migration. The Foundation initial process-group capture deadline of 250 ms is still a separate owner; `processInput` lifecycle settings do not cover it. Protocol/security validation and request interpretation remain unchanged except explicitly rejecting unsafe timer configuration instead of silently clamping the Kube execution ceiling.
++
++`npm run verify:buster:cluster-policy` is the maintained local gate. Local child-process and command-boundary tests are not live Kubernetes/Tailnet or native isolation acceptance. Full CONFIG/D17 status remains separate, including uncentralized policies of other consumers.
++
++Lease API versions use one shared domain: `v` followed by digits, optionally `alpha` or `beta` followed by at least one digit. Examples: `v1`, `v1alpha1`, `v2beta12`. Incomplete prerelease labels (`v1alpha`, `v1beta`) and other labels (`v1rc1`) reject in schema, both charts and both direct invokers. External namespace/registry bindings are required only for enabled cluster consumers; an otherwise valid non-cluster runtime does not need `clusterBindings`. If a binding is supplied even with all cluster routes disabled, its shape and namespace are validated; malformed or extra fields reject. Component policy itself remains explicitly required for every complete Buster component.
+--- a/docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md
++++ b/docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md
+@@ -16,31 +16,7 @@
+ 
+ ## Configure Buster
+ 
+-Add `kubernetes.fixture` to `allowedCapabilities`. Add this object to the
+-Buster remote runtime configuration.
+-
+-```json
+-{
+-  "kubernetesFixture": {
+-    "kubectlExecutable": "/usr/local/bin/kubectl",
+-    "controllerNamespace": "kubeclaw",
+-    "leaseApiGroup": "kubeclaw.forgestack.ai",
+-    "leaseApiVersion": "v1alpha1",
+-    "allowedNamespacePrefixes": ["test"],
+-    "allowedRegistryPrefixes": ["registry-local.kubeclaw.svc.cluster.local:5001/apps"],
+-    "allowedSecretReferences": ["test-registry"],
+-    "allowedStorageClasses": ["fixture-storage"],
+-    "allowDefaultStorageClass": false,
+-    "maximumManifestBytes": 4194304,
+-    "maximumResources": 128,
+-    "maximumPersistentVolumeClaimBytes": 10737418240,
+-    "maximumPersistentVolumeTotalBytes": 21474836480,
+-    "maximumRetentionSeconds": 86400,
+-    "maximumExecutionMs": 300000,
+-    "pollIntervalMs": 1000
+-  }
+-}
+-```
++Add `kubernetes.fixture` to the runtime capability allowlist. Select and author the complete Buster component described in [Buster cluster invoker configuration](buster-cluster-configuration.md). All invoker policy is required under `settings.clusterInvokers`; the old runtime JSON `kubernetesFixture` object and worker policy environment variables are rejected, including equal or empty values. The existing Buster deployment profile selects its own whole component and retains its five test-secret references. Capability grants and projected installation identity remain separate from operator policy.
+ 
+ PersistentVolumeClaims are admitted only when their requested storage is a
+ positive, whole-byte Kubernetes quantity within both configured byte limits.
+--- a/my-values/buster-values.yaml
++++ b/my-values/buster-values.yaml
+@@ -1,3 +1,4 @@
++busterComponentFile: files/config/profiles/buster-engine.runtime.config.json
+ # Buster production values. The gateway owns Buster agent sessions; the
+ # colocated v2 runtime owns deterministic suites and rootless BuildKit.
+ agentRole: "buster"
+@@ -110,8 +111,6 @@
+         value: /workspace/git-repo/.swarm/runtime-results
+       - name: BUSTER_V2_KUBERNETES_CREDENTIALS
+         value: /var/run/buster-worker/kubernetes
+-      - name: BUSTER_ALLOWED_SOURCE_SECRETS
+-        value: kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr
+       - name: CONTAINER_BUILD_BUILDKIT_HOST
+         value: unix:///run/user/1000/buildkit/buildkitd.sock
+       - name: BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT
+--- a/package.json
++++ b/package.json
+@@ -230,7 +230,8 @@
+     "verify:buster:scheduler-drain": "npm run plugin-system:sandbox:build && node --test --test-concurrency=1 tests/verification/contracts/runner-scheduler-drain.test.mjs tests/verification/contracts/runner-scheduler-provider-drain.test.mjs && node tests/verification/contracts/check-pipeline-test-plan-runner.mts && node tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+     "verify:buster:kubernetes-cleanup": "npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-execution-policy.json && node --test --test-concurrency=1 tests/verification/contracts/kubernetes-cleanup-errors.test.mjs tests/verification/contracts/kubernetes-cleanup-runner.test.mjs tests/verification/contracts/provider-disposal-recovery.test.mjs tests/verification/contracts/provider-disposal-unconfirmed.test.mjs tests/verification/contracts/provider-child-session.test.mjs tests/verification/contracts/provider-loader-ownership.test.mjs skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+     "verify:buster:execution-config": "npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-execution-policy.json && node --test --test-concurrency=1 tests/verification/contracts/buster-settings-registry.test.mjs tests/verification/contracts/check-pipeline-buster-execution-policy.mts tests/verification/contracts/provider-child-session.test.mjs tests/verification/contracts/buster-process-sampling.test.mjs tests/verification/contracts/buster-default-store-policy.test.mjs tests/verification/contracts/buster-provider-session-policy.test.mjs tests/verification/contracts/buster-session-capabilities.test.mjs tests/verification/contracts/provider-loader-ownership.test.mjs tests/verification/contracts/buster-completion-policy.test.mjs tests/verification/contracts/buster-report-policy-consumers.test.mjs tests/verification/contracts/buster-report-runtime-policy.test.mjs tests/verification/contracts/buster-report-policy-parity.test.mjs tests/verification/contracts/buster-report-runner-policy.test.mjs tests/verification/contracts/buster-process-input-policy.test.mjs tests/verification/contracts/buster-process-input-callers.test.mjs tests/verification/deployment/buster-process-input-parity.test.mjs",
+-    "verify:lint:policy-delivery": "node skills/nova/plugins/lint/tests/eslint-discipline.test.mjs && node --test tests/verification/deployment/eslint-policy-delivery.test.mjs tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs"
++    "verify:lint:policy-delivery": "node skills/nova/plugins/lint/tests/eslint-discipline.test.mjs && node --test tests/verification/deployment/eslint-policy-delivery.test.mjs tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
++    "verify:buster:cluster-policy": "npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-cluster-policy.json && node --test --test-concurrency=1 tests/verification/reliability/buster-cluster-entrypoint.test.mjs tests/verification/contracts/buster-cluster-output-consumers.test.mjs tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs tests/verification/contracts/buster-cluster-timing-consumers.test.mjs tests/verification/contracts/buster-cluster-poll-consumers.test.mjs tests/verification/deployment/buster-cluster-invoker-parity.test.mjs && node tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts && node tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts"
+   },
+   "devDependencies": {
+     "@types/js-yaml": "^4.0.9",
+--- /dev/null
++++ b/scripts/buster-cluster-preflight.mjs
+@@ -0,0 +1,4 @@
++import { loadSwarmSettings } from '../skills/common/plugin-runtime/foundation/config/swarm.ts';
++// Read-only before the entrypoint creates state, locks, files or child services.
++const snapshot = loadSwarmSettings(process.env);
++process.stdout.write(snapshot.identity.entry);
+--- a/skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts
+@@ -1,3 +1,4 @@
++import type { BusterManifestPolicy } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+ import { boundedManifestDocuments } from './kubernetes-manifest.ts';
+ import { flattenDocuments } from './kubernetes-fixture-manifest-files.ts';
+ import { podSpecs, validatePodSecurity } from './kubernetes-fixture-pods.ts';
+@@ -15,6 +16,7 @@
+     'ConfigMap', 'CronJob', 'Deployment', 'Job', 'PersistentVolumeClaim', 'Pod', 'Service', 'StatefulSet',
+ ]);
+ interface ManifestPolicy {
++    readonly manifest: BusterManifestPolicy;
+     readonly immutableImage: string;
+     readonly maximumResources: number;
+     readonly allowedRegistryPrefixes: readonly string[];
+@@ -37,8 +39,8 @@
+     workloads: number;
+     serviceTargetPort: number;
+ } {
+-    const loaded = boundedManifestDocuments(bytes);
+-    const documents = flattenDocuments(loaded, policy.maximumResources);
++    const loaded = boundedManifestDocuments(bytes, policy.manifest);
++    const documents = flattenDocuments(loaded, policy.maximumResources, policy.manifest);
+     if (documents.length < 1 || documents.length > policy.maximumResources)
+         throw new Error('KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID');
+     const state: InspectionState = { workloads: 0, matchedImage: false, matchedService: false,
+--- a/skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts
+@@ -1,3 +1,4 @@
++import type { BusterManifestPolicy } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+ import crypto from 'node:crypto';
+ import fs from 'node:fs';
+ import path from 'node:path';
+@@ -41,18 +42,18 @@
+         fs.closeSync(handle);
+     }
+ }
+-export function flattenDocuments(values: unknown[], maximumResources: number): JsonObject[] {
++export function flattenDocuments(values: unknown[], maximumResources: number, policy: BusterManifestPolicy): JsonObject[] {
+     const out: JsonObject[] = [];
+     const pending = values.filter(value => value !== null && value !== undefined).reverse();
+     let visits = 0;
+     while (pending.length) {
+-        if (++visits > 100_000)
++        if (++visits > policy.maximumFlattenVisits)
+             throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
+         const document = object(pending.pop(), 'manifestDocument');
+         if (document.kind === 'List') {
+             if (!Array.isArray(document.items))
+                 throw new Error('KUBERNETES_FIXTURE_MANIFEST_LIST_INVALID');
+-            if (pending.length + document.items.length > 100_000)
++            if (pending.length + document.items.length > policy.maximumFlattenPending)
+                 throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
+             for (let index = document.items.length - 1; index >= 0; index -= 1)
+                 pending.push(document.items[index]);
+--- a/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts
+@@ -54,12 +54,12 @@
+         const leaseBytes = `${JSON.stringify(lease)}\n`;
+         const resource = `busternamespaceleases.${this.#settings.apiGroup}`;
+         for (const verb of ['create', 'get', 'delete']) {
+-            const allowed = (await this.#operations.run(['auth', 'can-i', verb, resource, '-n', this.#settings.controllerNamespace], null, signal, 15_000)).trim();
++            const allowed = (await this.#operations.run(['auth', 'can-i', verb, resource, '-n', this.#settings.controllerNamespace], null, signal, this.#settings.shortCommandTimeoutMs)).trim();
+             if (allowed !== 'yes')
+                 throw new Error(`KUBERNETES_FIXTURE_RBAC_DENIED:${verb}`);
+         }
+-        await this.#operations.run(['apply', '--dry-run=server', '-f', '-'], leaseBytes, signal, 15_000);
+-        await this.#operations.run(['apply', '-f', '-'], leaseBytes, signal, 15_000);
++        await this.#operations.run(['apply', '--dry-run=server', '-f', '-'], leaseBytes, signal, this.#settings.shortCommandTimeoutMs);
++        await this.#operations.run(['apply', '-f', '-'], leaseBytes, signal, this.#settings.shortCommandTimeoutMs);
+         try {
+             return await this.#activate(prepared, selected, signal);
+         }
+@@ -109,7 +109,7 @@
+     if (secretReferences.some((name) => !settings.secretReferences.has(name))) {
+         throw new Error('KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED');
+     }
+-    const facts = inspectManifest(bytes, { immutableImage, maximumResources: settings.maximumResources,
++    const facts = inspectManifest(bytes, { immutableImage, maximumResources: settings.maximumResources, manifest: settings.manifest,
+         allowedRegistryPrefixes: settings.registryPrefixes, serviceName, servicePort, expectedServiceTargetPort,
+         persistentVolumePolicy: {
+             allowedStorageClasses: settings.allowedStorageClasses,
+--- a/skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts
+@@ -30,7 +30,7 @@
+         const deadline = Date.now() + timeoutMs;
+         let last = 'Pending';
+         while (Date.now() < deadline) {
+-            const requestTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
++            const requestTimeoutMs = Math.max(1, Math.min(this.#settings.shortCommandTimeoutMs, deadline - Date.now()));
+             const raw = await this.#run(['get', 'busternamespacelease', leaseName, '-n', this.#settings.controllerNamespace, '-o', 'json'], null, signal, requestTimeoutMs);
+             const value = object(JSON.parse(raw), 'lease');
+             const status = object(value.status ?? {}, 'lease.status');
+@@ -52,7 +52,7 @@
+         const deadline = Date.now() + timeoutMs;
+         let last = 'No pods found.';
+         while (Date.now() < deadline) {
+-            const requestTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
++            const requestTimeoutMs = Math.max(1, Math.min(this.#settings.shortCommandTimeoutMs, deadline - Date.now()));
+             const raw = await this.#run(['get', 'pods', '-n', namespace, '-o', 'json'], null, signal, requestTimeoutMs);
+             const value = object(JSON.parse(raw), 'pods');
+             const items = Array.isArray(value.items) ? value.items : [];
+@@ -73,7 +73,7 @@
+         const deadline = Date.now() + timeoutMs;
+         let last = 'Service endpoints not ready.';
+         while (Date.now() < deadline) {
+-            const serviceTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
++            const serviceTimeoutMs = Math.max(1, Math.min(this.#settings.shortCommandTimeoutMs, deadline - Date.now()));
+             const serviceRaw = await this.#run(['get', 'service', serviceName, '-n', namespace, '-o', 'json'], null, signal, serviceTimeoutMs);
+             const service = object(JSON.parse(serviceRaw), 'service');
+             const spec = object(service.spec, 'service.spec');
+@@ -87,7 +87,7 @@
+             if (Date.now() >= deadline)
+                 break;
+             try {
+-                const endpointsTimeoutMs = Math.max(1, Math.min(15_000, deadline - Date.now()));
++                const endpointsTimeoutMs = Math.max(1, Math.min(this.#settings.shortCommandTimeoutMs, deadline - Date.now()));
+                 const endpointsRaw = await this.#run(['get', 'endpoints', serviceName, '-n', namespace, '-o', 'json'], null, signal, endpointsTimeoutMs);
+                 const endpoints = object(JSON.parse(endpointsRaw), 'endpoints');
+                 const subsets = Array.isArray(endpoints.subsets) ? endpoints.subsets : [];
+--- a/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts
+@@ -7,13 +7,13 @@
+ import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';
+ import type { TestProviderCapabilityInvoker } from './runner.ts';
+ export type { KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-settings.ts';
+-function detail(error: unknown): string {
++function detail(error: unknown, maximumCodeUnits: number): string {
+     if (error && typeof error === 'object') {
+         const stderr = (error as Record<string, unknown>).stderr;
+         if (typeof stderr === 'string' && stderr.trim())
+-            return stderr.trim().slice(0, 4096);
++            return stderr.trim().slice(0, maximumCodeUnits);
+     }
+-    return (error instanceof Error ? error.message : String(error)).slice(0, 4096);
++    return (error instanceof Error ? error.message : String(error)).slice(0, maximumCodeUnits);
+ }
+ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilityInvoker {
+     readonly #settings: KubernetesFixtureSettings;
+@@ -31,7 +31,7 @@
+     async #kubectlRun(args: readonly string[], input: Buffer | string | null, signal: AbortSignal, timeout = this.#settings.maximumExecutionMs): Promise<string> {
+         try {
+             const result = await this.#settings.execute(this.#settings.kubectl, args, {
+-                encoding: 'utf8', maxBuffer: this.#settings.maximumManifestBytes * 2, timeout: Math.min(timeout, this.#settings.maximumExecutionMs),
++                encoding: 'utf8', maxBuffer: this.#settings.maximumManifestBytes * this.#settings.commandOutputManifestMultiplier, timeout: Math.min(timeout, this.#settings.maximumExecutionMs),
+                 signal, ...(input === null ? {} : { input }),
+                 env: { PATH: path.dirname(this.#settings.kubectl), HOME: process.env.HOME, KUBECONFIG: process.env.KUBECONFIG,
+                     KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,
+@@ -42,7 +42,7 @@
+         catch (error) {
+             if (signal.aborted)
+                 throw new Error('KUBERNETES_FIXTURE_CANCELLED', { cause: error });
+-            throw new Error(`KUBERNETES_FIXTURE_KUBECTL_FAILED:${detail(error)}`, { cause: error });
++            throw new Error(`KUBERNETES_FIXTURE_KUBECTL_FAILED:${detail(error, this.#settings.diagnosticCodeUnits)}`, { cause: error });
+         }
+     }
+     async #releaseAfterPrepareFailure(leaseName: string): Promise<void> {
+@@ -57,12 +57,12 @@
+     }
+     async #generatedCredentials(expected: Parameters<typeof generatedDemoCredentials>[2], signal: AbortSignal) {
+         const resource = `busternamespaceleases.${this.#settings.apiGroup}`;
+-        const freshLease = JSON.parse(await this.#kubectlRun(['get', resource, expected.leaseName, '-n', this.#settings.controllerNamespace, '-o', 'json'], null, signal, 15_000));
++        const freshLease = JSON.parse(await this.#kubectlRun(['get', resource, expected.leaseName, '-n', this.#settings.controllerNamespace, '-o', 'json'], null, signal, this.#settings.shortCommandTimeoutMs));
+         assertGeneratedCredentialLease(freshLease, expected);
+         let secret;
+         // Until UID and bytes are verified, subprocess diagnostics must not expose Secret content.
+         try {
+-            secret = JSON.parse(await this.#kubectlRun(['get', 'secret', expected.secretName, '-n', expected.namespace, '-o', 'json'], null, signal, 15_000));
++            secret = JSON.parse(await this.#kubectlRun(['get', 'secret', expected.secretName, '-n', expected.namespace, '-o', 'json'], null, signal, this.#settings.shortCommandTimeoutMs));
+         }
+         catch {
+             throw new Error('DEMO_CREDENTIAL_SECRET_READ_FAILED');
+--- a/skills/buster/engine/test-gates/kubernetes-fixture-settings.ts
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-settings.ts
+@@ -1,3 +1,4 @@
++import type { BusterManifestPolicy } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+ import fs from 'node:fs';
+ import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+ import { runProcessInput } from './process-input.ts';
+@@ -36,15 +37,20 @@
+     readonly allowedSecretReferences: readonly string[];
+     readonly allowedStorageClasses: readonly string[];
+     readonly allowDefaultStorageClass: boolean;
+-    readonly runnerSubject?: string;
+-    readonly credentialReaderSubject?: string;
++    readonly runnerSubject: string;
++    readonly credentialReaderSubject: string;
+     readonly maximumManifestBytes: number;
+     readonly maximumResources: number;
+     readonly maximumPersistentVolumeClaimBytes: number;
+     readonly maximumPersistentVolumeTotalBytes: number;
+     readonly maximumRetentionSeconds: number;
+     readonly maximumExecutionMs: number;
+-    readonly pollIntervalMs?: number;
++    readonly pollIntervalMs: number;
++    readonly shortCommandTimeoutMs: number;
++    readonly commandOutputManifestMultiplier: number;
++    readonly diagnosticCodeUnits: number;
++    readonly manifest: BusterManifestPolicy;
++
+     readonly execute?: Execute;
+     readonly now?: () => Date;
+ }
+@@ -68,21 +74,27 @@
+     readonly maximumRetentionSeconds: number;
+     readonly maximumExecutionMs: number;
+     readonly pollIntervalMs: number;
++    readonly shortCommandTimeoutMs: number;
++    readonly commandOutputManifestMultiplier: number;
++    readonly diagnosticCodeUnits: number;
++    readonly manifest: BusterManifestPolicy;
++
+     readonly execute: Execute;
+     readonly now: () => Date;
+     constructor(options: KubernetesFixtureCapabilityInvokerOptions) {
+         const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);
+-        this.root = fs.realpathSync(options.workspaceRoot);
+-        this.kubectl = fs.realpathSync(options.kubectlExecutable);
+-        fs.accessSync(this.kubectl, fs.constants.X_OK);
+         validateAddresses(options);
+-        const runnerSubject = options.runnerSubject ?? `${options.controllerNamespace}/agent-buster`;
+-        const credentialReaderSubject = options.credentialReaderSubject ?? `${options.controllerNamespace}/agent-nova`;
++        const runnerSubject = options.runnerSubject;
++        const credentialReaderSubject = options.credentialReaderSubject;
+         if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(runnerSubject)
+             || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\/[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(credentialReaderSubject)) {
+             throw new Error('KUBERNETES_FIXTURE_SUBJECT_INVALID');
+         }
+         validateLimits(options);
++        validateOperationPolicy(options);
++        this.root = fs.realpathSync(options.workspaceRoot);
++        this.kubectl = fs.realpathSync(options.kubectlExecutable);
++        fs.accessSync(this.kubectl, fs.constants.X_OK);
+         this.controllerNamespace = options.controllerNamespace;
+         this.apiGroup = options.leaseApiGroup;
+         this.apiVersion = options.leaseApiVersion;
+@@ -97,15 +109,13 @@
+         this.maximumResources = options.maximumResources;
+         this.maximumPersistentVolumeClaimBytes = BigInt(options.maximumPersistentVolumeClaimBytes);
+         this.maximumPersistentVolumeTotalBytes = BigInt(options.maximumPersistentVolumeTotalBytes);
+-        if (this.maximumPersistentVolumeTotalBytes < this.maximumPersistentVolumeClaimBytes) {
+-            throw new Error('KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_LIMIT_INVALID');
+-        }
+         this.maximumRetentionSeconds = options.maximumRetentionSeconds;
+-        this.maximumExecutionMs = Math.min(options.maximumExecutionMs, MAX_TIMER_MS);
+-        this.pollIntervalMs = options.pollIntervalMs ?? 1_000;
+-        if (!Number.isSafeInteger(this.pollIntervalMs) || this.pollIntervalMs < 50 || this.pollIntervalMs > 10000) {
+-            throw new Error('KUBERNETES_FIXTURE_POLL_INTERVAL_INVALID');
+-        }
++        this.maximumExecutionMs = options.maximumExecutionMs;
++        this.pollIntervalMs = options.pollIntervalMs;
++        this.shortCommandTimeoutMs = options.shortCommandTimeoutMs;
++        this.commandOutputManifestMultiplier = options.commandOutputManifestMultiplier;
++        this.diagnosticCodeUnits = options.diagnosticCodeUnits;
++        this.manifest = Object.freeze({ ...options.manifest });
+         this.execute = options.execute ?? ((command, args, operation) => executeProcess(command, args, operation, processInputPolicy));
+         this.now = options.now ?? (() => new Date());
+     }
+@@ -115,7 +125,7 @@
+         throw new Error('KUBERNETES_FIXTURE_CONTROLLER_NAMESPACE_INVALID');
+     if (!/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/u.test(options.leaseApiGroup))
+         throw new Error('KUBERNETES_FIXTURE_API_GROUP_INVALID');
+-    if (!/^v[0-9]+(?:alpha|beta)?[0-9]*$/u.test(options.leaseApiVersion))
++    if (!/^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$/u.test(options.leaseApiVersion))
+         throw new Error('KUBERNETES_FIXTURE_API_VERSION_INVALID');
+     if (options.allowedNamespacePrefixes.length < 1
+         || options.allowedNamespacePrefixes.some((item) => item.length > MAX_NAMESPACE_PREFIX_LENGTH || !DNS_LABEL.test(item))) {
+@@ -146,3 +156,18 @@
+             throw new Error(`KUBERNETES_FIXTURE_${label}_LIMIT_INVALID`);
+     }
+ }
++
++function validateOperationPolicy(options: KubernetesFixtureCapabilityInvokerOptions): void {
++    if (options.maximumPersistentVolumeTotalBytes < options.maximumPersistentVolumeClaimBytes)
++        throw new Error('KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_LIMIT_INVALID');
++    if (!Number.isSafeInteger(options.pollIntervalMs) || options.pollIntervalMs < 50 || options.pollIntervalMs > 10000)
++        throw new Error('KUBERNETES_FIXTURE_POLL_INTERVAL_INVALID');
++    const values = [options.shortCommandTimeoutMs, options.commandOutputManifestMultiplier,
++        options.diagnosticCodeUnits, options.manifest?.maximumNodes, options.manifest?.maximumDepth,
++        options.manifest?.maximumAliases, options.manifest?.maximumFlattenVisits, options.manifest?.maximumFlattenPending];
++    if (values.some(value => !Number.isSafeInteger(value) || value < 1)
++        || options.shortCommandTimeoutMs > MAX_TIMER_MS || options.maximumExecutionMs > MAX_TIMER_MS
++        || !Number.isSafeInteger(options.maximumManifestBytes * options.commandOutputManifestMultiplier)) {
++        throw new Error('KUBERNETES_FIXTURE_OPERATION_POLICY_INVALID');
++    }
++}
+--- a/skills/buster/engine/test-gates/kubernetes-manifest.ts
++++ b/skills/buster/engine/test-gates/kubernetes-manifest.ts
+@@ -1,29 +1,27 @@
++import type { BusterManifestPolicy } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+ import { loadAll } from 'js-yaml';
+ 
+-const MAX_NODES = 100_000;
+-const MAX_DEPTH = 64;
+-const MAX_ALIASES = 1_000;
+ 
+ /** Bound parser recursion and expanded alias work before inspecting any manifest. */
+-export function boundedManifestDocuments(bytes: Buffer): unknown[] {
++export function boundedManifestDocuments(bytes: Buffer, policy: BusterManifestPolicy): unknown[] {
+   const values: unknown[] = [];
+   let depth = 0; let nodes = 0;
+   try {
+     loadAll(bytes.toString('utf8'), value => { values.push(value); }, {
+       listener(event) {
+         if (event === 'open') {
+-          if (++depth > MAX_DEPTH || ++nodes > MAX_NODES) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
++          if (++depth > policy.maximumDepth || ++nodes > policy.maximumNodes) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
+         } else depth -= 1;
+       },
+     });
+   } catch (error) {
+     throw new Error(`KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
+   }
+-  validateAliasGraph(values);
++  validateAliasGraph(values, policy);
+   return values;
+ }
+ 
+-function validateAliasGraph(values: unknown[]): void {
++function validateAliasGraph(values: unknown[], policy: BusterManifestPolicy): void {
+   const active = new WeakSet<object>(); const seen = new WeakSet<object>();
+   const pending: { value: unknown; depth: number; leave?: boolean }[] = values.map(value => ({ value, depth: 0 }));
+   let nodes = 0; let aliases = 0;
+@@ -31,12 +29,12 @@
+     const frame = pending.pop()!;
+     if (!frame.value || typeof frame.value !== 'object') continue;
+     if (frame.leave) { active.delete(frame.value); continue; }
+-    if (++nodes > MAX_NODES || frame.depth > MAX_DEPTH) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
++    if (++nodes > policy.maximumNodes || frame.depth > policy.maximumDepth) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
+     if (active.has(frame.value)) throw new Error('KUBERNETES_FIXTURE_MANIFEST_ALIAS_CYCLE');
+-    if (seen.has(frame.value) && ++aliases > MAX_ALIASES) throw new Error('KUBERNETES_FIXTURE_MANIFEST_ALIAS_LIMIT');
++    if (seen.has(frame.value) && ++aliases > policy.maximumAliases) throw new Error('KUBERNETES_FIXTURE_MANIFEST_ALIAS_LIMIT');
+     seen.add(frame.value); active.add(frame.value);
+     const children = Object.values(frame.value);
+-    if (pending.length + children.length > MAX_NODES) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
++    if (pending.length + children.length > policy.maximumNodes) throw new Error('KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT');
+     pending.push({ ...frame, leave: true });
+     for (const value of children) pending.push({ value, depth: frame.depth + 1 });
+   }
+--- a/skills/buster/engine/test-gates/production-capability-sources.ts
++++ b/skills/buster/engine/test-gates/production-capability-sources.ts
+@@ -92,18 +92,11 @@
+   environment: NodeJS.ProcessEnv,
+ ) {
+   const command = commandSources(value, allowedCapabilities, environment);
+-  const kubernetesFixtureSource = capabilitySource(
+-    value,
+-    'kubernetesFixture',
+-    allowedCapabilities.has('kubernetes.fixture'),
+-    'BUSTER_KUBERNETES_FIXTURE_CONFIG_REQUIRED',
+-  );
+-  const tailscaleExposureSource = capabilitySource(
+-    value,
+-    'tailscaleExposure',
+-    allowedCapabilities.has('kubernetes.exposure'),
+-    'BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED',
+-  );
++  for (const key of ['kubernetesFixture', 'tailscaleExposure']) {
++    if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);
++  }
++  const kubernetesFixtureEnabled = allowedCapabilities.has('kubernetes.fixture');
++  const tailscaleExposureEnabled = allowedCapabilities.has('kubernetes.exposure');
+   const networkHttpSource = capabilitySource(
+     value,
+     'networkHttp',
+@@ -125,8 +118,8 @@
+   );
+   return {
+     ...command,
+-    kubernetesFixtureSource,
+-    tailscaleExposureSource,
++    kubernetesFixtureEnabled,
++    tailscaleExposureEnabled,
+     networkHttpSource,
+     ...browser,
+     securityScanSource,
+--- a/skills/buster/engine/test-gates/production-cluster-options.ts
++++ b/skills/buster/engine/test-gates/production-cluster-options.ts
+@@ -1,106 +1,53 @@
+ import type { BusterCapabilityRuntimeOptions } from './capability-runtime.ts';
+-import path from 'node:path';
+-import { integer, boolean, stringArray, optionalStringArray } from './production-config-values.ts';
++import type { BusterClusterInvokerSettings } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
++import { integer, stringArray, object } from './production-config-values.ts';
+ type Source = Record<string, unknown> | null;
+-
+-export function kubernetesFixtureOptions(
+-  kubernetesFixtureSource: Source,
+-  directory: string,
+-): Pick<BusterCapabilityRuntimeOptions, 'kubernetesFixture'> {
+-  return kubernetesFixtureSource
+-    ? {
+-        kubernetesFixture: {
+-          kubectlExecutable: path.resolve(directory, String(kubernetesFixtureSource.kubectlExecutable)),
+-          controllerNamespace: String(kubernetesFixtureSource.controllerNamespace),
+-          leaseApiGroup: String(kubernetesFixtureSource.leaseApiGroup),
+-          leaseApiVersion: String(kubernetesFixtureSource.leaseApiVersion),
+-          allowedNamespacePrefixes: stringArray(
+-            kubernetesFixtureSource.allowedNamespacePrefixes,
+-            'kubernetesFixture.allowedNamespacePrefixes',
+-          ),
+-          allowedRegistryPrefixes: stringArray(
+-            kubernetesFixtureSource.allowedRegistryPrefixes,
+-            'kubernetesFixture.allowedRegistryPrefixes',
+-          ),
+-          allowedSecretReferences: optionalStringArray(
+-            kubernetesFixtureSource.allowedSecretReferences,
+-            'kubernetesFixture.allowedSecretReferences',
+-          ),
+-          ...fixtureStoragePolicy(kubernetesFixtureSource),
+-          maximumManifestBytes: integer(
+-            kubernetesFixtureSource.maximumManifestBytes,
+-            'kubernetesFixture.maximumManifestBytes',
+-          ),
+-          maximumResources: integer(kubernetesFixtureSource.maximumResources, 'kubernetesFixture.maximumResources'),
+-          maximumPersistentVolumeClaimBytes: integer(
+-            kubernetesFixtureSource.maximumPersistentVolumeClaimBytes,
+-            'kubernetesFixture.maximumPersistentVolumeClaimBytes',
+-          ),
+-          maximumPersistentVolumeTotalBytes: integer(
+-            kubernetesFixtureSource.maximumPersistentVolumeTotalBytes,
+-            'kubernetesFixture.maximumPersistentVolumeTotalBytes',
+-          ),
+-          maximumRetentionSeconds: integer(
+-            kubernetesFixtureSource.maximumRetentionSeconds,
+-            'kubernetesFixture.maximumRetentionSeconds',
+-          ),
+-          maximumExecutionMs: integer(
+-            kubernetesFixtureSource.maximumExecutionMs,
+-            'kubernetesFixture.maximumExecutionMs',
+-          ),
+-          ...(kubernetesFixtureSource.pollIntervalMs === undefined
+-            ? {}
+-            : {
+-                pollIntervalMs: integer(kubernetesFixtureSource.pollIntervalMs, 'kubernetesFixture.pollIntervalMs'),
+-              }),
+-        },
+-      }
+-    : {};
++export interface ClusterRuntimeBinding {
++  readonly kubectlExecutable: string;
++  readonly controllerNamespace: string;
++  readonly leaseApiGroup: string;
++  readonly leaseApiVersion: string;
+ }
+-
+-export function tailscaleExposureOptions(
+-  tailscaleExposureSource: Source,
+-  directory: string,
+-): Pick<BusterCapabilityRuntimeOptions, 'tailscaleExposure'> {
+-  return tailscaleExposureSource
+-    ? {
+-        tailscaleExposure: {
+-          kubectlExecutable: path.resolve(directory, String(tailscaleExposureSource.kubectlExecutable)),
+-          controllerNamespace: String(tailscaleExposureSource.controllerNamespace),
+-          leaseApiGroup: String(tailscaleExposureSource.leaseApiGroup),
+-          leaseApiVersion: String(tailscaleExposureSource.leaseApiVersion),
+-          allowedNamespacePrefixes: stringArray(
+-            tailscaleExposureSource.allowedNamespacePrefixes,
+-            'tailscaleExposure.allowedNamespacePrefixes',
+-          ),
+-          allowedHostSuffixes: stringArray(
+-            tailscaleExposureSource.allowedHostSuffixes,
+-            'tailscaleExposure.allowedHostSuffixes',
+-          ),
+-          maximumExecutionMs: integer(
+-            tailscaleExposureSource.maximumExecutionMs,
+-            'tailscaleExposure.maximumExecutionMs',
+-          ),
+-          ...(tailscaleExposureSource.pollIntervalMs === undefined
+-            ? {}
+-            : {
+-                pollIntervalMs: integer(tailscaleExposureSource.pollIntervalMs, 'tailscaleExposure.pollIntervalMs'),
+-              }),
+-        },
+-      }
+-    : {};
++export function clusterRuntimeBinding(value: unknown, policy: BusterClusterInvokerSettings): ClusterRuntimeBinding {
++  const binding = object(value, 'clusterBindings');
++  if (Object.keys(binding).length !== 1 || typeof binding.controllerNamespace !== 'string'
++    || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/u.test(binding.controllerNamespace)) {
++    throw new Error('BUSTER_CLUSTER_BINDINGS_INVALID');
++  }
++  return Object.freeze({ ...policy.shared, controllerNamespace: binding.controllerNamespace });
+ }
+-
++export function kubernetesFixtureOptions(enabled: boolean, policy: BusterClusterInvokerSettings,
++  binding: ClusterRuntimeBinding, registryOrigin: string | undefined): Pick<BusterCapabilityRuntimeOptions, 'kubernetesFixture'> {
++  if (!enabled) return {};
++  if (!registryOrigin) throw new Error('BUSTER_CLUSTER_REGISTRY_REQUIRED');
++  const registryReference = new URL(registryOrigin).host;
++  const { runnerServiceAccount, credentialReaderServiceAccount, registryRepositoryPrefixes, ...selected } = policy.kubernetesFixture;
++  return { kubernetesFixture: { ...selected, kubectlExecutable: binding.kubectlExecutable,
++    controllerNamespace: binding.controllerNamespace, leaseApiGroup: binding.leaseApiGroup, leaseApiVersion: binding.leaseApiVersion,
++    allowedRegistryPrefixes: registryRepositoryPrefixes.map(repository => `${registryReference}/${repository}`),
++    runnerSubject: `${binding.controllerNamespace}/${runnerServiceAccount}`,
++    credentialReaderSubject: `${binding.controllerNamespace}/${credentialReaderServiceAccount}` } };
++}
++export function tailscaleExposureOptions(enabled: boolean, policy: BusterClusterInvokerSettings,
++  binding: ClusterRuntimeBinding): Pick<BusterCapabilityRuntimeOptions, 'tailscaleExposure'> {
++  if (!enabled) return {};
++  return { tailscaleExposure: { ...policy.tailscaleExposure, kubectlExecutable: binding.kubectlExecutable,
++    controllerNamespace: binding.controllerNamespace, leaseApiGroup: binding.leaseApiGroup, leaseApiVersion: binding.leaseApiVersion } };
++}
+ export function kubernetesRuntimeSecurityOptions(
+   kubernetesRuntimeSecuritySource: Source,
+-  directory: string,
++  shared: ClusterRuntimeBinding,
+ ): Pick<BusterCapabilityRuntimeOptions, 'kubernetesRuntimeSecurity'> {
++  if (kubernetesRuntimeSecuritySource && ['kubectlExecutable', 'controllerNamespace', 'leaseApiGroup', 'leaseApiVersion']
++    .some(key => Object.hasOwn(kubernetesRuntimeSecuritySource, key))) {
++    throw new Error('BUSTER_CLUSTER_LEGACY_RUNTIME_SECURITY_BINDING');
++  }
+   return kubernetesRuntimeSecuritySource
+     ? {
+         kubernetesRuntimeSecurity: {
+-          kubectlExecutable: path.resolve(directory, String(kubernetesRuntimeSecuritySource.kubectlExecutable)),
+-          controllerNamespace: String(kubernetesRuntimeSecuritySource.controllerNamespace),
+-          leaseApiGroup: String(kubernetesRuntimeSecuritySource.leaseApiGroup),
++          kubectlExecutable: shared.kubectlExecutable,
++          controllerNamespace: shared.controllerNamespace,
++          leaseApiGroup: shared.leaseApiGroup,
+           allowedNamespacePrefixes: stringArray(
+             kubernetesRuntimeSecuritySource.allowedNamespacePrefixes,
+             'kubernetesRuntimeSecurity.allowedNamespacePrefixes',
+@@ -129,16 +76,3 @@
+       }
+     : {};
+ }
+-
+-function fixtureStoragePolicy(kubernetesFixtureSource: Record<string, unknown>) {
+-  return {
+-    allowedStorageClasses: optionalStringArray(
+-      kubernetesFixtureSource.allowedStorageClasses,
+-      'kubernetesFixture.allowedStorageClasses',
+-    ),
+-    allowDefaultStorageClass: boolean(
+-      kubernetesFixtureSource.allowDefaultStorageClass,
+-      'kubernetesFixture.allowDefaultStorageClass',
+-    ),
+-  };
+-}
+--- a/skills/buster/engine/test-gates/production-config-values.ts
++++ b/skills/buster/engine/test-gates/production-config-values.ts
+@@ -169,6 +169,9 @@
+ 
+ export function validateRuntimeRoot(value: Record<string, unknown>): void {
+   if (value.schemaVersion !== 'buster-remote-plan-runtime.v1') throw new Error('BUSTER_REMOTE_CONFIG_VERSION_INVALID');
++  for (const key of ['kubernetesFixture', 'tailscaleExposure']) {
++    if (Object.hasOwn(value, key)) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);
++  }
+   if (Object.hasOwn(value, 'dependencyReadiness')) {
+     throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:dependencyReadiness:use buster-engine.config.json settings.dependencyReadiness');
+   }
+--- a/skills/buster/engine/test-gates/production.ts
++++ b/skills/buster/engine/test-gates/production.ts
+@@ -1,8 +1,9 @@
++import { rejectLegacyClusterEnvironment, validateBusterClusterInvokerSettings, type BusterClusterInvokerSettings } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
+ import { validateBusterExecutionSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+ import { directCommandOptions, containerBuildOptions, networkHttpOptions, securityScanOptions } from './production-command-options.ts';
+ import { browserAxeOptions, browserLighthouseOptions, browserVisualOptions, browserPlaywrightOptions } from './production-browser-options.ts';
+-import { kubernetesFixtureOptions, tailscaleExposureOptions, kubernetesRuntimeSecurityOptions } from './production-cluster-options.ts';
+-import { object, integer, validateRuntimeRoot, runtimeAuthority, runtimeRegistry } from './production-config-values.ts';
++import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions, kubernetesRuntimeSecurityOptions } from './production-cluster-options.ts';
++import { object, integer, registryHealthConfiguration, validateRuntimeRoot, runtimeAuthority, runtimeRegistry } from './production-config-values.ts';
+ import { capabilitySources } from './production-capability-sources.ts';
+ import type { BusterPreparation } from './preparation-client.ts';
+ import { validateBusterDependencyReadinessSettings, type BusterSettings, type WorkerCoreSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';
+@@ -18,7 +19,9 @@
+   workerLocalRuntime: WorkerCoreSettings['localRuntime'],
+   environment: Readonly<Record<string, string | undefined>>,
+ ): BusterRemotePlanRuntime {
++  rejectLegacyClusterEnvironment(environment);
+   const executionPolicy = validateBusterExecutionSettings(settings.execution);
++  const clusterInvokers = validateBusterClusterInvokerSettings(settings.clusterInvokers);
+   const canonical = fs.realpathSync(file);
+   const workerRevision = environment.KUBECLAW_BUILD_REVISION;
+   if (!workerRevision || !/^[a-f0-9]{40,64}$/u.test(workerRevision)) {
+@@ -28,7 +31,7 @@
+   const value = object(JSON.parse(fs.readFileSync(canonical, 'utf8')), 'root');
+   validateRuntimeRoot(value);
+   const authority = runtimeAuthority(value, environment);
+-  const service = configuredService(value, directory, environment, preparation, { buster: { ...settings, execution: executionPolicy }, workerLocalRuntime }, workerRevision, authority.sourceAttestationPublicKey);
++  const service = configuredService(value, directory, environment, preparation, { buster: { ...settings, execution: executionPolicy, clusterInvokers }, workerLocalRuntime }, workerRevision, authority.sourceAttestationPublicKey);
+   return configuredRuntime(value, directory, service, settings, authority);
+ }
+ 
+@@ -43,6 +46,7 @@
+     })());
+   const sources = capabilitySources(value, allowedCapabilities, environment);
+   const stateRoot = path.resolve(directory, value.stateRoot as string);
++  const capabilities = configuredCapabilities(sources, directory, environment, settings.buster.clusterInvokers, value.clusterBindings);
+   return new BusterRemotePlanService({
+     preparation,
+     store: new FileBusterPlanJobStore(stateRoot, {
+@@ -62,29 +66,43 @@
+     runtimeRoot: path.resolve(directory, value.runtimeRoot as string),
+     admission: settings.buster.admission, workerLocalRuntime: settings.workerLocalRuntime, executionPolicy: settings.buster.execution,
+     allowedCapabilities,
+-    ...configuredCapabilities(sources, directory, environment),
++    ...capabilities,
+   });
+ }
+ 
+-function configuredCapabilities(sources: ReturnType<typeof capabilitySources>, directory: string, environment: NodeJS.ProcessEnv) {
++function configuredCapabilities(sources: ReturnType<typeof capabilitySources>, directory: string, environment: NodeJS.ProcessEnv,
++  policy: BusterClusterInvokerSettings, bindingSource: unknown) {
+   const {
+-    directCommandSource, containerBuildSource, kubernetesFixtureSource, tailscaleExposureSource,
++    directCommandSource, containerBuildSource,
+     networkHttpSource, browserAxeSource, browserLighthouseSource, browserVisualSource,
+-    browserPlaywrightSource, securityScanSource, kubernetesRuntimeSecuritySource,
++    browserPlaywrightSource, securityScanSource,
+     directCommandCgroup, allowSampledProcessLimit, registryUsername, registryPassword, browserPlaywrightCgroup,
+   } = sources;
+   return {
+     ...directCommandOptions(directCommandSource, directory, directCommandCgroup, allowSampledProcessLimit),
+     ...containerBuildOptions(containerBuildSource, directory, registryUsername, registryPassword),
+-    ...kubernetesFixtureOptions(kubernetesFixtureSource, directory),
+-    ...tailscaleExposureOptions(tailscaleExposureSource, directory),
++    ...configuredClusterCapabilities(sources, policy, bindingSource),
+     ...networkHttpOptions(networkHttpSource, containerBuildSource, registryUsername, registryPassword),
+     ...browserAxeOptions(browserAxeSource),
+     ...browserLighthouseOptions(browserLighthouseSource),
+     ...browserVisualOptions(browserVisualSource),
+     ...browserPlaywrightOptions(browserPlaywrightSource, directory, browserPlaywrightCgroup),
+     ...securityScanOptions(securityScanSource, directory, environment),
+-    ...kubernetesRuntimeSecurityOptions(kubernetesRuntimeSecuritySource, directory),
++  };
++}
++
++function configuredClusterCapabilities(sources: ReturnType<typeof capabilitySources>,
++  policy: BusterClusterInvokerSettings, bindingSource: unknown) {
++  const { kubernetesFixtureEnabled, tailscaleExposureEnabled, kubernetesRuntimeSecuritySource,
++    containerBuildSource, registryUsername, registryPassword } = sources;
++  if (!kubernetesFixtureEnabled && !tailscaleExposureEnabled && !kubernetesRuntimeSecuritySource
++    && bindingSource === undefined) return {};
++  const binding = clusterRuntimeBinding(bindingSource, policy);
++  return {
++    ...kubernetesFixtureOptions(kubernetesFixtureEnabled, policy, binding, kubernetesFixtureEnabled
++      ? registryHealthConfiguration(true, containerBuildSource, registryUsername, registryPassword).origin : undefined),
++    ...tailscaleExposureOptions(tailscaleExposureEnabled, policy, binding),
++    ...kubernetesRuntimeSecurityOptions(kubernetesRuntimeSecuritySource, binding),
+   };
+ }
+ 
+--- a/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts
++++ b/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts
+@@ -35,7 +35,9 @@
+   readonly allowedNamespacePrefixes: readonly string[];
+   readonly allowedHostSuffixes: readonly string[];
+   readonly maximumExecutionMs: number;
+-  readonly pollIntervalMs?: number;
++  readonly pollIntervalMs: number;
++  readonly shortCommandTimeoutMs: number;
++  readonly maximumCommandOutputBytes: number;
+   readonly execute?: Execute;
+   readonly now?: () => Date;
+ }
+@@ -73,16 +75,24 @@
+   readonly #suffixes: readonly string[];
+   readonly #maximumExecutionMs: number;
+   readonly #pollIntervalMs: number;
++  readonly #shortCommandTimeoutMs: number;
++  readonly #maximumCommandOutputBytes: number;
+   readonly #execute: Execute;
+   readonly #now: () => Date;
+   readonly #environment: NodeJS.ProcessEnv;
+ 
+   constructor(options: TailscaleExposureCapabilityInvokerOptions) {
+     const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);
+-    this.#kubectl = fs.realpathSync(options.kubectlExecutable);
+-    if (!fs.statSync(this.#kubectl).isFile()) throw new Error('TAILSCALE_EXPOSURE_KUBECTL_INVALID');
++    if (!Number.isSafeInteger(options.shortCommandTimeoutMs) || options.shortCommandTimeoutMs < 1
++      || options.shortCommandTimeoutMs > MAX_TIMER_MS || !Number.isSafeInteger(options.maximumCommandOutputBytes)
++      || options.maximumCommandOutputBytes < 1 || !Number.isSafeInteger(options.pollIntervalMs)
++      || options.pollIntervalMs < 10 || options.pollIntervalMs > options.maximumExecutionMs) {
++      throw new Error('TAILSCALE_EXPOSURE_OPERATION_POLICY_INVALID');
++    }
++    this.#shortCommandTimeoutMs = options.shortCommandTimeoutMs;
++    this.#maximumCommandOutputBytes = options.maximumCommandOutputBytes;
+     if (!DNS_LABEL.test(options.controllerNamespace)) throw new Error('TAILSCALE_EXPOSURE_CONTROLLER_NAMESPACE_INVALID');
+-    if (!/^[a-z0-9.-]+$/u.test(options.leaseApiGroup) || !/^v[0-9]+(?:[a-z]+[0-9]+)?$/u.test(options.leaseApiVersion)) {
++    if (!/^[a-z0-9.-]+$/u.test(options.leaseApiGroup) || !/^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$/u.test(options.leaseApiVersion)) {
+       throw new Error('TAILSCALE_EXPOSURE_API_INVALID');
+     }
+     if (!Array.isArray(options.allowedNamespacePrefixes) || options.allowedNamespacePrefixes.length < 1
+@@ -96,7 +106,9 @@
+     this.#apiVersion = options.leaseApiVersion; this.#prefixes = [...new Set(options.allowedNamespacePrefixes)];
+     this.#suffixes = [...new Set(options.allowedHostSuffixes.map(suffix))];
+     this.#maximumExecutionMs = integer(options.maximumExecutionMs, 'maximumExecutionMs', 1, MAX_TIMER_MS);
+-    this.#pollIntervalMs = integer(options.pollIntervalMs ?? 1000, 'pollIntervalMs', 10, this.#maximumExecutionMs);
++    this.#pollIntervalMs = integer(options.pollIntervalMs, 'pollIntervalMs', 10, this.#maximumExecutionMs);
++    this.#kubectl = fs.realpathSync(options.kubectlExecutable);
++    if (!fs.statSync(this.#kubectl).isFile()) throw new Error('TAILSCALE_EXPOSURE_KUBECTL_INVALID');
+     this.#execute = options.execute ?? ((command, args, operation) => executeProcess(command, args, operation, processInputPolicy)); this.#now = options.now ?? (() => new Date());
+     this.#environment = { PATH: process.env.PATH, KUBECONFIG: process.env.KUBECONFIG,
+       KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,
+@@ -114,7 +126,7 @@
+     if (signal.aborted) throw new Error('TAILSCALE_EXPOSURE_CANCELLED');
+     try {
+       const result = await this.#execute(this.#kubectl, args, { input, signal, timeout: Math.min(timeout, this.#maximumExecutionMs),
+-        maxBuffer: 1024 * 1024, env: this.#environment });
++        maxBuffer: this.#maximumCommandOutputBytes, env: this.#environment });
+       return String(result.stdout ?? '');
+     } catch (error) {
+       if (signal.aborted) throw new Error('TAILSCALE_EXPOSURE_CANCELLED');
+@@ -160,7 +172,7 @@
+       servicePort: integer(spec.servicePort, 'servicePort', 1, 65535), expiresAt };
+   }
+   async #rollbackFailedPrepare(leaseName: string, owner: string, originalError: unknown): Promise<void> {
+-    const timeoutMs = Math.min(15_000, this.#maximumExecutionMs);
++    const timeoutMs = Math.min(this.#shortCommandTimeoutMs, this.#maximumExecutionMs);
+     const controller = new AbortController();
+     const timer = setTimeout(() => controller.abort(), timeoutMs);
+     try {
+@@ -195,7 +207,7 @@
+     const {leaseName,namespace,timeoutMs,path,hostname}=this.#prepareInput(payload);
+     const resource = `busternamespaceleases.${this.#apiGroup}`;
+     for (const verb of ['get', 'patch']) {
+-      const allowed = (await this.#run(['auth', 'can-i', verb, resource, '-n', this.#controllerNamespace], null, signal, 15_000)).trim();
++      const allowed = (await this.#run(['auth', 'can-i', verb, resource, '-n', this.#controllerNamespace], null, signal, this.#shortCommandTimeoutMs)).trim();
+       if (allowed !== 'yes') throw new Error(`TAILSCALE_EXPOSURE_RBAC_DENIED:${verb}`);
+     }
+     const before = await this.#lease(leaseName, signal); const verified = this.#verifyLease(before, payload, namespace);
+@@ -221,7 +233,7 @@
+         serviceName: verified.serviceName, servicePort: verified.servicePort, path, hostname: hostname ?? null } } };
+     try {
+       if (!alreadyOwned) await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
+-        '--type=merge', '-p', JSON.stringify(patch)], null, signal, 15_000);
++        '--type=merge', '-p', JSON.stringify(patch)], null, signal, this.#shortCommandTimeoutMs);
+       const ready = await this.#wait(leaseName, 'Ready', owner, signal, timeoutMs);
+       assertRequestedExposure(ready, payload);
+       this.#verifyLease(ready, payload, namespace);
+@@ -230,7 +242,7 @@
+       let handoff;
+       if(payload.retentionMode==='await-readiness'){
+         const transfer=exposureHandoffPatch(ready,identity);
+-        await this.#run(['patch','busternamespacelease',leaseName,'-n',this.#controllerNamespace,'--type=merge','-p',JSON.stringify(transfer.patch)],null,signal,15_000);
++        await this.#run(['patch','busternamespacelease',leaseName,'-n',this.#controllerNamespace,'--type=merge','-p',JSON.stringify(transfer.patch)],null,signal,this.#shortCommandTimeoutMs);
+         const transferred=await this.#wait(leaseName,'Ready',transfer.handoff.owner,signal,timeoutMs);
+         this.#verifyLease(transferred,payload,namespace);assertRequestedExposure(transferred,payload);
+         handoff=observedExposureHandoff(transferred,identity);
+@@ -266,7 +278,7 @@
+     const verified = this.#verifyLease(before, payload, namespace);
+     const resourceVersion = text(metadata.resourceVersion, 'lease.resourceVersion', 64);
+     const patch = JSON.stringify({ metadata: { resourceVersion }, spec: { purpose: 'gate', exposure: { provider: 'off' } } });
+-    await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace, '--type=merge', '-p', patch], null, signal, 15_000);
++    await this.#run(['patch', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace, '--type=merge', '-p', patch], null, signal, this.#shortCommandTimeoutMs);
+     const released = await this.#wait(leaseName, 'Off', identity.owner, signal, this.#maximumExecutionMs);
+     const status = object(released.status, 'lease.status');
+     if (status.namespaceName !== namespace || status.expiresAt !== verified.expiresAt) throw new Error('TAILSCALE_EXPOSURE_LEASE_CHANGED');
+--- /dev/null
++++ b/skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts
+@@ -0,0 +1,75 @@
++import { validateComponentSettings } from './swarm-bundle.ts';
++
++export interface BusterManifestPolicy {
++  readonly maximumNodes: number;
++  readonly maximumDepth: number;
++  readonly maximumAliases: number;
++  readonly maximumFlattenVisits: number;
++  readonly maximumFlattenPending: number;
++}
++export interface BusterClusterSharedSettings {
++  readonly kubectlExecutable: string;
++  readonly leaseApiGroup: string;
++  readonly leaseApiVersion: string;
++}
++export interface BusterKubernetesFixtureSettings {
++  readonly allowedNamespacePrefixes: readonly string[];
++  readonly registryRepositoryPrefixes: readonly string[];
++  readonly allowedSecretReferences: readonly string[];
++  readonly allowedStorageClasses: readonly string[];
++  readonly allowDefaultStorageClass: boolean;
++  readonly runnerServiceAccount: string;
++  readonly credentialReaderServiceAccount: string;
++  readonly maximumManifestBytes: number;
++  readonly maximumResources: number;
++  readonly maximumPersistentVolumeClaimBytes: number;
++  readonly maximumPersistentVolumeTotalBytes: number;
++  readonly maximumRetentionSeconds: number;
++  readonly maximumExecutionMs: number;
++  readonly pollIntervalMs: number;
++  readonly shortCommandTimeoutMs: number;
++  readonly commandOutputManifestMultiplier: number;
++  readonly diagnosticCodeUnits: number;
++  readonly manifest: BusterManifestPolicy;
++}
++export interface BusterTailscaleExposureSettings {
++  readonly allowedNamespacePrefixes: readonly string[];
++  readonly allowedHostSuffixes: readonly string[];
++  readonly maximumExecutionMs: number;
++  readonly pollIntervalMs: number;
++  readonly shortCommandTimeoutMs: number;
++  readonly maximumCommandOutputBytes: number;
++}
++export interface BusterClusterInvokerSettings {
++  readonly shared: BusterClusterSharedSettings;
++  readonly kubernetesFixture: BusterKubernetesFixtureSettings;
++  readonly tailscaleExposure: BusterTailscaleExposureSettings;
++}
++export function validateBusterClusterInvokerSettings(value: unknown): BusterClusterInvokerSettings {
++  validateComponentSettings('buster-cluster-invokers', value, 'SWARM_CONFIG_BUSTER_CLUSTER_INVALID');
++  const input = value as BusterClusterInvokerSettings;
++  const kube = input.kubernetesFixture;
++  const tail = input.tailscaleExposure;
++  if (kube.maximumPersistentVolumeTotalBytes < kube.maximumPersistentVolumeClaimBytes
++    || !Number.isSafeInteger(kube.maximumManifestBytes * kube.commandOutputManifestMultiplier)
++    || tail.pollIntervalMs > tail.maximumExecutionMs
++    || tail.allowedHostSuffixes.some(suffix => suffix.includes('..'))) {
++    throw new Error('SWARM_CONFIG_BUSTER_CLUSTER_COHERENCE_INVALID');
++  }
++  return Object.freeze({ shared: Object.freeze({ ...input.shared }),
++    kubernetesFixture: Object.freeze({ ...kube,
++      allowedNamespacePrefixes: Object.freeze([...kube.allowedNamespacePrefixes]),
++      registryRepositoryPrefixes: Object.freeze([...kube.registryRepositoryPrefixes]),
++      allowedSecretReferences: Object.freeze([...kube.allowedSecretReferences]),
++      allowedStorageClasses: Object.freeze([...kube.allowedStorageClasses]),
++      manifest: Object.freeze({ ...kube.manifest }) }),
++    tailscaleExposure: Object.freeze({ ...tail,
++      allowedNamespacePrefixes: Object.freeze([...tail.allowedNamespacePrefixes]),
++      allowedHostSuffixes: Object.freeze([...tail.allowedHostSuffixes]) }) });
++}
++
++export function rejectLegacyClusterEnvironment(environment: Readonly<Record<string, string | undefined>>): void {
++  for (const key of ['BUSTER_LEASE_API_GROUP', 'BUSTER_LEASE_API_VERSION', 'BUSTER_ALLOWED_SOURCE_SECRETS']) {
++    if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);
++  }
++}
+--- a/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
++++ b/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts
+@@ -17,7 +17,7 @@
+ const validateEntry = ajv.compile(entrySchema);
+ const validateComponent = ajv.compile(componentSchema);
+ const settingsDefinitionNames = ['buster-preparation', 'buster-admission', 'buster-dependency-readiness',
+-  'buster-execution', 'buster-execution-observation', 'buster-provider-runtime', 'buster-execution-reports', 'buster-execution-processInput'] as const;
++  'buster-cluster-invokers', 'buster-execution', 'buster-execution-observation', 'buster-provider-runtime', 'buster-execution-reports', 'buster-execution-processInput'] as const;
+ const settingsValidators = new Map(settingsDefinitionNames.map(name => [name, ajv.compile({
+   $defs: componentSchema.$defs, $ref: `#/$defs/${name}`,
+ })]));
+--- a/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
++++ b/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
+@@ -204,7 +204,8 @@
+         "preparation",
+         "admission",
+         "dependencyReadiness",
+-        "execution"
++        "execution",
++        "clusterInvokers"
+       ],
+       "properties": {
+         "preparation": {
+@@ -429,6 +430,9 @@
+         },
+         "execution": {
+           "$ref": "#/$defs/buster-execution"
++        },
++        "clusterInvokers": {
++          "$ref": "#/$defs/buster-cluster-invokers"
+         }
+       }
+     },
+@@ -1072,6 +1076,267 @@
+           "maximum": 2147483647
+         }
+       }
++    },
++    "buster-cluster-invokers": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "shared",
++        "kubernetesFixture",
++        "tailscaleExposure"
++      ],
++      "properties": {
++        "shared": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": [
++            "kubectlExecutable",
++            "leaseApiGroup",
++            "leaseApiVersion"
++          ],
++          "properties": {
++            "kubectlExecutable": {
++              "type": "string",
++              "minLength": 1,
++              "pattern": "^[^\\x00]+$"
++            },
++            "leaseApiGroup": {
++              "type": "string",
++              "minLength": 1,
++              "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$"
++            },
++            "leaseApiVersion": {
++              "type": "string",
++              "minLength": 1,
++              "pattern": "^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$"
++            }
++          }
++        },
++        "kubernetesFixture": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": [
++            "allowedNamespacePrefixes",
++            "registryRepositoryPrefixes",
++            "allowedSecretReferences",
++            "allowedStorageClasses",
++            "allowDefaultStorageClass",
++            "runnerServiceAccount",
++            "credentialReaderServiceAccount",
++            "maximumManifestBytes",
++            "maximumResources",
++            "maximumPersistentVolumeClaimBytes",
++            "maximumPersistentVolumeTotalBytes",
++            "maximumRetentionSeconds",
++            "maximumExecutionMs",
++            "pollIntervalMs",
++            "shortCommandTimeoutMs",
++            "commandOutputManifestMultiplier",
++            "diagnosticCodeUnits",
++            "manifest"
++          ],
++          "properties": {
++            "allowedNamespacePrefixes": {
++              "type": "array",
++              "minItems": 1,
++              "maxItems": 32,
++              "items": {
++                "type": "string",
++                "minLength": 1,
++                "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
++                "maxLength": 42
++              }
++            },
++            "registryRepositoryPrefixes": {
++              "type": "array",
++              "minItems": 1,
++              "maxItems": 32,
++              "items": {
++                "type": "string",
++                "minLength": 1,
++                "pattern": "^[a-z0-9]+(?:[._/-][a-z0-9]+)*$"
++              }
++            },
++            "allowedSecretReferences": {
++              "type": "array",
++              "minItems": 0,
++              "maxItems": 32,
++              "items": {
++                "type": "string",
++                "minLength": 1,
++                "pattern": "^[A-Za-z0-9._-]+$"
++              }
++            },
++            "allowedStorageClasses": {
++              "type": "array",
++              "minItems": 0,
++              "maxItems": 32,
++              "items": {
++                "type": "string",
++                "minLength": 1,
++                "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$",
++                "maxLength": 253
++              }
++            },
++            "allowDefaultStorageClass": {
++              "type": "boolean"
++            },
++            "runnerServiceAccount": {
++              "type": "string",
++              "minLength": 1,
++              "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
++            },
++            "credentialReaderServiceAccount": {
++              "type": "string",
++              "minLength": 1,
++              "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$"
++            },
++            "maximumManifestBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumResources": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumPersistentVolumeClaimBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumPersistentVolumeTotalBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumRetentionSeconds": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "maximumExecutionMs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 2147483647
++            },
++            "pollIntervalMs": {
++              "type": "integer",
++              "minimum": 50,
++              "maximum": 10000
++            },
++            "shortCommandTimeoutMs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 2147483647
++            },
++            "commandOutputManifestMultiplier": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "diagnosticCodeUnits": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            },
++            "manifest": {
++              "type": "object",
++              "additionalProperties": false,
++              "required": [
++                "maximumNodes",
++                "maximumDepth",
++                "maximumAliases",
++                "maximumFlattenVisits",
++                "maximumFlattenPending"
++              ],
++              "properties": {
++                "maximumNodes": {
++                  "type": "integer",
++                  "minimum": 1,
++                  "maximum": 9007199254740991
++                },
++                "maximumDepth": {
++                  "type": "integer",
++                  "minimum": 1,
++                  "maximum": 9007199254740991
++                },
++                "maximumAliases": {
++                  "type": "integer",
++                  "minimum": 1,
++                  "maximum": 9007199254740991
++                },
++                "maximumFlattenVisits": {
++                  "type": "integer",
++                  "minimum": 1,
++                  "maximum": 9007199254740991
++                },
++                "maximumFlattenPending": {
++                  "type": "integer",
++                  "minimum": 1,
++                  "maximum": 9007199254740991
++                }
++              }
++            }
++          }
++        },
++        "tailscaleExposure": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": [
++            "allowedNamespacePrefixes",
++            "allowedHostSuffixes",
++            "maximumExecutionMs",
++            "pollIntervalMs",
++            "shortCommandTimeoutMs",
++            "maximumCommandOutputBytes"
++          ],
++          "properties": {
++            "allowedNamespacePrefixes": {
++              "type": "array",
++              "minItems": 1,
++              "maxItems": 32,
++              "items": {
++                "type": "string",
++                "minLength": 1,
++                "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
++                "maxLength": 42
++              }
++            },
++            "allowedHostSuffixes": {
++              "type": "array",
++              "minItems": 1,
++              "maxItems": 32,
++              "items": {
++                "type": "string",
++                "minLength": 1,
++                "pattern": "^\\.[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?$"
++              }
++            },
++            "maximumExecutionMs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 2147483647
++            },
++            "pollIntervalMs": {
++              "type": "integer",
++              "minimum": 10,
++              "maximum": 2147483647
++            },
++            "shortCommandTimeoutMs": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 2147483647
++            },
++            "maximumCommandOutputBytes": {
++              "type": "integer",
++              "minimum": 1,
++              "maximum": 9007199254740991
++            }
++          }
++        }
++      }
+     }
+   },
+   "oneOf": [
+--- a/skills/common/plugin-runtime/foundation/config/swarm.ts
++++ b/skills/common/plugin-runtime/foundation/config/swarm.ts
+@@ -1,3 +1,4 @@
++import { validateBusterClusterInvokerSettings, type BusterClusterInvokerSettings } from './buster-cluster-invokers.ts';
+ import { validateBusterExecutionSettings, type BusterExecutionSettings } from './buster-execution.ts';
+ export { validateBusterExecutionSettings, type BusterExecutionSettings } from './buster-execution.ts';
+ import path from 'node:path';
+@@ -21,6 +22,7 @@
+   readonly maximumOutputBytes: number;
+ }
+ export interface BusterSettings {
++  readonly clusterInvokers: BusterClusterInvokerSettings;
+   readonly execution: BusterExecutionSettings;
+   readonly preparation: BusterPreparationSettings;
+   readonly admission: BusterAdmissionSettings;
+@@ -168,12 +170,15 @@
+   return loadSwarmSettings(environment).buster;
+ }
+ 
+-function busterSettingsFromConfig(value: unknown): BusterSettings {
++function busterSettingsFromConfig(value: unknown, componentDirectory: string): BusterSettings {
+   const preparation = busterPreparationSettingsFromConfig(value);
+   const admission = validateBusterAdmissionSettings((value as SwarmConfig).operator.buster?.admission);
+   const dependencyReadiness = validateBusterDependencyReadinessSettings((value as SwarmConfig).operator.buster?.dependencyReadiness);
+   const execution = validateBusterExecutionSettings((value as SwarmConfig).operator.buster?.execution);
+-  return Object.freeze({ preparation, admission, dependencyReadiness, execution });
++  const authored = validateBusterClusterInvokerSettings((value as SwarmConfig).operator.buster?.clusterInvokers);
++  const clusterInvokers = Object.freeze({ ...authored, shared: Object.freeze({ ...authored.shared,
++    kubectlExecutable: path.resolve(componentDirectory, authored.shared.kubectlExecutable) }) });
++  return Object.freeze({ preparation, admission, dependencyReadiness, execution, clusterInvokers });
+ }
+ 
+ export function validateBusterDependencyReadinessSettings(value: unknown): BusterDependencyReadinessSettings {
+@@ -254,7 +259,7 @@
+   } };
+   // Validate both domains before returning either: no partial bundle activation.
+   const prism = prismSettingsFromConfig(projection);
+-  const buster = busterSettingsFromConfig(projection);
++  const buster = busterSettingsFromConfig(projection, bundle.identity.generationDirectory);
+   return Object.freeze({ prism, buster, workerCore: bundle.components['worker-core'].settings as unknown as WorkerCoreSettings,
+     profile: bundle.profile, identity: bundle.identity });
+ }
+@@ -262,6 +267,7 @@
+ function rejectLegacyAuthors(environment: NodeJS.ProcessEnv): void {
+   for (const key of [...migratedEnvironmentKeys,
+     'BUSTER_V2_MAX_ARCHIVE_BYTES', 'BUSTER_V2_MAX_REQUEST_BYTES', 'BUSTER_V2_MAX_EXTRACTED_BYTES',
++    'BUSTER_LEASE_API_GROUP', 'BUSTER_LEASE_API_VERSION', 'BUSTER_ALLOWED_SOURCE_SECRETS',
+     'BUSTER_V2_MAX_ACTIVE_JOBS', 'BUSTER_V2_MAX_QUEUED_JOBS', 'BUSTER_V2_MAX_CONCURRENT_ATTEMPTS']) {
+     if (environment[key] !== undefined) throw new Error(`SWARM_CONFIG_LEGACY_OVERRIDE:${key}`);
+   }
+--- a/tests/fixtures/test-gate/buster-cli-profile.mjs
++++ b/tests/fixtures/test-gate/buster-cli-profile.mjs
+@@ -14,7 +14,8 @@
+     trustedBuiltinRoots: [plugins], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
+     providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: './platform-state',
+     shutdownTimeoutMs: 5000, orchestratorIssuerId: 'admission-cli', administrativeDecisionIssuers: [] }));
+-  fs.writeFileSync(runtime, JSON.stringify({ schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig: platform,
++  fs.writeFileSync(runtime, JSON.stringify({ schemaVersion: 'buster-remote-plan-runtime.v1',
++    platformConfig: platform,
+     host: '127.0.0.1', port: 0, tokenEnvironmentVariable: 'ADMISSION_TEST_TOKEN',
+     sourceAttestationPublicKeyEnvironmentVariable: 'ADMISSION_TEST_SOURCE_KEY', trustedSourceAuthority: 'nova:admission',
+     stateRoot: './plan-jobs', runtimeRoot: './runs', tarExecutable: '/usr/bin/tar', allowedCapabilities: [],
+--- /dev/null
++++ b/tests/fixtures/test-gate/cluster-command.mjs
+@@ -0,0 +1,37 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import childProcess from 'node:child_process';
++import { syncBuiltinESMExports } from 'node:module';
++
++export function clusterCommand(t, program) {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cluster-command-'));
++  const owned = []; const spawn = childProcess.spawn, kill = process.kill;
++  let hook;
++  t.after(async () => {
++    const failures = [];
++    try {
++      for (const row of owned) if (!row.closed) {
++        try { kill(-row.child.pid, 'SIGKILL'); } catch (error) { if (error.code !== 'ESRCH') failures.push(error); }
++      }
++      let timer;
++      try { await Promise.race([Promise.all(owned.map(row => row.close)), new Promise((_, reject) => {
++        timer = setTimeout(() => reject(new Error('CLUSTER_COMMAND_CLOSE_TIMEOUT')), 2000);
++      })]); } finally { clearTimeout(timer); }
++      if (failures.length) throw new AggregateError(failures, 'CLUSTER_COMMAND_CLEANUP_FAILED');
++      assert(owned.every(row => row.closed)); fs.rmSync(root, { recursive: true, force: true });
++    } finally { hook?.mock.restore(); syncBuiltinESMExports(); }
++  });
++  const binary = path.join(root, 'kubectl'); const marker = path.join(root, 'started.jsonl');
++  fs.writeFileSync(binary, `#!${process.execPath}\nconst fs=require('node:fs');const args=process.argv.slice(2);fs.appendFileSync(${JSON.stringify(marker)},JSON.stringify({pid:process.pid,args,at:Date.now()})+String.fromCharCode(10));\n${program}\n`, { flag: 'wx', mode: 0o700 });
++  hook = t.mock.method(childProcess, 'spawn', function (command, args, options) {
++    if (command !== binary) return Reflect.apply(spawn, childProcess, [command, args, options]);
++    assert.equal(options.detached, true);
++    const child = Reflect.apply(spawn, childProcess, [command, args, options]);
++    let close; const row = { child, closed: false, args: [...args], close: new Promise(resolve => { close = resolve; }) };
++    owned.push(row); child.once('close', () => { row.closed = true; close(); }); return child;
++  });
++  syncBuiltinESMExports();
++  return { root, binary, owned, calls: () => fs.readFileSync(marker, 'utf8').trim().split('\n').map(line => JSON.parse(line)) };
++}
+--- a/tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs
++++ b/tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs
+@@ -75,7 +75,7 @@
+   } };
+ }
+ export function invoker(root, api) {
+-  return new KubernetesFixtureCapabilityInvoker({ workspaceRoot: root, kubectlExecutable: process.execPath,
++  return new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova',  workspaceRoot: root, kubectlExecutable: process.execPath,
+     processInputPolicy: runnerExecutionPolicy.processInput, controllerNamespace: 'kubeclaw',
+     leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'],
+     allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [], allowedStorageClasses: [],
+--- /dev/null
++++ b/tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs
+@@ -0,0 +1,95 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { canonicalSwarmEntry, readTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
++import { validateBusterClusterInvokerSettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
++import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions } from '../../../skills/buster/engine/test-gates/production-cluster-options.ts';
++import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
++import { KubernetesFixtureCapabilityInvoker } from '../../../skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts';
++import { TailscaleExposureCapabilityInvoker } from '../../../skills/buster/engine/test-gates/tailscale-exposure-runtime.ts';
++import { boundedManifestDocuments } from '../../../skills/buster/engine/test-gates/kubernetes-manifest.ts';
++import { flattenDocuments } from '../../../skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts';
++import { localApi, request } from '../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs';
++
++function authored() { return structuredClone(readTestBundle(canonicalSwarmEntry)['buster-engine'].settings); }
++function runtime(root, settings, execute) {
++  const policy = validateBusterClusterInvokerSettings(settings.clusterInvokers);
++  const binding = clusterRuntimeBinding({ controllerNamespace: 'kubeclaw' }, policy);
++  const { kubernetesFixture } = kubernetesFixtureOptions(true, policy, binding, 'https://registry.local');
++  return createBusterCapabilityRuntime({ allowedCapabilities: new Set(['kubernetes.fixture']),
++    kubernetesFixture: { ...kubernetesFixture, execute } }, { jobRoot: root, workspaceRoot: root }, settings.execution.processInput);
++}
++for (const limit of [16, 80]) test(`actual kubectl diagnostic captures ${limit} code units`, async t => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cluster-diagnostic-'));
++  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
++  const settings = authored(); settings.clusterInvokers.shared.kubectlExecutable = process.execPath;
++  settings.clusterInvokers.kubernetesFixture.registryRepositoryPrefixes = ['app'];
++  settings.clusterInvokers.kubernetesFixture.diagnosticCodeUnits = limit;
++  const cause = Object.assign(new Error('actual injected CLI boundary'), { stderr: 'z'.repeat(200) });
++  let calls = 0;
++  const instance = runtime(root, settings, async () => { calls++; throw cause; });
++  t.after(() => instance.shutdown());
++  await assert.rejects(instance.invoker.invoke('kubernetes.fixture', request(root, 'delete'), new AbortController().signal), error => {
++    assert.equal(error.message, 'KUBERNETES_FIXTURE_KUBECTL_FAILED:' + 'z'.repeat(limit));
++    assert.equal(error.cause, cause); return true;
++  });
++  assert.equal(calls, 1, 'failure reaches real auth command before preparation mutation');
++});
++for (const field of ['maximumManifestBytes', 'maximumResources']) {
++  for (const low of [true, false]) test(`public invoker ${field}, low ${low}`, async t => {
++    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cluster-manifest-'));
++    t.after(() => fs.rmSync(root, { recursive: true, force: true }));
++    const settings = authored(); settings.clusterInvokers.shared.kubectlExecutable = process.execPath;
++    settings.clusterInvokers.kubernetesFixture.registryRepositoryPrefixes = ['app'];
++    settings.clusterInvokers.kubernetesFixture[field] = low ? (field === 'maximumManifestBytes' ? 100 : 1)
++      : (field === 'maximumManifestBytes' ? 1048576 : 64);
++    const api = localApi(); const instance = runtime(root, settings, api.execute.bind(api));
++    t.after(() => instance.shutdown());
++    const result = instance.invoker.invoke('kubernetes.fixture', request(root, 'delete'), new AbortController().signal);
++    if (low) { await assert.rejects(result, field === 'maximumManifestBytes' ? /MANIFEST_SIZE_INVALID/ : /RESOURCE_COUNT_INVALID/);
++      assert.equal(api.calls.length, 0, 'input quota rejects before external command'); }
++    else { assert.equal((await result).ok, true); assert(api.calls.some(call => call.args[0] === 'apply')); }
++  });
++}
++for (const [field, text, expected] of [
++  ['maximumNodes', 'root: {nested: {value: 1}}', /COMPLEXITY_LIMIT/],
++  ['maximumDepth', 'root: {nested: {value: 1}}', /COMPLEXITY_LIMIT/],
++  ['maximumAliases', 'first: &value {name: shared}\nsecond: *value\nthird: *value\n', /ALIAS_LIMIT/],
++]) test(`actual YAML consumer ${field}`, () => {
++  const policy = authored().clusterInvokers.kubernetesFixture.manifest;
++  assert.equal(boundedManifestDocuments(Buffer.from(text), policy).length, 1);
++  assert.throws(() => boundedManifestDocuments(Buffer.from(text), { ...policy, [field]: 1 }), expected);
++});
++for (const field of ['maximumFlattenVisits', 'maximumFlattenPending']) test(`actual List consumer ${field}`, () => {
++  const documents = [{ kind: 'List', items: [{ kind: 'ConfigMap' }, { kind: 'Service' }] }];
++  const policy = authored().clusterInvokers.kubernetesFixture.manifest;
++  assert.equal(flattenDocuments(documents, 64, policy).length, 2);
++  assert.throws(() => flattenDocuments(documents, 64, { ...policy, [field]: 1 }), /COMPLEXITY_LIMIT/);
++});
++
++for (const version of ['v1', 'v2', 'v1alpha1', 'v2beta12', 'v1alpha', 'v1beta', 'v1rc1', 'v1alpha1x', '']) {
++  test(`shared lease version domain reaches both actual constructors: ${version}`, t => {
++    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cluster-version-'));
++    t.after(() => fs.rmSync(root, { recursive: true, force: true }));
++    const settings = authored(); settings.clusterInvokers.shared.kubectlExecutable = process.execPath;
++    const validPolicy = validateBusterClusterInvokerSettings(settings.clusterInvokers);
++    const binding = clusterRuntimeBinding({ controllerNamespace: 'kubeclaw' }, validPolicy);
++    const kube = kubernetesFixtureOptions(true, validPolicy, binding, 'https://registry.local').kubernetesFixture;
++    const tail = tailscaleExposureOptions(true, validPolicy, binding).tailscaleExposure;
++    const kubeConstructor = () => new KubernetesFixtureCapabilityInvoker({ ...kube, workspaceRoot: root,
++      leaseApiVersion: version, processInputPolicy: settings.execution.processInput });
++    const tailConstructor = () => new TailscaleExposureCapabilityInvoker({ ...tail,
++      leaseApiVersion: version, processInputPolicy: settings.execution.processInput });
++    settings.clusterInvokers.shared.leaseApiVersion = version;
++    if (['v1', 'v2', 'v1alpha1', 'v2beta12'].includes(version)) {
++      assert.doesNotThrow(() => validateBusterClusterInvokerSettings(settings.clusterInvokers));
++      assert.doesNotThrow(kubeConstructor); assert.doesNotThrow(tailConstructor);
++    } else {
++      assert.throws(() => validateBusterClusterInvokerSettings(settings.clusterInvokers), /SWARM_CONFIG/);
++      assert.throws(kubeConstructor, { message: 'KUBERNETES_FIXTURE_API_VERSION_INVALID' });
++      assert.throws(tailConstructor, { message: 'TAILSCALE_EXPOSURE_API_INVALID' });
++    }
++  });
++}
+--- /dev/null
++++ b/tests/verification/contracts/buster-cluster-output-consumers.test.mjs
+@@ -0,0 +1,83 @@
++import assert from 'node:assert/strict';
++import childProcess from 'node:child_process';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import process from 'node:process';
++import { syncBuiltinESMExports } from 'node:module';
++import test from 'node:test';
++import { readTestBundle, writeTestBundle, canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
++import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
++import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions } from '../../../skills/buster/engine/test-gates/production-cluster-options.ts';
++import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
++
++function fixture(t, program) {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'process-input-invoker-'));
++  const realSpawn = childProcess.spawn, realKill = process.kill;
++  let child, closed, actualClose = false, spawnHook, killHook;
++  const signals = [];
++  let output = '';
++  t.after(async () => {
++    let signalError;
++    try {
++      if (child && !actualClose) {
++        try { realKill(-child.pid, 'SIGKILL'); }
++        catch (error) { if (error.code !== 'ESRCH') signalError = error; }
++        let timer;
++        try { await Promise.race([closed, new Promise((_, reject) => {
++          timer = setTimeout(() => reject(new Error('OWNED_INVOKER_CHILD_NOT_CLOSED')), 2000);
++        })]); } finally { clearTimeout(timer); }
++      }
++      if (signalError) throw signalError;
++      fs.rmSync(root, { recursive: true, force: true });
++    } finally { spawnHook?.mock.restore(); killHook?.mock.restore(); syncBuiltinESMExports(); }
++  });
++  const binary = path.join(root, 'kubectl-fixture');
++  fs.writeFileSync(binary, `#!${process.execPath}\n${program}\n`, { mode: 0o700, flag: 'wx' });
++  spawnHook = t.mock.method(childProcess, 'spawn', function (command, args, options) {
++    assert.equal(command, binary); assert.equal(child, undefined); assert.equal(options.detached, true);
++    child = Reflect.apply(realSpawn, childProcess, [command, args, options]);
++    closed = new Promise(resolve => child.once('close', () => { actualClose = true; resolve(); }));
++    child.stdout.on('data', bytes => { output += bytes.toString(); });
++    return child;
++  });
++  killHook = t.mock.method(process, 'kill', function (pid, signal) {
++    if (child && pid === -child.pid && signal !== 0) signals.push({ signal, at: performance.now() });
++    return Reflect.apply(realKill, process, [pid, signal]);
++  });
++  syncBuiltinESMExports();
++  return { root, binary, signals, observe: () => ({ actualClose, output }) };
++}
++
++for (const capability of ['kubernetes.fixture', 'kubernetes.exposure']) {
++  for (const large of [false, true]) test(`real ${capability} output limit profile ${large}`, { timeout: 10000 }, async t => {
++    const output = JSON.stringify({ metadata: { annotations: {} }, padding: 'x'.repeat(800) });
++    const f = fixture(t, `process.stdout.write(${JSON.stringify(output)});`);
++    const documents = readTestBundle(canonicalSwarmEntry);
++    const selected = documents['buster-engine'].settings.clusterInvokers;
++    selected.shared.kubectlExecutable = f.binary;
++    selected.kubernetesFixture.maximumManifestBytes = 256;
++    selected.kubernetesFixture.commandOutputManifestMultiplier = large ? 8 : 1;
++    selected.tailscaleExposure.maximumCommandOutputBytes = large ? 2048 : 256;
++    const entry = path.join(f.root, 'bundle/swarm.config.json'); writeTestBundle(entry, documents);
++    const snapshot = loadSwarmSettings({ SWARM_CONFIG: entry });
++    const policy = snapshot.buster.clusterInvokers;
++    const binding = clusterRuntimeBinding({ controllerNamespace: 'test' }, policy);
++    const options = { allowedCapabilities: new Set([capability]),
++      ...kubernetesFixtureOptions(capability === 'kubernetes.fixture', policy, binding, 'https://registry.test'),
++      ...tailscaleExposureOptions(capability === 'kubernetes.exposure', policy, binding) };
++    const runtime = createBusterCapabilityRuntime(options, { jobRoot: f.root, workspaceRoot: f.root }, snapshot.buster.execution.processInput);
++    t.after(() => runtime.shutdown());
++    // Mutate caller-owned options after construction; the actual command still uses the captured quota.
++    if (options.kubernetesFixture) options.kubernetesFixture.commandOutputManifestMultiplier = large ? 1 : 8;
++    if (options.tailscaleExposure) options.tailscaleExposure.maximumCommandOutputBytes = large ? 256 : 2048;
++    const request = { operation: 'release', resource: { type: capability,
++      canonicalId: `${capability === 'kubernetes.fixture' ? 'kubernetes-fixture' : 'kubernetes-exposure'}:attempt:one` },
++      payload: { leaseName: 'test-one', namespace: 'test-one', serviceName: 'app', servicePort: 80,
++        expiresAt: '2099-01-01T00:00:00.000Z', path: '/' } };
++    if (large) assert.equal((await runtime.invoker.invoke(capability, request, new AbortController().signal)).ok, true);
++    else await assert.rejects(runtime.invoker.invoke(capability, request, new AbortController().signal), /OUTPUT_LIMIT/);
++    assert.equal(f.observe().actualClose, true, 'genuine child must close, not fail before spawn');
++    assert(f.observe().output.length > 256, 'real output crosses low policy, below high policy');
++  });
++}
+--- /dev/null
++++ b/tests/verification/contracts/buster-cluster-poll-consumers.test.mjs
+@@ -0,0 +1,66 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { readTestBundle, canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
++import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions } from '../../../skills/buster/engine/test-gates/production-cluster-options.ts';
++import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
++import { request, localApi } from '../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs';
++
++for (const capability of ['kubernetes.fixture', 'kubernetes.exposure']) {
++  for (const poll of [50, 200]) test(`actual ${capability} polling cadence ${poll}`, { timeout: 10000 }, async t => {
++    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cluster-poll-'));
++    t.after(() => fs.rmSync(root, { recursive: true, force: true }));
++    const settings = readTestBundle(canonicalSwarmEntry)['buster-engine'].settings;
++    const policy = settings.clusterInvokers; policy.shared.kubectlExecutable = process.execPath;
++    policy.kubernetesFixture.registryRepositoryPrefixes = ['app'];
++    policy.kubernetesFixture.pollIntervalMs = poll; policy.tailscaleExposure.pollIntervalMs = poll;
++    const binding = clusterRuntimeBinding({ controllerNamespace: 'kubeclaw' }, policy);
++    const calls = []; const api = localApi();
++    const expiry = '2099-01-01T00:00:00.000Z';
++    const lease = { metadata: { name: 'test-one', resourceVersion: '1', generation: 1, annotations: {} },
++      spec: { namespaceName: 'test-one', serviceName: 'app', servicePort: 80 },
++      status: { phase: 'Ready', namespaceName: 'test-one', expiresAt: expiry, createdAt: '2026-09-21T00:00:00.000Z' } };
++    let owner;
++    const execute = async (command, args, options) => {
++      if (capability === 'kubernetes.fixture') {
++        if (args[0] === 'get' && args[1] === 'busternamespacelease') {
++          calls.push(performance.now());
++          if (calls.length < 3) return { stdout: JSON.stringify({ status: { phase: 'Pending' } }) };
++        }
++        return api.execute(command, args, options);
++      }
++      if (args[0] === 'auth') return { stdout: 'yes' };
++      if (args[0] === 'patch') {
++        const patch = JSON.parse(args[args.indexOf('-p') + 1]);
++        Object.assign(lease.metadata.annotations, patch.metadata.annotations); Object.assign(lease.spec, patch.spec);
++        owner = patch.metadata.annotations['kubeclaw.forgestack.ai/exposure-owner']; lease.metadata.generation++;
++        return { stdout: '{}' };
++      }
++      if (args[0] === 'get') {
++        if (owner) {
++          calls.push(performance.now());
++          Object.assign(lease.status, { exposureOwner: owner, exposureGeneration: lease.metadata.generation,
++            exposurePhase: calls.length < 3 ? 'Pending' : 'Ready', previewUrl: 'https://preview.ts.net/', exposureHostname: 'preview.ts.net' });
++        }
++        return { stdout: JSON.stringify(lease) };
++      }
++      throw new Error('UNEXPECTED_CLUSTER_COMMAND');
++    };
++    const options = capability === 'kubernetes.fixture' ? kubernetesFixtureOptions(true, policy, binding, 'https://registry.local')
++      : tailscaleExposureOptions(true, policy, binding);
++    if (options.kubernetesFixture) options.kubernetesFixture.execute = execute;
++    if (options.tailscaleExposure) options.tailscaleExposure.execute = execute;
++    const runtime = createBusterCapabilityRuntime({ allowedCapabilities: new Set([capability]), ...options },
++      { jobRoot: root, workspaceRoot: root }, settings.execution.processInput);
++    t.after(() => runtime.shutdown());
++    const input = capability === 'kubernetes.fixture' ? request(root, 'delete') : {
++      operation: 'prepare', resource: { type: capability, canonicalId: 'kubernetes-exposure:attempt:one' },
++      payload: { leaseName: 'test-one', namespace: 'test-one', serviceName: 'app', servicePort: 80,
++        expiresAt: expiry, path: '/', readinessTimeoutMs: 1500 } };
++    assert.equal((await runtime.invoker.invoke(capability, input, new AbortController().signal)).ok, true);
++    assert.equal(calls.length, 3); assert(calls[2] - calls[0] >= 2 * poll - 5);
++    assert(calls[2] - calls[0] < 1000, 'restoring fixed 1000 ms cannot satisfy the authored cadence');
++  });
++}
+--- /dev/null
++++ b/tests/verification/contracts/buster-cluster-timing-consumers.test.mjs
+@@ -0,0 +1,39 @@
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import { readTestBundle, canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
++import { clusterCommand } from '../../fixtures/test-gate/cluster-command.mjs';
++import { request } from '../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs';
++import { clusterRuntimeBinding, kubernetesFixtureOptions, tailscaleExposureOptions } from '../../../skills/buster/engine/test-gates/production-cluster-options.ts';
++import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
++import { validateBusterClusterInvokerSettings } from '../../../skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';
++
++function create(t, command, capability, timeout) {
++  const settings = readTestBundle(canonicalSwarmEntry)['buster-engine'].settings;
++  settings.clusterInvokers.shared.kubectlExecutable = command.binary;
++  settings.clusterInvokers.kubernetesFixture.registryRepositoryPrefixes = ['app'];
++  settings.clusterInvokers.kubernetesFixture.shortCommandTimeoutMs = timeout;
++  settings.clusterInvokers.tailscaleExposure.shortCommandTimeoutMs = timeout;
++  const policy = validateBusterClusterInvokerSettings(settings.clusterInvokers);
++  const binding = clusterRuntimeBinding({ controllerNamespace: 'kubeclaw' }, policy);
++  const runtime = createBusterCapabilityRuntime({ allowedCapabilities: new Set([capability]),
++    ...kubernetesFixtureOptions(capability === 'kubernetes.fixture', policy, binding, 'https://registry.local'),
++    ...tailscaleExposureOptions(capability === 'kubernetes.exposure', policy, binding) },
++    { jobRoot: command.root, workspaceRoot: command.root }, settings.execution.processInput);
++  t.after(() => runtime.shutdown()); return runtime;
++}
++for (const capability of ['kubernetes.fixture', 'kubernetes.exposure']) {
++  for (const short of [600, 2000]) test(`${capability} actual auth process uses short deadline ${short}`, { timeout: 15000 }, async t => {
++    // The first auth command has an observable actual start, then exits after the selected low deadline.
++    // Subsequent deliberate RBAC denial terminates the positive control without mutating a cluster.
++    const command = clusterCommand(t, "if(args[0]!=='auth')throw new Error('UNEXPECTED_NON_AUTH');setTimeout(()=>process.stdout.write('no'),1000);");
++    const runtime = create(t, command, capability, short);
++    const input = capability === 'kubernetes.fixture' ? request(command.root, 'delete') : {
++      operation: 'prepare', resource: { type: capability, canonicalId: 'kubernetes-exposure:attempt:one' },
++      payload: { leaseName: 'test-one', namespace: 'test-one', serviceName: 'app', servicePort: 80,
++        expiresAt: '2099-01-01T00:00:00.000Z', path: '/', readinessTimeoutMs: 5000 } };
++    await assert.rejects(runtime.invoker.invoke(capability, input, new AbortController().signal),
++      short === 600 ? /TIMEOUT/ : /RBAC_DENIED/);
++    assert.equal(command.calls().length, 1); assert.equal(command.calls()[0].args[0], 'auth');
++    assert.equal(command.owned.length, 1); assert(command.owned.every(row => row.closed));
++  });
++}
+--- a/tests/verification/contracts/buster-process-input-callers.test.mjs
++++ b/tests/verification/contracts/buster-process-input-callers.test.mjs
+@@ -52,10 +52,12 @@
+     const common = { kubectlExecutable: f.binary, controllerNamespace: 'test', leaseApiGroup: 'example.test',
+       leaseApiVersion: 'v1', allowedNamespacePrefixes: ['test'], maximumExecutionMs: 500 };
+     const runtime = createBusterCapabilityRuntime({ allowedCapabilities: new Set([capability]),
+-      kubernetesFixture: { ...common, allowedRegistryPrefixes: ['registry.test/app'], allowedSecretReferences: [],
++      kubernetesFixture: { ...common, pollIntervalMs: 1000, runnerSubject: 'test/agent-buster', credentialReaderSubject: 'test/agent-nova',
++        shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096,
++        manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, allowedRegistryPrefixes: ['registry.test/app'], allowedSecretReferences: [],
+         allowedStorageClasses: [], allowDefaultStorageClass: false, maximumManifestBytes: 4096, maximumResources: 1,
+         maximumPersistentVolumeClaimBytes: 1, maximumPersistentVolumeTotalBytes: 1, maximumRetentionSeconds: 60 },
+-      tailscaleExposure: { ...common, allowedHostSuffixes: ['.ts.net'], pollIntervalMs: 100 },
++      tailscaleExposure: { ...common, shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, allowedHostSuffixes: ['.ts.net'], pollIntervalMs: 100 },
+     }, { jobRoot: f.root, workspaceRoot: f.root }, policy);
+     t.after(() => runtime.shutdown());
+     policy.terminationGraceMs = 1200;
+--- a/tests/verification/contracts/buster-report-policy-parity.test.mjs
++++ b/tests/verification/contracts/buster-report-policy-parity.test.mjs
+@@ -28,6 +28,7 @@
+   if (name === 'prism') fs.copyFileSync(path.join(chart, 'ci-values.yaml'), valuesFile);
+   else {
+     const values = yaml.load(fs.readFileSync('my-values/buster-values.yaml', 'utf8'));
++    values.busterComponentFile = 'files/config/buster-engine.config.json'; // Explicit full profile exercised by original mutations.
+     const policy = yaml.load(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8'));
+     policy.nodeName = 'component-render-test'; policy.pools.buster.namespace = 'default';
+     values.busterNative = { nodeName: policy.nodeName, namespace: 'default', policyDigest: nativePoolPolicy(policy, 'buster').policyDigest };
+--- a/tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts
++++ b/tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts
+@@ -40,9 +40,13 @@
+ assert.match(livePreflight, /createProductionNovaTestGate/u);
+ assert.match(livePreflight, /approvedSecretCopyVerified/u);
+ const runtimeEntrypoint = fs.readFileSync('docker/buster-runtime-entrypoint.sh', 'utf8');
+-assert.match(runtimeEntrypoint, /BUSTER_ALLOWED_SOURCE_SECRETS/u);
++assert.match(runtimeEntrypoint, /buster-cluster-preflight\.mjs/u);
++assert.match(fs.readFileSync('skills/common/plugin-runtime/foundation/config/swarm.ts', 'utf8'), /BUSTER_ALLOWED_SOURCE_SECRETS/u);
+ const busterValues = fs.readFileSync('my-values/buster-values.yaml', 'utf8');
+-assert.match(busterValues, /BUSTER_ALLOWED_SOURCE_SECRETS/u);
++assert.match(busterValues, /busterComponentFile: files\/config\/profiles\/buster-engine\.runtime\.config\.json/u);
++const runtimeComponent = JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json', 'utf8'));
++assert.deepEqual(runtimeComponent.settings.clusterInvokers.kubernetesFixture.allowedSecretReferences,
++  ['kubeclaw-fixture-preflight', 'prism-test-provider', 'prism-test-runtime', 'prism-test-postgresql-auth', 'prism-test-ghcr']);
+ 
+ const scaffoldRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-scaffold-'));
+ try {
+--- a/tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts
+@@ -84,14 +84,14 @@
+ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-implementation-'));
+ try {
+   const executable = resolveExecutable('kubectl');
+-  assert.throws(() => new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary, kubectlExecutable: executable,
++  assert.throws(() => new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova', pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary, kubectlExecutable: executable,
+     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
+     allowedStorageClasses: ['example.com/fast'], allowDefaultStorageClass: false,
+     maximumManifestBytes: 1024 * 1024, maximumResources: 64,
+     maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 15 * 1024 ** 3,
+     maximumRetentionSeconds: 3600, maximumExecutionMs: 120_000 }), /KUBERNETES_FIXTURE_STORAGE_CLASSES_INVALID/u);
+-  const capability = new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary, kubectlExecutable: executable,
++  const capability = new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova', pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary, kubectlExecutable: executable,
+     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
+     allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
+@@ -128,7 +128,7 @@
+   const deadlinePath = path.join(temporary, 'deadline.yaml');
+   fs.writeFileSync(deadlinePath, deadlineManifest);
+   const podTimeouts: number[] = [];
+-  const deadlineCapability = new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary,
++  const deadlineCapability = new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova',  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary,
+     kubectlExecutable: executable, controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai',
+     leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'],
+     allowedSecretReferences: [], allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
+@@ -181,7 +181,7 @@
+   await assert.rejects(() => invokeFixture(fixtureRequest('replica-total', `---\napiVersion: apps\/v1\nkind: StatefulSet\nmetadata:\n  name: replicated\nspec:\n  replicas: 16\n  serviceName: app\n  selector:\n    matchLabels:\n      app: app\n  template:\n    metadata:\n      labels:\n        app: app\n    spec:\n      securityContext:\n        runAsNonRoot: true\n        seccompProfile:\n          type: RuntimeDefault\n      containers:\n        - name: app\n          image: registry.local/app@${digest}\n          securityContext:\n            runAsNonRoot: true\n            allowPrivilegeEscalation: false\n            capabilities:\n              drop: [ALL]\n  volumeClaimTemplates:\n    - metadata:\n        name: state\n      spec:\n        storageClassName: fast\n        resources:\n          requests:\n            storage: 1Gi\n`)), /KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED/u);
+   await assert.rejects(() => invokeFixture(fixtureRequest('ephemeral-volume', `---\napiVersion: v1\nkind: Pod\nmetadata:\n  name: ephemeral\nspec:\n  securityContext:\n    runAsNonRoot: true\n    seccompProfile:\n      type: RuntimeDefault\n  containers:\n    - name: app\n      image: registry.local/app@${digest}\n      securityContext:\n        runAsNonRoot: true\n        allowPrivilegeEscalation: false\n        capabilities:\n          drop: [ALL]\n  volumes:\n    - name: data\n      ephemeral:\n        volumeClaimTemplate:\n          spec:\n            storageClassName: fast\n            resources:\n              requests:\n                storage: 100Gi\n`)), /KUBERNETES_FIXTURE_GENERIC_EPHEMERAL_VOLUME_DENIED/u);
+ 
+-  const validationCapability = new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary,
++  const validationCapability = new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova', pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary,
+     kubectlExecutable: executable, controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai',
+     leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'],
+     allowedSecretReferences: [], allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
+--- a/tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts
++++ b/tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts
+@@ -97,7 +97,7 @@
+   const liveRunRoot = path.dirname(generatedWorkspace.artifactRoot);
+   const liveArtifactRoot = `${generatedWorkspace.artifactRoot}-suite5-artifacts`;
+   const liveObservabilityRoot = `${generatedWorkspace.artifactRoot}-suite5-observability`;
+-  const kubernetes = new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: liveRunRoot,
++  const kubernetes = new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova',  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: liveRunRoot,
+     kubectlExecutable: '/usr/local/bin/kubectl',
+     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: [`${registryHost}/${repositoryName}`],
+--- a/tests/verification/contracts/check-pipeline-remote-runtime-config.mts
++++ b/tests/verification/contracts/check-pipeline-remote-runtime-config.mts
+@@ -87,7 +87,8 @@
+   }));
+   const busterConfig = path.join(temporary, 'buster.json');
+   const baseBuster = {
+-    schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig, host: '127.0.0.1', port: 0,
++    schemaVersion: 'buster-remote-plan-runtime.v1',
++    platformConfig, host: '127.0.0.1', port: 0,
+     tokenEnvironmentVariable: tokenName, sourceAttestationPublicKeyEnvironmentVariable: sourcePublicKeyName,
+     trustedSourceAuthority: 'nova:production', stateRoot: './buster-state', runtimeRoot: './buster-runs',
+     tarExecutable: '/usr/bin/tar',
+@@ -170,6 +171,68 @@
+   fs.writeFileSync(busterConfig, JSON.stringify({ ...healthConfiguration, containerBuild: { ...containerBuild, registryReference: 'foreign.example.test' } }));
+   assert.throws(() => loadProductionBusterRemotePlanRuntime(busterConfig, registryEnvironment), /BUSTER_REGISTRY_HEALTH_ENDPOINT_MISMATCH/u);
+ 
++  // Cluster policy rejects before constructing any new store. Existing originals above remain intact.
++  const clusterConfiguration = { ...baseBuster, clusterBindings: { controllerNamespace: 'kubeclaw' },
++    stateRoot: './cluster-negative-state',
++    allowedCapabilities: ['kubernetes.fixture'], containerBuild };
++  const clusterLoad = () => loadProductionBusterRemotePlanRuntime(busterConfig, registryEnvironment);
++  const noClusterStore = () => assert.equal(fs.existsSync(path.join(temporary, 'cluster-negative-state')), false);
++  fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, stateRoot: './cluster-disabled-state' }));
++  const disabledClusterRuntime = clusterLoad();
++  const disabledClusterAddress = await disabledClusterRuntime.start();
++  assert.equal(disabledClusterAddress.address, '127.0.0.1');
++  await disabledClusterRuntime.stop();
++  for (const clusterBindings of [null, {}, { controllerNamespace: '' },
++    { controllerNamespace: 'kubeclaw', registryReference: containerBuild.registryReference }]) {
++    fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, stateRoot: './cluster-negative-state', clusterBindings }));
++    assert.throws(clusterLoad, /BUSTER_(?:REMOTE_CONFIG_INVALID:clusterBindings|CLUSTER_BINDINGS_INVALID)/); noClusterStore();
++  }
++  fs.writeFileSync(busterConfig, JSON.stringify({ ...clusterConfiguration, clusterBindings: undefined }));
++  assert.throws(clusterLoad, /BUSTER_REMOTE_CONFIG_INVALID:clusterBindings/); noClusterStore();
++  for (const retired of ['kubernetesFixture', 'tailscaleExposure']) {
++    fs.writeFileSync(busterConfig, JSON.stringify({ ...clusterConfiguration, [retired]: {} }));
++    assert.throws(clusterLoad, /SWARM_CONFIG_LEGACY_OVERRIDE/); noClusterStore();
++  }
++  for (const registryReference of ['', containerBuild.registryReference, 'foreign.example.test']) {
++    fs.writeFileSync(busterConfig, JSON.stringify({ ...clusterConfiguration,
++      clusterBindings: { controllerNamespace: 'kubeclaw', registryReference } }));
++    assert.throws(clusterLoad, /BUSTER_CLUSTER_BINDINGS_INVALID/); noClusterStore();
++  }
++  fs.writeFileSync(busterConfig, JSON.stringify({ ...clusterConfiguration,
++    containerBuild: { ...containerBuild, registryReference: 'foreign.example.test' } }));
++  assert.throws(clusterLoad, /BUSTER_REGISTRY_HEALTH_ENDPOINT_MISMATCH/); noClusterStore();
++  fs.writeFileSync(busterConfig, JSON.stringify({ ...clusterConfiguration, containerBuild: undefined }));
++  assert.throws(clusterLoad, /BUSTER_REGISTRY_HEALTH_CONFIG_INVALID/); noClusterStore();
++  fs.writeFileSync(busterConfig, JSON.stringify(clusterConfiguration));
++  const clusterRuntime = clusterLoad();
++  const clusterAddress = await clusterRuntime.start();
++  assert.equal(clusterAddress.address, '127.0.0.1');
++  await clusterRuntime.stop();
++
++  // Each other real cluster route independently requires its namespace binding.
++  const remainingClusterRoutes = [
++    { capability: 'kubernetes.exposure', source: {} },
++    { capability: 'kubernetes.runtime-security', source: { kubernetesRuntimeSecurity: {
++      allowedNamespacePrefixes: ['test'], maximumExecutionMs: 5000,
++      maximumOutputBytes: 1048576, maximumObservationAgeMs: 5000, pollIntervalMs: 1000,
++    } } },
++  ];
++  for (const [index, route] of remainingClusterRoutes.entries()) {
++    const stateRoot = `./cluster-route-${index}-state`;
++    const configuration = { ...baseBuster, ...route.source, stateRoot,
++      allowedCapabilities: [route.capability] };
++    fs.writeFileSync(busterConfig, JSON.stringify(configuration));
++    assert.throws(clusterLoad, { message: 'BUSTER_REMOTE_CONFIG_INVALID:clusterBindings' });
++    assert.equal(fs.existsSync(path.join(temporary, stateRoot)), false,
++      `${route.capability}: missing binding must reject before store construction`);
++    fs.writeFileSync(busterConfig, JSON.stringify({ ...configuration,
++      clusterBindings: { controllerNamespace: 'kubeclaw' } }));
++    const configuredRoute = clusterLoad();
++    const routeAddress = await configuredRoute.start();
++    assert.equal(routeAddress.address, '127.0.0.1');
++    await configuredRoute.stop();
++  }
++
+   fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, host: '0.0.0.0' }));
+   assert.ok(loadProductionBusterRemotePlanRuntime(busterConfig,
+     { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }) instanceof BusterRemotePlanRuntime);
+--- a/tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts
++++ b/tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts
+@@ -70,7 +70,7 @@
+ assert.match(controller, /legacyMutableExposureDigest/u);
+ assert.match(controller, /return "https:\/\/" \+ host \+ "\/"/u);
+ const kubectlExecutable = resolveExecutable('kubectl');
+-const capability = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
++const capability = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
+   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000 });
+ await assert.rejects(() => capability.invoke('kubernetes.exposure', { operation: 'prepare',
+@@ -81,7 +81,7 @@
+ const expiresAt = new Date(Date.now() + 60_000).toISOString();
+ let exposureOwner: string | undefined;
+ let resourceVersion = '1';
+-const cancellable = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
++const cancellable = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
+   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+   async execute(_command, args) {
+@@ -120,7 +120,7 @@
+ assert.match(patches[1]!, /"provider":"off"/u);
+ const rollbackFailure = Object.freeze(new Error('rollback unavailable'));
+ let failedOwner: string | undefined;
+-const failedRollback = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
++const failedRollback = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
+   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+   async execute(_command, args) {
+@@ -154,7 +154,7 @@
+ const stalePatches: string[] = [];
+ let staleOwner: string | undefined;
+ let supersededOwner: string | undefined;
+-const staleRollback = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
++const staleRollback = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
+   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+   async execute(_command, args) {
+@@ -190,7 +190,7 @@
+ const ownershipPatches: string[] = [];
+ let requestedOwner: string | undefined;
+ let ownershipReads = 0;
+-const supersededReady = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
++const supersededReady = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576, pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable,
+   controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 30_000,
+   async execute(_command, args) {
+--- a/tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts
++++ b/tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts
+@@ -1,7 +1,9 @@
++import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+ import assert from 'node:assert/strict';
+ import { TailscaleExposureCapabilityInvoker, NetworkHttpCapabilityInvoker } from '@kubeclaw/buster-engine';
+ 
+ if (process.env.KUBECLAW_TAILSCALE_EXPOSURE_LIVE !== '1') throw new Error('KUBECLAW_TAILSCALE_EXPOSURE_LIVE=1 is required');
++const clusterEndpoint = loadSwarmSettings(process.env).buster.clusterInvokers.shared;
+ const leaseName = process.env.KUBECLAW_TAILSCALE_LIVE_LEASE;
+ const namespace = process.env.KUBECLAW_TAILSCALE_LIVE_NAMESPACE;
+ const serviceName = process.env.KUBECLAW_TAILSCALE_LIVE_SERVICE;
+@@ -10,8 +12,8 @@
+ if (!leaseName || !namespace || !serviceName || !Number.isSafeInteger(servicePort) || !expiresAt
+   || !Number.isFinite(Date.parse(expiresAt))) throw new Error('TAILSCALE_EXPOSURE_LIVE_INPUT_REQUIRED');
+ const controllerNamespace = process.env.KUBECLAW_CONTROLLER_NAMESPACE ?? 'kubeclaw';
+-const exposure = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace,
+-  leaseApiGroup: process.env.KUBECLAW_LEASE_API_GROUP ?? 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
++const exposure = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace,
++  leaseApiGroup: clusterEndpoint.leaseApiGroup, leaseApiVersion: clusterEndpoint.leaseApiVersion,
+   allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 300_000, pollIntervalMs: 1000 });
+ const signal = new AbortController().signal;
+ let prepared: Readonly<Record<string, unknown>> | null = null;
+--- a/tests/verification/contracts/check-pipeline-worker-local-config.mts
++++ b/tests/verification/contracts/check-pipeline-worker-local-config.mts
+@@ -190,7 +190,8 @@
+ 
+     const runtimeFile = path.join(profileRoot, 'runtime.json');
+     fs.writeFileSync(runtimeFile, JSON.stringify({
+-      schemaVersion: 'buster-remote-plan-runtime.v1', platformConfig,
++      schemaVersion: 'buster-remote-plan-runtime.v1',
++    platformConfig,
+       host: '127.0.0.1', port: 0, tokenEnvironmentVariable: 'LC_TOKEN',
+       sourceAttestationPublicKeyEnvironmentVariable: 'LC_PUBLIC_KEY',
+       trustedSourceAuthority: 'nova:production', stateRoot,
+--- /dev/null
++++ b/tests/verification/contracts/tsconfig.buster-cluster-policy.json
+@@ -0,0 +1,17 @@
++{
++  "extends": "../../../tsconfig.base.json",
++  "include": [
++    "../../../skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
++    "../../../skills/buster/engine/test-gates/production.ts",
++    "check-pipeline-kubernetes-fixture-implementation.mts",
++    "check-pipeline-tailscale-exposure-implementation.mts",
++    "check-pipeline-kubernetes-fixture-live.mts",
++    "check-pipeline-tailscale-exposure-live.mts",
++    "check-pipeline-remote-runtime-config.mts",
++    "check-pipeline-worker-local-config.mts"
++  ],
++  "compilerOptions": {
++    "exactOptionalPropertyTypes": true,
++    "noUncheckedIndexedAccess": true
++  }
++}
+--- a/tests/verification/deployment/buster-admission-render.test.mjs
++++ b/tests/verification/deployment/buster-admission-render.test.mjs
+@@ -14,6 +14,7 @@
+   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-admission-render-'));
+   try {
+     const values = yaml.load(fs.readFileSync('my-values/buster-values.yaml', 'utf8'));
++    values.busterComponentFile = 'files/config/buster-engine.config.json'; // Explicit full profile exercised by original mutations.
+     const policy = yaml.load(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8'));
+     policy.nodeName = 'admission-render-only'; policy.pools.buster.namespace = 'buster-admission';
+     const binding = nativePoolPolicy(policy, 'buster');
+--- /dev/null
++++ b/tests/verification/deployment/buster-cluster-invoker-parity.test.mjs
+@@ -0,0 +1,194 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { spawnSync, execFileSync } from 'node:child_process';
++import yaml from 'js-yaml';
++import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
++import { readTestBundle, writeTestBundle, bundleFromConfigMap, bundleNames } from '../../fixtures/config/swarm-bundle.mjs';
++import { loadBusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
++
++for (const name of ['kubeclaw', 'prism']) test(`actual ${name} Helm and loader enforce shared cluster invoker policy`, () => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cluster-invoker-chart-'));
++  try {
++    const chart = path.join(root, name);
++    fs.cpSync(`charts/${name}`, chart, { recursive: true, dereference: true });
++    const mutationFiles = [...bundleNames, 'profiles/buster-engine.runtime.config.json', 'swarm.schema.json', 'swarm-components.schema.json'];
++    const originals = mutationFiles.map(file => {
++      const source = path.join(`charts/${name}`, 'files/config', file);
++      return { path: fs.realpathSync(source), stat: fs.statSync(source) };
++    });
++    const privateRoot = fs.realpathSync(root);
++    const assertPrivate = target => {
++      const parent = fs.realpathSync(path.dirname(target));
++      assert.ok(parent.startsWith(`${privateRoot}${path.sep}`));
++      const actual = fs.realpathSync(target), stat = fs.statSync(target);
++      assert.ok(actual.startsWith(`${privateRoot}${path.sep}`));
++      assert.equal(fs.lstatSync(target).isSymbolicLink(), false);
++      assert.equal(stat.isFile(), true);
++      for (const original of originals) {
++        assert.notEqual(actual, original.path);
++        assert.ok(stat.dev !== original.stat.dev || stat.ino !== original.stat.ino,
++          'private mutation target must not alias an original inode');
++      }
++    };
++    // Detach aliases in the private directory before any writable open.
++    for (const file of mutationFiles) {
++      const target = path.join(chart, 'files/config', file);
++      assert.ok(fs.realpathSync(path.dirname(target)).startsWith(`${privateRoot}${path.sep}`));
++      const bytes = fs.readFileSync(target), initial = fs.statSync(target);
++      const aliasesOriginal = originals.some(original => initial.dev === original.stat.dev && initial.ino === original.stat.ino);
++      if (fs.lstatSync(target).isSymbolicLink() || aliasesOriginal) {
++        fs.unlinkSync(target);
++        fs.writeFileSync(target, bytes, { flag: 'wx' });
++      }
++    }
++    // Validate all destinations before the first mutation, including hardlink identities.
++    for (const file of mutationFiles) assertPrivate(path.join(chart, 'files/config', file));
++    const writePrivateBundle = (entry, document) => {
++      for (const file of mutationFiles) assertPrivate(path.join(chart, 'files/config', file));
++      writeTestBundle(entry, document);
++    };
++    const values = name === 'prism' ? yaml.load(fs.readFileSync('charts/prism/ci-values.yaml', 'utf8'))
++      : yaml.load(fs.readFileSync('my-values/buster-values.yaml', 'utf8'));
++    const namespace = name === 'prism' ? 'default' : 'readiness-test';
++    if (name === 'kubeclaw') {
++      const policy = yaml.load(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8'));
++      policy.nodeName = 'readiness-render-only'; policy.pools.buster.namespace = namespace;
++      const binding = nativePoolPolicy(policy, 'buster');
++      values.busterNative = { namespace, nodeName: binding.nodeName, policyDigest: binding.policyDigest };
++      values.runtimeInfrastructure = { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } };
++      values.extraContainers.find(item => item.name === 'buster-v2-runtime').image = `ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`;
++    }
++    values.busterComponentFile = 'files/config/buster-engine.config.json'; // Explicit complete profile under mutation.
++    const file = path.join(root, 'values.yaml'); fs.writeFileSync(file, yaml.dump(values));
++    const entry = path.join(chart, 'files/config/swarm.config.json');
++    const baseline = readTestBundle(entry);
++    const render = () => spawnSync('helm', ['template', 'readiness', chart, '--namespace', namespace, '-f', file],
++      { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
++    const profileName = 'files/config/profiles/buster-engine.runtime.config.json';
++    const profileFile = path.join(chart, profileName);
++    const selectedBytes = fs.readFileSync(profileFile, 'utf8');
++    execFileSync('helm', ['package', chart, '--destination', root]);
++    const archive = path.join(root, fs.readdirSync(root).find(item => item.endsWith('.tgz')));
++    assert.equal(execFileSync('tar', ['-xzOf', archive, `${name}/${profileName}`], { encoding: 'utf8' }), selectedBytes);
++    values.busterComponentFile = profileName; fs.writeFileSync(file, yaml.dump(values));
++    const selectedRender = render(); assert.equal(selectedRender.status, 0, selectedRender.stderr);
++    const selectedDocuments = yaml.loadAll(selectedRender.stdout);
++    const selectedMap = selectedDocuments.find(doc => doc?.kind === 'ConfigMap' && doc.data?.['swarm.config.json']);
++    assert.equal(selectedMap.data['buster-engine.config.json'], selectedBytes);
++    const delivered = JSON.parse(selectedMap.data['buster-engine.config.json']);
++    assert.deepEqual(delivered.settings.clusterInvokers.kubernetesFixture.allowedSecretReferences,
++      ['kubeclaw-fixture-preflight', 'prism-test-provider', 'prism-test-runtime', 'prism-test-postgresql-auth', 'prism-test-ghcr']);
++    const checksums = documents => documents.filter(doc => doc?.spec?.template?.metadata?.annotations?.['checksum/swarm-config'])
++      .map(doc => doc.spec.template.metadata.annotations['checksum/swarm-config']);
++    assert(checksums(selectedDocuments).length > 0);
++    // Mutating an inactive complete profile cannot change the selected bytes or checksum.
++    const inactive = structuredClone(baseline);
++    inactive['buster-engine'].settings.clusterInvokers.kubernetesFixture.diagnosticCodeUnits++;
++    writePrivateBundle(entry, inactive);
++    const inactiveRender = render(); assert.equal(inactiveRender.status, 0, inactiveRender.stderr);
++    assert.deepEqual(checksums(yaml.loadAll(inactiveRender.stdout)), checksums(selectedDocuments));
++    writePrivateBundle(entry, baseline);
++    const changedProfile = JSON.parse(selectedBytes);
++    changedProfile.settings.clusterInvokers.kubernetesFixture.diagnosticCodeUnits++;
++    assertPrivate(profileFile); fs.writeFileSync(profileFile, JSON.stringify(changedProfile));
++    const changedRender = render(); assert.equal(changedRender.status, 0, changedRender.stderr);
++    assert.notDeepEqual(checksums(yaml.loadAll(changedRender.stdout)), checksums(selectedDocuments));
++    assertPrivate(profileFile); fs.writeFileSync(profileFile, selectedBytes);
++    for (const selection of [null, '', '../buster-engine.config.json', 'files/config/prism-worker.config.json',
++      'files/config/profiles/buster-engine.missing.config.json']) {
++      values.busterComponentFile = selection; fs.writeFileSync(file, yaml.dump(values));
++      const rejected = render(); assert.notEqual(rejected.status, 0); assert.match(rejected.stderr, /[Bb]uster.*[Cc]omponent/);
++    }
++    values.busterComponentFile = profileName;
++    fs.writeFileSync(file, yaml.dump(values));
++    assertPrivate(profileFile); fs.writeFileSync(profileFile, '');
++    const emptyProfile = render(); assert.notEqual(emptyProfile.status, 0);
++    assert.match(emptyProfile.stderr, /[Bb]uster.*[Cc]omponent/);
++    assertPrivate(profileFile); fs.writeFileSync(profileFile, selectedBytes);
++    const wrongOwner = JSON.parse(selectedBytes); wrongOwner.owner = 'prism-worker';
++    assertPrivate(profileFile); fs.writeFileSync(profileFile, JSON.stringify(wrongOwner)); fs.writeFileSync(file, yaml.dump(values));
++    assert.notEqual(render().status, 0);
++    assertPrivate(profileFile); fs.writeFileSync(profileFile, selectedBytes);
++    values.busterComponentFile = 'files/config/buster-engine.config.json'; fs.writeFileSync(file, yaml.dump(values));
++    const renderPolicy = policy => {
++      const document = structuredClone(baseline);
++      document['buster-engine'].settings.clusterInvokers = policy;
++      writePrivateBundle(entry, document);
++      return render();
++    };
++    const selected = baseline['buster-engine'].settings.clusterInvokers;
++    const changed = structuredClone(selected);
++    changed.shared.leaseApiGroup = 'leases.example.test';
++    changed.shared.leaseApiVersion = 'v2';
++    changed.kubernetesFixture.pollIntervalMs = 75;
++    changed.kubernetesFixture.shortCommandTimeoutMs = 700;
++    changed.kubernetesFixture.diagnosticCodeUnits = 96;
++    changed.tailscaleExposure.pollIntervalMs = 25;
++    changed.tailscaleExposure.maximumCommandOutputBytes = 2048;
++    for (const policy of [selected, changed]) {
++      const result = renderPolicy(policy); assert.equal(result.status, 0, result.stderr);
++      const docs = yaml.loadAll(result.stdout);
++      const map = docs.find(doc => doc?.kind === 'ConfigMap' && doc.data?.['swarm.config.json']);
++      assert(map);
++      const mounted = path.join(root, 'mounted/swarm.config.json');
++      fs.mkdirSync(path.dirname(mounted), { recursive: true });
++      writeTestBundle(mounted, bundleFromConfigMap(map.data));
++      assert.deepEqual(loadBusterSettings({ SWARM_CONFIG: mounted }).clusterInvokers, policy);
++      if (name === 'kubeclaw') {
++        const crd = docs.find(doc => doc?.kind === 'CustomResourceDefinition' && doc.spec?.names?.plural === 'busternamespaceleases');
++        assert(crd); assert.equal(crd.spec.group, policy.shared.leaseApiGroup);
++        assert.equal(crd.spec.versions[0].name, policy.shared.leaseApiVersion);
++        const client = docs.find(doc => doc?.kind === 'Role' && doc.metadata?.name?.endsWith('namespace-lease-client'));
++        assert(client); assert(client.rules.filter(rule => rule.resources?.includes('busternamespaceleases'))
++          .every(rule => rule.apiGroups.length === 1 && rule.apiGroups[0] === policy.shared.leaseApiGroup));
++        const controller = docs.find(doc => doc?.kind === 'Deployment' && doc.spec.template.spec.containers
++          .some(container => container.env?.some(entry => entry.name === 'BUSTER_LEASE_API_GROUP')));
++        assert(controller);
++        const environment = controller.spec.template.spec.containers.flatMap(container => container.env ?? []);
++        assert.equal(environment.find(entry => entry.name === 'BUSTER_LEASE_API_GROUP').value, policy.shared.leaseApiGroup);
++        assert.equal(environment.find(entry => entry.name === 'BUSTER_LEASE_API_VERSION').value, policy.shared.leaseApiVersion);
++      }
++
++    }
++    for (const version of ['v1', 'v1alpha1', 'v2beta12']) {
++      const policy = structuredClone(selected); policy.shared.leaseApiVersion = version;
++      const result = renderPolicy(policy); assert.equal(result.status, 0, result.stderr);
++      assert.equal(loadBusterSettings({ SWARM_CONFIG: entry }).clusterInvokers.shared.leaseApiVersion, version);
++    }
++    const invalid = [undefined, { ...selected, extra: 1 }];
++    for (const version of ['v1alpha', 'v1beta', 'v1rc1', 'v1alpha1x', '']) {
++      const policy = structuredClone(selected); policy.shared.leaseApiVersion = version; invalid.push(policy);
++    }
++    const collect = (value, prefix = []) => Object.entries(value).flatMap(([key, child]) =>
++      child && typeof child === 'object' && !Array.isArray(child) ? collect(child, [...prefix, key]) : [[...prefix, key]]);
++    for (const location of collect(selected)) {
++      const current = location.reduce((value, key) => value[key], selected);
++      const invalidValues = typeof current === 'number' ? [undefined, null, true, '10', 0, -1, 1.5, Number.MAX_SAFE_INTEGER + 1]
++        : typeof current === 'boolean' ? [undefined, null, 0, 'true'] : [undefined, null, 42, {}];
++      for (const value of invalidValues) {
++        const variant = structuredClone(selected);
++        const parent = location.slice(0, -1).reduce((item, key) => item[key], variant);
++        parent[location.at(-1)] = value; invalid.push(variant);
++      }
++    }
++    const incoherent = structuredClone(selected);
++    incoherent.kubernetesFixture.maximumPersistentVolumeTotalBytes = 1; invalid.push(incoherent);
++    const tailPoll = structuredClone(selected);
++    tailPoll.tailscaleExposure.pollIntervalMs = tailPoll.tailscaleExposure.maximumExecutionMs + 1; invalid.push(tailPoll);
++    for (const key of ['leaseApiGroup', 'leaseApiVersion']) for (const value of ['', key === 'leaseApiGroup' ? selected.shared.leaseApiGroup : selected.shared.leaseApiVersion]) {
++      values.busterNamespaceBroker = { ...values.busterNamespaceBroker, [key]: value };
++      fs.writeFileSync(file, yaml.dump(values));
++      const rejected = render(); assert.notEqual(rejected.status, 0); assert.match(rejected.stderr, /retired busterNamespaceBroker/);
++      delete values.busterNamespaceBroker[key];
++    }
++    fs.writeFileSync(file, yaml.dump(values));
++    for (const policy of invalid) {
++      const result = renderPolicy(policy); assert.notEqual(result.status, 0);
++      assert.match(result.stderr, /cluster/i);
++      assert.throws(() => loadBusterSettings({ SWARM_CONFIG: entry }), /SWARM_CONFIG/);
++    }
++  } finally { fs.rmSync(root, { recursive: true, force: true }); }
++});
+--- a/tests/verification/deployment/buster-process-input-parity.test.mjs
++++ b/tests/verification/deployment/buster-process-input-parity.test.mjs
+@@ -61,6 +61,7 @@
+       values.runtimeInfrastructure = { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } };
+       values.extraContainers.find(item => item.name === 'buster-v2-runtime').image = `ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`;
+     }
++    values.busterComponentFile = 'files/config/buster-engine.config.json'; // Explicit complete profile under mutation.
+     const file = path.join(root, 'values.yaml'); fs.writeFileSync(file, yaml.dump(values));
+     const entry = path.join(chart, 'files/config/swarm.config.json');
+     const baseline = readTestBundle(entry);
+--- a/tests/verification/deployment/buster-readiness-config.test.mjs
++++ b/tests/verification/deployment/buster-readiness-config.test.mjs
+@@ -61,6 +61,7 @@
+       values.runtimeInfrastructure = { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } };
+       values.extraContainers.find(item => item.name === 'buster-v2-runtime').image = `ghcr.io/datrab/kubeclaw-buster-runtime@sha256:${'a'.repeat(64)}`;
+     }
++    values.busterComponentFile = 'files/config/buster-engine.config.json'; // Explicit complete profile under mutation.
+     const file = path.join(root, 'values.yaml'); fs.writeFileSync(file, yaml.dump(values));
+     const entry = path.join(chart, 'files/config/swarm.config.json');
+     const baseline = readTestBundle(entry);
+--- a/tests/verification/deployment/config-component-packaging.test.mjs
++++ b/tests/verification/deployment/config-component-packaging.test.mjs
+@@ -44,6 +44,7 @@
+   if (name === 'prism') fs.copyFileSync(path.join(chart, 'ci-values.yaml'), valuesFile);
+   else {
+     const values = yaml.load(fs.readFileSync('my-values/buster-values.yaml', 'utf8'));
++    values.busterComponentFile = 'files/config/buster-engine.config.json'; // Explicit full profile exercised by original mutations.
+     const policy = yaml.load(fs.readFileSync('my-values/infra/native-worker-pools.yaml', 'utf8'));
+     policy.nodeName = 'component-render-test'; policy.pools.buster.namespace = 'default';
+     values.busterNative = { nodeName: policy.nodeName, namespace: 'default', policyDigest: nativePoolPolicy(policy, 'buster').policyDigest };
+--- a/tests/verification/deployment/prism-swarm-config.test.mjs
++++ b/tests/verification/deployment/prism-swarm-config.test.mjs
+@@ -398,7 +398,7 @@
+ test('BA Prism chart retains strict Buster sibling rejection', t => {
+   const chart = copiedChart(t), config = structuredClone(base); config['buster-engine'].settings.unknown = {};
+   writeTestBundle(path.join(chart, 'files/config/swarm.config.json'), config);
+-  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /buster requires preparation, admission, dependencyReadiness and execution only/);
++  const result = helm(chart); assert.notEqual(result.status, 0); assert.match(result.stderr, /buster requires preparation, admission, dependencyReadiness, execution and clusterInvokers only/);
+ });
+ 
+ for (const port of [23458, 23459]) for (const enabled of [false, true]) test(`WL Worker topology follows ${port}, SPIFFE=${enabled}`, t => {
+--- /dev/null
++++ b/tests/verification/reliability/buster-cluster-entrypoint.test.mjs
+@@ -0,0 +1,70 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { spawnSync } from 'node:child_process';
++import { readTestBundle, writeTestBundle, canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
++import { loadSwarmSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
++
++function fixture(t) {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'cluster-entrypoint-'));
++  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
++  const entry = path.join(root, 'bundle/swarm.config.json');
++  const documents = readTestBundle(canonicalSwarmEntry);
++  writeTestBundle(entry, documents);
++  const bin = path.join(root, 'bin'); fs.mkdirSync(bin);
++  const log = path.join(root, 'commands');
++  const quote = text => "'" + text.replaceAll("'", "'\"'\"'") + "'";
++  // Only path translation for the real read-only preflight. All subsequent commands would fail and be recorded.
++  const script = '#!/bin/sh\nprintf "%s\\n" "$*" >> ' + quote(log)
++    + '\nif [ "$1" = /app/scripts/buster-cluster-preflight.mjs ]; then exec '
++    + quote(process.execPath) + ' ' + quote(path.resolve('scripts/buster-cluster-preflight.mjs'))
++    + '; fi\nexit 91\n';
++  fs.writeFileSync(path.join(bin, 'node'), script, { mode: 0o700 });
++  return { root, entry, documents, log, bin };
++}
++for (const scenario of ['missing', 'invalid', 'group-empty', 'group-equal', 'version-empty', 'version-equal', 'secrets-empty', 'secrets-equal']) {
++  test(`actual entrypoint rejects ${scenario} before first runtime effect`, { timeout: 10000 }, t => {
++    const f = fixture(t);
++    const environment = { ...process.env, SWARM_CONFIG: f.entry, PATH: `${f.bin}:${process.env.PATH}` };
++    for (const key of ['BUSTER_LEASE_API_GROUP', 'BUSTER_LEASE_API_VERSION', 'BUSTER_ALLOWED_SOURCE_SECRETS']) delete environment[key];
++    if (scenario === 'missing') delete f.documents['buster-engine'].settings.clusterInvokers;
++    if (scenario === 'invalid') f.documents['buster-engine'].settings.clusterInvokers.kubernetesFixture.pollIntervalMs = 0;
++    if (scenario.startsWith('group')) environment.BUSTER_LEASE_API_GROUP = scenario.endsWith('empty') ? '' : 'kubeclaw.forgestack.ai';
++    if (scenario.startsWith('version')) environment.BUSTER_LEASE_API_VERSION = scenario.endsWith('empty') ? '' : 'v1alpha1';
++    if (scenario.startsWith('secrets')) environment.BUSTER_ALLOWED_SOURCE_SECRETS = scenario.endsWith('empty') ? ''
++      : 'kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr';
++    writeTestBundle(f.entry, f.documents);
++    const result = spawnSync('/bin/sh', [path.resolve('docker/buster-runtime-entrypoint.sh')],
++      { env: environment, encoding: 'utf8', timeout: 5000 });
++    assert.equal(result.error, undefined); assert.equal(result.status, 1, result.stderr);
++    const legacyKey = scenario.startsWith('group') ? 'BUSTER_LEASE_API_GROUP'
++      : scenario.startsWith('version') ? 'BUSTER_LEASE_API_VERSION' : 'BUSTER_ALLOWED_SOURCE_SECRETS';
++    assert.match(result.stderr, scenario === 'missing' || scenario === 'invalid'
++      ? /SWARM_CONFIG_INVALID:component:buster-engine/ : new RegExp('SWARM_CONFIG_LEGACY_OVERRIDE:' + legacyKey));
++    assert.deepEqual(fs.readFileSync(f.log, 'utf8').trim().split('\n'), ['/app/scripts/buster-cluster-preflight.mjs']);
++  });
++}
++test('relative executable uses the captured physical generation; component aliases reject', t => {
++  const f = fixture(t);
++  f.documents['buster-engine'].settings.clusterInvokers.shared.kubectlExecutable = './bin/kubectl';
++  writeTestBundle(f.entry, f.documents);
++  const alias = path.join(f.root, 'current.json'); fs.symlinkSync(f.entry, alias);
++  const snapshot = loadSwarmSettings({ SWARM_CONFIG: alias });
++  assert.equal(snapshot.buster.clusterInvokers.shared.kubectlExecutable, path.join(path.dirname(f.entry), 'bin/kubectl'));
++  assert.equal(snapshot.identity.generationDirectory, path.dirname(f.entry));
++  const component = path.join(path.dirname(f.entry), 'buster-engine.config.json');
++  const actual = path.join(f.root, 'elsewhere.json'); fs.renameSync(component, actual); fs.symlinkSync(actual, component);
++  assert.throws(() => loadSwarmSettings({ SWARM_CONFIG: alias }), /ELOOP|SWARM_CONFIG/);
++  assert.equal(snapshot.buster.clusterInvokers.shared.kubectlExecutable, path.join(path.dirname(f.entry), 'bin/kubectl'));
++});
++
++test('actual read-only preflight accepts an explicit complete generation', t => {
++  const f = fixture(t);
++  const result = spawnSync(process.execPath, [path.resolve('scripts/buster-cluster-preflight.mjs')],
++    { env: { SWARM_CONFIG: f.entry }, encoding: 'utf8', timeout: 5000 });
++  assert.equal(result.error, undefined); assert.equal(result.status, 0, result.stderr);
++  assert.equal(result.stdout.trim(), fs.realpathSync(f.entry));
++  assert.equal(fs.existsSync(f.log), false);
++});
+--- a/tests/verification/reliability/demo-exposure-handoff.test.mjs
++++ b/tests/verification/reliability/demo-exposure-handoff.test.mjs
+@@ -15,7 +15,7 @@
+  try{
+   const expiresAt=new Date(Date.now()+3600_000).toISOString();api.state.lease.status.expiresAt=expiresAt;
+   Object.assign(api.state.lease.spec,{ttlSeconds:3600,cleanupPolicy:'retain',verifiedImage:`registry.example/app@sha256:${'a'.repeat(64)}`,manifestDigest:`sha256:${'b'.repeat(64)}`});
+-  const options={processInputPolicy:{ cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 },kubectlExecutable:execFileSync('which',['kubectl'],{encoding:'utf8'}).trim(),controllerNamespace:'kubeclaw',leaseApiGroup:'kubeclaw.forgestack.ai',leaseApiVersion:'v1alpha1',allowedNamespacePrefixes:['test'],allowedHostSuffixes:['.ts.net'],maximumExecutionMs:10_000,pollIntervalMs:10};
++  const options={shortCommandTimeoutMs:15000,maximumCommandOutputBytes:1048576,processInputPolicy:{ cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 },kubectlExecutable:execFileSync('which',['kubectl'],{encoding:'utf8'}).trim(),controllerNamespace:'kubeclaw',leaseApiGroup:'kubeclaw.forgestack.ai',leaseApiVersion:'v1alpha1',allowedNamespacePrefixes:['test'],allowedHostSuffixes:['.ts.net'],maximumExecutionMs:10_000,pollIntervalMs:10};
+   let runtime=new TailscaleExposureCapabilityInvoker(options);
+   const context={invoke:(capability,request)=>runtime.invoke(capability,request,new AbortController().signal),log:()=>{}};
+   const invocation={attemptId:'attempt:demo-one',timeoutMs:5000,configuration:{values:{path:'/current',retentionMode:'await-readiness'}},inputs:[{name:'deployment',kind:'value',schemaId:'kubeclaw.kubernetes-deployment-fixture@1',value:{schemaVersion:'kubernetes-deployment-fixture.v1',leaseName:'preview-one',namespace:'test-one',expiresAt,endpoints:[{name:'web',url:'http://web.test-one.svc.cluster.local:80'}]}}]};
+--- a/tests/verification/reliability/kubernetes-manifest-budget.test.mjs
++++ b/tests/verification/reliability/kubernetes-manifest-budget.test.mjs
+@@ -13,7 +13,7 @@
+   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kube-yaml-budget-'));
+   try {
+     const executable = execFileSync('which', ['kubectl'], { encoding: 'utf8' }).trim();
+-    const capability = new KubernetesFixtureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: root, kubectlExecutable: executable,
++    const capability = new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova', pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: root, kubectlExecutable: executable,
+       controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+       allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
+       allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
+@@ -46,7 +46,7 @@
+     execFileSync(process.execPath, ['--max-old-space-size=128', import.meta.filename, 'child'], { timeout: 15_000, stdio: 'pipe' });
+   });
+   test('ordinary shared YAML aliases retain their content', () => {
+-    const [document] = boundedManifestDocuments(Buffer.from('first: &value {name: ordinary}\nsecond: *value\n'));
++    const [document] = boundedManifestDocuments(Buffer.from('first: &value {name: ordinary}\nsecond: *value\n'), { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 });
+     assert.deepEqual(document, { first: { name: 'ordinary' }, second: { name: 'ordinary' } });
+   });
+ }
+--- a/tests/verification/reliability/tailscale-generation.test.mjs
++++ b/tests/verification/reliability/tailscale-generation.test.mjs
+@@ -11,7 +11,7 @@
+   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'tailscale-wire-')); const api = await exposureAPI(root);
+   const priorConfig = process.env.KUBECONFIG; process.env.KUBECONFIG = api.config;
+   try {
+-    const client = new TailscaleExposureCapabilityInvoker({ processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable: execFileSync('which', ['kubectl'], { encoding: 'utf8' }).trim(),
++    const client = new TailscaleExposureCapabilityInvoker({ shortCommandTimeoutMs: 15000, maximumCommandOutputBytes: 1048576,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, kubectlExecutable: execFileSync('which', ['kubectl'], { encoding: 'utf8' }).trim(),
+       controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
+       allowedNamespacePrefixes: ['test'], allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 10_000, pollIntervalMs: 10 });
+     const request = attempt => ({ operation: 'prepare', resource: { type: 'kubernetes.exposure', canonicalId: `kubernetes-exposure:attempt:${attempt}` },

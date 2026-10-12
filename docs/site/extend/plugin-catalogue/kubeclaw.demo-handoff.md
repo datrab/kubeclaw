@@ -101,10 +101,13 @@ Run:
 npm test --prefix skills/nova/plugins/demo-handoff
 ```
 
-Package tests found: 0.
+Package tests found: 3.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/demo-handoff/plugin.json`
 - Package root: `skills/nova/plugins/demo-handoff`
 - Authored package guide: `skills/nova/plugins/demo-handoff/README.md`
+- Test: `skills/nova/plugins/demo-handoff/tests/compiler.test.mjs`
+- Test: `skills/nova/plugins/demo-handoff/tests/controller-client.test.mts`
+- Test: `skills/nova/plugins/demo-handoff/tests/handoff.test.mts`

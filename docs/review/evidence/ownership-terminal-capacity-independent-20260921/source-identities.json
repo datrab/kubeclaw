@@ -1,0 +1,143 @@
+[
+  {
+    "path": "skills/worker/core/worker/ownership-state.ts",
+    "sha256": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+    "snapshot": "source/skills/worker/core/worker/ownership-state.ts",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true,
+    "unchangedFromPreimplementation": false
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+    "snapshot": "source/skills/worker/core/worker/ownership-store.ts",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true,
+    "unchangedFromPreimplementation": false
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-children.ts",
+    "sha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+    "snapshot": "source/skills/worker/core/worker/ownership-children.ts",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true,
+    "unchangedFromPreimplementation": true
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "sha256": "b13dcae622c5aef5a533d659e0671ef923ae7138fbfbcaa827af8bed24a700f8",
+    "snapshot": "source/skills/worker/core/worker/native-worker-ownership.ts",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true,
+    "unchangedFromPreimplementation": true
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-quiescence.test.mts",
+    "sha256": "00cab46da97b3985e4117e5c49577dc12a25d1bdf134d498005ff87915d4c958",
+    "snapshot": "source/tests/verification/reliability/worker-native-quiescence.test.mts",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true,
+    "unchangedFromPreimplementation": false
+  },
+  {
+    "path": "tests/verification/reliability/worker-owned-children.test.mts",
+    "sha256": "30a0f743173532480016e0db32a02fd90cbd3115d5ad366b7f1fe95ca8f0d797",
+    "snapshot": "source/tests/verification/reliability/worker-owned-children.test.mts",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true,
+    "unchangedFromPreimplementation": true
+  },
+  {
+    "path": "tests/verification/reliability/worker-ownership-store.test.mts",
+    "sha256": "af2319b4a8c90b71b58cd6a3d46e7349fde0593151d4130af7d9c09a8765787b",
+    "snapshot": "source/tests/verification/reliability/worker-ownership-store.test.mts",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true,
+    "unchangedFromPreimplementation": true
+  },
+  {
+    "path": "tests/verification/reliability/tsconfig.native-scope.json",
+    "sha256": "b11f6af094bcb0a80e46607ccca68c426ef4ce9754efca52804af11ef7b11e2b",
+    "snapshot": "source/tests/verification/reliability/tsconfig.native-scope.json",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true,
+    "unchangedFromPreimplementation": false
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "sha256": "bcfae27446f1de541b80d5669b7d34b8548880130779bedb7a1ccc856167b72b",
+    "snapshot": "source/skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true,
+    "unchangedFromPreimplementation": false
+  },
+  {
+    "path": "package.json",
+    "sha256": "41c1df6745623e9035187c7627274ba4677cc24709d1e64d7c3fb8a56afa8531",
+    "snapshot": "source/package.json",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true,
+    "unchangedFromPreimplementation": false
+  },
+  {
+    "path": "docs/operations/native-worker-host-pools.md",
+    "sha256": "8e536e2633114e7d05e06ac8338768aa9efa5b89a87c99416f523a7e1845ea0f",
+    "snapshot": "source/docs/operations/native-worker-host-pools.md.snapshot",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true,
+    "unchangedFromPreimplementation": false
+  },
+  {
+    "path": "docs/review/remediation/implementation/ownership-terminal-capacity-20260921.md",
+    "sha256": "75e825c92c80a772811d8ed32951e21adaba9bab4880a1cd4f0d72302275d23d",
+    "snapshot": "source/docs/review/remediation/implementation/ownership-terminal-capacity-20260921.md.snapshot",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": false,
+    "unchangedFromPreimplementation": false,
+    "authorAcceptanceLinkAddedAfterReview": true
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-capacity.ts",
+    "sha256": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+    "snapshot": "source/skills/worker/core/worker/ownership-capacity.ts",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true
+  },
+  {
+    "path": "tests/verification/reliability/worker-terminal-capacity.test.mts",
+    "sha256": "f320d615c3e354d2f66d91f743f9bde189d0b2ca346867c8e5e38a27d640bf3d",
+    "snapshot": "source/tests/verification/reliability/worker-terminal-capacity.test.mts",
+    "matchesAuthorFinal": true,
+    "unchangedSinceRuntimeStart": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+    "snapshot": "source/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "matchesAuthorFinal": true
+  },
+  {
+    "path": "contracts/pipeline-observability/v1/src/canonical-json.ts",
+    "sha256": "378c3ba35ca88e40527e3912dfc0f897e6d5cbdc1dfd40b3a825fbf1241e9177",
+    "snapshot": "source/contracts/pipeline-observability/v1/src/canonical-json.ts",
+    "matchesAuthorFinal": true
+  },
+  {
+    "path": "contracts/pipeline-worker-core/v1/src/digest.ts",
+    "sha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+    "snapshot": "source/contracts/pipeline-worker-core/v1/src/digest.ts",
+    "matchesAuthorFinal": true
+  },
+  {
+    "path": "docs/review/evidence/ownership-terminal-capacity-independent-20260921/independent-filesystem.test.mjs",
+    "sha256": "079c6fc44b7f2dec90ed8f35fecefb08eca0690a3df35992bcde721efad54620"
+  },
+  {
+    "path": "docs/review/evidence/ownership-terminal-capacity-independent-20260921/mutation-hook.mjs",
+    "sha256": "174a682dac4592a290789fae8c37fc508cb7fca7d680b67576e78e1ac963e7df"
+  },
+  {
+    "path": "docs/review/evidence/ownership-terminal-capacity-independent-20260921/run-review.py",
+    "sha256": "d6bd721ac47b4ed742b1fa457d622bc134bae76fb31607bf7ff8d3c961078c91"
+  }
+]

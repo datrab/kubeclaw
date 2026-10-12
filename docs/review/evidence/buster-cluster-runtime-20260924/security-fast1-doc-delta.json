@@ -1,0 +1,8 @@
+[
+  {
+    "path": "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+    "beforeSha256": "466cd14ad86a59eb602f8844e57d62579d594e2c611b09e2ddaf306b3108813c",
+    "sha256": "4db289648abaa8d022cb653fdecc051d54f0bef47d01cc62a2516b38a0327b14",
+    "reason": "Record actual source integration and failed Fast1, no acceptance"
+  }
+]

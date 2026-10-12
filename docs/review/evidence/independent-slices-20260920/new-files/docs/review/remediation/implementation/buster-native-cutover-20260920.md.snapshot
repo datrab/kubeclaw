@@ -1,0 +1,90 @@
+# Buster: nativer Cutover und Quellenbereinigung
+
+Stand: 2026-09-20. Dies ist die Arbeitsmatrix, kein Abschlussnachweis.
+Maßgeblich bleiben [B1–B5 und W1–W5](../acceptance-20260920.md).
+
+## Implementierungsschnitt
+
+Der Produktionsrunner verwendet noch `WorkerAttemptExecutor` V1 und
+`LocalWorkerRuntime`. Dessen Callback lässt sich nicht allein durch den nativen
+V3-Prozessstarter ersetzen: Provider, Capability-RPCs, Reportadapter und
+Abschlussarbeit müssen gemeinsam in die gebundene Prozesslebensdauer wechseln.
+Die bereits vorhandenen `NativeAttemptJournal`, `NativeWorkerOwnership` und
+`startNativeBusterFixture` liefern dauerhafte Bausteine, beweisen jedoch keinen
+Produktionscutover. Insbesondere ist ein gestarteter Gesamtjobprozess kein
+Ersatz für getrennte Attemptbudgets und retained Fixturelifetimes.
+
+Der vollständige Schnitt umfasst:
+
+1. V3-Admission und dauerhafte Job→Attempt-/Fixturezuordnung vor Prozessstart.
+2. Einen spezialisierten Buster-Prozess mit Provider, Capabilityarbeit und
+   Reportabschluss in derselben nativen Grenze; WorkerCore bleibt generisch.
+3. Fixturebereitschaft und Teardown über den vorhandenen dauerhaften
+   Controlkanal; abhängige Nodes starten nur nach bestätigter Bereitschaft.
+4. Startup-Recovery über Originaljournal und Ownership, danach Freigabe
+   ausschließlich temporärer Quellen. Unbekannter Besitz bleibt geschützt.
+5. Entfernen des bisherigen produktiven V1-/Filecapability-/Samplingpfads,
+   sobald sämtliche Produktionsverbraucher umgestellt und geprüft sind.
+
+Kein Fallback und keine Statushochsetzung während der Teilintegration.
+Änderungen an Broker, Hostrollen und Produktionskonfiguration müssen mit
+deren Eigentümern abgestimmt werden.
+
+## Pflichtfallmatrix
+
+| Kriterien | Tatsächliche Prüfung | Stand |
+| --- | --- | --- |
+| B1 | Echter Produktionsaufruf: Provider, parallele Capability-RPCs, Reports und Abschluss; kein Parent-Workload | offen |
+| B2 | Reale CPU-/RAM-/Tasklast, kurzlebige Kinder, parallele Attempts, Rollenadmission | offen; vorhandene Coretests allein reichen nicht |
+| B3 | Timeout, Cancel, Supervisor-SIGKILL, vollständige Abrechnung und Restprozesssuche | offen |
+| B4 | Fixture vor/nach Readiness, Restart, Budgetbindung bis Cleanup; historische Receipts | offen im Produktionsrunner |
+| B5 | Echte Consumer bei Setupfehler, Cancel, Restart und Cleanupfehler | offen |
+| W1 | Erfolg, fachlicher Fehler, Ausführungsfehler, Cancel, Extraktionsfehler | offen für alle Produktionsfälle |
+| W2 | SIGKILL an Terminal-/Cleanupgrenzen, PID-Reuse, unbekannter Besitz, aktive Fixtures | offen |
+| W3 | Wiederholung, Symlink- und Parentwechsel; fremde Quellen, Logs und Evidence erhalten | lokale Regression wird erweitert |
+| W4 | Tote und lebende eigene Orphans; mehrere Restartzyklen mit tatsächlicher Freigabe und Frist | offen |
+| W5 | Eingebettete Archive, runtimeRoot, Fehler-/Abbruchretention, Replay und sämtliche Quoten | offen |
+| B-DOC/W-DOC | Betriebsanleitung, Ressourcenvertrag, Recoverydiagnose und aktuelle Grenzen | dieses Dokument beschreibt nur Zwischenstand |
+
+Kernel-/Hostrollen- und reale Nova→Buster-/Podrestartprüfungen bleiben separate
+Pflichtnachweise. Lokale Tests ohne delegierte Cgroups ersetzen sie nicht.
+
+## Umgesetzt: gepinnte Verzeichnisgrenzen bei temporären Quellen
+
+`cleanupTerminalWorkspace` öffnet auf Linux jeden Pfadbestandteil mit
+`O_DIRECTORY | O_NOFOLLOW` und verwendet die gehaltenen Directory-FDs für die
+Löschung. Die vorherige Folge `lstat` → `rm` auf dem ursprünglichen Pfad erlaubte
+einen Verzeichnistausch zwischen Prüfung und Löschung. Nun kann ein ersetzter
+Job-/Workspacepfad die Löschung nicht zu einem fremden Job umleiten. Die
+Quieszenzpflicht des Aufrufers bleibt bestehen; diese Änderung implementiert
+keine native Ownership-Recovery und verhindert keine noch aktiven Schreiber
+innerhalb des temporären Quellbaums.
+
+Prüfung mit Node v24.21.0:
+
+```sh
+node --test tests/verification/reliability/buster-terminal-workspace-native.test.mts skills/buster/engine/test-gates/tests/terminal-workspace.test.ts
+npx --no-install tsc --noEmit -p skills/buster/engine/tsconfig.json
+```
+
+Sechs Tests bestanden, keine Skips; Engine-Typecheck bestanden. Die Regression
+ersetzt echte Verzeichnisse genau vor dem ersten Löschaufruf und führt danach
+die originale `fs.rm`-Implementierung aus. Sie prüft fremde Quellen sowie
+verbleibende Ergebnis-, Evidence- und Scratchdateien. Als Negativkontrolle wurde
+der unveränderte `HEAD`-Stand der Cleanupfunktion in einem temporären Verzeichnis
+mit denselben Tests geprüft: zwei bisherige Fälle bestanden, alle drei neuen
+Fälle scheiterten. Bei den beiden Parentwechseln wurden tatsächlich fremde
+Dateien gelöscht. Die neue Prüfung erkennt somit den vorherigen Defekt.
+
+Die bestehende Fixture-Control-/Journalbaseline konnte hier noch nicht
+ausgeführt werden: alle zwölf Tests scheitern an BusyBox `/usr/bin/flock`, das
+`--timeout` nicht unterstützt, vor ihren fachlichen Assertions. Ein util-linux
+`flock` unter `/tmp` und eine PATH-Anpassung lösen dies nicht, weil der Store den
+absoluten Pfad verwendet. Weder Assertions noch der Produktionslockpfad wurden
+dafür gelockert. Das ist kein bestandener Fixture-Nachweis.
+
+Die Betriebsdoku wurde im Abschnitt „What existing cleanup actually does“ von
+[Observability retention](../../../operations/observability-retention.md)
+aktualisiert: Voraussetzungen, Symlinkdiagnose, geschützte Daten und verbleibende
+Restart-/Quota-Grenzen. B-DOC/W-DOC sind erst mit dem vollständigen Cutover und
+den übrigen Pflichtfällen abschließbar.

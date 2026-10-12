@@ -1,0 +1,230 @@
+{
+  "at": "2026-09-21T17:42:45.126426+00:00",
+  "scope": "Author touched files and named direct consumers; independent combined closure binding pending",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+      "physicalAuthor": "charts/kubeclaw/files/config/prism-worker.config.json",
+      "symlink": null,
+      "sha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834",
+      "bytes": 657
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm-components.schema.json",
+      "physicalAuthor": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "symlink": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "75b10b25550b0622948bd8334df660a5d526988a37abe29263e406dfddd688ae",
+      "bytes": 19971
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "physicalAuthor": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "symlink": null,
+      "sha256": "1769fccb43906ac862216274e36c7d78574d977c736a49e3c4b199b1752cc29b",
+      "bytes": 16215
+    },
+    {
+      "path": "charts/prism/templates/_swarm-bundle.tpl",
+      "physicalAuthor": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "symlink": "../../kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "1769fccb43906ac862216274e36c7d78574d977c736a49e3c4b199b1752cc29b",
+      "bytes": 16215
+    },
+    {
+      "path": "charts/prism/templates/_swarm-config.tpl",
+      "physicalAuthor": "charts/prism/templates/_swarm-config.tpl",
+      "symlink": null,
+      "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a",
+      "bytes": 2034
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "physicalAuthor": "charts/prism/templates/configmap-worker-trust.yaml",
+      "symlink": null,
+      "sha256": "7f84362f9d9c0d5fa08962e33e0c231621c4600ce52b9a6aa822334f81f3a1fc",
+      "bytes": 19487
+    },
+    {
+      "path": "charts/prism/templates/networkpolicy.yaml",
+      "physicalAuthor": "charts/prism/templates/networkpolicy.yaml",
+      "symlink": null,
+      "sha256": "75d2770a9d4a008cc10f6e506717ba8832e52d27ac2bd583bfee57dbd76eaa9f",
+      "bytes": 8721
+    },
+    {
+      "path": "charts/prism/templates/services.yaml",
+      "physicalAuthor": "charts/prism/templates/services.yaml",
+      "symlink": null,
+      "sha256": "abae201f362dacc4e4422c8867d57113483eb443d5cf964e2a65996bf9683a85",
+      "bytes": 1700
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "physicalAuthor": "charts/prism/templates/workloads.yaml",
+      "symlink": null,
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20",
+      "bytes": 14944
+    },
+    {
+      "path": "docker/Dockerfile.prism-worker",
+      "physicalAuthor": "docker/Dockerfile.prism-worker",
+      "symlink": null,
+      "sha256": "820d8c1b9cb0784113fbd4c2ceb206b40cb0e2381d3fad3df647d7dcc784bb80",
+      "bytes": 3067
+    },
+    {
+      "path": "docs/operations/operator-configuration.md",
+      "physicalAuthor": "docs/operations/operator-configuration.md",
+      "symlink": null,
+      "sha256": "f795518f3371f3235da779e1aac89420f0552e06d1a3b4258d8ed6b228c02238",
+      "bytes": 27084
+    },
+    {
+      "path": "docs/operations/prism-operator-guide.md",
+      "physicalAuthor": "docs/operations/prism-operator-guide.md",
+      "symlink": null,
+      "sha256": "2c5ea4a201ac3969328a55872cc33d5bc6177f9fcfa466b97e664ba31b6e09fc",
+      "bytes": 17782
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+      "physicalAuthor": "docs/review/remediation/implementation/config-inventory-20260920.json",
+      "symlink": null,
+      "sha256": "816f867443f71c0fe908b188b1aa1e67956735b26c70ea51a6ab2dcbdf4b31c3",
+      "bytes": 738087
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "physicalAuthor": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "symlink": null,
+      "sha256": "a2f88fff4701f78a694a7fa1a0ff8ad5e59c54357384cb2c2fa6cea4ee10ff54",
+      "bytes": 30352
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-worker-listener-20260921.md",
+      "physicalAuthor": "docs/review/remediation/implementation/config-worker-listener-20260921.md",
+      "symlink": null,
+      "sha256": "dc356d3a9e081f4855fc9507c1464170ec81ab4193ffddd38f5885c40c6ba41b",
+      "bytes": 10029
+    },
+    {
+      "path": "package.json",
+      "physicalAuthor": "package.json",
+      "symlink": null,
+      "sha256": "58ca667a1bb6c02195363146f89f863d0e25a9e1cd9e9c86d1c3dde813c1e5d8",
+      "bytes": 45215
+    },
+    {
+      "path": "scripts/check-built-runtime-image.sh",
+      "physicalAuthor": "scripts/check-built-runtime-image.sh",
+      "symlink": null,
+      "sha256": "c508667b9d280ba10e4bacd04e2727ebc0830b8843d3c1acdc1e95e4a44e81d4",
+      "bytes": 3422
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/README.md",
+      "physicalAuthor": "skills/common/plugin-runtime/foundation/config/README.md",
+      "symlink": null,
+      "sha256": "d42218741c4ccd57c753379e0f08cc16696fc4a903141c710fe042486e9a78ba",
+      "bytes": 5185
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "physicalAuthor": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "symlink": null,
+      "sha256": "75b10b25550b0622948bd8334df660a5d526988a37abe29263e406dfddd688ae",
+      "bytes": 19971
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "physicalAuthor": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "symlink": null,
+      "sha256": "484de1f0d6b7b7a4c069204495ddd31816e546b40ba41284a21c95cc51f6633e",
+      "bytes": 12023
+    },
+    {
+      "path": "skills/prism/server/worker-config.ts",
+      "physicalAuthor": "skills/prism/server/worker-config.ts",
+      "symlink": null,
+      "sha256": "f74aa34451583c1df785eaf21006b056b55791277f4731c9360f1ee5db0f5b0e",
+      "bytes": 1949
+    },
+    {
+      "path": "skills/prism/server/worker.ts",
+      "physicalAuthor": "skills/prism/server/worker.ts",
+      "symlink": null,
+      "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+      "bytes": 2915
+    },
+    {
+      "path": "skills/prism/tests/control-image-environment.test.mts",
+      "physicalAuthor": "skills/prism/tests/control-image-environment.test.mts",
+      "symlink": null,
+      "sha256": "72caacee4bd355a89206afbe8314502736d7beb151f4e1010bc6cbd890d59d1a",
+      "bytes": 4359
+    },
+    {
+      "path": "skills/prism/tests/control-listener.test.mts",
+      "physicalAuthor": "skills/prism/tests/control-listener.test.mts",
+      "symlink": null,
+      "sha256": "9de211954528ea017cd032e6abddd677f336adf1580e442b1dbfad305bbd1af5",
+      "bytes": 5520
+    },
+    {
+      "path": "skills/prism/tests/swarm-worker-config.test.mts",
+      "physicalAuthor": "skills/prism/tests/swarm-worker-config.test.mts",
+      "symlink": null,
+      "sha256": "e17586a73f9df4a305d9f714eb07ef81367f0fd4f71188c15292baecdd4db8ee",
+      "bytes": 5757
+    },
+    {
+      "path": "skills/prism/tests/worker-listener-config.test.mts",
+      "physicalAuthor": "skills/prism/tests/worker-listener-config.test.mts",
+      "symlink": null,
+      "sha256": "9b6b890ac766b34309fa617c79343d8436b24e5b269f8ff3d77679fb8c1b61de",
+      "bytes": 4651
+    },
+    {
+      "path": "skills/prism/tests/worker-process-shutdown-native.mts",
+      "physicalAuthor": "skills/prism/tests/worker-process-shutdown-native.mts",
+      "symlink": null,
+      "sha256": "3daca7922a7edf8e21d146d165159454bf5504bc47c248fc82c3f65065e252af",
+      "bytes": 10366
+    },
+    {
+      "path": "skills/prism/tests/worker-readiness-chart.test.mts",
+      "physicalAuthor": "skills/prism/tests/worker-readiness-chart.test.mts",
+      "symlink": null,
+      "sha256": "dead10f13e0ac89fc199c82612541c0ddd9de014531b325c57481b0617a6fa43",
+      "bytes": 1113
+    },
+    {
+      "path": "skills/prism/tsconfig.json",
+      "physicalAuthor": "skills/prism/tsconfig.json",
+      "symlink": null,
+      "sha256": "7b695f390b5dfac86bd90faaae8e94bc98507407360663c846404b394c6f53ae",
+      "bytes": 344
+    },
+    {
+      "path": "tests/fixtures/config/swarm-bundle.mjs",
+      "physicalAuthor": "tests/fixtures/config/swarm-bundle.mjs",
+      "symlink": null,
+      "sha256": "08cc278569ff299b04690e53d212ae9b44dccedbd3098a6bf3e594dc391f4e90",
+      "bytes": 2496
+    },
+    {
+      "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "physicalAuthor": "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "symlink": null,
+      "sha256": "f3f9beff6c16ea0dbe1d969b3aa0f7f59fc2379aa19441596d813eb37a7439a4",
+      "bytes": 32940
+    },
+    {
+      "path": "tests/verification/deployment/prism-swarm-image.mjs",
+      "physicalAuthor": "tests/verification/deployment/prism-swarm-image.mjs",
+      "symlink": null,
+      "sha256": "d3bc60f07bdd4ace771d3e868cfae6418813ca786d4570b804afdd0fdadef7dd",
+      "bytes": 3042
+    }
+  ]
+}

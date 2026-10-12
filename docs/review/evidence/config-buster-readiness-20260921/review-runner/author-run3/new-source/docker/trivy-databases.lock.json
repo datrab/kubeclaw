@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "trivy-database-lock.v1",
+  "scannerVersion": "0.74.0",
+  "databases": {
+    "vulnerability": {
+      "repository": "ghcr.io/aquasecurity/trivy-db",
+      "manifest": {
+        "digest": "sha256:4d431c680d01e396a20899ec027c95e5736bed4294aeb40a1648c58aed5d1f7b",
+        "size": 616
+      },
+      "layer": {
+        "digest": "sha256:d42d90efdb7ecc49abcf2c796cf6478f3bab596e907fd74c786ec8070dbf6bca",
+        "size": 120435408
+      },
+      "files": {
+        "metadata.json": {
+          "digest": "sha256:0986f927c4f9f08ee08387dff92074f3cb64c652032ae6a3602179763f33b3d2",
+          "size": 143
+        },
+        "trivy.db": {
+          "digest": "sha256:e783fe142a8425c25c6e61be54f61698a405510057a94bfdd2253a4ded9ca0cc",
+          "size": 1413980160
+        }
+      }
+    },
+    "java": {
+      "repository": "ghcr.io/aquasecurity/trivy-java-db",
+      "manifest": {
+        "digest": "sha256:d83c6dd4d525be30ffecc92e5be679392be56547c29cf70f76a7478b08981c9c",
+        "size": 624
+      },
+      "layer": {
+        "digest": "sha256:cf45b46809a5759bf7b4478c52ea2b4e7f31d44ea35a2fd467cfd88af6ac3830",
+        "size": 968473554
+      },
+      "files": {
+        "metadata.json": {
+          "digest": "sha256:764a408240c9a1c6f26649eb4372624bdf95dcffb52f1314904bdb59707426c3",
+          "size": 143
+        },
+        "trivy-java.db": {
+          "digest": "sha256:1fce16f732df52f325d9922f5a8ff7221719a7819cdb5ba1dc76fe32b4a36e4c",
+          "size": 1529786368
+        }
+      }
+    }
+  }
+}

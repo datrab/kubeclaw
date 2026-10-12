@@ -1,0 +1,13 @@
+✔ two genuinely concurrent same-revision child reservations produce exactly one durable winner (71.204236ms)
+✔ finish during durable host reservation prevents creation and launch, retaining reserved child (89.309581ms)
+✔ finish during helper binding waits for CAS and refuses that helper plus queued helper (116.294473ms)
+✔ concurrent lease helpers serialize durable reservations without lost children (238.99555ms)
+✔ historical lease launch refuses before touching any scope method (23.901153ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1034.124806

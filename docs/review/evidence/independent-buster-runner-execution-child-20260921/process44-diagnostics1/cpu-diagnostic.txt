@@ -1,0 +1,12 @@
+DIAGNOSTIC_EXACT_SOURCE_APPLIED 79b7db733f4cf1b4f55c1b6d8a660b4278069564ea6981605eaa30d9d5c50e08
+REPORT_PROFILE_DIAGNOSTIC {"field":"minimumCpuTimeMs","value":1000,"close":{"code":null,"signal":"SIGKILL","wallMs":998},"stderr":"REPORT_WORKLOAD_STARTED\n","summary":"REPORT_ADAPTER_PROTOCOL_INVALID:null:SIGKILL","state":"errored"}
+REPORT_PROFILE_DIAGNOSTIC {"field":"minimumCpuTimeMs","value":3000,"close":{"code":0,"signal":null,"wallMs":1233},"stderr":"REPORT_WORKLOAD_STARTED\nCPU_DIAGNOSTIC:{\"used\":{\"user\":980767,\"system\":219297},\"elapsed\":1200002}\n","summary":"produced","state":"completed"}
+✔ default Runner actual report process consumes minimumCpuTimeMs (2916.724345ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5318.052155

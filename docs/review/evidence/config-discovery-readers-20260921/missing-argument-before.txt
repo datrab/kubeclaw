@@ -1,0 +1,29 @@
+✔ computed literal environment reads are candidates without evaluating values (11.517937ms)
+✖ local environment helper parameter order identifies the actual name argument (9.067384ms)
+✔ unrelated and nested helper bodies do not authorize argument discovery (1.033006ms)
+✔ actual Control required credentials omitted by first-argument discovery are found (10.924921ms)
+✔ discovery never executes source or reads the named secret value (0.552484ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 386.043496
+
+✖ failing tests:
+
+test at scripts/config/tests/environment-readers.test.mjs:15:1
+✖ local environment helper parameter order identifies the actual name argument (9.067384ms)
+  TypeError: Cannot read properties of undefined (reading 'kind')
+      at Object.isStringLiteral (/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/typescript/lib/typescript.js:30641:15)
+      at visit (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/config/environment-readers.mjs:41:60)
+      at visitNode2 (/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/typescript/lib/typescript.js:32449:18)
+      at forEachChildInExpressionStatement (/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/typescript/lib/typescript.js:32679:12)
+      at Object.forEachChild (/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/typescript/lib/typescript.js:32970:35)
+      at visit (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/config/environment-readers.mjs:47:8)
+      at visitNodes (/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/typescript/lib/typescript.js:32457:22)
+      at forEachChildInSourceFile (/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/typescript/lib/typescript.js:32670:12)
+      at Object.forEachChild (/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/typescript/lib/typescript.js:32970:35)
+      at visit (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/config/environment-readers.mjs:47:8)

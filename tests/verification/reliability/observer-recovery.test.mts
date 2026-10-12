@@ -39,7 +39,7 @@ test('observer retries stay bounded after reconstruction and completed deliverie
     observers: [{ id: 'files', module: 'src/observer.ts', export: 'observe', subscriptions: ['run.started'], delivery: 'at_least_once', ordering: 'per_run',
       failurePolicy: { mode: 'best_effort', maxAttempts: 2, backoffMs: 0, timeoutMs: 1000 }, requiredCapabilities: [],
       configSchema: 'schemas/config.json', checkpointSchema: 'schemas/checkpoint.json' }] }));
-  const platform: PlatformConfig = { schemaVersion: 'pipeline-platform.v2', installationRoots: [path.dirname(plugin)], trustedBuiltinRoots: [path.dirname(plugin)],
+  const platform: PlatformConfig = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [path.dirname(plugin)], trustedBuiltinRoots: [path.dirname(plugin)],
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [],
     observers: { [observerId]: { output } }, storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 1000,
     orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [] };

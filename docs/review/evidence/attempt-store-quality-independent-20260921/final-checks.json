@@ -1,0 +1,104 @@
+[
+  {
+    "name": "quota",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/attempt-store-quality-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern",
+      "closure projection frees actual",
+      "tests/verification/reliability/attempt-closure-projection.test.mjs"
+    ],
+    "exitCode": 1,
+    "seconds": 3.519646886968985
+  },
+  {
+    "name": "generation",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/attempt-store-quality-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern",
+      "read-only plan and actual CLI",
+      "tests/verification/reliability/attempt-closure-projection.test.mjs"
+    ],
+    "exitCode": 1,
+    "seconds": 4.7721644340781495
+  },
+  {
+    "name": "saving",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/attempt-store-quality-20260921/mutation-hook.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern",
+      "no byte saving",
+      "tests/verification/reliability/attempt-closure-projection.test.mjs"
+    ],
+    "exitCode": 1,
+    "seconds": 3.1221985219744965
+  },
+  {
+    "name": "foundation",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "seconds": 6.104987183935009
+  },
+  {
+    "name": "nova",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/nova/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "seconds": 4.0483536389656365
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node_modules/.bin/eslint",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+      "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+      "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "tests/verification/reliability/attempt-store-input-ownership.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 4.243643734022044
+  },
+  {
+    "name": "preservation",
+    "command": [
+      "node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/attempt-store-quality-20260921/check-preservation.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 0.4646799360634759
+  }
+]

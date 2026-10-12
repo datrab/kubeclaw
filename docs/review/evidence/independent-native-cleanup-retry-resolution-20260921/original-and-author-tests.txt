@@ -1,0 +1,45 @@
+✔ same-journal retry resolves immutable predecessor, cleanup inserted first=false (856.576324ms)
+✔ same-journal retry resolves immutable predecessor, cleanup inserted first=true (770.484432ms)
+✔ same-journal cleanup resolution rejects missing-lookup (560.822977ms)
+✔ same-journal cleanup resolution rejects missing-association (566.927403ms)
+✔ same-journal cleanup resolution rejects wrong-effect (578.345047ms)
+✔ same-journal cleanup resolution rejects wrong-original (591.30632ms)
+✔ same-journal cleanup resolution rejects predecessor-as-success (579.272431ms)
+✔ same-journal cleanup resolution rejects missing-retry (446.346356ms)
+✔ same-journal cleanup resolution rejects failed-retry (545.046852ms)
+✔ same-journal cleanup resolution rejects unarchived-retry (732.319182ms)
+✔ same-journal cleanup resolution rejects bad-output (649.843163ms)
+✔ same-journal cleanup resolution rejects live-predecessor (563.314411ms)
+✔ same-journal cleanup resolution rejects live-retry (573.878732ms)
+✔ recovery requires its own sealed cleanup archive and preserves the original failed receipt (528.383303ms)
+✔ cleanup recovery handles no-hook (315.661749ms)
+✔ cleanup recovery handles declined (295.113101ms)
+✔ cleanup recovery handles missing-result (187.177728ms)
+✔ cleanup recovery handles wrong-profile (308.906275ms)
+✔ cleanup recovery handles original-live (300.845679ms)
+✔ cleanup recovery handles cleanup-live (334.644057ms)
+✔ cleanup recovery handles missing-original (301.613178ms)
+✔ cleanup recovery handles missing-cleanup (341.045811ms)
+✔ cleanup recovery handles wrong-reference (343.646878ms)
+✔ cleanup recovery handles unknown-key (376.950104ms)
+✔ cleanup recovery handles bad-output (358.301484ms)
+✔ cleanup recovery handles different-accounting (337.367327ms)
+✔ cleanup recovery handles callback-mutation (317.786434ms)
+✔ cleanup cannot reconcile a foreign envelopeDigest (312.270142ms)
+✔ cleanup cannot reconcile a foreign attemptId (313.881583ms)
+✔ cleanup cannot reconcile a foreign attemptSpecDigest (296.461935ms)
+✔ cleanup cannot reconcile a foreign profileDigest (356.699523ms)
+✔ cleanup cannot reconcile a foreign claimId (339.787909ms)
+✔ cleanup cannot reconcile a foreign claimGeneration (309.453719ms)
+✔ cleanup cannot reconcile a foreign workerId (318.231715ms)
+✔ cleanup cannot reconcile a foreign resultDigest (320.665347ms)
+✔ cleanup cannot reconcile a foreign receiptId (300.231213ms)
+✔ cleanup cannot reconcile a foreign receiptDigest (339.818059ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17346.592717

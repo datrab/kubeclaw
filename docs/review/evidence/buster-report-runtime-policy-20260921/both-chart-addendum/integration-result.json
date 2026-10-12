@@ -1,0 +1,7 @@
+{
+  "status": "source-reviewed integrated; both-chart execution pending",
+  "path": "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+  "beforeSha256": "2bf0ffe3fb27b0d86d4efbefdf4e359afd6d303287f3bfe887da0149ca906825",
+  "afterSha256": "5b2558a440a50ba57221cd3a4ec2d2924d42c86635746c4af505d87833526f69",
+  "review": "both-chart-addendum-source-review.json"
+}

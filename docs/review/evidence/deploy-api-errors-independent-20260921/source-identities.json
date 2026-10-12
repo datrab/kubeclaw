@@ -1,0 +1,37 @@
+[
+  {
+    "source": "scripts/deploy.sh",
+    "snapshot": "00-deploy.sh.snapshot",
+    "sha256": "56eab83c31f31774d9b1166208015a0e46b836744b4ebbe15a0ea35a37fdd9f7"
+  },
+  {
+    "source": "scripts/deploy-observation.mjs",
+    "snapshot": "01-deploy-observation.mjs.snapshot",
+    "sha256": "c098c00954423edfbd60046beb7fc1a6c58f3c57025b6d9eab772f39695f8586"
+  },
+  {
+    "source": "scripts/tests/deploy-api-errors.test.py",
+    "snapshot": "02-deploy-api-errors.test.py.snapshot",
+    "sha256": "7565d6b30640ef2c02e52777aa5c2364e4418ee282bacc4cba48cb07611d74fa"
+  },
+  {
+    "source": "tests/verification/deployment/bootstrap-api-guard.test.mjs",
+    "snapshot": "03-bootstrap-api-guard.test.mjs.snapshot",
+    "sha256": "0bcacf8252a279603dff15b98c520959176ffa6cf909d05a52580e878f81ccc1"
+  },
+  {
+    "source": "docs/deployment/setup-flow.md",
+    "snapshot": "04-setup-flow.md.snapshot",
+    "sha256": "7c34f354f52c31dfce3f73f997afc290c10cee6a94cb8fd3858b735837166e76"
+  },
+  {
+    "source": "docs/deployment/tailscale-operator.md",
+    "snapshot": "05-tailscale-operator.md.snapshot",
+    "sha256": "6c36d94514271c05325568d1e644ad2a797d221373c82244e3c2c1eebe7b8d8b"
+  },
+  {
+    "source": "docs/review/remediation/implementation/deploy-api-errors-20260921.md",
+    "snapshot": "06-deploy-api-errors-20260921.md.snapshot",
+    "sha256": "cd6f35576bf0f34c97536d9054373f57f3546a8e6250f39b62c3c3f8a16e5b76"
+  }
+]

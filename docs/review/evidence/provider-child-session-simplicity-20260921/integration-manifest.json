@@ -1,0 +1,27 @@
+{
+  "status": "prechecked-not-integrated",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "source": "docs/review/evidence/provider-child-session-simplicity-20260921/policy-files/skills/buster/engine/test-gates/provider-child.mjs",
+      "beforeSha256": "5dd41b92245c36b8e4d1d63d8a14f95f8647fda040ba2c3c60e20a088becfa50",
+      "afterSha256": "62a88c6c23e47440b05c62ea55453ba5b973a10fafc23e157e82bbd9ae526320",
+      "targetExists": true
+    },
+    {
+      "path": "tests/verification/contracts/provider-child-session.test.mjs",
+      "source": "docs/review/evidence/provider-child-session-simplicity-20260921/policy-files/tests/verification/contracts/provider-child-session.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "c355faab39ecbfd2dc488e5e91b98c8571c86e20183359d6da8503afe631a523",
+      "targetExists": false
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint.config.mjs",
+      "source": "docs/review/evidence/provider-child-session-simplicity-20260921/boundary-files/charts/kubeclaw/files/config/eslint.config.mjs",
+      "beforeSha256": "d0bf5f5735be8ad26e7d7ab566d849c26801b9914248e8ad08c1b0a4d5e40d55",
+      "afterSha256": "e39eec75b7ac987c0391cc97b910a8ad9922a4475d9d20d897bf026bbaa36ccf",
+      "targetExists": true
+    }
+  ],
+  "runtimeExecuted": false
+}

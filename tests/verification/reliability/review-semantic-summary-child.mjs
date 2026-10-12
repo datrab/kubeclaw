@@ -16,7 +16,7 @@ import { REVIEW_SEMANTIC_ENCODING } from '../../../skills/nova/plugins/review/sr
 const [root, phase] = process.argv.slice(2);
 const adapter = activate({ config: { artifactRoot: path.join(root, 'artifacts') } });
 const coordinator = new EffectCoordinator(new FileEffectJournal(path.join(root, 'events.jsonl')), undefined, undefined,
-  new FileResourceLockManager(path.join(root, 'locks')));
+  new FileResourceLockManager(path.join(root, 'locks')), 300_000);
 const adapterOwner = { pluginId: 'kubeclaw.artifact-store', apiVersion: 'pipeline-plugin-v2', packageVersion: '1.0.0', contentDigest: `sha256:${'a'.repeat(64)}` };
 let sequence = 0;
 // Actual Core effect coordinator, disk journal and ArtifactStore. The other

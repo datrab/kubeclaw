@@ -1,3 +1,4 @@
+import { bundleFromConfigMap, projectTestBundle } from '../../fixtures/config/swarm-bundle.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -30,8 +31,12 @@ test('actual Prism Helm render binds V3 producer, supervisor, NRI selection and 
     assert.equal(nri.roles.prism.container, supervisor.name); assert.equal(nri.roles.prism.namespace, 'kubeclaw');
     assert.equal(worker.spec.template.metadata.annotations['kubeclaw.dev/native-worker-role'], 'prism');
     assert.equal(spec.terminationGracePeriodSeconds, 150);
-    assert.equal(supervisor.env.find(item => item.name === 'PRISM_WORKER_SHUTDOWN_TIMEOUT_MS').value, '120000');
-    assert.equal(supervisor.env.find(item => item.name === 'PRISM_NATIVE_CLOSE_TIMEOUT_MS').value, '105000');
+    assert.equal(supervisor.env.find(item => item.name === 'SWARM_CONFIG').value, '/etc/kubeclaw/swarm/swarm.config.json');
+    const authored = projectTestBundle(bundleFromConfigMap(docs.find(doc => doc?.kind === 'ConfigMap' && doc.metadata.name === 'prism-swarm-config').data));
+    assert.equal(authored.operator.prism.worker.shutdownTimeoutMs, 120000);
+    assert.equal(supervisor.env.find(item => item.name === 'PRISM_WORKER_SHUTDOWN_TIMEOUT_MS'), undefined);
+    assert.equal(supervisor.env.find(item => item.name === 'PRISM_NATIVE_CLOSE_TIMEOUT_MS'), undefined);
+    assert.equal(authored.operator.prism.native.supervisor.closeTimeoutMs, 105000);
     assert.equal(worker.spec.strategy.type, 'Recreate'); assert.equal(worker.spec.replicas, 1);
     assert.deepEqual(spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms,
       [{ matchFields: [{ key: 'metadata.name', operator: 'In', values: [selected.nodeName] }] }]);

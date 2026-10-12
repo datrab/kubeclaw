@@ -1,0 +1,6 @@
+{
+  "manifestSha256": "e9e6eac3ea55dac1ef170abcc4dc595cf8586b08949cea4b9a97dbe784fe13cf",
+  "identitiesMatch": true,
+  "decision": "source accepted; active four statuses now exactly match generator. Blocking/refuted/superseded distinctions remain documented outside status field. Previous D12 and CLI checks retained.",
+  "runtime": "none"
+}

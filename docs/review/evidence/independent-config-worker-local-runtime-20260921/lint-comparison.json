@@ -1,0 +1,204 @@
+{
+  "scopeCount": 31,
+  "baselineCount": 32,
+  "newNormalizedFindings": [],
+  "removedNormalizedFindings": [
+    [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/local-runtime.ts",
+      "complexity",
+      "Method 'runAttempt' has a complexity of 17. Maximum allowed is 15."
+    ]
+  ],
+  "childCount": 12,
+  "childOriginalCount": 12,
+  "childRuleMessageMultisetUnchanged": true,
+  "qualityStatus": "Both canonical lint commands remain exit1; baseline classification does not constitute quality acceptance",
+  "scopeFindings": [
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-lines",
+      "message": "File has too many lines (1854). Maximum allowed is 300.",
+      "line": 324
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-params",
+      "message": "Function 'finalNodeResult' has too many parameters (8). Maximum allowed is 7.",
+      "line": 349
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "complexity",
+      "message": "Function 'validateAndMapOutputs' has a complexity of 16. Maximum allowed is 15.",
+      "line": 425
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "discipline/no-fallback-chain",
+      "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority.",
+      "line": 492
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-lines-per-function",
+      "message": "Constructor has too many lines (142). Maximum allowed is 60.",
+      "line": 555
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "complexity",
+      "message": "Constructor has a complexity of 39. Maximum allowed is 15.",
+      "line": 555
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-lines-per-function",
+      "message": "Async method 'run' has too many lines (178). Maximum allowed is 60.",
+      "line": 698
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "complexity",
+      "message": "Async method 'run' has a complexity of 26. Maximum allowed is 15.",
+      "line": 698
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+      "line": 729
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+      "line": 745
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+      "line": 761
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+      "line": 773
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+      "line": 790
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+      "line": 791
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+      "line": 794
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+      "line": 798
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+      "line": 826
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "complexity",
+      "message": "Private async method #executeNode has a complexity of 16. Maximum allowed is 15.",
+      "line": 964
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-lines-per-function",
+      "message": "Private async method #executeAttempt has too many lines (608). Maximum allowed is 60.",
+      "line": 1021
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "complexity",
+      "message": "Private async method #executeAttempt has a complexity of 73. Maximum allowed is 15.",
+      "line": 1021
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-lines-per-function",
+      "message": "Async method 'execute' has too many lines (112). Maximum allowed is 60.",
+      "line": 1131
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-lines-per-function",
+      "message": "Async method 'collectEvidence' has too many lines (121). Maximum allowed is 60.",
+      "line": 1280
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "complexity",
+      "message": "Async method 'collectEvidence' has a complexity of 25. Maximum allowed is 15.",
+      "line": 1280
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+      "line": 1297
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (5). Maximum allowed is 3.",
+      "line": 1301
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-depth",
+      "message": "Blocks are nested too deeply (4). Maximum allowed is 3.",
+      "line": 1377
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "discipline/no-fallback-chain",
+      "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority.",
+      "line": 1592
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "discipline/no-fallback-chain",
+      "message": "Use one explicit value and at most one fallback; longer fallback chains hide authority.",
+      "line": 1616
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "max-lines-per-function",
+      "message": "Private async method #persistWorkerCompletion has too many lines (122). Maximum allowed is 60.",
+      "line": 1630
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts",
+      "rule": "discipline/no-swallowed-error",
+      "message": "Handle the error intentionally or rethrow it with context.",
+      "line": 1748
+    },
+    {
+      "path": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+      "rule": "max-lines",
+      "message": "File has too many lines (2271). Maximum allowed is 2000.",
+      "line": 2054
+    }
+  ]
+}

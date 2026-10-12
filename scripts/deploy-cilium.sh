@@ -10,19 +10,7 @@ case "$MODE" in
     # Check on EVERY attempt, including retries after a failed Helm release.
     [[ "${CILIUM_K3S_READY:-false}" == true ]] || { echo 'Complete the host preflight in docs/ops/cilium-networking.md; set CILIUM_K3S_READY=true.' >&2; exit 2; }
     command -v k3s >/dev/null || { echo 'Run the initial cutover on the K3s host with CRI access.' >&2; exit 2; }
-    kubectl get nodes -o json | python3 -c 'import json,sys; n=json.load(sys.stdin)["items"]; assert len(n)==1 and n[0]["spec"].get("unschedulable"), "Initial cutover requires exactly one cordoned node"'
-    # Network namespace mode NODE=2 is hostNetwork. No old ready ordinary sandbox
-    # may overlap the new allocator. Run with permission to inspect the local CRI.
-    python3 - <<'PYCRI'
-import json, subprocess
-pods = json.loads(subprocess.check_output(['k3s', 'crictl', 'pods', '-o', 'json']))
-for pod in pods.get('items', []):
-    if pod.get('state') != 'SANDBOX_READY':
-        continue
-    info = json.loads(subprocess.check_output(['k3s', 'crictl', 'inspectp', pod['id']]))
-    mode = info.get('status', {}).get('linux', {}).get('namespaces', {}).get('options', {}).get('network')
-    assert str(mode) in ('2', 'NODE'), 'Old or unknown non-host sandbox still ready: ' + pod['id']
-PYCRI
+    python3 "$SCRIPT_DIR/verify-cilium-install-preflight.py"
 
     ;;
   upgrade)

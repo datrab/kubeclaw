@@ -1,0 +1,60 @@
+{
+  "changedFindingIds": [
+    "IFR-06-001"
+  ],
+  "all154OriginalTextsUnchanged": true,
+  "allOtherFindingsUnchanged": true,
+  "all5IntegrationFindingsUnchanged": true,
+  "counts": {
+    "verifiziert": 142,
+    "in Bearbeitung": 3,
+    "implementiert": 2,
+    "offen": 7
+  },
+  "remaining": 12,
+  "independentTests": {
+    "total": 26,
+    "passed": 26,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "files": [
+    {
+      "path": "docs/review/remediation/register.json",
+      "sha256": "c9fca62c4fef86ef8d45569cc6ffe3c7c4f65a924c631c9a90db055d9041dd3c"
+    },
+    {
+      "path": "docs/review/remediation/register.md",
+      "sha256": "988b44753e0f4a88f535a5344d58c4e11f5e3e731e43a922b61f20b6928555db"
+    },
+    {
+      "path": "docs/review/remediation/progress.md",
+      "sha256": "8eadfdf0cb4d45a34aaa849501d73d64f604b1a4e4662e040d46643349cbd68e"
+    },
+    {
+      "path": "docs/review/remediation/handoff.md",
+      "sha256": "b4b0848e1a8affc74144dec717a6054f94fd87a696f1d2700ab06ca4871001fb"
+    },
+    {
+      "path": "docs/review/remediation/decisions.md",
+      "sha256": "6eb4b5a2b44570886eeb295695ecb27e6e46942b767651dce665a59497ce6f64"
+    },
+    {
+      "path": "docs/review/remediation/acceptance-20260920.md",
+      "sha256": "90e0fade7d2b26102f817900f800789a8efd25897f36b4f26c9338e7b1a343f2"
+    },
+    {
+      "path": "docs/review/remediation/implementation/open-work-inventory-20260921.md",
+      "sha256": "82218f9e42a34dcbe93965b056885153a12c12f1f1f219a0671b65f006fab354"
+    },
+    {
+      "path": "scripts/tests/remediation-register.test.mjs",
+      "sha256": "5f4e1bc1fd1001e62212f24cc5711c373221aa68bb8a81fd9690667124490253"
+    },
+    {
+      "path": "docs/review/evidence/independent-backup-20260920/final-recheck/files/scripts/tests/remediation-register.test.mjs",
+      "sha256": "652f9d7fd2acd56f951fa52a728258bea4e85f4cc0f46e22b29eb17f6a8df8d2"
+    }
+  ]
+}

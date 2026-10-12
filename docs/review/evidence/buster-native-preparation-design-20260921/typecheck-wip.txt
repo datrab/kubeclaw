@@ -1,0 +1,12 @@
+skills/buster/engine/test-gates/preparation-channel.ts(23,53): error TS2538: Type 'undefined' cannot be used as an index type.
+skills/buster/engine/test-gates/preparation-channel.ts(24,22): error TS2538: Type 'undefined' cannot be used as an index type.
+skills/buster/engine/test-gates/preparation-channel.ts(36,83): error TS2345: Argument of type 'Buffer<ArrayBufferLike>' is not assignable to parameter of type 'Buffer<ArrayBuffer>'.
+  Type 'ArrayBufferLike' is not assignable to type 'ArrayBuffer'.
+    Type 'SharedArrayBuffer' is missing the following properties from type 'ArrayBuffer': resizable, resize, detached, transfer, transferToFixedLength
+skills/buster/engine/test-gates/preparation-header.ts(45,1): error TS18048: 'headerSchema.$defs.remotePlanJob' is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-header.ts(46,1): error TS18048: 'headerSchema.$defs.repositoryArchive' is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-header.ts(47,8): error TS18048: 'headerSchema.$defs.repositoryArchive' is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-header.ts(48,1): error TS18048: 'headerSchema.$defs.repositoryArchive' is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-header.ts(48,49): error TS18048: 'headerSchema.$defs.repositoryArchive' is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-ledger.ts(127,36): error TS2345: Argument of type 'SourceReservation | undefined' is not assignable to parameter of type 'SourceReservation'.
+  Type 'undefined' is not assignable to type 'SourceReservation'.

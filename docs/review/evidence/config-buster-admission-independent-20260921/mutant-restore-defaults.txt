@@ -1,0 +1,64 @@
+✔ canonical startup rejects missing/unknown/malformed admission and every retired ENV author (88.692639ms)
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (929.758242ms)
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (837.011366ms)
+✖ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (501.911798ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5345.04288
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-admission-config.test.mts:48:3
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (929.758242ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-admission-config.test.mts:65:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /BUSTER_REMOTE_ADMISSION_FULL/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-admission-config.test.mts:48:3
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (837.011366ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-admission-config.test.mts:65:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /BUSTER_REMOTE_ADMISSION_FULL/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-admission-config.test.mts:79:1
+✖ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (501.911798ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'accepted'
+  - 'failed'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-admission-config.test.mts:86:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'accepted',
+    expected: 'failed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

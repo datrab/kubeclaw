@@ -1,0 +1,5 @@
+{
+  "mutation": "restore former input default in production ingress resolver",
+  "exitCode": 1,
+  "scope": "temporary resolver copy and unchanged input-limit tests except resolver import"
+}

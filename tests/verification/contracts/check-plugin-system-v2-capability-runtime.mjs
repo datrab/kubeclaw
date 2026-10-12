@@ -82,7 +82,7 @@ const effects = new core.EffectCoordinator(
   journal,
   () => new Date('2026-07-25T22:00:00Z'),
   undefined,
-  new core.MemoryResourceLockManager(),
+  new core.MemoryResourceLockManager(), 300_000,
 );
 let invocations = 0;
 const adapter = {
@@ -119,7 +119,7 @@ const confidentialEffects = new core.EffectCoordinator(
     accepted(request) { confidentialAudit.push(['accepted', request]); },
     completed(request, receipt) { confidentialAudit.push(['completed', request, receipt]); },
   },
-  new core.MemoryResourceLockManager(),
+  new core.MemoryResourceLockManager(), 300_000,
 );
 const confidentialAdapter = {
   async ready() {},
@@ -164,7 +164,7 @@ const confidentialFailureEffects = new core.EffectCoordinator(
     accepted(request) { confidentialFailureAudit.push(['accepted', request]); },
     completed(request, receipt) { confidentialFailureAudit.push(['completed', request, receipt]); },
   },
-  new core.MemoryResourceLockManager(),
+  new core.MemoryResourceLockManager(), 300_000,
 );
 await assert.rejects(
   () => confidentialFailureEffects.invokeConfidential(
@@ -245,7 +245,7 @@ const runtime = new core.AdapterRuntime({
     new core.MemoryEffectJournal(),
     undefined,
     undefined,
-    new core.MemoryResourceLockManager(),
+    new core.MemoryResourceLockManager(), 300_000,
   ),
   shutdownTimeoutMs: 1_000,
   async emitDomainEvent() {},
@@ -288,7 +288,7 @@ const lifecycleRuntime = new core.AdapterRuntime({
     new core.MemoryEffectJournal(),
     undefined,
     undefined,
-    new core.MemoryResourceLockManager(),
+    new core.MemoryResourceLockManager(), 300_000,
   ),
   shutdownTimeoutMs: 1_000,
   async emitDomainEvent() {},
@@ -349,7 +349,7 @@ const racingRuntime = new core.AdapterRuntime({
     new core.MemoryEffectJournal(),
     undefined,
     undefined,
-    new core.MemoryResourceLockManager(),
+    new core.MemoryResourceLockManager(), 300_000,
   ),
   shutdownTimeoutMs: 1_000,
   async emitDomainEvent() {},
@@ -410,7 +410,7 @@ const factoryRaceRuntime = new core.AdapterRuntime({
     new core.MemoryEffectJournal(),
     undefined,
     undefined,
-    new core.MemoryResourceLockManager(),
+    new core.MemoryResourceLockManager(), 300_000,
   ),
   shutdownTimeoutMs: 1_000,
   async emitDomainEvent() {},
@@ -461,7 +461,7 @@ const stalledRuntime = new core.AdapterRuntime({
     new core.MemoryEffectJournal(),
     undefined,
     undefined,
-    new core.MemoryResourceLockManager(),
+    new core.MemoryResourceLockManager(), 300_000,
   ),
   shutdownTimeoutMs: 20,
   async emitDomainEvent() {},
@@ -504,7 +504,7 @@ const lateRuntime = new core.AdapterRuntime({
     new core.MemoryEffectJournal(),
     undefined,
     undefined,
-    new core.MemoryResourceLockManager(),
+    new core.MemoryResourceLockManager(), 300_000,
   ),
   shutdownTimeoutMs: 20,
   async emitDomainEvent() {},

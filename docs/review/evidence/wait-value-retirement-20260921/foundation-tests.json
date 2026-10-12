@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "/usr/local/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/verification/reliability/record-transition-authority-independent.test.mjs",
+    "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+    "tests/verification/reliability/record-retained-transition.test.mjs"
+  ],
+  "exitCode": 0,
+  "tests": [
+    {
+      "path": "tests/verification/reliability/record-transition-authority-independent.test.mjs",
+      "sha256": "69d114c208fb595e4d11789fcac61933c287d0d1c89f8670505eaff61d22782b"
+    },
+    {
+      "path": "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+      "sha256": "354baab090d89bf26dbfed637137785ff61087d84ee716e81c379e503d7ca1ea"
+    },
+    {
+      "path": "tests/verification/reliability/record-retained-transition.test.mjs",
+      "sha256": "d966812e0b1645468db4e72eba503aa124c70121ecb76ffa6e873845662d996f"
+    }
+  ]
+}

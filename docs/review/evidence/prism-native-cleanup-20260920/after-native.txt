@@ -1,0 +1,12 @@
+(node:729153) ExperimentalWarning: Transform Types is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ native cleanup waits for actual PostgreSQL client closure before dropping its database (123.078623ms)
+✔ native PostgreSQL and original Prism repositories restore after manual backup retirement (2129.288762ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2847.520092

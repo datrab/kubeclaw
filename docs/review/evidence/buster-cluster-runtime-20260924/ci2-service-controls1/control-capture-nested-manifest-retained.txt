@@ -1,0 +1,51 @@
+CI2_MUTATION_APPLIED {"mutation":"capture-nested-manifest-retained","pid":176006,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-settings.ts","beforeSha256":"63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4","afterSha256":"e8254d5f3871b6d354e4ccfe4eed2fcbe3369358541ddaf3477f2855efa9c5e2","replacements":[{"from":"this.manifest = Object.freeze({ ...options.manifest });","to":"this.manifest = options.manifest;","count":1}]}
+✔ captured file kubernetes.fixture namespace governs actual commands after mutation (1139.673791ms)
+✔ captured file kubernetes.fixture registry governs actual commands after mutation (1139.441234ms)
+✔ captured file kubernetes.fixture secret governs actual commands after mutation (1078.05174ms)
+✔ captured file kubernetes.fixture storage governs actual commands after mutation (1087.372803ms)
+✔ captured file kubernetes.fixture manifest governs actual commands after mutation (1053.667232ms)
+✔ captured file kubernetes.exposure namespace governs actual commands after mutation (540.773395ms)
+✔ captured file kubernetes.exposure host governs actual commands after mutation (799.812695ms)
+✔ captured caller kubernetes.fixture namespace governs actual commands after mutation (708.961471ms)
+✔ captured caller kubernetes.fixture registry governs actual commands after mutation (722.506275ms)
+✔ captured caller kubernetes.fixture secret governs actual commands after mutation (726.163221ms)
+✔ captured caller kubernetes.fixture storage governs actual commands after mutation (820.240449ms)
+✖ captured caller kubernetes.fixture manifest governs actual commands after mutation (343.612561ms)
+✔ captured caller kubernetes.exposure namespace governs actual commands after mutation (351.492987ms)
+✔ captured caller kubernetes.exposure host governs actual commands after mutation (602.502298ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13021.460307
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.fixture manifest governs actual commands after mutation (343.612561ms)
+  Error: KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED: KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT
+      at boundedManifestDocuments (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-manifest.ts:18:11)
+      at inspectManifest (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts:42:20)
+      at readRequest (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts:112:19)
+      at KubernetesFixturePreparation.prepare (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts:50:26)
+      at KubernetesFixtureCapabilityInvoker.invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:84:38)
+      at CompositeTestProviderCapabilityInvoker.invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/composite-capability-runtime.ts:12:18)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-capture.test.mjs:69:72
+      at Object.invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/cluster-test-ownership.mjs:24:65)
+      at invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-capture.test.mjs:69:38)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-capture.test.mjs:78:25 {
+    [cause]: Error: KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT
+        at State.listener (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-manifest.ts:13:85)
+        at composeNode (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/js-yaml/dist/js-yaml.mjs:2076:13)
+        at readBlockMapping (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/js-yaml/dist/js-yaml.mjs:1861:14)
+        at composeNode (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/js-yaml/dist/js-yaml.mjs:2134:80)
+        at readDocument (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/js-yaml/dist/js-yaml.mjs:2275:5)
+        at loadDocuments (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/js-yaml/dist/js-yaml.mjs:2315:7)
+        at loadAll2 (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/js-yaml/dist/js-yaml.mjs:2324:23)
+        at boundedManifestDocuments (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-manifest.ts:10:5)
+        at inspectManifest (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts:42:20)
+        at readRequest (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts:112:19)
+  }

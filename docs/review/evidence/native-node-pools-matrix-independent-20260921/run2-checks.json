@@ -1,0 +1,18 @@
+{
+  "beforeAfterExact": true,
+  "identities": 31179,
+  "previouslyOmittedPathsNowBound": [
+    "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "charts/kubeclaw/files/config/swarm.config.json",
+    "skills/prism/config/native-worker.ts",
+    "node_modules/ajv-formats/dist/index.js"
+  ],
+  "evidenceHashes": {
+    "host-tests.txt": "306b43c650a30bfd354fb7d01ce8f8dccff31a9dcd2b9c9962b6e3b360965ada",
+    "run-host.py": "98ac7b23163f1beaf3a95e71958bad13e1cd3f4a347b0bb38a69e2a13dedd70c",
+    "host-source-identities.json": "d691bb43a5faec307b9132ceadc03717bb0f867b70f5f0b4214bb9f12ee4a1f0",
+    "host-result.json": "b7cb0a550096adc6aeca3b06d08a2068e7bc4df161c3d77f8302ed524c7e3dc9",
+    "host-source-identities-after.json": "d691bb43a5faec307b9132ceadc03717bb0f867b70f5f0b4214bb9f12ee4a1f0"
+  }
+}

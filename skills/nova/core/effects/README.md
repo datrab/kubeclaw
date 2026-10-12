@@ -33,8 +33,12 @@ all runs in the storage root. Monotonic fencing tokens are passed to the adapter
 invocation, adapters must assert the active fence before mutation, and a live
 local adapter execution boundary remains exclusive while an asynchronous
 operation unwinds. Stale owners cannot release a replacement lock.
-The platform can set `effectLockTtlMs`; the default is five minutes and is
-independent of the shutdown timeout. Core renews the lease after durable
+The platform must explicitly set `effectLockTtlMs` to an integer from 60,000
+to 86,400,000 milliseconds, independently of the shutdown timeout. There is no
+TTL fallback. To preserve the former five-minute behavior, author `300000` in
+the platform document. Direct `EffectCoordinator` callers must supply the fifth
+argument; low-level positive safe-integer lifetimes may be shorter than the
+platform range for explicitly authored tests. Core renews the lease after durable
 pre-dispatch bookkeeping and then periodically while the adapter is active.
 
 The invocation owns the resource lock from successful acquisition through the
@@ -44,3 +48,9 @@ If both the primary operation and lock release fail, the thrown AggregateError
 retains both errors and identifies the primary error as its cause. A failed
 cleanup must be reconciled explicitly; expiry alone never authorizes stealing
 a lock from a still-running owner.
+
+Migration of direct callers keeps the existing argument order:
+`new EffectCoordinator(journal, undefined, undefined, locks, 300_000)`.
+The last value is an explicit caller policy, not a constructor default. Missing,
+nonpositive or non-safe-integer TTL values throw `EFFECT_LOCK_TTL_INVALID` before
+an effect can request or acquire a resource lease.

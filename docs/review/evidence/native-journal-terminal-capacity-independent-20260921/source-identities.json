@@ -1,0 +1,91 @@
+{
+  "authorFrozenFiles": [
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-capacity.ts",
+      "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+    },
+    {
+      "path": "tests/verification/reliability/native-journal-capacity-fixture.mts",
+      "sha256": "73c86874ee6ba22a6ebc9e9682ae15ca8c2a718ce7c3111ac2162eef568222a3"
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+      "sha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26"
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-journal.test.mts",
+      "sha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a"
+    },
+    {
+      "path": "tests/verification/reliability/tsconfig.native-scope.json",
+      "sha256": "6209e97562848fec9117da06aae183d738b4a2346740f43610d366aab5a41856"
+    },
+    {
+      "path": "package.json",
+      "sha256": "5c3b1ad0bd5ea201360dcb2419528849cec33e8001812c320d912d4c98408e7b"
+    },
+    {
+      "path": "docs/operations/native-worker-host-pools.md",
+      "sha256": "4ebb2a0ae55c4d434711edca63fe62ebd9fa23a84dba4b09dd8bbe4172b40371"
+    },
+    {
+      "path": "docs/review/remediation/implementation/native-journal-terminal-capacity-20260921.md",
+      "sha256": "8af102bfd1c76fbf9282c226184ff9bb4687ffd74b425edd86fdd1030f10baba"
+    }
+  ],
+  "originalJournalCasesByteIdenticalToVM3": true,
+  "independentEvidence": [
+    {
+      "path": "docs/review/evidence/native-journal-terminal-capacity-independent-20260921/commands.json",
+      "sha256": "233ca93deefbac5974ecbc25ffa4c972ec58c01fc0a979bf580a39964874383e"
+    },
+    {
+      "path": "docs/review/evidence/native-journal-terminal-capacity-independent-20260921/lint.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/review/evidence/native-journal-terminal-capacity-independent-20260921/mutant-final.txt",
+      "sha256": "f61f26620b149ee042e81552218b6aaad41dab41e8e9498ec791df8eb369b2b4"
+    },
+    {
+      "path": "docs/review/evidence/native-journal-terminal-capacity-independent-20260921/mutant.txt",
+      "sha256": "125954442953e77f84d29c4a74bc7cfcf21181ffcfb26f2500f569ecb09aef3c"
+    },
+    {
+      "path": "docs/review/evidence/native-journal-terminal-capacity-independent-20260921/probes-final.txt",
+      "sha256": "2033360e3e045ae0441e132b4a73d3953e165ba06f473215697ec5ccff616ba1"
+    },
+    {
+      "path": "docs/review/evidence/native-journal-terminal-capacity-independent-20260921/probes.mts",
+      "sha256": "b549f949499eb305e55c8197b156ee81b7582aca2d74b8099c14038516a54294"
+    },
+    {
+      "path": "docs/review/evidence/native-journal-terminal-capacity-independent-20260921/revert-admission.mjs",
+      "sha256": "9310a41c56613407fcb7e016d58f14e9683904e82cb8c4f693f9714133df90bb"
+    },
+    {
+      "path": "docs/review/evidence/native-journal-terminal-capacity-independent-20260921/run.py",
+      "sha256": "a0b581750cf3be0b44e359da5b235cfbece0e6ac3f24ebee24124a267bf803fe"
+    },
+    {
+      "path": "docs/review/evidence/native-journal-terminal-capacity-independent-20260921/tests-initial-invalid-unicode.txt",
+      "sha256": "e527f25c14eea0d7fa4ab1827c557717d44c84c78c6b66752d0b291d71bd5b59"
+    },
+    {
+      "path": "docs/review/evidence/native-journal-terminal-capacity-independent-20260921/types.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "report": {
+    "path": "docs/review/remediation/implementation/independent-native-journal-terminal-capacity-20260921.md",
+    "sha256": "a51d2cdd5589c4fa0fcd29742a5863c05afda81c5e35e823a2af76be70563c07"
+  }
+}

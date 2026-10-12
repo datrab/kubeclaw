@@ -1,3 +1,4 @@
+import { resolveRetainedCoreWait } from '../state/wait-projection-reader.ts';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import type { EffectRequest, LifecycleEvent, ObserverCheckpoint, PipelineDefinition, PluginDomainEvent } from '@kubeclaw/plugin-sdk';
@@ -79,8 +80,14 @@ export function createAdapterRuntime(platform: PlatformConfig, runRoot: string, 
     accepted: (request, executionMode) => append('effect.accepted', request, { executionMode }),
     completed: (request, receipt, executionMode) => append(receipt.status === 'completed' ? 'effect.completed' : 'effect.failed', request,
       receipt.status === 'completed' ? { executionMode, adapter: receipt.adapter, result: auditResult(receipt.result ?? {}) } : { executionMode, adapter: receipt.adapter, error: receipt.error ?? {} }),
-  }, new FileResourceLockManager(path.join(platform.storageRoot, 'resource-locks')), platform.effectLockTtlMs ?? 300_000);
+  }, new FileResourceLockManager(path.join(platform.storageRoot, 'resource-locks')), platform.effectLockTtlMs);
   return new AdapterRuntime({ granted: runtime.granted, activated: runtime.activated, configs: objectMap(platform.adapters), effects,
+    resolveRetainedWait: source => {
+      const waitRoot = platform.adapters?.['kubeclaw.wait-store:waits']?.root;
+      if (typeof waitRoot !== 'string') throw new Error('WAIT_RETAINED_CORE_EVIDENCE_INVALID');
+      return resolveRetainedCoreWait(source, { storageRoot: platform.storageRoot, waitRoot,
+        orchestratorIssuerId: platform.orchestratorIssuerId });
+    },
     shutdownTimeoutMs: platform.shutdownTimeoutMs, emitDomainEvent: async (registration, type, identity, payload) => { events.appendSequenced((sequence) => ({
       schemaVersion: 'plugin-domain-event.v2', eventId: `event:${crypto.randomUUID()}`, sequence, type,
       producer: registration, identity, occurredAt: new Date().toISOString(), causationId: null, payload,

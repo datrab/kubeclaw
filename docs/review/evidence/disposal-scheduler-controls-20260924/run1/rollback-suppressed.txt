@@ -1,0 +1,62 @@
+✔ real preparation rollback preserves errors; delete failure false (32.176721ms)
+✖ real preparation rollback preserves errors; delete failure true (7.6739ms)
+✖ registered Kubernetes provider retain, failed preparation true (912.105389ms)
+✔ registered Kubernetes provider retain, failed preparation false (493.310193ms)
+✖ registered Kubernetes provider delete, failed preparation true (432.936647ms)
+✔ registered Kubernetes provider delete, failed preparation false (419.773482ms)
+✔ post-passed Worker measurement fault uses incomplete cleanup then allows later retained success (534.914249ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 4
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4670.324706
+
+✖ failing tests:
+
+test at tests/verification/contracts/kubernetes-cleanup-errors.test.mjs:8:42
+✖ real preparation rollback preserves errors; delete failure true (7.6739ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(failure instanceof AggregateError)
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/kubernetes-cleanup-errors.test.mjs:21:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:12:3
+✖ registered Kubernetes provider retain, failed preparation true (912.105389ms)
+  AssertionError [ERR_ASSERTION]: real execution IPC must retain rollback marker
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:12:3
+✖ registered Kubernetes provider delete, failed preparation true (432.936647ms)
+  AssertionError [ERR_ASSERTION]: real execution IPC must retain rollback marker
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs:39:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,12 @@
+{
+  "name": "@kubeclaw/plugin-preflight-contract",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/package-boundary.test.mjs && node tests/declarations.unit.test.mjs && node tests/live-function.test.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*"
+  }
+}

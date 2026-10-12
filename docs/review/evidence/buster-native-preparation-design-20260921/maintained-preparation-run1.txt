@@ -1,0 +1,5 @@
+
+> verify:buster:preparation
+> tsc --noEmit -p tests/verification/reliability/tsconfig.buster-preparation.json && node --test --test-concurrency=1 tests/verification/reliability/buster-preparation-identities.test.mts tests/verification/reliability/buster-preparation-ledger.test.mts tests/verification/reliability/buster-result-origin.test.mts tests/verification/reliability/buster-prepared-store-cancellation.test.mts
+
+tests/verification/reliability/buster-preparation-identities.test.mts(45,83): error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'AssertPredicate'.

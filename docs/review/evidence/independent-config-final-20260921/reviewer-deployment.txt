@@ -1,0 +1,118 @@
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+✔ Prism database and migration prerequisites precede its Argo migration hook and all application deployments (74.838438ms)
+✔ all standalone data claims and PostgreSQL-generated claims retain data on Argo prune/delete (138.515882ms)
+✔ an external database selection does not create a phantom migration hook or PostgreSQL data claim (47.622424ms)
+✔ every standalone claim has a same-wave consumer, including backup storage before its first schedule (126.058224ms)
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+✔ actual Prism Helm render binds V3 producer, supervisor, NRI selection and only its role mounts (331.049ms)
+✖ original statically built NRI executable reads the actual generated root-owned policy (40.919663ms)
+✔ CD01 original chart delivers the one canonical config to the worker mount (101.840857ms)
+✔ CD02 real Helm output from two author profiles drives the actual production loader (298.364087ms)
+✔ CD03 old Helm shutdown authority is rejected (50.22292ms)
+✔ CD04 maximumActiveRequests rejects 3 before rendering (80.694117ms)
+✔ CD04 maximumActiveRequests rejects 0 before rendering (80.4342ms)
+✔ CD04 maximumActiveRequests rejects 1.5 before rendering (46.902406ms)
+✔ CD04 maximumActiveRequests rejects 2147483648 before rendering (70.62429ms)
+✔ CD04 maximumActiveRequests rejects undefined before rendering (66.382022ms)
+✔ CD04 maximumProbeRequests rejects 3 before rendering (49.276666ms)
+✔ CD04 maximumProbeRequests rejects 0 before rendering (68.986008ms)
+✔ CD04 maximumProbeRequests rejects 1.5 before rendering (46.628139ms)
+✔ CD04 maximumProbeRequests rejects 2147483648 before rendering (71.656747ms)
+✔ CD04 maximumProbeRequests rejects undefined before rendering (71.492792ms)
+✔ CD04 maximumConnections rejects 3 before rendering (93.817412ms)
+✔ CD04 maximumConnections rejects 0 before rendering (46.844004ms)
+✔ CD04 maximumConnections rejects 1.5 before rendering (66.3399ms)
+✔ CD04 maximumConnections rejects 2147483648 before rendering (48.489846ms)
+✔ CD04 maximumConnections rejects undefined before rendering (64.012041ms)
+✔ CD04 requestTimeoutMs rejects 3 before rendering (82.698638ms)
+✔ CD04 requestTimeoutMs rejects 0 before rendering (86.539366ms)
+✔ CD04 requestTimeoutMs rejects 1.5 before rendering (49.318417ms)
+✔ CD04 requestTimeoutMs rejects 2147483648 before rendering (91.664636ms)
+✔ CD04 requestTimeoutMs rejects undefined before rendering (86.250469ms)
+✔ CD04 shutdownTimeoutMs rejects 3 before rendering (54.235713ms)
+✔ CD04 shutdownTimeoutMs rejects 0 before rendering (63.345215ms)
+✔ CD04 shutdownTimeoutMs rejects 1.5 before rendering (65.458679ms)
+✔ CD04 shutdownTimeoutMs rejects 2147483648 before rendering (44.526405ms)
+✔ CD04 shutdownTimeoutMs rejects undefined before rendering (80.039691ms)
+✔ CD04 unknown key root (110.967099ms)
+✔ CD04 unknown key operator (66.185207ms)
+✔ CD04 unknown key operator.prism (45.833728ms)
+✔ CD04 unknown key operator.prism.worker (49.170033ms)
+✔ CD04 connection overcommit fails Helm rendering (51.267077ms)
+✔ CD05 shutdown 100000 violates native-close or Pod grace (53.139144ms)
+✔ CD05 shutdown 150000 violates native-close or Pod grace (53.281228ms)
+✔ CD06 Helm packaging dereferences the canonical author/schema without manual synchronization (48.206848ms)
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+✔ five original rendered Envoy consumers separate process probes from fresh self-mTLS readiness (339.043113ms)
+✔ both independent charts carry the same scoped readiness helper (0.568294ms)
+✔ SPIFFE cannot render with an unbound default ServiceAccount; disabled trust retains original default behavior (563.025833ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 44
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4872.75878
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-native-runtime.test.mjs:69:1
+✖ original statically built NRI executable reads the actual generated root-owned policy (40.919663ms)
+  Error: Command failed: /usr/local/bin/node scripts/build-native-worker-nri.mjs /tmp/native-nri-binary-OlIhpe/10-kubeclaw-native
+  node:internal/child_process:1160
+      result.error = new ErrnoException(result.error, 'spawnSync ' + options.file);
+                     ^
+  
+  <ref *1> Error: spawnSync go ENOENT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/build-native-worker-nri.mjs:14:5
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26
+      at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawnSync go',
+    path: 'go',
+    spawnargs: [ 'env', 'GOVERSION' ],
+    error: [Circular *1],
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-native-runtime.test.mjs:73:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12) {
+    status: 1,
+    signal: null,
+    output: [ null, <Buffer >, <Buffer 6e 6f 64 65 3a 69 6e 74 65 72 6e 61 6c 2f 63 68 69 6c 64 5f 70 72 6f 63 65 73 73 3a 31 31 36 30 0a 20 20 20 20 72 65 73 75 6c 74 2e 65 72 72 6f 72 20 ... 865 more bytes> ],
+    pid: 10392,
+    stdout: <Buffer >,
+    stderr: <Buffer 6e 6f 64 65 3a 69 6e 74 65 72 6e 61 6c 2f 63 68 69 6c 64 5f 70 72 6f 63 65 73 73 3a 31 31 36 30 0a 20 20 20 20 72 65 73 75 6c 74 2e 65 72 72 6f 72 20 ... 865 more bytes>
+  }

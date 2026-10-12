@@ -11,7 +11,7 @@ import { loadWorkerConfig } from './worker-config.ts';
 /** Native-only startup: durable ownership and journal recovery precede HTTP admission. */
 export async function runNativePrismWorker(): Promise<void> {
   const config = loadWorkerConfig();
-  const native = nativePrismSupervisorConfig();
+  const native = nativePrismSupervisorConfig(config);
   requireNativeWorkerSupervisorAuthority();
   requireNativeWorkerLauncher(native.launcher);
   const store = new FileWorkerOwnershipStore(native.ownershipRoot, {

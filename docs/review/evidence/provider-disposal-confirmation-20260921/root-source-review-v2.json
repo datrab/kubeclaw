@@ -1,0 +1,27 @@
+{
+  "reviewer": "root",
+  "manifestSha256": "dd71668739ad96cda6e50ed47fb7194c13e72ed7c9297c5d2083021a23591c9b",
+  "status": "correction-required",
+  "resolved": [
+    "Recovery becomes actual current session before initialization",
+    "Final cleanup error string includes both original details",
+    "Four actual Loader refusal tests authored for current/replacement close/drain boundaries"
+  ],
+  "findings": [
+    {
+      "id": "DC-R4",
+      "finding": "Two overlapping terminate calls can both enter with terminated=false and both add the same session resources in finally.",
+      "required": "Idempotent accounting per captured current session, with overlapping actual terminate regression."
+    },
+    {
+      "id": "DC-R5",
+      "finding": "Unconfirmed test helper starts cleanup and waits/asserts prerequisites before its finally; a failing prerequisite can miss release/close restoration.",
+      "required": "Guard entire started lifecycle, fail early if first cleanup ends before intended boundary, always release/restoration and conditionally await entered capability settlement."
+    }
+  ],
+  "additionalRequiredBeforeAcceptance": [
+    "maintained command includes new regression modules",
+    "operator/behavior documentation reflects changed current recovery ownership and error propagation",
+    "runtime and controls not executed yet"
+  ]
+}

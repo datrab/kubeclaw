@@ -1,0 +1,433 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "scope": "Fresh nonauthor source review of bounded cluster invoker migration; no runtime execution or final acceptance",
+  "decision": "Prism legacy test correction accepted for integration and verification; no blocking defect found in inspected production wiring. Final acceptance pending complete runtime, semantic controls and current checkpoint DOC.",
+  "manifestIdentity": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "expected": "f65d34e681f541f27b8b15d88cc5c2550325638118e45df5e71da0df9d78264d",
+      "actual": "f65d34e681f541f27b8b15d88cc5c2550325638118e45df5e71da0df9d78264d",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+      "expected": "8a59464fa85d16b6d7cecda632413b3b0c59eb015b17f8dc8034a61e5b5181d2",
+      "actual": "8a59464fa85d16b6d7cecda632413b3b0c59eb015b17f8dc8034a61e5b5181d2",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+      "expected": "0aaf28d95a6922eba26888a6a0471fbe3a1cb3518a792b35e00c9d3b8f8f5ce7",
+      "actual": "0aaf28d95a6922eba26888a6a0471fbe3a1cb3518a792b35e00c9d3b8f8f5ce7",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/_buster-native.tpl",
+      "expected": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+      "actual": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "expected": "1f597fc57f3cf5dc7d39d317f7009fdcb8c5cbc73f6191907ac01df67b0ecade",
+      "actual": "1f597fc57f3cf5dc7d39d317f7009fdcb8c5cbc73f6191907ac01df67b0ecade",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "expected": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+      "actual": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "expected": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+      "actual": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/rbac.yaml",
+      "expected": "45525f90703f76d3dbcfb67290599359b6366025bd6fdc77040c27d85da6f5e9",
+      "actual": "45525f90703f76d3dbcfb67290599359b6366025bd6fdc77040c27d85da6f5e9",
+      "matches": true
+    },
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "expected": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "actual": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "matches": true
+    },
+    {
+      "path": "charts/prism/files/config/profiles/buster-engine.runtime.config.json",
+      "expected": "0aaf28d95a6922eba26888a6a0471fbe3a1cb3518a792b35e00c9d3b8f8f5ce7",
+      "actual": "0aaf28d95a6922eba26888a6a0471fbe3a1cb3518a792b35e00c9d3b8f8f5ce7",
+      "matches": true
+    },
+    {
+      "path": "charts/prism/values.schema.json",
+      "expected": "7588db4e045bc4d52c1b46b4bbffeac238f12c9bd074b71aa9592c4ed24589c3",
+      "actual": "7588db4e045bc4d52c1b46b4bbffeac238f12c9bd074b71aa9592c4ed24589c3",
+      "matches": true
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "expected": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+      "actual": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+      "matches": true
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "expected": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be",
+      "actual": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be",
+      "matches": true
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "expected": "0b725285b971344b45ac4d0cba933679e6ca432d78e1b0249d7e310f10bc9280",
+      "actual": "0b725285b971344b45ac4d0cba933679e6ca432d78e1b0249d7e310f10bc9280",
+      "matches": true
+    },
+    {
+      "path": "docs/architecture/buster-cluster-configuration.md",
+      "expected": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4",
+      "actual": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4",
+      "matches": true
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+      "expected": "85408643e05abf71cd6e163a026775b5486381ac972336343f266eef6b1a2155",
+      "actual": "85408643e05abf71cd6e163a026775b5486381ac972336343f266eef6b1a2155",
+      "matches": true
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "expected": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f",
+      "actual": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f",
+      "matches": true
+    },
+    {
+      "path": "package.json",
+      "expected": "8ed84f5a8eb007801c9e24e3c6aa18484a1ad81c3199f990ae66b4d0951f5d0b",
+      "actual": "8ed84f5a8eb007801c9e24e3c6aa18484a1ad81c3199f990ae66b4d0951f5d0b",
+      "matches": true
+    },
+    {
+      "path": "scripts/buster-cluster-preflight.mjs",
+      "expected": "8af3686b218937310a08b03ef31a5d63c60d6525551003e3d655e0bf28c5bb5f",
+      "actual": "8af3686b218937310a08b03ef31a5d63c60d6525551003e3d655e0bf28c5bb5f",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "expected": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74",
+      "actual": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "expected": "d39c0de3c0e245cc6dfe8845f984a4b36b31449a5a1e37faa414f2254aa3806c",
+      "actual": "d39c0de3c0e245cc6dfe8845f984a4b36b31449a5a1e37faa414f2254aa3806c",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "expected": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+      "actual": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "expected": "b93b8ffe1b0af18614e20bb16899afe4378be86e748f667fc3b3ebdd77853fd9",
+      "actual": "b93b8ffe1b0af18614e20bb16899afe4378be86e748f667fc3b3ebdd77853fd9",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "expected": "d940cbaed6bf4f86cd1b03d3654b2483464d9e187caf04383a39398f283496fc",
+      "actual": "d940cbaed6bf4f86cd1b03d3654b2483464d9e187caf04383a39398f283496fc",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "expected": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4",
+      "actual": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "expected": "a86a248f1bd72e949a6d2cf63811f48fb1974e417954eea0e4a9f5f2a1a9e8df",
+      "actual": "a86a248f1bd72e949a6d2cf63811f48fb1974e417954eea0e4a9f5f2a1a9e8df",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "expected": "457bc4de3ee01804091f576efa6963dcccda53fd89f39d19b3e235cfd35e179a",
+      "actual": "457bc4de3ee01804091f576efa6963dcccda53fd89f39d19b3e235cfd35e179a",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "expected": "dc7ce158497dddbda0d814d35d2d5297d31706fcbdec08950a0d12e31e0ca5b7",
+      "actual": "dc7ce158497dddbda0d814d35d2d5297d31706fcbdec08950a0d12e31e0ca5b7",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "expected": "f386f4f5edf80c54e3679bbfa6f4fc4df6bfaea3793640c8cbd871a44827af61",
+      "actual": "f386f4f5edf80c54e3679bbfa6f4fc4df6bfaea3793640c8cbd871a44827af61",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "expected": "94b3d29e9f1b3a238d9cf3015ed8d5a364231f1aa3a47690419967931b2e6c46",
+      "actual": "94b3d29e9f1b3a238d9cf3015ed8d5a364231f1aa3a47690419967931b2e6c46",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "expected": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "actual": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "expected": "adb3a2a5cad33278860f8c45e1b104157e81deda9834cf7e95ffd7fabe2fbfbd",
+      "actual": "adb3a2a5cad33278860f8c45e1b104157e81deda9834cf7e95ffd7fabe2fbfbd",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "expected": "9f494597de1af2b55ec912e53f21f34de779ccdfa94142a893133d0d7ed50d63",
+      "actual": "9f494597de1af2b55ec912e53f21f34de779ccdfa94142a893133d0d7ed50d63",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "expected": "115c19a963ae45e1ca2be1e30dcd9b4f1cba7e73a38a8c700777c64f89f8b4b9",
+      "actual": "115c19a963ae45e1ca2be1e30dcd9b4f1cba7e73a38a8c700777c64f89f8b4b9",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "expected": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "actual": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+      "expected": "06ec94d5ba0e6f2db60cfb1574bc21a79fd8e2763abdf79fbc26650aac022ac1",
+      "actual": "06ec94d5ba0e6f2db60cfb1574bc21a79fd8e2763abdf79fbc26650aac022ac1",
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command.mjs",
+      "expected": "96236885439d14f24c14b4371afec426cc95d868aa19f3110fd21ace2c272271",
+      "actual": "96236885439d14f24c14b4371afec426cc95d868aa19f3110fd21ace2c272271",
+      "matches": true
+    },
+    {
+      "path": "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+      "expected": "e59433c5babd34e6c6fd07e68ab4e8012464fa54e418e163353dd6632baa603d",
+      "actual": "e59433c5babd34e6c6fd07e68ab4e8012464fa54e418e163353dd6632baa603d",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs",
+      "expected": "eed5abb2878b3dd7983859c6322994407a6ea31775529a2d2f5e11a6d2149b71",
+      "actual": "eed5abb2878b3dd7983859c6322994407a6ea31775529a2d2f5e11a6d2149b71",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-output-consumers.test.mjs",
+      "expected": "75850db668b05cca4edc2eaccd141d13678178253cc5890eca194ccb2406df35",
+      "actual": "75850db668b05cca4edc2eaccd141d13678178253cc5890eca194ccb2406df35",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+      "expected": "49ecf52423dd615c241cddcf4fa241131704831026b334b4b7328de80f070021",
+      "actual": "49ecf52423dd615c241cddcf4fa241131704831026b334b4b7328de80f070021",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs",
+      "expected": "70fa2b64df3e96c4035c893ae9bff368de6577d56be20bf5a05348674c0eba0c",
+      "actual": "70fa2b64df3e96c4035c893ae9bff368de6577d56be20bf5a05348674c0eba0c",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-process-input-callers.test.mjs",
+      "expected": "118aaf312f9e6f6d00a4b20d57b5e2a9c1aaaf672db7d67c31a28027d35d02ee",
+      "actual": "118aaf312f9e6f6d00a4b20d57b5e2a9c1aaaf672db7d67c31a28027d35d02ee",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+      "expected": "daeedf2c76ea68a35b7ee527891cff707532785b923d25b9be5084ce2c5ec2c3",
+      "actual": "daeedf2c76ea68a35b7ee527891cff707532785b923d25b9be5084ce2c5ec2c3",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+      "expected": "644c286de8e40f31aaa7889b7fb956c6b3430c1ba7b75998df3226471b3134fb",
+      "actual": "644c286de8e40f31aaa7889b7fb956c6b3430c1ba7b75998df3226471b3134fb",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "expected": "5cc4ec91787529dcd437e56d8cb1a22720a3b1569a32bafdc7ec9f372afba50d",
+      "actual": "5cc4ec91787529dcd437e56d8cb1a22720a3b1569a32bafdc7ec9f372afba50d",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "expected": "c13bd9bf7f78ed834b17d78fd24ec147e7b21edbf90ae9152ae3e993e9ba924f",
+      "actual": "c13bd9bf7f78ed834b17d78fd24ec147e7b21edbf90ae9152ae3e993e9ba924f",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "expected": "606c566c00541111a4f76544bea70b79aa794fd7f3502fa901e1a1428c135ebd",
+      "actual": "606c566c00541111a4f76544bea70b79aa794fd7f3502fa901e1a1428c135ebd",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+      "expected": "1cdc3105bcf3a63a32a2a79f3ae6fe7d7214ac5c29a025d591b23c18834cb951",
+      "actual": "1cdc3105bcf3a63a32a2a79f3ae6fe7d7214ac5c29a025d591b23c18834cb951",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+      "expected": "259143200677ba037d71eef8d0c569582c9fffd6841cae357d83a9bc0bc35a0d",
+      "actual": "259143200677ba037d71eef8d0c569582c9fffd6841cae357d83a9bc0bc35a0d",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "expected": "e3b8462e1190467d9bc16f771f81f356ba78fe07accefec8cd4292cb519d7d60",
+      "actual": "e3b8462e1190467d9bc16f771f81f356ba78fe07accefec8cd4292cb519d7d60",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/contracts/tsconfig.buster-cluster-policy.json",
+      "expected": "b7201417f2d5ab073a703a2ce66dafaf50bcb7ca2587a94bcc9054660c773077",
+      "actual": "b7201417f2d5ab073a703a2ce66dafaf50bcb7ca2587a94bcc9054660c773077",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/buster-admission-render.test.mjs",
+      "expected": "880659b662e0dc3400c5e8f5cfb0b4d2ea6cfaeeefa25d8daf6e5bcc1b5aebc8",
+      "actual": "880659b662e0dc3400c5e8f5cfb0b4d2ea6cfaeeefa25d8daf6e5bcc1b5aebc8",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+      "expected": "dc0f81d07a2bcc8555bb0d3f7e1555fe4e442ba05ac4a49a753051818f4221a6",
+      "actual": "49dcf0f3942fb5bc5c5ac3b3345f7afb6a269fde0a066652424d22a00fe0be15",
+      "matches": false
+    },
+    {
+      "path": "tests/verification/deployment/buster-process-input-parity.test.mjs",
+      "expected": "6a371ee2f232e195366c970a00d43052302f30db6974a8a5836e0f7a72d057c3",
+      "actual": "6a371ee2f232e195366c970a00d43052302f30db6974a8a5836e0f7a72d057c3",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/buster-readiness-config.test.mjs",
+      "expected": "2ebcfbb1fdb7e190a265d14ff0d03baaaed6ecd8106e567e5c02cc8a05ed9e53",
+      "actual": "2ebcfbb1fdb7e190a265d14ff0d03baaaed6ecd8106e567e5c02cc8a05ed9e53",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/config-component-packaging.test.mjs",
+      "expected": "e54bf0bc008ab23503971efcf8cc037364b09cfcd9e47bee8a33455eb6328930",
+      "actual": "e54bf0bc008ab23503971efcf8cc037364b09cfcd9e47bee8a33455eb6328930",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "expected": "ba4bcd6bd8bc01379ef02ed7d8a9ff49a46f4da270ad6eba5247d4f7199f2a72",
+      "actual": "ba4bcd6bd8bc01379ef02ed7d8a9ff49a46f4da270ad6eba5247d4f7199f2a72",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/buster-cluster-entrypoint.test.mjs",
+      "expected": "c9bbbaf745bb975ac3445bd034f28934621da1db5716ed6f861eb1c379488469",
+      "actual": "c9bbbaf745bb975ac3445bd034f28934621da1db5716ed6f861eb1c379488469",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+      "expected": "3d370b6ab521d825db82f6a9d509ce3eb7c61766d193c4fe000541e4507fe27f",
+      "actual": "3d370b6ab521d825db82f6a9d509ce3eb7c61766d193c4fe000541e4507fe27f",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+      "expected": "28958d66a366909e6182d79024e52c9cb51e2d96f832b762277066a995219fe5",
+      "actual": "28958d66a366909e6182d79024e52c9cb51e2d96f832b762277066a995219fe5",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/reliability/tailscale-generation.test.mjs",
+      "expected": "eeb00058cadb06726ef4292ef0b5fe9da2dfbb8992a96982b23521ad404f3691",
+      "actual": "eeb00058cadb06726ef4292ef0b5fe9da2dfbb8992a96982b23521ad404f3691",
+      "matches": true
+    },
+    {
+      "path": "scripts/native-worker-node-policy.d.mts",
+      "expected": "e769dd54e72b6b44dbbe1f29892d7a194ebb8f769385e260ae972779d318cb3e",
+      "actual": "e769dd54e72b6b44dbbe1f29892d7a194ebb8f769385e260ae972779d318cb3e",
+      "matches": true
+    },
+    {
+      "path": "scripts/registry-client-config.d.mts",
+      "expected": "68d13e008e4f36947f8cb6f8074803cfa63ecac920abb5641e86887cbccf74ac",
+      "actual": "68d13e008e4f36947f8cb6f8074803cfa63ecac920abb5641e86887cbccf74ac",
+      "matches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "expected": "cf35868ce909f53a05fae0e8a4bdf81f0e8c030850d569839f13d47f5efa4607",
+      "actual": "cf35868ce909f53a05fae0e8a4bdf81f0e8c030850d569839f13d47f5efa4607",
+      "matches": true
+    },
+    {
+      "path": "tests/verification/e2e/registry-target.d.mts",
+      "expected": "829f30b8da14840f8ce821f0ebef09fa971c514a8270c3a24eee69204e116944",
+      "actual": "829f30b8da14840f8ce821f0ebef09fa971c514a8270c3a24eee69204e116944",
+      "matches": true
+    },
+    {
+      "path": "scripts/tsconfig.json",
+      "expected": "dc37cbd2383d4c719721d0a1906bb36d48505ba32d9002441c70926a16c2c42b",
+      "actual": "dc37cbd2383d4c719721d0a1906bb36d48505ba32d9002441c70926a16c2c42b",
+      "matches": true
+    }
+  ],
+  "privateCorrectionIdentity": [
+    {
+      "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+      "actual": "49dcf0f3942fb5bc5c5ac3b3345f7afb6a269fde0a066652424d22a00fe0be15",
+      "expected": "49dcf0f3942fb5bc5c5ac3b3345f7afb6a269fde0a066652424d22a00fe0be15"
+    }
+  ],
+  "reviewed": [
+    "D17 and CONFIG F1-F6/F2a/F3a/F4a/F5a/F-DOCa plus package CI1-CI5",
+    "Prism correction: exact closed-schema rejection for the never-supported broker section; Kubeclaw key-specific retirement rejection; finally restores original property presence and value; positive render ensures later negatives start valid; no removed case or changed deadline",
+    "Production loader validates component and rejects legacy ENV before construction; factory optional-binding branch respects disabled consumers but validates supplied bindings; enabled Kube registry derives from existing registry-health configuration; capability options built before store constructor",
+    "Complete component selector raw bytes feed shared Helm validation and delivered bundle; lease group/version consumed by CRD, RBAC and controller; Prism delegates shared validation; stale broker fields reject",
+    "Required direct Kube/Tail operation options, explicit full subjects and shared policy forwarding; runtime operation deadlines/output/diagnostics consume fields; request interpretation defaults are separate disclosed ownership",
+    "Read-only entry preflight precedes runtime-root helper, lock, temporary registry writes and BuildKit launch; snapshot generation directory resolves relative executable",
+    "Operator reference covers every package field, units, authored defaults, selected profiles, old inputs, transport and remaining owners"
+  ],
+  "docPending": [
+    "Implementation checkpoint still describes Runtime2 as started. Root must record interruption, missing terminal/drift evidence, final full rerun and controls honestly before DOC acceptance."
+  ],
+  "limitations": [
+    "Did not run or independently accept runtime logs yet.",
+    "No full CONFIG, original finding, live Kubernetes/Tailnet or native isolation acceptance.",
+    "Remaining protocol/request ceilings, RuntimeSecurity budgets and other component policy are explicitly outside bounded migration, not silently accepted as global D17 completion."
+  ]
+}

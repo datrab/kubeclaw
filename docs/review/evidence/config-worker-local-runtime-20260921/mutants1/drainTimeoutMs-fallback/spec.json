@@ -1,0 +1,7 @@
+{
+  "file": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/local-runtime.ts",
+  "from": "options.drainTimeoutMs",
+  "log": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-local-runtime-20260921/mutants1/drainTimeoutMs-fallback/loads.jsonl",
+  "sha256": "17ce49a84ab0484d19e004aad2db4554804df89230c6884dd3c91c4892e962a4",
+  "to": "(options.drainTimeoutMs ?? 300_000)"
+}

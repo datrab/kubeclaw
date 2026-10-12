@@ -1,0 +1,9 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/verification/deployment/prism-swarm-config.test.mjs"
+  ],
+  "exitCode": 0
+}

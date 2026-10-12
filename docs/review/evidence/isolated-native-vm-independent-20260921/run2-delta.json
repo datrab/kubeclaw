@@ -1,0 +1,22 @@
+{
+  "launcherOnlyCacheNameManifestPathsChanged": true,
+  "originalTestCommandsIdentical": [
+    "node --test --test-concurrency=1 \\",
+    "node --test --test-concurrency=1 \\"
+  ],
+  "machineIdentity": {
+    "generation": "Python uuid.uuid4 for this new disposable guest only",
+    "uuid": "cd7b2949-495f-456a-8a21-34e00b2fca07",
+    "path": "/etc/machine-id",
+    "preparedMode": "0444",
+    "ownership": "guest-init chowns guest /etc to root before production-reader preflight"
+  },
+  "preparedFileMode": "0444",
+  "productionTrustCheck": "actual unchanged reader invoked inside guest after root ownership setup",
+  "reviewedHashes": {
+    "docs/review/evidence/isolated-native-vm-run2-proposal-20260921/guest-init.sh": "09c0ec8ee083d5daf636588d764d8e8a2abf14f92abd6f6db5c24eaa350f2cd1",
+    "docs/review/evidence/isolated-native-vm-run2-proposal-20260921/launch-approved.py": "c2779b8c6815c474cec041f6351a8a8e0bac65f3b2fc47e60bb0e9805e66abb8",
+    "docs/review/evidence/isolated-native-vm-run2-proposal-20260921/prepare-images.py": "be15e5f6d80279581372ac492565ff3895792aee1e33161b8f9077c8e073d063",
+    "docs/review/evidence/isolated-native-vm-run2-proposal-20260921/guest-identity.json": "7ab20801678429f8eaa9ca8ae52af39b4b0f7c06c1c6a234364a4d0301df38c5"
+  }
+}

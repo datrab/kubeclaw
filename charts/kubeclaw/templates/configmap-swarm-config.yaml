@@ -1,5 +1,5 @@
-# ConfigMap: Swarm platform config and its canonical lint policy.
-# Init container copies these to /home/node/.openclaw/ (config PVC).
+# ConfigMap: component bundle mounted as one generation, plus canonical lint policy.
+# Init copies lint files only; the operator bundle is never copied to the config PVC.
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,11 +7,9 @@ metadata:
   labels:
     {{- include "kubeclaw.labels" . | nindent 4 }}
 data:
-  swarm.config.json: |
-{{- if .Values.swarmConfigJson }}
-{{ .Values.swarmConfigJson | indent 4 }}
-{{- else }}
-{{ .Files.Get "files/config/swarm.config.json" | indent 4 }}
+{{- range $name, $contents := (include "kubeclaw.swarmBundle" . | mustFromJson) }}
+  {{ $name }}: |
+{{ $contents | indent 4 }}
 {{- end }}
   .semgrep.yml: |
 {{- if .Values.semgrepConfigYaml }}
@@ -23,8 +21,10 @@ data:
 {{- if .Values.eslintConfigMjs }}
 {{ .Values.eslintConfigMjs | indent 4 }}
 {{- else }}
-{{ .Files.Get "files/config/eslint.config.mjs" | indent 4 }}
+{{ .Files.Get "files/config/eslint-config.mjs" | indent 4 }}
 {{- end }}
+  discipline-eslint-plugin.mjs: |
+{{ .Files.Get "files/config/discipline-eslint-plugin.mjs" | indent 4 }}
   eslint-type-evidence-config.mjs: |
 {{ .Files.Get "files/config/eslint-type-evidence-config.mjs" | indent 4 }}
   eslint-type-evidence-tests-config.mjs: |

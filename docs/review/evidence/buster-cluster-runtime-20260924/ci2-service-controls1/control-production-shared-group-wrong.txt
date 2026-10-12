@@ -1,0 +1,53 @@
+CI2_MUTATION_APPLIED {"mutation":"production-shared-group-wrong","pid":167710,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-cluster-options.ts","beforeSha256":"eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff","afterSha256":"6c273dec6568948f3ca6ec44b6f5d07bc89e73f802d084ca1a03b5bd03da1556","replacements":[{"from":"leaseApiGroup: binding.leaseApiGroup, leaseApiVersion: binding.leaseApiVersion,","to":"leaseApiGroup: 'wrong.example.test', leaseApiVersion: binding.leaseApiVersion,","count":1}]}
+✖ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (1383.181741ms)
+✔ production decoder/service/IPC first kubernetes.exposure, allowed and grant/route denied (1375.48752ms)
+✔ production decoder/service/IPC first kubernetes.runtime-security, allowed and grant/route denied (1788.008096ms)
+✖ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (991.410955ms)
+✔ production decoder/service/IPC second kubernetes.exposure, allowed and grant/route denied (1315.328615ms)
+✔ production decoder/service/IPC second kubernetes.runtime-security, allowed and grant/route denied (1740.123132ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11114.947238
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (1383.181741ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'busternamespaceleases.wrong.example.test'
+  - 'busternamespaceleases.first.example.test'
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:199:18
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'busternamespaceleases.wrong.example.test',
+    expected: 'busternamespaceleases.first.example.test',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-cluster-production-route.test.mjs:87:3
+✖ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (991.410955ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'busternamespaceleases.wrong.example.test'
+  - 'busternamespaceleases.second.example.test'
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-production-route.test.mjs:199:18
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'busternamespaceleases.wrong.example.test',
+    expected: 'busternamespaceleases.second.example.test',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

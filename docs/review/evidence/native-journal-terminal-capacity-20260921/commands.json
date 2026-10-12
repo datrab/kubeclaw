@@ -1,0 +1,81 @@
+[
+  {
+    "name": "tests-final",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-native-journal.test.mts",
+      "tests/verification/reliability/worker-native-journal-capacity.test.mts"
+    ],
+    "environmentOverrides": {},
+    "exitCode": 0
+  },
+  {
+    "name": "types-final",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.native-scope.json"
+    ],
+    "environmentOverrides": {},
+    "exitCode": 0
+  },
+  {
+    "name": "lint-final",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/worker/core/worker/native-attempt-journal.ts",
+      "skills/worker/core/worker/native-journal-capacity.ts",
+      "skills/worker/core/worker/native-journal-state.ts",
+      "tests/verification/reliability/native-journal-capacity-fixture.mts",
+      "tests/verification/reliability/worker-native-journal-capacity.test.mts"
+    ],
+    "environmentOverrides": {},
+    "exitCode": 0
+  },
+  {
+    "name": "mutant-signal",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-journal-terminal-capacity-20260921/mutant-loader.mjs",
+      "--test",
+      "--test-name-pattern=exact future metadata fit",
+      "tests/verification/reliability/worker-native-journal-capacity.test.mts"
+    ],
+    "environmentOverrides": {
+      "JOURNAL_CAPACITY_MUTANT": "signal"
+    },
+    "exitCode": 1
+  },
+  {
+    "name": "mutant-fault",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-journal-terminal-capacity-20260921/mutant-loader.mjs",
+      "--test",
+      "--test-name-pattern=exact future metadata fit",
+      "tests/verification/reliability/worker-native-journal-capacity.test.mts"
+    ],
+    "environmentOverrides": {
+      "JOURNAL_CAPACITY_MUTANT": "fault"
+    },
+    "exitCode": 1
+  }
+]

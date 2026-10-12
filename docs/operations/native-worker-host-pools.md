@@ -54,6 +54,13 @@ make the resource pool generic.
 
 ## One source for this host policy
 
+`maximumActiveScopes` is required by Worker Core. Both Buster and Prism pass
+the explicit capacity from the trusted generated host-pool policy; Worker Core
+does not supply a default when it is missing. Missing, nonpositive, fractional
+or unsafe values reject supervisor startup before admission. Custom callers
+must supply their intended capacity explicitly. This requirement does not
+replace the existing host preparation, ownership or resource-limit checks.
+
 Edit `my-values/infra/native-worker-pools.yaml` (or its private selected copy).
 The node name and exact containerd runtime version deliberately start unset:
 no production host, installed runtime or available capacity is inferred. Set
@@ -82,6 +89,85 @@ Pending launches count. A failed admission consumes no owner identity; a
 journal-accepted attempt is sealed as an explicit never-launched failure.
 Release happens only after durable quiescence and scope disposal. An unresolved
 cleanup fences the supervisor instead of making its capacity reusable.
+
+## Attempt parents and owned process leaves
+
+New Core allocations create an empty `worker-<uuid>` aggregate beneath the role
+pool. The specialist host starts in its `host` leaf; trusted supervisor helper
+launches use distinct `helper-<uuid>` leaves. Controllers are enabled only on the
+new attempt parent. Core does not reconfigure the deployment-owned role root.
+The covering cgroup2 mount must retain hierarchical event counters: mounts with
+`memory_localevents` or `pids_localevents` are rejected for new aggregates and
+aggregate observations. Core only reads mountinfo; it never remounts the host.
+Both the ordinary host launch and the existing helper launch authority use this
+layout; there is no new-admission leaf fallback.
+
+The parent retains the accepted attempt memory/task ceilings and provides the
+receipt's actual kernel CPU, memory-peak and task-peak observations. Child peaks
+are not added together. Helpers share that reservation; creating a child does not
+create another copy of pool capacity. A trusted helper caller can specify tighter
+memory/task ceilings, which cannot exceed the parent's ceilings. This generic
+option does not replace required capability-specific limits, CPU-time monitoring,
+UID selection or sandbox restrictions. Buster's capability and fixture integration
+still has to supply and prove those requirements.
+
+Ownership format `worker-ownership-store.v3` retains a versioned topology with
+every child reservation, limits and boot/device/inode binding. Reservations are
+fsynced before child creation and bindings before spawning the trusted launcher.
+The launcher checks both parent and child identities, joins the child before
+exec, then drops credentials with the existing parent-death fence. Its
+`KUBECLAW_NATIVE_SCOPE` remains the aggregate parent for existing host consumers.
+Concurrent helpers are serialized through the lease's durable launch fence.
+Completed helper groups remain until attempt finalization; their metadata remains
+charged to the existing store byte limit, including after disposal. Exhaustion
+fails closed; there is no automatic history pruning or raised quota.
+
+Shutdown fences further launches, settles pending child creation, and attempts to
+reap launchers that have not entered their cgroup. After validating the owned
+child inventory, it attempts whole-subtree drain even if launcher reaping or the
+quiescing metadata write failed. A retained failure prevents successful completion,
+child/parent removal and capacity release. Normal finalization persists the final
+parent observation before removing children and parent. Recovery permits a missing bound
+child only after that durable empty boundary. Unbound reserved children can be
+removed only if empty; unknown, replaced or nested child groups block recovery.
+Partial removal can resume from the original persisted observation. Recovery
+never adopts a live host/control channel.
+
+New owner and child admissions reserve future terminal metadata for every active
+owner under the existing store lock and unchanged byte ceiling. The bound charges
+canonical JSON framing, future host identity and bindings, maximum safe integer
+revisions/counters, and the complete accepted 4,096 UTF-16-unit diagnosis domain
+(up to 24,578 JSON bytes). Immutable terminal records retain their actual byte
+charge. These accounting values are never persisted as observed kernel data.
+The effective concurrency ceiling can therefore be lower than the record limit:
+an 8,192-byte profile remains valid configuration but admits no new owner. The
+64 MiB default is unchanged; retained history and helper bindings also consume it.
+
+Historical stores already above this prospective commitment remain readable;
+new admissions fail closed, while lifecycle writes retain their actual-byte
+ceiling. Such a store can still be unable to seal a result at its unchanged quota.
+Known, identity-verified owned processes are drained despite a failed quiescing
+write, but groups and reservations remain retained without a durable completion.
+A null-host historical store can fail its required provenance write before
+supervisor recovery reaches drain. Restart alone does not cure either condition.
+No safe metadata-retirement command or complete saturated-store recovery procedure
+is supplied. Do not edit ownership JSON, delete records, raise quotas automatically,
+or report an unsealed attempt complete. Physical I/O failures remain possible;
+after persistence recovers, original recovery can seal the retained verified scope.
+See the [capacity criteria and evidence](../review/remediation/implementation/ownership-terminal-capacity-20260921.md).
+
+Historical v1/v2 records decode explicitly as legacy leaves and are drained using
+their original binding without enabling controllers on those existing groups.
+They cannot launch new work. Reading historical bytes does not rewrite them; a
+subsequent durable state mutation writes v3 with the explicit historical topology.
+
+`verify:worker-core:native-scope` includes real-host aggregate/leaf membership,
+real helper memory/task pressure and child-to-parent event propagation, subtree
+drain despite injected persistence failure, persisted removal-boundary recovery,
+and unknown/replaced/nested-child refusal. The metadata tests separately cover strict decoding, CAS,
+quota and old-format handling. Directory metadata fixtures prove no cgroup
+behavior. The native tests require the prepared host and remain unverified in
+this workspace; see the [bounded implementation evidence](../review/remediation/implementation/native-aggregate-topology-20260921.md).
 
 ## Generate and review host preparation
 
@@ -203,6 +289,20 @@ must not be able to create supervisor Pods in either selected namespace. The
 plugin accepts only the exact configured containerd version and refuses a
 second NRI-supplied configuration authority.
 
+The generated `buster-native-values.yaml` is the Buster topology overlay. Merge
+its `busterNative` fields and single-replica setting into the private file selected
+by `BUSTER_VALUES_FILE`, alongside the existing private registry configuration.
+Image release values remain independent of node topology: neither materializing
+an immutable image selection nor GitOps export invents a node or policy digest.
+The selected-release renderer carries only the supplied native node, namespace
+and policy digest into its comparison baseline; image and bundle overrides still
+undergo the original selection checks. Missing or wrong-namespace bindings fail
+before an export publishes its output directory. GitOps activation validates both
+committed native-role manifests against the selected node policy before the
+actual host preflight. A valid-shaped but wrong Buster digest is rejected there.
+This renders source wiring;
+actual host/runtime preflight and Buster cutover acceptance remain required.
+
 Use the generated `prism-native-values.yaml` as the selected private Prism
 overlay. It switches Control's envelope producer and the worker command together;
 a native request is never retried through the legacy executor. Both bind the
@@ -269,3 +369,62 @@ The runtime integration was checked against containerd's
 [2.2 CRI spec construction](https://github.com/containerd/containerd/blob/v2.2.0/internal/cri/server/container_create.go),
 [NRI configuration defaults](https://github.com/containerd/containerd/blob/v2.2.0/internal/nri/config.go),
 and NRI's pinned [namespace adjustment implementation](https://github.com/containerd/nri/blob/a2eea2bc19ada59eafdb1237a4720ef8ab11e5b1/pkg/api/adjustment.go).
+
+
+The process runner projects only `memoryBytes` and `tasks` into scope allocation.
+CPU, input/output, polling and deadline policy stays with the process runner;
+the cgroup decoder deliberately rejects those unrelated keys. Disposable VM
+run 2 exposed a regression where the complete process policy was forwarded and
+rejected before host launch. The boundary correction is covered by maintained
+actual-child orchestration tests with explicitly modeled ownership; these tests
+do not prove cgroup enforcement. VM run 3 reran the unchanged original consumer against the corrected source:
+all 12 original native kernel cases passed. The complete node-pools run still
+failed (34 of 39 passed, one missing-systemd-parser failure and four unchanged
+deadline cancellations). This frozen VM snapshot predates the journal-capacity
+change; it does not establish that newer change or full deployment acceptance.
+See the [boundary correction record](../review/remediation/implementation/native-process-scope-limits-20260921.md).
+
+The native attempt journal now reserves future **metadata** growth as well as
+retained disk bytes before admitting a new identity. Every pending row is charged
+for its possible process archive and result reference, including both bounded
+4096-unit diagnostic strings at their maximum JSON-escaped size, final counters
+and timestamps. The check includes actual durable-store headers, retained sealed
+rows and other metadata under the same configured state-byte ceiling. It writes
+no invented observations and does not increase any quota. Each output reference
+is conservatively charged at the configured output limit; this per-field envelope
+can exceed the tightest jointly reachable output-size combination.
+
+A small metadata profile can therefore admit no work even when an initial row
+would fit. Existing accepted attempts remain readable/replayable and can attempt
+completion, but previously admitted overcommit may still fail a terminal write;
+restart does not supply missing capacity. Physical I/O failures remain possible.
+No automatic record retirement or quota increase is authorized by this check.
+Source-cleanup reconciliation must separately reserve its role-ledger proof and
+establish safe cleanup authority before deletion; journal headroom alone is not
+that authorization. See the [journal capacity record](../review/remediation/implementation/native-journal-terminal-capacity-20260921.md).
+
+Core recovery also exposes an optional, trusted source-cleanup reconciliation
+capability. Without it, failed cleanup continues to fence admission. The
+capability supplies a fixed cleanup journal/profile and returns an accepted
+cleanup envelope; it cannot replace the original receipt or return a success
+flag. Core requires separately sealed successful cleanup, exact original
+identity/receipt binding and disposed ownership with final observations for
+both operations. The cleanup result must also match the archived process output
+and accounting through the original executor finalizer.
+
+A source-cleanup attempt can itself fail after making the original effect safe.
+Recovery preserves that failed receipt and defers its resolution until ordinary
+original attempts have been reconciled. A separate lookup-only callback may name
+the original envelope and an already successful cleanup retry. Core verifies the
+same original result, effect digest and fixed cleanup profile for both cleanup
+attempts, plus quiescent ownership for all three lifetimes. It does not launch a
+cleanup of a cleanup, infer success from absence, or rewrite either failed
+receipt. A missing association or invalid archived retry keeps admission fenced.
+The deferred list inherits the journal's existing record and state limits. See
+the [retry resolution criteria and evidence](../review/remediation/implementation/native-cleanup-retry-resolution-20260921.md).
+
+This API alone does not authorize filesystem deletion or release retained source
+capacity. Buster's source eligibility, publication fence, durable cleanup intent
+and crash handling are still being integrated. No production operator should
+interpret a missing source directory or a finished process as completed cleanup.
+See the [reconciliation contract and current limits](../review/remediation/implementation/native-source-cleanup-reconciliation-20260921.md).

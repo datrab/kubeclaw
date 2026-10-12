@@ -1,0 +1,1 @@
+Initial exact whole-package comparison failed because the coordinated component author independently appended verify:config:components after the TTL baseline. No existing scripts or fields changed; final comparison records both additions and attributes only the effect-lock verifier to this task.

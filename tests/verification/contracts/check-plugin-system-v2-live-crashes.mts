@@ -265,7 +265,7 @@ try {
         new core.MemoryEffectJournal(),
         undefined,
         undefined,
-        new core.MemoryResourceLockManager(),
+        new core.MemoryResourceLockManager(), 300_000,
       ),
       shutdownTimeoutMs: 1000,
       async emitDomainEvent() {},

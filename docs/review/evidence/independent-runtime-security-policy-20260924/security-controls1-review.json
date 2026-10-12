@@ -1,0 +1,438 @@
+{
+  "reviewer": "/root/runtime_security_policy_review",
+  "decision": "eight_controls_accepted_deadline_control_needs_crosstalk_correction",
+  "run": "docs/review/evidence/buster-cluster-runtime-20260924/security-controls1",
+  "baseline": "security-consumers2:61/61, independent review security-consumers2-review.json",
+  "sourceBinding": {
+    "objects": 35436,
+    "handoffFiles": 84,
+    "independentlyComputedDrift": [],
+    "guardViolation": false
+  },
+  "actualExitResults": [
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-restore-maximumExecutionMs",
+      "seconds": 25.719141110079363
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-restore-maximumOutputBytes",
+      "seconds": 6.44171219796408
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-restore-maximumObservationAgeMs",
+      "seconds": 5.841788936988451
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-restore-poll1000",
+      "seconds": 7.354438583017327
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-restore-future5000",
+      "seconds": 6.995925029972568
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-restore-diagnostic1024",
+      "seconds": 6.274903582059778
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-restore-child-path",
+      "seconds": 6.2740569449961185
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-restore-abort-before-output-cause",
+      "seconds": 6.348392118001357
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "control-restore-missing-policy-defaults",
+      "seconds": 6.475255885045044
+    }
+  ],
+  "controls": [
+    {
+      "name": "restore-maximumExecutionMs",
+      "counts": {
+        "tests": 61,
+        "pass": 58,
+        "fail": 1,
+        "cancelled": 2,
+        "skipped": 0,
+        "todo": 0
+      },
+      "hook": {
+        "mutation": "restore-maximumExecutionMs",
+        "pid": 161174,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-cluster-options.ts",
+        "beforeSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+        "afterSha256": "013634ab281d56c777ee944a41dc3782f9b51854480a09a97ceae493f83f0cd8",
+        "replacements": [
+          {
+            "from": "...policy.runtimeSecurity, kubectlExecutable:",
+            "to": "...policy.runtimeSecurity, maximumExecutionMs: 300000, kubectlExecutable:",
+            "count": 1
+          }
+        ]
+      },
+      "intendedOracleObserved": true,
+      "assessment": "Low250ms deadline unexpectedly succeeds for real700ms child; high4000ms succeeds. But two collateral10s node:test cancellations in age/future negatives make this control incomplete.",
+      "decision": "correction_and_rerun_required",
+      "failureLines": [
+        "\u2716 real execution deadline profile false (773.388479ms)",
+        "\u2716 real observation age profile false (10008.815958ms)",
+        "\u2716 real future skew profile false (10003.254561ms)"
+      ],
+      "rawSha256": "a47af4f4e79416c84c0b06cf98c4824452bd10e2345dd96e217d2f828357e3ab"
+    },
+    {
+      "name": "restore-maximumOutputBytes",
+      "counts": {
+        "tests": 61,
+        "pass": 60,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "hook": {
+        "mutation": "restore-maximumOutputBytes",
+        "pid": 162997,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-cluster-options.ts",
+        "beforeSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+        "afterSha256": "f3a2abc8a4a83f745016f42f6237d99d80c19f035abc0c03a6a8cf655f3f0c0a",
+        "replacements": [
+          {
+            "from": "...policy.runtimeSecurity, kubectlExecutable:",
+            "to": "...policy.runtimeSecurity, maximumOutputBytes: 16777216, kubectlExecutable:",
+            "count": 1
+          }
+        ]
+      },
+      "intendedOracleObserved": true,
+      "assessment": "Low combined-output profile unexpectedly succeeds instead of OUTPUT_LIMIT; high passes.",
+      "decision": "accept_intended_semantic_failure_at_run_stand",
+      "failureLines": [
+        "\u2716 real combined output profile false (43.264254ms)"
+      ],
+      "rawSha256": "aec94bd7c0094a56c29682510cdba52768443a0bd39e4ce121f3bf1fe9acaac8"
+    },
+    {
+      "name": "restore-maximumObservationAgeMs",
+      "counts": {
+        "tests": 61,
+        "pass": 60,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "hook": {
+        "mutation": "restore-maximumObservationAgeMs",
+        "pid": 163291,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-cluster-options.ts",
+        "beforeSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+        "afterSha256": "dca05965d0fe327b4fdff1b8146f6d2fb9125ed498fdedc814b41dc9c880ee6a",
+        "replacements": [
+          {
+            "from": "...policy.runtimeSecurity, kubectlExecutable:",
+            "to": "...policy.runtimeSecurity, maximumObservationAgeMs: 10000, kubectlExecutable:",
+            "count": 1
+          }
+        ]
+      },
+      "intendedOracleObserved": true,
+      "assessment": "Low past-age profile unexpectedly succeeds instead of selected deadline TIMEOUT; high passes.",
+      "decision": "accept_intended_semantic_failure_at_run_stand",
+      "failureLines": [
+        "\u2716 real observation age profile false (44.604039ms)"
+      ],
+      "rawSha256": "c9e5e2a0f698abd352ea452b8c88b2f4e95f2347408842010dfe116617196b00"
+    },
+    {
+      "name": "restore-poll1000",
+      "counts": {
+        "tests": 61,
+        "pass": 59,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "hook": {
+        "mutation": "restore-poll1000",
+        "pid": 163527,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+        "beforeSha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+        "afterSha256": "82c2e7f67103249040fed031ec6cecd35595961c3ad7fe06e7a6e40ef78158d5",
+        "replacements": [
+          {
+            "from": "Math.min(this.#policy.pollIntervalMs, Math.max(1, deadline - Date.now()))",
+            "to": "Math.min(1000, Math.max(1, deadline - Date.now()))",
+            "count": 1
+          }
+        ]
+      },
+      "intendedOracleObserved": true,
+      "assessment": "1200ms profile observes1039ms, violates configured lower bound;50ms counterpart passes. Parent second failure is expected derivative because failed subtest does not append second elapsed value.",
+      "decision": "accept_intended_semantic_failure_at_run_stand",
+      "failureLines": [
+        "  \u2716 poll interval 1200 (1082.65135ms)",
+        "\u2716 real polling profile changes command cadence; selected arrays and scalars captured (2173.034212ms)",
+        "\u2716 poll interval 1200 (1082.65135ms)"
+      ],
+      "rawSha256": "2b430453d99cce863127e6a8dfde275f9ed3a3c094abe75584af3c66962ae220"
+    },
+    {
+      "name": "restore-future5000",
+      "counts": {
+        "tests": 61,
+        "pass": 60,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "hook": {
+        "mutation": "restore-future5000",
+        "pid": 163750,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+        "beforeSha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+        "afterSha256": "566bde084e570b4714ed25f028cc83dd0eab568ab7be893fdbcd0f830ac3c74b",
+        "replacements": [
+          {
+            "from": "nowMs + maximumFutureSkewMs",
+            "to": "nowMs + 5000",
+            "count": 1
+          }
+        ]
+      },
+      "intendedOracleObserved": true,
+      "assessment": "High future-skew profile returns invoker TIMEOUT instead of successful matching observation; low rejection passes. This is the intended policy error, not a test harness timeout.",
+      "decision": "accept_intended_semantic_failure_at_run_stand",
+      "failureLines": [
+        "\u2716 real future skew profile true (604.688234ms)"
+      ],
+      "rawSha256": "5ad8fcddc7b320452f1534c43d68b4082aced9a281d06a1e7f9fb943d5dae3ee"
+    },
+    {
+      "name": "restore-diagnostic1024",
+      "counts": {
+        "tests": 61,
+        "pass": 58,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "hook": {
+        "mutation": "restore-diagnostic1024",
+        "pid": 164089,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+        "beforeSha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+        "afterSha256": "6cd5e5b429f6a2865141b0c27976d9d33da55db15323b1e4dab615c3f3a0ff5a",
+        "replacements": [
+          {
+            "from": ".slice(0, policy.diagnosticCodeUnits)",
+            "to": ".slice(0, 1024)",
+            "count": 1
+          }
+        ]
+      },
+      "intendedOracleObserved": true,
+      "assessment": "Both exact7/40 code-unit diagnostic expectations receive full100-character stderr. Reload diagnostic test likewise fails exact length; unrelated positive consumers remain green.",
+      "decision": "accept_intended_semantic_failure_at_run_stand",
+      "failureLines": [
+        "\u2716 real diagnostic code units profile false (51.069748ms)",
+        "\u2716 real diagnostic code units profile true (43.835339ms)",
+        "\u2716 reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (116.555524ms)"
+      ],
+      "rawSha256": "f060ee9e8dcc2ffbfdf1b8e3488ac7cda08b61f176a0612c7a82c3e584c446a8"
+    },
+    {
+      "name": "restore-child-path",
+      "counts": {
+        "tests": 61,
+        "pass": 58,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "hook": {
+        "mutation": "restore-child-path",
+        "pid": 164369,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+        "beforeSha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+        "afterSha256": "be2b8df8a894f4903aec5889954b4aa993c63503735f4848be1373013bddfb74",
+        "replacements": [
+          {
+            "from": "PATH: policy.executableSearchPath.join(path.delimiter)",
+            "to": "PATH: '/usr/local/bin:/usr/bin:/bin'",
+            "count": 1
+          }
+        ]
+      },
+      "intendedOracleObserved": true,
+      "assessment": "Observed PATH differs in negative profile; positive helper cannot resolve under hardcoded PATH; reload initial helper-positive fails. All are selected PATH consumer consequences.",
+      "decision": "accept_intended_semantic_failure_at_run_stand",
+      "failureLines": [
+        "\u2716 real PATH helper profile false (49.937918ms)",
+        "\u2716 real PATH helper profile true (41.744983ms)",
+        "\u2716 reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (48.576993ms)"
+      ],
+      "rawSha256": "34fbb9a566ccf1e1505944645560c5224a3e6f4f19c8410742126859c8d51451"
+    },
+    {
+      "name": "restore-abort-before-output-cause",
+      "counts": {
+        "tests": 61,
+        "pass": 60,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "hook": {
+        "mutation": "restore-abort-before-output-cause",
+        "pid": 164633,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+        "beforeSha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+        "afterSha256": "d410423ff04bfab08702adaf7c217562af004855771e6d5fd07e6d4f9e5c2eb5",
+        "replacements": [
+          {
+            "from": "finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED')); controller.abort();",
+            "to": "controller.abort(); finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED'));",
+            "count": 1
+          }
+        ]
+      },
+      "intendedOracleObserved": true,
+      "assessment": "Low combined-byte quota returns TIMEOUT instead of exact OUTPUT_LIMIT due synchronous abort. High output counterpart passes.",
+      "decision": "accept_intended_semantic_failure_at_run_stand",
+      "failureLines": [
+        "\u2716 real combined output profile false (42.521864ms)"
+      ],
+      "rawSha256": "083a328fd3074a5cac7ebda49dff9f9dbc377d7013f0d700f8db25832c47790f"
+    },
+    {
+      "name": "restore-missing-policy-defaults",
+      "counts": {
+        "tests": 61,
+        "pass": 53,
+        "fail": 8,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "hook": {
+        "mutation": "restore-missing-policy-defaults",
+        "pid": 164933,
+        "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+        "beforeSha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+        "afterSha256": "451c51c44d90e8f1d1da72901fa1dc05ad441638cf3d958ddd97f69e0ca773d4",
+        "replacements": [
+          {
+            "from": "  validateComponentSettings('buster-runtime-security', value, 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');",
+            "to": "  value = { ...{\"allowedNamespacePrefixes\": [\"test\"], \"maximumExecutionMs\": 300000, \"maximumOutputBytes\": 16777216, \"pollIntervalMs\": 1000, \"maximumObservationAgeMs\": 10000, \"maximumFutureSkewMs\": 5000, \"diagnosticCodeUnits\": 1024, \"executableSearchPath\": [\"/usr/local/bin\", \"/usr/bin\", \"/bin\"]}, ...(value as Record<string, unknown>) };\n  validateComponentSettings('buster-runtime-security', value, 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');",
+            "count": 1
+          }
+        ]
+      },
+      "intendedOracleObserved": true,
+      "assessment": "All8 missing-field constructor assertions reach ENOENT /missing-workspace instead of CONFIG_INVALID; these are intended early-validation assertions, not import/setup errors. Remaining53 tests pass.",
+      "decision": "accept_intended_semantic_failure_at_run_stand",
+      "failureLines": [
+        "\u2716 required RuntimeSecurity field allowedNamespacePrefixes before filesystem access (3.915063ms)",
+        "\u2716 required RuntimeSecurity field maximumExecutionMs before filesystem access (0.644997ms)",
+        "\u2716 required RuntimeSecurity field maximumOutputBytes before filesystem access (0.464222ms)",
+        "\u2716 required RuntimeSecurity field pollIntervalMs before filesystem access (0.523264ms)",
+        "\u2716 required RuntimeSecurity field maximumObservationAgeMs before filesystem access (0.687868ms)",
+        "\u2716 required RuntimeSecurity field maximumFutureSkewMs before filesystem access (0.485353ms)",
+        "\u2716 required RuntimeSecurity field diagnosticCodeUnits before filesystem access (0.510183ms)",
+        "\u2716 required RuntimeSecurity field executableSearchPath before filesystem access (0.453472ms)"
+      ],
+      "rawSha256": "0b9734cbf270ed29b5eecdf99dd83816b4812f7c8012b87649cb5e7214b535e0"
+    }
+  ],
+  "finding": {
+    "id": "RS-CONTROL-CROSSTALK-01",
+    "problem": "Restoring forwarded maximumExecutionMs to300000 changes age/future negative inspections whose baseline maximumExecutionMs is600. Both exceed10000ms node:test timeout and become cancelled. The exact intended low-deadline failure is observed but a clean full control run is not established.",
+    "required": "Keep complete61-case scope and original test/production deadlines. Give orthogonal age/future fixtures explicitly bounded requests matching their existing600ms behavior (or another reviewed causal isolation preserving requirement), then rerun passing baseline and full controls at new source. Never count cancellations as acceptable semantic failures."
+  },
+  "limits": [
+    "No test/runtime execution by reviewer.",
+    "All9hooks verified exact original+mutated source hashes and unique replacements; exit1 alone not used.",
+    "No missing import/setup errors mask intended results. Only identified cancellations are deadline-mutant crosstalk, explicitly rejected.",
+    "Full original security regression, lifecycle error paths, final DOC and overall goal remain open."
+  ]
+}

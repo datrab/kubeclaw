@@ -1,0 +1,497 @@
+--- skills/buster/engine/test-gates/provider-loader.ts
++++ skills/buster/engine/test-gates/provider-loader.ts
+@@ -84,36 +84,41 @@
+   async cleanup(_invocation: ProviderInvocationV1, context: TestProviderExecutionContext, disposition: TestProviderCleanupDisposition): Promise<void> {
+     assertCleanupDisposition(disposition);
+     if (!this.#terminated) {
+-      try { if (await this.#session.initialize(context)) await this.#session.cleanup(context, disposition); }
+-      finally { await this.terminate(); this.#removeSnapshot(); }
++      await this.#cleanupSession(this.#session, context, disposition, () => this.terminate());
+       return;
+     }
+-    const recovery = new ProviderProcessSession(this.#entry, this.#invocation, this.#workspaceRoot, this.#policy);
+-    try { if (await recovery.initialize(context)) await recovery.cleanup(context, disposition); }
+-    finally {
+-      recovery.resources();
+-      try { await recovery.terminate(); }
+-      finally {
+-        const recovered = recovery.resources();
+-        // Recovery starts only after the original session has terminated.
+-        // CPU is cumulative across those disjoint sessions; their sampled
+-        // memory/process peaks are not concurrent and must not be added.
+-        this.#resources = {
+-          cpuTimeMs: this.#resources.cpuTimeMs + recovered.cpuTimeMs,
+-          maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, recovered.maximumMemoryBytes),
+-          maximumProcesses: Math.max(this.#resources.maximumProcesses, recovered.maximumProcesses),
+-        };
+-      }
+-      this.#removeSnapshot();
++    // Transfer ownership before initialization: an unconfirmed recovery remains current.
++    this.#session = new ProviderProcessSession(this.#entry, this.#invocation, this.#workspaceRoot, this.#policy);
++    this.#terminated = false;
++    await this.#cleanupSession(this.#session, context, disposition, () => this.terminate());
++  }
++
++  async #cleanupSession(session: ProviderProcessSession, context: TestProviderExecutionContext,
++    disposition: TestProviderCleanupDisposition, terminate: () => Promise<void>): Promise<void> {
++    let cleanupFailure: { error: unknown } | undefined;
++    try { if (await session.initialize(context)) await session.cleanup(context, disposition); }
++    catch (error) { cleanupFailure = { error }; }
++    try { await terminate(); }
++    catch (terminationError) {
++      if (cleanupFailure) throw new AggregateError([cleanupFailure.error, terminationError],
++        `TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED:${cleanupFailure.error instanceof Error ? cleanupFailure.error.message : String(cleanupFailure.error)}:${terminationError instanceof Error ? terminationError.message : String(terminationError)}`, { cause: cleanupFailure.error });
++      throw terminationError;
+     }
++    // Preserve the existing boundary: a failed stop never authorizes deletion.
++    this.#removeSnapshot();
++    if (cleanupFailure) throw cleanupFailure.error;
+   }
+ 
+   async terminate(): Promise<void> {
+     if (this.#terminated) return;
+     this.#session.resources();
+     try { await this.#session.terminate(); }
+-    finally { this.#resources = this.#session.resources(); }
+-    this.#terminated = true;
++    finally {
++      if (this.#session.disposalConfirmed) {
++        this.#resources = this.#combinedResources();
++        this.#terminated = true;
++      }
++    }
+   }
+ 
+   async discard(): Promise<void> {
+@@ -128,9 +133,17 @@
+     fs.rmSync(this.#entry.package.root, { recursive: true, force: true });
+   }
+ 
++  #combinedResources(): ProviderProcessResources {
++    const current = this.#session.resources();
++    return {
++      cpuTimeMs: this.#resources.cpuTimeMs + current.cpuTimeMs,
++      maximumMemoryBytes: Math.max(this.#resources.maximumMemoryBytes, current.maximumMemoryBytes),
++      maximumProcesses: Math.max(this.#resources.maximumProcesses, current.maximumProcesses),
++    };
++  }
++
+   resources(): ProviderProcessResources {
+-    const current = this.#terminated ? this.#resources : this.#session.resources();
+-    return { ...current };
++    return this.#terminated ? { ...this.#resources } : this.#combinedResources();
+   }
+ }
+ 
+--- skills/buster/engine/test-gates/provider-process-session.ts
++++ skills/buster/engine/test-gates/provider-process-session.ts
+@@ -63,6 +63,7 @@
+   #cleanupResolve: (() => void) | null = null;
+   #cleanupReject: ((error: Error) => void) | null = null;
+   #closed = false;
++  #disposalConfirmed = false;
+   readonly #capabilities: ProviderCapabilities;
+   #termination: Promise<void> | null = null;
+   #protocolBytes = 0;
+@@ -169,9 +170,11 @@
+     return this.#termination;
+   }
+ 
++  get disposalConfirmed(): boolean { return this.#disposalConfirmed; }
++
+   async #terminate(): Promise<void> {
+     this.#capabilities.abort(new Error('TEST_PROVIDER_TERMINATED'));
+-    if (this.#closed) { await this.#capabilities.drain(this.#policy.provider.capabilityDrainTimeoutMs); return; }
++    if (this.#closed) { await this.#confirmDisposal(); return; }
+     let signalFailure: Error | undefined;
+     await new Promise<void>((resolve, reject) => {
+       const signal = (value: NodeJS.Signals): void => {
+@@ -189,8 +192,14 @@
+     });
+     // Only confirmed process closure reaches this bounded drain. A signal
+     // failure must not discard ownership of still-settling capability calls.
++    await this.#confirmDisposal();
++    if (signalFailure) throw signalFailure;
++  }
++
++  async #confirmDisposal(): Promise<void> {
+     await this.#capabilities.drain(this.#policy.provider.capabilityDrainTimeoutMs);
+-    if (signalFailure) throw signalFailure;
++    // Called only after actual close, never after a timeout or failed drain.
++    this.#disposalConfirmed = true;
+   }
+ 
+   resources(): ProviderProcessResources { this.#sample(); return { ...this.#resources }; }
+--- skills/buster/engine/test-gates/runner-fixtures.ts
++++ skills/buster/engine/test-gates/runner-fixtures.ts
+@@ -58,9 +58,7 @@
+       ]);
+       return true;
+     } catch (error) {
+-      owner.cleanupErrors.push({ nodeId: node.id, message: detail(error) });
+-      await instance.terminate();
+-      return false;
++      return await retainedCleanupFailure(owner, node, instance, error);
+     } finally {
+       if (timer) clearTimeout(timer);
+       controller.abort(new Error("TEST_PROVIDER_CLEANUP_COMPLETE"));
+@@ -112,3 +110,17 @@
+     }
+   }
+ }
++
++async function retainedCleanupFailure(owner: FixtureOwner, node: ResolvedPlanNodeV1,
++  instance: LoadedTestProvider, cleanupError: unknown): Promise<false> {
++  try { await instance.terminate(); }
++  catch (terminationError) {
++    const failure = new AggregateError([cleanupError, terminationError],
++      `TEST_PROVIDER_RETAINED_CLEANUP_UNCONFIRMED:${detail(cleanupError)}:${detail(terminationError)}`,
++      { cause: cleanupError });
++    owner.cleanupErrors.push({ nodeId: node.id, message: failure.message });
++    throw failure;
++  }
++  owner.cleanupErrors.push({ nodeId: node.id, message: detail(cleanupError) });
++  return false;
++}
+--- tests/verification/contracts/kubernetes-cleanup-runner.test.mjs
++++ tests/verification/contracts/kubernetes-cleanup-runner.test.mjs
+@@ -28,14 +28,18 @@
+     const executed = children.find(row => row.messages.some(message => message.kind === 'execute'));
+     const cleaned = children.find(row => row.messages.some(message => message.kind === 'cleanup'));
+     assert(executed && cleaned);
+-    assert.notEqual(executed.child.pid, cleaned.child.pid, 'actual replacement cleanup session required');
++    if (failed) assert.notEqual(executed.child.pid, cleaned.child.pid, 'failed execution requires recovery cleanup');
++    else assert.equal(executed.child.pid, cleaned.child.pid, 'normal successful retained cleanup uses its original session');
+     assert(executed.closed && cleaned.closed, 'both actual process closes observed');
+     const cleanupMessage = cleaned.messages.find(message => message.kind === 'cleanup');
+     assert.equal(cleanupMessage.schemaVersion, 'provider-cleanup.v1');
+     assert.equal(cleanupMessage.disposition, failed ? 'incomplete' : 'completed-fixture');
+     const deletes = api.calls.filter(row => row.args[0] === 'delete');
+     if (failed) {
+-      assert.match(attempts[0].summary, /KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED/);
++      assert(executed.responses.some(message => message.kind === 'error'
++        && message.error.includes('KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED')), 'real execution IPC must retain rollback marker');
++      assert.match(attempts[0].summary, /external delete fault/);
++      assert(result.cleanupErrors.some(error => error.message.includes('external delete fault')));
+       assert.equal(deletes.length, 2, 'initial rollback plus independent provider cleanup');
+       assert(result.cleanupErrors.some(error => error.nodeId === 'deploy'));
+       assert.notEqual(attempts[0].executionState, 'completed');
+@@ -59,32 +63,57 @@
+   });
+ }
+ 
+-test('post-provider termination fault has incomplete cleanup authority despite retained provider success', { timeout: 60000 }, async t => {
++test('post-passed Worker measurement fault uses incomplete cleanup then allows later retained success', { timeout: 60000 }, async t => {
+   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kube-faulted-retain-'));
+   const ownership = ownProviderChildren(t, root);
+-  const { failFirstDeployTermination } = await import('../../fixtures/test-gate/kubernetes-cleanup-children.mjs');
+-  const injected = failFirstDeployTermination(t, ownership);
+   const { api, options } = runnerOptions(root, 'retain', false);
++  const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider, observation: options.executionPolicy.observation });
++  const observationFailure = new Error('INJECTED_POST_PASSED_WORKER_MEASUREMENT');
++  let injected;
++  options.loader = { async load(...args) {
++    const instance = await loader.load(...args);
++    if (args[1].nodeId !== 'deploy' || args[1].attemptNumber !== 1) return instance;
++    const execute = instance.execute.bind(instance);
++    const resources = instance.resources.bind(instance);
++    let passed = false;
++    instance.execute = async (...values) => {
++      const result = await execute(...values);
++      assert.equal(result.outcome, 'passed');
++      passed = true;
++      return result;
++    };
++    instance.resources = () => {
++      const measured = resources();
++      const stack = new Error().stack;
++      if (passed && !injected && /at .*measure .*runner-provider-operation\.ts:/u.test(stack)) {
++        const child = ownership.owned.find(row => row.messages.some(message => message.kind === 'initialize'
++          && message.invocation.attemptId === args[1].attemptId));
++        assert(child.responses.some(message => message.kind === 'result' && message.value.outcome === 'passed'));
++        injected = { child, attemptId: args[1].attemptId, failure: observationFailure, stack };
++        throw observationFailure;
++      }
++      return measured;
++    };
++    return instance;
++  } };
+   const result = await new TestPlanRunner(options).run();
+-  const original = injected();
+-  assert(original, 'actual owned-group termination operation must reach the injected OS boundary');
+-  assert(original.closed, 'real child still closes through original escalation');
+-  const initialization = original.messages.find(message => message.kind === 'initialize');
+-  const attemptId = initialization.invocation.attemptId;
+-  const cleanup = ownership.owned.find(row => row !== original
+-    && row.messages.some(message => message.kind === 'initialize' && message.invocation.attemptId === attemptId)
++  assert(injected, 'must reach actual Worker measure after provider passed, not Loader termination measurement');
++  assert.equal(injected.failure, observationFailure);
++  const failed = result.attempts.find(attempt => attempt.attemptId === injected.attemptId);
++  assert.equal(failed.executionState, 'errored');
++  assert.match(failed.summary, /resource observation is missing or invalid/u);
++  const cleanup = ownership.owned.find(row => row.messages.some(message => message.kind === 'initialize'
++    && message.invocation.attemptId === injected.attemptId)
+     && row.messages.some(message => message.kind === 'cleanup'));
+   assert(cleanup && cleanup.closed);
+   assert.equal(cleanup.messages.find(message => message.kind === 'cleanup').disposition, 'incomplete');
+-  assert.notEqual(result.attempts.find(attempt => attempt.attemptId === attemptId).executionState, 'completed');
+-  assert(original.responses.some(message => message.kind === 'result' && message.value.outcome === 'passed'));
+   const later = result.attempts.find(attempt => attempt.nodeId === 'deploy'
+-    && attempt.attemptId !== attemptId && attempt.executionState === 'completed' && attempt.outcome === 'passed');
+-  assert(later, 'a later attempt must actually complete and pass, not merely avoid another delete');
+-  const retainedCleanup = ownership.owned.find(row => row.messages.some(message => message.kind === 'initialize'
++    && attempt.attemptId !== injected.attemptId && attempt.executionState === 'completed' && attempt.outcome === 'passed');
++  assert(later);
++  const retained = ownership.owned.find(row => row.messages.some(message => message.kind === 'initialize'
+     && message.invocation.attemptId === later.attemptId)
+     && row.messages.some(message => message.kind === 'cleanup' && message.disposition === 'completed-fixture'));
+-  assert(retainedCleanup && retainedCleanup.closed, 'successful later retain must reach its real completed-fixture cleanup');
+-  assert.equal(api.calls.filter(row => row.args[0] === 'delete').length, 1,
+-    'first attempt must release, later successfully retained attempt must remain retained');
++  assert(retained && retained.closed);
++  assert.equal(api.calls.filter(row => row.args[0] === 'delete').length, 1);
++  assert.equal(result.cleanupErrors.length, 0);
+ });
+--- /dev/null
++++ tests/verification/contracts/provider-disposal-recovery.test.mjs
+@@ -0,0 +1,119 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { RegisteredTestProviderLoader } from '../../../skills/buster/engine/test-gates/provider-loader.ts';
++import { TestPlanRunner } from '../../../skills/buster/engine/test-gates/runner.ts';
++import { ownProviderChildren, failFirstDeployTermination } from '../../fixtures/test-gate/kubernetes-cleanup-children.mjs';
++import { runnerOptions } from '../../fixtures/test-gate/kubernetes-cleanup-runner.mjs';
++
++for (const signalFailure of [false, true]) for (const retention of ['retain', 'delete']) {
++  test(`real Loader confirmed-disposal recovery: signal failure ${signalFailure}, ${retention}`, { timeout: 60000 }, async t => {
++    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'provider-disposal-recovery-'));
++    const ownership = ownProviderChildren(t, root);
++    const injected = signalFailure ? failFirstDeployTermination(t, ownership) : null;
++    const { api, options } = runnerOptions(root, retention, false);
++    const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider,
++      observation: options.executionPolicy.observation });
++    let oldChild;
++    let cleanupCalls = 0;
++    options.loader = { async load(...args) {
++      const instance = await loader.load(...args);
++      if (args[1].nodeId !== 'deploy') return instance;
++      const cleanup = instance.cleanup.bind(instance);
++      instance.cleanup = async (...cleanupArgs) => {
++        cleanupCalls++;
++        oldChild = ownership.owned.find(row => row.messages.some(message => message.kind === 'initialize'
++          && message.invocation.attemptId === args[1].attemptId));
++        assert(oldChild.responses.some(message => message.kind === 'result' && message.value.outcome === 'passed'));
++        // Explicitly stop the real successful instance; ordinary success need not do this.
++        if (signalFailure) {
++          await assert.rejects(instance.terminate(), error => {
++            assert.equal(error.message, 'TEST_PROVIDER_SIGNAL_FAILED');
++            assert.equal(error.cause.cause.code, 'EPERM');
++            return true;
++          });
++          assert.equal(injected(), oldChild);
++        } else await instance.terminate();
++        assert(oldChild.closed, 'actual close must precede recovery');
++        assert.equal(oldChild.messages.filter(message => message.kind === 'cleanup').length, 0);
++        return cleanup(...cleanupArgs);
++      };
++      return instance;
++    } };
++    const result = await new TestPlanRunner(options).run();
++    const attempts = result.attempts.filter(attempt => attempt.nodeId === 'deploy');
++    assert.equal(attempts.length, 1);
++    assert.equal(attempts[0].executionState, 'completed');
++    assert.equal(attempts[0].outcome, 'passed');
++    assert.equal(result.cleanupErrors.length, 0);
++    assert.equal(cleanupCalls, 1);
++    const children = ownership.owned.filter(row => row.messages.some(message => message.kind === 'initialize'
++      && message.invocation.attemptId === attempts[0].attemptId));
++    assert.equal(children.length, 2, 'exactly one new cleanup child');
++    const recovery = children.find(row => row !== oldChild);
++    assert.notEqual(recovery.child.pid, oldChild.child.pid);
++    assert(recovery.closed);
++    assert.deepEqual(recovery.messages.filter(message => message.kind === 'cleanup').map(message => message.disposition),
++      ['completed-fixture']);
++    assert.equal(api.calls.filter(call => call.args[0] === 'delete').length, retention === 'retain' ? 0 : 1);
++  });
++}
++
++for (const recovery of [false, true]) {
++  test(`real Loader retains cleanup and stop failures in ${recovery ? 'recovery' : 'current'} session`, { timeout: 60000 }, async t => {
++    const { ProviderProcessSession } = await import('../../../skills/buster/engine/test-gates/provider-process-session.ts');
++    const { invoker, localApi } = await import('../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs');
++    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'provider-disposal-errors-'));
++    const ownership = ownProviderChildren(t, root);
++    const { options } = runnerOptions(root, 'delete', false);
++    const api = localApi({ deleteError: new Error('EXPLICIT_DELETE_FAILURE') });
++    options.capabilityInvoker = invoker(root, api);
++    const stopFailure = new Error('INJECTED_STOP_DIAGNOSTIC_AFTER_ACTUAL_DISPOSAL');
++    const originalTerminate = ProviderProcessSession.prototype.terminate;
++    let inject = false;
++    let observed;
++    t.mock.method(ProviderProcessSession.prototype, 'terminate', async function () {
++      await Reflect.apply(originalTerminate, this, []);
++      if (inject) {
++        assert.equal(this.disposalConfirmed, true);
++        throw stopFailure;
++      }
++    });
++    const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider,
++      observation: options.executionPolicy.observation });
++    options.loader = { async load(...args) {
++      const instance = await loader.load(...args);
++      if (args[1].nodeId !== 'deploy') return instance;
++      const cleanup = instance.cleanup.bind(instance);
++      instance.cleanup = async (...values) => {
++        if (recovery) await instance.terminate();
++        inject = true;
++        try { return await cleanup(...values); }
++        catch (error) {
++          assert(error instanceof AggregateError);
++          assert.match(error.message, /^TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED:/u);
++          assert.match(error.errors[0].message, /EXPLICIT_DELETE_FAILURE/u);
++          assert.equal(error.errors[1], stopFailure);
++          assert.equal(error.cause, error.errors[0]);
++          observed = error;
++          throw error;
++        } finally { inject = false; }
++      };
++      return instance;
++    } };
++    const result = await new TestPlanRunner(options).run();
++    assert(observed);
++    assert(result.cleanupErrors.some(error => error.message.includes('TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED')
++      && error.message.includes('EXPLICIT_DELETE_FAILURE')
++      && error.message.includes('INJECTED_STOP_DIAGNOSTIC_AFTER_ACTUAL_DISPOSAL')));
++    assert.equal(api.calls.filter(call => call.args[0] === 'delete').length, 1);
++    const children = ownership.owned.filter(row => row.messages.some(message => message.kind === 'initialize'
++      && message.invocation.nodeId === 'deploy'));
++    assert.equal(children.length, recovery ? 2 : 1);
++    assert(children.every(row => row.closed));
++    assert(fs.readdirSync(path.join(options.workspaceRoot, 'test-provider-snapshots')).length > 0,
++      'failed termination diagnostic must preserve the existing snapshot-retention boundary');
++  });
++}
+--- /dev/null
++++ tests/verification/contracts/provider-disposal-unconfirmed.test.mjs
+@@ -0,0 +1,92 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { RegisteredTestProviderLoader } from '../../../skills/buster/engine/test-gates/provider-loader.ts';
++import { TestPlanRunner } from '../../../skills/buster/engine/test-gates/runner.ts';
++import { ownProviderChildren } from '../../fixtures/test-gate/kubernetes-cleanup-children.mjs';
++import { runnerOptions } from '../../fixtures/test-gate/kubernetes-cleanup-runner.mjs';
++import { invoker, localApi } from '../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs';
++
++function deferred() {
++  let resolve;
++  const promise = new Promise(done => { resolve = done; });
++  return { promise, resolve };
++}
++
++function guardUnconfirmedCleanup(instance, { attemptId, ownership, options, replacement, failure,
++  entered, release, settled, verified }) {
++const cleanup = instance.cleanup.bind(instance);
++instance.cleanup = async (...values) => {
++  if (replacement) await instance.terminate();
++  const first = cleanup(...values).then(value => ({ value }), error => ({ error }));
++  await entered.promise;
++  const children = ownership.owned.filter(row => row.messages.some(message => message.kind === 'initialize'
++    && message.invocation.attemptId === attemptId));
++  assert.equal(children.length, replacement ? 2 : 1);
++  const child = children.at(-1).child;
++  const emit = child.emit;
++  const actualClose = deferred();
++  let held;
++  if (failure === 'close') {
++    child.emit = function (event, ...eventArgs) {
++      if (event === 'close') { held = eventArgs; actualClose.resolve(); return false; }
++      return Reflect.apply(emit, this, [event, ...eventArgs]);
++    };
++    release.resolve();
++  }
++  const expected = failure === 'close' ? 'TEST_PROVIDER_TERMINATION_TIMEOUT' : 'TEST_PROVIDER_CAPABILITY_DRAIN_TIMEOUT';
++  try {
++    await assert.rejects(instance.terminate(), { message: expected });
++    if (failure === 'close') await actualClose.promise;
++    else assert(children.at(-1).closed, 'drain failure follows actual close');
++    const before = ownership.owned.length;
++    await assert.rejects(cleanup(...values));
++    assert.equal(ownership.owned.length, before, 'unconfirmed current session must block every new recovery');
++    assert(fs.readdirSync(path.join(options.workspaceRoot, 'test-provider-snapshots')).length > 0);
++    const result = await first;
++    assert(result.error, 'unconfirmed disposal cannot report cleanup success');
++    verified();
++    throw result.error;
++  } finally {
++    release.resolve();
++    child.emit = emit;
++    if (held) Reflect.apply(emit, child, ['close', ...held]);
++    await settled.promise;
++  }
++};
++}
++
++for (const replacement of [false, true]) for (const failure of ['close', 'drain']) {
++  test(`Loaded ${replacement ? 'replacement' : 'current'} ${failure} timeout cannot start another child`,
++    { timeout: 60000 }, async t => {
++      const root = fs.mkdtempSync(path.join(os.tmpdir(), 'provider-unconfirmed-'));
++      const ownership = ownProviderChildren(t, root);
++      const { options } = runnerOptions(root, 'delete', false);
++      const entered = deferred();
++      const release = deferred();
++      const settled = deferred();
++      const api = localApi();
++      const execute = api.execute.bind(api);
++      api.execute = async (...args) => {
++        if (args[1][0] !== 'delete') return execute(...args);
++        entered.resolve();
++        try { await release.promise; return await execute(...args); }
++        finally { settled.resolve(); }
++      };
++      options.capabilityInvoker = invoker(root, api);
++      const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider,
++        observation: options.executionPolicy.observation });
++      let verified = false;
++      options.loader = { async load(...args) {
++        const instance = await loader.load(...args);
++        if (args[1].nodeId !== 'deploy') return instance;
++        guardUnconfirmedCleanup(instance, { attemptId: args[1].attemptId, ownership, options, replacement,
++          failure, entered, release, settled, verified: () => { verified = true; } });
++        return instance;
++      } };
++      await assert.rejects(new TestPlanRunner(options).run());
++      assert(verified, 'negative must reach actual Loaded gating assertions');
++    });
++}
+--- tests/verification/contracts/provider-loader-ownership.test.mjs
++++ tests/verification/contracts/provider-loader-ownership.test.mjs
+@@ -147,6 +147,7 @@
+   assert.equal(f.signalErrors(), 1);
+   await f.closed;
+   assert.equal(pending.settled(), true);
++  assert.equal(f.session.disposalConfirmed, true);
+   assert((await pending.execution).error instanceof Error);
+ });
+ 
+@@ -158,6 +159,7 @@
+   const closed = await f.closed;
+   assert.equal(f.signalErrors(), 1);
+   assert.equal(pending.settled(), false);
++  assert.equal(f.session.disposalConfirmed, false);
+   assert(performance.now() - closed.at >= 900, 'drain must await its existing 1000ms budget');
+   assert(performance.now() - starting < 5000, 'no unbounded drain');
+   assert((await pending.execution).error instanceof Error);
+@@ -174,6 +176,7 @@
+   const pending = await runningCapability(f, false);
+   const starting = performance.now();
+   await assert.rejects(f.session.terminate(), { message: 'TEST_PROVIDER_TERMINATION_TIMEOUT' });
++  assert.equal(f.session.disposalConfirmed, false);
+   await f.closed; // actual OS child has ended; only session notification was withheld
+   assert.equal(drains, 0, 'no close confirmation means no capability drain');
+   assert(performance.now() - starting >= 900);

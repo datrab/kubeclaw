@@ -1,0 +1,1 @@
+First checker verified artifact/tool/payload/source identities and initrd, then stopped at missing cached sbin/dumpe2fs. rg found no cached debugfs/dumpe2fs. No installation/mount attempted. Final checker uses read-only ext4 superblock magic and UUID, not a substituted filesystem parser or kernel proof.

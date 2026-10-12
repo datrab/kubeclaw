@@ -1,0 +1,202 @@
+[
+  {
+    "path": "skills/common/plugins/wait-store/src/adapter.ts",
+    "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugins/wait-store/src/adapter.ts"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/README.md",
+    "sha256": "494d0699d025d0fa280e4f741b70f0778f05bf918b0ea9eeebf27b5ee95c3022",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugins/wait-store/README.md"
+  },
+  {
+    "path": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+    "sha256": "c5e03953d44d1b6324db203f081ee989bf1a78afc45b946c9cf50e3757917c16",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugin-runtime/sdk/src/runtime.ts"
+  },
+  {
+    "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+    "sha256": "6da0067cf8425a14e40a045d8c77f8b68536034d4abd2cc64e14565cb68852af",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugin-runtime/sdk/src/index.ts"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-runtime.ts",
+    "sha256": "35c238db98fe8e5ac9479773f3eaa3ad0b63f40d04a0e252e0a4030e84b6e27d",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/nova/core/execution/engine-runtime.ts"
+  },
+  {
+    "path": "skills/nova/core/execution/adapters.ts",
+    "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/nova/core/execution/adapters.ts"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/nova/core/execution/adapter-startup.ts"
+  },
+  {
+    "path": "skills/nova/core/state/read-run-evidence.ts",
+    "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/nova/core/state/read-run-evidence.ts"
+  },
+  {
+    "path": "scripts/observability-retirement/operator-authority.mjs",
+    "sha256": "1f04c622c015a860a81c5727b71b538ed00dd104aa05540072ef6bb09ce55586",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/scripts/observability-retirement/operator-authority.mjs"
+  },
+  {
+    "path": "scripts/retire-operator-request.mjs",
+    "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/scripts/retire-operator-request.mjs"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/tests/live-function.test.ts",
+    "sha256": "2de20a6573baec4e456ad4da22ff2fb6c9f5212ada9d75b940e0c21f2a5372d1",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugins/wait-store/tests/live-function.test.ts"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/tests/package-boundary.test.mjs",
+    "sha256": "f8c7f535103cd16f37ce8ab8c9dbc192262ff786f54fdfab7bad0a504c9e09f1",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugins/wait-store/tests/package-boundary.test.mjs"
+  },
+  {
+    "path": "tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+    "sha256": "646b4ac41f1deec54a572f1f9870e9fec7c78f924a585b762755a6304c92d6f2",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/operator-retention-authority-fixture.test.mjs"
+  },
+  {
+    "path": "tests/verification/reliability/operator-request-projection.test.mjs",
+    "sha256": "eb30a59891f2ca9ed5c972495969b7f786a3f3e274bceee6138b9c8aa7642bd6",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/operator-request-projection.test.mjs"
+  },
+  {
+    "path": "tests/verification/reliability/operator-projection-independent.test.mjs",
+    "sha256": "98694f4488603810505bccfa890e7386cb118379097cd6dbe6562a3786d4b9c8",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/operator-projection-independent.test.mjs"
+  },
+  {
+    "path": "tests/verification/reliability/fixtures/operator-retention-worker.mjs",
+    "sha256": "457dec59baa1f5fbe43f08ab249baadff667e8b03cc887efea46ddcac846f075",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/fixtures/operator-retention-worker.mjs"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+    "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugin-runtime/foundation/observability/durable-records.ts"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/wait-projection.ts",
+    "sha256": "f999051f0bf3539e64172bf636a0f95141dd74643ff1738fda1a4f2a656ba656",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugin-runtime/foundation/observability/wait-projection.ts"
+  },
+  {
+    "path": "skills/common/plugin-runtime/sdk/src/retained-wait.ts",
+    "sha256": "c9401d9a556a7c6ef4fa85ea670f956c8426dbc0f6234e91139d68bcb164caf0",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugin-runtime/sdk/src/retained-wait.ts"
+  },
+  {
+    "path": "skills/nova/core/state/wait-projection-reader.ts",
+    "sha256": "89975c862444e0ef55ba641afab5289243c0313cdbf392c7372ab3cda61e7dd7",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/nova/core/state/wait-projection-reader.ts"
+  },
+  {
+    "path": "scripts/retire-wait-value.mjs",
+    "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/scripts/retire-wait-value.mjs"
+  },
+  {
+    "path": "tests/verification/reliability/wait-value-projection.test.mjs",
+    "sha256": "b5eee8e086156031ee4ccd0511a1aeb13775bb566501bbd55314467cc109d2d1",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/wait-value-projection.test.mjs"
+  },
+  {
+    "path": "tests/verification/reliability/fixtures/wait-projection-worker.mjs",
+    "sha256": "f8a68fb9297bf6bc6111c1fc75dc00e1f400c98d3f6e7b719e06a32ea374ee04",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/fixtures/wait-projection-worker.mjs"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts",
+    "sha256": "b9d7866810eaa8b77681aa42c69b8f4651229317b0f73d0077b1866f97c1e73a",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugin-runtime/foundation/observability/durable-record-dependency.ts"
+  },
+  {
+    "path": "skills/nova/core/state/wait-projection-source.ts",
+    "sha256": "006a789f21cae188bbd8b45a6c7558595b5f978c096f93990602edb94d87c055",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/nova/core/state/wait-projection-source.ts"
+  },
+  {
+    "path": "tests/verification/reliability/wait-resolver-audience.test.mjs",
+    "sha256": "16e58e1d0d4200ad1e09c500ae8c898b491b2b41d3acdc288e29d1ccf78ac11e",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/wait-resolver-audience.test.mjs"
+  },
+  {
+    "path": "tests/verification/reliability/record-retained-transition.test.mjs",
+    "sha256": "d966812e0b1645468db4e72eba503aa124c70121ecb76ffa6e873845662d996f",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/record-retained-transition.test.mjs"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "1ab81d8acff9b7b87d193964780c08f39350086bf60aee51771e312ad6ae8e6e",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugin-runtime/foundation/config/swarm.ts"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "sha256": "6529733c4220ded5ef9b1482793ceadaf7f23d1a855bb9bd13de6454ec3c1a5a",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugin-runtime/foundation/config/swarm.schema.json"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "sha256": "b9f7ca208263a45c39c67fb21c864a83a33a04144dcade051fa24a0719d72451",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/charts/kubeclaw/files/config/swarm.config.json"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+    "sha256": "db6ef5e755808975ba934fa20276b6ac04e40161c3b81607b2c254bb07e36541",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugins/operator-messaging/src/delivery-projection.ts"
+  },
+  {
+    "path": "package.json",
+    "sha256": "b5bcb32d2601bf273b291998ca2c0cc5b5ce27c6cd53dd338cd80be7b95e0556",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/package.json"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+    "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugin-runtime/foundation/observability/durable-blobs.ts"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/package.json",
+    "sha256": "d2639c87351035eb4ed0d34569934d18151b4024ec81a7604680ad3a6ae71ae2",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/skills/common/plugin-runtime/foundation/package.json"
+  },
+  {
+    "path": "tests/verification/reliability/blob-budget.test.mts",
+    "sha256": "1a596f8c4a17979921ecb818398be018069969a037947cec40cd318192bfc5ad",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/blob-budget.test.mts"
+  },
+  {
+    "path": "tests/verification/reliability/blob-read-boundary.test.mjs",
+    "sha256": "07196b9858bcedbc12dcfb85aaefca04413cc3e82bcc8b0381b97a75983adab1",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/blob-read-boundary.test.mjs"
+  },
+  {
+    "path": "tests/verification/reliability/blob-read-independent.test.mjs",
+    "sha256": "1da460f13a945cb90182237c73b814131586431f442b5ba4156b411fc6d21f9d",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/blob-read-independent.test.mjs"
+  },
+  {
+    "path": "tests/verification/reliability/record-transition-authority-independent.test.mjs",
+    "sha256": "69d114c208fb595e4d11789fcac61933c287d0d1c89f8670505eaff61d22782b",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/record-transition-authority-independent.test.mjs"
+  },
+  {
+    "path": "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+    "sha256": "354baab090d89bf26dbfed637137785ff61087d84ee716e81c379e503d7ca1ea",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/reliability/record-fenced-read-independent.test.mjs"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+    "sha256": "caae066464f5c9488a78371613bb02eea4242d5db1630fe3566da0963196c9b2",
+    "snapshot": "docs/review/evidence/wait-value-retirement-20260921/run5-source/tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs"
+  }
+]

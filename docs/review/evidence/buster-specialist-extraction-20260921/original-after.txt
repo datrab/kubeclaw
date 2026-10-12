@@ -1,0 +1,129 @@
+node:fs:621
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/tmp/junit-execution-required-OFOkBD/all-skipped.xml'
+    at Object.openSync (node:fs:621:18)
+    at Object.readFileSync (node:fs:487:35)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-junit-executed-required.mts:121:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/tmp/junit-execution-required-OFOkBD/all-skipped.xml'
+}
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-junit-executed-required.mts (536.351155ms)
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:361
+    catch (error) { throw new Error(`REPORT_ADAPTER_PROTOCOL_INVALID:${String(result.code)}:${String(result.signal)}`, { cause: error }); }
+                          ^
+
+Error: REPORT_ADAPTER_PROTOCOL_INVALID:null:SIGSEGV
+    at #run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:361:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    ... 2 lines matching cause stack trace ...
+    at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-junit-report-adapter.mts:61:16 {
+  [cause]: SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at #run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:360:26)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async #adaptWithinDeadline (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:302:21)
+      at async RegisteredReportAdapterRuntime.adapt (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:260:14)
+      at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-junit-report-adapter.mts:61:16
+}
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-pipeline-junit-report-adapter.mts (8141.4651ms)
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:361
+    catch (error) { throw new Error(`REPORT_ADAPTER_PROTOCOL_INVALID:${String(result.code)}:${String(result.signal)}`, { cause: error }); }
+                          ^
+
+Error: REPORT_ADAPTER_PROTOCOL_INVALID:null:SIGSEGV
+    at #run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:361:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    ... 2 lines matching cause stack trace ...
+    at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-report-adapter-runtime.mts:147:16 {
+  [cause]: SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at #run (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:360:26)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async #adaptWithinDeadline (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:302:21)
+      at async RegisteredReportAdapterRuntime.adapt (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/report-adapter-runtime.ts:260:14)
+      at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-report-adapter-runtime.mts:147:16
+}
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-pipeline-report-adapter-runtime.mts (7541.548617ms)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'errored'
+- 'timed_out'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-test-plan-runner.mts:846:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'errored',
+  expected: 'timed_out',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-pipeline-test-plan-runner.mts (35005.175464ms)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"planId":"plan:3c32c7c2-e097-4329-a76d-f69711817009","runId":"run:f9c6f9f7-b12f-4f60-b1e4-169253a5a018","attempts":[{"schemaVersion":"attempt-result.v1","planId":"plan:3c32c7c2-e097-4329-a76d-f69711817009","runId":"run:f9c6f9f7-b12f-4f60-b1e4-169253a5a018","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"probe","executionId":"plan:3c32c7c2-e097-4329-a76d-f69711817009:probe","testIdentity":"test:6333d0633da016e69ed96c6273f85513ccb451954cbb7f6aee09a1d932c58cbc","nodeKind":"test","attemptId":"attempt:d35457fbb3df1b284cd07ab63bc969df2f2980ce4a7b2d543c3cb8db1e457db7","attemptNumber":1,"provider":{"packageId":"kubeclaw.api-flow","packageVersion":"1.0.0","contentDigest":"sha256:404cc68fce4f287cc47d68f6661cc1ae6c848cf83fc4b098b73ee360a6f5881a","registrationId":"flow","contractId":"kubeclaw.api-flow@1"},"mode":"blocking","executionState":"errored","outcome":null,"startedAt":"2026-09-21T07:45:51.621Z","completedAt":"2026-09-21T07:45:51.858Z","durationMs":237,"summary":"TEST_PROVIDER_INITIALIZE_EXITED:null:SIGSEGV","counts":{"total":0,"passed":0,"failed":0,"skipped":0},"findings":[],"metrics":[],"reports":[],"evidence":[],"outputs":[],"resources":{"cpuTimeMs":0,"maximumMemoryBytes":671744,"logBytes":0,"artifactBytes":0},"exitCode":null,"signal":null,"providerDetails":null,"resultDigest":"sha256:f8ebb2517235b6ed8e1238fc50a787a259c5bd93f313f2bc87e7b704d5a42da0","receipt":{"receiptId":"receipt:11fdb1681e23441c8cda905a7277bdb86042d02da293432a859079bb59753594","receiptDigest":"sha256:121204811ca72741612c758bcf95156dee858d0ac1c32189aad963a381d203f8"}}],"nodes":[{"schemaVersion":"node-result.v1","planId":"plan:3c32c7c2-e097-4329-a76d-f69711817009","runId":"run:f9c6f9f7-b12f-4f60-b1e4-169253a5a018","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"probe","executionId":"plan:3c32c7c2-e097-4329-a76d-f69711817009:probe","testIdentity":"test:6333d0633da016e69ed96c6273f85513ccb451954cbb7f6aee09a1d932c58cbc","nodeKind":"test","mode":"blocking","state":"errored","outcome":null,"attemptIds":["attempt:d35457fbb3df1b284cd07ab63bc969df2f2980ce4a7b2d543c3cb8db1e457db7"],"finalAttemptId":"attempt:d35457fbb3df1b284cd07ab63bc969df2f2980ce4a7b2d543c3cb8db1e457db7","unstable":false,"skipReason":null,"resultDigest":"sha256:759b5426214f4551185d414dea4960e28d14600ac0b0e2c92538ed542bf63129","receipt":{"receiptId":"receipt:cefa0232b693e348acfd242d441044c68f00ed05005991ab86df40458355d293","receiptDigest":"sha256:53e2b1292712bda51de533cd3e995ad806ba71266b56d512a3d0879a6d19ac3a"}}],"cleanupErrors":[{"nodeId":"probe","message":"TEST_PROVIDER_INITIALIZE_EXITED:null:SIGSEGV"}]}
+
+null !== 'failed'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-provider-semantics-remediation.mts:53:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: 'failed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-provider-semantics-remediation.mts (3241.146435ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54482.703377
+
+✖ failing tests:
+
+test at tests/verification/contracts/check-junit-executed-required.mts:1:1
+✖ tests/verification/contracts/check-junit-executed-required.mts (536.351155ms)
+  'test failed'
+
+test at tests/verification/contracts/check-pipeline-junit-report-adapter.mts:1:1
+✖ tests/verification/contracts/check-pipeline-junit-report-adapter.mts (8141.4651ms)
+  'test failed'
+
+test at tests/verification/contracts/check-pipeline-report-adapter-runtime.mts:1:1
+✖ tests/verification/contracts/check-pipeline-report-adapter-runtime.mts (7541.548617ms)
+  'test failed'
+
+test at tests/verification/contracts/check-pipeline-test-plan-runner.mts:1:1
+✖ tests/verification/contracts/check-pipeline-test-plan-runner.mts (35005.175464ms)
+  'test failed'
+
+test at tests/verification/contracts/check-provider-semantics-remediation.mts:1:1
+✖ tests/verification/contracts/check-provider-semantics-remediation.mts (3241.146435ms)
+  'test failed'

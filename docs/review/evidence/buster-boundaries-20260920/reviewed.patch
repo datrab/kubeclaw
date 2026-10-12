@@ -1,0 +1,337 @@
+diff --git a/docs/operations/observability-retention.md b/docs/operations/observability-retention.md
+index 7363d1fd..d7e36843 100644
+--- a/docs/operations/observability-retention.md
++++ b/docs/operations/observability-retention.md
+@@ -81,6 +81,25 @@ job. It preserves workspace diagnostics, scratch, evidence, artifacts,
+ observability and durable records. These reproducible input copies are distinct
+ from D07 retained logs.
+ 
++This cleanup requires Linux with `/proc/self/fd` available. It opens each parent
++directory without following symlinks and holds directory descriptors until the
++deletion finishes. Replacing the job or workspace pathname during deletion
++therefore cannot redirect cleanup into another directory. A symlink in any
++supplied ancestor fails with `BUSTER_TERMINAL_WORKSPACE_PARENT_INVALID`; inspect
++the configured root and the actual path components before retrying. There is no
++pathname-based fallback when descriptors cannot be opened.
++
++Descriptors protect the directory boundary; they do not prove process ownership
++or quiescence. The caller must establish that all writers and retained fixtures
++have stopped before calling cleanup. The current production service still
++preserves inputs after restart because terminal job metadata alone does not
++prove orphan termination. It also retains inputs after execution errors or
++unproven cleanup. Do not manually delete those roots based solely on a terminal
++status. The required native ownership/recovery integration remains
++[open in the cutover matrix](../review/remediation/implementation/buster-native-cutover-20260920.md).
++Embedded archives in durable job records are separate retained copies; deleting
++workspace inputs does not release their metadata quota or result/artifact quota.
++
+ The [durable record/blob interfaces](../../skills/common/plugin-runtime/foundation/observability/durable-records.ts)
+ provide append/read/transition and put/get. The concrete FileDurableRecordStore
+ also has an explicit writer-fenced `retire` operation for owned v2 records. It
+diff --git a/skills/buster/engine/test-gates/remote-plan-service.ts b/skills/buster/engine/test-gates/remote-plan-service.ts
+index ebb367b2..7ed8b00a 100644
+--- a/skills/buster/engine/test-gates/remote-plan-service.ts
++++ b/skills/buster/engine/test-gates/remote-plan-service.ts
+@@ -30,19 +30,7 @@ import {
+ import { ensureDirectoryDurable, withDurableStoreLock } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
+ import type { RegistrySnapshot } from '@kubeclaw/plugin-foundation/registry/types';
+ import { TestPlanRunner, type TestPlanRunResult } from './runner.ts';
+-import { DirectCommandCapabilityInvoker, type DirectCommandCapabilityInvokerOptions } from './direct-command-runtime.ts';
+-import { ContainerBuildCapabilityInvoker, type ContainerBuildCapabilityInvokerOptions } from './container-build-runtime.ts';
+-import { KubernetesFixtureCapabilityInvoker, type KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-runtime.ts';
+-import { TailscaleExposureCapabilityInvoker, type TailscaleExposureCapabilityInvokerOptions } from './tailscale-exposure-runtime.ts';
+-import { NetworkHttpCapabilityInvoker, type NetworkHttpCapabilityInvokerOptions } from './network-http-runtime.ts';
+-import { BrowserAxeCapabilityInvoker, type BrowserAxeCapabilityInvokerOptions } from './browser-axe-runtime.ts';
+-import { BrowserLighthouseCapabilityInvoker, type BrowserLighthouseCapabilityInvokerOptions } from './browser-lighthouse-runtime.ts';
+-import { BrowserVisualCapabilityInvoker, type BrowserVisualCapabilityInvokerOptions } from './browser-visual-runtime.ts';
+-import { BrowserPlaywrightCapabilityInvoker, type BrowserPlaywrightCapabilityInvokerOptions } from './browser-playwright-runtime.ts';
+-import { SecurityScanCapabilityInvoker, type SecurityScanCapabilityInvokerOptions } from './security-scan-runtime.ts';
+-import { KubernetesRuntimeSecurityCapabilityInvoker,
+-  type KubernetesRuntimeSecurityCapabilityInvokerOptions } from './kubernetes-runtime-security.ts';
+-import { CompositeTestProviderCapabilityInvoker } from './composite-capability-runtime.ts';
++import { createBusterCapabilityRuntime, type BusterCapabilityRuntimeOptions } from './capability-runtime.ts';
+ 
+ import {
+   assertCompactionIntent, assertCompactedPlanJobRecord, compactionDigest, readJobArtifact, resultArtifacts, verifyRetainedSource,
+@@ -334,28 +322,16 @@ export class FileBusterPlanJobStore {
+   }
+ }
+ 
+-export interface BusterRemotePlanServiceOptions {
++export interface BusterRemotePlanServiceOptions extends BusterCapabilityRuntimeOptions {
+   readonly store: FileBusterPlanJobStore;
+   readonly registry: RegistrySnapshot;
+   readonly workerRevision: string;
+   readonly runtimeRoot: string;
+   readonly tarExecutable: string;
+   readonly maximumExtractedBytes: number;
+-  readonly allowedCapabilities: ReadonlySet<string>;
+   readonly maximumActiveJobs?: number;
+   readonly maximumQueuedJobs?: number;
+   readonly maximumConcurrentAttempts?: number;
+-  readonly directCommand?: Omit<DirectCommandCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly containerBuild?: Omit<ContainerBuildCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly kubernetesFixture?: Omit<KubernetesFixtureCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly tailscaleExposure?: TailscaleExposureCapabilityInvokerOptions;
+-  readonly networkHttp?: NetworkHttpCapabilityInvokerOptions;
+-  readonly browserAxe?: BrowserAxeCapabilityInvokerOptions;
+-  readonly browserLighthouse?: BrowserLighthouseCapabilityInvokerOptions;
+-  readonly browserVisual?: BrowserVisualCapabilityInvokerOptions;
+-  readonly browserPlaywright?: Omit<BrowserPlaywrightCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly securityScan?: Omit<SecurityScanCapabilityInvokerOptions, 'workspaceRoot'>;
+-  readonly kubernetesRuntimeSecurity?: Omit<KubernetesRuntimeSecurityCapabilityInvokerOptions, 'workspaceRoot'>;
+   readonly dependencyReadiness?: { readonly maximumExecutionMs: number; readonly maximumOutputBytes: number };
+   readonly now?: () => Date;
+   readonly execute?: (
+@@ -692,73 +668,7 @@ export class BusterRemotePlanService {
+         throw error;
+       } finally { fs.rmSync(archive, { force: true }); }
+       const paths = { jobRoot, repositoryRoot, workspaceRoot, artifactRoot, observabilityRoot };
+-      const directCommand = this.#options.allowedCapabilities.has('command.execute')
+-        ? new DirectCommandCapabilityInvoker({
+-          ...(this.#options.directCommand ?? (() => { throw new Error('BUSTER_DIRECT_COMMAND_CONFIG_REQUIRED'); })()),
+-          workspaceRoot,
+-        })
+-        : null;
+-      const containerBuild = this.#options.allowedCapabilities.has('container.build')
+-        ? new ContainerBuildCapabilityInvoker({
+-          ...(this.#options.containerBuild ?? (() => { throw new Error('BUSTER_CONTAINER_BUILD_CONFIG_REQUIRED'); })()),
+-          workspaceRoot,
+-        })
+-        : null;
+-      const kubernetesFixture = this.#options.allowedCapabilities.has('kubernetes.fixture')
+-        ? new KubernetesFixtureCapabilityInvoker({
+-          ...(this.#options.kubernetesFixture ?? (() => { throw new Error('BUSTER_KUBERNETES_FIXTURE_CONFIG_REQUIRED'); })()),
+-          workspaceRoot: jobRoot,
+-        })
+-        : null;
+-      const tailscaleExposure = this.#options.allowedCapabilities.has('kubernetes.exposure')
+-        ? new TailscaleExposureCapabilityInvoker(this.#options.tailscaleExposure
+-          ?? (() => { throw new Error('BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED'); })())
+-        : null;
+-      const networkHttp = this.#options.allowedCapabilities.has('network.http')
+-        ? new NetworkHttpCapabilityInvoker(this.#options.networkHttp
+-          ?? (() => { throw new Error('BUSTER_NETWORK_HTTP_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserAxe = this.#options.allowedCapabilities.has('browser.axe')
+-        ? new BrowserAxeCapabilityInvoker(this.#options.browserAxe
+-          ?? (() => { throw new Error('BUSTER_BROWSER_AXE_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserLighthouse = this.#options.allowedCapabilities.has('browser.lighthouse')
+-        ? new BrowserLighthouseCapabilityInvoker(this.#options.browserLighthouse
+-          ?? (() => { throw new Error('BUSTER_BROWSER_LIGHTHOUSE_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserVisual = this.#options.allowedCapabilities.has('browser.visual')
+-        ? new BrowserVisualCapabilityInvoker(this.#options.browserVisual
+-          ?? (() => { throw new Error('BUSTER_BROWSER_VISUAL_CONFIG_REQUIRED'); })())
+-        : null;
+-      const browserPlaywright = this.#options.allowedCapabilities.has('browser.playwright')
+-        ? new BrowserPlaywrightCapabilityInvoker({
+-          ...(this.#options.browserPlaywright ?? (() => { throw new Error('BUSTER_BROWSER_PLAYWRIGHT_CONFIG_REQUIRED'); })()),
+-          workspaceRoot,
+-        }) : null;
+-      const securityScan = this.#options.allowedCapabilities.has('security.scan')
+-        ? new SecurityScanCapabilityInvoker({
+-          ...(this.#options.securityScan ?? (() => { throw new Error('BUSTER_SECURITY_SCAN_CONFIG_REQUIRED'); })()),
+-          workspaceRoot: jobRoot,
+-        }) : null;
+-      const kubernetesRuntimeSecurity = this.#options.allowedCapabilities.has('kubernetes.runtime-security')
+-        ? new KubernetesRuntimeSecurityCapabilityInvoker({
+-          ...(this.#options.kubernetesRuntimeSecurity
+-            ?? (() => { throw new Error('BUSTER_KUBERNETES_RUNTIME_SECURITY_CONFIG_REQUIRED'); })()),
+-          workspaceRoot: jobRoot,
+-        }) : null;
+-      const routes = new Map();
+-      if (directCommand) routes.set('command.execute', directCommand);
+-      if (containerBuild) routes.set('container.build', containerBuild);
+-      if (kubernetesFixture) routes.set('kubernetes.fixture', kubernetesFixture);
+-      if (tailscaleExposure) routes.set('kubernetes.exposure', tailscaleExposure);
+-      if (networkHttp) routes.set('network.http', networkHttp);
+-      if (browserAxe) routes.set('browser.axe', browserAxe);
+-      if (browserLighthouse) routes.set('browser.lighthouse', browserLighthouse);
+-      if (browserVisual) routes.set('browser.visual', browserVisual);
+-      if (browserPlaywright) routes.set('browser.playwright', browserPlaywright);
+-      if (securityScan) routes.set('security.scan', securityScan);
+-      if (kubernetesRuntimeSecurity) routes.set('kubernetes.runtime-security', kubernetesRuntimeSecurity);
+-      const capabilities = routes.size ? new CompositeTestProviderCapabilityInvoker(routes) : null;
++      const capabilities = createBusterCapabilityRuntime(this.#options, paths);
+       const run = this.#options.execute
+         ? await this.#options.execute(job, paths, controller.signal)
+         : await new TestPlanRunner({
+@@ -770,9 +680,9 @@ export class BusterRemotePlanService {
+           observabilityRoot,
+           maximumConcurrency: job.maximumConcurrency,
+           grants: new Map(Object.entries(job.grants)),
+-          ...(capabilities ? { capabilityInvoker: capabilities } : {}),
++          ...(capabilities.invoker ? { capabilityInvoker: capabilities.invoker } : {}),
+           signal: controller.signal,
+-        }).run().finally(() => directCommand?.shutdown());
++        }).run().finally(() => capabilities.shutdown());
+       if (run.cleanupErrors.length === 0 && run.attempts.every((attempt) => attempt.executionState === 'completed')) {
+         await cleanupTerminalWorkspace(jobRoot);
+       }
+diff --git a/skills/buster/engine/test-gates/terminal-workspace.ts b/skills/buster/engine/test-gates/terminal-workspace.ts
+index 60d55b5e..b4264e53 100644
+--- a/skills/buster/engine/test-gates/terminal-workspace.ts
++++ b/skills/buster/engine/test-gates/terminal-workspace.ts
+@@ -1,26 +1,55 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
++import type { FileHandle } from 'node:fs/promises';
+ 
+ // Only reproducible input copies are disposable. Do not remove workspace,
+ // scratch, evidence, artifacts, observability, durable job records or logs.
+ export async function cleanupTerminalWorkspace(jobRoot: string): Promise<void> {
+-  // A terminal caller must already own quiescence. Do not follow a replaced
+-  // parent into another job or retained evidence, even after execution stopped.
+-  if (!await realDirectory(jobRoot)) return;
+-  const workspace = await realDirectory(path.join(jobRoot, 'workspace'));
+-  for (const relative of ['repository.tar.gz', 'workspace/repository', 'workspace/test-provider-snapshots']) {
+-    if (!workspace && relative.startsWith('workspace/')) continue;
+-    await fs.promises.rm(path.join(jobRoot, relative), { recursive: true, force: true });
++  // The caller must already prove quiescence, including all fixture lifetimes.
++  // Pin directory inodes: lstat followed by rm on the original pathname would
++  // follow a substituted parent. Never reopen that pathname after validation.
++  if (process.platform !== 'linux') throw new Error('BUSTER_TERMINAL_WORKSPACE_LINUX_REQUIRED');
++  const job = await openDirectoryPath(jobRoot);
++  if (!job) return;
++  let workspace: FileHandle | null = null;
++  try {
++    workspace = await openDirectory(`${descriptorPath(job)}/workspace`);
++    await fs.promises.rm(`${descriptorPath(job)}/repository.tar.gz`, { recursive: true, force: true });
++    if (workspace) {
++      for (const name of ['repository', 'test-provider-snapshots']) {
++        await fs.promises.rm(`${descriptorPath(workspace)}/${name}`, { recursive: true, force: true });
++      }
++    }
++  } finally {
++    try { await workspace?.close(); } finally { await job.close(); }
+   }
+ }
+ 
+-async function realDirectory(directory: string): Promise<boolean> {
++function descriptorPath(directory: FileHandle): string {
++  return `/proc/self/fd/${directory.fd}`;
++}
++
++async function openDirectory(directory: string): Promise<FileHandle | null> {
+   try {
+-    const stat = await fs.promises.lstat(directory);
+-    if (!stat.isDirectory() || stat.isSymbolicLink()) throw new Error('BUSTER_TERMINAL_WORKSPACE_PARENT_INVALID');
+-    return true;
++    return await fs.promises.open(directory, fs.constants.O_RDONLY | fs.constants.O_DIRECTORY | fs.constants.O_NOFOLLOW);
+   } catch (error) {
+-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return false;
++    const code = (error as NodeJS.ErrnoException).code;
++    if (code === 'ENOENT') return null;
++    if (code === 'ELOOP' || code === 'ENOTDIR') throw new Error('BUSTER_TERMINAL_WORKSPACE_PARENT_INVALID', { cause: error });
+     throw error;
+   }
+ }
++
++async function openDirectoryPath(directory: string): Promise<FileHandle | null> {
++  // Opening only the leaf with O_NOFOLLOW still follows intermediate symlinks.
++  // Walk from / through pinned descriptors so every supplied ancestor is checked.
++  let current = await openDirectory('/');
++  try {
++    for (const component of path.resolve(directory).split(path.sep).filter(Boolean)) {
++      if (!current) return null;
++      const next = await openDirectory(`${descriptorPath(current)}/${component}`);
++      await current.close(); current = next;
++    }
++    const result = current; current = null; return result;
++  } finally { await current?.close(); }
++}
+diff --git a/tests/verification/reliability/buster-terminal-workspace-native.test.mts b/tests/verification/reliability/buster-terminal-workspace-native.test.mts
+index a183840a..4e843fd8 100644
+--- a/tests/verification/reliability/buster-terminal-workspace-native.test.mts
++++ b/tests/verification/reliability/buster-terminal-workspace-native.test.mts
+@@ -36,3 +36,60 @@ test('terminal cleanup unlinks a leaf symlink without deleting its target and re
+     await cleanupTerminalWorkspace(path.join(root, 'already-absent'));
+   } finally { fs.rmSync(root, { recursive: true, force: true }); }
+ });
++
++test('terminal cleanup rejects symlinks in ancestors of the job root', async () => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-cleanup-ancestor-'));
++  try {
++    const target = path.join(root, 'target');
++    fs.mkdirSync(path.join(target, 'job'), { recursive: true });
++    fs.writeFileSync(path.join(target, 'job', 'repository.tar.gz'), 'foreign archive');
++    fs.symlinkSync(target, path.join(root, 'linked'));
++    await assert.rejects(cleanupTerminalWorkspace(path.join(root, 'linked', 'job')), /BUSTER_TERMINAL_WORKSPACE_PARENT_INVALID/);
++    assert.equal(fs.readFileSync(path.join(target, 'job', 'repository.tar.gz'), 'utf8'), 'foreign archive');
++  } finally { fs.rmSync(root, { recursive: true, force: true }); }
++});
++
++for (const replaced of ['job', 'workspace'] as const) {
++  test(`terminal cleanup stays on original directory after ${replaced} is replaced during deletion`, async context => {
++    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-cleanup-replaced-'));
++    const job = path.join(root, 'job'); const foreign = path.join(root, 'foreign');
++    const archived = path.join(root, 'original');
++    const disposable = ['repository.tar.gz', 'workspace/repository/source.ts', 'workspace/test-provider-snapshots/provider.js'];
++    const retained = ['result.json', 'workspace/evidence/proof.json', 'workspace/scratch/task.log'];
++    try {
++      for (const directory of [job, foreign]) {
++        for (const name of [...disposable, ...retained]) {
++          const file = path.join(directory, name);
++          fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, `${directory}:${name}`);
++        }
++      }
++      const originalRemove = fs.promises.rm;
++      let changed = false;
++      // Pause at the real deletion boundary, replace a parent on disk, then use
++      // the original fs implementation. No mocked deletion or fake success.
++      context.mock.method(fs.promises, 'rm', async (...args: Parameters<typeof fs.promises.rm>) => {
++        if (!changed) {
++          changed = true;
++          const original = replaced === 'job' ? job : path.join(job, 'workspace');
++          const replacement = replaced === 'job' ? foreign : path.join(foreign, 'workspace');
++          fs.renameSync(original, archived); fs.symlinkSync(replacement, original);
++        }
++        return originalRemove(...args);
++      });
++      await cleanupTerminalWorkspace(job);
++      context.mock.restoreAll();
++      assert.equal(changed, true);
++      for (const name of [...disposable, ...retained]) {
++        assert.equal(fs.readFileSync(path.join(foreign, name), 'utf8'), `${foreign}:${name}`);
++      }
++      const originalWorkspace = replaced === 'job' ? path.join(archived, 'workspace') : archived;
++      assert.equal(fs.existsSync(path.join(originalWorkspace, 'repository')), false);
++      assert.equal(fs.existsSync(path.join(originalWorkspace, 'test-provider-snapshots')), false);
++      assert.equal(fs.readFileSync(path.join(originalWorkspace, 'evidence/proof.json'), 'utf8'), `${job}:workspace/evidence/proof.json`);
++      assert.equal(fs.readFileSync(path.join(originalWorkspace, 'scratch/task.log'), 'utf8'), `${job}:workspace/scratch/task.log`);
++      const originalJob = replaced === 'job' ? archived : job;
++      assert.equal(fs.readFileSync(path.join(originalJob, 'result.json'), 'utf8'), `${job}:result.json`);
++      assert.equal(fs.existsSync(path.join(originalJob, 'repository.tar.gz')), false);
++    } finally { context.mock.restoreAll(); fs.rmSync(root, { recursive: true, force: true }); }
++  });
++}
+diff --git a/tests/verification/reliability/http-authority.test.mts b/tests/verification/reliability/http-authority.test.mts
+index d3f73996..0c817263 100644
+--- a/tests/verification/reliability/http-authority.test.mts
++++ b/tests/verification/reliability/http-authority.test.mts
+@@ -3,6 +3,7 @@ import { test } from 'node:test';
+ import http from 'node:http';
+ import { once } from 'node:events';
+ import { NetworkHttpCapabilityInvoker } from '../../../skills/buster/engine/test-gates/network-http-runtime.ts';
++import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
+ 
+ test('suffix matching cannot contact an unrelated real HTTP service; exact origin works and redirects stop', async () => {
+   let contacts = 0;
+@@ -17,10 +18,13 @@ test('suffix matching cannot contact an unrelated real HTTP service; exact origi
+   const options = { allowedOrigins: [], allowedHostSuffixes: ['.0.0.1'], allowedPorts: [port], maximumResponseBytes: 4096, maximumExecutionMs: 2000 };
+   const request = (method: string, route = '/') => ({ operation: 'request', resource: { type: 'network.url', canonicalId: origin + route }, payload: { method } });
+   try {
+-    const restricted = new NetworkHttpCapabilityInvoker(options);
++    const restricted = createBusterCapabilityRuntime({ allowedCapabilities: new Set(['network.http']), networkHttp: options },
++      { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }).invoker!;
+     for (const method of ['GET', 'HEAD']) await assert.rejects(restricted.invoke('network.http', request(method), new AbortController().signal), /HTTP_REQUEST_EXACT_ORIGIN_REQUIRED/);
+     assert.equal(contacts, 0);
+-    const allowed = new NetworkHttpCapabilityInvoker({ ...options, allowedOrigins: [origin] });
++    const allowed = createBusterCapabilityRuntime({ allowedCapabilities: new Set(['network.http']),
++      networkHttp: { ...options, allowedOrigins: [origin] } },
++    { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }).invoker!;
+     const response = await allowed.invoke('network.http', request('GET'), new AbortController().signal);
+     assert.equal(response.body, 'real service response');
+     assert.equal(contacts, 1);

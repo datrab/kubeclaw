@@ -1,0 +1,11 @@
+# Independent genuine systemd parser review
+
+Accepted for the bounded parser claim. This reviewer did not prepare the runtime or author the probes. Fresh checks reran the actual analyzer against all three files: generated service exit 0 with empty stderr; nonexistent executable exit 1 with the actual executable diagnostic; absent ExecStart exit 1 with the actual bad-unit-setting diagnostic. No service or VM was started.
+
+Independently verified all 1,567 runtime/verifier entries, exact complete entry set, modes, file hashes and contained symlink targets. Reviewed the extraction filter: absolute archive symlinks become equivalent relative links inside the private root, followed by Python's containment filter; maintainer scripts are not executed. The retained first refusal is not a passing run.
+
+Fresh `gpgv` verification returned success and both pinned trixie primary identities in VALIDSIG records. The signed Packages index hash/size matched. Every selected package version, filename, size and hash matched that authenticated index and the downloaded package. Alpine verifier packages independently passed `apk verify`. This accepts the existing pinned-key trust anchor; it does not infer freshness from a nonexistent Valid-Until field.
+
+The production renderer/configuration/policy and original deployment-test hashes still match the author's bound inputs. The genuine glibc loader and extracted systemd library/unit directories are used through proot; the writable `/run` is a private cache bind. Proot is not isolation or real-root security proof. The complete root deployment test remains unrun, and systemd PID 1 activation, notification readiness, controller delegation and the live-node gate remain outside this acceptance.
+
+Reproduction and fresh raw outputs: `docs/review/evidence/independent-systemd-parser-20260921/`. No production source or original assertion was edited. Preparation scripts have reviewable limitations for reuse: bootstrap requires only one pinned fingerprint in its assertion, whereas this independent check explicitly required both; the final frozen artifacts contain both valid signatures. Any new download requires a new verification and binding, not reuse of this acceptance.

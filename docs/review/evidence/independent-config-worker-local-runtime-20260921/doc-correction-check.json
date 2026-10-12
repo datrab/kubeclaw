@@ -1,0 +1,12 @@
+{
+  "scope": "DOC-only correction after runtime freeze; no new runtime claim",
+  "beforeMatches": true,
+  "afterMatches": true,
+  "currentEqualsAfter": true,
+  "identity": {
+    "path": "docs/review/remediation/implementation/buster-provider-cancellation-20260921.md",
+    "beforeSha256": "f6f200ee8f9cce36bf808f9b90835ee57743338e785c6dba6450f5fc5677cff6",
+    "afterSha256": "7732f3585cb7da6ddd86b497fd146f49f46c7e52f7d35e5191e3b6461fd478c9",
+    "scope": "only historical/current DOC framing; no source/runtime change"
+  }
+}

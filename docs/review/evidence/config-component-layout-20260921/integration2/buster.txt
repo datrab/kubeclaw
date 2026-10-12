@@ -1,0 +1,36 @@
+✔ CE01 shared authorship is centrally validated before explicit E2E-profile projection (19.722306ms)
+✔ CE02 root rejects invalid central authorship before E2E derivation (3.265676ms)
+✔ CE02 operator rejects invalid central authorship before E2E derivation (3.540823ms)
+✔ CE02 worker-value rejects invalid central authorship before E2E derivation (2.803004ms)
+✔ CE03 run-scoped E2E overrides are added only after central validation and projection (2.842985ms)
+✔ canonical startup rejects missing/unknown/malformed admission and every retired ENV author (69.456388ms)
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (30005.679493ms)
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (30002.483679ms)
+✔ startup recovery durably rejects accepted jobs exceeding the newly authored concurrency limit (916.901066ms)
+✔ prepared source accepts valid identity and rejects JSON scalar coercion (1.367826ms)
+✔ staged input accepts valid identity and rejects JSON scalar coercion (72.920828ms)
+✔ cleanup effects accepts valid identity and rejects JSON scalar coercion (0.541014ms)
+✔ cleanup gate digest cannot be coerced from a JSON array (0.474233ms)
+✔ recovered source reference remains bound to the originally accepted extraction header (82.739466ms)
+✔ real ledger serializes competing admissions into exactly two fixed slots (150.112808ms)
+✔ admission reserves a future cleanup record inside the original record quota (35.602882ms)
+✔ profile, clock and settings ownership is captured before waiting on a real writer lock (40.48649ms)
+✔ malformed persisted cleanup association is rejected without rewriting bytes (26.700128ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 2
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68385.227446
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-admission-config.test.mts:49:3
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":1,"maximumQueuedJobs":1,"maximumConcurrentAttempts":3} (30005.679493ms)
+  'test timed out after 30000ms'
+
+test at tests/verification/reliability/buster-admission-config.test.mts:49:3
+✖ actual queue/drain/replay consumes authored profile {"maximumActiveJobs":3,"maximumQueuedJobs":2,"maximumConcurrentAttempts":3} (30002.483679ms)
+  'test timed out after 30000ms'

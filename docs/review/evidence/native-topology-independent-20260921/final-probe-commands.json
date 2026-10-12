@@ -1,0 +1,47 @@
+[
+  {
+    "name": "probes-final",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes-final.mts"
+    ],
+    "environmentOverrides": {},
+    "exitCode": 0
+  },
+  {
+    "name": "mutant-drain-on-metadata-error",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/mutate.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes-final.mts"
+    ],
+    "environmentOverrides": {
+      "REVIEW_MUTATION": "drain-on-metadata-error"
+    },
+    "exitCode": 1
+  },
+  {
+    "name": "original-node-pools-final",
+    "argv": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "/usr/local/lib/node_modules/npm/bin/npm-cli.js",
+      "run",
+      "verify:worker-core:node-pools"
+    ],
+    "exitCode": 1
+  }
+]

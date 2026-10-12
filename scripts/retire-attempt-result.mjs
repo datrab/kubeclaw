@@ -11,17 +11,20 @@ import {Inventory} from './observability-retirement/files.mjs';
 import {inspectRun} from './observability-retirement/journals.mjs';
 import {inspectAdmission,inspectAttempts} from './observability-retirement/stores.mjs';
 
-function scopeValue(input) {
+export function attemptRetirementScope(input,kind) {
   const scope=structuredClone(input);
   if(!scope||Object.keys(scope).sort().join(',')!=='action,attemptLimits,attemptRoot,intent,inventoryLimits,novaStorageRoot,schemaVersion'
-    ||scope.schemaVersion!=='attempt-result-retirement-scope.v1'||scope.action!=='compact-imported-result'
+    ||scope.schemaVersion!==`attempt-${kind}-retirement-scope.v1`||scope.action!==`compact-imported-${kind}`
     ||![scope.novaStorageRoot,scope.attemptRoot].every(value=>typeof value==='string'&&path.isAbsolute(value)&&path.resolve(value)===value)
     ||!scope.attemptLimits||Object.keys(scope.attemptLimits).sort().join(',')!=='maximumClosures,maximumEvidenceBytes,maximumEvidenceObjectBytes,maximumEvidenceObjects,maximumMetadataBytes,maximumPendingEvidenceAgeMs,maximumResults'
     ||!scope.inventoryLimits||Object.keys(scope.inventoryLimits).sort().join(',')!=='maximumFiles,maximumSnapshotBytes,maximumTotalBytes')throw new Error('ATTEMPT_RETIREMENT_SCOPE_INVALID');
-  assertAttemptRetirementIntent(scope.intent,scope.attemptRoot);
+  if(!Object.values(scope.attemptLimits).every(value=>Number.isSafeInteger(value)&&value>0))throw new Error('ATTEMPT_RETIREMENT_SCOPE_INVALID');
+  const {closureDigest,...resultIntent}=scope.intent;
+  if(kind==='closure'&&!/^sha256:[a-f0-9]{64}$/u.test(closureDigest))throw new Error('ATTEMPT_RETIREMENT_SCOPE_INVALID');
+  assertAttemptRetirementIntent(kind==='closure'?resultIntent:scope.intent,scope.attemptRoot);
   return scope;
 }
-function retainedRun(scope) {
+export function retainedAttemptRun(scope) {
   const {intent}=scope,inventory=new Inventory(scope.inventoryLimits);
   inventory.root(intent.runRoot,intent.pipelineRunId);
   const run=inspectRun(inventory,intent.runRoot,intent.pipelineRunId);
@@ -39,8 +42,9 @@ function retainedRun(scope) {
 }
 
 /** Local operator authority; this only removes a copy already durably imported. */
-export async function retireAttemptResult(input) {
-  const scope=scopeValue(input),roots=new Inventory(scope.inventoryLimits);
+export async function retireAttemptProjection(input,kind) {
+  if(!['result','closure'].includes(kind))throw new Error('ATTEMPT_RETIREMENT_SCOPE_INVALID');
+  const scope=attemptRetirementScope(input,kind),roots=new Inventory(scope.inventoryLimits);
   roots.root(scope.novaStorageRoot,'nova',false);
   roots.root(scope.attemptRoot,'attempts',false);
   const canonical=runRoot(scope.novaStorageRoot,scope.intent.pipelineRunId,{maximumLegacyBytes:scope.inventoryLimits.maximumSnapshotBytes});
@@ -54,8 +58,8 @@ export async function retireAttemptResult(input) {
     signal.throwIfAborted();
     const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);
     let initial;
-    return attempts.retireImportedResult(scope.intent,operation=>new FileMutex(`${journal}.append-lock`,5000,'ATTEMPT_RETIREMENT_JOURNAL_LOCKED').withLock(operation),()=>{
-      signal.throwIfAborted();const current=retainedRun(scope);
+    return attempts[kind==='closure'?'retireImportedClosure':'retireImportedResult'](scope.intent,operation=>new FileMutex(`${journal}.append-lock`,5000,'ATTEMPT_RETIREMENT_JOURNAL_LOCKED').withLock(operation),()=>{
+      signal.throwIfAborted();const current=retainedAttemptRun(scope);
       initial??=current;
       initial.verifyUnchanged();current.verifyUnchanged();roots.verifyUnchanged();
       if([...initial.blockers,...current.blockers,...roots.blockers].some(item=>item.code!=='RUN_RETIREMENT_AUTHORIZATION_MISSING'))throw new Error('ATTEMPT_RETIREMENT_RUN_CHANGED');
@@ -63,6 +67,7 @@ export async function retireAttemptResult(input) {
     });
   });
 }
+export async function retireAttemptResult(input) {return retireAttemptProjection(input,'result');}
 async function main() {
   if(process.argv.length!==4||process.argv[2]!=='--apply'||!path.isAbsolute(process.argv[3]))throw new Error('ATTEMPT_RETIREMENT_USAGE');
   const input=JSON.parse(readAttemptJournalPrefix(process.argv[3],1048576).toString());

@@ -1,0 +1,51 @@
+{
+  "manifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-invoker-policy-20260921/type-correction-v1/manifest.json",
+  "manifestSha256": "57f7216fdab337c5aa8fb2ca74cc2f61f0ab9eb50a02ec9e35f9dccc163a1f4a",
+  "review": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-buster-cluster-invoker-policy-20260921/type-correction-review-20260924.json",
+  "reviewSha256": "767a6eee198a62a1abd2cfd074c45283e1b2478d768487d5cb582bba3e042501",
+  "status": "integrated; verification pending",
+  "files": [
+    {
+      "path": "scripts/native-worker-node-policy.d.mts",
+      "beforeSha256": null,
+      "sha256": "e769dd54e72b6b44dbbe1f29892d7a194ebb8f769385e260ae972779d318cb3e",
+      "kind": "file"
+    },
+    {
+      "path": "scripts/registry-client-config.d.mts",
+      "beforeSha256": null,
+      "sha256": "68d13e008e4f36947f8cb6f8074803cfa63ecac920abb5641e86887cbccf74ac",
+      "kind": "file"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "beforeSha256": "4b971e5dbc945e233821677a39561394e3bda775a29851b2ef20705883169396",
+      "sha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "kind": "file"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "beforeSha256": null,
+      "sha256": "cf35868ce909f53a05fae0e8a4bdf81f0e8c030850d569839f13d47f5efa4607",
+      "kind": "file"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "beforeSha256": "2f29e99bf331dd69dd7d76161c6a6116d55c9e2b30c57b37b98ca1a47ff194f6",
+      "sha256": "8380b792ce0707c690612655db144e0a8d4adebbb35de32a9e2f17a3b4b4da17",
+      "kind": "file"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "beforeSha256": "d9701f630af15a9f8592d62c3650ba614f3b4e65a7c12315fde656199b080771",
+      "sha256": "c13bd9bf7f78ed834b17d78fd24ec147e7b21edbf90ae9152ae3e993e9ba924f",
+      "kind": "file"
+    },
+    {
+      "path": "tests/verification/e2e/registry-target.d.mts",
+      "beforeSha256": null,
+      "sha256": "829f30b8da14840f8ce821f0ebef09fa971c514a8270c3a24eee69204e116944",
+      "kind": "file"
+    }
+  ]
+}

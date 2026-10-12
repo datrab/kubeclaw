@@ -1,0 +1,12 @@
+✔ independent closure decoder refuses malformed direct references without repair or writes (3456.324256ms)
+ℹ {"malformedCases":["unknown-version","extra-field","mixed-full-reference","foreign-result-key","wrong-closure-digest","missing-source-completion","source-is-full-result","recursive-reference","duplicate-reference","mixed-duplicate-closure","missing-reference-receipt","invalid-reference-receipt","empty-reference-set"],"fullLogicalStateRecovered":true,"fixture":"actual validated result projection; closure reference constructed only for decoder-boundary probes"}
+✔ independent operator preserves quota after no-saving rejection and rejects later generation after projection (2844.685896ms)
+ℹ {"noSavingOperationAndActor":"valid maximum-length identities, rejection fixture only","positiveClosureUnpadded":true,"actualReleasedBytes":127,"finalizedGenerationPreserved":true}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7374.261955

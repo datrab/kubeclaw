@@ -1,0 +1,10 @@
+{
+  "status": "prepared, unexecuted",
+  "file": "skills/buster/engine/test-gates/production-cluster-options.ts",
+  "sha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+  "old": "...policy.runtimeSecurity, kubectlExecutable:",
+  "new": "...policy.runtimeSecurity, maximumOutputBytes: 16777216, kubectlExecutable:",
+  "test": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+  "oracle": "Both RuntimeSecurity policy-denied cases must reject real valid responses at their selected cap. Restored default incorrectly produces passed remote decisions; passing counterparts and grant/route cases remain unchanged.",
+  "scope": "Use full unchanged service suite; inspect actual failed assertion and applied source hook."
+}

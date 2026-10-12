@@ -1,0 +1,7 @@
+{
+  "supplementalSignedPackages": 8,
+  "launchOnlyNamespaceChanges": true,
+  "guestDriverCopiesExact": true,
+  "allTwelveAuthorSourceIdentitiesMatch": true,
+  "expectedGuestCaseCount": 7
+}

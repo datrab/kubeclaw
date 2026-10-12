@@ -1,0 +1,19 @@
+{
+  "manifestSha256": "dcb937701f77bab59fdd54bddd9ab33e0cff5a0ec8b0aec31789a6888a7cccd3",
+  "beforeMatches": true,
+  "afterMatches": true,
+  "originalSevenTestBodiesByteIdentical": true,
+  "decision": "source accepted for coordinated integration and actual tests",
+  "mode": "no runtime/live writes",
+  "cases": [
+    "TERM fault identity retained after delayed real forced close",
+    "timed KILL fault identity retained after genuine TERM-driven natural close",
+    "final KILL fault identity and original timeout retained while actual close notification held",
+    "group observation fault identity retained across close notification deadline"
+  ],
+  "limits": [
+    "faults are narrow injected syscall/observation boundaries, not real kernel EPERM/EACCES claims",
+    "child processes and normal forwarding are real; test children do not spawn descendants",
+    "existing owned cleanup and same deadlines retained; actual runtime timing remains unexecuted"
+  ]
+}

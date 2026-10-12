@@ -1,0 +1,39 @@
+
+> docs:check
+> npm run docs:check:generated && npm run docs:blueprint:check && node scripts/docs-check.mjs && npm run docs:check:refs && npm run docs:check:coverage && npm run docs:publication:check && npm run verify:migration:workflow
+
+
+> docs:check:generated
+> npm run plugin-system:inventory:check && npm run docs:inventory:check && npm run docs:generate:check
+
+
+> plugin-system:inventory:check
+> node scripts/plugin-system-inventory.mjs --check
+
+verified plugin-system inventory (49 roots, 67 registrations)
+
+> docs:inventory:check
+> node scripts/docs-inventory.mjs --check
+
+docs inventory is current
+
+> docs:generate:check
+> node scripts/docs-generate.mjs --check
+
+generated reference docs are current
+
+> docs:blueprint:check
+> node scripts/docs-blueprint-generate.mjs --check
+
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/docs-blueprint-generate.mjs:43
+      throw new Error(`Documentation blueprint output is stale: ${rel(target)}`);
+            ^
+
+Error: Documentation blueprint output is stale: docs/blueprint/generated/platform-inventory.json
+    at write (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/docs-blueprint-generate.mjs:43:13)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/docs-blueprint-generate.mjs:151:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

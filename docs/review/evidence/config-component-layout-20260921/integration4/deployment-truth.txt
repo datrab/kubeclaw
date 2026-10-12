@@ -1,0 +1,181 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Buster runtime image must invoke the production Playwright CLI without the pruned dev-dependency symlink
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/check-deployment-truth.mjs:269:10
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '# Version defaults are generated from versions.json; run npm run versions:sync.\n' +
+    'ARG BUILDKIT_BASE=moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c\n' +
+    'ARG BUSTER_NODE_BASE=node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e\n' +
+    '\n' +
+    "# Buster's v2 suite worker and colocated rootless image builder.\n" +
+    'FROM ${BUILDKIT_BASE} AS buildkit\n' +
+    'FROM ${BUSTER_NODE_BASE}\n' +
+    '\n' +
+    'USER root\n' +
+    'SHELL ["/bin/bash", "-o", "pipefail", "-c"]\n' +
+    'ARG DEBIAN_SNAPSHOT=20260713T000000Z\n' +
+    'ARG TARGETARCH\n' +
+    'ARG KUBECLAW_BUILD_REVISION=unknown\n' +
+    'ARG KUBECTL_VERSION=1.35.6\n' +
+    'ARG KUBECTL_SHA256_AMD64=5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926\n' +
+    'ARG KUBECTL_SHA256_ARM64=c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b\n' +
+    'ARG TRIVY_VERSION=0.74.0\n' +
+    'ARG TRIVY_SHA256_AMD64=2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a\n' +
+    'ARG TRIVY_SHA256_ARM64=b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5\n' +
+    '\n' +
+    'COPY --from=buildkit /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt\n' +
+    'COPY scripts/buster-subordinate-ids.mjs /usr/local/libexec/buster-subordinate-ids.mjs\n' +
+    'COPY scripts/buster-state-root.mjs /usr/local/libexec/buster-state-root.mjs\n' +
+    'COPY scripts/buster-runtime-config-root.mjs /usr/local/libexec/buster-runtime-config-root.mjs\n' +
+    '# The dated Debian snapshot pins the complete dependency graph coherently.\n' +
+    '# hadolint ignore=DL3008\n' +
+    "RUN printf '%s\\n' \\\n" +
+    "      'Types: deb' \\\n" +
+    '      "URIs: https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT}" \\\n' +
+    "      'Suites: bookworm bookworm-updates' \\\n" +
+    "      'Components: main' \\\n" +
+    "      'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \\\n" +
+    "      '' \\\n" +
+    "      'Types: deb' \\\n" +
+    '      "URIs: https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT}" \\\n' +
+    "      'Suites: bookworm-security' \\\n" +
+    "      'Components: main' \\\n" +
+    "      'Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg' \\\n" +
+    '      > /etc/apt/sources.list.d/debian.sources \\\n' +
+    '    && rm -f /etc/apt/sources.list \\\n' +
+    `    && printf 'Acquire::Check-Valid-Until "false";\\n' > /etc/apt/apt.conf.d/99snapshot \\\n` +
+    '    && packages=(bash ca-certificates curl git openssh-client jq python3 python3-pip uidmap libcap2-bin fuse-overlayfs iproute2 iptables tini util-linux build-essential shellcheck yamllint ripgrep tree netcat-openbsd nmap) \\\n' +
+    '    && apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update \\\n' +
+    '    && apt-get -o Acquire::Retries=5 install -y --no-install-recommends "${packages[@]}" \\\n' +
+    '    && rm -rf /var/lib/apt/lists/* \\\n' +
+    '    && chmod 0755 /usr/bin/newuidmap /usr/bin/newgidmap \\\n' +
+    '    && setcap cap_setuid=ep /usr/bin/newuidmap \\\n' +
+    '    && setcap cap_setgid=ep /usr/bin/newgidmap\n' +
+    '\n' +
+    'COPY --from=buildkit /usr/bin/buildkitd /usr/local/bin/buildkitd\n' +
+    'COPY --from=buildkit /usr/bin/buildctl /usr/local/bin/buildctl\n' +
+    'COPY --from=buildkit /usr/bin/buildkit-runc /usr/local/bin/buildkit-runc\n' +
+    'COPY --from=buildkit /usr/bin/rootlesskit /usr/local/bin/rootlesskit\n' +
+    '\n' +
+    'RUN set -eux; \\\n' +
+    '    arch="${TARGETARCH:-amd64}"; \\\n' +
+    '    case "$arch" in \\\n' +
+    '      amd64) kubectl_sha="$KUBECTL_SHA256_AMD64"; trivy_arch=64bit; trivy_sha="$TRIVY_SHA256_AMD64" ;; \\\n' +
+    '      arm64) kubectl_sha="$KUBECTL_SHA256_ARM64"; trivy_arch=ARM64; trivy_sha="$TRIVY_SHA256_ARM64" ;; \\\n' +
+    '      *) exit 1 ;; \\\n' +
+    '    esac; \\\n' +
+    '    curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" -o /tmp/kubectl; \\\n' +
+    `    printf '%s  %s\\n' "$kubectl_sha" /tmp/kubectl | sha256sum -c -; \\\n` +
+    '    install -m 0755 /tmp/kubectl /usr/local/bin/kubectl; \\\n' +
+    '    trivy_archive="trivy_${TRIVY_VERSION}_Linux-${trivy_arch}.tar.gz"; \\\n' +
+    '    curl -fsSL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${trivy_archive}" -o "/tmp/${trivy_archive}"; \\\n' +
+    '    printf \'%s  %s\\n\' "$trivy_sha" "/tmp/${trivy_archive}" | sha256sum -c -; \\\n' +
+    '    tar -xzf "/tmp/${trivy_archive}" -C /usr/local/bin trivy; \\\n' +
+    '    rm /tmp/kubectl "/tmp/${trivy_archive}"; \\\n' +
+    '    groupmod --new-name builder node; \\\n' +
+    '    usermod --login builder --home /home/builder --move-home --shell /bin/bash node; \\\n' +
+    '    groupadd --gid 1001 buster-suite; \\\n' +
+    '    groupadd --gid 1002 buster-buildkit; \\\n' +
+    '    groupadd --gid 1003 buster-preparation; \\\n' +
+    '    useradd --uid 1001 --gid 1001 --no-create-home --shell /usr/sbin/nologin buster-suite; \\\n' +
+    '    useradd --system --uid 1003 --gid 1003 --no-create-home --shell /usr/sbin/nologin buster-preparation; \\\n' +
+    '    groupadd --gid 1004 buster-preparation-second; \\\n' +
+    '    useradd --system --uid 1004 --gid 1004 --no-create-home --shell /usr/sbin/nologin buster-preparation-second; \\\n' +
+    '    usermod --append --groups buster-suite,buster-buildkit builder; \\\n' +
+    '    node /usr/local/libexec/buster-subordinate-ids.mjs /etc/subuid /etc/subgid; \\\n' +
+    '    mkdir -p /app /home/builder/.openclaw/v2-jobs /home/builder/.local/share/buildkit /home/builder/.config/buildkit /run/user/1000/buildkit; \\\n' +
+    '    chown -R builder:builder /app /home/builder /run/user/1000; \\\n' +
+    '    chown root:builder /home/builder/.config /home/builder/.config/buildkit; \\\n' +
+    '    chmod 0750 /home/builder/.config /home/builder/.config/buildkit\n' +
+    '\n' +
+    'ARG RUFF_VERSION=0.15.22\n' +
+    'ARG MYPY_VERSION=2.3.0\n' +
+    'ARG PIP_AUDIT_VERSION=2.10.1\n' +
+    'ARG SEMGREP_VERSION=1.170.1\n' +
+    'COPY docker/python-tools/buster.txt /opt/kubeclaw-python-locks/buster.txt\n' +
+    'RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/buster.txt \\\n' +
+    '    && grep -F "mypy==${MYPY_VERSION} " /opt/kubeclaw-python-locks/buster.txt \\\n' +
+    '    && grep -F "pip-audit==${PIP_AUDIT_VERSION} " /opt/kubeclaw-python-locks/buster.txt \\\n' +
+    '    && grep -F "semgrep==${SEMGREP_VERSION} " /opt/kubeclaw-python-locks/buster.txt \\\n' +
+    '    && pip install --break-system-packages --no-cache-dir --require-hashes --only-binary=:all: \\\n' +
+    '      -r /opt/kubeclaw-python-locks/buster.txt\n' +
+    '\n' +
+    'ENV PATH="/app/node_modules/.bin:${PATH}" \\\n' +
+    '    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \\\n' +
+    '    KUBECLAW_BUILD_REVISION=${KUBECLAW_BUILD_REVISION}\n' +
+    '\n' +
+    'COPY package.json package-lock.json /app/\n' +
+    'COPY contracts /app/contracts\n' +
+    '# This copy is the production provider payload. The runtime discovers every\n' +
+    '# role-approved provider below /app/skills/buster/plugins, including Axe.\n' +
+    'COPY skills /app/skills\n' +
+    'COPY charts/kubeclaw/files/config/swarm.config.json charts/kubeclaw/files/config/prism-control.config.json charts/kubeclaw/files/config/prism-studio.config.json charts/kubeclaw/files/config/prism-worker.config.json charts/kubeclaw/files/config/prism-execution.config.json charts/kubeclaw/files/config/buster-engine.config.json /etc/kubeclaw/swarm/\n' +
+    'COPY scripts/build-plugin-sandbox.mjs /app/scripts/build-plugin-sandbox.mjs\n' +
+    'COPY tests/verification/contracts/check-pipeline-container-build-production.mts /app/tests/verification/contracts/check-pipeline-container-build-production.mts\n' +
+    'COPY tests/verification/contracts/check-pipeline-container-build-recovery.mts /app/tests/verification/contracts/check-pipeline-container-build-recovery.mts\n' +
+    'RUN npm ci --prefix /app --omit=dev --ignore-scripts --no-audit --no-fund \\\n' +
+    '    && cd /app \\\n' +
+    '    && cc -std=c11 -O2 -Wall -Wextra -Werror -fstack-protector-strong -D_FORTIFY_SOURCE=2 \\\n' +
+    '         -fPIE -pie -Wl,-z,relro,-z,now skills/worker/core/worker/native-worker-launcher.c \\\n' +
+    '         -o /usr/local/libexec/kubeclaw-native-worker-launcher \\\n' +
+    '    && chmod 0755 /usr/local/libexec/kubeclaw-native-worker-launcher \\\n' +
+    '    && node scripts/build-plugin-sandbox.mjs \\\n' +
+    '    && test -x /app/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox \\\n' +
+    '    && install -d -o root -g root -m 0755 /opt/kubeclaw-trusted /run/kubeclaw-buster \\\n' +
+    '    && node scripts/build-plugin-sandbox.mjs --buster-browser-helper /opt/kubeclaw-trusted/plugin-sandbox \\\n' +
+    '    && chown root:builder /opt/kubeclaw-trusted/plugin-sandbox \\\n' +
+    '    && chmod 0750 /opt/kubeclaw-trusted/plugin-sandbox \\\n' +
+    '    && setcap cap_setuid,cap_setgid=ep /opt/kubeclaw-trusted/plugin-sandbox \\\n' +
+    '    && chown -R root:root /app \\\n' +
+    '    && chmod -R go-w /app\n' +
+    '\n' +
+    'COPY versions.json /app/versions.json\n' +
+    'COPY docker/browser-archives.lock.json /app/docker/browser-archives.lock.json\n' +
+    'COPY scripts/browser-archive-lock.mjs /app/scripts/browser-archive-lock.mjs\n' +
+    'RUN node /app/node_modules/playwright/cli.js install-deps chromium firefox webkit \\\n' +
+    '    && node /app/scripts/browser-archive-lock.mjs --install "$TARGETARCH" buster /ms-playwright \\\n' +
+    '    && chown -R builder:builder /ms-playwright\n' +
+    '\n' +
+    '# Database bytes are resolved only by the explicit update procedure. Build\n' +
+    '# retries consume identical OCI manifests/layers and never resolve mutable tags.\n' +
+    'COPY versions.json /app/versions.json\n' +
+    'COPY docker/trivy-databases.lock.json /app/docker/trivy-databases.lock.json\n' +
+    'COPY scripts/trivy-database-lock.mjs /app/scripts/trivy-database-lock.mjs\n' +
+    `RUN node /app/scripts/trivy-database-lock.mjs --install /home/builder/.cache/trivy "$(trivy --version | sed -n 's/^Version: //p')" \\\n` +
+    '    && chown -R builder:builder /home/builder/.cache/trivy \\\n' +
+    '    && test -s /home/builder/.cache/trivy/db/trivy.db \\\n' +
+    '    && test -s /home/builder/.cache/trivy/java-db/trivy-java.db\n' +
+    '\n' +
+    'COPY scripts/registry-client-config.mjs /app/scripts/registry-client-config.mjs\n' +
+    'COPY docker/buster-runtime-entrypoint.sh /usr/local/bin/buster-runtime-entrypoint\n' +
+    'RUN chmod 0755 /usr/local/bin/buster-runtime-entrypoint\n' +
+    '\n' +
+    'ENV SWARM_CONFIG=/etc/kubeclaw/swarm/swarm.config.json \\\n' +
+    '    HOME=/home/builder \\\n' +
+    '    XDG_RUNTIME_DIR=/run/user/1000 \\\n' +
+    '    NODE_PATH=/app/node_modules \\\n' +
+    '    BUILDKIT_HOST=unix:///run/user/1000/buildkit/buildkitd.sock \\\n' +
+    '    BUILDKIT_STATE_DIR=/home/builder/.local/share/buildkit \\\n' +
+    '    BUSTER_V2_RESULT_ROOT=/workspace/git-repo/.swarm/runtime-results \\\n' +
+    '    BUSTER_V2_RUNNER_UID=1001 \\\n' +
+    '    BUSTER_V2_RUNNER_GID=1001 \\\n' +
+    '    BUSTER_V2_BUILDKIT_GID=1002 \\\n' +
+    '    BUSTER_V2_KUBERNETES_CREDENTIALS=/var/run/buster-worker/kubernetes \\\n' +
+    '    BUSTER_PLAN_PORT=18891\n' +
+    '\n' +
+    '# The production supervisor starts with only the capabilities declared by the\n' +
+    '# pod securityContext. The entrypoint immediately launches BuildKit as the\n' +
+    '# non-root builder, while the worker uses the remaining SETUID/SETGID authority\n' +
+    '# solely to enter a per-job identity before dropping ever'... 337 more characters,
+  expected: /node \.?\/?(?:app\/)?node_modules\/playwright\/cli\.js install --with-deps chromium/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

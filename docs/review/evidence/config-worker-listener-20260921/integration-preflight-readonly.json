@@ -1,0 +1,140 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+    "physicalAuthor": "charts/kubeclaw/files/config/prism-worker.config.json",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "charts/kubeclaw/files/config/swarm-components.schema.json",
+    "physicalAuthor": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json"
+  },
+  {
+    "path": "charts/prism/templates/_swarm-bundle.tpl",
+    "physicalAuthor": "charts/kubeclaw/templates/_swarm-config.tpl",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": "../../kubeclaw/templates/_swarm-config.tpl"
+  },
+  {
+    "path": "charts/prism/templates/_swarm-config.tpl",
+    "physicalAuthor": "charts/prism/templates/_swarm-config.tpl",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "charts/prism/templates/configmap-worker-trust.yaml",
+    "physicalAuthor": "charts/prism/templates/configmap-worker-trust.yaml",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "charts/prism/templates/networkpolicy.yaml",
+    "physicalAuthor": "charts/prism/templates/networkpolicy.yaml",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "charts/prism/templates/services.yaml",
+    "physicalAuthor": "charts/prism/templates/services.yaml",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "charts/prism/templates/workloads.yaml",
+    "physicalAuthor": "charts/prism/templates/workloads.yaml",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "docker/Dockerfile.prism-worker",
+    "physicalAuthor": "docker/Dockerfile.prism-worker",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "docs/operations/operator-configuration.md",
+    "physicalAuthor": "docs/operations/operator-configuration.md",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "docs/operations/prism-operator-guide.md",
+    "physicalAuthor": "docs/operations/prism-operator-guide.md",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "physicalAuthor": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "physicalAuthor": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/README.md",
+    "physicalAuthor": "skills/common/plugin-runtime/foundation/config/README.md",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "physicalAuthor": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/prism/server/worker-config.ts",
+    "physicalAuthor": "skills/prism/server/worker-config.ts",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/prism/tests/control-image-environment.test.mts",
+    "physicalAuthor": "skills/prism/tests/control-image-environment.test.mts",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/prism/tests/control-listener.test.mts",
+    "physicalAuthor": "skills/prism/tests/control-listener.test.mts",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "physicalAuthor": "skills/prism/tests/swarm-worker-config.test.mts",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/prism/tests/worker-listener-config.test.mts",
+    "physicalAuthor": "skills/prism/tests/worker-listener-config.test.mts",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "skills/prism/tests/worker-process-shutdown-native.mts",
+    "physicalAuthor": "skills/prism/tests/worker-process-shutdown-native.mts",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "physicalAuthor": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-image.mjs",
+    "physicalAuthor": "tests/verification/deployment/prism-swarm-image.mjs",
+    "liveChangedSinceStaging": false,
+    "liveSymlink": null
+  }
+]

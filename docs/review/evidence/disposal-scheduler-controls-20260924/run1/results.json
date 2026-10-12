@@ -1,0 +1,121 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "recovery-completed",
+    "seconds": 4.535374781000428,
+    "semanticAcceptance": "pending actual named-assertion review"
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "faulted-completed",
+    "seconds": 4.202189645031467,
+    "semanticAcceptance": "pending actual named-assertion review"
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/kubernetes-cleanup-errors.test.mjs",
+      "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "rollback-suppressed",
+    "seconds": 4.748485028045252,
+    "semanticAcceptance": "pending actual named-assertion review"
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/provider-disposal-recovery.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "success-only-confirmation",
+    "seconds": 7.055520607973449,
+    "semanticAcceptance": "pending actual named-assertion review"
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "permit-unconfirmed",
+    "seconds": 67.84565514803398,
+    "semanticAcceptance": "pending actual named-assertion review"
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/provider-disposal-recovery.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "duplicate-accounting",
+    "seconds": 7.035466274013743,
+    "semanticAcceptance": "pending actual named-assertion review"
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/provider-disposal-recovery.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "hidden-error-details",
+    "seconds": 7.603875069995411,
+    "semanticAcceptance": "pending actual named-assertion review"
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/runner-scheduler-drain.test.mjs",
+      "tests/verification/contracts/runner-scheduler-provider-drain.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "old-scheduler",
+    "seconds": 3.0793245129752904,
+    "semanticAcceptance": "pending actual named-assertion review"
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "retain-unconditional",
+    "seconds": 6.50120815099217,
+    "semanticAcceptance": "pending actual named-assertion review"
+  }
+]

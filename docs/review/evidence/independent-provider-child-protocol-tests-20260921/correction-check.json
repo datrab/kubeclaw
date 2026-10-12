@@ -1,0 +1,10 @@
+{
+  "beforeSha256": "54b6a571d890dd7442cd7dca4cf3be8485b3bcd3e7517e7a503c9cdc85d0c917",
+  "afterSha256": "a23fb808f6a9bd6ac59332a1404e61fa9d219495004a3dc547927357622a650a",
+  "scope": "Static correction review only; no runtime",
+  "resolved": [
+    "extra fulfilled RPC abort must remain in queue and fail exact empty assertion after close",
+    "late reply extra protocol output must remain in queue and fail after close",
+    "early cleanup registration and finally removal"
+  ]
+}

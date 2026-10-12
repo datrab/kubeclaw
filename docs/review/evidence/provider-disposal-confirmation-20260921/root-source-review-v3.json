@@ -1,0 +1,23 @@
+{
+  "reviewer": "root",
+  "manifestSha256": "64e4b3981111d44787665fe8f970d4db3481874b2ad4493b3f176e41a0697915",
+  "status": "source-accepted-for-integration-and-runtime-with-small-DOC-followup",
+  "filesChecked": 9,
+  "resolved": [
+    "Captures actual terminating session and accounts each confirmed session once with WeakSet",
+    "Recovery session is actual current owner; unconfirmed state prevents replacement",
+    "Both cleanup/stop details retained in public aggregate and final result test",
+    "Unconfirmed test owns release/close-restoration from acquisition and awaits started operation",
+    "Maintained command appends both new modules and preserves all other scripts"
+  ],
+  "remaining": [
+    "Replace obsolete architecture phrase existing finally boundary with current successful-stop snapshot removal semantics",
+    "Types/lint and actual maintained runtime including concurrent-accounting and all refusal cases",
+    "Original Runner/real-provider behavior and exact semantic controls"
+  ],
+  "limits": [
+    "Source-only review; no runtime acceptance",
+    "No whole historical cleanup, durable ownership, or CONFIG closure",
+    "Internal signal-plus-drain/timeout cause aggregation remains outside this bounded claim"
+  ]
+}

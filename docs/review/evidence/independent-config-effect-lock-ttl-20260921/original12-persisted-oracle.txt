@@ -1,0 +1,59 @@
+{"proof":"original-human-approval-http-receipt-local-issuer-authorized-resume","httpPosts":1,"coreStatus":"succeeded","attempts":["wait","passed"],"deliveryRecords":2,"deliveryBytes":10137,"projectionImplemented":false,"externalAuthenticationProved":false}
+✔ original human approval, real signed HTTP receipt and issuer-authorized Core resume supply distinct causal attempts (17622.101056ms)
+✖ authored platform TTL 60000 reaches the real runtime and filesystem lock consumer (8940.845486ms)
+✖ authored platform TTL 120000 reaches the real runtime and filesystem lock consumer (6887.095583ms)
+✔ missing and invalid TTL reject at platform, runtime and direct coordinator boundaries (7641.691509ms)
+✔ effect releases resource after locked recheck rejects conflicting-request (274.236713ms)
+✔ effect releases resource after locked recheck rejects orphaned-receipt (124.145631ms)
+✔ effect releases resource after locked recheck rejects corrupt-journal (93.679355ms)
+✔ real artifact completion and receipt replay release once without repeating the effect (225.090281ms)
+✔ real Git resource contention release is resolved before effect acceptance (430.267497ms)
+✔ real Git resource contention cancel is resolved before effect acceptance (137.706436ms)
+✔ real Git resource contention timeout is resolved before effect acceptance (163.659358ms)
+✔ serialized real conflicting merges retain the conflict instead of treating it as lock contention (429.483177ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 10
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 47293.708245
+
+✖ failing tests:
+
+test at tests/verification/reliability/effect-lock-configuration.test.mjs:13:3
+✖ authored platform TTL 60000 reaches the real runtime and filesystem lock consumer (8940.845486ms)
+  AssertionError [ERR_ASSERTION]: independent: initial persisted lock lifetime matches authored profile
+  
+  300000 !== 60000
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/effect-lock-configuration.test.mjs:40:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 300000,
+    expected: 60000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/effect-lock-configuration.test.mjs:13:3
+✖ authored platform TTL 120000 reaches the real runtime and filesystem lock consumer (6887.095583ms)
+  AssertionError [ERR_ASSERTION]: independent: initial persisted lock lifetime matches authored profile
+  
+  300000 !== 120000
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/effect-lock-configuration.test.mjs:40:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 300000,
+    expected: 120000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

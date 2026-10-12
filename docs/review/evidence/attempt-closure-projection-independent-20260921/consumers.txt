@@ -1,0 +1,32 @@
+{"ok":true,"phase":"5.7-F","rawPreserved":true,"normalizedJoined":true,"gapsVisible":true,"liveTail":true}
+✔ tests/verification/contracts/check-pipeline-observability-clawdeck-view.mts (3313.448465ms)
+{"ok":true,"phase":"5.7-D","durableResults":true,"durableEvidence":true,"staleClaimsRejected":true}
+✔ tests/verification/contracts/check-pipeline-observability-durable-attempts.mts (5391.51586ms)
+{"ok":true,"phase":"5.7-E","workers":20,"idempotentImports":true,"developmentDegraded":true,"finalStrict":true}
+✔ tests/verification/contracts/check-pipeline-observability-nova-reconciliation.mts (9905.222191ms)
+✔ fresh admission reads and duplicate ACK fail closed for persisted corruption (1009.094256ms)
+✔ fresh attempt replay validates result, generation, evidence, intent and closure before recovery (1499.648995ms)
+✔ standalone closure producer binding preserves staged-evidence expiry and partial completeness (305.127377ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (2884.683384ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (4023.542507ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (2353.765484ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (2705.883133ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (2931.252525ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (2400.654981ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (4062.639027ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (3396.002966ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (2.804742ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (1.922289ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (6.402875ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (1509.003413ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (11094.101357ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (1706.725274ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (5296.499161ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 69486.107909

@@ -1,0 +1,23 @@
+{
+  "extends": "../../../../skills/buster/engine/tsconfig.json",
+  "include": [
+    "../../../../tests/verification/reliability/result-reservation.test.mts",
+    "../../../../tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "../../../../tests/verification/reliability/coverage-remote.test.mts",
+    "../../../../tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "../../../../tests/verification/reliability/nova-remote-faults.mts",
+    "../../../../tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+    "../../../../tests/verification/contracts/check-pipeline-container-build-production.mts",
+    "../../../../tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "../../../../tests/verification/contracts/check-pipeline-security-parity.mts",
+    "../../../../tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+    "../../../../tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+    "../../../../tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+    "../../../../tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+    "../../../../tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "../../../../tests/verification/contracts/check-pipeline-size-budget-production.mts",
+    "../../../../tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+    "../../../../tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+    "../../../../tests/fixtures/test-gate/modeled-preparation.mts"
+  ]
+}

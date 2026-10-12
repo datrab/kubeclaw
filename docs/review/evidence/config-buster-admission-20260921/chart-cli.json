@@ -1,0 +1,9 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/verification/deployment/buster-admission-render.test.mjs"
+  ],
+  "exitCode": 1
+}

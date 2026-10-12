@@ -1,0 +1,34 @@
+{
+  "_doc": "Single authored swarm configuration. operator.prism is consumed by production Prism startup loaders; legacy profile expansion remains separate test support.",
+  "profile": "standard",
+  "features": {
+    "observability": true,
+    "buster": true,
+    "discord_alerts": true
+  },
+  "tuning": {
+    "safety_margins": "high",
+    "retention": "high",
+    "alerts": "rich",
+    "logs": "verbose",
+    "checks": "strict",
+    "determinism": "strict"
+  },
+  "overrides": {},
+  "operator": {
+    "prism": {
+      "worker": {
+        "maximumActiveRequests": 16,
+        "maximumProbeRequests": 4,
+        "maximumConnections": 128,
+        "requestTimeoutMs": 120000,
+        "shutdownTimeoutMs": 120000,
+        "maximumInputBytes": 16777216
+      },
+      "native": {
+        "maximumResultBytes": 67108864,
+        "dispatchTimeoutMs": 900000
+      }
+    }
+  }
+}

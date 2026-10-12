@@ -1,0 +1,198 @@
+{
+  "mode": "independent source-only; no runtime/type/lint/Helm execution",
+  "manifestSha256": "59a329540b9870016a1c6cf1580d39f4d1fcc74df3305bb253ff7a99f502cca6",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "docs/architecture/buster-execution-configuration.md",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "package.json",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/process-input.test.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-process-input-policy.test.mjs",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/contracts/buster-report-runtime-policy.test.mjs",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-junit-report-adapter.mts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/reliability/http-authority.test.mts",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    },
+    {
+      "path": "tests/verification/reliability/tailscale-generation.test.mjs",
+      "afterMatches": true,
+      "beforeMatches": true,
+      "currentLiveMatchesBefore": true
+    }
+  ],
+  "counts": {
+    "files": 29,
+    "afterMismatch": 0,
+    "beforeMismatch": 0
+  },
+  "decision": "source candidate acceptable for coordinated integration and actual verification; not behavioral acceptance",
+  "remainingGates": [
+    "both-chart raw parity",
+    "per-caller actual forwarding controls and mutants",
+    "three old-lifecycle-constant and wrapper fallback mutants",
+    "original modules and types/lint",
+    "complete runtime dependency binding"
+  ],
+  "scopeNotes": [
+    "Factory forwards policy to selected Kube/Tailscale constructors; irrelevant routes do not themselves validate the unused lifecycle argument",
+    "Initial Foundation process-group capture250ms remains independent",
+    "Custom execute bypasses process execution as before, but invoker constructors still require policy"
+  ]
+}

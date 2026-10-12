@@ -12,11 +12,11 @@ import type { ManagedWorkerServer } from '../../server/worker-lifecycle.ts';
 export async function nativeWorkerHarness(t: { after(callback: () => Promise<void>): void },
   auth: WorkerAuthentication, controlInternalUrl = new URL('http://127.0.0.1:1'), secret = 'local') {
   assert.equal(process.env.PRISM_NATIVE_ISOLATED_TEST_POOL, 'true', 'A dedicated native test pool must be explicitly selected');
-  const native = nativePrismSupervisorConfig();
-  requireNativeWorkerSupervisorAuthority(); requireNativeWorkerLauncher(native.launcher);
-  const store = new FileWorkerOwnershipStore(native.ownershipRoot, { maximumRecords: native.maximumRecords, maximumBytes: native.maximumBytes });
   const config = loadWorkerConfig({ ...process.env, WORKER_TRUST_SPIFFE_ENABLED: 'false', PRISM_WORKER_SECRET: secret,
     DATABASE_URL: process.env.PRISM_NATIVE_OPERATION_TEST_DATABASE_URL ?? '', PRISM_CONTROL_INTERNAL_URL: controlInternalUrl.href });
+  const native = nativePrismSupervisorConfig(config);
+  requireNativeWorkerSupervisorAuthority(); requireNativeWorkerLauncher(native.launcher);
+  const store = new FileWorkerOwnershipStore(native.ownershipRoot, { maximumRecords: native.maximumRecords, maximumBytes: native.maximumBytes });
   let release!: () => void;
   const finished = new Promise<void>(resolve => { release = resolve; });
   let admit!: (value: ManagedWorkerServer) => void;
@@ -24,7 +24,7 @@ export async function nativeWorkerHarness(t: { after(callback: () => Promise<voi
   const admitted = new Promise<ManagedWorkerServer>((resolve, fail) => { admit = resolve; reject = fail; });
   const supervision = NativeWorkerOwnership.supervise({ ...native, store }, async owner => {
     const execution = await nativePrismExecution(owner, native, config);
-    const server = createWorkerServer(auth, execution);
+    const server = createWorkerServer(auth, execution, config.ingress);
     admit(server);
     await finished;
     owner.fenceAdmission();

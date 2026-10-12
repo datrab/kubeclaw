@@ -1,0 +1,27 @@
+
+> verify:buster:preparation
+> tsc --noEmit -p tests/verification/reliability/tsconfig.buster-preparation.json && node --test --test-concurrency=1 tests/verification/reliability/buster-preparation-identities.test.mts tests/verification/reliability/buster-preparation-ledger.test.mts tests/verification/reliability/buster-result-origin.test.mts tests/verification/reliability/buster-prepared-store-cancellation.test.mts
+
+✔ prepared source accepts valid identity and rejects JSON scalar coercion (1.423846ms)
+✔ staged input accepts valid identity and rejects JSON scalar coercion (21.168576ms)
+✔ cleanup effects accepts valid identity and rejects JSON scalar coercion (0.548495ms)
+✔ cleanup gate digest cannot be coerced from a JSON array (0.409121ms)
+✔ recovered source reference remains bound to the originally accepted extraction header (143.436762ms)
+✔ real ledger serializes competing admissions into exactly two fixed slots (114.385862ms)
+✔ admission reserves a future cleanup record inside the original record quota (55.631466ms)
+✔ profile, clock and settings ownership is captured before waiting on a real writer lock (35.914697ms)
+✔ malformed persisted cleanup association is rejected without rewriting bytes (46.50963ms)
+✔ source attachment and cancellation share the durable admission fence (143.233156ms)
+✔ result origin preserves explicit completed provenance and pending absence (1.532509ms)
+✔ historical result origin rejects coerced or malformed importId (0.303198ms)
+✔ historical result origin rejects coerced or malformed originalStoreDigest (0.178255ms)
+✔ historical result origin rejects coerced or malformed originalPayloadDigest (0.173424ms)
+✔ result origin rejects alternate selectors and extra keys (0.270347ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3191.334616

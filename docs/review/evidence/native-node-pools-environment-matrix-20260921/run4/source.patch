@@ -1,0 +1,2622 @@
+diff --git a/charts/kubeclaw/files/config/swarm.config.json b/charts/kubeclaw/files/config/swarm.config.json
+index 3ff9b745..5de1eb2c 100644
+--- a/charts/kubeclaw/files/config/swarm.config.json
++++ b/charts/kubeclaw/files/config/swarm.config.json
+@@ -1,5 +1,5 @@
+ {
+-  "_doc": "Compact authored swarm config rendered to /home/node/.openclaw/swarm.config.json. profile=standard expands to the full strict runtime config; code consumes only the expanded effective config.",
++  "_doc": "Single authored swarm configuration. operator.prism is consumed by production Prism startup loaders; legacy profile expansion remains separate test support.",
+   "profile": "standard",
+   "features": {
+     "observability": true,
+@@ -14,5 +14,78 @@
+     "checks": "strict",
+     "determinism": "strict"
+   },
+-  "overrides": {}
++  "overrides": {},
++  "operator": {
++    "prism": {
++      "worker": {
++        "maximumActiveRequests": 16,
++        "maximumProbeRequests": 4,
++        "maximumConnections": 128,
++        "requestTimeoutMs": 120000,
++        "shutdownTimeoutMs": 120000,
++        "maximumInputBytes": 16777216
++      },
++      "native": {
++        "maximumResultBytes": 67108864,
++        "dispatchTimeoutMs": 900000,
++        "resourcePolicy": {
++          "cpuTimeMs": 60000,
++          "memoryBytes": 8589934592,
++          "tasks": 2048
++        },
++        "supervisor": {
++          "uid": 1000,
++          "gid": 1000,
++          "maximumOwnershipRecords": 65536,
++          "maximumOwnershipBytes": 67108864,
++          "maximumOutputBytes": 33554432,
++          "maximumJournalBytes": 68719476736,
++          "pollIntervalMs": 20,
++          "drainTimeoutMs": 10000,
++          "closeTimeoutMs": 105000
++        }
++      },
++      "control": {
++        "pipelinePreferenceSubject": null,
++        "artifactRoot": "/var/lib/prism/artifacts",
++        "studioPublicUrl": "https://prism-studio",
++        "port": 8080
++      }
++    },
++    "buster": {
++      "preparation": {
++        "resourcePolicy": {
++          "cpuTimeMs": 120000,
++          "memoryBytes": 8589934592,
++          "tasks": 64
++        },
++        "timeoutMs": 300000,
++        "cleanupTimeoutMs": 10000,
++        "maximumActivePreparations": 2,
++        "maximumPendingAdmissions": 16,
++        "maximumRequestBytes": 100663296,
++        "maximumArchiveBytes": 67108864,
++        "maximumExtractedBytes": 536870912,
++        "maximumHeaderBytes": 3145728,
++        "maximumSourceBytes": 1073741824,
++        "maximumMetadataBytes": 67108864,
++        "maximumRecords": 10000,
++        "maximumOwnershipBytes": 16777216,
++        "maximumJournalBytes": 268435456,
++        "maximumInputBytes": 65536,
++        "maximumOutputBytes": 8388608,
++        "maximumResultBytes": 4194304,
++        "pollIntervalMs": 25,
++        "drainTimeoutMs": 5000,
++        "closeTimeoutMs": 10000,
++        "tarTimeoutMs": 120000,
++        "maximumArchiveEntries": 200000,
++        "maximumListingLineBytes": 1048576,
++        "maximumTarStderrBytes": 65536,
++        "maximumSourceEntries": 400014,
++        "sourceEntryReservationBytes": 256,
++        "maximumOpenFiles": 64
++      }
++    }
++  }
+ }
+diff --git a/package.json b/package.json
+index 1d1ebded..8e73e334 100644
+--- a/package.json
++++ b/package.json
+@@ -138,8 +138,8 @@
+     "verify:test-gate:tailscale-exposure-capability-live": "KUBECLAW_TAILSCALE_EXPOSURE_LIVE=1 node tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+     "verify:test-gate:tailscale-exposure-live": "node tests/verification/e2e/nova-tailscale-production-preflight.mts",
+     "verify:worker-core:contracts": "node tests/verification/contracts/check-pipeline-worker-core-contracts.mts && tsc --noEmit -p contracts/pipeline-worker-core/v1/tsconfig.json",
+-    "verify:worker-core:native-scope": "tsc --noEmit -p tests/verification/reliability/tsconfig.native-scope.json && node --test tests/verification/reliability/worker-native-scope-live.mts",
+-    "verify:worker-core:node-pools": "node --test tests/verification/reliability/worker-resource-reservations.test.mts tests/verification/reliability/worker-ownership-store.test.mts tests/verification/reliability/worker-native-journal.test.mts tests/verification/deployment/native-worker-node.test.mjs",
++    "verify:worker-core:native-scope": "tsc --noEmit -p tests/verification/reliability/tsconfig.native-scope.json && node --test --test-concurrency=1 tests/verification/reliability/worker-native-scope-live.mts tests/verification/reliability/worker-native-topology-live.mts",
++    "verify:worker-core:node-pools": "node --test tests/verification/reliability/worker-native-journal-capacity.test.mts tests/verification/reliability/native-process-policy.test.mts tests/verification/reliability/worker-native-cleanup.test.mts tests/verification/reliability/worker-native-cleanup-retry.test.mts tests/verification/reliability/worker-resource-reservations.test.mts tests/verification/reliability/worker-owned-children.test.mts tests/verification/reliability/worker-native-quiescence.test.mts tests/verification/reliability/worker-terminal-capacity.test.mts tests/verification/reliability/worker-ownership-store.test.mts tests/verification/reliability/worker-native-journal.test.mts tests/verification/deployment/native-worker-node.test.mjs",
+     "verify:worker-core:trust": "node tests/verification/contracts/check-worker-trust-spiffe.mts && node tests/verification/contracts/check-worker-trust-live-coverage.mts && node tests/verification/contracts/check-worker-trust-documentation.mts && npm run verify:worker-core:contracts",
+     "verify:worker-core:trust:live": "bash scripts/deploy.sh worker-trust-e2e",
+     "verify:worker-core:attempt-executor": "node tests/verification/contracts/check-pipeline-worker-attempt-executor.mts && tsc --noEmit -p tests/verification/contracts/tsconfig.worker-attempt-executor.json && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json",
+@@ -218,7 +218,7 @@
+     "verify:sdk:local": "node --test --test-concurrency=1 tests/verification/reliability/sdk-json-contract.test.mts tests/verification/reliability/sdk-json-portable.test.mts tests/verification/reliability/review-semantic-inner-owners.test.mjs tests/verification/reliability/review-semantic-compiler.test.mjs tests/verification/reliability/review-semantic-summary.test.mjs tests/verification/reliability/effect-identity-version.test.mts tests/verification/reliability/adapter-dependency-identity.test.mts tests/verification/reliability/source-identity-version.test.mjs tests/verification/reliability/repair-identity-historical-producer.test.mjs tests/verification/reliability/delivery-manifest-v3-compiler.test.mjs tests/verification/reliability/delivery-manifest-v3-durability.test.mjs tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs",
+     "verify:worker-core:native-runtime": "node --test tests/verification/reliability/prism-native-startup.test.mts tests/verification/reliability/worker-native-launcher.test.mts tests/verification/deployment/native-worker-node.test.mjs tests/verification/deployment/prism-native-runtime.test.mjs && GOTOOLCHAIN=local go -C tools/native-worker-nri test -mod=readonly -race -count=1 -v ./...",
+     "verify:prism:native-dispatch": "node --test skills/prism/tests/native/operation-journal.mts && node --test skills/prism/tests/native/operation-http.mts",
+-    "verify:prism:native-worker": "node --test --test-concurrency=1 skills/prism/tests/*.native.mts skills/prism/integration/worker-concurrent-resource-attribution.mts"
++    "verify:prism:native-worker": "node --test --test-concurrency=1 skills/prism/tests/*-native.mts skills/prism/integration/worker-concurrent-resource-attribution.mts"
+   },
+   "devDependencies": {
+     "@types/js-yaml": "^4.0.9",
+diff --git a/skills/common/plugin-runtime/foundation/config/README.md b/skills/common/plugin-runtime/foundation/config/README.md
+index ee60e37d..5ed51a03 100644
+--- a/skills/common/plugin-runtime/foundation/config/README.md
++++ b/skills/common/plugin-runtime/foundation/config/README.md
+@@ -37,3 +37,21 @@ delegated root as their first CLI argument. The additional isolation-kernel gate
+ also requires target UID/GID arguments and credential-drop authority so its
+ parent-death check covers that native branch. Missing prerequisites remain blocked
+ checks, not passing isolation assertions.
++
++Prism worker and shared native transport operator settings are resolved by `swarm.ts` from the existing
++canonical swarm file. Control and Worker capture the same strict authored
++`operator.prism` settings at startup; Control response bytes and Worker journal
++result bytes share `native.maximumResultBytes`, while `native.dispatchTimeoutMs`
++bounds the complete Control HTTP exchange. Required `native.resourcePolicy`
++values supply cumulative CPU milliseconds, memory bytes and Linux tasks to the
++Control producer and Worker admission from their frozen startup snapshots.
++Resource safe-integer bounds differ from timer bounds; pool memory/task fit is
++checked at supervisor composition, without comparing CPU time to CPU rate. The strict schema rejects unknown keys, missing/invalid
++values and retired environment overrides. `native.supervisor` supplies nine
++required numeric UID/GID, ownership/output/journal and poll/drain/close settings.
++The loader freezes this object and requires worker shutdown strictly above close
++plus drain; Helm uses those same authored values and checks Pod grace separately.
++Generated host identity, pool policy and runtime paths retain their authorities.
++Other configuration surfaces are not
++yet migrated. See [operator configuration](../../../../../docs/operations/operator-configuration.md)
++for the exact migrated keys, deployment delivery and remaining scope.
+diff --git a/skills/common/plugin-runtime/foundation/isolation/sandbox.c b/skills/common/plugin-runtime/foundation/isolation/sandbox.c
+index 68d5092c..26a90d56 100644
+--- a/skills/common/plugin-runtime/foundation/isolation/sandbox.c
++++ b/skills/common/plugin-runtime/foundation/isolation/sandbox.c
+@@ -3,6 +3,7 @@
+ #endif
+ #include <errno.h>
+ #include <linux/audit.h>
++#include <linux/capability.h>
+ #include <linux/filter.h>
+ #include <linux/landlock.h>
+ #include <linux/seccomp.h>
+@@ -333,7 +334,38 @@ static int supervise(char **program) {
+   return 70;
+ }
+ 
++#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
++/* This separately installed file-capability helper has one image-owned caller
++   and target. The generic, unprivileged sandbox does not compile this policy. */
++static int buster_caller_allowed(void) {
++  uid_t real_uid, effective_uid, saved_uid;
++  gid_t real_gid, effective_gid, saved_gid;
++  return getresuid(&real_uid, &effective_uid, &saved_uid) == 0
++    && getresgid(&real_gid, &effective_gid, &saved_gid) == 0
++    && real_uid == 1000 && effective_uid == 1000 && saved_uid == 1000
++    && real_gid == 1000 && effective_gid == 1000 && saved_gid == 1000;
++}
++
++static int drop_buster_capabilities(void) {
++  struct __user_cap_header_struct header = { .version = _LINUX_CAPABILITY_VERSION_3, .pid = 0 };
++  struct __user_cap_data_struct data[2] = {{0}, {0}};
++  if (syscall(SYS_capset, &header, data) != 0
++    || prctl(PR_CAP_AMBIENT, PR_CAP_AMBIENT_CLEAR_ALL, 0, 0, 0) != 0) return -1;
++  if (syscall(SYS_capget, &header, data) != 0) return -1;
++  for (int index = 0; index < 2; index++) {
++    if (data[index].effective || data[index].permitted || data[index].inheritable) return -1;
++  }
++  return 0;
++}
++#endif
++
+ int main(int argc, char **argv) {
++#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
++  if (!buster_caller_allowed()) {
++    fprintf(stderr, "BUSTER_SANDBOX_CALLER_DENIED\n");
++    return 77;
++  }
++#endif
+   if (argc == 2 && strcmp(argv[1], "--page-size") == 0) {
+     long page_size = sysconf(_SC_PAGESIZE);
+     if (page_size <= 0) { perror("page size"); return 70; }
+@@ -372,6 +404,9 @@ int main(int argc, char **argv) {
+   unsigned long long connect_tcp_port = 0;
+   unsigned long long run_as_uid = ULLONG_MAX;
+   unsigned long long run_as_gid = ULLONG_MAX;
++#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
++  int uid_seen = 0, gid_seen = 0;
++#endif
+   while (argc > program_index) {
+     if (strcmp(argv[program_index], "--allow-network") == 0) allow_network = 1;
+     else if (strcmp(argv[program_index], "--no-address-space-limit") == 0) no_address_space_limit = 1;
+@@ -384,6 +419,12 @@ int main(int argc, char **argv) {
+     }
+     else if (strcmp(argv[program_index], "--run-as-uid") == 0 || strcmp(argv[program_index], "--run-as-gid") == 0) {
+       int is_uid = strcmp(argv[program_index], "--run-as-uid") == 0;
++#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
++      if ((is_uid && uid_seen++) || (!is_uid && gid_seen++)) {
++        fprintf(stderr, "BUSTER_SANDBOX_IDENTITY_DENIED\n");
++        return 77;
++      }
++#endif
+       if (argc <= program_index + 1) return 64;
+       unsigned long long identity = strtoull(argv[program_index + 1], &end, 10);
+       if (!end || *end != '\0' || identity > UINT_MAX) return 64;
+@@ -402,6 +443,14 @@ int main(int argc, char **argv) {
+      explicit exemption is selected, the caller measures the complete adopted
+      process tree and applies the memory ceiling to resident bytes. Keep the
+      seccomp filter and kernel CPU/file ceilings in all modes. */
++#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
++  /* Validate before any cgroup write, kill-file open or credential change. */
++  if (!uid_seen || !gid_seen || run_as_uid != 1001 || run_as_gid != 1000) {
++    fprintf(stderr, "BUSTER_SANDBOX_IDENTITY_DENIED\n");
++    return 77;
++  }
++  if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) != 0) return 70;
++#endif
+   if (
+     (!no_address_space_limit && limit_resource(RLIMIT_AS, address_space) != 0)
+     || limit_resource(RLIMIT_CPU, cpu) != 0
+@@ -442,6 +491,12 @@ int main(int argc, char **argv) {
+       return 70;
+     }
+   }
++#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
++  if (drop_buster_capabilities() != 0) {
++    perror("clear browser helper capabilities");
++    return 70;
++  }
++#endif
+   char *read_roots[64];
+   int read_root_count = 0;
+   while (argc >= program_index + 2 && strcmp(argv[program_index], "--read-root") == 0) {
+diff --git a/skills/common/plugin-runtime/foundation/observability/admission-retirement.ts b/skills/common/plugin-runtime/foundation/observability/admission-retirement.ts
+index ac0b3139..859d07d8 100644
+--- a/skills/common/plugin-runtime/foundation/observability/admission-retirement.ts
++++ b/skills/common/plugin-runtime/foundation/observability/admission-retirement.ts
+@@ -6,7 +6,7 @@ import { canonicalJson, validatePipelineObservabilityContract, type AdmissionAck
+ import { replayAssert, replayIdentity, replayObject } from './replay-validation.ts';
+ import { scopedEvidenceId, type DurableAttemptStoreSnapshot, type DurableResultMetadata } from './durable-attempts.ts';
+ import {createHash} from 'node:crypto';
+-import {decodeAttemptState} from './attempt-projection.ts';
++import {decodeAttemptState,type PersistedAttempt} from './attempt-projection.ts';
+ import type { AdmittedRecordView } from './durable-delivery.ts';
+ 
+ /** A reference to an immutable, already committed completion, never a new archive. */
+@@ -62,7 +62,7 @@ async function readRetirementBytes(file:string,maximumBytes:number):Promise<Buff
+   return bytes;
+ }
+ async function readSource(s:AdmissionCompletionReference):Promise<DurableAttemptStoreSnapshot> {
+-  const state=JSON.parse((await readRetirementBytes(s.file,s.maximumBytes)).toString()) as DurableAttemptStoreSnapshot;
++  const state=JSON.parse((await readRetirementBytes(s.file,s.maximumBytes)).toString()) as PersistedAttempt;
+   return decodeAttemptState(state,path.dirname(s.file),{
+     maximumEvidenceObjects:Number.MAX_SAFE_INTEGER,maximumEvidenceBytes:Number.MAX_SAFE_INTEGER,
+     maximumEvidenceObjectBytes:Number.MAX_SAFE_INTEGER,maximumResults:Number.MAX_SAFE_INTEGER,
+diff --git a/skills/common/plugin-runtime/foundation/observability/attempt-projection.ts b/skills/common/plugin-runtime/foundation/observability/attempt-projection.ts
+index 1daaaad1..dcce46b2 100644
+--- a/skills/common/plugin-runtime/foundation/observability/attempt-projection.ts
++++ b/skills/common/plugin-runtime/foundation/observability/attempt-projection.ts
+@@ -1,3 +1,4 @@
++import {decodeClosures,encodeClosures,type ClosureReference,type ClosureProjections} from './closure-projection.ts';
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import {createHash,randomUUID} from 'node:crypto';
+@@ -25,6 +26,11 @@ export interface PersistedAttemptV2 extends Omit<DurableAttemptStoreSnapshot,'sc
+   schemaVersion:'durable-attempt-store.v2';
+   results:(DurableResultMetadata|ProjectedResultMetadata)[];
+ }
++export interface PersistedAttemptV3 extends Omit<PersistedAttemptV2,'schemaVersion'|'closures'> {
++  schemaVersion:'durable-attempt-store.v3';
++  closures:(DurableAttemptStoreSnapshot['closures'][number]|ClosureReference)[];
++}
++export type PersistedAttempt=DurableAttemptStoreSnapshot|PersistedAttemptV2|PersistedAttemptV3;
+ interface ImportEntry {
+   schemaVersion:string;
+   decisionKey:string;
+@@ -40,7 +46,7 @@ function removeUncommittedFile(file:string):void {
+ }
+ 
+ /** Existing store only: no await may split a journal-fenced validation/commit. */
+-export function replaceAttemptProjectionSync(file:string,value:DurableAttemptStoreSnapshot|PersistedAttemptV2):void {
++export function replaceAttemptProjectionSync(file:string,value:PersistedAttempt):void {
+   replayAssert(fs.realpathSync(file)===file&&fs.lstatSync(file).isFile(),'attempt-store-path');
+   const directory=path.dirname(file),temporary=`${file}.${process.pid}.${randomUUID()}.tmp`;
+   let renamed=false;
+@@ -110,12 +116,12 @@ function offsets(bytes:Buffer):number[] {
+ }
+ 
+ /** All references share the canonical run journal: one bounded read and one chain validation. */
+-export function decodeAttemptState(raw:DurableAttemptStoreSnapshot|PersistedAttemptV2,root:string,limits:DurableAttemptStoreLimits,
++export function decodeAttemptState(raw:PersistedAttempt,root:string,limits:DurableAttemptStoreLimits,
+   readPrefix:(file:string,maximumBytes:number,prefixBytes:number)=>Buffer=readAttemptJournalPrefix,
+-):{state:DurableAttemptStoreSnapshot;projections:AttemptProjections} {
+-  if(raw.schemaVersion==='durable-attempt-store.v1') {assertAttemptReplay(raw,root,limits);return {state:raw,projections:new Map()};}
++):{state:DurableAttemptStoreSnapshot;projections:AttemptProjections;closureProjections:ClosureProjections} {
++  if(raw.schemaVersion==='durable-attempt-store.v1') {assertAttemptReplay(raw,root,limits);return {state:raw,projections:new Map(),closureProjections:new Map()};}
+   replayObject(raw,['schemaVersion','evidence','results','closures'],'attempt-v2-envelope');
+-  replayAssert(raw.schemaVersion==='durable-attempt-store.v2'&&Array.isArray(raw.results),'attempt-v2-version');
++  replayAssert(['durable-attempt-store.v2','durable-attempt-store.v3'].includes(raw.schemaVersion)&&Array.isArray(raw.results)&&Array.isArray(raw.closures),'attempt-v2-version');
+   const projected=raw.results.filter((item):item is ProjectedResultMetadata=>Object.hasOwn(item,'resultReference'));
+   replayAssert(projected.length>0,'attempt-v2-empty-projections');
+   for(const item of projected)assertReference(item,root,limits.maximumMetadataBytes);
+@@ -131,13 +137,14 @@ export function decodeAttemptState(raw:DurableAttemptStoreSnapshot|PersistedAtte
+     const {resultReference:_,...metadata}=item;
+     return {...metadata,result:resolveResult(item,record)};
+   });
+-  const state:DurableAttemptStoreSnapshot={...raw,schemaVersion:'durable-attempt-store.v1',results};
+-  assertAttemptReplay(state,root,limits,projections.size);
+-  return {state,projections};
++  const decoded=raw.schemaVersion==='durable-attempt-store.v3'?decodeClosures(raw.closures,projections):{closures:raw.closures,closureProjections:new Map()};
++  const state:DurableAttemptStoreSnapshot={...raw,schemaVersion:'durable-attempt-store.v1',results,closures:decoded.closures};
++  assertAttemptReplay(state,root,limits,projections.size,decoded.closureProjections.size);
++  return {state,projections,closureProjections:decoded.closureProjections};
+ }
+ 
+-export function encodeAttemptState(state:DurableAttemptStoreSnapshot,projections:AttemptProjections):DurableAttemptStoreSnapshot|PersistedAttemptV2 {
+-  if(!projections.size)return state;
++export function encodeAttemptState(state:DurableAttemptStoreSnapshot,projections:AttemptProjections,closureProjections:ClosureProjections=new Map()):PersistedAttempt {
++  if(!projections.size){replayAssert(!closureProjections.size,'closure-result-projection-required');return state;}
+   let found=0;
+   const results=state.results.map(item=>{
+     const projected=projections.get(attemptProjectionKey(item));if(!projected)return item;
+@@ -146,6 +153,7 @@ export function encodeAttemptState(state:DurableAttemptStoreSnapshot,projections
+     found++;return projected;
+   });
+   replayAssert(found===projections.size,'attempt-projection-removed');
++  if(closureProjections.size)return {...state,schemaVersion:'durable-attempt-store.v3',results,closures:encodeClosures(state.closures,closureProjections,projections)};
+   return {...state,schemaVersion:'durable-attempt-store.v2',results};
+ }
+ 
+diff --git a/skills/common/plugin-runtime/foundation/observability/attempt-replay.ts b/skills/common/plugin-runtime/foundation/observability/attempt-replay.ts
+index dd829e23..73f04205 100644
+--- a/skills/common/plugin-runtime/foundation/observability/attempt-replay.ts
++++ b/skills/common/plugin-runtime/foundation/observability/attempt-replay.ts
+@@ -62,11 +62,15 @@ function closureEvidenceReplay(closure: ProducerClosureV1, evidence: Iterable<Du
+   // retention contract. Missing bytes/metadata remain a completeness issue;
+   // present metadata must never contradict the closure's producer identity.
+ }
+-export function assertAttemptReplay(state: DurableAttemptStoreSnapshot, root: string, limits: DurableAttemptStoreLimits, validatedProjectedResults = 0): void {
++function projectionCount(count:number,length:number,reason:string):void {
++  replayAssert(Number.isSafeInteger(count)&&count>=0&&count<=length,reason);
++}
++export function assertAttemptReplay(state: DurableAttemptStoreSnapshot, root: string, limits: DurableAttemptStoreLimits, validatedProjectedResults = 0, validatedProjectedClosures = 0): void {
+   replayObject(state, ['schemaVersion', 'evidence', 'results', 'closures'], 'attempt-envelope');
+   replayAssert(state.schemaVersion === 'durable-attempt-store.v1' && Array.isArray(state.evidence) && Array.isArray(state.results) && Array.isArray(state.closures), 'attempt-version');
+-  replayAssert(Number.isSafeInteger(validatedProjectedResults) && validatedProjectedResults >= 0 && validatedProjectedResults <= state.results.length, 'attempt-projection-count');
+-  replayAssert(state.evidence.length <= limits.maximumEvidenceObjects && state.results.length - validatedProjectedResults <= limits.maximumResults && state.closures.length <= limits.maximumClosures, 'attempt-count');
++  projectionCount(validatedProjectedResults,state.results.length,'attempt-projection-count');
++  projectionCount(validatedProjectedClosures,state.closures.length,'closure-projection-count');
++  replayAssert(state.evidence.length <= limits.maximumEvidenceObjects && state.results.length - validatedProjectedResults <= limits.maximumResults && state.closures.length - validatedProjectedClosures <= limits.maximumClosures, 'attempt-count');
+   const evidenceKeys = new Set<string>();
+   const evidence = new Map<string, DurableEvidenceMetadata>();
+   for (const item of state.evidence) { evidenceReplay(item, root, evidenceKeys); evidence.set(evidenceKey(item), item); }
+diff --git a/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts b/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts
+index 5edc6363..7ab9f81f 100644
+--- a/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts
++++ b/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts
+@@ -1,15 +1,5 @@
+-import { completionRetirementSource, type AdmissionRetiredEntry } from './admission-retirement.ts';
+-import {decodeAttemptState, encodeAttemptState, createAttemptProjection, attemptProjectionKey, attemptStoreDigest, assertAttemptRetirementIntent, readAttemptJournalPrefix, replaceAttemptProjectionSync,
+-  type AttemptProjections, type AttemptRetirementIntent, type PersistedAttemptV2} from './attempt-projection.ts';
+-import { assertAttemptReplay, assertCompletionIntent } from "./attempt-replay.ts";
+-import fs from "node:fs/promises";
+-import path from "node:path";
+-import { createHash, randomUUID } from "node:crypto";
+-import { pathToFileURL } from "node:url";
+ import {
+-  canonicalJson,
+   producerClosureDigest,
+-  validatePipelineObservabilityContract,
+   type ObservabilityCompletenessV1,
+   type ProducerClosureV1,
+   type ProducerGapReportV1,
+@@ -17,20 +7,24 @@ import {
+   type ProducerRecordV1,
+   type UnresolvedObservabilityItemV1,
+ } from "@kubeclaw/pipeline-observability-contract";
+-import {
+-  validatePipelineWorkerCoreContract,
+-  type WorkerAttemptResultV1,
+-  type WorkerEvidenceRefV1,
++import type {
++  WorkerAttemptResultV1,
++  WorkerEvidenceRefV1,
+ } from "@kubeclaw/pipeline-worker-core-contract";
++import type { ClosureRetirementIntent } from "./closure-projection.ts";
++import type { AttemptRetirementIntent } from "./attempt-projection.ts";
++import type { AdmissionRetiredEntry } from "./admission-retirement.ts";
++import type { FileObservabilityAdmissionStore } from "./durable-delivery.ts";
++import { AttemptState } from "./attempt-state.ts";
++import { storeEvidence } from "./attempt-evidence.ts";
++import { storeResult, resumeCompletion } from "./attempt-results.ts";
++import { storeClosure, evaluateCompleteness } from "./attempt-completeness.ts";
+ import {
+-  ensureDirectoryDurable,
+-  readDurableState,
+-  withDurableStoreLock,
+-  writeDurableState,
+-  type AdmittedRecordView,
+-  type FileObservabilityAdmissionStore,
+-} from "./durable-delivery.ts";
+-
++  retireAdmissionCompletion,
++  retireImportedResult,
++  retireImportedClosure,
++} from "./attempt-retirement.ts";
++export { scopedEvidenceId } from "./attempt-evidence.ts";
+ export interface DurableAttemptStoreLimits {
+   maximumEvidenceObjects: number;
+   maximumEvidenceBytes: number;
+@@ -82,286 +76,19 @@ export interface RequiredProducerClosure {
+   closureId: string;
+   producer: ProducerIdentityV1;
+ }
+-const EMPTY_STATE: DurableAttemptStoreSnapshot = {
+-  schemaVersion: "durable-attempt-store.v1",
+-  evidence: [],
+-  results: [],
+-  closures: [],
+-};
+-
+-function validLimit(value: number): boolean {
+-  return Number.isSafeInteger(value) && value > 0;
+-}
+-function requireIdentity(value: string, code: string): void {
+-  if (typeof value !== "string" || value.length < 1 || value.length > 512)
+-    throw new Error(code);
+-}
+-function digest(bytes: Uint8Array): string {
+-  return `sha256:${createHash("sha256").update(bytes).digest("hex")}`;
+-}
+-function sameProducer(
+-  left: ProducerIdentityV1,
+-  right: ProducerIdentityV1,
+-): boolean {
+-  return (
+-    left.producerId === right.producerId &&
+-    left.bootId === right.bootId &&
+-    left.producerType === right.producerType
+-  );
+-}
+-async function syncDirectory(directory: string): Promise<void> {
+-  const handle = await fs.open(directory, "r");
+-  try {
+-    await handle.sync();
+-  } finally {
+-    await handle.close();
+-  }
+-}
+-async function durableBlob(
+-  root: string,
+-  contentDigest: string,
+-  bytes: Uint8Array,
+-): Promise<string> {
+-  const hex = contentDigest.slice("sha256:".length);
+-  const directory = path.join(root, "blobs", hex.slice(0, 2));
+-  const staging = path.join(root, "staging");
+-  await ensureDirectoryDurable(directory);
+-  await ensureDirectoryDurable(staging);
+-  const destination = path.join(directory, hex);
+-  try {
+-    const existing = await fs.readFile(destination);
+-    if (digest(existing) !== contentDigest)
+-      throw new Error("OBSERVABILITY_EVIDENCE_DIGEST_CONFLICT");
+-    return destination;
+-  } catch (error) {
+-    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+-  }
+-  const temporary = path.join(staging, `${hex}.${randomUUID()}.tmp`);
+-  let renamed = false;
+-  try {
+-    const handle = await fs.open(temporary, "wx", 0o600);
+-    try {
+-      await handle.writeFile(bytes);
+-      await handle.sync();
+-    } finally {
+-      await handle.close();
+-    }
+-    await fs.rename(temporary, destination);
+-    renamed = true;
+-    await syncDirectory(directory);
+-    return destination;
+-  } finally {
+-    if (!renamed) await fs.unlink(temporary).catch(() => undefined);
+-  }
+-}
+-async function cleanupStaging(root: string): Promise<void> {
+-  const staging = path.join(root, "staging");
+-  await fs.mkdir(staging, { recursive: true });
+-  for (const entry of await fs.readdir(staging, { withFileTypes: true })) {
+-    if (entry.isFile() && entry.name.endsWith(".tmp"))
+-      await fs.unlink(path.join(staging, entry.name));
+-  }
+-}
+-async function cleanupUnreferencedBlobs(
+-  root: string,
+-  state: DurableAttemptStoreSnapshot,
+-): Promise<void> {
+-  const blobs = path.join(root, "blobs");
+-  const referenced = new Set(
+-    state.evidence.map((item) => item.artifact.contentDigest.slice(7)),
+-  );
+-  let prefixes: import("node:fs").Dirent<string>[] = [];
+-  try {
+-    prefixes = await fs.readdir(blobs, {
+-      withFileTypes: true,
+-      encoding: "utf8",
+-    });
+-  } catch (error) {
+-    if ((error as NodeJS.ErrnoException).code === "ENOENT") return;
+-    throw error;
+-  }
+-  for (const prefix of prefixes) {
+-    if (!prefix.isDirectory() || !/^[0-9a-f]{2}$/.test(prefix.name)) continue;
+-    const directory = path.join(blobs, prefix.name);
+-    for (const entry of await fs.readdir(directory, {
+-      withFileTypes: true,
+-      encoding: "utf8",
+-    })) {
+-      if (
+-        entry.isFile() &&
+-        /^[0-9a-f]{64}$/.test(entry.name) &&
+-        !referenced.has(entry.name)
+-      )
+-        await fs.unlink(path.join(directory, entry.name));
+-    }
+-  }
+-}
+-
+ export class FileDurableAttemptStore {
+-  readonly #root: string;
+-  readonly #file: string;
+-  readonly #limits: DurableAttemptStoreLimits;
+-  #queue: Promise<unknown> = Promise.resolve();
+-  #projections: AttemptProjections = new Map();
++  readonly #state: AttemptState;
+   constructor(root: string, limits: DurableAttemptStoreLimits) {
+-    if (!path.isAbsolute(root))
+-      throw new Error("OBSERVABILITY_ATTEMPT_STORE_ROOT_NOT_ABSOLUTE");
+-    if (Object.values(limits).some((value) => !validLimit(value)))
+-      throw new Error("OBSERVABILITY_ATTEMPT_STORE_LIMIT_INVALID");
+-    this.#root = root;
+-    this.#file = path.join(root, "attempt-store.json");
+-    this.#limits = limits;
++    this.#state = new AttemptState(root, limits);
+   }
+   storageDirectory(): string {
+-    return this.#root;
+-  }
+-  #serial<T>(operation: () => Promise<T>): Promise<T> {
+-    const locked = () =>
+-      withDurableStoreLock(this.#file, async () => {
+-        await cleanupStaging(this.#root);
+-        return operation();
+-      });
+-    const result = this.#queue.then(locked, locked);
+-    this.#queue = result.then(
+-      () => undefined,
+-      () => undefined,
+-    );
+-    return result;
+-  }
+-  async #readState(): Promise<DurableAttemptStoreSnapshot> {
+-    const raw = await readDurableState<DurableAttemptStoreSnapshot|PersistedAttemptV2>(this.#file, EMPTY_STATE, this.#limits.maximumMetadataBytes);
+-    const {state,projections}=decodeAttemptState(raw,this.#root,this.#limits);
+-    this.#projections=projections;
+-    return state;
+-  }
+-  async #writeState(state:DurableAttemptStoreSnapshot):Promise<void> {
+-    this.#checkSize(state);
+-    await writeDurableState(this.#file,encodeAttemptState(state,this.#projections));
+-  }
+-  #checkSize(state: DurableAttemptStoreSnapshot): void {
+-    const encoded=encodeAttemptState(state,this.#projections);
+-    assertAttemptReplay(state, this.#root, this.#limits,this.#projections.size);
+-    if (
+-      Buffer.byteLength(canonicalJson(encoded)) >
+-      this.#limits.maximumMetadataBytes
+-    )
+-      throw new Error("OBSERVABILITY_ATTEMPT_METADATA_FULL");
+-  }
+-  async #reclaimExpiredEvidence(
+-    state: DurableAttemptStoreSnapshot,
+-  ): Promise<void> {
+-    const referenced = new Set(
+-      state.results.flatMap((stored) =>
+-        stored.result.evidence.map(
+-          (item) =>
+-            `${stored.pipelineRunId}\0${stored.attemptId}\0${stored.claimGeneration}\0${item.evidenceId}`,
+-        ),
+-      ),
+-    );
+-    const now = Date.now();
+-    const retained = state.evidence.filter((item) => {
+-      const key = `${item.pipelineRunId}\0${item.attemptId}\0${item.claimGeneration}\0${item.evidenceId}`;
+-      if (referenced.has(key)) return true;
+-      const stagedAt = Date.parse(item.stagedAt);
+-      return (
+-        Number.isFinite(stagedAt) &&
+-        now - stagedAt < this.#limits.maximumPendingEvidenceAgeMs
+-      );
+-    });
+-    if (retained.length === state.evidence.length) return;
+-    state.evidence = retained;
+-    this.#checkSize(state);
+-    await this.#writeState(state);
+-    await cleanupUnreferencedBlobs(this.#root, state);
++    return this.#state.root;
+   }
+   async storeEvidence(
+     input: DurableEvidenceInput,
+     bytes: Uint8Array,
+   ): Promise<WorkerEvidenceRefV1> {
+-    const snapshot = structuredClone(input);
+-    requireIdentity(
+-      snapshot.pipelineRunId,
+-      "OBSERVABILITY_PIPELINE_RUN_ID_INVALID",
+-    );
+-    requireIdentity(snapshot.attemptId, "OBSERVABILITY_ATTEMPT_ID_INVALID");
+-    requireIdentity(snapshot.evidenceId, "OBSERVABILITY_EVIDENCE_ID_INVALID");
+-    requireIdentity(snapshot.type, "OBSERVABILITY_EVIDENCE_TYPE_INVALID");
+-    requireIdentity(
+-      snapshot.mediaType,
+-      "OBSERVABILITY_EVIDENCE_MEDIA_TYPE_INVALID",
+-    );
+-    if (
+-      !Number.isSafeInteger(snapshot.claimGeneration) ||
+-      snapshot.claimGeneration < 1
+-    )
+-      throw new Error("OBSERVABILITY_CLAIM_GENERATION_INVALID");
+-    validatePipelineObservabilityContract(
+-      "producerIdentity",
+-      snapshot.producer,
+-    );
+-    const content = Uint8Array.from(bytes);
+-    if (content.byteLength > this.#limits.maximumEvidenceObjectBytes)
+-      throw new Error("OBSERVABILITY_EVIDENCE_OBJECT_TOO_LARGE");
+-    return this.#serial(async () => {
+-      const state = await this.#readState();
+-      await this.#reclaimExpiredEvidence(state);
+-      await cleanupUnreferencedBlobs(this.#root, state);
+-      const existing = state.evidence.find(
+-        (item) =>
+-          item.pipelineRunId === snapshot.pipelineRunId &&
+-          item.attemptId === snapshot.attemptId &&
+-          item.claimGeneration === snapshot.claimGeneration &&
+-          item.evidenceId === snapshot.evidenceId,
+-      );
+-      const contentDigest = digest(content);
+-      if (existing) {
+-        if (
+-          existing.artifact.contentDigest !== contentDigest ||
+-          existing.type !== snapshot.type ||
+-          existing.mediaType !== snapshot.mediaType ||
+-          !sameProducer(existing.producer, snapshot.producer)
+-        )
+-          throw new Error("OBSERVABILITY_EVIDENCE_IDENTITY_CONFLICT");
+-        return structuredClone({
+-          evidenceId: existing.evidenceId,
+-          type: existing.type,
+-          artifact: existing.artifact,
+-        });
+-      }
+-      const total = state.evidence.reduce(
+-        (sum, item) => sum + item.artifact.sizeBytes,
+-        0,
+-      );
+-      if (
+-        state.evidence.length >= this.#limits.maximumEvidenceObjects ||
+-        total + content.byteLength > this.#limits.maximumEvidenceBytes
+-      )
+-        throw new Error("OBSERVABILITY_EVIDENCE_STORE_FULL");
+-      const hex = contentDigest.slice(7);
+-      const destination = path.join(this.#root, "blobs", hex.slice(0, 2), hex);
+-      const artifact = {
+-        artifactId: `artifact:${hex}`,
+-        type: snapshot.type,
+-        mediaType: snapshot.mediaType,
+-        contentDigest,
+-        sizeBytes: content.byteLength,
+-        storageUrl: pathToFileURL(destination).href,
+-      };
+-      const metadata: DurableEvidenceMetadata = {
+-        ...snapshot,
+-        artifact,
+-        stagedAt: new Date().toISOString(),
+-      };
+-      const candidate = { ...state, evidence: [...state.evidence, metadata] };
+-      this.#checkSize(candidate);
+-      await durableBlob(this.#root, contentDigest, content);
+-      await this.#writeState(candidate);
+-      return structuredClone({
+-        evidenceId: snapshot.evidenceId,
+-        type: snapshot.type,
+-        artifact,
+-      });
+-    });
++    return storeEvidence(this.#state, input, bytes);
+   }
+   async storeResult(
+     pipelineRunId: string,
+@@ -369,125 +96,13 @@ export class FileDurableAttemptStore {
+     completionIntent: DurableCompletionIntent | null = null,
+     owner: DurableResultOwner | null = null,
+   ): Promise<DurableResultMetadata> {
+-    requireIdentity(pipelineRunId, "OBSERVABILITY_PIPELINE_RUN_ID_INVALID");
+-    const snapshot = structuredClone(result);
+-    const intent = structuredClone(completionIntent);
+-    const ownerSnapshot = structuredClone(owner);
+-    if (ownerSnapshot) {
+-      requireIdentity(ownerSnapshot.planId, "OBSERVABILITY_PLAN_ID_INVALID");
+-      requireIdentity(ownerSnapshot.nodeId, "OBSERVABILITY_NODE_ID_INVALID");
+-    }
+-    validatePipelineWorkerCoreContract("workerAttemptResult", snapshot);
+-    assertCompletionIntent(pipelineRunId, snapshot, intent);
+-    return this.#serial(async () => {
+-      const state = await this.#readState();
+-      await this.#reclaimExpiredEvidence(state);
+-      await cleanupUnreferencedBlobs(this.#root, state);
+-      const generations = state.results
+-        .filter(
+-          (item) =>
+-            item.pipelineRunId === pipelineRunId &&
+-            item.attemptId === snapshot.attemptId,
+-        )
+-        .map((item) => item.claimGeneration);
+-      const highest = generations.length ? Math.max(...generations) : 0;
+-      if (snapshot.claimGeneration < highest)
+-        throw new Error("OBSERVABILITY_STALE_CLAIM_RESULT");
+-      const existing = state.results.find(
+-        (item) =>
+-          item.pipelineRunId === pipelineRunId &&
+-          item.attemptId === snapshot.attemptId &&
+-          item.claimGeneration === snapshot.claimGeneration,
+-      );
+-      if (existing) {
+-        if (
+-          existing.result.resultDigest !== snapshot.resultDigest ||
+-          canonicalJson(existing.completionIntent) !== canonicalJson(intent) ||
+-          existing.planId !== (ownerSnapshot?.planId ?? null) ||
+-          existing.nodeId !== (ownerSnapshot?.nodeId ?? null)
+-        )
+-          throw new Error("OBSERVABILITY_RESULT_IDENTITY_CONFLICT");
+-        if (existing.storedAt === null) {
+-          existing.storedAt = new Date().toISOString();
+-          this.#checkSize(state);
+-          await this.#writeState(state);
+-        }
+-        return structuredClone(existing);
+-      }
+-      const finalizedGeneration = state.results.find(
+-        (item) =>
+-          item.pipelineRunId === pipelineRunId &&
+-          item.attemptId === snapshot.attemptId &&
+-          item.claimGeneration < snapshot.claimGeneration &&
+-          item.completionIntent !== null &&
+-          state.closures.some(
+-            (closure) =>
+-              closure.pipelineRunId === pipelineRunId &&
+-              closure.closureId === item.completionIntent!.closure.closureId,
+-          ),
+-      );
+-      if (finalizedGeneration)
+-        throw new Error("OBSERVABILITY_ATTEMPT_ALREADY_COMPLETED");
+-      for (const evidence of snapshot.evidence) {
+-        const metadata = state.evidence.find(
+-          (item) =>
+-            item.pipelineRunId === pipelineRunId &&
+-            item.attemptId === snapshot.attemptId &&
+-            item.claimGeneration === snapshot.claimGeneration &&
+-            item.evidenceId === evidence.evidenceId,
+-        );
+-        if (
+-          !metadata ||
+-          canonicalJson(metadata.artifact) !== canonicalJson(evidence.artifact)
+-        )
+-          throw new Error(
+-            `OBSERVABILITY_RESULT_EVIDENCE_MISSING:${evidence.evidenceId}`,
+-          );
+-        const file = new URL(metadata.artifact.storageUrl);
+-        const evidenceBytes = await fs.readFile(file);
+-        if (
+-          evidenceBytes.byteLength !== metadata.artifact.sizeBytes ||
+-          digest(evidenceBytes) !== metadata.artifact.contentDigest
+-        )
+-          throw new Error(
+-            `OBSERVABILITY_RESULT_EVIDENCE_CORRUPT:${evidence.evidenceId}`,
+-          );
+-      }
+-      if (state.results.length - this.#projections.size >= this.#limits.maximumResults)
+-        throw new Error("OBSERVABILITY_RESULT_STORE_FULL");
+-      const metadata: DurableResultMetadata = {
+-        pipelineRunId,
+-        planId: ownerSnapshot?.planId ?? null,
+-        nodeId: ownerSnapshot?.nodeId ?? null,
+-        attemptId: snapshot.attemptId,
+-        claimGeneration: snapshot.claimGeneration,
+-        workerId: snapshot.workerId,
+-        result: snapshot,
+-        completionIntent: intent,
+-        storedAt: null,
+-      };
+-      const pending = { ...state, results: [...state.results, metadata] };
+-      const reservedCommit: DurableResultMetadata = {
+-        ...metadata,
+-        storedAt: "9999-12-31T23:59:59.999Z",
+-      };
+-      this.#checkSize({
+-        ...state,
+-        results: [...state.results, reservedCommit],
+-      });
+-      await this.#writeState(pending);
+-      const committed: DurableResultMetadata = {
+-        ...metadata,
+-        storedAt: new Date().toISOString(),
+-      };
+-      const committedState = {
+-        ...state,
+-        results: [...state.results, committed],
+-      };
+-      this.#checkSize(committedState);
+-      await this.#writeState(committedState);
+-      return structuredClone(committed);
+-    });
++    return storeResult(
++      this.#state,
++      pipelineRunId,
++      result,
++      completionIntent,
++      owner,
++    );
+   }
+   async resumeCompletion(
+     pipelineRunId: string,
+@@ -495,152 +110,62 @@ export class FileDurableAttemptStore {
+     claimGeneration: number,
+     admission: FileObservabilityAdmissionStore,
+   ): Promise<ProducerClosureV1> {
+-    return this.#serial(async () => {
+-      const state = await this.#readState();
+-      await this.#reclaimExpiredEvidence(state);
+-      if (
+-        state.results.some(
+-          (item) =>
+-            item.pipelineRunId === pipelineRunId &&
+-            item.attemptId === attemptId &&
+-            item.claimGeneration > claimGeneration,
+-        )
+-      )
+-        throw new Error("OBSERVABILITY_STALE_CLAIM_COMPLETION");
+-      const stored = state.results.find(
+-        (item) =>
+-          item.pipelineRunId === pipelineRunId &&
+-          item.attemptId === attemptId &&
+-          item.claimGeneration === claimGeneration,
+-      );
+-      if (!stored?.completionIntent)
+-        throw new Error("OBSERVABILITY_COMPLETION_INTENT_MISSING");
+-      if (typeof stored.storedAt !== "string")
+-        throw new Error("OBSERVABILITY_RESULT_COMMIT_PENDING");
+-      const { records: admitted } = await admission.admitAndRead(
+-        canonicalJson(stored.completionIntent.record),
+-      );
+-      return this.#storeClosureUnlocked(
+-        state,
+-        stored.completionIntent.closure,
+-        admitted,
+-      );
+-    });
++    return resumeCompletion(
++      this.#state,
++      pipelineRunId,
++      attemptId,
++      claimGeneration,
++      admission,
++    );
+   }
+-  /** Manual compaction of the redundant admission copy; result/evidence stay authoritative. */
+   async retireAdmissionCompletion(
+     admission: FileObservabilityAdmissionStore,
+-    input: {pipelineRunId:string;attemptId:string;claimGeneration:number;recordDigest:string;operationId:string;actor:string;authority:AdmissionRetiredEntry['authority']},
+-    authorize:()=>Promise<void>,
+-  ): Promise<{newlyRetired:boolean;releasedBytes:number}> {
+-    const scope=structuredClone(input);
+-    if(path.resolve(admission.storageDirectory())===path.resolve(this.#root))throw new Error('OBSERVABILITY_RETIREMENT_STORE_OVERLAP');
+-    return this.#serial(async()=>{
+-      const state=await this.#readState();
+-      const source=await completionRetirementSource(state,scope,this.#file,this.#limits.maximumMetadataBytes);
+-      const issues=await admission.observabilityIssues(scope.pipelineRunId);
+-      if(issues.missingRanges.length || issues.unresolvedItems.length)throw new Error('OBSERVABILITY_RETIREMENT_INCOMPLETE');
+-      return admission.retireCompletion({authority:scope.authority,operationId:scope.operationId,actor:scope.actor,recordDigest:scope.recordDigest,source},authorize);
+-    });
++    input: {
++      pipelineRunId: string;
++      attemptId: string;
++      claimGeneration: number;
++      recordDigest: string;
++      operationId: string;
++      actor: string;
++      authority: AdmissionRetiredEntry["authority"];
++    },
++    authorize: () => Promise<void>,
++  ): Promise<{ newlyRetired: boolean; releasedBytes: number }> {
++    return retireAdmissionCompletion(this.#state, admission, input, authorize);
+   }
+-  /** Manual removal of only a duplicate payload, behind the canonical consumer's fence. */
+   async retireImportedResult(
+-    input:AttemptRetirementIntent,
+-    withCheckpointFence:(operation:()=>{newlyRetired:boolean;releasedBytes:number})=>{newlyRetired:boolean;releasedBytes:number},
+-    authorize:()=>void,
+-  ):Promise<{newlyRetired:boolean;releasedBytes:number}> {
+-    const intent=structuredClone(input);
+-    assertAttemptRetirementIntent(intent,this.#root);
+-    return this.#serial(async()=>{
+-      const state=await this.#readState(),key=attemptProjectionKey(intent);
+-      const existing=this.#projections.get(key);
+-      authorize();
+-      // Async source/evidence checks finish before acquiring the synchronous
+-      // journal fence. Existing FileJournal appenders must not wait on an await.
+-      await completionRetirementSource(state,intent,this.#file,this.#limits.maximumMetadataBytes);
+-      return withCheckpointFence(()=>{
+-      authorize();
+-      if(existing) {
+-        if(canonicalJson(existing.resultReference.intent)!==canonicalJson(intent))throw new Error('OBSERVABILITY_RESULT_RETIREMENT_CONFLICT');
+-        return {newlyRetired:false,releasedBytes:0};
+-      }
+-      const before=readAttemptJournalPrefix(this.#file,this.#limits.maximumMetadataBytes);
+-      if(attemptStoreDigest(before)!==intent.expectedStoreDigest)throw new Error('OBSERVABILITY_RESULT_RETIREMENT_STORE_CHANGED');
+-      const item=state.results.find(result=>attemptProjectionKey(result)===key);
+-      if(!item||item.result.resultDigest!==intent.resultDigest||!item.storedAt)throw new Error('OBSERVABILITY_RESULT_RETIREMENT_UNCONFIRMED');
+-      // Reuse the original full completion/evidence/closure validation. Never fabricate an ACK.
+-      const projected=createAttemptProjection(item,intent,this.#root,this.#limits.maximumMetadataBytes);
+-      this.#projections.set(key,projected);
+-      this.#checkSize(state);
+-      const releasedBytes=before.length-Buffer.byteLength(canonicalJson(encodeAttemptState(state,this.#projections)));
+-      if(releasedBytes<=0)throw new Error('OBSERVABILITY_RESULT_RETIREMENT_NOT_SMALLER');
+-      authorize();
+-      replaceAttemptProjectionSync(this.#file,encodeAttemptState(state,this.#projections));
+-      return {newlyRetired:true,releasedBytes};
+-      });
+-    });
++    input: AttemptRetirementIntent,
++    withCheckpointFence: (
++      operation: () => { newlyRetired: boolean; releasedBytes: number },
++    ) => { newlyRetired: boolean; releasedBytes: number },
++    authorize: () => void,
++  ): Promise<{ newlyRetired: boolean; releasedBytes: number }> {
++    return retireImportedResult(
++      this.#state,
++      input,
++      withCheckpointFence,
++      authorize,
++    );
+   }
+-  async #storeClosureUnlocked(
+-    state: DurableAttemptStoreSnapshot,
+-    snapshot: ProducerClosureV1,
+-    admitted: ReadonlyArray<AdmittedRecordView>,
+-  ): Promise<ProducerClosureV1> {
+-    const existing = state.closures.find(
+-      (item) =>
+-        item.pipelineRunId === snapshot.pipelineRunId &&
+-        item.closureId === snapshot.closureId,
++  async retireImportedClosure(
++    input: ClosureRetirementIntent,
++    withCheckpointFence: (
++      operation: () => { newlyRetired: boolean; releasedBytes: number },
++    ) => { newlyRetired: boolean; releasedBytes: number },
++    authorize: () => void,
++  ): Promise<{ newlyRetired: boolean; releasedBytes: number }> {
++    return retireImportedClosure(
++      this.#state,
++      input,
++      withCheckpointFence,
++      authorize,
+     );
+-    if (existing) {
+-      if (existing.closureDigest !== snapshot.closureDigest)
+-        throw new Error("OBSERVABILITY_CLOSURE_IDENTITY_CONFLICT");
+-      return structuredClone(existing);
+-    }
+-    const records = admitted
+-      .filter(
+-        (item) =>
+-          sameProducer(item.record.producer, snapshot.producer) &&
+-          item.record.correlation.pipelineRunId === snapshot.pipelineRunId,
+-      )
+-      .sort((left, right) => left.record.sequence - right.record.sequence);
+-    if (
+-      records.length !== snapshot.recordCount ||
+-      records.some((item, index) => item.record.sequence !== index + 1)
+-    )
+-      throw new Error("OBSERVABILITY_CLOSURE_SEQUENCE_INCOMPLETE");
+-    for (const evidenceId of snapshot.requiredEvidenceIds) {
+-      if (
+-        !state.evidence.some(
+-          (item) =>
+-            item.pipelineRunId === snapshot.pipelineRunId &&
+-            sameProducer(item.producer, snapshot.producer) &&
+-            scopedEvidenceId(
+-              item.attemptId,
+-              item.claimGeneration,
+-              item.evidenceId,
+-            ) === evidenceId,
+-        )
+-      )
+-        throw new Error(`OBSERVABILITY_CLOSURE_EVIDENCE_MISSING:${evidenceId}`);
+-    }
+-    if (state.closures.length >= this.#limits.maximumClosures)
+-      throw new Error("OBSERVABILITY_CLOSURE_STORE_FULL");
+-    const candidate = { ...state, closures: [...state.closures, snapshot] };
+-    this.#checkSize(candidate);
+-    await this.#writeState(candidate);
+-    return structuredClone(snapshot);
+   }
+   async storeClosure(
+     closure: ProducerClosureV1,
+     admission: FileObservabilityAdmissionStore,
+   ): Promise<ProducerClosureV1> {
+-    const snapshot = structuredClone(closure);
+-    validatePipelineObservabilityContract("producerClosure", snapshot);
+-    const admitted = await admission.admittedRecords();
+-    return this.#serial(async () => {
+-      const state = await this.#readState();
+-      await this.#reclaimExpiredEvidence(state);
+-      return this.#storeClosureUnlocked(state, snapshot, admitted);
+-    });
++    return storeClosure(this.#state, closure, admission);
+   }
+   async evaluateCompleteness(
+     pipelineRunId: string,
+@@ -649,148 +174,23 @@ export class FileDurableAttemptStore {
+     missingRanges: ReadonlyArray<ProducerGapReportV1> = [],
+     unresolvedItems: ReadonlyArray<UnresolvedObservabilityItemV1> = [],
+   ): Promise<ObservabilityCompletenessV1> {
+-    const requirements = structuredClone(required);
+-    const durableIssues = await admission.observabilityIssues(pipelineRunId);
+-    const rangeSnapshot = [
+-      ...durableIssues.missingRanges,
+-      ...structuredClone(missingRanges),
+-    ].filter(
+-      (item, index, items) =>
+-        items.findIndex(
+-          (candidate) => canonicalJson(candidate) === canonicalJson(item),
+-        ) === index,
+-    );
+-    const unresolvedSnapshot = [
+-      ...durableIssues.unresolvedItems,
+-      ...structuredClone(unresolvedItems),
+-    ].filter(
+-      (item, index, items) =>
+-        items.findIndex((candidate) => candidate.itemId === item.itemId) ===
+-        index,
++    return evaluateCompleteness(
++      this.#state,
++      pipelineRunId,
++      required,
++      admission,
++      missingRanges,
++      unresolvedItems,
+     );
+-    const admittedRecords = await admission.admittedTail(pipelineRunId, 1);
+-    return this.#serial(async () => {
+-      const state = await this.#readState();
+-      await this.#reclaimExpiredEvidence(state);
+-      const requiredClosureIds = requirements.map((item) => item.closureId);
+-      if (new Set(requiredClosureIds).size !== requiredClosureIds.length)
+-        throw new Error("OBSERVABILITY_REQUIRED_CLOSURE_DUPLICATE");
+-      const admittedClosureIds: string[] = [];
+-      const evidenceItems: UnresolvedObservabilityItemV1[] = [];
+-      for (const requirement of requirements) {
+-        const closure = state.closures.find(
+-          (item) =>
+-            item.pipelineRunId === pipelineRunId &&
+-            item.closureId === requirement.closureId &&
+-            sameProducer(item.producer, requirement.producer),
+-        );
+-        if (!closure) continue;
+-        const records = admittedRecords.filter(
+-          (item) =>
+-            item.record.correlation.pipelineRunId === pipelineRunId &&
+-            sameProducer(item.record.producer, requirement.producer),
+-        );
+-        let valid =
+-          records.length === closure.recordCount &&
+-          records.every(
+-            (item) =>
+-              item.record.sequence >= closure.firstSequence &&
+-              item.record.sequence <= closure.finalSequence,
+-          );
+-        for (const evidenceId of closure.requiredEvidenceIds) {
+-          const metadata = state.evidence.find(
+-            (item) =>
+-              item.pipelineRunId === pipelineRunId &&
+-              sameProducer(item.producer, requirement.producer) &&
+-              scopedEvidenceId(
+-                item.attemptId,
+-                item.claimGeneration,
+-                item.evidenceId,
+-              ) === evidenceId,
+-          );
+-          let reasonCode: string | null = null;
+-          if (!metadata) reasonCode = "evidence-missing";
+-          else {
+-            try {
+-              const bytes = await fs.readFile(
+-                new URL(metadata.artifact.storageUrl),
+-              );
+-              if (
+-                bytes.byteLength !== metadata.artifact.sizeBytes ||
+-                digest(bytes) !== metadata.artifact.contentDigest
+-              )
+-                reasonCode = "evidence-corrupt";
+-            } catch {
+-              reasonCode = "evidence-unavailable";
+-            }
+-          }
+-          if (reasonCode) {
+-            valid = false;
+-            evidenceItems.push({
+-              itemId: `evidence:${createHash("sha256").update(evidenceId).digest("hex")}`,
+-              kind: "missing-evidence",
+-              producer: requirement.producer,
+-              subjectId: evidenceId,
+-              reasonCode,
+-            });
+-          }
+-        }
+-        if (valid) admittedClosureIds.push(requirement.closureId);
+-      }
+-      const missingClosureIds = requiredClosureIds.filter(
+-        (id) => !admittedClosureIds.includes(id),
+-      );
+-      const closureItems = missingClosureIds.map((id) => {
+-        const requirement = requirements.find((item) => item.closureId === id)!;
+-        return {
+-          itemId: `gap:${id}`,
+-          kind: "missing-closure" as const,
+-          producer: requirement.producer,
+-          subjectId: id,
+-          reasonCode: state.closures.some((item) => item.closureId === id)
+-            ? "producer-closure-stale"
+-            : "producer-closure-missing",
+-        };
+-      });
+-      const allItems = [
+-        ...closureItems,
+-        ...evidenceItems,
+-        ...unresolvedSnapshot,
+-      ].filter(
+-        (item, index, items) =>
+-          items.findIndex((candidate) => candidate.itemId === item.itemId) ===
+-          index,
+-      );
+-      const completeness: ObservabilityCompletenessV1 = {
+-        schemaVersion: "observability-completeness.v1",
+-        pipelineRunId,
+-        state:
+-          missingClosureIds.length || rangeSnapshot.length || allItems.length
+-            ? "partial"
+-            : "complete",
+-        requiredClosureIds,
+-        admittedClosureIds,
+-        missingClosureIds,
+-        missingRanges: rangeSnapshot,
+-        unresolvedItems: allItems,
+-        evaluatedAt: new Date().toISOString(),
+-      };
+-      validatePipelineObservabilityContract(
+-        "observabilityCompleteness",
+-        completeness,
+-      );
+-      return completeness;
+-    });
+   }
+   async snapshot(): Promise<Readonly<DurableAttemptStoreSnapshot>> {
+-    return this.#serial(async () => {
+-      const state = await this.#readState();
+-      await this.#reclaimExpiredEvidence(state);
++    return this.#state.serial(async () => {
++      const state = await this.#state.readState();
++      await this.#state.reclaimExpiredEvidence(state);
+       return state;
+     });
+   }
+ }
+-
+ export function createProducerClosure(
+   input: Omit<ProducerClosureV1, "closureDigest">,
+ ): ProducerClosureV1 {
+@@ -799,10 +199,3 @@ export function createProducerClosure(
+     closureDigest: producerClosureDigest(input),
+   };
+ }
+-export function scopedEvidenceId(
+-  attemptId: string,
+-  claimGeneration: number,
+-  evidenceId: string,
+-): string {
+-  return `evidence:${createHash("sha256").update(canonicalJson({ attemptId, claimGeneration, evidenceId })).digest("hex")}`;
+-}
+diff --git a/skills/prism/config/native-worker.ts b/skills/prism/config/native-worker.ts
+index 84d7d41f..5f962e21 100644
+--- a/skills/prism/config/native-worker.ts
++++ b/skills/prism/config/native-worker.ts
+@@ -1,19 +1,9 @@
+ import path from 'node:path';
++import { requirePrismResourcePoolCapacity } from './resource-policy.ts';
++import type { loadWorkerConfig } from '../server/worker-config.ts';
+ import { readNativeWorkerNodeIdentity, readNativeWorkerPoolPolicy, requireNativeWorkerRuntimeIdentity } from '@kubeclaw/worker-core';
+ 
+-export function prismNativeMaximumResultBytes(environment: NodeJS.ProcessEnv = process.env): number {
+-  const value = Number(environment.PRISM_NATIVE_MAXIMUM_RESULT_BYTES ?? 67108864);
+-  if (!Number.isSafeInteger(value) || value < 1 || value > 2_147_483_647) throw new Error('PRISM_NATIVE_RESULT_LIMIT_INVALID');
+-  return value;
+-}
+-
+-export function prismNativeDispatchTimeoutMs(environment: NodeJS.ProcessEnv = process.env): number {
+-  const value = Number(environment.PRISM_NATIVE_DISPATCH_TIMEOUT_MS ?? 900000);
+-  if (!Number.isSafeInteger(value) || value < 1 || value > 2_147_483_647) throw new Error('PRISM_NATIVE_DISPATCH_DEADLINE_INVALID');
+-  return value;
+-}
+-
+-/** Shared producer/worker defaults; deployment overrides use these same named settings. */
++/** Image identity shared by producer and worker. */
+ export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = process.env): string | undefined {
+   const digest = environment.PRISM_ENGINE_CONTENT_DIGEST?.trim();
+   if (environment.NODE_ENV === 'production' && !/^sha256:[a-f0-9]{64}$/u.test(digest ?? '')) {
+@@ -22,24 +12,12 @@ export function prismEngineContentDigest(environment: NodeJS.ProcessEnv = proces
+   return digest;
+ }
+ 
+-export function prismNativePolicy(environment: NodeJS.ProcessEnv = process.env) {
+-  const read = (name: string, fallback: number) => {
+-    const value = Number(environment[name] ?? fallback);
+-    if (!Number.isSafeInteger(value) || value < 1) throw new Error(`PRISM_NATIVE_POLICY_INVALID:${name}`);
+-    return value;
+-  };
+-  return Object.freeze({
+-    cpuTimeMs: read('PRISM_NATIVE_CPU_TIME_MS', 60000),
+-    memoryBytes: read('PRISM_NATIVE_MEMORY_BYTES', 8589934592),
+-    tasks: read('PRISM_NATIVE_TASKS', 2048),
+-  });
+-}
+-
+ export function nativePrismHostConfig(environment: NodeJS.ProcessEnv = process.env) {
+   const scope = environment.KUBECLAW_NATIVE_SCOPE;
+   if (!scope) throw new Error('PRISM_NATIVE_PREEXEC_MEMBERSHIP_REQUIRED');
+-  const maximumInputBytes = Number(environment.PRISM_NATIVE_MAXIMUM_INPUT_BYTES);
+-  if (!Number.isSafeInteger(maximumInputBytes) || maximumInputBytes < 1) throw new Error('PRISM_NATIVE_INPUT_LIMIT_REQUIRED');
++  if (environment.PRISM_NATIVE_MAXIMUM_INPUT_BYTES !== undefined) throw new Error('SWARM_CONFIG_LEGACY_OVERRIDE:PRISM_NATIVE_MAXIMUM_INPUT_BYTES');
++  const maximumInputBytes = Number(environment.PRISM_NATIVE_ASSIGNED_INPUT_BYTES);
++  if (!Number.isSafeInteger(maximumInputBytes) || maximumInputBytes < 1 || maximumInputBytes > 2_147_483_647) throw new Error('PRISM_NATIVE_INPUT_LIMIT_REQUIRED');
+   const controlInternalUrl = new URL(environment.PRISM_CONTROL_INTERNAL_URL!);
+   const workerSecret = environment.PRISM_WORKER_SECRET ?? '';
+   const spiffeEnabled = environment.WORKER_TRUST_SPIFFE_ENABLED === 'true';
+@@ -47,38 +25,42 @@ export function nativePrismHostConfig(environment: NodeJS.ProcessEnv = process.e
+   return Object.freeze({ scope, maximumInputBytes, controlInternalUrl, workerSecret, spiffeEnabled });
+ }
+ 
+-export function nativePrismSupervisorConfig(environment: NodeJS.ProcessEnv = process.env) {
++export function nativePrismSupervisorConfig(config: ReturnType<typeof loadWorkerConfig>, environment: NodeJS.ProcessEnv = process.env) {
+   const root = (name: string) => {
+     const value = environment[name];
+     if (!value || !path.isAbsolute(value) || path.resolve(value) !== value || value === '/') throw new Error(`PRISM_NATIVE_PATH_REQUIRED:${name}`);
+     return value;
+   };
+-  const read = (name: string, fallback: number, maximum = 2_147_483_647) => {
+-    const value = Number(environment[name] ?? fallback);
+-    if (!Number.isSafeInteger(value) || value < 1 || value > maximum) throw new Error(`PRISM_NATIVE_CONFIG_INVALID:${name}`);
+-    return value;
+-  };
+   const engineContentDigest = prismEngineContentDigest(environment);
+   if (!/^sha256:[a-f0-9]{64}$/u.test(engineContentDigest ?? '')) throw new Error('PRISM_NATIVE_ENGINE_CONTENT_IDENTITY_REQUIRED');
+   const pool = readNativeWorkerPoolPolicy(root('PRISM_NATIVE_POOL_POLICY_FILE'), 'prism');
++  requirePrismResourcePoolCapacity(config.native.resourcePolicy, pool.limits);
+   requireNativeWorkerRuntimeIdentity(pool.runtimeIdentityFile);
+   return Object.freeze({
+-    policy: prismNativePolicy(environment),
++    ...prismSupervisorSettings(config),
+     engineContentDigest: engineContentDigest!,
+     cgroupRoot: pool.cgroupRoot, ownershipRoot: pool.ownershipRoot,
+     poolLimits: pool.limits, nodeIdentity: readNativeWorkerNodeIdentity(pool.nodeIdentityFile),
+     launcher: root('PRISM_NATIVE_LAUNCHER'),
+-    uid: read('PRISM_NATIVE_UID', 1000), gid: read('PRISM_NATIVE_GID', 1000),
+     maximumActiveScopes: pool.maximumActiveScopes,
+-    maximumRecords: read('PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS', 65536),
+-    maximumBytes: read('PRISM_NATIVE_MAXIMUM_OWNERSHIP_BYTES', 67108864),
+-    maximumInputBytes: read('PRISM_NATIVE_MAXIMUM_INPUT_BYTES', 16777216),
+-    maximumOutputBytes: read('PRISM_NATIVE_MAXIMUM_OUTPUT_BYTES', 33554432),
+-    maximumResultBytes: prismNativeMaximumResultBytes(environment),
+-    maximumJournalBytes: read('PRISM_NATIVE_MAXIMUM_JOURNAL_BYTES', 68719476736, Number.MAX_SAFE_INTEGER),
+-    pollIntervalMs: read('PRISM_NATIVE_POLL_INTERVAL_MS', 20),
+-    drainTimeoutMs: read('PRISM_NATIVE_DRAIN_TIMEOUT_MS', 10000),
+-    closeTimeoutMs: read('PRISM_NATIVE_CLOSE_TIMEOUT_MS', 105000),
+     browserPath: environment.PLAYWRIGHT_BROWSERS_PATH ?? '/ms-playwright',
+   });
+ }
++
++/** Numeric startup snapshot; host authority is validated separately before composition. */
++export function prismSupervisorSettings(config: ReturnType<typeof loadWorkerConfig>) {
++  const supervisor = config.native.supervisor;
++  return Object.freeze({
++    policy: config.native.resourcePolicy,
++    uid: supervisor.uid, gid: supervisor.gid,
++    maximumRecords: supervisor.maximumOwnershipRecords,
++    maximumBytes: supervisor.maximumOwnershipBytes,
++    maximumInputBytes: config.ingress.maximumInputBytes,
++    maximumOutputBytes: supervisor.maximumOutputBytes,
++    maximumResultBytes: config.native.maximumResultBytes,
++    maximumJournalBytes: supervisor.maximumJournalBytes,
++    pollIntervalMs: supervisor.pollIntervalMs,
++    drainTimeoutMs: supervisor.drainTimeoutMs,
++    closeTimeoutMs: supervisor.closeTimeoutMs,
++  });
++}
+diff --git a/skills/prism/engine/worker-envelope.ts b/skills/prism/engine/worker-envelope.ts
+index 91b1041e..90ecdbd4 100644
+--- a/skills/prism/engine/worker-envelope.ts
++++ b/skills/prism/engine/worker-envelope.ts
+@@ -1,10 +1,11 @@
++import type { PrismResourcePolicy } from '../../common/plugin-runtime/foundation/config/swarm.ts';
+ import { randomUUID } from "node:crypto";
+ import type { WorkerArtifactRefV1, WorkerAttemptEnvelopeV1 } from "@kubeclaw/pipeline-worker-core-contract";
+ import { canonicalJson, sha256Digest, workerAttemptSpecDigest, workerProfileDigest } from "@kubeclaw/worker-core";
+ import { engineRequestSchema } from "@kubeclaw/prism-contracts-v1/digest";
+ import type { EngineOperation } from "./index.ts";
+ import type { WorkerAttemptEnvelopeV3, WorkerProfileV3 } from '@kubeclaw/pipeline-worker-core-contract';
+-import { prismNativePolicy, prismEngineContentDigest } from '../config/native-worker.ts';
++import { prismEngineContentDigest } from '../config/native-worker.ts';
+ 
+ const engineContentDigest = prismEngineContentDigest()
+   || sha256Digest({ engineId: "prism-design-engine", engineVersion: "1.0.0", development: true });
+@@ -30,10 +31,9 @@ export function prismRequestDigest(operation: WorkerAttemptEnvelopeV1['operation
+   return sha256Digest(JSON.stringify({ operation: ordered, inputDigest }));
+ }
+ 
+-export function prismNativeAttempt(operation: EngineOperation, inputArtifact: WorkerArtifactRefV1, idempotencyKey: string): WorkerAttemptEnvelopeV3 {
++export function prismNativeAttempt(operation: EngineOperation, inputArtifact: WorkerArtifactRefV1, idempotencyKey: string, policy: PrismResourcePolicy): WorkerAttemptEnvelopeV3 {
+   const now = new Date(); const expires = new Date(now.getTime() + 10 * 60_000); const attemptId = `attempt-${randomUUID()}`;
+   const request = engineRequestSchema(operation);
+-  const policy = prismNativePolicy();
+   const unsigned = {
+     schemaVersion: "worker-attempt-envelope.v3" as const, protocolVersion: "worker-protocol.v1" as const,
+     pipelineRunId: `prism-${idempotencyKey}`.slice(0, 128), moduleId: null, gateId: null, planId: `plan-${idempotencyKey}`.slice(0, 128),
+diff --git a/skills/worker/core/src/index.ts b/skills/worker/core/src/index.ts
+index 9040b48f..e18ab3af 100644
+--- a/skills/worker/core/src/index.ts
++++ b/skills/worker/core/src/index.ts
+@@ -13,6 +13,8 @@ export type { NativeWorkerProcessLimits, NativeWorkerProcessOptions, NativeWorke
+ export { executeNativeWorkerAttempt } from '../worker/native-attempt-executor.ts';
+ export { NativeAttemptJournal, NativeWorkerAttemptBusy } from '../worker/native-attempt-journal.ts';
+ export { recoverNativeWorkerAttempts } from '../worker/native-attempt-recovery.ts';
++export { nativeSourceCleanupOperation, nativeSourceCleanupResultSchema, verifyNativeSourceCleanupResult } from '../worker/native-cleanup-reconciliation.ts';
++export type { NativeCleanupReconciliation } from '../worker/native-cleanup-reconciliation.ts';
+ export type { NativeAttemptJournalLimits } from '../worker/native-attempt-journal.ts';
+ export type { NativeWorkerAttemptExecutorOptions } from '../worker/native-attempt-executor.ts';
+ export { observeNativeWorkerResources } from '../worker/native-resource-observation.ts';
+diff --git a/skills/worker/core/worker/native-attempt-journal.ts b/skills/worker/core/worker/native-attempt-journal.ts
+index 31a10ce7..8a5d7d46 100644
+--- a/skills/worker/core/worker/native-attempt-journal.ts
++++ b/skills/worker/core/worker/native-attempt-journal.ts
+@@ -9,8 +9,10 @@ import type { NativeWorkerProcessResult } from './native-worker-process.ts';
+ import { journalIdentity, journalKey, validateJournalState, usedJournalBytes,
+   type NativeAttemptJournalLimits, type NativeAttemptJournalState } from './native-journal-state.ts';
+ 
++import { nativeJournalStream, nativeJournalMaximumRecordBytes, reserveNativeJournalMetadata } from './native-journal-capacity.ts';
++
+ export type { NativeAttemptJournalLimits } from './native-journal-state.ts';
+-const stream = 'native-worker-attempts.v1';
++const stream = nativeJournalStream;
+ export class NativeWorkerAttemptBusy extends Error {
+   constructor() { super('WORKER_NATIVE_ATTEMPT_BUSY'); }
+ }
+@@ -28,7 +30,7 @@ export class NativeAttemptJournal {
+     }
+     this.#root = path.resolve(root); this.#limits = { ...limits };
+     this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {
+-      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: 65536,
++      maximumRecords: limits.maximumRecords, maximumBytes: limits.maximumStateBytes, maximumRecordBytes: nativeJournalMaximumRecordBytes,
+     });
+     this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);
+   }
+@@ -174,11 +176,14 @@ export class NativeAttemptJournal {
+       const payload: NativeAttemptJournalState = { schemaVersion: 'native-attempt-journal.v1', identity: journalIdentity(envelope),
+         envelopeDigest: sha256Digest(envelope), envelope: { digest: sha256Digest(envelope), sizeBytes: bytes.byteLength },
+         acceptedAt: new Date().toISOString(), reservationBytes, process: null, processCompletedAt: null, result: null };
++      const owner = `native-worker:${sha256Digest(envelope.claim.workerId).slice(7)}`;
++      await reserveNativeJournalMetadata(path.join(this.#root, 'metadata', 'records', 'store.json'),
++        payload, journalKey(envelope), owner, this.#limits);
+       // The global admission lock holds the checked disk reservation while the
+       // input is fsynced. A crash can leave an unreferenced original blob, which
+       // remains counted, but never an accepted identity with no recoverable input.
+       await this.#blobs.put(bytes);
+-      const appended = await this.#records.append(stream, journalKey(envelope), payload, `native-worker:${sha256Digest(envelope.claim.workerId).slice(7)}`);
++      const appended = await this.#records.append(stream, journalKey(envelope), payload, owner);
+       return { newlyAccepted: true, record: appended.record };
+     });
+   }
+diff --git a/skills/worker/core/worker/native-attempt-recovery.ts b/skills/worker/core/worker/native-attempt-recovery.ts
+index f0b303a8..3cdde4b5 100644
+--- a/skills/worker/core/worker/native-attempt-recovery.ts
++++ b/skills/worker/core/worker/native-attempt-recovery.ts
+@@ -4,10 +4,16 @@ import type { NativeAttemptJournal } from './native-attempt-journal.ts';
+ import type { NativeWorkerOwnership } from './native-worker-ownership.ts';
+ import { journalIdentity } from './native-journal-state.ts';
+ import { finalizeNativeWorkerResult, interruptedNativeWorkerResult } from './native-result.ts';
++import { reconcileNativeCleanup, resolveFailedNativeCleanup, type NativeCleanupReconciliation } from './native-cleanup-reconciliation.ts';
+ 
+ /** Called only after native ownership recovery, before exposing HTTP admission. */
+-export async function recoverNativeWorkerAttempts(journal: NativeAttemptJournal, owner: NativeWorkerOwnership): Promise<void> {
++export async function recoverNativeWorkerAttempts(journal: NativeAttemptJournal, owner: NativeWorkerOwnership,
++  reconciliation?: NativeCleanupReconciliation): Promise<void> {
+   try {
++    // The accepted journal is already bounded by its existing record/state limits.
++    // Defer only failed cleanup rows so an earlier insertion cannot prevent the
++    // original operation from producing its separately owned retry proof.
++    const deferred: Array<{ envelope: WorkerAttemptEnvelopeV3; result: WorkerAttemptResultV3 }> = [];
+     for await (const envelope of journal.acceptedEnvelopes()) {
+       const result = await journal.withAttempt(envelope, async context => {
+         const cached = await journal.readResult(envelope);
+@@ -16,7 +22,17 @@ export async function recoverNativeWorkerAttempts(journal: NativeAttemptJournal,
+         if (!recovered) throw new Error('WORKER_NATIVE_JOURNAL_RECOVERY_REQUIRED');
+         return journal.seal(envelope, recovered);
+       });
+-      if (result.cleanup.state === 'failed') owner.fenceAdmission();
++      if (result.cleanup.state === 'failed' && envelope.operation.contractId === 'kubeclaw.native-source-cleanup@1') {
++        deferred.push({ envelope, result });
++        continue;
++      }
++      if (result.cleanup.state === 'failed'
++        && (!reconciliation || !await reconcileNativeCleanup(owner, envelope, result, reconciliation))) owner.fenceAdmission();
++    }
++    for (const { envelope, result } of deferred) {
++      if (!reconciliation || !await resolveFailedNativeCleanup(journal, owner, envelope, result, reconciliation)) {
++        owner.fenceAdmission();
++      }
+     }
+   } catch (error) { owner.fenceAdmission(); throw error; }
+ }
+diff --git a/skills/worker/core/worker/native-journal-state.ts b/skills/worker/core/worker/native-journal-state.ts
+index 45d07e09..fb232f59 100644
+--- a/skills/worker/core/worker/native-journal-state.ts
++++ b/skills/worker/core/worker/native-journal-state.ts
+@@ -6,6 +6,8 @@ import type { NativeWorkerProcessResult } from './native-worker-process.ts';
+ import { identityValid, exact } from './ownership-state.ts';
+ import { validateNativeWorkerResourceObservation } from './native-resource-observation.ts';
+ 
++export const nativeJournalMaximumDiagnosticUnits = 4096;
++
+ export interface NativeAttemptJournalLimits {
+   readonly maximumRecords: number;
+   readonly maximumStateBytes: number;
+@@ -69,7 +71,7 @@ function validateProcess(value: unknown): void {
+   if (value.exitCode !== null && (!Number.isInteger(value.exitCode) || Number(value.exitCode) < 0 || Number(value.exitCode) > 255)) throw new Error('WORKER_NATIVE_JOURNAL_EXIT_INVALID');
+   if (value.exitCode !== 0 && value.fault === null) throw new Error('WORKER_NATIVE_JOURNAL_MISSING_PROCESS_FAILURE');
+   for (const key of ['signal', 'fault']) {
+-    if (value[key] !== null && (typeof value[key] !== 'string' || value[key].length < 1 || value[key].length > 4096)) throw new Error('WORKER_NATIVE_JOURNAL_FAULT_INVALID');
++    if (value[key] !== null && (typeof value[key] !== 'string' || value[key].length < 1 || value[key].length > nativeJournalMaximumDiagnosticUnits)) throw new Error('WORKER_NATIVE_JOURNAL_FAULT_INVALID');
+   }
+ }
+ 
+diff --git a/skills/worker/core/worker/native-resource-scope.ts b/skills/worker/core/worker/native-resource-scope.ts
+index 45a5077c..307fa668 100644
+--- a/skills/worker/core/worker/native-resource-scope.ts
++++ b/skills/worker/core/worker/native-resource-scope.ts
+@@ -1,5 +1,9 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
++import { requireHierarchicalCgroupEvents } from './native-hierarchy-events.ts';
++import { randomUUID } from 'node:crypto';
++import type { WorkerOwnedChild } from './ownership-children.ts';
++import { aggregateChildLimits, configureNativeLimits, createNativeChild, verifyNativeChild, verifyNativeChildren } from './native-owned-children.ts';
+ import { setTimeout as delay } from 'node:timers/promises';
+ import { performance } from 'node:perf_hooks';
+ import { observeNativeWorkerResources, type NativeWorkerResourceObservation } from './native-resource-observation.ts';
+@@ -36,24 +40,17 @@ function positive(value: number): void {
+   if (!Number.isSafeInteger(value) || value < 1) throw new Error('WORKER_NATIVE_LIMIT_INVALID');
+ }
+ 
+-function writeLimit(scope: string, name: string, value: number): void {
+-  const file = path.join(scope, name);
+-  fs.writeFileSync(file, String(value));
+-  const effective = Number(fs.readFileSync(file, 'utf8').trim());
+-  if (!Number.isSafeInteger(effective) || effective !== value) {
+-    throw new Error(`WORKER_NATIVE_LIMIT_MISMATCH:${name}`);
+-  }
+-}
+-
+ /** A kernel scope, not an attempt/fixture registry or a process launcher. */
+ export class NativeWorkerResourceScope {
+   readonly #path: string;
+   readonly #device: number;
+   readonly #inode: number;
++  readonly #aggregate: boolean;
+   #disposed = false;
+   #quiescing = false;
+ 
+-  private constructor(scope: string) {
++  private constructor(scope: string, aggregate: boolean) {
++    this.#aggregate = aggregate;
+     this.#path = scope;
+     const stat = fs.statSync(scope);
+     this.#device = stat.dev;
+@@ -65,8 +62,10 @@ export class NativeWorkerResourceScope {
+     positive(limits.memoryBytes);
+     positive(limits.tasks);
+     const root = delegatedRoot(rootValue);
++    requireHierarchicalCgroupEvents(root);
+     // Existing roots are never chmod/chowned, remounted or reconfigured here.
+-    const scope = fs.mkdtempSync(path.join(root, 'worker-'));
++    const scope = path.join(root, `worker-${randomUUID()}`);
++    fs.mkdirSync(scope);
+     return NativeWorkerResourceScope.#configure(scope, limits);
+   }
+ 
+@@ -75,19 +74,21 @@ export class NativeWorkerResourceScope {
+     positive(limits.memoryBytes);
+     positive(limits.tasks);
+     if (!scopeNamePattern.test(scopeName)) throw new Error('WORKER_NATIVE_SCOPE_NAME_INVALID');
+-    const scope = path.join(delegatedRoot(rootValue), scopeName);
++    const root = delegatedRoot(rootValue);
++    requireHierarchicalCgroupEvents(root);
++    const scope = path.join(root, scopeName);
+     fs.mkdirSync(scope); // Exclusive. Never adopt a pre-existing directory during admission.
+     return NativeWorkerResourceScope.#configure(scope, limits);
+   }
+ 
+   static #configure(scope: string, limits: NativeWorkerScopeLimits): NativeWorkerResourceScope {
+     try {
+-      writeLimit(scope, 'memory.max', limits.memoryBytes);
+-      writeLimit(scope, 'memory.swap.max', 0);
+-      writeLimit(scope, 'memory.oom.group', 1);
+-      writeLimit(scope, 'pids.max', limits.tasks);
++      configureNativeLimits(scope, limits);
++      fs.writeFileSync(path.join(scope, 'cgroup.subtree_control'), '+cpu +memory +pids');
++      const enabled = fs.readFileSync(path.join(scope, 'cgroup.subtree_control'), 'utf8').trim().split(/\s+/u);
++      if (!['cpu', 'memory', 'pids'].every(name => enabled.includes(name))) throw new Error('WORKER_NATIVE_CONTROLLERS_MISSING');
+       fs.accessSync(path.join(scope, 'cgroup.kill'), fs.constants.W_OK);
+-      const owner = new NativeWorkerResourceScope(scope);
++      const owner = new NativeWorkerResourceScope(scope, true);
+       if (owner.observe().populated) throw new Error('WORKER_NATIVE_SCOPE_NOT_EMPTY');
+       return owner;
+     } catch (cause) {
+@@ -103,17 +104,17 @@ export class NativeWorkerResourceScope {
+   }
+ 
+   /** Recovery before the durable launch fence: only an empty reservation can be adopted. */
+-  static recoverEmptyReservation(rootValue: string, scopeName: string): NativeWorkerResourceScope {
++  static recoverEmptyReservation(rootValue: string, scopeName: string, aggregate = false): NativeWorkerResourceScope {
+     if (!scopeNamePattern.test(scopeName)) throw new Error('WORKER_NATIVE_SCOPE_NAME_INVALID');
+     const scope = path.join(delegatedRoot(rootValue), scopeName);
+     if (!fs.lstatSync(scope).isDirectory()) throw new Error('WORKER_NATIVE_SCOPE_BINDING_CHANGED');
+-    const owner = new NativeWorkerResourceScope(scope);
++    const owner = new NativeWorkerResourceScope(scope, aggregate);
+     if (owner.observe().populated) throw new Error('WORKER_NATIVE_UNBOUND_SCOPE_POPULATED');
+     return owner;
+   }
+ 
+   /** An inode alone can be reused across boots. Both identities must match. */
+-  static reopen(rootValue: string, binding: WorkerScopeBinding): NativeWorkerResourceScope {
++  static reopen(rootValue: string, binding: WorkerScopeBinding, aggregate = false): NativeWorkerResourceScope {
+     if (!scopeNamePattern.test(binding.scopeName) || binding.bootId !== bootId()) {
+       throw new Error('WORKER_NATIVE_SCOPE_BINDING_CHANGED');
+     }
+@@ -122,7 +123,7 @@ export class NativeWorkerResourceScope {
+     if (!stat.isDirectory() || stat.dev !== binding.device || stat.ino !== binding.inode) {
+       throw new Error('WORKER_NATIVE_SCOPE_BINDING_CHANGED');
+     }
+-    return new NativeWorkerResourceScope(scope);
++    return new NativeWorkerResourceScope(scope, aggregate);
+   }
+ 
+   binding(): WorkerScopeBinding {
+@@ -130,11 +131,35 @@ export class NativeWorkerResourceScope {
+     return { scopeName: path.basename(this.#path), bootId: bootId(), device: this.#device, inode: this.#inode };
+   }
+ 
+-  /** Only the trusted pre-exec launcher may use this path. */
+-  launcherPath(): string {
++  childLimits(requested?: NativeWorkerScopeLimits): NativeWorkerScopeLimits {
++    this.#checkIdentity();
++    return aggregateChildLimits(this.#path, requested);
++  }
++
++  createChild(child: WorkerOwnedChild): WorkerScopeBinding {
+     this.#checkIdentity();
+     if (this.#quiescing) throw new Error('WORKER_NATIVE_SCOPE_QUIESCING');
+-    return this.#path;
++    return createNativeChild(this.#path, this.binding(), child);
++  }
++
++  /** The caller must persist the returned child binding before obtaining launch arguments. */
++  childLaunchArguments(child: WorkerOwnedChild): readonly string[] {
++    this.#checkIdentity();
++    if (this.#quiescing) throw new Error('WORKER_NATIVE_SCOPE_QUIESCING');
++    if (!child.binding) throw new Error('WORKER_NATIVE_CHILD_BINDING_REQUIRED');
++    const target = verifyNativeChild(this.#path, this.binding(), child);
++    return [target, String(this.#device), String(this.#inode), String(child.binding.device), String(child.binding.inode)];
++  }
++
++  verifyChildren(children: readonly WorkerOwnedChild[], removalStarted: boolean): void {
++    this.#checkIdentity();
++    verifyNativeChildren(this.#path, this.binding(), children, removalStarted);
++  }
++
++  disposeChildren(children: readonly WorkerOwnedChild[]): void {
++    this.#checkIdentity();
++    if (!this.#quiescing || this.observe().populated) throw new Error('WORKER_NATIVE_SCOPE_NOT_QUIESCENT');
++    for (const target of verifyNativeChildren(this.#path, this.binding(), children, true)) fs.rmdirSync(target);
+   }
+ 
+   observe(): NativeWorkerResourceObservation {
+@@ -170,6 +195,7 @@ export class NativeWorkerResourceScope {
+ 
+   #checkIdentity(): void {
+     if (this.#disposed) throw new Error('WORKER_NATIVE_SCOPE_DISPOSED');
++    if (this.#aggregate) requireHierarchicalCgroupEvents(this.#path);
+     const stat = fs.lstatSync(this.#path);
+     if (!stat.isDirectory() || stat.dev !== this.#device || stat.ino !== this.#inode) {
+       throw new Error('WORKER_NATIVE_SCOPE_IDENTITY_CHANGED');
+diff --git a/skills/worker/core/worker/native-worker-launcher.c b/skills/worker/core/worker/native-worker-launcher.c
+index a020da8e..0ffeabf5 100644
+--- a/skills/worker/core/worker/native-worker-launcher.c
++++ b/skills/worker/core/worker/native-worker-launcher.c
+@@ -29,22 +29,50 @@ static unsigned int identity(const char *text) {
+   return (unsigned int)value;
+ }
+ 
+-static void scope_name(const char *value) {
++static int uuid_name(const char *name, const char *prefix) {
++  size_t offset = strlen(prefix);
++  if (strlen(name) != offset + 36 || strncmp(name, prefix, offset)) return 0;
++  for (int index = 0; index < 36; ++index) {
++    char character = name[offset + index];
++    if (index == 8 || index == 13 || index == 18 || index == 23) {
++      if (character != '-') return 0;
++    } else if (!((character >= '0' && character <= '9') || (character >= 'a' && character <= 'f'))) return 0;
++  }
++  return 1;
++}
++
++static void scope_parent(const char *value, char *parent) {
+   char canonical[PATH_MAX];
+   if (!realpath(value, canonical) || strcmp(value, canonical)) fail("WORKER_NATIVE_LAUNCH_SCOPE_INVALID");
++  char *leaf = strrchr(canonical, '/');
++  if (!leaf || (strcmp(leaf + 1, "host") && !uuid_name(leaf + 1, "helper-"))) fail("WORKER_NATIVE_LAUNCH_SCOPE_INVALID");
++  *leaf = '\0';
+   const char *name = strrchr(canonical, '/');
+-  if (!name || strlen(++name) != 43 || strncmp(name, "worker-", 7)) fail("WORKER_NATIVE_LAUNCH_SCOPE_INVALID");
+-  for (int index = 7; index < 43; ++index) {
+-    if (index == 15 || index == 20 || index == 25 || index == 30) {
+-      if (name[index] != '-') fail("WORKER_NATIVE_LAUNCH_SCOPE_INVALID");
+-    } else if (!((name[index] >= '0' && name[index] <= '9') || (name[index] >= 'a' && name[index] <= 'f'))) {
+-      fail("WORKER_NATIVE_LAUNCH_SCOPE_INVALID");
+-    }
+-  }
++  if (!name || !uuid_name(name + 1, "worker-")) fail("WORKER_NATIVE_LAUNCH_SCOPE_INVALID");
++  strcpy(parent, canonical);
++}
++
++static unsigned long long binding_number(const char *text) {
++  char *end = NULL;
++  errno = 0;
++  unsigned long long value = strtoull(text, &end, 10);
++  if (errno || !*text || *end || text[0] < '0' || text[0] > '9') fail("WORKER_NATIVE_LAUNCH_BINDING_INVALID");
++  return value;
++}
++
++static int bound_scope(const char *value, const char *device, const char *inode) {
++  int scope = open(value, O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW);
++  struct stat info;
++  struct statfs filesystem;
++  if (scope < 0 || fstatfs(scope, &filesystem) || filesystem.f_type != CGROUP2_SUPER_MAGIC
++      || fstat(scope, &info) || info.st_uid != 0 || (info.st_mode & 0022)) fail("WORKER_NATIVE_LAUNCH_SCOPE_INVALID");
++  if ((unsigned long long)info.st_dev != binding_number(device)
++      || (unsigned long long)info.st_ino != binding_number(inode)) fail("WORKER_NATIVE_LAUNCH_BINDING_INVALID");
++  return scope;
+ }
+ 
+ int main(int argc, char **argv) {
+-  if (argc < 5 || argv[1][0] != '/' || argv[4][0] != '/') fail("WORKER_NATIVE_LAUNCH_ARGUMENTS_INVALID");
++  if (argc < 9 || argv[1][0] != '/' || argv[8][0] != '/') fail("WORKER_NATIVE_LAUNCH_ARGUMENTS_INVALID");
+   if (getuid() != 0 || geteuid() != 0) fail("WORKER_NATIVE_SUPERVISOR_IDENTITY_REQUIRED");
+   const char *parent = getenv("KUBECLAW_NATIVE_SUPERVISOR_PID");
+   if (!parent) fail("WORKER_NATIVE_LAUNCH_PARENT_REQUIRED");
+@@ -52,16 +80,19 @@ int main(int argc, char **argv) {
+   if (supervisor > INT_MAX || prctl(PR_SET_PDEATHSIG, SIGKILL) || getppid() != (pid_t)supervisor) {
+     fail("WORKER_NATIVE_LAUNCH_PARENT_LOST");
+   }
+-  uid_t uid = identity(argv[2]);
+-  gid_t gid = identity(argv[3]);
+-  scope_name(argv[1]);
+-  int scope = open(argv[1], O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW);
++  uid_t uid = identity(argv[6]);
++  gid_t gid = identity(argv[7]);
++  char parent_path[PATH_MAX];
++  scope_parent(argv[1], parent_path);
++  int aggregate = bound_scope(parent_path, argv[2], argv[3]);
++  int scope = bound_scope(argv[1], argv[4], argv[5]);
++  /* Verify that the pinned child still belongs to the pinned aggregate. */
++  int parent_fd = openat(scope, "..", O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW);
++  struct stat parent_info;
+   struct stat info;
+-  struct statfs filesystem;
+-  if (scope < 0 || fstatfs(scope, &filesystem) || filesystem.f_type != CGROUP2_SUPER_MAGIC
+-      || fstat(scope, &info) || info.st_uid != 0 || (info.st_mode & 0022)) {
+-    fail("WORKER_NATIVE_LAUNCH_SCOPE_INVALID");
+-  }
++  if (parent_fd < 0 || fstat(parent_fd, &parent_info) || fstat(aggregate, &info)
++      || parent_info.st_dev != info.st_dev || parent_info.st_ino != info.st_ino) fail("WORKER_NATIVE_LAUNCH_BINDING_INVALID");
++  if (close(parent_fd) || close(aggregate)) fail("WORKER_NATIVE_LAUNCH_CLOSE_FAILED");
+   int membership = openat(scope, "cgroup.procs", O_WRONLY | O_CLOEXEC | O_NOFOLLOW);
+   if (membership < 0 || fstat(membership, &info) || info.st_uid != 0 || (info.st_mode & 0022)) {
+     fail("WORKER_NATIVE_LAUNCH_MEMBERSHIP_INVALID");
+@@ -69,7 +100,7 @@ int main(int argc, char **argv) {
+   /* The kernel treats 0 as the caller. No executable work or descendant precedes membership. */
+   if (write(membership, "0", 1) != 1) fail("WORKER_NATIVE_LAUNCH_ATTACH_FAILED");
+   if (close(membership) || close(scope)) fail("WORKER_NATIVE_LAUNCH_CLOSE_FAILED");
+-  if (setenv("KUBECLAW_NATIVE_SCOPE", argv[1], 1)) fail("WORKER_NATIVE_LAUNCH_ENVIRONMENT_FAILED");
++  if (setenv("KUBECLAW_NATIVE_SCOPE", parent_path, 1)) fail("WORKER_NATIVE_LAUNCH_ENVIRONMENT_FAILED");
+   if (setgroups(0, NULL) || setresgid(gid, gid, gid) || setresuid(uid, uid, uid)
+       || prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0)) fail("WORKER_NATIVE_LAUNCH_DROP_PRIVILEGE_FAILED");
+   if (getuid() != uid || geteuid() != uid || getgid() != gid || getegid() != gid) {
+@@ -80,6 +111,6 @@ int main(int argc, char **argv) {
+   if (prctl(PR_SET_PDEATHSIG, SIGKILL) || getppid() != (pid_t)supervisor) {
+     fail("WORKER_NATIVE_LAUNCH_PARENT_LOST");
+   }
+-  execv(argv[4], &argv[4]);
++  execv(argv[8], &argv[8]);
+   fail("WORKER_NATIVE_LAUNCH_EXEC_FAILED");
+ }
+diff --git a/skills/worker/core/worker/native-worker-ownership.ts b/skills/worker/core/worker/native-worker-ownership.ts
+index 7b2cd8ab..2939813a 100644
+--- a/skills/worker/core/worker/native-worker-ownership.ts
++++ b/skills/worker/core/worker/native-worker-ownership.ts
+@@ -1,4 +1,5 @@
+ import fs from 'node:fs';
++import { randomUUID } from 'node:crypto';
+ import { NativeProcessLaunches } from './native-process-launches.ts';
+ import type { ChildProcessWithoutNullStreams } from 'node:child_process';
+ import { NativeWorkerResourceScope, type NativeWorkerScopeLimits } from './native-resource-scope.ts';
+@@ -24,6 +25,7 @@ export interface NativeWorkerLaunchCommand {
+   readonly arguments: readonly string[];
+   readonly cwd: string;
+   readonly environment: NodeJS.ProcessEnv;
++  readonly resourceLimits?: NativeWorkerScopeLimits;
+ }
+ 
+ export interface NativeWorkerLaunchAuthority {
+@@ -49,6 +51,7 @@ export class NativeWorkerOwnershipLease {
+   #launch: Promise<ChildProcessWithoutNullStreams> | undefined;
+   #completion: Promise<NativeWorkerResourceObservation> | undefined;
+   #launcher: string | undefined;
++  #childLaunches: Promise<unknown> = Promise.resolve();
+   readonly #launchers = new NativeProcessLaunches();
+ 
+   constructor(scope: NativeWorkerResourceScope, record: WorkerOwnershipRecord, options: NativeWorkerOwnershipOptions,
+@@ -61,14 +64,15 @@ export class NativeWorkerOwnershipLease {
+ 
+   /** Spawn is inside the launch fence; callers never receive a reusable admission path. */
+   launch(command: NativeWorkerLaunchCommand & { readonly launcher: string }, controlPipe = false): Promise<ChildProcessWithoutNullStreams> {
++    if (this.#record.topology.kind !== 'aggregate.v1') return Promise.reject(new Error('WORKER_OWNERSHIP_LEGACY_LAUNCH_FORBIDDEN'));
+     if (this.#started || this.#closing) return Promise.reject(new Error('WORKER_NATIVE_LAUNCH_FENCED'));
+     const input = structuredClone(command);
+     this.#launcher = input.launcher;
+     this.#started = true;
+-    this.#launch = this.#options.store.transition(this.#record, 'running').then(record => {
++    this.#launch = this.#options.store.transition(this.#record, 'running').then(async record => {
+       this.#record = record;
+       if (this.#closing) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+-      return this.#spawn(input, controlPipe);
++      return this.#startChild('host', input, controlPipe);
+     });
+     return this.#launch;
+   }
+@@ -80,16 +84,24 @@ export class NativeWorkerOwnershipLease {
+       if (this.#closing || !this.#started || !this.#launch) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+       await this.#launch;
+       if (this.#closing || this.#record.phase !== 'running') throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+-      // Check the durable binding before every start. The same launcher attaches
+-      // the new process before exec and drops credentials before any role code.
+-      this.#scope.observe();
+-      return this.#spawn(input, false);
++      const pending = this.#childLaunches.then(() => this.#startChild(`helper-${randomUUID()}`, input, false));
++      this.#childLaunches = pending.catch(() => undefined);
++      return pending;
+     } });
+   }
+ 
+-  #spawn(command: NativeWorkerLaunchCommand, controlPipe: boolean): ChildProcessWithoutNullStreams {
++  async #startChild(name: string, command: NativeWorkerLaunchCommand, controlPipe: boolean): Promise<ChildProcessWithoutNullStreams> {
+     if (this.#closing || !this.#launcher) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
+-    return this.#launchers.spawn(this.#launcher, [this.#scope.launcherPath(), String(command.uid), String(command.gid),
++    this.#scope.verifyChildren(this.#record.topology.children, false);
++    const limits = this.#scope.childLimits(command.resourceLimits);
++    this.#record = await this.#options.store.reserveChild(this.#record, name, limits);
++    if (this.#closing) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
++    const reserved = this.#record.topology.children.find(child => child.name === name)!;
++    const binding = this.#scope.createChild(reserved);
++    this.#record = await this.#options.store.bindChild(this.#record, name, binding);
++    if (this.#closing) throw new Error('WORKER_NATIVE_LAUNCH_FENCED');
++    const child = this.#record.topology.children.find(item => item.name === name)!;
++    return this.#launchers.spawn(this.#launcher, [...this.#scope.childLaunchArguments(child), String(command.uid), String(command.gid),
+       command.executable, ...command.arguments], { cwd: command.cwd,
+       env: { ...command.environment, KUBECLAW_NATIVE_SUPERVISOR_PID: String(process.pid) } }, controlPipe);
+   }
+@@ -108,19 +120,36 @@ export class NativeWorkerOwnershipLease {
+     return this.#completion;
+   }
+ 
+-  async #finish(): Promise<NativeWorkerResourceObservation> {
+-    // A concurrent fsync of the launch fence must settle before the terminal CAS.
+-    await this.#launch?.catch(() => undefined);
++  async #drainOwnedSubtree(): Promise<NativeWorkerResourceObservation> {
++    const errors: unknown[] = [];
++    // A pre-entry launcher failure cannot strand already entered descendants.
++    try { await this.#launchers.drain(this.#options.drainTimeoutMs); }
++    catch (error) { errors.push(error); }
++    // Unknown/replaced groups are never adopted, killed or removed as owned work.
++    this.#scope.verifyChildren(this.#record.topology.children, this.#record.phase === 'empty');
+     try {
+-      // Include launchers that have not yet joined the cgroup. Reaping these
+-      // closes the admission race before the final kernel drain and disposal.
+-      await this.#launchers.drain(this.#options.drainTimeoutMs);
+       if (this.#record.phase !== 'quiescing' && this.#record.phase !== 'empty') {
+         const notLaunched = this.#record.phase === 'allocated' && !this.#started;
+         this.#record = await this.#options.store.transition(this.#record, 'quiescing',
+           notLaunched ? { diagnosis: 'WORKER_NATIVE_ALLOCATION_NOT_LAUNCHED' } : {});
+       }
+-      const observation = await this.#scope.terminateAndDrain(this.#options.drainTimeoutMs);
++    } catch (error) { errors.push(error); }
++    let observation: NativeWorkerResourceObservation | undefined;
++    // Quota/fsync failure must not make identity-checked kernel drain unreachable.
++    // Any failure still prevents finalization, deletion and reservation release.
++    try { observation = await this.#scope.terminateAndDrain(this.#options.drainTimeoutMs); }
++    catch (error) { errors.push(error); }
++    if (errors.length === 1) throw errors[0];
++    if (errors.length) throw new AggregateError(errors, 'WORKER_NATIVE_QUIESCENCE_INCOMPLETE');
++    return observation!;
++  }
++
++  async #finish(): Promise<NativeWorkerResourceObservation> {
++    // A concurrent fsync of the launch fence must settle before the terminal CAS.
++    await this.#launch?.catch(() => undefined);
++    await this.#childLaunches;
++    try {
++      const observation = await this.#drainOwnedSubtree();
+       if (this.#record.finalObservation !== null && canonicalJson(this.#record.finalObservation) !== canonicalJson(observation)) {
+         throw new Error('WORKER_NATIVE_TERMINAL_COUNTERS_CHANGED');
+       }
+@@ -129,6 +158,7 @@ export class NativeWorkerOwnershipLease {
+         // empty phase. A crash after rmdir must not erase accounting evidence.
+         this.#record = await this.#options.store.transition(this.#record, 'empty', { finalObservation: observation });
+       }
++      this.#scope.disposeChildren(this.#record.topology.children);
+       this.#scope.dispose();
+       this.#record = await this.#options.store.transition(this.#record, 'disposed');
+       return observation;
+@@ -217,7 +247,7 @@ export class NativeWorkerOwnership {
+     let record: WorkerOwnershipRecord | undefined;
+     try {
+       record = await this.#options.store.reserve(captured);
+-      if (record.phase !== 'reserved') throw new Error('WORKER_NATIVE_IDENTITY_ALREADY_USED');
++      if (record.phase !== 'reserved' || record.topology.kind !== 'aggregate.v1') throw new Error('WORKER_NATIVE_IDENTITY_ALREADY_USED');
+       const scope = NativeWorkerResourceScope.createReserved(this.#options.cgroupRoot, record.scopeName, requested);
+       record = await this.#options.store.transition(record, 'allocated', { binding: scope.binding() });
+       const lease = new NativeWorkerOwnershipLease(scope, record, this.#options, failed => {
+@@ -272,11 +302,11 @@ export class NativeWorkerOwnership {
+     if (!exists) throw new Error('WORKER_NATIVE_OWNED_SCOPE_MISSING');
+     let scope: NativeWorkerResourceScope;
+     if (record.phase === 'reserved') {
+-      scope = NativeWorkerResourceScope.recoverEmptyReservation(this.#options.cgroupRoot, record.scopeName);
++      scope = NativeWorkerResourceScope.recoverEmptyReservation(this.#options.cgroupRoot, record.scopeName, record.topology.kind === 'aggregate.v1');
+       record = await this.#options.store.transition(record, 'allocated', { binding: scope.binding() });
+     } else {
+       if (!record.binding) throw new Error('WORKER_NATIVE_UNBOUND_SCOPE_UNRESOLVED');
+-      scope = NativeWorkerResourceScope.reopen(this.#options.cgroupRoot, record.binding);
++      scope = NativeWorkerResourceScope.reopen(this.#options.cgroupRoot, record.binding, record.topology.kind === 'aggregate.v1');
+     }
+     await new NativeWorkerOwnershipLease(scope, record, this.#options).finish();
+   }
+diff --git a/skills/worker/core/worker/native-worker-process.ts b/skills/worker/core/worker/native-worker-process.ts
+index 35666cb3..072017e2 100644
+--- a/skills/worker/core/worker/native-worker-process.ts
++++ b/skills/worker/core/worker/native-worker-process.ts
+@@ -69,7 +69,7 @@ export async function runNativeWorkerProcess(options: NativeWorkerProcessOptions
+   const input = Buffer.from(options.input);
+   const command = structuredClone(options.command);
+   options.signal?.throwIfAborted();
+-  const lease = await options.owner.allocate(options.identity, limits);
++  const lease = await options.owner.allocate(options.identity, { memoryBytes: limits.memoryBytes, tasks: limits.tasks });
+   let child: ChildProcessWithoutNullStreams | undefined;
+   try {
+     options.signal?.throwIfAborted();
+diff --git a/skills/worker/core/worker/ownership-state.ts b/skills/worker/core/worker/ownership-state.ts
+index cfb0922b..41890f03 100644
+--- a/skills/worker/core/worker/ownership-state.ts
++++ b/skills/worker/core/worker/ownership-state.ts
+@@ -1,9 +1,18 @@
+ import type { WorkerOwnershipIdentity, WorkerOwnershipPhase, WorkerOwnershipRecord, WorkerScopeBinding } from './ownership-store.ts';
++import { validateTopology } from './ownership-children.ts';
+ import { sha256Digest } from './digest.ts';
+ import { validateNativeWorkerResourceObservation } from './native-resource-observation.ts';
+ 
++export const maximumOwnershipDiagnosisUnits = 4096;
++export const maximumOwnershipHostIdentityCharacters = 256;
++
++export function validateOwnershipHostIdentity(value: unknown): asserts value is string {
++  if (typeof value !== 'string' || value.length > maximumOwnershipHostIdentityCharacters
++    || !/^[A-Za-z0-9][A-Za-z0-9:._-]*$/u.test(value)) throw new Error('WORKER_OWNERSHIP_HOST_IDENTITY_INVALID');
++}
++
+ export interface WorkerOwnershipState {
+-  schemaVersion: 'worker-ownership-store.v2';
++  schemaVersion: 'worker-ownership-store.v3';
+   hostIdentity: string | null;
+   records: WorkerOwnershipRecord[];
+ }
+@@ -55,7 +64,7 @@ function bindingValid(binding: unknown, scopeName: string): asserts binding is W
+ }
+ 
+ export function validateRecord(record: unknown): asserts record is WorkerOwnershipRecord {
+-  exact(record, ['identity', 'scopeName', 'revision', 'phase', 'binding', 'diagnosis', 'finalObservation']);
++  exact(record, ['identity', 'scopeName', 'revision', 'phase', 'binding', 'diagnosis', 'finalObservation', 'topology']);
+   identityValid(record.identity);
+   if (typeof record.scopeName !== 'string' || !/^worker-[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(record.scopeName)
+     || !Number.isSafeInteger(record.revision) || Number(record.revision) < 1
+@@ -63,6 +72,7 @@ export function validateRecord(record: unknown): asserts record is WorkerOwnersh
+     throw new Error('WORKER_OWNERSHIP_RECORD_INVALID');
+   }
+   validateRecordBinding(record);
++  validateTopology(record.topology, record.binding as WorkerScopeBinding | null);
+   validateDiagnosis(record);
+   if (record.finalObservation !== null) {
+     validateNativeWorkerResourceObservation(record.finalObservation);
+@@ -82,7 +92,7 @@ function validateRecordBinding(record: Record<string, unknown>): void {
+ 
+ function validateDiagnosis(record: Record<string, unknown>): void {
+   if (record.diagnosis !== null && (typeof record.diagnosis !== 'string' || record.diagnosis.length < 1
+-    || record.diagnosis.length > 4096)) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_INVALID');
++    || record.diagnosis.length > maximumOwnershipDiagnosisUnits)) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_INVALID');
+   if (['unresolved', 'abandoned'].includes(String(record.phase)) && record.diagnosis === null) throw new Error('WORKER_OWNERSHIP_DIAGNOSIS_REQUIRED');
+ }
+ 
+@@ -101,13 +111,13 @@ export function decodeOwnershipState(value: unknown, maximumRecords: number): Wo
+     if (keys.has(identityKey) || scopes.has(record.scopeName)) throw new Error('WORKER_OWNERSHIP_DUPLICATE');
+     keys.add(identityKey); scopes.add(record.scopeName);
+   }
+-  return { schemaVersion: 'worker-ownership-store.v2', hostIdentity, records } as WorkerOwnershipState;
++  return { schemaVersion: 'worker-ownership-store.v3', hostIdentity, records } as WorkerOwnershipState;
+ }
+ 
+ function statePayload(value: unknown) {
+   const legacy = typeof value === 'object' && value !== null && 'schemaVersion' in value && value.schemaVersion === 'worker-ownership-store.v1';
+   exact(value, legacy ? ['schemaVersion', 'records'] : ['schemaVersion', 'hostIdentity', 'records']);
+-  if (!['worker-ownership-store.v1', 'worker-ownership-store.v2'].includes(String(value.schemaVersion)) || !Array.isArray(value.records)) {
++  if (!['worker-ownership-store.v1', 'worker-ownership-store.v2', 'worker-ownership-store.v3'].includes(String(value.schemaVersion)) || !Array.isArray(value.records)) {
+     throw new Error('WORKER_OWNERSHIP_STORE_INVALID');
+   }
+   const records = legacy ? value.records.map(record => {
+@@ -115,8 +125,10 @@ function statePayload(value: unknown) {
+     return { ...record, finalObservation: null };
+   }) : value.records;
+   const hostIdentity = legacy ? null : value.hostIdentity;
+-  if (hostIdentity !== null && (typeof hostIdentity !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9:._-]{0,255}$/u.test(hostIdentity))) {
+-    throw new Error('WORKER_OWNERSHIP_HOST_IDENTITY_INVALID');
+-  }
+-  return { records, hostIdentity };
++  if (hostIdentity !== null) validateOwnershipHostIdentity(hostIdentity);
++  const upgraded = value.schemaVersion === 'worker-ownership-store.v3' ? records : records.map(record => {
++    exact(record, ['identity', 'scopeName', 'revision', 'phase', 'binding', 'diagnosis', 'finalObservation']);
++    return { ...record, topology: { kind: 'legacy-leaf', children: [] } };
++  });
++  return { records: upgraded, hostIdentity };
+ }
+diff --git a/skills/worker/core/worker/ownership-store.ts b/skills/worker/core/worker/ownership-store.ts
+index 762c6442..5a1fb165 100644
+--- a/skills/worker/core/worker/ownership-store.ts
++++ b/skills/worker/core/worker/ownership-store.ts
+@@ -3,9 +3,12 @@ import { constants } from 'node:fs';
+ import path from 'node:path';
+ import { randomUUID } from 'node:crypto';
+ import { withDurableStoreLock, writeDurableState } from '@kubeclaw/plugin-foundation/observability/durable-delivery';
++import { childNameValid, validateChildLimits, type WorkerScopeTopology } from './ownership-children.ts';
++import type { NativeWorkerScopeLimits } from './native-resource-scope.ts';
++import { ownershipTerminalCapacityBytes } from './ownership-capacity.ts';
+ import { canonicalJson } from './digest.ts';
+ import type { NativeWorkerResourceObservation } from './native-resource-observation.ts';
+-import { transitions, identityValid, validateRecord, key, decodeOwnershipState, type WorkerOwnershipState as State } from './ownership-state.ts';
++import { transitions, validateOwnershipHostIdentity, identityValid, validateRecord, key, decodeOwnershipState, type WorkerOwnershipState as State } from './ownership-state.ts';
+ 
+ export interface WorkerOwnershipIdentity {
+   readonly workerId: string;
+@@ -33,6 +36,7 @@ export interface WorkerOwnershipRecord {
+   readonly binding: WorkerScopeBinding | null;
+   readonly diagnosis: string | null;
+   readonly finalObservation: NativeWorkerResourceObservation | null;
++  readonly topology: WorkerScopeTopology;
+ }
+ 
+ 
+@@ -73,7 +77,7 @@ export class FileWorkerOwnershipStore {
+ 
+   /** A changed boot is only a reboot proof after this store is bound to one host. */
+   async bindHostIdentity(hostIdentity: string, currentBootId: string): Promise<void> {
+-    if (!/^[A-Za-z0-9][A-Za-z0-9:._-]{0,255}$/u.test(hostIdentity)) throw new Error('WORKER_OWNERSHIP_HOST_IDENTITY_INVALID');
++    validateOwnershipHostIdentity(hostIdentity);
+     if (!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/u.test(currentBootId)) throw new Error('WORKER_OWNERSHIP_BOOT_IDENTITY_INVALID');
+     await withDurableStoreLock(this.#file, async () => {
+       const state = await this.#read();
+@@ -112,8 +116,10 @@ export class FileWorkerOwnershipStore {
+       if (previous.some(record => !['disposed', 'abandoned'].includes(record.phase))) throw new Error('WORKER_OWNERSHIP_RECONCILIATION_REQUIRED');
+       const record: WorkerOwnershipRecord = {
+         identity, scopeName: `worker-${randomUUID()}`, revision: 1, phase: 'reserved', binding: null, diagnosis: null, finalObservation: null,
++        topology: { kind: 'aggregate.v1', children: [] },
+       };
+       state.records.push(record);
++      ownershipTerminalCapacityBytes(state, this.#maximumBytes);
+       await this.#write(state);
+       return structuredClone(record);
+     });
+@@ -144,11 +150,53 @@ export class FileWorkerOwnershipStore {
+     });
+   }
+ 
++  /** The entire topology is CAS-bound and charged to the same durable metadata quota. */
++  async reserveChild(input: WorkerOwnershipRecord, name: string, limits: NativeWorkerScopeLimits): Promise<WorkerOwnershipRecord> {
++    validateChildLimits(limits);
++    if (!childNameValid(name)) throw new Error('WORKER_OWNERSHIP_CHILD_INVALID');
++    const child = { name, limits: { ...limits }, binding: null };
++    return this.#changeChildren(input, current => {
++      if (current.phase !== 'running' || current.topology.children.some(item => item.name === name)) {
++        throw new Error('WORKER_OWNERSHIP_CHILD_RESERVATION_INVALID');
++      }
++      return [...current.topology.children, child];
++    }, true);
++  }
++
++  async bindChild(input: WorkerOwnershipRecord, name: string, binding: WorkerScopeBinding): Promise<WorkerOwnershipRecord> {
++    const captured = { ...binding };
++    return this.#changeChildren(input, current => {
++      const child = current.topology.children.find(item => item.name === name);
++      if (!child || child.binding !== null || current.phase !== 'running') throw new Error('WORKER_OWNERSHIP_CHILD_REBIND_FORBIDDEN');
++      return current.topology.children.map(item => item.name === name ? { ...item, binding: captured } : item);
++    }, false);
++  }
++
++  async #changeChildren(input: WorkerOwnershipRecord,
++    update: (current: WorkerOwnershipRecord) => WorkerScopeTopology['children'], admission: boolean): Promise<WorkerOwnershipRecord> {
++    const expected = structuredClone(input);
++    validateRecord(expected);
++    return withDurableStoreLock(this.#file, async () => {
++      const state = await this.#read();
++      const index = state.records.findIndex(record => key(record.identity) === key(expected.identity));
++      const current = state.records[index];
++      if (!current || canonicalJson(current) !== canonicalJson(expected)) throw new Error('WORKER_OWNERSHIP_CAS_CONFLICT');
++      if (current.topology.kind !== 'aggregate.v1') throw new Error('WORKER_OWNERSHIP_LEGACY_LAUNCH_FORBIDDEN');
++      const updated = { ...current, revision: current.revision + 1,
++        topology: { kind: current.topology.kind, children: update(current) } };
++      validateRecord(updated);
++      state.records[index] = updated;
++      if (admission) ownershipTerminalCapacityBytes(state, this.#maximumBytes);
++      await this.#write(state);
++      return structuredClone(updated);
++    });
++  }
++
+   async #read(): Promise<State> {
+     let handle;
+     try { handle = await fs.open(this.#file, constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK); }
+     catch (error) {
+-      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return { schemaVersion: 'worker-ownership-store.v2', hostIdentity: null, records: [] };
++      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return { schemaVersion: 'worker-ownership-store.v3', hostIdentity: null, records: [] };
+       throw error;
+     }
+     let value: unknown;
+diff --git a/tests/fixtures/buster-fixture-protocol.mts b/tests/fixtures/buster-fixture-protocol.mts
+index a4a65121..7c6d0b28 100644
+--- a/tests/fixtures/buster-fixture-protocol.mts
++++ b/tests/fixtures/buster-fixture-protocol.mts
+@@ -1,3 +1,4 @@
++import { nativeResourcePolicy } from '../../skills/prism/tests/native/resource-policy.mts';
+ import { randomUUID } from 'node:crypto';
+ import { validateFixtureAdmission, type BusterFixtureAdmission, type BusterFixtureReadiness } from '../../skills/buster/engine/test-gates/native-fixture-state.ts';
+ import { prismNativeAttempt } from '../../skills/prism/engine/worker-envelope.ts';
+@@ -6,7 +7,7 @@ import { sha256Digest, workerProfileDigest, workerAttemptSpecDigest } from '@kub
+ // Protocol vectors feed real stores; they do not impersonate a running kernel scope.
+ export function admission(): BusterFixtureAdmission {
+   const envelope = prismNativeAttempt('render', { artifactId: 'fixture-input', type: 'input', mediaType: 'application/json',
+-    contentDigest: sha256Digest('{}'), sizeBytes: 2, storageUrl: 'file:///fixture-input' }, `fixture-${randomUUID()}`);
++    contentDigest: sha256Digest('{}'), sizeBytes: 2, storageUrl: 'file:///fixture-input' }, `fixture-${randomUUID()}`, nativeResourcePolicy);
+   envelope.profile = { ...envelope.profile, workerType: 'buster', profileId: 'buster-fixture-lifetime-v1' };
+   envelope.moduleId = 'fixture-module'; envelope.gateId = 'fixture-gate';
+   envelope.profile.profileDigest = workerProfileDigest(envelope.profile);
+diff --git a/tests/verification/reliability/admission-retirement.test.mjs b/tests/verification/reliability/admission-retirement.test.mjs
+index 2b398ce8..0e2de0d0 100644
+--- a/tests/verification/reliability/admission-retirement.test.mjs
++++ b/tests/verification/reliability/admission-retirement.test.mjs
+@@ -1,86 +1,24 @@
++import {runPipelineV2} from '../../../skills/nova/core/execution/engine.ts';
++import {runRoot} from '../../../skills/nova/core/execution/run-root.ts';
++import {budgetFixture} from './repair-budget-fixture.mjs';
++import {admissionLimits,attemptLimits,resultFor,fixture,importCompletion,projectionFixture} from './attempt-retirement-fixture.mjs';
++export {projectionFixture} from './attempt-retirement-fixture.mjs';
+ import assert from 'node:assert/strict';
+ import fs from 'node:fs';
+-import os from 'node:os';
+ import path from 'node:path';
+ import {test} from 'node:test';
+ import {spawn,execFileSync} from 'node:child_process';
+ import {once} from 'node:events';
+ import {workerAttemptResultDigest} from '../../../contracts/pipeline-worker-core/v1/src/index.ts';
+ import {producerRecordDigest,canonicalJson} from '../../../contracts/pipeline-observability/v1/src/index.ts';
+-import {FileDurableAttemptStore,createProducerClosure,scopedEvidenceId} from '../../../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';
++import {FileDurableAttemptStore} from '../../../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';
+ import {FileObservabilityAdmissionStore,FileProducerOutbox,deliverPending} from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';
+ import {buildClawDeckObservationView} from '../../../skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts';
+ import {retireAdmission} from '../../../scripts/retire-admission.mjs';
+-import {runPipelineV2} from '../../../skills/nova/core/execution/engine.ts';
+-import {runRoot} from '../../../skills/nova/core/execution/run-root.ts';
+-import {budgetFixture} from './repair-budget-fixture.mjs';
+ import {NovaObservabilityReconciler} from '../../../skills/nova/core/observability/reconciler.ts';
+ import {retireAttemptResult} from '../../../scripts/retire-attempt-result.mjs';
+ import {attemptStoreDigest} from '../../../skills/common/plugin-runtime/foundation/observability/attempt-projection.ts';
+ import {planRetirement} from '../../../scripts/observability-retirement-plan.mjs';
+-const admissionLimits={maximumIngressBytes:20000,maximumRecords:2,maximumBytes:50000,maximumQuarantineRecords:10,maximumQuarantineBytes:5000};
+-const attemptLimits={maximumEvidenceObjects:10,maximumEvidenceBytes:10000,maximumEvidenceObjectBytes:1000,maximumResults:10,maximumClosures:10,maximumMetadataBytes:100000,maximumPendingEvidenceAgeMs:60000};
+-function resultFor(index) {
+-  const value = {
+-    schemaVersion: "worker-attempt-result.v1",
+-    protocolVersion: "worker-protocol.v1",
+-    attemptId: `attempt:${index}`,
+-    claimId: `claim:${index}:1`,
+-    claimGeneration: 1,
+-    workerId: `worker:${index % 4}`,
+-    state: "completed",
+-    startedAt: "2026-08-09T13:59:00Z",
+-    completedAt: "2026-08-09T13:59:30Z",
+-    durationMs: 30000,
+-    summary: `Attempt ${index} passed.`,
+-    specialistResult: {
+-      schemaId: "test-result.v1",
+-      schemaDigest: "sha256:".padEnd(71, "0"),
+-      values: { outcome: "passed" },
+-    },
+-    error: null,
+-    evidence: [],
+-    resources: { logBytes: 0, resultBytes: 100, evidenceBytes: 0 },
+-    cleanup: { state: "not_required", summary: null },
+-    exitCode: 0,
+-    signal: null,
+-    resultDigest: "sha256:".padEnd(71, "0"),
+-    receipt: {
+-      receiptId: `receipt:${index}`,
+-      receiptDigest: "sha256:".padEnd(71, "0"),
+-    },
+-  };
+-  value.resultDigest = workerAttemptResultDigest(value);
+-  return value;
+-}
+-async function fixture(t,failures={},resultDetail='') {
+-  const root=fs.mkdtempSync(path.join(os.tmpdir(),'admission-retirement-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+-  const native=budgetFixture(root,failures),runId='run:admission-retirement';
+-  await runPipelineV2(native.platform,native.definition,runId);
+-  const run=runRoot(native.platform.storageRoot,runId),attemptRoot=path.join(run,'observability/attempts'),admissionRoot=path.join(run,'observability/admission');
+-  const attempts=new FileDurableAttemptStore(attemptRoot,attemptLimits),admission=new FileObservabilityAdmissionStore(admissionRoot,admissionLimits);
+-  const result=resultFor(1),producer={producerId:'attempt:1',bootId:'claim:1',producerType:'buster-attempt'};
+-  if(resultDetail)result.specialistResult.values.detail=resultDetail;
+-  const evidence=await attempts.storeEvidence({pipelineRunId:runId,attemptId:result.attemptId,claimGeneration:1,producer,evidenceId:'evidence:1',type:'log',mediaType:'text/plain'},Buffer.from('original evidence bytes'));
+-  result.evidence=[evidence];result.resultDigest=workerAttemptResultDigest(result);
+-  const unsigned={schemaVersion:'producer-record.v1',recordId:'record:1',producer,sequence:1,recordType:'attempt.completed',occurredAt:'2026-08-09T13:59:30Z',
+-    correlation:{pipelineRunId:runId,moduleId:null,gateId:'final',attemptId:result.attemptId,claimId:result.claimId,claimGeneration:1,traceId:null,parentEventId:null},
+-    payload:{workerId:result.workerId,resultDigest:result.resultDigest,state:'completed',diagnostic:'original admitted diagnostic '.repeat(120)}};
+-  const record={...unsigned,recordDigest:producerRecordDigest(unsigned)};
+-  const closure=createProducerClosure({schemaVersion:'producer-closure.v1',closureId:'closure:1',producer,pipelineRunId:runId,firstSequence:1,finalSequence:1,recordCount:1,
+-    requiredEvidenceIds:[scopedEvidenceId(result.attemptId,1,evidence.evidenceId)],closedAt:'2026-08-09T13:59:31Z'});
+-  await attempts.storeResult(runId,result,{record,closure},{planId:'plan:1',nodeId:'node:1'});
+-  await attempts.resumeCompletion(runId,result.attemptId,1,admission);
+-  const otherUnsigned={...unsigned,recordId:'record:other',producer:{...producer,producerId:'active'},correlation:{...unsigned.correlation,pipelineRunId:'run:waiting'}};
+-  const other={...otherUnsigned,recordDigest:producerRecordDigest(otherUnsigned)};
+-  await admission.admit(canonicalJson(other));
+-  const scope={schemaVersion:'admission-retirement-scope.v1',action:'compact-admission-completion',actor:'operator:local',operationId:'compact:one',runId,novaStorageRoot:native.platform.storageRoot,
+-    attemptRoot,admissionRoot,admissionLimits,attemptLimits,attemptId:result.attemptId,claimGeneration:1,recordDigest:record.recordDigest,
+-    expectedJournalHead:JSON.parse(fs.readFileSync(path.join(run,'events.jsonl'),'utf8').trim().split('\n').at(-1)).hash,
+-    expectedSnapshotDigest:JSON.parse(fs.readFileSync(path.join(run,'run-snapshot.json'),'utf8')).digest,
+-    inventoryLimits:{maximumFiles:10000,maximumTotalBytes:256*1024**2,maximumSnapshotBytes:32*1024**2}};
+-  return {root,run,runId,attempts,admission,record,other,result,closure,evidence,scope};
+-}
+ test('original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly',async t=>{
+   const f=await fixture(t),file=path.join(f.scope.admissionRoot,'admission.json');
+   const prior=fs.readFileSync(file),source=fs.readFileSync(path.join(f.scope.attemptRoot,'attempt-store.json'));
+@@ -180,23 +118,6 @@ test('retirement rejects actual FIFO, final symlink and oversized evidence befor
+   assert.equal((await retireAdmission(f.scope)).newlyRetired,true);
+ });
+ 
+-async function importCompletion(f, attempts = f.attempts) {
+-  const journalFile = path.join(f.run, 'observability/reconciliation.jsonl');
+-  const desired = {
+-    pipelineRunId: f.runId, planId: 'plan:1', nodeId: 'node:1',
+-    attemptId: f.result.attemptId, claimId: f.result.claimId,
+-    claimGeneration: f.result.claimGeneration, workerId: f.result.workerId,
+-    claimExpiresAt: '2100-01-01T00:00:00Z', gateClass: 'authoritative-final',
+-    requiredClosures: [{closureId: f.closure.closureId, producer: f.closure.producer}],
+-  };
+-  const reconciler = new NovaObservabilityReconciler({attemptStore: attempts, admissionStore: f.admission, journalFile});
+-  const imported = await reconciler.reconcile([desired]);
+-  assert.equal(imported[0].action, 'imported');
+-  assert.equal(imported[0].completeness.state, 'complete');
+-  assert.deepEqual(imported[0].result, f.result);
+-  return {journalFile, desired, reconciler};
+-}
+-
+ test('real confirmed import and admission retirement do not release the remaining mixed-run result quota', async t => {
+   const f = await fixture(t);
+   const limits = {...attemptLimits, maximumResults: 2};
+@@ -275,22 +196,6 @@ test('existing import journal is a full result checkpoint but not a replacement
+     sourceRestored: 'original duplicate ACK and already-imported result recover', overallFindingComplete: false}));
+ });
+ 
+-export async function projectionFixture(t,failures={}) {
+-  const f=await fixture(t,failures,'original imported result detail '.repeat(600));
+-  const limits={...attemptLimits,maximumResults:2};
+-  const attempts=new FileDurableAttemptStore(f.scope.attemptRoot,limits);
+-  const active=resultFor(2);
+-  await attempts.storeResult('run:waiting',active,null,{planId:'plan:waiting',nodeId:'node:waiting'});
+-  const imported=await importCompletion(f,attempts);
+-  const journal=JSON.parse(fs.readFileSync(imported.journalFile,'utf8').trim().split('\n').at(-1));
+-  const scope={schemaVersion:'attempt-result-retirement-scope.v1',action:'compact-imported-result',
+-    novaStorageRoot:f.scope.novaStorageRoot,attemptRoot:f.scope.attemptRoot,attemptLimits:limits,inventoryLimits:f.scope.inventoryLimits,
+-    intent:{pipelineRunId:f.runId,attemptId:f.result.attemptId,claimGeneration:1,resultDigest:f.result.resultDigest,recordDigest:f.record.recordDigest,
+-      actor:'operator:local',operationId:'project:one',runRoot:f.run,runJournalHead:f.scope.expectedJournalHead,snapshotDigest:f.scope.expectedSnapshotDigest,
+-      expectedStoreDigest:attemptStoreDigest(fs.readFileSync(path.join(f.scope.attemptRoot,'attempt-store.json'))),journalSequence:journal.sequence,journalHash:journal.hash}};
+-  return {...f,attempts,limits,imported,projectionScope:scope};
+-}
+-
+ test('Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged',async t=>{
+   const f=await projectionFixture(t),file=path.join(f.scope.attemptRoot,'attempt-store.json');
+   const waitingRoot=path.join(f.root,'actual-projection-waiting-run');fs.mkdirSync(waitingRoot);
+diff --git a/tests/verification/reliability/attempt-projection-review.test.mjs b/tests/verification/reliability/attempt-projection-review.test.mjs
+index 00b77424..46db189b 100644
+--- a/tests/verification/reliability/attempt-projection-review.test.mjs
++++ b/tests/verification/reliability/attempt-projection-review.test.mjs
+@@ -4,7 +4,7 @@ import path from 'node:path';
+ import {setTimeout as delay} from 'node:timers/promises';
+ import {test} from 'node:test';
+ import {FileJournal} from '../../../skills/nova/core/state/journal.ts';
+-import {projectionFixture} from './admission-retirement.test.mjs';
++import {projectionFixture} from './attempt-retirement-fixture.mjs';
+ import {retireAttemptResult} from '../../../scripts/retire-attempt-result.mjs';
+ import {FileDurableAttemptStore} from '../../../skills/common/plugin-runtime/foundation/observability/durable-attempts.ts';
+ import {hashJournalRecord} from '../../../skills/common/plugin-runtime/foundation/observability/hash-journal.ts';
+diff --git a/tests/verification/reliability/buster-terminal-workspace-native.test.mts b/tests/verification/reliability/buster-terminal-workspace-native.test.mts
+index a183840a..4e843fd8 100644
+--- a/tests/verification/reliability/buster-terminal-workspace-native.test.mts
++++ b/tests/verification/reliability/buster-terminal-workspace-native.test.mts
+@@ -36,3 +36,60 @@ test('terminal cleanup unlinks a leaf symlink without deleting its target and re
+     await cleanupTerminalWorkspace(path.join(root, 'already-absent'));
+   } finally { fs.rmSync(root, { recursive: true, force: true }); }
+ });
++
++test('terminal cleanup rejects symlinks in ancestors of the job root', async () => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-cleanup-ancestor-'));
++  try {
++    const target = path.join(root, 'target');
++    fs.mkdirSync(path.join(target, 'job'), { recursive: true });
++    fs.writeFileSync(path.join(target, 'job', 'repository.tar.gz'), 'foreign archive');
++    fs.symlinkSync(target, path.join(root, 'linked'));
++    await assert.rejects(cleanupTerminalWorkspace(path.join(root, 'linked', 'job')), /BUSTER_TERMINAL_WORKSPACE_PARENT_INVALID/);
++    assert.equal(fs.readFileSync(path.join(target, 'job', 'repository.tar.gz'), 'utf8'), 'foreign archive');
++  } finally { fs.rmSync(root, { recursive: true, force: true }); }
++});
++
++for (const replaced of ['job', 'workspace'] as const) {
++  test(`terminal cleanup stays on original directory after ${replaced} is replaced during deletion`, async context => {
++    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'buster-cleanup-replaced-'));
++    const job = path.join(root, 'job'); const foreign = path.join(root, 'foreign');
++    const archived = path.join(root, 'original');
++    const disposable = ['repository.tar.gz', 'workspace/repository/source.ts', 'workspace/test-provider-snapshots/provider.js'];
++    const retained = ['result.json', 'workspace/evidence/proof.json', 'workspace/scratch/task.log'];
++    try {
++      for (const directory of [job, foreign]) {
++        for (const name of [...disposable, ...retained]) {
++          const file = path.join(directory, name);
++          fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, `${directory}:${name}`);
++        }
++      }
++      const originalRemove = fs.promises.rm;
++      let changed = false;
++      // Pause at the real deletion boundary, replace a parent on disk, then use
++      // the original fs implementation. No mocked deletion or fake success.
++      context.mock.method(fs.promises, 'rm', async (...args: Parameters<typeof fs.promises.rm>) => {
++        if (!changed) {
++          changed = true;
++          const original = replaced === 'job' ? job : path.join(job, 'workspace');
++          const replacement = replaced === 'job' ? foreign : path.join(foreign, 'workspace');
++          fs.renameSync(original, archived); fs.symlinkSync(replacement, original);
++        }
++        return originalRemove(...args);
++      });
++      await cleanupTerminalWorkspace(job);
++      context.mock.restoreAll();
++      assert.equal(changed, true);
++      for (const name of [...disposable, ...retained]) {
++        assert.equal(fs.readFileSync(path.join(foreign, name), 'utf8'), `${foreign}:${name}`);
++      }
++      const originalWorkspace = replaced === 'job' ? path.join(archived, 'workspace') : archived;
++      assert.equal(fs.existsSync(path.join(originalWorkspace, 'repository')), false);
++      assert.equal(fs.existsSync(path.join(originalWorkspace, 'test-provider-snapshots')), false);
++      assert.equal(fs.readFileSync(path.join(originalWorkspace, 'evidence/proof.json'), 'utf8'), `${job}:workspace/evidence/proof.json`);
++      assert.equal(fs.readFileSync(path.join(originalWorkspace, 'scratch/task.log'), 'utf8'), `${job}:workspace/scratch/task.log`);
++      const originalJob = replaced === 'job' ? archived : job;
++      assert.equal(fs.readFileSync(path.join(originalJob, 'result.json'), 'utf8'), `${job}:result.json`);
++      assert.equal(fs.existsSync(path.join(originalJob, 'repository.tar.gz')), false);
++    } finally { context.mock.restoreAll(); fs.rmSync(root, { recursive: true, force: true }); }
++  });
++}
+diff --git a/tests/verification/reliability/http-authority.test.mts b/tests/verification/reliability/http-authority.test.mts
+index d3f73996..0c817263 100644
+--- a/tests/verification/reliability/http-authority.test.mts
++++ b/tests/verification/reliability/http-authority.test.mts
+@@ -3,6 +3,7 @@ import { test } from 'node:test';
+ import http from 'node:http';
+ import { once } from 'node:events';
+ import { NetworkHttpCapabilityInvoker } from '../../../skills/buster/engine/test-gates/network-http-runtime.ts';
++import { createBusterCapabilityRuntime } from '../../../skills/buster/engine/test-gates/capability-runtime.ts';
+ 
+ test('suffix matching cannot contact an unrelated real HTTP service; exact origin works and redirects stop', async () => {
+   let contacts = 0;
+@@ -17,10 +18,13 @@ test('suffix matching cannot contact an unrelated real HTTP service; exact origi
+   const options = { allowedOrigins: [], allowedHostSuffixes: ['.0.0.1'], allowedPorts: [port], maximumResponseBytes: 4096, maximumExecutionMs: 2000 };
+   const request = (method: string, route = '/') => ({ operation: 'request', resource: { type: 'network.url', canonicalId: origin + route }, payload: { method } });
+   try {
+-    const restricted = new NetworkHttpCapabilityInvoker(options);
++    const restricted = createBusterCapabilityRuntime({ allowedCapabilities: new Set(['network.http']), networkHttp: options },
++      { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }).invoker!;
+     for (const method of ['GET', 'HEAD']) await assert.rejects(restricted.invoke('network.http', request(method), new AbortController().signal), /HTTP_REQUEST_EXACT_ORIGIN_REQUIRED/);
+     assert.equal(contacts, 0);
+-    const allowed = new NetworkHttpCapabilityInvoker({ ...options, allowedOrigins: [origin] });
++    const allowed = createBusterCapabilityRuntime({ allowedCapabilities: new Set(['network.http']),
++      networkHttp: { ...options, allowedOrigins: [origin] } },
++    { jobRoot: '/unused-network-only', workspaceRoot: '/unused-network-only/workspace' }).invoker!;
+     const response = await allowed.invoke('network.http', request('GET'), new AbortController().signal);
+     assert.equal(response.body, 'real service response');
+     assert.equal(contacts, 1);
+diff --git a/tests/verification/reliability/nova-remote-faults.mts b/tests/verification/reliability/nova-remote-faults.mts
+index 411907e3..0cac64eb 100644
+--- a/tests/verification/reliability/nova-remote-faults.mts
++++ b/tests/verification/reliability/nova-remote-faults.mts
+@@ -11,6 +11,8 @@ import { FileNovaRemotePlanStore, HttpRemotePlanTransport, NovaRemotePlanDispatc
+ export async function checkRemoteFaults(fixture: { port: number; token: string; temporary: string;
+   service: BusterRemotePlanService; job: (key: string) => RemotePlanJobV1; novaStore: (name: string) => FileNovaRemotePlanStore }) {
+   let mode = 'lost-submit'; let deletes = 0; let posts = 0; let held = 0; let closed = 0;
++  const lateSubmission = Promise.withResolvers<void>();
++  void lateSubmission.promise.catch(() => {});
+   const proxy = http.createServer((request, response) => {
+     if (request.method === 'DELETE') deletes++;
+     if (request.method === 'POST') posts++;
+@@ -18,8 +20,14 @@ export async function checkRemoteFaults(fixture: { port: number; token: string;
+       const chunks: Buffer[] = []; request.on('data', chunk => chunks.push(chunk));
+       request.on('end', () => setTimeout(() => {
+         const delayed = http.request({ hostname: '127.0.0.1', port: fixture.port, method: 'POST',
+-          path: request.url, headers: request.headers }, incoming => incoming.resume());
+-        delayed.on('error', () => response.destroy()); delayed.end(Buffer.concat(chunks));
++          path: request.url, headers: request.headers }, incoming => {
++          incoming.once('end', () => {
++            if (incoming.statusCode === 202) lateSubmission.resolve();
++            else lateSubmission.reject(new Error(`LATE_SUBMIT_STATUS:${incoming.statusCode}`));
++          });
++          incoming.once('error', error => lateSubmission.reject(error)); incoming.resume();
++        });
++        delayed.on('error', error => { lateSubmission.reject(error); response.destroy(); }); delayed.end(Buffer.concat(chunks));
+       }, 750));
+       return;
+     }
+@@ -73,6 +81,14 @@ export async function checkRemoteFaults(fixture: { port: number; token: string;
+     const lateJob = fixture.job('dispatch:cancel:deadline:late-submit');
+     await assert.rejects(dispatcher(fixture.novaStore('deadline-late')).dispatch(lateJob, { timeoutMs: 600 }), /TIMEOUT:REMOTE_STATE_UNKNOWN/u);
+     assert.equal(deletes, 1); assert.equal(posts, 1);
++    // The dispatch deadline does not prove delivery of the intentionally late
++    // request. Observe its actual durable HTTP acceptance before reading state.
++    let acceptanceTimer: NodeJS.Timeout | undefined;
++    try {
++      await Promise.race([lateSubmission.promise, new Promise<never>((_resolve, reject) => {
++        acceptanceTimer = setTimeout(() => reject(new Error('LATE_SUBMIT_NOT_ACCEPTED')), 5000);
++      })]);
++    } finally { clearTimeout(acceptanceTimer); }
+     assert.ok(['accepted', 'running'].includes((await fixture.service.status(lateJob.jobId)).state));
+     assert.equal((await fixture.novaStore('deadline-late').interruptions()).at(-1)!.remoteState, 'unknown');
+     await fixture.service.cancel(lateJob.jobId);
+diff --git a/tests/verification/reliability/tsconfig.native-scope.json b/tests/verification/reliability/tsconfig.native-scope.json
+index 9471e355..b1e22578 100644
+--- a/tests/verification/reliability/tsconfig.native-scope.json
++++ b/tests/verification/reliability/tsconfig.native-scope.json
+@@ -1,5 +1,5 @@
+ {
+   "extends": "../../../skills/worker/core/tsconfig.json",
+-  "include": ["worker-native-scope-live.mts"],
++  "include": ["worker-native-cleanup.test.mts", "worker-native-cleanup-retry.test.mts", "native-process-policy.test.mts", "worker-native-journal-capacity.test.mts", "worker-native-scope-live.mts", "worker-native-topology-live.mts", "worker-owned-children.test.mts", "worker-native-quiescence.test.mts", "worker-terminal-capacity.test.mts"],
+   "compilerOptions": { "rootDir": "../../.." }
+ }
+diff --git a/tests/verification/reliability/worker-native-contract.test.mts b/tests/verification/reliability/worker-native-contract.test.mts
+index ebf9ff22..7e06f052 100644
+--- a/tests/verification/reliability/worker-native-contract.test.mts
++++ b/tests/verification/reliability/worker-native-contract.test.mts
+@@ -1,3 +1,4 @@
++import { nativeResourcePolicy } from '../../../skills/prism/tests/native/resource-policy.mts';
+ import { currentTestCgroup } from './native-test-cgroup.mts';
+ import assert from 'node:assert/strict';
+ import test from 'node:test';
+@@ -18,7 +19,7 @@ test('V3 explicitly names Linux tasks while the original V1 envelope remains ind
+   validatePipelineWorkerCoreContract('workerAttemptEnvelope', legacy);
+   assert.equal(workerAttemptSpecDigest(legacy), legacy.attemptSpecDigest);
+   assert.equal(legacy.limits.processes, 256);
+-  const native = prismNativeAttempt('render', artifact, 'version-test');
++  const native = prismNativeAttempt('render', artifact, 'version-test', nativeResourcePolicy);
+   assert.deepEqual(checkWorkerResourceContractV3('workerAttemptEnvelope', native), { ok: true, errors: [] });
+   assert.equal(native.profile.resourceCapabilities.maximumTasks.unit, 'linux-tasks');
+   assert.equal('maximumProcesses' in native.resourceBudgets, false);
+@@ -28,7 +29,7 @@ test('V3 explicitly names Linux tasks while the original V1 envelope remains ind
+ 
+ test('native contract rejects relabelled process budgets, task units and unsafe integers even with recomputed digests', () => {
+   for (const mutation of ['old-field', 'old-unit', 'unsafe-integer']) {
+-    const native = prismNativeAttempt('render', artifact, `version-${mutation}`);
++    const native = prismNativeAttempt('render', artifact, `version-${mutation}`, nativeResourcePolicy);
+     const untrusted = JSON.parse(JSON.stringify(native));
+     if (mutation === 'old-field') untrusted.resourceBudgets.maximumProcesses = untrusted.resourceBudgets.maximumTasks;
+     if (mutation === 'old-unit') untrusted.profile.resourceCapabilities.maximumTasks.unit = 'processes';
+@@ -44,7 +45,7 @@ test('resource assessment compares real kernel task observations without manufac
+   // It does not assert that the container is an isolated production attempt.
+   const observation = observeNativeWorkerResources(currentTestCgroup());
+   assert.ok(observation.maximumTasks > 1);
+-  const native = prismNativeAttempt('render', artifact, 'task-policy');
++  const native = prismNativeAttempt('render', artifact, 'task-policy', nativeResourcePolicy);
+   native.resourceBudgets.cpuTimeMs = { state: 'unrequested' };
+   native.resourceBudgets.maximumMemoryBytes = { state: 'unrequested' };
+   native.resourceBudgets.maximumTasks = { state: 'requested', limit: observation.maximumTasks - 1 };
+diff --git a/tests/verification/reliability/worker-native-journal.test.mts b/tests/verification/reliability/worker-native-journal.test.mts
+index cfa5d685..942c83a8 100644
+--- a/tests/verification/reliability/worker-native-journal.test.mts
++++ b/tests/verification/reliability/worker-native-journal.test.mts
+@@ -1,3 +1,4 @@
++import { nativeResourcePolicy } from '../../../skills/prism/tests/native/resource-policy.mts';
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import fs from 'node:fs/promises';
+@@ -20,7 +21,7 @@ const artifact = { artifactId: 'input:journal-test', type: 'prism-engine-input',
+ test('new-admission rejection persists no accepted work and cannot block historical receipt replay', async () => {
+   const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-admission-'));
+   const journal = new NativeAttemptJournal(path.join(parent, 'journal'), limits);
+-  const envelope = prismNativeAttempt('render', artifact, 'admission-precondition');
++  const envelope = prismNativeAttempt('render', artifact, 'admission-precondition', nativeResourcePolicy);
+   const reject = () => { throw new Error('EXPIRED_NEW_ADMISSION'); };
+   try {
+     await assert.rejects(journal.withAttempt(envelope, async () => assert.fail('rejected work entered'), reject), /EXPIRED_NEW_ADMISSION/);
+@@ -40,7 +41,7 @@ for (const mode of ['accepted', 'sealed']) {
+   test(`real writer SIGKILL preserves ${mode} identity, original output and receipt without re-admission`, { timeout: 20000 }, async () => {
+     const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-crash-'));
+     const root = path.join(parent, 'journal');
+-    const envelope = prismNativeAttempt('render', artifact, 'journal-crash');
++    const envelope = prismNativeAttempt('render', artifact, 'journal-crash', nativeResourcePolicy);
+     const envelopePath = path.join(parent, 'envelope.json');
+     await fs.writeFile(envelopePath, JSON.stringify(envelope));
+     const child = spawn(process.execPath, [fileURLToPath(new URL('../../fixtures/worker-journal-writer.mjs', import.meta.url)), root, envelopePath, mode], { stdio: 'pipe' });
+@@ -82,7 +83,7 @@ test('journal binds the full envelope and reserves retained disk before admittin
+   const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-quota-'));
+   const root = path.join(parent, 'journal');
+   const journal = new NativeAttemptJournal(root, { ...limits, maximumTotalBytes: 950000 });
+-  const envelope = prismNativeAttempt('render', artifact, 'journal-quota');
++  const envelope = prismNativeAttempt('render', artifact, 'journal-quota', nativeResourcePolicy);
+   try {
+     await journal.withAttempt(envelope, async context => { assert.equal(context.newlyAccepted, true); });
+     const changed = structuredClone(envelope);
+@@ -93,7 +94,7 @@ test('journal binds the full envelope and reserves retained disk before admittin
+     // can make space. No implicit cleanup is triggered by admission pressure.
+     const retained = path.join(root, 'retained-original');
+     await fs.writeFile(retained, Buffer.alloc(400000, 7));
+-    const second = prismNativeAttempt('render', artifact, 'journal-quota-second');
++    const second = prismNativeAttempt('render', artifact, 'journal-quota-second', nativeResourcePolicy);
+     await assert.rejects(journal.withAttempt(second, async () => assert.fail('disk quota bypassed')), /WORKER_NATIVE_JOURNAL_CAPACITY_EXCEEDED/u);
+     assert.equal((await fs.stat(retained)).size, 400000);
+     await journal.withAttempt(envelope, async context => { assert.equal(context.newlyAccepted, false); });
+@@ -103,7 +104,7 @@ test('journal binds the full envelope and reserves retained disk before admittin
+ test('process archive verifies original output and immutable completion time before receipt construction', async () => {
+   const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-process-'));
+   const journal = new NativeAttemptJournal(path.join(parent, 'journal'), limits);
+-  const envelope = prismNativeAttempt('render', artifact, 'journal-process');
++  const envelope = prismNativeAttempt('render', artifact, 'journal-process', nativeResourcePolicy);
+   try {
+     await journal.withAttempt(envelope, async context => {
+       const spool = await NativeWorkerOutputSpool.create(context.outputRoot, limits.maximumOutputBytes);
+@@ -131,7 +132,7 @@ test('process archive verifies original output and immutable completion time bef
+ test('busy live attempt reports retryable contention without changing its durable identity', { timeout: 20000 }, async () => {
+   const parent = await fs.mkdtemp(path.join(os.tmpdir(), 'native-journal-busy-'));
+   const root = path.join(parent, 'journal');
+-  const envelope = prismNativeAttempt('render', artifact, 'journal-busy');
++  const envelope = prismNativeAttempt('render', artifact, 'journal-busy', nativeResourcePolicy);
+   const envelopePath = path.join(parent, 'envelope.json');
+   await fs.writeFile(envelopePath, JSON.stringify(envelope));
+   const child = spawn(process.execPath, [fileURLToPath(new URL('../../fixtures/worker-journal-writer.mjs', import.meta.url)), root, envelopePath, 'accepted'], { stdio: 'pipe' });
+diff --git a/tests/verification/reliability/worker-native-launcher.test.mts b/tests/verification/reliability/worker-native-launcher.test.mts
+index c4d83a6c..4e166025 100644
+--- a/tests/verification/reliability/worker-native-launcher.test.mts
++++ b/tests/verification/reliability/worker-native-launcher.test.mts
+@@ -23,8 +23,11 @@ test('compiled original launcher refuses ordinary filesystems and cannot execute
+     const sentinel = path.join(root, 'must-not-exist');
+     const ordinaryScope = path.join(root, 'worker-11111111-1111-1111-1111-111111111111');
+     await fs.mkdir(ordinaryScope);
+-    for (const target of [ordinaryScope, '/sys/fs/cgroup']) {
+-      const result = spawnSync(binary, [target, '1000', '1000', process.execPath, '-e',
++    const ordinaryHost = path.join(ordinaryScope, 'host');
++    const ordinaryHelper = path.join(ordinaryScope, 'helper-22222222-2222-2222-2222-222222222222');
++    await fs.mkdir(ordinaryHost); await fs.mkdir(ordinaryHelper);
++    for (const target of [ordinaryHost, ordinaryHelper, ordinaryScope, '/sys/fs/cgroup']) {
++      const result = spawnSync(binary, [target, '0', '1', '0', '2', '1000', '1000', process.execPath, '-e',
+         'require("node:fs").writeFileSync(process.argv[1], "executed")', sentinel], {
+         encoding: 'utf8', env: { ...process.env, KUBECLAW_NATIVE_SUPERVISOR_PID: String(process.pid) },
+       });
+@@ -39,7 +42,7 @@ test('compiled original launcher refuses ordinary filesystems and cannot execute
+       const env = { ...process.env };
+       delete env.KUBECLAW_NATIVE_SUPERVISOR_PID;
+       if (parent !== undefined) env.KUBECLAW_NATIVE_SUPERVISOR_PID = parent;
+-      const denied = spawnSync(binary, [ordinaryScope, '1000', '1000', process.execPath, '-e',
++      const denied = spawnSync(binary, [ordinaryScope, '0', '1', '0', '2', '1000', '1000', process.execPath, '-e',
+         'require("node:fs").writeFileSync(process.argv[1], "executed")', sentinel], { encoding: 'utf8', env });
+       assert.equal(denied.status, 125);
+       assert.match(denied.stderr, /WORKER_NATIVE_(LAUNCH_(PARENT_REQUIRED|PARENT_LOST|IDENTITY_INVALID)|SUPERVISOR_IDENTITY_REQUIRED)/u);
+diff --git a/tests/verification/reliability/worker-native-scope-live.mts b/tests/verification/reliability/worker-native-scope-live.mts
+index 44720bfe..1d225fdf 100644
+--- a/tests/verification/reliability/worker-native-scope-live.mts
++++ b/tests/verification/reliability/worker-native-scope-live.mts
+@@ -1,3 +1,4 @@
++import { nativeResourcePolicy } from '../../../skills/prism/tests/native/resource-policy.mts';
+ import assert from 'node:assert/strict';
+ import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
+ import { once } from 'node:events';
+@@ -39,8 +40,13 @@ function line(child: ChildProcessWithoutNullStreams, expected: string): Promise<
+   });
+ }
+ 
++const ownedLeaves = new Map<NativeWorkerResourceScope, { name: string; limits: typeof limits; binding: ReturnType<NativeWorkerResourceScope['binding']> }>();
++
+ async function workload(scope: NativeWorkerResourceScope) {
+-  const child = spawn(process.execPath, [fixture, scope.launcherPath()], { stdio: ['pipe', 'pipe', 'pipe'] });
++  const reserved = { name: 'host', limits, binding: null };
++  const leaf = { ...reserved, binding: scope.createChild(reserved) };
++  ownedLeaves.set(scope, leaf);
++  const child = spawn(process.execPath, [fixture, scope.childLaunchArguments(leaf)[0]!], { stdio: ['pipe', 'pipe', 'pipe'] });
+   const exited = once(child, 'exit');
+   // Keep a failed spawn observed even while the readiness wait owns the error.
+   void exited.catch(() => {});
+@@ -74,16 +80,16 @@ test('actual parallel scopes have independent CPU and retain final counters afte
+     assert.ok(final.cpuTimeMicroseconds >= hotAfter.cpuTimeMicroseconds);
+     assert.ok(final.maximumMemoryBytes >= hotAfter.maximumMemoryBytes);
+     assert.equal(hot.observe().populated, false);
+-    assert.throws(() => hot.launcherPath(), /WORKER_NATIVE_SCOPE_QUIESCING/u);
+-    hot.dispose(); hot.dispose();
++    assert.throws(() => hot.childLaunchArguments(ownedLeaves.get(hot)!), /WORKER_NATIVE_SCOPE_QUIESCING/u);
++    hot.disposeChildren([ownedLeaves.get(hot)!]); hot.dispose(); hot.dispose();
+     assert.throws(() => hot.observe(), /WORKER_NATIVE_SCOPE_DISPOSED/u);
+     const idleFinal = await idle.terminateAndDrain(5000);
+-    await waiting.exited; assert.equal(idleFinal.populated, false); idle.dispose();
++    await waiting.exited; assert.equal(idleFinal.populated, false); idle.disposeChildren([ownedLeaves.get(idle)!]); idle.dispose();
+   } finally {
+     for (const child of children) if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
+     const failures: unknown[] = [];
+     for (const scope of scopes) {
+-      try { await scope.terminateAndDrain(5000); scope.dispose(); }
++      try { await scope.terminateAndDrain(5000); scope.disposeChildren(ownedLeaves.has(scope) ? [ownedLeaves.get(scope)!] : []); scope.dispose(); }
+       catch (error) {
+         if (!(error instanceof Error) || error.message !== 'WORKER_NATIVE_SCOPE_DISPOSED') failures.push(error);
+       }
+@@ -152,7 +158,7 @@ test('production launcher and durable owner account the whole host and fence exa
+ async function capacityReceipt(owner: NativeWorkerOwnership, stateRoot: string, launcher: string): Promise<void> {
+   const artifact = { artifactId: 'input:pool-capacity', type: 'prism-engine-input', mediaType: 'application/json',
+     contentDigest: `sha256:${'1'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' };
+-  const envelope = prismNativeAttempt('render', artifact, 'pool-capacity');
++  const envelope = prismNativeAttempt('render', artifact, 'pool-capacity', nativeResourcePolicy);
+   envelope.resourceBudgets.maximumMemoryBytes = { state: 'requested', limit: limits.memoryBytes };
+   envelope.resourceBudgets.maximumTasks = { state: 'requested', limit: limits.tasks };
+   envelope.resourceBudgets.cpuTimeMs = { state: 'requested', limit: 10000 };
+diff --git a/tests/verification/reliability/worker-observation-durability.test.mts b/tests/verification/reliability/worker-observation-durability.test.mts
+index 29d8c012..1383df7a 100644
+--- a/tests/verification/reliability/worker-observation-durability.test.mts
++++ b/tests/verification/reliability/worker-observation-durability.test.mts
+@@ -58,7 +58,7 @@ test('legacy ownership remains readable without fabricating missing historical o
+     const store = new FileWorkerOwnershipStore(root, limits);
+     const record = await store.reserve({ workerId: 'old-worker', attemptId: 'old-attempt', claimId: 'old-claim', generation: 1,
+       profileDigest: `sha256:${'a'.repeat(64)}`, attemptSpecDigest: `sha256:${'b'.repeat(64)}` });
+-    const { finalObservation: _observation, ...legacy } = record;
++    const { finalObservation: _observation, topology: _topology, ...legacy } = record;
+     const file = path.join(root, 'owners.json');
+     const oldBytes = JSON.stringify({ schemaVersion: 'worker-ownership-store.v1', records: [legacy] });
+     await fs.writeFile(file, oldBytes);
+@@ -66,7 +66,7 @@ test('legacy ownership remains readable without fabricating missing historical o
+     assert.equal(reopened?.finalObservation, null);
+     assert.equal(await fs.readFile(file, 'utf8'), oldBytes, 'reading does not rewrite a historical store');
+     await store.transition(reopened!, 'abandoned', { diagnosis: 'reservation was never launched' });
+-    assert.equal(JSON.parse(await fs.readFile(file, 'utf8')).schemaVersion, 'worker-ownership-store.v2');
++    assert.equal(JSON.parse(await fs.readFile(file, 'utf8')).schemaVersion, 'worker-ownership-store.v3');
+   } finally { await fs.rm(root, { recursive: true, force: true }); }
+ });
+ 
+@@ -95,7 +95,7 @@ test('unbound legacy records from a different boot cannot be silently assigned t
+     const stat = await fs.stat(root);
+     const allocated = await store.transition(record, 'allocated', { binding: { scopeName: record.scopeName,
+       bootId: '00000000-0000-4000-8000-000000000000', device: stat.dev, inode: stat.ino } });
+-    const { finalObservation: _observation, ...legacy } = allocated;
++    const { finalObservation: _observation, topology: _topology, ...legacy } = allocated;
+     const file = path.join(root, 'owners.json');
+     const bytes = JSON.stringify({ schemaVersion: 'worker-ownership-store.v1', records: [legacy] });
+     await fs.writeFile(file, bytes);

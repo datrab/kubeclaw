@@ -21,7 +21,7 @@
     "prebuild:studio": "node ../../contracts/prism/v1/scripts/generate-validators.mjs",
     "build:studio": "vite build --config studio/vite.config.ts",
     "dev:studio": "NODE_ENV=development vite --config studio/vite.config.ts",
-    "test:studio": "node --test tests/studio-adapter.test.mts && playwright test --config studio/playwright.config.mjs",
+    "test:studio": "node --test tests/studio-adapter.test.mts tests/studio-service.test.mts tests/studio-config.test.mts && playwright test --config studio/playwright.config.mjs",
     "start:control": "node --experimental-strip-types server/control.ts",
     "start:studio": "node --experimental-strip-types server/studio.ts",
     "start:worker": "node --experimental-strip-types server/worker.ts",
@@ -30,7 +30,7 @@
     "test:corpus-pool": "node integration/corpus-pool.mts",
     "test:engine:native-retention": "node --expose-gc integration/engine-capture-retention.mts",
     "test:worker-readiness-native": "node tests/native/worker-readiness-gate.mts",
-    "test:worker:native": "node --test --test-concurrency=1 tests/*.native.mts integration/worker-concurrent-resource-attribution.mts"
+    "test:worker:native": "node --test --test-concurrency=1 tests/*-native.mts integration/worker-concurrent-resource-attribution.mts"
   },
   "dependencies": {
     "@kubeclaw/pipeline-worker-core-contract": "1.0.0",

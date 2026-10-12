@@ -1,0 +1,17 @@
+{
+  "name": "@kubeclaw/plugin-command-runner",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/adapter.ts",
+    "./runner": "./src/runner.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/process-group.test.ts && node tests/process-group-exit.test.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/plugin-foundation": "*"
+  }
+}

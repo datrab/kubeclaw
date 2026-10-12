@@ -1,3 +1,4 @@
+import type { RetainedWaitSource } from '@kubeclaw/plugin-sdk';
 import type { AsyncLocalStorage } from 'node:async_hooks';
 import {portableJson, runtimeDispatchProfileFields} from '@kubeclaw/plugin-sdk';
 import fs from 'node:fs';
@@ -63,7 +64,17 @@ export class AdapterStarter {
 
   #context(adapterId: string, lifecycle: AbortController, registration: AdapterActivationContext['registration'], pluginId: string, config: Readonly<Record<string, unknown>>): AdapterActivationContext {
     const active = (): void => { if (lifecycle.signal.aborted) throw new Error(`ADAPTER_CONTEXT_REVOKED:${adapterId}`); };
+    const selectedWait = this.#options.runtime.granted.selectedProviders.get('signal.wait');
     return Object.freeze({ registration, config,
+      ...(adapterId === 'kubeclaw.wait-store:waits' && selectedWait?.package.manifest.id === 'kubeclaw.wait-store'
+        && selectedWait.registration.id === 'waits' && this.#options.runtime.resolveRetainedWait ? {
+        resolveRetainedWait: (source: RetainedWaitSource) => {
+          active();
+          const wait = this.#options.runtime.resolveRetainedWait!(structuredClone(source));
+          active();
+          return wait;
+        },
+      } : {}),
       emit: async (type: string, identity: EventIdentity, payload: Readonly<Record<string, unknown>>) => { active(); if (!type.startsWith(`plugin.${pluginId}.`)) throw new Error(`PLUGIN_EVENT_NAMESPACE_DENIED:${type}`);
         await this.#options.runtime.emitDomainEvent(registration, type, identity, payload); active(); },
       invoke: (capability: string, request: CapabilityInvocation, options?: AdapterDependencyOptions) => this.#invokeDependency(adapterId, lifecycle, active, capability, request, false, options),

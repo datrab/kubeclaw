@@ -1,0 +1,60 @@
+# Operator configuration
+
+Centralization is in progress. The five Prism HTTP-worker settings below now
+come from `operator.prism.worker` in
+[`swarm.config.json`](../../charts/kubeclaw/files/config/swarm.config.json).
+Other platform, native-worker, Buster, Nova and deployment settings still use
+their existing loaders; this document does not claim a fully centralized system.
+
+| Author key under `operator.prism.worker` | Type/unit | Current value | Consumer |
+|---|---|---|---|
+| `maximumActiveRequests` | positive integer, requests | 16 | HTTP work admission |
+| `maximumProbeRequests` | positive integer, requests | 4 | separate health/probe admission |
+| `maximumConnections` | positive integer, connections | 128 | HTTP server connection limit |
+| `requestTimeoutMs` | positive integer, milliseconds | 120000 | request-body receive deadline |
+| `shutdownTimeoutMs` | positive integer, milliseconds | 120000 | complete worker shutdown deadline |
+
+These are explicit author values, not fallback defaults in the runtime. Every
+value is required and at most 2147483647. Work plus probe reservations must fit
+within the connection limit. Request-body and shutdown deadlines are independent:
+shutdown cancels outstanding work rather than waiting out its request deadline.
+For deployment, shutdown must exceed native close plus ten seconds and fit
+strictly below the Pod termination grace. Helm rejects incompatible budgets.
+These HTTP admission counts are not Linux task limits or native-worker attempt
+budgets.
+
+Edit the canonical file and use the normal render/release/GitOps path. Prism's
+chart references that file through a repository symlink; ordinary `helm template`
+and `helm package` include its current bytes automatically. There is no manual
+copy or second editable configuration. The generated ConfigMap is mounted
+read-only; its checksum triggers a worker rollout when configuration changes.
+The worker captures settings at startup. It does not reread settings for each
+request, and modifying a running ConfigMap alone is not a completed rollout.
+
+For a standalone process or isolated test, `SWARM_CONFIG` selects the complete
+authored JSON file. Without it the loader reads the existing standard location
+`/home/node/.openclaw/swarm.config.json`. The deployed Prism chart explicitly
+selects `/etc/kubeclaw/swarm/swarm.config.json`. Missing files, malformed JSON,
+unknown keys, missing values, wrong types and conflicting limits fail before
+worker startup. The loader does not coerce strings or silently use old defaults.
+
+The former environment settings `PRISM_WORKER_MAXIMUM_ACTIVE_REQUESTS`,
+`PRISM_WORKER_MAXIMUM_PROBE_REQUESTS`, `PRISM_WORKER_MAXIMUM_CONNECTIONS`,
+`PRISM_WORKER_REQUEST_BODY_TIMEOUT_MS` and `PRISM_WORKER_SHUTDOWN_TIMEOUT_MS` are
+rejected, even if they equal the authored value. Remove them when migrating.
+The former Helm value `worker.shutdownTimeoutMs` is also rejected. Secrets remain
+external and retain their existing authentication checks; they are neither
+accepted in this operator section nor included in effective setting objects.
+
+Validate the slice with:
+
+```sh
+node --test skills/prism/tests/swarm-worker-config.test.mts
+node --test tests/verification/deployment/prism-swarm-config.test.mjs
+helm template prism charts/prism --namespace default -f charts/prism/ci-values.yaml
+```
+
+The Helm example uses synthetic CI image and node references and must not be
+applied to a cluster. Built-image CI additionally runs the actual shipped loader
+with the mounted author file through `scripts/check-built-runtime-image.sh`.
+Local loader and Helm tests do not prove that an image was built or deployed.

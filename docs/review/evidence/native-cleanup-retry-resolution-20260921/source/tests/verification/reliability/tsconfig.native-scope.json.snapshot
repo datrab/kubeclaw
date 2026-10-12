@@ -1,0 +1,5 @@
+{
+  "extends": "../../../skills/worker/core/tsconfig.json",
+  "include": ["worker-native-cleanup.test.mts", "worker-native-cleanup-retry.test.mts", "native-process-policy.test.mts", "worker-native-journal-capacity.test.mts", "worker-native-scope-live.mts", "worker-native-topology-live.mts", "worker-owned-children.test.mts", "worker-native-quiescence.test.mts", "worker-terminal-capacity.test.mts"],
+  "compilerOptions": { "rootDir": "../../.." }
+}

@@ -1,0 +1,1 @@
+{"ok":true,"provider":"http","boundary":"real-local-http-server","syntheticResponses":0,"instrumentation":"body-cancel observes original fetch/reader and schedules abort after first real chunk"}

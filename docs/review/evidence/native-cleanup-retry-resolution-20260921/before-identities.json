@@ -1,0 +1,27 @@
+[
+  {
+    "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+    "sha256": "d899ef4ee020b9e516248503172e2a8b773732516d7476f6333c03012f73bfdc",
+    "snapshot": "docs/review/evidence/native-cleanup-retry-resolution-20260921/before/skills/worker/core/worker/native-attempt-recovery.ts.snapshot"
+  },
+  {
+    "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+    "sha256": "d1259d1ceeb7644387f93a6d39f999e1a27b20668b9aa30835bf980077b1f0bd",
+    "snapshot": "docs/review/evidence/native-cleanup-retry-resolution-20260921/before/skills/worker/core/worker/native-cleanup-reconciliation.ts.snapshot"
+  },
+  {
+    "path": "skills/worker/core/src/index.ts",
+    "sha256": "882a58e5d1d512fee36eb1f5c1f6d899a488084aa2a540ffb30ea49f76b27ce1",
+    "snapshot": "docs/review/evidence/native-cleanup-retry-resolution-20260921/before/skills/worker/core/src/index.ts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-cleanup.test.mts",
+    "sha256": "e7e9640aa711086a55e2f4ac5d7260dad814d6d39a75eb5c6c221dadf86625ff",
+    "snapshot": "docs/review/evidence/native-cleanup-retry-resolution-20260921/before/tests/verification/reliability/worker-native-cleanup.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/native-cleanup-fixture.mts",
+    "sha256": "38001b52df26bf030743768821185309f86250ca3cf57675d0c6eeee9faf6096",
+    "snapshot": "docs/review/evidence/native-cleanup-retry-resolution-20260921/before/tests/verification/reliability/native-cleanup-fixture.mts.snapshot"
+  }
+]

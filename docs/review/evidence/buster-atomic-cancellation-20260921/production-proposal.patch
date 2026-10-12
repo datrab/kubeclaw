@@ -1,0 +1,52 @@
+--- a/skills/buster/engine/test-gates/prepared-plan-store.ts
++++ b/skills/buster/engine/test-gates/prepared-plan-store.ts
+@@ -168,6 +168,17 @@
+       current.record.payloadDigest, { ...current.payload, source: structuredClone(prepared.source) });
+   }
+ 
++  /** Read the cancellation decision under the same fence as completion and source attachment. */
++  async requestCancellation(jobId: string, now: string): Promise<RemotePlanStatusV1> {
++    return withDurableStoreLock(this.#admissionLock, async () => {
++      const current = await this.get(jobId);
++      if (['completed', 'failed', 'cancelled', 'cancelling'].includes(current.payload.status.state)) {
++        return current.payload.status;
++      }
++      return this.#writeStatus(current, 'cancelling', now);
++    });
++  }
++
+   async transition(
+     jobId: string,
+     expected: readonly RemotePlanStatusV1['state'][],
+@@ -197,6 +208,15 @@
+       if (current.payload.status.state === state) return current.payload.status;
+       throw new Error(`BUSTER_REMOTE_JOB_STATE_CONFLICT:${current.payload.status.state}`);
+     }
++    return this.#writeStatus(current, state, now, terminal);
++  }
++
++  async #writeStatus(
++    current: Readonly<{ record: DurableRecord<StoredPreparedPlanJob>; payload: StoredPreparedPlanJob }>,
++    state: RemotePlanStatusV1['state'],
++    now: string,
++    terminal?: { readonly error?: string },
++  ): Promise<RemotePlanStatusV1> {
+     const status: RemotePlanStatusV1 = {
+       ...current.payload.status,
+       state,
+--- a/skills/buster/engine/test-gates/remote-plan-service.ts
++++ b/skills/buster/engine/test-gates/remote-plan-service.ts
+@@ -173,11 +173,8 @@
+   }
+ 
+   async cancel(jobId: string): Promise<RemotePlanStatusV1> {
+-    const current = await this.status(jobId);
+-    if (['completed', 'failed', 'cancelled'].includes(current.state)) return current;
+-    const status = await this.#options.store.transition(
+-      jobId, ['accepted', 'running', 'cancelling'], 'cancelling', this.#now().toISOString(),
+-    );
++    const status = await this.#options.store.requestCancellation(jobId, this.#now().toISOString());
++    if (status.state !== 'cancelling') return status;
+     this.#queue.delete(jobId);
+     this.#active.get(jobId)?.abort(new Error('BUSTER_REMOTE_CANCELLED'));
+     if (!this.#active.has(jobId)) {

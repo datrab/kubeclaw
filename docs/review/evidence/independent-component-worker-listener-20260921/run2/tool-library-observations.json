@@ -1,0 +1,52 @@
+[
+  {
+    "executable": "/usr/local/bin/node",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x70c99882e000)\n\tlibstdc++.so.6 => /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib/libstdc++.so.6 (0x70c991800000)\n\tlibgcc_s.so.1 => /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib/libgcc_s.so.1 (0x70c991ae9000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x70c99882e000)\n"
+  },
+  {
+    "executable": "/usr/local/bin/helm",
+    "exitCode": 1,
+    "output": "/lib/ld-musl-x86_64.so.1: /usr/local/bin/helm: Not a valid dynamic program\n"
+  },
+  {
+    "executable": "/usr/bin/git",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x76f1360e4000)\n\tlibpcre2-8.so.0 => /usr/lib/libpcre2-8.so.0 (0x76f135cf8000)\n\tlibz.so.1 => /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib/libz.so.1 (0x76f135cdd000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x76f1360e4000)\n"
+  },
+  {
+    "executable": "/bin/busybox",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x78ead4f70000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x78ead4f70000)\n"
+  },
+  {
+    "executable": "/usr/bin/python3.14",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x799f97992000)\n\tlibpython3.14.so.1.0 => /usr/lib/libpython3.14.so.1.0 (0x799f973ff000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x799f97992000)\n"
+  },
+  {
+    "executable": "/bin/bash",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x77cddcdaf000)\n\tlibreadline.so.8 => /usr/lib/libreadline.so.8 (0x77cddcc94000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x77cddcdaf000)\n\tlibncursesw.so.6 => /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib/libncursesw.so.6 (0x77cddcc3f000)\n"
+  },
+  {
+    "executable": "/usr/bin/ldd",
+    "exitCode": 1,
+    "output": "/lib/ld-musl-x86_64.so.1: /usr/bin/ldd: Not a valid dynamic program\n"
+  },
+  {
+    "executable": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x7be637187000)\n\tlibtalloc.so.2 => /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib/libtalloc.so.2 (0x7be63714a000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x7be637187000)\n"
+  },
+  {
+    "executable": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x7d815e5f5000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x7d815e5f5000)\n"
+  },
+  {
+    "executable": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x7443cebc3000)\n\tlibacl.so.1 => /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib/libacl.so.1 (0x7443ceb61000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x7443cebc3000)\n"
+  }
+]

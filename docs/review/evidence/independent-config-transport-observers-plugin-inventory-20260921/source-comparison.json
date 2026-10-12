@@ -1,0 +1,335 @@
+{
+  "scope": "independent integrity check only; semantic source review pending",
+  "files": [
+    {
+      "path": "docs/review/remediation/implementation/config-transport-observers-plugin-inventory-20260921.md",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/README.md",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/package.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/plugin.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/schemas/config.schema.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/src/observers.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/tests/live-function.test.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/tests/observers.unit.test.mjs",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/tests/package-boundary.test.mjs",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/tests/parity.test.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/tsconfig.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/README.md",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/package.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/tests/live-function.test.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/openclaw-agent-events/tsconfig.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/README.md",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/package.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/plugin.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/schemas/config.schema.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/exchange.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/resp.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/src/stream-identity.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/tests/live-function.test.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/tests/package-boundary.test.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/redis-transport/tsconfig.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/README.md",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/package.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/plugin.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/schemas/publish.schema.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/schemas/receipt.schema.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/tests/config-validation.test.mjs",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/tests/package-boundary.test.mjs",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/tsconfig.json",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/nova/core/execution/authorization.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/nova/core/telemetry/observer-delivery.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    },
+    {
+      "path": "skills/nova/core/telemetry/observers.ts",
+      "liveAndSnapshotEqual": true,
+      "declaredBytesEqual": true,
+      "declaredHashEqual": true
+    }
+  ]
+}

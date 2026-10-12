@@ -1,0 +1,42 @@
+[
+  {
+    "path": "skills/worker/core/worker/native-attempt-journal.ts",
+    "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-capacity.ts",
+    "sha256": "a0369d6ac33fa5607b03125d52e50aa8172e0b338c528c90b4e1e13fac47b65a"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-state.ts",
+    "sha256": "ae5cca21eb24261fa5389c7081bc3534e8e12b411d5bda0e97a69a94ead424d2"
+  },
+  {
+    "path": "tests/verification/reliability/native-journal-capacity-fixture.mts",
+    "sha256": "73c86874ee6ba22a6ebc9e9682ae15ca8c2a718ce7c3111ac2162eef568222a3"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-journal-capacity.test.mts",
+    "sha256": "b2a1ea2bdfa4d222ef6037c0fc57699450fbb38f02a21e60d6eea2a2cd9ddc26"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-journal.test.mts",
+    "sha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a"
+  },
+  {
+    "path": "tests/verification/reliability/tsconfig.native-scope.json",
+    "sha256": "6209e97562848fec9117da06aae183d738b4a2346740f43610d366aab5a41856"
+  },
+  {
+    "path": "package.json",
+    "sha256": "5c3b1ad0bd5ea201360dcb2419528849cec33e8001812c320d912d4c98408e7b"
+  },
+  {
+    "path": "docs/operations/native-worker-host-pools.md",
+    "sha256": "4ebb2a0ae55c4d434711edca63fe62ebd9fa23a84dba4b09dd8bbe4172b40371"
+  },
+  {
+    "path": "docs/review/remediation/implementation/native-journal-terminal-capacity-20260921.md",
+    "sha256": "8af102bfd1c76fbf9282c226184ff9bb4687ffd74b425edd86fdd1030f10baba"
+  }
+]

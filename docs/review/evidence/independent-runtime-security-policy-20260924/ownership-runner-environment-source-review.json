@@ -1,0 +1,24 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "Accept source integration and full ownership baseline/control rerun only",
+  "manifestSha256": "abeeecaf5be55e71c7fa3070c744eee7330947ff87d276b2da52ca2f10473948",
+  "filesVerified": [
+    {
+      "path": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "beforeSha256": "9a72278e4ef15a5a19c718f893ecca04d8263d1d66ab27059291c20bfea1d7ca",
+      "afterSha256": "d71fb8decddcff431f4e67750516ad8886dad335cba63051d79fb1880149611d"
+    }
+  ],
+  "observedFailure": "Preserved ownership1 stderr explicitly reports node:test run recursively within a test file and skipping running files. This is failed setup, not passed ownership behavior.",
+  "sourceAssessment": [
+    "Clone current environment and delete only NODE_TEST_CONTEXT when launching explicitly separate --test runner. Worker-context marker must not classify independent runner as current outer worker.",
+    "NODE_OPTIONS, strict rejection argument, trace/write guards, source control selection and manifest/spec environment remain inherited unchanged.",
+    "All three scenarios, child ownership guards, genuine barriers, exact cause/retention assertions and original helper/outer deadlines unchanged.",
+    "No skip is accepted: baseline still requires3 actual scenarios and correct nested failure evidence."
+  ],
+  "runtimePending": [
+    "Fresh full3case ownership gate on integrated corrected source.",
+    "Both semantic deletion controls with applied nested hooks and retained raw artifacts.",
+    "Original ownership1failed evidence remains immutable."
+  ]
+}

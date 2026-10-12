@@ -1,0 +1,22 @@
+{
+  "baseCommit": "cd9f235345f5fd8736a2ffe75d806288e4d538db",
+  "sourceState": "uncommitted worktree; hashes bind exact files",
+  "files": {
+    "scripts/trivy-database-lock.mjs": "7f86040766fd1cdc010302617217adbe58b862437259aea1cff03f992ca0d510",
+    "scripts/tests/trivy-database-lock.test.mjs": "6b41e748bb9b26a2753c9adfdf98e1be011db2f60f74020688f19254febe6fc2",
+    "scripts/tests/trivy-database-lock.native.mjs": "3d3a7f868306466b3a87f35dd12df55d61da234e7becfa4d0f62d0c1929278aa",
+    "scripts/versions.mjs": "a3040ffa7a7e7f7a7d0b5390f6b554c5191724f66030e18352144f7661caa0d4",
+    "versions.json": "a3f332d67a21e48fbaead8d66e5a848ecb2ad5e0370a44bd75b6bc9a4b0f301f",
+    "docker/trivy-databases.lock.json": "eb4de828de3d1afe277aad01925ab94a8ed2eb08fbe41c00fd3e16889d81569e",
+    "docker/Dockerfile.buster-runtime": "d2dfe401bc8c3e7a7839b011e30ecff7f159db8b72a2f27f85ccb97ea773f38a",
+    ".github/workflows/build-images.yaml": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc",
+    ".github/workflows/role-images.yaml": "b2756f5eec9f1248e1eb9926113ac28a7614d2868f5fc9004678f75ecdff99d8",
+    "tests/verification/deployment/versions.test.mjs": "c55c3fce4fba6f0f8626baca221a886aee709f8b84c37985af4c3a91209f5df0",
+    "docs/operations/local-image-vulnerability-scan.md": "53686fd61b1c8a6b671c6adf53041fdcdffd91f3d39e92e6bf43b74f5e55abf7",
+    "docs/operations/runtime-versions-and-images.md": "d5f237860cb23761243455b63c8bb5124f7503fea9dc46c3a5832420aa18680f"
+  },
+  "scanner": {
+    "scanner.tar.gz": "2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a",
+    "trivy": "d89bcc6510a267f11b773398cbf1be5520ce39f9e8b6633178c4487f05b7d791"
+  }
+}

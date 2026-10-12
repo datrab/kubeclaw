@@ -1,0 +1,66 @@
+[
+  {
+    "name": "field-defaults",
+    "failures": [
+      {
+        "case": "not ok 6 - real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay",
+        "details": [
+          "  error: 'Missing expected exception.'",
+          "  expected:"
+        ]
+      }
+    ],
+    "applied": 1
+  },
+  {
+    "name": "ignore-execution",
+    "failures": [
+      {
+        "case": "not ok 2 - real factory/service/process honors execution policy {\"maximumExecutionMs\":2500,\"maximumOutputBytes\":4096}",
+        "details": [
+          "  error: |-",
+          "    503 !== 200",
+          "  expected: 200",
+          "  actual: 503"
+        ]
+      }
+    ],
+    "applied": 1
+  },
+  {
+    "name": "ignore-output",
+    "failures": [
+      {
+        "case": "not ok 3 - real factory/service/process honors output policy {\"maximumExecutionMs\":2500,\"maximumOutputBytes\":64}",
+        "details": [
+          "  error: |-",
+          "    200 !== 503",
+          "  expected: 503",
+          "  actual: 200"
+        ]
+      },
+      {
+        "case": "not ok 6 - real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay",
+        "details": [
+          "  error: |-",
+          "  expected: false",
+          "  actual: true"
+        ]
+      }
+    ],
+    "applied": 1
+  },
+  {
+    "name": "policy-default",
+    "failures": [
+      {
+        "case": "not ok 6 - real service fails invalid policy before probe even when disabled; unavailable probe fences admission and accepted replay, not terminal replay",
+        "details": [
+          "  error: 'Missing expected exception.'",
+          "  expected:"
+        ]
+      }
+    ],
+    "applied": 1
+  }
+]

@@ -1,0 +1,76 @@
+# Platform configuration: current source inventory
+
+This is a source inventory for CONFIG F1, not a migration or runtime acceptance.
+The historical 1,374-entry discovery list has no entries whose source is
+`skills/common/plugin-runtime/foundation/config/platform.ts`. Its search count
+therefore cannot establish coverage of this shared configuration boundary.
+The table below covers all 15 top-level properties in the current
+[schema](../../../../skills/common/plugin-runtime/foundation/config/platform.schema.json).
+Nested plugin settings remain to be inventoried separately.
+
+[Source identities and schema coverage](../../evidence/config-platform-inventory-20260921/source-inventory.json)
+bind the inspected files to the current uncommitted tree; the same evidence
+directory retains the tracked source patch and the new Buster consumer source.
+This is an inventory snapshot, not a new runtime test result.
+
+The [independent source review](independent-config-platform-inventory-20260921.md)
+accepts this bounded inventory, including its schema coverage, consumer paths
+and explicit unresolved nested settings. CONFIG F1–F6 remain incomplete.
+
+## Author and loading paths
+
+[loadPlatformConfig](../../../../skills/common/plugin-runtime/foundation/config/platform.ts)
+reads a separately selected `pipeline-platform.v2` JSON file. It resolves the
+real file path, validates the complete object with the existing schema, resolves
+installation/trusted/storage/isolation paths relative to that real file's parent,
+and recursively freezes the returned configuration. It does not currently derive
+these settings from `swarm.config.json`.
+
+Nova's [core CLI](../../../../skills/nova/core/cli.ts),
+[project CLI](../../../../skills/nova/project/cli.ts), and
+[legacy-import CLI](../../../../skills/nova/project/legacy-import-cli.ts) select
+the file through `--platform`. Buster's
+[runtimeRegistry](../../../../skills/buster/engine/test-gates/production-config-values.ts)
+selects it through the separate remote configuration's `platformConfig` field,
+resolved relative to that configuration's directory. Buster uses the loaded
+installation and trust settings to discover its registry; this does not prove
+that Buster consumes every Nova platform setting.
+
+## Field classification and actual consumers
+
+All required fields have no default in this loader. Optional fields are marked
+explicitly. The existing selected JSON file is the current author for operator
+values; central migration and rejection/removal of that competing author remain
+pending.
+
+| Field | Type/unit and classification | Actual consumer / current default |
+|---|---|---|
+| `schemaVersion` | Fixed protocol identity `pipeline-platform.v2` | Schema validation; protocol invariant, not an operator tuning setting. |
+| `installationRoots` | Nonempty unique string array; installation selection | Nova `prepareRuntime` and Buster `runtimeRegistry` → `discoverPackages`; paths resolved relative to the real config file. |
+| `trustedBuiltinRoots` | Nonempty unique string array; operator trust boundary | Both discovery paths' trust policy; resolved paths, no fallback. |
+| `externalTrust.allowedSourceDigests` | Map of source identifiers to nonempty unique SHA-256 arrays; trust policy | Both discovery paths → `allowedSourceDigests` Map. These are digest values, not secret material. |
+| `externalTrust.verifiedAttestations` | SHA-256-keyed map to SHA-256 values; trust evidence binding | Both discovery paths → `verifiedAttestations` Map. Migration must preserve the existing verification meaning. |
+| `providers` | Map of capability identifiers to provider strings; operator selection | Nova `prepareRuntime` → `resolveCapabilityGrants`; no local provider default in this loader. |
+| `grants` | Nested capability configuration objects; operator capability policy | Nova `prepareRuntime` → `resolveCapabilityGrants`. Nested keys require the capability contracts, not a blanket central passthrough. |
+| `adapters` | Map of adapter configuration objects; plugin-specific operator settings | Nova registration configuration validation, `AdapterRuntime`, and selected Wait resolver root binding. Nested setting inventory remains open. |
+| `activeAdapters` | Unique string array; operator activation policy | Nova `enabledRegistrations`; explicit selection is distinct from merely supplying adapter configuration. |
+| `observers` | Map of observer configuration objects; plugin-specific operator settings | Nova enabled registrations, configuration validation, and observer runtime. Nested setting inventory remains open. |
+| `isolation.cgroupRoot` | Optional nonempty path; operator host resource boundary | Resolved by loader, then Nova `activateRegistry`. Absence is preserved; this loader introduces no cgroup fallback. |
+| `storageRoot` | Nonempty path; operator durable-state location | Nova run roots, resource-lock manager and retained Wait owner context; resolved relative to the real config file. |
+| `shutdownTimeoutMs` | Required positive integer, milliseconds; operator lifecycle budget | Nova `AdapterRuntime` invocation shutdown and adapter startup/readiness/teardown timeouts. Schema currently has no upper bound; a migration must not silently invent or remove a bound. |
+| `effectLockTtlMs` | Optional integer, 60,000–86,400,000 milliseconds; operator effect-lock lifetime | Nova `engine-runtime.ts` passes this to `EffectCoordinator`, with the current local fallback **300,000 ms**. That fallback is a remaining migration target. |
+| `orchestratorIssuerId` | Nonempty string; operator authority identity | Nova decisions, recovery, signal history and retained Wait resolution. This is an identity binding, not merely a display label. |
+| `administrativeDecisionIssuers` | Unique array of `{type,id}`; operator authority allowlist | Nova `engine-admin.ts` permits only matching operator/administrator principals for administrative reopening. |
+
+`externalTrust` occupies one top-level schema property and has two separately
+classified leaves above; likewise `isolation` is listed by its sole leaf. The
+result is 16 table rows covering 15 top-level properties. This table does not
+classify arbitrary nested plugin fields by inference.
+
+The principal Nova consumer is
+[engine-runtime.ts](../../../../skills/nova/core/execution/engine-runtime.ts);
+administrative authority is enforced in
+[engine-admin.ts](../../../../skills/nova/core/execution/engine-admin.ts).
+This inventory records current source behavior only. It does not replace two
+profile tests, actual CLI/consumer checks, invalid-input and old-author rejection,
+or the independent F1–F6/DOC acceptance required for a central migration.

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node_modules/.bin/eslint",
+    "--config",
+    "charts/kubeclaw/files/config/eslint.config.mjs",
+    "skills/buster/engine/test-gates/prepared-plan-store.ts",
+    "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "tests/verification/reliability/buster-atomic-cancellation.test.mts"
+  ],
+  "exitCode": 0
+}

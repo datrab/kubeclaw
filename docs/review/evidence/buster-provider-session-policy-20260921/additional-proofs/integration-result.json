@@ -1,0 +1,21 @@
+{
+  "status": "integrated; runtime pending",
+  "files": [
+    {
+      "path": "tests/fixtures/test-gate/session-policy.mjs",
+      "beforeSha256": "ed8f8c89e549ccc689e62549f7d01dcdded94650cfd5f136b2c0a427a07b9c31",
+      "afterSha256": "cf18fdf8c3ab83fbeb211311fc9aba57d3fdb412f777aafd02e32ca02db0a316"
+    },
+    {
+      "path": "tests/verification/contracts/buster-completion-policy.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "403ce90d831fff9dc2c5c610570e79826db0c2ad831ad34ea89bf8fdc7d53510"
+    },
+    {
+      "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "beforeSha256": "94649f2f57c6d3ed7c483c44aaf5dbe9f8527c6a6362579688120ae20cbd71f1",
+      "afterSha256": "be7a5564374acc9c2ea7cbbea2ba864850e99167460c8aefde79b3d6d8799196"
+    }
+  ],
+  "review": "independent-buster-session-additional-proofs-20260921.md"
+}

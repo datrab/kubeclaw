@@ -43,7 +43,7 @@ test('nested effects bind actual invocation and attempt, replay once after recon
     fs.writeFileSync(path.join(plugin,'config.json'),JSON.stringify({type:'object',properties:{origin:{type:'string'},marker:{type:'string'}},required:['origin','marker'],additionalProperties:false}));
     const roots=[path.resolve('skills/common/plugins'),pluginRoot];
     const adapterId='test.dependency-consumer:consumer',stageId='test.dependency-consumer:stage';
-    const platform:PlatformConfig={schemaVersion:'pipeline-platform.v2',shutdownTimeoutMs:1000,administrativeDecisionIssuers:[],storageRoot:path.join(root,'state'),installationRoots:roots,trustedBuiltinRoots:roots,
+    const platform:PlatformConfig={schemaVersion:'pipeline-platform.v2', effectLockTtlMs: 300_000,shutdownTimeoutMs:1000,administrativeDecisionIssuers:[],storageRoot:path.join(root,'state'),installationRoots:roots,trustedBuiltinRoots:roots,
       externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},orchestratorIssuerId:'test:operator',activeAdapters:[],observers:{},
       providers:{'runtime.dispatch':adapterId,'network.http':'kubeclaw.network-http:http'},
       grants:{[stageId]:{'runtime.dispatch':{allowedAgents:['probe']}},[adapterId]:{'network.http':{allowedOrigins:[origin]}}},
@@ -52,7 +52,7 @@ test('nested effects bind actual invocation and attempt, replay once after recon
     const prepared=await prepareRuntime(platform,definition);
     const observed:EffectRequest[]=[];
     const create=()=>new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(platform.adapters)),shutdownTimeoutMs:1000,async emitDomainEvent(){},
-      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_PREFIX');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks')))});
+      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_PREFIX');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks')), 300_000)});
     runtime=create();await runtime.start();
     const attempt={runId:'run:dependency',stageId:'one',attemptId:'attempt:one',attemptNumber:1};
     const invocation={operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'probe'},payload:{}};
@@ -143,7 +143,7 @@ test('explicit dependency delivery identity survives attempts while original ope
       ['kubeclaw.secret-resolver:secrets',{environment:{webhook:secretName}}]]);
     const observed:EffectRequest[]=[];
     const create=(interruptKey?:string,quota?:number)=>new core.AdapterRuntime({granted,activated,configs:quota===undefined?configs:new Map([...configs,[operator,{...configs.get(operator),deliveryRoot:path.join(root,'quota'),maximumDeliveryBytes:quota}]]),shutdownTimeoutMs:1000,async emitDomainEvent(){},
-      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_BEFORE_RESERVE');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks')))});
+      effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_BEFORE_RESERVE');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks')), 300_000)});
     runtime=create();await runtime.start();
     const invoke=(number:number,summary='Full URL and generated demo credentials',target='operators',runId='run:one')=>runtime!.invoke('runtime.dispatch',
       {runId,stageId:'delivery',attemptId:`attempt:${runId}:${number}`,attemptNumber:number},`parent:${runId}:${number}`,

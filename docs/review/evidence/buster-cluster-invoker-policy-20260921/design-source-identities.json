@@ -1,0 +1,42 @@
+[
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "sha256": "d2e81938db163ec92bd021a047f30aa5bec06549f01f15f794ff360ecec58820",
+    "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/design-sources/docker/buster-runtime-entrypoint.sh"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+    "sha256": "999649fb834be3763eecda6735a2fc65b610c0e47ed8e4b66477771bdd5894c6",
+    "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/design-sources/charts/kubeclaw/files/config/buster-engine.config.json"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+    "sha256": "7808623ea1d8bb3f838254a898f84807d04c40d4ae17042440eeae2bdee1492e",
+    "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/design-sources/skills/buster/engine/test-gates/production-cluster-options.ts"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+    "sha256": "c2135bd4f48030b883e6c13749991a17e2e47e8b4db7272d8fa096081136d9d4",
+    "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/design-sources/skills/buster/engine/test-gates/production-capability-sources.ts"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+    "sha256": "f1ce10ddd4574b8e735dd89e34b16dbb7401283e7f158cc24ffabf1af3ea4616",
+    "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/design-sources/skills/buster/engine/test-gates/kubernetes-fixture-settings.ts"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+    "sha256": "916fbe54e491c216e50fc3b20c81f0e114c918724ca327908a8fbd51cdbd8d86",
+    "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/design-sources/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+    "sha256": "42f3533feab2fcf98a60e4fe570d9980c6d008785d65df6e73e15e3f2f54dc85",
+    "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/design-sources/skills/buster/engine/test-gates/kubernetes-manifest.ts"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+    "sha256": "ea8247a2d440f65726372a71dcdc629be9dbcdf682a4b874c0d6288329cbc18e",
+    "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/design-sources/skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts"
+  }
+]

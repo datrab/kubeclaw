@@ -1,0 +1,19 @@
+2026-09-20 19:50:04.977 GMT [697196] LOG:  could not open directory "/usr/share/zoneinfo": No such file or directory
+2026-09-20 19:50:05.003 UTC [697196] LOG:  starting PostgreSQL 18.6 on x86_64-alpine-linux-musl, compiled by cc (Alpine 15.2.0) 15.2.0, 64-bit
+2026-09-20 19:50:05.003 UTC [697196] LOG:  listening on IPv4 address "127.0.0.1", port 55433
+2026-09-20 19:50:05.009 UTC [697196] LOG:  listening on Unix socket "/tmp/.s.PGSQL.55433"
+2026-09-20 19:50:05.080 UTC [697202] LOG:  database system was shut down at 2026-09-20 19:49:57 UTC
+2026-09-20 19:50:05.086 UTC [697196] LOG:  database system is ready to accept connections
+2026-09-20 19:51:15.247 UTC [697200] LOG:  checkpoint starting: immediate force wait
+2026-09-20 19:51:15.282 UTC [697200] LOG:  checkpoint complete: wrote 43 buffers (2.1%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.015 s, sync=0.008 s, total=0.035 s; sync files=14, longest=0.004 s, average=0.001 s; distance=4629 kB, estimate=4629 kB; lsn=0/1BBF138, redo lsn=0/1BBF0E0
+2026-09-20 19:51:47.868 UTC [697196] LOG:  received SIGHUP, reloading configuration files
+2026-09-20 19:51:47.869 UTC [697196] LOG:  parameter "shared_buffers" cannot be changed without restarting the server
+2026-09-20 19:51:47.869 UTC [697196] LOG:  configuration file "/tmp/prism-backup-native-target/postgresql.conf" contains errors; unaffected changes were applied
+2026-09-20 19:51:50.576 UTC [697200] LOG:  checkpoint starting: immediate force wait
+2026-09-20 19:51:50.611 UTC [697200] LOG:  checkpoint complete: wrote 11 buffers (0.5%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.011 s, sync=0.009 s, total=0.036 s; sync files=11, longest=0.007 s, average=0.001 s; distance=6642 kB, estimate=6642 kB; lsn=0/223B978, redo lsn=0/223B920
+2026-09-20 19:53:39.334 UTC [697200] LOG:  checkpoint starting: immediate force wait
+2026-09-20 19:53:39.363 UTC [697200] LOG:  checkpoint complete: wrote 36 buffers (1.8%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.007 s, total=0.030 s; sync files=15, longest=0.003 s, average=0.001 s; distance=6831 kB, estimate=6831 kB; lsn=0/28E76B8, redo lsn=0/28E7660
+2026-09-20 19:55:43.627 UTC [697200] LOG:  checkpoint starting: immediate force wait
+2026-09-20 19:55:43.662 UTC [697200] LOG:  checkpoint complete: wrote 10 buffers (0.5%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.009 s, total=0.036 s; sync files=10, longest=0.005 s, average=0.001 s; distance=6637 kB, estimate=6811 kB; lsn=0/2F62BB0, redo lsn=0/2F62B58
+2026-09-20 19:56:28.996 UTC [697200] LOG:  checkpoint starting: immediate force wait
+2026-09-20 19:56:29.029 UTC [697200] LOG:  checkpoint complete: wrote 9 buffers (0.4%), wrote 1 SLRU buffers; 0 WAL file(s) added, 0 removed, 1 recycled; write=0.010 s, sync=0.007 s, total=0.033 s; sync files=10, longest=0.003 s, average=0.001 s; distance=6629 kB, estimate=6793 kB; lsn=0/35DBFB8, redo lsn=0/35DBF60

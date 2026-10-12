@@ -1,0 +1,40 @@
+CLUSTER_MUTATION_APPLIED {"mutation":"tail-short","pid":36120,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts","beforeSha256":"6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc","afterSha256":"4a1333f4c8a5ba25e6858cdd130039841f52e7da301eff4cd0a6df0fbaad9749","replacements":[{"from":"signal, this.#shortCommandTimeoutMs)","to":"signal, 15000)","count":3},{"from":"null,signal,this.#shortCommandTimeoutMs)","to":"null,signal,15000)","count":1},{"from":"Math.min(this.#shortCommandTimeoutMs, this.#maximumExecutionMs)","to":"Math.min(15000, this.#maximumExecutionMs)","count":1}],"replacedAnchors":5}
+✔ kubernetes.fixture actual auth process uses short deadline 600 (621.280812ms)
+✔ kubernetes.fixture actual auth process uses short deadline 2000 (1038.898446ms)
+✖ kubernetes.exposure actual auth process uses short deadline 600 (1037.88776ms)
+✔ kubernetes.exposure actual auth process uses short deadline 2000 (1037.321506ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5832.072001
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-timing-consumers.test.mjs:25:36
+✖ kubernetes.exposure actual auth process uses short deadline 600 (1037.88776ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /TIMEOUT/. Input:
+  
+  'Error: TAILSCALE_EXPOSURE_RBAC_DENIED:get'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-timing-consumers.test.mjs:34:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: TAILSCALE_EXPOSURE_RBAC_DENIED:get
+        at #prepare (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:207:36)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-timing-consumers.test.mjs:34:5)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /TIMEOUT/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

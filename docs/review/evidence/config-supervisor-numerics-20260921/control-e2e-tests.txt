@@ -1,0 +1,15 @@
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (68.847194ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (1.117798ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (0.335579ms)
+✔ Tailscale exchange requires the trusted ingress path (3.341986ms)
+✔ session signatures and expiry fail closed (0.41681ms)
+✔ Nova request to Prism baseline to visual provider plan (4546.062877ms)
+✔ publication rejects missing approval and stale edits reject conflicts (1.9472ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7281.371948

@@ -1,0 +1,6 @@
+{
+  "path": "skills/nova/core/telemetry/observer-recovery.ts",
+  "sha256": "9d97600debff727243d62fbad6c4a4616b056a4e4afb1098e1e19bbaa5f3edcb",
+  "bytes": 6615,
+  "purpose": "Independent verification of actual persisted observer attempt recovery"
+}

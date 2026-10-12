@@ -1,0 +1,4 @@
+minimumHeapMiB True
+heapFraction True
+runtimeMemoryReserveBytes True
+minimumOpenFiles True

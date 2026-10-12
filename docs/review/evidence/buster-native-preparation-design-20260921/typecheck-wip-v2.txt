@@ -1,0 +1,9 @@
+skills/buster/engine/remote-plan-cli.ts(19,7): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+skills/buster/engine/remote-plan-cli.ts(19,36): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-host.ts(42,7): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-host.ts(42,7): error TS18048: 'process.getuid' is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-host.ts(42,46): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-source.ts(74,26): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-source.ts(74,26): error TS18048: 'process.getuid' is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-source.ts(76,7): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+skills/buster/engine/test-gates/preparation-source.ts(76,7): error TS18048: 'process.getgid' is possibly 'undefined'.

@@ -1,0 +1,8 @@
+{
+  "command": [
+    "/usr/local/bin/node",
+    "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+  ],
+  "cooperativeAssertionDetected": true,
+  "exitCode": 1
+}

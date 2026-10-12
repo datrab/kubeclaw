@@ -1,0 +1,48 @@
+[    2.026558] rodata_test: all tests were successful
+VM_BOOTED=1
+ℹ tests 12
+ℹ pass 1
+ℹ fail 11
+ℹ cancelled 0
+ℹ skipped 0
+ℹ duration_ms 46029.587968
+  Error: WORKER_NATIVE_NODE_IDENTITY_INVALID
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  Error: WORKER_NATIVE_NODE_IDENTITY_INVALID
+  Error: WORKER_NATIVE_NODE_IDENTITY_INVALID
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  Error: WORKER_NATIVE_NODE_IDENTITY_INVALID
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  Error: WORKER_NATIVE_NODE_IDENTITY_INVALID
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  Error: WORKER_NATIVE_NODE_IDENTITY_INVALID
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  Error: WORKER_NATIVE_NODE_IDENTITY_INVALID
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  Error: WORKER_NATIVE_NODE_IDENTITY_INVALID
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  Error: WORKER_NATIVE_NODE_IDENTITY_INVALID
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  Error: WORKER_NATIVE_NODE_IDENTITY_INVALID
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  Error: WORKER_NATIVE_NODE_IDENTITY_INVALID
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+✔ invalid and near-integer-limit budgets cannot bypass aggregate accounting (17.184985ms)
+ℹ tests 35
+ℹ pass 30
+ℹ fail 1
+ℹ cancelled 4
+ℹ skipped 0
+ℹ duration_ms 231451.562719
+  Error: spawnSync systemd-analyze ENOENT
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    syscall: 'spawnSync systemd-analyze',
+    path: 'systemd-analyze',
+    error: Error: spawnSync systemd-analyze ENOENT
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+  'test timed out after 20000ms'
+  'test timed out after 20000ms'
+  'test timed out after 20000ms'
+  'test timed out after 15000ms'
+VM_NATIVE_STATUS=1 VM_NODE_POOLS_STATUS=1
+VM_REVIEW_EXIT=1

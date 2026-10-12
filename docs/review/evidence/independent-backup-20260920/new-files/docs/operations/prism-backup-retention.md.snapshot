@@ -1,0 +1,122 @@
+# Prism backup groups: verification and manual space release
+
+`charts/prism/files/prism-backup.sh` is the program mounted into the existing
+Prism backup jobs. Completed `backup-*` directories use the existing
+`prism-db-artifacts-v1` format: a PostgreSQL custom dump, immutable object files,
+exact object index and checksummed metadata. Flat legacy dumps remain untouched.
+No schedule deletes groups. An incomplete or interrupted operation consumes
+capacity until an operator selects it for removal.
+
+This is **not a complete disaster-recovery system**. Keys and cross-service
+journals are not yet bound into these groups. The scheduled `database-proof` is
+only a same-server SQL smoke test. Complete session/job/pipeline recovery,
+independent failure-domain recovery and measured RPO/RTO remain unverified.
+
+## Capacity and protection contract
+
+The chart's `backup.maximumBytes`, `backup.maximumRetainedBytes` and
+`backup.maximumDurationSeconds` bound a group, retained storage and execution.
+Retained usage includes incomplete groups. Capacity exhaustion fails the backup;
+it never evicts existing recovery points. Provision space for active capture,
+retained recovery points and interrupted work. The script reserves additional
+headroom, so the next group's payload alone is not the required free space.
+
+The lexically latest completed group (the program generates UTC timestamp names)
+is always protected. Retirement also verifies that latest group; a corrupted
+latest group blocks release. Do not rename production groups. For every additional
+point required by your recovery policy, create an empty marker named
+`.protect-<complete-group-name>` in the backup root. Create/remove markers while
+holding the same exclusive `<BACKUP_ROOT>/.lock`; marker creation without the lock
+can race with retirement. Protection markers live outside immutable groups.
+A marker's existence, including a symlink, prevents retirement.
+
+There is no age-based expiry. An operator must decide which point is no longer
+required locally and preserve an identical verified copy. This implements D07's
+manual release rule, without deleting the only known copy of project material.
+The operator must separately define required historical points, external storage,
+key custody and recovery targets. A different directory or mount path does **not**
+prove a different physical failure domain. Protect the copy and periodically test
+its recovery in the destination environment.
+
+## Retire one completed group
+
+Run in a controlled maintenance environment with Bash, GNU coreutils/findutils
+and util-linux `flock`, under the UID that owns backup files. Mount the existing
+backup root and the verified-copy root writable: both require their own `.lock`.
+Do not run uncoordinated backup-file edits or deletion alongside this program.
+Every cooperating command serializes through those locks.
+
+Set the normal program configuration to the actual chart limits, then select an
+exact group and its **previously recorded SHA-256 of `SHA256SUMS`**. Do not derive
+the expected digest from an untrusted copy at the moment of retirement.
+
+```sh
+export BACKUP_ROOT=/backups
+export BACKUP_MAXIMUM_BYTES=1073741824
+export BACKUP_MAXIMUM_RETAINED_BYTES=8589934592
+export BACKUP_MAXIMUM_DURATION_SECONDS=3600
+export BACKUP_RETIRE_GROUP=backup-20260920T120000Z-REPLACE
+export BACKUP_COPY_ROOT=/verified-copies
+export BACKUP_RETIRE_SHA256=REPLACE_WITH_RECORDED_64_HEX_DIGEST
+bash /backup-program/prism-backup.sh retire
+```
+
+Values above are examples, not deployment defaults. The copy must be an intact
+same-named group at `<BACKUP_COPY_ROOT>/<BACKUP_RETIRE_GROUP>`. Root overlap,
+wrong digest, corrupt or missing objects, an active copy-root lock, protection,
+or selection of the latest group aborts without releasing that group. Both
+manifests must match and both complete groups are verified before the first
+rename. Symlinked roots/groups are rejected. Hash pinning detects mismatch; it
+is not a digital signature or a defense against a fully compromised operator.
+
+Release atomically renames the selected directory to `.retiring-<group-name>`,
+syncs the backup filesystem, then removes only that directory. A killed process
+may leave a partially removed tombstone. Repeat the **same** retirement command
+with the same pinned copy to finish. The copy and remaining latest local group
+are reverified before continuing. Never treat a `.retiring-*` directory as a
+recovery point. A successful command prints `PRISM_BACKUP_RETIRED:<group-name>`.
+
+## Discard one failed capture
+
+First inspect the failure and confirm that its private incomplete directory is
+no longer needed for diagnosis. Select the exact `.incomplete-*` name:
+
+```sh
+export BACKUP_DISCARD_INCOMPLETE=.incomplete-20260920T120000Z-REPLACE
+bash /backup-program/prism-backup.sh discard-incomplete
+```
+
+The same root lock prevents concurrent capture from being removed. The command
+rejects completed names, traversal and symlinked directories. Incomplete work has
+never been published as a restore point and therefore does not require a copied
+recovery group. No wildcard or age-based purge is supported. An interrupted
+cleanup can be repeated while the directory exists; after successful removal,
+repeating it reports a missing directory. Existing complete groups and legacy
+flat dumps are untouched.
+
+## Local evidence and remaining work
+
+`prism-backup.test.mts` exercises filesystem copying, verification, retention,
+protection, capacity, SIGKILL after retirement rename, partial tombstone resume,
+invalid names, source corruption, locks, timeouts and chart rendering. Its DB
+commands are explicitly fixtures and prove no PostgreSQL behavior.
+
+`prism-backup-native.test.mts` requires two real PostgreSQL servers with different
+system identifiers and data directories. It executes the original migrations and
+Prism revision/artifact APIs, creates repeated groups, reaches quota, releases one
+group, captures again and restores that new dump on the other server. It compares
+all Prism table rows from a quiescent snapshot, reads copied objects after removal
+of the source object directory and edits the restored document through the real
+repository. It does not exercise saved jobs/sessions or concurrent writers; it
+is a Q4 storage roundtrip and partial Q3 evidence, not a full Q3 acceptance test.
+
+The native gate fails when required servers are absent; it never silently skips.
+Both URLs must point at dedicated disposable loopback servers. The test owns only
+randomly named databases it creates, but original migrations create the normal
+Prism roles and vector extension, so do not supply shared developer databases.
+
+```sh
+PRISM_BACKUP_TEST_SOURCE_URL=postgresql://USER@127.0.0.1:55432/postgres \
+PRISM_BACKUP_TEST_TARGET_URL=postgresql://USER@127.0.0.1:55433/postgres \
+node --experimental-transform-types --test tests/verification/deployment/prism-backup-native.test.mts
+```

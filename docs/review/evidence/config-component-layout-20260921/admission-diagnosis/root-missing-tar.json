@@ -1,0 +1,17 @@
+{
+  "kind": "source-and-tool-path-diagnosis-not-runtime-acceptance",
+  "missingExecutable": "/usr/bin/tar",
+  "exists": false,
+  "existingBoundTool": "node_modules/.cache/native-host-tools/root/bin/tar",
+  "existingBoundToolExists": true,
+  "finding": "integration2 omitted the explicit tar bind present in previous successful independent BA runner; fixture waits for started callback even when extraction fails before execute",
+  "nextProof": "diagnostic status.error and rerun using same prior executable binding; do not extend deadlines",
+  "sources": {
+    "tests/fixtures/test-gate/buster-admission.mts": "2c4f38463969666c75f2a99515363672c6b6380d493be1a721c80e11c232fe3d",
+    "skills/buster/engine/test-gates/preparation-archive.ts": "a3f47267addf5e371faff3896521eb3aac35b49523275a7766ed29c8d1d42f6a",
+    "skills/buster/engine/test-gates/remote-prepared-execution.ts": "c30fd160cb458232e68f27eaae24d9e622a85184f65ad8fbde3135cf14e3355d",
+    "tests/verification/reliability/buster-admission-config.test.mts": "cdea7b696e368a64ed972d1bb7e00b96a43ff24829a865cf713465898a51bdbf",
+    "docs/review/evidence/config-component-layout-20260921/integration2/results.json": "c4248398516cc53a09727838eb9aa1f1ff72c0e917a5319a295d3be683a9894b",
+    "docs/review/evidence/config-buster-admission-independent-20260921/run.py": "35a1d13b3a21514e9c41850d65dc59259bd076ce64fd9fd8ddcfc32b7e52fe8e"
+  }
+}

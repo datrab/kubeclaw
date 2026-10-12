@@ -1,0 +1,163 @@
+{
+  "sourceCount": 583,
+  "sourceDrift": [],
+  "rosterExact": true,
+  "registrations": [
+    {
+      "manifest": "skills/buster/plugins/junit-report-adapter/plugin.json",
+      "kind": "reportAdapters",
+      "id": "junit",
+      "rawSchemaExact": true,
+      "topLevelFields": 0
+    },
+    {
+      "manifest": "skills/nova/plugins/architecture-validator/plugin.json",
+      "kind": "stages",
+      "id": "architecture",
+      "rawSchemaExact": true,
+      "topLevelFields": 2
+    },
+    {
+      "manifest": "skills/nova/plugins/blueprint-sync/plugin.json",
+      "kind": "stages",
+      "id": "sync",
+      "rawSchemaExact": true,
+      "topLevelFields": 0
+    },
+    {
+      "manifest": "skills/nova/plugins/buster-quality-gate/plugin.json",
+      "kind": "stages",
+      "id": "quality",
+      "rawSchemaExact": true,
+      "topLevelFields": 3
+    },
+    {
+      "manifest": "skills/nova/plugins/case-study/plugin.json",
+      "kind": "stages",
+      "id": "case-study",
+      "rawSchemaExact": true,
+      "topLevelFields": 1
+    },
+    {
+      "manifest": "skills/nova/plugins/delivery-lint/plugin.json",
+      "kind": "stages",
+      "id": "delivery-lint",
+      "rawSchemaExact": true,
+      "topLevelFields": 0
+    },
+    {
+      "manifest": "skills/nova/plugins/demo-handoff/plugin.json",
+      "kind": "stages",
+      "id": "candidate",
+      "rawSchemaExact": true,
+      "topLevelFields": 0
+    },
+    {
+      "manifest": "skills/nova/plugins/demo-handoff/plugin.json",
+      "kind": "stages",
+      "id": "delivery",
+      "rawSchemaExact": true,
+      "topLevelFields": 0
+    },
+    {
+      "manifest": "skills/nova/plugins/demo-handoff/plugin.json",
+      "kind": "stages",
+      "id": "ready",
+      "rawSchemaExact": true,
+      "topLevelFields": 0
+    },
+    {
+      "manifest": "skills/nova/plugins/human-approval/plugin.json",
+      "kind": "stages",
+      "id": "approval",
+      "rawSchemaExact": true,
+      "topLevelFields": 3
+    },
+    {
+      "manifest": "skills/nova/plugins/human-approval/plugin.json",
+      "kind": "stages",
+      "id": "architecture-approval",
+      "rawSchemaExact": true,
+      "topLevelFields": 3
+    },
+    {
+      "manifest": "skills/nova/plugins/implementation-agent/plugin.json",
+      "kind": "stages",
+      "id": "implementation",
+      "rawSchemaExact": true,
+      "topLevelFields": 2
+    },
+    {
+      "manifest": "skills/nova/plugins/lint/plugin.json",
+      "kind": "stages",
+      "id": "pre-check",
+      "rawSchemaExact": true,
+      "topLevelFields": 4
+    },
+    {
+      "manifest": "skills/nova/plugins/lint/plugin.json",
+      "kind": "stages",
+      "id": "full",
+      "rawSchemaExact": true,
+      "topLevelFields": 4
+    },
+    {
+      "manifest": "skills/nova/plugins/pipeline-review/plugin.json",
+      "kind": "stages",
+      "id": "review",
+      "rawSchemaExact": true,
+      "topLevelFields": 2
+    },
+    {
+      "manifest": "skills/nova/plugins/preflight-contract/plugin.json",
+      "kind": "stages",
+      "id": "validate",
+      "rawSchemaExact": true,
+      "topLevelFields": 0
+    },
+    {
+      "manifest": "skills/nova/plugins/preflight-contract/plugin.json",
+      "kind": "stages",
+      "id": "source",
+      "rawSchemaExact": true,
+      "topLevelFields": 0
+    },
+    {
+      "manifest": "skills/nova/plugins/prism-design/plugin.json",
+      "kind": "stages",
+      "id": "design",
+      "rawSchemaExact": true,
+      "topLevelFields": 4
+    },
+    {
+      "manifest": "skills/nova/plugins/project-summary/plugin.json",
+      "kind": "stages",
+      "id": "summary",
+      "rawSchemaExact": true,
+      "topLevelFields": 2
+    },
+    {
+      "manifest": "skills/nova/plugins/review/plugin.json",
+      "kind": "stages",
+      "id": "review",
+      "rawSchemaExact": true,
+      "topLevelFields": 5
+    },
+    {
+      "manifest": "skills/nova/plugins/review/plugin.json",
+      "kind": "stages",
+      "id": "repository-audit",
+      "rawSchemaExact": true,
+      "topLevelFields": 7
+    },
+    {
+      "manifest": "skills/nova/plugins/review/plugin.json",
+      "kind": "stages",
+      "id": "repository-revalidation",
+      "rawSchemaExact": true,
+      "topLevelFields": 7
+    }
+  ],
+  "topLevelFields": 49,
+  "scope": "Independent source bytes, roster, full registration and full raw schema comparison. Nested projections and semantic consumer review remain open. No runtime/migration acceptance."
+}

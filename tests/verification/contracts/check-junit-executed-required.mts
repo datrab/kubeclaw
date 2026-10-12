@@ -114,7 +114,10 @@ try {
     const source = path.join(root, `${scenario.name}.mjs`);
     const reportFile = path.join(root, `${scenario.name}.xml`);
     fs.writeFileSync(source, `import test from 'node:test';\n${scenario.source}`);
-    const child = spawnSync(process.execPath, ['--test', '--test-reporter=junit', `--test-reporter-destination=${reportFile}`, source]);
+    const childEnvironment = { ...process.env };
+    // The child owns its reporter; inheriting the parent test context suppresses it.
+    delete childEnvironment.NODE_TEST_CONTEXT;
+    const child = spawnSync(process.execPath, ['--test', '--test-reporter=junit', `--test-reporter-destination=${reportFile}`, source], { env: childEnvironment });
     assert.equal(child.status, scenario.failed && !scenario.xml ? 1 : 0, child.stderr.toString());
     // Explicit XML contract vectors cover cases Node's reporter does not emit.
     if (scenario.xml) fs.writeFileSync(reportFile, scenario.xml);

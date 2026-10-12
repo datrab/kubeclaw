@@ -1,0 +1,26 @@
+[
+  {
+    "name": "corrected",
+    "command": [
+      "node",
+      "docs/review/evidence/control-listener-quality-independent-20260921/closed-stderr-child.mts"
+    ],
+    "ready": "READY\n",
+    "actualParentClosedStderrPipe": true,
+    "exitCode": 1,
+    "stdout": ""
+  },
+  {
+    "name": "old-logger",
+    "command": [
+      "node",
+      "--import",
+      "./docs/review/evidence/control-listener-quality-independent-20260921/old-logger.mjs",
+      "docs/review/evidence/control-listener-quality-independent-20260921/closed-stderr-child.mts"
+    ],
+    "ready": "READY\n",
+    "actualParentClosedStderrPipe": true,
+    "exitCode": 1,
+    "stdout": ""
+  }
+]

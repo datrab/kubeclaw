@@ -1,0 +1,22 @@
+[
+  {
+    "executable": "/usr/local/bin/node",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x7beb47e6f000)\n\tlibstdc++.so.6 => /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib/libstdc++.so.6 (0x7beb40e00000)\n\tlibgcc_s.so.1 => /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib/libgcc_s.so.1 (0x7beb4112a000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x7beb47e6f000)\n"
+  },
+  {
+    "executable": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x7b6cebea3000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x7b6cebea3000)\n"
+  },
+  {
+    "executable": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x78ee0de43000)\n\tlibacl.so.1 => /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/lib/libacl.so.1 (0x78ee0dde1000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x78ee0de43000)\n"
+  },
+  {
+    "executable": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox",
+    "exitCode": 0,
+    "output": "\t/lib/ld-musl-x86_64.so.1 (0x78f9cc664000)\n\tlibc.musl-x86_64.so.1 => /lib/ld-musl-x86_64.so.1 (0x78f9cc664000)\n"
+  }
+]

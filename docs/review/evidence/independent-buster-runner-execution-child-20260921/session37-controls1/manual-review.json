@@ -1,0 +1,11 @@
+{
+  "session": 89719,
+  "exitCode": 0,
+  "sourceDrift": [],
+  "appliedAndManuallyConfirmed": {
+    "old-protocol-order": "Exact idle regression asserts log count0; mutant actually dispatches1.",
+    "lost-idle-failure": "Later execute returns PROCESS_CLOSED instead of persisted PROTOCOL_LIMIT.",
+    "force-grace-500": "50ms profile has no actual parent SIGKILL, violating exact positive signal assertion.",
+    "force-grace-50": "500ms profile has actual parent SIGKILL, violating supervisor-before-parent assertion."
+  }
+}

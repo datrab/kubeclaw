@@ -1,0 +1,11 @@
+✔ preexisting metadata saturation still reaches modeled drain and never disposes or releases (105.568082ms)
+✔ metadata I/O failure retains failed ownership after modeled drain and can retry when storage recovers (222.186453ms)
+✔ unknown-child verification failure prevents modeled subtree mutation (110.816429ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1441.44951

@@ -1,0 +1,15 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "tests/verification/contracts/buster-cluster-capture.test.mjs"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "name": "ci2",
+    "seconds": 27.546882487018593
+  }
+]

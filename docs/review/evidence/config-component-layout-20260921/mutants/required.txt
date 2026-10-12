@@ -1,0 +1,128 @@
+CONFIG_MUTANT_APPLIED:required
+✔ explicit entry required; old inline authorship is rejected (11.728437ms)
+✖ prism-control: missing file, wrong owner, unknown envelope and reference rejected (16.855888ms)
+✖ prism-studio: missing file, wrong owner, unknown envelope and reference rejected (41.567444ms)
+✖ prism-worker: missing file, wrong owner, unknown envelope and reference rejected (11.44619ms)
+✖ prism-execution: missing file, wrong owner, unknown envelope and reference rejected (11.523342ms)
+✖ buster-engine: missing file, wrong owner, unknown envelope and reference rejected (12.937598ms)
+✖ every authored setting is required, including explicit nullable values (15.427781ms)
+✔ both domains validate before selecting either and nested snapshots stay frozen (10.982059ms)
+✔ real ConfigMap-style entry symlink resolves component files within its physical generation (36.804433ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 3
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 560.583453
+
+✖ failing tests:
+
+test at tests/verification/reliability/config-component-bundle.test.mts:27:38
+✖ prism-control: missing file, wrong owner, unknown envelope and reference rejected (16.855888ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/config-component-bundle.test.mts:39:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/config-component-bundle.test.mts:27:38
+✖ prism-studio: missing file, wrong owner, unknown envelope and reference rejected (41.567444ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/config-component-bundle.test.mts:39:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/config-component-bundle.test.mts:27:38
+✖ prism-worker: missing file, wrong owner, unknown envelope and reference rejected (11.44619ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/config-component-bundle.test.mts:39:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/config-component-bundle.test.mts:27:38
+✖ prism-execution: missing file, wrong owner, unknown envelope and reference rejected (11.523342ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/config-component-bundle.test.mts:39:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/config-component-bundle.test.mts:27:38
+✖ buster-engine: missing file, wrong owner, unknown envelope and reference rejected (12.937598ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/config-component-bundle.test.mts:39:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/config-component-bundle.test.mts:48:1
+✖ every authored setting is required, including explicit nullable values (15.427781ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: prism-control:pipelinePreferenceSubject
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/config-component-bundle.test.mts:56:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SWARM_CONFIG_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }

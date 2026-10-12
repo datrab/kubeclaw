@@ -1,0 +1,11 @@
+{
+  "byteIdenticalDeclarations": [
+    "adapt",
+    "#run",
+    "#assertRuntimeRoot",
+    "abortable",
+    "validateLimits",
+    "runtimePaths"
+  ],
+  "phaseCleanupCatchFinallyByteIdentical": true
+}

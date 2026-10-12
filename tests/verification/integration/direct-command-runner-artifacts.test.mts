@@ -1,3 +1,4 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -31,7 +32,8 @@ try {
       policy: { defaultTimeoutMs: 5000, maximumTimeoutMs: 5000, defaultLimits: limits, maximumLimits: limits,
         maximumRetryCount: 1, maximumMatrixSize: 1, maximumNodes: 1, defaultConcurrencyLimit: 1, maximumConcurrencyLimits: {} } });
     const artifactRoot = path.join(temporary, `artifacts-${index}`);
-    const result = await new TestPlanRunner({ plan, registry, workspaceRoot: workspace, repositoryRoot: repository,
+    const result = await new TestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: workspace, repositoryRoot: repository,
       artifactRoot, observabilityRoot: path.join(artifactRoot, 'observability'), maximumConcurrency: 1,
       grants: new Map([[plan.nodes[0]!.id, ['command.execute']]]), capabilityInvoker: invoker }).run();
     const diagnostics = result.attempts.flatMap((attempt) => attempt.evidence.filter((item) => item.type === 'log')

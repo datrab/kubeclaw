@@ -1,0 +1,22 @@
+[
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "beforeSha256": "8d31713e1a4ff4b14a9c98ee2616ee48dc0336a67a01e2ddec915a602f67fd09",
+    "afterSha256": "ca4e2ed503e3fa21cfe3c1fd589a93ea102c9ee42fe1bb16a79ee19b6b04f638"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+    "beforeSha256": "3e166c56a1aa0c33e82d917cf7e5824f8188d7eed1757ea2a7aebf1810fbed20",
+    "afterSha256": "15994d9caebf7f98f2e23740a66ad105ec721c0ebbe01aba22def8a9e4c5bad4"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+    "beforeSha256": "9d8cfa063a73da1c7c90f861af13bd2b3303e7c999f925b660f9b065ab19a2f5",
+    "afterSha256": "cdba534f94cbf3fca17d16d40b196d5a303620e8809f1f419e996478dbfd0d69"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+    "beforeSha256": "b18749b2b9b81eb8e0cbf824d61e4b96f117b0b00eebb502ceb6a7b788f62ce8",
+    "afterSha256": "aa8c4a9e4b7adccfce6d4ee78d6b8e67d86171bb8651e3c90fb14b3d948e7521"
+  }
+]

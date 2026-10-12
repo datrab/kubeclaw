@@ -1,0 +1,42 @@
+{
+  "sessionId": 81857,
+  "qemuPid": 103538,
+  "wrapperExitCode": 1,
+  "readiness": [
+    {
+      "root": "/repo",
+      "mode": "accepted",
+      "stdout": "",
+      "expectedMarker": "durable\n",
+      "deadline": 20000,
+      "stderr": "DIAGNOSTIC {\"phase\":\"bootstrap\",\"elapsedMs\":128.42902800000002,\"loads\":0,\"resolutions\":0,\"loadMs\":0,\"resolveMs\":0,\"lastModule\":null,\"cpu\":{\"user\":1100858,\"system\":339204},\"rss\":54251520,\"context\":\"child-v8\"}\nDIAGNOSTIC {\"phase\":\"tick\",\"elapsedMs\":16162.646668000001,\"loads\":138,\"resolutions\":353,\"loadMs\":1254.6633900000147,\"resolveMs\":4112.096478999993,\"lastModule\":\"file:///repo/node_modules/ajv/dist/refs/json-schema-draft-07.json\",\"cpu\":{\"user\":18659109,\"system\":3799870},\"rss\":100556800,\"context\":\"child-v8\"}\nDIAGNOSTIC {\"phase\":\"tick\",\"elapsedMs\":18166.652814,\"loads\":138,\"resolutions\":353,\"loadMs\":1254.6633900000147,\"resolveMs\":4112.096478999993,\"lastModule\":\"file:///repo/node_modules/ajv/dist/refs/json-schema-draft-07.json\",\"cpu\":{\"user\":21258081,\"system\":4065222},\"rss\":102465536,\"context\":\"child-v8\"}\n"
+    },
+    {
+      "root": "/repo",
+      "mode": "sealed",
+      "stdout": "",
+      "expectedMarker": "durable\n",
+      "deadline": 20000,
+      "stderr": "DIAGNOSTIC {\"phase\":\"bootstrap\",\"elapsedMs\":95.117481,\"loads\":0,\"resolutions\":0,\"loadMs\":0,\"resolveMs\":0,\"lastModule\":null,\"cpu\":{\"user\":1025153,\"system\":307818},\"rss\":54173696,\"context\":\"child-v8\"}\nDIAGNOSTIC {\"phase\":\"tick\",\"elapsedMs\":15963.594928999999,\"loads\":138,\"resolutions\":353,\"loadMs\":1200.3520659999995,\"resolveMs\":4393.579972999978,\"lastModule\":\"file:///repo/node_modules/ajv/dist/refs/json-schema-draft-07.json\",\"cpu\":{\"user\":18933291,\"system\":3755540},\"rss\":103567360,\"context\":\"child-v8\"}\nDIAGNOSTIC {\"phase\":\"tick\",\"elapsedMs\":17739.582936,\"loads\":138,\"resolutions\":353,\"loadMs\":1200.3520659999995,\"resolveMs\":4393.579972999978,\"lastModule\":\"file:///repo/node_modules/ajv/dist/refs/json-schema-draft-07.json\",\"cpu\":{\"user\":21058589,\"system\":3990848},\"rss\":104927232,\"context\":\"child-v8\"}\nDIAGNOSTIC {\"phase\":\"tick\",\"elapsedMs\":18800.266462,\"loads\":138,\"resolutions\":353,\"loadMs\":1200.3520659999995,\"resolveMs\":4393.579972999978,\"lastModule\":\"file:///repo/node_modules/ajv/dist/refs/json-schema-draft-07.json\",\"cpu\":{\"user\":21796706,\"system\":4250036},\"rss\":106561536,\"context\":\"child-v8\"}\n"
+    },
+    {
+      "root": "/repo",
+      "mode": "supervisor",
+      "stdout": "",
+      "expectedMarker": "locked\n",
+      "deadline": 15000,
+      "stderr": "DIAGNOSTIC {\"phase\":\"bootstrap\",\"elapsedMs\":91.30816700000003,\"loads\":0,\"resolutions\":0,\"loadMs\":0,\"resolveMs\":0,\"lastModule\":null,\"cpu\":{\"user\":930362,\"system\":271279},\"rss\":54325248,\"context\":\"child-v8\"}\n"
+    }
+  ],
+  "originalNinePTests": {
+    "tests": 15,
+    "passed": 11,
+    "failed": 0,
+    "cancelled": 4,
+    "skipped": 0,
+    "exitCode": 1
+  },
+  "ext4ComparisonCompleted": false,
+  "causalConclusion": null,
+  "independentReview": "terminal failure verified: independent-native-vm-startup-storage-20260921.md"
+}

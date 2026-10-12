@@ -1,0 +1,56 @@
+proot info: binding = /
+proot info: vpid 1: translate("/" + "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox")
+proot info: vpid 1:          -> "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox"
+proot info: vpid 1: translate("/" + "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox")
+proot info: vpid 1:          -> "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox"
+proot info: exe = /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox
+proot info: argv = /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox 536870912 10 64 /usr/local/bin/node --max-old-space-size=358 -e console.log("started")
+proot info: initial cwd = /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo
+proot info: verbose level = 3
+proot info: pid 654508: access to "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-local-runtime-20260921/start-diagnosis/proot-verbose.txt" (fd 1) won't be translated until closed
+proot info: pid 654508: access to "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-local-runtime-20260921/start-diagnosis/proot-verbose.txt" (fd 2) won't be translated until closed
+proot info: pid 654508: access to "/proc/654508/fd" (fd 3) won't be translated until closed
+proot info: ptrace acceleration (seccomp mode 2) enabled
+proot info: vpid 1: sysenter start: mmap(0x0, 0x1000, 0x3, 0x22, 0xffffffffffffffff, 0x0) = 0xffffffffffffffda [0x7ffd7ece9490, 0]
+proot info: vpid 1: sysenter start: execve(0x7c268f7d3f20, 0x7ffd7ece9840, 0x7ffd7ece9888, 0x8080808080808080, 0xfefefefefefefeff, 0x2f2f2f2f2f2f2f2f) = 0xffffffffffffffda [0x7ffd7ece96b0, 0]
+proot info: vpid 1: translate("/" + "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox")
+proot info: vpid 1:          -> "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox"
+proot info: vpid 1: translate("/" + "/lib/ld-musl-x86_64.so.1")
+proot info: vpid 1:          -> "/lib/ld-musl-x86_64.so.1"
+proot info: loader: /tmp/prooted-654508-FEBnof
+proot info: vpid 1: sysenter start: open(0x7ffdc06caac0, 0x0, 0x0, 0x0, 0x0, 0x0) = 0xffffffffffffffda [0x7ffdc06ca878, 0]
+proot info: vpid 1: translate("/" + "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox")
+proot info: vpid 1:          -> "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox"
+proot info: vpid 1: sysenter start: open(0x7ffdc06cab4b, 0x0, 0x0, 0x12, 0x500000006000, 0xff0) = 0xffffffffffffffda [0x7ffdc06ca878, 0]
+proot info: vpid 1: translate("/" + "/lib/ld-musl-x86_64.so.1")
+proot info: vpid 1:          -> "/lib/ld-musl-x86_64.so.1"
+proot info: vpid 1: sysenter start: prctl(0xf, 0x7ffdc06cab3c, 0x0, 0x32, 0x8, 0x0) = 0xffffffffffffffda [0x7ffdc06ca878, 0]
+proot info: vpid 1: sysenter start: brk(0x0, 0x7ffdc06cae68, 0x7ffdc06cace8, 0x0, 0x6f00000a4880, 0x1) = 0xffffffffffffffda [0x7ffdc06ca800, 0]
+proot info: vpid 1: sysenter start: brk(0x500000009000, 0x7ffdc06cae68, 0x7ffdc06cace8, 0x0, 0x6f00000a4880, 0x1) = 0xffffffffffffffda [0x7ffdc06ca800, 0]
+proot info: vpid 1: sysenter start: prctl(0x1, 0xf, 0x0, 0x0, 0x0, 0x8) = 0xffffffffffffffda [0x7ffdc06c9390, 0]
+proot info: vpid 1: sysenter start: open(0x7ffdc06c9ab0, 0x88000, 0x0, 0x0, 0x0, 0x0) = 0xffffffffffffffda [0x7ffdc06c9348, 0]
+proot info: vpid 1: translate("/" + "/proc/654509/task/654509/children")
+proot info: vpid 1:          -> "/proc/654509/task/654509/children"
+proot info: vpid 1: sysenter start: prlimit64(0x0, 0x9, 0x7ffdc06c9460, 0x0, 0x9, 0x0) = 0xffffffffffffffda [0x7ffdc06c93b0, 0]
+proot info: vpid 1: sysenter start: prlimit64(0x0, 0x0, 0x7ffdc06c9460, 0x0, 0x0, 0x0) = 0xffffffffffffffda [0x7ffdc06c93b0, 0]
+proot info: vpid 1: sysenter start: prlimit64(0x0, 0x7, 0x7ffdc06c9460, 0x0, 0x7, 0x0) = 0xffffffffffffffda [0x7ffdc06c93b0, 0]
+proot info: vpid 1: sysenter start: prlimit64(0x0, 0x4, 0x7ffdc06c9460, 0x0, 0x4, 0x0) = 0xffffffffffffffda [0x7ffdc06c93b0, 0]
+proot info: vpid 1: sysenter start: prctl(0x26, 0x1, 0x0, 0x0, 0x0, 0x0) = 0xffffffffffffffda [0x7ffdc06c9390, 0]
+proot info: vpid 1: sysenter start: prctl(0x16, 0x2, 0x7ffdc06c9460, 0x6f0000044637, 0x0, 0x0) = 0xffffffffffffffda [0x7ffdc06c9390, 0]
+proot info: vpid 1: sysenter start: prctl(0x24, 0x1, 0x0, 0x0, 0x0, 0x0) = 0xffffffffffffffda [0x7ffdc06c9390, 0]
+proot info: vpid 2: pid 654510
+proot info: vpid 1: sysenter start: wait4(0xffffffffffffffff, 0x7ffdc06c9460, 0x0, 0x0, 0x0, 0x0) = 0xffffffffffffffda [0x7ffdc06c9398, 0]
+proot info: vpid 2: sysenter start: prctl(0x1, 0x9, 0x0, 0x0, 0x0, 0x0) = 0xffffffffffffffda [0x7ffdc06c9390, 0]
+proot info: vpid 2: sysenter start: execve(0x7ffdc06cca14, 0x7ffdc06cab98, 0x7ffdc06cabc0, 0x0, 0x7ffdc06c92a8, 0x8) = 0xffffffffffffffda [0x7ffdc06c93e0, 0]
+proot info: vpid 2: translate("/" + "/usr/local/bin/node")
+proot info: vpid 2:          -> "/usr/local/bin/node"
+proot info: vpid 2: translate("/" + "/lib/ld-musl-x86_64.so.1")
+proot info: vpid 2:          -> "/lib/ld-musl-x86_64.so.1"
+proot info: vpid 2: translate("/" + "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox")
+proot info: vpid 2:          -> "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox"
+proot info: vpid 2: terminated with signal 11
+proot info: vpid 1: sysenter start: wait4(0xffffffffffffffff, 0x7ffdc06c9460, 0x1, 0x0, 0x0, 0x0) = 0xffffffffffffffda [0x7ffdc06c9398, 0]
+proot info: vpid 1: sysenter start: wait4(0xffffffffffffffff, 0x7ffdc06c9460, 0x0, 0x0, 0x0, 0x0) = 0xffffffffffffffda [0x7ffdc06c9398, 0]
+proot info: vpid 1: translate("/" + "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox")
+proot info: vpid 1:          -> "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox"
+proot info: vpid 1: terminated with signal 11

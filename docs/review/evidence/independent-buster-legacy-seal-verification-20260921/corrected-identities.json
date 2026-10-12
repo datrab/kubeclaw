@@ -1,0 +1,10 @@
+[
+  {
+    "path": "scripts/buster-legacy-store-verify.py",
+    "sha256": "f98aea84b728881bed848a157fc092e18ce5a508e1a45bb0e0820a54a4823440"
+  },
+  {
+    "path": "docs/review/remediation/implementation/independent-buster-legacy-seal-verification-20260921.md",
+    "sha256": "aa1f18796541ce1df4968276788e062d39c213f963e367ac20c7bfd64c3e0a7f"
+  }
+]

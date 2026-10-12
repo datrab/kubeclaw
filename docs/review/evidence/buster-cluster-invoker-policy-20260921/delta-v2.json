@@ -1,0 +1,52 @@
+[
+  {
+    "path": "docs/architecture/buster-cluster-configuration.md",
+    "v1": "9ecf6233c05109c7ab2adbc19877fbc5fbd89d3fbb06d4587587a85f59ad3f34",
+    "v2": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+    "v1": "ac93eb062897b55bf60fda9f46c92ec0c5f5f05b7e71406a301226717ab7ee15",
+    "v2": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "v1": "2bf42cf527b3df53b41c075b91f87a23c325c205472e894e13311fd7721512f0",
+    "v2": "94b3d29e9f1b3a238d9cf3015ed8d5a364231f1aa3a47690419967931b2e6c46"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+    "v1": "a17b044d2af5a3a88051effb62710a9cda038db30c1a4f35fbf364c4ecb5985e",
+    "v2": "4b971e5dbc945e233821677a39561394e3bda775a29851b2ef20705883169396"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "v1": "cbc155b267070782837ff3317a8d2604df886c798eaf2656be9a743a40b61055",
+    "v2": "115c19a963ae45e1ca2be1e30dcd9b4f1cba7e73a38a8c700777c64f89f8b4b9"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+    "v1": "1354f25e5d9a7ad909b0d045c683fa6c421976034a38dcb3cede2727deb92951",
+    "v2": "06ec94d5ba0e6f2db60cfb1574bc21a79fd8e2763abdf79fbc26650aac022ac1"
+  },
+  {
+    "path": "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs",
+    "v1": "22cfd90570a713fd12d18a0be2df2d843ea7394d842c5a53cea653625d8bf4d1",
+    "v2": "eed5abb2878b3dd7983859c6322994407a6ea31775529a2d2f5e11a6d2149b71"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "v1": "6197c30e73e6812544668c59fee9e636dd4e351f6dc377cafcb5c8f782c38cfd",
+    "v2": "3ceb718a6d5265e178767a0328b954998d4f42518e172021f55624ecaf4d2718"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+    "v1": "c921d44f230b90aa94bf6f20430c92f230cfe27b367e8ed80b4f67475ed8f3b4",
+    "v2": "e3b8462e1190467d9bc16f771f81f356ba78fe07accefec8cd4292cb519d7d60"
+  },
+  {
+    "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+    "v1": "8cd2b37713b1e54258ba7cef09dcf7baa706da77c49e197f0a7d324ce512712d",
+    "v2": "79691f6b90dece3f267e2f693f53f926932da8d7bd2891f2e1c34956107c5bd0"
+  }
+]

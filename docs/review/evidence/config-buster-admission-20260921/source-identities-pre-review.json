@@ -1,0 +1,145 @@
+{
+  "status": "production frozen; remaining tests/docs pending",
+  "files": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "1ab81d8acff9b7b87d193964780c08f39350086bf60aee51771e312ad6ae8e6e",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/00.snapshot"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "sha256": "6529733c4220ded5ef9b1482793ceadaf7f23d1a855bb9bd13de6454ec3c1a5a",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/01.snapshot"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm.config.json",
+      "sha256": "b9f7ca208263a45c39c67fb21c864a83a33a04144dcade051fa24a0719d72451",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/02.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/remote-plan-cli.ts",
+      "sha256": "f10d961a5d171f846d8f5d7dff11eb387ccbd36282c10c30d1b2b627fd2cfdfa",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/03.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "e9508ea7274873e803ac2c43faedbb3172469a551292a794f9b40db2caadd6ed",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/04.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "330f1285b6efe175d58003d0efe94fc2dfbface7769beb6e22dd2d773a37db4f",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/05.snapshot"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "40c86542dcf8c55b5e7270fe889487a81e7257c90433bd62b4b36f0bd9abbbbf",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/06.snapshot"
+    },
+    {
+      "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+      "sha256": "426b54bed8e939d47fca1ec6c0872b27e178e8dbb410b3b3825a9a11f5fecb51",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/07.snapshot"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "sha256": "00bdc96bce82bfb152937cde1376627bea4d18c49a281d5d006dcb236205f827",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/08.snapshot"
+    },
+    {
+      "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "sha256": "7e317d3f65a874bcf615fc187d6128685ec3eb3b0468466057416b6d067901ed",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/09.snapshot"
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "sha256": "e7104051fd0b53b1169d2be70519c6c8d7b21c2b06ee86a1f176886fc3892688",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/10.snapshot"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_buster-native.tpl",
+      "sha256": "4cc1152a523ac9dd87b41ce909027a2208f74888369176a821135a8d0bd1d5c5",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/11.snapshot"
+    },
+    {
+      "path": "package.json",
+      "sha256": "e100d513dc25a4e23145f9f2ea8825f4b991dae8a1b6694027796207a9c36578",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/12.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "c2135bd4f48030b883e6c13749991a17e2e47e8b4db7272d8fa096081136d9d4",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/13.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-browser-options.ts",
+      "sha256": "846a6488bf66ab4a84d8fb79db7cd88ddcaf69b77707bda9a116ed567fa38cdd",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/14.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sha256": "7808623ea1d8bb3f838254a898f84807d04c40d4ae17042440eeae2bdee1492e",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/15.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "771cf3a0105edc54bbca6af53d5761082374aab2be15c3df72e5f6e5ee6ec567",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/16.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-command-options.ts",
+      "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/17.snapshot"
+    },
+    {
+      "path": "tests/fixtures/test-gate/buster-admission.mts",
+      "sha256": "8fca581a354470b14b6d7f3b04f51cc92cf6b0627e22c42a0c61efe430666a11",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/18.snapshot"
+    },
+    {
+      "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+      "sha256": "c22a1d78a63cb077a8eee9f3b34d349c6e40306b70d9a4a107e11754d77a0487",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/19.snapshot"
+    },
+    {
+      "path": "tests/verification/reliability/buster-admission-config.test.mts",
+      "sha256": "d5cb2e38a5e7935577c02bd2f8743812bcd3106090dbc31d16a1084a835e7088",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/20.snapshot"
+    },
+    {
+      "path": "tests/verification/reliability/buster-admission-cli.test.mjs",
+      "sha256": "78d6a992bd378d2bddae6306eaece2385d6ce730dc24a95621e43f9957e7307b",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/21.snapshot"
+    },
+    {
+      "path": "tests/verification/reliability/tsconfig.buster-admission.json",
+      "sha256": "296c2bdeb88545d61394e42ead7b454638b55a117ab602e3a9eeb4e3508a3ec7",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/22.snapshot"
+    },
+    {
+      "path": "tests/verification/deployment/buster-admission-render.test.mjs",
+      "sha256": "3a96798b43af4ee80f72b68116c8750b9418d262a059fb8fd6c051e90974fe42",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/23.snapshot"
+    },
+    {
+      "path": "docs/operations/operator-configuration.md",
+      "sha256": "084a02de91bc2feaf92af099985775c51f8081703559c6f2ef7d94a7307930ac",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/24.snapshot"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "sha256": "e4e081fd53bf7f77bf860107436a065911c0aec1cf064f67bcae68288bcb4544",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/25.snapshot"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+      "sha256": "50b95b6135acdb9445e117c1ee616881ecd280152d3a17ae1ed0436217333ba7",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/26.snapshot"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-buster-admission-20260921.md",
+      "sha256": "a37068ff3519984049a79b7c6946e866acbc11959cfb60c665357a08984a7957",
+      "snapshot": "docs/review/evidence/config-buster-admission-20260921/pre-review-source/27.snapshot"
+    }
+  ]
+}

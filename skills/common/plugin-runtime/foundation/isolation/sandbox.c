@@ -3,6 +3,7 @@
 #endif
 #include <errno.h>
 #include <linux/audit.h>
+#include <linux/capability.h>
 #include <linux/filter.h>
 #include <linux/landlock.h>
 #include <linux/seccomp.h>
@@ -333,7 +334,38 @@ static int supervise(char **program) {
   return 70;
 }
 
+#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
+/* This separately installed file-capability helper has one image-owned caller
+   and target. The generic, unprivileged sandbox does not compile this policy. */
+static int buster_caller_allowed(void) {
+  uid_t real_uid, effective_uid, saved_uid;
+  gid_t real_gid, effective_gid, saved_gid;
+  return getresuid(&real_uid, &effective_uid, &saved_uid) == 0
+    && getresgid(&real_gid, &effective_gid, &saved_gid) == 0
+    && real_uid == 1000 && effective_uid == 1000 && saved_uid == 1000
+    && real_gid == 1000 && effective_gid == 1000 && saved_gid == 1000;
+}
+
+static int drop_buster_capabilities(void) {
+  struct __user_cap_header_struct header = { .version = _LINUX_CAPABILITY_VERSION_3, .pid = 0 };
+  struct __user_cap_data_struct data[2] = {{0}, {0}};
+  if (syscall(SYS_capset, &header, data) != 0
+    || prctl(PR_CAP_AMBIENT, PR_CAP_AMBIENT_CLEAR_ALL, 0, 0, 0) != 0) return -1;
+  if (syscall(SYS_capget, &header, data) != 0) return -1;
+  for (int index = 0; index < 2; index++) {
+    if (data[index].effective || data[index].permitted || data[index].inheritable) return -1;
+  }
+  return 0;
+}
+#endif
+
 int main(int argc, char **argv) {
+#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
+  if (!buster_caller_allowed()) {
+    fprintf(stderr, "BUSTER_SANDBOX_CALLER_DENIED\n");
+    return 77;
+  }
+#endif
   if (argc == 2 && strcmp(argv[1], "--page-size") == 0) {
     long page_size = sysconf(_SC_PAGESIZE);
     if (page_size <= 0) { perror("page size"); return 70; }
@@ -372,6 +404,9 @@ int main(int argc, char **argv) {
   unsigned long long connect_tcp_port = 0;
   unsigned long long run_as_uid = ULLONG_MAX;
   unsigned long long run_as_gid = ULLONG_MAX;
+#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
+  int uid_seen = 0, gid_seen = 0;
+#endif
   while (argc > program_index) {
     if (strcmp(argv[program_index], "--allow-network") == 0) allow_network = 1;
     else if (strcmp(argv[program_index], "--no-address-space-limit") == 0) no_address_space_limit = 1;
@@ -384,6 +419,12 @@ int main(int argc, char **argv) {
     }
     else if (strcmp(argv[program_index], "--run-as-uid") == 0 || strcmp(argv[program_index], "--run-as-gid") == 0) {
       int is_uid = strcmp(argv[program_index], "--run-as-uid") == 0;
+#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
+      if ((is_uid && uid_seen++) || (!is_uid && gid_seen++)) {
+        fprintf(stderr, "BUSTER_SANDBOX_IDENTITY_DENIED\n");
+        return 77;
+      }
+#endif
       if (argc <= program_index + 1) return 64;
       unsigned long long identity = strtoull(argv[program_index + 1], &end, 10);
       if (!end || *end != '\0' || identity > UINT_MAX) return 64;
@@ -402,6 +443,14 @@ int main(int argc, char **argv) {
      explicit exemption is selected, the caller measures the complete adopted
      process tree and applies the memory ceiling to resident bytes. Keep the
      seccomp filter and kernel CPU/file ceilings in all modes. */
+#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
+  /* Validate before any cgroup write, kill-file open or credential change. */
+  if (!uid_seen || !gid_seen || run_as_uid != 1001 || run_as_gid != 1000) {
+    fprintf(stderr, "BUSTER_SANDBOX_IDENTITY_DENIED\n");
+    return 77;
+  }
+  if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) != 0) return 70;
+#endif
   if (
     (!no_address_space_limit && limit_resource(RLIMIT_AS, address_space) != 0)
     || limit_resource(RLIMIT_CPU, cpu) != 0
@@ -442,6 +491,12 @@ int main(int argc, char **argv) {
       return 70;
     }
   }
+#ifdef KUBECLAW_BUSTER_BROWSER_IDENTITY
+  if (drop_buster_capabilities() != 0) {
+    perror("clear browser helper capabilities");
+    return 70;
+  }
+#endif
   char *read_roots[64];
   int read_root_count = 0;
   while (argc >= program_index + 2 && strcmp(argv[program_index], "--read-root") == 0) {

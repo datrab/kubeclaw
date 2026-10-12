@@ -133,10 +133,12 @@ Run:
 npm test --prefix skills/buster/plugins/security-providers
 ```
 
-Package tests found: 0.
+Package tests found: 2.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/security-providers/plugin.json`
 - Package root: `skills/buster/plugins/security-providers`
 - Authored package guide: `skills/buster/plugins/security-providers/README.md`
+- Test: `skills/buster/plugins/security-providers/tests/database-freshness.test.mts`
+- Test: `skills/buster/plugins/security-providers/tests/live-function.test.ts`

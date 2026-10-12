@@ -1,0 +1,83 @@
+{
+  "at": "2026-09-21T17:44:41.623494+00:00",
+  "originalNine": [
+    {
+      "path": "skills/common/plugins/artifact-store/plugin.json",
+      "expectedSha256": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f",
+      "currentSha256": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f",
+      "snapshotSha256": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f",
+      "match": true
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/schemas/config.schema.json",
+      "expectedSha256": "dd34d3f97c673d7c011e989d98c11f68bb06c65cda50361bf5913b915bd90de5",
+      "currentSha256": "dd34d3f97c673d7c011e989d98c11f68bb06c65cda50361bf5913b915bd90de5",
+      "snapshotSha256": "dd34d3f97c673d7c011e989d98c11f68bb06c65cda50361bf5913b915bd90de5",
+      "match": true
+    },
+    {
+      "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+      "expectedSha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "currentSha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "snapshotSha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+      "match": true
+    },
+    {
+      "path": "skills/common/plugins/state-store/plugin.json",
+      "expectedSha256": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb",
+      "currentSha256": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb",
+      "snapshotSha256": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb",
+      "match": true
+    },
+    {
+      "path": "skills/common/plugins/state-store/schemas/config.schema.json",
+      "expectedSha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+      "currentSha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+      "snapshotSha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+      "match": true
+    },
+    {
+      "path": "skills/common/plugins/state-store/src/adapter.ts",
+      "expectedSha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+      "currentSha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+      "snapshotSha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+      "match": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "expectedSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "currentSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "snapshotSha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+      "match": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+      "expectedSha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "currentSha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "snapshotSha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+      "match": true
+    },
+    {
+      "path": "docs/review/evidence/config-plugin-settings-inventory-20260921/registrations.json",
+      "expectedSha256": "5e1a141bc8564c6669c37d8962b521ae235b8b4aa9e501692bc83c4a036797c1",
+      "currentSha256": "5e1a141bc8564c6669c37d8962b521ae235b8b4aa9e501692bc83c4a036797c1",
+      "snapshotSha256": "5e1a141bc8564c6669c37d8962b521ae235b8b4aa9e501692bc83c4a036797c1",
+      "match": true
+    }
+  ],
+  "additionalInspected": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "sha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-storage-plugin-inventory-20260921.md",
+      "sha256": "949c045e3f8fbde7a814c545ec379462fb41e70859937dad00fabbaaf36f9892"
+    }
+  ],
+  "runtimeExecuted": false
+}

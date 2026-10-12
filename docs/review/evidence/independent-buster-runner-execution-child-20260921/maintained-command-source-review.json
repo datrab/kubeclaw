@@ -1,0 +1,61 @@
+{
+  "status": "source-only accepted for integration; no command executed",
+  "beforeSha256": "e6fcfe751eb82779aa52a74558c2173fa72168ee77c873f63b7fb681de16e0c4",
+  "afterSha256": "f5eec9356c2611aed1b9e1f5abeba7b518bc737755a177792a1d409c3ce05f96",
+  "oldScriptChanges": [],
+  "otherPackageChanges": [],
+  "moduleIdentities": [
+    {
+      "path": "tests/verification/contracts/tsconfig.buster-execution-policy.json",
+      "sha256": "d6a016b5cc53db6e76389c47cf5b90297b474d510086cd8da6cfc474d47ddd16"
+    },
+    {
+      "path": "tests/verification/contracts/buster-settings-registry.test.mjs",
+      "sha256": "6f813e9c30e020f3896e40161017432ca4022425cb0fab8410e1694b27cbdb96"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-buster-execution-policy.mts",
+      "sha256": "9d7364333f7a15b08880ea5137d4e0461b0627bf115f791c26fab733b8e70baa"
+    },
+    {
+      "path": "tests/verification/contracts/provider-child-session.test.mjs",
+      "sha256": "c355faab39ecbfd2dc488e5e91b98c8571c86e20183359d6da8503afe631a523"
+    },
+    {
+      "path": "tests/verification/contracts/buster-process-sampling.test.mjs",
+      "sha256": "d4c68874cee198b85420bac65cda2964b59ca4064d5c2829947f7c98dd58dbfa"
+    },
+    {
+      "path": "tests/verification/contracts/buster-default-store-policy.test.mjs",
+      "sha256": "d857630229c976b41e462ee9a1a5150305ddfd8ddd91e21c0467257ec33eca7c"
+    },
+    {
+      "path": "tests/verification/contracts/buster-provider-session-policy.test.mjs",
+      "sha256": "137c240536cb898c9a21e73c030abc95a6ab1174904e004229dedf7a4b187dd7"
+    },
+    {
+      "path": "tests/verification/contracts/buster-session-capabilities.test.mjs",
+      "sha256": "eb9d13a34006c4399b57cb4ccc5b064d306eb8275f270c11068fcb3b695d7664"
+    },
+    {
+      "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "sha256": "94649f2f57c6d3ed7c483c44aaf5dbe9f8527c6a6362579688120ae20cbd71f1"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/eslint-discipline.test.mjs",
+      "sha256": "7c0d58c5c3893334450c3cdbc5b86456ab4791f23b5107f82955d654cef2790a"
+    },
+    {
+      "path": "tests/verification/deployment/eslint-policy-delivery.test.mjs",
+      "sha256": "35a565762ba1d6d7e022dc9c4399ee67cbe612a3c1112927745a104caa4300ad"
+    }
+  ],
+  "findings": [],
+  "scope": [
+    "Eight existing execution test paths; Node --test --test-concurrency=1 maintains separate default test processes and serial file execution.",
+    "Existing sandbox build and scoped tsc precede tests with &&; failure stops dependent stages.",
+    "npm adds local node_modules/.bin so unchanged Discipline eslint spawn resolves normal installed executable.",
+    "Type project covers its declared MTS closure; this does not claim checkJs coverage of all new MJS modules.",
+    "No original command removed or replaced. No run evidence or full CONFIG claim."
+  ]
+}

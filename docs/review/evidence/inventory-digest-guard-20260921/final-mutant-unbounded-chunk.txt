@@ -1,0 +1,40 @@
+✔ final inventory verification rejects changed real bytes despite colliding metadata (6.581859ms)
+✔ repeated verification of unchanged bytes fits the original scan quota (1.9669ms)
+✔ final inventory verification rejects grow (1.021557ms)
+✔ final inventory verification rejects shrink (0.913423ms)
+✔ final inventory verification rejects remove (1.074657ms)
+✔ final inventory verification rejects replace (1.14266ms)
+✔ final inventory verification rejects symlink (1.374945ms)
+✔ insufficient initial hash quota never becomes an executable clean inventory (0.78049ms)
+✖ growth by a real competing process cannot exceed the inventoried read size (31.975542ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143.310132
+
+✖ failing tests:
+
+test at ../../../../../tmp/inventory-final-mutant-okv4v00o/tests/verification/reliability/inventory-digest-guard.test.mjs:73:1
+✖ growth by a real competing process cannot exceed the inventoried read size (31.975542ms)
+  AssertionError [ERR_ASSERTION]: existing file bytes are read, appended bytes are not
+  
+  65536 !== 11
+  
+      at TestContext.<anonymous> (file:///tmp/inventory-final-mutant-okv4v00o/tests/verification/reliability/inventory-digest-guard.test.mjs:95:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 65536,
+    expected: 11,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

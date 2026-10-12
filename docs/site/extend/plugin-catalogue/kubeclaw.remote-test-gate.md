@@ -71,10 +71,13 @@ Run:
 npm test --prefix skills/nova/plugins/remote-test-gate
 ```
 
-Package tests found: 0.
+Package tests found: 3.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/remote-test-gate/plugin.json`
 - Package root: `skills/nova/plugins/remote-test-gate`
 - Authored package guide: `skills/nova/plugins/remote-test-gate/README.md`
+- Test: `skills/nova/plugins/remote-test-gate/tests/demo-import-fixture.ts`
+- Test: `skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts`
+- Test: `skills/nova/plugins/remote-test-gate/tests/live-function.test.ts`

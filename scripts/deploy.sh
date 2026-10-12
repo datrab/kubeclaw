@@ -2,7 +2,7 @@
 # =============================================================================
 # KubeClaw — Full Stack Deployment
 # =============================================================================
-# Deploys everything from scratch: namespace, secrets, infra, agents.
+# Deploys namespace, secrets, infra and agents onto an existing Kubernetes cluster.
 #
 # Usage:
 #   ./deploy.sh setup              Create namespace + secrets + helm repos
@@ -153,29 +153,67 @@ require_command() {
   fi
 }
 
-is_not_found_error() {
-  local text="$1"
-  [[ $text =~ [Nn]ot[Ff]ound|[Nn]ot\ [Ff]ound|No\ resources\ found ]]
+require_shared_helm_connection() {
+  local setting
+  for setting in HELM_KUBECONTEXT HELM_KUBETOKEN HELM_KUBEASUSER HELM_KUBEASGROUPS HELM_KUBEAPISERVER HELM_KUBECAFILE HELM_KUBETLS_SERVER_NAME HELM_KUBEINSECURE_SKIP_TLS_VERIFY; do
+    if [[ -n ${!setting:-} ]]; then
+      err "Helm-only connection override $setting is unsupported; use the shared KUBECONFIG context"
+      return 1
+    fi
+  done
+}
+
+observe_helm_release() {
+  local release="$1" namespace="$2" output records revision expected state=absent storage
+  require_shared_helm_connection || return 1
+  case "${HELM_DRIVER:-secret}" in
+    secret|secrets) storage=secret ;;
+    configmap|configmaps) storage=configmap ;;
+    *) err "Deployment observations support only Helm Secret or ConfigMap storage"; return 1 ;;
+  esac
+  if [[ ! $release =~ ^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$ ]]; then
+    err "Invalid Helm release name"
+    return 1
+  fi
+  if ! output=$(kubectl get "$storage" -n "$namespace" -l "owner=helm,name=$release" -o json); then
+    err "Cannot inspect Helm storage for ${namespace}/${release}"
+    return 1
+  fi
+  records=$(printf '%s' "$output" | node "$SCRIPT_DIR/deploy-observation.mjs" helm-storage "$storage" "$release" "$namespace") || return 1
+  if [[ -n $records ]]; then
+    while read -r revision expected; do
+      # Named revision GET uses Helm's decoder; unlike list, it cannot skip a
+      # corrupt record and substitute an older healthy revision.
+      if ! output=$(helm status "$release" -n "$namespace" --revision "$revision" -o json); then
+        err "Cannot decode Helm revision ${namespace}/${release}/${revision}"
+        return 1
+      fi
+      state=$(printf '%s' "$output" | node "$SCRIPT_DIR/deploy-observation.mjs" helm-status "$revision" "$release" "$namespace" "$expected") || return 1
+    done <<<"$records"
+  fi
+  printf '%s' "$state"
+}
+
+observe_exact_resource() {
+  local kind="$1" name="$2" namespace="${3:-}" output
+  local scope=()
+  [[ -z $namespace ]] || scope=(-n "$namespace")
+  if ! output=$(kubectl get "$kind" "${scope[@]}" --field-selector "metadata.name=$name" -o json); then
+    err "Cannot inspect $kind/$name before mutation"
+    return 1
+  fi
+  printf '%s' "$output" | node "$SCRIPT_DIR/deploy-observation.mjs" resource "$kind" "$name" "$namespace"
 }
 
 require_helm_release_idle() {
   local release="$1"
   local namespace="$2"
-  local output status
+  local status
 
   node "$SCRIPT_DIR/gitops-owner.mjs" "$namespace" "$release" || return 1
-  if ! output="$(helm status "$release" -n "$namespace" 2>&1)"; then
-    if is_not_found_error "$output"; then
-      return 0
-    fi
-    err "Cannot inspect Helm release ${namespace}/${release} before deployment"
-    echo "$output" >&2
-    return 1
-  fi
-
-  status="$(awk -F ':[[:space:]]*' '$1 == "STATUS" { print $2; exit }' <<<"$output")"
+  status=$(observe_helm_release "$release" "$namespace") || return 1
   case "$status" in
-    pending-install|pending-upgrade|pending-rollback)
+    pending-install|pending-upgrade|pending-rollback|uninstalling)
       err "Helm release ${namespace}/${release} is ${status}; refusing to start a competing operation"
       info "Inspect local owners: ps -eo pid,ppid,etime,args | grep -E '[h]elm (upgrade|install|rollback)|[d]eploy\\.sh'"
       info "Inspect release state: helm status ${release} -n ${namespace} && helm history ${release} -n ${namespace} --max 10"
@@ -247,53 +285,23 @@ show_optional_kubectl_table() {
     return 0
   fi
 
-  if is_not_found_error "$output"; then
-    warn "No $description found"
-    return 0
-  fi
-
   warn_nonfatal_failure "Unable to list $description for namespace '$NAMESPACE'. Status output may be incomplete." "$output"
 }
 
 delete_namespaced_resource_if_present() {
-  local kind="$1"
-  local name="$2"
-  local output
-
-  if output=$(kubectl get "$kind" "$name" -n "$NAMESPACE" 2>&1); then
-    kubectl delete "$kind" "$name" -n "$NAMESPACE"
-    log "Removed: $name"
-    return 0
-  fi
-
-  if is_not_found_error "$output"; then
-    return 0
-  fi
-
-  err "Failed to check $kind/$name in namespace '$NAMESPACE' before delete"
-  echo "$output" >&2
-  return 1
+  local kind="$1" name="$2" state
+  state=$(observe_exact_resource "$kind" "$name" "$NAMESPACE") || return 1
+  [[ $state == present ]] || return 0
+  kubectl delete "$kind" "$name" -n "$NAMESPACE" || return 1
+  log "Removed: $name"
 }
 
 delete_manifest_if_cluster_resource_present() {
-  local kind="$1"
-  local name="$2"
-  local manifest_path="$3"
-  local output
-
-  if output=$(kubectl get "$kind" "$name" 2>&1); then
-    kubectl delete -f "$manifest_path"
-    log "Removed: $name"
-    return 0
-  fi
-
-  if is_not_found_error "$output"; then
-    return 0
-  fi
-
-  err "Failed to check cluster resource $kind/$name before delete"
-  echo "$output" >&2
-  return 1
+  local kind="$1" name="$2" manifest_path="$3" state
+  state=$(observe_exact_resource "$kind" "$name") || return 1
+  [[ $state == present ]] || return 0
+  kubectl delete -f "$manifest_path" || return 1
+  log "Removed: $name"
 }
 
 wait_for_agent_rollout() {
@@ -868,19 +876,37 @@ EOF
 
 cmd_setup() {
   header "Step 1: Namespace"
-  local namespace_output
+  local namespace_output namespace_state
 
   prompt_workspace_namespace_if_needed
 
-  if namespace_output=$(kubectl get namespace "$NAMESPACE" 2>&1); then
+  if ! namespace_output=$(kubectl get namespaces --field-selector "metadata.name=$NAMESPACE" -o json); then
+    err "Failed to check namespace '$NAMESPACE'; check the existing cluster context, API and credentials"
+    return 1
+  fi
+  if ! namespace_state=$(printf '%s' "$namespace_output" | node -e '
+    const fs = require("node:fs");
+    try {
+      const value = JSON.parse(fs.readFileSync(0, "utf8"));
+      if (value.apiVersion !== "v1" || !["List", "NamespaceList"].includes(value.kind)
+          || !Array.isArray(value.items) || value.items.length > 1
+          || ![undefined, ""].includes(value.metadata?.continue)
+          || value.items.some(item => item?.kind !== "Namespace" || item?.metadata?.name !== process.argv[1])) {
+        throw new Error("Unexpected namespace list");
+      }
+      process.stdout.write(value.items.length === 0 ? "absent" : "present");
+    } catch {
+      console.error("Invalid namespace lookup response; refusing namespace creation");
+      process.exitCode = 1;
+    }
+  ' "$NAMESPACE"); then
+    return 1
+  fi
+  if [[ $namespace_state == present ]]; then
     warn "Namespace '$NAMESPACE' already exists"
-  elif is_not_found_error "$namespace_output"; then
+  else
     kubectl create namespace "$NAMESPACE"
     log "Created namespace: $NAMESPACE"
-  else
-    err "Failed to check namespace '$NAMESPACE'"
-    echo "$namespace_output" >&2
-    return 1
   fi
 
   header "Step 2: Helm Repos"
@@ -1052,26 +1078,21 @@ ensure_tailscale_oauth_secret() {
   local normalized_mode="$1"
   local client_id="${TAILSCALE_OAUTH_CLIENT_ID:-}"
   local client_secret="${TAILSCALE_OAUTH_CLIENT_SECRET:-}"
-  local output
+  local state
 
-  if output=$(kubectl get secret "$TAILSCALE_OAUTH_SECRET_NAME" -n "$TAILSCALE_OPERATOR_NAMESPACE" 2>&1); then
+  state=$(observe_exact_resource secret "$TAILSCALE_OAUTH_SECRET_NAME" "$TAILSCALE_OPERATOR_NAMESPACE") || return 1
+  if [[ $state == present ]]; then
     log "Using existing Tailscale OAuth secret: ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}"
     return 0
   fi
 
-  if ! is_not_found_error "$output"; then
-    err "Failed to check Tailscale OAuth secret '${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}'"
-    echo "$output" >&2
-    return 1
-  fi
-
   if [[ -n $client_id && -n $client_secret ]]; then
-    kubectl create namespace "$TAILSCALE_OPERATOR_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
+    kubectl create namespace "$TAILSCALE_OPERATOR_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f - || return 1
     kubectl create secret generic "$TAILSCALE_OAUTH_SECRET_NAME" \
       --namespace "$TAILSCALE_OPERATOR_NAMESPACE" \
       --from-literal=client_id="$client_id" \
       --from-literal=client_secret="$client_secret" \
-      --dry-run=client -o yaml | kubectl apply -f -
+      --dry-run=client -o yaml | kubectl apply -f - || return 1
     log "Created Tailscale OAuth secret: ${TAILSCALE_OPERATOR_NAMESPACE}/${TAILSCALE_OAUTH_SECRET_NAME}"
     return 0
   fi
@@ -1420,6 +1441,14 @@ deploy_agent() {
     [[ -z $override_file ]] || rm -f "$override_file"
     return 0
   fi
+  if [[ $role == buster ]]; then
+    if ! node "$REPO_DIR/scripts/native-worker-deployment-preflight.mjs" \
+      "${NATIVE_WORKER_NODE_POLICY_FILE:-$INFRA_DIR/native-worker-pools.yaml}" "$NAMESPACE" \
+      template "agent-${role}" "$CHART_DIR" --namespace "$NAMESPACE" "${helm_args[@]}"; then
+      [[ -z $override_file ]] || rm -f "$override_file"
+      return 1
+    fi
+  fi
   require_agent_worker_trust_prerequisites
   require_helm_release_idle "agent-${role}" "$NAMESPACE"
   if [[ $role == nova ]]; then reconcile_nova_retired_trust_mount; else reconcile_buster_runtime_ports; fi
@@ -1572,7 +1601,10 @@ cmd_smoke_agent() {
   kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- node /runtime-config/kubeclaw-health.mjs startup-status
   kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- node /runtime-config/kubeclaw-health.mjs readiness
   kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- test -d /app/skills
-  kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- test -f /home/node/.openclaw/swarm.config.json
+  local config_file
+  for config_file in swarm prism-control prism-studio prism-worker prism-execution buster-engine worker-core; do
+    kubectl exec -n "$NAMESPACE" "$pod" -c kubeclaw -- test -f "/etc/kubeclaw/swarm/${config_file}.config.json"
+  done
   log "${release} smoke passed"
 }
 
@@ -2695,22 +2727,11 @@ cmd_teardown_agents() {
 }
 
 uninstall_helm_release_if_present() {
-  local release="$1"
-  local output
-
-  if output=$(helm status "$release" -n "$NAMESPACE" 2>&1); then
-    helm uninstall "$release" -n "$NAMESPACE"
-    log "Removed: $release"
-    return 0
-  fi
-
-  if is_not_found_error "$output"; then
-    return 0
-  fi
-
-  err "Failed to check Helm release '$release' before uninstall"
-  echo "$output" >&2
-  return 1
+  local release="$1" state
+  state=$(observe_helm_release "$release" "$NAMESPACE") || return 1
+  [[ $state == absent ]] && return 0
+  helm uninstall "$release" -n "$NAMESPACE" || return 1
+  log "Removed: $release"
 }
 
 delete_manifested_resource_if_present() {
@@ -2719,10 +2740,11 @@ delete_manifested_resource_if_present() {
   local manifest_path="$3"
   local fallback_types="$4"
   local fallback_selector="$5"
-  local output
+  local state
   local fallback_output
 
-  if output=$(kubectl get "$kind" "$name" -n "$NAMESPACE" 2>&1); then
+  state=$(observe_exact_resource "$kind" "$name" "$NAMESPACE") || return 1
+  if [[ $state == present ]]; then
     if kubectl delete -n "$NAMESPACE" -f "$manifest_path"; then
       log "Removed: $name"
       return 0
@@ -2740,13 +2762,7 @@ delete_manifested_resource_if_present() {
     return 1
   fi
 
-  if is_not_found_error "$output"; then
-    return 0
-  fi
-
-  err "Failed to check $kind/$name in namespace '$NAMESPACE' before delete"
-  echo "$output" >&2
-  return 1
+  return 0
 }
 
 remove_destructive_infra() {
@@ -2848,6 +2864,12 @@ cmd_teardown_all() {
 }
 
 # ─── Main ────────────────────────────────────────────────────────────────
+
+# Both clients must observe the same configured API before any cluster lookup.
+case "${1:-}" in
+  setup|infra|tailscale|agents|agent|image|code|all|prism|teardown|teardown-agents|teardown-all|teardown-prism)
+    require_shared_helm_connection ;;
+esac
 
 case "${1:-}" in
   agents|agent|image|code|all|prism|render) require_selected_runtime ;;

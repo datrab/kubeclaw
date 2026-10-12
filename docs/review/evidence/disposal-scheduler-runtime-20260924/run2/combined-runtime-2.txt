@@ -1,0 +1,24 @@
+
+> verify:buster:scheduler-drain
+> npm run plugin-system:sandbox:build && node --test --test-concurrency=1 tests/verification/contracts/runner-scheduler-drain.test.mjs tests/verification/contracts/runner-scheduler-provider-drain.test.mjs && node tests/verification/contracts/check-pipeline-test-plan-runner.mts && node tests/verification/contracts/check-pipeline-remote-real-provider.mts
+
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+✔ scheduler settles started peer before cleanup; late failure false (5.484504ms)
+✔ scheduler settles started peer before cleanup; late failure true (1.227332ms)
+✔ scheduler drains a started peer after synchronous reservation failure (34.864902ms)
+✔ scheduler preserves execution and cleanup errors (1.094789ms)
+✔ scheduler preserves cleanup-only error identity (0.546325ms)
+✔ actual Runner drains its active provider and cleans a late fixture after a preparation rejection (560.235983ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2383.838568
+{"ok":true,"nodes":15,"attempts":15,"unstable":["retry"]}
+{"ok":true,"phase":"7-unmocked-remote","provider":"isolated-process","runner":"default"}

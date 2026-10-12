@@ -1,0 +1,33 @@
+✔ independent closure decoder refuses malformed direct references without repair or writes (2436.671492ms)
+ℹ {"malformedCases":["unknown-version","extra-field","mixed-full-reference","foreign-result-key","wrong-closure-digest","missing-source-completion","source-is-full-result","recursive-reference","duplicate-reference","mixed-duplicate-closure","missing-reference-receipt","invalid-reference-receipt","empty-reference-set"],"fullLogicalStateRecovered":true,"fixture":"actual validated result projection; closure reference constructed only for decoder-boundary probes"}
+✖ independent operator preserves quota after no-saving rejection and rejects later generation after projection (2264.610147ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5356.064878
+
+✖ failing tests:
+
+test at docs/review/evidence/attempt-closure-projection-independent-20260921/decoder-probe.test.mjs:61:1
+✖ independent operator preserves quota after no-saving rejection and rejects later generation after projection (2264.610147ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /FINALIZED|IDENTITY|STALE/u. Input:
+  
+  'Error: OBSERVABILITY_ATTEMPT_ALREADY_COMPLETED'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/attempt-closure-projection-independent-20260921/decoder-probe.test.mjs:87:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: OBSERVABILITY_ATTEMPT_ALREADY_COMPLETED
+        at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts:433:15
+        at async withDurableStoreLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:269:12),
+    expected: /FINALIZED|IDENTITY|STALE/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }

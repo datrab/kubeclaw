@@ -1,0 +1,37 @@
+{
+  "onlyChangedSetting": {
+    "before": {
+      "plugin": "kubeclaw.wait-store",
+      "field": "maxEntryBytes",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 1048576,
+      "unit": "canonical durable payload bytes (whole store limit separately includes framing)",
+      "consumer": "src/adapter.ts::activate -> FileDurableRecordStore",
+      "requirement": "root required; numeric values currently optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-wait-store.config.json",
+      "note": "manual retention repeats these defaults from historical snapshots; plugin root is not rebased by platform loader"
+    },
+    "after": {
+      "plugin": "kubeclaw.wait-store",
+      "field": "maxEntryBytes",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 1048576,
+      "unit": "canonical durable payload bytes (whole store limit separately includes framing)",
+      "consumer": "src/adapter.ts::activate -> FileDurableRecordStore",
+      "requirement": "root required; numeric values currently optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-wait-store.config.json",
+      "note": "manual retention repeats these defaults from historical snapshots; plugin root is not rebased by platform loader",
+      "additionalConsumer": {
+        "path": "skills/nova/core/state/wait-projection-reader.ts",
+        "function": "pinnedContext -> originalValue -> resolveRetainedCoreWait",
+        "currentExpression": "Number(config.maxEntryBytes ?? 1048576)",
+        "sourceAuthority": "Original run-snapshot registry.configuration.adapters[kubeclaw.wait-store:waits], bound to exact snapshot digest/provider/root",
+        "interpretation": "Independent historical 1048576-byte fallback and Number coercion; limits reconstructed canonical original Wait payload, not current live adapter configuration",
+        "migrationRequirement": "Explicit versioned historical interpretation or bound migration proof; preserve original snapshot and original limits; separately kill restored resolver fallback mutant"
+      }
+    }
+  },
+  "readerSha256": "89975c862444e0ef55ba641afab5289243c0313cdbf392c7372ab3cda61e7dd7",
+  "reportSha256": "d5e194683fd5877b5838e8907637549423cf026e9f4c35918ad03b83c277fcb7",
+  "settingsSha256": "2beed7af9cf4523ff9b5ffa03a0b86035fea5ab71f9810459c6661772863c8b6"
+}

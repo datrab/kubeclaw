@@ -1,0 +1,88 @@
+
+> verify:buster:cluster-policy
+> npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-cluster-policy.json && node --test --test-concurrency=1 tests/verification/reliability/buster-cluster-entrypoint.test.mjs tests/verification/contracts/buster-cluster-output-consumers.test.mjs tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs tests/verification/contracts/buster-cluster-timing-consumers.test.mjs tests/verification/contracts/buster-cluster-poll-consumers.test.mjs tests/verification/deployment/buster-cluster-invoker-parity.test.mjs && node tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts && node tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts
+
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+✔ actual kubectl diagnostic captures 16 code units (9.138058ms)
+✔ actual kubectl diagnostic captures 80 code units (2.025053ms)
+✔ public invoker maximumManifestBytes, low true (1.51113ms)
+✔ public invoker maximumManifestBytes, low false (3.808439ms)
+✔ public invoker maximumResources, low true (1.605532ms)
+✔ public invoker maximumResources, low false (3.109251ms)
+✔ actual YAML consumer maximumNodes (0.853872ms)
+✔ actual YAML consumer maximumDepth (0.612216ms)
+✔ actual YAML consumer maximumAliases (0.744109ms)
+✔ actual List consumer maximumFlattenVisits (0.699448ms)
+✔ actual List consumer maximumFlattenPending (0.478683ms)
+✔ shared lease version domain reaches both actual constructors: v1 (1.694964ms)
+✔ shared lease version domain reaches both actual constructors: v2 (0.870203ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1 (0.79709ms)
+✔ shared lease version domain reaches both actual constructors: v2beta12 (0.921654ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha (1.12068ms)
+✔ shared lease version domain reaches both actual constructors: v1beta (0.77113ms)
+✔ shared lease version domain reaches both actual constructors: v1rc1 (0.676218ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1x (0.676928ms)
+✔ shared lease version domain reaches both actual constructors:  (0.733759ms)
+✔ real kubernetes.fixture output limit profile false (140.086939ms)
+✔ real kubernetes.fixture output limit profile true (71.473347ms)
+✔ real kubernetes.exposure output limit profile false (40.951029ms)
+✔ real kubernetes.exposure output limit profile true (50.886199ms)
+✔ actual kubernetes.fixture polling cadence 50 (111.356679ms)
+✔ actual kubernetes.fixture polling cadence 200 (404.142666ms)
+✔ actual kubernetes.exposure polling cadence 50 (108.154895ms)
+✔ actual kubernetes.exposure polling cadence 200 (403.727375ms)
+✔ kubernetes.fixture actual auth process uses short deadline 600 (622.287734ms)
+✔ kubernetes.fixture actual auth process uses short deadline 2000 (1042.204701ms)
+✔ kubernetes.exposure actual auth process uses short deadline 600 (614.157181ms)
+✔ kubernetes.exposure actual auth process uses short deadline 2000 (1041.617596ms)
+walk.go:75: found symbolic link in path: /tmp/cluster-invoker-chart-AlNmhO/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used
+✔ actual kubeclaw Helm and loader enforce shared cluster invoker policy (14443.776544ms)
+✖ actual prism Helm and loader enforce shared cluster invoker policy (1740.413006ms)
+✔ actual entrypoint rejects missing before first runtime effect (603.04549ms)
+✔ actual entrypoint rejects invalid before first runtime effect (547.872099ms)
+✔ actual entrypoint rejects group-empty before first runtime effect (492.834752ms)
+✔ actual entrypoint rejects group-equal before first runtime effect (398.124198ms)
+✔ actual entrypoint rejects version-empty before first runtime effect (399.104853ms)
+✔ actual entrypoint rejects version-equal before first runtime effect (367.208441ms)
+✔ actual entrypoint rejects secrets-empty before first runtime effect (369.747516ms)
+✔ actual entrypoint rejects secrets-equal before first runtime effect (387.513941ms)
+✔ relative executable uses the captured physical generation; component aliases reject (37.104779ms)
+✔ actual read-only preflight accepts an explicit complete generation (363.129114ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 43
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33232.775613
+
+✖ failing tests:
+
+test at tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:12:43
+✖ actual prism Helm and loader enforce shared cluster invoker policy (1740.413006ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /retired busterNamespaceBroker/. Input:
+  
+  'walk.go:75: found symbolic link in path: /tmp/cluster-invoker-chart-AlNmhO/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\n' +
+    "Error: values don't meet the specifications of the schema(s) in the following chart(s):\n" +
+    'prism:\n' +
+    "- at '': additional properties 'busterNamespaceBroker' not allowed\n" +
+    '\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/buster-cluster-invoker-parity.test.mjs:198:78)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "walk.go:75: found symbolic link in path: /tmp/cluster-invoker-chart-AlNmhO/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\nError: values don't meet the specifications of the schema(s) in the following chart(s):\nprism:\n- at '': additional properties 'busterNamespaceBroker' not allowed\n\n",
+    expected: /retired busterNamespaceBroker/,
+    operator: 'match',
+    diff: 'simple'
+  }

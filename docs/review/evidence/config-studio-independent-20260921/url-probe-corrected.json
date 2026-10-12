@@ -1,0 +1,59 @@
+{
+  "sources": {
+    "skills/prism/server/studio-config.ts": "377f836f98c8d346a41a9eff4cbe1488a0451038ead95e0f941c66fdcfe35fad",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts": "70269dd1c10ca90cc255feecc46c51007a1441f707d2d2586d96c10fcd36bbdb",
+    "skills/common/plugin-runtime/foundation/config/swarm.schema.json": "aae0cc4633ff1462efbc103d0529e68bdb103907a6511e9e40e6139a3575e3ed",
+    "charts/kubeclaw/files/config/swarm.config.json": "991e0c6dfd683b484bbc132c3e6e60c67abdf7c88e53959e9d08b7e4e60c20da"
+  },
+  "results": [
+    {
+      "input": "http://control\\suffix",
+      "accepted": false,
+      "error": "Error: SWARM_CONFIG_INVALID:[{\"instancePath\":\"/operator/prism/studio/controlUrl\",\"schemaPath\":\"#/properties/operator/properties/prism/properties/studio/properties/controlUrl/pattern\",\"keyword\":\"pattern\",\"params\":{\"pattern\":\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\"},\"message\":\"must match pattern \\\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\\\"\"}]"
+    },
+    {
+      "input": "https://user:secret@control",
+      "accepted": false,
+      "error": "Error: SWARM_CONFIG_INVALID:[{\"instancePath\":\"/operator/prism/studio/controlUrl\",\"schemaPath\":\"#/properties/operator/properties/prism/properties/studio/properties/controlUrl/pattern\",\"keyword\":\"pattern\",\"params\":{\"pattern\":\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\"},\"message\":\"must match pattern \\\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\\\"\"}]"
+    },
+    {
+      "input": "https://control?query",
+      "accepted": false,
+      "error": "Error: SWARM_CONFIG_INVALID:[{\"instancePath\":\"/operator/prism/studio/controlUrl\",\"schemaPath\":\"#/properties/operator/properties/prism/properties/studio/properties/controlUrl/pattern\",\"keyword\":\"pattern\",\"params\":{\"pattern\":\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\"},\"message\":\"must match pattern \\\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\\\"\"}]"
+    },
+    {
+      "input": "https://control#fragment",
+      "accepted": false,
+      "error": "Error: SWARM_CONFIG_INVALID:[{\"instancePath\":\"/operator/prism/studio/controlUrl\",\"schemaPath\":\"#/properties/operator/properties/prism/properties/studio/properties/controlUrl/pattern\",\"keyword\":\"pattern\",\"params\":{\"pattern\":\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\"},\"message\":\"must match pattern \\\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\\\"\"}]"
+    },
+    {
+      "input": "https://control/path",
+      "accepted": false,
+      "error": "Error: SWARM_CONFIG_INVALID:[{\"instancePath\":\"/operator/prism/studio/controlUrl\",\"schemaPath\":\"#/properties/operator/properties/prism/properties/studio/properties/controlUrl/pattern\",\"keyword\":\"pattern\",\"params\":{\"pattern\":\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\"},\"message\":\"must match pattern \\\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\\\"\"}]"
+    },
+    {
+      "input": "http://control\u0000",
+      "accepted": false,
+      "error": "Error: SWARM_CONFIG_INVALID:[{\"instancePath\":\"/operator/prism/studio/controlUrl\",\"schemaPath\":\"#/properties/operator/properties/prism/properties/studio/properties/controlUrl/pattern\",\"keyword\":\"pattern\",\"params\":{\"pattern\":\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\"},\"message\":\"must match pattern \\\"^https?://[^/?#\\\\s@\\\\\\\\\\\\x00-\\\\x20\\\\x7f]+/?$\\\"\"}]"
+    },
+    {
+      "input": "http://control:8080/",
+      "accepted": true,
+      "href": "http://control:8080/",
+      "pathname": "/"
+    },
+    {
+      "input": "https://control.example.test",
+      "accepted": true,
+      "href": "https://control.example.test/",
+      "pathname": "/"
+    },
+    {
+      "input": "http://[::1]:8080/",
+      "accepted": true,
+      "href": "http://[::1]:8080/",
+      "pathname": "/"
+    }
+  ],
+  "noSourceDrift": true
+}

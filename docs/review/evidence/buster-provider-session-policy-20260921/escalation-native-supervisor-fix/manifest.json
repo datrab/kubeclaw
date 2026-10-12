@@ -1,0 +1,11 @@
+{
+  "status": "private-unexecuted",
+  "path": "tests/verification/contracts/buster-provider-session-policy.test.mjs",
+  "beforeSha256": "137c240536cb898c9a21e73c030abc95a6ab1174904e004229dedf7a4b187dd7",
+  "afterSha256": "aae15408dfb2ade28a0dc404a6361d828bc1a6de944041f1f561ecbb3bec1c29",
+  "supervisor": {
+    "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+    "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+  },
+  "oracles": "original50/500 profiles;50 actualparentKILL25..300ms,500 actualclosewithoutparentKILL;bothcancelled+PIDabsent;force500/force50 mutants"
+}

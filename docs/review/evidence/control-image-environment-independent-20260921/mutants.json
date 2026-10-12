@@ -1,0 +1,22 @@
+[
+  {
+    "name": "retired-image-env",
+    "argv": [
+      "/usr/local/bin/node",
+      "--test",
+      "/tmp/control-image-mutant-n17le0gw/skills/prism/tests/control-image-environment.test.mts"
+    ],
+    "exitCode": 1,
+    "detected": true
+  },
+  {
+    "name": "synthetic-proof-env",
+    "argv": [
+      "/usr/local/bin/node",
+      "--test",
+      "/tmp/control-image-mutant-r8mk273r/skills/prism/tests/control-image-environment.test.mts"
+    ],
+    "exitCode": 1,
+    "detected": true
+  }
+]

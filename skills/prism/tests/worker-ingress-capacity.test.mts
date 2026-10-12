@@ -1,3 +1,7 @@
+import { readTestBundle, writeTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
@@ -18,7 +22,12 @@ function response(request: http.ClientRequest): Promise<{ status: number; body: 
   });
 }
 
-test('actual HTTP ingress rejects excess unfinished bodies while reserving health capacity', { timeout: 15000 }, async () => {
+test('actual HTTP ingress rejects excess unfinished bodies while reserving health capacity', { timeout: 15000 }, async t => {
+  const root = fs.mkdtempSync(path.join(tmpdir(), 'prism-ingress-config-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const authored = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
+  Object.assign(authored['prism-worker'].settings.ingress, { maximumActiveRequests: 1, maximumProbeRequests: 1, maximumConnections: 4 });
+  const file = path.join(root, 'swarm.config.json'); writeTestBundle(file, authored);
   let accepted = 0;
   let notify: () => void = () => {};
   const receiving = new Promise<void>(resolve => { notify = resolve; });
@@ -28,7 +37,7 @@ test('actual HTTP ingress rejects excess unfinished bodies while reserving healt
     const chunks: Buffer[] = [];
     for await (const bytes of request) chunks.push(bytes);
     outgoing.end(Buffer.concat(chunks));
-  }, async () => {}, { ...workerIngressLimits({}), maximumActiveRequests: 1, maximumProbeRequests: 1, maximumConnections: 4 });
+  }, async () => {}, workerIngressLimits({ SWARM_CONFIG: file }));
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   const port = (server.address() as AddressInfo).port;
   const options = { host: '127.0.0.1', port, agent: false as const };

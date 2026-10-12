@@ -1,0 +1,14 @@
+{
+  "status": "source-reviewed and integrated; execution pending",
+  "beforeSha256": "be7a5564374acc9c2ea7cbbea2ba864850e99167460c8aefde79b3d6d8799196",
+  "afterSha256": "42b57809fc91e208790ec00f7a01226b1890e291762dcc843d652601a9421c77",
+  "checks": [
+    "original ownership test bodies retained exactly",
+    "real initialized marker before file-triggered idle frame",
+    "actual stdout-byte observation independent of Session guard",
+    "low exact PROTOCOL_LIMIT across late execute cleanup initialize and zero dispatched logs",
+    "high actual log execute cleanup then close",
+    "generated source uses String.fromCharCode(10) instead of broken template newline",
+    "existing exact owned-group actual-close cleanup retained"
+  ]
+}

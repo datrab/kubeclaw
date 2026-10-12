@@ -1,0 +1,25 @@
+--- 
++++ 
+@@ -66,9 +66,19 @@
+     assert.equal(caller.status, 77, caller.stderr);
+     assert.match(caller.stderr, /BUSTER_SANDBOX_CALLER_DENIED/u);
+   }
+-  const inaccessible = spawnSync('setpriv', ['--reuid=1003', '--regid=1003', '--clear-groups', binary, '--page-size'], { encoding: 'utf8' });
+-  assert.notEqual(inaccessible.status, 0);
+-  assert.match(inaccessible.stderr, /Permission denied/u);
++  // A root-started setpriv may retain effective DAC override until exec. Use
++  // an ordinary caller and prove its credentials before testing the file ACL.
++  const inaccessible = spawnSync(process.execPath, ['scripts/tests/fixtures/buster-unprivileged-caller.mjs', binary],
++    { uid: 1003, gid: 1003, encoding: 'utf8', timeout: 15000, maxBuffer: 131072 });
++  assert.equal(inaccessible.status, 0, inaccessible.stderr);
++  const observed = JSON.parse(inaccessible.stdout);
++  assert.match(observed.status, /^Uid:\s+1003\s+1003\s+1003\s+1003$/mu);
++  assert.match(observed.status, /^Gid:\s+1003\s+1003\s+1003\s+1003$/mu);
++  assert.match(observed.status, /^Groups:[ \t]*$/mu);
++  for (const field of ['CapInh', 'CapPrm', 'CapEff', 'CapAmb']) assert.match(observed.status, new RegExp(`^${field}:\\s+0+$`, 'mu'));
++  assert.equal(observed.child.error, 'EACCES');
++  assert.equal(observed.child.status, null);
++  assert.equal(observed.child.signal, null);
+   for (const target of [0, 1003]) {
+     const rejected = spawnSync(binary, ['67108864', '2', '64', '--run-as-uid', String(target),
+       '--run-as-gid', '1000', '--cgroup', root, '--child-cgroup', root, '/bin/true'],

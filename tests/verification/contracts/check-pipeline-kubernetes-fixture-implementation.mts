@@ -21,19 +21,29 @@ assert.deepEqual(entry.registration.inputs.map((input) => input.name), ['image',
 assert.equal(entry.registration.outputs.find(output => output.name === 'deployment')?.schemaId, 'kubeclaw.kubernetes-deployment-fixture@1');
 const controllerChart = fs.readFileSync('charts/kubeclaw/templates/buster-namespace-controller.yaml', 'utf8');
 const controllerSource = fs.readFileSync('cmd/buster-namespace-controller/main.go', 'utf8');
-const runtimeSource = fs.readFileSync('skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts', 'utf8');
+const fixtureModuleNames = ['runtime', 'settings', 'readiness', 'preparation', 'inspection', 'pods', 'storage', 'manifest-files', 'values'];
+const fixtureSources = new Map(fixtureModuleNames.map(name => [name,
+  fs.readFileSync(`skills/buster/engine/test-gates/kubernetes-fixture-${name}.ts`, 'utf8')]));
+const runtimeSource = fixtureModuleNames.map(name => fixtureSources.get(name)!).join('\n');
+for (const [owner, dependency] of [['runtime', 'settings'], ['runtime', 'readiness'], ['runtime', 'preparation'],
+  ['preparation', 'inspection'], ['inspection', 'pods'], ['inspection', 'storage'], ['inspection', 'manifest-files']]) {
+  assert(fixtureSources.get(owner!)!.includes(`from './kubernetes-fixture-${dependency}.ts'`), 'real extracted module import');
+}
+assert.match(fixtureSources.get('runtime')!, /this\.#preparation\.prepare\(request, signal\)/u);
+assert.match(fixtureSources.get('preparation')!, /inspectManifest\(bytes,/u);
+assert.match(fixtureSources.get('inspection')!, /validatePodSecurity\(spec\)/u);
 assert.doesNotMatch(controllerChart, /pods\/portforward/u);
 assert.doesNotMatch(controllerSource, /pods\/portforward/u);
 assert.match(runtimeSource, /#releaseAfterPrepareFailure\(leaseName: string\)/u);
 assert.match(runtimeSource, /new AbortController\(\)[\s\S]*#release\(leaseName, controller\.signal\)/u);
 assert.match(runtimeSource, /\['get', 'service', serviceName[\s\S]*\['get', 'endpoints', serviceName/u);
-assert.match(runtimeSource, /Math\.min\(15_000, deadline - Date\.now\(\)\)/u);
+assert.match(fixtureSources.get('readiness')!, /Math\.max\(1, Math\.min\(this\.#settings\.shortCommandTimeoutMs, deadline - Date\.now\(\)\)\)/u);
 assert.match(runtimeSource, /NotFound[\s\S]*not found/u);
-assert.match(runtimeSource, /readinessDeadline - Date\.now\(\)[\s\S]*#waitService/u);
+assert.match(runtimeSource, /readinessDeadline - Date\.now\(\)[\s\S]*readiness\.waitService/u);
 assert.match(runtimeSource, /servicePortName[\s\S]*hasConfiguredPort/u);
 assert.match(runtimeSource, /retentionMode[\s\S]*cleanupPolicy: retentionMode/u);
 assert.match(runtimeSource, /status\.createdAt[\s\S]*KUBERNETES_FIXTURE_CREATED_AT_INVALID/u);
-assert.match(runtimeSource, /#secretReferences\.has\(name\)[\s\S]*KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED/u);
+assert.match(runtimeSource, /settings\.secretReferences\.has\(name\)[\s\S]*KUBERNETES_FIXTURE_SECRET_REFERENCE_DENIED/u);
 assert.match(runtimeSource, /annotations\['tailscale\.com\/expose'\][\s\S]*KUBERNETES_FIXTURE_EXTERNAL_SERVICE_DENIED/u);
 assert.match(runtimeSource, /externalIPs\.length > 0[\s\S]*externalName\.trim\(\)\.length > 0/u);
 assert.match(runtimeSource, /field === 'containers' && containers\.length < 1/u);
@@ -41,7 +51,7 @@ assert.match(runtimeSource, /hostPort !== undefined && hostPort !== 0/u);
 assert.match(controllerSource, /expireLease\([\s\S]*deleteOwnedNamespace/u);
 assert.match(controllerSource, /allowedSourceSecrets\[name\][\s\S]*not approved for test namespace copying/u);
 assert.match(controllerSource, /generated testCredentials keys must be username and password/u);
-assert.match(runtimeSource, /access: \[\{ subject: this\.#runnerSubject, mode: 'deployer' \}\]/u);
+assert.match(runtimeSource, /access: \[\{ subject: settings\.runnerSubject, mode: 'deployer' \}\]/u);
 const legacyExecutionPath = 'skills/buster/plugins/buster-suite-runtime/src/runtime/suites/k8s-execution.ts';
 if (fs.existsSync(legacyExecutionPath)) {
   const legacyExecution = fs.readFileSync(legacyExecutionPath, 'utf8');
@@ -69,19 +79,21 @@ const plan = resolveTestPlan({ planId: 'plan:kubernetes-fixture', runId: 'run:ku
     maximumConcurrencyLimits: { 'kubernetes-fixture': 2 } } });
 assert.deepEqual(plan.nodes.map((node) => [node.id, node.kind]), [['deploy', 'fixture'], ['manifest', 'test']]);
 assert.deepEqual(plan.nodes.find((node) => node.id === 'deploy')?.dependencies.map((item) => item.nodeId), ['manifest']);
-assert.equal(plan.links[0]?.mediaType, 'application/vnd.kubeclaw.checked-kubernetes-yaml');
+const checkedManifestLink = plan.links[0];
+assert.ok(checkedManifestLink && checkedManifestLink.kind === 'artifact');
+assert.equal(checkedManifestLink.mediaType, 'application/vnd.kubeclaw.checked-kubernetes-yaml');
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubernetes-fixture-implementation-'));
 try {
   const executable = resolveExecutable('kubectl');
-  assert.throws(() => new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary, kubectlExecutable: executable,
+  assert.throws(() => new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova', pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary, kubectlExecutable: executable,
     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
     allowedStorageClasses: ['example.com/fast'], allowDefaultStorageClass: false,
     maximumManifestBytes: 1024 * 1024, maximumResources: 64,
     maximumPersistentVolumeClaimBytes: 10 * 1024 ** 3, maximumPersistentVolumeTotalBytes: 15 * 1024 ** 3,
     maximumRetentionSeconds: 3600, maximumExecutionMs: 120_000 }), /KUBERNETES_FIXTURE_STORAGE_CLASSES_INVALID/u);
-  const capability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary, kubectlExecutable: executable,
+  const capability = new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova', pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary, kubectlExecutable: executable,
     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [],
     allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
@@ -118,7 +130,7 @@ try {
   const deadlinePath = path.join(temporary, 'deadline.yaml');
   fs.writeFileSync(deadlinePath, deadlineManifest);
   const podTimeouts: number[] = [];
-  const deadlineCapability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary,
+  const deadlineCapability = new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova',  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary,
     kubectlExecutable: executable, controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai',
     leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'],
     allowedSecretReferences: [], allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,
@@ -171,7 +183,7 @@ try {
   await assert.rejects(() => invokeFixture(fixtureRequest('replica-total', `---\napiVersion: apps\/v1\nkind: StatefulSet\nmetadata:\n  name: replicated\nspec:\n  replicas: 16\n  serviceName: app\n  selector:\n    matchLabels:\n      app: app\n  template:\n    metadata:\n      labels:\n        app: app\n    spec:\n      securityContext:\n        runAsNonRoot: true\n        seccompProfile:\n          type: RuntimeDefault\n      containers:\n        - name: app\n          image: registry.local/app@${digest}\n          securityContext:\n            runAsNonRoot: true\n            allowPrivilegeEscalation: false\n            capabilities:\n              drop: [ALL]\n  volumeClaimTemplates:\n    - metadata:\n        name: state\n      spec:\n        storageClassName: fast\n        resources:\n          requests:\n            storage: 1Gi\n`)), /KUBERNETES_FIXTURE_PVC_TOTAL_SIZE_DENIED/u);
   await assert.rejects(() => invokeFixture(fixtureRequest('ephemeral-volume', `---\napiVersion: v1\nkind: Pod\nmetadata:\n  name: ephemeral\nspec:\n  securityContext:\n    runAsNonRoot: true\n    seccompProfile:\n      type: RuntimeDefault\n  containers:\n    - name: app\n      image: registry.local/app@${digest}\n      securityContext:\n        runAsNonRoot: true\n        allowPrivilegeEscalation: false\n        capabilities:\n          drop: [ALL]\n  volumes:\n    - name: data\n      ephemeral:\n        volumeClaimTemplate:\n          spec:\n            storageClassName: fast\n            resources:\n              requests:\n                storage: 100Gi\n`)), /KUBERNETES_FIXTURE_GENERIC_EPHEMERAL_VOLUME_DENIED/u);
 
-  const validationCapability = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: temporary,
+  const validationCapability = new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova', pollIntervalMs: 1000,  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: temporary,
     kubectlExecutable: executable, controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai',
     leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: ['registry.local/app'],
     allowedSecretReferences: [], allowedStorageClasses: ['fast'], allowDefaultStorageClass: false,

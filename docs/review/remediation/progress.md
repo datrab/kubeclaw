@@ -1,5 +1,197 @@
 # Aktueller Umsetzungsstand
 
+<!-- remediation:current:start -->
+**142/154 lokal verifiziert, 12 unvollständig** (2 teilweise implementiert, 4 in Bearbeitung, 6 offen). Zusätzlich 5 separat geführte Integrationsbefunde.
+
+Quelle: [register.json](register.json); je ID: [Register](register.md). D12: Vollständig korrigierter Code mit ausreichender lokaler Testabdeckung gilt für den Behebungsauftrag als lokal verifiziert/abgeschlossen. Ausstehende Live-/Cluster-/GitHub-Actions-Abnahmen bleiben separat und werden vom Auftraggeber nach dem Open-Sourcing durchgeführt. Keine Umdeutung nicht ausgeführter Tests in bestanden; echte Code- oder lokale Nachweislücken bleiben offen.
+
+Pflege und Prüfung: [Registerverfahren](implementation/register-consistency-20260920.md).
+<!-- remediation:current:end -->
+
+## Laufende Gesamtbehebung
+
+REGISTER ist für den aktuellen Stand nach G1–G3/G-DOC
+[unabhängig lokal abgenommen](../evidence/independent-register-final-20260921/review.md).
+Die 26 ursprünglichen Konsistenztests und der echte Checker bestehen; 154
+historische und fünf zusätzliche IDs sowie die Einzelstatus bleiben erhalten.
+Der historische A1-Zeitverstoß des ersten Entwurfs bleibt ausdrücklich dokumentiert.
+Diese Registerabnahme schließt keinen der zwölf unvollständigen Befunde und
+nicht CONFIG. Spätere Statusänderungen müssen erneut generiert und geprüft werden.
+
+
+Die zentralen Komponentendateien und die Worker-Port-Verdrahtung sind
+[unabhängig lokal geprüft](implementation/independent-component-worker-listener-20260921.md).
+Der Nachweis umfasst 636 unterschiedliche positive Fälle, vier Typprüfungen,
+Deploymentprüfungen, Lint und zwölf erkannte semantische Mutanten. Ein fehlender
+Schemaeingang in der ursprünglichen Release-Fixture wurde korrigiert und das
+vollständige betroffene Modul erneut geprüft; der vorherige Fehllauf bleibt
+erhalten. Positive native Worker-Starts auf zwei Ports, fertige Rollenimages
+und die Live-Aktivierung bleiben offen. Weitere Core-/Plugin-/Orchestrator-
+Einstellungen sind noch zu migrieren; CONFIG und die Findingzähler ändern sich
+durch diese begrenzte Abnahme nicht.
+
+Die beiden impliziten Orchestrator-Effect-Lock-TTLs sind entfernt und
+[für TTL1–TTL5/DOC unabhängig abgenommen](implementation/independent-config-effect-lock-ttl-20260921.md).
+Platformloader und Runtime verlangen den ausdrücklichen Wert; die bisherigen
+Grenzen und bewusst kürzeren Low-Level-Testfristen bleiben erhalten. Der frische
+Review bestätigt tatsächliche persistierte Lockfristen von 60.000/120.000 ms,
+Originalfälle und zwei erkannte Fallbackmutanten. Ein anfänglich falscher
+Reviewer-Filter auf Setup-Locks wurde sichtbar korrigiert. Busters generiertes
+Platformdokument enthält weiterhin einen ausdrücklich im Code verfassten Wert;
+seine Registry-Konfiguration und die vollständige D17-Dateiautorität sind damit
+nicht abgeschlossen. Kein Findingstatus ändert sich.
+
+Worker Core verlangt die Hostpool-Kapazität `maximumActiveScopes` jetzt
+ausdrücklich; der versteckte Fallback auf 128 ist entfernt.
+Die [frische begrenzte Abnahme](implementation/independent-config-worker-scope-required-20260921.md)
+bestätigt unveränderte Produktionsverdrahtung, zehn Ownership- und drei
+modellierte Quiescencefälle, eigene Eingabegegenproben, Typen und Lint sowie den erkannten
+alten Fallback. Eine zunächst fehlende Test-Typabdeckung und unvollständige
+Quellenbindung wurden nachgebessert und erneut geprüft. Die modifizierten
+nativen Fixtures wurden nur typgeprüft, nicht ausgeführt. Weitere Worker-Core-
+Defaults und Gesamt-CONFIG bleiben offen; kein Findingstatus ändert sich.
+
+Die drei Buster-Admissionwerte sind für BA1–BA6/DOC
+[unabhängig lokal abgenommen](implementation/independent-config-buster-admission-20260921.md).
+Acht gepflegte Admission-/CLI-/Renderfälle, 27 gezielte Prismfälle, der
+ursprüngliche Runtimeconfig-Test und zusätzliche CLI-Gegenproben bestehen;
+beide absichtlich eingebauten Policyfehler werden erkannt. Der geprüfte Stand
+entfernt die bisherigen ENV-/Runtime-JSON-Autoren dieser drei Werte. Die nach
+D17 verlangte Umstellung dieser Werte auf eigene Komponentendateien ist inzwischen
+im oben verlinkten kombinierten Review lokal geprüft. Gesamt-CONFIG und die zwölf offenen Befunde
+bleiben offen; diese Teilabnahme ändert keinen Findingstatus.
+
+Die [atomare Buster-Abbruchentscheidung](implementation/independent-buster-atomic-cancellation-20260921.md)
+ist für BC1–BC5/DOC unabhängig lokal abgenommen. Entscheidung und Statusänderung
+liegen jetzt unter derselben bestehenden Sperre wie der Jobabschluss; ein
+zwischenzeitlich abgeschlossener Job wird unverändert zurückgegeben. Sechs
+Cancellationfälle, zehn Shutdown-/Admissionfälle, der vollständige ursprüngliche
+Remote-Test mit unveränderten 600/300-ms-Fristen sowie Typen und Lint bestehen.
+Die Wiederherstellung des alten getrennten Lese-/Schreibpfads wird durch die
+Race-Tests erkannt. Frühere Timingfehler und der ungültige erste Testaufbau
+bleiben dokumentiert. Das schließt weder Buster-Ressourcenintegration noch CONFIG
+ab und beweist keine allgemeine Latenzgarantie oder native Preparation-Ownership.
+
+Der manuelle Wait-Retirement-Pfad ist für WP1–WP8/DOC
+[frisch unabhängig lokal abgenommen](implementation/independent-wait-retirement-final-20260921.md).
+Die ursprünglichen 23 Wait-/Operatorfälle, 14 Foundation-/Blobfälle, Cutover,
+Typprüfungen und scoped Lint bestehen; zusätzliche Reihenfolge-/Autoritätsproben
+und vier erkannte Mutanten ergänzen den Nachweis. Drei eigene fehlerhafte
+Reviewerproben bleiben mit ihrer Korrekturhistorie sichtbar. Die Operation gibt
+nur redundante physische Wait-Storebytes frei; ursprüngliche Werte bleiben aus
+gebundener Corehistorie lesbar. Recordanzahl, Blobdaten, Corehistorie und weitere
+Storeklassen sind damit nicht freigegeben. PCR-OBS-002 bleibt unvollständig;
+die oben genannten Findingzähler ändern sich nicht. Die Abnahme bindet den Stand
+vor der nachfolgenden Buster-Abbruchkorrektur und ersetzt deren Prüfung nicht.
+
+Tailscale IFR-04-001 ist nun in Bearbeitung: [Doku- und Render-Vorbereitung](implementation/independent-tailscale-access-preparation-20260921.md)
+ist mit 5/5 Fällen unabhängig geprüft. Der aktuelle externe Regelstand und reale
+erlaubte/verbotene Clientreferenzen fehlen weiterhin für T1/T2. Es gibt dadurch
+keinen zusätzlichen lokalen Finding-Abschluss; die Zahl unvollständiger Befunde
+bleibt zwölf. Ops ist als ausgehender SOCKS-Pfad, nicht als eigener Ingress erfasst.
+
+IFR-06-001 (SPIRE) ist nach der [frischen unabhängigen Abnahme](implementation/independent-spire-current-scope-20260921.md)
+für S1/S2/S-DOC lokal abgeschlossen. Der erneut ausgeführte Chart-Render und die
+geprüften Quellen stimmen mit den gebundenen Belegen überein. Reale Ausfall-,
+Erneuerungs- und CA-/Serverrestoretests bleiben separate, nicht ausgeführte
+Live-Gates. Dadurch sinkt die Zahl unvollständiger historischer Befunde auf zwölf.
+Die anschließende [unabhängige Registerprüfung](implementation/independent-spire-register-promotion-20260921.md)
+bestätigt ausschließlich diese Statusänderung, unveränderte Originalbefunde und
+26/26 Registertests. Die drei zuvor auf den alten Zähler festgelegten
+Negativmutationen treffen jetzt die aktuelle Zusammenfassung; ihre Fehlerbelege
+bleiben erhalten.
+
+Der [aktuelle Detailstand](implementation/implementation-20260920.md) trennt
+umgesetzte und unabhängig geprüfte Teile von noch offenen Code- und Nachweislücken.
+Die [Control-Image-Korrektur](implementation/control-image-environment-20260921.md)
+dokumentiert einen nach dem ersten Review gefundenen konkurrierenden Env-Autor
+und die nachgebesserte Prüfung. Die anschließende [Control-Listener- und
+Routenprüfung](implementation/independent-control-listener-quality-20260921.md)
+ist nach Korrektur einer zusätzlich gefundenen Logger-Regression unabhängig
+abgenommen: 357 Tests, Typprüfung und Lint; die dokumentierte EPIPE-Grenze bleibt
+offen. Dieser frühere Prism-Teil umfasst 24 Einstellungen und 28 historische
+Reads. Hinzu kommen jetzt die drei Studio-Einstellungen für Listener, Control-Origin
+und Proxydeadline: [frische unabhängige Quellen-/Hostprüfung](implementation/independent-studio-complete-20260921.md),
+337 gebundene Autorentests und 22 unabhängig wiederholte Service-/Loaderfälle.
+Die sieben ursprünglichen HTTP-Fälle sind unverändert erhalten; ein tatsächlicher
+URL-Validierungsfehler wurde gefunden und korrigiert. Der verpflichtende kanonische
+Port-8080-Test im isolierten Image sowie der echte Image-Build/-Lauf bleiben offen.
+Diese Prism-Teilprüfungen ändern keine Befundstatus; der oben ausgewiesene neue
+lokale Abschluss betrifft ausschließlich SPIRE.
+
+Für die historischen Buster-Daten besteht der aktuelle isolierte Gastlauf
+**29/29 Fälle** in 90,137 Sekunden, ohne Watchdog oder Quellendrift. Die
+[unabhängige Prüfung der ursprünglichen 27 Fälle](implementation/independent-legacy-seal-run5-20260921.md)
+und die [separate Nichtautorenprüfung der zwei neuen Nachfahrenfälle](implementation/independent-legacy-seal-descendants-20260921.md)
+binden echte Capability-, Mutations-, Syscall-, Dateisystem- und Namespacebeobachtungen.
+Auch der zuvor fehlgeschlagene tmpfs-Fall weist nun die exakte Ablehnung
+`EXT4_REQUIRED` nach. [Rohbelege und Fallübersicht](../evidence/buster-legacy-seal-vm-20260921/run5/summary.json)
+sind erhalten. Die [Ausführungshistorie](implementation/buster-legacy-seal-guest-proposal-20260921.md)
+bewahrt die Fehlläufe 1/2 und die Speicherabbrüche 3/4; Limits wurden nicht erhöht.
+Ein geprüfter Cache-Hinweis betrifft ausschließlich eigene Gast-Image-Dateien.
+
+Das ist kein Abschluss der historischen Migration: LIS7 verlangt weiterhin den
+Nachweis gegen den Austausch des ursprünglich gebundenen Stores am tatsächlichen
+Zuordnungs-Consumer. Alte Schreiber müssen nachweislich beendet sein; Stopreceipt,
+Importerautorität und vollständige Produktionsintegration bleiben offen.
+Keine produktive Hoständerung wurde vorgenommen.
+
+Zusätzlich bestehen die [lokalen Prüfungen des abgeschlossenen Stop-Consumers](implementation/buster-legacy-completed-association-20260921.md)
+mit 17/17 Fällen und zwei gezielt erkannten Vergleichsmutationen. Die drei neuen
+Fälle prüfen die tatsächliche Entscheidungsreihenfolge mit ausdrücklich
+ersetzten Verifier-/Publikations-/Dienstgrenzen. Sie sind kein Kerneltest,
+beweisen keinen Writer-Stop und schließen LIS7 nicht. Die [frische Nichtautorenprüfung](implementation/independent-buster-legacy-completed-association-20260921.md)
+bestätigt den begrenzten Schnitt durch eigenen vollständigen Testlauf und
+erneute Erkennung beider Mutanten.
+
+Der [dritte isolierte VM-Lauf](implementation/isolated-native-vm-run3-execution-20260921.md)
+besteht alle 12 ursprünglichen Kerneltests. Die zuvor fehlgeschlagene
+Produktionsverdrahtung wurde korrigiert und unabhängig nachgeprüft. Der Gesamtlauf
+bleibt fehlgeschlagen: In der zusätzlichen Node-Pools-Suite bestehen 34 von 39
+Tests; ein fehlender systemd-Parser und vier unveränderte Zeitüberschreitungen
+bleiben offen. Die vorherigen Fehlversuche sind erhalten. Der Nachweis gilt für
+den eingefrorenen Core-Stand, nicht für die anschließenden Journal- und
+Buster-Änderungen. Buster-Umstellung und vollständige CONFIG-Abnahme laufen weiter. Die
+[Startup-Diagnose](implementation/native-vm-startup-storage-execution-20260921.md)
+bestätigt die vier Abbrüche, erreicht vor dem unveränderten äußeren Watchdog aber
+keinen vollständigen Speichertypvergleich; die Ursache bleibt offen.
+
+Die [vollständige Modulzuordnung](implementation/native-node-pools-environment-matrix-20260921.md)
+ordnet neun unveränderte Node-Pools-Module dem nativen Host und das echte
+Root-Deployment-Modul einem separaten Gastlauf zu. Der zweite Hostlauf besteht
+62/62 Tests ohne Skips oder Abbrüche; 31.179 Quellen-/Laufzeitidentitäten bleiben
+unverändert. Das unabhängige Review hat diesen begrenzten Nachweis angenommen.
+Eine zuvor gefundene Lücke der ersten Quellenliste ist dokumentiert und durch
+den vollständigen Wiederholungslauf korrigiert. Das zehnte Modul mit dem echten
+systemd-Parser bleibt offen; die früheren VM-Fehlläufe bleiben fehlgeschlagen.
+
+Nach Ergänzung der vollständigen Cleanup-Retry-Prüfung umfasst die gepflegte
+Zuordnung elf Module. Der [aktuelle gebundene Hostlauf](implementation/native-node-pools-environment-matrix-20260921.md)
+besteht alle zehn Hostmodule mit 75/75 Tests, ohne Skips oder Abbrüche und mit
+31.183 unveränderten Identitäten. Das [frische Retry-Review](implementation/independent-native-cleanup-retry-resolution-20260921.md)
+bestätigt zusätzlich 13 eigene Gegenproben und einen erkannten Schutz-Mutanten.
+Ein vorheriger Lauf mit Quellendrift bleibt als solcher erhalten. Reale
+Root-/Kernel-Abnahme und Buster-Integration sind dadurch nicht abgeschlossen.
+
+Die [Core-Reconciliation](implementation/independent-native-source-cleanup-reconciliation-20260921.md)
+ist begrenzt unabhängig abgenommen: 30 gepflegte Tests, sechs zusätzliche
+Prüfungen sowie erkannte Negativkontrollen. Busters tatsächliche Lösch- und
+Wiederanlaufberechtigung bleibt offen. Der [erste Helper-Gastlauf](implementation/isolated-buster-helper-vm-execution-20260921.md)
+bleibt mit 6/7 bestandenen Fällen fehlgeschlagen; die positive Capability-Prüfung
+wurde nach der fehlgeschlagenen ACL-Assertion nicht ausgeführt. Die separate
+[Diagnose](implementation/buster-helper-acl-diagnostic-execution-20260921.md)
+belegt inzwischen die Ursache: Der bisherige Testaufruf behielt vor `exec`
+`CAP_DAC_OVERRIDE`. Ein nachweislich capabilityfreier Aufruf erhält dagegen
+`EACCES`; die separate erlaubte Browser-Identität besteht ihre Positivprüfung.
+Der ursprüngliche Fehlversuch bleibt erhalten. Der korrigierte vollständige
+[Sieben-Fälle-Lauf](implementation/isolated-buster-helper-vm-run2-execution-20260921.md)
+besteht alle sieben Fälle ohne Skips oder Abbrüche und ist unabhängig abgenommen. Die spätere Buster-Umstellung auf zwei feste Identitäten ist
+in diesem eingefrorenen Helper-Nachweis nicht enthalten.
+
+## Historische Checkpoints (unverändert)
+
+Die folgenden Meldungen sind datierte Zwischenstände. Maßgeblich ist ausschließlich die generierte Übersicht oben.
+
 IFR-24-001 zusätzlich lokal abgeschlossen: echte PostgreSQL17→18- und
 Qdrant1.18.2→1.19.1-Migration, Erhalt der Altdaten, frische Ziel-Releases/PVCs,
 Recovery-/TLS-/Netzwerkbindung und zehn Helm-/Manifestgates.

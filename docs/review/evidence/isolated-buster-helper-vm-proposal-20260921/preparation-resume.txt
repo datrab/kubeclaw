@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/prepare.py", line 23, in <module>
+    elif target.exists():assert source.read_bytes()==target.read_bytes(),str(target)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-20260921/guest-root/bin/setpriv

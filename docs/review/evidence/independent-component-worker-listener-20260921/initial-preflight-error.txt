@@ -1,0 +1,1 @@
+Manifest assembly stopped before any test: reviewer assumed Port manifest was a list; actual document has a files member. TypeError: string indices must be integers, not str. Corrected parser uses files explicitly.

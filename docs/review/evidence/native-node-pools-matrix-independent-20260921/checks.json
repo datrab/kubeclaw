@@ -1,0 +1,21 @@
+{
+  "matrixMatchesPackageScript": true,
+  "hostCommandMatchesNineWholeModules": true,
+  "recordedFilesCurrentDrift": [
+    "skills/worker/core/src/index.ts",
+    "skills/worker/core/worker/native-cleanup-reconciliation.ts"
+  ],
+  "concreteMissingRuntimeDependencies": [
+    "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "charts/kubeclaw/files/config/swarm.config.json",
+    "skills/prism/config/native-worker.ts",
+    "node_modules/ajv-formats/dist/index.js"
+  ],
+  "reviewedEvidenceHashes": {
+    "host-tests.txt": "66d240148c4bfa3b42f37142de91ff599d256f2655a6641af1dae603c76fef1c",
+    "run-host.py": "29c854c83b887693744ff24d7d66bbd01c33a31c2fd4eb48af28ed6d4be6098a",
+    "host-source-identities.json": "f9c110a021af1137c0eae98f043fdf01754523a986580ada3b5813c9e02a57a2",
+    "module-matrix.json": "6c90fac06fd7e38a1520f7b169e212a3e172fd4f5a1c33bbe0c24974f6af7e6d",
+    "host-result.json": "4cc2d9db21d14f4928e7734f1587cffaddf8a4082f41c18edb5873f1b7cdbda8"
+  }
+}

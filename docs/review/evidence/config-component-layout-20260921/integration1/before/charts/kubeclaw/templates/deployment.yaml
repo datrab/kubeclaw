@@ -1,0 +1,1683 @@
+# KubeClaw Agent Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "kubeclaw.fullname" . }}
+  {{- if eq .Values.agentRole "prism" }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  {{- end }}
+  labels:
+    {{- include "kubeclaw.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "kubeclaw.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "kubeclaw.labels" . | nindent 8 }}
+        {{- if .Values.workerTrust.spiffe.enabled }}
+        kubeclaw.dev/worker-trust: "true"
+        {{- end }}
+      annotations:
+        {{- if eq .Values.agentRole "buster" }}
+        kubeclaw.dev/native-worker-role: buster
+        kubeclaw.dev/native-worker-policy: {{ .Values.busterNative.policyDigest | quote }}
+        {{- end }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-gateway.yaml") . | sha256sum }}
+        checksum/swarm-config: {{ include (print $.Template.BasePath "/configmap-swarm-config.yaml") . | sha256sum }}
+        {{- if .Values.workerTrust.spiffe.enabled }}
+        checksum/worker-trust: {{ index ((include (print $.Template.BasePath "/configmap-worker-trust.yaml") .) | fromYaml).data "envoy.yaml" | sha256sum }}
+        {{- end }}
+        {{- if .Values.customSkills }}
+        checksum/skills: {{ include (print $.Template.BasePath "/configmap-skills.yaml") . | sha256sum }}
+        {{- end }}
+        {{- if .Values.workspace.enabled }}
+        checksum/workspace: {{ include (print $.Template.BasePath "/configmap-workspace.yaml") . | sha256sum }}
+        {{- end }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- if eq .Values.agentRole "buster" }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchFields:
+                  - { key: metadata.name, operator: In, values: [{{ .Values.busterNative.nodeName | quote }}] }
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.shutdown.terminationGracePeriodSeconds | default 180 }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ include "kubeclaw.fullname" . }}
+      automountServiceAccountToken: {{ .Values.serviceAccount.automount | default false }}
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+
+      securityContext:
+        # The gateway and the non-root Buster worker share the workspace PVC.
+        # Keep a single writable group across both containers while preserving
+        # the configured runtime UID for the gateway.
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        {{- if .Values.runAsRoot }}
+        runAsUser: 0
+        runAsGroup: 0
+        {{- else }}
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        {{- end }}
+
+      # ---------------------------------------------------------------
+      # INIT CONTAINER — Setup SSH, Git, Workspace, Skills
+      # ---------------------------------------------------------------
+      initContainers:
+        {{- if and .Values.gateway.startupDoctor.enabled (not .Values.runAsRoot) }}
+        # Older releases could initialize the persistent OpenClaw state as
+        # root. Reconcile only the config PVC before the non-root doctor needs
+        # to chmod or atomically replace those files. The workspace PVC is not
+        # mounted here and is therefore outside this ownership repair.
+        - name: openclaw-state-permissions
+          image: {{ include "kubeclaw.image" .Values.image | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              find /home/node/.openclaw -xdev -exec chown -h 1000:1000 {} +
+              echo "==> Reconciled persistent OpenClaw state ownership to UID/GID 1000"
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            runAsNonRoot: false
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - DAC_READ_SEARCH
+          resources:
+            requests: { cpu: 10m, memory: 32Mi }
+            limits: { cpu: 100m, memory: 128Mi }
+          volumeMounts:
+            - name: config
+              mountPath: /home/node/.openclaw
+        {{- end }}
+        {{- if .Values.gateway.startupDoctor.enabled }}
+        # OpenClaw 2026.8+ can reject every CLI command while an existing
+        # state database still needs a schema migration. This must run before
+        # init-setup because init-setup invokes the OpenClaw plugin CLI.
+        - name: openclaw-state-migration
+          image: {{ include "kubeclaw.image" .Values.image | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # OpenClaw 2026.8.1 gates doctor-owned state migrations on TTY
+          # presence even when --fix was explicitly requested. Allocate a PTY
+          # only for this exclusive pre-gateway migration process.
+          stdin: true
+          tty: true
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              state_db="/home/node/.openclaw/state/openclaw.sqlite"
+              if [ ! -f "$state_db" ]; then
+                echo "==> No existing OpenClaw state database; migration not required"
+                exit 0
+              fi
+              config_path="/home/node/.openclaw/openclaw.json"
+              if [ -f "$config_path" ]; then
+                node <<'NODE'
+              const fs = require('node:fs');
+              const configPath = '/home/node/.openclaw/openclaw.json';
+              const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+              const legacyEntries = Array.isArray(config?.agents?.list)
+                ? config.agents.list
+                : [];
+              const keyedEntries = config?.agents?.entries
+                && typeof config.agents.entries === 'object'
+                && !Array.isArray(config.agents.entries)
+                ? Object.entries(config.agents.entries)
+                : [];
+              let changed = false;
+              config.agents = config.agents || {};
+              if (legacyEntries.length > 0) {
+                const canonicalEntries = Object.fromEntries(keyedEntries);
+                for (const legacyEntry of legacyEntries) {
+                  if (!legacyEntry || typeof legacyEntry !== 'object' || !legacyEntry.id) continue;
+                  const { id, ...entry } = legacyEntry;
+                  delete entry.default;
+                  canonicalEntries[id] = { ...(canonicalEntries[id] || {}), ...entry };
+                }
+                config.agents.entries = canonicalEntries;
+                delete config.agents.list;
+                changed = true;
+                console.log('==> Migrated agents.list to canonical keyed agents.entries');
+              }
+              if (Object.hasOwn(config.agents, 'ownership')) {
+                delete config.agents.ownership;
+                changed = true;
+                console.log('==> Removed multi-agent ownership from the managed single-agent roster');
+              }
+              const currentEntries = config?.agents?.entries
+                && typeof config.agents.entries === 'object'
+                && !Array.isArray(config.agents.entries)
+                ? config.agents.entries
+                : {};
+              const managedMainEntry = {
+                ...(currentEntries.main && typeof currentEntries.main === 'object'
+                  ? currentEntries.main
+                  : {}),
+              };
+              delete managedMainEntry.default;
+              const managedEntries = { main: managedMainEntry };
+              if (JSON.stringify(currentEntries) !== JSON.stringify(managedEntries)) {
+                config.agents.entries = managedEntries;
+                changed = true;
+                console.log('==> Converged the managed OpenClaw roster to the sole main agent');
+              }
+              config.agents.defaults = config.agents.defaults || {};
+              if (config.agents.defaults.systemAgent?.agentId !== 'main') {
+                config.agents.defaults.systemAgent = { agentId: 'main' };
+                changed = true;
+                console.log('==> Set agents.defaults.systemAgent.agentId=main');
+              }
+              if (config.agents.defaults.heartbeat?.agentId
+                  && config.agents.defaults.heartbeat.agentId !== 'main') {
+                config.agents.defaults.heartbeat.agentId = 'main';
+                changed = true;
+                console.log('==> Reassigned heartbeat ownership to main');
+              }
+              if (config?.channels?.discord
+                  && Object.hasOwn(config.channels.discord, 'groupAllowFrom')) {
+                delete config.channels.discord.groupAllowFrom;
+                changed = true;
+                console.log('==> Removed retired Discord groupAllowFrom configuration');
+              }
+              const isBroadDefaultDiscordBinding = (binding) => {
+                const match = binding?.match;
+                return !binding?.type
+                  && match?.channel === 'discord'
+                  && (match.accountId === undefined || match.accountId === 'default')
+                  && match.peer === undefined
+                  && match.guildId === undefined
+                  && match.teamId === undefined
+                  && match.roles === undefined;
+              };
+              if (config?.channels?.discord?.enabled === true) {
+                const existingBindings = Array.isArray(config.bindings) ? config.bindings : [];
+                const retainedBindings = existingBindings.filter(
+                  (binding) => !isBroadDefaultDiscordBinding(binding),
+                );
+                config.bindings = [
+                  { agentId: 'main', match: { channel: 'discord', accountId: 'default' } },
+                  ...retainedBindings,
+                ];
+                if (JSON.stringify(config.bindings) !== JSON.stringify(existingBindings)) {
+                  changed = true;
+                  console.log('==> Bound discord:default to the main agent');
+                }
+              }
+              const managedPluginAllow = ['discord', 'acpx', 'codex', 'openai'];
+              if (process.env.AGENT_ROLE === 'buster') managedPluginAllow.push('kubeclaw-agent-observer');
+              if (process.env.AGENT_ROLE === 'prism') managedPluginAllow.push('kubeclaw-prism');
+              config.plugins = config.plugins || {};
+              config.plugins.entries = config.plugins.entries || {};
+              if (JSON.stringify(config.plugins.allow) !== JSON.stringify(managedPluginAllow)) {
+                config.plugins.allow = managedPluginAllow;
+                changed = true;
+                console.log('==> Synchronized installed plugin allowlist');
+              }
+              if (process.env.AGENT_ROLE !== 'buster'
+                  && config.plugins.entries['kubeclaw-agent-observer']) {
+                delete config.plugins.entries['kubeclaw-agent-observer'];
+                changed = true;
+                console.log('==> Removed Buster-only observer configuration from non-Buster agent');
+              }
+              if (process.env.AGENT_ROLE !== 'prism'
+                  && config?.plugins?.entries?.['kubeclaw-prism']) {
+                delete config.plugins.entries['kubeclaw-prism'];
+                changed = true;
+                console.log('==> Removed Prism-only plugin configuration from non-Prism agent');
+              }
+              if (changed) {
+                const temporaryPath = `${configPath}.kubeclaw-migration.tmp`;
+                fs.writeFileSync(temporaryPath, `${JSON.stringify(config, null, 2)}\n`, 'utf8');
+                fs.renameSync(temporaryPath, configPath);
+              }
+              NODE
+              fi
+              echo "==> Migrating OpenClaw persistent state before setup commands"
+              exec node /app/openclaw.mjs doctor --fix --non-interactive
+          env:
+            - name: HOME
+              value: "/home/node"
+            - name: TMPDIR
+              value: "/tmp"
+            - name: XDG_CACHE_HOME
+              value: "/tmp/.cache"
+            - name: NODE_OPTIONS
+              value: {{ .Values.gateway.startupDoctor.nodeOptions | quote }}
+            - name: AGENT_ROLE
+              value: {{ .Values.agentRole | default "default" | quote }}
+            - name: NODE_PATH
+              value: "/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules"
+            - name: SWARM_CONFIG
+              value: "/home/node/.openclaw/swarm.config.json"
+            - name: LITELLM_API_KEY
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
+            - name: OPENCLAW_GATEWAY_TOKEN
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.gatewaySecretName" . }}, key: {{ include "kubeclaw.gatewaySecretKey" . }} } }
+            {{- if .Values.discord.enabled }}
+            - name: DISCORD_TOKEN
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.discordSecretName" . }}, key: {{ include "kubeclaw.discordSecretKey" . }} } }
+            {{- end }}
+          securityContext:
+            {{- if .Values.runAsRoot }}
+            runAsUser: 0
+            runAsGroup: 0
+            {{- else }}
+            runAsUser: 1000
+            runAsGroup: 1000
+            {{- end }}
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          resources: {{- toYaml .Values.gateway.startupDoctor.resources | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: /home/node/.openclaw
+            - name: workspace
+              mountPath: /home/node/.openclaw/workspace
+            - name: tmp
+              mountPath: /tmp
+            - name: tmp
+              mountPath: /home/node/.cache
+        {{- end }}
+
+        - name: init-setup
+          image: {{ include "kubeclaw.image" .Values.image | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            {{- if .Values.runAsRoot }}
+            runAsUser: 0
+            runAsGroup: 0
+            {{- else }}
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            {{- end }}
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+              {{- if .Values.runAsRoot }}
+              # Root-mode setup performs the explicit ownership handoff from
+              # gateway-created files to the non-root Buster runtime.
+              add:
+                - CHOWN
+                - FOWNER
+              {{- end }}
+            readOnlyRootFilesystem: true
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -e
+              echo "==> 0. Backup Originals"
+              if [ -f /config/openclaw.json ] && [ ! -f /config/openclaw_org.json ]; then
+                cp /config/openclaw.json /config/openclaw_org.json
+                echo "    openclaw_org.json created"
+              fi
+
+              {{- if .Values.agent.git.enabled }}
+              echo "==> 1. SSH Setup"
+              mkdir -p "$INIT_SSH_HOME"
+              if [ -f /secrets/ssh/id_rsa ]; then
+                cp /secrets/ssh/id_rsa "$INIT_SSH_HOME/id_rsa"
+                chmod 600 "$INIT_SSH_HOME/id_rsa"
+                echo "    SSH key loaded."
+              else
+                echo "    WARNING: No SSH key found at /secrets/ssh/id_rsa"
+              fi
+
+              cat > "$INIT_SSH_HOME/known_hosts" << 'HOSTKEYS'
+              github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+              github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+              github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZKyFT7RnFTvx0rWSJrjUCg+b0tJLAt0dXHl0pdd4VVtQYGBSNiCcMMpoiyt3TZV2FJwrH+A6Bkqe3V6JBrigfXvDAdqVX5+a20EJAtHWtnN8TPCS/CY0dkRvK3F2LzD33gZ0Y8+wO3BNEIV/r0JQR5bN5oy0RkreJ3f3wBqaxcRPD7yd8KUzBaR9bgg7UBgc5sCZ0U1Xv5QR+hUw7HhC1DhXEAr1LrKawClUOP7CIFa7R2S4FE+J8FMP2MIlAl9e4BwP/IETvZUFG3ysJIGnaMOO/P0Fo/bK2NrvI/OF3bv+Uot0mYR0P4+BPeVOR6VlGUT+5mLbeHhW/aCSMPjsKq+9TEplz22Rrkj5YHhpieyoDbmIORbOfBF0wYJvWfPi/KLD2TR0QjV3xUe8Tqzp0VXgENLeVEr62OIFKUR3LPwzqnlWavmJCmHYMlC4=
+              [ssh.github.com]:443 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+              [ssh.github.com]:443 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
+              [ssh.github.com]:443 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZKyFT7RnFTvx0rWSJrjUCg+b0tJLAt0dXHl0pdd4VVtQYGBSNiCcMMpoiyt3TZV2FJwrH+A6Bkqe3V6JBrigfXvDAdqVX5+a20EJAtHWtnN8TPCS/CY0dkRvK3F2LzD33gZ0Y8+wO3BNEIV/r0JQR5bN5oy0RkreJ3f3wBqaxcRPD7yd8KUzBaR9bgg7UBgc5sCZ0U1Xv5QR+hUw7HhC1DhXEAr1LrKawClUOP7CIFa7R2S4FE+J8FMP2MIlAl9e4BwP/IETvZUFG3ysJIGnaMOO/P0Fo/bK2NrvI/OF3bv+Uot0mYR0P4+BPeVOR6VlGUT+5mLbeHhW/aCSMPjsKq+9TEplz22Rrkj5YHhpieyoDbmIORbOfBF0wYJvWfPi/KLD2TR0QjV3xUe8Tqzp0VXgENLeVEr62OIFKUR3LPwzqnlWavmJCmHYMlC4=
+              HOSTKEYS
+              cat > "$INIT_SSH_HOME/config" << 'SSHCONFIG'
+              Host github.com
+                HostName ssh.github.com
+                Port 443
+                User git
+                IdentitiesOnly yes
+              SSHCONFIG
+              chmod 600 "$INIT_SSH_HOME/config"
+              if [ "$INIT_RUN_AS_ROOT" = "true" ]; then
+                chown -R 0:0 "$INIT_SSH_HOME"
+              fi
+              echo "    GitHub SSH configured through port 443."
+
+              echo "==> 2. Git Repository Sync"
+              REPO_DIR="/workspace/git-repo"
+              CURRENT_AGENT="${AGENT_NAME:-unknown}"
+              AGENT_CAPITALIZED="$(tr '[:lower:]' '[:upper:]' <<< ${CURRENT_AGENT:0:1})${CURRENT_AGENT:1}"
+              export GIT_CONFIG_COUNT=1
+              export GIT_CONFIG_KEY_0=safe.directory
+              export GIT_CONFIG_VALUE_0="$REPO_DIR"
+              if [ ! -d "$REPO_DIR/.git" ]; then
+                echo "    Cloning repository..."
+                git clone "$GIT_REPO_URL" "$REPO_DIR"
+              else
+                echo "    Repository exists. Checking for safe updates..."
+                cd "$REPO_DIR"
+                if git remote get-url origin >/dev/null 2>&1; then
+                  CURRENT_REPO_URL="$(git remote get-url origin)"
+                  if [ "$CURRENT_REPO_URL" != "$GIT_REPO_URL" ]; then
+                    git remote set-url origin "$GIT_REPO_URL"
+                    echo "    Reconciled origin to the configured repository."
+                  fi
+                else
+                  git remote add origin "$GIT_REPO_URL"
+                  echo "    Added the configured origin repository."
+                fi
+                if git diff --quiet && git diff --cached --quiet; then
+                  if git fetch origin main; then
+                    LOCAL_REV="$(git rev-parse HEAD)"
+                    REMOTE_REV="$(git rev-parse origin/main)"
+                    BASE_REV="$(git merge-base HEAD origin/main)"
+                    if [ "$LOCAL_REV" = "$REMOTE_REV" ]; then
+                      echo "    Repository already up to date."
+                    elif [ "$LOCAL_REV" = "$BASE_REV" ]; then
+                      echo "    Fast-forwarding repository to origin/main..."
+                      git merge --ff-only origin/main
+                    else
+                      echo "    WARNING: Repository diverged from origin/main. Skipping pull to preserve local state." >&2
+                    fi
+                  else
+                    echo "    WARNING: Git fetch failed; keeping existing workspace checkout." >&2
+                  fi
+                else
+                  echo "    WARNING: Repository has local edits; skipping git update to preserve workspace changes." >&2
+                fi
+              fi
+              git -C "$REPO_DIR" config user.email "${CURRENT_AGENT}@kubeclaw.swarm"
+              git -C "$REPO_DIR" config user.name "${AGENT_CAPITALIZED} Agent"
+
+              {{- end }}
+              echo "==> 3. Workspace Sync"
+              mkdir -p /workspace/memory
+              mkdir -p /workspace/prism/designs
+              for file in SOUL.md AGENTS.md USER.md TOOLS.md MEMORY.md IDENTITY.md BOOTSTRAP.md; do
+                if [ -f "/init-workspace/$file" ]; then
+                  if [ "${OVERRIDE_WORKSPACE}" = "true" ] || [ ! -f "/workspace/$file" ]; then
+                    cp -Lf "/init-workspace/$file" "/workspace/$file"
+                    echo "    $file written"
+                  else
+                    echo "    $file exists, keeping (override=false)"
+                  fi
+                fi
+              done
+              echo "==> 4. Config Setup"
+              if [ ! -f /config/openclaw.json ]; then
+                if [ -f /init-config/openclaw.json ]; then
+                  cp /init-config/openclaw.json /config/openclaw.json
+                  echo "    openclaw.json initialized as persistent secret-free source (first start)"
+                fi
+              else
+                echo "    openclaw.json exists, keeping persistent source"
+              fi
+              if [ -f /config/openclaw.json ]; then
+                node <<'NODE'
+              const fs = require('fs');
+              const p = '/config/openclaw.json';
+              const initializedConfigPath = '/init-config/openclaw.json';
+              const obsolete = '/app/openclaw-plugins/kubeclaw-agent-observer';
+              const litellmSecretRef = { source: 'env', provider: 'default', id: 'LITELLM_API_KEY' };
+              const discordSecretRef = { source: 'env', provider: 'default', id: 'DISCORD_TOKEN' };
+              const config = JSON.parse(fs.readFileSync(p, 'utf8'));
+
+              const paths = Array.isArray(config?.plugins?.load?.paths) ? config.plugins.load.paths : null;
+              if (paths?.includes(obsolete)) {
+                config.plugins.load.paths = paths.filter((entry) => entry !== obsolete);
+                if (config.plugins.load.paths.length === 0) delete config.plugins.load.paths;
+                if (config.plugins.load && Object.keys(config.plugins.load).length === 0) delete config.plugins.load;
+                console.log('    removed obsolete kubeclaw-agent-observer plugin load path');
+              }
+
+              if (config?.memory?.search?.remote) config.memory.search.remote.apiKey = litellmSecretRef;
+              if (config?.channels?.discord) config.channels.discord.token = discordSecretRef;
+
+              if (fs.existsSync(initializedConfigPath)) {
+                const initialized = JSON.parse(fs.readFileSync(initializedConfigPath, 'utf8'));
+                if (Array.isArray(initialized?.plugins?.allow)) {
+                  config.plugins = config.plugins || {};
+                  config.plugins.allow = [...initialized.plugins.allow];
+                  console.log('    synchronized installed plugin allowlist');
+                }
+                if (initialized?.plugins?.entries
+                    && typeof initialized.plugins.entries === 'object') {
+                  config.plugins = config.plugins || {};
+                  config.plugins.entries = initialized.plugins.entries;
+                  console.log('    synchronized managed plugin configuration');
+                }
+                if (initialized?.auth && typeof initialized.auth === 'object') {
+                  config.auth = initialized.auth;
+                  console.log('    synchronized managed auth profiles');
+                }
+                if (initialized?.commands && typeof initialized.commands === 'object') {
+                  config.commands = initialized.commands;
+                  console.log('    synchronized managed command authorization');
+                }
+                if (initialized?.channels?.discord
+                    && typeof initialized.channels.discord === 'object') {
+                  config.channels = config.channels || {};
+                  config.channels.discord = initialized.channels.discord;
+                  config.channels.discord.token = discordSecretRef;
+                  console.log('    synchronized managed Discord channel configuration');
+                }
+                if (initialized?.models && typeof initialized.models === 'object') {
+                  config.models = initialized.models;
+                } else {
+                  delete config.models;
+                }
+                if (initialized?.acp && typeof initialized.acp === 'object') {
+                  config.acp = initialized.acp;
+                  console.log('    synchronized managed ACP agents');
+                }
+                if (initialized?.agents?.defaults?.model) {
+                  config.agents = config.agents || {};
+                  config.agents.defaults = config.agents.defaults || {};
+                  config.agents.defaults.model = initialized.agents.defaults.model;
+                  console.log('    synchronized managed agent model route');
+                }
+                if (initialized?.agents?.defaults?.models) {
+                  config.agents = config.agents || {};
+                  config.agents.defaults = config.agents.defaults || {};
+                  config.agents.defaults.models = initialized.agents.defaults.models;
+                  console.log('    synchronized managed agent model catalog');
+                }
+                if (initialized?.agents?.defaults?.modelPolicy) {
+                  config.agents = config.agents || {};
+                  config.agents.defaults = config.agents.defaults || {};
+                  config.agents.defaults.modelPolicy = initialized.agents.defaults.modelPolicy;
+                  console.log('    synchronized managed agent model policy');
+                }
+                if (initialized?.memory?.search) {
+                  config.memory = config.memory || {};
+                  config.memory.search = initialized.memory.search;
+                  config.memory.search.remote.apiKey = litellmSecretRef;
+                  if (config?.agents?.defaults?.memorySearch) {
+                    delete config.agents.defaults.memorySearch;
+                    console.log('    removed retired agents.defaults.memorySearch configuration');
+                  }
+                  console.log('    synchronized managed memory search configuration');
+                }
+                if (initialized?.agents?.entries
+                    && typeof initialized.agents.entries === 'object'
+                    && !Array.isArray(initialized.agents.entries)) {
+                  config.agents = config.agents || {};
+                  delete config.agents.ownership;
+                  config.agents.entries = structuredClone(initialized.agents.entries);
+                  console.log('    synchronized managed single-agent roster');
+                }
+                const managedDiscordBinding = Array.isArray(initialized?.bindings)
+                  ? initialized.bindings.find((binding) => binding?.agentId === 'main'
+                    && binding?.match?.channel === 'discord'
+                    && binding?.match?.accountId === 'default'
+                    && binding?.match?.peer === undefined
+                    && binding?.match?.guildId === undefined
+                    && binding?.match?.teamId === undefined
+                    && binding?.match?.roles === undefined)
+                  : null;
+                if (managedDiscordBinding) {
+                  const currentBindings = Array.isArray(config.bindings) ? config.bindings : [];
+                  const retainedBindings = currentBindings.filter((binding) => {
+                    const match = binding?.match;
+                    return binding?.type
+                      || match?.channel !== 'discord'
+                      || (match.accountId !== undefined && match.accountId !== 'default')
+                      || match.peer !== undefined
+                      || match.guildId !== undefined
+                      || match.teamId !== undefined
+                      || match.roles !== undefined;
+                  });
+                  config.bindings = [managedDiscordBinding, ...retainedBindings];
+                  console.log('    synchronized discord:default agent binding');
+                }
+                const managedSystemAgent = initialized?.agents?.defaults?.systemAgent;
+                if (managedSystemAgent?.agentId) {
+                  config.agents = config.agents || {};
+                  config.agents.defaults = config.agents.defaults || {};
+                  config.agents.defaults.systemAgent = managedSystemAgent;
+                  console.log('    synchronized managed system agent owner');
+                }
+              }
+
+              if (config?.channels?.discord
+                  && Object.hasOwn(config.channels.discord, 'groupAllowFrom')) {
+                delete config.channels.discord.groupAllowFrom;
+                console.log('    removed retired Discord groupAllowFrom configuration');
+              }
+
+              fs.writeFileSync(p, `${JSON.stringify(config, null, 2)}\n`);
+              console.log('    openclaw.json source refreshed managed SecretRefs and safe migrations');
+              NODE
+              fi
+
+              echo "==> 4a. OpenClaw Plugin Cache"
+              if [ -d /opt/openclaw-plugin-home ]; then
+                IMAGE_PLUGIN_CACHE_VERSION=""
+                CONFIG_PLUGIN_CACHE_VERSION=""
+                PLUGIN_INSTALL_MODE={{ .Values.pluginSeed.installMode | quote }}
+                CONFIG_PLUGIN_INSTALL_MODE=""
+                if [ -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version ]; then
+                  IMAGE_PLUGIN_CACHE_VERSION="$(cat /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version 2>/dev/null || true)"
+                fi
+                if [ -f /config/.kubeclaw-plugin-cache-version ]; then
+                  CONFIG_PLUGIN_CACHE_VERSION="$(cat /config/.kubeclaw-plugin-cache-version 2>/dev/null || true)"
+                fi
+                if [ -f /config/.kubeclaw-plugin-install-mode ]; then
+                  CONFIG_PLUGIN_INSTALL_MODE="$(cat /config/.kubeclaw-plugin-install-mode 2>/dev/null || true)"
+                fi
+                if [ -n "$IMAGE_PLUGIN_CACHE_VERSION" ] \
+                  && [ "$IMAGE_PLUGIN_CACHE_VERSION" = "$CONFIG_PLUGIN_CACHE_VERSION" ] \
+                  && [ "$PLUGIN_INSTALL_MODE" = "$CONFIG_PLUGIN_INSTALL_MODE" ]; then
+                  echo "    OpenClaw external plugin cache already current; skipping reseed"
+                else
+                  rm -rf /tmp/openclaw-plugin-npm-cache
+                  mkdir -p /tmp/openclaw-plugin-npm-cache
+                  cp -a /opt/openclaw-plugin-home/npm-cache/. /tmp/openclaw-plugin-npm-cache/
+                  for plugin_spec in{{- range .Values.pluginSeed.specs }} {{ . | quote }}{{- end }}; do
+                    echo "    Installing pinned official plugin ${plugin_spec} from offline cache"
+                    HOME=/home/node \
+                      NPM_CONFIG_CACHE=/tmp/openclaw-plugin-npm-cache \
+                      NPM_CONFIG_OFFLINE=true \
+                      openclaw plugins install "${plugin_spec}" --force --pin --accept-capabilities
+                  done
+                  HOME=/home/node openclaw plugins registry --refresh
+                  if [ -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version ]; then
+                    cp -f /opt/openclaw-plugin-home/.kubeclaw-plugin-cache-version /config/.kubeclaw-plugin-cache-version
+                  else
+                    rm -f /config/.kubeclaw-plugin-cache-version
+                  fi
+                  printf '%s\n' "$PLUGIN_INSTALL_MODE" > /config/.kubeclaw-plugin-install-mode
+                  echo "    Installed OpenClaw external plugins from the offline image cache"
+                fi
+              else
+                echo "    WARNING: baked OpenClaw plugin home cache not found"
+              fi
+              mkdir -p /config/agents/main/sessions
+
+              echo "==> 4b. Swarm Config"
+              if [ -e /config/node_modules ] && [ ! -L /config/node_modules ]; then
+                rm -rf /config/node_modules
+              fi
+              ln -sfnT /opt/kubeclaw-tools/node_modules /config/node_modules
+              if [ -f "/init-swarm-config/swarm.config.json" ]; then
+                cp -Lf "/init-swarm-config/swarm.config.json" "/config/swarm.config.json"
+                echo "    swarm.config.json written from chart source"
+              fi
+              if [ -f "/config/swarm.config.json" ]; then
+                node -e 'const fs=require("fs"); const p="/config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(p,"utf8")); if (Object.prototype.hasOwnProperty.call(config,"discord_webhook_url")) { delete config.discord_webhook_url; const temporaryPath=`${p}.kubeclaw-normalize.tmp`; fs.writeFileSync(temporaryPath, JSON.stringify(config,null,2)+"\n", { mode: 0o600 }); fs.renameSync(temporaryPath,p); } console.log("    swarm.config.json source normalized without runtime webhook secrets");'
+              fi
+              if [ -f "/init-swarm-config/.semgrep.yml" ]; then
+                if [ "${OVERRIDE_SWARM_CONFIG}" = "true" ] || [ ! -f "/config/.semgrep.yml" ]; then
+                  cp -Lf "/init-swarm-config/.semgrep.yml" "/config/.semgrep.yml"
+                  echo "    .semgrep.yml written"
+                else
+                  echo "    .semgrep.yml exists, keeping (override=false)"
+                fi
+              fi
+              if [ -f "/init-swarm-config/eslint.config.mjs" ]; then
+                if [ "${OVERRIDE_SWARM_CONFIG}" = "true" ] || [ ! -f "/config/eslint.config.mjs" ]; then
+                  cp -Lf "/init-swarm-config/eslint.config.mjs" "/config/eslint.config.mjs"
+                  echo "    eslint.config.mjs written"
+                else
+                  echo "    eslint.config.mjs exists, keeping (override=false)"
+                fi
+              fi
+              if [ -f "/init-swarm-config/.yamllint.yml" ]; then
+                cp -Lf "/init-swarm-config/.yamllint.yml" "/config/.yamllint.yml"
+                echo "    .yamllint.yml written from chart source"
+              fi
+              if [ -f "/init-swarm-config/.tflint.hcl" ]; then
+                cp -Lf "/init-swarm-config/.tflint.hcl" "/config/.tflint.hcl"
+                echo "    .tflint.hcl written from chart source"
+              fi
+              for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
+                if [ -f "/init-swarm-config/$lint_config" ]; then
+                  cp -Lf "/init-swarm-config/$lint_config" "/config/$lint_config"
+                  echo "    $lint_config written from chart source"
+                fi
+              done
+              if [ -f "/init-swarm-config/lint-policy.json" ]; then
+                cp -Lf "/init-swarm-config/lint-policy.json" "/config/lint-policy.json"
+                echo "    lint-policy.json written from chart source"
+              fi
+
+              echo "==> 4c. Runtime Config"
+              mkdir -p /runtime-config
+              rm -rf /runtime-config/node_modules
+              ln -sfnT /opt/kubeclaw-tools/node_modules /runtime-config/node_modules
+              if [ -f /config/swarm.config.json ]; then
+                node -e 'const fs=require("fs"); const source="/config/swarm.config.json"; const target="/runtime-config/swarm.config.json"; const config=JSON.parse(fs.readFileSync(source,"utf8")); if (process.env.DISCORD_WEBHOOK) config.discord_webhook_url=process.env.DISCORD_WEBHOOK; fs.writeFileSync(target, JSON.stringify(config,null,2)+"\n");'
+                echo "    swarm.config.json rendered into runtime config"
+              fi
+              if [ -f /config/.semgrep.yml ]; then
+                cp -Lf /config/.semgrep.yml /runtime-config/.semgrep.yml
+              fi
+              if [ -f /config/eslint.config.mjs ]; then
+                cp -Lf /config/eslint.config.mjs /runtime-config/eslint.config.mjs
+              fi
+              if [ -f /config/.yamllint.yml ]; then
+                cp -Lf /config/.yamllint.yml /runtime-config/.yamllint.yml
+              fi
+              if [ -f /config/.tflint.hcl ]; then
+                cp -Lf /config/.tflint.hcl /runtime-config/.tflint.hcl
+              fi
+              for lint_config in eslint-type-evidence-config.mjs eslint-type-evidence-tests-config.mjs eslint-type-evidence-generated-config.mjs type-evidence-eslint-plugin.mjs knip.json jscpd.json jscpd-tests.json lint-baseline.json; do
+                if [ -f "/config/$lint_config" ]; then
+                  cp -Lf "/config/$lint_config" "/runtime-config/$lint_config"
+                fi
+              done
+              if [ -f /config/lint-policy.json ]; then
+                cp -Lf /config/lint-policy.json /runtime-config/lint-policy.json
+              fi
+              rm -f /runtime-config/code-bundle-manifest.json
+              cat > /runtime-config/kubeclaw-health.mjs <<'HEALTH_SCRIPT'
+              import fs from 'fs';
+              import path from 'path';
+              import { createRequire } from 'module';
+
+              const require = createRequire(import.meta.url);
+              const mode = process.argv[2] || 'readiness';
+              const agent = process.env.AGENT_NAME || 'unknown';
+              const containerRole = process.env.KUBECLAW_CONTAINER_ROLE || 'agent';
+              const timeoutMs = Number.parseInt(process.env.KUBECLAW_HEALTH_TIMEOUT_MS || '5000', 10);
+              const startupStatusPath = process.env.KUBECLAW_HEALTH_STARTUP_STATUS_PATH || '/home/node/.openclaw/logs/startup-verification.json';
+              const startupEventLogPath = process.env.KUBECLAW_HEALTH_STARTUP_EVENT_LOG_PATH || '/home/node/.openclaw/logs/startup-verification.jsonl';
+              const failures = [];
+
+              function enabled(name, defaultValue = false) {
+                const raw = process.env[name];
+                if (raw === undefined || raw === '') return defaultValue;
+                return /^(1|true|yes|on)$/i.test(raw);
+              }
+
+              function withTimeout(promise, label) {
+                let timer;
+                const timeout = new Promise((_, reject) => {
+                  timer = setTimeout(() => reject(new Error(`${label} timed out after ${timeoutMs}ms`)), timeoutMs);
+                });
+                return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+              }
+
+              async function check(name, fn) {
+                try {
+                  await withTimeout(Promise.resolve().then(fn), name);
+                } catch (error) {
+                  failures.push(`${name}: ${error?.message || error}`);
+                }
+              }
+
+              function requirePath(path, type) {
+                const stat = fs.statSync(path);
+                if (type === 'file' && !stat.isFile()) throw new Error(`${path} is not a file`);
+                if (type === 'dir' && !stat.isDirectory()) throw new Error(`${path} is not a directory`);
+              }
+
+              function ensureParentDir(targetPath) {
+                fs.mkdirSync(path.dirname(targetPath), { recursive: true });
+              }
+
+              function readBundleManifest() {
+                const manifestPath = process.env.KUBECLAW_CODE_BUNDLE_MANIFEST || '/runtime-config/code-bundle-manifest.json';
+                requirePath(manifestPath, 'file');
+                return JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+              }
+
+              function writeStartupVerification(ok, detailFailures = []) {
+                const record = {
+                  ok,
+                  mode: 'startup',
+                  agent,
+                  containerRole,
+                  checkedAt: new Date().toISOString(),
+                  failures: Array.isArray(detailFailures) ? detailFailures : [],
+                };
+                ensureParentDir(startupStatusPath);
+                ensureParentDir(startupEventLogPath);
+                fs.writeFileSync(startupStatusPath, `${JSON.stringify(record, null, 2)}\n`, 'utf8');
+                fs.appendFileSync(startupEventLogPath, `${JSON.stringify(record)}\n`, 'utf8');
+                return record;
+              }
+
+              function readStartupVerification() {
+                requirePath(startupStatusPath, 'file');
+                return JSON.parse(fs.readFileSync(startupStatusPath, 'utf8'));
+              }
+
+              function baseUrl(raw) {
+                return String(raw || '').trim().replace(/\/tools\/invoke$/, '').replace(/\/v1$/, '').replace(/\/$/, '');
+              }
+
+              async function httpOk(url, headers = {}, accepted = new Set()) {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), timeoutMs);
+                try {
+                  const response = await fetch(url, { headers, signal: controller.signal });
+                  if (!response.ok && !accepted.has(response.status)) {
+                    throw new Error(`HTTP ${response.status} from ${url}`);
+                  }
+                } finally {
+                  clearTimeout(timer);
+                }
+              }
+
+              async function checkGateway() {
+                const url = `${baseUrl(process.env.OPENCLAW_GATEWAY_URL || `http://127.0.0.1:${process.env.GATEWAY_PORT || '18789'}`)}/health`;
+                const headers = process.env.OPENCLAW_GATEWAY_TOKEN
+                  ? { Authorization: `Bearer ${process.env.OPENCLAW_GATEWAY_TOKEN}` }
+                  : {};
+                await httpOk(url, headers);
+              }
+
+              async function openRedis() {
+                const Redis = require('ioredis');
+                if (!process.env.REDIS_HOST) throw new Error('REDIS_HOST is required');
+                if (!process.env.REDIS_PORT) throw new Error('REDIS_PORT is required');
+                const redis = new Redis({
+                  host: process.env.REDIS_HOST,
+                  port: Number.parseInt(process.env.REDIS_PORT, 10),
+                  username: process.env.REDIS_USERNAME || undefined,
+                  password: process.env.REDIS_PASSWORD || undefined,
+                  lazyConnect: true,
+                  connectTimeout: timeoutMs,
+                  commandTimeout: timeoutMs,
+                  maxRetriesPerRequest: 1,
+                  enableReadyCheck: true,
+                });
+                redis.on('error', () => {});
+                await redis.connect();
+                return redis;
+              }
+
+              async function checkRedis() {
+                const redis = await openRedis();
+                try {
+                  const pong = await redis.ping();
+                  if (pong !== 'PONG') throw new Error(`unexpected PING response: ${pong}`);
+                } finally {
+                  await redis.quit().catch(() => redis.disconnect());
+                }
+              }
+
+              async function checkRedisStream() {
+                const redis = await openRedis();
+                try {
+                  const stream = process.env.KUBECLAW_HEALTH_REDIS_STREAM || `kubeclaw:health:${agent}`;
+                  const maxLen = String(Number.parseInt(process.env.KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN || '1000', 10));
+                  const id = await redis.xadd(stream, 'MAXLEN', '~', maxLen, '*',
+                    'agent', agent,
+                    'pod', process.env.HOSTNAME || '',
+                    'mode', mode,
+                    'ts', String(Date.now()));
+                  if (!id) throw new Error('XADD returned no entry id');
+                } finally {
+                  await redis.quit().catch(() => redis.disconnect());
+                }
+              }
+
+              async function checkLiteLLM() {
+                const url = `${baseUrl(process.env.LITELLM_URL)}/health`;
+                const headers = process.env.LITELLM_API_KEY
+                  ? { Authorization: `Bearer ${process.env.LITELLM_API_KEY}` }
+                  : {};
+                await httpOk(url, headers);
+              }
+
+
+              async function checkRegistries() {
+                const entries = String(process.env.KUBECLAW_HEALTH_REGISTRIES || '')
+                  .split(',')
+                  .map((entry) => entry.trim())
+                  .filter(Boolean);
+                if (entries.length === 0) throw new Error('no registry endpoints configured');
+                for (const entry of entries) {
+                  const url = `${baseUrl(entry.startsWith('http') ? entry : `http://${entry}`)}/v2/`;
+                  await httpOk(url, {}, new Set([401]));
+                }
+              }
+
+              function checkDrainState() {
+                if (mode !== 'readiness') return;
+                const path = process.env.KUBECLAW_DRAIN_FILE || '/tmp/kubeclaw-draining';
+                if (fs.existsSync(path)) throw new Error(`${path} exists; container is draining`);
+              }
+
+              function checkStartupVerificationStatus() {
+                if (!enabled('KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER', true)) return;
+                const record = readStartupVerification();
+                if (record?.ok !== true) {
+                  throw new Error(`startup verification did not pass: ${JSON.stringify(record?.failures || [])}`);
+                }
+              }
+
+              function checkCodeBundle() {
+                if (!enabled('KUBECLAW_CODE_BUNDLE_ENABLED', false)) return;
+                const manifest = readBundleManifest();
+                const expectedAgent = process.env.KUBECLAW_CODE_BUNDLE_AGENT || agent;
+                const expectedCommit = String(process.env.KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT || '').trim();
+                const expectedContract = String(process.env.KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION || '').trim();
+                if (manifest?.role !== expectedAgent) {
+                  throw new Error(`bundle role ${manifest?.role || '<missing>'} does not match ${expectedAgent}`);
+                }
+                if (expectedCommit && manifest?.commit !== expectedCommit) {
+                  throw new Error(`bundle commit ${manifest?.commit || '<missing>'} does not match ${expectedCommit}`);
+                }
+                if (expectedContract && manifest?.contractVersion !== expectedContract) {
+                  throw new Error(`bundle contract ${manifest?.contractVersion || '<missing>'} does not match ${expectedContract}`);
+                }
+              }
+
+              if (mode === 'startup-status') {
+                await check('startup verification status', checkStartupVerificationStatus);
+              } else if (mode === 'liveness') {
+                if (enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)) await check('gateway', checkGateway);
+              } else {
+                await check('runtime openclaw config', () => requirePath('/home/node/.openclaw/openclaw.json', 'file'));
+                await check('runtime swarm config', () => requirePath(process.env.SWARM_CONFIG, 'file'));
+                await check('code bundle', checkCodeBundle);
+                await check('skills', () => requirePath('/app/skills', 'dir'));
+                if (mode === 'startup') {
+                  if (enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)) await check('gateway', checkGateway);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_REDIS', true)) await check('redis ping', checkRedis);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_REDIS_STREAM', true)) await check('redis stream', checkRedisStream);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_LITELLM', false)) await check('litellm', checkLiteLLM);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_REGISTRIES', false)) await check('registries', checkRegistries);
+                } else {
+                  await check('drain state', checkDrainState);
+                  await check('startup verification status', checkStartupVerificationStatus);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_GATEWAY', true)) await check('gateway', checkGateway);
+                  if (enabled('KUBECLAW_HEALTH_CHECK_REDIS', true)) await check('redis ping', checkRedis);
+                }
+              }
+
+              if (failures.length > 0) {
+                if (mode === 'startup') {
+                  const record = writeStartupVerification(false, failures);
+                  console.error(JSON.stringify(record));
+                }
+                console.error(JSON.stringify({ ok: false, mode, agent, failures }));
+                process.exit(1);
+              }
+              if (mode === 'startup') {
+                const record = writeStartupVerification(true);
+                console.log(JSON.stringify(record));
+              }
+              console.log(JSON.stringify({ ok: true, mode, agent }));
+              HEALTH_SCRIPT
+              echo "==> 5. Skills Merge"
+              mkdir -p /skills-merged
+              # Base image intentionally carries no fast-changing agent skill code.
+              # Code bundles own the final /app/skills runtime tree.
+              echo "    Preparing image skills mount baseline..."
+              cp -r /app/skills/. /skills-merged/
+              if [ "${CODE_BUNDLE_ENABLED}" = "true" ]; then
+                echo "==> 5a. Code Bundle"
+                echo "    Bundle contract: final /app/skills overlay tree for ${AGENT_NAME}"
+                if [ -z "${CODE_BUNDLE_ARCHIVE_URL}" ]; then
+                  echo "    ERROR: codeBundle.enabled=true but CODE_BUNDLE_ARCHIVE_URL is empty" >&2
+                  exit 1
+                fi
+                BUNDLE_TMP_ROOT="/tmp/code-bundle"
+                BUNDLE_ARCHIVE="${BUNDLE_TMP_ROOT}/bundle.tgz"
+                rm -rf "$BUNDLE_TMP_ROOT"
+                mkdir -p "$BUNDLE_TMP_ROOT/extracted"
+                echo "    Downloading bundle archive..."
+                node <<'NODE'
+              const fs = require('fs');
+              const { Readable } = require('stream');
+              const { pipeline } = require('stream/promises');
+
+              function parseGitHubReleaseUrl(raw) {
+                try {
+                  const parsed = new URL(raw);
+                  const match = parsed.pathname.match(/^\/([^/]+)\/([^/]+)\/releases\/download\/([^/]+)\/([^/]+)$/);
+                  if (!match) return null;
+                  return {
+                    owner: match[1],
+                    repo: match[2],
+                    tag: decodeURIComponent(match[3]),
+                    assetName: decodeURIComponent(match[4]),
+                  };
+                } catch {
+                  return null;
+                }
+              }
+
+              async function main() {
+                let url = process.env.CODE_BUNDLE_ARCHIVE_URL;
+                const output = process.env.CODE_BUNDLE_ARCHIVE_PATH;
+                const token = process.env.CODE_BUNDLE_AUTH_TOKEN || '';
+                let headers = {};
+
+                const releaseInfo = token ? parseGitHubReleaseUrl(url) : null;
+                if (releaseInfo) {
+                  const apiHeaders = {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'application/vnd.github+json',
+                    'X-GitHub-Api-Version': '2022-11-28',
+                  };
+                  const releaseResponse = await fetch(
+                    `https://api.github.com/repos/${releaseInfo.owner}/${releaseInfo.repo}/releases/tags/${encodeURIComponent(releaseInfo.tag)}`,
+                    { headers: apiHeaders, redirect: 'follow' },
+                  );
+                  if (!releaseResponse.ok) {
+                    throw new Error(`bundle release lookup failed with HTTP ${releaseResponse.status}`);
+                  }
+                  const release = await releaseResponse.json();
+                  const asset = Array.isArray(release.assets)
+                    ? release.assets.find((entry) => entry && entry.name === releaseInfo.assetName)
+                    : null;
+                  if (!asset?.url) {
+                    throw new Error(`bundle release asset not found: ${releaseInfo.assetName}`);
+                  }
+                  url = asset.url;
+                  headers = {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'application/octet-stream',
+                    'X-GitHub-Api-Version': '2022-11-28',
+                  };
+                } else if (token) {
+                  headers.Authorization = `Bearer ${token}`;
+                }
+
+                const response = await fetch(url, { headers, redirect: 'follow' });
+                if (!response.ok) {
+                  throw new Error(`bundle download failed with HTTP ${response.status}`);
+                }
+                await pipeline(Readable.fromWeb(response.body), fs.createWriteStream(output));
+              }
+
+              main().catch((error) => {
+                console.error(error?.stack || String(error));
+                process.exit(1);
+              });
+              NODE
+                if [ -n "${CODE_BUNDLE_SHA256}" ]; then
+                  printf '%s  %s\n' "$CODE_BUNDLE_SHA256" "$BUNDLE_ARCHIVE" | sha256sum -c - || exit 1
+                fi
+                tar -xzf "$BUNDLE_ARCHIVE" -C "$BUNDLE_TMP_ROOT/extracted"
+                BUNDLE_TMP_ROOT="$BUNDLE_TMP_ROOT" node <<'NODE'
+              const fs = require('fs');
+              const path = require('path');
+
+              const tempRoot = process.env.BUNDLE_TMP_ROOT;
+              const extractedRoot = path.join(tempRoot, 'extracted');
+              const manifestOut = '/runtime-config/code-bundle-manifest.json';
+              const expectedAgent = process.env.AGENT_NAME;
+              const expectedCommit = String(process.env.CODE_BUNDLE_EXPECTED_COMMIT || '').trim();
+              const expectedContract = String(process.env.CODE_BUNDLE_CONTRACT_VERSION || '').trim();
+
+              function isDirectory(candidate) {
+                try {
+                  return fs.statSync(candidate).isDirectory();
+                } catch {
+                  return false;
+                }
+              }
+
+              function manifestCandidates(root) {
+                const direct = path.join(root, 'manifest.json');
+                const candidates = [];
+                if (fs.existsSync(direct)) candidates.push(root);
+                for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
+                  if (!entry.isDirectory()) continue;
+                  const nested = path.join(root, entry.name, 'manifest.json');
+                  if (fs.existsSync(nested)) candidates.push(path.join(root, entry.name));
+                }
+                return candidates;
+              }
+
+              const candidates = manifestCandidates(extractedRoot);
+              if (candidates.length !== 1) {
+                throw new Error(`expected exactly one bundle root with manifest.json, found ${candidates.length}`);
+              }
+
+              const bundleRoot = candidates[0];
+              const manifestPath = path.join(bundleRoot, 'manifest.json');
+              const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+              const skillsPath = path.join(bundleRoot, 'skills');
+
+              if (!isDirectory(skillsPath)) {
+                throw new Error('bundle must contain a top-level skills/ directory');
+              }
+              if (manifest.schemaVersion !== 'pipeline-runtime-bundle.v1'
+                || manifest.bundleKind !== 'app-skills-package-set') {
+                throw new Error('bundle uses an unsupported package contract');
+              }
+              if (manifest.role !== expectedAgent) {
+                throw new Error(`bundle role ${manifest.role || '<missing>'} does not match ${expectedAgent}`);
+              }
+              if (expectedCommit && manifest.commit !== expectedCommit) {
+                throw new Error(`bundle commit ${manifest.commit || '<missing>'} does not match ${expectedCommit}`);
+              }
+              if (expectedContract && manifest.contractVersion !== expectedContract) {
+                throw new Error(`bundle contract ${manifest.contractVersion || '<missing>'} does not match ${expectedContract}`);
+              }
+
+              for (const entry of fs.readdirSync(skillsPath)) {
+                fs.cpSync(path.join(skillsPath, entry), path.join('/skills-merged', entry), { recursive: true, force: true });
+              }
+              fs.copyFileSync(manifestPath, manifestOut);
+              console.log(`    bundle manifest accepted: ${manifest.role}@${manifest.commit}`);
+              NODE
+              fi
+              protected_skill_overlay() {
+                case "$1" in
+                  pipeline.ts|runtime.ts|contracts|contracts/*|packages|packages/*|node_modules|node_modules/*|plugins|plugins/*)
+                    return 0
+                    ;;
+                esac
+                return 1
+              }
+              # Overlay: optional user-defined custom skills from ConfigMap
+              if [ -d /init-skills ] && [ -n "$(ls -A /init-skills 2>/dev/null)" ]; then
+                while IFS= read -r -d '' custom_skill_path; do
+                  custom_skill_rel="${custom_skill_path#/init-skills/}"
+                  if protected_skill_overlay "$custom_skill_rel"; then
+                    echo "    ERROR: customSkills may not override protected runtime skill path: $custom_skill_rel" >&2
+                    exit 1
+                  fi
+                done < <(find /init-skills -mindepth 1 -print0)
+                cp -r /init-skills/. /skills-merged/
+                echo "    Custom skills overlaid ($(ls /init-skills | wc -l) files)"
+              fi
+
+              echo "==> 6. Fixing Permissions"
+              if [ "$INIT_RUN_AS_ROOT" = "true" ]; then
+                chown -R 0:0 /config /runtime-config /skills-merged
+                if [ "${AGENT_NAME}" = "buster" ]; then
+                  chown -R 1000:1000 /workspace
+                  chmod -R g+rwX /workspace
+                  find /workspace -type d -exec chmod g+s {} +
+                  {{- if .Values.agent.git.enabled }}
+                  chown -R 0:1000 "$INIT_SSH_HOME"
+                  find "$INIT_SSH_HOME" -type d -exec chmod 750 {} +
+                  if [ -f "$INIT_SSH_HOME/id_rsa" ]; then chmod 640 "$INIT_SSH_HOME/id_rsa"; fi
+                  {{- end }}
+                else
+                  chown -R 0:0 /workspace
+                  {{- if .Values.agent.git.enabled }}
+                  chown -R 0:0 "$INIT_SSH_HOME"
+                  {{- end }}
+                fi
+              else
+                echo "    Non-root init selected; persistent volumes already use fsGroup 1000."
+              fi
+              echo "==> Init Complete."
+              ls -la /workspace/
+
+          env:
+            - name: HOME
+              value: "/home/node"
+            - name: TMPDIR
+              value: "/tmp"
+            - name: XDG_CACHE_HOME
+              value: "/tmp/.cache"
+            - name: INIT_RUN_AS_ROOT
+              value: {{ .Values.runAsRoot | quote }}
+            {{- if .Values.agent.git.enabled }}
+            - name: INIT_SSH_HOME
+              value: {{ ternary "/root/.ssh" "/home/node/.ssh" .Values.runAsRoot | quote }}
+            {{- end }}
+            - name: AGENT_NAME
+              value: {{ .Values.agentRole | default "default" | quote }}
+            - name: AGENT_ROLE
+              value: {{ .Values.agentRole | default "default" | quote }}
+            {{- if .Values.agent.git.enabled }}
+            - name: GIT_REPO_URL
+              value: {{ .Values.agent.git.repoUrl | quote }}
+            {{- end }}
+            - name: OVERRIDE_WORKSPACE
+              value: {{ .Values.workspace.overrideOnRestart | default false | quote }}
+            - name: OVERRIDE_SWARM_CONFIG
+              value: {{ .Values.swarmConfig.overrideOnRestart | default false | quote }}
+            - name: CODE_BUNDLE_ENABLED
+              value: {{ .Values.codeBundle.enabled | default false | quote }}
+            - name: CODE_BUNDLE_ARCHIVE_URL
+              value: {{ .Values.codeBundle.archiveUrl | default "" | quote }}
+            - name: CODE_BUNDLE_SHA256
+              value: {{ .Values.codeBundle.sha256 | default "" | quote }}
+            - name: CODE_BUNDLE_EXPECTED_COMMIT
+              value: {{ .Values.codeBundle.expectedCommit | default "" | quote }}
+            - name: CODE_BUNDLE_CONTRACT_VERSION
+              value: {{ .Values.codeBundle.contractVersion | default "v2" | quote }}
+            - name: CODE_BUNDLE_ARCHIVE_PATH
+              value: "/tmp/code-bundle/bundle.tgz"
+            {{- if .Values.codeBundle.auth.existingSecret }}
+            - name: CODE_BUNDLE_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.codeBundle.auth.existingSecret }}
+                  key: {{ .Values.codeBundle.auth.existingSecretKey | default "token" }}
+            {{- else }}
+            - name: CODE_BUNDLE_AUTH_TOKEN
+              value: ""
+            {{- end }}
+            - name: LITELLM_API_KEY
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
+            - name: DISCORD_TOKEN
+              {{- if .Values.discord.enabled }}
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.discordSecretName" . }}, key: {{ include "kubeclaw.discordSecretKey" . }} } }
+              {{- else }}
+              value: ""
+              {{- end }}
+            {{- if .Values.stitch.existingSecret }}
+            - name: STITCH_API_KEY
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.stitchSecretName" . }}, key: {{ include "kubeclaw.stitchSecretKey" . }} } }
+            {{- end }}
+            {{- if .Values.discordWebhook.secretName }}
+            - name: DISCORD_WEBHOOK
+              valueFrom: { secretKeyRef: { name: {{ .Values.discordWebhook.secretName }}, key: {{ .Values.discordWebhook.secretKey | default "discordWebhook" }} } }
+            {{- end }}
+
+          resources: {{- toYaml .Values.initSetup.resources | nindent 12 }}
+
+          volumeMounts:
+            {{- if .Values.agent.git.enabled }}
+            - name: ssh-secret-vol
+              mountPath: /secrets/ssh
+              readOnly: true
+            - name: ssh-home-vol
+              mountPath: {{ ternary "/root/.ssh" "/home/node/.ssh" .Values.runAsRoot | quote }}
+            {{- end }}
+            - name: config
+              mountPath: /config
+            - name: config
+              mountPath: /home/node/.openclaw
+            - name: runtime-config
+              mountPath: /runtime-config
+            - name: workspace
+              mountPath: /workspace
+            - name: init-config
+              mountPath: /init-config
+            {{- if .Values.workspace.enabled }}
+            - name: init-workspace
+              mountPath: /init-workspace
+            {{- end }}
+            - name: init-skills
+              mountPath: /init-skills
+            - name: skills-merged
+              mountPath: /skills-merged
+            - name: init-swarm-config
+              mountPath: /init-swarm-config
+              readOnly: true
+            - name: tmp
+              mountPath: /tmp
+            - name: tmp
+              mountPath: /home/node/.cache
+
+      # ---------------------------------------------------------------
+      # MAIN CONTAINERS
+      # ---------------------------------------------------------------
+      # Buster's worker reaches gateway tools over the shared pod network. It
+      # does not need visibility into gateway container processes.
+      shareProcessNamespace: {{ ne (lower (.Values.agentRole | default "nova")) "buster" }}
+      containers:
+
+        # ── OpenClaw Gateway ──
+        - name: kubeclaw
+          image: {{ include "kubeclaw.image" .Values.image | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: {{- toYaml .Values.gateway.command | nindent 12 }}
+
+          env:
+            - name: HOME
+              value: "/home/node"
+            - name: TMPDIR
+              value: "/tmp"
+            - name: XDG_CACHE_HOME
+              value: "/tmp/.cache"
+            - name: NODE_PATH
+              value: "/opt/kubeclaw-tools/node_modules:/usr/local/lib/node_modules:/app/node_modules"
+            - name: AGENT_NAME
+              value: {{ .Values.agentRole | default "default" | quote }}
+            - name: AGENT_ROLE
+              value: {{ .Values.agentRole | default "default" | quote }}
+            - name: KUBECLAW_CONTAINER_ROLE
+              value: "agent"
+            {{- if .Values.busterNamespaceBroker.leaseClient.verificationRead.enabled }}
+            - name: TAILSCALE_OPERATOR_NAMESPACE
+              value: {{ .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOperatorNamespace | quote }}
+            - name: TAILSCALE_OAUTH_SECRET_NAME
+              value: {{ .Values.busterNamespaceBroker.leaseClient.verificationRead.tailscaleOAuthSecretName | quote }}
+            {{- end }}
+            - name: KUBECLAW_CODE_BUNDLE_ENABLED
+              value: {{ .Values.codeBundle.enabled | default false | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_AGENT
+              value: {{ .Values.agentRole | default "default" | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_EXPECTED_COMMIT
+              value: {{ .Values.codeBundle.expectedCommit | default "" | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_CONTRACT_VERSION
+              value: {{ .Values.codeBundle.contractVersion | default "v2" | quote }}
+            - name: KUBECLAW_CODE_BUNDLE_MANIFEST
+              value: "/runtime-config/code-bundle-manifest.json"
+            {{- if .Values.agent.git.enabled }}
+            - name: GIT_REPO_URL
+              value: {{ .Values.agent.git.repoUrl | quote }}
+            {{- end }}
+            {{- include "kubeclaw.demoReadyClientEnv" . | nindent 12 }}
+            - name: REPO_ROOT
+              value: "/home/node/.openclaw/workspace/git-repo"
+            - name: REDIS_HOST
+              value: {{ .Values.redis.host | quote }}
+            - name: REDIS_PORT
+              value: {{ .Values.redis.port | default "6379" | quote }}
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.redis.secretName }}
+                  key: {{ .Values.redis.secretKey | default "redis-password" }}
+            - name: LITELLM_URL
+              value: {{ .Values.litellm.endpoint | trimSuffix "/v1" | quote }}
+            - name: OPENCLAW_GATEWAY_URL
+              value: {{ default (printf "http://127.0.0.1:%v" .Values.gateway.port) .Values.gateway.url | quote }}
+            - name: OPENCLAW_GATEWAY_TOKEN
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.gatewaySecretName" . }}, key: {{ include "kubeclaw.gatewaySecretKey" . }} } }
+            {{- if .Values.capabilityProviders }}
+            {{- $catalog := dict }}
+            {{- range $providerId, $provider := .Values.capabilityProviders }}
+            {{- if not (regexMatch "^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$" $providerId) }}
+            {{- fail "capability provider id must be a DNS label" }}
+            {{- end }}
+            {{- $agentRole := required (printf "capabilityProviders.%s.agentRole is required" $providerId) $provider.agentRole }}
+            {{- $service := include "kubeclaw.agentServiceName" $agentRole }}
+            {{- $capabilities := required (printf "capabilityProviders.%s.capabilities is required" $providerId) $provider.capabilities }}
+            {{- $routes := dict }}
+            {{- range $capability, $route := $capabilities }}
+            {{- if not (regexMatch "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)+$" $capability) }}
+            {{- fail (printf "capabilityProviders.%s capability name is invalid" $providerId) }}
+            {{- end }}
+            {{- $adapter := required (printf "capabilityProviders.%s.capabilities.%s.adapter is required" $providerId $capability) $route.adapter }}
+            {{- if not (regexMatch "^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$" $adapter) }}
+            {{- fail (printf "capabilityProviders.%s.capabilities.%s.adapter must be a DNS label" $providerId $capability) }}
+            {{- end }}
+            {{- $port := int (required (printf "capabilityProviders.%s.capabilities.%s.port is required" $providerId $capability) $route.port) }}
+            {{- if or (lt $port 1) (gt $port 65535) }}
+            {{- fail (printf "capabilityProviders.%s.capabilities.%s.port must be between 1 and 65535" $providerId $capability) }}
+            {{- end }}
+            {{- $scheme := default "http" $route.scheme }}
+            {{- if not (has $scheme (list "http" "https")) }}
+            {{- fail (printf "capabilityProviders.%s.capabilities.%s.scheme must be http or https" $providerId $capability) }}
+            {{- end }}
+            {{- $endpoint := printf "%s://%s:%d" $scheme $service $port }}
+            {{- if and $.Values.workerTrust.spiffe.enabled (hasKey $route "proxyPort") }}
+            {{- $proxyPort := int $route.proxyPort }}
+            {{- if or (lt $proxyPort 1) (gt $proxyPort 65535) }}
+            {{- fail (printf "capabilityProviders.%s.capabilities.%s.proxyPort must be between 1 and 65535" $providerId $capability) }}
+            {{- end }}
+            {{- $endpoint = printf "http://127.0.0.1:%d" $proxyPort }}
+            {{- end }}
+            {{- $authentication := default "hmac" $route.authentication }}
+            {{- $_ := set $routes $capability (dict "adapter" $adapter "endpoint" $endpoint "authentication" $authentication) }}
+            {{- end }}
+            {{- $_ := set $catalog $providerId (dict "agentRole" $agentRole "capabilities" $routes) }}
+            {{- end }}
+            - name: KUBECLAW_CAPABILITY_PROVIDERS
+              value: {{ toJson $catalog | quote }}
+            {{- end }}
+            - name: LITELLM_API_KEY
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.litellmSecretName" . }}, key: {{ include "kubeclaw.litellmSecretKey" . }} } }
+            {{- if .Values.discord.enabled }}
+            - name: DISCORD_TOKEN
+              valueFrom: { secretKeyRef: { name: {{ include "kubeclaw.discordSecretName" . }}, key: {{ include "kubeclaw.discordSecretKey" . }} } }
+            - name: DISCORD_CHANNEL
+              value: {{ .Values.discord.channelId | default "" | quote }}
+            {{- end }}
+            {{- if .Values.discordWebhook.secretName }}
+            - name: DISCORD_WEBHOOK
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.discordWebhook.secretName }}
+                  key: {{ .Values.discordWebhook.secretKey | default "discordWebhook" }}
+            {{- end }}
+            - name: SWARM_CONFIG
+              value: "/home/node/.openclaw/swarm.config.json"
+            - name: GATEWAY_PORT
+              value: {{ .Values.gateway.port | quote }}
+            - name: KUBECLAW_DRAIN_FILE
+              value: {{ .Values.shutdown.drainFile | default "/tmp/kubeclaw-draining" | quote }}
+            - name: KUBECLAW_PRESTOP_DRAIN_SECONDS
+              value: {{ .Values.shutdown.preStopDrainSeconds | default 5 | quote }}
+            - name: KUBECLAW_HEALTH_TIMEOUT_MS
+              value: {{ mul (.Values.probes.readiness.timeoutSeconds | default 10 | int) 1000 | quote }}
+            - name: KUBECLAW_HEALTH_STARTUP_STATUS_PATH
+              value: "/home/node/.openclaw/logs/startup-verification.json"
+            - name: KUBECLAW_HEALTH_STARTUP_EVENT_LOG_PATH
+              value: "/home/node/.openclaw/logs/startup-verification.jsonl"
+            - name: KUBECLAW_HEALTH_REQUIRE_STARTUP_MARKER
+              value: "true"
+            - name: KUBECLAW_HEALTH_CHECK_GATEWAY
+              value: {{ .Values.probes.dependencies.gateway.enabled | quote }}
+            - name: KUBECLAW_HEALTH_CHECK_REDIS
+              value: {{ .Values.probes.dependencies.redis.enabled | quote }}
+            - name: KUBECLAW_HEALTH_CHECK_REDIS_STREAM
+              value: {{ .Values.probes.dependencies.redisStream.enabled | quote }}
+            - name: KUBECLAW_HEALTH_REDIS_STREAM
+              value: {{ .Values.probes.dependencies.redisStream.stream | default "" | quote }}
+            - name: KUBECLAW_HEALTH_REDIS_STREAM_MAX_LEN
+              value: {{ .Values.probes.dependencies.redisStream.maxLen | default 1000 | quote }}
+            - name: KUBECLAW_HEALTH_CHECK_LITELLM
+              value: {{ .Values.probes.dependencies.litellm.enabled | quote }}
+            - name: KUBECLAW_HEALTH_CHECK_REGISTRIES
+              value: {{ .Values.probes.dependencies.registries.enabled | quote }}
+            - name: KUBECLAW_HEALTH_REGISTRIES
+              value: {{ join "," (.Values.probes.dependencies.registries.endpoints | default list) | quote }}
+            {{- if .Values.agent.project }}
+            - name: CURRENT_PROJECT
+              value: {{ .Values.agent.project | quote }}
+            {{- end }}
+            {{- with .Values.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- if .Values.workerTrust.spiffe.enabled }}
+            - name: SPIFFE_ENDPOINT_SOCKET
+              value: {{ printf "unix://%s" .Values.workerTrust.spiffe.socketPath | quote }}
+            {{- end }}
+
+          ports:
+            - name: gateway
+              containerPort: {{ .Values.gateway.port }}
+              protocol: TCP
+            - name: bridge
+              containerPort: {{ .Values.gateway.bridgePort }}
+              protocol: TCP
+
+          volumeMounts:
+            {{- include "kubeclaw.demoReadyClientMounts" . | nindent 12 }}
+            - name: config
+              mountPath: /home/node/.openclaw
+            - name: runtime-config
+              mountPath: /home/node/.openclaw/swarm.config.json
+              subPath: swarm.config.json
+            - name: runtime-config
+              mountPath: /runtime-config
+              readOnly: true
+            - name: config
+              mountPath: /home/node/.openclaw-persisted
+            - name: workspace
+              mountPath: /home/node/.openclaw/workspace
+            {{- if .Values.agent.git.enabled }}
+            - name: ssh-home-vol
+              mountPath: {{ ternary "/root/.ssh" "/home/node/.ssh" .Values.runAsRoot | quote }}
+            {{- end }}
+            - name: skills-merged
+              mountPath: /app/skills
+            - name: tmp
+              mountPath: /tmp
+            - name: tmp
+              mountPath: /home/node/.cache
+            {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- if .Values.workerTrust.spiffe.enabled }}
+            - name: spiffe-workload-api
+              mountPath: /run/spire/sockets
+              readOnly: true
+            {{- end }}
+
+          resources: {{- toYaml (.Values.gateway.resources | default .Values.resources) | nindent 12 }}
+
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - |
+                    DRAIN_FILE="${KUBECLAW_DRAIN_FILE:-/tmp/kubeclaw-draining}"
+                    rm -f -- "$DRAIN_FILE"
+            preStop:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - |
+                    DRAIN_FILE="${KUBECLAW_DRAIN_FILE:-/tmp/kubeclaw-draining}"
+                    mkdir -p "$(dirname "$DRAIN_FILE")"
+                    date -Iseconds > "$DRAIN_FILE"
+                    sleep "${KUBECLAW_PRESTOP_DRAIN_SECONDS:-5}"
+
+          securityContext:
+            {{- if .Values.runAsRoot }}
+            runAsUser: 0
+            runAsGroup: 0
+            {{- else }}
+            runAsUser: 1000
+            runAsGroup: 1000
+            {{- end }}
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+
+          {{- if .Values.probes.startup.enabled }}
+          startupProbe:
+            exec:
+              command:
+                - node
+                - /runtime-config/kubeclaw-health.mjs
+                - startup
+            initialDelaySeconds: {{ .Values.probes.startup.initialDelaySeconds }}
+            periodSeconds: {{ .Values.probes.startup.periodSeconds }}
+            timeoutSeconds: {{ .Values.probes.startup.timeoutSeconds }}
+            failureThreshold: {{ .Values.probes.startup.failureThreshold }}
+          {{- end }}
+          {{- if .Values.probes.readiness.enabled }}
+          readinessProbe:
+            exec:
+              command:
+                - node
+                - /runtime-config/kubeclaw-health.mjs
+                - readiness
+            initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
+            failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
+          {{- end }}
+          {{- if .Values.probes.liveness.enabled }}
+          livenessProbe:
+            exec:
+              command:
+                - node
+                - /runtime-config/kubeclaw-health.mjs
+                - liveness
+            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
+            failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+          {{- end }}
+
+        {{- $registryWorkers := 0 }}
+        {{- range .Values.extraContainers }}
+        {{- if eq .name "buster-v2-runtime" }}{{- $registryWorkers = add1 $registryWorkers }}{{- end }}
+        {{- end }}
+        {{- if or (gt (int $registryWorkers) 1) (and (eq .Values.agentRole "buster") (ne (int $registryWorkers) 1)) }}
+        {{- fail "Buster registry configuration requires exactly one extraContainers entry named buster-v2-runtime" }}
+        {{- end }}
+        {{- range .Values.extraContainers }}
+        {{- if eq .name "buster-v2-runtime" }}
+        - {{ include "kubeclaw.busterNativeContainer" (dict "root" $ "container" .) | nindent 10 | trim }}
+        {{- else }}
+        - {{ toYaml . | nindent 10 | trim }}
+        {{- end }}
+        {{- end }}
+        {{- if .Values.workerTrust.spiffe.enabled }}
+        - name: worker-trust-proxy
+          image: "{{ .Values.workerTrust.spiffe.envoy.repository }}:{{ .Values.workerTrust.spiffe.envoy.tag }}@{{ .Values.workerTrust.spiffe.envoy.digest }}"
+          imagePullPolicy: {{ .Values.workerTrust.spiffe.envoy.pullPolicy }}
+          args: ["-c", "/etc/kubeclaw-worker-trust/envoy.yaml", "--service-cluster", {{ printf "kubeclaw-%s" .Values.agentRole | quote }}]
+          ports:
+            - { name: envoy-health, containerPort: 19000, protocol: TCP }
+            {{- if eq .Values.agentRole "buster" }}
+            - { name: buster-plan, containerPort: 18891, protocol: TCP }
+            {{- else if eq .Values.agentRole "prism" }}
+            - { name: prism-dispatch, containerPort: 18082, protocol: TCP }
+            {{- end }}
+          startupProbe:
+            httpGet: { path: /bootstrap, port: envoy-health }
+            periodSeconds: 2
+            failureThreshold: 30
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet: { path: /ready, port: envoy-health }
+            initialDelaySeconds: 3
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet: { path: /health, port: envoy-health }
+            initialDelaySeconds: 10
+            timeoutSeconds: 3
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+          resources: {{- toYaml .Values.workerTrust.spiffe.envoy.resources | nindent 12 }}
+          volumeMounts:
+            - { name: worker-trust-envoy, mountPath: /etc/kubeclaw-worker-trust, readOnly: true }
+            - { name: spiffe-workload-api, mountPath: /run/spire/sockets, readOnly: true }
+            - { name: worker-trust-tmp, mountPath: /tmp }
+        {{- end }}
+
+      # ---------------------------------------------------------------
+      # VOLUMES
+      # ---------------------------------------------------------------
+      volumes:
+        {{- if eq .Values.agentRole "buster" }}
+        - { name: buster-native-pool, hostPath: { path: /sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/buster, type: Directory } }
+        - { name: buster-native-ownership, hostPath: { path: /var/lib/kubeclaw/native/buster, type: Directory } }
+        - { name: buster-native-policy, hostPath: { path: /etc/kubeclaw/buster-pool.json, type: File } }
+        - { name: buster-native-node, hostPath: { path: /etc/kubeclaw/native-node-id, type: File } }
+        - { name: buster-native-runtime, hostPath: { path: /etc/kubeclaw/native-runtime-identity.json, type: File } }
+        {{- end }}
+        {{- include "kubeclaw.demoReadyClientVolumes" . | nindent 8 }}
+        {{- range $name, $client := dict "registry" .Values.runtimeInfrastructure.registry "dockerHubMirror" .Values.runtimeInfrastructure.dockerHubMirror }}
+        {{- if $client.caSecretName }}
+        - name: registry-client-{{ lower $name }}
+          secret:
+            secretName: {{ $client.caSecretName | quote }}
+            items:
+              - key: {{ required "registry CA secret key is required" $client.caSecretKey | quote }}
+                path: ca.crt
+        {{- end }}
+        {{- end }}
+        - name: config
+          {{- if .Values.persistence.config.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "kubeclaw.fullname" . }}-config
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: runtime-config
+          emptyDir: {}
+        - name: workspace
+          {{- if .Values.persistence.workspace.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "kubeclaw.fullname" . }}-workspace
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: init-config
+          configMap:
+            name: {{ include "kubeclaw.fullname" . }}-config
+        {{- if .Values.workspace.enabled }}
+        - name: init-workspace
+          configMap:
+            name: {{ include "kubeclaw.fullname" . }}-workspace
+        {{- end }}
+        {{- if .Values.agent.git.enabled }}
+        - name: ssh-secret-vol
+          secret:
+            secretName: {{ .Values.agent.git.secretName | default (printf "git-deploy-key-%s" (.Values.agentRole | default "default")) }}
+            # Non-root setup reads the key through fsGroup 1000; root agents
+            # retain the stricter owner-only mode.
+            defaultMode: {{ ternary "0400" "0440" .Values.runAsRoot }}
+            optional: false
+        - name: ssh-home-vol
+          emptyDir: {}
+        {{- end }}
+        - name: init-skills
+          configMap:
+            name: {{ include "kubeclaw.fullname" . }}-skills
+            defaultMode: 0444
+            optional: true
+        - name: skills-merged
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+        - name: init-swarm-config
+          configMap:
+            name: {{ include "kubeclaw.fullname" . }}-swarm-config
+            defaultMode: 0444
+        {{- if .Values.workerTrust.spiffe.enabled }}
+        - name: worker-trust-envoy
+          configMap:
+            name: {{ include "kubeclaw.fullname" . }}-worker-trust
+            defaultMode: 0444
+        - name: spiffe-workload-api
+          csi:
+            driver: {{ .Values.workerTrust.spiffe.csiDriver | quote }}
+            readOnly: true
+        - name: worker-trust-tmp
+          emptyDir: { sizeLimit: 64Mi }
+        {{- end }}
+        {{- if .Values.archviewer.enabled }}
+        - name: archviewer-auth
+          secret:
+            secretName: {{ required "archviewer.existingSecret is required" .Values.archviewer.existingSecret | quote }}
+            items: [{key: htpasswd, path: htpasswd}]
+            defaultMode: 0444
+        {{- end }}
+        {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      restartPolicy: Always

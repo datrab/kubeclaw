@@ -1,0 +1,47 @@
+{
+  "ready": false,
+  "reason": "Final author source freeze and remaining original-runner failures/mutations pending; no runtime authorization exercised",
+  "criteria": "LC1-LC5/LC-DOC unchanged",
+  "originals": [
+    "tests/verification/contracts/check-pipeline-worker-local-runtime.mts",
+    "tests/verification/reliability/worker-deadline.test.mts",
+    "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+    "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+  ],
+  "new": [
+    "tests/verification/contracts/check-pipeline-worker-local-policy.mts",
+    "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+  ],
+  "maintainedComponentCommand": "npm run verify:config:components",
+  "types": [
+    "tests/verification/contracts/tsconfig.worker-local-runtime.json",
+    "skills/common/plugin-runtime/tsconfig.json"
+  ],
+  "mutants": [
+    "restore drain fallback",
+    "restore cancellation fallback",
+    "restore replay fallback",
+    "ignore actual production replayLimit"
+  ],
+  "toolPolicy": "Native node/sandbox; exact GNU flock path mapping only, unchanged args/options. Explicit GNU tar fixture input. No proot wrapping of real provider; preserve original failed proot evidence. Independently verify lock exclusion and archive bytes. Bind binary and supporting libraries, hook bytes/effects, source/dependencies, actual module loads.",
+  "originalFixtureReview": "Initial29byteequal explicit insertions followed by authorized cooperative timeout and actual registered logHang + preserved unresolved negatives. Need final exact source mapping and all original assertions/timers checked against saved before; do not infer whole-script success from partial output.",
+  "qualityBoundary": "Run canonical full touched-file lint and classify exact pre-existing diagnostics without disabling rules or representing nonzero lint as pass. Reclaim-loop extraction byte comparison is separate from runtime test evidence.",
+  "openBoundaries": [
+    "Core drain/cancellation is not Buster production drain",
+    "native preparation modeled in replay integration; real provider/default runner/Core are required",
+    "no CONFIG global closure",
+    "no independent runtime until explicit final author freeze"
+  ],
+  "providerCancellation": {
+    "criteria": "PC1-PC3/PC-DOC; buster-provider-cancellation-20260921.md",
+    "scope": "Separate production correction: permanent child SIGTERM handler aborts the existing context controller; no finish shortcut, new grace interval or parent termination bound change.",
+    "checks": [
+      "Full original cooperative registered-provider cancellation with ready.txt and aborted.txt observations",
+      "Actual noncooperative hard timeout, process closure, existing 500ms escalation and 1000ms termination bound",
+      "Private removal of corrected signal path must fail cooperative observation, not initialization",
+      "Capability cancellation/drain and cleanup/evidence ordering; maintained runtime documentation"
+    ],
+    "status": "Source preparation only; author run8 failure retained; final author freeze pending"
+  }
+}

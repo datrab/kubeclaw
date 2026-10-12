@@ -1,0 +1,17 @@
+✔ prepared source accepts valid identity and rejects JSON scalar coercion (1.566279ms)
+✔ staged input accepts valid identity and rejects JSON scalar coercion (24.469211ms)
+✔ cleanup effects accepts valid identity and rejects JSON scalar coercion (0.41029ms)
+✔ cleanup gate digest cannot be coerced from a JSON array (0.543784ms)
+✔ result origin preserves explicit completed provenance and pending absence (1.720982ms)
+✔ historical result origin rejects coerced or malformed importId (0.297428ms)
+✔ historical result origin rejects coerced or malformed originalStoreDigest (0.202355ms)
+✔ historical result origin rejects coerced or malformed originalPayloadDigest (0.191235ms)
+✔ result origin rejects alternate selectors and extra keys (0.260427ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 871.961712

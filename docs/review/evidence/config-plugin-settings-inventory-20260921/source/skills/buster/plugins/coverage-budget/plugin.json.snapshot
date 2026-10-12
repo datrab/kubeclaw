@@ -1,0 +1,23 @@
+{
+  "id": "kubeclaw.coverage-budget",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [], "observers": [], "adapters": [],
+  "testProviders": [{
+    "id": "lcov", "contractId": "kubeclaw.coverage-budget@1", "kind": "test",
+    "module": "src/provider.js", "export": "provider", "configSchema": "schemas/config.schema.json",
+    "inputs": [
+      { "name": "coverage-1", "kind": "artifact", "required": true, "mediaTypes": ["text/lcov"] },
+      { "name": "coverage-2", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+      { "name": "coverage-3", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+      { "name": "coverage-4", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+      { "name": "coverage-5", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+      { "name": "coverage-6", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+      { "name": "coverage-7", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] },
+      { "name": "coverage-8", "kind": "artifact", "required": false, "mediaTypes": ["text/lcov"] }
+    ],
+    "outputs": [], "requiredCapabilities": [], "retrySafe": true, "matrixFields": [],
+    "reportFormats": [], "evidenceTypes": ["log"],
+    "evidenceDefaults": { "onPass": ["log"], "onFail": ["log"], "onError": ["log"] }
+  }]
+}

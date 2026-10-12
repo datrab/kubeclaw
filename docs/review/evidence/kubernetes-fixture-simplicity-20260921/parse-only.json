@@ -1,0 +1,381 @@
+{
+  "scope": "TypeScript syntax and physical function spans only; no module/test/type/lint execution",
+  "errors": [],
+  "lengths": [
+    {
+      "file": "kubernetes-fixture-inspection.ts",
+      "name": "inspectManifest",
+      "lines": 16
+    },
+    {
+      "file": "kubernetes-fixture-inspection.ts",
+      "name": "inspectDocument",
+      "lines": 24
+    },
+    {
+      "file": "kubernetes-fixture-inspection.ts",
+      "name": "inspectService",
+      "lines": 17
+    },
+    {
+      "file": "kubernetes-fixture-inspection.ts",
+      "name": "selectService",
+      "lines": 16
+    },
+    {
+      "file": "kubernetes-fixture-inspection.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-inspection.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-inspection.ts",
+      "name": "inspectPods",
+      "lines": 16
+    },
+    {
+      "file": "kubernetes-fixture-inspection.ts",
+      "name": "inspectContainer",
+      "lines": 13
+    },
+    {
+      "file": "kubernetes-fixture-inspection.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-inspection.ts",
+      "name": "recordContainerPorts",
+      "lines": 10
+    },
+    {
+      "file": "kubernetes-fixture-inspection.ts",
+      "name": "finishInspection",
+      "lines": 19
+    },
+    {
+      "file": "kubernetes-fixture-manifest-files.ts",
+      "name": "contained",
+      "lines": 12
+    },
+    {
+      "file": "kubernetes-fixture-manifest-files.ts",
+      "name": "manifestBytes",
+      "lines": 27
+    },
+    {
+      "file": "kubernetes-fixture-manifest-files.ts",
+      "name": "flattenDocuments",
+      "lines": 24
+    },
+    {
+      "file": "kubernetes-fixture-manifest-files.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-pods.ts",
+      "name": "isObject",
+      "lines": 3
+    },
+    {
+      "file": "kubernetes-fixture-pods.ts",
+      "name": "podSpecs",
+      "lines": 25
+    },
+    {
+      "file": "kubernetes-fixture-pods.ts",
+      "name": "validatePodSecurity",
+      "lines": 20
+    },
+    {
+      "file": "kubernetes-fixture-pods.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-pods.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-pods.ts",
+      "name": "validateContainerSecurity",
+      "lines": 19
+    },
+    {
+      "file": "kubernetes-fixture-pods.ts",
+      "name": "anonymous",
+      "lines": 4
+    },
+    {
+      "file": "kubernetes-fixture-pods.ts",
+      "name": "validatePodContainers",
+      "lines": 13
+    },
+    {
+      "file": "kubernetes-fixture-preparation.ts",
+      "name": "anonymous",
+      "lines": 4
+    },
+    {
+      "file": "kubernetes-fixture-preparation.ts",
+      "name": "#activate",
+      "lines": 28
+    },
+    {
+      "file": "kubernetes-fixture-preparation.ts",
+      "name": "prepare",
+      "lines": 22
+    },
+    {
+      "file": "kubernetes-fixture-preparation.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-preparation.ts",
+      "name": "readRequest",
+      "lines": 45
+    },
+    {
+      "file": "kubernetes-fixture-preparation.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-preparation.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-preparation.ts",
+      "name": "leaseRequest",
+      "lines": 31
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "waitForPoll",
+      "lines": 18
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "anonymous",
+      "lines": 16
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "anonymous",
+      "lines": 4
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "anonymous",
+      "lines": 5
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "anonymous",
+      "lines": 4
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "waitLease",
+      "lines": 22
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "waitPods",
+      "lines": 21
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "waitService",
+      "lines": 46
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "anonymous",
+      "lines": 9
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "anonymous",
+      "lines": 3
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "collectPendingPods",
+      "lines": 14
+    },
+    {
+      "file": "kubernetes-fixture-readiness.ts",
+      "name": "anonymous",
+      "lines": 4
+    },
+    {
+      "file": "kubernetes-fixture-runtime.ts",
+      "name": "detail",
+      "lines": 8
+    },
+    {
+      "file": "kubernetes-fixture-runtime.ts",
+      "name": "anonymous",
+      "lines": 10
+    },
+    {
+      "file": "kubernetes-fixture-runtime.ts",
+      "name": "#kubectlRun",
+      "lines": 17
+    },
+    {
+      "file": "kubernetes-fixture-runtime.ts",
+      "name": "#releaseAfterPrepareFailure",
+      "lines": 10
+    },
+    {
+      "file": "kubernetes-fixture-runtime.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-runtime.ts",
+      "name": "#generatedCredentials",
+      "lines": 14
+    },
+    {
+      "file": "kubernetes-fixture-runtime.ts",
+      "name": "#release",
+      "lines": 7
+    },
+    {
+      "file": "kubernetes-fixture-runtime.ts",
+      "name": "invoke",
+      "lines": 13
+    },
+    {
+      "file": "kubernetes-fixture-settings.ts",
+      "name": "executeProcess",
+      "lines": 18
+    },
+    {
+      "file": "kubernetes-fixture-settings.ts",
+      "name": "anonymous",
+      "lines": 39
+    },
+    {
+      "file": "kubernetes-fixture-settings.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-settings.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-settings.ts",
+      "name": "validateAddresses",
+      "lines": 17
+    },
+    {
+      "file": "kubernetes-fixture-settings.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-settings.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-settings.ts",
+      "name": "validateStorageOptions",
+      "lines": 11
+    },
+    {
+      "file": "kubernetes-fixture-settings.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-settings.ts",
+      "name": "anonymous",
+      "lines": 1
+    },
+    {
+      "file": "kubernetes-fixture-settings.ts",
+      "name": "validateLimits",
+      "lines": 8
+    },
+    {
+      "file": "kubernetes-fixture-storage.ts",
+      "name": "storageBytes",
+      "lines": 28
+    },
+    {
+      "file": "kubernetes-fixture-storage.ts",
+      "name": "persistentVolumeClaims",
+      "lines": 27
+    },
+    {
+      "file": "kubernetes-fixture-storage.ts",
+      "name": "anonymous",
+      "lines": 6
+    },
+    {
+      "file": "kubernetes-fixture-storage.ts",
+      "name": "validatePersistentVolumeClaim",
+      "lines": 26
+    },
+    {
+      "file": "kubernetes-fixture-values.ts",
+      "name": "object",
+      "lines": 6
+    },
+    {
+      "file": "kubernetes-fixture-values.ts",
+      "name": "text",
+      "lines": 6
+    },
+    {
+      "file": "kubernetes-fixture-values.ts",
+      "name": "integer",
+      "lines": 6
+    },
+    {
+      "file": "kubernetes-fixture-values.ts",
+      "name": "stringArray",
+      "lines": 8
+    },
+    {
+      "file": "kubernetes-fixture-values.ts",
+      "name": "anonymous",
+      "lines": 2
+    },
+    {
+      "file": "kubernetes-fixture-values.ts",
+      "name": "invalidArrayEntry",
+      "lines": 5
+    }
+  ]
+}

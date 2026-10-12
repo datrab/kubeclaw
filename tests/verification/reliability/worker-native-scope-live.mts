@@ -1,3 +1,4 @@
+import { nativeResourcePolicy } from '../../../skills/prism/tests/native/resource-policy.mts';
 import assert from 'node:assert/strict';
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import { once } from 'node:events';
@@ -39,8 +40,13 @@ function line(child: ChildProcessWithoutNullStreams, expected: string): Promise<
   });
 }
 
+const ownedLeaves = new Map<NativeWorkerResourceScope, { name: string; limits: typeof limits; binding: ReturnType<NativeWorkerResourceScope['binding']> }>();
+
 async function workload(scope: NativeWorkerResourceScope) {
-  const child = spawn(process.execPath, [fixture, scope.launcherPath()], { stdio: ['pipe', 'pipe', 'pipe'] });
+  const reserved = { name: 'host', limits, binding: null };
+  const leaf = { ...reserved, binding: scope.createChild(reserved) };
+  ownedLeaves.set(scope, leaf);
+  const child = spawn(process.execPath, [fixture, scope.childLaunchArguments(leaf)[0]!], { stdio: ['pipe', 'pipe', 'pipe'] });
   const exited = once(child, 'exit');
   // Keep a failed spawn observed even while the readiness wait owns the error.
   void exited.catch(() => {});
@@ -74,16 +80,16 @@ test('actual parallel scopes have independent CPU and retain final counters afte
     assert.ok(final.cpuTimeMicroseconds >= hotAfter.cpuTimeMicroseconds);
     assert.ok(final.maximumMemoryBytes >= hotAfter.maximumMemoryBytes);
     assert.equal(hot.observe().populated, false);
-    assert.throws(() => hot.launcherPath(), /WORKER_NATIVE_SCOPE_QUIESCING/u);
-    hot.dispose(); hot.dispose();
+    assert.throws(() => hot.childLaunchArguments(ownedLeaves.get(hot)!), /WORKER_NATIVE_SCOPE_QUIESCING/u);
+    hot.disposeChildren([ownedLeaves.get(hot)!]); hot.dispose(); hot.dispose();
     assert.throws(() => hot.observe(), /WORKER_NATIVE_SCOPE_DISPOSED/u);
     const idleFinal = await idle.terminateAndDrain(5000);
-    await waiting.exited; assert.equal(idleFinal.populated, false); idle.dispose();
+    await waiting.exited; assert.equal(idleFinal.populated, false); idle.disposeChildren([ownedLeaves.get(idle)!]); idle.dispose();
   } finally {
     for (const child of children) if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
     const failures: unknown[] = [];
     for (const scope of scopes) {
-      try { await scope.terminateAndDrain(5000); scope.dispose(); }
+      try { await scope.terminateAndDrain(5000); scope.disposeChildren(ownedLeaves.has(scope) ? [ownedLeaves.get(scope)!] : []); scope.dispose(); }
       catch (error) {
         if (!(error instanceof Error) || error.message !== 'WORKER_NATIVE_SCOPE_DISPOSED') failures.push(error);
       }
@@ -104,7 +110,7 @@ test('production launcher and durable owner account the whole host and fence exa
   const poolFile = process.env.KUBECLAW_WORKER_TEST_POOL_LIMITS_FILE;
   if (!poolFile) throw new Error('KUBECLAW_WORKER_TEST_POOL_LIMITS_FILE must bind the actual prepared aggregate pool');
   const poolLimits = JSON.parse(await fs.readFile(poolFile, 'utf8'));
-  const ownership = { cgroupRoot: root, store, nodeIdentity: readNativeWorkerNodeIdentity(identityFile), drainTimeoutMs: 5000, poolLimits };
+  const ownership = { cgroupRoot: root, store, nodeIdentity: readNativeWorkerNodeIdentity(identityFile), drainTimeoutMs: 5000, maximumActiveScopes: 128, poolLimits };
   try {
     await NativeWorkerOwnership.supervise(ownership, async owner => {
       const result = await runNativeWorkerProcess({ owner, identity,
@@ -152,7 +158,7 @@ test('production launcher and durable owner account the whole host and fence exa
 async function capacityReceipt(owner: NativeWorkerOwnership, stateRoot: string, launcher: string): Promise<void> {
   const artifact = { artifactId: 'input:pool-capacity', type: 'prism-engine-input', mediaType: 'application/json',
     contentDigest: `sha256:${'1'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' };
-  const envelope = prismNativeAttempt('render', artifact, 'pool-capacity');
+  const envelope = prismNativeAttempt('render', artifact, 'pool-capacity', nativeResourcePolicy);
   envelope.resourceBudgets.maximumMemoryBytes = { state: 'requested', limit: limits.memoryBytes };
   envelope.resourceBudgets.maximumTasks = { state: 'requested', limit: limits.tasks };
   envelope.resourceBudgets.cpuTimeMs = { state: 'requested', limit: 10000 };

@@ -1,0 +1,19 @@
+{
+  "runtimeExecuted": false,
+  "integrated": false,
+  "transport": "initialize.observation.resourceSampleIntervalMs",
+  "owner": "buster-engine.settings.execution.observation.resourceSampleIntervalMs",
+  "sources": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "sha256": "62a88c6c23e47440b05c62ea55453ba5b973a10fafc23e157e82bbd9ae526320"
+    },
+    {
+      "path": "tests/verification/contracts/provider-child-session.test.mjs",
+      "sha256": "c355faab39ecbfd2dc488e5e91b98c8571c86e20183359d6da8503afe631a523"
+    }
+  ],
+  "semantics": "Initial RSS captured at startup; recurring sampling starts after required policy validation, before provider import. Same policy reuse creates no additional timer; changed policy is rejected. Two-profile resource sampling runtime proof remains required.",
+  "privateTestCoverage": "Two profiles (10/40ms) observe the exact real setInterval call and actual callback firings through a forwarding diagnostic preload; original scheduling arguments, callback receiver and returned timer are retained. Not an OS timing accuracy, isolation or full owner-to-child integration proof.",
+  "reviewCorrection": "Invalid initialization asserts no timer observations. Repeated same policy asserts exactly one scheduled sampler; changed policy asserts exact rejection and process exit. RSS-max computation and precise timing are not claimed by the forwarding timer probe."
+}

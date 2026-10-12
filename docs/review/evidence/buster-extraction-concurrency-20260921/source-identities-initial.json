@@ -1,0 +1,74 @@
+[
+  {
+    "path": "skills/buster/engine/test-gates/preparation-extraction.ts",
+    "sha256": "10f495344bc139291bfd127662682bd35b601d9643b915b5016e49334a3523ca",
+    "bytes": 7119,
+    "snapshot": "source/00-preparation-extraction.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+    "sha256": "2a0c6e615d2b156ffad8be308613c7b16fa83daf8faf9ef393cc6e81b701f8ad",
+    "bytes": 5244,
+    "snapshot": "source/01-preparation-supervisor.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+    "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5",
+    "bytes": 18824,
+    "snapshot": "source/02-preparation-ledger.ts.snapshot"
+  },
+  {
+    "path": "package.json",
+    "sha256": "85962ce987591fd12c769c3df45c2ac824f878b769b0102c1d1c2581794a23dd",
+    "bytes": 43710,
+    "snapshot": "source/03-package.json.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/tsconfig.buster-preparation.json",
+    "sha256": "cc153cd2dfa1f6235392199d962dd9dcd8dc43bb20526a47f27f88511b19e5ad",
+    "bytes": 304,
+    "snapshot": "source/04-tsconfig.buster-preparation.json.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-extraction-concurrency.test.mts",
+    "sha256": "24f0f5ea946c4672d7fbb5bba07332736fb0e4309c76036d7c5b72e8d4d596f2",
+    "bytes": 7677,
+    "snapshot": "source/05-buster-extraction-concurrency.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-identities.test.mts",
+    "sha256": "64feb116c377500403a8e659224fdcc6d12f0c054f32e06f2ac18cb453829f1a",
+    "bytes": 5740,
+    "snapshot": "source/06-buster-preparation-identities.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-ledger.test.mts",
+    "sha256": "dc1363cfaa22ea1ec21181ae6fdd0aac532c1072a9da68c6cc723b121099b8ac",
+    "bytes": 4443,
+    "snapshot": "source/07-buster-preparation-ledger.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-result-origin.test.mts",
+    "sha256": "d4ba7718c34260927a370cfa7e6335c73416fba3861807b59e71176a93095598",
+    "bytes": 1911,
+    "snapshot": "source/08-buster-result-origin.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-prepared-store-cancellation.test.mts",
+    "sha256": "3584b88b0556f1b4c58cec877b788e99b40c658fff2bdf3e48c41b9eee13a3a5",
+    "bytes": 4894,
+    "snapshot": "source/09-buster-prepared-store-cancellation.test.mts.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/buster-extraction-concurrency-20260921.md",
+    "sha256": "3611ebee252af6f599a71046efe8dc5fb3529b111a038ace2dbccf1d8d169be6",
+    "bytes": 5216,
+    "snapshot": "source/10-buster-extraction-concurrency-20260921.md.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/buster-native-preparation-20260921.md",
+    "sha256": "1108821f06331f5074d44c75602659ba0ef9cc0bda067fb077031b4b3f843d54",
+    "bytes": 26960,
+    "snapshot": "source/11-buster-native-preparation-20260921.md.snapshot"
+  }
+]

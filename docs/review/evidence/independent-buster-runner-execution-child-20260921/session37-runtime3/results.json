@@ -1,0 +1,60 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:buster:execution-config"
+    ],
+    "exitCode": 1,
+    "name": "session-runtime-1",
+    "seconds": 55.95173002604861
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:lint:policy-delivery"
+    ],
+    "exitCode": 0,
+    "name": "session-runtime-2",
+    "seconds": 16.249474487965927
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "skills/buster/engine/test-gates/tests/provider-capabilities.test.ts"
+    ],
+    "exitCode": 0,
+    "name": "session-runtime-3",
+    "seconds": 0.538105930085294
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    ],
+    "exitCode": 0,
+    "name": "session-runtime-4",
+    "seconds": 107.93927242595237
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts"
+    ],
+    "exitCode": 0,
+    "name": "session-runtime-5",
+    "seconds": 26.750276810955256
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:config:components"
+    ],
+    "exitCode": 0,
+    "name": "session-runtime-6",
+    "seconds": 128.31762765499298
+  }
+]

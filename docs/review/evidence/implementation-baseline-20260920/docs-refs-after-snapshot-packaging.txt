@@ -1,0 +1,11 @@
+docs reference check failed:
+- docs/review/evidence/buster-boundaries-20260920/new-files/docs/review/remediation/implementation/buster-native-cases-20260920.md links to missing local path: ../../evidence/independent-slices-20260920/identities.json
+- docs/review/evidence/buster-boundaries-20260920/new-files/docs/review/remediation/implementation/buster-native-cases-20260920.md links to missing local path: independent-slices-review-20260920.md
+- docs/review/evidence/buster-boundaries-20260920/new-files/docs/review/remediation/implementation/buster-native-cases-20260920.md links to missing local path: ../../evidence/independent-slices-20260920/tests.txt
+- docs/review/evidence/buster-boundaries-20260920/new-files/docs/review/remediation/implementation/buster-native-cases-20260920.md links to missing local path: ../../evidence/independent-slices-20260920/reviewed.patch
+- docs/review/evidence/buster-boundaries-20260920/new-files/docs/review/remediation/implementation/buster-native-cases-20260920.md links to missing local path: ../../evidence/independent-slices-20260920/identities.json
+- docs/review/evidence/buster-boundaries-20260920/new-files/docs/review/remediation/implementation/buster-native-cases-20260920.md links to missing local path: ../../evidence/independent-slices-20260920/old-cleanup-tests.txt
+- docs/review/evidence/buster-boundaries-20260920/new-files/docs/review/remediation/implementation/buster-native-cutover-20260920.md links to missing local path: ../acceptance-20260920.md
+- docs/review/evidence/buster-boundaries-20260920/new-files/docs/review/remediation/implementation/buster-native-cutover-20260920.md links to missing local path: ../../../operations/observability-retention.md
+
+Intentional exclusions: docs/archive/**, fenced code blocks, external URLs, globs, placeholders, and generated example data are not treated as source-path claims.

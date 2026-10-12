@@ -1,0 +1,230 @@
+✖ original completed import projects duplicate bytes with real quotas and exact HTTP replay (9657.782067ms)
+✖ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (9121.83183ms)
+✖ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (8910.783571ms)
+✖ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (8474.604989ms)
+✖ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (9385.635056ms)
+✖ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (8559.513198ms)
+✖ actual blocked original Core with a completed import cannot authorize retention before cancellation (6887.19842ms)
+✖ honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility (8393.66301ms)
+✖ registered implementation source authorizes dispatch projection through its committed artifact (11270.807797ms)
+✖ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (8699.376679ms)
+✖ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (8523.565152ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 0
+ℹ fail 11
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 99856.136482
+
+✖ failing tests:
+
+test at tests/verification/reliability/nova-dispatch-projection.test.mjs:177:1
+✖ original completed import projects duplicate bytes with real quotas and exact HTTP replay (9657.782067ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(imported.payload.remoteResult)
+  
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:159:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:178:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/nova-dispatch-projection.test.mjs:210:1
+✖ original legacy crash repair stays available; projected missing and corrupt authority cannot be repaired from replay input (9121.83183ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(imported.payload.remoteResult)
+  
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:159:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:211:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/nova-dispatch-projection.test.mjs:227:1
+✖ manual scope rejects stale CAS/import/run, foreign and aliased paths, and active original run owner (8910.783571ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(imported.payload.remoteResult)
+  
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:159:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:228:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/nova-dispatch-projection.test.mjs:244:1
+✖ independent unrelated original Core run cannot authorize a foreign dispatch by sharing its runId (8474.604989ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(imported.payload.remoteResult)
+  
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:159:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:245:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/nova-dispatch-projection.test.mjs:261:1
+✖ independent canonical-invalid original selected request cannot authorize retention after honest hash-chain recomputation (9385.635056ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(imported.payload.remoteResult)
+  
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:159:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:262:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/nova-dispatch-projection.test.mjs:285:1
+✖ independent selected stage, attempt, source, plan and adapter corruptions cannot authorize metadata release (8559.513198ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(imported.payload.remoteResult)
+  
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:159:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:286:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/nova-dispatch-projection.test.mjs:329:1
+✖ actual blocked original Core with a completed import cannot authorize retention before cancellation (6887.19842ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(imported.payload.remoteResult)
+  
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:159:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:332:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/nova-dispatch-projection.test.mjs:338:1
+✖ honestly rehashed sourceStageId or missing-source snapshot cannot bypass explicit-revision-only eligibility (8393.66301ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(imported.payload.remoteResult)
+  
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:159:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:339:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/nova-dispatch-projection.test.mjs:359:1
+✖ registered implementation source authorizes dispatch projection through its committed artifact (11270.807797ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(imported.payload.remoteResult)
+  
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:159:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:360:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/nova-dispatch-projection.test.mjs:396:1
+✖ actual operator run/import/dispatch fence order rejects a competing dispatch writer without losing its job (8699.376679ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(imported.payload.remoteResult)
+  
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:159:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:397:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/nova-dispatch-projection.test.mjs:427:1
+✖ actual SIGKILL at original dispatch atomic-write boundary preserves exact replay and permits original recovery (8523.565152ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(imported.payload.remoteResult)
+  
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:159:60)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/nova-dispatch-projection.test.mjs:428:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

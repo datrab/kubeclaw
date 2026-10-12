@@ -6,6 +6,7 @@ import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import yaml from 'js-yaml';
+import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
 import { selectedCode, validateCodeReceipt } from '../../../scripts/updates/code-release.mjs';
 import { isImageInput, isDeploymentInput, inputDigest } from '../../../scripts/updates/runtime-inputs.mjs';
 import { selectedRelease, validateRenderedRelease } from '../../../scripts/updates/deployment-release.mjs';
@@ -133,9 +134,21 @@ test('real materialization and Helm render enable pinned bundles for all three a
   const git = args => execFileSync('git', ['-C', root, ...args], { encoding: 'utf8' }).trim();
   const commit = () => { git(['add', '.']); git(['-c', 'user.name=Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', 'selection']); return git(['rev-parse', 'HEAD']); };
   try {
-    for (const name of ['charts', 'my-values']) fs.cpSync(path.join(source, name), path.join(root, name), { recursive: true });
+    for (const name of ['charts', 'my-values']) fs.cpSync(path.join(source, name), path.join(root, name), { recursive: true, verbatimSymlinks: true });
+    for (const name of ['swarm.schema.json', 'swarm-components.schema.json']) {
+      const schema = `skills/common/plugin-runtime/foundation/config/${name}`;
+      fs.mkdirSync(path.dirname(path.join(root, schema)), { recursive: true });
+      fs.copyFileSync(path.join(source, schema), path.join(root, schema));
+    }
     const busterFile = path.join(root, 'my-values/buster-values.yaml');
     const buster = yaml.load(fs.readFileSync(busterFile, 'utf8'));
+    const policyFile = path.join(root, 'my-values/infra/native-worker-pools.yaml');
+    const policy = yaml.load(fs.readFileSync(policyFile, 'utf8'));
+    policy.nodeName = 'native-render-test';
+    policy.pools.buster.namespace = 'default';
+    fs.writeFileSync(policyFile, yaml.dump(policy));
+    buster.busterNative = { ...buster.busterNative, nodeName: policy.nodeName,
+      namespace: policy.pools.buster.namespace, policyDigest: nativePoolPolicy(policy, 'buster').policyDigest };
     buster.runtimeInfrastructure = { ...buster.runtimeInfrastructure, registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } };
     fs.writeFileSync(busterFile, yaml.dump(buster));
     git(['init', '-q']); git(['config', 'core.autocrlf', 'false']); const imageCommit = commit();
@@ -154,7 +167,7 @@ test('real materialization and Helm render enable pinned bundles for all three a
       const values = yaml.load(fs.readFileSync(valuesFile, 'utf8'));
       assert.equal(values.codeBundle.enabled, true); assert.equal(values.codeBundle.expectedCommit, codeCommit);
       assert.equal(values.image.digest, `sha256:${'d'.repeat(64)}`);
-      const rendered = execFileSync('helm', ['template', `agent-${role}`, path.join(root, 'charts/kubeclaw'), '-f', valuesFile], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+      const rendered = execFileSync('helm', ['template', `agent-${role}`, path.join(root, 'charts/kubeclaw'), '--namespace', 'default', '-f', valuesFile], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
       validateRenderedRelease(rendered, rendered, selected, true);
       assert.match(rendered, /sha256sum -c/);
     }

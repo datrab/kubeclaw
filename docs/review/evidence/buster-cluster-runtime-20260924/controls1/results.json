@@ -1,0 +1,110 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-output-consumers.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-kube-output",
+    "seconds": 2.123184887925163
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-output-consumers.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-tail-output",
+    "seconds": 2.3498325700638816
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-kube-short",
+    "seconds": 5.704325480968691
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-tail-short",
+    "seconds": 5.886770327924751
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-diagnostic",
+    "seconds": 2.9481839790241793
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-kube-poll",
+    "seconds": 4.773008064017631
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-tail-poll",
+    "seconds": 5.674221262917854
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-manifest-depth",
+    "seconds": 2.018030817969702
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-manifest-alias",
+    "seconds": 2.067924653994851
+  }
+]

@@ -1,0 +1,11 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-capability-sources.ts
+   4:1  error  Function 'browserSources' has a complexity of 18. Maximum allowed is 15      complexity
+  34:8  error  Function 'capabilitySources' has too many lines (78). Maximum allowed is 60  max-lines-per-function
+  34:8  error  Function 'capabilitySources' has a complexity of 32. Maximum allowed is 15   complexity
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-cluster-options.ts
+  6:8  error  Function 'kubernetesFixtureOptions' has too many lines (61). Maximum allowed is 60  max-lines-per-function
+
+✖ 4 problems (4 errors, 0 warnings)
+

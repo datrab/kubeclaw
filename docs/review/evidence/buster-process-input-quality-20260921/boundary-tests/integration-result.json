@@ -1,0 +1,14 @@
+{
+  "integratedAt": "2026-09-21T20:42:04.173790+00:00",
+  "sourceReview": "Huygens explicit source acceptance; actual lint execution pending",
+  "files": [
+    {
+      "path": "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
+      "sha256": "bca95a7b027cd7ded0b8d4411d7f1db66f3705e89a099c5ee4d9446595546f3b"
+    },
+    {
+      "path": "package.json",
+      "sha256": "99ac01cb9b46bd2d2fe1475873a5b79f85be7a7d3359f94fcffb4375800e1f3f"
+    }
+  ]
+}

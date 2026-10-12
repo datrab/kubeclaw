@@ -1,0 +1,26 @@
+--- v2/buster-report-policy-consumers.test.mjs
++++ v3/buster-report-policy-consumers.test.mjs
+@@ -78,7 +78,14 @@
+       retainedFixtures.delete(directory);
+     } finally { hook?.mock.restore(); syncBuiltinESMExports(); }
+   });
++  const providerChild = path.resolve('skills/buster/engine/test-gates/provider-child.mjs');
++  const reportChild = path.resolve('skills/buster/engine/test-gates/report-adapter-child.mjs');
+   hook = t.mock.method(childProcess, 'spawn', function (...args) {
++    const isProvider = Array.isArray(args[1]) && args[1].includes(providerChild);
++    const isReport = Array.isArray(args[1]) && args[1].includes(reportChild);
++    // Store flock and other genuine tool spawns retain their existing owner and
++    // tool mappings. Intercept only these two actual session entrypoint paths.
++    if (!isProvider && !isReport) return Reflect.apply(originalSpawn, childProcess, args);
+     const options = args[2];
+     const cwd = typeof options?.cwd === 'string' ? fs.realpathSync(options.cwd) : null;
+     if (closing || !cwd || !cwd.startsWith(`${fs.realpathSync(directory)}${path.sep}`)
+@@ -93,7 +100,7 @@
+       closePromise: new Promise(resolve => { resolveClose = resolve; }) };
+     owned.push(row);
+     child.once('close', (code, signal) => { row.closed = { code, signal }; resolveClose(); });
+-    if (args[1]?.some(arg => String(arg).endsWith('/report-adapter-child.mjs'))) {
++    if (isReport) {
+       child.stderr.on('data', chunk => { row.stderr += chunk.toString(); });
+       reports.push(row);
+     }

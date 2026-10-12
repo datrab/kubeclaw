@@ -1,0 +1,39 @@
+CI2_MUTATION_APPLIED {"mutation":"capture-tail-prefix-array-retained","pid":178192,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts","beforeSha256":"6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc","afterSha256":"45aacf03937e955b98bca2a622f558384abacacf9b0fd356469d0a5affbe2395","replacements":[{"from":"this.#prefixes = [...new Set(options.allowedNamespacePrefixes)];","to":"this.#prefixes = options.allowedNamespacePrefixes;","count":1}]}
+✔ captured file kubernetes.fixture namespace governs actual commands after mutation (1208.668621ms)
+✔ captured file kubernetes.fixture registry governs actual commands after mutation (1069.027451ms)
+✔ captured file kubernetes.fixture secret governs actual commands after mutation (1060.99445ms)
+✔ captured file kubernetes.fixture storage governs actual commands after mutation (1045.330001ms)
+✔ captured file kubernetes.fixture manifest governs actual commands after mutation (1062.635183ms)
+✔ captured file kubernetes.exposure namespace governs actual commands after mutation (546.713858ms)
+✔ captured file kubernetes.exposure host governs actual commands after mutation (788.678232ms)
+✔ captured caller kubernetes.fixture namespace governs actual commands after mutation (708.598879ms)
+✔ captured caller kubernetes.fixture registry governs actual commands after mutation (724.163916ms)
+✔ captured caller kubernetes.fixture secret governs actual commands after mutation (705.457177ms)
+✔ captured caller kubernetes.fixture storage governs actual commands after mutation (717.484391ms)
+✔ captured caller kubernetes.fixture manifest governs actual commands after mutation (716.999998ms)
+✖ captured caller kubernetes.exposure namespace governs actual commands after mutation (180.261791ms)
+✔ captured caller kubernetes.exposure host governs actual commands after mutation (620.990429ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13060.475553
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.exposure namespace governs actual commands after mutation (180.261791ms)
+  Error: TAILSCALE_EXPOSURE_NAMESPACE_DENIED
+      at #namespace (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:117:13)
+      at #prepareInput (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:195:38)
+      at #prepare (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:203:75)
+      at TailscaleExposureCapabilityInvoker.invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:289:62)
+      at CompositeTestProviderCapabilityInvoker.invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/composite-capability-runtime.ts:12:18)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-capture.test.mjs:69:72
+      at Object.invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/cluster-test-ownership.mjs:24:65)
+      at invoke (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-capture.test.mjs:69:38)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-capture.test.mjs:78:25
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)

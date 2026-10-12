@@ -1,0 +1,125 @@
+[
+  {
+    "name": "nova-types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/nova/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "seconds": 8.57037663902156
+  },
+  {
+    "name": "foundation-types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "seconds": 13.149658510112204
+  },
+  {
+    "name": "ttl-and-original-locks",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/effect-lock-configuration.test.mjs",
+      "tests/verification/reliability/effect-lock-lifetime.test.mts",
+      "tests/verification/reliability/forge-lock-wait.test.mts"
+    ],
+    "exitCode": 0,
+    "seconds": 51.888501978013664
+  },
+  {
+    "name": "original-platform",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 1.449125736951828
+  },
+  {
+    "name": "original-capability",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 1.7002766259247437
+  },
+  {
+    "name": "original-phase7",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-plugin-system-v2-phase7.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 2.8471445849863812
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/nova/core/effects/coordinator.ts",
+      "skills/nova/core/execution/engine-runtime.ts",
+      "skills/common/plugin-runtime/foundation/config/platform.ts",
+      "tests/verification/reliability/effect-lock-configuration.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 8.300542395096272
+  },
+  {
+    "name": "mutant-runtime",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-effect-lock-ttl-20260921/restore-fallback.mjs",
+      "--test",
+      "--test-name-pattern=missing and invalid TTL",
+      "tests/verification/reliability/effect-lock-configuration.test.mjs"
+    ],
+    "exitCode": 1,
+    "detected": true
+  },
+  {
+    "name": "mutant-constructor",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-effect-lock-ttl-20260921/restore-fallback.mjs",
+      "--test",
+      "--test-name-pattern=missing and invalid TTL",
+      "tests/verification/reliability/effect-lock-configuration.test.mjs"
+    ],
+    "exitCode": 1,
+    "detected": true
+  }
+]

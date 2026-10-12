@@ -1,0 +1,80 @@
+[
+  {
+    "name": "types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.buster-preparation.json"
+    ],
+    "exitCode": 0,
+    "expectedExit": 0,
+    "elapsedSeconds": 5.306965003022924
+  },
+  {
+    "name": "original19",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-preparation-identities.test.mts",
+      "tests/verification/reliability/buster-preparation-ledger.test.mts",
+      "tests/verification/reliability/buster-result-origin.test.mts",
+      "tests/verification/reliability/buster-prepared-store-cancellation.test.mts",
+      "tests/verification/reliability/buster-extraction-concurrency.test.mts"
+    ],
+    "exitCode": 0,
+    "expectedExit": 0,
+    "elapsedSeconds": 4.899156237952411
+  },
+  {
+    "name": "own-success",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-extraction-concurrency-independent-20260921/success-hook.mjs",
+      "--test",
+      "tests/verification/reliability/buster-extraction-concurrency.test.mts"
+    ],
+    "exitCode": 0,
+    "expectedExit": 0,
+    "elapsedSeconds": 1.1983071990543976
+  },
+  {
+    "name": "old-source-mutant",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-extraction-concurrency-20260921/restore-before.mjs",
+      "--test",
+      "tests/verification/reliability/buster-extraction-concurrency.test.mts"
+    ],
+    "exitCode": 1,
+    "expectedExit": 1,
+    "elapsedSeconds": 11.133033136022277
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/buster/engine/test-gates/preparation-extraction.ts",
+      "tests/verification/reliability/buster-extraction-concurrency.test.mts"
+    ],
+    "exitCode": 0,
+    "expectedExit": 0,
+    "elapsedSeconds": 9.554481770959683
+  }
+]

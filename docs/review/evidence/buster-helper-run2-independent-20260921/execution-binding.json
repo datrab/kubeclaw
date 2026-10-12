@@ -1,0 +1,85 @@
+{
+  "sourceChecks": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+      "sha256": "dd09a45754f51fbcd5a000565a48eeee5aa3d9e60a890ba5a3969026130508dc"
+    },
+    {
+      "path": "scripts/build-plugin-sandbox.mjs",
+      "sha256": "8d209ed77632f9dbfea28782b43eb27441a7508ca54682d33b7b151eefd34a78"
+    },
+    {
+      "path": "scripts/buster-subordinate-ids.mjs",
+      "sha256": "43d96aab5e0d1405e86f59c32d2f2e68a83058cbfdf57b7bbf97d09761ac16f7"
+    },
+    {
+      "path": "scripts/buster-runtime-config-root.mjs",
+      "sha256": "a199f7bad7ee7d91205035588a7958c6d2b589d6be64f0c27f930c0ba0d51674"
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "sha256": "1c25f459624394c4484154b728d93ec6f1e04002a99219aeebea4ea7ef2297b3"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "ac187283d7f0815ba2c1db8622dd81667a523aa1239c96a049c3638c3cc26ceb"
+    },
+    {
+      "path": "tests/verification/deployment/check-deployment-truth.mjs",
+      "sha256": "0483f5a11ea8358b048d03cf09203509dc31c18f6ec46deda3c001fadd7f43b0"
+    },
+    {
+      "path": "scripts/tests/buster-helper-authority.test.mjs",
+      "sha256": "cb997c944d9a86264dae79813a224460ef8cdc5fe0ac6542429338e8ec5c9a72"
+    },
+    {
+      "path": "scripts/tests/buster-helper-authority-root.test.mjs",
+      "sha256": "454cd7bda952ca1c341214b2cb7ac5d92ac79e0dda1fad7e665c410563660297"
+    },
+    {
+      "path": "scripts/tests/buster-lock-inheritance.py",
+      "sha256": "09202cd80196b443daeb01daa4ebdc7cf02dcf3c4ed0cdab613640437b9a6ec1"
+    },
+    {
+      "path": "scripts/tests/run-buster-helper-authority.mjs",
+      "sha256": "f63727e89695b1b7daf92b4c5331d2716565c205ef6f6ab0b5ae44b766265fd3"
+    },
+    {
+      "path": "docs/review/remediation/implementation/buster-helper-authority-20260921.md",
+      "sha256": "1cd9731ebf4f74d8449abcbf8b0e7adb6b94ce00c357d5cfc2f944ff7bba5228"
+    },
+    {
+      "path": "scripts/tests/fixtures/buster-unprivileged-caller.mjs",
+      "sha256": "31ca2583b1d9c332b9dd54f1fcf7013ca33cf89bf43f3fa03d0114a5f56002d7"
+    },
+    {
+      "path": "ha-proof/guest-tests.mjs",
+      "sha256": "39adfe3e83d4e35cb828dcb187df8f971dc758a72d5cd8a891fed3411b13b3c0"
+    },
+    {
+      "path": "ha-proof/guest-proof.test.mjs",
+      "sha256": "e41d9e523f57790fce5bf5ef84b6234a297265cbad438e6c5f1b9091ac93b892"
+    },
+    {
+      "path": "ha-proof/sandbox.before.c",
+      "sha256": "2102536656c01e861f612eb18967d7881b2993629de63b6d93e0ae8b70b70376"
+    }
+  ],
+  "wrapperResult": {
+    "qemuExitCode": 0,
+    "elapsedSeconds": 68.10868453909643,
+    "stoppedReason": null,
+    "passed": true,
+    "verifiedInitialArtifacts": {
+      "node_modules/.cache/buster-helper-vm-run2-20260921/root/usr/bin/qemu-system-x86_64": "d0c183817a3044bc38e104f88ef56ee235c5d91a9413cba7255c1c1751c31fc1",
+      "node_modules/.cache/buster-helper-vm-run2-20260921/root/boot/vmlinuz-virt": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c",
+      "node_modules/.cache/buster-helper-vm-run2-20260921/initrd.cpio.gz": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2",
+      "node_modules/.cache/buster-helper-vm-run2-20260921/guest-root.ext4": "8b6ca26245f8cd5596f45058627b18d612c028ddf4ea526d8532e5b9cf10f909",
+      "node_modules/.cache/buster-helper-vm-run2-20260921/repo-snapshot-manifest.json": "7d75b0ba49eb18744bd63d2f741c60d65329f73251f38f4c5716780c25d0aaad"
+    },
+    "initialDiskSha256": "8b6ca26245f8cd5596f45058627b18d612c028ddf4ea526d8532e5b9cf10f909",
+    "finalMutableDiskSha256": "37472c77c56d9bd4a66306fcb9ec7ab1aeb209ed80404e785b1eb2ea07b7bd15"
+  },
+  "duplicateDiskHashRequired": false,
+  "basis": "Reviewed wrapper verifies complete initial disk, post-run readonly export and final mutable disk; independent source identities match."
+}

@@ -1,0 +1,23 @@
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/state/file-mutex.ts:18
+      if (acquired.status !== 0) throw new Error(`FILE_MUTEX_ACQUIRE_FAILED:${this.#file}:${acquired.status}:${acquired.signal}:${acquired.stderr?.toString().trim()}`);
+                                       ^
+
+Error: FILE_MUTEX_ACQUIRE_FAILED:/tmp/remote-real-provider-EaHMam/quality-passed/effects.jsonl.append-lock:1:null:/usr/bin/flock: unrecognized option: timeout
+BusyBox v1.37.0 (2026-01-10 15:38:28 UTC) multi-call binary.
+
+Usage: flock [-sxun] FD | { FILE [-c] PROG ARGS }
+
+[Un]lock file descriptor, or lock FILE, run PROG
+
+	-s	Shared lock
+	-x	Exclusive lock (default)
+	-u	Unlock FD
+	-n	Fail rather than wait
+    at FileMutex.withLock (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/state/file-mutex.ts:18:40)
+    at new FileJournal (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/state/journal.ts:37:32)
+    at new FileEffectJournal (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/effects/journal.ts:94:21)
+    at verifyQualityProviderRuntime (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/quality-provider-runtime.mts:138:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-remote-real-provider.mts:154:5
+
+Node.js v24.21.0

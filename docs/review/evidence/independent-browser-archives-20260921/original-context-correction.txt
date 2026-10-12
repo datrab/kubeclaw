@@ -1,0 +1,9 @@
+=== RUN   TestOriginalRules
+    original_test.go:3: versions.json excluded=true
+    original_test.go:3: scripts/browser-archive-lock.mjs excluded=true
+    original_test.go:3: scripts/trivy-database-lock.mjs excluded=true
+    original_test.go:3: docker/browser-archives.lock.json excluded=false
+    original_test.go:3: docker/trivy-databases.lock.json excluded=false
+--- PASS: TestOriginalRules (0.00s)
+PASS
+ok  	github.com/datrab/kubeclaw/tests/docker-context	0.003s

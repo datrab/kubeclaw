@@ -1,0 +1,82 @@
+=== RUN   TestExplicitDockerCopySources
+=== RUN   TestExplicitDockerCopySources/tests/verification/contracts/check-pipeline-container-build-production.mts
+=== RUN   TestExplicitDockerCopySources/versions.json
+    context_test.go:123: required COPY source versions.json is excluded from Docker context
+=== RUN   TestExplicitDockerCopySources/docker/browser-archives.lock.json
+=== RUN   TestExplicitDockerCopySources/docker/nova-tools/package.json
+=== RUN   TestExplicitDockerCopySources/skills/prism/openclaw-plugin
+=== RUN   TestExplicitDockerCopySources/tsconfig.base.json
+=== RUN   TestExplicitDockerCopySources/docker/openclaw-tools/package.json
+=== RUN   TestExplicitDockerCopySources/package-lock.json
+=== RUN   TestExplicitDockerCopySources/docker/trivy-databases.lock.json
+=== RUN   TestExplicitDockerCopySources/docker/buster-runtime-entrypoint.sh
+=== RUN   TestExplicitDockerCopySources/skills/prism/server/agent-prompt.mjs
+=== RUN   TestExplicitDockerCopySources/skills/prism/server/preference-prompt.mjs
+=== RUN   TestExplicitDockerCopySources/skills/prism/server/agent-attempt.ts
+=== RUN   TestExplicitDockerCopySources/contracts
+=== RUN   TestExplicitDockerCopySources/cmd/buster-namespace-controller
+=== RUN   TestExplicitDockerCopySources/docker/python-tools/semgrep-nova.txt
+=== RUN   TestExplicitDockerCopySources/docker/python-tools/buster.txt
+=== RUN   TestExplicitDockerCopySources/scripts/build-plugin-sandbox.mjs
+=== RUN   TestExplicitDockerCopySources/tests/verification/contracts/check-pipeline-container-build-recovery.mts
+=== RUN   TestExplicitDockerCopySources/scripts/registry-client-config.mjs
+=== RUN   TestExplicitDockerCopySources/docker/nova-tools/package-lock.json
+=== RUN   TestExplicitDockerCopySources/docker/python-tools/common.txt
+=== RUN   TestExplicitDockerCopySources/docker/openclaw-tools/package-lock.json
+=== RUN   TestExplicitDockerCopySources/package.json
+=== RUN   TestExplicitDockerCopySources/skills
+=== RUN   TestExplicitDockerCopySources/skills/worker/core/worker/native-worker-launcher.c
+=== RUN   TestExplicitDockerCopySources/scripts/browser-archive-lock.mjs
+=== RUN   TestExplicitDockerCopySources/go.mod
+=== RUN   TestExplicitDockerCopySources/scripts/trivy-database-lock.mjs
+=== RUN   TestExplicitDockerCopySources/skills/prism/server/worker-artifacts.ts
+=== RUN   TestExplicitDockerCopySources/contracts/agent-observability/v1
+=== RUN   TestExplicitDockerCopySources/skills/prism/server/agent-bridge.mjs
+=== RUN   TestExplicitDockerCopySources/skills/prism/server/agent-job-runner.mjs
+=== RUN   TestExplicitDockerCopySources/skills/prism/server/agent-process.ts
+=== RUN   TestExplicitDockerCopySources/docker/go-tools
+=== RUN   TestExplicitDockerCopySources/docker/archviewer.nginx.conf
+=== RUN   TestExplicitDockerCopySources/skills/common/plugins/openclaw-agent-observer
+--- FAIL: TestExplicitDockerCopySources (0.00s)
+    --- PASS: TestExplicitDockerCopySources/tests/verification/contracts/check-pipeline-container-build-production.mts (0.00s)
+    --- FAIL: TestExplicitDockerCopySources/versions.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/browser-archives.lock.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/nova-tools/package.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills/prism/openclaw-plugin (0.00s)
+    --- PASS: TestExplicitDockerCopySources/tsconfig.base.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/openclaw-tools/package.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/package-lock.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/trivy-databases.lock.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/buster-runtime-entrypoint.sh (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills/prism/server/agent-prompt.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills/prism/server/preference-prompt.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills/prism/server/agent-attempt.ts (0.00s)
+    --- PASS: TestExplicitDockerCopySources/contracts (0.00s)
+    --- PASS: TestExplicitDockerCopySources/cmd/buster-namespace-controller (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/python-tools/semgrep-nova.txt (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/python-tools/buster.txt (0.00s)
+    --- PASS: TestExplicitDockerCopySources/scripts/build-plugin-sandbox.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/tests/verification/contracts/check-pipeline-container-build-recovery.mts (0.00s)
+    --- PASS: TestExplicitDockerCopySources/scripts/registry-client-config.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/nova-tools/package-lock.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/python-tools/common.txt (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/openclaw-tools/package-lock.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/package.json (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills/worker/core/worker/native-worker-launcher.c (0.00s)
+    --- PASS: TestExplicitDockerCopySources/scripts/browser-archive-lock.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/go.mod (0.00s)
+    --- PASS: TestExplicitDockerCopySources/scripts/trivy-database-lock.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills/prism/server/worker-artifacts.ts (0.00s)
+    --- PASS: TestExplicitDockerCopySources/contracts/agent-observability/v1 (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills/prism/server/agent-bridge.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills/prism/server/agent-job-runner.mjs (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills/prism/server/agent-process.ts (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/go-tools (0.00s)
+    --- PASS: TestExplicitDockerCopySources/docker/archviewer.nginx.conf (0.00s)
+    --- PASS: TestExplicitDockerCopySources/skills/common/plugins/openclaw-agent-observer (0.00s)
+FAIL
+FAIL	github.com/datrab/kubeclaw/tests/docker-context	0.007s
+FAIL
+
+exit=1

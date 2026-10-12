@@ -1,3 +1,4 @@
+{{- $controlPort := (include "prism.swarmConfig" . | fromJson).operator.prism.control.port | int }}
 {{- if .Values.workerTrust.spiffe.enabled }}
 {{- $trustDomain := required "workerTrust.spiffe.trustDomain is required" .Values.workerTrust.spiffe.trustDomain }}
 {{- $namespace := .Release.Namespace }}
@@ -67,7 +68,7 @@ data:
         - name: control-local
           connect_timeout: 1s
           type: STATIC
-          load_assignment: { cluster_name: control-local, endpoints: [{ lb_endpoints: [{ endpoint: { address: { socket_address: { address: 127.0.0.1, port_value: 8080 } } } }] }] }
+          load_assignment: { cluster_name: control-local, endpoints: [{ lb_endpoints: [{ endpoint: { address: { socket_address: { address: 127.0.0.1, port_value: {{ $controlPort }} } } } }] }] }
         - name: worker-mtls
           connect_timeout: 3s
           type: STRICT_DNS
@@ -179,7 +180,7 @@ data:
         - name: worker-local
           connect_timeout: 1s
           type: STATIC
-          load_assignment: { cluster_name: worker-local, endpoints: [{ lb_endpoints: [{ endpoint: { address: { socket_address: { address: 127.0.0.1, port_value: 8080 } } } }] }] }
+          load_assignment: { cluster_name: worker-local, endpoints: [{ lb_endpoints: [{ endpoint: { address: { socket_address: { address: 127.0.0.1, port_value: {{ (include "prism.swarmConfig" . | fromJson).operator.prism.worker.port | int }} } } } }] }] }
         - name: control-mtls
           connect_timeout: 3s
           type: STRICT_DNS

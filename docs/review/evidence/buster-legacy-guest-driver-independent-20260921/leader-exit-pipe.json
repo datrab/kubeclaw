@@ -1,0 +1,10 @@
+{
+  "source": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/legacy-seal-guest.py",
+  "sha256": "541a6e715cc7b038566d4ae230c934cebf3dcc0f34cccca8bf0ae54a985df15f",
+  "uid": 1000,
+  "watchdog": "CHILD_WATCHDOG",
+  "elapsedSeconds": 0.30331045808270574,
+  "descendantPid": 216227,
+  "descendantTerminalState": "absent",
+  "scope": "Actual unprivileged process-group timeout after leader exits while child retains pipes. Not PID namespace, capability or filesystem proof."
+}

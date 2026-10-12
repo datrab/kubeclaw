@@ -1,0 +1,55 @@
+{
+  "_doc": "Single authored swarm configuration. operator.prism is consumed by production Prism startup loaders; legacy profile expansion remains separate test support.",
+  "profile": "standard",
+  "features": {
+    "observability": true,
+    "buster": true,
+    "discord_alerts": true
+  },
+  "tuning": {
+    "safety_margins": "high",
+    "retention": "high",
+    "alerts": "rich",
+    "logs": "verbose",
+    "checks": "strict",
+    "determinism": "strict"
+  },
+  "overrides": {},
+  "operator": {
+    "prism": {
+      "worker": {
+        "maximumActiveRequests": 16,
+        "maximumProbeRequests": 4,
+        "maximumConnections": 128,
+        "requestTimeoutMs": 120000,
+        "shutdownTimeoutMs": 120000,
+        "maximumInputBytes": 16777216
+      },
+      "native": {
+        "maximumResultBytes": 67108864,
+        "dispatchTimeoutMs": 900000,
+        "resourcePolicy": {
+          "cpuTimeMs": 60000,
+          "memoryBytes": 8589934592,
+          "tasks": 2048
+        },
+        "supervisor": {
+          "uid": 1000,
+          "gid": 1000,
+          "maximumOwnershipRecords": 65536,
+          "maximumOwnershipBytes": 67108864,
+          "maximumOutputBytes": 33554432,
+          "maximumJournalBytes": 68719476736,
+          "pollIntervalMs": 20,
+          "drainTimeoutMs": 10000,
+          "closeTimeoutMs": 105000
+        }
+      },
+      "control": {
+        "pipelinePreferenceSubject": null,
+        "artifactRoot": "/var/lib/prism/artifacts",
+        "studioPublicUrl": "https://prism-studio"
+      }
+    }
+  }
+}

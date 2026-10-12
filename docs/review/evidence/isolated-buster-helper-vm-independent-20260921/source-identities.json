@@ -1,0 +1,54 @@
+[
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/artifact-manifest.json",
+    "sha256": "7b2154e7a3b2dd67818b9ebef268ca967f537a0ca45e2a394c68a73c0787aafd"
+  },
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/guest-init.sh",
+    "sha256": "ac40547065172ff340b6cc8509111c2bdcbc63ee6579f1b3c0a9469d745bcc87"
+  },
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/guest-tests.mjs",
+    "sha256": "39adfe3e83d4e35cb828dcb187df8f971dc758a72d5cd8a891fed3411b13b3c0"
+  },
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/guest-proof.test.mjs",
+    "sha256": "e41d9e523f57790fce5bf5ef84b6234a297265cbad438e6c5f1b9091ac93b892"
+  },
+  {
+    "path": "docs/review/remediation/implementation/independent-isolated-buster-helper-vm-20260921.md",
+    "sha256": "4cfbfc92394cd72a3b78e587e624f706b4fd46a3bd3a10e846fbaeb6aeae591c"
+  },
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-independent-20260921/checks.json",
+    "sha256": "53627cd12e055696f411b6e035319ec52b306a30ffb1c58ae0c4cc967bbe513f"
+  },
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-independent-20260921/commands.json",
+    "sha256": "06f73728e29cc4c76467ec18a481692d941bcaddf778e0a8557cc82457f38f6b"
+  },
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-independent-20260921/compile-generic.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-independent-20260921/compile-restricted.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-independent-20260921/getcap-help.txt",
+    "sha256": "498232945da34818efe0204b18ec952e2535fa1e09a897f5b11e7e94b752e986"
+  },
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-independent-20260921/package-verify.txt",
+    "sha256": "f82a527812217fada4fc63e36f89a80e2c5d4cdbfb7fdb31e6b8e61747f6a079"
+  },
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-independent-20260921/setpriv-version.txt",
+    "sha256": "c8886a077197dc9e688e5af9f0066195d915cb32dcb0a062968192de291a6182"
+  },
+  {
+    "path": "docs/review/evidence/isolated-buster-helper-vm-independent-20260921/verification-only.txt",
+    "sha256": "17c202b3d8ac56c191998ff7e6b5d30bc4329125351a5494e875ef4c3c2156db"
+  }
+]

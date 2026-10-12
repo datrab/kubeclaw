@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["stateRoot","manifestStageId","gateStageId"],"properties":{"stateRoot":{"type":"string","minLength":1},"manifestStageId":{"type":"string","minLength":1},"gateStageId":{"type":"string","minLength":1}}}

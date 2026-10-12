@@ -1,0 +1,68 @@
+{
+  "runtimeExecuted": false,
+  "sources": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "beforeMatches": true,
+      "stagedMatches": true,
+      "liveStillBefore": true,
+      "stagedSha256": "a04de312879696876c9bf92b084b157155152d26e86bfa3023896ca8c53426f1"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "beforeMatches": true,
+      "stagedMatches": true,
+      "liveStillBefore": true,
+      "stagedSha256": "fbfddf5396dcb1ac90c7c2296613641b917d4d4a27468e4e7362c5a622ae1f8c"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "beforeMatches": true,
+      "stagedMatches": true,
+      "liveStillBefore": true,
+      "stagedSha256": "8d31713e1a4ff4b14a9c98ee2616ee48dc0336a67a01e2ddec915a602f67fd09"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "beforeMatches": true,
+      "stagedMatches": true,
+      "liveStillBefore": true,
+      "stagedSha256": "8e5398a1681bbb6c89ee519d45fe12db63b9871a37ab1bd49cb8ecb65c405602"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "beforeMatches": true,
+      "stagedMatches": true,
+      "liveStillBefore": true,
+      "stagedSha256": "39fae2ef7c97b92259f1e1193a91e969b405c31b6970d51c8c0f7765fbb1f2bb"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "beforeMatches": true,
+      "stagedMatches": true,
+      "liveStillBefore": true,
+      "stagedSha256": "53f4d9d8ca4d66d1ce077a4bb40df389e7ebc040b4813db8055987dce5c46c4d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "beforeMatches": true,
+      "stagedMatches": true,
+      "liveStillBefore": true,
+      "stagedSha256": "b18d1684d25bae992b70c9e99910dc36a3015dbcef0ea72a6c0ee19dfdc27792"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "beforeMatches": true,
+      "stagedMatches": true,
+      "liveStillBefore": true,
+      "stagedSha256": "d2e81938db163ec92bd021a047f30aa5bec06549f01f15f794ff360ecec58820"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "beforeMatches": true,
+      "stagedMatches": true,
+      "liveStillBefore": true,
+      "stagedSha256": "6f0742e73bb03100a5ef611b7a160a400f6383d7a36dc81ed341c5a493132c4e"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "reviewer": "bootstrap_guard_fresh_review",
+  "status": "bounded DOC/delivery source accepted; no runtime",
+  "afterIdentities": [
+    {
+      "path": "package.json",
+      "sha256": "a85f5b8f4f77d662400a2362e790bfc9b6aed18cb9fa3ef15986a5d5b6b8d0b0"
+    },
+    {
+      "path": "docs/architecture/buster-runner-failure-drain.md",
+      "sha256": "32f209509ec21cf87f55b754b396efde9d0ac4900ce428e07ce08afda9c83d26"
+    },
+    {
+      "path": "docs/architecture/buster-v2-runtime.md",
+      "sha256": "ee61528276a2db109643e74b545871931bca4fe0de828c34d622ae34910ac6d9"
+    },
+    {
+      "path": "docs/review/remediation/implementation/runner-scheduler-drain-20260921.md",
+      "sha256": "0322993a243ff501d7200054f31fc1ab7abfbcec3f3cde1663abfc6c6c948019"
+    }
+  ],
+  "packageDelta": "Exactly one added verify:buster:scheduler-drain script; all original scripts and every other parsed JSON property unchanged.",
+  "command": "npm run plugin-system:sandbox:build && node --test --test-concurrency=1 tests/verification/contracts/runner-scheduler-drain.test.mjs tests/verification/contracts/runner-scheduler-provider-drain.test.mjs && node tests/verification/contracts/check-pipeline-test-plan-runner.mts && node tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+  "checks": [
+    "Actual source modules exist; serial node tests followed by full original Runner and real-provider, genuine sandbox build prerequisite retained.",
+    "No skip/deadline option or substitute runtime. Types/lint remain separately mandatory in status report; command is not evidence of execution.",
+    "All local DOC links resolve. Behavioral statements match reviewed scheduler delta, distinguish rejected execution from resolved unsuccessful results, and preserve existing per-node authority.",
+    "Runtime/type/lint/control status explicitly pending; historical/native/durable/provider-cleanup responsibilities not claimed solved."
+  ]
+}

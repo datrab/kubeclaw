@@ -1,0 +1,35 @@
+✔ report runtime requires minimumOpenFiles before directory effects (4.135277ms)
+✔ report runtime requires minimumHeapMiB before directory effects (1.017466ms)
+✔ report runtime requires heapFraction before directory effects (0.965345ms)
+✔ report runtime requires runtimeMemoryReserveBytes before directory effects (1.051677ms)
+✔ real report V8 heap consumes minimumHeapMiB (123.765003ms)
+✔ real report V8 heap consumes heapFraction (93.46492ms)
+✔ selected report descriptor floor gates actual process admission (49.783178ms)
+✔ report snapshot rejects incoherent ranges and remains immutable (0.299988ms)
+✖ selected runtime memory reserve gates the real adapter before spawn (92.184636ms)
+✔ direct adaptation enforces the selected ceiling and derived CPU floor (50.97965ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1164.087722
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-report-runtime-policy.test.mjs:132:1
+✖ selected runtime memory reserve gates the real adapter before spawn (92.184636ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-report-runtime-policy.test.mjs:143:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /REPORT_ADAPTER_MEMORY_LIMIT_INCOMPATIBLE/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

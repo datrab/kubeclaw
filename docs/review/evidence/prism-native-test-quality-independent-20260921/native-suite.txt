@@ -1,0 +1,194 @@
+
+> verify:prism:native-worker
+> node --test --test-concurrency=1 skills/prism/tests/*-native.mts skills/prism/integration/worker-concurrent-resource-attribution.mts
+
+✖ native attempt receipt excludes real concurrent supervisor-process CPU (36.932897ms)
+✖ actual HTTP caller disconnect cancels and drains original artifact read (10.471469ms)
+✖ actual HTTP caller disconnect cancels and drains original artifact upload (2.774851ms)
+✖ normal HTTP completion keeps its bound result and original persisted full log (1.098389ms)
+✖ service shutdown drains the original read and returns a cancelled bound attempt (0.962775ms)
+✖ service shutdown drains the original upload and returns a cancelled bound attempt (1.071688ms)
+✖ shutdown interrupts a real incomplete request body before authentication or artifact I/O (0.761269ms)
+
+Interrupted while running:
+
+⚠ skills/prism/tests/worker-http-cancellation-native.mts (skills/prism/tests/worker-http-cancellation-native.mts:1:1)
+✖ skills/prism/tests/worker-http-cancellation-native.mts (33997.959116ms)
+✖ skills/prism/tests/worker-process-shutdown-native.mts
+✖ skills/prism/tests/worker-readiness-native.mts
+ℹ tests 10
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 3
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34796.73904
+
+✖ failing tests:
+
+test at skills/prism/integration/worker-concurrent-resource-attribution.mts:57:7
+✖ native attempt receipt excludes real concurrent supervisor-process CPU (36.932897ms)
+  AssertionError [ERR_ASSERTION]: A dedicated native test pool must be explicitly selected
+  + actual - expected
+  
+  + undefined
+  - 'true'
+  
+      at nativeWorkerHarness (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/native/worker-harness.mts:14:10)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/integration/worker-concurrent-resource-attribution.mts:71:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/integration/worker-concurrent-resource-attribution.mts:57:1 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'true',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/worker-http-cancellation-native.mts:63:3
+✖ actual HTTP caller disconnect cancels and drains original artifact read (10.471469ms)
+  AssertionError [ERR_ASSERTION]: A dedicated native test pool must be explicitly selected
+  + actual - expected
+  
+  + undefined
+  - 'true'
+  
+      at nativeWorkerHarness (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/native/worker-harness.mts:14:10)
+      at setup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:52:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:64:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'true',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/worker-http-cancellation-native.mts:63:3
+✖ actual HTTP caller disconnect cancels and drains original artifact upload (2.774851ms)
+  AssertionError [ERR_ASSERTION]: A dedicated native test pool must be explicitly selected
+  + actual - expected
+  
+  + undefined
+  - 'true'
+  
+      at nativeWorkerHarness (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/native/worker-harness.mts:14:10)
+      at setup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:52:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:64:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'true',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/worker-http-cancellation-native.mts:84:1
+✖ normal HTTP completion keeps its bound result and original persisted full log (1.098389ms)
+  AssertionError [ERR_ASSERTION]: A dedicated native test pool must be explicitly selected
+  + actual - expected
+  
+  + undefined
+  - 'true'
+  
+      at nativeWorkerHarness (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/native/worker-harness.mts:14:10)
+      at setup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:52:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:85:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'true',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/worker-http-cancellation-native.mts:95:3
+✖ service shutdown drains the original read and returns a cancelled bound attempt (0.962775ms)
+  AssertionError [ERR_ASSERTION]: A dedicated native test pool must be explicitly selected
+  + actual - expected
+  
+  + undefined
+  - 'true'
+  
+      at nativeWorkerHarness (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/native/worker-harness.mts:14:10)
+      at setup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:52:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:96:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'true',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/worker-http-cancellation-native.mts:95:3
+✖ service shutdown drains the original upload and returns a cancelled bound attempt (1.071688ms)
+  AssertionError [ERR_ASSERTION]: A dedicated native test pool must be explicitly selected
+  + actual - expected
+  
+  + undefined
+  - 'true'
+  
+      at nativeWorkerHarness (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/native/worker-harness.mts:14:10)
+      at setup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:52:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:96:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'true',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/worker-http-cancellation-native.mts:110:1
+✖ shutdown interrupts a real incomplete request body before authentication or artifact I/O (0.761269ms)
+  AssertionError [ERR_ASSERTION]: A dedicated native test pool must be explicitly selected
+  + actual - expected
+  
+  + undefined
+  - 'true'
+  
+      at nativeWorkerHarness (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/native/worker-harness.mts:14:10)
+      at setup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:52:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation-native.mts:111:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'true',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/worker-http-cancellation-native.mts:1:1
+✖ skills/prism/tests/worker-http-cancellation-native.mts (33997.959116ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/worker-process-shutdown-native.mts:1:1
+✖ skills/prism/tests/worker-process-shutdown-native.mts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at skills/prism/tests/worker-readiness-native.mts:1:1
+✖ skills/prism/tests/worker-readiness-native.mts
+  'Promise resolution is still pending but the event loop has already resolved'

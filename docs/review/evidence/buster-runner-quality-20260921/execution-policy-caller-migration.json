@@ -1,0 +1,147 @@
+[
+  {
+    "path": "tests/fixtures/test-gate/buster-admission.mts",
+    "beforeSha256": "65a81daae9d2b924bd8ec33c36a443825a26afe862f77825259827fe3f5c9200",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/reliability/buster-job-compaction.test.mts",
+    "beforeSha256": "16d7d9f94eb2e5140f94ab63da98540f4cde2c515ba35e8f5ea8b25d0fde3180",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "beforeSha256": "9fad2a1206cf4b07003c29a6c5c10e108586f0de7d7577b9d49cb94b1006bff4",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "beforeSha256": "e66a6784aaf130ce1df92e6be934d00a57e6a16c83a96d100c67046108d9f5eb",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/reliability/buster-readiness-consumer.test.mts",
+    "beforeSha256": "34af0ed326455a7205835378cb9d202992c102d9d311e9e0989bd23d1f7ae392",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/reliability/coverage-remote.test.mts",
+    "beforeSha256": "70a24aa0e2c342ec218b3b420982d003ab991f654a1a38efed42fed207759bc4",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+    "beforeSha256": "e35780680d8572991bb6ae5ada62583c653e3892f6a6312192ddbe2ee98ad79c",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+    "beforeSha256": "354c548fa084428b3f9f44f7aa47d579617a61fffc480a465db45219e13d2f23",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+    "beforeSha256": "0f60a8d996fbe02db074e2731b42f8a8e74548e13f718d219d632b2c622f71eb",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-parity.mts",
+    "beforeSha256": "2172c05f73569ec72ec99b0f43b37d0fe934e59c109117b83ac49908c3bf1905",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-provider-semantics-remediation.mts",
+    "beforeSha256": "6588dc9049ef7987a18eac628de093736f523c6e3af87f348519984418ad3303",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-implementation.mts",
+    "beforeSha256": "9cdb82d6db864e5bdcfbb1d282ad1e97d5a6049208939b99ea8d9aa6df5acea6",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+    "beforeSha256": "c83192b39b688cd94bb997788f04fb4cd02d1ed8b458875ec197e2948b625615",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-a11y-implementation.mts",
+    "beforeSha256": "23d3b579a090eb2bd027951ab6df4a7d01a4eeb2da0ecb21cff103f975c9cd11",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-implementation.mts",
+    "beforeSha256": "612a4b17c74ed61909a6edb757304a8cc6e5551b1f92e55225561ed1f949e770",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-http-live.mts",
+    "beforeSha256": "c828a11679a917b803921961a20510472387197a9a8c0567e2e704d6f1973530",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-container-build-production.mts",
+    "beforeSha256": "b46d220db76505a731c22a0465bf1ee2bd87c7378e865266472a02759b0bf4ee",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+    "beforeSha256": "9fc8af9062b107a72c437f3e61d743b5794d96ed002b69170d3238942cae2a6a",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "beforeSha256": "ae543e13e21df5fc6b2616e9a2b637d6150577517bff58d1387cff5ab447191d",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+    "beforeSha256": "53ee533eeb630a1dcb2ca3094dba406938d22026038e0ac7c02c9ed73a0e46df",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+    "beforeSha256": "9b95880bdc1e897250fff1200564e609652ea17be78f6495650fe3d10d3c98cf",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+    "beforeSha256": "b97f75c7cfc3fb043ac7af9d2f9e7fa24873a04518699b0103cc9778b23c3bbb",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+    "beforeSha256": "306435bbe92ae5de565beecf51b85bf03f09fcb5feb7f8de003415856f744cb6",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+    "beforeSha256": "b666effbfaa33240f82e837447c44e5772462c6de66830918628f8a828c3073a",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-api-implementation.mts",
+    "beforeSha256": "4f131ae15fd42e9b3bf5b51626d1d9997a2897a3a2ef6a2e301ea0e4b150e603",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+    "beforeSha256": "7608fc72844b708ed3bd6068d03230d558ce691fb1beeb8b16dd6f8da1965c45",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+    "beforeSha256": "d0068337fa1a3e3215f9089af80d7ac7f946855476c92bb49c561fd952ec8a68",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "beforeSha256": "b702b32bef4db80aa1cf5b5f32e9e005c061dbbb177691d367f14ea47a6164e1",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+    "beforeSha256": "33999fd059678e30e8e497b60283157eaa5bfae828bb8522b473ff006dfc4879",
+    "changes": "explicit executionPolicy at existing local-runtime input and/or explicit registered loader observation policy"
+  }
+]

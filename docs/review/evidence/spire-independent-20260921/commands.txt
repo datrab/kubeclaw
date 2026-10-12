@@ -1,0 +1,11 @@
+Independent reviewer, 2026-09-21; no cluster mutation or runtime exercise.
+helm template spire node_modules/.cache/spire-effective-20260921/spire-0.30.0.tgz --namespace spire-server --values my-values/infra/spire-values.yaml > docs/review/evidence/spire-independent-20260921/rendered.yaml
+exit 0; rendered SHA256 27ae94f759a0a0a42cb00d1cc6ab0b9c3f4b9b31aee73e122f9ff9a13cc4d8f3, identical to author render.
+Independent Node yaml parse and strict assertions checked database and key paths, persistent mount and RWO claim, replicas, UID, image, TTLs, absent agent_ttl/availability_target/UpstreamAuthority, agent emptyDir/memory, and namespace exclusions. All passed; result in assertions.txt.
+Reviewed pinned upstream references using web tool:
+https://raw.githubusercontent.com/spiffe/spire/v1.15.2/doc/spire_server.md — Server configuration, agent_ttl default inherits default_x509_svid_ttl.
+https://raw.githubusercontent.com/spiffe/spire/v1.15.2/doc/spire_agent.md — Availability Target, default X509 rotation at half lifetime; applies to agent and workload X509, not JWT.
+https://raw.githubusercontent.com/spiffe/spire-controller-manager/v0.7.0/api/v1alpha1/clusterspiffeid_types.go — TTL optional upper bound, default if omitted.
+https://raw.githubusercontent.com/spiffe/spire-controller-manager/v0.7.0/config/crd/bases/spire.spiffe.io_clusterspiffeids.yaml — TTL schema has no overriding default.
+Local deployment source pins SPIRE_CHART_VERSION default 0.30.0, allows operator override. This review covers default checked values, not arbitrary runtime overrides.
+Read actual Worker Trust Envoy templates in charts/kubeclaw and charts/prism for certificate requirements and exact URI SAN validation.

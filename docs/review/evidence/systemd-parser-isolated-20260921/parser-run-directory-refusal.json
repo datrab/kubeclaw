@@ -1,0 +1,40 @@
+[
+  {
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/systemd:/usr/lib/systemd",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/share/systemd:/usr/share/systemd",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "--library-path",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu/systemd",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/bin/systemd-analyze",
+      "verify",
+      "--man=no",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/probes/kubeclaw-native-pools.service"
+    ],
+    "status": 1,
+    "stdout": "",
+    "stderr": "Failed to create directory '/run/systemd/': Read-only file system\n"
+  },
+  {
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/systemd:/usr/lib/systemd",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/share/systemd:/usr/share/systemd",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "--library-path",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/lib/x86_64-linux-gnu/systemd",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/runtime/usr/bin/systemd-analyze",
+      "verify",
+      "--man=no",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/systemd-parser-20260921/probes/malformed.service"
+    ],
+    "status": 1,
+    "stdout": "",
+    "stderr": "Failed to create directory '/run/systemd/': Read-only file system\n"
+  }
+]

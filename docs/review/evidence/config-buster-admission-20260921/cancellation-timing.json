@@ -1,0 +1,120 @@
+{
+  "code": 1,
+  "events": [
+    {
+      "at": 5844.896111,
+      "kind": "service.cancel.start",
+      "jobId": "job:5faf6d2e14ffee818c8e44255bb19b08119d4d832da83da32268ae32c8adceea"
+    },
+    {
+      "at": 5913.415665,
+      "kind": "service.cancel.result",
+      "jobId": "job:5faf6d2e14ffee818c8e44255bb19b08119d4d832da83da32268ae32c8adceea",
+      "state": "cancelling"
+    },
+    {
+      "at": 10927.34707,
+      "kind": "transport.cancel.start",
+      "jobId": "job:8ce2a0f8e1071097804e7f67c94f006133a860166af019eb40fa53e2d99b413b"
+    },
+    {
+      "at": 10927.842683,
+      "kind": "http.delete.receive",
+      "port": 41885,
+      "path": "/v1/plan-jobs/job%3A8ce2a0f8e1071097804e7f67c94f006133a860166af019eb40fa53e2d99b413b"
+    },
+    {
+      "at": 10927.938936,
+      "kind": "service.cancel.start",
+      "jobId": "job:8ce2a0f8e1071097804e7f67c94f006133a860166af019eb40fa53e2d99b413b"
+    },
+    {
+      "at": 11019.177691,
+      "kind": "service.cancel.result",
+      "jobId": "job:8ce2a0f8e1071097804e7f67c94f006133a860166af019eb40fa53e2d99b413b",
+      "state": "cancelling"
+    },
+    {
+      "at": 11019.456579,
+      "kind": "http.delete.finish",
+      "status": 200,
+      "port": 41885,
+      "path": "/v1/plan-jobs/job%3A8ce2a0f8e1071097804e7f67c94f006133a860166af019eb40fa53e2d99b413b"
+    },
+    {
+      "at": 11019.51932,
+      "kind": "http.delete.close",
+      "finished": true,
+      "port": 41885,
+      "path": "/v1/plan-jobs/job%3A8ce2a0f8e1071097804e7f67c94f006133a860166af019eb40fa53e2d99b413b"
+    },
+    {
+      "at": 11019.837968,
+      "kind": "transport.cancel.result",
+      "jobId": "job:8ce2a0f8e1071097804e7f67c94f006133a860166af019eb40fa53e2d99b413b",
+      "state": "cancelling"
+    },
+    {
+      "at": 12809.914105,
+      "kind": "transport.cancel.start",
+      "jobId": "job:4d068b9ad04531f003c5de1286eb4e4c571075e51c18d72d59faca635d284fab"
+    },
+    {
+      "at": 12811.725363,
+      "kind": "http.delete.receive",
+      "port": 41951,
+      "path": "/v1/plan-jobs/job%3A4d068b9ad04531f003c5de1286eb4e4c571075e51c18d72d59faca635d284fab"
+    },
+    {
+      "at": 12812.297138,
+      "kind": "http.delete.receive",
+      "port": 41885,
+      "path": "/v1/plan-jobs/job%3A4d068b9ad04531f003c5de1286eb4e4c571075e51c18d72d59faca635d284fab"
+    },
+    {
+      "at": 12812.356579,
+      "kind": "service.cancel.start",
+      "jobId": "job:4d068b9ad04531f003c5de1286eb4e4c571075e51c18d72d59faca635d284fab"
+    },
+    {
+      "at": 12919.798146,
+      "kind": "service.cancel.result",
+      "jobId": "job:4d068b9ad04531f003c5de1286eb4e4c571075e51c18d72d59faca635d284fab",
+      "state": "cancelling"
+    },
+    {
+      "at": 12920.016452,
+      "kind": "http.delete.finish",
+      "status": 200,
+      "port": 41885,
+      "path": "/v1/plan-jobs/job%3A4d068b9ad04531f003c5de1286eb4e4c571075e51c18d72d59faca635d284fab"
+    },
+    {
+      "at": 12920.026932,
+      "kind": "http.delete.close",
+      "finished": true,
+      "port": 41885,
+      "path": "/v1/plan-jobs/job%3A4d068b9ad04531f003c5de1286eb4e4c571075e51c18d72d59faca635d284fab"
+    },
+    {
+      "at": 12920.301669,
+      "kind": "http.delete.finish",
+      "status": 200,
+      "port": 41951,
+      "path": "/v1/plan-jobs/job%3A4d068b9ad04531f003c5de1286eb4e4c571075e51c18d72d59faca635d284fab"
+    },
+    {
+      "at": 12920.33146,
+      "kind": "http.delete.close",
+      "finished": true,
+      "port": 41951,
+      "path": "/v1/plan-jobs/job%3A4d068b9ad04531f003c5de1286eb4e4c571075e51c18d72d59faca635d284fab"
+    },
+    {
+      "at": 12920.658009,
+      "kind": "transport.cancel.result",
+      "jobId": "job:4d068b9ad04531f003c5de1286eb4e4c571075e51c18d72d59faca635d284fab",
+      "state": "cancelling"
+    }
+  ]
+}

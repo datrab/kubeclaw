@@ -1,0 +1,13 @@
+Baseline (before production edits): exit 1; 0/3 modules passed.
+LD_LIBRARY_PATH="$PWD/node_modules/.cache/native-host-tools/root/usr/lib:$PWD/node_modules/.cache/native-host-tools/root/lib" node_modules/.cache/native-host-tools/root/usr/bin/proot -b "$PWD/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!" -b "$PWD/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!" /usr/local/bin/node --test tests/verification/contracts/check-pipeline-test-plan-runner.mts tests/verification/contracts/check-provider-semantics-remediation.mts tests/verification/contracts/check-junit-executed-required.mts
+
+After: same command plus tests/verification/contracts/check-pipeline-report-adapter-runtime.mts tests/verification/contracts/check-pipeline-junit-report-adapter.mts; exit 1; 0/5 modules passed.
+
+node --test skills/buster/engine/test-gates/tests/specialist-boundary.test.ts
+exit 0; 7/7 tests passed.
+node node_modules/typescript/bin/tsc --noEmit -p skills/buster/engine/tsconfig.json
+exit 0.
+Canonical eslint new three modules plus boundary test: exit 0.
+Canonical eslint including runner: exit 1; 30 errors. HEAD runner via eslint --stdin --stdin-filename skills/buster/engine/test-gates/runner.ts also exit 1; 30 errors.
+python3 docs/review/evidence/buster-specialist-extraction-20260921/run-mutant.py
+exit 0 means the deliberately mutated private-copy test failed as expected (package mismatch admitted).

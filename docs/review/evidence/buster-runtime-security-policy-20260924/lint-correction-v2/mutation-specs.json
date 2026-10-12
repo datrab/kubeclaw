@@ -1,0 +1,86 @@
+{
+  "executionStatus": "not executed",
+  "controls": [
+    {
+      "name": "restore-maximumExecutionMs",
+      "file": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+      "old": "...policy.runtimeSecurity, kubectlExecutable:",
+      "new": "...policy.runtimeSecurity, maximumExecutionMs: 300000, kubectlExecutable:",
+      "requiredFailureOracle": "real maximumExecutionMs low profile unexpectedly succeeds; counterpart high profile remains valid",
+      "status": "not executed"
+    },
+    {
+      "name": "restore-maximumOutputBytes",
+      "file": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+      "old": "...policy.runtimeSecurity, kubectlExecutable:",
+      "new": "...policy.runtimeSecurity, maximumOutputBytes: 16777216, kubectlExecutable:",
+      "requiredFailureOracle": "real maximumOutputBytes low profile unexpectedly succeeds; counterpart high profile remains valid",
+      "status": "not executed"
+    },
+    {
+      "name": "restore-maximumObservationAgeMs",
+      "file": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+      "old": "...policy.runtimeSecurity, kubectlExecutable:",
+      "new": "...policy.runtimeSecurity, maximumObservationAgeMs: 10000, kubectlExecutable:",
+      "requiredFailureOracle": "real maximumObservationAgeMs low profile unexpectedly succeeds; counterpart high profile remains valid",
+      "status": "not executed"
+    },
+    {
+      "name": "restore-poll1000",
+      "file": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+      "old": "Math.min(this.#policy.pollIntervalMs, Math.max(1, deadline - Date.now()))",
+      "new": "Math.min(1000, Math.max(1, deadline - Date.now()))",
+      "requiredFailureOracle": "1200 ms real polling profile is not respected; actual successive command separation below configured interval",
+      "status": "not executed"
+    },
+    {
+      "name": "restore-future5000",
+      "file": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+      "old": "nowMs + maximumFutureSkewMs",
+      "new": "nowMs + 5000",
+      "requiredFailureOracle": "high future-skew profile should admit otherwise valid +7500 ms observation; instead times out",
+      "status": "not executed"
+    },
+    {
+      "name": "restore-diagnostic1024",
+      "file": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+      "old": ".slice(0, policy.diagnosticCodeUnits)",
+      "new": ".slice(0, 1024)",
+      "requiredFailureOracle": "both exact diagnostic lengths mismatch original stderr",
+      "status": "not executed"
+    },
+    {
+      "name": "restore-child-path",
+      "file": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+      "old": "PATH: policy.executableSearchPath.join(path.delimiter)",
+      "new": "PATH: '/usr/local/bin:/usr/bin:/bin'",
+      "requiredFailureOracle": "actual helper selection in private authored PATH fails positive profile; actual observed PATH differs",
+      "status": "not executed"
+    },
+    {
+      "name": "restore-abort-before-output-cause",
+      "file": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sha256": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+      "old": "finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED')); controller.abort();",
+      "new": "controller.abort(); finish(new Error('KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED'));",
+      "requiredFailureOracle": "combined byte-limit negative must report OUTPUT_LIMIT exactly, not TIMEOUT",
+      "status": "not executed"
+    },
+    {
+      "name": "restore-missing-policy-defaults",
+      "file": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+      "old": "  validateComponentSettings('buster-runtime-security', value, 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');",
+      "new": "  value = { ...{\"allowedNamespacePrefixes\": [\"test\"], \"maximumExecutionMs\": 300000, \"maximumOutputBytes\": 16777216, \"pollIntervalMs\": 1000, \"maximumObservationAgeMs\": 10000, \"maximumFutureSkewMs\": 5000, \"diagnosticCodeUnits\": 1024, \"executableSearchPath\": [\"/usr/local/bin\", \"/usr/bin\", \"/bin\"]}, ...(value as Record<string, unknown>) };\n  validateComponentSettings('buster-runtime-security', value, 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');",
+      "requiredFailureOracle": "each omitted direct policy field must reject CONFIG_INVALID before filesystem access; fallback reaches nonexistent path instead",
+      "status": "not executed"
+    }
+  ]
+}

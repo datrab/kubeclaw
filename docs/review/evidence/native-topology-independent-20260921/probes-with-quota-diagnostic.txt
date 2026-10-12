@@ -1,0 +1,15 @@
+✔ two genuinely concurrent same-revision child reservations produce exactly one durable winner (69.398982ms)
+✔ finish during durable host reservation prevents creation and launch, retaining reserved child (93.995003ms)
+✔ finish during helper binding waits for CAS and refuses that helper plus queued helper (129.165515ms)
+✔ concurrent lease helpers serialize durable reservations without lost children (233.544944ms)
+✔ historical lease launch refuses before touching any scope method (21.460381ms)
+DIAGNOSTIC: full store prevents subtree kill/drain; it is not a kernel test. bytes=826
+✔ review diagnostic: a full child metadata store currently prevents subtree drain (75.96944ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1072.346794

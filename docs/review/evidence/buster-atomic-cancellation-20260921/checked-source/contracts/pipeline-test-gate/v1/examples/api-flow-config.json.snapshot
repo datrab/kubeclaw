@@ -1,0 +1,7 @@
+{
+  "flowFile": ".swarm/modules/api/api-flow.json",
+  "endpointName": "web",
+  "requestTimeoutMs": 10000,
+  "maximumResponseBytes": 1048576,
+  "maximumSteps": 64
+}

@@ -1,0 +1,16 @@
+✔ CR05 real journal consumes authored 2051 byte result limit (128.890918ms)
+✔ CR05 real journal consumes authored 2052 byte result limit (279.571558ms)
+✔ new-admission rejection persists no accepted work and cannot block historical receipt replay (407.688437ms)
+✔ real writer SIGKILL preserves accepted identity, original output and receipt without re-admission (783.105843ms)
+✔ real writer SIGKILL preserves sealed identity, original output and receipt without re-admission (800.042598ms)
+✔ journal binds the full envelope and reserves retained disk before admitting output (138.012603ms)
+✔ process archive verifies original output and immutable completion time before receipt construction (148.416191ms)
+✔ busy live attempt reports retryable contention without changing its durable identity (6436.858807ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11074.34248

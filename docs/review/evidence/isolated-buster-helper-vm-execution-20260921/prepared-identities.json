@@ -1,0 +1,34 @@
+[
+  {
+    "path": "prepared-added-packages.json",
+    "sha256": "5e62a0ad06b1e330d211b43796aec4eab71dd582de888021d89d23fbee2f826b"
+  },
+  {
+    "path": "prepared-artifact-manifest.json",
+    "sha256": "7b2154e7a3b2dd67818b9ebef268ca967f537a0ca45e2a394c68a73c0787aafd"
+  },
+  {
+    "path": "prepared-author-source-identities.json",
+    "sha256": "6864e8e8251e907d3b73f59fd959f9080f476391b18ccfd0da0d79781d17e12e"
+  },
+  {
+    "path": "prepared-guest-init.sh",
+    "sha256": "ac40547065172ff340b6cc8509111c2bdcbc63ee6579f1b3c0a9469d745bcc87"
+  },
+  {
+    "path": "prepared-guest-proof.test.mjs",
+    "sha256": "e41d9e523f57790fce5bf5ef84b6234a297265cbad438e6c5f1b9091ac93b892"
+  },
+  {
+    "path": "prepared-guest-tests.mjs",
+    "sha256": "39adfe3e83d4e35cb828dcb187df8f971dc758a72d5cd8a891fed3411b13b3c0"
+  },
+  {
+    "path": "prepared-launch-command.json",
+    "sha256": "d3fb9ccf4417998d7f787d6dcb79c206e5ca1082e4b623a2dce2039b6a41c6f0"
+  },
+  {
+    "path": "prepared-snapshot-delta.json",
+    "sha256": "eaff07be5a92bf3a5e015fe68715af3a7619852f8562bc966a2e047f3b1b0799"
+  }
+]

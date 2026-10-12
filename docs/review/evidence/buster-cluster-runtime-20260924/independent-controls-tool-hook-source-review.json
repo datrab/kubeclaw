@@ -1,0 +1,37 @@
+{
+  "reviewer": "cleanup_scheduler_final_review",
+  "decision": "bounded private control/hook source accepted; unexecuted",
+  "blockingFindings": [],
+  "resolved": "tail-short logs actual replacement list/count and includes compact command call; constructor assignment untouched",
+  "tailShortAnchorCounts": [
+    3,
+    1,
+    1
+  ],
+  "toolContract": "Original callback method and original promisify.custom are delegated with original args/options; actual Promise and ChildProcess are retained. Probe covers unmapped callback/promise success, exit7 stdout/stderr and child; actual mapped tar/flock promisified version calls plus translation records.",
+  "controlScope": "Nine mapped consumer controls require exact current manifest source hash; in-memory loader replacement only, application PID/URL/before-after hashes and actual replacements logged; source binder/protection preserved. Exit1 remains only expected execution status, not semantic acceptance.",
+  "limits": [
+    "No runtime performed in this review",
+    "Run full positive baseline before controls",
+    "Each control requires actual raw intended assertion review",
+    "Tool probe and affected original modules must pass with new hook"
+  ],
+  "bindings": [
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/run-with-controls.py",
+      "sha256": "0444ffe92878af5aebf45712db0d58cadf0e8fce4b80ce0c60982d981c6a94f0"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/mutate.mjs",
+      "sha256": "83294256760eea1e6346ff5cf9ff5e1caecb1b9efe890e049b0e373ce60eb3c3"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/tool-paths.mjs",
+      "sha256": "cb06474d2d1933fe1b0345c7551bfd18e8be67e1e92bcdb1421b569533afc928"
+    },
+    {
+      "path": "docs/review/evidence/buster-cluster-runtime-20260924/tool-paths-probe.mjs",
+      "sha256": "799d0d961863ed9ef5536f429044ff4da3963777bb193376980af479b8333ad1"
+    }
+  ]
+}

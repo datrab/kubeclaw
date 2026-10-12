@@ -1,0 +1,50 @@
+[
+  {
+    "path": "skills/prism/tests/studio-config.test.mts",
+    "remainingInlineReferences": 0
+  },
+  {
+    "path": "skills/prism/tests/fixtures/control-policy.mts",
+    "remainingInlineReferences": 0
+  },
+  {
+    "path": "skills/prism/tests/fixtures/studio-service.mts",
+    "remainingInlineReferences": 0
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "remainingInlineReferences": 0
+  },
+  {
+    "path": "skills/prism/tests/swarm-control-policy.test.mts",
+    "remainingInlineReferences": 0
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-config.test.mts",
+    "remainingInlineReferences": 0
+  },
+  {
+    "path": "skills/prism/tests/swarm-resource-policy.test.mts",
+    "remainingInlineReferences": 0
+  },
+  {
+    "path": "skills/prism/tests/swarm-input-limit.test.mts",
+    "remainingInlineReferences": 0
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-behavior.test.mts",
+    "remainingInlineReferences": 0
+  },
+  {
+    "path": "skills/prism/tests/swarm-result-journal.test.mts",
+    "remainingInlineReferences": 0
+  },
+  {
+    "path": "skills/prism/tests/swarm-resource-operation.test.mts",
+    "remainingInlineReferences": 0
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "remainingInlineReferences": 0
+  }
+]

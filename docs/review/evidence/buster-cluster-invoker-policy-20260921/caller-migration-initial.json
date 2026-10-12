@@ -1,0 +1,30 @@
+[
+  {
+    "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+    "directCalls": 5
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+    "directCalls": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+    "directCalls": 1
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+    "directCalls": 4
+  },
+  {
+    "path": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+    "directCalls": 1
+  },
+  {
+    "path": "tests/verification/reliability/tailscale-generation.test.mjs",
+    "directCalls": 1
+  },
+  {
+    "path": "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+    "directCalls": 1
+  }
+]

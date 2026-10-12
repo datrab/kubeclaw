@@ -1,0 +1,16 @@
+{
+  "status": "private unexecuted lint correction; source review required; active runtime HOLD respected",
+  "createdAt": "2026-09-24T14:24:05.409354+00:00",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "beforeSha256": "d940cbaed6bf4f86cd1b03d3654b2483464d9e187caf04383a39398f283496fc",
+      "afterSha256": "293dd4062ee8b3d8bc9927849e4e230647e84fd6c8f2fb47e5317851b0795e82"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "beforeSha256": "d877da689ad67653723eebab1c57bf5972ea9928430a652b7e57881e49f880a2",
+      "afterSha256": "c97bd7b7ca69111f170896b868d509d1fc68d225f6aeb15bd3046494a013a49f"
+    }
+  ]
+}

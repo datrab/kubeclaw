@@ -1,0 +1,72 @@
+{
+  "head": "cd9f235345f5fd8736a2ffe75d806288e4d538db",
+  "mode": "read-only architecture review; dirty worktree; no execution equivalence asserted",
+  "currentSourceIdentities": [
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "e7a7cee020d5fd6823b5a63039a9ba2e924ed63363a7bb7bad1d51dd59722e20"
+    },
+    {
+      "path": "skills/prism/server/worker.ts",
+      "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d"
+    },
+    {
+      "path": "skills/prism/server/native-worker-execution.ts",
+      "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "sha256": "c8c3709acc66be25880a9e56bc4ab0df9f8eb3d3b76b19e0d3aedb3964c0705b"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "sha256": "332e73e5e35b28800ab7ad70331adf8c2ed683f819a0ea6504eea0abbb61645c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-reservations.ts",
+      "sha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-executor.ts",
+      "sha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-launcher.c",
+      "sha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63"
+    },
+    {
+      "path": "tools/native-worker-nri/main.go",
+      "sha256": "3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531"
+    },
+    {
+      "path": "tools/native-worker-nri/go.mod",
+      "sha256": "2e4ff78b7fb9a5cd83284d4b002104d7035c67d404de25082c3681945419bd73"
+    },
+    {
+      "path": "docs/operations/native-worker-host-pools.md",
+      "sha256": "55261c6d5b6b2cba0bc1ee37441e241fb5dca2d771f95b9312ab14564f5022a4"
+    },
+    {
+      "path": "docs/review/remediation/implementation/pr6-node-accounting-decision.md",
+      "sha256": "e8240f0c7745d0fbb386413bc9e3061c88c27e4bd5a2e6d11abb2ae1e7b7c3cb"
+    },
+    {
+      "path": "docs/review/remediation/decisions.md",
+      "sha256": "02529859f4848939c03efd38ed50149c9cea978229d7d2e3da2ff812d0e5386e"
+    }
+  ],
+  "externalDocumentation": [
+    "https://kubernetes.io/docs/concepts/workloads/controllers/job/",
+    "https://kubernetes.io/docs/concepts/policy/pid-limiting/",
+    "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+  ],
+  "newBehaviorTestsExecuted": false
+}

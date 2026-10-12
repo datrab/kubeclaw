@@ -1,0 +1,17 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "tests/verification/reliability/nova-source-cleanup-errors.test.mjs"
+  ],
+  "exitCode": 1,
+  "candidateDetection": true,
+  "requiredMarkers": [
+    "not ok 1 - Nova TERM failure retains ownership until actual child close",
+    "not ok 2 - Nova timed KILL failure remains visible after natural child close",
+    "not ok 3 - Nova group observation failure is retained with a later close-notification timeout",
+    "ERR_ASSERTION"
+  ],
+  "manualOracleReviewRequired": true
+}

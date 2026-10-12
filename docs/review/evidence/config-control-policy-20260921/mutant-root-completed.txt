@@ -1,0 +1,40 @@
+✖ CC3 real Control service profile 1 selects history, artifact root and Studio URL (3306.476649ms)
+✖ CC3 real Control service profile 2 selects history, artifact root and Studio URL (2032.646723ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5901.545852
+
+✖ failing tests:
+
+test at skills/prism/tests/control-generation-http.test.mts:111:30
+✖ CC3 real Control service profile 1 selects history, artifact root and Studio URL (3306.476649ms)
+  Error: ENOENT: no such file or directory, open '/tmp/prism-original-http-gHjADp/artifacts/ec/ecba8570be3d6459c82be79035f2dce650ee9c02439d6100539ac62744232fa9'
+      at async open (node:internal/fs/promises:1345:25)
+      at async readFile (node:internal/fs/promises:1996:14)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-generation-http.test.mts:129:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/prism-original-http-gHjADp/artifacts/ec/ecba8570be3d6459c82be79035f2dce650ee9c02439d6100539ac62744232fa9'
+  }
+
+test at skills/prism/tests/control-generation-http.test.mts:111:30
+✖ CC3 real Control service profile 2 selects history, artifact root and Studio URL (2032.646723ms)
+  Error: ENOENT: no such file or directory, open '/tmp/prism-original-http-lDAbHI/artifacts/d7/d763b496d5cb00ad5925d7a9c7dd3bda8031395f44668b616396bcc8c3b1e16c'
+      at async open (node:internal/fs/promises:1345:25)
+      at async readFile (node:internal/fs/promises:1996:14)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-generation-http.test.mts:129:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/prism-original-http-lDAbHI/artifacts/d7/d763b496d5cb00ad5925d7a9c7dd3bda8031395f44668b616396bcc8c3b1e16c'
+  }

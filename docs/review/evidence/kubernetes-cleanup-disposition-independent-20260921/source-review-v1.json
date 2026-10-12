@@ -1,0 +1,25 @@
+{
+  "manifest": "docs/review/evidence/kubernetes-cleanup-disposition-20260921/manifest-v1.json",
+  "manifestSha256": "9e60edecd46ea1b03a6f38fe399ffff76c7a524549383a1cee5161b151e2691a",
+  "all20BeforeAfterHashesMatch": true,
+  "decision": "production source direction accepted; final test-source gate pending additive V2 oracle correction",
+  "production": [
+    "SDK required disposition, Loaded validation before replacement spawn, session and versioned child IPC preserve authority",
+    "Ordinary and faulted cleanup explicitly incomplete; only retained completed/passed/identity-checked host path selects completed-fixture",
+    "Kubernetes current provider skips retain only for completed-fixture; rollback preserves exact original error when successful and both causes when unsuccessful",
+    "Historical pinned providers and durable cleanup recovery explicitly remain open"
+  ],
+  "fixtureChecks": [
+    "Private provider mutation follows actual realpath/inode/no-hardlink guards before discovery",
+    "Actual child ownership hook forwards other tool/store spawns unchanged and registers bounded close cleanup before setup",
+    "Invoker rollback verifies exact wrapped primary/secondary identities and separate AbortSignal",
+    "Failed preparation cases demand actual execute/recovery PIDs, cleanup failure, no unsafe retry; successful retention matrix checks delete counts"
+  ],
+  "finding": {
+    "file": "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+    "problem": "Faulted-retain test observes execute message but not prior passed result IPC; could accept a failure before provider success and does not explicitly assert later retained success.",
+    "required": "Forward actual stdout IPC; require passed result before injected TERM; assert later completed/passed retained attempt and completed-fixture cleanup.",
+    "authorResponse": "Accepted, preparing immutable V2; V1 preserved."
+  },
+  "runtime": "none"
+}

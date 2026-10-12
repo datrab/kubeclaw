@@ -1,0 +1,25 @@
+{
+  "command": [
+    "python3",
+    "-I",
+    "tests/fixtures/test-gate/legacy-seal-capabilities.py",
+    "--verifier",
+    "scripts/buster-legacy-store-verify.py",
+    "--root",
+    "/var/lib/legacy-seal-tests/unprepared",
+    "--kind",
+    "plan",
+    "--profile",
+    "parent",
+    "--maximum-bytes",
+    "4096",
+    "--maximum-entries",
+    "16"
+  ],
+  "uid": 1000,
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "RuntimeError: guest root UID/GID prerequisite required\n",
+  "sourceSha256": "3423e4dc08f62d4e9c4ff65fb43bf676e6b79bab44aedca30da0012ade52aed8",
+  "scope": "Unprivileged prerequisite rejection only; no capability transition or kernel verifier executed."
+}

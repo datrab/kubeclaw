@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "skills/prism/tests/studio-service.test.mts"
+  ],
+  "exitCode": 1,
+  "actualChildHookInherited": true,
+  "detected": "authored 600ms deadline rejects hardcoded250ms"
+}

@@ -1,0 +1,27 @@
+✔ actual extraction rejects a same-input alias before reservation and captures caller input (115.58965ms)
+✔ different inputs reach the actual reservation boundary in parallel within authored capacity (7.28301ms)
+✔ actual extraction releases coordination after thrown reservation work (5.621506ms)
+✔ actual extraction releases coordination after aborted reservation work (4.278162ms)
+✔ prepared source accepts valid identity and rejects JSON scalar coercion (2.147066ms)
+✔ staged input accepts valid identity and rejects JSON scalar coercion (37.24266ms)
+✔ cleanup effects accepts valid identity and rejects JSON scalar coercion (0.727899ms)
+✔ cleanup gate digest cannot be coerced from a JSON array (0.558274ms)
+✔ recovered source reference remains bound to the originally accepted extraction header (62.019075ms)
+✔ real ledger serializes competing admissions into exactly two fixed slots (166.788454ms)
+✔ admission reserves a future cleanup record inside the original record quota (76.865081ms)
+✔ profile, clock and settings ownership is captured before waiting on a real writer lock (35.120945ms)
+✔ malformed persisted cleanup association is rejected without rewriting bytes (38.78397ms)
+✔ source attachment and cancellation share the durable admission fence (142.305226ms)
+✔ result origin preserves explicit completed provenance and pending absence (1.514199ms)
+✔ historical result origin rejects coerced or malformed importId (0.329438ms)
+✔ historical result origin rejects coerced or malformed originalStoreDigest (0.182644ms)
+✔ historical result origin rejects coerced or malformed originalPayloadDigest (0.176615ms)
+✔ result origin rejects alternate selectors and extra keys (0.347229ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4825.059098

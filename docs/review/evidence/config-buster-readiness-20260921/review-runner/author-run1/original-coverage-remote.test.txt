@@ -1,0 +1,31 @@
+✖ original remote Buster skipped execution cannot fulfil required coverage at the same Git candidate (645.285141ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2498.300318
+
+✖ failing tests:
+
+test at tests/verification/reliability/coverage-remote.test.mts:14:1
+✖ original remote Buster skipped execution cannot fulfil required coverage at the same Git candidate (645.285141ms)
+  AssertionError [ERR_ASSERTION]: {"error":"spawn /usr/bin/tar ENOENT","jobId":"job:62c584a1d7a62d107afb0105217d432821d4fdc24407245751e38829eff9c82f","requestDigest":"sha256:f0ac590661feef6409c2b89afedffab7581f2cf8c8d673f68928bc6af26245cc","result":null,"schemaVersion":"buster-plan-status.v1","state":"failed","submittedAt":"2026-09-09T00:00:00Z","updatedAt":"2026-09-21T18:52:16.837Z"}
+  + actual - expected
+  
+  + 'failed'
+  - 'completed'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/coverage-remote.test.mts:67:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'failed',
+    expected: 'completed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

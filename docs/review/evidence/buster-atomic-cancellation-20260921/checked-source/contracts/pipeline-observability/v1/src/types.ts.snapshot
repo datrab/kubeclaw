@@ -1,0 +1,11 @@
+export type ObservabilityDefinition = 'producerIdentity' | 'producerRecord' | 'admissionAcknowledgement' | 'replayRange' | 'gapReport' | 'producerClosure' | 'observabilityCompleteness';
+export interface ProducerIdentityV1 { producerId:string; bootId:string; producerType:string }
+export interface ProducerCorrelationV1 { pipelineRunId:string; moduleId:string|null; gateId:string|null; attemptId:string|null; claimId:string|null; claimGeneration:number|null; traceId:string|null; parentEventId:string|null }
+export interface ProducerRecordV1 { schemaVersion:'producer-record.v1'; recordId:string; producer:ProducerIdentityV1; sequence:number; recordType:string; occurredAt:string; correlation:ProducerCorrelationV1; payload:unknown; recordDigest:string }
+export interface AdmissionAcknowledgementV1 { schemaVersion:'admission-acknowledgement.v1'; recordId:string; producer:ProducerIdentityV1; pipelineRunId:string; sequence:number; state:'admitted'|'duplicate'; admittedAt:string; canonicalCursor:number; recordDigest:string }
+export interface ReplayRangeV1 { schemaVersion:'replay-range.v1'; producer:ProducerIdentityV1; pipelineRunId:string; fromSequence:number; toSequence:number; requestedAt:string }
+export interface ProducerGapReportV1 { schemaVersion:'producer-gap-report.v1'; producer:ProducerIdentityV1; pipelineRunId:string; fromSequence:number; toSequence:number; state:'missing'|'unavailable'|'restored'; reportedAt:string; reasonCode:string }
+export interface ProducerClosureV1 { schemaVersion:'producer-closure.v1'; closureId:string; producer:ProducerIdentityV1; pipelineRunId:string; firstSequence:number; finalSequence:number; recordCount:number; requiredEvidenceIds:string[]; closedAt:string; closureDigest:string }
+export interface UnresolvedObservabilityItemV1 { itemId:string; kind:'missing-closure'|'missing-evidence'|'quarantined-record'; producer:ProducerIdentityV1; subjectId:string; reasonCode:string }
+export interface ObservabilityCompletenessV1 { schemaVersion:'observability-completeness.v1'; pipelineRunId:string; state:'complete'|'partial'|'degraded'|'unknown'; requiredClosureIds:string[]; admittedClosureIds:string[]; missingClosureIds:string[]; missingRanges:ProducerGapReportV1[]; unresolvedItems:UnresolvedObservabilityItemV1[]; evaluatedAt:string }
+export interface ContractValidationResult { ok:boolean; errors:string[] }

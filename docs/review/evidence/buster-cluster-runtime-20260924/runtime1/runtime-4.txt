@@ -1,0 +1,379 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Math\.min\(15_000, deadline - Date\.now\(\)\)/u. Input:
+
+"import path from 'node:path';\n" +
+  "import { assertGeneratedCredentialLease, generatedDemoCredentials } from './generated-demo-credentials.ts';\n" +
+  "import { object, text, DNS_LABEL } from './kubernetes-fixture-values.ts';\n" +
+  "import { KubernetesFixtureSettings, type KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-settings.ts';\n" +
+  "import { KubernetesFixtureReadiness } from './kubernetes-fixture-readiness.ts';\n" +
+  "import { KubernetesFixturePreparation } from './kubernetes-fixture-preparation.ts';\n" +
+  "import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';\n" +
+  "import type { TestProviderCapabilityInvoker } from './runner.ts';\n" +
+  "export type { KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-settings.ts';\n" +
+  'function detail(error: unknown, maximumCodeUnits: number): string {\n' +
+  "    if (error && typeof error === 'object') {\n" +
+  '        const stderr = (error as Record<string, unknown>).stderr;\n' +
+  "        if (typeof stderr === 'string' && stderr.trim())\n" +
+  '            return stderr.trim().slice(0, maximumCodeUnits);\n' +
+  '    }\n' +
+  '    return (error instanceof Error ? error.message : String(error)).slice(0, maximumCodeUnits);\n' +
+  '}\n' +
+  'export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilityInvoker {\n' +
+  '    readonly #settings: KubernetesFixtureSettings;\n' +
+  '    readonly #preparation: KubernetesFixturePreparation;\n' +
+  '    constructor(options: KubernetesFixtureCapabilityInvokerOptions) {\n' +
+  '        this.#settings = new KubernetesFixtureSettings(options);\n' +
+  '        const run = this.#kubectlRun.bind(this);\n' +
+  '        const readiness = new KubernetesFixtureReadiness(this.#settings, run);\n' +
+  '        this.#preparation = new KubernetesFixturePreparation(this.#settings, {\n' +
+  '            run, readiness,\n' +
+  '            generatedCredentials: this.#generatedCredentials.bind(this),\n' +
+  '            releaseAfterPrepareFailure: this.#releaseAfterPrepareFailure.bind(this),\n' +
+  '        });\n' +
+  '    }\n' +
+  '    async #kubectlRun(args: readonly string[], input: Buffer | string | null, signal: AbortSignal, timeout = this.#settings.maximumExecutionMs): Promise<string> {\n' +
+  '        try {\n' +
+  '            const result = await this.#settings.execute(this.#settings.kubectl, args, {\n' +
+  "                encoding: 'utf8', maxBuffer: this.#settings.maximumManifestBytes * this.#settings.commandOutputManifestMultiplier, timeout: Math.min(timeout, this.#settings.maximumExecutionMs),\n" +
+  '                signal, ...(input === null ? {} : { input }),\n' +
+  '                env: { PATH: path.dirname(this.#settings.kubectl), HOME: process.env.HOME, KUBECONFIG: process.env.KUBECONFIG,\n' +
+  '                    KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,\n' +
+  '                    KUBERNETES_SERVICE_PORT: process.env.KUBERNETES_SERVICE_PORT },\n' +
+  '            });\n' +
+  "            return result.stdout ?? '';\n" +
+  '        }\n' +
+  '        catch (error) {\n' +
+  '            if (signal.aborted)\n' +
+  "                throw new Error('KUBERNETES_FIXTURE_CANCELLED', { cause: error });\n" +
+  '            throw new Error(`KUBERNETES_FIXTURE_KUBECTL_FAILED:${detail(error, this.#settings.diagnosticCodeUnits)}`, { cause: error });\n' +
+  '        }\n' +
+  '    }\n' +
+  '    async #releaseAfterPrepareFailure(leaseName: string): Promise<void> {\n' +
+  '        const controller = new AbortController();\n' +
+  '        const timer = setTimeout(() => controller.abort(), this.#settings.maximumExecutionMs);\n' +
+  '        try {\n' +
+  '            await this.#release(leaseName, controller.signal);\n' +
+  '        }\n' +
+  '        finally {\n' +
+  '            clearTimeout(timer);\n' +
+  '        }\n' +
+  '    }\n' +
+  '    async #generatedCredentials(expected: Parameters<typeof generatedDemoCredentials>[2], signal: AbortSignal) {\n' +
+  '        const resource = `busternamespaceleases.${this.#settings.apiGroup}`;\n' +
+  "        const freshLease = JSON.parse(await this.#kubectlRun(['get', resource, expected.leaseName, '-n', this.#settings.controllerNamespace, '-o', 'json'], null, signal, this.#settings.shortCommandTimeoutMs));\n" +
+  '        assertGeneratedCredentialLease(freshLease, expected);\n' +
+  '        let secret;\n' +
+  '        // Until UID and bytes are verified, subprocess diagnostics must not expose Secret content.\n' +
+  '        try {\n' +
+  "            secret = JSON.parse(await this.#kubectlRun(['get', 'secret', expected.secretName, '-n', expected.namespace, '-o', 'json'], null, signal, this.#settings.shortCommandTimeoutMs));\n" +
+  '        }\n' +
+  '        catch {\n' +
+  "            throw new Error('DEMO_CREDENTIAL_SECRET_READ_FAILED');\n" +
+  '        }\n' +
+  '        return generatedDemoCredentials(freshLease, secret, expected);\n' +
+  '    }\n' +
+  '    async #release(leaseName: string, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {\n' +
+  '        if (!DNS_LABEL.test(leaseName))\n' +
+  "            throw new Error('KUBERNETES_FIXTURE_LEASE_NAME_INVALID');\n" +
+  "        await this.#kubectlRun(['delete', 'busternamespacelease', leaseName, '-n', this.#settings.controllerNamespace,\n" +
+  "            '--ignore-not-found=true', '--wait=true', `--timeout=${Math.ceil(this.#settings.maximumExecutionMs / 1_000)}s`], null, signal);\n" +
+  '        return Object.freeze({ ok: true, leaseName, released: true });\n' +
+  '    }\n' +
+  '    async invoke(capability: string, request: TestProviderCapabilityRequest, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {\n' +
+  "        if (capability !== 'kubernetes.fixture' || request.resource.type !== 'kubernetes.fixture'\n" +
+  '            || !/^kubernetes-fixture:attempt:[A-Za-z0-9._:-]+$/u.test(request.resource.canonicalId)) {\n' +
+  "            throw new Error('KUBERNETES_FIXTURE_CAPABILITY_REQUEST_INVALID');\n" +
+  '        }\n' +
+  "        if (request.operation === 'prepare')\n" +
+  '            return this.#preparation.prepare(request, signal);\n' +
+  "        if (request.operation === 'release') {\n" +
+  "            const payload = object(request.payload, 'payload');\n" +
+  "            return this.#release(text(payload.leaseName, 'leaseName', 63), signal);\n" +
+  '        }\n' +
+  "        throw new Error('KUBERNETES_FIXTURE_OPERATION_INVALID');\n" +
+  '    }\n' +
+  '}\n' +
+  '\n' +
+  "import type { BusterManifestPolicy } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';\n" +
+  "import fs from 'node:fs';\n" +
+  "import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';\n" +
+  "import { runProcessInput } from './process-input.ts';\n" +
+  "import { DNS_LABEL, SECRET_NAME, MAX_TIMER_MS, MAX_NAMESPACE_PREFIX_LENGTH, STORAGE_CLASS_NAME } from './kubernetes-fixture-values.ts';\n" +
+  'type Execute = (command: string, args: readonly string[], options: Readonly<Record<string, unknown>>) => Promise<{\n' +
+  '    stdout?: string;\n' +
+  '    stderr?: string;\n' +
+  '}>;\n' +
+  'async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>, processInputPolicy: BusterProcessInputSettings): Promise<{\n' +
+  '    stdout: string;\n' +
+  '    stderr: string;\n' +
+  '}> {\n' +
+  '    const result = await runProcessInput(command, args, {\n' +
+  '        processInputPolicy,\n' +
+  '        ...(options.env ? { env: options.env as NodeJS.ProcessEnv } : {}),\n' +
+  '        ...(options.signal ? { signal: options.signal as AbortSignal } : {}),\n' +
+  '        input: options.input as string | Buffer | null ?? null,\n' +
+  '        timeoutMs: options.timeout as number, maximumOutputBytes: options.maxBuffer as number,\n' +
+  "        prefix: 'KUBERNETES_FIXTURE_KUBECTL',\n" +
+  '    });\n' +
+  "    const stdout = result.stdout.toString('utf8');\n" +
+  "    const stderr = result.stderr.toString('utf8');\n" +
+  '    if (result.code !== 0)\n' +
+  '        throw Object.assign(new Error(`Command failed with code ${String(result.code)} and signal ${String(result.signal)}`), { stdout, stderr });\n' +
+  '    return { stdout, stderr };\n' +
+  '}\n' +
+  'export interface KubernetesFixtureCapabilityInvokerOptions {\n' +
+  '    readonly processInputPolicy: BusterProcessInputSettings;\n' +
+  '    readonly workspaceRoot: string;\n' +
+  '    readonly kubectlExecutable: string;\n' +
+  '    readonly controllerNamespace: string;\n' +
+  '    readonly leaseApiGroup: string;\n' +
+  '    readonly leaseApiVersion: string;\n' +
+  '    readonly allowedNamespacePrefixes: readonly string[];\n' +
+  '    readonly allowedRegistryPrefixes: readonly string[];\n' +
+  '    readonly allowedSecretReferences: readonly string[];\n' +
+  '    readonly allowedStorageClasses: readonly string[];\n' +
+  '    readonly allowDefaultStorageClass: boolean;\n' +
+  '    readonly runnerSubject: string;\n' +
+  '    readonly credentialReaderSubject: string;\n' +
+  '    readonly maximumManifestBytes: number;\n' +
+  '    readonly maximumResources: number;\n' +
+  '    readonly maximumPersistentVolumeClaimBytes: number;\n' +
+  '    readonly maximumPersistentVolumeTotalBytes: number;\n' +
+  '    readonly maximumRetentionSeconds: number;\n' +
+  '    readonly maximumExecutionMs: number;\n' +
+  '    readonly pollIntervalMs: number;\n' +
+  '    readonly shortCommandTimeoutMs: number;\n' +
+  '    readonly commandOutputManifestMultiplier: number;\n' +
+  '    readonly diagnosticCodeUnits: number;\n' +
+  '    readonly manifest: BusterManifestPolicy;\n' +
+  '\n' +
+  '    readonly execute?: Execute;\n' +
+  '    readonly now?: () => Date;\n' +
+  '}\n' +
+  'export class KubernetesFixtureSettings {\n' +
+  '    readonly root: string;\n' +
+  '    readonly kubectl: string;\n' +
+  '    readonly controllerNamespace: string;\n' +
+  '    readonly apiGroup: string;\n' +
+  '    readonly apiVersion: string;\n' +
+  '    readonly namespacePrefixes: ReadonlySet<string>;\n' +
+  '    readonly registryPrefixes: readonly string[];\n' +
+  '    readonly secretReferences: ReadonlySet<string>;\n' +
+  '    readonly allowedStorageClasses: ReadonlySet<string>;\n' +
+  '    readonly allowDefaultStorageClass: boolean;\n' +
+  '    readonly runnerSubject: string;\n' +
+  '    readonly credentialReaderSubject: string;\n' +
+  '    readonly maximumManifestBytes: number;\n' +
+  '    readonly maximumResources: number;\n' +
+  '    readonly maximumPersistentVolumeClaimBytes: bigint;\n' +
+  '    readonly maximumPersistentVolumeTotalBytes: bigint;\n' +
+  '    readonly maximumRetentionSeconds: number;\n' +
+  '    readonly maximumExecutionMs: number;\n' +
+  '    readonly pollIntervalMs: number;\n' +
+  '    readonly shortCommandTimeoutMs: number;\n' +
+  '    readonly commandOutputManifestMultiplier: number;\n' +
+  '    readonly diagnosticCodeUnits: number;\n' +
+  '    readonly manifest: BusterManifestPolicy;\n' +
+  '\n' +
+  '    readonly execute: Execute;\n' +
+  '    readonly now: () => Date;\n' +
+  '    constructor(options: KubernetesFixtureCapabilityInvokerOptions) {\n' +
+  '        const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);\n' +
+  '        validateAddresses(options);\n' +
+  '        const runnerSubject = options.r'... 46834 more characters
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts:40:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: "import path from 'node:path';\n" +
+    "import { assertGeneratedCredentialLease, generatedDemoCredentials } from './generated-demo-credentials.ts';\n" +
+    "import { object, text, DNS_LABEL } from './kubernetes-fixture-values.ts';\n" +
+    "import { KubernetesFixtureSettings, type KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-settings.ts';\n" +
+    "import { KubernetesFixtureReadiness } from './kubernetes-fixture-readiness.ts';\n" +
+    "import { KubernetesFixturePreparation } from './kubernetes-fixture-preparation.ts';\n" +
+    "import type { TestProviderCapabilityRequest } from '@kubeclaw/plugin-sdk';\n" +
+    "import type { TestProviderCapabilityInvoker } from './runner.ts';\n" +
+    "export type { KubernetesFixtureCapabilityInvokerOptions } from './kubernetes-fixture-settings.ts';\n" +
+    'function detail(error: unknown, maximumCodeUnits: number): string {\n' +
+    "    if (error && typeof error === 'object') {\n" +
+    '        const stderr = (error as Record<string, unknown>).stderr;\n' +
+    "        if (typeof stderr === 'string' && stderr.trim())\n" +
+    '            return stderr.trim().slice(0, maximumCodeUnits);\n' +
+    '    }\n' +
+    '    return (error instanceof Error ? error.message : String(error)).slice(0, maximumCodeUnits);\n' +
+    '}\n' +
+    'export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilityInvoker {\n' +
+    '    readonly #settings: KubernetesFixtureSettings;\n' +
+    '    readonly #preparation: KubernetesFixturePreparation;\n' +
+    '    constructor(options: KubernetesFixtureCapabilityInvokerOptions) {\n' +
+    '        this.#settings = new KubernetesFixtureSettings(options);\n' +
+    '        const run = this.#kubectlRun.bind(this);\n' +
+    '        const readiness = new KubernetesFixtureReadiness(this.#settings, run);\n' +
+    '        this.#preparation = new KubernetesFixturePreparation(this.#settings, {\n' +
+    '            run, readiness,\n' +
+    '            generatedCredentials: this.#generatedCredentials.bind(this),\n' +
+    '            releaseAfterPrepareFailure: this.#releaseAfterPrepareFailure.bind(this),\n' +
+    '        });\n' +
+    '    }\n' +
+    '    async #kubectlRun(args: readonly string[], input: Buffer | string | null, signal: AbortSignal, timeout = this.#settings.maximumExecutionMs): Promise<string> {\n' +
+    '        try {\n' +
+    '            const result = await this.#settings.execute(this.#settings.kubectl, args, {\n' +
+    "                encoding: 'utf8', maxBuffer: this.#settings.maximumManifestBytes * this.#settings.commandOutputManifestMultiplier, timeout: Math.min(timeout, this.#settings.maximumExecutionMs),\n" +
+    '                signal, ...(input === null ? {} : { input }),\n' +
+    '                env: { PATH: path.dirname(this.#settings.kubectl), HOME: process.env.HOME, KUBECONFIG: process.env.KUBECONFIG,\n' +
+    '                    KUBERNETES_SERVICE_HOST: process.env.KUBERNETES_SERVICE_HOST,\n' +
+    '                    KUBERNETES_SERVICE_PORT: process.env.KUBERNETES_SERVICE_PORT },\n' +
+    '            });\n' +
+    "            return result.stdout ?? '';\n" +
+    '        }\n' +
+    '        catch (error) {\n' +
+    '            if (signal.aborted)\n' +
+    "                throw new Error('KUBERNETES_FIXTURE_CANCELLED', { cause: error });\n" +
+    '            throw new Error(`KUBERNETES_FIXTURE_KUBECTL_FAILED:${detail(error, this.#settings.diagnosticCodeUnits)}`, { cause: error });\n' +
+    '        }\n' +
+    '    }\n' +
+    '    async #releaseAfterPrepareFailure(leaseName: string): Promise<void> {\n' +
+    '        const controller = new AbortController();\n' +
+    '        const timer = setTimeout(() => controller.abort(), this.#settings.maximumExecutionMs);\n' +
+    '        try {\n' +
+    '            await this.#release(leaseName, controller.signal);\n' +
+    '        }\n' +
+    '        finally {\n' +
+    '            clearTimeout(timer);\n' +
+    '        }\n' +
+    '    }\n' +
+    '    async #generatedCredentials(expected: Parameters<typeof generatedDemoCredentials>[2], signal: AbortSignal) {\n' +
+    '        const resource = `busternamespaceleases.${this.#settings.apiGroup}`;\n' +
+    "        const freshLease = JSON.parse(await this.#kubectlRun(['get', resource, expected.leaseName, '-n', this.#settings.controllerNamespace, '-o', 'json'], null, signal, this.#settings.shortCommandTimeoutMs));\n" +
+    '        assertGeneratedCredentialLease(freshLease, expected);\n' +
+    '        let secret;\n' +
+    '        // Until UID and bytes are verified, subprocess diagnostics must not expose Secret content.\n' +
+    '        try {\n' +
+    "            secret = JSON.parse(await this.#kubectlRun(['get', 'secret', expected.secretName, '-n', expected.namespace, '-o', 'json'], null, signal, this.#settings.shortCommandTimeoutMs));\n" +
+    '        }\n' +
+    '        catch {\n' +
+    "            throw new Error('DEMO_CREDENTIAL_SECRET_READ_FAILED');\n" +
+    '        }\n' +
+    '        return generatedDemoCredentials(freshLease, secret, expected);\n' +
+    '    }\n' +
+    '    async #release(leaseName: string, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {\n' +
+    '        if (!DNS_LABEL.test(leaseName))\n' +
+    "            throw new Error('KUBERNETES_FIXTURE_LEASE_NAME_INVALID');\n" +
+    "        await this.#kubectlRun(['delete', 'busternamespacelease', leaseName, '-n', this.#settings.controllerNamespace,\n" +
+    "            '--ignore-not-found=true', '--wait=true', `--timeout=${Math.ceil(this.#settings.maximumExecutionMs / 1_000)}s`], null, signal);\n" +
+    '        return Object.freeze({ ok: true, leaseName, released: true });\n' +
+    '    }\n' +
+    '    async invoke(capability: string, request: TestProviderCapabilityRequest, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {\n' +
+    "        if (capability !== 'kubernetes.fixture' || request.resource.type !== 'kubernetes.fixture'\n" +
+    '            || !/^kubernetes-fixture:attempt:[A-Za-z0-9._:-]+$/u.test(request.resource.canonicalId)) {\n' +
+    "            throw new Error('KUBERNETES_FIXTURE_CAPABILITY_REQUEST_INVALID');\n" +
+    '        }\n' +
+    "        if (request.operation === 'prepare')\n" +
+    '            return this.#preparation.prepare(request, signal);\n' +
+    "        if (request.operation === 'release') {\n" +
+    "            const payload = object(request.payload, 'payload');\n" +
+    "            return this.#release(text(payload.leaseName, 'leaseName', 63), signal);\n" +
+    '        }\n' +
+    "        throw new Error('KUBERNETES_FIXTURE_OPERATION_INVALID');\n" +
+    '    }\n' +
+    '}\n' +
+    '\n' +
+    "import type { BusterManifestPolicy } from '../../../common/plugin-runtime/foundation/config/buster-cluster-invokers.ts';\n" +
+    "import fs from 'node:fs';\n" +
+    "import { validateBusterProcessInputSettings, type BusterProcessInputSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';\n" +
+    "import { runProcessInput } from './process-input.ts';\n" +
+    "import { DNS_LABEL, SECRET_NAME, MAX_TIMER_MS, MAX_NAMESPACE_PREFIX_LENGTH, STORAGE_CLASS_NAME } from './kubernetes-fixture-values.ts';\n" +
+    'type Execute = (command: string, args: readonly string[], options: Readonly<Record<string, unknown>>) => Promise<{\n' +
+    '    stdout?: string;\n' +
+    '    stderr?: string;\n' +
+    '}>;\n' +
+    'async function executeProcess(command: string, args: readonly string[], options: Readonly<Record<string, unknown>>, processInputPolicy: BusterProcessInputSettings): Promise<{\n' +
+    '    stdout: string;\n' +
+    '    stderr: string;\n' +
+    '}> {\n' +
+    '    const result = await runProcessInput(command, args, {\n' +
+    '        processInputPolicy,\n' +
+    '        ...(options.env ? { env: options.env as NodeJS.ProcessEnv } : {}),\n' +
+    '        ...(options.signal ? { signal: options.signal as AbortSignal } : {}),\n' +
+    '        input: options.input as string | Buffer | null ?? null,\n' +
+    '        timeoutMs: options.timeout as number, maximumOutputBytes: options.maxBuffer as number,\n' +
+    "        prefix: 'KUBERNETES_FIXTURE_KUBECTL',\n" +
+    '    });\n' +
+    "    const stdout = result.stdout.toString('utf8');\n" +
+    "    const stderr = result.stderr.toString('utf8');\n" +
+    '    if (result.code !== 0)\n' +
+    '        throw Object.assign(new Error(`Command failed with code ${String(result.code)} and signal ${String(result.signal)}`), { stdout, stderr });\n' +
+    '    return { stdout, stderr };\n' +
+    '}\n' +
+    'export interface KubernetesFixtureCapabilityInvokerOptions {\n' +
+    '    readonly processInputPolicy: BusterProcessInputSettings;\n' +
+    '    readonly workspaceRoot: string;\n' +
+    '    readonly kubectlExecutable: string;\n' +
+    '    readonly controllerNamespace: string;\n' +
+    '    readonly leaseApiGroup: string;\n' +
+    '    readonly leaseApiVersion: string;\n' +
+    '    readonly allowedNamespacePrefixes: readonly string[];\n' +
+    '    readonly allowedRegistryPrefixes: readonly string[];\n' +
+    '    readonly allowedSecretReferences: readonly string[];\n' +
+    '    readonly allowedStorageClasses: readonly string[];\n' +
+    '    readonly allowDefaultStorageClass: boolean;\n' +
+    '    readonly runnerSubject: string;\n' +
+    '    readonly credentialReaderSubject: string;\n' +
+    '    readonly maximumManifestBytes: number;\n' +
+    '    readonly maximumResources: number;\n' +
+    '    readonly maximumPersistentVolumeClaimBytes: number;\n' +
+    '    readonly maximumPersistentVolumeTotalBytes: number;\n' +
+    '    readonly maximumRetentionSeconds: number;\n' +
+    '    readonly maximumExecutionMs: number;\n' +
+    '    readonly pollIntervalMs: number;\n' +
+    '    readonly shortCommandTimeoutMs: number;\n' +
+    '    readonly commandOutputManifestMultiplier: number;\n' +
+    '    readonly diagnosticCodeUnits: number;\n' +
+    '    readonly manifest: BusterManifestPolicy;\n' +
+    '\n' +
+    '    readonly execute?: Execute;\n' +
+    '    readonly now?: () => Date;\n' +
+    '}\n' +
+    'export class KubernetesFixtureSettings {\n' +
+    '    readonly root: string;\n' +
+    '    readonly kubectl: string;\n' +
+    '    readonly controllerNamespace: string;\n' +
+    '    readonly apiGroup: string;\n' +
+    '    readonly apiVersion: string;\n' +
+    '    readonly namespacePrefixes: ReadonlySet<string>;\n' +
+    '    readonly registryPrefixes: readonly string[];\n' +
+    '    readonly secretReferences: ReadonlySet<string>;\n' +
+    '    readonly allowedStorageClasses: ReadonlySet<string>;\n' +
+    '    readonly allowDefaultStorageClass: boolean;\n' +
+    '    readonly runnerSubject: string;\n' +
+    '    readonly credentialReaderSubject: string;\n' +
+    '    readonly maximumManifestBytes: number;\n' +
+    '    readonly maximumResources: number;\n' +
+    '    readonly maximumPersistentVolumeClaimBytes: bigint;\n' +
+    '    readonly maximumPersistentVolumeTotalBytes: bigint;\n' +
+    '    readonly maximumRetentionSeconds: number;\n' +
+    '    readonly maximumExecutionMs: number;\n' +
+    '    readonly pollIntervalMs: number;\n' +
+    '    readonly shortCommandTimeoutMs: number;\n' +
+    '    readonly commandOutputManifestMultiplier: number;\n' +
+    '    readonly diagnosticCodeUnits: number;\n' +
+    '    readonly manifest: BusterManifestPolicy;\n' +
+    '\n' +
+    '    readonly execute: Execute;\n' +
+    '    readonly now: () => Date;\n' +
+    '    constructor(options: KubernetesFixtureCapabilityInvokerOptions) {\n' +
+    '        const processInputPolicy = validateBusterProcessInputSettings(options.processInputPolicy);\n' +
+    '        validateAddresses(options);\n' +
+    '        const runnerSubject = options.r'... 46834 more characters,
+  expected: /Math\.min\(15_000, deadline - Date\.now\(\)\)/u,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

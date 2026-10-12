@@ -1,0 +1,164 @@
+TAP version 13
+# Subtest: real child preserves detached invoke, concurrent replies, instance state and import logs
+ok 1 - real child preserves detached invoke, concurrent replies, instance state and import logs
+  ---
+  duration_ms: 71.995901
+  type: 'test'
+  ...
+# Subtest: real child settles outstanding RPCs and ignores late replies; early reply=false
+ok 2 - real child settles outstanding RPCs and ignores late replies; early reply=false
+  ---
+  duration_ms: 60.235037
+  type: 'test'
+  ...
+# Subtest: real child settles outstanding RPCs and ignores late replies; early reply=true
+ok 3 - real child settles outstanding RPCs and ignores late replies; early reply=true
+  ---
+  duration_ms: 66.295724
+  type: 'test'
+  ...
+# Subtest: real child rejects an unawaited RPC and exits with failure
+ok 4 - real child rejects an unawaited RPC and exits with failure
+  ---
+  duration_ms: 60.860813
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: undefined
+ok 5 - real child rejects invalid observation before provider import: undefined
+  ---
+  duration_ms: 62.631079
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: null
+ok 6 - real child rejects invalid observation before provider import: null
+  ---
+  duration_ms: 59.103718
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: {}
+ok 7 - real child rejects invalid observation before provider import: {}
+  ---
+  duration_ms: 60.056453
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: []
+ok 8 - real child rejects invalid observation before provider import: []
+  ---
+  duration_ms: 55.539536
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":0}
+ok 9 - real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":0}
+  ---
+  duration_ms: 54.986431
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":1.5}
+ok 10 - real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":1.5}
+  ---
+  duration_ms: 55.185807
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":"10"}
+ok 11 - real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":"10"}
+  ---
+  duration_ms: 60.182176
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":2147483648}
+ok 12 - real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":2147483648}
+  ---
+  duration_ms: 66.020216
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":10,"extra":1}
+ok 13 - real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":10,"extra":1}
+  ---
+  duration_ms: 60.028391
+  type: 'test'
+  ...
+# Subtest: real child uses authored sample interval 10
+ok 14 - real child uses authored sample interval 10
+  ---
+  duration_ms: 306.658807
+  type: 'test'
+  ...
+# Subtest: real child uses authored sample interval 40
+not ok 15 - real child uses authored sample interval 40
+  ---
+  duration_ms: 304.979823
+  type: 'test'
+  location: '/tmp/child-observation-control-o4dapfju/provider-child-session.test.mjs:184:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        {
+    +     delay: 10,
+    -     delay: 40,
+          kind: 'scheduled'
+        }
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      kind: 'scheduled'
+      delay: 40
+  actual:
+    0:
+      kind: 'scheduled'
+      delay: 10
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/child-observation-control-o4dapfju/provider-child-session.test.mjs:203:12)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: real child reuses an identical sampling policy and rejects a changed policy
+not ok 16 - real child reuses an identical sampling policy and rejects a changed policy
+  ---
+  duration_ms: 60.555585
+  type: 'test'
+  location: '/tmp/child-observation-control-o4dapfju/provider-child-session.test.mjs:211:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    identical policy must reuse the one sampler
+    + actual - expected
+    
+      [
+        {
+    +     delay: 10,
+    -     delay: 40,
+          kind: 'scheduled'
+        }
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      kind: 'scheduled'
+      delay: 40
+  actual:
+    0:
+      kind: 'scheduled'
+      delay: 10
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/child-observation-control-o4dapfju/provider-child-session.test.mjs:223:10)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 14
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1555.667023

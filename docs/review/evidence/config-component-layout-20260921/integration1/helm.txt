@@ -1,0 +1,392 @@
+✔ CD01 original chart delivers the one canonical config to the worker mount (91.176249ms)
+✔ CD02 real Helm output from two author profiles drives the actual production loader (204.790856ms)
+✔ CD03 old Helm shutdown authority is rejected (47.774951ms)
+✔ CD04 maximumActiveRequests rejects 3 before rendering (59.199931ms)
+✔ CD04 maximumActiveRequests rejects null before rendering (56.640474ms)
+✔ CD04 maximumActiveRequests rejects -1 before rendering (52.871165ms)
+✔ CD04 maximumActiveRequests rejects 0 before rendering (58.478952ms)
+✔ CD04 maximumActiveRequests rejects 1.5 before rendering (60.639539ms)
+✔ CD04 maximumActiveRequests rejects 2147483648 before rendering (58.062801ms)
+✔ CD04 maximumActiveRequests rejects undefined before rendering (59.058007ms)
+✔ CD04 maximumProbeRequests rejects 3 before rendering (54.55535ms)
+✔ CD04 maximumProbeRequests rejects null before rendering (52.801583ms)
+✔ CD04 maximumProbeRequests rejects -1 before rendering (56.09341ms)
+✔ CD04 maximumProbeRequests rejects 0 before rendering (49.007914ms)
+✔ CD04 maximumProbeRequests rejects 1.5 before rendering (51.249422ms)
+✔ CD04 maximumProbeRequests rejects 2147483648 before rendering (53.114281ms)
+✔ CD04 maximumProbeRequests rejects undefined before rendering (60.040803ms)
+✔ CD04 maximumConnections rejects 3 before rendering (51.325985ms)
+✔ CD04 maximumConnections rejects null before rendering (54.273432ms)
+✔ CD04 maximumConnections rejects -1 before rendering (56.840059ms)
+✔ CD04 maximumConnections rejects 0 before rendering (58.665267ms)
+✔ CD04 maximumConnections rejects 1.5 before rendering (53.652916ms)
+✔ CD04 maximumConnections rejects 2147483648 before rendering (52.331091ms)
+✔ CD04 maximumConnections rejects undefined before rendering (61.676366ms)
+✔ CD04 requestTimeoutMs rejects 3 before rendering (55.064373ms)
+✔ CD04 requestTimeoutMs rejects null before rendering (48.502701ms)
+✔ CD04 requestTimeoutMs rejects -1 before rendering (60.950167ms)
+✔ CD04 requestTimeoutMs rejects 0 before rendering (59.15767ms)
+✔ CD04 requestTimeoutMs rejects 1.5 before rendering (51.076859ms)
+✔ CD04 requestTimeoutMs rejects 2147483648 before rendering (49.340633ms)
+✔ CD04 requestTimeoutMs rejects undefined before rendering (53.251875ms)
+✔ CD04 shutdownTimeoutMs rejects 3 before rendering (54.634152ms)
+✔ CD04 shutdownTimeoutMs rejects null before rendering (55.165055ms)
+✔ CD04 shutdownTimeoutMs rejects -1 before rendering (60.063804ms)
+✔ CD04 shutdownTimeoutMs rejects 0 before rendering (54.241082ms)
+✔ CD04 shutdownTimeoutMs rejects 1.5 before rendering (57.969189ms)
+✔ CD04 shutdownTimeoutMs rejects 2147483648 before rendering (57.535068ms)
+✔ CD04 shutdownTimeoutMs rejects undefined before rendering (59.099008ms)
+✔ CD04 maximumInputBytes rejects 3 before rendering (51.825088ms)
+✔ CD04 maximumInputBytes rejects null before rendering (50.456412ms)
+✔ CD04 maximumInputBytes rejects -1 before rendering (57.043044ms)
+✔ CD04 maximumInputBytes rejects 0 before rendering (49.845776ms)
+✔ CD04 maximumInputBytes rejects 1.5 before rendering (52.781523ms)
+✔ CD04 maximumInputBytes rejects 2147483648 before rendering (50.107273ms)
+✔ CD04 maximumInputBytes rejects undefined before rendering (54.316754ms)
+✔ CD04 unknown key entry (56.268914ms)
+✔ CD04 unknown key prism-worker (53.656816ms)
+✔ CD04 unknown key prism-worker.settings (59.244352ms)
+✔ CD04 unknown key prism-worker.settings.ingress (59.412566ms)
+✔ CD04 connection overcommit fails Helm rendering (57.609929ms)
+✔ CD05 shutdown 100000 violates native-close or Pod grace (50.186415ms)
+✔ CD05 shutdown 150000 violates native-close or Pod grace (55.623948ms)
+✔ CD06 Helm packaging dereferences the canonical author/schema without manual synchronization (67.624322ms)
+✔ CI05 old Helm input authority worker.native.maximumInputBytes is rejected (42.017931ms)
+✔ CI05 old Helm input authority native.maximumInputBytes is rejected (43.558701ms)
+✔ CR06 native maximumResultBytes rejects 3 before rendering (57.297151ms)
+✔ CR06 native maximumResultBytes rejects null before rendering (56.286255ms)
+✔ CR06 native maximumResultBytes rejects -1 before rendering (68.157896ms)
+✔ CR06 native maximumResultBytes rejects 0 before rendering (63.466753ms)
+✔ CR06 native maximumResultBytes rejects 1.5 before rendering (51.983282ms)
+✔ CR06 native maximumResultBytes rejects 2147483648 before rendering (48.099331ms)
+✔ CR06 native maximumResultBytes rejects undefined before rendering (59.449108ms)
+✔ CR06 native dispatchTimeoutMs rejects 3 before rendering (49.698682ms)
+✔ CR06 native dispatchTimeoutMs rejects null before rendering (49.088916ms)
+✔ CR06 native dispatchTimeoutMs rejects -1 before rendering (47.219937ms)
+✔ CR06 native dispatchTimeoutMs rejects 0 before rendering (50.216826ms)
+✔ CR06 native dispatchTimeoutMs rejects 1.5 before rendering (54.637162ms)
+✔ CR06 native dispatchTimeoutMs rejects 2147483648 before rendering (62.20827ms)
+✔ CR06 native dispatchTimeoutMs rejects undefined before rendering (73.589418ms)
+✖ CR06 missing or unknown native section fails rendering (58.862923ms)
+✔ CR06 missing or unknown native section fails rendering (47.014922ms)
+✔ CR06 missing or unknown native section fails rendering (47.501764ms)
+✔ CR06 two real authored profiles deliver identical bytes and changing checksums to both roles (168.601257ms)
+✔ CR06 old Helm authority worker.native.maximumResultBytes rejected (43.53804ms)
+✖ CR06 old Helm authority control.nativeWorkerDispatchTimeoutMs rejected (43.833119ms)
+✖ CR06 old Helm authority control.maximumWorkerResponseBytes rejected (45.279986ms)
+✔ CP01 resource cpuTimeMs rejects 3 in Helm (53.198834ms)
+✔ CP01 resource cpuTimeMs rejects null in Helm (47.408052ms)
+✔ CP01 resource cpuTimeMs rejects -1 in Helm (51.488609ms)
+✔ CP01 resource cpuTimeMs rejects 0 in Helm (55.184026ms)
+✔ CP01 resource cpuTimeMs rejects 1.5 in Helm (51.227992ms)
+✔ CP01 resource cpuTimeMs rejects 9007199254740992 in Helm (53.923402ms)
+✔ CP01 resource cpuTimeMs rejects undefined in Helm (55.828753ms)
+✔ CP01 resource memoryBytes rejects 3 in Helm (51.713575ms)
+✔ CP01 resource memoryBytes rejects null in Helm (54.163029ms)
+✔ CP01 resource memoryBytes rejects -1 in Helm (52.29296ms)
+✔ CP01 resource memoryBytes rejects 0 in Helm (51.89936ms)
+✔ CP01 resource memoryBytes rejects 1.5 in Helm (48.263055ms)
+✔ CP01 resource memoryBytes rejects 9007199254740992 in Helm (48.306645ms)
+✔ CP01 resource memoryBytes rejects undefined in Helm (48.296516ms)
+✔ CP01 resource tasks rejects 3 in Helm (52.717152ms)
+✔ CP01 resource tasks rejects null in Helm (55.464743ms)
+✔ CP01 resource tasks rejects -1 in Helm (48.404188ms)
+✔ CP01 resource tasks rejects 0 in Helm (56.972623ms)
+✔ CP01 resource tasks rejects 1.5 in Helm (55.484034ms)
+✔ CP01 resource tasks rejects 9007199254740992 in Helm (55.752551ms)
+✔ CP01 resource tasks rejects undefined in Helm (59.18513ms)
+✔ CP01 unsupported resource policy rejected in Helm (55.159985ms)
+✔ CP01 unsupported resource policy rejected in Helm (66.742629ms)
+✔ CP01 unsupported resource policy rejected in Helm (60.32782ms)
+✔ CP06 competing Helm worker.native.resourcePolicy.tasks is rejected (43.983393ms)
+✔ CP06 competing Helm control.nativeResourcePolicy.tasks is rejected (44.27247ms)
+✔ CP06 two resource policies change both rendered snapshots and checksums (155.904395ms)
+✔ CP01 Helm accepts the resource safe-integer ceiling without timer coercion (79.798261ms)
+✔ CS5 Helm rejects supervisor uid=undefined (60.274299ms)
+✔ CS5 Helm rejects supervisor uid=null (56.020188ms)
+✔ CS5 Helm rejects supervisor uid=1 (53.722137ms)
+✔ CS5 Helm rejects supervisor uid=0 (53.674406ms)
+✔ CS5 Helm rejects supervisor uid=-1 (52.605168ms)
+✔ CS5 Helm rejects supervisor uid=1.5 (48.48143ms)
+✔ CS5 Helm rejects supervisor uid=2147483648 (59.89992ms)
+✔ CS5 Helm rejects supervisor gid=undefined (56.259494ms)
+✔ CS5 Helm rejects supervisor gid=null (56.666075ms)
+✔ CS5 Helm rejects supervisor gid=1 (53.668926ms)
+✔ CS5 Helm rejects supervisor gid=0 (55.71824ms)
+✔ CS5 Helm rejects supervisor gid=-1 (58.653497ms)
+✔ CS5 Helm rejects supervisor gid=1.5 (58.593425ms)
+✔ CS5 Helm rejects supervisor gid=2147483648 (54.55453ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=undefined (60.770782ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=null (54.729374ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=1 (55.040632ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=0 (54.632131ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=-1 (53.140512ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=1.5 (56.514031ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=2147483648 (56.90699ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=undefined (49.579109ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=null (50.273557ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=1 (54.565049ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=0 (59.804567ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=-1 (53.608974ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=1.5 (56.923991ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=2147483648 (60.146015ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=undefined (58.606626ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=null (59.373736ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=1 (51.207182ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=0 (54.999731ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=-1 (51.810227ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=1.5 (55.840513ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=2147483648 (53.923203ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=undefined (68.873485ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=null (54.918219ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=1 (48.439459ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=0 (52.597938ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=-1 (48.343857ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=1.5 (59.346215ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=9007199254740992 (54.688673ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=undefined (60.349581ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=null (55.485614ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=1 (47.658548ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=0 (49.350243ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=-1 (50.02384ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=1.5 (47.126304ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=2147483648 (50.320979ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=undefined (51.281483ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=null (56.232443ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=1 (62.468236ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=0 (53.029779ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=-1 (50.676938ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=1.5 (59.14335ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=2147483648 (58.972455ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=undefined (50.210525ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=null (54.693773ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=1 (50.158674ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=0 (57.034084ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=-1 (56.336166ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=1.5 (52.219869ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=2147483648 (56.776948ms)
+✔ CS5 old Helm supervisor close author is rejected (44.789723ms)
+✔ CS4 Helm uses authored drain as well as close in shutdown budget (192.146934ms)
+✔ CS5 both actual mounts and checksums deliver two supervisor profiles without old environment authors (176.232477ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (54.60494ms)
+✖ CS5 Helm rejects missing, null or extended supervisor object (49.094917ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (57.790335ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=undefined (55.608586ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject="" (52.998579ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject="operator:test" (54.6033ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=1 (53.171763ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=false (52.003452ms)
+✔ CC4 Helm rejects Control artifactRoot=undefined (53.894922ms)
+✔ CC4 Helm rejects Control artifactRoot=null (50.341179ms)
+✔ CC4 Helm rejects Control artifactRoot="" (48.578803ms)
+✔ CC4 Helm rejects Control artifactRoot="/" (52.101835ms)
+✔ CC4 Helm rejects Control artifactRoot="relative" (57.455245ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/../artifacts" (51.5304ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/artifacts/" (48.406838ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp//artifacts" (56.543472ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/\u0000artifacts" (50.02341ms)
+✔ CC4 Helm rejects Control artifactRoot=1 (46.610271ms)
+✔ CC4 Helm rejects Control studioPublicUrl=undefined (47.72824ms)
+✔ CC4 Helm rejects Control studioPublicUrl=null (52.931177ms)
+✔ CC4 Helm rejects Control studioPublicUrl="" (55.622567ms)
+✔ CC4 Helm rejects Control studioPublicUrl="relative" (53.034719ms)
+✔ CC4 Helm rejects Control studioPublicUrl="file:///tmp" (51.279233ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://" (62.577949ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://user:pass@studio" (55.932436ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://studio?query=1" (46.827437ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://studio#fragment" (54.634582ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://bad host" (51.701565ms)
+✔ CC4 Helm rejects Control studioPublicUrl=1 (49.685732ms)
+✖ CC4 Helm strict Control object (51.436808ms)
+✔ CC4 Helm strict Control object (49.62254ms)
+✔ CC4 Helm strict Control object (49.806535ms)
+✔ CC4 Helm strict Control object (54.375895ms)
+✔ CC4 retired Helm subject author rejects even disabled value (96.332464ms)
+✔ CC4 two real mounted Control profiles align PVC and checksum while retaining generated trust topology (191.069786ms)
+✔ CL chart listener 23456 keeps every Control destination coherent (SPIFFE true) (96.114448ms)
+✔ CL chart listener 23456 keeps every Control destination coherent (SPIFFE false) (82.786789ms)
+✔ CL chart listener 23457 keeps every Control destination coherent (SPIFFE true) (91.59341ms)
+✔ CL chart listener 23457 keeps every Control destination coherent (SPIFFE false) (90.186443ms)
+✔ CL Helm rejects invalid listener undefined (55.138665ms)
+✔ CL Helm rejects invalid listener null (52.541236ms)
+✔ CL Helm rejects invalid listener 8080 (50.272717ms)
+✔ CL Helm rejects invalid listener 0 (58.37681ms)
+✔ CL Helm rejects invalid listener 65536 (54.233791ms)
+✔ CL Helm rejects invalid listener 3.5 (48.597003ms)
+✔ CL Helm rejects invalid listener true (47.615438ms)
+✔ CL Helm rejects second listener author (42.38768ms)
+✔ Studio authored profiles bind loader and all rendered listener edges (312.525918ms)
+✔ Studio chart rejects competing values and unsupported upstream topology (931.215677ms)
+✔ BA Prism chart preserves two Buster admission profiles through the mounted canonical document (196.984161ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=undefined (85.022928ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=null (49.178589ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=2 (49.335713ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=0 (60.514785ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=-1 (51.460518ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=1.5 (74.897622ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=9007199254740992 (55.196136ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=undefined (54.408846ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=null (62.333473ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=2 (57.323872ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=0 (53.552203ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=-1 (59.134139ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=1.5 (52.187377ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=9007199254740992 (50.786671ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=undefined (48.430319ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=null (49.698762ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=2 (49.087396ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=0 (58.177255ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=-1 (49.949508ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=1.5 (72.952672ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=9007199254740992 (47.499735ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (62.99487ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (50.308758ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (53.606545ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (50.933394ms)
+✔ BA Prism chart retains strict Buster sibling rejection (58.354778ms)
+ℹ tests 246
+ℹ suites 0
+ℹ pass 241
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16245.729053
+
+✖ failing tests:
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:112:105
+✖ CR06 missing or unknown native section fails rendering (58.862923ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm (?:native|prism)/. Input:
+  
+  'walk.go:75: found symbolic link in path: /tmp/prism-swarm-chart-cPEbpf/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\n' +
+    'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm component identity invalid: prism-execution\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:115:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'walk.go:75: found symbolic link in path: /tmp/prism-swarm-chart-cPEbpf/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\nError: execution error at (prism/templates/workloads.yaml:1:14): swarm component identity invalid: prism-execution\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm (?:native|prism)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:138:136
+✖ CR06 old Helm authority control.nativeWorkerDispatchTimeoutMs rejected (43.833119ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Control result and dispatch limits must be authored/. Input:
+  
+  'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/buster-engine.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-control.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-control.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-execution.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-execution.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-studio.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-studio.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-worker.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-worker.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\n' +
+    'Error: execution error at (prism/templates/workloads.yaml:1:14): Control result limit belongs to prism-execution.config.json settings.maximumResultBytes; dispatch timeout belongs to prism-control.config.json settings.dispatchTimeoutMs\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:140:45)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/buster-engine.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-control.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-control.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-execution.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-execution.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-studio.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-studio.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-worker.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-worker.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\nError: execution error at (prism/templates/workloads.yaml:1:14): Control result limit belongs to prism-execution.config.json settings.maximumResultBytes; dispatch timeout belongs to prism-control.config.json settings.dispatchTimeoutMs\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /Control result and dispatch limits must be authored/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:138:136
+✖ CR06 old Helm authority control.maximumWorkerResponseBytes rejected (45.279986ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Control result and dispatch limits must be authored/. Input:
+  
+  'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/buster-engine.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-control.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-control.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-execution.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-execution.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-studio.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-studio.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-worker.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-worker.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\n' +
+    'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\n' +
+    'Error: execution error at (prism/templates/workloads.yaml:1:14): Control result limit belongs to prism-execution.config.json settings.maximumResultBytes; dispatch timeout belongs to prism-control.config.json settings.dispatchTimeoutMs\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:140:45)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/buster-engine.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-control.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-control.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-execution.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-execution.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-studio.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-studio.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-worker.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-worker.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used\nwalk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\nError: execution error at (prism/templates/workloads.yaml:1:14): Control result limit belongs to prism-execution.config.json settings.maximumResultBytes; dispatch timeout belongs to prism-control.config.json settings.dispatchTimeoutMs\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /Control result and dispatch limits must be authored/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:224:3
+✖ CS5 Helm rejects missing, null or extended supervisor object (49.094917ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm (?:native|supervisor)/. Input:
+  
+  'walk.go:75: found symbolic link in path: /tmp/prism-swarm-chart-GbIDpf/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\n' +
+    'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm worker requires ingress and supervisor only\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:227:75)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'walk.go:75: found symbolic link in path: /tmp/prism-swarm-chart-GbIDpf/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\nError: execution error at (prism/templates/workloads.yaml:1:14): swarm worker requires ingress and supervisor only\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm (?:native|supervisor)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/prism-swarm-config.test.mjs:240:93
+✖ CC4 Helm strict Control object (51.436808ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /swarm (?:prism|control)/. Input:
+  
+  'walk.go:75: found symbolic link in path: /tmp/prism-swarm-chart-pOkjDE/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\n' +
+    'Error: execution error at (prism/templates/workloads.yaml:1:14): swarm component identity invalid: prism-control\n' +
+    '\n' +
+    'Use --debug flag to render out invalid YAML\n'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/prism-swarm-config.test.mjs:243:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'walk.go:75: found symbolic link in path: /tmp/prism-swarm-chart-pOkjDE/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used\nError: execution error at (prism/templates/workloads.yaml:1:14): swarm component identity invalid: prism-control\n\nUse --debug flag to render out invalid YAML\n',
+    expected: /swarm (?:prism|control)/,
+    operator: 'match',
+    diff: 'simple'
+  }

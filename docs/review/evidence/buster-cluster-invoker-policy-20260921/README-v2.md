@@ -1,0 +1,9 @@
+# Private cluster candidate V2 — source correction only
+
+V1 manifest, snapshot and all V1 evidence remain unchanged. No live integration, tests, Helm, types or lint were executed. Review V2 against snapshot-v1 using delta-v2.json; full baseline patch is change-v2.patch.
+
+The selected lease version domain is now exactly `^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$` in component schema and both direct consumers. Stable versions and numbered alpha/beta are admitted; unnumbered alpha/beta and arbitrary labels are rejected. The shared Helm helper validates from that same schema. New both-chart cases plus central-validator and actual direct-constructor cases cover stable, alpha, beta, incomplete and foreign labels. No execute seam is needed to construct these real invokers, and no child or cluster is launched by these constructor checks.
+
+Central cluster policy remains required. Runtime production skips external binding creation only when KubernetesFixture, TailscaleExposure and RuntimeSecurity are all absent and clusterBindings is omitted. An explicitly provided malformed/extra binding still rejects. Any active cluster route requires the real namespace binding. No placeholder namespace/default is inserted. Production runtime cases now verify omitted binding with all routes disabled through real start/stop, malformed supplied bindings before store creation, and active KubernetesFixture missing binding before store creation. Existing non-cluster original fixture objects no longer need the V1-inserted dummy namespace; their other original assertions/deadlines remain unchanged.
+
+Architecture documentation states the exact version domain, conditional external binding requirement, code identifiers and units. V1 README scopes, remaining policy owners and planned runtime requirements still apply. Original-module-matrix-v2.json binds current test adaptations. Runtime and mutant recognition remain pending; this is not behavioral acceptance or full CONFIG closure.

@@ -1,0 +1,7 @@
+PASS committed retarget rejected despite current correct alias
+PASS committed canonical symlink rejected despite current regular target
+PASS absent committed canonical target rejected despite current target
+PASS current charts ancestor link rejected
+PASS current my-values ancestor link rejected
+PASS current skills ancestor link rejected
+PASS restored original remains accepted

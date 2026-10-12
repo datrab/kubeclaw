@@ -1,0 +1,163 @@
+TAP version 13
+# Subtest: actual Control image declarations and exact image proof accept authored profile one
+ok 1 - actual Control image declarations and exact image proof accept authored profile one
+  ---
+  duration_ms: 2425.755581
+  type: 'test'
+  ...
+# Subtest: actual Control image declarations and exact image proof accept authored profile two
+ok 2 - actual Control image declarations and exact image proof accept authored profile two
+  ---
+  duration_ms: 3014.152923
+  type: 'test'
+  ...
+# Subtest: image proof requires the selected role and rejects the retired Worker PORT author
+ok 3 - image proof requires the selected role and rejects the retired Worker PORT author
+  ---
+  duration_ms: 785.327277
+  type: 'test'
+  ...
+# Subtest: Control listener rejects invalid authored port undefined
+ok 4 - Control listener rejects invalid authored port undefined
+  ---
+  duration_ms: 11.315973
+  type: 'test'
+  ...
+# Subtest: Control listener rejects invalid authored port null
+ok 5 - Control listener rejects invalid authored port null
+  ---
+  duration_ms: 4.107816
+  type: 'test'
+  ...
+# Subtest: Control listener rejects invalid authored port 8080
+ok 6 - Control listener rejects invalid authored port 8080
+  ---
+  duration_ms: 3.810688
+  type: 'test'
+  ...
+# Subtest: Control listener rejects invalid authored port 0
+ok 7 - Control listener rejects invalid authored port 0
+  ---
+  duration_ms: 3.829649
+  type: 'test'
+  ...
+# Subtest: Control listener rejects invalid authored port -1
+ok 8 - Control listener rejects invalid authored port -1
+  ---
+  duration_ms: 5.379739
+  type: 'test'
+  ...
+# Subtest: Control listener rejects invalid authored port 1.5
+ok 9 - Control listener rejects invalid authored port 1.5
+  ---
+  duration_ms: 4.105497
+  type: 'test'
+  ...
+# Subtest: Control listener rejects invalid authored port 65536
+ok 10 - Control listener rejects invalid authored port 65536
+  ---
+  duration_ms: 3.924832
+  type: 'test'
+  ...
+# Subtest: Control listener rejects invalid authored port true
+ok 11 - Control listener rejects invalid authored port true
+  ---
+  duration_ms: 3.88374
+  type: 'test'
+  ...
+# Subtest: Control accepts TCP boundary 1 without promising host bind permissions
+ok 12 - Control accepts TCP boundary 1 without promising host bind permissions
+  ---
+  duration_ms: 7.146135
+  type: 'test'
+  ...
+# Subtest: Control accepts TCP boundary 65535 without promising host bind permissions
+ok 13 - Control accepts TCP boundary 65535 without promising host bind permissions
+  ---
+  duration_ms: 5.035391
+  type: 'test'
+  ...
+# Subtest: Control snapshot owns the port before asynchronous composition; Worker uses its separate authored port
+ok 14 - Control snapshot owns the port before asynchronous composition; Worker uses its separate authored port
+  ---
+  duration_ms: 35.390307
+  type: 'test'
+  ...
+# Subtest: original production entrypoint serves authored listener profile one
+ok 15 - original production entrypoint serves authored listener profile one
+  ---
+  duration_ms: 2041.530923
+  type: 'test'
+  ...
+# Subtest: original production entrypoint serves authored listener profile two
+ok 16 - original production entrypoint serves authored listener profile two
+  ---
+  duration_ms: 2765.197983
+  type: 'test'
+  ...
+# Subtest: actual Control preserves HTTP errors and availability when the diagnostic sink fails
+ok 17 - actual Control preserves HTTP errors and availability when the diagnostic sink fails
+  ---
+  duration_ms: 1920.702872
+  type: 'test'
+  ...
+# Subtest: WL actual HTTP Worker consumes two authored listeners; native execution remains modeled
+ok 18 - WL actual HTTP Worker consumes two authored listeners; native execution remains modeled
+  ---
+  duration_ms: 201.823442
+  type: 'test'
+  ...
+# Subtest: WL actual entrypoint rejects port undefined before native startup
+ok 19 - WL actual entrypoint rejects port undefined before native startup
+  ---
+  duration_ms: 935.563263
+  type: 'test'
+  ...
+# Subtest: WL actual entrypoint rejects port 0 before native startup
+ok 20 - WL actual entrypoint rejects port 0 before native startup
+  ---
+  duration_ms: 1066.60261
+  type: 'test'
+  ...
+# Subtest: WL actual entrypoint rejects port 65536 before native startup
+ok 21 - WL actual entrypoint rejects port 65536 before native startup
+  ---
+  duration_ms: 1100.188012
+  type: 'test'
+  ...
+# Subtest: WL actual entrypoint rejects retired PORT ""
+ok 22 - WL actual entrypoint rejects retired PORT ""
+  ---
+  duration_ms: 1401.794031
+  type: 'test'
+  ...
+# Subtest: WL actual entrypoint rejects retired PORT "8080"
+ok 23 - WL actual entrypoint rejects retired PORT "8080"
+  ---
+  duration_ms: 1284.88153
+  type: 'test'
+  ...
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/buster-engine.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-control.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-control.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-execution.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-execution.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-studio.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-studio.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/prism-worker.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/prism-worker.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.config.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used
+# Subtest: actual Helm worker bootstrap readiness preserves post-install migration startup
+ok 24 - actual Helm worker bootstrap readiness preserves post-install migration startup
+  ---
+  duration_ms: 419.000422
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 23812.142659

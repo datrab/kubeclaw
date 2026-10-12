@@ -1,0 +1,36 @@
+{
+  "changedFindings": [
+    "IFR-04-001"
+  ],
+  "all154OriginalTextsPreserved": true,
+  "otherFindingsAndTopLevelMetadataUnchanged": true,
+  "counts": {
+    "verifiziert": 142,
+    "in Bearbeitung": 4,
+    "implementiert": 2,
+    "offen": 6
+  },
+  "unfinished": 12,
+  "files": [
+    {
+      "path": "docs/review/remediation/register.json",
+      "sha256": "cbd64533bd16c91928c21317b9d183969aff91c512cc32bcc7daf3102af95697"
+    },
+    {
+      "path": "docs/review/remediation/register.md",
+      "sha256": "7f44049163a17d250f61aff7d01435ff354cb8658dff7ea630b692993ed0fdfa"
+    },
+    {
+      "path": "docs/review/remediation/progress.md",
+      "sha256": "55af7c16fb75ec777fa2f2138bafadaa651ae17b4d231f16ba882292c4d958a2"
+    },
+    {
+      "path": "docs/review/remediation/handoff.md",
+      "sha256": "92d54f37c376b78d64746e9dd6ea6b5e4542dd5c71e177dc8857525b3d86f6fb"
+    },
+    {
+      "path": "docs/review/remediation/implementation/open-work-inventory-20260921.md",
+      "sha256": "b1a761b0e71c28d8c83309e824c3648dd39d69f15010015950d10ba013dec48d"
+    }
+  ]
+}

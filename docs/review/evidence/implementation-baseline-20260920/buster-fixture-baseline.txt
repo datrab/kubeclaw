@@ -1,0 +1,20 @@
+✔ real host readiness is persisted before dependents and teardown intent precedes host cleanup (1003.098271ms)
+✔ readiness for a different scope is rejected before journal write or dependency admission (631.75796ms)
+✔ teardown before setup completion fences a late readiness report (694.410934ms)
+✔ repeated host readiness is a protocol failure, not another fixture admission (657.433674ms)
+✔ host SIGKILL after readiness cannot become a successful lifetime (652.961019ms)
+✔ cancellation persists before forced termination without waiting for host cleanup (733.94155ms)
+✔ host refuses teardown without the original readiness acknowledgement (597.087597ms)
+✔ fixture accepted survives real writer SIGKILL and cannot become a new identity (889.652594ms)
+✔ fixture teardown survives real writer SIGKILL and cannot become a new identity (849.116962ms)
+✔ actual fixture files preserve nonterminal readiness, first teardown intent and immutable scope binding (276.628281ms)
+✔ original Core never-launched receipt closes an unready fixture and remains replayable without invented observations (308.717777ms)
+✔ retained bytes reserve readiness and receipt space, and corruption is not silently repaired (119.128722ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8512.531383

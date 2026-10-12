@@ -1,0 +1,12 @@
+{
+  "originalManifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-runtime-security-policy-20260924/consumer-isolation-v1/manifest.json",
+  "originalManifestSha256": "2427668922d6c7cad8afc1547816242a7e3b339d7d25ea04be4d0d4bcc58c9b0",
+  "files": [
+    {
+      "path": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "kind": "file",
+      "beforeSha256": "fa7ef952e620fce3549c525bce1639e0605fd99f3d9a1fd8d7626c5e8183ba88",
+      "sha256": "f67e43a2be7ebc263274834ea4dc8e8083fa007043a522fbdb86e1380bd290ff"
+    }
+  ]
+}

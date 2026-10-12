@@ -1,0 +1,19 @@
+import json,pathlib,hashlib
+root=pathlib.Path('docs/review/evidence/buster-security-scan-policy-20260924')
+p=json.loads((root/'ownership-proposal-v1.json').read_text())
+p['status']='Resolved for private implementation only; independently reviewed design, runtime acceptance pending'
+p['fields'][2]={'field':'allowedRegistryPrefixes','initialValue':'Explicit full deployment prefixes in each complete profile; no transport-derived concatenation','currentAuthority':'entrypoint old generated image scope','consumer':'Exact-or-slash-child image admission independent of registry transport; multiple allowed hosts retained'}
+p['registryBinding']={'owner':'existing operator registry config','delivery':'optional generated top-level runtime registryClient','absence':'absent only; null rejected','capture':'closed validation and external secret lookup once before runtimeRegistry or store effects','consumers':['containerBuild','networkHttp.registryHealth','kubernetesFixture registry origin','securityScan optional private transport'],'legacy':'whole securityScan and removed containerBuild registry keys rejected by presence'}
+p['review']='../independent-security-scan-policy-20260924/design-review-v1.json'
+(root/'ownership-resolved-v2.json').write_text(json.dumps(p,indent=2)+'\n')
+(root/'design-resolved-v2.md').write_text('''# Resolved scanner policy and shared registry design
+
+The root decision and independent design-review-v1 authorize private implementation, not integration or acceptance. V1 proposals remain archived. All thirteen policy fields are required under `buster-engine.config.json settings.securityScan`, including when the route is disabled. Full `allowedRegistryPrefixes` explicitly authorize images; changing transport grants no image admission. A missing optional generated `registryClient` means no private binding; present null, malformed data and missing named credentials reject. The descriptor derives once from the existing operator registry config. Resolve credentials once and capture immutable values before registry/store effects. Build, opt-in registry health, fixture origin and scanner transport project that value; none reads a duplicate legacy author. Scanner-only public/dependency/config operation does not require BuildKit configuration.
+
+Keep exact existing matching, age/size domains and code-unit truncation. Both profiles explicitly author complete policy. Anonymous image execution explicitly isolates Docker auth even if host/cache credentials exist; credentials and CA reach only the exact configured private host. Existing single private origin support does not promise multiple private authorities. HTTP lab scanner requests fail before network. Retired scanner objects and containerBuild registry keys reject by presence, including empty/null/equal values.
+
+The output-limit-before-abort correction is a behavior fix with an exact old-order mutation, not a pure migration. All new two-profile consumers, actual production service routes, capture/reload checks, denied grant/route checks, original security/native DB/TLS registry/component/chart/remote runtime scopes and documentation require fresh execution after source review. Prepared tests do not establish acceptance.
+
+Open and unaffected: child/group ownership and credential cleanup before confirmed child close; partial credential-file creation ownership; unbounded manifest read, parsed JSON/findings/retained result budgets; provider defaults, installer transfer/buffer budgets and native CPU/RAM/process/live gates. No test teardown is a production ownership proof. Root separately corrects the obsolete locked-database-installer source assertion; this package must not overwrite that correction.
+''')
+base=root/'private-v1';(base/'files').mkdir(parents=True,exist_ok=True);(base/'before').mkdir(exist_ok=True)

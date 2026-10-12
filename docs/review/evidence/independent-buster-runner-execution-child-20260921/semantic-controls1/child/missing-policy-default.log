@@ -1,0 +1,144 @@
+TAP version 13
+# Subtest: real child preserves detached invoke, concurrent replies, instance state and import logs
+ok 1 - real child preserves detached invoke, concurrent replies, instance state and import logs
+  ---
+  duration_ms: 71.364685
+  type: 'test'
+  ...
+# Subtest: real child settles outstanding RPCs and ignores late replies; early reply=false
+ok 2 - real child settles outstanding RPCs and ignores late replies; early reply=false
+  ---
+  duration_ms: 56.687245
+  type: 'test'
+  ...
+# Subtest: real child settles outstanding RPCs and ignores late replies; early reply=true
+ok 3 - real child settles outstanding RPCs and ignores late replies; early reply=true
+  ---
+  duration_ms: 60.566115
+  type: 'test'
+  ...
+# Subtest: real child rejects an unawaited RPC and exits with failure
+ok 4 - real child rejects an unawaited RPC and exits with failure
+  ---
+  duration_ms: 57.560188
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: undefined
+not ok 5 - real child rejects invalid observation before provider import: undefined
+  ---
+  duration_ms: 60.534325
+  type: 'test'
+  location: '/tmp/child-observation-control-sac7x5ib/provider-child-session.test.mjs:173:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'PROVIDER_SHOULD_NOT_LOAD'
+    - 'TEST_PROVIDER_OBSERVATION_INVALID'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'TEST_PROVIDER_OBSERVATION_INVALID'
+  actual: 'PROVIDER_SHOULD_NOT_LOAD'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/child-observation-control-sac7x5ib/provider-child-session.test.mjs:176:14)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: real child rejects invalid observation before provider import: null
+not ok 6 - real child rejects invalid observation before provider import: null
+  ---
+  duration_ms: 55.604837
+  type: 'test'
+  location: '/tmp/child-observation-control-sac7x5ib/provider-child-session.test.mjs:173:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'PROVIDER_SHOULD_NOT_LOAD'
+    - 'TEST_PROVIDER_OBSERVATION_INVALID'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'TEST_PROVIDER_OBSERVATION_INVALID'
+  actual: 'PROVIDER_SHOULD_NOT_LOAD'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/child-observation-control-sac7x5ib/provider-child-session.test.mjs:176:14)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: real child rejects invalid observation before provider import: {}
+ok 7 - real child rejects invalid observation before provider import: {}
+  ---
+  duration_ms: 56.83894
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: []
+ok 8 - real child rejects invalid observation before provider import: []
+  ---
+  duration_ms: 54.235302
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":0}
+ok 9 - real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":0}
+  ---
+  duration_ms: 62.420713
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":1.5}
+ok 10 - real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":1.5}
+  ---
+  duration_ms: 67.192797
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":"10"}
+ok 11 - real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":"10"}
+  ---
+  duration_ms: 57.967929
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":2147483648}
+ok 12 - real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":2147483648}
+  ---
+  duration_ms: 57.179858
+  type: 'test'
+  ...
+# Subtest: real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":10,"extra":1}
+ok 13 - real child rejects invalid observation before provider import: {"resourceSampleIntervalMs":10,"extra":1}
+  ---
+  duration_ms: 56.10491
+  type: 'test'
+  ...
+# Subtest: real child uses authored sample interval 10
+ok 14 - real child uses authored sample interval 10
+  ---
+  duration_ms: 301.954935
+  type: 'test'
+  ...
+# Subtest: real child uses authored sample interval 40
+ok 15 - real child uses authored sample interval 40
+  ---
+  duration_ms: 307.717724
+  type: 'test'
+  ...
+# Subtest: real child reuses an identical sampling policy and rejects a changed policy
+ok 16 - real child reuses an identical sampling policy and rejects a changed policy
+  ---
+  duration_ms: 60.407601
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 14
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1532.583946

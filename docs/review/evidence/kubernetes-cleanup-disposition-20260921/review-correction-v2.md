@@ -1,0 +1,3 @@
+# V2: prove successful provider response before injected termination fault
+
+V1 remains unchanged. Only the new owned-child observer and fifth Runner test change. The observer records real stdout protocol lines without replacing or suppressing bytes; at the exact injected TERM it requires an already observed passed provider result. The test also requires a distinct later completed/passed deploy attempt and its actual closed cleanup session receiving completed-fixture authority. Delete-count and initial incomplete-cleanup assertions remain. No production, original test, timeout or runtime execution changes.

@@ -1,0 +1,9 @@
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-size-budget-production.mts:89
+  const firstResult = JSON.parse((await service.result(firstStatus.jobId, firstResultRef.contentDigest,
+                                                                                         ^
+
+TypeError: Cannot read properties of null (reading 'contentDigest')
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-size-budget-production.mts:89:90
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0

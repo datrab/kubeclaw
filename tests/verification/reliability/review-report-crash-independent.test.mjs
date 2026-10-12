@@ -18,7 +18,7 @@ import {report} from './review-report-locale-fixture.mjs';
 const self=fileURLToPath(import.meta.url);
 async function child(root,mode,replay){
  const adapter=activate({config:{artifactRoot:path.join(root,'artifacts')}});
- const coordinator=new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl')),undefined,undefined,new FileResourceLockManager(path.join(root,'locks')));
+ const coordinator=new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl')),undefined,undefined,new FileResourceLockManager(path.join(root,'locks')), 300_000);
  const attempt={runId:'run:report-hex',stageId:'review',attemptId:'attempt-hex',attemptNumber:1};
  const owner={pluginId:'kubeclaw.artifact-store',apiVersion:'pipeline-plugin-v2',packageVersion:'1.0.0',contentDigest:`sha256:${'a'.repeat(64)}`};
  await adapter.ready();

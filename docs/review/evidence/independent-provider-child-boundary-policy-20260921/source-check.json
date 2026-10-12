@@ -1,0 +1,18 @@
+{
+  "identities": {
+    "path": "charts/kubeclaw/files/config/eslint.config.mjs",
+    "beforeSha256": "d0bf5f5735be8ad26e7d7ab566d849c26801b9914248e8ad08c1b0a4d5e40d55",
+    "draftSha256": "e39eec75b7ac987c0391cc97b910a8ad9922a4475d9d20d897bf026bbaa36ccf",
+    "integrated": false,
+    "lintExecuted": false,
+    "scope": "Declare the actual provider process entrypoint in the existing exact-file console and module-loader boundary lists. No other file, rule, threshold or ignore changes."
+  },
+  "checks": {
+    "beforeMatches": true,
+    "draftMatches": true,
+    "liveEqualsBefore": true,
+    "exactlyTwoDeclarations": true,
+    "noOtherDelta": true,
+    "runtimeExecuted": false
+  }
+}

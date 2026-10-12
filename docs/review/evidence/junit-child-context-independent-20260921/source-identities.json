@@ -1,0 +1,36 @@
+[
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+    "sha256": "19a9a9ad9e3a3bbb876d2b846a3e97b738a1e9c2586e37c4bb2a80a960d46d20",
+    "matchesAuthorFrozenManifest": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+    "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+    "matchesAuthorFrozenManifest": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-evidence.ts",
+    "sha256": "e232178fab57c5f55742d9b8ccec88cdbccada7b77f6ec8a653ee1ad56972f95",
+    "matchesAuthorFrozenManifest": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+    "sha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+    "matchesAuthorFrozenManifest": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+    "sha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+    "matchesAuthorFrozenManifest": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+    "sha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327",
+    "matchesAuthorFrozenManifest": true
+  },
+  {
+    "path": "tests/verification/contracts/check-junit-executed-required.mts",
+    "sha256": "91c3bef282bf06ac44abe7d0320d330af10ec8c01d940a36134348458f7b18f7"
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "topLevelProperties": 15,
+  "classifiedRows": 16,
+  "exactSchemaCoverage": true,
+  "localLinksExist": 9,
+  "runtimeExecuted": false,
+  "files": [
+    {
+      "path": "docs/review/remediation/implementation/config-platform-inventory-20260921.md",
+      "sha256": "7cf6b36183c64d26fe93cf03ecbc127a31063cb7dff0a2beb819d4ceb0426da2"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "sha256": "55f58130cd8e2c49fe2ed5928000e1c79684c715a08b19700a017729db562303"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+      "sha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "sha256": "4b4814b370a035668309df52af51dd138bc4c92ae3ec596393fb87b959dae605"
+    },
+    {
+      "path": "skills/nova/core/cli.ts",
+      "sha256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787"
+    },
+    {
+      "path": "skills/nova/project/cli.ts",
+      "sha256": "6dbf4cb0a699b1e4c5e64c7f94d1bcbe9bdba1fcd1cf5232d81d7ad45ea5f366"
+    },
+    {
+      "path": "skills/nova/project/legacy-import-cli.ts",
+      "sha256": "61f0e1ebb20a807a5b2fac3e0508931d0935e24aecaf7affa34bb30ee640f824"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "35c238db98fe8e5ac9479773f3eaa3ad0b63f40d04a0e252e0a4030e84b6e27d"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-admin.ts",
+      "sha256": "f3ba44d49baffa01ee74a4d749818e8f903feb48827eb9108f959c24c8a0a1f2"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "771cf3a0105edc54bbca6af53d5761082374aab2be15c3df72e5f6e5ee6ec567"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "source": "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+  "beforeSha256": "8a9b796faeb8e4decc083deebc7624212798ade8e7243aa54b770b0250f40529",
+  "change": "Only export existing retainedTerminal; function body and existing callers unchanged. Wait executor reuses it, removing duplicate crypto/key/shape/attempt decoder.",
+  "afterSha256": "db6ef5e755808975ba934fa20276b6ac04e40161c3b81607b2c254bb07e36541",
+  "onlyExportChanged": true
+}

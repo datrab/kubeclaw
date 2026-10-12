@@ -1,0 +1,16 @@
+✔ snapshot preserves registry digest, nested bytes and private file modes (89.028877ms)
+✔ package reader rejects symlinks and the existing aggregate byte bound (2.906474ms)
+✔ package reader preserves its 2048-file admission limit (1799.873794ms)
+✔ package read and snapshot write preserve cancellation reason identity (1.488908ms)
+{"ok":true,"adapter":"junit","isolated":true,"cases":2}
+✔ tests/verification/contracts/check-pipeline-junit-report-adapter.mts (8298.770557ms)
+{"ok":true,"isolated":true,"sourceVerified":true,"resultValidated":true,"timeout":true,"cancellation":true}
+✔ tests/verification/contracts/check-pipeline-report-adapter-runtime.mts (5717.698424ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16326.681547

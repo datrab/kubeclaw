@@ -1,0 +1,31 @@
+{
+  "hashes": {
+    "scripts/trivy-database-lock.mjs": "7f86040766fd1cdc010302617217adbe58b862437259aea1cff03f992ca0d510",
+    "scripts/tests/trivy-database-lock.test.mjs": "6b41e748bb9b26a2753c9adfdf98e1be011db2f60f74020688f19254febe6fc2",
+    "scripts/versions.mjs": "a3040ffa7a7e7f7a7d0b5390f6b554c5191724f66030e18352144f7661caa0d4",
+    "versions.json": "a3f332d67a21e48fbaead8d66e5a848ecb2ad5e0370a44bd75b6bc9a4b0f301f",
+    "docker/trivy-databases.lock.json": "eb4de828de3d1afe277aad01925ab94a8ed2eb08fbe41c00fd3e16889d81569e",
+    "docker/Dockerfile.buster-runtime": "d2dfe401bc8c3e7a7839b011e30ecff7f159db8b72a2f27f85ccb97ea773f38a",
+    ".github/workflows/build-images.yaml": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc",
+    ".github/workflows/role-images.yaml": "b2756f5eec9f1248e1eb9926113ac28a7614d2868f5fc9004678f75ecdff99d8",
+    "docs/operations/local-image-vulnerability-scan.md": "53686fd61b1c8a6b671c6adf53041fdcdffd91f3d39e92e6bf43b74f5e55abf7",
+    "docs/operations/runtime-versions-and-images.md": "d5f237860cb23761243455b63c8bb5124f7503fea9dc46c3a5832420aa18680f"
+  },
+  "mutations": [
+    {
+      "name": "manifest",
+      "pattern": "TD04",
+      "exitCode": 1
+    },
+    {
+      "name": "archive",
+      "pattern": "TD05",
+      "exitCode": 1
+    },
+    {
+      "name": "extracted",
+      "pattern": "TD06: correct archive",
+      "exitCode": 1
+    }
+  ]
+}

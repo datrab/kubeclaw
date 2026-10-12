@@ -1,0 +1,677 @@
+[
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "sha256": "40c86542dcf8c55b5e7270fe889487a81e7257c90433bd62b4b36f0bd9abbbbf",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/docker/buster-runtime-entrypoint.sh.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "sha256": "f89c78d96f4a1fa041468890d8759d711514ea7ff9c45fd29c5239d8daa4c4fd",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/docs/review/remediation/implementation/config-inventory-20260920.json.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-platform-inventory-20260921.md",
+    "sha256": "4db389920a7643c3dc14adbbd287c4194027bf71a89d42d44d681b03d8922a3c",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/docs/review/remediation/implementation/config-platform-inventory-20260921.md.snapshot"
+  },
+  {
+    "path": "scripts/observability-retirement/operator-authority.mjs",
+    "sha256": "1f04c622c015a860a81c5727b71b538ed00dd104aa05540072ef6bb09ce55586",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/scripts/observability-retirement/operator-authority.mjs.snapshot"
+  },
+  {
+    "path": "scripts/retire-operator-request.mjs",
+    "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/scripts/retire-operator-request.mjs.snapshot"
+  },
+  {
+    "path": "scripts/retire-wait-value.mjs",
+    "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/scripts/retire-wait-value.mjs.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/api-flow/plugin.json",
+    "sha256": "d6c8f75a90ab142a4273893cd0e0bcf12a1d377432a42eb8f65127c177bbe536",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/api-flow/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/axe/plugin.json",
+    "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/axe/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/container-build/plugin.json",
+    "sha256": "6a43c756b8707be3a5efb3851ed8869a17e376658a30503bf9d51697a7e9c011",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/container-build/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/coverage-budget/plugin.json",
+    "sha256": "0f0ae38312005bf70de5b8da45dd96122be24614b05079b2ed410248e9166067",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/coverage-budget/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+    "sha256": "a7dc11d0cd73886181c787be579552ed8f26eba3a4b364e87361ca6eff0db194",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/demo-auth-smoke/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/direct-command/plugin.json",
+    "sha256": "649466714d77ce1afe3a753f48e1a77481aa757fb46a325f3ea05c0c3ed2835a",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/direct-command/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/http/plugin.json",
+    "sha256": "be8c584b93172cc05d88c547f43d351dd00a0570475bad0c2a6bfbebc6792453",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/http/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+    "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/junit-report-adapter/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+    "sha256": "9c658fd6807beea11340609d22483ffac429a5e9184e74233a145774ec92feea",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/kubernetes-fixture/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/lighthouse/plugin.json",
+    "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/lighthouse/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/openapi/plugin.json",
+    "sha256": "ea64826e4be0b75620a11de0d375abb6ef0361492488adaa5c3b839e49fbf3af",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/openapi/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/playwright/plugin.json",
+    "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/playwright/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/security-providers/plugin.json",
+    "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/security-providers/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/size-budget/plugin.json",
+    "sha256": "5f9a11dad63edf557454124ae8a71a6382ddac5212dbeaf064e86019fe28a737",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/size-budget/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+    "sha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/tailscale-exposure/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/buster/plugins/visual/plugin.json",
+    "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/buster/plugins/visual/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+    "sha256": "4b4814b370a035668309df52af51dd138bc4c92ae3ec596393fb87b959dae605",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugin-runtime/foundation/config/platform.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+    "sha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugin-runtime/foundation/config/platform.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+    "sha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugin-runtime/foundation/registry/activation.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+    "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugin-runtime/foundation/registry/capabilities.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+    "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+    "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugin-runtime/foundation/registry/configuration.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+    "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugin-runtime/foundation/registry/discovery.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+    "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugin-runtime/foundation/registry/schema.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/agent-observability/plugin.json",
+    "sha256": "00319c7417cd253a0bcc0ae6574baba74a2592a8ee9284552f7d2fc2c341ce8c",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/agent-observability/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/artifact-store/plugin.json",
+    "sha256": "48f2a67542f717818d50d395a74c66273078a0444cdebbc70e8f3cc4a840202f",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/artifact-store/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/command-runner/plugin.json",
+    "sha256": "6d59b5fdf3f954c2b11894024166b281d57583fa8d3e5b4b1a77b1090232c146",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/command-runner/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/git-workspace/plugin.json",
+    "sha256": "c7fac89445933a524d8f8032be5749a221cc8780de6cbcb20f483217841c8802",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/git-workspace/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/network-http/README.md",
+    "sha256": "10b1f89e246820bff951b8a95ba671c7f71b65e1cd00395ef908c700892e66a6",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/network-http/README.md.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/network-http/package.json",
+    "sha256": "a107e301f9cf6b63724e5197f0023ebba2761c4cda585923b0633752289745c1",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/network-http/package.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/network-http/plugin.json",
+    "sha256": "54d1a21a08c950e7a63731f2fc76c5dd479c349462880e2b50977c5518b3b1e3",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/network-http/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/network-http/schemas/config.schema.json",
+    "sha256": "a064ffe2b856d9a11ff45b51bc24cfb2506f321f66a54ea0707a17de59fa6219",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/network-http/schemas/config.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/network-http/src/adapter.ts",
+    "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/network-http/src/adapter.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/network-http/tests/live-function.test.ts",
+    "sha256": "d047a9f0a9fd368ad7dcd876b5374f8040c77bc21be5ef17880282fcacb37e98",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/network-http/tests/live-function.test.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/network-http/tests/package-boundary.test.mjs",
+    "sha256": "660938d631d5e6575a641b9584b6a25d33c1f7482a15b05ddfeca0f40a90690c",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/network-http/tests/package-boundary.test.mjs.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/network-http/tests/streaming.test.ts",
+    "sha256": "5732265d9df917410ad613816e9ce8ca179ac5d21392cec38d8bea7d1ab4934c",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/network-http/tests/streaming.test.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/network-http/tsconfig.json",
+    "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/network-http/tsconfig.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/README.md",
+    "sha256": "64235a03c137827e4ef3db5cfa0313374a46f470bf91a86fbb7335fd8d99d52f",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/notification-observer/README.md.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/package.json",
+    "sha256": "0ce1f17ad3f2510f5de53e5d40dbc59b71db925b5061b7bda518a2cc81929511",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/notification-observer/package.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/plugin.json",
+    "sha256": "7b5b349b4767d74db5df9db9b4580880dff6a86bdcecf5cbf9f11470e76f8e48",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/notification-observer/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/schemas/checkpoint.schema.json",
+    "sha256": "c6d66f56cbb0c5cd0b277a1def6ce910dfbbd1707a6feaf5ef17674cfcf29759",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/notification-observer/schemas/checkpoint.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/schemas/config.schema.json",
+    "sha256": "d1e51edc89a0ad7ef3cead4b4a769a2340c35d78cf501b3302c16740409860c3",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/notification-observer/schemas/config.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/src/observer.ts",
+    "sha256": "264990bdacb7d3598db99fb4c7aab9a050c1d717f08c4013ba6f19eced578a70",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/notification-observer/src/observer.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/tests/live-function.test.ts",
+    "sha256": "078325d0b4ccfebee4d5285f01fa3976b45d2a0ba23c3ebdf70aed2e60b5125f",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/notification-observer/tests/live-function.test.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/tests/observer.unit.test.mjs",
+    "sha256": "ce46f2724a154d1262f4e4833b9b6c74dc7cd64e7fc05cce46f42c617e30dca0",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/notification-observer/tests/observer.unit.test.mjs.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/tests/package-boundary.test.mjs",
+    "sha256": "e0eb88d461603cdecdfafe6dcc12c3675e034034d0e0fe4bf6b3168408b55d90",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/notification-observer/tests/package-boundary.test.mjs.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/tests/parity.test.ts",
+    "sha256": "975df180de9994abdd3b56546ca673782fd75b2c2985edfa6737abf1a7e0acba",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/notification-observer/tests/parity.test.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/tsconfig.json",
+    "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/notification-observer/tsconfig.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/openclaw-agent-events/plugin.json",
+    "sha256": "16e0baa799abd2a53ef43f3ccfb0a4055d90c2129453de750992eafec9112be5",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/openclaw-agent-events/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/README.md",
+    "sha256": "84e6525da379f33bdd2a3543881737b6e14568f66297544548df2f35a1b25ed7",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/README.md.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/package.json",
+    "sha256": "24456c06df9fbb3a280731ff3bee2106b4432f3334efed93449bbd1c90b48894",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/package.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/plugin.json",
+    "sha256": "e46b330a054495e0628168c03e7fe8c1e3ea58542ea40012b87def6185744563",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+    "sha256": "4054963cbfc17820e7f11be45ed3bf087d09d16ffc9f2dd14953358637f7ebd4",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/schemas/config.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/schemas/payload.schema.json",
+    "sha256": "55bb4a333433f20da21a337830d7084bef0212651613d76f996defb93119744f",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/schemas/payload.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+    "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/src/adapter.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/src/config.ts",
+    "sha256": "0fc5440d5519c03c463073e95baeaf8206cfdf37cbd55bf0f70aaf45dd4a95c1",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/src/config.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/src/delivery-projection.ts",
+    "sha256": "db6ef5e755808975ba934fa20276b6ac04e40161c3b81607b2c254bb07e36541",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/src/delivery-projection.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+    "sha256": "25ce708f55dfd154d04f044edfac8f232989b2fbd59a7b644bb41aa65dfcbddc",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/src/delivery-records.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/src/discord-payload.ts",
+    "sha256": "6473d2b2e902e7df43c6c45a5ab9f4bd7201d447a1c06482026f4cb3891c74b8",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/src/discord-payload.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/src/discord-receipt.ts",
+    "sha256": "8a02118800371d9d3318739cb0def5dc6ae6c3b6d634bf0793c924cafce77384",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/src/discord-receipt.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/src/payload.ts",
+    "sha256": "c38da612f8ccf13fad4cf2ede6c37f1f9607f960c200ef3185914eca17766f17",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/src/payload.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/src/receiver.ts",
+    "sha256": "3701e839cc513812a790a4a794ebdd2dc71bf56ab1def0854250c38494cf3ab1",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/src/receiver.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+    "sha256": "c50f0c8e808c0bc1a2a35381164bcc14d19abb988eb04194e389450c51935d81",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/tests/live-function.test.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs",
+    "sha256": "1ea2ce16290cf8b38e1d062857d94310802502ac321614950f68e0e253f7131d",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/tsconfig.json",
+    "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/operator-messaging/tsconfig.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/redis-transport/plugin.json",
+    "sha256": "a90353c2451b1e6649929310944cdec0f9e5c9ff8ae44474b6c23dfb24aa2843",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/redis-transport/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+    "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/runtime-dispatch/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/README.md",
+    "sha256": "20d8c301684dad82c2c43cb192e134baddcfcb187d7c121f1dc7e4d686520964",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/secret-resolver/README.md.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/package.json",
+    "sha256": "0560589604336d53c39a66e46c1ea8da95adea16706a6e4367048c511320b6a8",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/secret-resolver/package.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/plugin.json",
+    "sha256": "c36463ec4caa7adc8334d5adc6ac362d8a6fa5763e9a3b1ff03bf044024ed347",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/secret-resolver/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/schemas/config.schema.json",
+    "sha256": "572ebe9929ea533da85909fc65c3a6e8ba4a14a62ee941500bd8b246092d6629",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/secret-resolver/schemas/config.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/src/adapter.ts",
+    "sha256": "89e997cbc5c533ab70b5c17e71f29e72ce26a49263345ae635ad9a41f8b56eb3",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/secret-resolver/src/adapter.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/tests/live-function.test.ts",
+    "sha256": "24256122aea32b514f8f6641a8bff0551c9af2cf31afb439bc675463b3df325f",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/secret-resolver/tests/live-function.test.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs",
+    "sha256": "8cb51a813070435a71785dd1613eeb479aea2c3f46bce0d698ec61abdefd0f4d",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/secret-resolver/tsconfig.json",
+    "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/secret-resolver/tsconfig.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/state-store/plugin.json",
+    "sha256": "57fa3d6179e5f6d781f716a164eb88e26630a69d768f2fd1022eab7c3580a8eb",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/state-store/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/README.md",
+    "sha256": "921d2ddf474987a9d2417171cf0bad32d409cf961e76ecaa963d84fe70941133",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-observer/README.md.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/package.json",
+    "sha256": "cdca39d83d0fe501129c2d542032e99dd0673eb34e1e936a8288df8c1238d870",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-observer/package.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/plugin.json",
+    "sha256": "e8f47d3fe54481f200935675f1899a29fe428b636060e5cf61756958044221b6",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-observer/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json",
+    "sha256": "c6d66f56cbb0c5cd0b277a1def6ce910dfbbd1707a6feaf5ef17674cfcf29759",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
+    "sha256": "67c0a3e017f62ab8fa45adf3782967e9fd83fd25da2b4cecd06cfb1ca77e2afa",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-observer/schemas/config.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+    "sha256": "21abca7f49d39ccb085bac5aa152c3e2fd7b5b477d7fbc897785a8750854b71c",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-observer/src/observer.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/tests/live-function.test.ts",
+    "sha256": "48e7bd9fed2b3e384a36cd15b04fa3713e419d463d5e14b5c2a89cd510df0a94",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-observer/tests/live-function.test.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs",
+    "sha256": "927a807043d570f908a61bd4b69fb5853656f320d896a8eadc7814baf24bf717",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/tests/parity.test.ts",
+    "sha256": "fceb60c580f69cee4ae5bc92023907b696c3cffd0e9398b97048b81b3d82ea14",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-observer/tests/parity.test.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-observer/tsconfig.json",
+    "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-observer/tsconfig.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/README.md",
+    "sha256": "86528774651ce1cc75349470f02ce8c1ac9dfa6610c98211b74e74a27f67e503",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-store/README.md.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/package.json",
+    "sha256": "c37f4fbdff25d3a5ead00cdd07fa05d21541097dbdfb870f3370744efedb5457",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-store/package.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/plugin.json",
+    "sha256": "77c3f887ed4068b00a3d3a3019c5257b9a9a7c397c5d94a2bc21095b5481b848",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-store/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
+    "sha256": "2b0186fbdf59b80a4c247cfd9622e88c8d3d2bec986e75647e1a178e777bf3c8",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-store/schemas/config.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+    "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-store/src/adapter.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/src/projection.ts",
+    "sha256": "b570c21e64b262cb12edb0f92c94fd7643f3c7bfadcbcb63da7d999aba415f31",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-store/src/projection.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/tests/live-function.test.ts",
+    "sha256": "833c981f5418f3e9e0df1c5b3048d403563009493210362bbd57676165ba1f29",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-store/tests/live-function.test.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/tests/package-boundary.test.mjs",
+    "sha256": "c45b3111f03bcf8b02c3a0f91d662ab9f16181e16c8cf92cc877f2c86565c8d7",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-store/tests/package-boundary.test.mjs.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/telemetry-store/tsconfig.json",
+    "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/telemetry-store/tsconfig.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/transport-publisher/plugin.json",
+    "sha256": "91473413670e5fa02bb197c71deaeffba26a9661dae26e6d04f9c527c026a76f",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/transport-publisher/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/README.md",
+    "sha256": "494d0699d025d0fa280e4f741b70f0778f05bf918b0ea9eeebf27b5ee95c3022",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/wait-store/README.md.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/package.json",
+    "sha256": "6c8dcb28629c75b3d5f13b3337c0423fbfc5db8ace01782723ea1c11606bb516",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/wait-store/package.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/plugin.json",
+    "sha256": "f7564d3bb167b2aebe69bba54ab7ba2d59cf588475ea21c8c4cb4ab658a210ed",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/wait-store/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/schemas/config.schema.json",
+    "sha256": "4c5a84b166a37eccdb6e2ea0a62151995d7e9fcec71453e961f5633c4b826944",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/wait-store/schemas/config.schema.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/src/adapter.ts",
+    "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/wait-store/src/adapter.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/tests/live-function.test.ts",
+    "sha256": "2de20a6573baec4e456ad4da22ff2fb6c9f5212ada9d75b940e0c21f2a5372d1",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/wait-store/tests/live-function.test.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/tests/package-boundary.test.mjs",
+    "sha256": "f8c7f535103cd16f37ce8ab8c9dbc192262ff786f54fdfab7bad0a504c9e09f1",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/wait-store/tests/package-boundary.test.mjs.snapshot"
+  },
+  {
+    "path": "skills/common/plugins/wait-store/tsconfig.json",
+    "sha256": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/common/plugins/wait-store/tsconfig.json.snapshot"
+  },
+  {
+    "path": "skills/nova/core/cli.ts",
+    "sha256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/core/cli.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/adapter-startup.ts",
+    "sha256": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/core/execution/adapter-startup.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/adapters.ts",
+    "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/core/execution/adapters.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/authorization.ts",
+    "sha256": "3f04309435d4fe3eebe5a73bac5247b0d3c981ffd4a9580e52974cf46cf3942d",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/core/execution/authorization.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/execution/engine-runtime.ts",
+    "sha256": "35c238db98fe8e5ac9479773f3eaa3ad0b63f40d04a0e252e0a4030e84b6e27d",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/core/execution/engine-runtime.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/telemetry/observer-delivery.ts",
+    "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/core/telemetry/observer-delivery.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/core/telemetry/observers.ts",
+    "sha256": "b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/core/telemetry/observers.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/architecture-validator/plugin.json",
+    "sha256": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/architecture-validator/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/blueprint-sync/plugin.json",
+    "sha256": "b7d85a1c195d9d5280da1c396ac1d697be9e0d3a85babe1046850c18fa47e384",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/blueprint-sync/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/buster-quality-gate/plugin.json",
+    "sha256": "19b03b5c61f4b6decbf06a650a3824db02f61ba010939246a7d1bd35ae3e6966",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/buster-quality-gate/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/case-study/plugin.json",
+    "sha256": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/case-study/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/delivery-lint/plugin.json",
+    "sha256": "4d560ad2f25858a8f399097effb0f32c7a25bfbe326c3dfd61101346ee1d01d9",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/delivery-lint/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/plugin.json",
+    "sha256": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/demo-handoff/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/human-approval/plugin.json",
+    "sha256": "a93144f20bcd0968995844516da5221e8d77aa5c559577c7f1165f00dfd0f4b8",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/human-approval/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/implementation-agent/plugin.json",
+    "sha256": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/implementation-agent/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/lint/plugin.json",
+    "sha256": "3d671a34bb259b1c031d7f2ac1c54b19b4821e023bb53c7d43e5642dd1a0ce04",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/lint/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/plugin.json",
+    "sha256": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/pipeline-review/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/preflight-contract/plugin.json",
+    "sha256": "3db03aa245a1721e183ce3e035bf0c6a5a57b2c227e3ca230b528b1bc68c192c",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/preflight-contract/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/prism-design/plugin.json",
+    "sha256": "063ef9316e7bfdbe8b2b9a0812bfc2a0b968294edc116d85e557d3e591dbf2d9",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/prism-design/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/project-summary/plugin.json",
+    "sha256": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/project-summary/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/remote-test-gate/plugin.json",
+    "sha256": "7c42888270bb814bfeb9c47b2bc1daa4a858e649890866c9abb0f6b3c4b8d35e",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/remote-test-gate/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/plugin.json",
+    "sha256": "91fe75d56133722d51c62bb2b06f729cdf3ee35735f471857fb324aab34501bd",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/repository-adapter/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/plugins/review/plugin.json",
+    "sha256": "5ced42bfc8ca0851739ed6bbd668085345dea0e1caa391c5f1520e7f919be8f1",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/plugins/review/plugin.json.snapshot"
+  },
+  {
+    "path": "skills/nova/project/cli.ts",
+    "sha256": "6dbf4cb0a699b1e4c5e64c7f94d1bcbe9bdba1fcd1cf5232d81d7ad45ea5f366",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/project/cli.ts.snapshot"
+  },
+  {
+    "path": "skills/nova/project/legacy-import-cli.ts",
+    "sha256": "61f0e1ebb20a807a5b2fac3e0508931d0935e24aecaf7affa34bb30ee640f824",
+    "snapshot": "docs/review/evidence/config-plugin-settings-inventory-20260921/source/skills/nova/project/legacy-import-cli.ts.snapshot"
+  }
+]

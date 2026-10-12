@@ -1,0 +1,1 @@
+First audit target selector omitted runtime fixture names fifo-link/absolute/dangling/relative and conservatively failed its required-match assertion. Corrected selector against actual raw trace; no guest/test/source changes.

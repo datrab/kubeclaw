@@ -1,0 +1,98 @@
+# CONFIG: gemeinsame Prism-Ergebnisgrenze und Dispatchdeadline
+
+Vor Implementierung festgelegter Umfang am 2026-09-21: zwei weitere Settings,
+keine Änderung nativer Prozess-/Task-/Memorybudgets. Autorenquelle ist
+`swarm.config.json` unter `operator.prism.native`: `maximumResultBytes`
+(67108864 Bytes) und `dispatchTimeoutMs` (900000 ms). Beide sind explizite
+Integer 1…2147483647. Die Ergebnisgrenze wird von Control-HTTPempfang und
+Worker-Supervisor gemeinsam verwendet; die Dispatchdeadline begrenzt Controls
+HTTPanfrage einschließlich Antwortstream. Beide Rollen laden einen validierten
+Startsnapshot. Alte Envkeys werden abgewiesen, nicht still ignoriert.
+
+| Fall | Vorab festgelegtes Abschlusskriterium |
+|---|---|
+| CR01 | Zwei Autorenprofile erreichen originale Control-/Workerloader; fehlende, unbekannte, null, String, negative, gebrochene und übergroße Settings scheitern. |
+| CR02 | `PRISM_NATIVE_MAXIMUM_RESULT_BYTES` und `PRISM_NATIVE_DISPATCH_TIMEOUT_MS` scheitern in beiden Rollen auch bei gleichem Wert. Kein verbleibender alter Resolver/Default. |
+| CR03 | Originaler HTTPtransport gegen echten lokalen Server: exakt begrenzte UTF-8-Antwort erfolgreich, ein Byte darüber abgewiesen; höherer Autorenwert nimmt dieselbe Antwort an. |
+| CR04 | Originaltransport: langsame Header und stockender Antwortbody laufen tatsächlich in die geladene Deadline; höheres Zeitbudget erlaubt dieselbe verzögerte Antwort. Keine Fetch-/Timerattrappe. |
+| CR05 | Einmal geladene Settings bleiben nach Autorenänderung unverändert; Supervisor nutzt denselben Workerstartsnapshot für Journal/Resultlimit. Nativer Consumer wird soweit ohne Kernelgate möglich tatsächlich geprüft; Grenzen explizit. |
+| CR06 | Tatsächliches Helmrender liefert dieselben Autorenbytes read-only samt Checksumme an Control und Worker; geänderte Profile ändern beide Checksummen. Unzulässige Autorenwerte und alte Helmkeys scheitern. |
+| CR07 | Bestehende betroffene Tests, Typecheck und kanonischer Lint bestehen; Negativkontrolle erkennt wieder eingeführten Result-/Deadlinefallback. Frischer unabhängiger Review erforderlich. |
+| CR-DOC | Operatoranleitung, Defaults/Einheiten, Migration, Fehlerwirkung und genau zugeordnete Inventareinträge aktualisiert; keine Gesamt-CONFIG-Erledigung behauptet. |
+
+Vorabstatus bei Festlegung der Matrix: Implementierung und Nachweise offen.
+Der aktuelle Stand und die noch offene unabhängige Abnahme stehen unten.
+
+## Implementierung und ausgeführte Prüfungen
+
+Beide alten Envresolver sind entfernt. `loadPrismSettings` validiert einmal die
+vollständige Autorendatei und friert Worker- und Native-Unterobjekte ein.
+`loadWorkerConfig` hält diesen Snapshot; `nativePrismSupervisorConfig` übernimmt
+seinen Ergebniswert statt Environment erneut zu lesen. `loadControlServerConfig`
+übernimmt Ergebnisgröße und Deadline in seine unveränderliche Startkonfiguration.
+Der vorhandene HTTPtransport einschließlich AbortSignal und Streambytezählung
+bleibt unverändert. Worker-/E2E-Kompatibilitätsprojektionen verwenden denselben
+Validator und führen keine zweite Autorenquelle ein.
+
+Das Chart liefert nun auch Control denselben ConfigMap-Mount und dessen
+Checksumme. Der ursprüngliche Control-Valuesblock erlaubte unbekannte Werte;
+daher weist das Template die beiden konkurrierenden Control-Limitkeys explizit
+ab. Worker-Native-Altkeys scheitern am bestehenden geschlossenen Valueschema.
+Die beiden bereits geprüften kanonischen Chartsymbolverweise bleiben unverändert.
+Der vorhandene gebaute-Image-Smokecheck lädt beide Rollen mit derselben Datei und
+wird jetzt für Control und Worker aufgerufen; mangels Docker wurde dieser
+Imagecheck hier nicht ausgeführt.
+
+| Prüfung | Tatsächliches Ergebnis |
+|---|---|
+| [Originale und ergänzte Runtime-/Helmtests](../../evidence/config-result-dispatch-20260921/tests.txt) | 172/172 bestanden, null Skips/Abbrüche; reale Profile, HTTP und Helmrender/-paket. |
+| [Realer persistenter Resultjournal](../../evidence/config-result-dispatch-20260921/journal.txt) | 2/2 bestanden: 2052-Byte-Receipt bei 2051 abgewiesen und bei 2052 gespeichert/wieder gelesen. |
+| [Bestehende Control-Kompositions-/Generierungs-/unabhängige Tests](../../evidence/config-result-dispatch-20260921/control-regression.txt) | 12/12 bestanden; tatsächliche HTTPserver und PGlite, kein nativer PostgreSQL-Nachweis. |
+| [Übrige originale Control-/Decisiontests](../../evidence/config-result-dispatch-20260921/control-remaining.txt) | 7/7 bestanden; mit den drei Control-Konfigurationstests im 172er-Lauf sind alle sechs `control*.test.mts`-Module ausgeführt. |
+| [Release-/Code-/Image-/Inputintegration](../../evidence/config-result-dispatch-20260921/release-regression.txt) | 19/19 bestanden; echtes Git, kanonische Aliasprüfung, Release-Materialisierung und Helm. |
+| [Gemeinsamer E2E-Konfigurationsleser](../../evidence/config-result-dispatch-20260921/swarm-e2e-reader.txt) | 5/5 bestanden; bestehende Projektionsgrenze erhalten. |
+| [Prism-Typecheck](../../evidence/config-result-dispatch-20260921/typecheck.txt), [kanonischer Lint](../../evidence/config-result-dispatch-20260921/lint.txt) | Exit 0; Lint umfasst alle geänderten TS-/JS-Produktions-, Test- und Imageproofdateien. |
+| [Schemafelder](../../evidence/config-result-dispatch-20260921/docs-schema.txt), [Fehlercodes](../../evidence/config-result-dispatch-20260921/docs-errors.txt) | Beide vorhandenen Dokumentationsgates Exit 0. Kein gesamtes `docs:check` behauptet. |
+| [Negativkontrollen](../../evidence/config-result-dispatch-20260921/mutation-results.json) | Private Control-Loaderkopien führen jeweils den alten Result-/Deadlinefallback wieder ein. Unveränderte fachliche HTTPtests erkennen beide durch fehlende erwartete Ablehnung. |
+
+Die [erste erweiterte Prüfung](../../evidence/config-result-dispatch-20260921/tests-expanded-initial.txt)
+endete mit 170 Erfolgen und zwei Fehlern: Control-Helmkeys wurden still akzeptiert.
+Der anschließende Templatecheck behebt genau diese Konkurrenzautorität; die
+Erwartung wurde auf dessen tatsächliche Migrationsdiagnose präzisiert. Kein
+Produktionsvalidator wurde gelockert. Der vorherige kleinere
+[151er-Lauf](../../evidence/config-result-dispatch-20260921/tests-initial.txt) bleibt
+als historischer Umfang erhalten und ersetzt den erweiterten Lauf nicht.
+
+Die Tests bestehender Control-Komposition und des nativen PostgreSQL-HTTPgates
+benennen jetzt ausdrücklich die kanonische Autorendatei als `SWARM_CONFIG`.
+Authentifizierungs-, Persistenz- und Fehlerassertions bleiben erhalten. Der native
+PostgreSQL-HTTPgate selbst wurde in diesem Schnitt nicht erneut ausgeführt.
+
+## Beweisgrenzen und Dokumentationsabschluss
+
+Die Journalprüfung führt echten Originalcode und echte Dateipersistenz mit dem
+geladenen Workerwert aus. Das unveränderte absolute `/usr/bin/flock` wird mittels
+Proot auf das zuvor geprüfte originale GNU-flock-Binary im lokalen Cache gebunden;
+kein Lockstub oder Fake-Root kommt zum Einsatz. Der gespeicherte Receipt ist ein
+wahrheitsgemäßer `TEST_NOT_LAUNCHED`-Fehlerreceipt mit ursprünglicher Bindung.
+Supervisor→Journal-Weitergabe wurde im Produktionsquelltext geprüft; wegen der
+root-eigenen Hostpolicy wird kein ausgeführter Supervisor oder nativer Attempt
+behauptet. Keine Kernelbeobachtung, Launcher-, cgroup-, Hostpool-, Container- oder
+Clusterprüfung wurde erfunden. Kleine Resultbudgets dürfen valide sein, können
+aber die vollständige Receiptpersistenz verhindern; die Anleitung benennt dies.
+
+CR-DOC: Aktualisiert sind die zentrale Operatoranleitung, der Prism-Operatorguide,
+die Foundation-Konfigurations-README und genau die zwei zugeordneten Fundstellen
+im Inventar (MD/JSON). Dokumentiert sind Autorenpfad, Werte, Einheiten,
+Startsnapshot, Rollout beider Rollen, abgewiesene Konkurrenzkeys, Streamfehler und
+Recoverygrenze bei HTTPabbruch. Alle übrigen Inventareinträge und CONFIG F1–F6
+bleiben offen. Der anschließende
+[unabhängige Review](independent-config-result-dispatch-20260921.md) akzeptiert
+CR01–CR07/CR-DOC mit eigenen Läufen und Transportmutanten. Er fand zwei weitere
+Release-Fixtures, die relative Chartlinks beim Kopieren veränderten. Die
+Korrekturen in `deployment-release.test.mjs` und `gitops-release.test.mjs`
+erhalten die tatsächlichen relativen Links und nehmen die tatsächliche kanonische
+Schemadatei in den Test-Commit auf; sämtliche Assertions bleiben unverändert.
+Die vollständigen korrigierten Suiten bestehen mit 8/8 beziehungsweise 6/6 Tests
+ohne Skips, auch unabhängig wiederholt. Fehlgeschlagene Anfangsläufe bleiben
+erhalten und werden nicht als erfolgreiche Integration ausgegeben.

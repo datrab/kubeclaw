@@ -1,0 +1,207 @@
+{
+  "reviewer": "/root/runtime_security_policy_review",
+  "decision": "accept_private_implementation_design_with_explicit_registry_model_and_required_proposal_corrections",
+  "scope": "Source design only; all32 source copies/current hashes verified, all4 design manifest entries verified; no code or runtime changes",
+  "manifestSha256": "556451800bd449e7629f718bd41b3e6a81588a7b2bb77014ace18e9d4320fc70",
+  "ownerDecision": {
+    "owner": "buster-engine.config.json settings.securityScan",
+    "fields": 13,
+    "required": true,
+    "changeToProposal": "Replace registryRepositoryPrefixes with full allowedRegistryPrefixes. Preserve exact-or-slash-child admission matching and existing multiple host prefixes. Author explicit full values in both complete profiles; no generated host concatenation/default admission list. Other12 fields approved as inventoried.",
+    "semantics": "Allowlist entries describe authorized image identities, not registry transport routing or credentials. Changing a transport binding must not automatically authorize another host/repository. Explicit admission list and transport contract serve different requirements."
+  },
+  "registryDecision": {
+    "delivery": "One optional top-level generated registryClient descriptor in runtime delivery, using existing registry-client-config output shape. Render from existing KUBECLAW_REGISTRY_CONFIG once and embed descriptor once; do not retain temporary descriptor path after entrypoint removes it.",
+    "capture": "Validate closed descriptor plus endpoint/reference/transport/credential-pair/CA shape, resolve named external credential values once and capture immutable result. Validate before runtimeRegistry/store construction and before constructor filesystem effects. Never log secret values.",
+    "absence": "Optional field absent is the explicit no-configured-private-registry state; scanner still supports dependency/config scans and admitted public anonymous image prefixes across multiple registries. Do not substitute containerBuild, old securityScan.registry, host ENV, guessed registry or second default. If null is supported, specify it as the same explicit no-binding state; otherwise reject null consistently.",
+    "presence": "Any present malformed descriptor, invalid/missing named credential, wrong transport or mismatched reference rejects. Never turn these failures into anonymous mode. HTTPS configured private binding keeps explicit credentials/TLS checks; http-lab configured host remains unsupported for scanner image requests without network attempts or insecure TLS flags.",
+    "scoping": "Only an image whose exact registry host equals the configured private binding receives its credentials/CA. Public/other admitted hosts keep anonymous behavior. Dependency/config-only execution receives no registry credentials. Preserve existing single-private-origin credential support; multiple allowed public hosts does not establish arbitrary multi-private-credential support.",
+    "noExtraAuthor": "Runtime descriptor is generated delivery of existing operator registry config, not a newly editable parallel origin/auth config. Full allowlist remains explicit permission. No imageEnabled switch, implicit permission grant or additional secret fallback.",
+    "ambientAuthCheck": "The anonymous test must demonstrate no implicit host/cache Docker credentials are read or delivered when binding is absent; explicitly control auth delivery without relying on unspecified scanner defaults."
+  },
+  "coordinatedCutoverRequired": [
+    {
+      "consumer": "docker/buster-runtime-entrypoint.sh",
+      "change": "Read generated runtime descriptor once into top-level registryClient. Remove descriptor spread from containerBuild and scanner registry copy, along with entire retired scanner policy object and any scanner-only registry concatenation. Remove unused REGISTRY_REFERENCE glue only after all consumers migrate."
+    },
+    {
+      "consumer": "production-capability-sources.ts",
+      "change": "Replace securityScanSource policy presence author with allowedCapabilities-derived enabled flag. Move shared credential lookup out of containerBuildSource; enabled scanner must not require BuildKit config. Supplied shared binding is validated independently of active routes."
+    },
+    {
+      "consumer": "production-config-values.ts / new small shared binding decoder",
+      "change": "Replace scannerRegistry and old containerBuild credential/endpoint readers with one shared captured resolver. validateRuntimeRoot rejects retired securityScan by presence before effects. Reject removed containerBuild endpoint/reference/CA/credential ENV-name fields by presence, even equal/null/empty, instead of merging legacy authors."
+    },
+    {
+      "consumer": "production-command-options.ts containerBuildOptions",
+      "change": "Build options consume existing shared binding origin/reference/credential values. Keep build executable/socket/repository scope/platform/limits as existing build-owned fields pending their own CONFIG migration. Enabled build requires valid binding; disabled build is not a scanner dependency."
+    },
+    {
+      "consumer": "production.ts configuredClusterCapabilities / kubernetesFixtureOptions",
+      "change": "KubernetesFixture allowed registry prefix projection now consumes shared binding directly, not containerBuildSource or registryHealthConfiguration reached through BuildKit config. Preserve repository admission prefixes, exact origin and original validation; enabled Kube route requires actual shared binding. Update original missing-binding/disabled-binding cases."
+    },
+    {
+      "consumer": "production-command-options.ts networkHttpOptions / registry health",
+      "change": "registryHealth opt-in consumes same shared binding and existing endpoint coherence, TLS and auth checks. General network.http without registryHealth remains independent. Configured health requires binding without requiring unrelated BuildKit options."
+    },
+    {
+      "consumer": "securityScanOptions / SecurityScanCapabilityInvoker / databasePolicy",
+      "change": "Scanner selected13-field policy comes only from validated captured component; optional shared binding supplies private transport. Require explicit DB policy and remove DEFAULT/default parameter/optional decoders. Validate before realpath/access; copy nested credential/DB/text/array input so caller mutation cannot retarget active consumer."
+    },
+    {
+      "consumer": "registry-client generator, both charts, schemas, complete profile artifacts and packaging",
+      "change": "Keep original operator registry authority and existing BuildKit/node/mirror behavior. Extend required Buster sections5\u21926 in all closed validators. Deliver exact selected scanner file bytes; ensure explicit full admission values preserve intended original deployment scope."
+    }
+  ],
+  "compatibilityTestsRequired": [
+    "Production service scan-only dependency and config requests without containerBuild or shared registry binding.",
+    "Anonymous allowed images at two distinct hosts and unauthorized exact/slash-boundary refusals; changing transport origin alone must not expand allowlist.",
+    "Shared private TLS registry with correct/wrong external credentials, unrelated-host credential non-disclosure, binding capture/changed generation, HTTP-lab early denial.",
+    "Build-only and registryHealth-only consume shared binding without scanner policy object author; disabled consumers remain disabled.",
+    "Existing KubernetesFixture two-profile actual service path uses new shared binding with original registry/subject oracles; no BuildKit execution requirement.",
+    "All old duplicate keys reject by presence before side effects, including equal/null/empty; no dual-author compatibility merge.",
+    "Whole original security provider/freshness/cutover/nativeTLS-registry/registry-client/remote-runtime/component/chart/readiness scope remains."
+  ],
+  "behaviorAndOpenBoundaries": {
+    "truncation": "Move existing2048/4096 code-unit projection limits unchanged initially and document limits; do not drop additional findings or label truncation as complete lossless evidence. Any change to truncation disclosure/count semantics is separate explicit integrity work.",
+    "causalFix": "Output-limit-before-abort correction permitted only explicitly documented with exact old-order semantic control, not described as pure migration.",
+    "stillOpen": [
+      "Production child/group ownership and credential-file cleanup before confirmed scanner stop.",
+      "Partial credential directory creation/write failure ownership.",
+      "Unbounded Kubernetes-policy manifest allocation, parsed JSON/findings/retained-result budgets.",
+      "Provider request defaults, installer transfer/buffer budgets, scanner/native CPU/RAM/process isolation and live gates."
+    ],
+    "supportBoundary": "Generated deployment currently has one writable private-registry authority. Direct invoker credential API remains explicit/captured. Do not claim arbitrary multiple private credential authorities or silently migrate conflicting old custom Build/Scan origins to one; any such discovered deployment must get an explicit shared-catalog migration decision."
+  },
+  "implementationAuthorizationBoundary": "Root confirmed full allowlist admission semantics and optional shared binding model. Author may prepare private coordinated implementation after incorporating proposal field rename and this migration/compatibility contract; source integration/runtime/final acceptance remain separate.",
+  "sources": [
+    {
+      "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+      "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/trivy-database.ts",
+      "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-command-options.ts",
+      "sha256": "70d70fa703f74f6411ae9de99e9f34fe734555a4311fc8f01d4bc6fd978e2c81"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "8311e1cc957e0691fd904be4f042bb5003b58cfacf00992921f0873418cda63f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "2a99f596c2e6ecb38572c9e5ec2ab4f5dfbdc1f03451cb45c5c41b02ec0e299c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/capability-runtime.ts",
+      "sha256": "3615780a7c173fc3f43f0510e208378e276a9e34f71c8a7c1c643fde296ded11"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "2630481f59214cd69d7cc09eeecea60ff06d4697a9f5d36b319847a21526f029"
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be"
+    },
+    {
+      "path": "scripts/registry-client-config.mjs",
+      "sha256": "e67a3568c4a6a33ad23bd2b47b6479ed694b79d25e03fcc5dc461532a8cea1c2"
+    },
+    {
+      "path": "scripts/trivy-database-lock.mjs",
+      "sha256": "7f86040766fd1cdc010302617217adbe58b862437259aea1cff03f992ca0d510"
+    },
+    {
+      "path": "docker/trivy-databases.lock.json",
+      "sha256": "eb4de828de3d1afe277aad01925ab94a8ed2eb08fbe41c00fd3e16889d81569e"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "sha256": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+      "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+      "sha256": "e37ea6086143c335c70c0fcc5ea7839b4e149a012fd6efbc22dd374c1af958c7"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+      "sha256": "0581bde77436534084542396ff836e417532c9fffa314af56d52f8b094248162"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+      "sha256": "bef5d53264fe879e1776a3852f4a52e4b50d6c3d500bded41c6a07ea011d6b23"
+    },
+    {
+      "path": "tests/verification/deployment/registry-trivy-native.test.mts",
+      "sha256": "f44146efba4d2f9d8fb13e2be50f654d43bb710639f8ea54b7bacc3c703eb26e"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "sha256": "caa32846ed52fb2143c05aa0d5b1d9afda11f03c0ca7c7542bca5c8377ca0858"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-implementation.mts",
+      "sha256": "a8b4cabada3ed10e3b67a37509e15b1c6f8d590b3e6f515149950b9c140a7a3a"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-parity.mts",
+      "sha256": "0a9a3a7fd2a404bcef3d978898835241159a4a628b6e59f2ffbd03f7b10f1b99"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-security-cutover.mts",
+      "sha256": "f75cd40e6acdaa6e19acb7ec4f7e297d89990c2de88d8d7f7adaf09acda8eb0e"
+    },
+    {
+      "path": "tests/verification/e2e/nova-security-production-preflight.mts",
+      "sha256": "23fda5ee402cefae2e402c16b7dd823eadf473ce7805443ce4e1ec614b7ad2b3"
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-security-configuration-reference.md",
+      "sha256": "4e017476552f21dc98208c0142cd3adf431bd618af35037e978a58106413157a"
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-security-operator-guide.md",
+      "sha256": "b64b13a053ceade7962f9289d2a2b9e95700f56cca2d4ad0a60e46e66d19e92e"
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-security-security-model.md",
+      "sha256": "2bb339930cb3df84d4779d945c19d5f7a150a1ff11d1682a91e52eaceac7965f"
+    },
+    {
+      "path": "docs/operations/registry-clients.md",
+      "sha256": "46778fa3d1939ecb11dea2289ba789d98c04744d2ab1122502248ebf2fae4dde"
+    },
+    {
+      "path": "package.json",
+      "sha256": "63322d00421a359d4c310e2e8a59ac888dd869dd800db715612a032aa7e3d517"
+    }
+  ]
+}

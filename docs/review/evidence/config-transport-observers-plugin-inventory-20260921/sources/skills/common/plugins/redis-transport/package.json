@@ -1,0 +1,12 @@
+{
+  "name": "@kubeclaw/plugin-redis-transport",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/live-function.test.ts && node tests/package-boundary.test.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*"
+  }
+}

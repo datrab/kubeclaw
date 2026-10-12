@@ -1,0 +1,29 @@
+{
+  "reviewer": "root",
+  "manifestSha256": "67253cc6cdf4cafbb3b68c8fd85f21f947a0f7efd53fcd559bc6e33d20d2aafb",
+  "status": "correction-required-before-integration",
+  "findings": [
+    {
+      "id": "DC-R1",
+      "finding": "Recovery session is a local variable while original #session and #terminated remain authoritative. An unconfirmed recovery stop can therefore be skipped by terminate and another cleanup can start another child.",
+      "required": "Track actual current recovery ownership before initialization, gate replacement on that session confirmation, and prove refusal for both current/replacement close and drain failures."
+    },
+    {
+      "id": "DC-R2",
+      "finding": "Fixed aggregate message hides original cleanup and stop details in final Runner cleanupErrors strings; wrapper-level nested-cause assertion alone does not prove production output visibility.",
+      "required": "Preserve both error details in final result within existing contract, retain nested immediate-boundary identity, assert both via actual Runner result."
+    },
+    {
+      "id": "DC-R3",
+      "finding": "V1 lacks planned actual Loader refusal negatives for unconfirmed close/drain.",
+      "required": "Add real current and replacement Loader cases; unchanged child count and preserved snapshot, existing deadlines."
+    }
+  ],
+  "acceptedParts": [
+    "Explicit session close-plus-drain confirmation distinct from signal failure",
+    "Catch awaits helper before finally, preserving cleanup context lifecycle",
+    "Normal same-session success separated from explicit real replacement scenarios",
+    "Execute-error IPC marker separately asserted from final Core cleanup-priority summary"
+  ],
+  "runtime": "none; V1 not integrated"
+}

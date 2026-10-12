@@ -1,374 +1,14 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
-import {
-  buildRegistry,
-  discoverPackages,
-  resolveTestPlan,
-  type NodeDeclaration,
-  type ResolverPolicy,
-} from "../../../skills/nova/core/src/index.ts";
-import {
-  createBusterWorkerProfiles,
-  LocalWorkerRuntime,
-  RegisteredTestProviderLoader,
-  TestPlanRunner,
-  type TestPlanRunnerOptions,
-  type LoadedTestProvider,
-  type TestProviderLoader,
-  type WorkerAttemptRuntime,
-} from "../../../skills/buster/engine/src/index.ts";
-import type { WorkerAttemptResultV1 } from "@kubeclaw/pipeline-worker-core-contract";
-import type {
-  ProviderInvocationV1,
-  ProviderResultV1,
-} from "@kubeclaw/pipeline-test-gate-contract";
-import type { TestProviderInstance } from "../../../skills/common/plugin-runtime/sdk/src/index.ts";
-import type { TestProviderRegistryEntry } from "../../../skills/common/plugin-runtime/foundation/registry/types.ts";
+import { createBusterWorkerProfiles, LocalWorkerRuntime, RegisteredTestProviderLoader, TestPlanRunner, type WorkerAttemptRuntime } from "../../../skills/buster/engine/src/index.ts";
+import { validatePipelineWorkerCoreContract, type WorkerAttemptResultV1 } from "@kubeclaw/pipeline-worker-core-contract";
+import type { ProviderInvocationV1, ProviderResultV1 } from "@kubeclaw/pipeline-test-gate-contract";
 import { FileObservabilityAdmissionStore } from "../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts";
 
-const temporary = fs.mkdtempSync(path.join(os.tmpdir(), "test-plan-runner-"));
-
-type LocalTestPlanRunnerOptions = Omit<
-  TestPlanRunnerOptions,
-  "observabilityRoot"
-> & { readonly observabilityRoot?: string };
-class LocalTestPlanRunner extends TestPlanRunner {
-  constructor(options: LocalTestPlanRunnerOptions) {
-    super({
-      ...options,
-      observabilityRoot:
-        options.observabilityRoot ??
-        path.join(options.artifactRoot, "observability"),
-    });
-  }
-}
-const plugins = path.join(temporary, "plugins");
-const packageRoot = path.join(plugins, "providers");
-const workspace = path.join(temporary, "workspace");
-const repository = path.join(workspace, "repository");
-const artifacts = path.join(temporary, "artifacts");
-fs.mkdirSync(path.join(packageRoot, "dist"), { recursive: true });
-fs.mkdirSync(path.join(packageRoot, "schemas"), { recursive: true });
-fs.mkdirSync(path.join(packageRoot, "node_modules", "example-dep"), {
-  recursive: true,
-});
-fs.mkdirSync(repository, { recursive: true });
-fs.writeFileSync(
-  path.join(packageRoot, "node_modules", "example-dep", "package.json"),
-  '{"name":"example-dep","type":"module","exports":"./index.js"}\n',
-);
-fs.writeFileSync(
-  path.join(packageRoot, "node_modules", "example-dep", "index.js"),
-  'export const dependencyValue = "dependency loaded";\n',
-);
-fs.writeFileSync(
-  path.join(packageRoot, "dist", "provider.js"),
-  `import { dependencyValue } from 'example-dep';
-export function provider() {
-  return { async execute(invocation, context) {
-    if (invocation.configuration.values.hang === true) { while (true) {} }
-    if (invocation.configuration.values.waitForAbort === true) {
-      (await import('node:fs')).writeFileSync(context.workspaceRoot + '/' + invocation.workspace.scratch + '/ready.txt', 'ready');
-      await new Promise((resolve) => context.signal.addEventListener('abort', resolve, { once: true }));
-      (await import('node:fs')).writeFileSync(context.workspaceRoot + '/' + invocation.workspace.scratch + '/aborted.txt', 'aborted');
-    }
-    if (invocation.configuration.values.readForbidden === true) { (await import('node:fs')).readFileSync('/etc/passwd'); }
-    if (invocation.configuration.values.spawnForbidden === true) { (await import('node:child_process')).spawnSync('true'); }
-    if (invocation.configuration.values.networkForbidden === true) { await fetch('http://127.0.0.1:1'); }
-    if (invocation.configuration.values.symlinkEscape === true) {
-      const file = context.workspaceRoot + '/' + invocation.workspace.evidence + '/leak';
-      (await import('node:fs')).symlinkSync('/etc/passwd', file);
-      (await import('node:fs')).readFileSync(file);
-    }
-    if (invocation.nodeId === 'isolatedProducer') {
-      const report = invocation.configuration.values.invalidReport === true ? 'invalid' : '<testsuite tests="1"/>';
-      (await import('node:fs')).writeFileSync(context.workspaceRoot + '/' + invocation.workspace.evidence + '/report.xml', report);
-      return { schemaVersion: 'provider-result.v1', outcome: 'passed', summary: 'produced',
-        counts: { total: 1, passed: 1, failed: 0, skipped: 0 }, findings: [], metrics: [],
-        evidenceFiles: [{ evidenceId: 'junit', type: 'test-report', file: 'report.xml', mediaType: 'application/junit+xml' }],
-        reports: [{ evidenceId: 'junit', format: 'junit' }],
-        outputs: [{ name: 'report', kind: 'artifact', evidenceId: 'junit' }], exitCode: 0, signal: null, providerDetails: null };
-    }
-    if (invocation.nodeId === 'isolatedConsumer') {
-      const artifact = invocation.inputs.find((input) => input.name === 'report').artifact;
-      const content = (await import('node:fs')).readFileSync((await import('node:url')).fileURLToPath(artifact.storageUrl), 'utf8');
-      if (!content.includes('tests="1"')) throw new Error('artifact content missing');
-    }
-    return {
-    schemaVersion: 'provider-result.v1', outcome: 'passed', summary: dependencyValue,
-    counts: { total: 1, passed: 1, failed: 0, skipped: 0 }, findings: [], metrics: [], evidenceFiles: [], reports: [], outputs: [],
-    exitCode: 0, signal: null, providerDetails: null,
-  }; }, async cleanup() {} };
-}\n`,
-);
-fs.writeFileSync(
-  path.join(packageRoot, "dist", "report-adapter.js"),
-  `export function adapter(input) { if (new TextDecoder().decode(input.bytes) === 'invalid') throw new Error('REPORT_INVALID'); return {
-    counts: { total: 1, passed: 0, failed: 1, errored: 0, skipped: 0 },
-    durationMs: 0, cases: [], casesTruncated: true, omittedCaseCount: 1,
-    findings: [], findingsTruncated: false, omittedFindingCount: 0,
-  }; }\n`,
-);
-fs.writeFileSync(
-  path.join(packageRoot, "schemas", "empty.json"),
-  `${JSON.stringify(
-    {
-      $schema: "https://json-schema.org/draft/2020-12/schema",
-      type: "object",
-      additionalProperties: true,
-    },
-    null,
-    2,
-  )}\n`,
-);
-
-function provider(
-  id: string,
-  contractId: string,
-  options: Record<string, unknown> = {},
-) {
-  return {
-    id,
-    contractId,
-    kind: "test",
-    module: "dist/provider.js",
-    export: "provider",
-    configSchema: "schemas/empty.json",
-    inputs: [],
-    outputs: [],
-    requiredCapabilities: [],
-    retrySafe: true,
-    matrixFields: [],
-    reportFormats: [],
-    evidenceTypes: ["log", "report"],
-    evidenceDefaults: {
-      onPass: ["log", "report"],
-      onFail: ["log", "report"],
-      onError: ["log"],
-    },
-    ...options,
-  };
-}
-
-fs.writeFileSync(
-  path.join(packageRoot, "plugin.json"),
-  `${JSON.stringify(
-    {
-      id: "example.runner",
-      apiVersion: "pipeline-plugin-v2",
-      packageVersion: "1.0.0",
-      stages: [],
-      observers: [],
-      adapters: [],
-      testProviders: [
-        provider("deployment", "example.deployment@1", {
-          kind: "fixture",
-          outputs: [
-            {
-              name: "endpoint",
-              kind: "value",
-              required: true,
-              schemaId: "example.endpoint@1",
-            },
-          ],
-        }),
-        provider("report", "example.report@1", {
-          kind: "fixture",
-          reportFormats: ["junit"],
-          evidenceTypes: ["log", "report", "test-report"],
-          evidenceDefaults: { onPass: ["log", "report"], onFail: ["log", "report"], onError: ["log"] },
-          outputs: [
-            {
-              name: "report",
-              kind: "artifact",
-              required: true,
-              mediaTypes: ["application/junit+xml"],
-            },
-          ],
-        }),
-        provider("optional-report", "example.optional-report@1", {
-          kind: "fixture",
-          outputs: [
-            {
-              name: "report",
-              kind: "artifact",
-              required: false,
-              mediaTypes: ["application/junit+xml"],
-            },
-          ],
-        }),
-        provider("endpoint-consumer", "example.endpoint-consumer@1", {
-          inputs: [
-            {
-              name: "target",
-              kind: "value",
-              required: true,
-              schemaId: "example.endpoint@1",
-            },
-          ],
-        }),
-        provider("report-consumer", "example.report-consumer@1", {
-          inputs: [
-            {
-              name: "report",
-              kind: "artifact",
-              required: true,
-              mediaTypes: ["application/junit+xml"],
-            },
-          ],
-        }),
-        provider("generic", "example.generic@1", {
-          matrixFields: ["runtime"],
-          evidenceTypes: ["log", "report", "diagnostic"],
-        }),
-        provider("capability", "example.capability@1", {
-          requiredCapabilities: ["network.http"],
-        }),
-      ],
-      reportAdapters: [{
-        id: "junit", format: "junit", contractVersion: 1,
-        module: "dist/report-adapter.js", export: "adapter",
-        mediaTypes: ["application/junit+xml"],
-      }],
-    },
-    null,
-    2,
-  )}\n`,
-);
-
-const registry = buildRegistry(
-  discoverPackages({
-    installationRoots: [plugins],
-    trustPolicy: {
-      trustedBuiltinRoots: [plugins],
-      allowedSourceDigests: new Map(),
-      verifiedAttestations: new Map(),
-      verifierId: "test:runner",
-    },
-    now: () => new Date("2026-08-05T17:00:00Z"),
-  }),
-);
-
-const limits = {
-  cpuMillis: 10_000,
-  memoryBytes: 512 * 1024 * 1024,
-  logBytes: 1024 * 1024,
-  artifactBytes: 16 * 1024 * 1024,
-  artifactFiles: 16,
-  processes: 16,
-};
-const policy: ResolverPolicy = {
-  defaultTimeoutMs: 1_000,
-  maximumTimeoutMs: 10_000,
-  defaultLimits: limits,
-  maximumLimits: limits,
-  maximumRetryCount: 3,
-  maximumMatrixSize: 16,
-  maximumNodes: 100,
-  defaultConcurrencyLimit: 4,
-  maximumConcurrencyLimits: { serial: 1 },
-};
-
-function plan(
-  tests: Record<string, NodeDeclaration>,
-  fixtures: Record<string, NodeDeclaration> = {},
-  concurrencyLimits: Record<string, number> = {},
-) {
-  return resolveTestPlan({
-    planId: `plan:${Object.keys(tests).join("-")}`,
-    runId: "run:runner",
-    project: "runner-project",
-    scope: { moduleId: "app", gateId: null },
-    createdAt: "2026-08-05T17:00:00Z",
-    declaration: { tests, fixtures, concurrencyLimits },
-    suiteTemplates: [],
-    registry,
-    facts: {
-      changedPaths: ["src/app.ts"],
-      moduleType: "web",
-      pipelineStage: "test",
-    },
-    policy,
-  });
-}
-
-function result(overrides: Partial<ProviderResultV1> = {}): ProviderResultV1 {
-  return {
-    schemaVersion: "provider-result.v1",
-    outcome: "passed",
-    summary: "passed",
-    counts: { total: 1, passed: 1, failed: 0, skipped: 0 },
-    findings: [],
-    metrics: [],
-    evidenceFiles: [],
-    reports: [],
-    outputs: [],
-    exitCode: 0,
-    signal: null,
-    providerDetails: null,
-    ...overrides,
-  };
-}
-
-async function waitForNamedFile(
-  root: string,
-  name: string,
-  timeoutMs = 2_000,
-): Promise<void> {
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    if (fs.existsSync(root)) {
-      const files = fs.readdirSync(root, { recursive: true, encoding: "utf8" });
-      if (files.some((file) => path.basename(file) === name)) return;
-    }
-    await new Promise((resolve) => setTimeout(resolve, 10));
-  }
-  throw new Error(`TEST_READY_FILE_TIMEOUT:${name}`);
-}
-
-type Behavior = (
-  invocation: ProviderInvocationV1,
-  context: Parameters<TestProviderInstance["execute"]>[1],
-) => Promise<ProviderResultV1>;
-
-class BehaviorLoader implements TestProviderLoader {
-  readonly cleanups: string[] = [];
-  readonly terminations: string[] = [];
-  readonly behavior: Behavior;
-  readonly usage: LoadedTestProvider["resources"];
-  constructor(
-    behavior: Behavior,
-    usage: LoadedTestProvider["resources"] = () => ({
-      cpuTimeMs: 1,
-      maximumMemoryBytes: 1,
-      maximumProcesses: 1,
-    }),
-  ) {
-    this.behavior = behavior;
-    this.usage = usage;
-  }
-  async load(
-    _entry: TestProviderRegistryEntry,
-    invocation: ProviderInvocationV1,
-  ): Promise<LoadedTestProvider> {
-    return {
-      supportsCleanup: async () => true,
-      execute: (value, context) => this.behavior(value, context),
-      cleanup: async () => {
-        this.cleanups.push(`${invocation.nodeId}:${invocation.attemptNumber}`);
-      },
-      terminate: async () => {
-        this.terminations.push(
-          `${invocation.nodeId}:${invocation.attemptNumber}`,
-        );
-      },
-      resources: this.usage,
-    };
-  }
-}
+import { temporary, LocalTestPlanRunner, packageRoot, workspace, repository, artifacts, registry, limits, plan, result, waitForNamedFile, BehaviorLoader } from "../../fixtures/test-gate/runner-contract-fixture.mts";
 
 let sequence = 0;
 const id = () => `id-${++sequence}`;
@@ -489,6 +129,7 @@ const mainPlan = plan(
 );
 
 const main = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: mainPlan,
   registry,
   workspaceRoot: workspace,
@@ -578,9 +219,10 @@ assert.equal(
 );
 assert.equal(observedInputs.get("consumeEndpoint")?.[0]?.kind, "value");
 assert.equal(observedInputs.get("consumeReport")?.[0]?.kind, "artifact");
+const consumedReport = observedInputs.get("consumeReport")?.[0];
 assert.match(
-  observedInputs.get("consumeReport")?.[0]?.kind === "artifact"
-    ? observedInputs.get("consumeReport")![0]!.artifact.storageUrl
+  consumedReport?.kind === "artifact"
+    ? consumedReport.artifact.storageUrl
     : "",
   /\/observability\/attempts\/blobs\//,
   "dependent nodes must consume the durable artifact reference",
@@ -605,6 +247,7 @@ const independentPlan = plan({
   independent: { uses: "example.generic@1" },
 });
 const independent = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: independentPlan,
   registry,
   workspaceRoot: workspace,
@@ -645,6 +288,7 @@ Object.defineProperty(unavailableAdmission, "admitAndRead", {
   },
 });
 const admissionOutage = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: admissionOutagePlan,
   registry,
   workspaceRoot: workspace,
@@ -692,6 +336,7 @@ assert.equal(
 await assert.rejects(
   () =>
     new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
       plan: admissionOutagePlan,
       registry,
       workspaceRoot: workspace,
@@ -715,6 +360,7 @@ assert.equal(
 await assert.rejects(
   () =>
     new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
       plan: admissionOutagePlan,
       registry,
       workspaceRoot: workspace,
@@ -738,19 +384,21 @@ assert.equal(
 assert.throws(
   () =>
     new LocalTestPlanRunner({
+    executionPolicy: { ...runnerExecutionPolicy, provider: { ...runnerExecutionPolicy.provider, cleanupTimeoutMs: 2_147_483_648 } }, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
       plan: mainPlan,
       registry,
       workspaceRoot: workspace,
       repositoryRoot: repository,
       artifactRoot: artifacts,
       maximumConcurrency: 1,
-      cleanupTimeoutMs: 2_147_483_648,
+      
     }),
-  /TEST_RUNNER_CLEANUP_TIMEOUT_INVALID/,
+  /SWARM_CONFIG_BUSTER_EXECUTION_INVALID/,
 );
 assert.throws(
   () =>
     new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
       plan: mainPlan,
       registry,
       workspaceRoot: workspace,
@@ -763,6 +411,7 @@ assert.throws(
 assert.throws(
   () =>
     new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
       plan: mainPlan,
       registry,
       workspaceRoot: workspace,
@@ -785,6 +434,7 @@ fs.symlinkSync(outsideObservabilityRoot, linkedObservabilityRoot);
 assert.throws(
   () =>
     new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
       plan: mainPlan,
       registry,
       workspaceRoot: workspace,
@@ -799,6 +449,7 @@ assert.throws(
 assert.throws(
   () =>
     new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
       plan: mainPlan,
       registry,
       workspaceRoot: workspace,
@@ -816,6 +467,7 @@ fs.symlinkSync(path.join(workspace, "linked-artifacts"), linkedArtifactRoot);
 assert.throws(
   () =>
     new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
       plan: mainPlan,
       registry,
       workspaceRoot: workspace,
@@ -827,13 +479,17 @@ assert.throws(
   /TEST_RUNNER_ARTIFACT_ROOT_OVERLAPS_WORKSPACE/,
 );
 
+// This original timeout/cleanup oracle models a provider that settles on real abort.
 const timeoutLoader = new BehaviorLoader(
-  async () => new Promise<ProviderResultV1>(() => undefined),
+  async (_invocation, context) => new Promise<ProviderResultV1>((_resolve, reject) => {
+    context.signal.addEventListener("abort", () => reject(context.signal.reason), { once: true });
+  }),
 );
 const timeoutPlan = plan({
   timeout: { uses: "example.generic@1", timeoutMs: 5, retries: 0 },
 });
 const timedOut = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: timeoutPlan,
   registry,
   workspaceRoot: workspace,
@@ -843,12 +499,31 @@ const timedOut = await new LocalTestPlanRunner({
   loader: timeoutLoader,
   id,
 }).run();
+if (timedOut.nodes[0]?.state !== "timed_out") console.error("LC_ORIGINAL_TIMEOUT_DIAGNOSTIC", JSON.stringify(timedOut));
 assert.equal(timedOut.nodes[0]?.state, "timed_out");
 assert.equal(
   timeoutLoader.cleanups.length,
   1,
   "cleanup is requested after a timeout",
 );
+
+// Preserve the original non-settling behavior separately: logging terminate is
+// not proof that execution stopped, so real Core must quarantine later phases.
+const unresolvedTimeoutLoader = new BehaviorLoader(
+  async () => new Promise<ProviderResultV1>(() => undefined),
+);
+const unresolvedTimeout = await new LocalTestPlanRunner({
+  executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+  plan: timeoutPlan, registry, workspaceRoot: workspace, repositoryRoot: repository,
+  artifactRoot: path.join(temporary, "unresolved-timeout-artifacts"),
+  maximumConcurrency: 1, loader: unresolvedTimeoutLoader, id,
+}).run();
+assert.equal(unresolvedTimeout.nodes[0]?.state, "errored");
+assert.match(unresolvedTimeout.attempts[0]!.summary, /WORKER_PHASE_UNRESOLVED/);
+assert.equal(unresolvedTimeoutLoader.terminations.length, 1);
+assert.equal(unresolvedTimeoutLoader.cleanups.length, 0, "quarantined execution must not start cleanup");
+assert.deepEqual(unresolvedTimeout.attempts[0]!.evidence, [], "quarantined execution must not collect evidence");
+assert.ok(unresolvedTimeout.cleanupErrors.some(error => /WORKER_PHASE_UNRESOLVED/.test(error.message)));
 
 const cancelController = new AbortController();
 const cancelLoader = new BehaviorLoader(
@@ -866,6 +541,7 @@ const cancelPlan = plan({
   cancelled: { uses: "example.generic@1", retries: 0 },
 });
 const cancelled = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: cancelPlan,
   registry,
   workspaceRoot: workspace,
@@ -885,6 +561,7 @@ const loadCancelPlan = plan({
   loadCancelled: { uses: "example.generic@1", retries: 0 },
 });
 const loadCancelled = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: loadCancelPlan,
   registry,
   workspaceRoot: workspace,
@@ -934,6 +611,7 @@ const resourcePlan = plan({
   resource: { uses: "example.generic@1", retries: 0, limits: { cpuMillis: 1 } },
 });
 const resourceFailure = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: resourcePlan,
   registry,
   workspaceRoot: workspace,
@@ -953,6 +631,7 @@ const logPlan = plan({
   logLimit: { uses: "example.generic@1", retries: 0, limits: { logBytes: 1 } },
 });
 const logFailure = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: logPlan,
   registry,
   workspaceRoot: workspace,
@@ -968,18 +647,21 @@ const logFailure = await new LocalTestPlanRunner({
 assert.equal(logFailure.nodes[0]?.state, "errored");
 assert.equal(logFailure.attempts[0]?.summary, "TEST_PROVIDER_LOG_LIMIT");
 
+let logHangScratch = "";
+const realLogHangLoader = new RegisteredTestProviderLoader({ provider: runnerExecutionPolicy.provider, observation: runnerExecutionPolicy.observation });
 const logHangStarted = Date.now();
 const logHang = await new LocalTestPlanRunner({
-  plan: logPlan,
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+  plan: plan({ logLimit: { uses: "example.generic@1", retries: 0, limits: { logBytes: 1 }, config: { logHang: true } } }),
   registry,
   workspaceRoot: workspace,
   repositoryRoot: repository,
   artifactRoot: path.join(temporary, "log-hang-artifacts"),
   maximumConcurrency: 1,
-  loader: new BehaviorLoader(async (_invocation, context) => {
-    context.log("stdout", "too much output");
-    return new Promise<ProviderResultV1>(() => undefined);
-  }),
+  loader: { load(entry, invocation, root, signal) {
+    logHangScratch = path.join(root, invocation.workspace.scratch);
+    return realLogHangLoader.load(entry, invocation, root, signal);
+  } },
   id,
 }).run();
 assert.equal(logHang.attempts[0]?.summary, "TEST_PROVIDER_LOG_LIMIT");
@@ -989,7 +671,32 @@ assert.equal(
   "the log limit stops a provider that does not return",
 );
 
+const logHangPid = Number(fs.readFileSync(path.join(logHangScratch, "log-hang-pid"), "utf8"));
+assert.ok(Number.isSafeInteger(logHangPid) && logHangPid > 0, "actual provider wrote its startup identity");
+assert.throws(() => process.kill(logHangPid, 0), { code: "ESRCH" }, "actual hung provider is gone");
+const marker = fs.readFileSync(path.join(logHangScratch, "log-hang-pid"));
+await new Promise(resolve => setTimeout(resolve, 50));
+assert.deepEqual(fs.readFileSync(path.join(logHangScratch, "log-hang-pid")), marker);
+assert.throws(() => process.kill(logHangPid, 0), { code: "ESRCH" });
+
+// Retain the old never-settling modeled log overflow as an unresolved negative.
+const unresolvedLogLoader = new BehaviorLoader(async (_invocation, context) => {
+  context.log("stdout", "too much output");
+  return new Promise<ProviderResultV1>(() => undefined);
+});
+const unresolvedLog = await new LocalTestPlanRunner({
+  executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
+  plan: logPlan, registry, workspaceRoot: workspace, repositoryRoot: repository,
+  artifactRoot: path.join(temporary, "unresolved-log-artifacts"),
+  maximumConcurrency: 1, loader: unresolvedLogLoader, id,
+}).run();
+assert.equal(unresolvedLog.nodes[0]?.state, "errored");
+assert.match(unresolvedLog.attempts[0]!.summary, /WORKER_PHASE_UNRESOLVED/);
+assert.equal(unresolvedLogLoader.cleanups.length, 0);
+assert.deepEqual(unresolvedLog.attempts[0]!.evidence, []);
+
 const reservedLogId = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: plan({ reservedLog: { uses: "example.generic@1", retries: 0 } }),
   registry,
   workspaceRoot: workspace,
@@ -1024,6 +731,7 @@ assert.equal(
 );
 
 const duplicateEvidencePath = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: plan({
     duplicateEvidencePath: { uses: "example.generic@1", retries: 0 },
   }),
@@ -1074,6 +782,7 @@ const artifactPlan = plan({
   },
 });
 const artifactFailure = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: artifactPlan,
   registry,
   workspaceRoot: workspace,
@@ -1109,6 +818,7 @@ assert.equal(
 );
 
 const artifactFailureWithDiagnostic = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: plan({
     artifactFailureWithDiagnostic: {
       uses: "example.generic@1",
@@ -1166,6 +876,7 @@ assert.deepEqual(
 );
 
 const symlinkEvidence = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: plan({ symlink: { uses: "example.generic@1", retries: 0 } }),
   registry,
   workspaceRoot: workspace,
@@ -1201,6 +912,7 @@ assert.match(
 );
 
 const cleanupDeletesEvidence = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: plan({
     cleanupDeletesEvidence: { uses: "example.generic@1", retries: 0 },
   }),
@@ -1259,6 +971,7 @@ assert.equal(
 
 const mutableProviderResult = result();
 const cleanupMutatesResult = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: plan({
     cleanupMutatesResult: { uses: "example.generic@1", retries: 0 },
   }),
@@ -1291,6 +1004,7 @@ assert.equal(
 );
 
 const nestedEvidence = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: plan({ nestedEvidence: { uses: "example.generic@1", retries: 0 } }),
   registry,
   workspaceRoot: workspace,
@@ -1326,6 +1040,7 @@ assert.equal(
 );
 
 const parentSymlinkEvidence = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: plan({ parentSymlink: { uses: "example.generic@1", retries: 0 } }),
   registry,
   workspaceRoot: workspace,
@@ -1364,6 +1079,7 @@ assert.match(
 );
 
 const unselectedErrorEvidence = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: plan({
     diagnostics: {
       uses: "example.generic@1",
@@ -1409,6 +1125,7 @@ const capabilityPlan = plan({
   capability: { uses: "example.capability@1", retries: 0 },
 });
 const denied = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: capabilityPlan,
   registry,
   workspaceRoot: workspace,
@@ -1424,6 +1141,7 @@ assert.equal(
 );
 let invokedCapability = "";
 const allowed = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: capabilityPlan,
   registry,
   workspaceRoot: workspace,
@@ -1460,6 +1178,7 @@ const cleanupPlan = plan({
   cleanup: { uses: "example.generic@1", retries: 0 },
 });
 const cleanupFailure = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: cleanupPlan,
   registry,
   workspaceRoot: workspace,
@@ -1499,6 +1218,7 @@ const cleanupEvidencePlan = plan({
   },
 });
 const cleanupErrorEvidence = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: cleanupEvidencePlan,
   registry,
   workspaceRoot: workspace,
@@ -1561,6 +1281,7 @@ const cleanupDependencyPlan = plan({
   },
 });
 const cleanupDependency = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: cleanupDependencyPlan,
   registry,
   workspaceRoot: workspace,
@@ -1598,13 +1319,14 @@ assert.equal(
 
 let cleanupTerminated = false;
 const cleanupTimeout = await new LocalTestPlanRunner({
+    executionPolicy: { ...runnerExecutionPolicy, provider: { ...runnerExecutionPolicy.provider, cleanupTimeoutMs: 10 } }, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: cleanupPlan,
   registry,
   workspaceRoot: workspace,
   repositoryRoot: repository,
   artifactRoot: path.join(temporary, "cleanup-timeout-artifacts"),
   maximumConcurrency: 1,
-  cleanupTimeoutMs: 10,
+  
   loader: {
     load: async () => ({
       supportsCleanup: async () => true,
@@ -1633,6 +1355,7 @@ const terminationFailurePlan = plan({
   terminationFailure: { uses: "example.generic@1", timeoutMs: 5 },
 });
 const terminationFailure = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: terminationFailurePlan,
   registry,
   workspaceRoot: workspace,
@@ -1669,6 +1392,7 @@ const missingCleanupPlan = plan(
 );
 let unsupportedFixtureCleaned = false;
 const missingCleanup = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: missingCleanupPlan,
   registry,
   workspaceRoot: workspace,
@@ -1715,6 +1439,7 @@ const missingOutputPlan = plan(
   { optional: { uses: "example.optional-report@1", retries: 0 } },
 );
 const missingOutput = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: missingOutputPlan,
   registry,
   workspaceRoot: workspace,
@@ -1744,6 +1469,7 @@ tampered.nodes[0]!.timeoutMs = 99;
 assert.throws(
   () =>
     new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
       plan: tampered,
       registry,
       workspaceRoot: workspace,
@@ -1755,8 +1481,9 @@ assert.throws(
 );
 
 const loadedPlan = plan({ loaded: { uses: "example.generic@1", retries: 0 } });
-const registeredLoader = new RegisteredTestProviderLoader();
+const registeredLoader = new RegisteredTestProviderLoader({ provider: runnerExecutionPolicy.provider, observation: runnerExecutionPolicy.observation });
 const loaded = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: loadedPlan,
   registry,
   workspaceRoot: workspace,
@@ -1783,6 +1510,7 @@ const isolatedArtifactPlan = plan(
   { isolatedProducer: { uses: "example.report@1", retries: 0 } },
 );
 const isolatedArtifact = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: isolatedArtifactPlan,
   registry,
   workspaceRoot: workspace,
@@ -1816,6 +1544,7 @@ const invalidReportPlan = plan({}, {
   isolatedProducer: { uses: "example.report@1", config: { invalidReport: true }, retries: 0 },
 });
 const invalidReport = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: invalidReportPlan, registry, workspaceRoot: workspace, repositoryRoot: repository,
   artifactRoot: path.join(temporary, "invalid-report-store"), maximumConcurrency: 1,
   loader: registeredLoader, id,
@@ -1838,7 +1567,9 @@ class CapturingRuntime implements WorkerAttemptRuntime {
       "schemaVersion" in value &&
       value.schemaVersion === "worker-attempt-result.v1"
     ) {
-      this.results.push(value as WorkerAttemptResultV1);
+      const captured: unknown = value;
+      validatePipelineWorkerCoreContract("workerAttemptResult", captured);
+      this.results.push(captured as WorkerAttemptResultV1);
     }
     return value;
   }
@@ -1885,6 +1616,7 @@ const parityBehavior = async () => result({ summary: "parity" });
 const directRuntime = new CapturingRuntime();
 let directSequence = 0;
 const directResult = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: parityPlan,
   registry,
   workspaceRoot: workspace,
@@ -1897,6 +1629,7 @@ const directResult = await new LocalTestPlanRunner({
 }).run();
 let localSequence = 0;
 const localResult = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: parityPlan,
   registry,
   workspaceRoot: workspace,
@@ -1918,6 +1651,7 @@ const evidencePlan = plan(
   { report: { uses: "example.report@1", retries: 0 } },
 );
 const evidenceResult = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: evidencePlan,
   registry,
   workspaceRoot: workspace,
@@ -1975,6 +1709,7 @@ class RejectAfterRuntime implements WorkerAttemptRuntime {
 
 const rejectedArtifactRoot = path.join(temporary, "rejected-runtime-artifacts");
 const rejectedRuntimeResult = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: evidencePlan,
   registry,
   workspaceRoot: workspace,
@@ -2039,6 +1774,7 @@ const lifecyclePlan = plan({
 });
 const lifecycleProfiles = createBusterWorkerProfiles(lifecyclePlan, registry);
 const lifecycleWorker = new LocalWorkerRuntime({
+  replayLimit: 65_536,
   workerId: "worker:buster:local",
   workerType: "buster",
   coreVersion: "1.0.0",
@@ -2054,6 +1790,7 @@ const lifecycleReady = new Promise<void>((resolve) => {
   lifecycleStarted = resolve;
 });
 const lifecycleRun = new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: lifecyclePlan,
   registry,
   workspaceRoot: workspace,
@@ -2094,6 +1831,7 @@ const cooperativePlan = plan({
   },
 });
 const cooperativeRun = new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: cooperativePlan,
   registry,
   workspaceRoot: workspace,
@@ -2132,6 +1870,7 @@ for (const forbidden of [
     },
   });
   const forbiddenResult = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
     plan: forbiddenPlan,
     registry,
     workspaceRoot: workspace,
@@ -2151,6 +1890,7 @@ for (const forbidden of [
 const providerPath = path.join(packageRoot, "dist", "provider.js");
 const verifiedProviderSource = fs.readFileSync(providerPath, "utf8");
 const pinnedRunPromise = new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: loadedPlan,
   registry,
   workspaceRoot: workspace,
@@ -2184,6 +1924,7 @@ const hardTimeoutPlan = plan({
 });
 const hardTimeoutStarted = Date.now();
 const hardTimeout = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: hardTimeoutPlan,
   registry,
   workspaceRoot: workspace,
@@ -2202,6 +1943,7 @@ assert.equal(
 
 fs.appendFileSync(providerPath, "\n// changed after registry freeze\n");
 const changed = await new LocalTestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   plan: loadedPlan,
   registry,
   workspaceRoot: workspace,

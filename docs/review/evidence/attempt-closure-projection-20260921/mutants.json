@@ -1,0 +1,14 @@
+[
+  {
+    "mutation": "quota",
+    "exitCode": 1
+  },
+  {
+    "mutation": "generation",
+    "exitCode": 1
+  },
+  {
+    "mutation": "saving",
+    "exitCode": 1
+  }
+]

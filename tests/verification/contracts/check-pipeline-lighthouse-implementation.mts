@@ -1,3 +1,4 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -70,7 +71,8 @@ assert.equal(fs.existsSync(chromeExecutable), true, 'real Chrome is required');
 const capability = new BrowserLighthouseCapabilityInvoker({ allowedOrigins: [origin], chromeExecutable,
   maximumRuns: 4, maximumExecutionMs: 180_000, maximumResultBytes: 64 * 1024 * 1024 });
 try {
-  const run = await new TestPlanRunner({ plan, registry, workspaceRoot: path.join(root, 'workspace'),
+  const run = await new TestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: path.join(root, 'workspace'),
     repositoryRoot: path.join(root, 'workspace/repository'), artifactRoot: path.join(root, 'artifacts'),
     observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1,
     grants: new Map([['seo', ['browser.lighthouse']]]), capabilityInvoker: capability }).run();

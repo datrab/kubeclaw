@@ -7,15 +7,23 @@ This reference describes `kubeclaw.playwright@1`. Project configuration selects 
 | Field | Type | Required | Default | Limit | Failure | Example |
 | --- | --- | --- | --- | --- | --- | --- |
 | `url` | HTTP or HTTPS origin | No | Typed input | Origin only; no path, user information, query, or fragment | `PLAYWRIGHT_TARGET_INVALID` | `https://preview.example.test` |
-| `endpointName` | String | No | First deployment endpoint | 1–128 stable characters | `PLAYWRIGHT_ENDPOINT_NOT_FOUND` | `web` |
+| `endpointName` | String | No | First deployment endpoint | 1–64 stable characters in the project schema | `PLAYWRIGHT_ENDPOINT_NOT_FOUND` | `web` |
 | `projectDirectory` | Repository-relative path | Yes | None | 1–1024 characters; no empty segment or `..` | `PLAYWRIGHT_PROJECT_DIRECTORY_INVALID` | `apps/web` |
 | `configFile` | Project-relative path | Yes | None | 1–1024 characters; must be a real file inside the project | `PLAYWRIGHT_CONFIG_FILE_INVALID` | `playwright.config.ts` |
 | `workers` | Integer | No | 4 | 1–64; Buster can reduce it | `PLAYWRIGHT_CONFIG_INVALID` | `2` |
 | `timeoutMs` | Integer milliseconds | No | Node timeout | 1,000–3,600,000; Buster can reduce it | `PLAYWRIGHT_CONFIG_INVALID` | `120000` |
+| `minimumExecutedTests` | Integer | No | 1 | 0–100000; blocking nodes always require at least 1 executed test | Failed result when execution count is below the effective minimum | `5` |
+| `requiredTests` | Unique string array | No | Empty | At most 10000 exact case titles, each 1–2048 characters | Failed result when a required title is absent, ambiguous, skipped or unexecuted; cases classified failed also fail the result | `["checkout > pays > chromium"]` |
 
 Use either `url` or one typed `deployment` or `endpoint` input. Do not use both. Unknown fields are invalid. Symlinks cannot move a path outside the immutable attempt repository.
 
 The project Playwright configuration owns test selection, browser projects, retries, authentication setup, assertion timeouts, screenshots, video, and traces. KubeClaw always adds the JSON reporter, a canonical artifact directory, `--max-failures=0`, the authorized base URL, and the effective worker ceiling.
+
+Required titles use the provider's full title: nonempty enclosing suite titles,
+spec title and project name joined with ` > `. These acceptance fields check the
+reported cases; they do not select tests or make a skipped case count as executed.
+Playwright-expected failures and flaky cases with execution are classified as
+passed by this provider; a failed retry alone is not a failed case classification.
 
 ## Operator fields
 

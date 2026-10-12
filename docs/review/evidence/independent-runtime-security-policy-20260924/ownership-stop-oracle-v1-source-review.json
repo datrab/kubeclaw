@@ -1,0 +1,38 @@
+{
+  "reviewer": "/root/runtime_security_policy_review",
+  "decision": "accept_explicit_scenario_isolation_for_source_integration_and_verification",
+  "manifestSha256": "055b6d41df9b26b8e202c4a4415f2018fd216b360925853d084e9463c3870a23",
+  "allCandidateBeforeLiveAndObservedHashesVerified": true,
+  "findings": [],
+  "scopeDecision": {
+    "requiredBehavior": "Registered stop failure is surfaced with retained-root cause, no unhandled rejection, genuine held child not falsely marked closed, root stays retained after later real child close. Per assigned acceptance, simultaneous body rejection is not a required trigger.",
+    "changedScenario": "OWN-STOP-FAILURE now has a successfully settled body and real registered stop rejection. This changes an authored test scenario and removes its simultaneous-body-error oracle; it must not be described as all original oracles unchanged.",
+    "whyAcceptable": "The actual required stop rejection and all retention/cause/close/unhandled oracles remain. The old scenario only exposed the primary body failure through genuine Node reporter, so treating that as the stop-cause proof would be false. Isolating stop failure lets the same real runner publicly expose the exact required failure chain without replacing runner, faking errors or weakening retention.",
+    "notProved": "Public dual-error reporting or simultaneous body+stop rejection behavior remains unproven; preserved prior failure must remain historical failed evidence. No blanket claim of arbitrary multi-failure diagnostics is approved."
+  },
+  "sourceChecks": [
+    "Actual stop method still throws OWN_STOP_SENTINEL while owning same live held child.",
+    "Outer assertions still demand FILES_RETAINED.cause == SHUTDOWN_FAILED and nested OWN_STOP_SENTINEL, plus successful-body event and absence of body-rejecting event.",
+    "Root must exist before release and after actual child close; real code0/signalnull close and absence of uncaught/unhandled remain required.",
+    "Other timeout-clean and disposal-timeout-late scenarios, watchdogs, original test deadlines, helper source, IPC barriers and termination-generation checks unchanged.",
+    "Retained observed evidence shows only OWN_BODY_SENTINEL in Node failure reporter and actual stop-entered/child-stop-requested events; no stop-cause acceptance can be inferred from it."
+  ],
+  "requiredBeforeAcceptance": [
+    "Execute all3 ownership cases under exact source binding, original timeouts and strict unhandled rejection mode.",
+    "Inspect public real cause chain/retention/close oracles; nonzero nested exit alone is insufficient.",
+    "Update current matrix/implementation status to reference this explicit scenario decision; do not relabel V1/V2 failed simultaneous scenario as passed."
+  ],
+  "runtimeExecutedByReviewer": false,
+  "boundFiles": [
+    {
+      "path": "tests/fixtures/test-gate/cluster-ownership-scenario.mjs",
+      "beforeSha256": "341c79995904955505607f309ec697d8508b282e0557b1a2ef66ecc31fc9c473",
+      "afterSha256": "2733291320e51f7a1a08521d2ebb39d632815ab614260a1360a6cc7d62b9768d"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "beforeSha256": "d71fb8decddcff431f4e67750516ad8886dad335cba63051d79fb1880149611d",
+      "afterSha256": "d71bfc2c3c468406deb05f0cf45582eff2786633e0570adfd336f3a36ba2f695"
+    }
+  ]
+}

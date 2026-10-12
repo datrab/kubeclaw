@@ -1,0 +1,11 @@
+--- v1
++++ v2
+@@ -279,7 +279,7 @@
+       const timer = setInterval(() => {
+         if (!fs.existsSync(trigger)) return;
+         clearInterval(timer);
+-        process.stdout.write(JSON.stringify({ kind: 'log', stream: 'stdout', content: ${JSON.stringify(content)} }) + '\n');
++        process.stdout.write(JSON.stringify({ kind: 'log', stream: 'stdout', content: ${JSON.stringify(content)} }) + String.fromCharCode(10));
+       }, 10);
+       return { execute() { return { value: 'after idle log' }; }, cleanup() {} };
+     }`, { providerPolicy: { maximumProtocolBytes } });

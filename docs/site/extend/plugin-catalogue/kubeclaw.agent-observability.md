@@ -71,10 +71,14 @@ Run:
 npm test --prefix skills/common/plugins/agent-observability
 ```
 
-Package tests found: 0.
+Package tests found: 4.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/agent-observability/plugin.json`
 - Package root: `skills/common/plugins/agent-observability`
 - Authored package guide: `skills/common/plugins/agent-observability/README.md`
+- Test: `skills/common/plugins/agent-observability/tests/live-function.test.ts`
+- Test: `skills/common/plugins/agent-observability/tests/observers.unit.test.mjs`
+- Test: `skills/common/plugins/agent-observability/tests/package-boundary.test.mjs`
+- Test: `skills/common/plugins/agent-observability/tests/parity.test.ts`

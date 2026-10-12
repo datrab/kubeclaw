@@ -1,0 +1,25 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-diagnostics-source/observe-test.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=consumes minimumCpuTimeMs",
+      "tests/verification/contracts/buster-report-policy-consumers.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "cpu-diagnostic",
+    "seconds": 5.3728819019161165
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-diagnostics-source/boundary.mjs"
+    ],
+    "exitCode": 0,
+    "name": "boundary-diagnostic",
+    "seconds": 10.691448702011257
+  }
+]

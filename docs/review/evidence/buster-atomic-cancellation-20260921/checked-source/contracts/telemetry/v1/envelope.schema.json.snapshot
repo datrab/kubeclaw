@@ -1,0 +1,192 @@
+{
+  "$id": "telemetry_envelope.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_id": {
+      "$ref": "correlation_identity.schema.json#/properties/agent_id"
+    },
+    "authority_class": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt": {
+      "$ref": "correlation_identity.schema.json#/properties/attempt"
+    },
+    "causation_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "cursor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dispatch_id": {
+      "$ref": "correlation_identity.schema.json#/properties/dispatch_id"
+    },
+    "emitted_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "event_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "extensions": {
+      "type": "object",
+      "properties": {
+        "evidence_provenance": {
+          "enum": [
+            "production",
+            "recorded",
+            "synthetic"
+          ]
+        }
+      },
+      "required": [
+        "evidence_provenance"
+      ]
+    },
+    "gate_id": {
+      "$ref": "correlation_identity.schema.json#/properties/gate_id"
+    },
+    "gate_type": {
+      "$ref": "correlation_identity.schema.json#/properties/gate_type"
+    },
+    "module_id": {
+      "$ref": "correlation_identity.schema.json#/properties/module_id"
+    },
+    "model_call_id": {
+      "$ref": "correlation_identity.schema.json#/properties/model_call_id"
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "producer": {
+      "$ref": "correlation_identity.schema.json#/properties/producer"
+    },
+    "parent_session_id": {
+      "$ref": "correlation_identity.schema.json#/properties/parent_session_id"
+    },
+    "trace_id": {
+      "$ref": "correlation_identity.schema.json#/properties/trace_id"
+    },
+    "span_id": {
+      "$ref": "correlation_identity.schema.json#/properties/span_id"
+    },
+    "parent_span_id": {
+      "$ref": "correlation_identity.schema.json#/properties/parent_span_id"
+    },
+    "project": {
+      "$ref": "correlation_identity.schema.json#/properties/project"
+    },
+    "run_id": {
+      "$ref": "correlation_identity.schema.json#/properties/run_id"
+    },
+    "schema_version": {
+      "const": "telemetry_envelope.v1"
+    },
+    "source_event_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "seq": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "session_id": {
+      "$ref": "correlation_identity.schema.json#/properties/session_id"
+    },
+    "source": {
+      "$ref": "correlation_identity.schema.json#/properties/source"
+    },
+    "tool_call_id": {
+      "$ref": "correlation_identity.schema.json#/properties/tool_call_id"
+    },
+    "type": {
+      "enum": [
+        "pipeline.started",
+        "pipeline.completed",
+        "pipeline.halted",
+        "module.started",
+        "module.status_changed",
+        "phase.started",
+        "phase.completed",
+        "retry.scheduled",
+        "retry.exhausted",
+        "system.io_warning",
+        "summary.started",
+        "summary.completed",
+        "gate.started",
+        "gate.verdict",
+        "agent.spawn.requested",
+        "agent.spawned",
+        "agent.delivery.target",
+        "agent.killed",
+        "agent.ended",
+        "agent.llm.input.summary",
+        "agent.llm.output.summary",
+        "agent.tool.started",
+        "agent.tool.finished",
+        "agent.model.started",
+        "agent.model.ended",
+        "agent.session.started",
+        "agent.session.ended",
+        "agent.transcript",
+        "agent.progress",
+        "cost.update",
+        "rate_limit.detected",
+        "observability.degraded",
+        "observability.restored",
+        "error.escalation",
+        "approval.requested",
+        "approval.resolved",
+        "budget.warning",
+        "budget.exceeded",
+        "plugin.event",
+        "artifact.published",
+        "lifecycle.transition",
+        "lifecycle.snapshot",
+        "producer.health",
+        "terminal.closure",
+        "runtime.log",
+        "git.evidence",
+        "quality.evidence",
+        "infrastructure.evidence",
+        "evaluation.fact",
+        "command.requested",
+        "command.accepted",
+        "command.rejected",
+        "command.completed"
+      ]
+    },
+    "work_id": {
+      "$ref": "correlation_identity.schema.json#/properties/work_id"
+    },
+    "work_type": {
+      "$ref": "correlation_identity.schema.json#/properties/work_type"
+    }
+  },
+  "required": [
+    "schema_version",
+    "event_id",
+    "source_event_id",
+    "type",
+    "occurred_at",
+    "emitted_at",
+    "seq",
+    "cursor",
+    "project",
+    "run_id",
+    "source",
+    "producer",
+    "authority_class",
+    "extensions"
+  ],
+  "type": "object"
+}

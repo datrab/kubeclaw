@@ -1,0 +1,26 @@
+[
+  {
+    "mutation": "connection",
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern",
+      "CB02",
+      "/tmp/config-review-mutant-sx6s6vgy/behavior.test.mts"
+    ],
+    "exitCode": 1,
+    "expectation": "configured boundary no longer occurs; original positive control must have reached real server"
+  },
+  {
+    "mutation": "body",
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern",
+      "CB03",
+      "/tmp/config-review-mutant-dhvjo98t/behavior.test.mts"
+    ],
+    "exitCode": 1,
+    "expectation": "configured boundary no longer occurs; original positive control must have reached real server"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+    "sha256": "82d71f3e554364be664b649a251009f606cb7efda46c84b16b44f38aa271a6bf",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/before/skills/buster/engine/test-gates/prepared-plan-store.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "330f1285b6efe175d58003d0efe94fc2dfbface7769beb6e22dd2d773a37db4f",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/before/skills/buster/engine/test-gates/remote-plan-service.ts.snapshot"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-admission.mts",
+    "sha256": "8fca581a354470b14b6d7f3b04f51cc92cf6b0627e22c42a0c61efe430666a11",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/before/tests/fixtures/test-gate/buster-admission.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "sha256": "13e698f7350ee9411a506620b354577f360c27a0b7a2dd35f40c4bf9a974cae7",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/before/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/nova-remote-faults.mts",
+    "sha256": "b14c845886e702ea23d12ed7b8b9231ddc2abfbf8411eb34d78b5b088d975e9a",
+    "snapshot": "docs/review/evidence/buster-atomic-cancellation-20260921/before/tests/verification/reliability/nova-remote-faults.mts.snapshot"
+  }
+]

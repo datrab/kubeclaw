@@ -1,0 +1,59 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const builderRange = { start: 100000, count: 65536 };
+const protectedIdentityMaximum = 1003;
+
+function parseEntry(line) {
+  const match = /^([A-Za-z_][A-Za-z0-9_-]*|[0-9]+):([0-9]+):([0-9]+)$/u.exec(line);
+  if (!match) throw new Error('BUSTER_SUBORDINATE_ID_FORMAT_INVALID');
+  const start = Number(match[2]);
+  const count = Number(match[3]);
+  const end = start + count;
+  if (!Number.isSafeInteger(start) || !Number.isSafeInteger(count) || count < 1
+    || !Number.isSafeInteger(end) || start <= protectedIdentityMaximum || end > 4294967295) {
+    throw new Error('BUSTER_SUBORDINATE_ID_PROTECTED_RANGE');
+  }
+  const owner = normalizeOwner(match[1]);
+  if (owner === 'builder' && (start !== builderRange.start || count !== builderRange.count)) {
+    throw new Error('BUSTER_SUBORDINATE_BUILDER_RANGE_INVALID');
+  }
+  return { owner, start, count };
+}
+
+function normalizeOwner(value) {
+  const numeric = /^[0-9]+$/u.test(value) ? Number(value) : null;
+  if (numeric !== null && (!Number.isSafeInteger(numeric) || numeric > 4294967294)) {
+    throw new Error('BUSTER_SUBORDINATE_ID_OWNER_INVALID');
+  }
+  if (['node', 'builder'].includes(value) || numeric === 1000) return 'builder';
+  return numeric === null ? value : String(numeric);
+}
+
+/** Validate inherited ranges before adding the image's sole builder delegation. */
+export function busterSubordinateIds(content) {
+  const entries = [];
+  for (const raw of content.split('\n')) {
+    const line = raw.trim();
+    if (!line || line.startsWith('#')) continue;
+    const { owner, start, count } = parseEntry(line);
+    const duplicate = entries.some(item => item.owner === owner && item.start === start && item.count === count);
+    if (!duplicate) entries.push({ owner, start, count });
+  }
+  if (!entries.some(item => item.owner === 'builder')) entries.push({ owner: 'builder', ...builderRange });
+  const sorted = [...entries].sort((left, right) => left.start - right.start);
+  for (let index = 1; index < sorted.length; index++) {
+    if (sorted[index].start < sorted[index - 1].start + sorted[index - 1].count) {
+      throw new Error('BUSTER_SUBORDINATE_ID_RANGE_OVERLAP');
+    }
+  }
+  return `${entries.map(item => `${item.owner}:${item.start}:${item.count}`).join('\n')}\n`;
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const files = process.argv.slice(2);
+  if (files.length !== 2) throw new Error('Usage: buster-subordinate-ids.mjs SUBUID_FILE SUBGID_FILE');
+  const contents = files.map(file => busterSubordinateIds(fs.readFileSync(file, 'utf8')));
+  files.forEach((file, index) => fs.writeFileSync(file, contents[index], { mode: 0o644 }));
+}

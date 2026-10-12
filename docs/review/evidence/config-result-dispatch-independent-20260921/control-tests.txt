@@ -1,0 +1,40 @@
+✔ direction selection rolls back on actual SQL insert failure and replays a committed response (5114.872135ms)
+✔ all feedback actions persist valid wire IDs, explicit retries deduplicate and fresh actions remain distinct (3981.933449ms)
+✔ failed rejection retains proposed state; stale and historical partial selections do not invent receipts (2920.780738ms)
+✔ wire preference IDs replay only exact owner and content while preserving internal UUIDs (2508.485618ms)
+✔ wire ID migration preserves legacy UUID/content and refuses ambiguous historical wire identities (5165.139997ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (7505.170781ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (4097.669378ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (5063.753913ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (1020.380633ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (4606.102314ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (4171.398952ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (6395.716336ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (1295.500245ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (5490.620758ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (5893.903622ms)
+✔ independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key (5614.538117ms)
+✔ independent original composed restart rejects prior session authority before recording and preserves fresh authorized intent (5288.294863ms)
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (2.455162ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (1.083968ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (0.377729ms)
+✔ Tailscale exchange requires the trusted ingress path (3.193922ms)
+✔ session signatures and expiry fail closed (0.40617ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 81155.502947

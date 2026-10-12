@@ -1,0 +1,22 @@
+[
+  {
+    "file": "skills/buster/engine/test-gates/runner.ts",
+    "exitCode": 1,
+    "stderr": ""
+  },
+  {
+    "file": "skills/worker/core/worker/local-runtime.ts",
+    "exitCode": 1,
+    "stderr": ""
+  },
+  {
+    "file": "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+    "exitCode": 1,
+    "stderr": ""
+  },
+  {
+    "file": "skills/buster/engine/test-gates/production.ts",
+    "exitCode": 0,
+    "stderr": ""
+  }
+]

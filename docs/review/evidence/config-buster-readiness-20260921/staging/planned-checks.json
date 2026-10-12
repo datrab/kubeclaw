@@ -1,0 +1,97 @@
+{
+  "executed": false,
+  "note": "Requires integration/rebase plus coordinated tools/source binding. Use genuine GNU flock/native host tools and available Helm as in accepted original suites. Confirm package-script/path identities before execution.",
+  "commands": [
+    [
+      "npm",
+      "run",
+      "verify:buster:readiness-config"
+    ],
+    [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/verification/reliability/buster-admission-cli.test.mjs",
+      "tests/verification/deployment/buster-admission-render.test.mjs"
+    ],
+    [
+      "node",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+    ],
+    [
+      "node",
+      "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+    ],
+    [
+      "node",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+    ],
+    [
+      "node",
+      "tests/verification/deployment/check-deployment-truth.mjs"
+    ],
+    [
+      "node",
+      "--test",
+      "tests/verification/deployment/config-component-packaging.test.mjs"
+    ]
+  ],
+  "mutations": [
+    {
+      "env": {
+        "BUSTER_READINESS_MUTATION": "restore-policy-default"
+      },
+      "command": [
+        "node",
+        "--import",
+        "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+        "--test",
+        "tests/verification/reliability/buster-readiness-consumer.test.mts"
+      ]
+    },
+    {
+      "env": {
+        "BUSTER_READINESS_MUTATION": "restore-field-defaults"
+      },
+      "command": [
+        "node",
+        "--import",
+        "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+        "--test",
+        "tests/verification/reliability/buster-readiness-consumer.test.mts"
+      ]
+    },
+    {
+      "env": {
+        "BUSTER_READINESS_MUTATION": "ignore-execution"
+      },
+      "command": [
+        "node",
+        "--import",
+        "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+        "--test",
+        "tests/verification/reliability/buster-readiness-consumer.test.mts"
+      ]
+    },
+    {
+      "env": {
+        "BUSTER_READINESS_MUTATION": "ignore-output"
+      },
+      "command": [
+        "node",
+        "--import",
+        "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+        "--test",
+        "tests/verification/reliability/buster-readiness-consumer.test.mts"
+      ]
+    }
+  ],
+  "types": [
+    "tests/verification/reliability/tsconfig.buster-readiness.json",
+    "skills/common/plugin-runtime/tsconfig.json",
+    "skills/buster/engine/tsconfig.json"
+  ],
+  "lint": "All changed maintained TS/MTS/MJS using repository canonical ESLint configuration; no disables",
+  "boundAt": "2026-09-21T18:24:09.603981+00:00"
+}

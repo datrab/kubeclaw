@@ -92,7 +92,7 @@ test('real cgroup2 delegation is required and host platform paths resolve', asyn
     await assert.rejects(invokeIsolated({ packageRoot: path.dirname(modulePath), modulePath, exportName: 'execute', surface: 'stage', argument: {}, context: fullContext }), /ISOLATION_CGROUP_REQUIRED/);
     assert.throws(() => IsolationCgroup.create(root, 64 * 1024 * 1024), /ISOLATION_CGROUP_ROOT_INVALID/);
     assert.throws(() => IsolationCgroup.create('/sys/fs/cgroup', 64 * 1024 * 1024), /ISOLATION_CGROUP_ROOT_INVALID/);
-    const platform = { schemaVersion: 'pipeline-platform.v2', installationRoots: [root], trustedBuiltinRoots: [root], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: 'state', shutdownTimeoutMs: 1000, orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [], isolation: { cgroupRoot: 'delegated' } };
+    const platform = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [root], trustedBuiltinRoots: [root], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: 'state', shutdownTimeoutMs: 1000, orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [], isolation: { cgroupRoot: 'delegated' } };
     const file = path.join(root, 'platform.json'); fs.writeFileSync(file, JSON.stringify(platform));
     assert.equal(loadPlatformConfig(file).isolation.cgroupRoot, path.join(root, 'delegated'));
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
@@ -103,7 +103,7 @@ test('changed isolation policy is pinned for recovery while builtin execution st
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'isolation-pinned-policy-'));
   try {
     const fixture = path.resolve('tests/fixtures/plugin-system-v2');
-    const platform = { schemaVersion: 'pipeline-platform.v2', installationRoots: [fixture], trustedBuiltinRoots: [fixture], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 1000, orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [] };
+    const platform = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [fixture], trustedBuiltinRoots: [fixture], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {}, storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 1000, orchestratorIssuerId: 'nova', administrativeDecisionIssuers: [] };
     const definition = { schemaVersion: 'pipeline-definition.v2', id: 'test:isolation-policy', maxConcurrency: 1, stages: [{ id: 'review', type: 'test.resume', dependsOn: [], config: {}, input: {}, execution: { maxAttempts: 3, maxRemediationCycles: 0, timeoutMs: 2000 } }] };
     const first = await runPipelineV2(platform, definition, 'run:isolation-policy');
     assert.equal(first.status, 'waiting');

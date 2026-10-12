@@ -1,0 +1,69 @@
+--- a/tests/verification/contracts/provider-loader-ownership.test.mjs
++++ b/tests/verification/contracts/provider-loader-ownership.test.mjs
+@@ -30,6 +30,7 @@
+   let emit;
+   let signalErrors = 0;
+   let observationErrors = 0;
++  let stdoutBytes = 0;
+   let session;
+   let spawnMock;
+   let killMock;
+@@ -67,6 +68,7 @@
+   spawnMock = t.mock.method(childProcess, 'spawn', function (...args) {
+     assert.equal(child, undefined, 'exactly one actual provider spawn');
+     child = Reflect.apply(realSpawn, childProcess, args);
++    child.stdout.on('data', chunk => { stdoutBytes += chunk.byteLength; });
+     emit = child.emit;
+     // Observe the actual ChildProcess close event. In the timeout case only
+     // delivery to session listeners is withheld; the real child is already dead.
+@@ -109,6 +111,7 @@
+       const values = withheldClose; withheldClose = undefined;
+       Reflect.apply(emit, child, ['close', ...values]);
+     },
++    stdoutBytes: () => stdoutBytes,
+     signalErrors: () => signalErrors, observationErrors: () => observationErrors };
+ }
+ 
+@@ -266,3 +269,42 @@
+   assert.equal(pending.settled(), true);
+   assert((await pending.execution).error instanceof Error);
+ });
++
++
++for (const maximumProtocolBytes of [512, 4096]) test(`initialized idle session retains actual protocol overflow at ${maximumProtocolBytes} bytes`, { timeout: 10000 }, async t => {
++  const content = 'idle overflow payload '.repeat(60);
++  const f = fixture(t, `import fs from 'node:fs';
++    export function provider() {
++      const trigger = new URL('./scratch/overflow-go', import.meta.url);
++      const timer = setInterval(() => {
++        if (!fs.existsSync(trigger)) return;
++        clearInterval(timer);
++        process.stdout.write(JSON.stringify({ kind: 'log', stream: 'stdout', content: ${JSON.stringify(content)} }) + '\n');
++      }, 10);
++      return { execute() { return { value: 'after idle log' }; }, cleanup() {} };
++    }`, { providerPolicy: { maximumProtocolBytes } });
++  const received = deferred();
++  const logs = [];
++  f.context.log = (stream, value) => { logs.push({ stream, value }); if (value === content) received.resolve(); };
++  assert.equal(await f.session.initialize(f.context), true);
++  assert(f.stdoutBytes() > 0 && f.stdoutBytes() <= 512, 'real initialization completed within the low budget');
++  // Only now may the child emit its next frame; no execute/cleanup is pending.
++  fs.writeFileSync(path.join(f.context.workspaceRoot, 'scratch/overflow-go'), 'go');
++  if (maximumProtocolBytes === 512) {
++    await f.closed;
++    assert(f.stdoutBytes() > maximumProtocolBytes, 'actual child bytes crossed the selected cap');
++    assert.equal(logs.length, 0, 'over-budget frame must not dispatch a log');
++    await assert.rejects(f.session.execute(f.context), { message: 'TEST_PROVIDER_PROTOCOL_LIMIT' });
++    await assert.rejects(f.session.cleanup(f.context), { message: 'TEST_PROVIDER_PROTOCOL_LIMIT' });
++    await assert.rejects(f.session.initialize(f.context), { message: 'TEST_PROVIDER_PROTOCOL_LIMIT' });
++    await f.session.terminate();
++  } else {
++    await received.promise;
++    assert(f.stdoutBytes() > 512 && f.stdoutBytes() <= maximumProtocolBytes);
++    assert.deepEqual(logs, [{ stream: 'stdout', value: content }]);
++    assert.deepEqual(await f.session.execute(f.context), { value: 'after idle log' });
++    await f.session.cleanup(f.context);
++    await f.closed;
++    await f.session.terminate();
++  }
++});

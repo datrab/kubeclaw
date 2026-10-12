@@ -1,0 +1,6 @@
+{
+  "path": "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
+  "beforeSha256": "bca95a7b027cd7ded0b8d4411d7f1db66f3705e89a099c5ee4d9446595546f3b",
+  "afterSha256": "54bb3a32574fb06d835bd3ac04614c6cc18d2286949003dd5ea3b97f27dcf714",
+  "scope": "Existing real adjacent TypeScript module enables projectService parsing; actual canonical rules, expected denial and fatal guard unchanged. Diagnostics now include parser messages."
+}

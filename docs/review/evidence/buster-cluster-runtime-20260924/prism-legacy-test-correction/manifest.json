@@ -1,0 +1,12 @@
+{
+  "status": "private unexecuted test correction; no live source change",
+  "cause": "Prism closed values schema never admits broker section; original negative expected a later template error and left an empty invalid section behind. Keep rejection, assert actual boundary, restore original property presence, positively render before further independent invalid cases.",
+  "files": [
+    {
+      "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+      "kind": "file",
+      "beforeSha256": "dc0f81d07a2bcc8555bb0d3f7e1555fe4e442ba05ac4a49a753051818f4221a6",
+      "sha256": "49dcf0f3942fb5bc5c5ac3b3345f7afb6a269fde0a066652424d22a00fe0be15"
+    }
+  ]
+}

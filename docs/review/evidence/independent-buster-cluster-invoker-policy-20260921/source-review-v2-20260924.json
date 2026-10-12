@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-24",
+  "mode": "independent bounded source-only follow-up; no runtime/types/lint/Helm execution",
+  "manifest": "docs/review/evidence/buster-cluster-invoker-policy-20260921/manifest-v2.json",
+  "manifestSha256": "248e1dc17a498678fece1e02bbd243344b4876396ba7c90fe782d11a3d1bc889",
+  "files": 62,
+  "changedFiles": [
+    "docs/architecture/buster-cluster-configuration.md",
+    "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+    "skills/buster/engine/test-gates/production.ts",
+    "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+    "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "tests/fixtures/test-gate/buster-cli-profile.mjs",
+    "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs",
+    "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+    "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs"
+  ],
+  "identityErrors": [],
+  "decision": "source accepted for coordinated integration and independent verification; V1 blockers addressed",
+  "blockerResolution": {
+    "CLUSTER-V1-01": "Identical ^v[0-9]+(?:(?:alpha|beta)[0-9]+)?$ in central schema and both constructors. Both-chart test loop has positive v1/v1alpha1/v2beta12 and malformed suffix negatives; separate constructor/schema cases additionally test v2. Explicit acceptance-domain tightening documented.",
+    "CLUSTER-V1-02": "New configuredClusterCapabilities omits binding only when both route booleans false, RuntimeSecurity source absent, and binding itself undefined. Present null/empty/extra/invalid values still validate and reject. All central policy validation remains unconditional before runtime effects. No invented namespace. Existing disabled CLI/local-runtime fixtures remove dummy binding."
+  },
+  "assertionReview": [
+    "New factory disabled case starts and stops genuine otherwise valid runtime without binding. Present malformed and extra binding cases require exact configuration error family plus absent fresh state-root. Enabled Kube missing binding requires configuration error plus absent state-root.",
+    "Actual direct constructor tests invoke real constructors; version parameter is set explicitly at constructor boundary. These are constructor-domain tests, not complete runtime command tests.",
+    "Existing parity loop covers both Prism and Kubeclaw; new version rows preserve all prior profile, packaging, alias, checksum and malformed-field assertions.",
+    "V2 adds assertions and removes only unnecessary namespace fixture values; no original assertion or deadline removed.",
+    "Documentation separates required component policy from enabled-consumer external bindings and preserves open D17/native/live boundaries."
+  ],
+  "limitations": [
+    "No executed proof from this review; full planned originals, types/lint, real local consumers, both-chart packaging and semantic controls remain required.",
+    "Enabled-missing-binding runtime assertion currently exercises Kube route; Tail/RuntimeSecurity missing binding rejection additionally established by common source branch, not separate executed cases.",
+    "Root owns independent complete baseline/integration and entrypoint/chart review."
+  ]
+}

@@ -1,3 +1,6 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
+// Preparation authority is modeled here; parser, extraction and durable service/store remain real.
+import { ModeledBusterRemotePlanService as BusterRemotePlanService, ModeledPreparedPlanJobStore as FileBusterPlanJobStore } from '../../fixtures/test-gate/modeled-preparation.mts';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import crypto from 'node:crypto';
@@ -7,7 +10,7 @@ import http from 'node:http';
 import os from 'node:os';
 import path from 'node:path';
 import { buildRegistry, createProductionNovaTestGate, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
-import { BrowserVisualCapabilityInvoker, BusterRemotePlanRuntime, BusterRemotePlanService, FileBusterPlanJobStore } from '@kubeclaw/buster-engine';
+import { BrowserVisualCapabilityInvoker, BusterRemotePlanRuntime } from '@kubeclaw/buster-engine';
 
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'visual-remote-vertical-')); const repository=path.join(root,'repository');
 const token='visual-remote-vertical-token-0001'; const keys=crypto.generateKeyPairSync('ed25519');
@@ -32,7 +35,9 @@ try{
   const plan=resolveTestPlan({planId:'plan:visual:remote',runId:'run:visual:remote',project:'visual-remote',scope:{moduleId:'visual',gateId:null},createdAt:'2026-09-03T00:00:00.000Z',declaration:{tests:{visual:{uses:'kubeclaw.visual@1',mode:'blocking',retries:0,concurrencyGroup:'visual',config:{url:origin,manifestFile:'.swarm/visual/manifest.json',profileFile:'.swarm/visual/profiles.json',targets:['home'],comparisonProfile:'strict-v1'}}},concurrencyLimits:{visual:1}},suiteTemplates:[],registry,facts:{changedPaths:['.swarm/visual/manifest.json'],moduleType:'service',pipelineStage:'test'},policy:{defaultTimeoutMs:120000,maximumTimeoutMs:120000,defaultLimits:limits,maximumLimits:limits,maximumRetryCount:1,maximumMatrixSize:1,maximumNodes:2,defaultConcurrencyLimit:1,maximumConcurrencyLimits:{visual:1}}});
   const records={maximumRecords:100,maximumBytes:134217728,maximumRecordBytes:67108864};
   const store=new FileBusterPlanJobStore(path.join(root,'buster-state'),{recordLimits:records,maximumArchiveBytes:8388608,maximumResultBytes:67108864,maximumResultStoreBytes:134217728,trustedSourceAuthority:'nova:production',sourceAttestationPublicKey:publicKey});
-  const service=new BusterRemotePlanService({store,registry,workerRevision:'b'.repeat(40),runtimeRoot:path.join(root,'buster-runs'),tarExecutable:'/usr/bin/tar',maximumExtractedBytes:33554432,allowedCapabilities:new Set(['browser.visual']),browserVisual:{allowedOrigins:[origin],allowedBrowsers:['chromium'],browserExecutables:{chromium:executable},maximumCombinations:2,maximumConcurrency:1,maximumExecutionMs:60000,maximumResultBytes:33554432,maximumScreenshotBytes:8388608,maximumMasksPerCombination:4}});
+  const service=new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },store,registry,workerRevision:'b'.repeat(40),runtimeRoot:path.join(root,'buster-runs'),tarExecutable:'/usr/bin/tar',maximumExtractedBytes:33554432,allowedCapabilities:new Set(['browser.visual']),browserVisual:{allowedOrigins:[origin],allowedBrowsers:['chromium'],browserExecutables:{chromium:executable},maximumCombinations:2,maximumConcurrency:1,maximumExecutionMs:60000,maximumResultBytes:33554432,maximumScreenshotBytes:8388608,maximumMasksPerCombination:4}});
   const runtime=new BusterRemotePlanRuntime({service,host:'127.0.0.1',port:0,token,maximumRequestBytes:16777216,maximumResponseBytes:65536,maximumResultBytes:67108864,shutdownTimeoutMs:5000}); const runtimeAddress=await runtime.start();
   try{
     const gate=createProductionNovaTestGate({stateRoot:path.join(root,'nova-state'),endpoint:`http://127.0.0.1:${runtimeAddress.port}`,token,sourceAuthority:'nova:production',sourceAttestationPrivateKey:privateKey,pollMilliseconds:10,maximumResponseBytes:65536,maximumResultBytes:67108864,maximumArchiveBytes:8388608,maximumArchiveStoreBytes:33554432,maximumEvidenceBytes:67108864,maximumEvidenceStoreBytes:134217728,recordLimits:records});

@@ -1,0 +1,33 @@
+✖ native supervision requires explicit valid scope capacity before filesystem access or admission (83.908555ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1088.695602
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-ownership-store.test.mts:152:1
+✖ native supervision requires explicit valid scope capacity before filesystem access or admission (83.908555ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /WORKER_NATIVE_CAPACITY_INVALID/u. Input:
+  
+  "Error: ENOENT: no such file or directory, lstat '/tmp/worker-owners-IBGLPo/absent-cgroup'"
+  
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-ownership-store.test.mts:159:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, lstat '/tmp/worker-owners-IBGLPo/absent-cgroup'
+        at Object.realpathSync (node:fs:2862:29)
+        at NativeWorkerOwnership.supervise (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-worker-ownership.ts:217:90)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-ownership-store.test.mts:159:50)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3),
+    expected: /WORKER_NATIVE_CAPACITY_INVALID/u,
+    operator: 'rejects',
+    diff: 'simple'
+  }

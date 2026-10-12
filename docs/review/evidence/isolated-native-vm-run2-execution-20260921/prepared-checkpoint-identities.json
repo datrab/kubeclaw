@@ -1,0 +1,26 @@
+[
+  {
+    "path": "prepared-artifact-manifest.json",
+    "sha256": "d60f86c99b25654ff4b1952c36fc8da2041b35147e1e99db1454c3bd9df13ae0"
+  },
+  {
+    "path": "prepared-guest-identity.json",
+    "sha256": "7ab20801678429f8eaa9ca8ae52af39b4b0f7c06c1c6a234364a4d0301df38c5"
+  },
+  {
+    "path": "prepared-image-build.json",
+    "sha256": "51f41eb8c4b2fbc5728580e132b5606ee0fa5fe7de5944b9e73f8cb1367d6a06"
+  },
+  {
+    "path": "prepared-launch-command.json",
+    "sha256": "8624614be9f28c2861d2fd989bb86317263c1514b741f2eea8299fec4b8b36f9"
+  },
+  {
+    "path": "prepared-native-snapshot-current.json",
+    "sha256": "6dfe8e078bfb7dbbad3c0085f9dc821f2146ff0792e757f92fcd7aa0f5a14211"
+  },
+  {
+    "path": "prepared-verification-only.txt",
+    "sha256": "49c7a6f3bc4818ca693cf5dc1f2d893ee533669da4d1e47849971186b795031e"
+  }
+]

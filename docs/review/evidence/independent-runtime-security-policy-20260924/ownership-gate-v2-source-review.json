@@ -1,0 +1,14 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "Accept V2 source for integration and exact-stand baseline/control execution only",
+  "manifestSha256": "81d8484f32e04a28834b5d54438303bb1fcbfe85566ae811b87911fcd0e30135",
+  "allFourSnapshotHashesVerified": true,
+  "resolvedFinding": "OWN-GATE-01: observed exit immediately removes signaling authority, independently of delayed close; terminate also checks absent terminal, null exitCode/signalCode and valid owned pid>1. Late assertions after process termination therefore cannot reuse old PGID.",
+  "preservation": "Only outer termination guard/listener changes from V1. Three real nested-test scenarios, original helper10000ms deadline, IPC/barriers, error-cause assertions, filesystem retention and child-close checks remain identical. Other3files unchanged.",
+  "limits": [
+    "No runtime/lint executed by reviewer.",
+    "Cannot claim process-group lifetime from leader close in general; this correction conservatively retains evidence once leader is terminal.",
+    "Need all3 baseline cases and2 intended deletion mutants on actual integrated source, with no hidden skipped/cancelled/unhandled failures.",
+    "CI2/RS2 final acceptance and full CONFIG remain separate."
+  ]
+}

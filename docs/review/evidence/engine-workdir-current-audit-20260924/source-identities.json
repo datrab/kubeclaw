@@ -1,0 +1,130 @@
+{
+  "reviewer": "/root/runtime_security_policy_review",
+  "readOnlyAudit": true,
+  "files": [
+    {
+      "path": "docs/review/remediation/register.json",
+      "sha256": "906e861f7ed13c4052e10f637e325848df16491ff1d0889b45b513cf5e9e4adf"
+    },
+    {
+      "path": "docs/review/remediation/acceptance-20260920.md",
+      "sha256": "27942ef3c0f04c0b325d98f4cd2d0f70cd6060fef47d941d2e7bef3ec92b5cda"
+    },
+    {
+      "path": "docs/review/remediation/decisions.md",
+      "sha256": "02529859f4848939c03efd38ed50149c9cea978229d7d2e3da2ff812d0e5386e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "sha256": "832631872e86addc6ae98516f63c191e403675b679c795ad3d47a2fdb8350dde"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+      "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-client.ts",
+      "sha256": "31b1bec56dc09daafb7e0ba425243009b86f7f73eb693ae0e74617c1cac6f6dd"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-header.ts",
+      "sha256": "921c13b2285ce3293ec2c2c75a0e42f576bb11300d527b7dd9640a270136f167"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger.ts",
+      "sha256": "e0631a2ec68d28a2eddbb62d37727db2fd71378ae48c0d879ee3aaadc56c92c5"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-ledger-state.ts",
+      "sha256": "e37446c62e1e9a599a525c4203935b6b43ed093c8af612bc89e95b5c321c19b1"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-recovery.ts",
+      "sha256": "3bc1d7f6787a1917ea471b55c4f7075618ae16459b6f9d85825493bc98ca10de"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-cleanup.ts",
+      "sha256": "192c1954407e294483ea08389220eab128052ba57e9b7a72b26fcb768d608bc1"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/preparation-historical-import.ts",
+      "sha256": "4f6144633592a1e2dd11cac4b82c653982cddec50930a1d6d11694a5c3c74828"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+      "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+      "sha256": "e74b3fe2e8dca0157d22c6bd1b50f5cc69df91ec29eedbdbaef86d4ff05a42de"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
+      "sha256": "60264e4f91904b49c57225184cc86233778c5c7146039bdd783bdb86ba71a9b1"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+      "sha256": "cdba534f94cbf3fca17d16d40b196d5a303620e8809f1f419e996478dbfd0d69"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+      "sha256": "9012607f67aeb7abe5aa29ae6687ea1e43b091b3bea3c1b57b0ed9d01fa6c705"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "sha256": "c8c3709acc66be25880a9e56bc4ab0df9f8eb3d3b76b19e0d3aedb3964c0705b"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "sha256": "40cd4f0fc7a84079efe2a3fe026c214ef34cd48f278db5cbac45e250e6afc9b7"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+      "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7"
+    },
+    {
+      "path": "scripts/compact-buster-job.mjs",
+      "sha256": "bf10ee8da2de22ac7463be04b77401ff71e4ee89632bf66b61c5852cf02bed47"
+    },
+    {
+      "path": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "sha256": "78d31932a04baddf88178a9e3bbf2d558ae15bdba400860d805f90e7ac502515"
+    },
+    {
+      "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+      "sha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tests/terminal-workspace.test.ts",
+      "sha256": "b02702d27aedf1ec68ff08ecf6205748f23a4219eb7515f7d52ab87fb19a6b6c"
+    },
+    {
+      "path": "docs/review/evidence/independent-cleanup-scheduler-final-20260924/decision.json",
+      "sha256": "92cb57dfcbc9efdfa3dc9a346062efa9ec43d9a15b1ccf39514aa28f4d3a817e"
+    },
+    {
+      "path": "docs/review/evidence/independent-cleanup-scheduler-final-20260924/review.md",
+      "sha256": "07f9cd618d26b13d1efb8b615a3b7a42844bfefbb4e72240002b160086f1f7db"
+    },
+    {
+      "path": "docs/review/evidence/buster-consumer-preparation-adaptation-20260921/compaction-unadapted.txt",
+      "sha256": "8f9e684730afc28e34a703518c8ce0562d2eb844c468620a43106e645dffc382"
+    },
+    {
+      "path": "docs/review/evidence/native-source-cleanup-independent-20260921/commands.json",
+      "sha256": "3d28fd76e37c2530820944e2973fbda9549bc48a42f2a0fd04a96a729a4bcc33"
+    },
+    {
+      "path": "docs/review/remediation/implementation/buster-native-cases-20260920.md",
+      "sha256": "7b4f1826c0f88aa0cccfdd6ec3463e80c120abdd3118904b881159550cb1178e"
+    }
+  ]
+}

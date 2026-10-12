@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "scalable-review-quality-corpus.v1",
+  "cases": [
+    {
+      "id": "security-missing-authorization",
+      "risk": "security",
+      "expected": "defect",
+      "priority": "P1",
+      "path": "quality/security-missing-authorization.ts",
+      "content": "export function readApiToken(_user: { role: string }): string {\n  return process.env.API_TOKEN ?? '';\n}\n"
+    },
+    {
+      "id": "security-authorized-control",
+      "risk": "security",
+      "expected": "clean",
+      "path": "quality/security-authorized-control.ts",
+      "content": "export function readApiToken(user: { role: string }): string {\n  if (user.role !== 'admin') throw new Error('forbidden');\n  return process.env.API_TOKEN ?? '';\n}\n"
+    },
+    {
+      "id": "contract-date-type-mismatch",
+      "risk": "contract",
+      "expected": "defect",
+      "priority": "P2",
+      "path": "quality/contract-date-type-mismatch.ts",
+      "content": "type Lease = { expiresAt: string };\nexport function expired(lease: Lease): boolean {\n  return Date.now() > (lease.expiresAt as unknown as number);\n}\n"
+    },
+    {
+      "id": "contract-date-control",
+      "risk": "contract",
+      "expected": "clean",
+      "path": "quality/contract-date-control.ts",
+      "content": "type Lease = { expiresAt: string };\nexport function expired(lease: Lease): boolean {\n  const timestamp = Date.parse(lease.expiresAt);\n  if (!Number.isFinite(timestamp)) throw new Error('invalid expiry');\n  return Date.now() > timestamp;\n}\n"
+    },
+    {
+      "id": "concurrency-lost-update",
+      "risk": "concurrency",
+      "expected": "defect",
+      "priority": "P1",
+      "path": "quality/concurrency-lost-update.ts",
+      "content": "interface Store { read(): Promise<number>; write(value: number): Promise<void> }\nexport async function add(store: Store, amount: number): Promise<void> {\n  const current = await store.read();\n  await store.write(current + amount);\n}\n"
+    },
+    {
+      "id": "concurrency-cas-control",
+      "risk": "concurrency",
+      "expected": "clean",
+      "path": "quality/concurrency-cas-control.ts",
+      "content": "interface Store { addAtomic(amount: number): Promise<void> }\nexport async function add(store: Store, amount: number): Promise<void> {\n  await store.addAtomic(amount);\n}\n"
+    },
+    {
+      "id": "retry-unsafe-post",
+      "risk": "retry",
+      "expected": "defect",
+      "priority": "P1",
+      "path": "quality/retry-unsafe-post.ts",
+      "content": "export async function charge(body: string): Promise<Response> {\n  for (let attempt = 0; attempt < 3; attempt += 1) {\n    try { return await fetch('/charge', { method: 'POST', body }); } catch {}\n  }\n  throw new Error('charge failed');\n}\n"
+    },
+    {
+      "id": "retry-idempotent-control",
+      "risk": "retry",
+      "expected": "clean",
+      "path": "quality/retry-idempotent-control.ts",
+      "content": "export async function charge(body: string, key: string): Promise<Response> {\n  return fetch('/charge', { method: 'POST', body, headers: { 'idempotency-key': key } });\n}\n"
+    },
+    {
+      "id": "persistence-early-completion",
+      "risk": "persistence",
+      "expected": "defect",
+      "priority": "P1",
+      "path": "quality/persistence-early-completion.ts",
+      "content": "interface Store { markDone(id: string): Promise<void>; writeResult(id: string, value: string): Promise<void> }\nexport async function finish(store: Store, id: string, value: string): Promise<void> {\n  await store.markDone(id);\n  await store.writeResult(id, value);\n}\n"
+    },
+    {
+      "id": "persistence-ordered-control",
+      "risk": "persistence",
+      "expected": "clean",
+      "path": "quality/persistence-ordered-control.ts",
+      "content": "interface Store { writeResult(id: string, value: string): Promise<void>; markDone(id: string): Promise<void> }\nexport async function finish(store: Store, id: string, value: string): Promise<void> {\n  await store.writeResult(id, value);\n  await store.markDone(id);\n}\n"
+    },
+    {
+      "id": "deployment-port-mismatch",
+      "risk": "deployment",
+      "expected": "defect",
+      "priority": "P1",
+      "path": "quality/deployment-port-mismatch.yaml",
+      "content": "service:\n  targetPort: 8080\ncontainer:\n  command: [\"node\", \"server.js\", \"--port\", \"3000\"]\n"
+    },
+    {
+      "id": "deployment-port-control",
+      "risk": "deployment",
+      "expected": "clean",
+      "path": "quality/deployment-port-control.yaml",
+      "content": "service:\n  targetPort: 3000\ncontainer:\n  command: [\"node\", \"server.js\", \"--port\", \"3000\"]\n"
+    },
+    {
+      "id": "recovery-destructive-restore",
+      "risk": "recovery",
+      "expected": "defect",
+      "priority": "P1",
+      "path": "quality/recovery-destructive-restore.ts",
+      "content": "interface Store { clear(): Promise<void>; restore(data: string): Promise<void> }\nexport async function restore(store: Store, backup: string): Promise<void> {\n  await store.clear();\n  JSON.parse(backup);\n  await store.restore(backup);\n}\n"
+    },
+    {
+      "id": "recovery-validated-control",
+      "risk": "recovery",
+      "expected": "clean",
+      "path": "quality/recovery-validated-control.ts",
+      "content": "interface Store { replaceAtomically(data: string): Promise<void> }\nexport async function restore(store: Store, backup: string): Promise<void> {\n  JSON.parse(backup);\n  await store.replaceAtomically(backup);\n}\n"
+    }
+  ]
+}

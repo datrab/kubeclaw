@@ -1,0 +1,59 @@
+{
+  "reviewer": "bootstrap_guard_fresh_review",
+  "status": "source review: one teardown correction requested; runtime unexecuted",
+  "manifestSha256": "d0a20e84bb9ec706eaece2d643ce8d4ce4d7f1f5d3de07e7e4c80af510accf71",
+  "draftIdentities": [
+    {
+      "path": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "sha256": "40cd4f0fc7a84079efe2a3fe026c214ef34cd48f278db5cbac45e250e6afc9b7"
+    },
+    {
+      "path": "tests/fixtures/test-gate/scheduler-drain.mjs",
+      "sha256": "98f591efdf707cc712b363de7b0d7687f455ea3b83eca756afe4abd519e598fd"
+    },
+    {
+      "path": "tests/verification/contracts/runner-scheduler-drain.test.mjs",
+      "sha256": "0164ff0f62d7dc00636a165b54ad812bdcd979c799700de75844d8232052d18e"
+    },
+    {
+      "path": "tests/verification/contracts/runner-scheduler-provider-drain.test.mjs",
+      "sha256": "27f213ef7cf80dd287de78866f9ec686cc47377bdebffcfbfaa93324fef85735"
+    }
+  ],
+  "dependencyIdentities": [
+    {
+      "path": "tests/fixtures/test-gate/kubernetes-cleanup-children.mjs",
+      "sha256": "2de37a1986d41de7b1766fc7702695c29b060e33e3f57e8bc5803be943127279"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-preparation.ts",
+      "sha256": "b0f2a62cd1bd4179736bf2c9346a44bb946a1db28fdd661ad4ffee064814667d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-node.ts",
+      "sha256": "f8dee4f5340d84b8be053ab13b9fce925eafcfd7e6e3a1125029ca5929608851"
+    },
+    {
+      "path": "skills/nova/core/test-gates/resolver.ts",
+      "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+    }
+  ],
+  "positiveFindings": [
+    "Five synthetic scheduler tests cover late success/error, no third start, synchronous reservation rejection, combined failures and cleanup-only identity. Synthetic NodeExecution values are clearly unit fixtures, not public-result validation evidence.",
+    "Real Runner uses actual registry discovery/digest and default provider loader/processes; grants permit the actual IPC barrier. No executeNode or workerRuntime replacement.",
+    "a waits until b reaches actual capability IPC. b remains pending on releasePeer; only after a completes can c reach the third exact repository copy. prepareRunnerAttempt throws before the attempt execution block; this is a rejected executeNode promise, not a resolved errored result.",
+    "The positive oracle requires unchanged primary error identity, b cleanup exactly once, actual close, passed result IPC, completed-fixture disposition and no c provider spawn.",
+    "Owned-child helper registers before writes/process creation, forwards genuine spawns, constrains owned paths/PIDs, waits actual close and retains roots on unresolved ownership."
+  ],
+  "finding": {
+    "target": "runner-scheduler-provider-drain.test.mjs finally",
+    "severity": "test cleanup correction needed",
+    "description": "Only releasePeer is resolved. If b fails before calling the host barrier, a remains waiting on peerStarted in an uncancellable host capability; child deadlines can close the process but do not settle this private host promise. Resolve peerStarted as well as releasePeer on exit before awaiting outcome.",
+    "scope": "No production change or timeout increase needed."
+  },
+  "remaining": "After corrected freeze: scoped type/lint, all direct cases, real Runner case, all original Runner/provider/concurrency/cancellation suites, actual old-scheduler mutation and final DOC. Rebind shared owned-child fixture after pending DC changes."
+}

@@ -1,0 +1,15 @@
+{
+  "qemuExitCode": 0,
+  "elapsedSeconds": 464.51098874304444,
+  "stoppedReason": null,
+  "passed": false,
+  "verifiedInitialArtifacts": {
+    "node_modules/.cache/native-test-vm-20260921/root/usr/bin/qemu-system-x86_64": "d0c183817a3044bc38e104f88ef56ee235c5d91a9413cba7255c1c1751c31fc1",
+    "node_modules/.cache/native-test-vm-20260921/root/boot/vmlinuz-virt": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c",
+    "node_modules/.cache/native-test-vm-20260921/initrd.cpio.gz": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2",
+    "node_modules/.cache/native-test-vm-20260921/guest-root.ext4": "6bac358fd6d0c496219d99b6a88ecedfb5e53abefa0e221189ce379f725a2cc0",
+    "node_modules/.cache/native-test-vm-20260921/repo-snapshot-manifest.json": "38f9e278cc33b49dcc0668d43c5019be36601879df07e81ad44b0b7039c11d67"
+  },
+  "initialDiskSha256": "6bac358fd6d0c496219d99b6a88ecedfb5e53abefa0e221189ce379f725a2cc0",
+  "finalMutableDiskSha256": "fcd0f6cf103018563730ed07f38e615dfc3fcfab65176b64baaca20c12852f6c"
+}

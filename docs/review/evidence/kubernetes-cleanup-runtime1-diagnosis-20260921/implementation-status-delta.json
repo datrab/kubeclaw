@@ -1,0 +1,6 @@
+{
+  "target": "docs/review/remediation/implementation/kubernetes-cleanup-disposition-20260921.md",
+  "beforeSha256": "30baa4f27aad271df739e5298bc34a4b442acfde377ceec9ce69bb0a33f58716",
+  "afterSha256": "8706f9529fd38cf37eaeecfe8df8c089c31891d85a05820b835db33676027de9",
+  "scope": "Add actual terminal failed runtime and positive fast checkpoints; no acceptance claimed"
+}

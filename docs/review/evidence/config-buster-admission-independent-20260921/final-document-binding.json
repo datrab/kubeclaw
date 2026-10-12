@@ -1,0 +1,26 @@
+{
+  "documents": [
+    {
+      "path": "docs/review/remediation/implementation/config-buster-admission-20260921.md",
+      "sha256": "d052b70c66fe36f00a26a0697334d405bee8ca8cbc1a6be27fc8b49c43ca926f"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "sha256": "bda676bced09deca0b852459eb0f936501a5856cbf93eb242fa7d3799d970bfb"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+      "sha256": "f89c78d96f4a1fa041468890d8759d711514ea7ff9c45fd29c5239d8daa4c4fd"
+    },
+    {
+      "path": "docs/operations/operator-configuration.md",
+      "sha256": "084a02de91bc2feaf92af099985775c51f8081703559c6f2ef7d94a7307930ac"
+    },
+    {
+      "path": "docs/review/remediation/implementation/independent-config-buster-admission-20260921.md",
+      "sha256": "9487fcc2d2ea2018175c53ecf118707fecf50cc4958a11a8632c66ce1aabf332"
+    }
+  ],
+  "linksChecked": true,
+  "scope": "BA1-6/DOC local only; D17, overall CONFIG, image/native/deployment remain open"
+}

@@ -85,7 +85,7 @@ test('real cancelled v2/v3 Summary writes and nested evidence reads never publis
       const adapters = new core.AdapterRuntime({ granted, activated,
         configs: new Map([['kubeclaw.artifact-store:artifact-store', { artifactRoot }],
           [evidenceId, { stateRoot: root, manifestStageId: 'project-summary', gateStageId: 'final-test' }]]),
-        effects: new core.EffectCoordinator(effects, undefined, audit, new core.FileResourceLockManager(path.join(root, 'cancel-locks'))),
+        effects: new core.EffectCoordinator(effects, undefined, audit, new core.FileResourceLockManager(path.join(root, 'cancel-locks')), 300_000),
         shutdownTimeoutMs: 1000, async emitDomainEvent() {},
       });
       await adapters.start();

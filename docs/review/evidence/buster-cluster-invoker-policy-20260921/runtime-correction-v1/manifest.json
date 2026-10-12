@@ -1,0 +1,17 @@
+{
+  "status": "private-unexecuted",
+  "files": [
+    {
+      "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+      "beforeSha256": "79691f6b90dece3f267e2f693f53f926932da8d7bd2891f2e1c34956107c5bd0",
+      "sha256": "dc0f81d07a2bcc8555bb0d3f7e1555fe4e442ba05ac4a49a753051818f4221a6"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "beforeSha256": "8380b792ce0707c690612655db144e0a8d4adebbb35de32a9e2f17a3b4b4da17",
+      "sha256": "5cc4ec91787529dcd437e56d8cb1a22720a3b1569a32bafdc7ec9f372afba50d"
+    }
+  ],
+  "patchSha256": "bf714c01d09419bdb7af74ed6210ba4ae9988dbe6d42e13b8b8b0fe191a5747b",
+  "readmeSha256": "8a15eb8c83fb3797e32d13f9a68f6c4d54b7f14ed36d8a167901118f7b2fb8e8"
+}

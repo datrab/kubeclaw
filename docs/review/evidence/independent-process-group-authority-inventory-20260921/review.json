@@ -1,0 +1,15 @@
+{
+  "decision": "inventory source findings confirmed with precise TERM rejection wording",
+  "boundFiveSourcesMatchLive": true,
+  "sourceGitSha256": "869044fecd888a1e4ded10059c8f6a5ec4510d1ca9c277507de545538f1fb90c",
+  "novaTimedKill": "Recorded errors discarded when close and group acknowledgement resolve successfully.",
+  "novaTerm": "Unexpected TERM error occurs before close/group race creation. Catch attempts KILL, destroys pipes and rejects without awaiting actual close. sourceGit forwards CLEANUP_UNCONFIRMED; this is early failure settlement, not a TERM-path success.",
+  "otherFindings": [
+    "Exactly three production Foundation capture callers found",
+    "Foundation capture250ms and Nova1500/250/10 are operational code authors",
+    "CommandRunner1000ms acknowledgement and10ms polling remain; group-signal catch suppresses all failures",
+    "Lint capture is separate with different missing-group contract, no capture deadline,64-wide async scans and10ms polling"
+  ],
+  "runtime": "none",
+  "liveWrites": "none"
+}

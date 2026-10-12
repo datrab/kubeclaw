@@ -1,0 +1,40 @@
+
+> verify:buster:scheduler-drain
+> npm run plugin-system:sandbox:build && node --test --test-concurrency=1 tests/verification/contracts/runner-scheduler-drain.test.mjs tests/verification/contracts/runner-scheduler-provider-drain.test.mjs && node tests/verification/contracts/check-pipeline-test-plan-runner.mts && node tests/verification/contracts/check-pipeline-remote-real-provider.mts
+
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+✔ scheduler settles started peer before cleanup; late failure false (4.825836ms)
+✔ scheduler settles started peer before cleanup; late failure true (1.030157ms)
+✔ scheduler drains a started peer after synchronous reservation failure (0.731809ms)
+✔ scheduler preserves execution and cleanup errors (28.861268ms)
+✔ scheduler preserves cleanup-only error identity (0.666127ms)
+✖ actual Runner drains its active provider and cleans a late fixture after a preparation rejection (69.235399ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1714.13082
+
+✖ failing tests:
+
+test at tests/verification/contracts/runner-scheduler-provider-drain.test.mjs:17:1
+✖ actual Runner drains its active provider and cleans a late fixture after a preparation rejection (69.235399ms)
+  Error [TestPlanResolutionError]: TEST_PLAN_POLICY_INVALID:policy.maximumRetryCount
+      at fail (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/test-gates/resolver.ts:63:9)
+      at positiveInteger (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/test-gates/resolver.ts:437:87)
+      at validateResolverPolicy (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/test-gates/resolver.ts:449:3)
+      at resolveTestPlan (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/test-gates/resolver.ts:721:3)
+      at schedulerRunnerOptions (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/scheduler-drain.mjs:37:16)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/runner-scheduler-provider-drain.test.mjs:23:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'TEST_PLAN_POLICY_INVALID'
+  }

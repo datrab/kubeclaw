@@ -1,0 +1,13 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-records.ts
+  335:1  error  File has too many lines (310). Maximum allowed is 300  max-lines
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugins/wait-store/src/adapter.ts
+  188:8  error  Function 'activate' has too many lines (61). Maximum allowed is 60  max-lines-per-function
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/state/wait-projection-reader.ts
+  24:8  error  Function 'resolveRetainedCoreWait' has too many lines (105). Maximum allowed is 60  max-lines-per-function
+  24:8  error  Function 'resolveRetainedCoreWait' has a complexity of 63. Maximum allowed is 15    complexity
+
+✖ 4 problems (4 errors, 0 warnings)
+

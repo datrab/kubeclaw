@@ -1,0 +1,6 @@
+{
+  "iterations": 1000,
+  "sameMetadataActualWrites": 759,
+  "missedChanges": 0,
+  "method": "verifyUnchanged() {\n    for (const directory of this.directories.keys()) {\n      try { this.checkParents(directory); this.pinDirectory(directory); }\n      catch { this.block('SNAPSHOT_CHANGED', directory); return; }\n    }\n    const before = new Set(this.files.keys());\n    for (const root of this.roots) if (root.scan) {\n      try { this.walk(root.path); } catch { this.block('SNAPSHOT_CHANGED', root.path); }\n    }\n    if (this.files.size !== before.size) this.block('SNAPSHOT_CHANGED', 'inventory');\n    for (const item of this.files.values()) {\n      try {\n        const stat = fs.lstatSync(item.path);\n        if (!stat.isFile() || stableStat(stat) !== item.stamp\n          || (item.hash !== null && this.hashFile(item.path, stat) !== item.hash)) this.block('SNAPSHOT_CHANGED', item.path);\n      } catch { this.block('SNAPSHOT_CHANGED', item.path); }\n    }\n  }"
+}

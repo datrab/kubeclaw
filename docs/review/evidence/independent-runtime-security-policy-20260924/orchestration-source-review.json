@@ -1,0 +1,82 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "scope": "Source-only orchestration and mutation-hook review; no runtime invocation",
+  "decision": "Accept orchestration for coordinated execution; actual intended failure evidence and full RS2 service proof remain required",
+  "hashes": {
+    "run-with-controls.py": "2e064a9c013492efc89a4b105e266382fc74ecad60680f4b5486e0217efb4548",
+    "run-ci2.py": "8d916f1d26374c83820fb09b79884d891a734f3ccb20ded7060ff47e7f2555ce",
+    "run-security.py": "71915b073a34b770812d6c7796af98831af9e739b90ef5c17c80a456c1f296a4",
+    "mutate-ci2.mjs": "1461b7395b3972e5cf9abb38d8c8b94ecc2862954c5ccf462e9687d0dee5d800",
+    "security-control-specs.json": "589085b2993beff55477230530683bf01ad6ef969c16058492703f3823c5ac83"
+  },
+  "controls": [
+    {
+      "name": "restore-maximumExecutionMs",
+      "normalizationExact": true,
+      "liveSourceHashMatches": true,
+      "anchorCount": 1
+    },
+    {
+      "name": "restore-maximumOutputBytes",
+      "normalizationExact": true,
+      "liveSourceHashMatches": true,
+      "anchorCount": 1
+    },
+    {
+      "name": "restore-maximumObservationAgeMs",
+      "normalizationExact": true,
+      "liveSourceHashMatches": true,
+      "anchorCount": 1
+    },
+    {
+      "name": "restore-poll1000",
+      "normalizationExact": true,
+      "liveSourceHashMatches": true,
+      "anchorCount": 1
+    },
+    {
+      "name": "restore-future5000",
+      "normalizationExact": true,
+      "liveSourceHashMatches": true,
+      "anchorCount": 1
+    },
+    {
+      "name": "restore-diagnostic1024",
+      "normalizationExact": true,
+      "liveSourceHashMatches": true,
+      "anchorCount": 1
+    },
+    {
+      "name": "restore-child-path",
+      "normalizationExact": true,
+      "liveSourceHashMatches": true,
+      "anchorCount": 1
+    },
+    {
+      "name": "restore-abort-before-output-cause",
+      "normalizationExact": true,
+      "liveSourceHashMatches": true,
+      "anchorCount": 1
+    },
+    {
+      "name": "restore-missing-policy-defaults",
+      "normalizationExact": true,
+      "liveSourceHashMatches": true,
+      "anchorCount": 1
+    }
+  ],
+  "observations": [
+    "run-ci2 adds explicit ci2 baseline/control phases and expands lint to .cjs; original runtime13 command construction remains unchanged.",
+    "run-security redirects those phase specs to Security and prepends full RuntimeSecurity consumer module plus complete security-cutover before original13-command sequence. Phase name ci2 does not itself prove production CI2/RS2.",
+    "Original before/after capture, source manifests, file/symlink identity assertions, dependency/library/tools/compiler binding, source write guard, trace, protected source inodes and unexpected drift/violation exit checks retained unchanged.",
+    "Control hook checks selected known control, target presence in integrated manifest, exact source hash, unique anchor and nonidentical replacement, logs exact before/after mutation hashes before returning changed module source. No live source write.",
+    "All9 normalized specifications preserve original reviewed name/source/hash/replacement/oracle exactly. Each current target hash and unique anchor checked. No changed test assertion/deadline or name filter.",
+    "Each control expects exit1 but final independent review still must verify hook applied and desired semantic assertion: exit1 alone can also represent setup failure.",
+    "Earlier ci2-controls branch makes later elif membership of ci2-controls redundant but harmless; no alternate execution path or guard bypass."
+  ],
+  "remaining": [
+    "Execute complete fast/runtime/security-control scopes with terminal handles and raw evidence.",
+    "Rebase/review separate seven CI2 specs after RuntimeSecurity source updates; not accepted by this report.",
+    "RS2 actual full service-path proof and final DOC/evidence acceptance remain open."
+  ]
+}

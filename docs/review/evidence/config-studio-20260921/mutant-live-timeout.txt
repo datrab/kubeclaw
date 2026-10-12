@@ -1,0 +1,35 @@
+✔ actual Studio survives refused Control and malformed URL with explicit responses (492.157775ms)
+✔ actual Studio retains proxy bytes, cookies and upstream status (509.445713ms)
+✔ actual Studio forwards direction idempotency keys and retry payloads to Control (501.961699ms)
+✔ actual Studio bounds upstream headers wait and remains healthy (772.688846ms)
+✔ actual Studio bounds upstream empty-body wait and remains healthy (658.270349ms)
+✔ actual Studio bounds upstream partial-body wait and remains healthy (623.149359ms)
+✔ actual Studio cancels upstream streaming when the client disconnects (443.00336ms)
+✔ authored Studio timeout 150 reaches the live proxy and startup snapshot (672.536218ms)
+✖ authored Studio timeout 600 reaches the live proxy and startup snapshot (664.460239ms)
+✔ missing Studio ingress secret retains 503 proxy response and static availability (439.214452ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5980.137148
+
+✖ failing tests:
+
+test at skills/prism/tests/studio-service.test.mts:96:3
+✖ authored Studio timeout 600 reaches the live proxy and startup snapshot (664.460239ms)
+  AssertionError [ERR_ASSERTION]: deadline 600, elapsed 255
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:106:5)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

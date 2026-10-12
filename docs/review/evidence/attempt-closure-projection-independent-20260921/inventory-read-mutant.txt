@@ -1,0 +1,31 @@
+✖ independent final verification reads no more than original bytes when real file grows after descriptor check (6.307022ms)
+✔ independent empty inventoried file remains valid with exact-size reader (1.562941ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 186.608256
+
+✖ failing tests:
+
+test at docs/review/evidence/attempt-closure-projection-independent-20260921/inventory-read-bound.test.mjs:8:1
+✖ independent final verification reads no more than original bytes when real file grows after descriptor check (6.307022ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  65536 !== 8
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/attempt-closure-projection-independent-20260921/inventory-read-bound.test.mjs:31:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 65536,
+    expected: 8,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,18 @@
+[
+  {
+    "path": "skills/worker/core/worker/native-attempt-journal.ts",
+    "sha256": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4"
+  },
+  {
+    "path": "skills/worker/core/worker/native-journal-state.ts",
+    "sha256": "caca74b468a134faf29da1f74d0a69443f495e63fbbf8fb39692ff9de0ba8111"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+    "sha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-journal.test.mts",
+    "sha256": "6ea7256fd52849106e153c272f2804717b5ae25b2234aba7345c84a67b08cb7a"
+  }
+]

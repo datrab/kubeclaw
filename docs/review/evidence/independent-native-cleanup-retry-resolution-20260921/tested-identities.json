@@ -1,0 +1,22 @@
+[
+  {
+    "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+    "sha256": "f6cef5767983497edd3865667a6b480e8ea75ed34b847bc4f44e8fae02d807bc"
+  },
+  {
+    "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+    "sha256": "9cfc04ab25b0eecea23b75b9dcdbb4b87f87854c8b00b7346e7eafa33a0118f4"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-cleanup.test.mts",
+    "sha256": "e7e9640aa711086a55e2f4ac5d7260dad814d6d39a75eb5c6c221dadf86625ff"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-cleanup-retry.test.mts",
+    "sha256": "942add5539cac92870fc040a6e38032c8c52e97d29df133d4e833724b5faa06b"
+  },
+  {
+    "path": "tests/verification/reliability/native-cleanup-fixture.mts",
+    "sha256": "38001b52df26bf030743768821185309f86250ca3cf57675d0c6eeee9faf6096"
+  }
+]

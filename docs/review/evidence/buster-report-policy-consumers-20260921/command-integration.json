@@ -1,0 +1,6 @@
+{
+  "beforeSha256": "d13c1ecb58c1aaf6eaa1fb4e1978c20492f6995c72e1cb37510ea34b39bb61dd",
+  "afterSha256": "f60607f5fc9c563843fcdcb16e77a5eefc220cf46b3d4b786f12cd01f83fe85e",
+  "onlyChange": "append tests/verification/contracts/buster-report-policy-consumers.test.mjs",
+  "execution": "pending"
+}

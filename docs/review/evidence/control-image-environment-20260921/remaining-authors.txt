@@ -1,0 +1,9 @@
+charts/prism/files/prism-backup.sh:32:  [[ -d $root && ! -L $root ]] || fail ARTIFACT_ROOT_INVALID
+charts/prism/files/prism-backup.sh:68:  : "${ARTIFACT_ROOT:?}" "${PGDATABASE:?}" "${PRISM_BACKUP_IMAGE:?}"
+charts/prism/files/prism-backup.sh:71:  [[ $ARTIFACT_ROOT == /* && -d $ARTIFACT_ROOT && $(realpath -- "$ARTIFACT_ROOT") == "$ARTIFACT_ROOT" ]] || fail ARTIFACT_ROOT_INVALID
+charts/prism/files/prism-backup.sh:72:  [[ $BACKUP_ROOT != "$ARTIFACT_ROOT" && $BACKUP_ROOT != "$ARTIFACT_ROOT"/* && $ARTIFACT_ROOT != "$BACKUP_ROOT"/* ]] || fail ROOTS_OVERLAP
+charts/prism/files/prism-backup.sh:87:  find "$ARTIFACT_ROOT" -mindepth 1 -print0 | sort -z > "$stage/SOURCE.nul" || fail ARTIFACT_ENUMERATION_FAILED
+charts/prism/files/prism-backup.sh:89:    relative=${item#"$ARTIFACT_ROOT"/}
+charts/prism/templates/backup.yaml:55:                - { name: ARTIFACT_ROOT, value: /artifacts }
+my-values/prism-agent-values.yaml:66:  - { name: PRISM_STUDIO_PUBLIC_URL, value: "https://prism-studio" }
+my-values/prism-agent-values.yaml:76:      - { name: PRISM_STUDIO_PUBLIC_URL, value: "https://prism-studio" }

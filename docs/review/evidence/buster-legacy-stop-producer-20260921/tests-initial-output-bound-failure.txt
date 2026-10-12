@@ -1,0 +1,14 @@
+F.........
+======================================================================
+FAIL: test_actual_child_output_ceiling (__main__.StopProducerTests.test_actual_child_output_ceiling)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/buster-legacy-stop.test.py", line 47, in test_actual_child_output_ceiling
+    with self.assertRaisesRegex(ValueError, 'COMMAND_FAILED|COMMAND_OUTPUT_LIMIT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.123s
+
+FAILED (failures=1)

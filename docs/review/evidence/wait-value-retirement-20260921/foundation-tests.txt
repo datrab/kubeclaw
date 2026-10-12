@@ -1,0 +1,15 @@
+✔ independent actual competing process waits for original read fence, and callback receives owned records (1187.046389ms)
+✔ independent actual SIGKILL of read-fence owner releases original kernel lock without partial write (880.540663ms)
+✔ retained transition snapshots input before waiting and provides owned clones of both original stores (154.113485ms)
+✔ retained transition rejects self, separate same-root instance, symlink-parent and hardlink aliases before acquiring dependency (73.940901ms)
+✔ retained transition preserves synchronous authorization, stale CAS and actual byte quota without callback bypass (135.989624ms)
+✔ independent transition authorization sees original locked records but cannot mutate committed state through its clone (145.638545ms)
+✔ independent async authorization and stale CAS fail before write, preserving bytes and releasing original fence (104.422054ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5002.636815

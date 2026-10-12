@@ -1,0 +1,19 @@
+import pathlib,json,os,subprocess,shutil,hashlib,importlib.util,time
+root=pathlib.Path.cwd();here=pathlib.Path(__file__).resolve().parent;shared=root/'docs/review/evidence/independent-component-worker-listener-20260921';author=root/'docs/review/evidence/config-buster-readiness-20260921/review-runner';loader=root/'docs/review/evidence/config-worker-local-runtime-20260921/mutant-loader.mjs'
+spec=importlib.util.spec_from_file_location('binding',shared/'bind.py');b=importlib.util.module_from_spec(spec);spec.loader.exec_module(b);plan=json.loads((shared/'plan.json').read_text());plan['dependencyRoots'].append('/usr/local/lib/node_modules/npm');out=here/'controls1';out.mkdir(exist_ok=False);native=root/plan['toolRoot'];node=shutil.which('node')
+file=root/'skills/buster/engine/test-gates/remote-plan-service.ts';raw=file.read_text();call='validateBusterDependencyReadinessSettings(options.dependencyReadiness)'
+changes=[('policy-default',call,'validateBusterDependencyReadinessSettings(options.dependencyReadiness ?? { maximumExecutionMs: 1000, maximumOutputBytes: 65536 })','Missing expected exception'),('field-defaults',call,'validateBusterDependencyReadinessSettings({ maximumExecutionMs: 1000, maximumOutputBytes: 65536, ...options.dependencyReadiness })','Missing expected exception'),('ignore-execution','maximumExecutionMs: options.dependencyReadiness.maximumExecutionMs','maximumExecutionMs: 1000','503'),('ignore-output','maximumOutputBytes: options.dependencyReadiness.maximumOutputBytes','maximumOutputBytes: 65536','200')]
+extra=[here/'run-controls.py',loader,author/'tool-paths.mjs',shared/'bind.py',shared/'source-write-guard.mjs'];positive=json.loads((here/'run1/before.json').read_text());extra.extend(pathlib.Path(p) for p in positive if not pathlib.Path(p).is_relative_to(root));folders=[]
+for name,old,new,oracle in changes:
+ assert raw.count(old)==1;folder=out/name;folder.mkdir();folders.append(folder);(folder/'before.ts').write_text(raw);(folder/'mutant.ts').write_text(raw.replace(old,new));b.write_json(folder/'spec.json',{'file':str(file),'sha256':hashlib.sha256(raw.encode()).hexdigest(),'from':old,'to':new,'log':str(folder/'applied.jsonl')});extra.extend([folder/'before.ts',folder/'mutant.ts',folder/'spec.json'])
+before=b.capture(root,plan,extra);b.write_json(out/'before.json',before);results=[]
+try:
+ for (name,old,new,oracle),folder in zip(changes,folders):
+  env=dict(os.environ,LD_LIBRARY_PATH=f'{native}/usr/lib:{native}/lib',LC_GNU_FLOCK=str(native/'usr/bin/flock'),KUBECLAW_TEST_TAR=str(native/'bin/tar'),LC_TOOL_MAPPING_LOG=str(folder/'tools.jsonl'),LC_MUTANT_SPEC=str(folder/'spec.json'),COMPONENT_REVIEW_PROTECTED_SOURCES=str(here/'run1/protected.json'),COMPONENT_REVIEW_WRITE_VIOLATIONS=str(folder/'violations.jsonl'))
+  env['NODE_OPTIONS']=f'--import={shared / "source-write-guard.mjs"} --import={author / "tool-paths.mjs"} --import={loader}'
+  cmd=[node,'--test','--test-reporter=tap','--test-concurrency=1','tests/verification/reliability/buster-readiness-consumer.test.mts'];print('START '+name,flush=True);start=time.monotonic()
+  with (folder/'output.txt').open('w') as log:r=subprocess.run(cmd,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=180)
+  text=(folder/'output.txt').read_text();detected=r.returncode!=0 and 'ERR_ASSERTION' in text and oracle in text and (folder/'applied.jsonl').exists();results.append({'name':name,'command':cmd,'exitCode':r.returncode,'candidateDetection':detected,'requiresNamedFailureReview':True,'seconds':time.monotonic()-start});b.write_json(out/'results.json',results);print('END '+name+' '+str(r.returncode)+' detected='+str(detected),flush=True)
+finally:
+ after=b.capture(root,plan,extra);b.write_json(out/'after.json',after);drift=[p for p in set(before)|set(after) if before.get(p)!=after.get(p)];b.write_json(out/'drift.json',drift)
+raise SystemExit(0 if not drift and len(results)==4 and all(r['candidateDetection'] for r in results) else 1)

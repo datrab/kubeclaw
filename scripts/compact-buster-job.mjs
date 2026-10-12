@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { FileBusterPlanJobStore } from '../skills/buster/engine/test-gates/remote-plan-service.ts';
+import { HistoricalBusterPlanJobStore } from '../skills/buster/engine/test-gates/historical-plan-store.ts';
 import { assertCompactionIntent } from '../skills/buster/engine/test-gates/remote-plan-compaction.ts';
 
 function readRegularFile(file, maximumBytes, kind) {
@@ -42,7 +42,7 @@ async function main() {
   // Refuse a typo that would otherwise create an empty record store.
   if (!fs.statSync(path.join(input.storeRoot, 'records/store.json')).isFile()) throw new Error('BUSTER_COMPACTION_STORE_REQUIRED');
   const publicKey = readRegularFile(input.sourcePublicKeyFile, input.maximumSourcePublicKeyBytes, 'PUBLIC_KEY');
-  const store = new FileBusterPlanJobStore(input.storeRoot, { ...input.storeOptions, sourceAttestationPublicKey: publicKey });
+  const store = new HistoricalBusterPlanJobStore(input.storeRoot, { ...input.storeOptions, sourceAttestationPublicKey: publicKey });
   const result = await store.compactCompletedArchive(input.intent, input.runtimeRoot);
   process.stdout.write(`${JSON.stringify(result)}\n`);
 }

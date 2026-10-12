@@ -1,0 +1,1 @@
+Initial independent checker errored while counting defaults in a boolean JSON Schema. TypeError: argument of type bool is not a container or iterable. No inventory defect or successful comparison inferred. Corrected checker counts defaults only in object schemas and still compares boolean schemas exactly.

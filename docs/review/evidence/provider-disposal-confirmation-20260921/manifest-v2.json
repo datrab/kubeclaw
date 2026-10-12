@@ -1,0 +1,57 @@
+{
+  "status": "frozen private V2, unexecuted",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/skills/buster/engine/test-gates/provider-loader.ts",
+      "beforeSha256": "03c227b06bc5d6e5b967d8ddfd519816bfffce45007f0e52b50dd49347606f50",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v2/skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "ae32f2f43e6aecf36950953375e2f8dc42f17d83869bdfae348cfa8a94412f1f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/skills/buster/engine/test-gates/provider-process-session.ts",
+      "beforeSha256": "21f71e7885deec3faedaf8ff374a27522d9ca929aa2c320de175096213ba9787",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v2/skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "ea0ac4030fbcfb9428590bbc8f4a68c445596da9a56f6b4ad41c0df10cb7ca6d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/skills/buster/engine/test-gates/runner-fixtures.ts",
+      "beforeSha256": "10c02adcf2a5975eeab7759cffd9ba6d9cbf38dce76971dfe1789554197ec239",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v2/skills/buster/engine/test-gates/runner-fixtures.ts",
+      "sha256": "c8c3709acc66be25880a9e56bc4ab0df9f8eb3d3b76b19e0d3aedb3964c0705b"
+    },
+    {
+      "path": "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+      "beforeSha256": "5c401ec8acd2cf6b2b8d95c9d223e82a82d0f7ab6816bd8b9bbbfc7ab5daa2f6",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v2/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs",
+      "sha256": "c5ad3ab397057d02a52a1d26d1b23486c4c59d9988b3410ed3768223cfa9e257"
+    },
+    {
+      "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+      "before": null,
+      "beforeSha256": null,
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v2/tests/verification/contracts/provider-disposal-recovery.test.mjs",
+      "sha256": "2f09c7d51eb895875983617e2dfaadc70432c119cd423a4dda340c0ebd40dc4d"
+    },
+    {
+      "path": "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs",
+      "before": null,
+      "beforeSha256": null,
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v2/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs",
+      "sha256": "fcecb9db491994e4bbb165d5977b14cabf2d0c049a49837721bbd59c0160ddd2"
+    },
+    {
+      "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "before": "docs/review/evidence/provider-disposal-confirmation-20260921/before/tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "beforeSha256": "5fb8ada78a1aacde27cd7af1c23ecc359ee783b29067734bf62766d33d676fd6",
+      "after": "docs/review/evidence/provider-disposal-confirmation-20260921/files-v2/tests/verification/contracts/provider-loader-ownership.test.mjs",
+      "sha256": "edbe313ffac1eb2b4d2435cca801ca1c9e711cfe5f23de0783f616a88460a050"
+    }
+  ],
+  "criteriaSha256": "0778836653bbb72af2be1854b5260bf74acdbb3e0b3fbfbc3baeeb4085ffd3c9",
+  "readmeSha256": "099d9e47a065a415ba3f3f3365a71363f42b4a19b07bb06c57f8742da80820a4",
+  "patchSha256": "32011a017ac553311ff4a24c7fa353362513a38b96617a9cb1b245d14c89a704"
+}

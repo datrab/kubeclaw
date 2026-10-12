@@ -1,0 +1,772 @@
+--- /dev/null
++++ b/docs/architecture/buster-fixture-cleanup.md
+@@ -0,0 +1,15 @@
++# Buster fixture cleanup authority
++
++The host tells a provider whether cleanup concerns an incomplete attempt or a completed fixture. This is execution authority, not an operator setting or a provider-local success flag.
++
++`TestProviderInstance.cleanup(invocation, context, disposition)` receives `incomplete` or `completed-fixture`. Loaded providers validate the value before constructing a replacement session. The cleanup command uses `schemaVersion: provider-cleanup.v1` with an explicit disposition; missing, unknown or differently versioned commands reject before the child invokes plugin cleanup. Original invocation and pinned package identity remain unchanged. The SDK adds the required argument; existing providers may ignore the argument, but host call sites must supply it. The broader plugin manifest API remains pipeline-plugin-v2.
++
++Ordinary failed-attempt cleanup and cleanup after a worker fault use incomplete authority. A successful provider response alone is insufficient: evidence/finalization or termination can still fail. Only the final retained-fixture path may supply completed-fixture, after checking fixture kind, completed/passed host result, no cleanup failure, and matching node/attempt/invocation identities. That path runs after dependent fixture consumers finish.
++
++The Kubernetes provider honors retain only for completed-fixture. Incomplete attempts always request lease release. A failed preparation performs its existing bounded rollback with an independent cancellation controller. If rollback succeeds, the original preparation error is rethrown unchanged. If rollback also fails, KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED carries both original local causes. Provider capability IPC retains the top-level error marker; it does not serialize nested AggregateError causes. Provider cleanup subsequently attempts release; failure enters the existing cleanup-failed path and blocks retry, including explicitly authorized unsafe retries. Successful retained fixtures stay retained; successful delete-mode fixtures are released.
++
++A replacement provider process receives the host disposition explicitly. It cannot infer success from its own memory because execution may have occurred in a different process. This same-host session recovery is distinct from durable crash recovery of failed cleanup: the loader still disposes its package snapshot in its existing finally boundary. No durable cleanup retry ledger is added here.
++
++Old immutable Kubernetes provider snapshots retain their old source behavior and cannot be repaired by merely supplying an extra argument. Historical cleanup safety requires a separate compatibility/ownership contract. This change does not rewrite snapshots, change grants, authorize cluster operations or claim that historical namespaces have been retired.
++
++`npm run verify:buster:kubernetes-cleanup` includes the original child/ownership/plugin tests and local regressions through the real invoker, registered provider and Runner. Their injected CLI/OS failure boundaries must be reported explicitly; they are not live cluster or kernel-fault acceptance. Current execution/review status belongs to the accompanying remediation evidence, not this behavioral reference.
+--- a/package.json
++++ b/package.json
+@@ -227,6 +227,7 @@
+     "verify:buster:admission": "tsc --noEmit -p tests/verification/reliability/tsconfig.buster-admission.json && node --test --test-concurrency=1 tests/verification/reliability/buster-admission-config.test.mts tests/verification/reliability/buster-admission-cli.test.mjs tests/verification/deployment/buster-admission-render.test.mjs && node tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+     "verify:buster:cancellation": "tsc --noEmit -p tests/verification/reliability/tsconfig.buster-cancellation.json && node --test --test-concurrency=1 tests/verification/reliability/buster-atomic-cancellation.test.mts tests/verification/reliability/buster-prepared-store-cancellation.test.mts",
+     "verify:buster:readiness-config": "tsc --noEmit -p tests/verification/reliability/tsconfig.buster-readiness.json && node --test --test-concurrency=1 tests/verification/reliability/buster-readiness-config.test.mts tests/verification/reliability/buster-readiness-consumer.test.mts tests/verification/deployment/buster-readiness-config.test.mjs tests/verification/deployment/buster-readiness.test.mts",
++    "verify:buster:kubernetes-cleanup": "npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-execution-policy.json && node --test --test-concurrency=1 tests/verification/contracts/kubernetes-cleanup-errors.test.mjs tests/verification/contracts/kubernetes-cleanup-runner.test.mjs tests/verification/contracts/provider-child-session.test.mjs tests/verification/contracts/provider-loader-ownership.test.mjs skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+     "verify:buster:execution-config": "npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-execution-policy.json && node --test --test-concurrency=1 tests/verification/contracts/buster-settings-registry.test.mjs tests/verification/contracts/check-pipeline-buster-execution-policy.mts tests/verification/contracts/provider-child-session.test.mjs tests/verification/contracts/buster-process-sampling.test.mjs tests/verification/contracts/buster-default-store-policy.test.mjs tests/verification/contracts/buster-provider-session-policy.test.mjs tests/verification/contracts/buster-session-capabilities.test.mjs tests/verification/contracts/provider-loader-ownership.test.mjs tests/verification/contracts/buster-completion-policy.test.mjs tests/verification/contracts/buster-report-policy-consumers.test.mjs tests/verification/contracts/buster-report-runtime-policy.test.mjs tests/verification/contracts/buster-report-policy-parity.test.mjs tests/verification/contracts/buster-report-runner-policy.test.mjs tests/verification/contracts/buster-process-input-policy.test.mjs tests/verification/contracts/buster-process-input-callers.test.mjs tests/verification/deployment/buster-process-input-parity.test.mjs",
+     "verify:lint:policy-delivery": "node skills/nova/plugins/lint/tests/eslint-discipline.test.mjs && node --test tests/verification/deployment/eslint-policy-delivery.test.mjs tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs"
+   },
+--- a/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts
++++ b/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts
+@@ -64,7 +64,11 @@
+             return await this.#activate(prepared, selected, signal);
+         }
+         catch (error) {
+-            await this.#operations.releaseAfterPrepareFailure(leaseName).catch(() => undefined);
++            try {
++                await this.#operations.releaseAfterPrepareFailure(leaseName);
++            } catch (cleanupError) {
++                throw new AggregateError([error, cleanupError], 'KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED', { cause: error });
++            }
+             throw error;
+         }
+     }
+--- a/skills/buster/engine/test-gates/provider-child.mjs
++++ b/skills/buster/engine/test-gates/provider-child.mjs
+@@ -112,8 +112,12 @@
+     send({ kind: 'result', value, resources: this.#resources() });
+   }
+ 
+-  async #cleanup() {
+-    if (this.#instance?.cleanup) await this.#instance.cleanup(this.#invocation, this.#context);
++  async #cleanup(message) {
++    if (message.schemaVersion !== 'provider-cleanup.v1'
++      || !['incomplete', 'completed-fixture'].includes(message.disposition)) {
++      throw new Error('TEST_PROVIDER_CLEANUP_DISPOSITION_INVALID');
++    }
++    if (this.#instance?.cleanup) await this.#instance.cleanup(this.#invocation, this.#context, message.disposition);
+     send({ kind: 'cleanup-result', resources: this.#resources() });
+     this.#finish();
+   }
+@@ -130,7 +134,7 @@
+       return;
+     }
+     if (message.kind === 'abort') { this.#controller.abort(new Error(String(message.reason || 'TEST_PROVIDER_CANCELLED'))); return; }
+-    if (message.kind === 'cleanup') { await this.#cleanup(); return; }
++    if (message.kind === 'cleanup') { await this.#cleanup(message); return; }
+     if (message.kind === 'execute') { await this.#execute(); return; }
+     await this.#initialize(message);
+   }
+--- a/skills/buster/engine/test-gates/provider-loader.ts
++++ b/skills/buster/engine/test-gates/provider-loader.ts
+@@ -1,10 +1,10 @@
+-import { ProviderProcessSession } from './provider-process-session.ts';
++import { ProviderProcessSession, assertCleanupDisposition } from './provider-process-session.ts';
+ import { validateBusterProviderRuntimeSettings, type BusterProviderRuntimeSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+ import { createHash } from 'node:crypto';
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import type { ProviderInvocationV1, ProviderResultV1 } from '@kubeclaw/pipeline-test-gate-contract';
+-import type { TestProviderExecutionContext } from '@kubeclaw/plugin-sdk';
++import type { TestProviderExecutionContext, TestProviderCleanupDisposition } from '@kubeclaw/plugin-sdk';
+ import { computePackageDigest } from '@kubeclaw/plugin-foundation/registry/digest';
+ import type { TestProviderRegistryEntry } from '@kubeclaw/plugin-foundation/registry/types';
+ 
+@@ -18,7 +18,7 @@
+ export interface LoadedTestProvider {
+   supportsCleanup(context: TestProviderExecutionContext): Promise<boolean>;
+   execute(invocation: ProviderInvocationV1, context: TestProviderExecutionContext): Promise<ProviderResultV1>;
+-  cleanup(invocation: ProviderInvocationV1, context: TestProviderExecutionContext): Promise<void>;
++  cleanup(invocation: ProviderInvocationV1, context: TestProviderExecutionContext, disposition: TestProviderCleanupDisposition): Promise<void>;
+   terminate(): Promise<void>;
+   discard?(): Promise<void>;
+   resources(): ProviderProcessResources;
+@@ -81,14 +81,15 @@
+     return this.#session.execute(context);
+   }
+ 
+-  async cleanup(_invocation: ProviderInvocationV1, context: TestProviderExecutionContext): Promise<void> {
++  async cleanup(_invocation: ProviderInvocationV1, context: TestProviderExecutionContext, disposition: TestProviderCleanupDisposition): Promise<void> {
++    assertCleanupDisposition(disposition);
+     if (!this.#terminated) {
+-      try { if (await this.#session.initialize(context)) await this.#session.cleanup(context); }
++      try { if (await this.#session.initialize(context)) await this.#session.cleanup(context, disposition); }
+       finally { await this.terminate(); this.#removeSnapshot(); }
+       return;
+     }
+     const recovery = new ProviderProcessSession(this.#entry, this.#invocation, this.#workspaceRoot, this.#policy);
+-    try { if (await recovery.initialize(context)) await recovery.cleanup(context); }
++    try { if (await recovery.initialize(context)) await recovery.cleanup(context, disposition); }
+     finally {
+       recovery.resources();
+       try { await recovery.terminate(); }
+--- a/skills/buster/engine/test-gates/provider-process-session.ts
++++ b/skills/buster/engine/test-gates/provider-process-session.ts
+@@ -5,13 +5,17 @@
+ import readline from 'node:readline';
+ import { fileURLToPath } from 'node:url';
+ import type { ProviderInvocationV1, ProviderResultV1 } from '@kubeclaw/pipeline-test-gate-contract';
+-import type { TestProviderExecutionContext } from '@kubeclaw/plugin-sdk';
++import type { TestProviderExecutionContext, TestProviderCleanupDisposition } from '@kubeclaw/plugin-sdk';
+ import type { TestProviderRegistryEntry } from '@kubeclaw/plugin-foundation/registry/types';
+ import { validateBusterProviderRuntimeSettings, type BusterProviderRuntimeSettings } from '../../../common/plugin-runtime/foundation/config/buster-execution.ts';
+ import type { ProviderProcessResources } from './provider-loader.ts';
+ import { ProviderCapabilities } from './provider-capabilities.ts';
+ import { processFacts, signalProvider } from './provider-process-observation.ts';
+ 
++
++export function assertCleanupDisposition(value: unknown): asserts value is TestProviderCleanupDisposition {
++  if (value !== 'incomplete' && value !== 'completed-fixture') throw new Error('TEST_PROVIDER_CLEANUP_DISPOSITION_INVALID');
++}
+ 
+ function runtimePaths(): { launcher: string; child: string } {
+   const launcher = fileURLToPath(import.meta.resolve('@kubeclaw/plugin-foundation/isolation/plugin-sandbox'));
+@@ -148,14 +152,15 @@
+     return operation;
+   }
+ 
+-  async cleanup(context: TestProviderExecutionContext): Promise<void> {
++  async cleanup(context: TestProviderExecutionContext, disposition: TestProviderCleanupDisposition): Promise<void> {
++    assertCleanupDisposition(disposition);
+     this.#setContext(context);
+     if (this.#protocolFailure) return Promise.reject(this.#protocolFailure);
+     if (this.#closed) return Promise.reject(new Error('TEST_PROVIDER_PROCESS_NOT_AVAILABLE'));
+     const supported = await this.initialize(context);
+     if (!supported) return;
+     const operation = new Promise<void>((resolve, reject) => { this.#cleanupResolve = resolve; this.#cleanupReject = reject; });
+-    if (!this.#send({ kind: 'cleanup' })) this.#fail(new Error('TEST_PROVIDER_PROCESS_CLOSED'));
++    if (!this.#send({ kind: 'cleanup', schemaVersion: 'provider-cleanup.v1', disposition })) this.#fail(new Error('TEST_PROVIDER_PROCESS_CLOSED'));
+     return operation;
+   }
+ 
+--- a/skills/buster/engine/test-gates/runner-fixtures.ts
++++ b/skills/buster/engine/test-gates/runner-fixtures.ts
+@@ -1,7 +1,7 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import type { ProviderInvocationV1, ResolvedInputV1, ResolvedPlanNodeV1 } from '@kubeclaw/pipeline-test-gate-contract';
+-import type { TestProviderExecutionContext } from '@kubeclaw/plugin-sdk';
++import type { TestProviderExecutionContext, TestProviderCleanupDisposition } from '@kubeclaw/plugin-sdk';
+ import type { LoadedTestProvider } from './provider-loader.ts';
+ import type { AttemptExecution } from './runner-types.ts';
+ import { createLogCapture } from './runner-log-capture.ts';
+@@ -18,12 +18,14 @@
+     node: ResolvedPlanNodeV1,
+     execution: AttemptExecution,
+   ): Promise<boolean> {
++    assertCompletedFixture(node, execution);
+     if (!execution.instance?.cleanup) return true;
+     return cleanupRetainedProvider(owner,
+       node,
+       execution.instance,
+       execution.invocation,
+       createLogCapture(execution.invocation.limits.logBytes).contextLog,
++      'completed-fixture',
+     );
+   }
+ 
+@@ -32,6 +34,7 @@
+     instance: LoadedTestProvider,
+     invocation: ProviderInvocationV1,
+     log: TestProviderExecutionContext["log"],
++    disposition: TestProviderCleanupDisposition,
+   ): Promise<boolean> {
+     if (!instance.cleanup) return true;
+     const controller = new AbortController();
+@@ -45,7 +48,7 @@
+     );
+     try {
+       await Promise.race([
+-        instance.cleanup(invocation, context),
++        instance.cleanup(invocation, context, disposition),
+         new Promise<never>((_resolve, reject) => {
+           timer = setTimeout(() => {
+             controller.abort(new Error("TEST_PROVIDER_CLEANUP_TIMEOUT"));
+@@ -80,3 +83,32 @@
+       }
+     }
+   }
++
++function assertCompletedFixture(node: ResolvedPlanNodeV1, execution: AttemptExecution): void {
++  const { result, invocation } = execution;
++  if (execution.cleanupFailed || node.kind !== 'fixture' || result.nodeKind !== 'fixture'
++    || invocation.nodeKind !== 'fixture' || result.executionState !== 'completed' || result.outcome !== 'passed') {
++    throw new Error('TEST_PROVIDER_COMPLETED_FIXTURE_AUTHORITY_INVALID');
++  }
++  if (node.id !== result.nodeId || node.id !== invocation.nodeId) {
++    throw new Error('TEST_PROVIDER_COMPLETED_FIXTURE_IDENTITY_INVALID');
++  }
++  assertFixtureProviderIdentity(node, execution);
++  for (const key of ['planId', 'runId', 'attemptId', 'attemptNumber', 'executionId', 'testIdentity'] as const) {
++    if (result[key] !== invocation[key]) throw new Error('TEST_PROVIDER_COMPLETED_FIXTURE_IDENTITY_INVALID');
++  }
++}
++
++function assertFixtureProviderIdentity(node: ResolvedPlanNodeV1, execution: AttemptExecution): void {
++  const { result, invocation } = execution;
++  for (const key of ['executionId', 'testIdentity', 'suiteInstanceId'] as const) {
++    if (node[key] !== invocation[key] || result[key] !== invocation[key]) {
++      throw new Error('TEST_PROVIDER_COMPLETED_FIXTURE_IDENTITY_INVALID');
++    }
++  }
++  for (const key of ['packageId', 'packageVersion', 'contentDigest', 'registrationId', 'contractId'] as const) {
++    if (node.provider[key] !== invocation.provider[key] || result.provider[key] !== invocation.provider[key]) {
++      throw new Error('TEST_PROVIDER_COMPLETED_FIXTURE_IDENTITY_INVALID');
++    }
++  }
++}
+--- a/skills/buster/engine/test-gates/runner-provider-operation.ts
++++ b/skills/buster/engine/test-gates/runner-provider-operation.ts
+@@ -83,7 +83,7 @@
+     return;
+   }
+   if (!state.instance?.cleanup || state.retainFixture) return;
+-  await state.instance.cleanup(input.invocation, providerContext(input, workerContext));
++  await state.instance.cleanup(input.invocation, providerContext(input, workerContext), 'incomplete');
+ }
+ 
+ export function createRunnerProviderOperation(input: RunnerProviderInput, state: RunnerProviderState,
+--- a/skills/buster/engine/test-gates/runner.ts
++++ b/skills/buster/engine/test-gates/runner.ts
+@@ -237,7 +237,7 @@
+ 
+   #cleanupProvider(node: ResolvedPlanNodeV1, instance: LoadedTestProvider,
+     invocation: ProviderInvocationV1, log: TestProviderExecutionContext['log']): Promise<boolean> {
+-    return cleanupRetainedProvider(this.#fixtureOwner(), node, instance, invocation, log);
++    return cleanupRetainedProvider(this.#fixtureOwner(), node, instance, invocation, log, 'incomplete');
+   }
+ 
+   #cleanupFixtures(): Promise<void> {
+--- a/skills/buster/plugins/kubernetes-fixture/src/provider.js
++++ b/skills/buster/plugins/kubernetes-fixture/src/provider.js
+@@ -131,9 +131,10 @@
+           manifestDigest: manifest.artifact.contentDigest, immutableImage: config.immutableImage,
+           retentionMode: config.retentionMode, expiresAt: result.expiresAt }) };
+     },
+-    async cleanup(invocation, context) {
++    async cleanup(invocation, context, disposition) {
++      if (disposition !== 'incomplete' && disposition !== 'completed-fixture') throw new Error('TEST_PROVIDER_CLEANUP_DISPOSITION_INVALID');
+       const config = configuration(invocation);
+-      if (config.retentionMode === 'retain') return;
++      if (config.retentionMode === 'retain' && disposition === 'completed-fixture') return;
+       const names = identity(invocation, config.namespacePrefix);
+       const released = await context.invoke('kubernetes.fixture', { operation: 'release',
+         resource: { type: 'kubernetes.fixture', canonicalId: `kubernetes-fixture:${invocation.attemptId}` },
+--- a/skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts
++++ b/skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts
+@@ -26,6 +26,6 @@
+ await assert.rejects(() => instance.execute({ ...invocation, inputs: [] }, {} as any), /KUBERNETES_FIXTURE_INPUT_REQUIRED/u);
+ await assert.rejects(() => instance.cleanup({ ...invocation, inputs: [] }, {
+   invoke: async () => ({ ok: false }),
+-} as any), /KUBERNETES_FIXTURE_RELEASE_FAILED/u);
+-await instance.cleanup({ ...invocation, inputs: [] }, { invoke: async () => ({ ok: true }) } as any);
++} as any, 'incomplete'), /KUBERNETES_FIXTURE_RELEASE_FAILED/u);
++await instance.cleanup({ ...invocation, inputs: [] }, { invoke: async () => ({ ok: true }) } as any, 'incomplete');
+ console.log(JSON.stringify({ ok: true, provider: 'kubernetes-fixture', deterministicIdentity: true, mocks: 0 }));
+--- a/skills/common/plugin-runtime/sdk/src/index.ts
++++ b/skills/common/plugin-runtime/sdk/src/index.ts
+@@ -17,6 +17,7 @@
+   PluginInvocationContext,
+   TestProviderCapabilityRequest,
+   TestProviderExecutionContext,
++  TestProviderCleanupDisposition,
+   TestProviderFactory,
+   TestProviderInstance,
+   ReportAdapterFunction,
+--- a/skills/common/plugin-runtime/sdk/src/runtime.ts
++++ b/skills/common/plugin-runtime/sdk/src/runtime.ts
+@@ -141,6 +141,9 @@
+   ): Promise<Readonly<Record<string, unknown>>>;
+ }
+ 
++/** Host-selected cleanup authority; never inferred from requested retention. */
++export type TestProviderCleanupDisposition = 'incomplete' | 'completed-fixture';
++
+ export interface TestProviderInstance {
+   execute(
+     invocation: ProviderInvocationV1,
+@@ -149,6 +152,7 @@
+   cleanup?(
+     invocation: ProviderInvocationV1,
+     context: TestProviderExecutionContext,
++    disposition: TestProviderCleanupDisposition,
+   ): Promise<void>;
+ }
+ 
+--- /dev/null
++++ b/tests/fixtures/test-gate/kubernetes-cleanup-children.mjs
+@@ -0,0 +1,96 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import path from 'node:path';
++import process from 'node:process';
++import childProcess from 'node:child_process';
++import { syncBuiltinESMExports } from 'node:module';
++
++export function ownProviderChildren(t, directory) {
++  const originalSpawn = childProcess.spawn;
++  const originalKill = process.kill;
++  const owned = [];
++
++  let hook;
++  let closing = false;
++  let ownershipFailure;
++  // Registered before setup writes, discovery, or any possible process start.
++  t.after(async () => {
++    closing = true;
++    const failures = [];
++    try {
++      for (const row of owned) {
++        if (row.closed) continue;
++        try {
++          if (process.platform !== 'win32' && row.child.pid) originalKill(-row.child.pid, 'SIGKILL');
++          else row.child.kill('SIGKILL');
++        } catch (error) { if (error.code !== 'ESRCH') failures.push(error); }
++      }
++      let timer;
++      try {
++        await Promise.race([
++          Promise.all(owned.map(row => row.closePromise)),
++          new Promise((_, reject) => {
++            timer = setTimeout(() => reject(new Error('REPORT_FIXTURE_CLOSE_TIMEOUT')), 2000);
++          }),
++        ]);
++      } finally { clearTimeout(timer); }
++      if (ownershipFailure) failures.push(ownershipFailure);
++      if (failures.length) throw new AggregateError(failures, 'REPORT_FIXTURE_CLEANUP_FAILED');
++      assert(owned.every(row => row.closed), 'actual close required for every owned child');
++      fs.rmSync(directory, { recursive: true, force: true });
++    } finally { hook?.mock.restore(); syncBuiltinESMExports(); }
++  });
++  const providerChild = path.resolve('skills/buster/engine/test-gates/provider-child.mjs');
++  const reportChild = path.resolve('skills/buster/engine/test-gates/report-adapter-child.mjs');
++  hook = t.mock.method(childProcess, 'spawn', function (...args) {
++    const isProvider = Array.isArray(args[1]) && args[1].includes(providerChild);
++    const isReport = Array.isArray(args[1]) && args[1].includes(reportChild);
++    // Store flock and other genuine tool spawns retain their existing owner and
++    // tool mappings. Intercept only these two actual session entrypoint paths.
++    if (!isProvider && !isReport) return Reflect.apply(originalSpawn, childProcess, args);
++    const options = args[2];
++    const cwd = typeof options?.cwd === 'string' ? fs.realpathSync(options.cwd) : null;
++    if (closing || !cwd || !cwd.startsWith(`${fs.realpathSync(directory)}${path.sep}`)
++      || (process.platform !== 'win32' && options.detached !== true)) {
++      ownershipFailure = new Error('REPORT_FIXTURE_UNKNOWN_SPAWN_OWNERSHIP');
++      // Reject before spawning anything whose ownership cannot be established.
++      throw ownershipFailure;
++    }
++    const child = Reflect.apply(originalSpawn, childProcess, args);
++    let resolveClose;
++    const row = { child, messages: [], stderr: '', closed: null,
++      closePromise: new Promise(resolve => { resolveClose = resolve; }) };
++    const write = child.stdin.write;
++    child.stdin.write = function (...values) {
++      const bytes = values[0];
++      for (const line of String(bytes).trim().split('\n')) {
++        if (line) row.messages.push(JSON.parse(line));
++      }
++      return Reflect.apply(write, child.stdin, values);
++    };
++    owned.push(row);
++    child.once('close', (code, signal) => { row.closed = { code, signal }; resolveClose(); });
++    child.stderr.on('data', chunk => { row.stderr += chunk.toString(); });
++    return child;
++  });
++  syncBuiltinESMExports();
++  return { owned };
++}
++
++
++export function failFirstDeployTermination(t, ownership) {
++  const realKill = process.kill;
++  let injected;
++  const hook = t.mock.method(process, 'kill', function (pid, signal) {
++    const row = ownership.owned.find(candidate => candidate.child.pid && pid === -candidate.child.pid
++      && candidate.messages.some(message => message.kind === 'initialize' && message.invocation.nodeId === 'deploy')
++      && candidate.messages.some(message => message.kind === 'execute'));
++    if (!injected && row && signal === 'SIGTERM') {
++      injected = row;
++      throw Object.assign(new Error('injected exact owned group TERM failure'), { code: 'EPERM' });
++    }
++    return Reflect.apply(realKill, process, [pid, signal]);
++  });
++  t.after(() => hook.mock.restore());
++  return () => injected;
++}
+--- /dev/null
++++ b/tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs
+@@ -0,0 +1,86 @@
++import fs from 'node:fs';
++import path from 'node:path';
++import crypto from 'node:crypto';
++import process from 'node:process';
++import { KubernetesFixtureCapabilityInvoker } from '../../../skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts';
++import { runnerExecutionPolicy } from './execution-policy.mts';
++
++export const imageDigest = `sha256:${'a'.repeat(64)}`;
++export const image = `registry.local/app@${imageDigest}`;
++export const mediaType = 'application/vnd.kubeclaw.checked-kubernetes-yaml';
++export const manifest = `apiVersion: apps/v1
++kind: Deployment
++metadata:
++  name: app
++spec:
++  template:
++    spec:
++      securityContext:
++        runAsNonRoot: true
++        seccompProfile:
++          type: RuntimeDefault
++      containers:
++        - name: app
++          image: ${image}
++          securityContext:
++            runAsNonRoot: true
++            allowPrivilegeEscalation: false
++            capabilities:
++              drop: [ALL]
++---
++apiVersion: v1
++kind: Service
++metadata:
++  name: app
++spec:
++  ports:
++    - port: 8080
++      targetPort: 8080
++`;
++export const manifestDigest = `sha256:${crypto.createHash('sha256').update(manifest).digest('hex')}`;
++export function request(root, retentionMode) {
++  const manifestPath = path.join(root, 'checked.yaml');
++  fs.writeFileSync(manifestPath, manifest, { flag: 'wx' });
++  return { operation: 'prepare', resource: { type: 'kubernetes.fixture', canonicalId: 'kubernetes-fixture:attempt:one' },
++    payload: { leaseName: 'test-one', namespaceName: 'test-one', namespacePrefix: 'test', project: 'proof',
++      immutableImage: image, imageDigest, manifestPath, manifestDigest, serviceName: 'app', servicePort: 8080,
++      retentionSeconds: 300, retentionMode, readinessTimeoutMs: 1000, secretReferences: [] } };
++}
++export function localApi({ primary, deleteError, originalController } = {}) {
++  const calls = [];
++  let namespace = 'test-one';
++  return { calls, async execute(_command, args, options) {
++    calls.push({ args: [...args], signal: options.signal });
++    if (args[0] === 'auth') return { stdout: 'yes' };
++    if (args[0] === 'delete') {
++      if (deleteError) throw deleteError;
++      return { stdout: '' };
++    }
++    if (args[0] === 'apply') {
++      if (typeof options.input === 'string' && options.input.includes('BusterNamespaceLease')) {
++        namespace = JSON.parse(options.input).spec.namespaceName;
++      }
++      return { stdout: '' };
++    }
++    if (args[0] === 'get' && args[1] === 'busternamespacelease') {
++      if (primary) { originalController?.abort(primary); throw primary; }
++      return { stdout: JSON.stringify({ status: { phase: 'Ready', namespaceName: namespace,
++        createdAt: '2026-09-21T00:00:00.000Z', expiresAt: '2026-09-21T00:05:00.000Z' } }) };
++    }
++    if (args[1] === 'pods') return { stdout: JSON.stringify({ items: [{ metadata: { name: 'app' },
++      status: { conditions: [{ type: 'Ready', status: 'True' }] } }] }) };
++    if (args[1] === 'service') return { stdout: JSON.stringify({ spec: { ports: [{ port: 8080, targetPort: 8080 }] } }) };
++    if (args[1] === 'endpoints') return { stdout: JSON.stringify({ subsets: [{ ports: [{ port: 8080 }], addresses: [{ ip: '127.0.0.1' }] }] }) };
++    throw new Error(`UNEXPECTED_FIXTURE_COMMAND:${args.join(' ')}`);
++  } };
++}
++export function invoker(root, api) {
++  return new KubernetesFixtureCapabilityInvoker({ workspaceRoot: root, kubectlExecutable: process.execPath,
++    processInputPolicy: runnerExecutionPolicy.processInput, controllerNamespace: 'kubeclaw',
++    leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1', allowedNamespacePrefixes: ['test'],
++    allowedRegistryPrefixes: ['registry.local/app'], allowedSecretReferences: [], allowedStorageClasses: [],
++    allowDefaultStorageClass: false, maximumManifestBytes: 1048576, maximumResources: 64,
++    maximumPersistentVolumeClaimBytes: 1, maximumPersistentVolumeTotalBytes: 1,
++    maximumRetentionSeconds: 3600, maximumExecutionMs: 10000, pollIntervalMs: 50,
++    execute: api.execute.bind(api) });
++}
+--- /dev/null
++++ b/tests/fixtures/test-gate/kubernetes-cleanup-runner.mjs
+@@ -0,0 +1,75 @@
++import assert from 'node:assert/strict';
++import process from 'node:process';
++import fs from 'node:fs';
++import path from 'node:path';
++import { buildRegistry, discoverPackages, resolveTestPlan } from '../../../skills/nova/core/src/index.ts';
++import { runnerExecutionPolicy } from './execution-policy.mts';
++import { image, imageDigest, manifest, mediaType, invoker, localApi } from './kubernetes-cleanup-fixture.mjs';
++
++export function runnerOptions(root, retentionMode, fail) {
++  const plugins = path.join(root, 'plugins');
++  const publisher = path.join(plugins, 'publisher');
++  fs.mkdirSync(publisher, { recursive: true });
++  fs.writeFileSync(path.join(publisher, 'package.json'), JSON.stringify({ name: 'cleanup-manifest', type: 'module' }), { flag: 'wx' });
++  fs.writeFileSync(path.join(publisher, 'schema.json'), JSON.stringify({ type: 'object', additionalProperties: false }), { flag: 'wx' });
++  fs.writeFileSync(path.join(publisher, 'provider.js'), `import assert from 'node:assert/strict';
++import process from 'node:process';
++import fs from 'node:fs'; import path from 'node:path';
++export function provider() { return { execute(invocation, context) {
++  fs.writeFileSync(path.join(context.workspaceRoot, invocation.workspace.evidence, 'checked.yaml'), ${JSON.stringify(manifest)});
++  return { schemaVersion:'provider-result.v1',outcome:'passed',summary:'checked manifest fixture',
++    counts:{total:1,passed:1,failed:0,skipped:0},findings:[],metrics:[],
++    evidenceFiles:[{evidenceId:'manifest',type:'report',file:'checked.yaml',mediaType:${JSON.stringify(mediaType)}}],
++    reports:[],outputs:[{name:'manifest',kind:'artifact',evidenceId:'manifest'}],exitCode:0,signal:null,providerDetails:null };
++} }; }\n`, { flag: 'wx' });
++  fs.writeFileSync(path.join(publisher, 'plugin.json'), JSON.stringify({ id: 'test.cleanup-manifest',
++    apiVersion: 'pipeline-plugin-v2', packageVersion: '1.0.0', stages: [], observers: [], adapters: [],
++    testProviders: [{ id: 'manifest', contractId: 'test.cleanup-manifest@1', kind: 'test', module: 'provider.js',
++      export: 'provider', configSchema: 'schema.json', inputs: [], outputs: [{ name: 'manifest', kind: 'artifact',
++        required: true, mediaTypes: [mediaType] }], requiredCapabilities: [], retrySafe: true, matrixFields: [],
++      reportFormats: [], evidenceTypes: ['report'], evidenceDefaults: { onPass: ['report'], onFail: ['report'], onError: ['report'] } }] }), { flag: 'wx' });
++  const actualPlugin = path.resolve('skills/buster/plugins/kubernetes-fixture');
++  const copiedPlugin = path.join(plugins, 'kubernetes-fixture');
++  fs.cpSync(actualPlugin, copiedPlugin, { recursive: true, dereference: true });
++  const source = path.join(actualPlugin, 'src/provider.js');
++  const target = path.join(copiedPlugin, 'src/provider.js');
++  const originalStat = fs.statSync(source), copiedStat = fs.lstatSync(target);
++  assert(copiedStat.isFile() && !copiedStat.isSymbolicLink() && copiedStat.nlink === 1);
++  assert(fs.realpathSync(target).startsWith(`${fs.realpathSync(root)}${path.sep}`));
++  assert.notEqual(fs.realpathSync(source), fs.realpathSync(target));
++  assert(originalStat.dev !== copiedStat.dev || originalStat.ino !== copiedStat.ino);
++  assert.equal(fs.readFileSync(target, 'utf8'), fs.readFileSync(source, 'utf8'));
++  if (process.env.BUSTER_CLEANUP_PROVIDER_MUTATION !== undefined) {
++    assert.equal(process.env.BUSTER_CLEANUP_PROVIDER_MUTATION, 'retain-unconditional');
++    const bytes = fs.readFileSync(target, 'utf8');
++    const anchor = "config.retentionMode === 'retain' && disposition === 'completed-fixture'";
++    assert.equal(bytes.split(anchor).length, 2);
++    fs.writeFileSync(target, bytes.replace(anchor, "config.retentionMode === 'retain'"));
++  }
++
++  const registry = buildRegistry(discoverPackages({ installationRoots: [plugins], trustPolicy: {
++    trustedBuiltinRoots: [plugins], allowedSourceDigests: new Map(), verifiedAttestations: new Map(),
++    verifierId: 'test:kubernetes-cleanup' } }));
++  const limits = { cpuMillis: 10000, memoryBytes: 512 * 1024 * 1024, logBytes: 1048576,
++    artifactBytes: 16777216, artifactFiles: 16, processes: 16 };
++  const plan = resolveTestPlan({ planId: 'plan:kubernetes-cleanup', runId: 'run:kubernetes-cleanup', project: 'cleanup-proof',
++    scope: { moduleId: 'app', gateId: null }, createdAt: '2026-09-21T00:00:00.000Z',
++    declaration: { tests: { manifest: { uses: 'test.cleanup-manifest@1', mode: 'blocking', retries: 0 } },
++      fixtures: { deploy: { uses: 'kubeclaw.kubernetes-fixture@1', retries: 1, acceptUnsafeRetry: true,
++        config: { image: { reference: image, digest: imageDigest }, serviceName: 'app', servicePort: 8080,
++          retention: { mode: retentionMode, seconds: 300 }, readinessTimeoutSeconds: 1 },
++        inputs: { 'checked-manifest': { from: 'manifest', output: 'manifest', mediaType } } } }, concurrencyLimits: {} },
++    suiteTemplates: [], registry, facts: { changedPaths: [], moduleType: 'service', pipelineStage: 'test' },
++    policy: { defaultTimeoutMs: 10000, maximumTimeoutMs: 10000, defaultLimits: limits, maximumLimits: limits,
++      maximumRetryCount: 1, maximumMatrixSize: 1, maximumNodes: 2, defaultConcurrencyLimit: 1,
++      maximumConcurrencyLimits: {} } });
++  const workspaceRoot = path.join(root, 'workspace');
++  const repositoryRoot = path.join(workspaceRoot, 'repository');
++  fs.mkdirSync(repositoryRoot, { recursive: true });
++  const api = localApi(fail ? { primary: new Error('external preparation fault'), deleteError: new Error('external delete fault') } : {});
++  return { api, options: { plan, registry, workspaceRoot, repositoryRoot, artifactRoot: path.join(root, 'artifacts'),
++    observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1,
++    executionPolicy: runnerExecutionPolicy,
++    workerLocalRuntime: { drainTimeoutMs: 300000, cancellationTimeoutMs: 30000, replayLimit: 65536 },
++    grants: new Map([['deploy', ['kubernetes.fixture']]]), capabilityInvoker: invoker(root, api) } };
++}
+--- /dev/null
++++ b/tests/verification/contracts/kubernetes-cleanup-errors.test.mjs
+@@ -0,0 +1,34 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { request, localApi, invoker } from '../../fixtures/test-gate/kubernetes-cleanup-fixture.mjs';
++
++for (const deleteFails of [false, true]) test(`real preparation rollback preserves errors; delete failure ${deleteFails}`, async t => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kube-cleanup-errors-'));
++  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
++  const primary = new Error('injected external GET failure');
++  const secondary = new Error('injected external DELETE failure');
++  const controller = new AbortController();
++  const api = localApi({ primary, deleteError: deleteFails ? secondary : undefined, originalController: controller });
++  const capability = invoker(root, api);
++  let failure;
++  try { await capability.invoke('kubernetes.fixture', request(root, 'retain'), controller.signal); }
++  catch (error) { failure = error; }
++  assert(failure);
++  if (deleteFails) {
++    assert(failure instanceof AggregateError);
++    assert.equal(failure.message, 'KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED');
++    assert.equal(failure.cause, failure.errors[0]);
++    assert.equal(failure.errors[0].cause, primary, 'existing cancelled wrapper retains exact primary cause');
++    assert.equal(failure.errors[1].cause, secondary, 'existing kubectl wrapper retains exact delete cause');
++  } else {
++    assert.equal(failure.message, 'KUBERNETES_FIXTURE_CANCELLED');
++    assert.equal(failure.cause, primary);
++  }
++  const deletes = api.calls.filter(row => row.args[0] === 'delete');
++  assert.equal(deletes.length, 1);
++  assert.notEqual(deletes[0].signal, controller.signal);
++  assert.equal(deletes[0].signal.aborted, false, 'rollback uses independent bounded cancellation scope');
++});
+--- /dev/null
++++ b/tests/verification/contracts/kubernetes-cleanup-runner.test.mjs
+@@ -0,0 +1,82 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import test from 'node:test';
++import { RegisteredTestProviderLoader } from '../../../skills/buster/engine/test-gates/provider-loader.ts';
++import { TestPlanRunner } from '../../../skills/buster/engine/test-gates/runner.ts';
++import { ownProviderChildren } from '../../fixtures/test-gate/kubernetes-cleanup-children.mjs';
++import { runnerOptions } from '../../fixtures/test-gate/kubernetes-cleanup-runner.mjs';
++
++for (const retention of ['retain', 'delete']) for (const failed of [true, false]) {
++  test(`registered Kubernetes provider ${retention}, failed preparation ${failed}`, { timeout: 60000 }, async t => {
++    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kube-runner-cleanup-'));
++    const ownership = ownProviderChildren(t, root); // before any fixture write or process
++    const { api, options } = runnerOptions(root, retention, failed);
++    const loader = new RegisteredTestProviderLoader({ provider: options.executionPolicy.provider, observation: options.executionPolicy.observation });
++    const loaded = [];
++    options.loader = { async load(...args) {
++      const instance = await loader.load(...args);
++      loaded.push({ instance, invocation: args[1] });
++      return instance;
++    } };
++    const result = await new TestPlanRunner(options).run();
++    const attempts = result.attempts.filter(row => row.nodeId === 'deploy');
++    assert.equal(attempts.length, 1, 'failed cleanup blocks even explicitly accepted unsafe retry');
++    const children = ownership.owned.filter(row => row.messages.some(message => message.kind === 'initialize'
++      && message.invocation.nodeId === 'deploy'));
++    const executed = children.find(row => row.messages.some(message => message.kind === 'execute'));
++    const cleaned = children.find(row => row.messages.some(message => message.kind === 'cleanup'));
++    assert(executed && cleaned);
++    assert.notEqual(executed.child.pid, cleaned.child.pid, 'actual replacement cleanup session required');
++    assert(executed.closed && cleaned.closed, 'both actual process closes observed');
++    const cleanupMessage = cleaned.messages.find(message => message.kind === 'cleanup');
++    assert.equal(cleanupMessage.schemaVersion, 'provider-cleanup.v1');
++    assert.equal(cleanupMessage.disposition, failed ? 'incomplete' : 'completed-fixture');
++    const deletes = api.calls.filter(row => row.args[0] === 'delete');
++    if (failed) {
++      assert.match(attempts[0].summary, /KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED/);
++      assert.equal(deletes.length, 2, 'initial rollback plus independent provider cleanup');
++      assert(result.cleanupErrors.some(error => error.nodeId === 'deploy'));
++      assert.notEqual(attempts[0].executionState, 'completed');
++    } else {
++      assert.equal(attempts[0].executionState, 'completed');
++      assert.equal(attempts[0].outcome, 'passed');
++      assert.equal(deletes.length, retention === 'retain' ? 0 : 1);
++      assert.equal(result.cleanupErrors.length, 0);
++      const before = ownership.owned.length;
++      const retained = loaded.find(row => row.invocation.nodeId === 'deploy');
++      assert(retained);
++      const context = { signal: new AbortController().signal, workspaceRoot: options.workspaceRoot,
++        log() { throw new Error('UNEXPECTED_INVALID_CLEANUP_LOG'); },
++        invoke() { throw new Error('UNEXPECTED_INVALID_CLEANUP_CAPABILITY'); } };
++      for (const disposition of [undefined, null, 'passed', true, {}]) {
++        await assert.rejects(retained.instance.cleanup(retained.invocation, context, disposition),
++          { message: 'TEST_PROVIDER_CLEANUP_DISPOSITION_INVALID' });
++      }
++      assert.equal(ownership.owned.length, before, 'invalid authority rejected before fresh-session spawn');
++    }
++  });
++}
++
++test('post-provider termination fault has incomplete cleanup authority despite retained provider success', { timeout: 60000 }, async t => {
++  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kube-faulted-retain-'));
++  const ownership = ownProviderChildren(t, root);
++  const { failFirstDeployTermination } = await import('../../fixtures/test-gate/kubernetes-cleanup-children.mjs');
++  const injected = failFirstDeployTermination(t, ownership);
++  const { api, options } = runnerOptions(root, 'retain', false);
++  const result = await new TestPlanRunner(options).run();
++  const original = injected();
++  assert(original, 'actual owned-group termination operation must reach the injected OS boundary');
++  assert(original.closed, 'real child still closes through original escalation');
++  const initialization = original.messages.find(message => message.kind === 'initialize');
++  const attemptId = initialization.invocation.attemptId;
++  const cleanup = ownership.owned.find(row => row !== original
++    && row.messages.some(message => message.kind === 'initialize' && message.invocation.attemptId === attemptId)
++    && row.messages.some(message => message.kind === 'cleanup'));
++  assert(cleanup && cleanup.closed);
++  assert.equal(cleanup.messages.find(message => message.kind === 'cleanup').disposition, 'incomplete');
++  assert.notEqual(result.attempts.find(attempt => attempt.attemptId === attemptId).executionState, 'completed');
++  assert.equal(api.calls.filter(row => row.args[0] === 'delete').length, 1,
++    'first attempt must release, later successfully retained attempt must remain retained');
++});
+--- a/tests/verification/contracts/provider-child-session.test.mjs
++++ b/tests/verification/contracts/provider-child-session.test.mjs
+@@ -112,7 +112,7 @@
+   session.send({ kind: 'capability-result', id: second.id, ok: true, value: 'second' });
+   session.send({ kind: 'capability-result', id: first.id, ok: true, value: 'first' });
+   assert.deepEqual((await session.next((m) => m.kind === 'result')).value, { values: ['first', 'second'] });
+-  session.send({ kind: 'cleanup' });
++  session.send({ kind: 'cleanup', schemaVersion: 'provider-cleanup.v1', disposition: 'incomplete' });
+   assert.equal((await session.next((m) => m.kind === 'log')).content, 'cleanup retained instance state');
+   await session.next((m) => m.kind === 'cleanup-result');
+   assert.deepEqual(await session.closed, { code: 0, signal: null });
+@@ -143,7 +143,7 @@
+     assert.deepEqual((await session.next((m) => m.kind === 'result')).value,
+       { statuses: [replyBeforeAbort ? 'fulfilled' : 'rejected', 'rejected'], aborted: true });
+     session.send({ kind: 'capability-result', id: second.id, ok: true, value: 'late' });
+-    session.send({ kind: 'cleanup' });
++    session.send({ kind: 'cleanup', schemaVersion: 'provider-cleanup.v1', disposition: 'incomplete' });
+     await session.next((m) => m.kind === 'cleanup-result');
+     assert.deepEqual(await session.closed, { code: 0, signal: null });
+   assert.deepEqual(session.remaining(), [], 'no extra protocol messages after all expected replies and closure');
+@@ -195,7 +195,7 @@
+     const result = await session.next((m) => m.kind === 'result');
+     assert.deepEqual(result.value, { completed: true });
+     assert.ok(result.resources.maximumMemoryBytes > 0);
+-    session.send({ kind: 'cleanup' });
++    session.send({ kind: 'cleanup', schemaVersion: 'provider-cleanup.v1', disposition: 'incomplete' });
+     await session.next((m) => m.kind === 'cleanup-result');
+     assert.deepEqual(await session.closed, { code: 0, signal: null });
+     assert.deepEqual(session.remaining(), []);
+@@ -222,3 +222,20 @@
+   const scheduled = (await session.intervals()).filter((item) => item.kind === 'scheduled');
+   assert.deepEqual(scheduled, [{ kind: 'scheduled', delay: 40 }], 'identical policy must reuse the one sampler');
+ });
++
++for (const command of [
++  { kind: 'cleanup' },
++  { kind: 'cleanup', schemaVersion: 'provider-cleanup.v1', disposition: 'passed' },
++  { kind: 'cleanup', schemaVersion: 'provider-cleanup.v0', disposition: 'completed-fixture' },
++]) test(`child rejects invalid cleanup authority ${JSON.stringify(command)}`, { timeout: 10000 }, async t => {
++  const session = await startChild(t, `export function provider() { return {
++    execute() { return {}; },
++    cleanup(_invocation, context) { context.log('stdout', 'UNAUTHORIZED_CLEANUP_EXECUTED'); },
++  }; }`, { resourceSampleIntervalMs: 10 });
++  assert.equal((await session.next(message => message.kind === 'initialized')).supportsCleanup, true);
++  session.send(command);
++  assert.equal((await session.next(message => message.kind === 'error')).error, 'TEST_PROVIDER_CLEANUP_DISPOSITION_INVALID');
++  assert.deepEqual(await session.closed, { code: 1, signal: null });
++  assert.equal(session.remaining().some(message => message.kind === 'cleanup-result'
++    || message.content === 'UNAUTHORIZED_CLEANUP_EXECUTED'), false);
++});
+--- a/tests/verification/contracts/provider-loader-ownership.test.mjs
++++ b/tests/verification/contracts/provider-loader-ownership.test.mjs
+@@ -210,7 +210,7 @@
+     f.context.log = (stream, content) => logs.push({ stream, content });
+     assert.equal(await f.session.initialize(f.context), true);
+     assert.deepEqual(await f.session.execute(f.context), { value: 'healthy' });
+-    await f.session.cleanup(f.context);
++    await f.session.cleanup(f.context, 'incomplete');
+     await f.closed;
+     assert(logs.some(row => row.stream === 'stdout' && row.content === 'actual cleanup'));
+     await f.session.terminate();
+@@ -295,7 +295,7 @@
+     assert(f.stdoutBytes() > maximumProtocolBytes, 'actual child bytes crossed the selected cap');
+     assert.equal(logs.length, 0, 'over-budget frame must not dispatch a log');
+     await assert.rejects(f.session.execute(f.context), { message: 'TEST_PROVIDER_PROTOCOL_LIMIT' });
+-    await assert.rejects(f.session.cleanup(f.context), { message: 'TEST_PROVIDER_PROTOCOL_LIMIT' });
++    await assert.rejects(f.session.cleanup(f.context, 'incomplete'), { message: 'TEST_PROVIDER_PROTOCOL_LIMIT' });
+     await assert.rejects(f.session.initialize(f.context), { message: 'TEST_PROVIDER_PROTOCOL_LIMIT' });
+     await f.session.terminate();
+   } else {
+@@ -303,7 +303,7 @@
+     assert(f.stdoutBytes() > 512 && f.stdoutBytes() <= maximumProtocolBytes);
+     assert.deepEqual(logs, [{ stream: 'stdout', value: content }]);
+     assert.deepEqual(await f.session.execute(f.context), { value: 'after idle log' });
+-    await f.session.cleanup(f.context);
++    await f.session.cleanup(f.context, 'incomplete');
+     await f.closed;
+     await f.session.terminate();
+   }

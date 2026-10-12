@@ -1,0 +1,58 @@
+# Guest startup/storage diagnostic proposal
+
+The new disk and UUID are materialized and hash preflight passed; no VM has
+been launched. The root coordinator
+must review the final artifact hashes and exclusive test slot before execution. This is a separate diagnostic, not host-authority acceptance
+or a substitute for full original test gates.
+
+VM3's four cancellations still lack a demonstrated cause. The host differential
+in `native-vm-timeout-diagnosis-20260921` observed exact child readiness in
+437–1107 ms both with inherited `NODE_TEST_CONTEXT=child-v8` and with it removed.
+It does not support stripping the variable as a fix. Guest module startup,
+filesystem metadata latency and synchronous compilation remain hypotheses.
+
+The proposed guest keeps the immutable VM3 snapshot, including the reviewed
+process projection but excluding subsequent journal-capacity/Buster/authority
+work. It runs a bounded diagnostic for the three original long-lived fixture
+modes (accepted, sealed, supervisor), first on the readonly 9p export. A private
+preload measures bootstrap, resolve/load counts and durations, periodic CPU/RSS,
+and first stdout. Each child retains the corresponding original 20- or 15-second
+readiness bound; stderr is capped at 128 KiB. The driver then runs both unchanged
+original journal and ownership files (15 cases), with their own deadlines and
+assertions untouched. A separate 180-second outer process watchdog bounds this
+diagnostic batch without extending any case deadline.
+
+It then independently copies the same snapshot to the guest's disposable ext4
+disk, checks every entry/type/hash/symlink target against the same manifest, and
+makes that guest copy a readonly bind mount. It repeats the same three diagnostic
+modes and both original test files against the ext4 layout. Both source trees
+are verified again afterward. No source, expectation or fixture is rewritten.
+The host export stays readonly; only guest scratch data is copied or mounted.
+The 8-GiB disk has room for the approximately 447-MB source copy in addition to
+the approximately 500-MB guest tree; this is not an in-memory staging filesystem.
+
+Order and cache warming can affect latency. A difference alone is evidence of a
+layout association, not final causal proof; stage timings must identify where
+the delay occurs. A later reverse-order check would need a separate reviewed
+run if necessary. Diagnostic completion and original-test success are reported
+separately. The driver reports diagnostic completion separately and returns nonzero if
+any original batch or readiness probe fails. Completion is never acceptance
+of failed original cases.
+
+The existing fixed VM envelope is retained: 1 GiB RAM, 2 vCPUs, 64 MiB TCG cache,
+2 GiB address space, 120/900-second boot/overall watchdogs, 1200-second CPU limit,
+64 MiB console cap, 2.75-GiB shared-memory cutoff and 512-MiB initial
+nonreclaimable-memory check. No network, host package installation, host mounts,
+host cgroup changes, device passthrough or parallel QEMU process is allowed.
+Exhausting a bound ends the diagnostic honestly; no automatic budget increase.
+
+Reviewable scripts are in
+`docs/review/evidence/native-vm-startup-storage-proposal-20260921/`:
+`guest-diagnostic.mjs`, `child-preload.mjs`, guest init and copied fixed-budget
+launcher/image builder. Syntax checking and `--verify-only` passed. Materialization created a
+new `node_modules/.cache/native-test-vm-startup-20260921` tree, copied the pristine
+guest-root independently, generated a new guest UUID, copied the diagnostic scripts
+and VM3 source manifest under guest `/diagnostics`, and bound all resulting
+artifacts before `--verify-only`. The frozen VM3 export may be reused readonly;
+no previous disk or metadata may be overwritten. Exact launcher flags remain
+those of the reviewed VM3 launcher, with only the new fixture paths/name.

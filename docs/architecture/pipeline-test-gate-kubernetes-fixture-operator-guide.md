@@ -16,31 +16,7 @@ runtime cannot create a namespace directly.
 
 ## Configure Buster
 
-Add `kubernetes.fixture` to `allowedCapabilities`. Add this object to the
-Buster remote runtime configuration.
-
-```json
-{
-  "kubernetesFixture": {
-    "kubectlExecutable": "/usr/local/bin/kubectl",
-    "controllerNamespace": "kubeclaw",
-    "leaseApiGroup": "kubeclaw.forgestack.ai",
-    "leaseApiVersion": "v1alpha1",
-    "allowedNamespacePrefixes": ["test"],
-    "allowedRegistryPrefixes": ["registry-local.kubeclaw.svc.cluster.local:5001/apps"],
-    "allowedSecretReferences": ["test-registry"],
-    "allowedStorageClasses": ["fixture-storage"],
-    "allowDefaultStorageClass": false,
-    "maximumManifestBytes": 4194304,
-    "maximumResources": 128,
-    "maximumPersistentVolumeClaimBytes": 10737418240,
-    "maximumPersistentVolumeTotalBytes": 21474836480,
-    "maximumRetentionSeconds": 86400,
-    "maximumExecutionMs": 300000,
-    "pollIntervalMs": 1000
-  }
-}
-```
+Add `kubernetes.fixture` to the runtime capability allowlist. Select and author the complete Buster component described in [Buster cluster invoker configuration](buster-cluster-configuration.md). All invoker policy is required under `settings.clusterInvokers`; the old runtime JSON `kubernetesFixture` object and worker policy environment variables are rejected, including equal or empty values. The existing Buster deployment profile selects its own whole component and retains its five test-secret references. Capability grants and projected installation identity remain separate from operator policy.
 
 PersistentVolumeClaims are admitted only when their requested storage is a
 positive, whole-byte Kubernetes quantity within both configured byte limits.

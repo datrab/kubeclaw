@@ -1,0 +1,9 @@
+{
+  "command": [
+    "node",
+    "docs/review/evidence/control-listener-quality-independent-20260921/closed-stderr-child.mts"
+  ],
+  "exitCode": 0,
+  "stdout": "{\"closedStderr\":true,\"statuses\":[422,400,200],\"alive\":true}\n",
+  "stderr": ""
+}

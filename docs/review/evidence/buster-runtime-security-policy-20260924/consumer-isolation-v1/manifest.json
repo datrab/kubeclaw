@@ -1,0 +1,10 @@
+{
+  "status": "frozen private test isolation correction; no runtime; production/limits/oracles unchanged",
+  "files": [
+    {
+      "path": "tests/verification/contracts/buster-runtime-security-policy.test.mjs",
+      "beforeSha256": "fa7ef952e620fce3549c525bce1639e0605fd99f3d9a1fd8d7626c5e8183ba88",
+      "afterSha256": "f67e43a2be7ebc263274834ea4dc8e8083fa007043a522fbdb86e1380bd290ff"
+    }
+  ]
+}

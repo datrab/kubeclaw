@@ -1,0 +1,87 @@
+
+> verify:buster:cluster-policy
+> npm run plugin-system:sandbox:build && tsc --noEmit -p tests/verification/contracts/tsconfig.buster-cluster-policy.json && node --test --test-concurrency=1 tests/verification/reliability/buster-cluster-entrypoint.test.mjs tests/verification/contracts/buster-cluster-output-consumers.test.mjs tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs tests/verification/contracts/buster-cluster-timing-consumers.test.mjs tests/verification/contracts/buster-cluster-poll-consumers.test.mjs tests/verification/contracts/buster-cluster-capture.test.mjs tests/verification/contracts/buster-cluster-production-route.test.mjs tests/verification/deployment/buster-cluster-invoker-parity.test.mjs && node tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts && node tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts
+
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+✔ captured file kubernetes.fixture namespace governs actual commands after mutation (1313.880346ms)
+✔ captured file kubernetes.fixture registry governs actual commands after mutation (1191.445544ms)
+✔ captured file kubernetes.fixture secret governs actual commands after mutation (1207.945874ms)
+✔ captured file kubernetes.fixture storage governs actual commands after mutation (1306.304358ms)
+✔ captured file kubernetes.fixture manifest governs actual commands after mutation (1319.793359ms)
+✔ captured file kubernetes.exposure namespace governs actual commands after mutation (656.933742ms)
+✔ captured file kubernetes.exposure host governs actual commands after mutation (875.326424ms)
+✔ captured caller kubernetes.fixture namespace governs actual commands after mutation (869.214385ms)
+✔ captured caller kubernetes.fixture registry governs actual commands after mutation (899.870283ms)
+✔ captured caller kubernetes.fixture secret governs actual commands after mutation (785.609455ms)
+✔ captured caller kubernetes.fixture storage governs actual commands after mutation (799.311773ms)
+✔ captured caller kubernetes.fixture manifest governs actual commands after mutation (1284.264152ms)
+✔ captured caller kubernetes.exposure namespace governs actual commands after mutation (634.446095ms)
+✔ captured caller kubernetes.exposure host governs actual commands after mutation (682.487528ms)
+✔ actual kubectl diagnostic captures 16 code units (10.915444ms)
+✔ actual kubectl diagnostic captures 80 code units (2.374941ms)
+✔ public invoker maximumManifestBytes, low true (1.801047ms)
+✔ public invoker maximumManifestBytes, low false (3.995084ms)
+✔ public invoker maximumResources, low true (1.739846ms)
+✔ public invoker maximumResources, low false (2.942227ms)
+✔ actual YAML consumer maximumNodes (14.94454ms)
+✔ actual YAML consumer maximumDepth (0.545515ms)
+✔ actual YAML consumer maximumAliases (0.682348ms)
+✔ actual List consumer maximumFlattenVisits (0.688518ms)
+✔ actual List consumer maximumFlattenPending (0.39789ms)
+✔ shared lease version domain reaches both actual constructors: v1 (1.877139ms)
+✔ shared lease version domain reaches both actual constructors: v2 (0.79763ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1 (1.175201ms)
+✔ shared lease version domain reaches both actual constructors: v2beta12 (0.827982ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha (0.969076ms)
+✔ shared lease version domain reaches both actual constructors: v1beta (0.607346ms)
+✔ shared lease version domain reaches both actual constructors: v1rc1 (0.688538ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1x (0.559525ms)
+✔ shared lease version domain reaches both actual constructors:  (0.646947ms)
+✔ real kubernetes.fixture output limit profile false (166.285744ms)
+✔ real kubernetes.fixture output limit profile true (41.266156ms)
+✔ real kubernetes.exposure output limit profile false (83.214849ms)
+✔ real kubernetes.exposure output limit profile true (40.316271ms)
+✔ actual kubernetes.fixture polling cadence 50 (140.610835ms)
+✔ actual kubernetes.fixture polling cadence 200 (405.245413ms)
+✔ actual kubernetes.exposure polling cadence 50 (107.193124ms)
+✔ actual kubernetes.exposure polling cadence 200 (403.193988ms)
+✔ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (2393.54558ms)
+✔ production decoder/service/IPC first kubernetes.exposure, allowed and grant/route denied (1761.200189ms)
+✔ production decoder/service/IPC first kubernetes.runtime-security, allowed and grant/route denied (2388.070106ms)
+✔ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (1546.158184ms)
+✔ production decoder/service/IPC second kubernetes.exposure, allowed and grant/route denied (1336.016738ms)
+✔ production decoder/service/IPC second kubernetes.runtime-security, allowed and grant/route denied (1701.632726ms)
+✔ kubernetes.fixture actual auth process uses short deadline 600 (620.971293ms)
+✔ kubernetes.fixture actual auth process uses short deadline 2000 (1038.260967ms)
+✔ kubernetes.exposure actual auth process uses short deadline 600 (611.699491ms)
+✔ kubernetes.exposure actual auth process uses short deadline 2000 (1038.845952ms)
+walk.go:75: found symbolic link in path: /tmp/cluster-invoker-chart-IjgBMJ/prism/templates/_swarm-bundle.tpl resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used
+✔ actual kubeclaw Helm and loader enforce shared cluster invoker policy (16655.420855ms)
+✔ actual prism Helm and loader enforce shared cluster invoker policy (18467.602136ms)
+✔ actual entrypoint rejects missing before first runtime effect (539.197199ms)
+✔ actual entrypoint rejects invalid before first runtime effect (523.642095ms)
+✔ actual entrypoint rejects security-missing before first runtime effect (553.508422ms)
+✔ actual entrypoint rejects security-invalid before first runtime effect (513.038237ms)
+✔ actual entrypoint rejects group-empty before first runtime effect (572.877987ms)
+✔ actual entrypoint rejects group-equal before first runtime effect (512.731ms)
+✔ actual entrypoint rejects version-empty before first runtime effect (578.828953ms)
+✔ actual entrypoint rejects version-equal before first runtime effect (522.930536ms)
+✔ actual entrypoint rejects secrets-empty before first runtime effect (512.401071ms)
+✔ actual entrypoint rejects secrets-equal before first runtime effect (615.374464ms)
+✔ relative executable uses the captured physical generation; component aliases reject (59.352357ms)
+✔ actual read-only preflight accepts an explicit complete generation (641.600618ms)
+ℹ tests 66
+ℹ suites 0
+ℹ pass 66
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 86338.32127
+{"ok":true,"phase":"kubernetes-fixture-implementation","authority":"replacement-only","providerKind":"fixture","typedManifestLink":true,"narrowCapability":true,"injectedExecutorVectors":true,"nativeCluster":false}
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+{"ok":true,"phase":"tailscale-exposure-implementation","providerKind":"fixture","typedLinks":true,"narrowCapability":true,"injectedExecutorVectors":true,"nativeCluster":false}

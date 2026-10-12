@@ -1,0 +1,8 @@
+{
+  "extends": "../../../skills/buster/engine/tsconfig.json",
+  "include": [
+    "buster-admission-config.test.mts",
+    "buster-shutdown-storage.test.mts",
+    "../contracts/check-pipeline-remote-runtime-config.mts"
+  ]
+}

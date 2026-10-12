@@ -1,0 +1,75 @@
+{
+  "kind": "read-only preimplementation baseline; no tests executed",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+      "sha256": "21b63692a2049718b49bcbdec03033642fc25d4e6206fa0330c753615ca036ff",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/skills/buster/engine/test-gates/remote-plan-http.ts.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+      "sha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/skills/buster/engine/test-gates/remote-plan-runtime.ts.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "c70d3c30a194563557bf553ff6872e34ae212536acc3531402a483e1638314cc",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/skills/buster/engine/test-gates/remote-plan-service.ts.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+      "sha256": "e74b3fe2e8dca0157d22c6bd1b50f5cc69df91ec29eedbdbaef86d4ff05a42de",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/skills/buster/engine/test-gates/remote-plan-compaction.ts.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/skills/buster/engine/test-gates/production.ts.snapshot"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/native-fixture-control.ts",
+      "sha256": "6d305ecd5509af0dc13b90e02d00339619822cb5551c17077b4503439bfd272d",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/skills/buster/engine/test-gates/native-fixture-control.ts.snapshot"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/remote.ts",
+      "sha256": "7f02db208c0728dabdcf51604e149f97b018666019e51b8e2853338e9f7bf9b8",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/contracts/pipeline-test-gate/v1/src/remote.ts.snapshot"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/validation.ts",
+      "sha256": "0932fe19bc79f5dba2a63842cf7892ac6ae0ea6885ed2efb36ac4f2e70b4b69a",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/contracts/pipeline-test-gate/v1/src/validation.ts.snapshot"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/skills/common/plugin-runtime/foundation/observability/durable-records.ts.snapshot"
+    },
+    {
+      "path": "skills/worker/core/worker/native-control-channel.ts",
+      "sha256": "253ecc17f153e13e6e00aad3f842565ad17a01e85cac15db910d9b4b2ea9edc8",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/skills/worker/core/worker/native-control-channel.ts.snapshot"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "16a17c38fb41644c01c314544955c54da1f1e97f40aaa5b5463f11d7c53aa125",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/docker/buster-runtime-entrypoint.sh.snapshot"
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "sha256": "286741a2f5406ff08723bb39d3ba95b2f55a556b1eeb89bf16960c21a572d38a",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/docker/Dockerfile.buster-runtime.snapshot"
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "sha256": "d3c2f1b798893d281035971bd2c602a958692a8c03bc36a41a4471afe19812d1",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/my-values/buster-values.yaml.snapshot"
+    },
+    {
+      "path": "docs/review/remediation/implementation/buster-native-integration-seam-20260921.md",
+      "sha256": "ec9b1ecbe8de6401d24821e395a62278afe883c3658827a1b5fd417fd016d50c",
+      "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/source/docs/review/remediation/implementation/buster-native-integration-seam-20260921.md.snapshot"
+    }
+  ]
+}

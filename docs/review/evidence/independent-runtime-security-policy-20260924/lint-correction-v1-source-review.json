@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "changes required before integration",
+  "manifestSha256": "fbce2338108e2f7553b334c5a05a6695272419bb2fc0c1fb4c3f13a455c0cee5",
+  "filesVerified": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "beforeSha256": "d940cbaed6bf4f86cd1b03d3654b2483464d9e187caf04383a39398f283496fc",
+      "afterSha256": "293dd4062ee8b3d8bc9927849e4e230647e84fd6c8f2fb47e5317851b0795e82"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "beforeSha256": "d877da689ad67653723eebab1c57bf5972ea9928430a652b7e57881e49f880a2",
+      "afterSha256": "c97bd7b7ca69111f170896b868d509d1fc68d225f6aeb15bd3046494a013a49f"
+    }
+  ],
+  "acceptedPart": "runtimeSecuritySnapshot and observationMatches retain original extraction, namespace mismatch error, condition order/short-circuit and Date.now freshness evaluation at same condition position; cohesive helpers resolve complexity without changing intended logic.",
+  "finding": {
+    "id": "RS-LINT-COUPLING-01",
+    "priority": "P2",
+    "problem": "RuntimeSecurity imports common credential environment from the complete KubernetesFixture invoker solely to reuse its current process.env lint exemption. That creates unnecessary sibling-feature runtime dependency and loads fixture implementation dependencies.",
+    "required": "Extract a small explicit Kubernetes command transport/credential environment adapter module consumed by both invokers. Declare that actual process.env adapter boundary narrowly in canonical ESLint policy, removing obsolete Fixture exemption if no direct reads remain. Preserve per-command reading, exact credential keys and separate caller-authored PATH/locale policy. Do not grant blanket exemption to RuntimeSecurity or weaken global rule.",
+    "reason": "A genuine shared adapter is simpler ownership than coupling inspection implementation to fixture lifecycle implementation. A documented boundary change here reflects the actual architecture, rather than hiding direct reads."
+  },
+  "verification": "Source only, no runtime/type/lint. Need revised manifest/source review then full applicable checks after active job terminal."
+}

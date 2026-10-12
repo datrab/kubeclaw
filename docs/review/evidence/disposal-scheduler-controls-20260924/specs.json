@@ -1,0 +1,84 @@
+{
+  "recovery-completed": {
+    "file": "skills/buster/engine/test-gates/provider-loader.ts",
+    "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+    "anchor": "if (this.#terminated) {\n      // Adopt",
+    "replacement": "if (this.#terminated) {\n      disposition = 'completed-fixture';\n      // Adopt",
+    "tests": [
+      "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs"
+    ],
+    "oracle": "failed preparation recovery must release using incomplete authority"
+  },
+  "faulted-completed": {
+    "file": "skills/buster/engine/test-gates/runner.ts",
+    "sha256": "8db6fb069648014e1cfb2c63f33de1382219279b1358a76a15a1936e3b80732a",
+    "anchor": "cleanupRetainedProvider(this.#fixtureOwner(), node, instance, invocation, log, 'incomplete')",
+    "replacement": "cleanupRetainedProvider(this.#fixtureOwner(), node, instance, invocation, log, 'completed-fixture')",
+    "tests": [
+      "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs"
+    ],
+    "oracle": "post-passed Worker fault must release incomplete fixture"
+  },
+  "rollback-suppressed": {
+    "file": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+    "sha256": "b52c8ccc2762abe5a43a75434f989b983e7fab81d16e5e0ae235bb0f7a3e042c",
+    "anchor": "throw new AggregateError([error, cleanupError], 'KUBERNETES_FIXTURE_PREPARE_CLEANUP_FAILED', { cause: error });",
+    "replacement": "throw error;",
+    "tests": [
+      "tests/verification/contracts/kubernetes-cleanup-errors.test.mjs",
+      "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs"
+    ],
+    "oracle": "actual rollback error causes and execution IPC marker must remain"
+  },
+  "success-only-confirmation": {
+    "file": "skills/buster/engine/test-gates/provider-loader.ts",
+    "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+    "anchor": "try { await session.terminate(); }\n    finally {",
+    "replacement": "await session.terminate();\n    {",
+    "tests": [
+      "tests/verification/contracts/provider-disposal-recovery.test.mjs"
+    ],
+    "oracle": "confirmed actual disposal after signal error must permit real cleanup replacement"
+  },
+  "permit-unconfirmed": {
+    "file": "skills/buster/engine/test-gates/provider-loader.ts",
+    "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+    "anchor": "if (session.disposalConfirmed) {",
+    "replacement": "if (true) {",
+    "tests": [
+      "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs"
+    ],
+    "oracle": "current and replacement close/drain failures must not permit another child"
+  },
+  "duplicate-accounting": {
+    "file": "skills/buster/engine/test-gates/provider-loader.ts",
+    "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+    "anchor": "if (!this.#accountedSessions.has(session)) {",
+    "replacement": "if (true) {",
+    "tests": [
+      "tests/verification/contracts/provider-disposal-recovery.test.mjs"
+    ],
+    "oracle": "overlapping terminate calls must equal nonzero measured session CPU exactly once"
+  },
+  "hidden-error-details": {
+    "file": "skills/buster/engine/test-gates/provider-loader.ts",
+    "sha256": "b48f69d93fe663d9266576567939775cc830b225923a65d85e87de343a1ee25e",
+    "anchor": "`TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED:${cleanupFailure.error instanceof Error ? cleanupFailure.error.message : String(cleanupFailure.error)}:${terminationError instanceof Error ? terminationError.message : String(terminationError)}`",
+    "replacement": "'TEST_PROVIDER_CLEANUP_AND_TERMINATION_FAILED:'",
+    "tests": [
+      "tests/verification/contracts/provider-disposal-recovery.test.mjs"
+    ],
+    "oracle": "actual final Runner cleanupErrors must include both failure details; immediate nested errors unchanged"
+  },
+  "old-scheduler": {
+    "file": "skills/buster/engine/test-gates/runner-scheduler.ts",
+    "sha256": "40cd4f0fc7a84079efe2a3fe026c214ef34cd48f278db5cbac45e250e6afc9b7",
+    "fullReplacement": "old-scheduler.ts",
+    "replacementSha256": "aa8c4a9e4b7adccfce6d4ee78d6b8e67d86171bb8651e3c90fb14b3d948e7521",
+    "tests": [
+      "tests/verification/contracts/runner-scheduler-drain.test.mjs",
+      "tests/verification/contracts/runner-scheduler-provider-drain.test.mjs"
+    ],
+    "oracle": "direct ordering and actual late fixture cleanup fail with original scheduler, not setup/import failure"
+  }
+}

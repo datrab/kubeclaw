@@ -1,0 +1,44 @@
+{
+  "checkedArtifactHashes": [
+    "node_modules/.cache/buster-helper-acl-vm-20260921/root/usr/bin/qemu-system-x86_64",
+    "node_modules/.cache/buster-helper-acl-vm-20260921/root/boot/vmlinuz-virt",
+    "node_modules/.cache/buster-helper-acl-vm-20260921/initrd.cpio.gz",
+    "node_modules/.cache/buster-helper-acl-vm-20260921/guest-root/usr/local/bin/node",
+    "node_modules/.cache/buster-helper-acl-vm-20260921/repo-snapshot-manifest.json",
+    "node_modules/.cache/buster-helper-acl-vm-20260921/guest-root/etc/machine-id",
+    "docs/review/evidence/buster-setpriv-diagnosis-20260921/execvp-observer.c",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/acl-diagnosis.mjs",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/baseline-added-packages.json",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/baseline-author-source-identities.json",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/baseline-snapshot-delta.json",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/credential-bridge.mjs",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/guest-identity.json",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/guest-init.sh",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/image-build.json",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/initrd-init.sh",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/launch-approved.py",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/launch-command.json",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/materialize.py",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/prepare-images.py",
+    "docs/review/remediation/implementation/buster-helper-acl-diagnostic-proposal-20260921.md",
+    "docs/review/evidence/buster-helper-acl-diagnostic-proposal-20260921/observer-build.txt",
+    "node_modules/.cache/buster-helper-acl-vm-20260921/observer-build-proof.so"
+  ],
+  "guestDiagnosticsExact": true,
+  "unchangedReadonlySourceExport": true,
+  "independentDiskInode": true,
+  "authorWholeDiskVerification": {
+    "verified": true,
+    "vmBooted": false,
+    "initialArtifacts": {
+      "node_modules/.cache/buster-helper-acl-vm-20260921/root/usr/bin/qemu-system-x86_64": "d0c183817a3044bc38e104f88ef56ee235c5d91a9413cba7255c1c1751c31fc1",
+      "node_modules/.cache/buster-helper-acl-vm-20260921/root/boot/vmlinuz-virt": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c",
+      "node_modules/.cache/buster-helper-acl-vm-20260921/initrd.cpio.gz": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2",
+      "node_modules/.cache/buster-helper-acl-vm-20260921/guest-root.ext4": "deeabee22e0c451117d62581f3ffa8531a757d2d7e5f5f3880a6459676469826",
+      "node_modules/.cache/buster-helper-acl-vm-20260921/repo-snapshot-manifest.json": "ad55e2b1b8e8ae54b25d341212964e3fa2577ac0a7b7a8940993e6b84b6901b8"
+    },
+    "memoryCurrentAfterOwnCacheHints": "872484864"
+  },
+  "manifestSha256": "acfff2de04a4e519f0c30990ff6cc7f387599e7e2b7c81fee682446dc7b32cac",
+  "noReviewerBoot": true
+}

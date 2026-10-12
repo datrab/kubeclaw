@@ -1,0 +1,41 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/runner.ts
+   324:1   error  File has too many lines (1854). Maximum allowed is 300                                         max-lines
+   349:1   error  Function 'finalNodeResult' has too many parameters (8). Maximum allowed is 7                   max-params
+   425:8   error  Function 'validateAndMapOutputs' has a complexity of 16. Maximum allowed is 15                 complexity
+   492:30  error  Use one explicit value and at most one fallback; longer fallback chains hide authority         discipline/no-fallback-chain
+   555:3   error  Constructor has too many lines (142). Maximum allowed is 60                                    max-lines-per-function
+   555:3   error  Constructor has a complexity of 39. Maximum allowed is 15                                      complexity
+   698:3   error  Async method 'run' has too many lines (178). Maximum allowed is 60                             max-lines-per-function
+   698:3   error  Async method 'run' has a complexity of 26. Maximum allowed is 15                               complexity
+   729:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   745:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   761:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   773:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   790:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   791:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   794:13  error  Blocks are nested too deeply (5). Maximum allowed is 3                                         max-depth
+   798:13  error  Blocks are nested too deeply (5). Maximum allowed is 3                                         max-depth
+   826:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+   964:3   error  Private async method #executeNode has a complexity of 16. Maximum allowed is 15                complexity
+  1021:3   error  Private async method #executeAttempt has too many lines (608). Maximum allowed is 60           max-lines-per-function
+  1021:3   error  Private async method #executeAttempt has a complexity of 73. Maximum allowed is 15             complexity
+  1131:7   error  Async method 'execute' has too many lines (112). Maximum allowed is 60                         max-lines-per-function
+  1280:7   error  Async method 'collectEvidence' has too many lines (121). Maximum allowed is 60                 max-lines-per-function
+  1280:7   error  Async method 'collectEvidence' has a complexity of 25. Maximum allowed is 15                   complexity
+  1297:15  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+  1301:17  error  Blocks are nested too deeply (5). Maximum allowed is 3                                         max-depth
+  1377:15  error  Blocks are nested too deeply (4). Maximum allowed is 3                                         max-depth
+  1592:9   error  Use one explicit value and at most one fallback; longer fallback chains hide authority         discipline/no-fallback-chain
+  1616:7   error  Use one explicit value and at most one fallback; longer fallback chains hide authority         discipline/no-fallback-chain
+  1630:3   error  Private async method #persistWorkerCompletion has too many lines (122). Maximum allowed is 60  max-lines-per-function
+  1748:7   error  Handle the error intentionally or rethrow it with context                                      discipline/no-swallowed-error
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/local-runtime.ts
+  164:3  error  Method 'runAttempt' has a complexity of 17. Maximum allowed is 15  complexity
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-test-plan-runner.mts
+  2053:1  error  File has too many lines (2243). Maximum allowed is 2000  max-lines
+
+✖ 32 problems (32 errors, 0 warnings)
+

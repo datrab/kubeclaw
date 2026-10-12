@@ -1,0 +1,2 @@
+{"name":"character-count","before":"size += chunk.value.byteLength;","after":"size += new TextDecoder().decode(chunk.value).length;","sha256":"1d44f9085c1f4a79228f550160b22fb8cc9b8e5d4b6c342b1b67afdf5fdd4873","exit":1,"caught":"Missing expected rejection in original HTTP behavior case"}
+{"name":"remove-abort","before":"signal: AbortSignal.timeout(config.nativeWorkerDispatchTimeoutMs),","after":"","sha256":"f3c30bdb8b94e4338db7bdf29bbefb306669cd0e3dc4d0a3a28c15c6906c509d","exit":1,"caught":"Missing expected rejection in original HTTP behavior case"}

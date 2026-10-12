@@ -1,0 +1,32 @@
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-local-runtime-20260921/mutant-loader.mjs:12
+  if (original.split(specification.from).length !== 2) throw Error('LC_MUTANT_TARGET_NOT_UNIQUE');
+                                                             ^
+
+Error: LC_MUTANT_TARGET_NOT_UNIQUE
+    at load (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-worker-local-runtime-20260921/mutant-loader.mjs:12:62)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+    at #loadSync (node:internal/modules/esm/loader:829:16)
+    at ModuleLoader.load (node:internal/modules/esm/loader:787:26)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:498:31)
+    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)
+    at afterResolve (node:internal/modules/esm/loader:611:52)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:276:33)
+
+Node.js v24.21.0
+✖ tests/verification/contracts/check-pipeline-worker-local-policy.mts (112.137795ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 123.793548
+
+✖ failing tests:
+
+test at tests/verification/contracts/check-pipeline-worker-local-policy.mts:1:1
+✖ tests/verification/contracts/check-pipeline-worker-local-policy.mts (112.137795ms)
+  'test failed'

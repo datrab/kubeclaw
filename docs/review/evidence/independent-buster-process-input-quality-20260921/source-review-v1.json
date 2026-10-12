@@ -1,0 +1,24 @@
+{
+  "manifestSha256": "785d8e8a992b42caa4b50d0d0c2025c93e918ebf96b495f5c551a4cdb1138969",
+  "mode": "source-only, no runtime or live writes",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "beforeMatches": true,
+      "afterMatches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "beforeMatches": true,
+      "afterMatches": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+      "beforeMatches": true,
+      "afterMatches": true
+    }
+  ],
+  "decision": "validation extraction and exact environment registration accepted at source; lifecycle aggregation needs correction before source approval",
+  "finding": "Group observation can reject before actual close; allSettled hides that cause until close. Outer deadline wins when close absent and loses already-observed group failure. Preserve observation failure immediately while still awaiting bounded actual close.",
+  "positive": "ESRCH unchanged; unexpected TERM/timedKILL/finalKILL captured; no timer bounds raised; original actual-close and group conjunction retained"
+}

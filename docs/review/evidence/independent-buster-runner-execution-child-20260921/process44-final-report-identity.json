@@ -1,0 +1,11 @@
+{
+  "report": "docs/review/remediation/implementation/independent-buster-process-input-implementation-20260921.md",
+  "sha256": "7a57c8053924183c43c6e76b08d75de1e4c2dcc8b8e0a820821f73b96fdb5b35",
+  "runtimeSessions": [
+    4149,
+    96737,
+    46888
+  ],
+  "status": "bounded local accepted; HOLD",
+  "unexplainedHistoricalCpuFailure": true
+}

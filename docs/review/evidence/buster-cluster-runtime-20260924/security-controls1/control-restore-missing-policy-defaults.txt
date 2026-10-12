@@ -1,0 +1,351 @@
+CI2_MUTATION_APPLIED {"mutation":"restore-missing-policy-defaults","pid":164933,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts","beforeSha256":"00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057","afterSha256":"451c51c44d90e8f1d1da72901fa1dc05ad441638cf3d958ddd97f69e0ca773d4","replacements":[{"from":"  validateComponentSettings('buster-runtime-security', value, 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');","to":"  value = { ...{\"allowedNamespacePrefixes\": [\"test\"], \"maximumExecutionMs\": 300000, \"maximumOutputBytes\": 16777216, \"pollIntervalMs\": 1000, \"maximumObservationAgeMs\": 10000, \"maximumFutureSkewMs\": 5000, \"diagnosticCodeUnits\": 1024, \"executableSearchPath\": [\"/usr/local/bin\", \"/usr/bin\", \"/bin\"]}, ...(value as Record<string, unknown>) };\n  validateComponentSettings('buster-runtime-security', value, 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID');","count":1}]}
+✖ required RuntimeSecurity field allowedNamespacePrefixes before filesystem access (3.915063ms)
+✖ required RuntimeSecurity field maximumExecutionMs before filesystem access (0.644997ms)
+✖ required RuntimeSecurity field maximumOutputBytes before filesystem access (0.464222ms)
+✖ required RuntimeSecurity field pollIntervalMs before filesystem access (0.523264ms)
+✖ required RuntimeSecurity field maximumObservationAgeMs before filesystem access (0.687868ms)
+✖ required RuntimeSecurity field maximumFutureSkewMs before filesystem access (0.485353ms)
+✖ required RuntimeSecurity field diagnosticCodeUnits before filesystem access (0.510183ms)
+✖ required RuntimeSecurity field executableSearchPath before filesystem access (0.453472ms)
+✔ complete bundle requires allowedNamespacePrefixes even with route disabled (15.24515ms)
+✔ complete bundle requires maximumExecutionMs even with route disabled (2.725741ms)
+✔ complete bundle requires maximumOutputBytes even with route disabled (1.823027ms)
+✔ complete bundle requires pollIntervalMs even with route disabled (1.870789ms)
+✔ complete bundle requires maximumObservationAgeMs even with route disabled (1.707335ms)
+✔ complete bundle requires maximumFutureSkewMs even with route disabled (1.827168ms)
+✔ complete bundle requires diagnosticCodeUnits even with route disabled (1.656223ms)
+✔ complete bundle requires executableSearchPath even with route disabled (1.715025ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [] (0.355599ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [""] (0.274987ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [42] (0.276687ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 0 (0.276407ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 2147483648 (0.258637ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 1.5 (0.281778ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 1023 (0.268217ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 9007199254740992 (0.263647ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 9 (0.335759ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 10001 (0.348559ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 999 (0.274117ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 60001 (0.39937ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs -1 (0.273957ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs 2147483648 (0.268927ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 0 (0.256377ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 1.5 (0.256517ms)
+✔ reject invalid RuntimeSecurity executableSearchPath [] (0.250666ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["relative"] (0.252997ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin:/escape"] (0.297268ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin\u0000"] (0.243986ms)
+✔ retired RuntimeSecurity object null (0.222086ms)
+✔ retired RuntimeSecurity object {} (0.093533ms)
+✔ retired RuntimeSecurity object {"allowedNamespacePrefixes":["test"],"maximumExecutionMs":300000,"maximumOutputBytes":16777216,"pollIntervalMs":1000,"maximumObservationAgeMs":10000,"maximumFutureSkewMs":5000,"diagnosticCodeUnits":1024,"executableSearchPath":["/usr/local/bin","/usr/bin","/bin"]} (0.216735ms)
+✔ retired RuntimeSecurity object "invalid" (0.094953ms)
+✔ disabled RuntimeSecurity route has no binding or implicit activation (1.017437ms)
+✔ real execution deadline profile false (275.344542ms)
+✔ real combined output profile false (43.752776ms)
+✔ real observation age profile false (605.409557ms)
+✔ real future skew profile false (612.040841ms)
+✔ real diagnostic code units profile false (52.412852ms)
+✔ real PATH helper profile false (83.556168ms)
+✔ real execution deadline profile true (786.274814ms)
+✔ real combined output profile true (44.543616ms)
+✔ real observation age profile true (39.609637ms)
+✔ real future skew profile true (46.366135ms)
+✔ real diagnostic code units profile true (42.599786ms)
+✔ real PATH helper profile true (89.549275ms)
+▶ real polling profile changes command cadence; selected arrays and scalars captured
+  ✔ poll interval 50 (128.107515ms)
+  ✔ poll interval 1200 (1281.282509ms)
+✔ real polling profile changes command cadence; selected arrays and scalars captured (1410.303448ms)
+✔ real namespace profile false (15.430305ms)
+✔ real namespace profile true (39.307019ms)
+✔ preserve inspected namespace prefix aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (40.137211ms)
+✔ preserve inspected namespace prefix test- (39.471104ms)
+✔ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (187.257955ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 53
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6378.228243
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:122:46
+✖ required RuntimeSecurity field allowedNamespacePrefixes before filesystem access (3.915063ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: "ENOENT: no such file or directory, lstat '/missing-workspace'"
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID'
+    }
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, lstat '/missing-workspace'
+        at Object.realpathSync (node:fs:2862:29)
+        at new KubernetesRuntimeSecurityCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:140:21)
+        at assert.throws.message (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:23)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.start (node:internal/test_runner/test:1262:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:122:46
+✖ required RuntimeSecurity field maximumExecutionMs before filesystem access (0.644997ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: "ENOENT: no such file or directory, lstat '/missing-workspace'"
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID'
+    }
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, lstat '/missing-workspace'
+        at Object.realpathSync (node:fs:2862:29)
+        at new KubernetesRuntimeSecurityCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:140:21)
+        at assert.throws.message (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:23)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:122:46
+✖ required RuntimeSecurity field maximumOutputBytes before filesystem access (0.464222ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: "ENOENT: no such file or directory, lstat '/missing-workspace'"
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID'
+    }
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, lstat '/missing-workspace'
+        at Object.realpathSync (node:fs:2862:29)
+        at new KubernetesRuntimeSecurityCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:140:21)
+        at assert.throws.message (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:23)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:122:46
+✖ required RuntimeSecurity field pollIntervalMs before filesystem access (0.523264ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: "ENOENT: no such file or directory, lstat '/missing-workspace'"
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID'
+    }
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, lstat '/missing-workspace'
+        at Object.realpathSync (node:fs:2862:29)
+        at new KubernetesRuntimeSecurityCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:140:21)
+        at assert.throws.message (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:23)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:122:46
+✖ required RuntimeSecurity field maximumObservationAgeMs before filesystem access (0.687868ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: "ENOENT: no such file or directory, lstat '/missing-workspace'"
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID'
+    }
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, lstat '/missing-workspace'
+        at Object.realpathSync (node:fs:2862:29)
+        at new KubernetesRuntimeSecurityCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:140:21)
+        at assert.throws.message (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:23)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:122:46
+✖ required RuntimeSecurity field maximumFutureSkewMs before filesystem access (0.485353ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: "ENOENT: no such file or directory, lstat '/missing-workspace'"
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID'
+    }
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, lstat '/missing-workspace'
+        at Object.realpathSync (node:fs:2862:29)
+        at new KubernetesRuntimeSecurityCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:140:21)
+        at assert.throws.message (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:23)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:122:46
+✖ required RuntimeSecurity field diagnosticCodeUnits before filesystem access (0.510183ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: "ENOENT: no such file or directory, lstat '/missing-workspace'"
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID'
+    }
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, lstat '/missing-workspace'
+        at Object.realpathSync (node:fs:2862:29)
+        at new KubernetesRuntimeSecurityCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:140:21)
+        at assert.throws.message (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:23)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:122:46
+✖ required RuntimeSecurity field executableSearchPath before filesystem access (0.453472ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   message: "ENOENT: no such file or directory, lstat '/missing-workspace'"
+  -   message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID'
+    }
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, lstat '/missing-workspace'
+        at Object.realpathSync (node:fs:2862:29)
+        at new KubernetesRuntimeSecurityCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts:140:21)
+        at assert.throws.message (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:23)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:124:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+        at Test.postRun (node:internal/test_runner/test:1542:19),
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_CONFIG_INVALID' },
+    operator: 'throws',
+    diff: 'simple'
+  }

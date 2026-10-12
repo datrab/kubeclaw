@@ -1,0 +1,37 @@
+TAP version 13
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/release-helm-IFnOif/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/release-helm-IFnOif/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/release-helm-IFnOif/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/release-helm-IFnOif/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/release-helm-IFnOif/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/release-helm-IFnOif/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/prism/files/config/buster-engine.config.json resolves to /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/buster-engine.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/prism/files/config/prism-control.config.json resolves to /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/prism-control.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/prism/files/config/prism-execution.config.json resolves to /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/prism-execution.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/prism/files/config/prism-studio.config.json resolves to /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/prism-studio.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/prism/files/config/prism-worker.config.json resolves to /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/prism-worker.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/prism/files/config/swarm-components.schema.json resolves to /tmp/release-helm-IFnOif/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/prism/files/config/swarm.config.json resolves to /tmp/release-helm-IFnOif/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/prism/files/config/swarm.schema.json resolves to /tmp/release-helm-IFnOif/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/release-helm-IFnOif/charts/prism/templates/_swarm-bundle.tpl resolves to /tmp/release-helm-IFnOif/charts/kubeclaw/templates/_swarm-config.tpl. Contents of linked file included and used
+# Subtest: release selection rejects missing, duplicate and cross-commit build receipts
+ok 1 - release selection rejects missing, duplicate and cross-commit build receipts
+  ---
+  duration_ms: 12.640147
+  type: 'test'
+  ...
+# Subtest: generated release values render actual Helm charts with immutable role and sidecar references
+ok 2 - generated release values render actual Helm charts with immutable role and sidecar references
+  ---
+  duration_ms: 4691.237233
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4841.700263

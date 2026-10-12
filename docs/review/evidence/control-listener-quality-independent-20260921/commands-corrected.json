@@ -1,0 +1,44 @@
+[
+  {
+    "name": "originals-corrected",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/control-listener.test.mts",
+      "skills/prism/tests/control-server-config.test.mts",
+      "skills/prism/tests/control-image-environment.test.mts",
+      "skills/prism/tests/swarm-control-policy.test.mts",
+      "skills/prism/tests/swarm-worker-config.test.mts",
+      "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "skills/prism/tests/control.test.mts",
+      "skills/prism/tests/control-decisions.test.mts",
+      "skills/prism/tests/control-product-composition.test.mts",
+      "skills/prism/tests/control-product-independent.test.mts",
+      "skills/prism/tests/control-generation-http.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "prism-types-corrected",
+    "command": [
+      "node_modules/.bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/prism/tsconfig.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "lint-corrected",
+    "command": [
+      "node_modules/.bin/eslint",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/prism/server/control-server.ts",
+      "skills/prism/tests/control-listener.test.mts",
+      "skills/prism/tests/fixtures/closed-stderr-control.mts"
+    ],
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,21 @@
+LC_ORIGINAL_TIMEOUT_DIAGNOSTIC {"planId":"plan:timeout","runId":"run:runner","attempts":[{"schemaVersion":"attempt-result.v1","planId":"plan:timeout","runId":"run:runner","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"timeout","executionId":"plan:timeout:timeout","testIdentity":"test:aeb9bef2a5e2a7cb28d24459e6e877b10c0c3640b4419916688b8c05c47ba497","nodeKind":"test","attemptId":"attempt:f88b089c65104d62a79b01058902d78f8439954ff2fed95dad3d46b7217013b3","attemptNumber":1,"provider":{"packageId":"example.runner","packageVersion":"1.0.0","contentDigest":"sha256:341c5c7642fed81a9bc8e4b4937c5a4b83d658a868f2f80902608dbfaed6486d","registrationId":"generic","contractId":"example.generic@1"},"mode":"blocking","executionState":"errored","outcome":null,"startedAt":"2026-09-21T18:15:00.970Z","completedAt":"2026-09-21T18:15:30.978Z","durationMs":30008,"summary":"WORKER_EVIDENCE_COLLECTION_FAILED: WORKER_PHASE_UNRESOLVED:WORKER_EVIDENCE_COLLECTION; aborted work did not settle; external outcome requires reconciliation.","counts":{"total":0,"passed":0,"failed":0,"skipped":0},"findings":[],"metrics":[],"reports":[],"evidence":[],"outputs":[],"resources":{"logBytes":0,"artifactBytes":0},"exitCode":null,"signal":null,"providerDetails":null,"resultDigest":"sha256:f25e6dc6dfef80927518a4849093c1b2f24cc9a4d8d75f5d0cadc9e401bd42f9","receipt":{"receiptId":"receipt:34d0ac4e42821fba25b421b7cb9d8bf660c16c0fc307c38224aa6e8bc2db2300","receiptDigest":"sha256:1cd7680bdb41b5b0f0495afecd34bc6df214c1724c298d5ca8a7ae9e728a5981"}}],"nodes":[{"schemaVersion":"node-result.v1","planId":"plan:timeout","runId":"run:runner","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"timeout","executionId":"plan:timeout:timeout","testIdentity":"test:aeb9bef2a5e2a7cb28d24459e6e877b10c0c3640b4419916688b8c05c47ba497","nodeKind":"test","mode":"blocking","state":"errored","outcome":null,"attemptIds":["attempt:f88b089c65104d62a79b01058902d78f8439954ff2fed95dad3d46b7217013b3"],"finalAttemptId":"attempt:f88b089c65104d62a79b01058902d78f8439954ff2fed95dad3d46b7217013b3","unstable":false,"skipReason":null,"resultDigest":"sha256:c0bdeeecd21dcbc9a1289e9756af99b3d7a611547802ba69c82f4684170ca486","receipt":{"receiptId":"receipt:ebd57981c5b205f604849d8d851fceb6e2477c3c80b5416af06ba66eb1802ca7","receiptDigest":"sha256:80c103c78592adc1a239db15f94dadf88774d73e47067586332bd054061999e5"}}],"cleanupErrors":[{"nodeId":"timeout","message":"WORKER_PHASE_UNRESOLVED:WORKER_CLEANUP"}]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'errored'
+- 'timed_out'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-test-plan-runner.mts:859:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'errored',
+  expected: 'timed_out',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

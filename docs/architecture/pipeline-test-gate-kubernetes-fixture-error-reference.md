@@ -7,6 +7,19 @@ Purpose: identify stable fixture failures and corrective actions
 
 ## Configuration Errors
 
+- `KUBERNETES_FIXTURE_CREDENTIAL_PROVENANCE_MISSING`: test credentials were
+  requested but the capability returned no generated-credential provenance.
+  The provider rejects the result. Inspect the controller and capability versions;
+  do not substitute credentials from another fixture.
+- `KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT`: manifest traversal exceeds
+  fixed node, nesting or resource-list bounds. Parser-stage complexity errors
+  are wrapped by `KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED`; alias limits and
+  cycles have their own diagnostics. Reduce nesting and resource-list size;
+  retrying the same manifest does not repair this validation failure.
+- `KUBERNETES_FIXTURE_KUBECTL` is the process-error prefix, not a standalone
+  emitted failure. Suffixes distinguish timeout, output limit, stream errors
+  and cleanup failure. Preserve the complete diagnostic and inspect the kubectl
+  operation before retrying; reconcile remote effects after interrupted writes.
 - `KUBERNETES_FIXTURE_CONFIG_INVALID`: correct the project object type.
 - `KUBERNETES_FIXTURE_IMAGE_INVALID`: use one matching immutable image and digest.
 - `KUBERNETES_FIXTURE_IMAGE_REQUIRED`: configure or link one immutable image.

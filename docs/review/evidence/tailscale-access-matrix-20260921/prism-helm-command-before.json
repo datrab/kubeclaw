@@ -1,0 +1,4 @@
+{
+  "command": "helm lint charts/prism -f charts/prism/ci-values.yaml && helm template prism charts/prism -f charts/prism/ci-values.yaml >/dev/null",
+  "requirement": "Bind both local lint and template to the default namespace explicitly authored by charts/prism/ci-values.yaml; do not change any native guard or production namespace. Validate the exact maintained npm command after the current serial test slot."
+}

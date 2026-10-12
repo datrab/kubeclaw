@@ -3,6 +3,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
+import yaml from 'js-yaml';
+import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
 import { collectReceipts } from '../../../scripts/updates/release-images.mjs';
 
 test('release selection rejects missing, duplicate and cross-commit build receipts', () => {
@@ -31,9 +33,14 @@ test('generated release values render actual Helm charts with immutable role and
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'release-helm-'));
   try {
     fs.cpSync(path.join(source, 'my-values'), path.join(root, 'my-values'), { recursive: true });
-    fs.cpSync(path.join(source, 'charts'), path.join(root, 'charts'), { recursive: true });
+    fs.cpSync(path.join(source, 'charts'), path.join(root, 'charts'), { recursive: true, verbatimSymlinks: true });
+    const schemaDirectory = 'skills/common/plugin-runtime/foundation/config';
+    fs.mkdirSync(path.join(root, schemaDirectory), { recursive: true });
+    for (const name of ['swarm.schema.json', 'swarm-components.schema.json']) {
+      fs.copyFileSync(path.join(source, schemaDirectory, name), path.join(root, schemaDirectory, name));
+    }
     execFileSync('git', ['init', '-q', root]);
-    execFileSync('git', ['-C', root, 'add', 'charts', 'my-values']);
+    execFileSync('git', ['-C', root, 'add', 'charts', 'my-values', schemaDirectory]);
     execFileSync('git', ['-C', root, '-c', 'user.name=Release Test', '-c', 'user.email=release@example.invalid', 'commit', '-qm', 'Configuration under test']);
     const configurationCommit = execFileSync('git', ['-C', root, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
     fs.mkdirSync(path.join(root, 'releases'));
@@ -48,8 +55,16 @@ test('generated release values render actual Helm charts with immutable role and
       '--set-string', 'worker.native.namespace=prism-test',
       '--set-string', 'worker.native.nodeName=worker-test',
       '--set-string', `worker.native.policyDigest=${'a'.repeat(64)}`];
+    const policy = yaml.load(fs.readFileSync(path.join(root, 'my-values/infra/native-worker-pools.yaml'), 'utf8'));
+    policy.nodeName = 'native-render-test';
+    policy.pools.buster.namespace = 'buster-test';
+    const busterBinding = nativePoolPolicy(policy, 'buster');
+    const nativeBusterArgs = ['--namespace', policy.pools.buster.namespace,
+      '--set-string', `busterNative.namespace=${policy.pools.buster.namespace}`,
+      '--set-string', `busterNative.nodeName=${busterBinding.nodeName}`,
+      '--set-string', `busterNative.policyDigest=${busterBinding.policyDigest}`];
     for (const role of ['nova', 'buster', 'prism-agent', 'prism']) {
-      const output = execFileSync('helm', ['template', role, path.join(root, `charts/${role === 'prism' ? 'prism' : 'kubeclaw'}`), '-f', path.join(root, `releases/values/${role}.yaml`), ...(role === 'prism' ? nativeWorkerArgs : []), ...(role === 'buster' ? ['--set', 'runtimeInfrastructure.registry.endpoint=https://registry.example.test', '--set', 'runtimeInfrastructure.registry.transport=https', '--set', 'runtimeInfrastructure.registry.authSecretName=registry-test'] : [])], { encoding: 'utf8' });
+      const output = execFileSync('helm', ['template', role, path.join(root, `charts/${role === 'prism' ? 'prism' : 'kubeclaw'}`), '-f', path.join(root, `releases/values/${role}.yaml`), ...(role === 'prism' ? nativeWorkerArgs : role === 'buster' ? nativeBusterArgs : []), ...(role === 'buster' ? ['--set', 'runtimeInfrastructure.registry.endpoint=https://registry.example.test', '--set', 'runtimeInfrastructure.registry.transport=https', '--set', 'runtimeInfrastructure.registry.authSecretName=registry-test'] : [])], { encoding: 'utf8' });
       const docs = parseAllDocuments(output).map(doc => { assert.deepEqual(doc.errors, []); return doc.toJSON(); });
       const refs = docs.flatMap(doc => [...(doc?.spec?.template?.spec?.containers ?? []), ...(doc?.spec?.template?.spec?.initContainers ?? [])]).map(container => container.image).filter(image => image.startsWith('ghcr.io/datrab/kubeclaw-'));
       assert.ok(refs.length > 0, `No rendered runtime images for ${role}`);

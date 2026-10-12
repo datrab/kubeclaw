@@ -61,10 +61,12 @@ Run:
 npm test --prefix skills/buster/plugins/openapi
 ```
 
-Package tests found: 0.
+Package tests found: 2.
 
 ## Source Evidence
 
 - Manifest: `skills/buster/plugins/openapi/plugin.json`
 - Package root: `skills/buster/plugins/openapi`
 - Authored package guide: `skills/buster/plugins/openapi/README.md`
+- Test: `skills/buster/plugins/openapi/tests/live-function.test.ts`
+- Test: `skills/buster/plugins/openapi/tests/remediation.test.ts`

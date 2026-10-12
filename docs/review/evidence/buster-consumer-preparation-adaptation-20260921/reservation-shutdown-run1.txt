@@ -1,0 +1,121 @@
+✖ durable shutdown failure ownership: during (593.717863ms)
+✖ durable shutdown failure ownership: after (460.469104ms)
+✖ durable shutdown failure ownership: queued (454.984794ms)
+✖ durable shutdown failure ownership: admission (441.431369ms)
+(node:164250) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 46)
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ durable shutdown failure ownership: read-failure (415.497578ms)
+✖ durable shutdown failure ownership: healthy-terminal (380.980187ms)
+✔ result admission reserves capacity across competing processes and reconstruction (4025.492827ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 1
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12089.029465
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:15:102
+✖ durable shutdown failure ownership: during (593.717863ms)
+  AssertionError [ERR_ASSERTION]: failed persistence cannot invent a terminal status
+  + actual - expected
+  
+  + 'accepted'
+  - 'running'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-shutdown-storage.test.mts:119:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'accepted',
+    expected: 'running',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:15:102
+✖ durable shutdown failure ownership: after (460.469104ms)
+  AssertionError [ERR_ASSERTION]: failed persistence cannot invent a terminal status
+  + actual - expected
+  
+  + 'accepted'
+  - 'running'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-shutdown-storage.test.mts:119:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'accepted',
+    expected: 'running',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:15:102
+✖ durable shutdown failure ownership: queued (454.984794ms)
+  AssertionError [ERR_ASSERTION]: failed persistence cannot invent a terminal status
+  + actual - expected
+  
+  + 'accepted'
+  - 'running'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-shutdown-storage.test.mts:119:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'accepted',
+    expected: 'running',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:15:102
+✖ durable shutdown failure ownership: admission (441.431369ms)
+  Error: DURABLE_RECORD_SIZE_EXCEEDED
+      at FileDurableRecordStore.transition (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-records.ts:189:13)
+      at ModeledPreparedPlanJobStore.transition (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/prepared-plan-store.ts:191:40)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async #execute (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/remote-plan-service.ts:354:7)
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:15:102
+✖ durable shutdown failure ownership: read-failure (415.497578ms)
+  Error: ENOENT: no such file or directory, open '/tmp/result-reservation-LKbdaH/limited-state/records/store.json'
+      at Object.openSync (node:fs:621:18)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-shutdown-storage.test.mts:61:21)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/tmp/result-reservation-LKbdaH/limited-state/records/store.json'
+  }
+
+test at tests/verification/reliability/buster-shutdown-storage.test.mts:15:102
+✖ durable shutdown failure ownership: healthy-terminal (380.980187ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'spawn /usr/bin/tar ENOENT'
+  - 'OBSERVABILITY_STORE_PATH_NOT_DIRECTORY'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-shutdown-storage.test.mts:106:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'spawn /usr/bin/tar ENOENT',
+    expected: 'OBSERVABILITY_STORE_PATH_NOT_DIRECTORY',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

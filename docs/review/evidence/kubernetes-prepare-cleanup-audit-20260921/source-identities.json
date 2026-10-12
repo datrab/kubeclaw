@@ -1,0 +1,49 @@
+{
+  "mode": "bounded source-only, no runtime/live code edits",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "sha256": "b2a8cb4442d3243dec435a480f04506ab7e79438150169efb85d9ea01c3095ee"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "sha256": "1572e13ce4ce41070867e8e0ff64a8b28772623fd1f693d2e25d0a43dede4288"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+      "sha256": "ab4b341f3d52181ff6b6fa33aaaa70d617616f33a1f40b0ec147db0ec2f0df06"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "sha256": "62a88c6c23e47440b05c62ea55453ba5b973a10fafc23e157e82bbd9ae526320"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "sha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "sha256": "331bfbfbf501192293154f2b237470374190365401630516e2e2f602ab1a022d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-node.ts",
+      "sha256": "f8dee4f5340d84b8be053ab13b9fce925eafcfd7e6e3a1125029ca5929608851"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+      "sha256": "cdba534f94cbf3fca17d16d40b196d5a303620e8809f1f419e996478dbfd0d69"
+    },
+    {
+      "path": "cmd/buster-namespace-controller/main.go",
+      "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "sha256": "9a99a8196763ca41bd9bc10269b4e2a3ade22d72e7a4393a64f0e10ca15f8af4"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+      "sha256": "59f85c44388dd5e8ae8659a88b4f6edd8585bd5afc0a154d52f9cbe21406c6eb"
+    }
+  ]
+}

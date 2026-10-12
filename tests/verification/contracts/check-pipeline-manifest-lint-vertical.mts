@@ -74,7 +74,7 @@ async function runAuthoritative(runId: string): Promise<any> {
     new core.FileEffectJournal(path.join(fixture.root, `${runId}-effects.jsonl`)),
     undefined,
     undefined,
-    new core.MemoryResourceLockManager(),
+    new core.MemoryResourceLockManager(), 300_000,
   );
   const adapters = new core.AdapterRuntime({
     granted,

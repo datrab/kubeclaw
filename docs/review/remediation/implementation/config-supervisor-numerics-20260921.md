@@ -1,0 +1,117 @@
+# Prism supervisor numeric configuration — 2026-09-21
+
+Pre-implementation criteria for the remaining nine numeric supervisor settings.
+Fresh independent review is required; this slice does not close all CONFIG work.
+
+| Criterion | Required observation |
+| --- | --- |
+| CS1 | Exactly nine required numeric fields under `operator.prism.native.supervisor`; preserve current defaults, units and bounds; reject missing, unknown and invalid values. |
+| CS2 | Worker startup freezes one validated snapshot; nine former environment authors are rejected, including empty strings; later mutation cannot replace its values. |
+| CS3 | Actual supervisor composition forwards UID/GID, ownership record/byte limits, output/journal bytes and poll/drain/close milliseconds to their existing consumers; two authored profiles demonstrate meaningful consumer behavior. |
+| CS4 | Runtime and Helm reject shutdown <= close + drain; Helm retains termination grace > shutdown. No new timing relation is invented. |
+| CS5 | Remove the old Helm close-timeout author and environment emission; reject old overrides; actual rendered mounted config and checksum carry new authored settings. Preserve generated node/policy identity and root-owned pool authority. |
+| CS6 | Affected original runtime, render, release and config suites pass; negative controls detect competing defaults/budget bypasses. Distinguish unprivileged consumer coverage from actual privileged native host proof. |
+| CS-DOC | Update operator guidance, canonical generated docs/references and only mapped inventory entries, with exact evidence and remaining limits. |
+
+Authored defaults: uid/gid 1000; maximumOwnershipRecords 65536;
+maximumOwnershipBytes 67108864; maximumOutputBytes 33554432;
+maximumJournalBytes 68719476736; pollIntervalMs 20; drainTimeoutMs 10000;
+closeTimeoutMs 105000. Positive integer maximum is 2147483647 except journal
+bytes, whose maximum is 9007199254740991. Paths, image identity, pool authority
+and generated native host binding are outside this migration.
+
+## Implemented behavior
+
+The required `operator.prism.native.supervisor` object is the only numeric author.
+The shared loader rejects all nine retired environment keys, even empty strings,
+validates the complete document and freezes the supervisor snapshot. The small
+`prismSupervisorSettings` function maps that snapshot to the existing supervisor
+consumer names. `nativePrismSupervisorConfig` uses that function after unchanged
+root-owned pool policy and runtime identity validation. It retains existing host
+paths, pool capacity, node identity, image identity and browser path behavior.
+No competing numeric environment read or fallback remains.
+
+Worker ownership metadata, journal metadata/reservations, process output/poll/
+close limits and child UID/GID receive this startup snapshot through the existing
+composition. Runtime startup now enforces the existing deployment invariant:
+`shutdownTimeoutMs > closeTimeoutMs + drainTimeoutMs`. Helm uses these same two
+authored values rather than the former fixed ten-second drain term; it still
+requires Pod grace strictly greater than shutdown. Request-body deadlines remain
+independent. Existing short-shutdown tests author suitably short native close and
+drain values without changing their original shutdown deadlines or assertions.
+
+The old `worker.native.closeTimeoutMs` Helm key is removed and rejected, and its
+environment emission is gone. Canonical chart aliases, both ConfigMap mounts and
+both rollout checksums remain the delivery path. The generated native host values
+contain no close-timeout field to migrate: their node/namespace/policy binding
+remains intact. Operator guidance and ten historical inventory rows describe the
+nine settings; the additional row is the removed Helm author for the same close
+setting. No other unresolved setting is claimed migrated.
+
+## Verification and limits
+
+Evidence: `docs/review/evidence/config-supervisor-numerics-20260921/`.
+
+- `supervisor-helm-final.txt`: **255/255 pass**, zero skips. Includes strict field/
+  object rejection, nine legacy-key rejections, frozen startup state despite later
+  file/environment changes, distinct safe-integer ceilings, combined-budget
+  equality/excess rejection, real chart packaging, both mounted profiles and
+  changing rollout checksums. Original chart tests remain in the run.
+- `runtime-tests.txt`: **210/210 pass**, including original result-byte/dispatch
+  HTTP, resource policy, worker configuration/admission/TCP/body timeout and host
+  input tests. The later two supervisor-only cases are covered in the 255 run.
+- `release-tests.txt`: **25/25 pass** across original release configuration,
+  code release, release images, runtime inputs and actual release materialization.
+- `journal-tests.txt`: **8/8 pass**, six new consumer cases plus two original
+  result-journal cases, with actual GNU flock under Proot. Real ownership stores
+  enforce two record/byte profiles; real output spools enforce two byte profiles.
+  `original-journal-tests.txt`: **6/6 original worker journal tests pass** separately.
+- The production `nativePrismExecution` journal rejects the low journal profile
+  before allocation. A sufficiently provisioned profile reaches the actual
+  `runNativeWorkerProcess` allocation boundary carrying authored output/poll/close
+  limits. A declared observer throws there: no privileged allocation, resource
+  observation, UID/GID switch, drain or successful kernel receipt is fabricated.
+  This is production option wiring and journal behavior, not native host proof.
+- `typecheck-final.txt` and `lint-final.txt`: Prism typecheck and the complete
+  eight-file changed JavaScript/TypeScript set pass canonical lint, with no rule
+  suppression. `mutants.txt` records detection of a dropped drain-budget term and
+  a competing hardcoded output default using real output spool acceptance.
+- `native-runtime-final.txt`: the original actual Helm/native selection test
+  passes. The unchanged original NRI binary check builds with real Go, then fails
+  `NATIVE_NRI_POLICY_NOT_TRUSTED` because the local policy file is owned by UID
+  1000. This host gate remains nonpassing. `initial-tests.txt` preserves the first
+  missing-Go failure and initial schema-fixture mismatches; the fixtures were
+  repaired by including canonical supervisor settings and by asserting the new
+  mounted value plus absence of the retired environment author.
+
+A preliminary `supervisor-tests.txt` run used a declared UID-metadata fixture for
+mapping only. That approach was removed before the final tests: the final pure
+production mapping boundary requires no forged filesystem ownership. The retained
+preliminary output is historical, not evidence of trusted policy or native host
+execution. No fake-root or privileged bypass was used for the NRI gate.
+
+The initial combined journal command named a nonexistent extra test path; Node
+ran only the eight listed Prism cases. The actual original journal file was then
+run separately and its six results are recorded above. Counts are not combined
+as if all files ran in the earlier command.
+
+Normal documentation inventory/reference generation was rerun. The first docs
+link checks failed on concurrent OBS evidence saved as a relocated Markdown file;
+that unrelated failure is retained, not hidden by a checker exclusion. Final doc
+check status and full original Control results are recorded in the handoff below.
+The [fresh independent review](config-supervisor-numerics-independent-20260921.md) accepts this bounded migration; CS6 does not claim the unavailable
+privileged host gate passed, and this is not closure of F1–F6 or all CONFIG work.
+
+### Final handoff
+
+- Full original `control*.test.mts`: **22/22 pass** (`full-control-tests.txt`).
+  Separate Control/config/E2E selection: **7/7 pass** (`control-e2e-tests.txt`).
+- Final docs checks and refs both pass after the OBS evidence owner corrected
+  its snapshot extension. Generated inventory/reference checks and publication
+  check pass. No documentation rule was weakened.
+- `commands.txt` records exact invocations. `source-identities.json` retains
+  selected changed sources and direct production consumers, including unchanged
+  host policy and ownership code. These snapshots are not a complete dependency
+  archive or proof of a reproduced shipped image.
+- [Fresh independent acceptance](config-supervisor-numerics-independent-20260921.md) covers CS1–CS6/CS-DOC for the numeric migration. Actual privileged NRI policy
+  verification and kernel UID/GID/poll/drain behavior remain unproven here.

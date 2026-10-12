@@ -1,0 +1,90 @@
+import { readTestBundle, writeTestBundle, projectTestBundle } from '../../../tests/fixtures/config/swarm-bundle.mjs';
+import { nativeResourcePolicy } from './native/resource-policy.mts';
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { once } from 'node:events';
+import { createServer, type RequestListener } from 'node:http';
+import { setTimeout as delay } from 'node:timers/promises';
+import type { AddressInfo } from 'node:net';
+import { loadControlServerConfig } from '../server/control-config.ts';
+import { loadWorkerConfig } from '../server/worker-config.ts';
+import { requestWorkerResult } from '../control/worker-operation-transport.ts';
+import { prismNativeAttempt } from '../engine/worker-envelope.ts';
+
+const authoredBundle = readTestBundle(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url));
+const authored = projectTestBundle(authoredBundle);
+const credentials = { PRISM_SESSION_SECRET: 'test-session', PRISM_INGRESS_SECRET: 'test-ingress',
+  PRISM_INGESTION_SECRET: 'test-ingestion', PRISM_DISPATCH_SECRET: 'test-dispatch', PRISM_WORKER_SECRET: 'test-worker', DATABASE_URL: 'postgresql://not-opened' };
+const attempt = prismNativeAttempt('render', { artifactId: 'input:config-test', type: 'prism-engine-input', mediaType: 'application/json',
+  contentDigest: `sha256:${'a'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' }, 'config-transport-test', nativeResourcePolicy);
+function fixture(t: { after(fn: () => void): void }, settings: {maximumResultBytes?: unknown; dispatchTimeoutMs?: unknown}) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'prism-native-config-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const value = structuredClone(authoredBundle);
+  value['prism-execution'].settings.maximumResultBytes = settings.maximumResultBytes;
+  value['prism-control'].settings.dispatchTimeoutMs = settings.dispatchTimeoutMs;
+  const file = path.join(root, 'swarm.config.json'); writeTestBundle(file, value);
+  return { root, file, value, environment: { ...credentials, SWARM_CONFIG: file } };
+}
+async function listener(t: { after(fn: () => Promise<void>): void }, handler: RequestListener) {
+  const server = createServer(handler); server.listen(0, '127.0.0.1'); await once(server, 'listening');
+  t.after(async () => { server.closeAllConnections(); await new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve())); });
+  return `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+}
+for (const settings of [{ maximumResultBytes: 64, dispatchTimeoutMs: 100 }, { maximumResultBytes: 128, dispatchTimeoutMs: 2000 }]) {
+  test(`CR01 both startup snapshots use authored ${JSON.stringify(settings)}`, t => {
+    const f = fixture(t, settings), control = loadControlServerConfig(f.environment), worker = loadWorkerConfig(f.environment);
+    assert.equal(control.maximumWorkerResponseBytes, settings.maximumResultBytes);
+    assert.equal(control.nativeWorkerDispatchTimeoutMs, settings.dispatchTimeoutMs);
+    assert.deepEqual(worker.native, { resourcePolicy: authored.operator.prism.native.resourcePolicy, supervisor: authored.operator.prism.native.supervisor, ...settings }); assert.equal(Object.isFrozen(worker.native), true);
+    f.value['prism-execution'].settings.maximumResultBytes = 999;
+    f.value['prism-control'].settings.dispatchTimeoutMs = 999;
+    writeTestBundle(f.file, f.value);
+    assert.equal(control.maximumWorkerResponseBytes, settings.maximumResultBytes);
+    assert.equal(control.nativeWorkerDispatchTimeoutMs, settings.dispatchTimeoutMs); assert.deepEqual(worker.native, { resourcePolicy: authored.operator.prism.native.resourcePolicy, supervisor: authored.operator.prism.native.supervisor, ...settings });
+  });
+}
+for (const key of ['maximumResultBytes', 'dispatchTimeoutMs']) for (const invalid of [undefined, null, '5', 0, -1, 1.5, 2147483648]) {
+  test(`CR01 both roles reject ${key}=${String(invalid)}`, t => {
+    const f = fixture(t, { ...authored.operator.prism.native, [key]: invalid });
+    for (const load of [loadWorkerConfig, loadControlServerConfig]) assert.throws(() => load(f.environment), /SWARM_CONFIG_INVALID/);
+  });
+}
+for (const settings of [undefined, null, { ...authored.operator.prism.native, unknown: 1 }]) test('CR01 both roles reject missing or unsupported native section', t => {
+  const f = fixture(t, authored.operator.prism.native);
+  f.value['prism-execution'].settings = settings == null ? settings : { ...authoredBundle['prism-execution'].settings, unknown: 1 };
+  writeTestBundle(f.file, f.value);
+  for (const load of [loadWorkerConfig, loadControlServerConfig]) assert.throws(() => load(f.environment), /SWARM_CONFIG_INVALID/);
+});
+for (const key of ['PRISM_NATIVE_MAXIMUM_RESULT_BYTES', 'PRISM_NATIVE_DISPATCH_TIMEOUT_MS']) test(`CR02 both roles reject ${key}`, t => {
+  const f = fixture(t, authored.operator.prism.native);
+  const value = key.includes('RESULT') ? authored.operator.prism.native.maximumResultBytes : authored.operator.prism.native.dispatchTimeoutMs;
+  for (const load of [loadWorkerConfig, loadControlServerConfig]) assert.throws(() => load({ ...f.environment, [key]: String(value) }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+});
+for (const maximumResultBytes of [8, 9]) test(`CR03 original HTTP transport enforces ${maximumResultBytes} UTF-8 bytes`, async t => {
+  const f = fixture(t, { maximumResultBytes, dispatchTimeoutMs: 2000 });
+  const url = await listener(t, (request, response) => {
+    request.resume(); response.writeHead(200, { 'content-type': 'application/json' });
+    response.write('"€'); response.end('€ "'); // 9 UTF-8 bytes, 5 characters; chunked response.
+  });
+  const config = loadControlServerConfig({ ...f.environment, PRISM_WORKER_URL: url });
+  if (maximumResultBytes === 8) await assert.rejects(requestWorkerResult(config, attempt), /PRISM_NATIVE_RESULT_BODY_LIMIT/);
+  else assert.equal(await requestWorkerResult(config, attempt), '€€ ');
+});
+for (const mode of ['headers', 'body']) test(`CR04 real ${mode} deadline follows short and long author budgets`, { timeout: 10000 }, async t => {
+  let requests = 0, closed = 0;
+  const url = await listener(t, (request, response) => {
+    requests++; request.resume(); response.on('close', () => closed++);
+    if (mode === 'body') { response.writeHead(200, { 'content-type': 'application/json' }); response.write('"'); }
+    void delay(300).then(() => { if (!response.destroyed) response.end(mode === 'body' ? 'ok"' : '"ok"'); });
+  });
+  const short = fixture(t, { maximumResultBytes: 128, dispatchTimeoutMs: 75 });
+  const long = fixture(t, { maximumResultBytes: 128, dispatchTimeoutMs: 2000 });
+  await assert.rejects(requestWorkerResult(loadControlServerConfig({ ...short.environment, PRISM_WORKER_URL: url }), attempt),
+    error => error instanceof Error && ['TimeoutError', 'AbortError'].includes(error.name));
+  assert.equal(await requestWorkerResult(loadControlServerConfig({ ...long.environment, PRISM_WORKER_URL: url }), attempt), 'ok');
+  assert.equal(requests, 2); assert.equal(closed, 2, 'aborted request and completed request release their responses');
+});

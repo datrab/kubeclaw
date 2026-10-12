@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "test-suite-template.v1",
+  "contractId": "kubeclaw.kubernetes-fixture-suite@1",
+  "tests": {},
+  "fixtures": {},
+  "concurrencyLimits": {
+    "kubernetes-fixture": 2
+  }
+}

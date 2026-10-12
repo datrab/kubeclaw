@@ -1,0 +1,18 @@
+✔ concurrent durable reservations converge and survive reopening (89.03811ms)
+✔ caller mutation after reserve starts cannot change persisted identity (18.542315ms)
+✔ metadata lifecycle is fenced and disposed identities cannot execute again (135.603337ms)
+✔ unresolved ownership preserves diagnosis and blocks generation replacement (37.198273ms)
+✔ record quota fails atomically without losing existing ownership (24.153632ms)
+✔ corrupt persisted ownership fails without overwriting the record (16.84213ms)
+✔ abandoned admission preserves replay identity and requires a failure diagnosis (55.735158ms)
+✔ supervisor holds a separate real kernel lock and SIGKILL releases it without erasing reservations (932.867735ms)
+✔ native supervision requires explicit valid scope capacity before filesystem access or admission (13.154224ms)
+✔ native recovery rejects ordinary directories before exposing admission or modifying existing ownership (22.449147ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1964.375471

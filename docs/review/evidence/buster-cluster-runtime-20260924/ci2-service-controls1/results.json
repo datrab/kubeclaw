@@ -1,0 +1,98 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-production-route.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-production-shared-group-wrong",
+    "seconds": 11.18377852695994
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-production-route.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-production-runner-subject-wrong",
+    "seconds": 10.932122463011183
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-production-route.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-production-service-cluster-forwarding-dropped",
+    "seconds": 4.857281323056668
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-capture.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-capture-registry-array-retained",
+    "seconds": 13.746066394960508
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-capture.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-capture-nested-manifest-retained",
+    "seconds": 13.098573412979022
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-capture.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-capture-tail-prefix-array-retained",
+    "seconds": 13.118238872964866
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-capture.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-capture-tail-suffix-array-retained",
+    "seconds": 13.396041900035925
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-cluster-production-route.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-runtime-security-service-output-forwarding",
+    "seconds": 12.095572647056542
+  }
+]

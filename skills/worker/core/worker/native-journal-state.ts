@@ -6,6 +6,8 @@ import type { NativeWorkerProcessResult } from './native-worker-process.ts';
 import { identityValid, exact } from './ownership-state.ts';
 import { validateNativeWorkerResourceObservation } from './native-resource-observation.ts';
 
+export const nativeJournalMaximumDiagnosticUnits = 4096;
+
 export interface NativeAttemptJournalLimits {
   readonly maximumRecords: number;
   readonly maximumStateBytes: number;
@@ -69,7 +71,7 @@ function validateProcess(value: unknown): void {
   if (value.exitCode !== null && (!Number.isInteger(value.exitCode) || Number(value.exitCode) < 0 || Number(value.exitCode) > 255)) throw new Error('WORKER_NATIVE_JOURNAL_EXIT_INVALID');
   if (value.exitCode !== 0 && value.fault === null) throw new Error('WORKER_NATIVE_JOURNAL_MISSING_PROCESS_FAILURE');
   for (const key of ['signal', 'fault']) {
-    if (value[key] !== null && (typeof value[key] !== 'string' || value[key].length < 1 || value[key].length > 4096)) throw new Error('WORKER_NATIVE_JOURNAL_FAULT_INVALID');
+    if (value[key] !== null && (typeof value[key] !== 'string' || value[key].length < 1 || value[key].length > nativeJournalMaximumDiagnosticUnits)) throw new Error('WORKER_NATIVE_JOURNAL_FAULT_INVALID');
   }
 }
 

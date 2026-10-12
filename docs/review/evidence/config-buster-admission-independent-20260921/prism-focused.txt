@@ -1,0 +1,35 @@
+✔ BA Prism chart preserves two Buster admission profiles through the mounted canonical document (188.953221ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=undefined (69.538856ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=null (63.744644ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=2 (73.983803ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=0 (100.793227ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=-1 (103.409185ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=1.5 (63.495408ms)
+✔ BA Prism chart rejects Buster admission maximumActiveJobs=9007199254740992 (67.951004ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=undefined (82.346712ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=null (70.981224ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=2 (69.006832ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=0 (79.60847ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=-1 (78.392728ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=1.5 (60.949781ms)
+✔ BA Prism chart rejects Buster admission maximumQueuedJobs=9007199254740992 (71.97736ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=undefined (65.629383ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=null (76.55371ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=2 (81.222033ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=0 (81.038267ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=-1 (68.245162ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=1.5 (67.115692ms)
+✔ BA Prism chart rejects Buster admission maximumConcurrentAttempts=9007199254740992 (64.00306ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (79.032765ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (66.356433ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (70.331517ms)
+✔ BA Prism chart rejects missing/malformed/unknown admission objects (70.07487ms)
+✔ BA Prism chart retains strict Buster sibling rejection (91.521853ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2460.835094

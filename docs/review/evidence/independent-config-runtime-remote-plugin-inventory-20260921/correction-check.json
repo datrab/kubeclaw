@@ -1,0 +1,226 @@
+{
+  "runtimeExecuted": false,
+  "original40SnapshotsUnchanged": true,
+  "v2Sources": [
+    {
+      "path": "docs/review/remediation/implementation/config-runtime-remote-plugin-inventory-20260921.md",
+      "sha256": "49db85ebd42763d913a44b982fd01d9f059b0dac5594f93aa994ef0d83c9247c",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/network-http/src/adapter.ts",
+      "sha256": "8885ca56e2a2322c98e4c83ba935397f8f47d829c4feec69efbdde0113553e8d",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/package.json",
+      "sha256": "dea861af81c54c9801a87c272d7467f359056be1cdb2d25ab0fa6cf88f9bbc67",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/plugin.json",
+      "sha256": "b3c3a77253ce191a184c8c85f6d02595a1df26b472a63f252339205cae04f349",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "sha256": "c780e8086e6d6c954734e62c171f3de67a37b1c94c7483c887571ea08f18a641",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "sha256": "defa712aa87820a8e2d4fa593f6e3dedf2fbc6c22a22f2a6933dc36e3d8d95b7",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+      "sha256": "5bf2d0c003497e74b0bfdf7524b4725bcd77d12b592f00e121be553868009e5e",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+      "sha256": "16ccaa5e974de17c36d20078fb2912ddd9d2fa1c6a0a677af760e242ce3cd33a",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+      "sha256": "1532db26c17561feba17d5bdbba2771de2730df9bd299af203c4b0432d5842f4",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+      "sha256": "9cd036b48db02117734aea56e9e77bf4010f5487150e3bab0fcdc99585ac22fd",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-response.ts",
+      "sha256": "70a2a376fcf885861af37075646b0868a810f9bc3cd109781fc48fb62fe8444d",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+      "sha256": "38290ff080cc31a5465f911bf8adaf1d7d82c1c0a019914d088a5dd6c35b9643",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+      "sha256": "8f3bfbfe9d3d9fa3fa88ac532f8f59abe457d830089a340b196cb8c25bd97217",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+      "sha256": "a66a16088c28519c1d88a63b650bf7caa416e13cee5eefe3b773df2691832af5",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+      "sha256": "4939307a37adc3aea6dfba4d7f196a897c5ee3ca72a7594c6b7b8c02f4509a41",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+      "sha256": "163d6442b6eb4261db013c55af03183a04cedaa1a4a90c0893dc1f65f36f2ab5",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/execution/authorization.ts",
+      "sha256": "3f04309435d4fe3eebe5a73bac5247b0d3c981ffd4a9580e52974cf46cf3942d",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/test-gates/deadline.ts",
+      "sha256": "27bb55650cfa85943f64843b523b671460f86a93b173f2233ffe31cdf72d182b",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/test-gates/dispatch-operation.ts",
+      "sha256": "ba74467ce360528872aea28dd54822a1c2b936098447ba34d92e54ae0306f85a",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/test-gates/http-response.ts",
+      "sha256": "03da46c89c22facbf8970a363288f29addc6171cea2b65d0286696e8ff9da74b",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/test-gates/production.ts",
+      "sha256": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+      "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-dispatch.ts",
+      "sha256": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/test-gates/remote-result-import.ts",
+      "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/test-gates/secure-endpoint.ts",
+      "sha256": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/test-gates/source-git.ts",
+      "sha256": "869044fecd888a1e4ded10059c8f6a5ec4510d1ca9c277507de545538f1fb90c",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/test-gates/source-process-lifecycle.ts",
+      "sha256": "5924d42b6b5140cd8148aba4d69e54eca84ba8883e0a2739420019f5b48f778b",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/test-gates/source-snapshot.ts",
+      "sha256": "dddba2b8b5d9be5a098108b85f5134f6a93b05bc560d0f1a3c318d60cae860f2",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/package.json",
+      "sha256": "cef20108b224eb7e3cd521591c63d1d490de1dcdebe0f07577fc7b345789299b",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/plugin.json",
+      "sha256": "7c42888270bb814bfeb9c47b2bc1daa4a858e649890866c9abb0f6b3c4b8d35e",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
+      "sha256": "282ed6bdc8d07486e6e34b40cec822036a5cc851af4369e55f68ab7f146eef47",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json",
+      "sha256": "767de53403900e5b72e8f35bb6d238eed5a889b6cb9141fb18b1ce56aef8461d",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+      "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/demo-evidence.ts",
+      "sha256": "28fc430c4e7840ae1dc0c76698981ebfe35ce08011032ed3380b19799ceb6a63",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/demo-source-links.ts",
+      "sha256": "de4808cd82d0e5c0dad7157289388ed72b7249b1fc21cd78987a1d9a701b7fd7",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+      "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+      "matches": true
+    },
+    {
+      "path": "scripts/observability-retirement/dispatch.mjs",
+      "sha256": "0b397716a3d255f146121631aa6d6a83a265870590f043ef40e3403f1066a94f",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+      "matches": true
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+      "matches": true
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+      "matches": true
+    }
+  ]
+}

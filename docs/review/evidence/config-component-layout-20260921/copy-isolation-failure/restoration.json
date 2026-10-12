@@ -1,0 +1,38 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "preservedFailedSha256": "e10174243995e0a30f9e2277ac72392e8e28ed493eafe68a987d9d9928d3bab8",
+    "restoredSha256": "ab3ee0545ef7d04897523efcfe3a7c93acf036025e92a4142b044a530e0d0634",
+    "authority": "exact integration4/sources-before.json and staging/files bytes"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-control.config.json",
+    "preservedFailedSha256": "cf105f821e7e9a3fbd21d55e17f7ec2badc3e29759b1dd99c48fd871afedd7e2",
+    "restoredSha256": "5e41d7612926ce4d3bfad195d79649e106b54cd59c23de64afad1e9c43e1dcd0",
+    "authority": "exact integration4/sources-before.json and staging/files bytes"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-studio.config.json",
+    "preservedFailedSha256": "09f0914c4376aee615167cccfe5ccbf1c511647e19bbd744f81065f422bfe328",
+    "restoredSha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+    "authority": "exact integration4/sources-before.json and staging/files bytes"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+    "preservedFailedSha256": "06df045bdb97ef697f37d4e692597620237c271502e74abcebb8c77b9db156eb",
+    "restoredSha256": "a2ae24efb4777b5018041c58a790025435308afa6efb5e9598d2980c0544ee69",
+    "authority": "exact integration4/sources-before.json and staging/files bytes"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/prism-execution.config.json",
+    "preservedFailedSha256": "1567adae8e338d2f8ee903e1ac51519b3035abe60ce537fefc33af468edfb256",
+    "restoredSha256": "94f1a8eece3aa58db89907accd846d471d17263557c8e0925cc1caae6ec0034f",
+    "authority": "exact integration4/sources-before.json and staging/files bytes"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+    "preservedFailedSha256": "c01b5423ae1cc94d50c393ec1f6bc79d7b0fdcd6bb273673d30cb2103dd87275",
+    "restoredSha256": "57f5f68231777a113c01773a33c350cbbb2746e97ad8aad4538b455427585ff4",
+    "authority": "exact integration4/sources-before.json and staging/files bytes"
+  }
+]

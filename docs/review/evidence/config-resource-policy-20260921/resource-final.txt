@@ -1,0 +1,40 @@
+✔ CP03 original Control persists and dispatches startup budgets and preserves admitted retry identity (3635.351598ms)
+✔ CP01 both roles reject cpuTimeMs=undefined (3.683256ms)
+✔ CP01 both roles reject cpuTimeMs=null (0.566485ms)
+✔ CP01 both roles reject cpuTimeMs=5 (0.710828ms)
+✔ CP01 both roles reject cpuTimeMs=0 (0.692718ms)
+✔ CP01 both roles reject cpuTimeMs=-1 (0.718959ms)
+✔ CP01 both roles reject cpuTimeMs=1.5 (0.650347ms)
+✔ CP01 both roles reject cpuTimeMs=9007199254740992 (0.563494ms)
+✔ CP01 both roles reject memoryBytes=undefined (0.586295ms)
+✔ CP01 both roles reject memoryBytes=null (0.652617ms)
+✔ CP01 both roles reject memoryBytes=5 (0.525853ms)
+✔ CP01 both roles reject memoryBytes=0 (0.41636ms)
+✔ CP01 both roles reject memoryBytes=-1 (0.39851ms)
+✔ CP01 both roles reject memoryBytes=1.5 (0.39082ms)
+✔ CP01 both roles reject memoryBytes=9007199254740992 (0.38924ms)
+✔ CP01 both roles reject tasks=undefined (0.39898ms)
+✔ CP01 both roles reject tasks=null (0.445352ms)
+✔ CP01 both roles reject tasks=5 (0.528283ms)
+✔ CP01 both roles reject tasks=0 (0.38795ms)
+✔ CP01 both roles reject tasks=-1 (0.429701ms)
+✔ CP01 both roles reject tasks=1.5 (0.435391ms)
+✔ CP01 both roles reject tasks=9007199254740992 (0.40247ms)
+✔ CP01 missing or competing resource policy fails (0.478262ms)
+✔ CP01 missing or competing resource policy fails (0.39413ms)
+✔ CP01 missing or competing resource policy fails (0.39543ms)
+✔ CP02 rejects PRISM_NATIVE_CPU_TIME_MS even empty (0.611726ms)
+✔ CP02 rejects PRISM_NATIVE_MEMORY_BYTES even empty (0.446992ms)
+✔ CP02 rejects PRISM_NATIVE_TASKS even empty (0.37756ms)
+✔ CP04 actual admission maps authored policy {"cpuTimeMs":123,"memoryBytes":4096,"tasks":7} (44.561461ms)
+✔ CP04 actual admission maps authored policy {"cpuTimeMs":456,"memoryBytes":8192,"tasks":11} (2.988947ms)
+✔ CP01 resource safe-integer ceiling is independent of transport timer ceiling (1.035927ms)
+✔ CP02 a loaded producer never consults later legacy environment changes (0.687158ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4692.592671

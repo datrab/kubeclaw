@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-test-vm-20260921/root/usr/bin/gcc",
+    "--sysroot=/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-test-vm-20260921/guest-root",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-O2",
+    "-fstack-protector-strong",
+    "-U_FORTIFY_SOURCE",
+    "-D_FORTIFY_SOURCE=3",
+    "-fPIE",
+    "-pie",
+    "-Wl,-z,relro,-z,now",
+    "-o",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-test-vm-20260921/native-worker-launcher-build-proof",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-worker-launcher.c"
+  ],
+  "exitCode": 0
+}

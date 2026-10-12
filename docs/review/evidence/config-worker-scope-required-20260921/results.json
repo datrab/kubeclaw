@@ -1,0 +1,34 @@
+{
+  "results": [
+    {
+      "name": "ownership",
+      "command": [
+        "node",
+        "--test",
+        "tests/verification/reliability/worker-ownership-store.test.mts"
+      ],
+      "exitCode": 1
+    },
+    {
+      "name": "worker-types",
+      "command": [
+        "node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "skills/worker/core/tsconfig.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "native-test-types",
+      "command": [
+        "node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "tests/verification/reliability/tsconfig.native-scope.json"
+      ],
+      "exitCode": 2
+    }
+  ],
+  "drift": []
+}

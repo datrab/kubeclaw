@@ -71,6 +71,13 @@ behavior is outside this freshness slice.
 
 ## Controlled refresh route
 
+**Historical implementation, superseded on 2026-09-21:** the per-run refresh
+argument described in this section was removed by the database-input lock.
+Current builds consume reviewed immutable database identities authored in
+`versions.json`. Use the [current explicit update procedure](../../../operations/local-image-vulnerability-scan.md#offline-buster-job-databases).
+The text below records the earlier implementation and is not a current operator
+instruction; the freshness policy and evidence limits above still apply.
+
 The existing immutable Buster image downloads both databases during its build.
 The build layer now consumes `TRIVY_DATABASE_REFRESH`; the existing build-images
 and role-images workflows supply the unique run ID plus attempt, preventing a

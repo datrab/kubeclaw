@@ -1,0 +1,105 @@
+CI2_MUTATION_APPLIED {"mutation":"restore-poll1000","pid":163527,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-runtime-security.ts","beforeSha256":"de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004","afterSha256":"82c2e7f67103249040fed031ec6cecd35595961c3ad7fe06e7a6e40ef78158d5","replacements":[{"from":"Math.min(this.#policy.pollIntervalMs, Math.max(1, deadline - Date.now()))","to":"Math.min(1000, Math.max(1, deadline - Date.now()))","count":1}]}
+✔ required RuntimeSecurity field allowedNamespacePrefixes before filesystem access (2.958338ms)
+✔ required RuntimeSecurity field maximumExecutionMs before filesystem access (0.404201ms)
+✔ required RuntimeSecurity field maximumOutputBytes before filesystem access (0.351169ms)
+✔ required RuntimeSecurity field pollIntervalMs before filesystem access (0.409321ms)
+✔ required RuntimeSecurity field maximumObservationAgeMs before filesystem access (0.434352ms)
+✔ required RuntimeSecurity field maximumFutureSkewMs before filesystem access (0.40505ms)
+✔ required RuntimeSecurity field diagnosticCodeUnits before filesystem access (0.540615ms)
+✔ required RuntimeSecurity field executableSearchPath before filesystem access (0.334669ms)
+✔ complete bundle requires allowedNamespacePrefixes even with route disabled (15.943228ms)
+✔ complete bundle requires maximumExecutionMs even with route disabled (2.523626ms)
+✔ complete bundle requires maximumOutputBytes even with route disabled (1.90559ms)
+✔ complete bundle requires pollIntervalMs even with route disabled (1.768316ms)
+✔ complete bundle requires maximumObservationAgeMs even with route disabled (1.748506ms)
+✔ complete bundle requires maximumFutureSkewMs even with route disabled (2.004642ms)
+✔ complete bundle requires diagnosticCodeUnits even with route disabled (1.859219ms)
+✔ complete bundle requires executableSearchPath even with route disabled (1.926611ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [] (0.408061ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [""] (0.271237ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [42] (0.265137ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 0 (0.38478ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 2147483648 (0.316448ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 1.5 (0.273467ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 1023 (0.314538ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 9007199254740992 (0.314918ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 9 (0.283037ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 10001 (0.272597ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 999 (0.257777ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 60001 (0.252476ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs -1 (0.276017ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs 2147483648 (0.289428ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 0 (0.272958ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 1.5 (0.255267ms)
+✔ reject invalid RuntimeSecurity executableSearchPath [] (0.304688ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["relative"] (0.291288ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin:/escape"] (0.333138ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin\u0000"] (0.340159ms)
+✔ retired RuntimeSecurity object null (0.269827ms)
+✔ retired RuntimeSecurity object {} (0.058611ms)
+✔ retired RuntimeSecurity object {"allowedNamespacePrefixes":["test"],"maximumExecutionMs":300000,"maximumOutputBytes":16777216,"pollIntervalMs":1000,"maximumObservationAgeMs":10000,"maximumFutureSkewMs":5000,"diagnosticCodeUnits":1024,"executableSearchPath":["/usr/local/bin","/usr/bin","/bin"]} (0.052201ms)
+✔ retired RuntimeSecurity object "invalid" (0.049951ms)
+✔ disabled RuntimeSecurity route has no binding or implicit activation (0.922384ms)
+✔ real execution deadline profile false (287.469214ms)
+✔ real combined output profile false (52.819185ms)
+✔ real observation age profile false (607.984303ms)
+✔ real future skew profile false (614.75519ms)
+✔ real diagnostic code units profile false (38.841138ms)
+✔ real PATH helper profile false (41.414425ms)
+✔ real execution deadline profile true (772.946115ms)
+✔ real combined output profile true (48.547502ms)
+✔ real observation age profile true (68.233778ms)
+✔ real future skew profile true (47.863635ms)
+✔ real diagnostic code units profile true (57.26684ms)
+✔ real PATH helper profile true (110.826874ms)
+▶ real polling profile changes command cadence; selected arrays and scalars captured
+  ✔ poll interval 50 (1087.924548ms)
+  ✖ poll interval 1200 (1082.65135ms)
+✖ real polling profile changes command cadence; selected arrays and scalars captured (2173.034212ms)
+✔ real namespace profile false (17.792497ms)
+✔ real namespace profile true (43.934062ms)
+✔ preserve inspected namespace prefix aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (42.836283ms)
+✔ preserve inspected namespace prefix test- (42.192326ms)
+✔ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (191.891438ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 59
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7262.801762
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:218:13
+✖ poll interval 1200 (1082.65135ms)
+  AssertionError [ERR_ASSERTION]: poll 1200: actual separation 1039
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:227:7)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:218:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:215:1
+✖ real polling profile changes command cadence; selected arrays and scalars captured (2173.034212ms)
+  AssertionError [ERR_ASSERTION]: distinct authored poll effects: 1043
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:230:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

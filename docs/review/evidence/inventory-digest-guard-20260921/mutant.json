@@ -1,0 +1,9 @@
+{
+  "command": [
+    "/usr/local/bin/node",
+    "--test",
+    "/tmp/inventory-old-guard-4eqbvecf/tests/verification/reliability/inventory-digest-guard.test.mjs"
+  ],
+  "returnCode": 1,
+  "oldStatOnlyGuardDetected": true
+}

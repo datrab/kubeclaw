@@ -1,3 +1,4 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -35,7 +36,8 @@ const capability = new BrowserAxeCapabilityInvoker({ allowedOrigins: [origin], a
   maximumConcurrency: 1, maximumExecutionMs: 30_000, maximumResultBytes: 8 * 1024 * 1024,
   maximumScreenshots: 4, maximumScreenshotBytes: 4 * 1024 * 1024 });
 try {
-  const run = await new TestPlanRunner({ plan, registry, workspaceRoot: path.join(root, 'workspace'), repositoryRoot: path.join(root, 'workspace/repository'),
+  const run = await new TestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: path.join(root, 'workspace'), repositoryRoot: path.join(root, 'workspace/repository'),
     artifactRoot: path.join(root, 'artifacts'), observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1,
     grants: new Map([['a11y/axe', ['browser.axe']]]), capabilityInvoker: capability }).run();
   assert.equal(run.nodes[0]?.outcome, 'passed', JSON.stringify(run));

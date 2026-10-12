@@ -1,0 +1,14 @@
+✔ Nova TERM failure retains ownership until actual child close (318.248713ms)
+✔ Nova timed KILL failure remains visible after natural child close (455.225044ms)
+✔ Nova group observation failure is retained with a later close-notification timeout (1545.6261ms)
+✔ production deadline cancels actual Git archive compressor before any HTTP submission (617.409265ms)
+✔ durable write already waiting for a real kernel lock is drained before timeout returns (360.50954ms)
+✔ escaped real Git compressor pipe owner yields bounded unconfirmed cleanup with the timeout cause (2021.08492ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6526.898321

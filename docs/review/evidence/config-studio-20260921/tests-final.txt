@@ -1,0 +1,603 @@
+✔ actual Control image declarations and exact image proof accept authored profile one (706.692744ms)
+✔ actual Control image declarations and exact image proof accept authored profile two (685.237034ms)
+✔ image proof requires the selected role and preserves legitimate Worker PORT (308.007409ms)
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (6.605413ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (2.019152ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (2.144076ms)
+✔ real stored image traverses HTTP with integrity, size, load and cancellation denials (113.80919ms)
+✔ real session issuer, explicit operator policy, origin and CSRF bind the signer (3.598054ms)
+✔ real HTTP authorization persists signed intent before failed transport and recovers identical bytes after durable database reopen (3308.702565ms)
+✔ SQL receipt replay compares nested signature bytes and preserves append-only history (1666.6328ms)
+✔ receipt contract preserves Go nanosecond expiry and rejects changed nested envelope (1616.065089ms)
+✔ desktop startup and failure panels remain visible (1.589131ms)
+✔ Puck insertion becomes a typed canonical operation (1.15047ms)
+✔ Puck completes a split with one explicit child (0.512883ms)
+✔ an empty canvas renders a safe empty state (0.328928ms)
+✔ a valid leaf root renders as content (1.091008ms)
+✔ Puck preserves nested content and inserts into the correct parent (0.289537ms)
+✔ Puck edits a nested node through a typed operation (0.248027ms)
+✔ one Puck change emits one atomic batch for multiple edits (0.814161ms)
+✔ the isolated preview uses the trusted renderer for every node (0.40421ms)
+✔ Studio loads authored operator values and keeps installation inputs outside JSON (19.779776ms)
+✔ Studio rejects retired PORT="" (0.926895ms)
+✔ Studio rejects retired PORT="8080" (0.490582ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="" (0.497273ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="8080" (0.632486ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="" (0.490112ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080" (0.584966ms)
+✔ Studio rejects invalid port through original shared validation (2.218778ms)
+✔ Studio rejects invalid controlTimeoutMs through original shared validation (1.783157ms)
+✔ Studio rejects invalid controlUrl through original shared validation (4.808865ms)
+✔ Studio rejects unknown settings and invalid startup terminates before serving (240.006333ms)
+✔ production Studio Docker environment does not reintroduce a retired author (1.1356ms)
+✔ actual schema initialState and validated flow action preserve source, action and optional node matching (9.675952ms)
+✔ malformed unknown flows fail actual contract validation before Studio navigation (3.173453ms)
+✔ canonical stack survives actual projection no-op and another node edit (12.898467ms)
+✔ canonical grid survives actual projection no-op and another node edit (2.078014ms)
+✔ canonical split survives actual projection no-op and another node edit (2.044843ms)
+✔ canonical scroll survives actual projection no-op and another node edit (3.026579ms)
+✔ canonical overlay survives actual projection no-op and another node edit (1.52232ms)
+✔ canonical text survives actual projection no-op and another node edit (1.242393ms)
+✔ canonical heading survives actual projection no-op and another node edit (1.275154ms)
+✔ canonical image survives actual projection no-op and another node edit (1.589951ms)
+✔ canonical icon survives actual projection no-op and another node edit (1.101419ms)
+✔ canonical divider survives actual projection no-op and another node edit (1.447298ms)
+✔ canonical code survives actual projection no-op and another node edit (0.837082ms)
+✔ canonical button survives actual projection no-op and another node edit (0.947494ms)
+✔ canonical link survives actual projection no-op and another node edit (1.318095ms)
+✔ canonical text-input survives actual projection no-op and another node edit (1.399557ms)
+✔ canonical select survives actual projection no-op and another node edit (1.874119ms)
+✔ canonical checkbox survives actual projection no-op and another node edit (0.951574ms)
+✔ canonical list survives actual projection no-op and another node edit (0.706959ms)
+✔ canonical table survives actual projection no-op and another node edit (0.73985ms)
+✔ canonical badge survives actual projection no-op and another node edit (0.672868ms)
+✔ canonical progress survives actual projection no-op and another node edit (1.076069ms)
+✔ canonical chart survives actual projection no-op and another node edit (0.694678ms)
+✔ canonical navigation survives actual projection no-op and another node edit (0.687698ms)
+✔ canonical tabs survives actual projection no-op and another node edit (0.671397ms)
+✔ canonical breadcrumb survives actual projection no-op and another node edit (0.646557ms)
+✔ canonical pagination survives actual projection no-op and another node edit (0.667498ms)
+✔ canonical alert survives actual projection no-op and another node edit (1.119179ms)
+✔ canonical dialog survives actual projection no-op and another node edit (0.774271ms)
+✔ canonical toast survives actual projection no-op and another node edit (0.74306ms)
+✔ canonical tooltip survives actual projection no-op and another node edit (0.837312ms)
+✔ canonical empty-state survives actual projection no-op and another node edit (0.859733ms)
+✔ canonical spinner survives actual projection no-op and another node edit (1.048738ms)
+✔ canonical component survives actual projection no-op and another node edit (0.911083ms)
+✔ canonical terminal survives actual projection no-op and another node edit (0.712359ms)
+✔ canonical command survives actual projection no-op and another node edit (1.030377ms)
+✔ canonical prompt survives actual projection no-op and another node edit (1.118559ms)
+✔ canonical output survives actual projection no-op and another node edit (0.978636ms)
+✔ actual Studio survives refused Control and malformed URL with explicit responses (305.543332ms)
+✔ actual Studio retains proxy bytes, cookies and upstream status (302.080722ms)
+✔ actual Studio forwards direction idempotency keys and retry payloads to Control (295.577282ms)
+✔ actual Studio bounds upstream headers wait and remains healthy (506.138926ms)
+✔ actual Studio bounds upstream empty-body wait and remains healthy (546.600371ms)
+✔ actual Studio bounds upstream partial-body wait and remains healthy (504.226915ms)
+✔ actual Studio cancels upstream streaming when the client disconnects (302.709698ms)
+✔ authored Studio timeout 150 reaches the live proxy and startup snapshot (428.039058ms)
+✔ authored Studio timeout 600 reaches the live proxy and startup snapshot (889.98404ms)
+✖ canonical authored Studio profile starts the actual packaged service contract (245.29172ms)
+✔ CC1 Control pipelinePreferenceSubject rejects undefined (7.297861ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "" (0.697709ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "operator:test" (0.725129ms)
+✔ CC1 Control pipelinePreferenceSubject rejects "user-abc" (0.856033ms)
+✔ CC1 Control pipelinePreferenceSubject rejects 1 (0.7842ms)
+✔ CC1 Control pipelinePreferenceSubject rejects false (0.7956ms)
+✔ CC1 Control artifactRoot rejects undefined (0.862883ms)
+✔ CC1 Control artifactRoot rejects null (0.806231ms)
+✔ CC1 Control artifactRoot rejects "" (0.789931ms)
+✔ CC1 Control artifactRoot rejects "/" (0.78135ms)
+✔ CC1 Control artifactRoot rejects "relative" (0.594705ms)
+✔ CC1 Control artifactRoot rejects "/tmp/../artifacts" (0.588785ms)
+✔ CC1 Control artifactRoot rejects "/tmp/artifacts/" (2.126746ms)
+✔ CC1 Control artifactRoot rejects "/tmp//artifacts" (0.659357ms)
+✔ CC1 Control artifactRoot rejects "/tmp/\u0000artifacts" (0.475622ms)
+✔ CC1 Control artifactRoot rejects 1 (0.467082ms)
+✔ CC1 Control studioPublicUrl rejects undefined (0.562074ms)
+✔ CC1 Control studioPublicUrl rejects null (0.476283ms)
+✔ CC1 Control studioPublicUrl rejects "" (0.500353ms)
+✔ CC1 Control studioPublicUrl rejects "relative" (0.505204ms)
+✔ CC1 Control studioPublicUrl rejects "file:///tmp" (0.440482ms)
+✔ CC1 Control studioPublicUrl rejects "https://" (0.578565ms)
+✔ CC1 Control studioPublicUrl rejects "https://user:pass@studio" (0.438682ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio?query=1" (0.483373ms)
+✔ CC1 Control studioPublicUrl rejects "https://studio#fragment" (0.596405ms)
+✔ CC1 Control studioPublicUrl rejects "https://bad host" (0.484743ms)
+✔ CC1 Control studioPublicUrl rejects 1 (0.425361ms)
+✔ CC1 strict Control object (14.039336ms)
+✔ CC1 strict Control object (1.14467ms)
+✔ CC1 strict Control object (0.890423ms)
+✔ CC1 strict Control object (0.584795ms)
+✔ CC2 retired PRISM_PIPELINE_PREFERENCE_SUBJECT rejects even empty (0.652337ms)
+✔ CC2 retired ARTIFACT_ROOT rejects even empty (0.521174ms)
+✔ CC2 retired PRISM_STUDIO_PUBLIC_URL rejects even empty (0.3887ms)
+✔ CC2 authored Control snapshot survives file mutation (1.424628ms)
+✖ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (1327.724479ms)
+✔ imperative ownership guard fails closed and permits only other namespaces (1.471569ms)
+✖ committed bundle corruption, switched selection and hidden image changes fail before activation (1319.045301ms)
+✖ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (1338.782554ms)
+✔ root claim and retained workload tracking block imperative adoption after partial GitOps transitions (0.612126ms)
+✔ original runtime teardown commands stop before any Helm mutation when Argo owns the namespace (270.807585ms)
+✔ disabled product authority creates no key mount, audience token, environment or network access (94.104984ms)
+✔ explicit product authority belongs only to Control and uses separate signing and scoped transport (239.99474ms)
+✔ incomplete or ambiguous product authority fails actual Helm validation (612.089727ms)
+✔ CD01 original chart delivers the one canonical config to the worker mount (82.351969ms)
+✔ CD02 real Helm output from two author profiles drives the actual production loader (142.862877ms)
+✔ CD03 old Helm shutdown authority is rejected (45.411354ms)
+✔ CD04 maximumActiveRequests rejects 3 before rendering (50.296222ms)
+✔ CD04 maximumActiveRequests rejects null before rendering (50.924369ms)
+✔ CD04 maximumActiveRequests rejects -1 before rendering (57.47365ms)
+✔ CD04 maximumActiveRequests rejects 0 before rendering (74.167695ms)
+✔ CD04 maximumActiveRequests rejects 1.5 before rendering (52.877219ms)
+✔ CD04 maximumActiveRequests rejects 2147483648 before rendering (52.707315ms)
+✔ CD04 maximumActiveRequests rejects undefined before rendering (46.060561ms)
+✔ CD04 maximumProbeRequests rejects 3 before rendering (50.702893ms)
+✔ CD04 maximumProbeRequests rejects null before rendering (47.263563ms)
+✔ CD04 maximumProbeRequests rejects -1 before rendering (48.054774ms)
+✔ CD04 maximumProbeRequests rejects 0 before rendering (47.473648ms)
+✔ CD04 maximumProbeRequests rejects 1.5 before rendering (47.433277ms)
+✔ CD04 maximumProbeRequests rejects 2147483648 before rendering (47.373136ms)
+✔ CD04 maximumProbeRequests rejects undefined before rendering (52.261053ms)
+✔ CD04 maximumConnections rejects 3 before rendering (53.868106ms)
+✔ CD04 maximumConnections rejects null before rendering (51.891844ms)
+✔ CD04 maximumConnections rejects -1 before rendering (51.627507ms)
+✔ CD04 maximumConnections rejects 0 before rendering (52.054058ms)
+✔ CD04 maximumConnections rejects 1.5 before rendering (49.649995ms)
+✔ CD04 maximumConnections rejects 2147483648 before rendering (55.956009ms)
+✔ CD04 maximumConnections rejects undefined before rendering (51.825682ms)
+✔ CD04 requestTimeoutMs rejects 3 before rendering (46.976026ms)
+✔ CD04 requestTimeoutMs rejects null before rendering (47.213221ms)
+✔ CD04 requestTimeoutMs rejects -1 before rendering (68.442575ms)
+✔ CD04 requestTimeoutMs rejects 0 before rendering (80.833079ms)
+✔ CD04 requestTimeoutMs rejects 1.5 before rendering (49.46652ms)
+✔ CD04 requestTimeoutMs rejects 2147483648 before rendering (73.843956ms)
+✔ CD04 requestTimeoutMs rejects undefined before rendering (45.372384ms)
+✔ CD04 shutdownTimeoutMs rejects 3 before rendering (52.463008ms)
+✔ CD04 shutdownTimeoutMs rejects null before rendering (49.420569ms)
+✔ CD04 shutdownTimeoutMs rejects -1 before rendering (46.949114ms)
+✔ CD04 shutdownTimeoutMs rejects 0 before rendering (47.371195ms)
+✔ CD04 shutdownTimeoutMs rejects 1.5 before rendering (46.885023ms)
+✔ CD04 shutdownTimeoutMs rejects 2147483648 before rendering (43.539356ms)
+✔ CD04 shutdownTimeoutMs rejects undefined before rendering (45.478396ms)
+✔ CD04 maximumInputBytes rejects 3 before rendering (46.695018ms)
+✔ CD04 maximumInputBytes rejects null before rendering (69.235745ms)
+✔ CD04 maximumInputBytes rejects -1 before rendering (49.197423ms)
+✔ CD04 maximumInputBytes rejects 0 before rendering (47.120589ms)
+✔ CD04 maximumInputBytes rejects 1.5 before rendering (52.349786ms)
+✔ CD04 maximumInputBytes rejects 2147483648 before rendering (50.863067ms)
+✔ CD04 maximumInputBytes rejects undefined before rendering (48.817973ms)
+✔ CD04 unknown key root (51.36404ms)
+✔ CD04 unknown key operator (52.466929ms)
+✔ CD04 unknown key operator.prism (47.721345ms)
+✔ CD04 unknown key operator.prism.worker (51.062062ms)
+✔ CD04 connection overcommit fails Helm rendering (55.160229ms)
+✔ CD05 shutdown 100000 violates native-close or Pod grace (51.36117ms)
+✔ CD05 shutdown 150000 violates native-close or Pod grace (48.811034ms)
+✔ CD06 Helm packaging dereferences the canonical author/schema without manual synchronization (53.989288ms)
+✔ CI05 old Helm input authority worker.native.maximumInputBytes is rejected (46.137124ms)
+✔ CI05 old Helm input authority native.maximumInputBytes is rejected (41.646316ms)
+✔ CR06 native maximumResultBytes rejects 3 before rendering (47.345475ms)
+✔ CR06 native maximumResultBytes rejects null before rendering (47.434567ms)
+✔ CR06 native maximumResultBytes rejects -1 before rendering (46.113912ms)
+✔ CR06 native maximumResultBytes rejects 0 before rendering (48.459784ms)
+✔ CR06 native maximumResultBytes rejects 1.5 before rendering (46.693527ms)
+✔ CR06 native maximumResultBytes rejects 2147483648 before rendering (47.304574ms)
+✔ CR06 native maximumResultBytes rejects undefined before rendering (50.858316ms)
+✔ CR06 native dispatchTimeoutMs rejects 3 before rendering (53.25879ms)
+✔ CR06 native dispatchTimeoutMs rejects null before rendering (47.995802ms)
+✔ CR06 native dispatchTimeoutMs rejects -1 before rendering (52.93085ms)
+✔ CR06 native dispatchTimeoutMs rejects 0 before rendering (49.418949ms)
+✔ CR06 native dispatchTimeoutMs rejects 1.5 before rendering (58.131826ms)
+✔ CR06 native dispatchTimeoutMs rejects 2147483648 before rendering (49.977754ms)
+✔ CR06 native dispatchTimeoutMs rejects undefined before rendering (45.566108ms)
+✔ CR06 missing or unknown native section fails rendering (52.072518ms)
+✔ CR06 missing or unknown native section fails rendering (65.325784ms)
+✔ CR06 missing or unknown native section fails rendering (61.770281ms)
+✔ CR06 two real authored profiles deliver identical bytes and changing checksums to both roles (177.552301ms)
+✔ CR06 old Helm authority worker.native.maximumResultBytes rejected (41.078061ms)
+✔ CR06 old Helm authority control.nativeWorkerDispatchTimeoutMs rejected (82.051731ms)
+✔ CR06 old Helm authority control.maximumWorkerResponseBytes rejected (89.205407ms)
+✔ CP01 resource cpuTimeMs rejects 3 in Helm (94.020232ms)
+✔ CP01 resource cpuTimeMs rejects null in Helm (90.805138ms)
+✔ CP01 resource cpuTimeMs rejects -1 in Helm (97.063852ms)
+✔ CP01 resource cpuTimeMs rejects 0 in Helm (49.809579ms)
+✔ CP01 resource cpuTimeMs rejects 1.5 in Helm (141.302966ms)
+✔ CP01 resource cpuTimeMs rejects 9007199254740992 in Helm (111.147249ms)
+✔ CP01 resource cpuTimeMs rejects undefined in Helm (188.415015ms)
+✔ CP01 resource memoryBytes rejects 3 in Helm (124.811055ms)
+✔ CP01 resource memoryBytes rejects null in Helm (108.844118ms)
+✔ CP01 resource memoryBytes rejects -1 in Helm (159.637303ms)
+✔ CP01 resource memoryBytes rejects 0 in Helm (105.933913ms)
+✔ CP01 resource memoryBytes rejects 1.5 in Helm (100.913662ms)
+✔ CP01 resource memoryBytes rejects 9007199254740992 in Helm (92.670087ms)
+✔ CP01 resource memoryBytes rejects undefined in Helm (114.515617ms)
+✔ CP01 resource tasks rejects 3 in Helm (111.361614ms)
+✔ CP01 resource tasks rejects null in Helm (107.475683ms)
+✔ CP01 resource tasks rejects -1 in Helm (99.150336ms)
+✔ CP01 resource tasks rejects 0 in Helm (86.66357ms)
+✔ CP01 resource tasks rejects 1.5 in Helm (115.747159ms)
+✔ CP01 resource tasks rejects 9007199254740992 in Helm (75.289343ms)
+✔ CP01 resource tasks rejects undefined in Helm (48.138735ms)
+✔ CP01 unsupported resource policy rejected in Helm (143.710768ms)
+✔ CP01 unsupported resource policy rejected in Helm (108.216553ms)
+✔ CP01 unsupported resource policy rejected in Helm (108.608542ms)
+✔ CP06 competing Helm worker.native.resourcePolicy.tasks is rejected (96.629981ms)
+✔ CP06 competing Helm control.nativeResourcePolicy.tasks is rejected (93.625712ms)
+✔ CP06 two resource policies change both rendered snapshots and checksums (295.711483ms)
+✔ CP01 Helm accepts the resource safe-integer ceiling without timer coercion (194.096482ms)
+✔ CS5 Helm rejects supervisor uid=undefined (121.53519ms)
+✔ CS5 Helm rejects supervisor uid=null (97.462142ms)
+✔ CS5 Helm rejects supervisor uid=1 (45.123877ms)
+✔ CS5 Helm rejects supervisor uid=0 (84.473873ms)
+✔ CS5 Helm rejects supervisor uid=-1 (99.733931ms)
+✔ CS5 Helm rejects supervisor uid=1.5 (92.249516ms)
+✔ CS5 Helm rejects supervisor uid=2147483648 (105.997164ms)
+✔ CS5 Helm rejects supervisor gid=undefined (85.294674ms)
+✔ CS5 Helm rejects supervisor gid=null (98.002956ms)
+✔ CS5 Helm rejects supervisor gid=1 (180.61425ms)
+✔ CS5 Helm rejects supervisor gid=0 (95.229534ms)
+✔ CS5 Helm rejects supervisor gid=-1 (46.362259ms)
+✔ CS5 Helm rejects supervisor gid=1.5 (155.568198ms)
+✔ CS5 Helm rejects supervisor gid=2147483648 (94.055683ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=undefined (116.94839ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=null (101.779335ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=1 (89.003891ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=0 (98.5467ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=-1 (93.455567ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=1.5 (52.616192ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipRecords=2147483648 (85.807868ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=undefined (83.452486ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=null (93.065997ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=1 (85.253213ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=0 (50.154588ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=-1 (95.123031ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=1.5 (92.986785ms)
+✔ CS5 Helm rejects supervisor maximumOwnershipBytes=2147483648 (63.672641ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=undefined (52.89443ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=null (51.189034ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=1 (43.763881ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=0 (47.709164ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=-1 (52.310615ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=1.5 (48.924765ms)
+✔ CS5 Helm rejects supervisor maximumOutputBytes=2147483648 (55.003855ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=undefined (51.523353ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=null (50.531297ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=1 (50.461066ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=0 (49.198743ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=-1 (51.968775ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=1.5 (49.45415ms)
+✔ CS5 Helm rejects supervisor maximumJournalBytes=9007199254740992 (53.149657ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=undefined (48.833524ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=null (48.567337ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=1 (51.237617ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=0 (52.55095ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=-1 (55.011175ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=1.5 (54.360167ms)
+✔ CS5 Helm rejects supervisor pollIntervalMs=2147483648 (51.469493ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=undefined (57.787137ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=null (54.883481ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=1 (49.628894ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=0 (48.589778ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=-1 (53.501615ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=1.5 (52.882099ms)
+✔ CS5 Helm rejects supervisor drainTimeoutMs=2147483648 (53.887555ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=undefined (45.717102ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=null (52.53595ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=1 (56.723039ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=0 (52.475649ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=-1 (53.299999ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=1.5 (50.817905ms)
+✔ CS5 Helm rejects supervisor closeTimeoutMs=2147483648 (51.111362ms)
+✔ CS5 old Helm supervisor close author is rejected (45.751443ms)
+✔ CS4 Helm uses authored drain as well as close in shutdown budget (171.234136ms)
+✔ CS5 both actual mounts and checksums deliver two supervisor profiles without old environment authors (139.838457ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (48.750121ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (50.700033ms)
+✔ CS5 Helm rejects missing, null or extended supervisor object (44.276944ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=undefined (51.614796ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject="" (49.885641ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject="operator:test" (56.891104ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=1 (50.479686ms)
+✔ CC4 Helm rejects Control pipelinePreferenceSubject=false (49.47438ms)
+✔ CC4 Helm rejects Control artifactRoot=undefined (60.60304ms)
+✔ CC4 Helm rejects Control artifactRoot=null (44.894791ms)
+✔ CC4 Helm rejects Control artifactRoot="" (47.293423ms)
+✔ CC4 Helm rejects Control artifactRoot="/" (50.059876ms)
+✔ CC4 Helm rejects Control artifactRoot="relative" (49.09813ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/../artifacts" (45.010013ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/artifacts/" (45.170248ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp//artifacts" (50.374974ms)
+✔ CC4 Helm rejects Control artifactRoot="/tmp/\u0000artifacts" (46.748679ms)
+✔ CC4 Helm rejects Control artifactRoot=1 (45.808715ms)
+✔ CC4 Helm rejects Control studioPublicUrl=undefined (47.079328ms)
+✔ CC4 Helm rejects Control studioPublicUrl=null (48.817903ms)
+✔ CC4 Helm rejects Control studioPublicUrl="" (45.912908ms)
+✔ CC4 Helm rejects Control studioPublicUrl="relative" (46.330598ms)
+✔ CC4 Helm rejects Control studioPublicUrl="file:///tmp" (48.245898ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://" (48.518505ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://user:pass@studio" (54.416519ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://studio?query=1" (55.000824ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://studio#fragment" (48.617778ms)
+✔ CC4 Helm rejects Control studioPublicUrl="https://bad host" (49.146222ms)
+✔ CC4 Helm rejects Control studioPublicUrl=1 (47.715584ms)
+✔ CC4 Helm strict Control object (45.599279ms)
+✔ CC4 Helm strict Control object (45.017824ms)
+✔ CC4 Helm strict Control object (49.08936ms)
+✔ CC4 Helm strict Control object (50.655761ms)
+✔ CC4 retired Helm subject author rejects even disabled value (84.787651ms)
+✔ CC4 two real mounted Control profiles align PVC and checksum while retaining generated trust topology (147.181518ms)
+✔ CL chart listener 23456 keeps every Control destination coherent (SPIFFE true) (79.917774ms)
+✔ CL chart listener 23456 keeps every Control destination coherent (SPIFFE false) (70.096818ms)
+✔ CL chart listener 23457 keeps every Control destination coherent (SPIFFE true) (98.041046ms)
+✔ CL chart listener 23457 keeps every Control destination coherent (SPIFFE false) (73.161697ms)
+✔ CL Helm rejects invalid listener undefined (54.933202ms)
+✔ CL Helm rejects invalid listener null (48.025352ms)
+✔ CL Helm rejects invalid listener 8080 (49.888981ms)
+✔ CL Helm rejects invalid listener 0 (50.026785ms)
+✔ CL Helm rejects invalid listener 65536 (48.522485ms)
+✔ CL Helm rejects invalid listener 3.5 (46.484002ms)
+✔ CL Helm rejects invalid listener true (47.882488ms)
+✔ CL Helm rejects second listener author (50.610959ms)
+✔ Studio authored profiles bind loader and all rendered listener edges (314.589723ms)
+✔ Studio chart rejects competing values and unsupported upstream topology (931.686754ms)
+Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding
+
+Use --debug flag to render out invalid YAML
+✔ release selection rejects missing, duplicate and cross-commit build receipts (2.70047ms)
+✖ generated release values render actual Helm charts with immutable role and sidecar references (830.281179ms)
+ℹ tests 345
+ℹ suites 0
+ℹ pass 340
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 38446.798003
+
+✖ failing tests:
+
+test at skills/prism/tests/studio-service.test.mts:163:1
+✖ canonical authored Studio profile starts the actual packaged service contract (245.29172ms)
+  AssertionError [ERR_ASSERTION]: node:events:505
+      throw er; // Unhandled 'error' event
+      ^
+  
+  Error: listen EADDRINUSE: address already in use 0.0.0.0:8080
+      at Server.setupListenHandle [as _listen2] (node:net:2328:16)
+      at listenInCluster (node:net:2437:12)
+      at node:net:2666:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  Emitted 'error' event on Server instance at:
+      at emitErrorNT (node:net:2416:8)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EADDRINUSE',
+    errno: -98,
+    syscall: 'listen',
+    address: '0.0.0.0',
+    port: 8080
+  }
+  
+  Node.js v24.21.0
+  
+  
+  1 !== null
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:45:12
+      at until (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:20:17)
+      at async studio (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:44:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/studio-service.test.mts:166:15)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/deployment/gitops-release.test.mjs:50:1
+✖ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (1327.724479ms)
+  Error: Command failed: bash /tmp/gitops-release-EJNPFI/scripts/deploy.sh render buster image
+  Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding
+  
+  Use --debug flag to render out invalid YAML
+  node:internal/errors:986
+    const err = new Error(message);
+                ^
+  
+  Error: Command failed: helm template agent-buster /tmp/gitops-release-EJNPFI/charts/kubeclaw --namespace agents -f /tmp/gitops-release-EJNPFI/releases/values/buster.yaml -f /tmp/release-registry-context-IipJCP/3.yaml
+  Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at render (file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:189:30)
+      at file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:191:24
+      at withDeploymentContext (file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:153:12)
+      at file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:190:5
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26 {
+    status: 1,
+    signal: null,
+    output: [
+      null,
+      '',
+      'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n' +
+        '\n' +
+        'Use --debug flag to render out invalid YAML\n'
+    ],
+    pid: 202143,
+    stdout: '',
+    stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n' +
+      '\n' +
+      'Use --debug flag to render out invalid YAML\n'
+  }
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at renderGroup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/gitops-bundle.mjs:78:20)
+      at exportGitOpsBundle (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/gitops-bundle.mjs:111:33)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:51:18
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:44:5)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:50:115)
+      at Test.runInAsyncScope (node:async_hooks:227:14) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\nnode:internal/errors:986\n  const err = new Error(message);\n              ^\n\nError: Command failed: helm template agent-buster /tmp/gitops-release-EJNPFI/charts/kubeclaw --namespace agents -f /tmp/gitops-release-EJNPFI/releases/values/buster.yaml -f /tmp/release-registry-context-IipJCP/3.yaml\nError: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at render (file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:189:30)\n    at file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:191:24\n    at withDeploymentContext (file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:153:12)\n    at file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:190:5\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26 {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    '',\n    'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n      '\\n' +\n      'Use --debug flag to render out invalid YAML\\n'\n  ],\n  pid: 202143,\n  stdout: '',\n  stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n    '\\n' +\n    'Use --debug flag to render out invalid YAML\\n'\n}\n\nNode.js v24.21.0\n" ],
+    pid: 201941,
+    stdout: '',
+    stderr: "Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\nnode:internal/errors:986\n  const err = new Error(message);\n              ^\n\nError: Command failed: helm template agent-buster /tmp/gitops-release-EJNPFI/charts/kubeclaw --namespace agents -f /tmp/gitops-release-EJNPFI/releases/values/buster.yaml -f /tmp/release-registry-context-IipJCP/3.yaml\nError: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at render (file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:189:30)\n    at file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:191:24\n    at withDeploymentContext (file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:153:12)\n    at file:///tmp/gitops-release-EJNPFI/scripts/updates/deployment-release.mjs:190:5\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26 {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    '',\n    'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n      '\\n' +\n      'Use --debug flag to render out invalid YAML\\n'\n  ],\n  pid: 202143,\n  stdout: '',\n  stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n    '\\n' +\n    'Use --debug flag to render out invalid YAML\\n'\n}\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/gitops-release.test.mjs:126:1
+✖ committed bundle corruption, switched selection and hidden image changes fail before activation (1319.045301ms)
+  Error: Command failed: bash /tmp/gitops-release-iaKmpb/scripts/deploy.sh render buster image
+  Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding
+  
+  Use --debug flag to render out invalid YAML
+  node:internal/errors:986
+    const err = new Error(message);
+                ^
+  
+  Error: Command failed: helm template agent-buster /tmp/gitops-release-iaKmpb/charts/kubeclaw --namespace agents -f /tmp/gitops-release-iaKmpb/releases/values/buster.yaml -f /tmp/release-registry-context-KjjChj/3.yaml
+  Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at render (file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:189:30)
+      at file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:191:24
+      at withDeploymentContext (file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:153:12)
+      at file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:190:5
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26 {
+    status: 1,
+    signal: null,
+    output: [
+      null,
+      '',
+      'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n' +
+        '\n' +
+        'Use --debug flag to render out invalid YAML\n'
+    ],
+    pid: 202519,
+    stdout: '',
+    stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n' +
+      '\n' +
+      'Use --debug flag to render out invalid YAML\n'
+  }
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at renderGroup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/gitops-bundle.mjs:78:20)
+      at exportGitOpsBundle (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/gitops-bundle.mjs:111:33)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:127:18
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:44:5)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:126:111)
+      at Test.runInAsyncScope (node:async_hooks:227:14) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\nnode:internal/errors:986\n  const err = new Error(message);\n              ^\n\nError: Command failed: helm template agent-buster /tmp/gitops-release-iaKmpb/charts/kubeclaw --namespace agents -f /tmp/gitops-release-iaKmpb/releases/values/buster.yaml -f /tmp/release-registry-context-KjjChj/3.yaml\nError: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at render (file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:189:30)\n    at file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:191:24\n    at withDeploymentContext (file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:153:12)\n    at file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:190:5\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26 {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    '',\n    'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n      '\\n' +\n      'Use --debug flag to render out invalid YAML\\n'\n  ],\n  pid: 202519,\n  stdout: '',\n  stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n    '\\n' +\n    'Use --debug flag to render out invalid YAML\\n'\n}\n\nNode.js v24.21.0\n" ],
+    pid: 202317,
+    stdout: '',
+    stderr: "Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\nnode:internal/errors:986\n  const err = new Error(message);\n              ^\n\nError: Command failed: helm template agent-buster /tmp/gitops-release-iaKmpb/charts/kubeclaw --namespace agents -f /tmp/gitops-release-iaKmpb/releases/values/buster.yaml -f /tmp/release-registry-context-KjjChj/3.yaml\nError: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at render (file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:189:30)\n    at file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:191:24\n    at withDeploymentContext (file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:153:12)\n    at file:///tmp/gitops-release-iaKmpb/scripts/updates/deployment-release.mjs:190:5\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26 {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    '',\n    'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n      '\\n' +\n      'Use --debug flag to render out invalid YAML\\n'\n  ],\n  pid: 202519,\n  stdout: '',\n  stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n    '\\n' +\n    'Use --debug flag to render out invalid YAML\\n'\n}\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/gitops-release.test.mjs:146:1
+✖ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (1338.782554ms)
+  Error: Command failed: bash /tmp/gitops-release-AgfOal/scripts/deploy.sh render buster image
+  Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding
+  
+  Use --debug flag to render out invalid YAML
+  node:internal/errors:986
+    const err = new Error(message);
+                ^
+  
+  Error: Command failed: helm template agent-buster /tmp/gitops-release-AgfOal/charts/kubeclaw --namespace agents -f /tmp/gitops-release-AgfOal/releases/values/buster.yaml -f /tmp/release-registry-context-CLnbFH/3.yaml
+  Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at render (file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:189:30)
+      at file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:191:24
+      at withDeploymentContext (file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:153:12)
+      at file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:190:5
+      at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+      at async node:internal/modules/esm/loader:647:26 {
+    status: 1,
+    signal: null,
+    output: [
+      null,
+      '',
+      'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n' +
+        '\n' +
+        'Use --debug flag to render out invalid YAML\n'
+    ],
+    pid: 202902,
+    stdout: '',
+    stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n' +
+      '\n' +
+      'Use --debug flag to render out invalid YAML\n'
+  }
+  
+  Node.js v24.21.0
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at renderGroup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/gitops-bundle.mjs:78:20)
+      at exportGitOpsBundle (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/gitops-bundle.mjs:111:33)
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:147:3
+      at fixture (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:44:5)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/gitops-release.test.mjs:146:122)
+      at Test.runInAsyncScope (node:async_hooks:227:14) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\nnode:internal/errors:986\n  const err = new Error(message);\n              ^\n\nError: Command failed: helm template agent-buster /tmp/gitops-release-AgfOal/charts/kubeclaw --namespace agents -f /tmp/gitops-release-AgfOal/releases/values/buster.yaml -f /tmp/release-registry-context-CLnbFH/3.yaml\nError: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at render (file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:189:30)\n    at file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:191:24\n    at withDeploymentContext (file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:153:12)\n    at file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:190:5\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26 {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    '',\n    'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n      '\\n' +\n      'Use --debug flag to render out invalid YAML\\n'\n  ],\n  pid: 202902,\n  stdout: '',\n  stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n    '\\n' +\n    'Use --debug flag to render out invalid YAML\\n'\n}\n\nNode.js v24.21.0\n" ],
+    pid: 202700,
+    stdout: '',
+    stderr: "Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\nnode:internal/errors:986\n  const err = new Error(message);\n              ^\n\nError: Command failed: helm template agent-buster /tmp/gitops-release-AgfOal/charts/kubeclaw --namespace agents -f /tmp/gitops-release-AgfOal/releases/values/buster.yaml -f /tmp/release-registry-context-CLnbFH/3.yaml\nError: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at render (file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:189:30)\n    at file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:191:24\n    at withDeploymentContext (file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:153:12)\n    at file:///tmp/gitops-release-AgfOal/scripts/updates/deployment-release.mjs:190:5\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26 {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    '',\n    'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n      '\\n' +\n      'Use --debug flag to render out invalid YAML\\n'\n  ],\n  pid: 202902,\n  stdout: '',\n  stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\\n' +\n    '\\n' +\n    'Use --debug flag to render out invalid YAML\\n'\n}\n\nNode.js v24.21.0\n"
+  }
+
+test at tests/verification/deployment/release-images.test.mjs:27:1
+✖ generated release values render actual Helm charts with immutable role and sidecar references (830.281179ms)
+  Error: Command failed: helm template buster /tmp/release-helm-aeGEMH/charts/kubeclaw -f /tmp/release-helm-aeGEMH/releases/values/buster.yaml --set runtimeInfrastructure.registry.endpoint=https://registry.example.test --set runtimeInfrastructure.registry.transport=https --set runtimeInfrastructure.registry.authSecretName=registry-test
+  Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding
+  
+  Use --debug flag to render out invalid YAML
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/release-images.test.mjs:55:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    status: 1,
+    signal: null,
+    output: [ null, '', 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n' ],
+    pid: 204866,
+    stdout: '',
+    stderr: 'Error: execution error at (kubeclaw/templates/deployment.yaml:1537:13): native Buster requires one replica and the generated namespace/node/policy binding\n\nUse --debug flag to render out invalid YAML\n'
+  }

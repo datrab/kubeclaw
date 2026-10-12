@@ -1,0 +1,17 @@
+{
+  "engineTypecheck": {
+    "command": "npx --no-install tsc --noEmit -p skills/buster/engine/tsconfig.json",
+    "exitCode": 0
+  },
+  "changedTestsTypecheck": {
+    "command": "npx --no-install tsc --noEmit --strict --allowJs --exactOptionalPropertyTypes --noUncheckedIndexedAccess --module nodenext --target esnext --allowImportingTsExtensions --skipLibCheck tests/verification/contracts/check-pipeline-remote-plan-runtime.mts tests/verification/reliability/nova-remote-faults.mts",
+    "exitCode": 0
+  },
+  "changedTestsLint": {
+    "command": "npx --no-install eslint --config charts/kubeclaw/files/config/eslint.config.mjs tests/verification/reliability/nova-remote-faults.mts tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "exitCode": 0
+  },
+  "configurationAttempts": "An initial ad-hoc non-strict TypeScript command produced existing Nova inference errors; strict mode without allowJs then reported missing .mjs declarations. Final flags match the engine strict/allowJs policy; no source declarations or checks were relaxed.",
+  "sourceBinding": "identities.json; checks executed in tool transcript, test subprocess output in final.txt",
+  "independentReview": "pending"
+}

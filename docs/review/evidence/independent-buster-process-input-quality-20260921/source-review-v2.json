@@ -1,0 +1,28 @@
+{
+  "manifestSha256": "6533a6a26084384b1ef51c4b980c7574f1712377e71dae5c1bc0409e98d2b1a4",
+  "mode": "independent source-only; no runtime/live edits",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "beforeMatches": true,
+      "afterMatches": true
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "beforeMatches": true,
+      "afterMatches": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+      "beforeMatches": true,
+      "afterMatches": true
+    }
+  ],
+  "decision": "V1 source blocker resolved; suitable for coordinated integration and genuine regression verification",
+  "reason": "Group rejection is captured immediately in shared failures list. Close remains awaited within original deadline. On timeout, error plus already observed group/signal errors retained. On close with failed observation, aggregate rejection prevents success claim. Timer callbacks do not throw. ESRCH remains expected suppression.",
+  "limits": [
+    "Only failures already observed by settlement can be included; pending OS operations are not claimed completed",
+    "No runtime/type/lint acceptance; real signal/group regression tests still required",
+    "Validation extraction and exact two environment paths unchanged from reviewed V1"
+  ]
+}

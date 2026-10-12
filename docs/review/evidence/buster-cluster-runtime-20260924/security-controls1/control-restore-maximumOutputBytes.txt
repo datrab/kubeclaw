@@ -1,0 +1,88 @@
+CI2_MUTATION_APPLIED {"mutation":"restore-maximumOutputBytes","pid":162997,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/production-cluster-options.ts","beforeSha256":"eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff","afterSha256":"f3a2abc8a4a83f745016f42f6237d99d80c19f035abc0c03a6a8cf655f3f0c0a","replacements":[{"from":"...policy.runtimeSecurity, kubectlExecutable:","to":"...policy.runtimeSecurity, maximumOutputBytes: 16777216, kubectlExecutable:","count":1}]}
+✔ required RuntimeSecurity field allowedNamespacePrefixes before filesystem access (2.767703ms)
+✔ required RuntimeSecurity field maximumExecutionMs before filesystem access (0.434351ms)
+✔ required RuntimeSecurity field maximumOutputBytes before filesystem access (0.37849ms)
+✔ required RuntimeSecurity field pollIntervalMs before filesystem access (0.39063ms)
+✔ required RuntimeSecurity field maximumObservationAgeMs before filesystem access (0.36463ms)
+✔ required RuntimeSecurity field maximumFutureSkewMs before filesystem access (0.457172ms)
+✔ required RuntimeSecurity field diagnosticCodeUnits before filesystem access (0.457732ms)
+✔ required RuntimeSecurity field executableSearchPath before filesystem access (0.357579ms)
+✔ complete bundle requires allowedNamespacePrefixes even with route disabled (15.507167ms)
+✔ complete bundle requires maximumExecutionMs even with route disabled (2.68664ms)
+✔ complete bundle requires maximumOutputBytes even with route disabled (1.765426ms)
+✔ complete bundle requires pollIntervalMs even with route disabled (1.713035ms)
+✔ complete bundle requires maximumObservationAgeMs even with route disabled (1.761986ms)
+✔ complete bundle requires maximumFutureSkewMs even with route disabled (1.809848ms)
+✔ complete bundle requires diagnosticCodeUnits even with route disabled (1.613522ms)
+✔ complete bundle requires executableSearchPath even with route disabled (1.690224ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [] (0.39024ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [""] (0.289628ms)
+✔ reject invalid RuntimeSecurity allowedNamespacePrefixes [42] (0.284867ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 0 (0.366559ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 2147483648 (0.302578ms)
+✔ reject invalid RuntimeSecurity maximumExecutionMs 1.5 (0.275337ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 1023 (0.288677ms)
+✔ reject invalid RuntimeSecurity maximumOutputBytes 9007199254740992 (0.323148ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 9 (0.325369ms)
+✔ reject invalid RuntimeSecurity pollIntervalMs 10001 (0.292437ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 999 (0.272427ms)
+✔ reject invalid RuntimeSecurity maximumObservationAgeMs 60001 (0.267647ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs -1 (0.276087ms)
+✔ reject invalid RuntimeSecurity maximumFutureSkewMs 2147483648 (0.308538ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 0 (0.285597ms)
+✔ reject invalid RuntimeSecurity diagnosticCodeUnits 1.5 (0.278947ms)
+✔ reject invalid RuntimeSecurity executableSearchPath [] (0.320168ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["relative"] (0.291528ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin:/escape"] (0.347869ms)
+✔ reject invalid RuntimeSecurity executableSearchPath ["/bin\u0000"] (0.427651ms)
+✔ retired RuntimeSecurity object null (0.217496ms)
+✔ retired RuntimeSecurity object {} (0.056932ms)
+✔ retired RuntimeSecurity object {"allowedNamespacePrefixes":["test"],"maximumExecutionMs":300000,"maximumOutputBytes":16777216,"pollIntervalMs":1000,"maximumObservationAgeMs":10000,"maximumFutureSkewMs":5000,"diagnosticCodeUnits":1024,"executableSearchPath":["/usr/local/bin","/usr/bin","/bin"]} (0.053182ms)
+✔ retired RuntimeSecurity object "invalid" (0.048342ms)
+✔ disabled RuntimeSecurity route has no binding or implicit activation (0.847482ms)
+✔ real execution deadline profile false (284.339283ms)
+✖ real combined output profile false (43.264254ms)
+✔ real observation age profile false (608.421907ms)
+✔ real future skew profile false (611.439916ms)
+✔ real diagnostic code units profile false (39.025482ms)
+✔ real PATH helper profile false (48.601474ms)
+✔ real execution deadline profile true (741.969967ms)
+✔ real combined output profile true (44.890646ms)
+✔ real observation age profile true (41.345344ms)
+✔ real future skew profile true (41.21436ms)
+✔ real diagnostic code units profile true (41.329533ms)
+✔ real PATH helper profile true (80.393177ms)
+▶ real polling profile changes command cadence; selected arrays and scalars captured
+  ✔ poll interval 50 (127.245065ms)
+  ✔ poll interval 1200 (1281.995ms)
+✔ real polling profile changes command cadence; selected arrays and scalars captured (1409.935893ms)
+✔ real namespace profile false (9.951501ms)
+✔ real namespace profile true (42.792532ms)
+✔ preserve inspected namespace prefix aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa (38.630583ms)
+✔ preserve inspected namespace prefix test- (39.178486ms)
+✔ reloaded file changes real PATH and diagnostic consumers; old captured consumer stays unchanged (180.536001ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 60
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6388.527444
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-runtime-security-policy.test.mjs:169:3
+✖ real combined output profile false (43.264254ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-runtime-security-policy.test.mjs:173:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { message: 'KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

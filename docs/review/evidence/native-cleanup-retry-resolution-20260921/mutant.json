@@ -1,0 +1,14 @@
+{
+  "mutation": "failed.operation.values.effectsDigest !== successfulCleanup.operation.values.effectsDigest -> false",
+  "exitCode": 1,
+  "detected": true,
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "/usr/local/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "/tmp/native-cleanup-retry-mutant-qt__nhwz/retry.test.mts"
+  ]
+}

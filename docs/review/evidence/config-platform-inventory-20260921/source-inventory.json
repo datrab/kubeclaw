@@ -1,0 +1,51 @@
+{
+  "scope": "Read-only current platform field inventory; no implementation or runtime acceptance",
+  "sourceCommit": "cd9f235345f5fd8736a2ffe75d806288e4d538db",
+  "sourceSha256": {
+    "skills/common/plugin-runtime/foundation/config/platform.ts": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8",
+    "skills/common/plugin-runtime/foundation/config/platform.schema.json": "4b4814b370a035668309df52af51dd138bc4c92ae3ec596393fb87b959dae605",
+    "skills/nova/core/cli.ts": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787",
+    "skills/nova/project/cli.ts": "6dbf4cb0a699b1e4c5e64c7f94d1bcbe9bdba1fcd1cf5232d81d7ad45ea5f366",
+    "skills/nova/project/legacy-import-cli.ts": "61f0e1ebb20a807a5b2fac3e0508931d0935e24aecaf7affa34bb30ee640f824",
+    "skills/nova/core/execution/engine-runtime.ts": "35c238db98fe8e5ac9479773f3eaa3ad0b63f40d04a0e252e0a4030e84b6e27d",
+    "skills/nova/core/execution/engine-admin.ts": "f3ba44d49baffa01ee74a4d749818e8f903feb48827eb9108f959c24c8a0a1f2",
+    "skills/buster/engine/test-gates/production-config-values.ts": "771cf3a0105edc54bbca6af53d5761082374aab2be15c3df72e5f6e5ee6ec567"
+  },
+  "schemaProperties": [
+    "schemaVersion",
+    "installationRoots",
+    "trustedBuiltinRoots",
+    "externalTrust",
+    "providers",
+    "grants",
+    "adapters",
+    "activeAdapters",
+    "observers",
+    "isolation",
+    "storageRoot",
+    "shutdownTimeoutMs",
+    "effectLockTtlMs",
+    "orchestratorIssuerId",
+    "administrativeDecisionIssuers"
+  ],
+  "tableRows": [
+    "schemaVersion",
+    "installationRoots",
+    "trustedBuiltinRoots",
+    "externalTrust.allowedSourceDigests",
+    "externalTrust.verifiedAttestations",
+    "providers",
+    "grants",
+    "adapters",
+    "activeAdapters",
+    "observers",
+    "isolation.cgroupRoot",
+    "storageRoot",
+    "shutdownTimeoutMs",
+    "effectLockTtlMs",
+    "orchestratorIssuerId",
+    "administrativeDecisionIssuers"
+  ],
+  "historicalCandidates": 1374,
+  "historicalPlatformLoaderEntries": 0
+}

@@ -1,0 +1,68 @@
+{
+  "status": "planned source-bound controls; not executed",
+  "controls": [
+    {
+      "name": "production-shared-group-wrong",
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sourceSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+      "old": "leaseApiGroup: binding.leaseApiGroup, leaseApiVersion: binding.leaseApiVersion,",
+      "new": "leaseApiGroup: 'wrong.example.test', leaseApiVersion: binding.leaseApiVersion,",
+      "test": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "expected": "Kubernetes auth argument must equal authored profile.group; exposure remains positive control"
+    },
+    {
+      "name": "production-runner-subject-wrong",
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sourceSha256": "eb4448a7250ed6e2adbff8ec47956ba5c4d253d198697c344f75274eb3d61bff",
+      "old": "runnerSubject: `${binding.controllerNamespace}/${runnerServiceAccount}`,",
+      "new": "runnerSubject: `${binding.controllerNamespace}/wrong-account`,",
+      "test": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "expected": "Lease spec.access must equal actual namespace/authored runnerServiceAccount"
+    },
+    {
+      "name": "production-service-cluster-forwarding-dropped",
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sourceSha256": "73a9e23f3744f0a7bbbb1cba440300fd32c8f32e4233b32a38aebd9b84a43005",
+      "old": "    ...configuredClusterCapabilities(sources, policy, bindingSource),",
+      "new": "    ...{},",
+      "test": "tests/verification/contracts/buster-cluster-production-route.test.mjs",
+      "expected": "Allowed real job cannot pass with BUSTER_KUBERNETES_FIXTURE_CONFIG_REQUIRED or BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED"
+    },
+    {
+      "name": "capture-registry-array-retained",
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "sourceSha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4",
+      "old": "this.registryPrefixes = [...options.allowedRegistryPrefixes];",
+      "new": "this.registryPrefixes = options.allowedRegistryPrefixes;",
+      "test": "tests/verification/contracts/buster-cluster-capture.test.mjs",
+      "expected": "caller kubernetes.fixture registry post-mutation captured invocation unexpectedly IMAGE_DENIED"
+    },
+    {
+      "name": "capture-nested-manifest-retained",
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "sourceSha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4",
+      "old": "this.manifest = Object.freeze({ ...options.manifest });",
+      "new": "this.manifest = options.manifest;",
+      "test": "tests/verification/contracts/buster-cluster-capture.test.mjs",
+      "expected": "caller kubernetes.fixture manifest post-mutation captured invocation unexpectedly COMPLEXITY_LIMIT"
+    },
+    {
+      "name": "capture-tail-prefix-array-retained",
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "old": "this.#prefixes = [...new Set(options.allowedNamespacePrefixes)];",
+      "new": "this.#prefixes = options.allowedNamespacePrefixes;",
+      "test": "tests/verification/contracts/buster-cluster-capture.test.mjs",
+      "expected": "caller kubernetes.exposure namespace post-mutation captured invocation unexpectedly NAMESPACE_DENIED"
+    },
+    {
+      "name": "capture-tail-suffix-array-retained",
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sourceSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "old": "this.#suffixes = [...new Set(options.allowedHostSuffixes.map(suffix))];",
+      "new": "this.#suffixes = options.allowedHostSuffixes;",
+      "test": "tests/verification/contracts/buster-cluster-capture.test.mjs",
+      "expected": "caller kubernetes.exposure host post-mutation captured invocation unexpectedly HOST_DENIED"
+    }
+  ]
+}

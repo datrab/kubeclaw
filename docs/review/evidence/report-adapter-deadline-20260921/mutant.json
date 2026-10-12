@@ -1,0 +1,9 @@
+{
+  "command": [
+    "/usr/local/bin/node",
+    "--test",
+    "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts"
+  ],
+  "returnCode": 1,
+  "detectedOriginalDeadlineDefect": true
+}

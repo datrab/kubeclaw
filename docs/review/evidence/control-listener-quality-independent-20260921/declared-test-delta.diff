@@ -1,0 +1,62 @@
+--- before/skills/prism/tests/control-server-config.test.mts
++++ skills/prism/tests/control-server-config.test.mts
+@@ -2,7 +2,7 @@
+ import { fileURLToPath } from 'node:url';
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+-import {loadControlListenerConfig, loadControlServerConfig} from '../server/control-config.ts';
++import {loadControlCompositionConfig, loadControlServerConfig} from '../server/control-config.ts';
+ 
+ const shared = {
+   SWARM_CONFIG: fileURLToPath(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)),
+@@ -11,7 +11,7 @@
+   PRISM_WORKER_SECRET: 'worker-test',
+ };
+ 
+-test('Control configuration preserves production listener and original non-SPIFFE service defaults', () => {
++test('Control configuration preserves production listener and original non-SPIFFE service defaults', async () => {
+   const configuration = loadControlServerConfig(shared);
+   assert.equal(configuration.workerUrl.href, 'http://prism-worker:8080/');
+   assert.equal(configuration.controlInternalUrl.href, 'http://prism-control:8080/');
+@@ -21,9 +21,10 @@
+   assert.equal(configuration.dispatchSecret, shared.PRISM_DISPATCH_SECRET);
+   assert.equal(configuration.workerSecret, shared.PRISM_WORKER_SECRET);
+   assert.equal(configuration.spiffeEnabled, false);
+-  assert.deepEqual(loadControlListenerConfig({}), {databaseUrl: undefined, port: 8080});
+-  assert.deepEqual(loadControlListenerConfig({DATABASE_URL: 'postgresql://db/prism', PORT: '28080'}),
+-    {databaseUrl: 'postgresql://db/prism', port: 28080});
++  assert.deepEqual((await loadControlCompositionConfig(shared)).listener, {databaseUrl: undefined, port: 8080});
++  const configurationWithDatabase = await loadControlCompositionConfig({...shared, DATABASE_URL: 'postgresql://db/prism'});
++  assert.deepEqual(configurationWithDatabase.listener, {databaseUrl: 'postgresql://db/prism', port: 8080});
++  assert.throws(() => loadControlServerConfig({...shared, PORT: '28080'}), /SWARM_CONFIG_LEGACY_OVERRIDE:PORT/);
+ });
+ 
+ test('Control trust configuration fails closed and keeps optional test-runner identity optional', () => {
+--- before/tests/verification/deployment/prism-swarm-image.mjs
++++ tests/verification/deployment/prism-swarm-image.mjs
+@@ -5,6 +5,9 @@
+ import { loadWorkerConfig } from '/app/prism/skills/prism/server/worker-config.ts';
+ const file = process.env.SWARM_CONFIG;
+ const settings = JSON.parse(fs.readFileSync(file, 'utf8')).operator.prism;
++const role = process.argv[2];
++assert.ok(['prism-control', 'prism-worker'].includes(role), 'explicit image role required');
++if (role === 'prism-worker') {
+ const expected = settings.worker;
+ const actual = loadWorkerConfig({ ...process.env, SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://image-proof/control' });
+ const { shutdownTimeoutMs, ...ingress } = expected;
+@@ -12,6 +15,8 @@
+ assert.deepEqual(actual.ingress, ingress);
+ assert.throws(() => loadWorkerConfig({ ...process.env, SWARM_CONFIG: file, WORKER_TRUST_SPIFFE_ENABLED: 'true', PRISM_TRUSTED_CONTROL_SPIFFE_ID: 'spiffe://image-proof/control', PRISM_WORKER_SHUTDOWN_TIMEOUT_MS: String(shutdownTimeoutMs) }), /SWARM_CONFIG_LEGACY_OVERRIDE/);
+ assert.deepEqual(actual.native, settings.native);
++}
++if (role === 'prism-control') {
+ const control = loadControlServerConfig({ ...process.env, SWARM_CONFIG: file, PRISM_SESSION_SECRET: 'image-proof', PRISM_INGRESS_SECRET: 'image-proof',
+   PRISM_INGESTION_SECRET: 'image-proof', PRISM_DISPATCH_SECRET: 'image-proof', PRISM_WORKER_SECRET: 'image-proof' });
+ assert.equal(control.maximumWorkerResponseBytes, settings.native.maximumResultBytes);
+@@ -19,4 +24,6 @@
+ assert.equal(control.artifactRoot, settings.control.artifactRoot);
+ assert.equal(control.studioPublicUrl, settings.control.studioPublicUrl);
+ assert.equal(control.pipelinePreferenceSubject, settings.control.pipelinePreferenceSubject ?? undefined);
++assert.equal(control.port, settings.control.port);
++}
+ console.log('PRISM_SWARM_IMAGE_LOADER_VERIFIED');

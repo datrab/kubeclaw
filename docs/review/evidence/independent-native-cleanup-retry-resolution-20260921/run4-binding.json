@@ -1,0 +1,44 @@
+{
+  "equalBeforeAfterEntries": 31183,
+  "testedFinalCurrentFiles": [
+    "skills/worker/core/worker/native-attempt-recovery.ts",
+    "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+    "tests/verification/reliability/worker-native-cleanup.test.mts",
+    "tests/verification/reliability/worker-native-cleanup-retry.test.mts",
+    "tests/verification/reliability/native-cleanup-fixture.mts",
+    "tests/verification/reliability/tsconfig.native-scope.json",
+    "package.json"
+  ],
+  "pass": 75,
+  "fail": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "newTestArchiveMatches": true,
+  "kernelRootProof": false,
+  "artifacts": [
+    {
+      "path": "docs/review/evidence/native-node-pools-environment-matrix-20260921/run4/host-result.json",
+      "sha256": "8625131e2b131935fe85b45f46c842241a6c5ded896d1f70e67ce1f0d862af99"
+    },
+    {
+      "path": "docs/review/evidence/native-node-pools-environment-matrix-20260921/run4/host-tests.txt",
+      "sha256": "19329edde22ce013d31f425b437ac6a79f06f47ab8e613b9ca912dbe6c1c781d"
+    },
+    {
+      "path": "docs/review/evidence/native-node-pools-environment-matrix-20260921/run4/host-source-identities.json",
+      "sha256": "ed359ef9b87d8f588471d4558bb86da424dee41765b7bdf72a45655f0f68bfd8"
+    },
+    {
+      "path": "docs/review/evidence/native-node-pools-environment-matrix-20260921/run4/host-source-identities-after.json",
+      "sha256": "ed359ef9b87d8f588471d4558bb86da424dee41765b7bdf72a45655f0f68bfd8"
+    },
+    {
+      "path": "docs/review/evidence/native-node-pools-environment-matrix-20260921/run4/source.patch",
+      "sha256": "69b2ee1f20b0a64e6c6c161afa4b9d63c5f036bef301b78e46c1c3ed84eed15c"
+    },
+    {
+      "path": "docs/review/evidence/native-node-pools-environment-matrix-20260921/run4/new-sources.tar.gz",
+      "sha256": "615905d43e2cbd11314e8a20cab4e8f0920e821549539c19e7e1f93d3de50c9a"
+    }
+  ]
+}

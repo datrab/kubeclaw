@@ -1,0 +1,179 @@
+import { ProcessInputLifecycle } from "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/process-input-lifecycle.ts";
+import { ProcessInputCleanupError } from "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/process-input.ts";
+import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import type { ArtifactRefV1 } from 'file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/contracts/pipeline-test-gate/v1/src/types.ts';
+import {
+  FileReportArtifactReader,
+  RegisteredReportAdapterRuntime,
+  type ReportAdapterRuntimeLimits,
+} from 'file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/src/index.ts';
+import { buildRegistry, discoverPackages } from 'file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/src/index.ts';
+
+const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'report-adapter-runtime-'));
+const installRoot = path.join(workspace, 'plugins');
+const artifactRoot = path.join(workspace, 'artifacts');
+const runtimeRoot = path.join(workspace, 'runtime');
+fs.mkdirSync(installRoot, { recursive: true });
+fs.mkdirSync(artifactRoot, { recursive: true });
+
+const validSource = `export async function adapt(input) {
+  if (Buffer.from(input.bytes).toString('utf8') !== '<testsuite/>') throw new Error('source mismatch');
+  return {
+    counts: { total: 1, passed: 1, failed: 0, errored: 0, skipped: 0 },
+    durationMs: 5,
+    cases: [{ id: 'case:one', name: 'one', suitePath: ['unit'], className: null,
+      outcome: 'passed', durationMs: 5, findings: [], findingsTruncated: false, omittedFindingCount: 0 }],
+    casesTruncated: false, omittedCaseCount: 0,
+    findings: [], findingsTruncated: false, omittedFindingCount: 0,
+  };
+}\n`;
+
+function writePackage(name: string, pluginId: string, source: string): string {
+  const root = path.join(installRoot, name);
+  fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
+  fs.writeFileSync(path.join(root, 'dist', 'adapter.js'), source);
+  fs.writeFileSync(path.join(root, 'plugin.json'), `${JSON.stringify({
+    id: pluginId,
+    apiVersion: 'pipeline-plugin-v2',
+    packageVersion: '1.0.0',
+    stages: [], observers: [], adapters: [],
+    reportAdapters: [{
+      id: 'junit', format: 'junit', contractVersion: 1,
+      module: 'dist/adapter.js', export: 'adapt',
+      mediaTypes: ['application/junit+xml'],
+    }],
+  }, null, 2)}\n`);
+  return root;
+}
+
+writePackage('valid', 'example.valid-report', validSource);
+writePackage('invalid-result', 'example.invalid-report', `export function adapt() {
+  return { counts: { total: 0, passed: 1, failed: 0, errored: 0, skipped: 0 }, durationMs: 0,
+    cases: [], casesTruncated: false, omittedCaseCount: 0,
+    findings: [], findingsTruncated: false, omittedFindingCount: 0 };
+}\n`);
+writePackage('forbidden', 'example.forbidden-report', `import fs from 'node:fs';
+export function adapt() { fs.readFileSync('/etc/passwd'); return {}; }\n`);
+writePackage('slow', 'example.slow-report', 'export async function adapt() { await new Promise((resolve) => setTimeout(resolve, 10000)); }\n');
+writePackage('spoofed', 'example.spoofed-report', `export function adapt() {
+  return {
+    schemaVersion: 'report-adapter-result.v1',
+    adapter: { adapterId: 'fake', format: 'junit', contractVersion: 1,
+      package: { packageId: 'fake.package', packageVersion: '1.0.0', contentDigest: 'sha256:${'0'.repeat(64)}' } },
+    sourceArtifact: { artifactId: 'artifact:fake', type: 'test-report', mediaType: 'application/junit+xml',
+      contentDigest: 'sha256:${'0'.repeat(64)}', sizeBytes: 0, storageUrl: 'file:///fake' },
+    counts: { total: 0, passed: 0, failed: 0, errored: 0, skipped: 0 }, durationMs: 0,
+    cases: [], casesTruncated: false, omittedCaseCount: 0,
+    findings: [], findingsTruncated: false, omittedFindingCount: 0,
+  };
+}\n`);
+writePackage('over-limit', 'example.over-limit-report', `export function adapt() {
+  const item = (id) => ({ id, name: id, suitePath: ['unit'], className: null,
+    outcome: 'passed', durationMs: 1, findings: [], findingsTruncated: false, omittedFindingCount: 0 });
+  return { counts: { total: 2, passed: 2, failed: 0, errored: 0, skipped: 0 }, durationMs: 2,
+    cases: [item('case:one'), item('case:two')], casesTruncated: false, omittedCaseCount: 0,
+    findings: [], findingsTruncated: false, omittedFindingCount: 0 };
+}\n`);
+writePackage('noisy', 'example.noisy-report', `process.stdout.write('x'.repeat(4096));
+export function adapt() { return {}; }\n`);
+writePackage('network', 'example.network-report', `import net from 'node:net';
+export async function adapt() {
+  await new Promise((resolve, reject) => {
+    const socket = net.connect(80, '127.0.0.1');
+    socket.once('connect', () => { socket.destroy(); resolve(); });
+    socket.once('error', reject);
+  });
+  return {};
+}\n`);
+const sqliteOutside = path.join(workspace, 'outside.sqlite');
+fs.writeFileSync(sqliteOutside, '');
+writePackage('sqlite', 'example.sqlite-report', `import { DatabaseSync } from 'node:sqlite';
+export function adapt() {
+  const database = new DatabaseSync(${JSON.stringify(sqliteOutside)});
+  database.close();
+  return {
+    counts: { total: 0, passed: 0, failed: 0, errored: 0, skipped: 0 }, durationMs: 0,
+    cases: [], casesTruncated: false, omittedCaseCount: 0,
+    findings: [], findingsTruncated: false, omittedFindingCount: 0,
+  };
+}\n`);
+
+const packages = discoverPackages({
+  installationRoots: [installRoot],
+  trustPolicy: {
+    trustedBuiltinRoots: [installRoot],
+    allowedSourceDigests: new Map(),
+    verifiedAttestations: new Map(),
+    verifierId: 'test:report-adapter-runtime',
+  },
+  now: () => new Date('2026-08-09T22:45:00Z'),
+});
+const registry = buildRegistry(packages);
+const reader = new FileReportArtifactReader([artifactRoot]);
+assert.throws(() => new FileReportArtifactReader([path.parse(artifactRoot).root]), /REPORT_ARTIFACT_ROOT_TOO_BROAD/u);
+assert.throws(() => new RegisteredReportAdapterRuntime(reader, path.parse(runtimeRoot).root),
+  /REPORT_ADAPTER_RUNTIME_ROOT_TOO_BROAD/u);
+const runtime = new RegisteredReportAdapterRuntime(reader, runtimeRoot);
+assert.equal(fs.statSync(runtimeRoot).mode & 0o077, 0, 'runtime snapshots stay in an owner-private directory');
+
+const reportPath = path.join(artifactRoot, 'report.xml');
+const reportBytes = Buffer.from('<testsuite/>');
+fs.writeFileSync(reportPath, reportBytes);
+const artifact: ArtifactRefV1 = {
+  artifactId: 'artifact:report',
+  type: 'test-report',
+  mediaType: 'application/junit+xml',
+  contentDigest: `sha256:${crypto.createHash('sha256').update(reportBytes).digest('hex')}`,
+  sizeBytes: reportBytes.byteLength,
+  storageUrl: pathToFileURL(reportPath).href,
+};
+const limits: ReportAdapterRuntimeLimits = {
+  maximumSourceBytes: 1024 * 1024,
+  maximumResultBytes: 1024 * 1024,
+  maximumCases: 100,
+  maximumFindings: 100,
+  maximumCaseFindings: 10,
+  timeoutMs: 2_000,
+  memoryBytes: 128 * 1024 * 1024,
+  cpuMillis: 5_000,
+  openFiles: 64,
+};
+
+
+const slow = registry.reportAdapters.get('example.slow-report:junit'); assert.ok(slow);
+const originalCleanup = ProcessInputLifecycle.prototype.cleanup;
+let cleanupCalls = 0;
+const pause = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+try {
+  ProcessInputLifecycle.prototype.cleanup = async function() {
+    cleanupCalls++; await originalCleanup.call(this); await pause(350);
+  };
+  const external = new AbortController(); const externalReason = new Error('REPORT_ADAPTER_TIMEOUT');
+  const first = runtime.adapt(slow, artifact, { ...limits, timeoutMs: 300 }, external.signal);
+  const firstTimer = setTimeout(() => external.abort(externalReason), 100);
+  try { await assert.rejects(first, error => error instanceof Error && error.message === 'REPORT_ADAPTER_CANCELLED' && error.cause === externalReason); }
+  finally { clearTimeout(firstTimer); }
+  assert.equal(cleanupCalls, 1); assert.equal(fs.readdirSync(runtimeRoot).length, 0);
+  console.log('PASS caller abort wins even after internal timer fires while real drained cleanup settlement is delayed');
+  const laterExternal = new AbortController(); const laterReason = new Error('REPORT_ADAPTER_TIMEOUT');
+  const second = runtime.adapt(slow, artifact, { ...limits, timeoutMs: 100 }, laterExternal.signal);
+  const secondTimer = setTimeout(() => laterExternal.abort(laterReason), 200);
+  try { await assert.rejects(second, error => error instanceof Error && error.message === 'REPORT_ADAPTER_TIMEOUT' && error !== laterReason); }
+  finally { clearTimeout(secondTimer); }
+  assert.equal(cleanupCalls, 2); assert.equal(fs.readdirSync(runtimeRoot).length, 0);
+  console.log('PASS internal deadline wins despite a later caller abort during delayed real drained cleanup settlement');
+  const injectedFailure = new Error('INDEPENDENT_INJECTED_CLEANUP_FAILURE_AFTER_REAL_DRAIN');
+  ProcessInputLifecycle.prototype.cleanup = async function() {
+    cleanupCalls++; await originalCleanup.call(this); throw injectedFailure;
+  };
+  await assert.rejects(runtime.adapt(slow, artifact, { ...limits, timeoutMs: 100 }), error =>
+    error instanceof ProcessInputCleanupError && error.message === 'REPORT_ADAPTER_CLEANUP_FAILED'
+    && error.errors.includes(injectedFailure) && error.cause instanceof Error && error.cause.message === 'REPORT_ADAPTER_CANCELLED');
+  assert.equal(cleanupCalls, 3); assert.equal(fs.readdirSync(runtimeRoot).length, 1, 'unconfirmed cleanup retains exact snapshot');
+  console.log('PASS injected cleanup failure stays distinct and retains snapshot; this is NOT an actual failed kernel drain');
+} finally { ProcessInputLifecycle.prototype.cleanup = originalCleanup; fs.rmSync(workspace, { recursive: true, force: true }); }

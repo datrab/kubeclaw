@@ -1,0 +1,20 @@
+{
+  "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/isolation/plugin-sandbox": {
+    "after": {
+      "bytes": 24016,
+      "device": 2306,
+      "inode": 11972731,
+      "kind": "file",
+      "mode": 493,
+      "sha256": "3faba9a88eef6f4278c2cc11fef6fbdd246a898862cbe08eabbafee4b848376b"
+    },
+    "before": {
+      "bytes": 24016,
+      "device": 2306,
+      "inode": 11972715,
+      "kind": "file",
+      "mode": 493,
+      "sha256": "3faba9a88eef6f4278c2cc11fef6fbdd246a898862cbe08eabbafee4b848376b"
+    }
+  }
+}

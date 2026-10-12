@@ -1,0 +1,8 @@
+✔ deploy bundle fields decode folded URLs and preserve overlay credential selection (799.547783ms)
+✔ agent changes and manifest changes do not rebuild tools; embedded service code does (1.241582ms)
+✔ code selection reuses images only across unchanged image inputs, including deleted inputs (381.472188ms)
+✔ bundle selection rejects missing hashes, mutable URLs and wrong role archives (1.082968ms)
+✔ push detector rebuilds an environment changed by an earlier unselected build (900.988083ms)
+✔ actual bootstrap checksum command rejects modified downloads before extraction (13.222081ms)
+✔ rendered code updates retain image digests and require selected URL, role, hash and revision (184.695943ms)
+✔ real materialization and Helm render enable pinned bundles for all three agents on retained images (5927.197011ms)

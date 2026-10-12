@@ -1,0 +1,22 @@
+{
+  "at": "2026-09-21T19:27:10.350853+00:00",
+  "runtimeExecuted": false,
+  "previousManifest": "identities.json",
+  "files": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "480ccdab11b1329caa5c564a5dc7a121ca043a955bb9d48365dd8fbacaa5e503",
+      "snapshot": "after-v2/skills/buster/engine/test-gates/provider-loader.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-session.ts",
+      "sha256": "24c91d8a84da1d17ead3060f04eb6556176d4dd55e5ba916a304f0a302ab1daf",
+      "snapshot": "after-v2/skills/buster/engine/test-gates/provider-process-session.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-process-observation.ts",
+      "sha256": "eca305796cc719a34e1d8707db0c3a8b5421815ce092c6b12f136e6003762e92",
+      "snapshot": "after-v2/skills/buster/engine/test-gates/provider-process-observation.ts"
+    }
+  ]
+}

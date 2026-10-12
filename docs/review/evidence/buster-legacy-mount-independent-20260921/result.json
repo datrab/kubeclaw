@@ -1,0 +1,26 @@
+{
+  "driverSha256": "db816f090613843fcc43b024f606d9441b06cd2006a4779ca7a1f365db0ba9ef",
+  "allOtherAstIdentical": true,
+  "caseCount": 27,
+  "modeledCallBoundaryOnly": [
+    {
+      "unshareReturn": 0,
+      "mountReturn": 0,
+      "error": null,
+      "callCount": 2
+    },
+    {
+      "unshareReturn": -1,
+      "mountReturn": 0,
+      "error": "MOUNT_NAMESPACE_PREREQUISITE:1",
+      "callCount": 1
+    },
+    {
+      "unshareReturn": 0,
+      "mountReturn": -1,
+      "error": "[Errno 1] PRIVATE_MOUNT_PREREQUISITE:Operation not permitted",
+      "callCount": 2
+    }
+  ],
+  "realMountOrNamespaceExecuted": false
+}

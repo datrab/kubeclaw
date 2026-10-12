@@ -1,0 +1,180 @@
+{
+  "status": "prepared-not-booted",
+  "files": [
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/added-packages.json",
+      "bytes": 1465,
+      "sha256": "5e62a0ad06b1e330d211b43796aec4eab71dd582de888021d89d23fbee2f826b"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/author-source-identities.json",
+      "bytes": 3770,
+      "sha256": "6864e8e8251e907d3b73f59fd959f9080f476391b18ccfd0da0d79781d17e12e"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/bind-artifacts.py",
+      "bytes": 1022,
+      "sha256": "245ad453e80eb28551bf77d7a6a2bc26d48a04eacf30a3e7e1d25ce6f5c82a4d"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/extract-final.txt",
+      "bytes": 2572,
+      "sha256": "dba70b0e7f0ec9d9292db6d3e09ced66e9cf72f82b19f2eb813dfd819f1cc0a7"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/extract.txt",
+      "bytes": 997,
+      "sha256": "44b5a0273a24e141d3122e93600911d763706ff6ed3c7707ce8a9bc60458b7ec"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/fetch-setpriv.txt",
+      "bytes": 91,
+      "sha256": "6974cba5418d1576b988783114be9da9e11fe87292f981f5a7cc1047950deb86"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/fetch.txt",
+      "bytes": 155,
+      "sha256": "331f897ea3a150f580a7f6e137c3810e70552fa87ab80209cf01ba0212f74593"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/guest-identity.json",
+      "bytes": 121,
+      "sha256": "24c7899f326680c57b7001a40ce69c726ceb98774a7ea15a33ce82d4d861566b"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/guest-init.sh",
+      "bytes": 1987,
+      "sha256": "ac40547065172ff340b6cc8509111c2bdcbc63ee6579f1b3c0a9469d745bcc87"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/guest-proof.test.mjs",
+      "bytes": 2424,
+      "sha256": "e41d9e523f57790fce5bf5ef84b6234a297265cbad438e6c5f1b9091ac93b892"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/guest-tests.mjs",
+      "bytes": 836,
+      "sha256": "39adfe3e83d4e35cb828dcb187df8f971dc758a72d5cd8a891fed3411b13b3c0"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/launch-approved.py",
+      "bytes": 9664,
+      "sha256": "8f5eabadb4818d2edf6d234ec28e8e3637b66d20059318a8cf090f2e92194cf3"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/launch-command.json",
+      "bytes": 1776,
+      "sha256": "d3fb9ccf4417998d7f787d6dcb79c206e5ca1082e4b623a2dce2039b6a41c6f0"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/package-verify.txt",
+      "bytes": 410,
+      "sha256": "3700562400cb2942cb2ca36e8164029a497bc2d5253f0a60e20dafd651526f3a"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/preparation-final.txt",
+      "bytes": 1240,
+      "sha256": "cbaec1e6b5db4e57cc4fc557c8368b4db7e7a36999c79a0f4492cb491d896c07"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/preparation-resume.txt",
+      "bytes": 533,
+      "sha256": "fd56ed955b885fc6f4851132687f302629ab02069d517c708152c2ac66ee445b"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/preparation.txt",
+      "bytes": 1090,
+      "sha256": "e64779eb0fbbee3494a8f8b240197c0492b05e307843057f9ab873ec8e08209a"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/prepare-images.py",
+      "bytes": 5582,
+      "sha256": "024153497846bc8e0a953a396ef09a5b6cae272b780253234878264bb6e03c80"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/prepare.py",
+      "bytes": 5584,
+      "sha256": "ca45443f82119566fdb01a432f7348085ab35239c69957a337c661fc90427278"
+    },
+    {
+      "path": "docs/review/evidence/isolated-buster-helper-vm-proposal-20260921/snapshot-delta.json",
+      "bytes": 1792,
+      "sha256": "eaff07be5a92bf3a5e015fe68715af3a7619852f8562bc966a2e047f3b1b0799"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/guest-root/etc/machine-id",
+      "bytes": 37,
+      "sha256": "e4efc5b721387a52095f8f6e24ef8669e160a52b9900fc8ba7b564e0ecfea90e"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/guest-root/usr/local/bin/node",
+      "bytes": 131391152,
+      "sha256": "78465b20b5455f64d2dbbd9e8b38470cfc23ad3abe4cdc9a00dc5e050eee70fb"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/guest-root.ext4",
+      "bytes": 8589934592,
+      "sha256": "fa8897dc209e1cefcc69e18c4022b44bd7de586c454ed720cc24e15973f110f9"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/initrd.cpio.gz",
+      "bytes": 1899633,
+      "sha256": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libcap-getcap-2.78-r0.apk",
+      "bytes": 4323,
+      "sha256": "649b1de7cc4932d538b9d3f8760f1520b8f18babffb8e996dd9680f3e55bff27"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libcap-ng-0.8.5-r2.apk",
+      "bytes": 11389,
+      "sha256": "feeb65b050ec75766057ce8f3e9611eef3c03d9eeed17d31a900ab900ed2bcf2"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libcap-setcap-2.78-r0.apk",
+      "bytes": 5573,
+      "sha256": "79db5bb2c75ae67f97cb8982c6f26d78fc16cc01a2cc560a1764db981c6cecc2"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libcap-utils-2.78-r0.apk",
+      "bytes": 19256,
+      "sha256": "fb2137ea57d70951e7f81733272a0926f2b906f97d395d3ad59ce4d5af3e0a1b"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libcap2-2.78-r0.apk",
+      "bytes": 21582,
+      "sha256": "42886a7b4bcde26347c712925c8dc7db202b6029ef9b8c7ee81577ab7bdd8fad"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libeconf-0.8.3-r0.apk",
+      "bytes": 26054,
+      "sha256": "2a791c7957961f830cf31b04f35f814a63afcf633badc9052425ff1cf2f64380"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/packages/musl-1.2.6-r2.apk",
+      "bytes": 415475,
+      "sha256": "573712e2f49c15bfc20a2699f204acdfc74c772722b15e7353d768057fae0e71"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/packages/setpriv-2.42.3-r1.apk",
+      "bytes": 15077,
+      "sha256": "6a6290ca1f0fb61d0a47e15ed921dd44cb54cf15981c26923dcdf79095c7aff8"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/repo-snapshot-manifest.json",
+      "bytes": 6538870,
+      "sha256": "ad55e2b1b8e8ae54b25d341212964e3fa2577ac0a7b7a8940993e6b84b6901b8"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/root/boot/vmlinuz-virt",
+      "bytes": 12608512,
+      "sha256": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c"
+    },
+    {
+      "path": "node_modules/.cache/buster-helper-vm-20260921/root/usr/bin/qemu-system-x86_64",
+      "bytes": 27791496,
+      "sha256": "d0c183817a3044bc38e104f88ef56ee235c5d91a9413cba7255c1c1751c31fc1"
+    }
+  ]
+}

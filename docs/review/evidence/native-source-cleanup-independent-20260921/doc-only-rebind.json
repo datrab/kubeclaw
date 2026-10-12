@@ -1,0 +1,60 @@
+{
+  "productionUnchanged": true,
+  "priorManifestPreserved": true,
+  "rows": [
+    {
+      "path": "skills/worker/core/worker/native-cleanup-reconciliation.ts",
+      "reviewedSha256": "a4106fb5a0fde142ecce350fe670ae39482b05ae9a85f32298f944fdb88f512c",
+      "finalSha256": "a4106fb5a0fde142ecce350fe670ae39482b05ae9a85f32298f944fdb88f512c",
+      "changed": false
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+      "reviewedSha256": "d899ef4ee020b9e516248503172e2a8b773732516d7476f6333c03012f73bfdc",
+      "finalSha256": "d899ef4ee020b9e516248503172e2a8b773732516d7476f6333c03012f73bfdc",
+      "changed": false
+    },
+    {
+      "path": "skills/worker/core/src/index.ts",
+      "reviewedSha256": "03393a9f804937097964a81cedd1ca2a62ec9e95acce8d1ed0726d1828894012",
+      "finalSha256": "03393a9f804937097964a81cedd1ca2a62ec9e95acce8d1ed0726d1828894012",
+      "changed": false
+    },
+    {
+      "path": "tests/verification/reliability/native-cleanup-fixture.mts",
+      "reviewedSha256": "38001b52df26bf030743768821185309f86250ca3cf57675d0c6eeee9faf6096",
+      "finalSha256": "38001b52df26bf030743768821185309f86250ca3cf57675d0c6eeee9faf6096",
+      "changed": false
+    },
+    {
+      "path": "tests/verification/reliability/worker-native-cleanup.test.mts",
+      "reviewedSha256": "e7e9640aa711086a55e2f4ac5d7260dad814d6d39a75eb5c6c221dadf86625ff",
+      "finalSha256": "e7e9640aa711086a55e2f4ac5d7260dad814d6d39a75eb5c6c221dadf86625ff",
+      "changed": false
+    },
+    {
+      "path": "tests/verification/reliability/tsconfig.native-scope.json",
+      "reviewedSha256": "27003d96f350cd1906b8b4e987afc387cac2134731015f3631842e1948850fb3",
+      "finalSha256": "27003d96f350cd1906b8b4e987afc387cac2134731015f3631842e1948850fb3",
+      "changed": false
+    },
+    {
+      "path": "package.json",
+      "reviewedSha256": "a96ba6a76d3789f642cb6fad8ebc33107c96594758244feb5d020139ab91ce7b",
+      "finalSha256": "a96ba6a76d3789f642cb6fad8ebc33107c96594758244feb5d020139ab91ce7b",
+      "changed": false
+    },
+    {
+      "path": "docs/review/remediation/implementation/native-source-cleanup-reconciliation-20260921.md",
+      "reviewedSha256": "162972e5e40cd82769eba625292e5928608f0dba61a71e5f4ffef68ae5d94d77",
+      "finalSha256": "98b7cbaf6640dc7681b4ba8642eec8115a6e4fdb8b064bea276ba155d888fe48",
+      "changed": true
+    },
+    {
+      "path": "docs/operations/native-worker-host-pools.md",
+      "reviewedSha256": "0eaafc5f0ce1755b04a9ea0a19e7b694ac2be89ae41405dd0ba4b553512cd39b",
+      "finalSha256": "0eaafc5f0ce1755b04a9ea0a19e7b694ac2be89ae41405dd0ba4b553512cd39b",
+      "changed": false
+    }
+  ]
+}

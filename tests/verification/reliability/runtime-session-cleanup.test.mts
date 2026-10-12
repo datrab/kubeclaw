@@ -99,7 +99,7 @@ async function fixture(mode: Mode) {
   ]);
   const journalPath=path.join(root,'effects.jsonl');
   const create=()=>new core.AdapterRuntime({granted,activated,configs,
-    effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath),undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks'))),
+    effects:new core.EffectCoordinator(new core.FileEffectJournal(journalPath),undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks')), 300_000),
     shutdownTimeoutMs:1000,async emitDomainEvent(){}});
   const runtime=create();await runtime.start();
   const attempt={runId:'run:cleanup',stageId:'runtime',attemptId:'attempt:cleanup',attemptNumber:1};

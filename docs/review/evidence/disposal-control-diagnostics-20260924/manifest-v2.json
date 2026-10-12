@@ -1,0 +1,7 @@
+{
+  "path": "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs",
+  "beforeSha256": "1e851db3516243325b8f800dc22c2d1b7dab4e38e75d4c879541ac461fe4d557",
+  "afterSha256": "31234628c2266b28975407bef8c4164f673d672a75a0251ca07618f7189086ee",
+  "reason": "Await actual injected cleanup work with immediate rejection observation before final test assertions; Runner timeout may otherwise return first. Same original60s test budget and behavioral assertions, no production change.",
+  "runtime": "pending"
+}

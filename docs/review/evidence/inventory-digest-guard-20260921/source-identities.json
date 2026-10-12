@@ -1,0 +1,27 @@
+[
+  {
+    "path": "scripts/observability-retirement/files.mjs",
+    "snapshot": "source-0.snapshot",
+    "sha256": "ab00700014cae85cc33a162397f90f12502d16877648ceaf40aa27064a6fd38d"
+  },
+  {
+    "path": "tests/verification/reliability/inventory-digest-guard.test.mjs",
+    "snapshot": "source-1.snapshot",
+    "sha256": "6774bb3b602248abbccb5f87e719345882a037c1322c8e4ba117d9207750da7c"
+  },
+  {
+    "path": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+    "snapshot": "source-2.snapshot",
+    "sha256": "80f405b854fe427b2250e792acb64464acedb4bec00eb6b32b22ecea646e7971"
+  },
+  {
+    "path": "docs/operations/observability-retention.md",
+    "snapshot": "source-3.snapshot",
+    "sha256": "ded9b079ee7e19916cf5418bd9b2b60321f71744cc03b00a8954d540fa9ee385"
+  },
+  {
+    "path": "docs/review/remediation/implementation/inventory-digest-guard-20260921.md",
+    "snapshot": "source-4.snapshot",
+    "sha256": "14e35bb98164bfd8017a9227eeea26359490561de599398e20079bcb4860b1e2"
+  }
+]

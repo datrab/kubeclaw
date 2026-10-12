@@ -1,0 +1,8 @@
+{
+  "status": "private unexecuted regression draft",
+  "at": "2026-09-21T20:04:21.094529+00:00",
+  "path": "tests/verification/contracts/provider-loader-ownership.test.mjs",
+  "beforeSha256": "be7a5564374acc9c2ea7cbbea2ba864850e99167460c8aefde79b3d6d8799196",
+  "afterSha256": "42b57809fc91e208790ec00f7a01226b1890e291762dcc843d652601a9421c77",
+  "previous": "manifest-v1.json"
+}

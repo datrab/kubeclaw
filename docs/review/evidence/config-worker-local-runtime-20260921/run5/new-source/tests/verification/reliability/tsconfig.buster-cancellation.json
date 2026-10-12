@@ -1,0 +1,7 @@
+{
+  "extends": "../../../skills/buster/engine/tsconfig.json",
+  "include": [
+    "buster-atomic-cancellation.test.mts",
+    "buster-prepared-store-cancellation.test.mts"
+  ]
+}

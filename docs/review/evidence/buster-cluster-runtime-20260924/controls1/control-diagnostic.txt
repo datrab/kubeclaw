@@ -1,0 +1,77 @@
+CLUSTER_MUTATION_APPLIED {"mutation":"diagnostic","pid":37355,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts","beforeSha256":"d940cbaed6bf4f86cd1b03d3654b2483464d9e187caf04383a39398f283496fc","afterSha256":"9956017faea1cf04bc0c1b0c1bed6b3f02957d7884bf260b3c47464a62690df2","replacements":[{"from":"slice(0, maximumCodeUnits)","to":"slice(0, 4096)","count":2}],"replacedAnchors":2}
+✖ actual kubectl diagnostic captures 16 code units (11.357182ms)
+✖ actual kubectl diagnostic captures 80 code units (2.082964ms)
+✔ public invoker maximumManifestBytes, low true (1.413846ms)
+✔ public invoker maximumManifestBytes, low false (3.266705ms)
+✔ public invoker maximumResources, low true (1.452967ms)
+✔ public invoker maximumResources, low false (2.169876ms)
+✔ actual YAML consumer maximumNodes (0.610886ms)
+✔ actual YAML consumer maximumDepth (0.479292ms)
+✔ actual YAML consumer maximumAliases (0.558264ms)
+✔ actual List consumer maximumFlattenVisits (0.583565ms)
+✔ actual List consumer maximumFlattenPending (0.399181ms)
+✔ shared lease version domain reaches both actual constructors: v1 (1.672803ms)
+✔ shared lease version domain reaches both actual constructors: v2 (0.720749ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1 (0.692088ms)
+✔ shared lease version domain reaches both actual constructors: v2beta12 (0.734279ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha (0.889293ms)
+✔ shared lease version domain reaches both actual constructors: v1beta (0.554285ms)
+✔ shared lease version domain reaches both actual constructors: v1rc1 (0.550794ms)
+✔ shared lease version domain reaches both actual constructors: v1alpha1x (0.535294ms)
+✔ shared lease version domain reaches both actual constructors:  (0.574155ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 18
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2849.854839
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs:24:31
+✖ actual kubectl diagnostic captures 16 code units (11.357182ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'KUBERNETES_FIXTURE_KUBECTL_FAILED:zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz'
+  - 'KUBERNETES_FIXTURE_KUBECTL_FAILED:zzzzzzzzzzzzzzzz'
+  
+      at Object.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs:35:12)
+      at expectedException (node:assert:578:17)
+      at expectsError (node:assert:703:21)
+      at strict.rejects (node:assert:769:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs:34:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'KUBERNETES_FIXTURE_KUBECTL_FAILED:zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
+    expected: 'KUBERNETES_FIXTURE_KUBECTL_FAILED:zzzzzzzzzzzzzzzz',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs:24:31
+✖ actual kubectl diagnostic captures 80 code units (2.082964ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'KUBERNETES_FIXTURE_KUBECTL_FAILED:zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz'
+  - 'KUBERNETES_FIXTURE_KUBECTL_FAILED:zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz'
+  
+      at Object.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs:35:12)
+      at expectedException (node:assert:578:17)
+      at expectsError (node:assert:703:21)
+      at strict.rejects (node:assert:769:3)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs:34:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'KUBERNETES_FIXTURE_KUBECTL_FAILED:zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
+    expected: 'KUBERNETES_FIXTURE_KUBECTL_FAILED:zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

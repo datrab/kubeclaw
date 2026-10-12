@@ -56,7 +56,7 @@ for (const phase of ['before-receipt', 'after-receipt', 'lost-response'] as cons
     const common = path.resolve('skills/common/plugins');
     const secretName = `KUBECLAW_EFFECT_TEST_${phase.replaceAll('-', '_').toUpperCase()}`;
     process.env[secretName] = 'ephemeral-effect-test-token';
-    const platform: PlatformConfig = { schemaVersion: 'pipeline-platform.v2', installationRoots: [install, common], trustedBuiltinRoots: [install, common], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
+    const platform: PlatformConfig = { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [install, common], trustedBuiltinRoots: [install, common], externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
       providers: { 'runtime.dispatch': 'kubeclaw.runtime-dispatch:runtime', 'network.http': 'kubeclaw.network-http:http', 'secrets.read': 'kubeclaw.secret-resolver:secrets' },
       grants: { 'test.external-effects:mutate': { 'runtime.dispatch': { allowedAgents: ['mutation-service'] } },
         'kubeclaw.runtime-dispatch:runtime': { 'network.http': { allowedOrigins: [origin] }, 'secrets.read': { allowedNames: ['mutation-service.token'] } } },

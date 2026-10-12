@@ -1,0 +1,9 @@
+{
+  "originalTestsByteIdentical": 14,
+  "originalFixtureFunctionsPreserved": [
+    "resultFor",
+    "fixture",
+    "importCompletion",
+    "projectionFixture"
+  ]
+}

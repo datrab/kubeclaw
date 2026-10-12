@@ -71,10 +71,13 @@ Run:
 npm test --prefix skills/nova/plugins/human-approval
 ```
 
-Package tests found: 0.
+Package tests found: 3.
 
 ## Source Evidence
 
 - Manifest: `skills/nova/plugins/human-approval/plugin.json`
 - Package root: `skills/nova/plugins/human-approval`
 - Authored package guide: `skills/nova/plugins/human-approval/README.md`
+- Test: `skills/nova/plugins/human-approval/tests/approval.unit.test.mjs`
+- Test: `skills/nova/plugins/human-approval/tests/live-function.test.ts`
+- Test: `skills/nova/plugins/human-approval/tests/package-boundary.test.mjs`

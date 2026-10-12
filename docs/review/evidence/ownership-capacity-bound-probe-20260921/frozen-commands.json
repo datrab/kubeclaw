@@ -1,0 +1,22 @@
+[
+  {
+    "argv": [
+      "node",
+      "docs/review/evidence/ownership-capacity-bound-probe-20260921/probe.mjs"
+    ],
+    "output": "frozen-result.json",
+    "exitCode": 0,
+    "expectedExitCode": 0
+  },
+  {
+    "argv": [
+      "node",
+      "--import",
+      "./docs/review/evidence/ownership-capacity-bound-probe-20260921/omit-diagnosis.mjs",
+      "docs/review/evidence/ownership-capacity-bound-probe-20260921/probe.mjs"
+    ],
+    "output": "frozen-mutant.txt",
+    "exitCode": 1,
+    "expectedExitCode": 1
+  }
+]

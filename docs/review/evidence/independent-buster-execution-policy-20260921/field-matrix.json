@@ -1,0 +1,343 @@
+{
+  "fieldCount": 28,
+  "sourceInspectionOnly": true,
+  "fields": [
+    {
+      "section": "provider",
+      "field": "cleanupTimeoutMs",
+      "canonicalValue": 30000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "provider",
+      "field": "maximumResultBytes",
+      "canonicalValue": 16777216,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "provider",
+      "field": "claimGraceMs",
+      "canonicalValue": 60000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "provider",
+      "field": "queueTimeoutMs",
+      "canonicalValue": 60000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "provider",
+      "field": "workerResultWrapperBytes",
+      "canonicalValue": 4096,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "reports",
+      "field": "maximumAggregateResultBytes",
+      "canonicalValue": 16777216,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 16777216
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "reports",
+      "field": "maximumSourceBytes",
+      "canonicalValue": 67108864,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 67108864
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "reports",
+      "field": "maximumCases",
+      "canonicalValue": 5000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5000
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "reports",
+      "field": "maximumFindings",
+      "canonicalValue": 5000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 5000
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "reports",
+      "field": "maximumCaseFindings",
+      "canonicalValue": 100,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 100
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "reports",
+      "field": "maximumTimeoutMs",
+      "canonicalValue": 300000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 300000
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "reports",
+      "field": "memoryBytes",
+      "canonicalValue": 536870912,
+      "schema": {
+        "type": "integer",
+        "minimum": 67108869,
+        "maximum": 2147483648
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "reports",
+      "field": "minimumCpuTimeMs",
+      "canonicalValue": 1000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1000,
+        "maximum": 300000,
+        "multipleOf": 1000
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "reports",
+      "field": "maximumOpenFiles",
+      "canonicalValue": 64,
+      "schema": {
+        "type": "integer",
+        "minimum": 16,
+        "maximum": 256
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "observation",
+      "field": "resourceSampleIntervalMs",
+      "canonicalValue": 10,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "observation",
+      "field": "processSampleIntervalMs",
+      "canonicalValue": 50,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483647
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-attempts",
+      "field": "maximumEvidenceObjects",
+      "canonicalValue": 10000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-attempts",
+      "field": "maximumEvidenceBytes",
+      "canonicalValue": 10737418240,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-attempts",
+      "field": "maximumEvidenceObjectBytes",
+      "canonicalValue": 1073741824,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-attempts",
+      "field": "maximumResults",
+      "canonicalValue": 10000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-attempts",
+      "field": "maximumClosures",
+      "canonicalValue": 10000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-attempts",
+      "field": "maximumMetadataBytes",
+      "canonicalValue": 268435456,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-attempts",
+      "field": "maximumPendingEvidenceAgeMs",
+      "canonicalValue": 3600000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-admission",
+      "field": "maximumIngressBytes",
+      "canonicalValue": 16777216,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-admission",
+      "field": "maximumRecords",
+      "canonicalValue": 10000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-admission",
+      "field": "maximumBytes",
+      "canonicalValue": 268435456,
+      "schema": {
+        "type": "integer",
+        "minimum": 1025,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-admission",
+      "field": "maximumQuarantineRecords",
+      "canonicalValue": 1000,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    },
+    {
+      "section": "store-admission",
+      "field": "maximumQuarantineBytes",
+      "canonicalValue": 67108864,
+      "schema": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "typedRequired": true,
+      "helm": "generic required-properties loop reads same schema minimum/maximum/multipleOf; float64 + floor integer check"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/integration/worker-concurrent-resource-attribution.mts
+  25:114  error  Async arrow function has too many lines (68). Maximum allowed is 60  max-lines-per-function
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-http-cancellation.native.mts
+  1:1  error  Use a lowercase kebab-case filename  discipline/filename-case
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/worker-process-shutdown.native.mts
+  1:1  error  Use a lowercase kebab-case filename  discipline/filename-case
+
+✖ 3 problems (3 errors, 0 warnings)
+

@@ -1,3 +1,4 @@
+busterComponentFile: files/config/buster-engine.config.json
 images:
   control: { repository: ghcr.io/datrab/kubeclaw-prism-control, digest: "", pullPolicy: IfNotPresent }
   studio: { repository: ghcr.io/datrab/kubeclaw-prism-studio, digest: "", pullPolicy: IfNotPresent }
@@ -22,8 +23,6 @@ control:
     controllerCaSecretKey: ca.crt
     tokenAudience: ""
     tokenExpirationSeconds: 600
-  # Existing authenticated Prism subject; empty disables pipeline personal learning.
-  pipelinePreferenceSubject: ""
   replicas: 1
   resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: "4", memory: 4Gi } }
 studio:
@@ -36,8 +35,6 @@ worker:
     nodeName: ""
     namespace: ""
     policyDigest: ""
-    closeTimeoutMs: 105000
-  shutdownTimeoutMs: 120000
   terminationGracePeriodSeconds: 150
   replicas: 1
   resources: { requests: { cpu: "1", memory: 2Gi }, limits: { cpu: "8", memory: 8Gi } }

@@ -1,0 +1,30 @@
+✔ Studio loads authored operator values and keeps installation inputs outside JSON (16.341913ms)
+✔ Studio rejects retired PORT="" (1.190111ms)
+✔ Studio rejects retired PORT="8080" (0.662467ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="" (0.554885ms)
+✔ Studio rejects retired PRISM_CONTROL_URL="8080" (0.680898ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="" (1.5254ms)
+✔ Studio rejects retired PRISM_CONTROL_TIMEOUT_MS="8080" (0.716509ms)
+✔ Studio rejects invalid port through original shared validation (9.373103ms)
+✔ Studio rejects invalid controlTimeoutMs through original shared validation (60.078994ms)
+✔ Studio rejects invalid controlUrl through original shared validation (3.642224ms)
+✔ Studio rejects unknown settings and invalid startup terminates before serving (701.212038ms)
+✔ production Studio Docker environment does not reintroduce a retired author (1.109839ms)
+✔ actual Studio survives refused Control and malformed URL with explicit responses (919.861223ms)
+✔ actual Studio retains proxy bytes, cookies and upstream status (598.767818ms)
+✔ actual Studio forwards direction idempotency keys and retry payloads to Control (798.436552ms)
+✔ actual Studio bounds upstream headers wait and remains healthy (1184.706543ms)
+✔ actual Studio bounds upstream empty-body wait and remains healthy (1307.398536ms)
+✔ actual Studio bounds upstream partial-body wait and remains healthy (1398.05ms)
+✔ actual Studio cancels upstream streaming when the client disconnects (1009.376137ms)
+✔ authored Studio timeout 150 reaches the live proxy and startup snapshot (782.349435ms)
+✔ authored Studio timeout 600 reaches the live proxy and startup snapshot (1294.869131ms)
+✔ missing Studio ingress secret retains 503 proxy response and static availability (1097.591407ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12310.855719

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "fixed unrelated startup listener",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=original production entrypoint",
+      "skills/prism/tests/control-listener.test.mts"
+    ],
+    "exitCode": 1,
+    "detected": true
+  },
+  {
+    "name": "stale Service target8080",
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=CL chart listener",
+      "/tmp/control-chart-mutant-ns1734i4/tests/verification/deployment/prism-swarm-config.test.mjs"
+    ],
+    "exitCode": 1,
+    "detected": true
+  }
+]

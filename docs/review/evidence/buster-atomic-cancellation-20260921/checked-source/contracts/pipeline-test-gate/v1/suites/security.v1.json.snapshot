@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "test-suite-template.v1",
+  "contractId": "kubeclaw.security-suite@1",
+  "tests": {
+    "security-headers": { "uses": "kubeclaw.security-headers@1", "mode": "blocking", "retries": 0, "concurrencyGroup": "security-headers", "config": { "profile": "api-http-v1", "paths": ["/"], "policy": { "profile": "strict-v1" } } },
+    "dependency-security": { "uses": "kubeclaw.dependency-scan-trivy@1", "mode": "blocking", "retries": 0, "concurrencyGroup": "security-dependency", "config": { "projectDirectory": ".", "policy": { "profile": "strict-v1" } } },
+    "image-security": { "uses": "kubeclaw.image-scan-trivy@1", "mode": "blocking", "retries": 0, "concurrencyGroup": "security-image", "config": { "policy": { "profile": "strict-v1" } } },
+    "kubernetes-policy-security": { "uses": "kubeclaw.kubernetes-policy-security@1", "mode": "blocking", "retries": 0, "concurrencyGroup": "security-kubernetes-policy", "config": { "policy": { "profile": "strict-v1" } } },
+    "kubernetes-runtime-security": { "uses": "kubeclaw.kubernetes-runtime-security@1", "mode": "blocking", "retries": 0, "concurrencyGroup": "security-kubernetes-runtime", "config": { "policy": { "profile": "strict-v1" } } }
+  },
+  "fixtures": {},
+  "concurrencyLimits": {
+    "security-headers": 2,
+    "security-dependency": 1,
+    "security-image": 1,
+    "security-kubernetes-policy": 1,
+    "security-kubernetes-runtime": 1
+  }
+}

@@ -18,7 +18,12 @@ function fixture(run) {
   const git = args => execFileSync('git', ['-C', root, ...args], { encoding: 'utf8' }).trim();
   const commit = message => { git(['add', '.']); git(['-c', 'user.name=GitOps Test', '-c', 'user.email=test@example.invalid', 'commit', '-qm', message]); return git(['rev-parse', 'HEAD']); };
   try {
-    for (const directory of ['charts', 'my-values', 'scripts']) fs.cpSync(path.join(source, directory), path.join(root, directory), { recursive: true });
+    for (const directory of ['charts', 'my-values', 'scripts']) fs.cpSync(path.join(source, directory), path.join(root, directory), { recursive: true, verbatimSymlinks: true });
+    for (const name of ['swarm.schema.json', 'swarm-components.schema.json']) {
+      const schema = `skills/common/plugin-runtime/foundation/config/${name}`;
+      fs.mkdirSync(path.dirname(path.join(root, schema)), { recursive: true });
+      fs.copyFileSync(path.join(source, schema), path.join(root, schema));
+    }
     fs.symlinkSync(path.join(source, 'node_modules'), path.join(root, 'node_modules'));
     fs.writeFileSync(path.join(root, '.gitignore'), 'node_modules\n');
     const policy = yaml.load(fs.readFileSync(path.join(root, 'my-values/infra/native-worker-pools.yaml'), 'utf8'));
@@ -35,18 +40,25 @@ function fixture(run) {
     fs.writeFileSync(path.join(root, 'releases/runtime-images.json'), JSON.stringify({ schemaVersion: 1, commit: sourceCommit, sourceRunId: 123, sourceRunAttempt: 1, images }));
     execFileSync(process.execPath, ['scripts/updates/materialize-release.mjs', '--family=runtime'], { cwd: root });
     const buster = path.join(root, 'registry.yaml'), prism = path.join(root, 'native.yaml');
-    fs.writeFileSync(buster, yaml.dump({ runtimeInfrastructure: { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } } }));
+    fs.writeFileSync(buster, yaml.dump({ runtimeInfrastructure: { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } },
+      busterNative: { nodeName: policy.nodeName, namespace: policy.pools.buster.namespace, policyDigest: nativePoolPolicy(policy, 'buster').policyDigest } }));
     fs.writeFileSync(prism, yaml.dump({ worker: { native: { nodeName: 'native-render-test', namespace: 'agents', policyDigest: nativePoolPolicy(policy, 'prism').policyDigest } } }));
     const env = { ...process.env, CODE_BUNDLE_GITHUB_REPOSITORY: 'datrab/kubeclaw', BUSTER_VALUES_FILE: buster, PRISM_VALUES_FILE: prism };
-    run({ root, git, commit, sourceCommit, images, env });
+    run({ root, git, commit, sourceCommit, images, env, policy });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 }
 const directory = 'releases/gitops/reviewed-test';
 const url = 'https://github.com/datrab/kubeclaw.git';
 
-test('real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps', context => fixture(({ root, commit, sourceCommit, env }) => {
+test('real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps', context => fixture(({ root, commit, sourceCommit, env, policy }) => {
   const bundle = exportGitOpsBundle(root, directory, 'agents', 'agents', env);
   assert.equal(bundle.receipt.commit, sourceCommit);
+  const busterDocs = yaml.loadAll(fs.readFileSync(path.join(root, directory, 'buster/resources.yaml'), 'utf8')).filter(Boolean);
+  const busterPod = busterDocs.find(doc => doc.kind === 'Deployment' && doc.metadata.name === 'agent-buster').spec.template;
+  assert.equal(busterPod.metadata.annotations['kubeclaw.dev/native-worker-policy'], nativePoolPolicy(policy, 'buster').policyDigest);
+  assert.deepEqual(busterPod.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchFields,
+    [{ key: 'metadata.name', operator: 'In', values: [policy.nodeName] }]);
+
   assert.deepEqual(bundle.groups.map(group => group.role), ['buster', 'prism', 'nova']);
   assert.ok(bundle.groups.every(group => group.images.length > 0 && group.requiredSecrets.length > 0));
   const prismDocs = yaml.loadAll(fs.readFileSync(path.join(root, directory, 'prism/resources.yaml'), 'utf8')).filter(Boolean);
@@ -187,6 +199,18 @@ test('activation preflight requires Secrets, sole ownership, native binding and 
   assert.throws(() => preflightGitOps(root, result, 'argocd', run), /HEALTH_OR_TRACKING/); cases.health = health;
   cases.hostError = true;
   assert.throws(() => preflightGitOps(root, result, 'argocd', run), /NATIVE_HOST_NOT_READY/);
+  cases.hostError = false;
+  const wrongBinding = yaml.load(fs.readFileSync(env.BUSTER_VALUES_FILE, 'utf8'));
+  wrongBinding.busterNative.policyDigest = 'e'.repeat(64);
+  fs.writeFileSync(env.BUSTER_VALUES_FILE, yaml.dump(wrongBinding));
+  const wrongDirectory = 'releases/gitops/wrong-buster-binding';
+  exportGitOpsBundle(root, wrongDirectory, 'agents', 'agents', env);
+  const wrongResult = bootstrapDocuments(root, wrongDirectory, url, commit('Wrong Buster binding fixture'), 'argocd');
+  cases.apps = [];
+  calls.length = 0;
+  assert.throws(() => preflightGitOps(root, wrongResult, 'argocd', run), /NATIVE_BUSTER_POLICY_MISMATCH/);
+  assert.equal(calls.some(call => call[0] === process.execPath), false, 'wrong binding must reject before actual host preflight');
+
 }));
 
 test('root claim and retained workload tracking block imperative adoption after partial GitOps transitions', () => {
@@ -218,3 +242,17 @@ test('original runtime teardown commands stop before any Helm mutation when Argo
     assert.equal(fs.existsSync(log), false);
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
 });
+
+test('Buster export requires the supplied native binding before publishing a bundle', () => fixture(({ root, env }) => {
+  const file = env.BUSTER_VALUES_FILE;
+  const original = yaml.load(fs.readFileSync(file, 'utf8'));
+  for (const binding of [undefined, { ...original.busterNative, namespace: 'wrong-namespace' }]) {
+    const overlay = structuredClone(original);
+    if (binding === undefined) delete overlay.busterNative;
+    else overlay.busterNative = binding;
+    fs.writeFileSync(file, yaml.dump(overlay));
+    assert.throws(() => exportGitOpsBundle(root, directory, 'agents', 'agents', env),
+      error => /native Buster requires one replica and the generated namespace\/node\/policy binding/.test(error.stderr));
+    assert.equal(fs.existsSync(path.join(root, directory)), false);
+  }
+}));

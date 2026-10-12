@@ -1,0 +1,9 @@
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-phase9-vertical.mts:91
+      reference.contentDigest, reference.sizeBytes)).toString('utf8'));
+                ^
+
+TypeError: Cannot read properties of null (reading 'contentDigest')
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-phase9-vertical.mts:91:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0

@@ -1,0 +1,481 @@
+{
+  "previousManifestSha256": "b4f201dad80db2cda873d3012ec984986b0a7e651b2802e8d37f12f1ac39bdc2",
+  "correctionManifestSha256": "57f7216fdab337c5aa8fb2ca74cc2f61f0ab9eb50a02ec9e35f9dccc163a1f4a",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "f65d34e681f541f27b8b15d88cc5c2550325638118e45df5e71da0df9d78264d",
+      "beforeSha256": "999649fb834be3763eecda6735a2fc65b610c0e47ed8e4b66477771bdd5894c6",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/kubeclaw/files/config/buster-engine.config.json"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint-config.mjs",
+      "sha256": "8a59464fa85d16b6d7cecda632413b3b0c59eb015b17f8dc8034a61e5b5181d2",
+      "beforeSha256": "71843faf3904ce7e001aecd5ec4c0e8a511f6a4d5fe77baafa1e9f4306dfa09d",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/kubeclaw/files/config/eslint-config.mjs"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+      "sha256": "0aaf28d95a6922eba26888a6a0471fbe3a1cb3518a792b35e00c9d3b8f8f5ce7",
+      "beforeSha256": null,
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_buster-native.tpl",
+      "sha256": "06eaa44435684f2af9a14365b149ecef0c5cab1a0929413d5edbc2b73e8247e6",
+      "beforeSha256": "e12d651294c5dc9e98a409f3fb5ab24fc0dc44a6869d1980a534d93af640de55",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/kubeclaw/templates/_buster-native.tpl"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "1f597fc57f3cf5dc7d39d317f7009fdcb8c5cbc73f6191907ac01df67b0ecade",
+      "beforeSha256": "48254682f1b9d7edbf1546dd1c285a4e67815042062e906be514095c1bbedd20",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/kubeclaw/templates/_swarm-config.tpl"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "sha256": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+      "beforeSha256": "760a82838ffce8fbf2a29f17914a1395b5dbaac61b71742155e378f962ccaee3",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/kubeclaw/templates/buster-namespace-controller.yaml"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "sha256": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+      "beforeSha256": "5dff68d75c46476c582e8bb5d677b758574ecd1a2a0676363ef11eb188cb83f8",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/kubeclaw/templates/buster-namespace-lease-crd.yaml"
+    },
+    {
+      "path": "charts/kubeclaw/templates/rbac.yaml",
+      "sha256": "45525f90703f76d3dbcfb67290599359b6366025bd6fdc77040c27d85da6f5e9",
+      "beforeSha256": "66bde2d8f04e0e77e373cbd6e7722c00fb98345afa1042487a2b60f777914f3d",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/kubeclaw/templates/rbac.yaml"
+    },
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+      "beforeSha256": "cb4aca9459d3eb545425da701f0abb20196ff54bb00101287e4e9cf53e6bd729",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/kubeclaw/values.yaml"
+    },
+    {
+      "path": "charts/prism/files/config/profiles/buster-engine.runtime.config.json",
+      "sha256": "0aaf28d95a6922eba26888a6a0471fbe3a1cb3518a792b35e00c9d3b8f8f5ce7",
+      "beforeSha256": null,
+      "kind": "symlink",
+      "linkTarget": "../../../../kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/prism/files/config/profiles/buster-engine.runtime.config.json"
+    },
+    {
+      "path": "charts/prism/values.schema.json",
+      "sha256": "7588db4e045bc4d52c1b46b4bbffeac238f12c9bd074b71aa9592c4ed24589c3",
+      "beforeSha256": "116be07db791452f8ab6333fa0a9d5f76c8ed540e24c39c5f8dd76c9bec9b4e5",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/prism/values.schema.json"
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "sha256": "8b13da5c725b9eff02d1e12dae6f799ca74a6b01a83cb714a2777a915e98cee8",
+      "beforeSha256": "169e3416ba511dd3743850358ac0d6caf6a957318568af316f242355c32722b7",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/charts/prism/values.yaml"
+    },
+    {
+      "path": "docker/Dockerfile.buster-runtime",
+      "sha256": "c06483aca404d930853061f77537287f7855099d335a473a04475d5d88b7a8be",
+      "beforeSha256": "874d89034b372a6a82c47aa1169375a6b1542030cf22ad72a32b252ab0df60cb",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/docker/Dockerfile.buster-runtime"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "0b725285b971344b45ac4d0cba933679e6ca432d78e1b0249d7e310f10bc9280",
+      "beforeSha256": "d2e81938db163ec92bd021a047f30aa5bec06549f01f15f794ff360ecec58820",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/docker/buster-runtime-entrypoint.sh"
+    },
+    {
+      "path": "docs/architecture/buster-cluster-configuration.md",
+      "sha256": "e93ea82fdd3b024bf01d96fd45c976148148646e5e584907e32bfaab4adffab4",
+      "beforeSha256": null,
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/docs/architecture/buster-cluster-configuration.md"
+    },
+    {
+      "path": "docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md",
+      "sha256": "85408643e05abf71cd6e163a026775b5486381ac972336343f266eef6b1a2155",
+      "beforeSha256": "dff7f54c3321d1351fd496cd9fcd485f73451015c5c72d904ca473079291e785",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/docs/architecture/pipeline-test-gate-kubernetes-fixture-operator-guide.md"
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "sha256": "23106a0d42310ad7aa5e2ce22a7bc940e88beac0eb486130b6f728dd84e0472f",
+      "beforeSha256": "cf9afa2f8340c53b50e98e4bbdb0109bec5b3ce2530c42fd2519c86f350fd2c8",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/my-values/buster-values.yaml"
+    },
+    {
+      "path": "package.json",
+      "sha256": "8ed84f5a8eb007801c9e24e3c6aa18484a1ad81c3199f990ae66b4d0951f5d0b",
+      "beforeSha256": "a94c2d1af6d7a68a0949f3ccb6d89362cb6f7e78c14cdfb986d0f8cd59fdceca",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/package.json"
+    },
+    {
+      "path": "scripts/buster-cluster-preflight.mjs",
+      "sha256": "8af3686b218937310a08b03ef31a5d63c60d6525551003e3d655e0bf28c5bb5f",
+      "beforeSha256": null,
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/scripts/buster-cluster-preflight.mjs"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+      "sha256": "d2ea5344cca6f0e849dbe94b3bb455e170c7a0ec44d8e2f9f0517c5bd3ce0a74",
+      "beforeSha256": "2709b1a75b62d219b1c3771ee5698134e690343cb1d9df8063b3eaeea8881aec",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+      "sha256": "d39c0de3c0e245cc6dfe8845f984a4b36b31449a5a1e37faa414f2254aa3806c",
+      "beforeSha256": "ea8247a2d440f65726372a71dcdc629be9dbcdf682a4b874c0d6288329cbc18e",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+      "sha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+      "beforeSha256": "b52c8ccc2762abe5a43a75434f989b983e7fab81d16e5e0ae235bb0f7a3e042c",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+      "sha256": "b93b8ffe1b0af18614e20bb16899afe4378be86e748f667fc3b3ebdd77853fd9",
+      "beforeSha256": "5881e8bc25800a80f18a3377fc3fe66b11853a6e5aea51630dbd86e44c19d439",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "sha256": "d940cbaed6bf4f86cd1b03d3654b2483464d9e187caf04383a39398f283496fc",
+      "beforeSha256": "1572e13ce4ce41070867e8e0ff64a8b28772623fd1f693d2e25d0a43dede4288",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+      "sha256": "63872449a0e477735f5da43a6ec55291aaa7bfbe43cc66321ba1ad7feefdddc4",
+      "beforeSha256": "f1ce10ddd4574b8e735dd89e34b16dbb7401283e7f158cc24ffabf1af3ea4616",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/buster/engine/test-gates/kubernetes-fixture-settings.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "sha256": "a86a248f1bd72e949a6d2cf63811f48fb1974e417954eea0e4a9f5f2a1a9e8df",
+      "beforeSha256": "42f3533feab2fcf98a60e4fe570d9980c6d008785d65df6e73e15e3f2f54dc85",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/buster/engine/test-gates/kubernetes-manifest.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-capability-sources.ts",
+      "sha256": "457bc4de3ee01804091f576efa6963dcccda53fd89f39d19b3e235cfd35e179a",
+      "beforeSha256": "c2135bd4f48030b883e6c13749991a17e2e47e8b4db7272d8fa096081136d9d4",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/buster/engine/test-gates/production-capability-sources.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-cluster-options.ts",
+      "sha256": "dc7ce158497dddbda0d814d35d2d5297d31706fcbdec08950a0d12e31e0ca5b7",
+      "beforeSha256": "7808623ea1d8bb3f838254a898f84807d04c40d4ae17042440eeae2bdee1492e",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/buster/engine/test-gates/production-cluster-options.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "f386f4f5edf80c54e3679bbfa6f4fc4df6bfaea3793640c8cbd871a44827af61",
+      "beforeSha256": "b18d1684d25bae992b70c9e99910dc36a3015dbcef0ea72a6c0ee19dfdc27792",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/buster/engine/test-gates/production-config-values.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "94b3d29e9f1b3a238d9cf3015ed8d5a364231f1aa3a47690419967931b2e6c46",
+      "beforeSha256": "dd3b06c92a726cb2bcd68b61f8bc819e2b51101b10362bd043e92313f10fbc2a",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/buster/engine/test-gates/production.ts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "beforeSha256": "916fbe54e491c216e50fc3b20c81f0e114c918724ca327908a8fbd51cdbd8d86",
+      "sha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/type-correction-v1/files/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+      "sha256": "adb3a2a5cad33278860f8c45e1b104157e81deda9834cf7e95ffd7fabe2fbfbd",
+      "beforeSha256": null,
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "sha256": "9f494597de1af2b55ec912e53f21f34de779ccdfa94142a893133d0d7ed50d63",
+      "beforeSha256": "d1f283c7d9bd53e0385c36d20bd89d290371fd04b092401b98363acd6a551eef",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "115c19a963ae45e1ca2be1e30dcd9b4f1cba7e73a38a8c700777c64f89f8b4b9",
+      "beforeSha256": "df566aa6c12fda5943c736ec0babd4dff62113cc99e74128c488a551bb3efeef",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "55a38e42b869c27d831dfd9ee5392aa0177f7fc98e2e74e1b13f273f9f476de1",
+      "beforeSha256": "6eb99f6f053feee7debade1324f4044c2dd3820c5f51e6f081ebee406dff1700",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/skills/common/plugin-runtime/foundation/config/swarm.ts"
+    },
+    {
+      "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+      "sha256": "06ec94d5ba0e6f2db60cfb1574bc21a79fd8e2763abdf79fbc26650aac022ac1",
+      "beforeSha256": "31184df6adbd40d072cc4ebd24cdb80c434e287369105aa0f82fe1b52e3012e8",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/fixtures/test-gate/buster-cli-profile.mjs"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-command.mjs",
+      "sha256": "96236885439d14f24c14b4371afec426cc95d868aa19f3110fd21ace2c272271",
+      "beforeSha256": null,
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/fixtures/test-gate/cluster-command.mjs"
+    },
+    {
+      "path": "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+      "sha256": "e59433c5babd34e6c6fd07e68ab4e8012464fa54e418e163353dd6632baa603d",
+      "beforeSha256": "bcaaee2be2131b4508110a4f60370b02541b86eb9962cc60d8ec4b82d069706f",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs",
+      "sha256": "eed5abb2878b3dd7983859c6322994407a6ea31775529a2d2f5e11a6d2149b71",
+      "beforeSha256": null,
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-output-consumers.test.mjs",
+      "sha256": "75850db668b05cca4edc2eaccd141d13678178253cc5890eca194ccb2406df35",
+      "beforeSha256": null,
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/buster-cluster-output-consumers.test.mjs"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+      "sha256": "49ecf52423dd615c241cddcf4fa241131704831026b334b4b7328de80f070021",
+      "beforeSha256": null,
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/buster-cluster-poll-consumers.test.mjs"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs",
+      "sha256": "70fa2b64df3e96c4035c893ae9bff368de6577d56be20bf5a05348674c0eba0c",
+      "beforeSha256": null,
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/buster-cluster-timing-consumers.test.mjs"
+    },
+    {
+      "path": "tests/verification/contracts/buster-process-input-callers.test.mjs",
+      "sha256": "118aaf312f9e6f6d00a4b20d57b5e2a9c1aaaf672db7d67c31a28027d35d02ee",
+      "beforeSha256": "16c94f356e98005e5ac05d309c9bcad8111cf64d4c87243473936a2396a2f870",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/buster-process-input-callers.test.mjs"
+    },
+    {
+      "path": "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+      "sha256": "daeedf2c76ea68a35b7ee527891cff707532785b923d25b9be5084ce2c5ec2c3",
+      "beforeSha256": "5b2558a440a50ba57221cd3a4ec2d2924d42c86635746c4af505d87833526f69",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/buster-report-policy-parity.test.mjs"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+      "sha256": "644c286de8e40f31aaa7889b7fb956c6b3430c1ba7b75998df3226471b3134fb",
+      "beforeSha256": "8188d995f22cc5a124f3bfa3b6bb72167f79de1f2098db25a0238c36f095f8e5",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+      "beforeSha256": "8380b792ce0707c690612655db144e0a8d4adebbb35de32a9e2f17a3b4b4da17",
+      "sha256": "5cc4ec91787529dcd437e56d8cb1a22720a3b1569a32bafdc7ec9f372afba50d",
+      "kind": "file"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "beforeSha256": "915caa76b6eca542ac0336db6119685b069d4face68e2778f4aa0fdf876963ac",
+      "sha256": "c13bd9bf7f78ed834b17d78fd24ec147e7b21edbf90ae9152ae3e993e9ba924f",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/type-correction-v1/files/tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "sha256": "606c566c00541111a4f76544bea70b79aa794fd7f3502fa901e1a1428c135ebd",
+      "beforeSha256": "640531af9a0284ecfee39b6dfbc06393437b2e1fb8d182cb8fca8d07cb7622ae",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+      "sha256": "1cdc3105bcf3a63a32a2a79f3ae6fe7d7214ac5c29a025d591b23c18834cb951",
+      "beforeSha256": "3aa382dd6b81e8ac3736eee06a0ecfb8951e06e339c771367789f332921f5987",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+      "sha256": "259143200677ba037d71eef8d0c569582c9fffd6841cae357d83a9bc0bc35a0d",
+      "beforeSha256": "6a4b0f3b041550a794010ca954281eabbc8a7c4f64ff598a7f84b0b56c609799",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "sha256": "e3b8462e1190467d9bc16f771f81f356ba78fe07accefec8cd4292cb519d7d60",
+      "beforeSha256": "636c877577b946c1ddfd41e8e0e83faade5eacfb3bd5d7f1020430a951c3b4b5",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/check-pipeline-worker-local-config.mts"
+    },
+    {
+      "path": "tests/verification/contracts/tsconfig.buster-cluster-policy.json",
+      "sha256": "b7201417f2d5ab073a703a2ce66dafaf50bcb7ca2587a94bcc9054660c773077",
+      "beforeSha256": null,
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/contracts/tsconfig.buster-cluster-policy.json"
+    },
+    {
+      "path": "tests/verification/deployment/buster-admission-render.test.mjs",
+      "sha256": "880659b662e0dc3400c5e8f5cfb0b4d2ea6cfaeeefa25d8daf6e5bcc1b5aebc8",
+      "beforeSha256": "6d15c495edc1b7d6b4c615c9373fa9f72cc7dbf665a7da7dd260e4ed7df7a91b",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/deployment/buster-admission-render.test.mjs"
+    },
+    {
+      "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+      "beforeSha256": "79691f6b90dece3f267e2f693f53f926932da8d7bd2891f2e1c34956107c5bd0",
+      "sha256": "dc0f81d07a2bcc8555bb0d3f7e1555fe4e442ba05ac4a49a753051818f4221a6",
+      "kind": "file"
+    },
+    {
+      "path": "tests/verification/deployment/buster-process-input-parity.test.mjs",
+      "sha256": "6a371ee2f232e195366c970a00d43052302f30db6974a8a5836e0f7a72d057c3",
+      "beforeSha256": "a0fa942758dde1118015f3fd8255656c6fe4e31045e96837b75a05f11afd9247",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/deployment/buster-process-input-parity.test.mjs"
+    },
+    {
+      "path": "tests/verification/deployment/buster-readiness-config.test.mjs",
+      "sha256": "2ebcfbb1fdb7e190a265d14ff0d03baaaed6ecd8106e567e5c02cc8a05ed9e53",
+      "beforeSha256": "6219a487b0ce51de79934d15d278e3060b07df02a65b420f9c81a3477fe5487d",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/deployment/buster-readiness-config.test.mjs"
+    },
+    {
+      "path": "tests/verification/deployment/config-component-packaging.test.mjs",
+      "sha256": "e54bf0bc008ab23503971efcf8cc037364b09cfcd9e47bee8a33455eb6328930",
+      "beforeSha256": "a3a7ded6a76afdfa59ff5723419cc0f5367308de7c2b241ed17b7c1ad12b5aa5",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/deployment/config-component-packaging.test.mjs"
+    },
+    {
+      "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "sha256": "ba4bcd6bd8bc01379ef02ed7d8a9ff49a46f4da270ad6eba5247d4f7199f2a72",
+      "beforeSha256": "13dc87d6ddb859e93df0843e798c6633b4f8424f006951925f69aee198aec58d",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/deployment/prism-swarm-config.test.mjs"
+    },
+    {
+      "path": "tests/verification/reliability/buster-cluster-entrypoint.test.mjs",
+      "sha256": "c9bbbaf745bb975ac3445bd034f28934621da1db5716ed6f861eb1c379488469",
+      "beforeSha256": null,
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/reliability/buster-cluster-entrypoint.test.mjs"
+    },
+    {
+      "path": "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+      "sha256": "3d370b6ab521d825db82f6a9d509ce3eb7c61766d193c4fe000541e4507fe27f",
+      "beforeSha256": "1c61acfc0bea18e60f76c924603905e06e77335867606ced211cf971249ca6d1",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/reliability/demo-exposure-handoff.test.mjs"
+    },
+    {
+      "path": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+      "sha256": "28958d66a366909e6182d79024e52c9cb51e2d96f832b762277066a995219fe5",
+      "beforeSha256": "994692a35f36897e515c3f1594b6a6cfbbec38eb70758a26643252e192bed618",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/reliability/kubernetes-manifest-budget.test.mjs"
+    },
+    {
+      "path": "tests/verification/reliability/tailscale-generation.test.mjs",
+      "sha256": "eeb00058cadb06726ef4292ef0b5fe9da2dfbb8992a96982b23521ad404f3691",
+      "beforeSha256": "3a754d1094691461b50c928846b45768fc853354f4dcd12579054c5ed26a15a2",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/snapshot-v3/tests/verification/reliability/tailscale-generation.test.mjs"
+    },
+    {
+      "path": "scripts/native-worker-node-policy.d.mts",
+      "beforeSha256": null,
+      "sha256": "e769dd54e72b6b44dbbe1f29892d7a194ebb8f769385e260ae972779d318cb3e",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/type-correction-v1/files/scripts/native-worker-node-policy.d.mts"
+    },
+    {
+      "path": "scripts/registry-client-config.d.mts",
+      "beforeSha256": null,
+      "sha256": "68d13e008e4f36947f8cb6f8074803cfa63ecac920abb5641e86887cbccf74ac",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/type-correction-v1/files/scripts/registry-client-config.d.mts"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+      "beforeSha256": null,
+      "sha256": "cf35868ce909f53a05fae0e8a4bdf81f0e8c030850d569839f13d47f5efa4607",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/type-correction-v1/files/skills/buster/engine/test-gates/tailscale-operation-policy.ts"
+    },
+    {
+      "path": "tests/verification/e2e/registry-target.d.mts",
+      "beforeSha256": null,
+      "sha256": "829f30b8da14840f8ce821f0ebef09fa971c514a8270c3a24eee69204e116944",
+      "kind": "file",
+      "snapshot": "docs/review/evidence/buster-cluster-invoker-policy-20260921/type-correction-v1/files/tests/verification/e2e/registry-target.d.mts"
+    },
+    {
+      "path": "scripts/tsconfig.json",
+      "beforeSha256": null,
+      "sha256": "dc37cbd2383d4c719721d0a1906bb36d48505ba32d9002441c70926a16c2c42b",
+      "kind": "file"
+    }
+  ],
+  "scriptsDeclarationProject": {
+    "reason": "Type-aware ESLint needs a containing project for script declarations; all script declarations included, strict checks retained and declaration checking enabled",
+    "previousManifestSha256": "92e5987ed6cb17068a65d9bfffd6e15fc0620e1d91e6c23a542c7fc6845db349"
+  },
+  "runtimeTestCorrection": {
+    "manifest": "docs/review/evidence/buster-cluster-invoker-policy-20260921/runtime-correction-v1/manifest.json",
+    "sha256": "bca85b47a4d1a89014082565f6bc04288dd0d0562cbbc6345169717222c81f8c"
+  }
+}

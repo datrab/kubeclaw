@@ -1,0 +1,3 @@
+{"name":"producer-memory-default","old":"limit: policy.memoryBytes","replacement":"limit: 8589934592","status":1,"semanticTestFailureDetected":true}
+{"name":"pool-equality-rejected","old":"policy[metric] > pool[metric]","replacement":"policy[metric] >= pool[metric]","status":1,"semanticTestFailureDetected":true}
+{"name":"admission-units-confused","old":"requested('maximumTasks', policy.tasks)","replacement":"requested('maximumTasks', policy.memoryBytes)","status":1,"semanticTestFailureDetected":true}

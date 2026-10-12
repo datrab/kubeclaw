@@ -1,0 +1,110 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-restore-maximumExecutionMs",
+    "seconds": 25.719141110079363
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-restore-maximumOutputBytes",
+    "seconds": 6.44171219796408
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-restore-maximumObservationAgeMs",
+    "seconds": 5.841788936988451
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-restore-poll1000",
+    "seconds": 7.354438583017327
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-restore-future5000",
+    "seconds": 6.995925029972568
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-restore-diagnostic1024",
+    "seconds": 6.274903582059778
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-restore-child-path",
+    "seconds": 6.2740569449961185
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-restore-abort-before-output-cause",
+    "seconds": 6.348392118001357
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-runtime-security-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "control-restore-missing-policy-defaults",
+    "seconds": 6.475255885045044
+  }
+]

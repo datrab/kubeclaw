@@ -16,3 +16,15 @@ Ein Tailnet-Name oder Ingress-Objekt beweist keinen autorisierten Zugriff. Die N
 **Mittel; offene Frage.** Auslöser: Argo-/Ops-/Prism-Zugriff oder neue Broker-Preview wird als verfügbar betrachtet, obwohl ACL-/Grant-/TagOwner-Konfiguration nicht erfasst ist. Quellen: obige Values, Ingress-Templates und `docs/deployment/tailscale-operator.md`. Auswirkung: Zugriff fehlt oder ist breiter als erwartet. Ursachenbehebung: redigierten externen Zugriffsvertrag mit Tag-Eigentümern, zugelassenen Nutzern und Zweck je Ingress dokumentieren. Test: je ein erlaubter und verbotener echter Tailnet-Client, Proxy-Neustart und OAuth-/Zertifikatrotation.
 
 Manifest- und Aufruferreview abgeschlossen; kein Operator-Chart installiert, keine Tailnet-Daten gelesen. Doku teilweise vorhanden, konkrete externe Konfiguration und Recovery ohne Operator offen. Optionaler Userspace-Tailscale im [Ops-Pod](ops-pod.md) ist ein anderer Zugriffsweg.
+
+## Aktueller Nachtrag 2026-09-21
+
+Der obige Review und sein Originalbefund bleiben historisch. Der aktuelle
+Releasepfad bindet das Chart und die Images inzwischen über `versions.json`.
+Die [aktuelle Betreiberanleitung](../../deployment/tailscale-operator.md) erfasst
+Argo, Nova-Archviewer, Prism Studio und dynamische Previews sowie den getrennten
+ausgehenden Ops-SOCKS-Pfad. Ops stellt dadurch keinen eigenen Ingress bereit.
+Regelstand, TagOwner-/Grant-Zuordnung und echte erlaubte/verbotene Clientreferenzen
+fehlen weiterhin; der Befund wird durch diese Dokumentation nicht geschlossen.
+Die [unabhängige Inventur](../remediation/implementation/independent-tailscale-current-inventory-20260921.md)
+grenzt lokale Quellenbelege von diesen fehlenden externen Eingaben ab.

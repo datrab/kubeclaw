@@ -1,0 +1,19 @@
+[
+  {
+    "guardEnabled": true,
+    "exitCode": 0,
+    "stdout": "GUARD: alias/hardlink blocked; unlink and independent copy writable; original unchanged\n",
+    "stderr": "",
+    "violations": [
+      "{\"pid\":609963,\"operation\":\"writeFileSync\",\"file\":\"/tmp/component-review-guard-4els87xf/alias\"}",
+      "{\"pid\":609963,\"operation\":\"writeFileSync\",\"file\":\"/tmp/component-review-guard-4els87xf/hardlink\"}"
+    ]
+  },
+  {
+    "guardEnabled": false,
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Missing expected exception.\n    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-component-worker-listener-20260921/guard-probe-child.mjs:8:10\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: undefined,\n  expected: /REVIEW_PROTECTED_SOURCE_WRITE/,\n  operator: 'throws',\n  diff: 'simple'\n}\n\nNode.js v24.21.0\n",
+    "violations": []
+  }
+]

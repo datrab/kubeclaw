@@ -1,0 +1,11 @@
+# Private correction after actual Cluster Fast1 / Lint1
+
+Seven files, no live edits or verification execution. Original failure logs remain under buster-cluster-runtime-20260924/fast1 and lint1. No compiler/lint rule, exclusion, assertion or deadline is relaxed.
+
+- TypedLink is asserted to exist and have kind artifact before the original exact mediaType assertion. This strengthens the discriminator oracle rather than casting the union.
+- Three adjacent .d.mts files declare every actual JS export with concrete structured outputs. Unknown is confined to runtime-validated input documents; there are no any return types or suppression comments. Registry target outputs are readonly as actually frozen. Native policy result fields reflect the validated clone and pool projections; nonvalidated extra fields are not promised. Source contracts are copied and hash-bound.
+- Live registry credential environment values are captured and checked as a complete nonempty pair before passing them; no optional property is explicitly assigned undefined. Existing registryClientConfig validation still runs first. No credential values are recorded.
+- The live runner uses its existing explicit runnerExecutionPolicy fixture, replacing the removed top-level cleanupTimeoutMs with provider.cleanupTimeoutMs=180000 in a copied profile. Its authored cleanup budget and all original deadlines remain unchanged. This is a source/types migration, not a live-cluster pass.
+- Tailscale operation-policy validation is extracted verbatim to a cohesive helper and called at precisely its old constructor position, after processInput validation and before all field assignments. Conditions, order and error message remain unchanged. The helper's type-only import creates no runtime cycle. Its fixed maximum is the existing JavaScript timer representability boundary, not a new operator default. Runtime file stays below 300 lines and rules remain unchanged.
+
+The cumulative-manifest.json describes V3 plus this overlay, for integration and full source binding. It does not overwrite any original manifest. Required checks remain the complete cluster project, affected original modules and canonical touched lint; declarations must be included in quality checks. No runtime authority, native acceptance, CONFIG closure or successful Fast result is claimed.

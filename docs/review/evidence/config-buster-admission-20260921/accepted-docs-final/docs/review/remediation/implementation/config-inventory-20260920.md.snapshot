@@ -1,0 +1,389 @@
+# Zentrale Operator-Konfiguration: Inventur und Pflichtfälle
+
+Die Erhebung und ursprünglichen Tabellen dokumentieren den Ausgangsstand vor der
+Produktionsmigration am 2026-09-20. Damals war die swarm-Profilauflösung nur im
+E2E-Support belegt. Diese Aussage beschreibt nicht mehr den aktuellen Ladepfad.
+
+Aktueller unabhängig geprüfter Implementierungsstand: Siebenundzwanzig Prism-Settings
+(sechs Worker-, zwei Transport-, drei Ressourcen-, neun Supervisor-, vier Control-
+und drei Studiowerte) kommen aus der kanonischen `swarm.config.json` und dem
+strikten gemeinsamen Produktionsloader. Die unten angefügten Schnittberichte und
+die `resolved`-Felder der JSONinventur ordnen die Änderungen den historischen
+Fundstellen zu. Der [frische Ressourcenpolicy-Review](independent-resource-policy-review-20260921.md)
+bestätigt den funktionalen Schnitt und dokumentiert dessen damalige Lint-Altfehler. F1–F6 und die
+Gesamtmigration sind weiterhin offen. Die [Studio-Quellen-/Hostprüfung](independent-studio-complete-20260921.md)
+ist abgeschlossen; tatsächlicher Image-Build und Image-Lauf bleiben offen. Die ursprünglichen Pflichtmatrizen bleiben
+erhalten und sind kein Beleg für einen bereits abgeschlossenen Umfang.
+
+## Vorab festgehaltene Pflichtfallmatrix
+
+| Kriterium | Vollständiger Pflichtumfang | Zu erhebender Beleg |
+|---|---|---|
+| F1 | Nova, Buster, Prism, gemeinsame Loader, sämtliche Chart-/Hostsettings; für jedes Setting Quelle, Typ/Einheit, Default, Override, Consumer, Klassifikation | Einzelinventar und dokumentierte Auflösung jedes unklaren Eintrags; keine reine Suchtrefferzahl als Vollständigkeit |
+| F2 | Nur vorhandene swarm-Datei autorisiert Operatorsettings; Versionen separat; Secretwerte extern; alle Nachfolgeartefakte erzeugt | direkte Produktionslade-/Renderaufrufe; alte konkurrierende Autorenwege entfernt/abgewiesen |
+| F3 | Unbekannte Keys jedes geschlossenen Objekts; falsche Typen, Einheiten, Grenzen; konkurrierende Autoritäten; Einzel-/Parallel-/Hostkonflikte | jeweils echte Negativfälle plus zwei gültige unterschiedliche Profile; keine Aktivierung vor Gesamtprüfung |
+| F4 | Jedes dynamische Setting verändert echten Consumer; deklarative Settings verändern echtes Render-/Ladeergebnis | keine Testsupport-Expansion, kein austauschbarer Ersatzloader |
+| F5 | Neu eingeführter Default, Hardcoding und erzeugter Drift scheitern; unterschiedliche Nodes ohne Codeänderung | Mutationstests, Provenienz ohne Secretwerte |
+| F6 | Gemessene Reserve passt zu Attempt, Parallelität, Host und Container; Fehler erhöhen keine Grenzen; vollständige Migration | Messbelege und verknüpfte Budgetprüfung; fehlende Messung bleibt offen |
+| F-DOC | Zentrales Bedienungsdokument für Defaults/Overrides/Einheiten/Fehler/Auswirkungen; alle Altanleitungen abgeglichen | Dokumentdiffs und geprüfte Links/Beispiele |
+| Live | Zwei gültige Stände via Git/Argo; ungültiger Stand aktiviert keine Teilkonfiguration | bleibt separate reale Betriebsprüfung |
+
+## Bereits bestätigte Autoren- und Verbraucherpfade
+
+| Bereich | Derzeitige Autorenquelle | Produktionsverbraucher | Migration |
+|---|---|---|---|
+| Nova Plattform | separate `pipeline-platform.v2`-JSON mit optionalem `effectLockTtlMs`/Isolation | `foundation/config/platform.ts` → Nova project/core CLI | striktes vorhandenes Schema erhalten, swarm-Ableitung herstellen |
+| Buster Plattform | remote-plan.v1 referenziert zusätzliche Platform.v2-Datei | `buster/engine/test-gates/production.ts` → RemotePlanService | beide gebunden aus derselben swarm-Snapshotauflösung |
+| Buster Ressourcen/Capabilities | remote-plan.v1-JSON; lokale Fallbacks 2 aktive Jobs, 16 Queue, 64 Attempts | derselbe Loader, Capabilityconsumer | Defaults zentral; historische `maximumProcesses` niemals zu Tasks umdeuten |
+| Prism Control | Env + lokale Fallbacks | `prism/server/control-config.ts` | genaue Operatorsettings aus zentralem Snapshot; Secretauflösung extern |
+| Prism Worker | Env + lokale Fallbacks | `prism/server/worker-config.ts`, `prism/config/native-worker.ts` | Ressourcen, Admission, Timeouts zentral; D16-Poolpolicy bleibt generiertes Artefakt |
+| Prism Studio | `operator.prism.studio`; Quellen-/Hostreview abgeschlossen, Imagegate offen | `prism/server/studio-config.ts` | Port, Control-Origin und Deadline migriert; `STUDIO_ROOT` bleibt Installationspfad, Ingress-Secret bleibt extern |
+| Charts | `charts/*/values.yaml`, `my-values/*`, Templatekonstanten | Helmtemplates, Env/ConfigMaps/Workloads | Values werden Ableitungen; kein beliebiger unvalidierter Values-Passthrough |
+| Host | zwei native-worker-pools-YAMLs | `scripts/native-worker-node-policy.mjs` und Renderer/Preflight | Profiles in swarm, generierte Poolpolicy; reale Nodeidentität explizit |
+| Versionen | `versions.json`; Host YAML enthält zusätzlich containerdVersion | Builder/Charts/Hostruntime | Softwareversionsquelle beibehalten; beobachtete Hostruntime als nachgewiesene externe Identität kennzeichnen |
+| Secrets | Environment/Kubernetes SecretRefs/Dateien | jeweilige Trust-/DB-/Authloader | ausschließlich Referenzen zentral, niemals Secretwerte im Inventar oder Effektivbericht |
+
+## Abgrenzungen
+
+Die ergänzende [aktuelle Platform-Feldinventur](config-platform-inventory-20260921.md)
+ordnet alle 15 Top-Level-Schemafelder den tatsächlichen Nova-/Buster-Ladepfaden
+und Consumern zu. Diese gemeinsame Loaderquelle war in den 1374 historischen
+Suchkandidaten nicht enthalten. Verschachtelte Pluginsettings und ihre zentrale
+Migration bleiben offen; die Ergänzung behauptet keinen F1-Abschluss.
+
+Protokollversionen, kryptografische Digestformen, Parser-Maximalsicherheit und
+feste D13-Tasksemantik sind keine abschaltbaren Operatorsettings. Bei Pfaden und
+URLs ist zwischen operatorspezifischer Adresse und aus der Paketinstallation
+abgeleitetem Assetpfad zu unterscheiden. Ein Inventarscanner kann Fundstellen
+sammeln; er kann diese Unterscheidung nicht fachlich beweisen. Unaufgelöste
+Fundstellen bleiben ausdrücklich unaufgelöst und verhindern F1-Abschluss.
+
+Die ursprüngliche Bestandsinventur wurde vor der Produktionsmigration angelegt.
+Die nachfolgend einzeln belegten Schnitte sind inzwischen integriert; die
+vollständige Inventur und bereichsübergreifende Migration bleiben offen.
+
+## Erster Implementierungsschnitt: Prism HTTP-Worker
+
+Dieser Schnitt migriert exakt fünf Operatorsettings: parallele Requests,
+parallele Probes, Verbindungen, Requestbody-Deadline und Shutdown-Deadline.
+Zum damaligen Stand blieb `PRISM_NATIVE_MAXIMUM_INPUT_BYTES` offen; der
+[folgende Eingabelimitschnitt](config-input-limit-20260921.md) migriert diese
+Grenze inzwischen gemeinsam für HTTP, Supervisor, Journal, Prozess und Host. Die fünf migrierten
+Env-Overrides werden ausdrücklich abgewiesen, nicht als stiller Fallback behalten.
+Die alleinige Autorenquelle wird `operator.prism.worker` in der vorhandenen
+Chart-`swarm.config.json`. `SWARM_CONFIG` wählt diese Datei, ansonsten gilt der
+bereits vorgesehene Mountpfad `/home/node/.openclaw/swarm.config.json`.
+
+Vor Codeänderung festgelegte Einzeltests:
+
+| ID | Input/Mutation | Erwartung und Beweisgrenze |
+|---|---|---|
+| CW01 | echte vorhandene swarm-Datei | alle fünf effektiven Consumerwerte stimmen exakt mit Autorenwerten überein; kein Helmbeweis |
+| CW02 | gültige zweite Datei: Requests 7, Probes 2, Connections 40, Body 3000ms, Shutdown 5000ms | `loadWorkerConfig` liefert jeden abweichenden Wert; Inputbytes unverändert aus bestehendem unmigriertem Vertrag |
+| CW03 | je geschlossener Ebene zusätzlicher unbekannter Key (root/operator/prism/worker) | tatsächlicher Loader wirft vor Consumerstart |
+| CW04 | für jeden der fünf Keys jeweils String, 0, Bruchzahl, >2147483647 und fehlender Wert | tatsächlicher Loader wirft; keine Typecoercion/Defaults |
+| CW05 | jeder der fünf alten Environmentkeys zusätzlich zur gültigen Datei | expliziter Migrationsfehler statt Override, auch bei gleichem Wert |
+| CW06 | unbekannte profile/features/tuning/overrides-Belegung | strikter Schemanachweis; keine beliebige Override-Passthrough |
+| CW07 | fehlende/kaputte Configdatei | sichtbarer Fehler, keine lokale Ersatzkonfiguration |
+| CW08 | Probe-/Requestparallelität größer als Connectionlimit | vor Aktivierung abgewiesen |
+| CW09 | Bodydeadline größer als Shutdowndeadline | gültig: Shutdown bricht Requests ab; unabhängige Frist bleibt wirksam |
+| CW10 | mit Secretwerten im Env | effektive Operatorsettings enthalten keine Secrets; originaler Authpfad behält seine bisherigen Secretanforderungen |
+| CW11 | Original-Worker-Konfigtests mit neuer Autorenquelle | unveränderte Trust-/Authfehler weiter geprüft, keine Skips |
+
+Chart-/GitOpsveröffentlichung der neuen Datei an Prism, restliche Prismsettings,
+Native-/Buster-/Nova-/Hostmigration, vollständiges klassifiziertes Inventar und
+Liveprüfung bleiben explizit offen. Dieser Schnitt ist kein CONFIG-Abschluss.
+
+Matrixkorrektur vor dem abschließenden Testlauf: CW09 verlangte zunächst
+Bodydeadline ≤ Shutdown. Prüfung des damaligen `worker-process-shutdown.native.mts`
+(heute [worker-process-shutdown-native.mts](../../../../skills/prism/tests/worker-process-shutdown-native.mts))
+zeigt, dass Shutdown ausdrücklich laufende Requests abbrechen soll (30ms/1500ms
+Drainbudget). Die ursprünglich erfundene Kopplung wäre eine Regression, keine
+Sicherheitsinvariante. Deshalb unabhängige positive Fristen, weiterhin Original-
+Shutdownverhalten prüfen.
+
+## Vorabmatrix: Lieferung des migrierten Workerschnitts
+
+| ID | Input/Mutation | Erwartung/Beweisgrenze |
+|---|---|---|
+| CD01 | normaler Helmrender mit CI-Image-/Nodebindung | ConfigMapbytes sind kanonische swarm-Datei, Workervolume read-only, SWARM_CONFIG zeigt genau diese Datei, kein alter Shutdown-Envkey |
+| CD02 | zwei unterschiedliche gültige Autorenstände in isolierter Chartkopie | reale Helm-Ausgabe danach mit echtem Workerloader laden; jeder der fünf Werte propagiert; zweite Autorenquelle nicht nötig |
+| CD03 | alter Helmkey worker.shutdownTimeoutMs | Migration abgewiesen, nicht ignoriert oder konkurrierend |
+| CD04 | ungültiger Workerkey/fehlender Key/Typ/Bruch/0/zu groß/Connectionkonflikt | Helmrender scheitert vor Manifestfreigabe |
+| CD05 | Shutdown passt nicht zwischen native.closeTimeoutMs+10s und Podgrace | bestehende Deploymentbudgetprüfung scheitert mit zentralem Shutdownwert |
+| CD06 | Helm packagiert Chart mit Verweis auf kanonische Datei | entpacktes Paket enthält vollständiges Autorensnapshot; normaler Chartaufruf braucht keinen manuellen Kopierschritt |
+| CD07 | Imagequellen/Dockerignore und Runtime-Packageprüfung | Loader/Schema/Ajv nachweislich im vorhandenen Image-COPY-/Dependencyumfang; kein behaupteter gebauter Image-/Clusternachweis ohne echten Build |
+| CD08 | Original-Prism-Helm-/Deploymentprüfungen | Änderungen verursachen keine verlorenen Secrets, Mounts oder Sicherheitsverträge; passende bestehende Prüfungen ausführen |
+
+Liefermechanismus: Prism-Chart liest per repositoryinternem Symlink denselben
+Autoreninhalt; Helm dereferenziert ihn beim Rendern/Packagieren. Das erzeugte
+Chartarchiv und ConfigMap sind Snapshots, keine separat gepflegte Autorenquelle.
+
+## Implementierter, noch nicht unabhängig abgenommener Worker-Schnitt
+
+Der oben zunächst offene Chartlieferpfad ist für die fünf migrierten Settings
+jetzt integriert: kanonische Datei → Helm-ConfigMap → read-only Workermount →
+`loadWorkerConfig` → echte HTTP-/Shutdownconsumer. Zwei Autorenstände sind durch
+den tatsächlichen Helmrender und anschließend den Produktionsloader geprüft.
+Die beiden Chartsymlinks verweisen auf genau eine JSON-Autorenquelle und genau
+eine Schemadatei. `helm package` schließt beide Inhalte als normale Dateien ein.
+Die ConfigMap liegt vor dem Migrationshook in Argo-Welle 0; der Workerrollout
+wird über seinen Configchecksum ausgelöst. Alte Shutdown-Helm-/Envkeys sind
+entfernt bzw. ausdrücklich abgewiesen.
+
+Detaillierte Settings, Einheiten, Präzedenz, Migration und Fehlverhalten stehen
+in [Operator configuration](../../../operations/operator-configuration.md).
+Der bestehende [Prism-Guide](../../../operations/prism-operator-guide.md) und die
+Config-README sind aktualisiert. Native Inputbytes, alle weiteren Prismsettings,
+Nova/Buster/Host-/Versions-/Secretreferenzmigration und die vollständige fachliche
+Klassifikation des Kandidateninventars bleiben offen. Die 1374 automatisch
+erhobenen Kandidaten aus 105 Quellen sind ausschließlich Suchmaterial; kein
+vollständiges F1-Inventar oder Nachweis von 1374 Operatorsettings.
+
+Prüfergebnisse und tatsächliche Grenzen:
+
+- 49 Runtime-/HTTP-/Shutdowntests bestanden, keine Skips.
+- 36 neue Helm-/Negativ-/Package-/Consumerprüfungen bestanden, keine Skips.
+- Vier vorhandene Argo-Reihenfolgeprüfungen und drei Trust-/Envoy-Renderprüfungen
+  bestanden, keine Skips.
+- Prism-Typecheck bestanden. Canonical-Lint der neuen Dateien und migrierten
+  regulären Quellen bestanden. Der bestehende Dateiname
+  `worker-process-shutdown.native.mts` verletzte in diesem historischen Lauf die
+  `discipline/filename-case`-Regel. Der separate
+  [Native-Testqualitätsnachtrag](prism-native-test-quality-20260921.md) benennt die
+  Datei ohne Regelabschwächung um; der damalige Fehlerbeleg bleibt unverändert.
+- Vorhandener Native-Deploymenttest: Helm-/Policybindung bestanden. Sein zweiter
+  Test konnte beim ersten Lauf das echte NRI-Binary nicht bauen (`go`/`ENOENT`).
+  Inzwischen hat Root die versionsgebundene Go1.26.5-Toolchain installiert.
+  Der aktuelle Lauf scheitert an der echten Rootpolicy-Vertrauensgrenze
+  `NATIVE_NRI_POLICY_NOT_TRUSTED` für die UID1000-Testdatei. Kein vollständiger
+  Pass dieses Testfiles und kein NRI-Nachweis behauptet.
+- Docker fehlt lokal. Der bestehende Runtime-CI-Imagegate führt für Prismworker
+  nun die tatsächlich im gebauten Image enthaltenen Loader-/Schema-/Ajvdateien
+  mit gemounteter Autorendatei aus. Dieser neue Imagegate ist hier **nicht
+  ausgeführt**. Die bisherigen Docker-COPYpfade enthalten die neuen Dateien;
+  keine neue Imagekonfiguration oder baked zweite Autorenquelle wurde ergänzt.
+- Kein Deployment und keine Liveprüfung. CONFIG bleibt insgesamt offen.
+
+Echte Fehler im ersten Liefer-Testlauf: doppelte Podannotations wurden
+zusammengeführt. Das neue ConfigMap lag zunächst in Welle 1; der bestehende
+Reihenfolgetest erkannte den Verstoß und die Vorlage wurde auf Welle 0 korrigiert.
+Die temporäre Chartkopie musste Symlinks ausdrücklich materialisieren: die
+verwendete `fs.cpSync`-Umgebung behielt sie trotz `dereference:true`, wodurch
+Testmutationen zunächst die kanonische Datei erreichten. Der beabsichtigte
+Autorensnapshot wurde wiederhergestellt; jeder Kopietest prüft nun vor Mutation,
+dass seine Configdatei kein Symlink ist. Finale Tests verwenden echte getrennte
+Kopien. Keine Negativbehauptung basiert auf einem unveränderten Testinput.
+
+Die Argo-Bestandstests erbten zunächst einen fremden Namespace aus der
+Helmumgebung. Vergleich mit einem unveränderten `git archive HEAD charts/prism`
+belegt denselben Fehler im Ausgangscode; mit explizitem `--namespace default`
+passt die bestehende CI-Nodebindung. Nur diese Testvorbedingung wurde präzisiert,
+keine Assertion entfernt.
+
+Rohausgaben unter `docs/review/evidence/config-worker-20260920/`:
+[runtime-tests.txt](../../evidence/config-worker-20260920/runtime-tests.txt),
+[deployment-tests.txt](../../evidence/config-worker-20260920/deployment-tests.txt)
+und [types.txt](../../evidence/config-worker-20260920/types.txt).
+
+## Vorabmatrix: tatsächliches Consumerverhalten (frisches Review)
+
+Der frische Reviewer unterscheidet zurecht Loaderwert-Propagation und ausgelöstes
+Verhalten. Die bisherigen 49 Fälle sind kein Nachweis, dass jeder der fünf Werte
+seine echte Verhaltensgrenze bereits überschritten hatte. Vor ergänzendem Code:
+
+| ID | Autorendatei/Input | Erwartetes reales Verhalten | Beweisgrenze |
+|---|---|---|---|
+| CB01 | active=1/probes=2/connections=8; ein Arbeitsrequest bleibt offen, zwei GET-/health-Anfragen bleiben offen | dritter Probe bekommt503 ohne Handleraufruf; eine Probe fertigstellen, neue Probe bekommt200; aktive Arbeit weiterhin vorhanden | originaler lokaler HTTP-Lifecycle, keine nativen Attempts |
+| CB02 | active=1/probes=1/connections=3; drei echte TCP-Verbindungen offen | vierte Verbindung wird vom originalen Node-Server verworfen; nach Schließen einer angenommenen Verbindung wird eine neue angenommen | Socket-/Servergrenze, kein Host-/Taskbudget |
+| CB03 | bodytimeout=100ms; kompletter schneller Request und unvollständiger langsamer Body | schneller Request200, langsamer Request erhält echten Node408 und Disconnect; die unveränderte native Connections-Prüfperiode (typisch30s) wird abgewartet | echtes Node-HTTP-Verhalten, keine Änderung von Timer/Produktionscode |
+| CB04 | shutdown=1500ms aus Datei, echter pg-Client hängt100ms im TCP-Startup | Originalshutdown schließt vollständig; offene/pending Connections0 | Original-pg gegen stillen TCP-Peer, kein echter DB-Server/Nativeworker |
+| CB05 | shutdown=30ms aus Datei, derselbe originale pg-Pfad hängt350ms | expliziter Deadlinefehler, Connection zunächst noch offen; spätere echte Abwicklung beobachtet; späterer Aufruf kann Fehler nicht rückwirkend bestehen lassen | unveränderte Lifecycle-Fehlersemantik, keine Native-Abnahme |
+
+Alle fünf Einstellungen werden durch `loadWorkerConfig` aus temporären Kopien
+der tatsächlichen Autorenstruktur gelesen. Keine Änderung des Produktionscodes
+und keine verkürzte serverinterne `connectionsCheckingInterval` für diese Tests.
+
+## Vorabmatrix: bestehender E2E-Autorenfileverbraucher
+
+Roots vollständiger Workflowtest fand eine neue Integrationsregression:
+`buildRunConfig` las dieselbe Autorenfile, fügte E2E-Override-/Laufdaten hinzu und
+übergab `operator` an den bisherigen reinen Profil-Expander. Dieser verweigerte
+berechtigt unbekannte Felder. Der bestehende Verbraucher wird deshalb vor der
+E2E-Anreicherung an denselben strikten Produktionsvalidator angeschlossen.
+
+| ID | Input | Erwartung |
+|---|---|---|
+| CE01 | unveränderte kanonische Autorenfile | zentral validieren, explizit ausschließlich Profilfelder an E2E-Expander übertragen; operator nie im expandierten Pipelinevertrag |
+| CE02 | unbekannter Operator-/Rootkey oder invalider Workerwert | dieselben Produktionsfehler, bevor ein E2E-Runconfig entsteht |
+| CE03 | normaler `buildRunConfig` mit Lauf-ID und Worktree | vorhandene E2E-Overrides und dynamische Pfade bleiben funktionsfähig; keine geheimnisvolle globale Field-Ignore-Regel |
+| CE04 | Original real-run-workspace-Tests und Tailscale-Cutover | ursprünglicher Einstieg durchläuft Profilauflösung wieder; weitere Fehler bleiben separat sichtbar |
+
+Die E2E-Profilfelder bleiben eine getrennte alte Testsupport-Schnittstelle;
+keine Behauptung, dass deren Expansion jetzt Nova-Platform-v2-Produktion wäre.
+
+
+## Nachprüfung des Consumerverhaltens
+
+CB01–CB05 und die bestehende Active-Request-Grenzprüfung wurden mit echten lokalen
+HTTP-/TCP-Sockets und dem originalen pg-Client ausgeführt: **7/7 bestanden,
+keine Skips**. Der Bodytimeout dauerte etwa30 Sekunden, weil Nodes originale
+Timeoutprüfperiode unverändert blieb; vor der langsamen Anfrage wurde ein
+vollständiger POST erfolgreich verarbeitet. Die Tests beweisen die lokale
+HTTP-/Shutdown-Lifecyclegrenze, keine Ausführung nativer Worker oder reale DB.
+[Rohausgabe](../../evidence/config-worker-behavior-20260920/tests.txt) und
+[Aufruf/Zeiten/Exitstatus](../../evidence/config-worker-behavior-20260920/execution.json).
+
+Die zusätzliche E2E-Verbraucherintegration validiert dieselben vollständigen
+Autorenbytes mit `prismWorkerSettingsFromConfig`, bevor
+`pipelineProfileFromSwarm` ausschließlich die fünf expliziten Profilfelder
+übernimmt. Erst danach fügt `buildRunConfig` Lauf-ID/Pfade/E2E-Overrides hinzu.
+Die Operatorgruppe gelangt nicht in den Pipelinevertrag; unbekannte Root-/
+Operatorkeys und ungültige Workerwerte werden weiterhin abgewiesen. Kein
+allgemeines Ignorieren unbekannter Felder wurde eingeführt.
+
+Der direkte Original-Tailscale-Cutover durchlief nach dieser Änderung seine
+Workspace-/Fixtureassertions. Der anschließende separate Parityimport scheitert
+weiter an einem alten fehlenden `.ts`-Belegpfad für TSX-HTTP-002. Der vollständige
+npm-Einstieg scheitert vorher am fehlenden lokalen `cc` im Sandboxbuild. Beide
+Fehler sind keine bestandenen Tests; [direkter Lauf](../../evidence/config-worker-behavior-20260920/tailscale-cutover-direct.txt)
+und [voller Einstieg](../../evidence/config-worker-behavior-20260920/tailscale-cutover.txt)
+bleiben als Beweisgrenzen erhalten. Die neuen CE-Negativfälle und die vollständige
+bestehende Workspace-Suite werden separat protokolliert.
+
+Der vollständige Original-Workspace-Testlauf plus fünf neue CE-Fälle ist
+abgeschlossen: **66/66 bestanden, keine Skips** (ca159 Sekunden, echte temporäre
+Gitworkspaces). [Originalsuite und Profilregression](../../evidence/config-worker-behavior-20260920/e2e-profile-tests.txt).
+Zentrale Loader-/Profilnegativtests separat: **50/50 bestanden, keine Skips**.
+Prism-Typecheck und Canonical-Lint aller in dieser Nachprüfung geänderten
+JS-/TS-Dateien bestanden. Die nach der gemeinsamen Validatorfaktorisierung
+abschließend wiederholten CB-Tests binden alle relevanten Quellhashes vor dem
+Lauf und bestätigen, dass diese während der Ausführung unverändert blieben.
+
+## Zweiter Implementierungsschnitt: gemeinsames Eingabelimit
+
+`operator.prism.worker.maximumInputBytes` ist die einzige Autorenquelle für
+HTTPbody, nativen Journalinput, Prozessinput und Hoststdin. Expliziter Autorenwert
+16777216 Bytes, Integer 1…2147483647, kein lokaler Default/Override. Der
+Startup-Snapshot wird an den Supervisor weitergereicht. Der erzeugte Childkey
+`PRISM_NATIVE_ASSIGNED_INPUT_BYTES` transportiert ihn ausschließlich intern;
+Operatorloader und alter Key werden strikt abgegrenzt. Die drei historischen
+Discoveryfundstellen des alten Envkeys sind im JSON-Inventar mit ihrem aktuellen
+Auflösungsergebnis versehen. Alle übrigen ungelösten Fundstellen und F1–F6
+bleiben offen. Prüfumfang/Ergebnisse: [Eingabelimitmatrix](config-input-limit-20260921.md).
+
+
+## Gemeinsame Prism-Ergebnisgrenze und Dispatchdeadline
+
+Der [Ergebnis-/Dispatchschnitt](config-result-dispatch-20260921.md) löst genau
+zwei weitere bisherige Fundstellen in `skills/prism/config/native-worker.ts` auf:
+`PRISM_NATIVE_MAXIMUM_RESULT_BYTES` und `PRISM_NATIVE_DISPATCH_TIMEOUT_MS`.
+Die alten Envresolver sind entfernt. Ihre alleinige Autorenquelle ist jetzt
+`operator.prism.native.maximumResultBytes` (67108864 Bytes) beziehungsweise
+`operator.prism.native.dispatchTimeoutMs` (900000 ms); beide strikt Integer
+1…2147483647, ohne Runtimefallback oder Wertoverride. Alte Envkeys scheitern
+in beiden Rollen. Die bestehenden Discoveryzeilen bleiben als historische
+Fundstellen erhalten; nur diese beiden JSONeinträge erhalten ihre Auflösung.
+
+Control nutzt den geladenen Startsnapshot für Antwortstreambytes und die gesamte
+Dispatchdeadline. Worker gibt denselben Ergebniswert an den nativen Supervisor
+und dessen persistentes Journal weiter. Helm liefert das gemeinsame Autorenobjekt
+read-only mit Rolloutchecksumme an beide Rollen. Secrets bleiben extern, übrige
+Settings unaufgelöst. Zwei zusätzliche migrierte Settings schließen weder die
+Inventur F1 noch F2–F6 ab. Die zentrale Operatoranleitung beschreibt Migration,
+Einheiten, Fehler und Betriebswirkung.
+
+## Prism resource policy
+
+Exactly three further historical discoveries (`PRISM_NATIVE_CPU_TIME_MS`,
+`PRISM_NATIVE_MEMORY_BYTES`, `PRISM_NATIVE_TASKS`) now resolve to
+`operator.prism.native.resourcePolicy.{cpuTimeMs,memoryBytes,tasks}`.
+The explicit values remain 60000 cumulative CPU milliseconds, 8589934592 memory
+bytes and 2048 Linux tasks. Each is a positive safe integer through 9007199254740991;
+there is no old resolver, per-attempt environment read or runtime fallback.
+Both roles freeze their startup policy. Producers require it explicitly; Worker
+admission and process-limit mapping consume the same snapshot. Pool memory/tasks
+must fit, while CPU time is never compared to a CPU quota/rate. Historical process
+counts retain their separate semantics. Accepted identities retain original
+budgets on retry. Only these three JSON inventory entries were resolved; all
+remaining discovery and CONFIG F1–F6 work remains open. See the
+[resource-policy criteria and evidence](config-resource-policy-20260921.md).
+
+
+Inventory reconciliation on 2026-09-21: the five original HTTP-worker environment
+entries still carried discovery status even though their migration had already
+been independently accepted. Their `resolved` fields now name the canonical
+author, exact units, captured startup consumer and existing independent proof.
+Historical source/default observations are retained. This is a five-entry
+classification correction, not five additional migrated settings or an F1
+completeness claim. The eleven distinct settings correspond to thirteen resolved
+historical reads because the input-byte limit had three original consumers.
+
+## Supervisor-Zahlenmigration
+
+Neun bisherige numerische Env-Autoren und der konkurrierende Helm-Autor
+`worker.native.closeTimeoutMs` sind auf `operator.prism.native.supervisor`
+abgebildet. Das sind neun Settings mit zehn historischen Fundstellen.
+Der [Schnittbericht](config-supervisor-numerics-20260921.md) führt Abnahmefälle,
+Belege und Grenzen; der [frische unabhängige Review](config-supervisor-numerics-independent-20260921.md) bestätigt diesen begrenzten Schnitt.
+Hostpolicy, Pfade, Node-/Runtimeidentität und Imageidentität bleiben getrennt.
+Die kombinierte Shutdownprüfung nutzt jetzt die beiden expliziten Close- und
+Drainwerte. Diese Migration ist kein Abschluss von F1–F6 oder der Liveprüfung.
+
+## Control service policy
+
+Three settings now use `operator.prism.control`: the platform preference subject,
+artifact directory and public Studio URL. The three old Control environment authors
+and the former Helm subject author are rejected. Four historical reads describe
+these three settings. The [criteria and evidence](config-control-policy-20260921.md)
+retain the exact consumer boundaries; the [fresh independent review](control-discovery-independent-20260921.md) accepts this bounded migration.
+
+The other eleven historical Control reads were classified, not declared migrated:
+PostgreSQL credentials remain external; SPIFFE mode is an upstream operator setting;
+peer identities are generated from deployment authority; service endpoints and
+listener ports need coordinated topology changes. Generated identity classification
+does not resolve the upstream trustDomain/namespace/service-account authors.
+The fourteen historical Control rows omitted five local-helper credential reads
+found by the later scanner review; they are not a completeness claim. With this
+slice the independently reviewed migrated set is 23 distinct settings across 27 historical reads.
+The supplemental discovery candidates still need separate semantic classification.
+
+## Control listener follow-up (independently accepted)
+
+[Listener criteria](config-control-listener-20260921.md) migrate exactly the historical
+Control `PORT` row at `skills/prism/server/control-config.ts`, replacing the old
+`loadControlListenerConfig` environment resolver with one captured composition.
+The independently reviewed total is 24 distinct settings across 28 historical reads; the prior
+independently reviewed23/27 checkpoint above remains historical. The [corrected fresh review](independent-control-listener-quality-20260921.md)
+accepts this additional setting and the linked
+[Control route quality](control-route-quality-20260921.md), including failed-stderr
+regression revalidation. Worker/Studio/ingestion/bridge PORT rows
+remain separately classified; they are not swept into the Control migration.
+
+`operator.prism.control.port` owns the process listener and coordinated pod
+destinations. `prism-control:8080` is retained Service discovery topology, backed
+by the authored targetPort. SPIFFE service/listener8443 and local sidecar listener
+18080 are existing trust-routing topology. Neither is a second process-listener
+author. This classification does not declare all topology settings centralized.
+
+## Buster service admission (BA1–BA6/BA-DOC locally accepted)
+
+The three current settings `operator.buster.admission.maximumActiveJobs`,
+`maximumQueuedJobs`, and `maximumConcurrentAttempts` have one canonical author.
+Their defaults are 2 active jobs, 8 queued jobs, and 64 declared concurrent
+attempts. The image previously supplied queue 8, overriding the fallback 16 in
+entrypoint, runtime JSON loader and service. The image ENV and all three fallback
+authorities are removed; the three old ENV names and JSON fields are rejected.
+The JSON inventory's `busterAdmissionMigration` supplement records these exact
+paths without changing its 1,374 historical entries or the 27-setting Prism count.
+The older table above remains baseline evidence.
+
+See [the bounded admission report](config-buster-admission-20260921.md) for
+consumer tests, preserved originals and review status. Service jobs outlive native
+preparation; these settings do not replace preparation slots or prove F6 host
+capacity. Full CONFIG and live rollout remain open.
+
+
+The three-setting admission migration is now [independently accepted locally](independent-config-buster-admission-20260921.md)
+under BA1–BA6/BA-DOC. This leaves full F1–F6 and the D17 component-file migration
+open; historical inventory rows and defaults remain unchanged.

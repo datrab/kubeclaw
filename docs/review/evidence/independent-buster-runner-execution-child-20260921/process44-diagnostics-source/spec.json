@@ -1,0 +1,22 @@
+{
+  "file": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-report-policy-consumers.test.mjs",
+  "sha256": "79b7db733f4cf1b4f55c1b6d8a660b4278069564ea6981605eaa30d9d5c50e08",
+  "pairs": [
+    [
+      "const row = { child, stderr: '', closed: null,",
+      "const row = { child, spawnedAt: Date.now(), stderr: '', closed: null,"
+    ],
+    [
+      "row.closed = { code, signal }; resolveClose();",
+      "row.closed = { code, signal, wallMs: Date.now() - row.spawnedAt }; resolveClose();"
+    ],
+    [
+      "} while (elapsed < 1200000);`,",
+      "} while (elapsed < 1200000); fs.writeSync(2, 'CPU_DIAGNOSTIC:' + JSON.stringify({used:process.cpuUsage(start),elapsed}) + '\\\\n');`,"
+    ],
+    [
+      "const attempt = result.attempts[0];\n      assert(attempt.evidence",
+      "const attempt = result.attempts[0];\n      console.error('REPORT_PROFILE_DIAGNOSTIC', JSON.stringify({field:profile.field,value,close:child.closed,stderr:child.stderr,summary:attempt.summary,state:attempt.executionState}));\n      assert(attempt.evidence"
+    ]
+  ]
+}

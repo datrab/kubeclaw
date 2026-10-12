@@ -1,0 +1,58 @@
+[
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "sha256": "6e8747682057019b7dbe3350fcd3d9fe921a050dd6c90910b8d799e151dfb3b7"
+  },
+  {
+    "path": "skills/prism/server/control.ts",
+    "sha256": "b99be63fc90f0096a6acfef54c26c86b247ae7b1ad85066df064abca60600cd3"
+  },
+  {
+    "path": "skills/prism/server/control-server.ts",
+    "sha256": "c165fb6b20bc6b608ae2bc859f52fc5700856e6cea3798916df921dcac5ce8ac"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "40ea5718592029ca8b40b2d0b78a17c1ca579d02ff0d0c554d1359f2222ff0c8"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "sha256": "b67022f23315e203895aaa15c4963848918f51c33f831598834de8ac11a22ba5"
+  },
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "sha256": "d25e065ab4f7bd2c1f79f5cac7a387ecb0fd7380030e4da88332d33e06da451c"
+  },
+  {
+    "path": "charts/prism/templates/_swarm-config.tpl",
+    "sha256": "1b35a24d29982ec5546edf118c24b55e9b6ff0a2bb56dd05dec50c2889c840ed"
+  },
+  {
+    "path": "charts/prism/templates/workloads.yaml",
+    "sha256": "76fef3e614228e00669e7c923f06a9f0e5d0a311dfe0a9400019e1bd933f6db7"
+  },
+  {
+    "path": "charts/prism/templates/services.yaml",
+    "sha256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b"
+  },
+  {
+    "path": "charts/prism/templates/configmap-worker-trust.yaml",
+    "sha256": "61d7e98c21c7f9ae69fc7a5bbeec145fff6c8c85123763cb8cdd8fb562c1ebd6"
+  },
+  {
+    "path": "charts/prism/templates/networkpolicy.yaml",
+    "sha256": "fcc61920277b2481d7b7f206d787eebbb831dd9b588352a3e5abf3814be4b066"
+  },
+  {
+    "path": "docker/Dockerfile.prism-control",
+    "sha256": "e1f4e47108b12c7c4a67881f70a96a55a84ac68498d1de495fad372aaa31eb36"
+  },
+  {
+    "path": "skills/prism/tests/control-server-config.test.mts",
+    "sha256": "1d4b7d3b2dfbae9f4697e13209d3dd1c4e447f345aeeb3668d9775e1f3e25140"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-image.mjs",
+    "sha256": "6c59f288935c9a1487d643c84758c8eb042e213a09cb8d6d16a3ad55348f79b8"
+  }
+]

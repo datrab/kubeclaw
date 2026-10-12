@@ -1,0 +1,151 @@
+TAP version 13
+# Subtest: required process-input policy and explicit command bounds fail before spawn
+ok 1 - required process-input policy and explicit command bounds fail before spawn
+  ---
+  duration_ms: 4.864376
+  type: 'test'
+  ...
+# Subtest: actual escalation consumes 50ms
+ok 2 - actual escalation consumes 50ms
+  ---
+  duration_ms: 763.414511
+  type: 'test'
+  ...
+# Subtest: actual escalation consumes 400ms
+not ok 3 - actual escalation consumes 400ms
+  ---
+  duration_ms: 770.72019
+  type: 'test'
+  location: '/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-policy.test.mjs:104:45'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(elapsed >= terminationGraceMs - 15)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-policy.test.mjs:116:3)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: cleanup close bound consumes 100ms
+ok 4 - cleanup close bound consumes 100ms
+  ---
+  duration_ms: 165.237411
+  type: 'test'
+  ...
+# Subtest: cleanup close bound consumes 600ms
+ok 5 - cleanup close bound consumes 600ms
+  ---
+  duration_ms: 257.038233
+  type: 'test'
+  ...
+# Subtest: actual group scan intervals consume 10ms
+ok 6 - actual group scan intervals consume 10ms
+  ---
+  duration_ms: 764.827568
+  type: 'test'
+  ...
+# Subtest: actual group scan intervals consume 100ms
+ok 7 - actual group scan intervals consume 100ms
+  ---
+  duration_ms: 819.525862
+  type: 'test'
+  ...
+# Subtest: failed TERM still waits for real forced close and retains the signal error
+ok 8 - failed TERM still waits for real forced close and retains the signal error
+  ---
+  duration_ms: 766.910552
+  type: 'test'
+  ...
+# Subtest: failed timed KILL remains visible after independent actual close
+not ok 9 - failed timed KILL remains visible after independent actual close
+  ---
+  duration_ms: 664.31033
+  type: 'test'
+  location: '/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-policy.test.mjs:173:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'POLICY_TIMEOUT'
+    - 'POLICY_CLEANUP_FAILED'
+              ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'POLICY_CLEANUP_FAILED'
+  actual: 'POLICY_TIMEOUT'
+  operator: 'strictEqual'
+  stack: |-
+    Object.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-policy.test.mjs:178:12)
+    expectedException (node:assert:578:17)
+    expectsError (node:assert:703:21)
+    strict.rejects (node:assert:769:3)
+    async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-policy.test.mjs:177:3)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: cleanup deadline retains the final KILL error as well as its timeout
+not ok 10 - cleanup deadline retains the final KILL error as well as its timeout
+  ---
+  duration_ms: 164.425189
+  type: 'test'
+  location: '/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-policy.test.mjs:187:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(includesCause(error, failure))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    Object.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-policy.test.mjs:196:5)
+    expectedException (node:assert:578:17)
+    expectsError (node:assert:703:21)
+    strict.rejects (node:assert:769:3)
+    async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-policy.test.mjs:191:3)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: group observation failure survives a later close deadline
+not ok 11 - group observation failure survives a later close deadline
+  ---
+  duration_ms: 607.964014
+  type: 'test'
+  location: '/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-policy.test.mjs:203:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-policy.test.mjs:215:10)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 7
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6225.512635

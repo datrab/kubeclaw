@@ -1,0 +1,14 @@
+{
+  "files": [
+    {
+      "path": "scripts/tests/buster-helper-authority-root.test.mjs",
+      "sha256": "454cd7bda952ca1c341214b2cb7ac5d92ac79e0dda1fad7e665c410563660297"
+    },
+    {
+      "path": "scripts/tests/fixtures/buster-unprivileged-caller.mjs",
+      "sha256": "31ca2583b1d9c332b9dd54f1fcf7013ca33cf89bf43f3fa03d0114a5f56002d7"
+    }
+  ],
+  "independentCanonicalLintExit": 0,
+  "privilegedExecution": false
+}

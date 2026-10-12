@@ -1,0 +1,9 @@
+{
+  "beforeSha256": "caae066464f5c9488a78371613bb02eea4242d5db1630fe3566da0963196c9b2",
+  "afterSha256": "f2bb0c8daa62a7f6c86640490bd64cb774f69b9bafa8693084d8be6dd93ffe1d",
+  "runtimeRecordAndBlobAssertionsByteIdentical": true,
+  "sixOriginalSharedRegexAssertionsByteIdentical": true,
+  "transportTerminalRecordKeyAssertionUnchanged": true,
+  "onlyAdaptedOriginalAssertion": "Operator terminalRecordKey internal symbol literal replaced by actual attemptNumber/hash(attemptId) terminalKey construction, append use and returned reservation key assertions. Each plugin closure remains separate; real import/call links additionally checked.",
+  "scope": "Structural source mapping only, not runtime-authority proof; earlier red Run5 preserved. Fresh complete script execution still required."
+}

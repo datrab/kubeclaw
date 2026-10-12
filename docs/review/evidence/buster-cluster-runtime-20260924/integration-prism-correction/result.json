@@ -1,0 +1,15 @@
+{
+  "manifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-runtime-20260924/prism-legacy-test-correction/manifest.json",
+  "manifestSha256": "9cdff6c95d5dee08da67d2ed56d9e0486bae3914c2b1b8cbabac20ff9316d63a",
+  "review": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-buster-cluster-invoker-policy-20260921/prism-legacy-test-review-20260924.json",
+  "reviewSha256": "81309d7436843c0bdbfdd3a0a02a39f7dd1e6f9f3f761e3dc51c783ad93664df",
+  "status": "integrated; verification pending",
+  "files": [
+    {
+      "path": "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+      "kind": "file",
+      "beforeSha256": "dc0f81d07a2bcc8555bb0d3f7e1555fe4e442ba05ac4a49a753051818f4221a6",
+      "sha256": "49dcf0f3942fb5bc5c5ac3b3345f7afb6a269fde0a066652424d22a00fe0be15"
+    }
+  ]
+}

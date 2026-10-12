@@ -1,0 +1,18 @@
+✔ CB01 real probe reservation overflows and recovers while work remains active (26.889835ms)
+✔ CB02 actual TCP connection limit rejects the next socket and reopens after release (4.759331ms)
+✔ CB03 original Node body deadline sends 408 without shortening its checking interval (30003.818115ms)
+✔ actual HTTP ingress rejects excess unfinished bodies while reserving health capacity (83.819714ms)
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_CONNECT_TIMEOUT","durationMs":103,"active":1,"open":0,"pending":0}
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_UNKNOWN","durationMs":0,"active":1,"open":0,"pending":0}
+✔ shutdown waits for actual native pg acquisition settlement and closes the original pool (189.192706ms)
+{"event":"prism_nonce_dependency_failure","phase":"connect","code":"PG_CONNECT_TIMEOUT","durationMs":351,"active":1,"open":0,"pending":0}
+✔ one service deadline fails explicitly while the real pg startup remains unresolved (362.228111ms)
+✔ invalid service deadline cannot stop a healthy listener; configuration owns a separate bounded default (18.127062ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32392.932928

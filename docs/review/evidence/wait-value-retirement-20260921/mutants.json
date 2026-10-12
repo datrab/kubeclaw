@@ -1,0 +1,74 @@
+[
+  {
+    "mode": "events-prefix",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-value-retirement-20260921/mutant.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=retained original prefix mutation",
+      "tests/verification/reliability/wait-value-projection.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedDiagnostic": "Missing expected rejection",
+    "semanticFailureDetected": true
+  },
+  {
+    "mode": "receipt-authority",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-value-retirement-20260921/mutant.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=wrong source/receipt identities",
+      "tests/verification/reliability/wait-value-projection.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedDiagnostic": "Missing expected rejection",
+    "semanticFailureDetected": true
+  },
+  {
+    "mode": "original-wait-digest",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-value-retirement-20260921/mutant.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=existing operator projection receipt",
+      "tests/verification/reliability/wait-value-projection.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedDiagnostic": "OPERATOR_PROJECTION_AUTHORITY_REQUIRED",
+    "semanticFailureDetected": true
+  },
+  {
+    "mode": "selected-audience",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-value-retirement-20260921/mutant.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=Core exposes retained",
+      "tests/verification/reliability/wait-resolver-audience.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedDiagnostic": "Expected values to be strictly equal",
+    "semanticFailureDetected": true
+  }
+]

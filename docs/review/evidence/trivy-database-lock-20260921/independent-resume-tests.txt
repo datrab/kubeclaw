@@ -1,0 +1,29 @@
+✔ TD01/07: exact locked files publish together without rewriting metadata or resolving tags (48.595892ms)
+✔ TD02/13: malformed inputs and scanner mismatch fail before registry access (7.612103ms)
+✔ TD04: changed vulnerability manifest is rejected without publishing either database (6.848344ms)
+✔ TD05: changed vulnerability archive is rejected before extraction (8.225538ms)
+✔ TD04: changed java manifest is rejected without publishing either database (11.893361ms)
+✔ TD05: changed java archive is rejected before extraction (13.152403ms)
+✔ TD06: correct archive with wrong locked extracted bytes fails (41.564804ms)
+✔ TD06: duplicate archive members are rejected before publication (19.676509ms)
+✔ TD06: symlink archive members are rejected before publication (47.138216ms)
+tar: removing leading '../' from member names
+tar: removing leading '../' from member names
+✔ TD06: traversal archive members are rejected before publication (66.485936ms)
+✔ TD08: registry failure has no fallback or partial cache publication (5.938791ms)
+✔ TD09/14: existing directory and dangling symlink remain untouched (7.09181ms)
+✔ TD14: two installers cannot publish or merge into the same destination (18.871718ms)
+✔ TD02: actual CLI rejects authored database lock drift before registry access (58.077103ms)
+✔ TD02: actual CLI rejects generated database lock drift before registry access (46.736595ms)
+✔ TD13: actual CLI checks installed scanner against the consistent authored lock (103.241788ms)
+✔ TD11: production Dockerfile wires authored inputs and installer; obsolete refresh paths are absent (8.414403ms)
+✔ central versions update actual build/deployment files and reject drift without repairing it (75.019072ms)
+✔ every central base requires a digest, including non-OpenClaw runtimes (0.357889ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 741.630206

@@ -1,0 +1,12 @@
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/browser-archive-lock.mjs:107
+    if (process.platform !== 'linux' || architecture !== ({ x64: 'amd64', arm64: 'arm64' })[process.arch]) throw new Error('Browser target must match actual Linux build architecture');
+                                                                                                                 ^
+
+Error: Browser target must match actual Linux build architecture
+    at main (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/browser-archive-lock.mjs:107:114)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/browser-archive-lock.mjs:116:96
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0

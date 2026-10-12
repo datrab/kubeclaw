@@ -1,0 +1,457 @@
+[
+  {
+    "path": "docker/buster-runtime-entrypoint.sh",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-effect-lock-ttl-20260921.md",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-platform-inventory-20260921.md",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "package.json",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "scripts/tests/integration/repository-review-supervisor-start.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/README.md",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/README.md",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/common/plugins/agent-observability/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/common/plugins/notification-observer/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/core/effects/README.md",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/core/effects/coordinator.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/core/execution/adapters.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/core/execution/engine-runtime.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/core/src/index.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/human-approval/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/review/tests/live-function.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-e2e.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-engine.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-live-crashes.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-plugin-system-v2-resume.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/check-project-compiler.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/contracts/quality-provider-runtime.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/e2e/run-v2-production-pipeline.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/e2e/scenario-proof.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary-child.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/historical-branch-acceptance/review-semantic-history-child.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/adapter-cleanup-scope.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/adapter-dependency-identity.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/admin-approval-fixture.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/admin-repair.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/approval-source-fixture.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/attempt-projection-recovery.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/discord-delivery-receipt.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/effect-identity-version.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/effect-lock-configuration.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/effect-lock-lifetime.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/external-effect-recovery.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/fixtures/forge-runtime.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/fixtures/legacy-effects/README.md",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/forge-lock-wait.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/isolation-session.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/observer-recovery.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/operator-delivery.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/prism-reader-fixture.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/redis-transport.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/repair-budget-fixture.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/report-identity-fixture.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/review-cache-native-profile.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/review-cache-storage-negative.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/review-report-crash-independent.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/review-report-locale-child.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/review-semantic-summary-child.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/runtime-session-cleanup.test.mts",
+    "snapshotMatches": true,
+    "currentMatches": true
+  },
+  {
+    "path": "tests/verification/reliability/wait-value-projection.test.mjs",
+    "snapshotMatches": true,
+    "currentMatches": true
+  }
+]

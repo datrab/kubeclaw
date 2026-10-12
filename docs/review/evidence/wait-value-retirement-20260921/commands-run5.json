@@ -1,0 +1,86 @@
+[
+  {
+    "name": "original-wait-live",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "tests/live-function.test.ts"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugins/wait-store",
+    "exitCode": 0
+  },
+  {
+    "name": "original-wait-boundary",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "tests/package-boundary.test.mjs"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugins/wait-store",
+    "exitCode": 0
+  },
+  {
+    "name": "original-operator-and-wait",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/wait-value-projection.test.mjs",
+      "tests/verification/reliability/wait-resolver-audience.test.mjs",
+      "tests/verification/reliability/operator-request-projection.test.mjs",
+      "tests/verification/reliability/operator-projection-independent.test.mjs"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+    "exitCode": 0
+  },
+  {
+    "name": "foundation-types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+    "exitCode": 0
+  },
+  {
+    "name": "original-blob-and-foundation",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/blob-budget.test.mts",
+      "tests/verification/reliability/blob-read-boundary.test.mjs",
+      "tests/verification/reliability/blob-read-independent.test.mjs",
+      "tests/verification/reliability/record-transition-authority-independent.test.mjs",
+      "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+      "tests/verification/reliability/record-retained-transition.test.mjs"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+    "exitCode": 0
+  },
+  {
+    "name": "original-durable-cutover",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs"
+    ],
+    "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+    "exitCode": 1
+  }
+]

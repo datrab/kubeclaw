@@ -1,0 +1,17 @@
+{
+  "decision": "bounded source accepted for coordinated integration and Fast2; documentation qualification required",
+  "manifestSha256": "57f7216fdab337c5aa8fb2ca74cc2f61f0ab9eb50a02ec9e35f9dccc163a1f4a",
+  "cumulativeManifestSha256Expected": "92e5987ed6cb17068a65d9bfffd6e15fc0620e1d91e6c23a542c7fc6845db349",
+  "filesChecked": 7,
+  "sourceContractIdentitiesChecked": 6,
+  "identityErrors": [],
+  "checks": [
+    "Extracted Tailscale operation-policy if block byte-identical after surrounding whitespace trim; exact constructor position preserves processInput-first validation and all assignments/effects after operation-policy validation. Type-only back reference adds no runtime import cycle.",
+    "Three adjacent declarations inspected against every actual JS named export. Runtime-validated unknown inputs and concrete output shapes match; readonly E2E outputs actually frozen. No any/suppression or runtime validation replacement.",
+    "Original exact mediaType assertion retained after stronger existence/artifact discriminator.",
+    "Credential fields passed only as complete captured nonempty pair; existing registry client validation remains first.",
+    "Live runner explicit cleanup budget moved to actual executionPolicy.provider cleanupTimeoutMs. Original declared value remains 180000 but previously obsolete top-level option was ignored, so effective behavior changes. No unchanged-effective-deadline claim."
+  ],
+  "docCorrection": "Private README says all original deadlines remain unchanged. Qualify this as original declared values/oracles preserved; the formerly ignored live cleanupTimeoutMs now becomes effective. Root notified.",
+  "execution": "none; no runtime/type/lint/live-cluster pass claimed"
+}

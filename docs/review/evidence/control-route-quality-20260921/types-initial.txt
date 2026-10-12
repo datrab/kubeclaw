@@ -1,0 +1,21 @@
+skills/prism/server/artifact-route.ts(20,3): error TS2322: Type 'void' is not assignable to type 'boolean'.
+skills/prism/server/artifact-route.ts(35,51): error TS18047: 'artifact' is possibly 'null'.
+skills/prism/server/direction-routes.ts(40,11): error TS2349: This expression is not callable.
+  Type 'RegExpExecArray' has no call signatures.
+skills/prism/server/direction-routes.ts(59,6): error TS18047: 'directions' is possibly 'null'.
+skills/prism/server/direction-routes.ts(65,6): error TS18047: 'directions' is possibly 'null'.
+skills/prism/server/direction-routes.ts(98,6): error TS18047: 'directions' is possibly 'null'.
+skills/prism/server/direction-routes.ts(106,6): error TS18047: 'directions' is possibly 'null'.
+skills/prism/server/direction-routes.ts(155,5): error TS18047: 'directionFeedback' is possibly 'null'.
+skills/prism/server/direction-routes.ts(181,5): error TS18047: 'selectDirection' is possibly 'null'.
+skills/prism/server/engine-route.ts(58,5): error TS18047: 'execute' is possibly 'null'.
+skills/prism/server/engine-route.ts(66,8): error TS18047: 'execute' is possibly 'null'.
+skills/prism/server/engine-route.ts(80,21): error TS18047: 'execute' is possibly 'null'.
+skills/prism/server/engine-route.ts(119,54): error TS18047: 'execute' is possibly 'null'.
+skills/prism/server/engine-route.ts(123,11): error TS18047: 'execute' is possibly 'null'.
+skills/prism/server/engine-route.ts(130,50): error TS18047: 'execute' is possibly 'null'.
+skills/prism/server/engine-route.ts(135,51): error TS18047: 'execute' is possibly 'null'.
+skills/prism/server/project-routes.ts(30,11): error TS2349: This expression is not callable.
+  Type 'RegExpExecArray' has no call signatures.
+skills/prism/server/project-routes.ts(72,6): error TS18047: 'projectBrief' is possibly 'null'.
+skills/prism/tests/control-image-environment.test.mts(64,22): error TS2339: Property 'NODE_TEST_CONTEXT' does not exist on type '{ SWARM_CONFIG: string; PORT: string; }'.

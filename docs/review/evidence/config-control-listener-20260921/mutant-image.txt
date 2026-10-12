@@ -1,0 +1,34 @@
+✖ actual Control image declarations and exact image proof accept authored profile one (2.092443ms)
+✖ actual Control image declarations and exact image proof accept authored profile two (0.559494ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 240.445017
+
+✖ failing tests:
+
+test at ../../../../../tmp/control-image-mutant-208oc2yp/skills/prism/tests/control-image-environment.test.mts:30:3
+✖ actual Control image declarations and exact image proof accept authored profile one (2.092443ms)
+  Error: SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use operator.prism.control.port
+      at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:46:45)
+      at TestContext.<anonymous> (file:///tmp/control-image-mutant-208oc2yp/skills/prism/tests/control-image-environment.test.mts:37:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at ../../../../../tmp/control-image-mutant-208oc2yp/skills/prism/tests/control-image-environment.test.mts:30:3
+✖ actual Control image declarations and exact image proof accept authored profile two (0.559494ms)
+  Error: SWARM_CONFIG_LEGACY_OVERRIDE:PORT:use operator.prism.control.port
+      at loadControlServerConfig (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/server/control-config.ts:46:45)
+      at TestContext.<anonymous> (file:///tmp/control-image-mutant-208oc2yp/skills/prism/tests/control-image-environment.test.mts:37:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

@@ -1,0 +1,31 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-run2-20260921/root/sbin/mke2fs",
+    "-q",
+    "-t",
+    "ext4",
+    "-F",
+    "-d",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-run2-20260921/guest-root",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-helper-vm-run2-20260921/guest-root.ext4"
+  ],
+  "initrdUncompressedBytes": 5745004,
+  "initrdCompressedBytes": 1899633,
+  "modules": [
+    "kernel/drivers/block/virtio_blk.ko.gz",
+    "kernel/lib/crc/crc16.ko.gz",
+    "kernel/fs/mbcache.ko.gz",
+    "kernel/fs/jbd2/jbd2.ko.gz",
+    "kernel/fs/ext4/ext4.ko.gz",
+    "kernel/fs/netfs/netfs.ko.gz",
+    "kernel/net/9p/9pnet.ko.gz",
+    "kernel/fs/9p/9p.ko.gz",
+    "kernel/net/9p/9pnet_virtio.ko.gz",
+    "kernel/drivers/char/hw_random/rng-core.ko.gz",
+    "kernel/drivers/char/hw_random/virtio-rng.ko.gz"
+  ],
+  "guestDiskLogicalBytes": 8589934592,
+  "guestDiskAllocatedBytes": 498040832,
+  "guestNodeVersion": "v24.21.0",
+  "guestNodeSha256": "78465b20b5455f64d2dbbd9e8b38470cfc23ad3abe4cdc9a00dc5e050eee70fb"
+}

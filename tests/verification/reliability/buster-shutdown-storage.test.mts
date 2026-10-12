@@ -1,3 +1,10 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
+import { canonicalSwarmEntry } from '../../fixtures/config/swarm-bundle.mjs';
+import { loadBusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';
+import { canonicalJson } from '@kubeclaw/pipeline-observability-contract';
+import { preparedPlanStateRoot, preparedPlanRuntimeRoot } from '../../fixtures/test-gate/modeled-preparation.mts';
+// Preparation authority is modeled here; parser, extraction and durable service/store remain real.
+import { ModeledBusterRemotePlanService as BusterRemotePlanService, ModeledPreparedPlanJobStore as FileBusterPlanJobStore } from '../../fixtures/test-gate/modeled-preparation.mts';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import crypto from 'node:crypto';
@@ -8,7 +15,7 @@ import { execFileSync } from 'node:child_process';
 import { buildRegistry, discoverPackages, resolveTestPlan, createRemotePlanJob } from '@kubeclaw/nova-core';
 import { buildCommittedSourceSnapshot } from '../../../skills/nova/core/test-gates/source-snapshot.ts';
 import { withDurableStoreLock } from '../../../skills/common/plugin-runtime/foundation/observability/durable-delivery.ts';
-import { BusterRemotePlanService, FileBusterPlanJobStore } from '../../../skills/buster/engine/test-gates/remote-plan-service.ts';
+
 
 for (const timing of ['during', 'after', 'queued', 'admission', 'read-failure', 'healthy-terminal']) test(`durable shutdown failure ownership: ${timing}`, { timeout: 30000 }, async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'result-reservation-'));
@@ -38,14 +45,26 @@ for (const timing of ['during', 'after', 'queued', 'admission', 'read-failure', 
     const job = (id: string) => createRemotePlanJob({ idempotencyKey: id, pipelineStageId: 'test', plan, ...snapshot,
       grants: new Map([['check', ['command.execute']]]), maximumConcurrency: 1, submittedAt: new Date().toISOString() });
     const first = job('reservation:first');
-    await new FileBusterPlanJobStore(state, options).accept(first, new Date().toISOString());
-    const accepted = await new FileBusterPlanJobStore(state, options).get(first.jobId);
-    const quota = Buffer.byteLength(JSON.stringify(accepted.payload)) + 2;
+    const calibration = new FileBusterPlanJobStore(state, options);
+    await calibration.accept(first, new Date().toISOString());
+    const accepted = await calibration.get(first.jobId);
+    if (!accepted.payload.input) throw new Error('TEST_CALIBRATION_INPUT_REQUIRED');
+    await calibration.attachSource(await calibration.modeledPreparation.extract(accepted.payload));
+    await calibration.transition(first.jobId, ['accepted'], 'running', new Date().toISOString());
+    const running = await calibration.get(first.jobId);
+    assert.equal(running.payload.status.state, 'running');
+    const quota = Buffer.byteLength(canonicalJson(running.payload)) + 2;
+    assert.ok(Buffer.byteLength(canonicalJson({ ...running.payload, status: { ...running.payload.status,
+      state: 'cancelled', error: 'OBSERVABILITY_STORE_PATH_NOT_DIRECTORY' } })) > quota);
+    console.log(JSON.stringify({ fixture: 'terminal-persistence-cut', timing,
+      acceptedBytes: Buffer.byteLength(canonicalJson(accepted.payload)), runningBytes: quota - 2, quota, slack: 2 }));
     const limited = new FileBusterPlanJobStore(path.join(root, 'limited-state'), { ...options, recordLimits: { ...options.recordLimits, maximumRecordBytes: timing === 'healthy-terminal' ? 128 * 1024 : quota } });
     const runtimeRoot = path.join(root, 'runtime-is-a-file');
-    fs.writeFileSync(runtimeRoot, 'original filesystem ENOTDIR; no provider can start');
-    const service = new BusterRemotePlanService({ store: limited, registry, workerRevision: 'a'.repeat(40), runtimeRoot,
-      tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['command.execute']), maximumActiveJobs: 1 });
+    fs.writeFileSync(preparedPlanRuntimeRoot(runtimeRoot), 'original filesystem ENOTDIR; no provider can start');
+    const service = new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store: limited, registry, workerRevision: 'a'.repeat(40), runtimeRoot,
+      tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['command.execute']), admission: { ...loadBusterSettings({ SWARM_CONFIG: canonicalSwarmEntry }).admission, maximumActiveJobs: 1 } });
     const queued = job('reservation:other');
     if (timing === 'queued') {
       await limited.accept(first, new Date().toISOString());
@@ -55,7 +74,7 @@ for (const timing of ['during', 'after', 'queued', 'admission', 'read-failure', 
     assert.equal(service.bootstrapReady(), true);
     if (timing === 'read-failure') {
       assert.equal((await service.submit(first)).state, 'accepted');
-      const recordFile = path.join(root, 'limited-state', 'records', 'store.json');
+      const recordFile = path.join(preparedPlanStateRoot(path.join(root, 'limited-state')), 'records', 'store.json');
       const fd = fs.openSync(recordFile, 'w');
       try { fs.writeSync(fd, '{"broken":'); fs.fsyncSync(fd); } finally { fs.closeSync(fd); }
       await assert.rejects(() => limited.get(first.jobId), SyntaxError);
@@ -70,7 +89,7 @@ for (const timing of ['during', 'after', 'queued', 'admission', 'read-failure', 
         return true;
       });
       assert.equal(fs.readFileSync(recordFile, 'utf8'), '{"broken":');
-      assert.equal(fs.readFileSync(runtimeRoot, 'utf8'), 'original filesystem ENOTDIR; no provider can start');
+      assert.equal(fs.readFileSync(preparedPlanRuntimeRoot(runtimeRoot), 'utf8'), 'original filesystem ENOTDIR; no provider can start');
       return;
     }
     if (timing === 'admission') {
@@ -78,7 +97,7 @@ for (const timing of ['during', 'after', 'queued', 'admission', 'read-failure', 
       let entered!: () => void;
       const held = new Promise<void>(resolve => { entered = resolve; });
       const unlock = new Promise<void>(resolve => { release = resolve; });
-      const locking = withDurableStoreLock(path.join(root, 'limited-state', 'job-admission'), async () => { entered(); await unlock; });
+      const locking = withDurableStoreLock(path.join(preparedPlanStateRoot(path.join(root, 'limited-state')), 'job-admission'), async () => { entered(); await unlock; });
       await held;
       const pending = service.submit(first);
       try {
@@ -117,6 +136,6 @@ for (const timing of ['during', 'after', 'queued', 'admission', 'read-failure', 
     assert.equal(after.payload.status.state, 'running', 'failed persistence cannot invent a terminal status');
     assert.equal(after.payload.status.error, null);
     if (timing === 'queued') assert.equal((await limited.get(queued.jobId)).payload.status.state, 'accepted', 'queued durable job must remain available to restart recovery');
-    assert.equal(fs.readFileSync(runtimeRoot, 'utf8'), 'original filesystem ENOTDIR; no provider can start');
+    assert.equal(fs.readFileSync(preparedPlanRuntimeRoot(runtimeRoot), 'utf8'), 'original filesystem ENOTDIR; no provider can start');
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

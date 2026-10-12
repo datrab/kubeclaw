@@ -1,3 +1,4 @@
+import {writeControlPolicy} from './fixtures/control-policy.mts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {generateKeyPairSync, verify} from 'node:crypto';
@@ -18,7 +19,7 @@ import {fileURLToPath} from 'node:url';
 
 const operator = 'operator@example.test';
 const origin = 'https://studio.example.test';
-const shared = {PRISM_SESSION_SECRET: 'session-composition-test', PRISM_INGRESS_SECRET: 'ingress-composition-test',
+const shared = {SWARM_CONFIG: fileURLToPath(new URL('../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)), PRISM_SESSION_SECRET: 'session-composition-test', PRISM_INGRESS_SECRET: 'ingress-composition-test',
   PRISM_INGESTION_SECRET: 'ingestion-test', PRISM_DISPATCH_SECRET: 'dispatch-test', PRISM_WORKER_SECRET: 'worker-test'};
 async function listen(server: Server) {
   await new Promise<void>((resolve, reject) => {server.once('error', reject); server.listen(0, '127.0.0.1', resolve);});
@@ -33,7 +34,7 @@ export async function setup() {
   const keys = generateKeyPairSync('ed25519');
   const keyFile = join(root, 'authority.pem');
   await writeFile(keyFile, keys.privateKey.export({format: 'pem', type: 'pkcs8'}), {mode: 0o600});
-  const environment = {...shared, ARTIFACT_ROOT: join(root, 'artifacts'), PRISM_PRODUCT_DECISIONS_ENABLED: 'true',
+  const environment = {...shared, ...writeControlPolicy(root, {artifactRoot: join(root, 'artifacts')}), PRISM_PRODUCT_DECISIONS_ENABLED: 'true',
     PRISM_PRODUCT_ORIGIN: origin, PRISM_PRODUCT_CONTROLLER_URL: 'https://127.0.0.1:1',
     PRISM_PRODUCT_OPERATORS: JSON.stringify([operator]), PRISM_PRODUCT_PRIVATE_KEY_FILE: keyFile,
     PRISM_PRODUCT_ISSUER: 'composition-authority', PRISM_PRODUCT_CONTROLLER_CA_FILE: join(root, 'missing-ca'),
@@ -72,7 +73,7 @@ test('original composed Control preserves disabled routes and rejects incomplete
 
 test('actual production listener rejects invalid opt-in configuration before listening', async () => {
   await assert.rejects(promisify(execFile)(process.execPath, [fileURLToPath(new URL('../server/control.ts', import.meta.url))],
-    {env: {...process.env, ...shared, PORT: '0', PRISM_PRODUCT_DECISIONS_ENABLED: 'true', PRISM_PRODUCT_ORIGIN: ''}, timeout: 10_000}),
+    {env: {...process.env, ...shared, PRISM_PRODUCT_DECISIONS_ENABLED: 'true', PRISM_PRODUCT_ORIGIN: ''}, timeout: 10_000}),
     (error: unknown) => {
       const failure = error as {code: number; stderr: string; killed: boolean};
       assert.equal(failure.code, 1); assert.notEqual(failure.killed, true);

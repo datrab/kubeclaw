@@ -1,0 +1,32 @@
+{
+  "manifestSha256": "ee221e6bf05422820bae2813151c63669b0e6827ef2caf276230e2d9e36966f1",
+  "allBoundFileHashesMatch": true,
+  "changedSinceV1": [
+    "tests/fixtures/test-gate/kubernetes-cleanup-children.mjs",
+    "tests/verification/contracts/kubernetes-cleanup-runner.test.mjs"
+  ],
+  "decision": "source accepted for coordinated integration and actual original/new runtime, types, lint and mutation verification; no behavioral acceptance yet",
+  "v1Finding": "resolved: real forwarded stdout result/passed must be observed before exact TERM injection; later actual completed/passed attempt and closed completed-fixture cleanup explicitly required",
+  "authorityReview": [
+    "Completed authority derives only from retained host completed/passed fixture, no cleanupFailed, and matching node/provider/execution/run/attempt identities",
+    "Faulted retained result is explicitly incomplete through runner cleanupProvider; ordinary cleanup is incomplete",
+    "Loaded validates required authority before recovery spawn and preserves original pinned invocation; both fresh and recovery sessions forward same disposition",
+    "Current Kubernetes retain respects completed-fixture only; old immutable plugin snapshots explicitly not repaired",
+    "Rollback success rethrows original failure; rollback failure retains local primary+cleanup causes and stable marker across capability IPC"
+  ],
+  "fixtureReview": [
+    "Before-setup teardown ownership registered, unknown child ownership rejected before spawn, real children awaited closed under existing2000ms helper bound; unresolved cleanup retains directory",
+    "Other tool/store spawn calls forwarded unchanged",
+    "Private plugin mutation requires nonalias realpath and different inode before modification and before digest discovery",
+    "Four real default Runner retain/delete success/failure profiles, fifth post-passed failure/next-retain profile, two direct rollback cause cases, three child IPC negatives prepared",
+    "Original caller tests only receive explicit valid disposition; original assertions/deadlines retained"
+  ],
+  "remaining": [
+    "All prepared runtime/type/lint/mutant results still unexecuted for this private snapshot",
+    "Negative controls for altered completed-fixture identity guard are not included; no claim of exhaustive tamper coverage",
+    "No real cluster/kernel EPERM or durable cleanup recovery acceptance",
+    "Historical pinned Kubernetes providers remain explicit compatibility work"
+  ],
+  "reviewerRuntime": "none",
+  "liveWrites": "none"
+}

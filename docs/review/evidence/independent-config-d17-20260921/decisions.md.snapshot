@@ -1,0 +1,198 @@
+# Bestätigte Zielentscheidungen
+
+Stand: 2026-09-09. Vom Auftraggeber in der Planungssitzung ausdrücklich bestätigt, einschließlich seiner Korrekturen. **Zielvorgaben für die Behebung, keine Behauptung bereits implementierten Verhaltens.** Historische Reviewberichte bleiben unverändert. Technische Ausgestaltung erfolgt in den zugeordneten Arbeitspaketen; Abweichungen von diesen Entscheidungen benötigen eine neue ausdrückliche Entscheidung.
+
+## D01 — Vollständige Diagnose, Demo-Credentials und Logsammlung
+
+- Relevant ausgeführte Aktionen nachvollziehbar erfassen: wer, was, wo, wann und wie; Projekt, Run, Modul, Stage, Versuch und externe Auftragsidentität soweit anwendbar mitführen. Eingaben, Ausgaben, Zustandsänderungen, Fehlerursache und Fortsetzung müssen nachvollziehbar bleiben.
+- Fehler explizit berichten: betroffene Operation, Originalursache und Diagnose erhalten; nicht hinter generischen Fehlermeldungen verbergen.
+- Ausschließlich **von der Pipeline erzeugte Demo-Zugangsdaten** dürfen ungeschwärzt in Logs und autorisierten Operatorbenachrichtigungen stehen. Langlebige Plattform-Secrets, GitHub-/Modellanbieter-/Tailscale-Tokens, Plattform-DBzugänge und echte Benutzerdaten bleiben geschützt. Kein pauschales Abschalten von Schutzmechanismen. Die Ausnahme richtet sich nach Herkunft/Zweck des Credentials, nicht allein nach Namespace oder Feldname.
+- Clawdeck übernimmt die dauerhafte Logsammlung. Es wird kein zusätzlicher zentraler Pipeline-Logspeicher als Produktanforderung eingeführt. Vorhandene lokale Log-/Artefaktverträge müssen dennoch konsistent funktionieren; keine Dummy-Speicherung oder stiller Logverlust zur Erfüllung eines Pflichtcallbacks.
+- Große Ausgaben vollständig als Dateien/Artefakte erhalten und aus Ereignissen/Benachrichtigungen verlinken. Anzeigeverkürzung ausdrücklich kennzeichnen; sie darf keine unbemerkte Kürzung des gespeicherten Originals sein. Relevante konkrete Fehler und Ergebnisse bleiben in Nachrichten sichtbar.
+- Diese Regel erlaubt keine öffentliche Veröffentlichung von Logs, Secrets oder Betreiberkonfiguration. Sie betrifft den vorgesehenen privaten Diagnose-/Operatorpfad.
+
+## D02 — Technische Lieferung und menschliche Abnahme
+
+- **Bereit zur Abnahme:** Implementation abgeschlossen, verpflichtende Prüfungen bestanden, exakt der geprüfte Stand als Demo erreichbar und URL samt Demo-Zugangsdaten dem Operator zugestellt.
+- **Abgenommen:** ausdrückliche Zustimmung des Operators zu genau dieser Version.
+- Änderungswünsche erzeugen weitere Arbeit und erneute Prüfung des geänderten Stands. Eine alte Abnahme ist keine Freigabe einer neuen Version.
+- Pipeline Review und Case Study bleiben optional. Eine abgelaufene Demo wird als abgelaufen dargestellt; bereits erteilte Abnahme bleibt historisch gültig.
+
+## D03 — Pflichtprüfungen und optionale Agenten
+
+- Lint nach jeder Moduländerung verpflichtend, einschließlich Reparaturen.
+- Deterministische Tests mit ausdrücklich definiertem Pflichtumfang pro Modul. Vor technischer Lieferung zusätzlich kumulative Prüfung des integrierten Projekts. Testauswahl ist projektspezifisch; nicht jede vorhandene Suite muss für jede Anwendung laufen. Übersprungene Pflichtprüfungen zählen nicht als bestanden. Pflichtumfang nicht stillschweigend reduzieren.
+- Architektur: **nur der deterministische Teil ist Pflicht**, um erforderliche Struktur, Konfiguration und Referenzen zu prüfen. Agentisches Architekturreview ist optional. Die frühere Empfehlung eines generell verpflichtenden agentischen Architekturreviews wurde ausdrücklich korrigiert.
+- Echo-Code-Review: optional, standardmäßig **aus**.
+- Buster einschließlich Test-Agent: standardmäßig **an**. Der Test-Agent bleibt separat abschaltbar; vereinbarte deterministische Pflichtprüfungen bleiben verbindlich. Buster ist nicht allein mit seinem optionalen Test-Agent gleichzusetzen.
+- Aktivierte Review-/Agentprüfungen sind verbindlich gemäß D10. Pipeline Review und Case Study sind optionale Abschlussauswertungen, keine Ersatztests.
+
+## D04 — Getrennte Reparaturbudgets und einmalige Nova-Eskalation
+
+- Pro Modul gibt es getrennte Budgets: **zwei Lint-Reparaturrunden, zwei Review-Reparaturrunden und zwei Test-Reparaturrunden**. Reviewbudget nur bei aktiviertem Review. Keine gemeinsame Zweiergrenze und keine drei Standardrunden.
+- Erstimplementation und reine Wiederprüfungen zählen nicht als Reparatur. Eine Reparatur wird dem auslösenden Prüfschritt zugerechnet; danach erforderliche andere Prüfungen bleiben verpflichtend. Bereits verbrauchte Budgets bleiben erhalten, auch bei Invalidierung oder Neustart.
+- Eine weitere notwendige Reparatur über ein ausgeschöpftes Kategorienbudget führt zu **Needs Nova** mit vollständiger Fehler-/Änderungshistorie. Erfolg nach der letzten erlaubten Reparatur wird nicht allein wegen des Zählerstands blockiert.
+- Nova darf **einmal pro Modul genau einen zusätzlichen Reparaturauftrag** geben. Führt dieser einschließlich aller notwendigen Wiederprüfungen nicht zum Erfolg, folgt **blocked**; weitere Arbeit benötigt die Entscheidung des Operators. Keine zwei zusätzlichen Nova-Runden und kein automatischer Reset aller Budgets.
+- Nova darf Anforderungen oder Pflichtprüfungen nicht eigenständig abschwächen. Fachliche Entscheidung und bewilligter zusätzlicher Auftrag müssen dauerhaft nachvollziehbar sein.
+
+## D05 — Parallele Module und kontrollierte Integration
+
+- Unabhängige Module in getrennten autorisierten Worktrees parallel bearbeiten.
+- Kurze gemeinsame Gitintegrationen serialisieren; normale Lockkonkurrenz kontrolliert behandeln.
+- Abhängige Module erst nach bestandenen Pflichtprüfungen ihrer Voraussetzungen starten.
+- Maximalparallelität konfigurierbar. Den tatsächlich integrierten Stand anschließend kumulativ prüfen.
+
+## D06 — Demo-Lebensdauer
+
+- Standardmäßig **eine Woche (sieben Tage) ab Bereit zur Abnahme**, pro Projekt konfigurierbar und verlängerbar.
+- Operator kann jederzeit vorzeitig bereinigen. Vor Ablauf benachrichtigen.
+- Namespace, Zugangs-URL/Exposure und Demo-Credentials haben denselben Lebenszyklus. Planende darf die übertragene Operator-Exposure nicht vorzeitig löschen.
+- Nach Ablauf beziehungsweise expliziter Bereinigung Demo-Ressourcen entfernen. Code, Berichte, Logs und Abnahmestatus folgen D07; die Demo-TTL ist keine Log-TTL.
+
+## D07 — Aufbewahrung ohne automatische Loglöschung
+
+- Logs auf Disk oder in Git bleiben **auf unbestimmte Zeit bis zur manuellen Bereinigung durch den Operator**. Die vorgeschlagene automatische 30-Tage-Löschung wurde verworfen.
+- Code, finale Berichte, Entscheidungen und Abnahmehistorie bleiben bis zur ausdrücklichen Projektlöschung erhalten.
+- Solange ein Run auf Entscheidung wartet, seine zur Fortsetzung/Prüfung erforderlichen Belege erhalten. Explizite Bereinigung darf nicht unbemerkt einen fortsetzbaren Run unbrauchbar machen; Konsequenz sichtbar machen.
+- Vollständige große Ausgaben wie in D01; Clawdeck bleibt Logsammlung. Eine konkrete Clawdeck-interne Löschfrist wurde nicht festgelegt.
+- Nicht alle Caches, entpackten Quellen oder temporären Buildverzeichnisse sind Logs. D07 erklärt diese nicht pauschal für unbefristet aufzubewahren. Speicherbudgets, Backpressure und explizite Kapazitätsfehler dürfen Datenverlust nicht durch stille Kürzung/Löschung verdecken.
+
+## D08 — Technische Wiederaufnahme
+
+- Sicher wiederholbare Arbeit automatisch fortsetzen.
+- Bei möglicherweise bereits ausgeführten externen Aktionen zuerst tatsächlichen Zustand ermitteln und vorhandene Arbeit übernehmen, beispielsweise Git-Push oder angenommener Buster-Auftrag.
+- Bleibt der Ausgang unklar: Needs Nova mit konkreter Diagnose, keine blinde Wiederholung ungewisser Seiteneffekte. Auch ein zusätzlicher Auftrag nach D04 hebt diese Integritätsgrenze nicht auf.
+- Technische Wiederholungen verbrauchen kein fachliches Reparaturbudget; eigene konfigurierbare Zeit-/Versuchslimits verhindern Endlosschleifen.
+
+## D09 — Generischer Worker-Core
+
+- Derselbe Core für Buster, Prism und weitere Worker: Auftragsidentität, Status, Timeout, Abbruch, Wiederaufnahme und Ergebnisübergabe.
+- Fachlogik in getrennten Engines. Workerfähigkeiten und Ressourcen pro Worker konfigurierbar.
+- Nova steuert den Gesamtprozess; Worker führen Aufträge aus. Generischer Core importiert keine konkreten Plugins.
+- Dauerhafter Ausführungszustand besteht unabhängig von Clawdeck. Logsammlung ist keine Voraussetzung für korrekte Recovery; benötigte Auftrags-/Ergebnisbelege sind trotzdem zuverlässig zu persistieren.
+
+## D10 — Bewusste Risikoakzeptanz
+
+- Ausschließlich der Operator darf fachliche Qualitätsrisiken bewusst akzeptieren, mit Begründung und Bindung an den geprüften Stand. Nova darf diese Freigabe nicht selbst erteilen.
+- Fehlgeschlagene Pflichtprüfungen bleiben fehlgeschlagen. Änderungen an Anforderungen/Pflichtumfang ausdrücklich entscheiden und betroffenen Stand erneut prüfen; kein force-passed.
+- Beschädigte Evidenz, falsche Ergebniszuordnung oder fehlende Autorisierung sind nicht durch Risikoakzeptanz übersteuerbar.
+
+## D11 — Persönliche Designpräferenzen
+
+- Gespeicherte persönliche Präferenzen gelten projektübergreifend; pro Projekt überschreibbar oder deaktivierbar.
+- Explizite Projektvorgaben haben Vorrang. Jede Generierung hält fest, welchen Präferenzstand sie tatsächlich verwendet hat.
+- Projektübergreifende Verwendung hebt Nutzer-, Projekt-/Ereignisherkunft und Generationsidentität nicht auf. Keine zufällige Aggregation durch kollidierende Schlüssel.
+
+## Noch benötigte Umgebungsdaten, keine neuen stillen Produktentscheidungen
+
+Die Pipelinevorgaben reichen für den Behebungsplan. Konkrete Hostkapazität/Paperless-Reserve, externe Tailnetregeln, unabhängiger Recoveryzugang, Backupziel und akzeptierte Wiederherstellungszeiten sowie verfügbare Clawdeck-Schnittstelle sind vor den jeweiligen Betriebsnachweisen zu erheben. Keine neue VM, kostenpflichtige Ressource, Backupgarantie oder externe Zugriffsregel wird aus diesem Dokument als bereits genehmigt/vorhanden abgeleitet. Technische Vorschläge hierfür gehören mit Begründung in WP09/WP12/WP13.
+
+## D12 — Lokaler Abschluss und separate Live-Abnahme
+
+Am2026-09-12 vom Auftraggeber ausdrücklich bestätigt: Wenn Code vollständig
+korrigiert und ausreichend lokal getestet ist, gilt das Finding als **lokal
+verifiziert und für diesen Behebungsauftrag abgeschlossen**. Die Live-Tests
+führt der Auftraggeber am Ende nach dem Open-Sourcing aus; GitHub-Actions-Gates
+bleiben dafür erhalten. Lokale Nachweise und ausstehende Live-Nachweise werden
+getrennt geführt. Fehlende Implementierung oder unzureichende lokale Abdeckung
+bleiben offen. Nicht ausgeführte Tests werden nicht als bestanden bezeichnet.
+
+Diese Entscheidung ersetzt frühere Anforderungen, bereits für den lokalen
+Findingabschluss sämtliche Live-/Cluster-/Empfängerprüfungen auszuführen. Sie
+ändert weder Runtime-Sicherheitsgates noch D02-Produktabnahme und autorisiert
+keine Deployments, Nachrichten oder Umgehung einer gesperrten Aktion. Umsetzung
+und [Einzelbewertung](implementation/pr6-local-acceptance.md) bleiben in PR #6;
+keine zusätzlichen Branches.
+
+## D13 — Explizite Tasklimits und großzügige Reserve
+
+Am 2026-09-12 vom Auftraggeber nach Abwägung ausdrücklich bestätigt:
+
+- Der neue native Worker-Ressourcenpfad begrenzt Linux-Tasks, also alle Threads
+  einschließlich des Hauptthreads jedes Prozesses. Prozesse werden nicht noch
+  einmal zusätzlich zu ihren Threads gezählt.
+- Die Einheit wird im Ressourcenvertrag und in Profilen ausdrücklich gebunden.
+  Bestehende Prozessbudgets und historische Receipts werden nicht stillschweigend
+  als Taskbudgets umgedeutet; die Migration muss versioniert beziehungsweise
+  eindeutig diskriminiert sein und alte Nachweise lesbar erhalten.
+- Limits mit großzügiger Reserve anhand tatsächlicher Worker-Arbeit wählen,
+  nicht knapp am Normalverbrauch und nicht durch eine feste Umrechnung alter
+  Prozesszahlen. Fehlende Messungen erlauben keine Behauptung einer bereits
+  erfolgten Kalibrierung. CPU, Speicher und Parallelität bleiben separat begrenzt.
+- Die Prüfung und vollständige Zentralisierung aller Betreiber-Einstellungen
+  über die vorhandene `swarm.config.json` ist ein eigener Roadmap-Schritt nach
+  den vier verbleibenden Findings in PR #6. Keine zweite Betreiberdatei einführen.
+
+Dies ist die freigegebene Zielentscheidung, noch kein implementierter oder
+verifizierter Ressourcenpfad. D09 und D12 bleiben unverändert; keine Deployment-
+oder Privilegienänderung ist damit autorisiert.
+
+## D14 — Eigene dauerhafte Fixture-Lebensdauer in Buster
+
+Der Auftraggeber hat den Vorschlag ausdrücklich bestätigt: Retained Fixtures
+erhalten eine eigene dauerhafte Lebensdauer in Buster mit großzügigem separatem
+Ressourcenbudget und einem Abschlussbeleg nach dem Cleanup. Bereitschaft nach
+dem Setup ist kein Nachweis abgeschlossener Bereinigung. Buster führt
+Abhängigkeiten, Bereitschaft und Fixture-Abschluss; Worker Core stellt neutrale
+Prozessbesitz-, Messungs- und Recoverymechanismen bereit. Prism behält seine
+normale Attempt-Lebensdauer. Die bereits freigegebene Core/Buster-Aufteilung und
+Task-Einheit müssen nicht erneut bestätigt werden.
+
+Die physische Ressourcenbindung bleibt während der Fixture-Lebensdauer erhalten;
+ein Prozesswechsel zwischen Cgroups darf nicht als Übertragung bereits
+angefallener Speicherbelastung behauptet werden. Historische Setup-Receipts und
+Budgets bleiben unverändert lesbar; neue Lebensdauerbelege sind explizit
+versioniert und gebunden.
+
+## D15 — Vollständiger verbleibender 23er-Umfang
+
+Der Auftrag umfasst jetzt alle 23 noch nicht verifizierten Findings der
+ursprünglichen 154: die vier laufenden Implementierungen und die 19 bislang
+offenen Infrastrukturfindings. Arbeit weiter direkt in PR #6. Vollständige
+Implementierung und echte ausreichende lokale Verifikation sind erforderlich;
+Live-Gates bleiben vorbereitet für die abschließende Ausführung durch den
+Auftraggeber. Kein Live-Nachweis wird aus Konfiguration oder lokalen Ersatzdaten
+abgeleitet. Die gewünschte Mindestarbeitsdauer von acht Stunden ist kein Beleg
+für Abschluss und wird nur bei tatsächlich geleisteter Zeit behauptet.
+
+## D16 — Feste Host-Reservierung für native Worker
+
+Der Auftraggeber hat Variante A aus `implementation/pr6-node-accounting-decision.md`
+ausdrücklich bestätigt: hostverwaltete Rollenbereiche mit festen, tatsächlich
+schedulerwirksamen Kapazitätsreservierungen. Die Umsetzung betrifft Buster und
+Prism. Gesamtlimits und vollständige Admission-Reservierungen verhindern, dass
+Parallelität großzügige Einzelbudgets unkontrolliert vervielfacht. Kubernetes darf
+diese Hostkapazität nicht nochmals an Pods vergeben. Andere Hostdienste behalten
+eine getrennte Reserve. Konkrete verfügbare Kapazität wird geprüft, nicht erfunden.
+
+D13/D14 bleiben unverändert. Die Entscheidung autorisiert die Implementierung in
+PR #6, keinen Hosteingriff, Deployment oder Kauf zusätzlicher Ressourcen. Die
+Node-/Runtime-Anbindung muss fehlende Voraussetzungen vor Aktivierung abweisen.
+
+## D17 — Config als alleinige Autorität, klare Komponentengrenzen
+
+Der Auftraggeber präzisiert den laufenden CONFIG-Auftrag: Code und Konfiguration
+müssen klar getrennt sein. Für konfigurierbare Werte dürfen keine hardcodierten
+Fallbacks, lokalen Ersatzdefaults oder konkurrierenden Autoren im Code verbleiben.
+Fehlende erforderliche oder ungültige Konfiguration muss vor Aktivierung abgewiesen
+werden. Auch Loader, Schemas, Environment, Entrypoints und Charts dürfen keinen
+versteckten zweiten Defaultpfad bereitstellen. Gewünschte Standardwerte stehen
+ausdrücklich in der gepflegten Konfiguration.
+
+Gewünschte Struktur sind klar zugeordnete zentrale Config-Dateien pro Plugin und
+entsprechend für Worker Core, Engine, Orchestrator Core und weitere Komponenten.
+Jede Einstellung hat genau eine editierbare Autorenquelle. Ein gemeinsamer
+Einstiegspunkt darf diese Komponentenreferenzen zusammenführen und validieren;
+er darf ihre Werte nicht parallel pflegen oder durch lokale Defaults ersetzen.
+Die bisherige zentrale swarm-Autorität ist bei dieser Aufteilung nachvollziehbar
+zu migrieren, nicht durch zusätzliche konkurrierende Dateien zu ergänzen.
+Externe Secretwerte und die getrennte Softwareversionsautorität bleiben erhalten;
+ihre erforderlichen Referenzen und Zuständigkeiten müssen eindeutig sein.
+
+F1–F6 und F-DOC bleiben verpflichtend. Die Inventur muss jede konfigurierbare
+Einstellung, ihren einzigen Autor und alle tatsächlichen Consumer zuordnen.
+Positive Profile müssen den echten Consumer verändern; fehlende Werte und
+wieder eingeführte Fallbacks müssen durch passende Negativ-/Mutationstests
+auffallen. Ersetzte Ladepfade und widersprüchliche Anleitungen sind zu entfernen
+oder ausdrücklich als historische Belege zu kennzeichnen. Die Entscheidung
+beschreibt das Ziel, keinen bereits abgeschlossenen Implementierungsstand.

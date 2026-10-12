@@ -1,0 +1,12 @@
+{"ok":true,"iterations":8,"descendants":24,"escapedPipe":"bounded-explicit-failure","supervisorTerm":"acknowledged"}
+✔ skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts (5821.597933ms)
+{"ok":true,"suite":"process-input","transport":"native-process","checks":5}
+✔ skills/buster/engine/test-gates/tests/process-input.test.ts (714.179224ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6548.664465

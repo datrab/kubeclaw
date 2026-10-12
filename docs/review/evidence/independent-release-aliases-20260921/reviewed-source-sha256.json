@@ -1,0 +1,8 @@
+{
+  "scripts/updates/release-configuration.mjs": "2d41b251498d6459b0638f597a5daa3fa6b908f94d44d9f73924a1a040008478",
+  "scripts/updates/materialize-release.mjs": "ad026a32e4e9cad21ab3f2f0e87fcafe6c5d563f5133191f70b4c5ef4c925475",
+  "tests/verification/deployment/release-configuration.test.mjs": "e288d5c7c6d613128c41b0c73aea74ce0e1f1470de0dabd16027c40eafeecef6",
+  "tests/verification/deployment/code-release.test.mjs": "135a563287971d05f3b6eff053b704a9ae261617b92da2da01bc24f5a29c85d9",
+  "tests/verification/deployment/release-images.test.mjs": "a1deba2ffcbadd4803448101446c73419914022f06f74dfebb420278d9efb544",
+  "docs/operations/operator-configuration.md": "2b8b3484760551f4573c9501e7f8805e5132c0fce38561741a9f287e10dd2b0d"
+}

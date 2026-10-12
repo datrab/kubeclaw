@@ -1,0 +1,9 @@
+# Source correction after root review
+
+No runtime, type or lint checks were executed by this author. Initial snapshots and manifests are preserved.
+
+Confirmed child close now resolves the process-termination wait regardless of a retained signal/send failure. The existing Capability drain (default 1000 ms) then runs, and only after successful drain is the retained signal error thrown. A drain timeout remains the returned error when capabilities fail to settle; it must not be replaced by the earlier signal error. The original 1000 ms process-close timeout still rejects before the drain; no unbounded finally was added. Thus process-close and capability-drain remain separate existing bounds.
+
+Failures before successful initialization are retained in initializationFailure, including constructor observation failures and already-aborted initial contexts. initialize checks this after installing the context and rejects with the retained original failure rather than caching success or waiting for a missing callback. Execution failures after successful initialization do not become sticky initialization failures: the existing provider cleanup path remains available.
+
+Required targeted follow-up tests: (1) signal throws, real close occurs, an aborted in-flight capability settles, termination waits for drain then rejects signal error; (2) same close with nonsettling capability rejects drain timeout; (3) signal failure with no close rejects the original process termination bound without entering drain; (4) constructor observation failure before initialize is rejected by later initialize with OBSERVATION_FAILED; (5) already-aborted initialization rejects, while a post-initialization provider execution error still permits supported cleanup. Actual process/kernel behavior is not established by this source correction.

@@ -1,14 +1,12 @@
+export { FileDurableBlobStore, type DurableBlobStore } from './durable-blobs.ts';
+import { readStoreRecords, withRetainedStoreFence } from './durable-record-dependency.ts';
 import {assertDurableRecordReplay, assertRetirementIntent, payloadDigest, ownerValid, existingRecord,
   type DurableRecord, type DurableRecordState, type RecordRetirementIntent, type RecordRetirement} from './record-retirement.ts';
 export {assertDurableRecordReplay} from './record-retirement.ts';
 export type {DurableRecord, DurableRecordState, RecordRetirementIntent, RecordRetirement, RecordTombstone} from './record-retirement.ts';
-import crypto from "node:crypto";
-import fs from "node:fs/promises";
-import { readDurableBlob } from './durable-blob-read.ts';
 import path from "node:path";
 import { canonicalJson } from "@kubeclaw/pipeline-observability-contract";
 import {
-  ensureDirectoryDurable,
   readDurableState,
   withDurableStoreLock,
   writeDurableState,
@@ -27,14 +25,6 @@ export interface DurableRecordStore {
   }>;
   transition<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string, payload: T): Promise<DurableRecord<T>>;
   read<T>(stream: string): Promise<ReadonlyArray<DurableRecord<T>>>;
-}
-
-export interface DurableBlobStore {
-  put(bytes: Uint8Array): Promise<{
-    readonly digest: string;
-    readonly sizeBytes: number;
-  }>;
-  get(digest: string): Promise<Buffer>;
 }
 
 const EMPTY_STATE: DurableRecordState = {
@@ -118,11 +108,7 @@ export class FileDurableRecordStore implements DurableRecordStore {
    * Never reenter this store from operation; acquire other stores in a fixed order. */
   async withRecords<T, R>(stream: string, operation: (records: ReadonlyArray<DurableRecord<T>>) => Promise<R>): Promise<R> {
     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
-    return this.#serial(async () => {
-      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);
-      assertDurableRecordReplay(state);
-      return operation(structuredClone(state.records.filter((record) => record.stream === stream)) as DurableRecord<T>[]);
-    });
+    return this.#serial(async () => operation(await readStoreRecords<T>(this.#file, this.#limits.maximumBytes, stream)));
   }
 
   async retirements(stream: string): Promise<readonly RecordRetirement[]> {
@@ -180,6 +166,38 @@ export class FileDurableRecordStore implements DurableRecordStore {
     payload: T,
     authorize?: (records: ReadonlyArray<DurableRecord>) => void,
   ): Promise<DurableRecord<T>> {
+    const { snapshot, digest } = this.#transitionCandidate(stream, idempotencyKey, expectedPayloadDigest, payload);
+    return this.#serial(() => this.#transitionLocked(stream, idempotencyKey, expectedPayloadDigest, snapshot, digest, authorize));
+  }
+
+  /** Hold the owner writer before its retained dependency writer through the
+   * original durable transition. Domain callers must use one fixed store order. */
+  async transitionWithRetainedStore<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string,
+    payload: T, retained: FileDurableRecordStore, retainedStream: string,
+    authorize: (records: ReadonlyArray<DurableRecord>, retainedRecords: ReadonlyArray<DurableRecord>) => void,
+  ): Promise<DurableRecord<T>> {
+    const { snapshot, digest } = this.#transitionCandidate(stream, idempotencyKey, expectedPayloadDigest, payload);
+    return this.#withRetainedStore(retained, retainedStream, retainedRecords =>
+      this.#transitionLocked(stream, idempotencyKey, expectedPayloadDigest, snapshot, digest,
+        records => authorize(records, retainedRecords)));
+  }
+
+  /** Read-owned snapshots with the same fixed two-store fence as a retained transition. */
+  async withRetainedRecords<T, R>(stream: string, retained: FileDurableRecordStore, retainedStream: string,
+    operation: (records: readonly DurableRecord<T>[], retainedRecords: readonly DurableRecord[]) => Promise<R>,
+  ): Promise<R> {
+    identity(stream, 'DURABLE_RECORD_STREAM_INVALID');
+    return this.#withRetainedStore(retained, retainedStream, async records =>
+      operation(await readStoreRecords<T>(this.#file, this.#limits.maximumBytes, stream), records));
+  }
+
+  #withRetainedStore<R>(retained: FileDurableRecordStore, stream: string, operation: (records: readonly DurableRecord[]) => Promise<R>): Promise<R> {
+    identity(stream, 'DURABLE_RECORD_STREAM_INVALID');
+    return withRetainedStoreFence({ ownerFile: this.#file, retainedFile: retained.#file,
+      owner: callback => this.#serial(callback), retained: callback => retained.withRecords(stream, callback) }, operation);
+  }
+
+  #transitionCandidate<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string, payload: T): { snapshot: T; digest: string } {
     identity(stream, "DURABLE_RECORD_STREAM_INVALID");
     identity(idempotencyKey, "DURABLE_RECORD_IDEMPOTENCY_KEY_INVALID");
     if (!DIGEST.test(expectedPayloadDigest)) throw new Error("DURABLE_RECORD_DIGEST_INVALID");
@@ -187,7 +205,12 @@ export class FileDurableRecordStore implements DurableRecordStore {
     const digest = payloadDigest(snapshot);
     if (Buffer.byteLength(canonicalJson(snapshot)) > this.#limits.maximumRecordBytes)
       throw new Error("DURABLE_RECORD_SIZE_EXCEEDED");
-    return this.#serial(async () => {
+    return { snapshot, digest };
+  }
+
+  async #transitionLocked<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string,
+    snapshot: T, digest: string, authorize?: (records: ReadonlyArray<DurableRecord>) => void,
+  ): Promise<DurableRecord<T>> {
       const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);
       assertDurableRecordReplay(state);
       const index = state.records.findIndex(
@@ -217,92 +240,7 @@ export class FileDurableRecordStore implements DurableRecordStore {
       if (authorize?.(structuredClone(state.records)) !== undefined) throw new Error('DURABLE_RECORD_AUTHORIZATION_NOT_SYNCHRONOUS');
       await writeDurableState(this.#file, candidate);
       return structuredClone(record);
-    });
+
   }
 }
 
-async function syncDirectory(directory: string): Promise<void> {
-  const handle = await fs.open(directory, "r");
-  try { await handle.sync(); } finally { await handle.close(); }
-}
-
-export class FileDurableBlobStore implements DurableBlobStore {
-  readonly #root: string;
-  readonly #maximumBytes: number;
-  readonly #maximumTotalBytes: number | undefined;
-
-  constructor(root: string, maximumBytes: number, maximumTotalBytes?: number) {
-    positiveInteger(maximumBytes, "DURABLE_BLOB_LIMIT_INVALID");
-    if (maximumTotalBytes !== undefined) positiveInteger(maximumTotalBytes, "DURABLE_BLOB_TOTAL_LIMIT_INVALID");
-    this.#maximumTotalBytes = maximumTotalBytes;
-    this.#root = path.resolve(root);
-    this.#maximumBytes = maximumBytes;
-  }
-
-  #path(digest: string): string {
-    if (!DIGEST.test(digest)) throw new Error("DURABLE_BLOB_DIGEST_INVALID");
-    const hash = digest.slice("sha256:".length);
-    return path.join(this.#root, "blobs", "sha256", hash.slice(0, 2), hash.slice(2));
-  }
-
-  async put(input: Uint8Array): Promise<{ readonly digest: string; readonly sizeBytes: number }> {
-    if (this.#maximumTotalBytes === undefined) return this.#put(input);
-    await ensureDirectoryDurable(this.#root);
-    return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));
-  }
-
-  async #usedBytes(directory: string): Promise<number> {
-    let entries;
-    try { entries = await fs.readdir(directory, { withFileTypes: true }); }
-    catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return 0; throw error; }
-    let total = 0;
-    for (const entry of entries) {
-      const file = path.join(directory, entry.name);
-      if (entry.isSymbolicLink()) throw new Error('DURABLE_BLOB_PATH_INVALID');
-      if (entry.isDirectory()) total += await this.#usedBytes(file);
-      else if (entry.isFile()) total += (await fs.lstat(file)).size;
-      else throw new Error('DURABLE_BLOB_PATH_INVALID');
-      if (!Number.isSafeInteger(total) || total > this.#maximumTotalBytes!) throw new Error('DURABLE_BLOB_STORE_LIMIT_EXCEEDED');
-    }
-    return total;
-  }
-
-  async #put(input: Uint8Array): Promise<{ readonly digest: string; readonly sizeBytes: number }> {
-    const bytes = Buffer.from(input);
-    if (bytes.byteLength > this.#maximumBytes) throw new Error("DURABLE_BLOB_SIZE_EXCEEDED");
-    const digest = `sha256:${crypto.createHash("sha256").update(bytes).digest("hex")}`;
-    const file = this.#path(digest);
-    try {
-      const existing = await this.get(digest);
-      if (!existing.equals(bytes)) throw new Error('DURABLE_BLOB_DIGEST_COLLISION');
-      return { digest, sizeBytes: bytes.byteLength };
-    } catch (error) {
-      if (!(error instanceof Error) || error.message !== 'DURABLE_BLOB_NOT_FOUND') throw error;
-    }
-    if (this.#maximumTotalBytes !== undefined
-      && await this.#usedBytes(path.join(this.#root, 'blobs')) + bytes.byteLength > this.#maximumTotalBytes) {
-      throw new Error('DURABLE_BLOB_STORE_LIMIT_EXCEEDED');
-    }
-    await ensureDirectoryDurable(path.dirname(file));
-    const temporary = `${file}.${process.pid}.${crypto.randomUUID()}.tmp`;
-    try {
-      const handle = await fs.open(temporary, "wx", 0o600);
-      try { await handle.writeFile(bytes); await handle.sync(); } finally { await handle.close(); }
-      try { await fs.link(temporary, file); }
-      catch (error) {
-        if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
-        const stat = await fs.lstat(file);
-        if (!stat.isFile() || stat.isSymbolicLink()) throw new Error("DURABLE_BLOB_PATH_INVALID");
-        if (!Buffer.from(await fs.readFile(file)).equals(bytes)) throw new Error("DURABLE_BLOB_DIGEST_COLLISION");
-      }
-      await syncDirectory(path.dirname(file));
-    } finally {
-      await fs.unlink(temporary).catch(() => undefined);
-    }
-    return { digest, sizeBytes: bytes.byteLength };
-  }
-
-  async get(digest: string): Promise<Buffer> {
-    return readDurableBlob(this.#path(digest), digest, this.#maximumBytes);
-  }
-}

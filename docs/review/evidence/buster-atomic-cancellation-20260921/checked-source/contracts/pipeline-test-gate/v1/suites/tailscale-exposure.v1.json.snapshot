@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "test-suite-template.v1",
+  "contractId": "kubeclaw.tailscale-exposure-suite@1",
+  "tests": {},
+  "fixtures": {},
+  "concurrencyLimits": { "tailscale-exposure": 1, "http": 2 }
+}

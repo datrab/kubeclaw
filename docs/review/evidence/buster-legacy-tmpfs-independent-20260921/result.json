@@ -1,0 +1,12 @@
+{
+  "sourceSha256": "d571b72b9f936e059782fb5cbdd5926e3077568cea2ab67c0019b254b78d8292",
+  "outsideTmpfsBlockAstEqual": true,
+  "expectedVerifierCallUnchanged": true,
+  "caseCount": 27,
+  "newPrerequisiteStatements": [
+    "mounted = tree.stat()",
+    "require(mounted.st_uid == 0 and mounted.st_gid == 0 and (stat.S_IMODE(mounted.st_mode) == 493), 'TMPFS_ROOT_AUTHORITY_PREREQUISITE')",
+    "emit({'case': case, 'phase': 'tmpfs-root-authority', 'uid': mounted.st_uid, 'gid': mounted.st_gid, 'mode': oct(stat.S_IMODE(mounted.st_mode))})"
+  ],
+  "privilegedExecution": false
+}

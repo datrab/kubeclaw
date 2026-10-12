@@ -1,0 +1,47 @@
+{
+  "commands": [
+    {
+      "name": "foundation-types",
+      "command": [
+        "node_modules/.bin/tsc",
+        "--noEmit",
+        "-p",
+        "skills/common/plugin-runtime/tsconfig.json"
+      ],
+      "exitCode": 0,
+      "seconds": 6.521564722061157
+    },
+    {
+      "name": "readiness-chart",
+      "command": [
+        "node",
+        "--test",
+        "skills/prism/tests/worker-readiness-chart.test.mts"
+      ],
+      "exitCode": 0,
+      "seconds": 0.3537435531616211
+    },
+    {
+      "name": "mutants",
+      "command": [
+        "python3",
+        "docs/review/evidence/config-worker-listener-20260921/run-mutations.py"
+      ],
+      "exitCode": 0,
+      "seconds": 6.73037576675415
+    },
+    {
+      "name": "lint",
+      "command": [
+        "node_modules/.bin/eslint",
+        "--config",
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        "skills/prism/tests/worker-readiness-chart.test.mts",
+        "tests/verification/deployment/prism-swarm-config.test.mjs"
+      ],
+      "exitCode": 0,
+      "seconds": 0.9020216464996338
+    }
+  ],
+  "drift": []
+}

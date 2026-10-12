@@ -1,0 +1,87 @@
+[
+  {
+    "path": "skills/worker/core/worker/ownership-children.ts",
+    "sha256": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+    "snapshot": "reviewed-before-quota-fix/skills/worker/core/worker/ownership-children.ts"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-state.ts",
+    "sha256": "2c8a8648a692cc4c6f235e7eeecf3f18dae785c6d1ce7340521e0f7c102b26a9",
+    "snapshot": "reviewed-before-quota-fix/skills/worker/core/worker/ownership-state.ts"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "sha256": "5b68cd3733ded1fa5739f9b93e181268b38e8164c14152244f786e7f0113dfeb",
+    "snapshot": "reviewed-before-quota-fix/skills/worker/core/worker/ownership-store.ts"
+  },
+  {
+    "path": "skills/worker/core/worker/native-hierarchy-events.ts",
+    "sha256": "de9626356ef4ffca272c1bb534b29e13c9a3845df0ff34b33783b71320e32aea",
+    "snapshot": "reviewed-before-quota-fix/skills/worker/core/worker/native-hierarchy-events.ts"
+  },
+  {
+    "path": "skills/worker/core/worker/native-owned-children.ts",
+    "sha256": "631594461634def759607c57e4a7407c062bd1d5e837a28d7f83c5fcde5e204d",
+    "snapshot": "reviewed-before-quota-fix/skills/worker/core/worker/native-owned-children.ts"
+  },
+  {
+    "path": "skills/worker/core/worker/native-resource-scope.ts",
+    "sha256": "f10a3700c82322b4f426f520c8bd01dde8bdbd45678f36fa7b88292f1f419e0c",
+    "snapshot": "reviewed-before-quota-fix/skills/worker/core/worker/native-resource-scope.ts"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "sha256": "ace95492f101e63c8158b37194ce70f70875a3cd88d258695f2f3fbc08b13507",
+    "snapshot": "reviewed-before-quota-fix/skills/worker/core/worker/native-worker-ownership.ts"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-launcher.c",
+    "sha256": "69c04c62b0e3ae9e48d24280ffc53dfcbc883fc053db694e3d088230332ded63",
+    "snapshot": "reviewed-before-quota-fix/skills/worker/core/worker/native-worker-launcher.c"
+  },
+  {
+    "path": "tests/verification/reliability/worker-owned-children.test.mts",
+    "sha256": "30a0f743173532480016e0db32a02fd90cbd3115d5ad366b7f1fe95ca8f0d797",
+    "snapshot": "reviewed-before-quota-fix/tests/verification/reliability/worker-owned-children.test.mts"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-topology-live.mts",
+    "sha256": "63155d5becfd4edb617ad647a340b27b0a32cc70020f584a3f5023359108dda0",
+    "snapshot": "reviewed-before-quota-fix/tests/verification/reliability/worker-native-topology-live.mts"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-scope-live.mts",
+    "sha256": "ee22aa32e30ed38b1658c5cbace3c7a6dc33db337d5476955a0d8cb47616f5aa",
+    "snapshot": "reviewed-before-quota-fix/tests/verification/reliability/worker-native-scope-live.mts"
+  },
+  {
+    "path": "tests/verification/reliability/worker-native-launcher.test.mts",
+    "sha256": "d5df450656ada0af9fb709ecc7e326f54c8c892ff2181fc1d1ac0c5f423b21a5",
+    "snapshot": "reviewed-before-quota-fix/tests/verification/reliability/worker-native-launcher.test.mts"
+  },
+  {
+    "path": "tests/verification/reliability/worker-observation-durability.test.mts",
+    "sha256": "70c9ca353545d6b2c58dc56f47e85be5eebb1c96a3ef19303a5a011aec51d6a4",
+    "snapshot": "reviewed-before-quota-fix/tests/verification/reliability/worker-observation-durability.test.mts"
+  },
+  {
+    "path": "tests/verification/reliability/tsconfig.native-scope.json",
+    "sha256": "2d613b83513d0f85b481790d806ff96607d0fdfdd1a90952d620de821755013d",
+    "snapshot": "reviewed-before-quota-fix/tests/verification/reliability/tsconfig.native-scope.json"
+  },
+  {
+    "path": "package.json",
+    "sha256": "5756f5fa464650496a7a6352fb7e16dcc1ba48a18e09ef7edc03e216ff2d3cb9",
+    "snapshot": "reviewed-before-quota-fix/package.json"
+  },
+  {
+    "path": "docs/review/remediation/implementation/native-aggregate-topology-20260921.md",
+    "sha256": "057024941b12d36aaf9d431e1dfa343ca25974ae306f2244a5b07513493c52fd",
+    "snapshot": "reviewed-before-quota-fix/docs/review/remediation/implementation/native-aggregate-topology-20260921.md.snapshot"
+  },
+  {
+    "path": "docs/operations/native-worker-host-pools.md",
+    "sha256": "20b62eb9b2c3b4edfda9a923729c7a8af79a639a5ac4096ffd46673c3ff3aa01",
+    "snapshot": "reviewed-before-quota-fix/docs/operations/native-worker-host-pools.md.snapshot"
+  }
+]

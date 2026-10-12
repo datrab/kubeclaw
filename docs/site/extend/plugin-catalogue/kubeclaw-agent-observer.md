@@ -55,10 +55,15 @@ Run:
 npm test --prefix skills/common/plugins/openclaw-agent-observer
 ```
 
-Package tests found: 0.
+Package tests found: 5.
 
 ## Source Evidence
 
 - Manifest: `skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json`
 - Package root: `skills/common/plugins/openclaw-agent-observer`
 - Authored package guide: `skills/common/plugins/openclaw-agent-observer/README.md`
+- Test: `skills/common/plugins/openclaw-agent-observer/tests/clean-build.test.mjs`
+- Test: `skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs`
+- Test: `skills/common/plugins/openclaw-agent-observer/tests/live-function.test.ts`
+- Test: `skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs`
+- Test: `skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts`

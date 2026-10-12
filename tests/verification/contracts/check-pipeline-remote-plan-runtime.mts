@@ -1,3 +1,7 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
+import type { PreparedPlanJob } from '../../../skills/buster/engine/test-gates/preparation-header.ts';
+// Preparation authority is modeled here; parser, extraction and durable service/store remain real.
+import { ModeledBusterRemotePlanService as BusterRemotePlanService, ModeledPreparedPlanJobStore as FileBusterPlanJobStore } from '../../fixtures/test-gate/modeled-preparation.mts';
 import { probeCapabilities } from '../e2e/capabilities.mts';
 import { probeBusterReadiness } from '../e2e/buster-readiness.mjs';
 import assert from 'node:assert/strict';
@@ -20,13 +24,7 @@ import {
   RemotePlanTransportError,
   type RemotePlanTransport,
 } from '@kubeclaw/nova-core';
-import {
-  BusterRemotePlanService,
-  BusterRemotePlanRuntime,
-  createBusterRemotePlanHttpServer,
-  FileBusterPlanJobStore,
-  type TestPlanRunResult,
-} from '@kubeclaw/buster-engine';
+import { BusterRemotePlanRuntime, createBusterRemotePlanHttpServer, type TestPlanRunResult } from '@kubeclaw/buster-engine';
 import {
   remotePlanDigest,
   attestSourceSnapshot,
@@ -99,7 +97,7 @@ const registry = {
   reportAdapterFormats: new Map(),
 } as unknown as RegistrySnapshot;
 
-function nodeResult(job: RemotePlanJobV1): NodeResultV1 {
+function nodeResult(job: Pick<RemotePlanJobV1, 'jobId' | 'plan'>): NodeResultV1 {
   const unsigned = {
     schemaVersion: 'node-result.v1' as const,
     planId: job.plan.planId, runId: job.plan.runId, moduleId: 'module-1', gateId: null,
@@ -113,12 +111,12 @@ function nodeResult(job: RemotePlanJobV1): NodeResultV1 {
   } };
 }
 
-function authorityReceipt(job: RemotePlanJobV1, resultDigest: string, name: string) {
+function authorityReceipt(job: Pick<RemotePlanJobV1, 'jobId' | 'plan'>, resultDigest: string, name: string) {
   const receiptId = `receipt:${name}:${job.jobId}`;
   return { receiptId, receiptDigest: remotePlanDigest({ authorityId: `test-runner:${job.plan.planDigest}`, receiptId, resultDigest }) };
 }
 
-function passedResults(job: RemotePlanJobV1, artifact: ArtifactRefV1, large = false): TestPlanRunResult {
+function passedResults(job: Pick<RemotePlanJobV1, 'jobId' | 'plan'>, artifact: ArtifactRefV1, large = false): TestPlanRunResult {
   const definition = job.plan.nodes[0]!;
   const attemptUnsigned = { schemaVersion: 'attempt-result.v1' as const, planId: job.plan.planId,
     runId: job.plan.runId, moduleId: job.plan.scope.moduleId, gateId: job.plan.scope.gateId,
@@ -157,10 +155,11 @@ const busterStore = new FileBusterPlanJobStore(path.join(temporary, 'buster-stat
   trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
 });
 const executionCounts = new Map<string, number>();
-const execute = async (job: RemotePlanJobV1, paths: { repositoryRoot: string; artifactRoot: string }, signal: AbortSignal): Promise<TestPlanRunResult> => {
+const execute = async (job: PreparedPlanJob, paths: { sourceRepositoryRoot: string; artifactRoot: string }, signal: AbortSignal): Promise<TestPlanRunResult> => {
   executionCounts.set(job.jobId, (executionCounts.get(job.jobId) ?? 0) + 1);
-  assert.equal(fs.readFileSync(path.join(paths.repositoryRoot, 'README.md'), 'utf8'), 'remote plan source\n');
+  assert.equal(fs.readFileSync(path.join(paths.sourceRepositoryRoot, 'README.md'), 'utf8'), 'remote plan source\n');
   if (job.idempotencyKey.includes('cancel')) {
+    signal.throwIfAborted();
     await new Promise<void>((resolve) => signal.addEventListener('abort', () => resolve(), { once: true }));
     throw new Error('cancelled');
   }
@@ -176,6 +175,8 @@ const execute = async (job: RemotePlanJobV1, paths: { repositoryRoot: string; ar
   return { planId: job.plan.planId, runId: job.plan.runId, attempts: [], nodes: [nodeResult(job)], cleanupErrors: [] };
 };
 const service = new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
   tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024,
   allowedCapabilities: new Set(), execute,
@@ -205,6 +206,8 @@ const unavailableStore = new FileBusterPlanJobStore(path.join(temporary, 'unavai
   trustedSourceAuthority: 'nova:test', sourceAttestationPublicKey,
 });
 const unavailableService = new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
   store: unavailableStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'unavailable-buildkit-runs'),
   tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['container.build']),
   containerBuild: { buildctlExecutable: path.join(temporary, 'missing-native-buildctl-private-path'), buildkitHost: 'unix:///missing-buildkit.sock',
@@ -274,6 +277,27 @@ function novaStore(name: string) {
   });
 }
 try {
+  // Bind cancellation to the real durable running transition, before extraction.
+  // This removes scheduling luck from the pre-aborted executor regression.
+  const earlyAbortJob = job('dispatch:early-abort');
+  const originalTransition = busterStore.transition.bind(busterStore);
+  const earlyAbortFinished = Promise.withResolvers<void>();
+  busterStore.transition = async (...args: Parameters<typeof busterStore.transition>) => {
+    const status = await originalTransition(...args);
+    if (args[0] === earlyAbortJob.jobId && args[2] === 'running') await service.cancel(earlyAbortJob.jobId);
+    if (args[0] === earlyAbortJob.jobId && args[2] === 'cancelled') earlyAbortFinished.resolve();
+    return status;
+  };
+  let earlyAbortTimer: NodeJS.Timeout | undefined;
+  try {
+    await service.submit(earlyAbortJob);
+    await Promise.race([earlyAbortFinished.promise, new Promise<never>((_resolve, reject) => {
+      earlyAbortTimer = setTimeout(() => reject(new Error('EARLY_ABORT_DID_NOT_FINISH')), 5000);
+    })]);
+    assert.equal(executionCounts.get(earlyAbortJob.jobId) ?? 0, 0,
+      'an already cancelled job must not start its executor after extraction');
+    assert.equal((await service.status(earlyAbortJob.jobId)).state, 'cancelled');
+  } finally { clearTimeout(earlyAbortTimer); busterStore.transition = originalTransition; }
   const concurrentBase = job('dispatch:concurrent-conflict');
   const concurrentChanged = { ...concurrentBase, maximumConcurrency: 2 };
   const concurrentChangedJob = { ...concurrentChanged, requestDigest: remotePlanJobDigest(concurrentChanged) };
@@ -414,6 +438,8 @@ try {
   await busterStore.accept(interruptedJob, '2026-08-10T01:00:00.000Z');
   await busterStore.transition(interruptedJob.jobId, ['accepted'], 'running', '2026-08-10T01:00:01.000Z');
   const restarted = new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
     store: busterStore, registry, workerRevision: 'a'.repeat(40), runtimeRoot: path.join(temporary, 'buster-runs'),
     tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024,
     allowedCapabilities: new Set(), execute,
@@ -424,6 +450,8 @@ try {
   const changedRegistryJob = job('dispatch:registry-changed');
   await busterStore.accept(changedRegistryJob, '2026-08-10T01:00:00.000Z');
   const mismatched = new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
     store: busterStore,
     registry: { ...registry, snapshotDigest: `sha256:${'4'.repeat(64)}` },
     workerRevision: 'a'.repeat(40),

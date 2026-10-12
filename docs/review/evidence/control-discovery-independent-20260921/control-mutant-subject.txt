@@ -1,0 +1,52 @@
+✖ CC3 real Control service profile 1 selects history, artifact root and Studio URL (3373.808426ms)
+✖ CC3 real Control service profile 2 selects history, artifact root and Studio URL (2077.302256ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6049.852513
+
+✖ failing tests:
+
+test at skills/prism/tests/control-generation-http.test.mts:111:30
+✖ CC3 real Control service profile 1 selects history, artifact root and Studio URL (3373.808426ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'user-c404d02dfba0e80bb41ffaee'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-generation-http.test.mts:120:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'user-c404d02dfba0e80bb41ffaee',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at skills/prism/tests/control-generation-http.test.mts:111:30
+✖ CC3 real Control service profile 2 selects history, artifact root and Studio URL (2077.302256ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'user-20ef654bba7f932f0f1ce47a'
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/prism/tests/control-generation-http.test.mts:120:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'user-20ef654bba7f932f0f1ce47a',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

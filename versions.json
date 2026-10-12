@@ -138,5 +138,135 @@
   },
   "litellmProduction": {
     "image": "ghcr.io/berriai/litellm:main-latest@sha256:a79320760af8df488074ab3fbc830883856c7f952976aad00f039d3a43ffe4b2"
+  },
+  "trivyDatabases": {
+    "vulnerability": {
+      "repository": "ghcr.io/aquasecurity/trivy-db",
+      "manifest": {
+        "digest": "sha256:4d431c680d01e396a20899ec027c95e5736bed4294aeb40a1648c58aed5d1f7b",
+        "size": 616
+      },
+      "layer": {
+        "digest": "sha256:d42d90efdb7ecc49abcf2c796cf6478f3bab596e907fd74c786ec8070dbf6bca",
+        "size": 120435408
+      },
+      "files": {
+        "metadata.json": {
+          "digest": "sha256:0986f927c4f9f08ee08387dff92074f3cb64c652032ae6a3602179763f33b3d2",
+          "size": 143
+        },
+        "trivy.db": {
+          "digest": "sha256:e783fe142a8425c25c6e61be54f61698a405510057a94bfdd2253a4ded9ca0cc",
+          "size": 1413980160
+        }
+      }
+    },
+    "java": {
+      "repository": "ghcr.io/aquasecurity/trivy-java-db",
+      "manifest": {
+        "digest": "sha256:d83c6dd4d525be30ffecc92e5be679392be56547c29cf70f76a7478b08981c9c",
+        "size": 624
+      },
+      "layer": {
+        "digest": "sha256:cf45b46809a5759bf7b4478c52ea2b4e7f31d44ea35a2fd467cfd88af6ac3830",
+        "size": 968473554
+      },
+      "files": {
+        "metadata.json": {
+          "digest": "sha256:764a408240c9a1c6f26649eb4372624bdf95dcffb52f1314904bdb59707426c3",
+          "size": 143
+        },
+        "trivy-java.db": {
+          "digest": "sha256:1fce16f732df52f325d9922f5a8ff7221719a7819cdb5ba1dc76fe32b4a36e4c",
+          "size": 1529786368
+        }
+      }
+    }
+  },
+  "browserArchives": {
+    "amd64": [
+      {
+        "name": "chromium",
+        "url": "https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-linux64.zip",
+        "directory": "chromium-1234",
+        "executable": "chrome-linux64/chrome",
+        "size": 193282658,
+        "sha256": "ae8736ac28bc69278551500f219fc749575648263c43ec5990749eff43b9fcf8"
+      },
+      {
+        "name": "chromium-headless-shell",
+        "url": "https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-headless-shell-linux64.zip",
+        "directory": "chromium_headless_shell-1234",
+        "executable": "chrome-headless-shell-linux64/chrome-headless-shell",
+        "size": 120231126,
+        "sha256": "3cfc2bd00d1bafcf8a68dc74c9c92bb7150ddc8d26ade948a776316e1cec4f14"
+      },
+      {
+        "name": "firefox",
+        "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/firefox/1538/firefox-debian-12.zip",
+        "directory": "firefox-1538",
+        "executable": "firefox/firefox",
+        "size": 113411079,
+        "sha256": "04b0d3d86f7472bbbebce1b7c536900d05e0eb63bcfdb22cd1da932b5ea297e7"
+      },
+      {
+        "name": "webkit",
+        "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/webkit/2336/webkit-debian-12.zip",
+        "directory": "webkit-2336",
+        "executable": "pw_run.sh",
+        "size": 107153598,
+        "sha256": "95d87eedf554620015e392805be5d71aedbbdbb65dfa6c62c94753cf8e34406e"
+      },
+      {
+        "name": "ffmpeg",
+        "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip",
+        "directory": "ffmpeg-1011",
+        "executable": "ffmpeg-linux",
+        "size": 2376500,
+        "sha256": "ebc74fc5b94830176a3c2914ae96bd8bc7f6a91f4f33890230f84a172ee61ccc"
+      }
+    ],
+    "arm64": [
+      {
+        "name": "chromium",
+        "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1234/chromium-linux-arm64.zip",
+        "directory": "chromium-1234",
+        "executable": "chrome-linux/chrome",
+        "size": 204732694,
+        "sha256": "b5ad7d8fe70f230b34198ddb5626d717c016db2f627cb44b922babbcaf3479b9"
+      },
+      {
+        "name": "chromium-headless-shell",
+        "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1234/chromium-headless-shell-linux-arm64.zip",
+        "directory": "chromium_headless_shell-1234",
+        "executable": "chrome-linux/headless_shell",
+        "size": 116380215,
+        "sha256": "b03443e1e1a60d06e07b6cdfe650b8c2bfcbb3db497d2b652f73dc6912f4ae15"
+      },
+      {
+        "name": "firefox",
+        "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/firefox/1538/firefox-debian-12-arm64.zip",
+        "directory": "firefox-1538",
+        "executable": "firefox/firefox",
+        "size": 104187734,
+        "sha256": "3997819d57c9da40f34f7f9ccc81d3273907839e986ceb9645c4d08f71be10b2"
+      },
+      {
+        "name": "webkit",
+        "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/webkit/2336/webkit-debian-12-arm64.zip",
+        "directory": "webkit-2336",
+        "executable": "pw_run.sh",
+        "size": 100657649,
+        "sha256": "e12c703aac19046a8d7f815610a5bba0916313abf8243cfc7e7641b6a11231f4"
+      },
+      {
+        "name": "ffmpeg",
+        "url": "https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux-arm64.zip",
+        "directory": "ffmpeg-1011",
+        "executable": "ffmpeg-linux",
+        "size": 1717234,
+        "sha256": "2628c03f05318ff812c8c9baaf207dea2ddf53e818c0dc936714b0fbe3afb009"
+      }
+    ]
   }
 }

@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "afterSha256": "a85f5b8f4f77d662400a2362e790bfc9b6aed18cb9fa3ef15986a5d5b6b8d0b0",
+      "beforeSha256": "3015e8abc149554659fd9794d15e8d5d45ac5c20351a564a48f57865540529bf",
+      "path": "package.json"
+    },
+    {
+      "afterSha256": "32f209509ec21cf87f55b754b396efde9d0ac4900ce428e07ce08afda9c83d26",
+      "beforeSha256": null,
+      "path": "docs/architecture/buster-runner-failure-drain.md"
+    },
+    {
+      "afterSha256": "ee61528276a2db109643e74b545871931bca4fe0de828c34d622ae34910ac6d9",
+      "beforeSha256": "ea5125c01875a91bdb84bdfd1d0d267d0192a83586e7bcc4fd4c9910756530e3",
+      "path": "docs/architecture/buster-v2-runtime.md"
+    },
+    {
+      "afterSha256": "0322993a243ff501d7200054f31fc1ab7abfbcec3f3cde1663abfc6c6c948019",
+      "beforeSha256": null,
+      "path": "docs/review/remediation/implementation/runner-scheduler-drain-20260921.md"
+    }
+  ],
+  "status": "authored DOC/delivery; review pending"
+}

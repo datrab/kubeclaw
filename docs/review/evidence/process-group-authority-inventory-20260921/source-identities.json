@@ -1,0 +1,22 @@
+[
+  {
+    "path": "skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+    "sha256": "4dd81ccecacfc3b71848d2cca20c4e83e31f14223d4320ba30c83c4650592388"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+    "sha256": "ff1279f5ca4af3364b0e04cf977803717b6884329f75b9c5461be3b5455797bd"
+  },
+  {
+    "path": "skills/nova/core/test-gates/source-process-lifecycle.ts",
+    "sha256": "5924d42b6b5140cd8148aba4d69e54eca84ba8883e0a2739420019f5b48f778b"
+  },
+  {
+    "path": "skills/common/plugins/command-runner/src/process-group.ts",
+    "sha256": "b58ed6ee068546fa44561a7875aee21633e02a4148dedb0104b15c441b8a3002"
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/linux-process-group.ts",
+    "sha256": "83696b7511173f21e5af38f238758fc087afc0b3d84d8c62017aefa3527e6ea2"
+  }
+]

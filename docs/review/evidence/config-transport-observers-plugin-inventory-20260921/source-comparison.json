@@ -1,0 +1,9 @@
+{
+  "files": 55,
+  "drift": [],
+  "runtimeExecuted": false,
+  "capturePreparationCorrections": [
+    "Empty object schema omits properties; enumeration now treats it as zero fields.",
+    "Incorrect auxiliary filename corrected to actual durable-delivery.ts before final manifest; preexisting partial snapshots compared byte-for-byte, not overwritten."
+  ]
+}

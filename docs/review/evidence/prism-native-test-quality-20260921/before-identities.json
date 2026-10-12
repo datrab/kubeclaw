@@ -1,0 +1,32 @@
+[
+  {
+    "source": "package.json",
+    "snapshot": "00-package.json.txt",
+    "sha256": "2433857c14048ca218506d69b4117799a5d52388e39461a0b934aaf2757a3cfe"
+  },
+  {
+    "source": "skills/prism/package.json",
+    "snapshot": "01-package.json.txt",
+    "sha256": "19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c"
+  },
+  {
+    "source": "skills/prism/integration/worker-concurrent-resource-attribution.mts",
+    "snapshot": "02-worker-concurrent-resource-attribution.mts.txt",
+    "sha256": "c6acf7bf9cca3ee1766099da0d2cf161726df495214669e6c62a322f559f4bb9"
+  },
+  {
+    "source": "skills/prism/tests/worker-http-cancellation.native.mts",
+    "snapshot": "03-worker-http-cancellation.native.mts.txt",
+    "sha256": "39be007e67b21e960dcdb11ee81c836bab597d26ca7a04a74827839cea1b2f6c"
+  },
+  {
+    "source": "skills/prism/tests/worker-process-shutdown.native.mts",
+    "snapshot": "04-worker-process-shutdown.native.mts.txt",
+    "sha256": "17d516b69f96cae527736e672d4ce33b34f39efe782d2cf0fb0c9ce6685a71ea"
+  },
+  {
+    "source": "skills/prism/tests/worker-readiness.native.mts",
+    "snapshot": "05-worker-readiness.native.mts.txt",
+    "sha256": "259c25b98529558bcdbc619fe086bbc9a5d91b4951733f09aa18413bf3337ef2"
+  }
+]

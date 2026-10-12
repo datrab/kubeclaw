@@ -1,0 +1,69 @@
+{
+  "originalTwoTestsBytePrefixUnchanged": true,
+  "originalFileSha256": "5094a211eaf9624fee2ecf1bd1cfa2edd5d656397492c9364cde486365bd83ac",
+  "ownCompleteSuite": {
+    "tests": 5,
+    "passed": 5,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "localLinkTargetsExist": 23,
+  "files": [
+    {
+      "path": "tests/verification/contracts/infra-private-access.test.mjs",
+      "sha256": "28b408ff2ae5444418df27da6b9d486f624b0b8b101dcdb1e6586d9aaf12e3f2"
+    },
+    {
+      "path": "docs/deployment/tailscale-operator.md",
+      "sha256": "c04c3dc18a4ab1e8b056bc39e33585345fcb22862481e9ff5ba199cce1553dfb"
+    },
+    {
+      "path": "docs/operators/final-preview-tailscale.md",
+      "sha256": "757d475e0125450b08683b3b7a76d8eac517f82b82e31033b8c122b7a3c26acf"
+    },
+    {
+      "path": "docs/review/infrastructure/tailscale.md",
+      "sha256": "f0556a1beba0d32d4d1d85eff479f26fb95fc3b9c3cdafbb0f8e8ab10312ba1a"
+    },
+    {
+      "path": "docs/review/remediation/implementation/tailscale-access-matrix-20260921.md",
+      "sha256": "6af3bba3ec4704636fd823f954eae9c7bebdda5bfc30aaac5318b24e669638d9"
+    },
+    {
+      "path": "charts/prism/templates/_swarm-config.tpl",
+      "sha256": "eb179b1825a1682a1080234984d702369d625e3404552451e90f7bc6ed4093d7"
+    },
+    {
+      "path": "charts/prism/templates/services.yaml",
+      "sha256": "feea08cb2eaf89d5fb520c321a275a8550add0ca46337f4614d7384a7c1701df"
+    },
+    {
+      "path": "charts/kubeclaw/templates/archviewer.yaml",
+      "sha256": "5a89affd7b25f63ff38a0de9bec61388927e06b5d20a7075f6af0a92d4c7cb2a"
+    },
+    {
+      "path": "charts/ops-pod/templates/workload.yaml",
+      "sha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58"
+    },
+    {
+      "path": "charts/ops-pod/templates/network.yaml",
+      "sha256": "1a96b733c35c853cf2064dd57caae1f061a94a023cc8637b4799464ad163e283"
+    },
+    {
+      "path": "my-values/infra/argocd-tailscale-ingress.yaml",
+      "sha256": "eb86daeca77a9329d80d0f0f96b0b9a46ee5807a7b9bd9187cb6ebb2d1ece58e"
+    },
+    {
+      "path": "my-values/infra/tailscale-operator-values.yaml",
+      "sha256": "8c8f44a3f243b519973ea250d283da3c6a08b31a9224ee3b34012b4e28f36110"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm.config.json",
+      "sha256": "b9f7ca208263a45c39c67fb21c864a83a33a04144dcade051fa24a0719d72451"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "sha256": "6529733c4220ded5ef9b1482793ceadaf7f23d1a855bb9bd13de6454ec3c1a5a"
+    }
+  ]
+}

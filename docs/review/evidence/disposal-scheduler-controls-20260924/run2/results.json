@@ -1,0 +1,54 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/provider-disposal-recovery.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "success-only-confirmation",
+    "seconds": 7.900914280908182,
+    "semanticAcceptance": "pending actual named-assertion review"
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "permit-unconfirmed",
+    "seconds": 68.13324418896809,
+    "semanticAcceptance": "pending actual named-assertion review"
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/provider-disposal-recovery.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "duplicate-accounting",
+    "seconds": 6.382382482057437,
+    "semanticAcceptance": "pending actual named-assertion review"
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/contracts/provider-disposal-recovery.test.mjs"
+    ],
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "name": "hidden-error-details",
+    "seconds": 7.476046227966435,
+    "semanticAcceptance": "pending actual named-assertion review"
+  }
+]

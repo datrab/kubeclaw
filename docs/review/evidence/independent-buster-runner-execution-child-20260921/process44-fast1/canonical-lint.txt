@@ -1,0 +1,46 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts
+   97:29  error  Use one explicit value and at most one fallback; longer fallback chains hide authority  discipline/no-fallback-chain
+  158:1   error  Function 'podSpecs' has a complexity of 23. Maximum allowed is 15                       complexity
+  258:1   error  Function 'validatePodSecurity' has a complexity of 28. Maximum allowed is 15            complexity
+  303:1   error  Function 'inspectManifest' has too many lines (98). Maximum allowed is 60               max-lines-per-function
+  303:1   error  Function 'inspectManifest' has too many parameters (8). Maximum allowed is 7            max-params
+  303:1   error  Function 'inspectManifest' has a complexity of 53. Maximum allowed is 15                complexity
+  319:1   error  File has too many lines (730). Maximum allowed is 300                                   max-lines
+  349:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                  max-depth
+  353:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                  max-depth
+  355:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                  max-depth
+  356:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                  max-depth
+  364:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                  max-depth
+  365:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                  max-depth
+  366:9   error  Blocks are nested too deeply (4). Maximum allowed is 3                                  max-depth
+  370:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                  max-depth
+  371:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                  max-depth
+  374:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                  max-depth
+  375:11  error  Blocks are nested too deeply (5). Maximum allowed is 3                                  max-depth
+  377:13  error  Blocks are nested too deeply (6). Maximum allowed is 3                                  max-depth
+  450:3   error  Constructor has too many lines (62). Maximum allowed is 60                              max-lines-per-function
+  450:3   error  Constructor has a complexity of 25. Maximum allowed is 15                               complexity
+  518:57  error  Read environment variables only in a declared configuration or infrastructure adapter   discipline/no-direct-env-access
+  518:87  error  Read environment variables only in a declared configuration or infrastructure adapter   discipline/no-direct-env-access
+  519:36  error  Read environment variables only in a declared configuration or infrastructure adapter   discipline/no-direct-env-access
+  520:36  error  Read environment variables only in a declared configuration or infrastructure adapter   discipline/no-direct-env-access
+  567:11  error  Blocks are nested too deeply (4). Maximum allowed is 3                                  max-depth
+  641:3   error  Private async method #prepare has too many lines (101). Maximum allowed is 60           max-lines-per-function
+  641:3   error  Private async method #prepare has a complexity of 31. Maximum allowed is 15             complexity
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/process-input-lifecycle.ts
+  38:42  error  Handle the error intentionally or rethrow it with context  discipline/no-swallowed-error
+  47:40  error  Handle the error intentionally or rethrow it with context  discipline/no-swallowed-error
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/process-input.ts
+  32:8  error  Function 'runProcessInput' has too many lines (61). Maximum allowed is 60  max-lines-per-function
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts
+  101:33  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  101:63  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  102:32  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+  103:32  error  Read environment variables only in a declared configuration or infrastructure adapter  discipline/no-direct-env-access
+
+✖ 35 problems (35 errors, 0 warnings)
+

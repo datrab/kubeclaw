@@ -1,0 +1,195 @@
+{
+  "registrations": [
+    {
+      "plugin": "kubeclaw.architecture-validator",
+      "id": "architecture",
+      "derivedFields": 2,
+      "recordedFields": 2,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.blueprint-sync",
+      "id": "sync",
+      "derivedFields": 0,
+      "recordedFields": 0,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.buster-quality-gate",
+      "id": "quality",
+      "derivedFields": 3,
+      "recordedFields": 3,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.case-study",
+      "id": "case-study",
+      "derivedFields": 1,
+      "recordedFields": 1,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.delivery-lint",
+      "id": "delivery-lint",
+      "derivedFields": 0,
+      "recordedFields": 0,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.demo-handoff",
+      "id": "candidate",
+      "derivedFields": 0,
+      "recordedFields": 0,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.demo-handoff",
+      "id": "delivery",
+      "derivedFields": 0,
+      "recordedFields": 0,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.demo-handoff",
+      "id": "ready",
+      "derivedFields": 0,
+      "recordedFields": 0,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.human-approval",
+      "id": "approval",
+      "derivedFields": 3,
+      "recordedFields": 3,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.human-approval",
+      "id": "architecture-approval",
+      "derivedFields": 3,
+      "recordedFields": 3,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.implementation-agent",
+      "id": "implementation",
+      "derivedFields": 2,
+      "recordedFields": 2,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.lint",
+      "id": "pre-check",
+      "derivedFields": 4,
+      "recordedFields": 4,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.lint",
+      "id": "full",
+      "derivedFields": 4,
+      "recordedFields": 4,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.pipeline-review",
+      "id": "review",
+      "derivedFields": 2,
+      "recordedFields": 2,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.preflight-contract",
+      "id": "validate",
+      "derivedFields": 0,
+      "recordedFields": 0,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.preflight-contract",
+      "id": "source",
+      "derivedFields": 0,
+      "recordedFields": 0,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.prism-design",
+      "id": "design",
+      "derivedFields": 4,
+      "recordedFields": 4,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.project-summary",
+      "id": "summary",
+      "derivedFields": 2,
+      "recordedFields": 2,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.review",
+      "id": "review",
+      "derivedFields": 81,
+      "recordedFields": 81,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.review",
+      "id": "repository-audit",
+      "derivedFields": 81,
+      "recordedFields": 81,
+      "missing": [],
+      "extra": [],
+      "different": []
+    },
+    {
+      "plugin": "kubeclaw.review",
+      "id": "repository-revalidation",
+      "derivedFields": 81,
+      "recordedFields": 81,
+      "missing": [],
+      "extra": [],
+      "different": []
+    }
+  ],
+  "derivedFields": 273,
+  "scope": "Exact independent nested schema projection; semantic consumer review and migration remain open."
+}

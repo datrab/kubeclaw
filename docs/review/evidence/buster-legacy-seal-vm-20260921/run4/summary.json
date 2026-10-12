@@ -1,0 +1,13 @@
+{
+  "vmBooted": true,
+  "terminalGuestMarker": false,
+  "publishedCaseResults": 0,
+  "passed": false,
+  "stoppedReason": "shared workspace memory exceeded 2.75 GiB conservative stop threshold",
+  "elapsedSeconds": 34.90234335302375,
+  "execSession": 93173,
+  "qemuPid": 290201,
+  "qemuAbsent": true,
+  "caseOutcomes": "unknown; no supervised case output before host memory stop",
+  "foreignWorkloadCause": "not established; post-run process list showed no foreign workload"
+}

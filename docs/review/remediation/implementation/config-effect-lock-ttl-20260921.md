@@ -1,0 +1,94 @@
+# Explicit orchestrator effect-lock TTL
+
+Status: implemented and bounded TTL1–TTL5/TTL-DOC independently accepted; see [fresh review](independent-config-effect-lock-ttl-20260921.md). Criteria were recorded before edits. This is the bounded removal of the effect-lock TTL fallbacks, not completion of D17 or overall CONFIG.
+
+- TTL1: `PlatformConfig.effectLockTtlMs` is required. The existing platform schema range remains 60,000–86,400,000 milliseconds. Missing, null, noninteger and out-of-range platform values reject; no runtime fallback or helper repair supplies the setting.
+- TTL2: `createAdapterRuntime` forwards the authored TTL unchanged. `EffectCoordinator` requires an explicit fifth argument and rejects missing/nonpositive/non-safe-integer values before journal or lock activity. Existing explicit short low-level test lifetimes remain permitted; the platform schema is the separate operator boundary.
+- TTL3: Inventory every actual constructor call, namespace-qualified call, multiline call, generated child script, platform fixture and generated platform author before migration. Preserve original assertions and deliberately authored short TTLs. Do not change immutable historical journals or frozen source snapshots. Historical-branch producer sources require explicit provenance classification before modification.
+- TTL4: Two authored TTL profiles reach an actual effect-lock consumer. Missing/invalid values fail through actual public boundaries. Existing lock-lifetime/recovery behavior remains covered; no deadline relaxation.
+- TTL5: Private restoration of either original fallback must fail a meaningful negative assertion. Keep originals and all failed runs. Run appropriate types/lint and obtain fresh nonauthor review of final source identities.
+- TTL-DOC: Explain the required setting and units, migration from the former five-minute fallback, schema versus low-level bounds, generated-author path, and remaining D17/component migration scope. Update operator inventory and effect-runtime documentation where needed.
+
+The positional API remains recognizable: journal, explicit clock-or-undefined, explicit audit-or-undefined, explicit lock manager, explicit TTL. The clock's ordinary current-time behavior is separate from the removed operator TTL default. No generic options framework is introduced for this bounded change.
+
+Initial collision list: component author owns swarm/Charts/Buster composition and E2E profiles. TTL-only changes to the generated Buster platform, E2E platform objects and shared Buster runtime fixtures are coordinated before editing. Runtime checks are serialized with that author's work; a typecheck overlapping intermediate sources is not final acceptance.
+
+
+## Implementation and complete caller migration
+
+The platform TypeScript field and schema requirement are explicit; the existing
+60,000–86,400,000-ms bounds are unchanged. The runtime forwards the value without
+`?? 300_000`. The coordinator requires all five positional arguments, retains the
+ordinary current-time behavior only when the clock argument is undefined, and
+checks a positive safe-integer TTL before using the journal or lock manager.
+This intentionally preserves shorter explicit low-level lifetimes such as 40 ms
+and 1,000 ms. It does not invent a second operator range.
+
+The pre-edit TypeScript AST inventory found 69 constructor calls, including
+namespace-qualified and multiline calls; 60 omitted the TTL. It found 33 platform
+objects, 29 lacking the field, and two generated child templates already passing
+1,000 ms explicitly. Exact positional insertion migrated 68 fixture modules with
+89 insertions; every original byte outside those insertions is preserved by
+`check-preservation.mjs`. This is not a helper that repairs missing configuration
+at runtime. The old five-minute value is authored explicitly at each migrated
+fixture. Existing assertions and deadlines remain unchanged.
+
+Four calls in three maintained `historical-branch-acceptance` runner files import
+the current checkout's Core and therefore require the current signature. They
+were migrated after explicit source/provenance review. Their pre-edit source
+snapshots remain intact; immutable legacy journals and embedded original producer
+snapshots were not rewritten. The only current four-argument call is the new
+intentional missing-TTL negative test.
+
+The Buster entrypoint is also an actual platform-document generator. Its generated
+platform now explicitly includes `effectLockTtlMs: 300_000`; no ENV fallback was
+introduced. Buster consumes that platform for registry configuration. This
+schema-completeness change is not a claim that the later D17 component-file
+migration or every remaining entrypoint author is finished.
+
+## Executed author verification
+
+Evidence: `docs/review/evidence/config-effect-lock-ttl-20260921/`.
+
+- Nova and Foundation TypeScript: exit 0.
+- Maintained TTL configuration module plus original lock-lifetime/Forge modules:
+  12/12, no skips or cancellations. The configuration module also imports the
+  real original Human-Approval fixture and retains its original test.
+- Actual platform profiles 60,000 and 120,000 ms pass through the loader and
+  `createAdapterRuntime` to the real filesystem lock manager. A delegating
+  observer records the actual acquire argument; it does not simulate acquisition
+  or skip original lock writes/release. Real Wait reads retain their values.
+- Missing/invalid platform values reject through the actual loader; missing
+  runtime TTL and missing/invalid direct-constructor TTL reject. Explicit short
+  direct TTLs remain allowed.
+- Entire original platform-config, capability-runtime and phase7 scripts: exit 0.
+- Canonical scoped production/new-test lint: exit 0.
+- Restoring the old runtime fallback, and separately the old constructor fallback,
+  each causes the exact missing-value assertion to fail. Both private controls
+  record their actual source replacement and semantic failure.
+- The selected before/after source manifest reports no drift. This is an author
+  scope manifest, not a claim that every host/kernel file was captured.
+
+The initial verification runner mistakenly iterated the inventory object's keys
+instead of its `rows` array and stopped before starting any test. The failure and
+correction are recorded in `runner-initial-error.txt`; it was not counted as a
+runtime pass. An initial Python recreation of AST edit offsets was unsuitable
+for UTF-16 JavaScript offsets in a Unicode-containing fixture; the retained
+migration log is verified using JavaScript string offsets instead. No fixture
+assertion was changed to obtain that proof.
+
+The additive maintained command is `npm run verify:orchestrator:effect-lock-config`.
+Existing verification commands are unchanged. Local filesystem tests require the
+same real GNU flock prerequisite as the existing Core tests; the author run used
+the established private tool binding without host installation.
+
+## Operator migration and limits
+
+Every operator-owned `pipeline-platform.v2` document must include the field.
+Author `"effectLockTtlMs": 300000` to retain the former implicit policy, or choose
+another integer within the unchanged platform bounds. Absence is now a startup
+configuration error. Direct API callers pass the fifth argument explicitly.
+Neither path synthesizes a TTL from another timeout. Updated effect-runtime,
+foundation configuration and platform-inventory documentation describe these
+contracts. No full component-file migration, host-capacity or live deployment
+acceptance is inferred. The linked fresh nonauthor review accepts only TTL1–TTL5/TTL-DOC.

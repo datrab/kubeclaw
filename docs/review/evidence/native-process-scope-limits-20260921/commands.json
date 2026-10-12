@@ -1,0 +1,46 @@
+[
+  {
+    "name": "types",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.native-scope.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "lint",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "skills/worker/core/worker/native-worker-process.ts",
+      "tests/verification/reliability/native-process-policy.test.mts"
+    ],
+    "exitCode": 2
+  },
+  {
+    "name": "originals",
+    "command": [
+      "node",
+      "--test",
+      "tests/verification/reliability/native-process-policy.test.mts",
+      "tests/verification/reliability/native-process-launches.test.mts",
+      "tests/verification/reliability/native-process-cancellation.test.mts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "lint-final",
+    "command": [
+      "node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/worker/core/worker/native-worker-process.ts",
+      "tests/verification/reliability/native-process-policy.test.mts"
+    ],
+    "exitCode": 0
+  }
+]

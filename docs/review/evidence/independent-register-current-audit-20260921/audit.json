@@ -1,0 +1,61 @@
+{
+  "mode": "bounded source/data audit only; no test or generator execution",
+  "sources": [
+    {
+      "path": "docs/review/remediation/acceptance-20260920.md",
+      "sha256": "27942ef3c0f04c0b325d98f4cd2d0f70cd6060fef47d941d2e7bef3ec92b5cda"
+    },
+    {
+      "path": "docs/review/remediation/register.json",
+      "sha256": "cbd64533bd16c91928c21317b9d183969aff91c512cc32bcc7daf3102af95697"
+    },
+    {
+      "path": "docs/review/remediation/register.md",
+      "sha256": "7f44049163a17d250f61aff7d01435ff354cb8658dff7ea630b692993ed0fdfa"
+    },
+    {
+      "path": "docs/review/remediation/progress.md",
+      "sha256": "b5c7b9005c6be2cda96b5f52e0335bc710b7a461af74938d8d221a114b12b7eb"
+    },
+    {
+      "path": "docs/review/remediation/handoff.md",
+      "sha256": "92d54f37c376b78d64746e9dd6ea6b5e4542dd5c71e177dc8857525b3d86f6fb"
+    },
+    {
+      "path": "docs/review/remediation/README.md",
+      "sha256": "36cd1363120e157da3506ed6e84d4faf9459507940d64a83ec2a33fe3a247eee"
+    },
+    {
+      "path": "docs/review/remediation/implementation/register-consistency-20260920.md",
+      "sha256": "429777e9481d13ba79a59e7bbdbefd461474d3e435889f86f43f23394d944fd7"
+    },
+    {
+      "path": "docs/review/remediation/implementation/open-work-inventory-20260921.md",
+      "sha256": "62725dd776d5aa407e9ca354184dfb07635080e3567d8b21882a65c15292ecea"
+    },
+    {
+      "path": "scripts/review/remediation-register.mjs",
+      "sha256": "3f04dd1da92874bd5d43d199fae6e103c967ac51f16ff1df9b1fd54ea5ebaf13"
+    },
+    {
+      "path": "scripts/review/remediation-identities.json",
+      "sha256": "2f6fbb58a790eab9a728f1f3378f89e56c4b91b17dcfbc41b2ab2288a886a3c1"
+    },
+    {
+      "path": "scripts/tests/remediation-register.test.mjs",
+      "sha256": "5f4e1bc1fd1001e62212f24cc5711c373221aa68bb8a81fd9690667124490253"
+    }
+  ],
+  "historicalIdentityMatch": true,
+  "historicalCount": 154,
+  "integrationCount": 5,
+  "counts": {
+    "verifiziert": 142,
+    "in Bearbeitung": 4,
+    "implementiert": 2,
+    "offen": 6
+  },
+  "markdownStatusMismatches": [],
+  "originalTextDriftSinceBoundPromotionBefore": [],
+  "decision": "G1/G2 current identity/status checks plausible; G3 mechanism and historical26test evidence present. Current G-DOC corrections and final current-source-bound check/test remain before REGISTER completion."
+}

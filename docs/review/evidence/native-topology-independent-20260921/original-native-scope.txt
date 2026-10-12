@@ -1,0 +1,46 @@
+
+> verify:worker-core:native-scope
+> tsc --noEmit -p tests/verification/reliability/tsconfig.native-scope.json && node --test --test-concurrency=1 tests/verification/reliability/worker-native-scope-live.mts tests/verification/reliability/worker-native-topology-live.mts
+
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-scope-live.mts:21
+if (!root) throw new Error('KUBECLAW_WORKER_TEST_CGROUP_ROOT is required; native scope checks cannot be skipped');
+                 ^
+
+Error: KUBECLAW_WORKER_TEST_CGROUP_ROOT is required; native scope checks cannot be skipped
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-scope-live.mts:21:18
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ tests/verification/reliability/worker-native-scope-live.mts (483.435201ms)
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-topology-live.mts:19
+if (!root || !launcher || !nodeIdentityFile || !poolFile) throw new Error('Native topology tests require the real delegated host configuration');
+                                                                ^
+
+Error: Native topology tests require the real delegated host configuration
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-topology-live.mts:19:65
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ tests/verification/reliability/worker-native-topology-live.mts (378.896469ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 877.735036
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-native-scope-live.mts:1:1
+✖ tests/verification/reliability/worker-native-scope-live.mts (483.435201ms)
+  'test failed'
+
+test at tests/verification/reliability/worker-native-topology-live.mts:1:1
+✖ tests/verification/reliability/worker-native-topology-live.mts (378.896469ms)
+  'test failed'

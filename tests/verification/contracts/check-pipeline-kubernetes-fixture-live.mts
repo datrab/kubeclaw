@@ -1,3 +1,4 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -33,10 +34,18 @@ if (registryConfig.caFile && (!process.env.NODE_EXTRA_CA_CERTS
   throw new Error('KUBERNETES_FIXTURE_LIVE_CA_REQUIRED: start Node with NODE_EXTRA_CA_CERTS set to the configured registry CA');
 }
 const registryRuntime = registryConfig.runtime;
-await verifyContainerManifest({ maximumManifestBytes: 4 * 1024 * 1024,
-  ...(registryRuntime.registryUsernameEnvironmentVariable ? {
-    registryUsername: process.env[registryRuntime.registryUsernameEnvironmentVariable],
-    registryPassword: process.env[registryRuntime.registryPasswordEnvironmentVariable] } : {}) },
+const registryCredentials: { registryUsername?: string; registryPassword?: string } = {};
+if (registryRuntime.registryUsernameEnvironmentVariable !== undefined
+  || registryRuntime.registryPasswordEnvironmentVariable !== undefined) {
+  const username = registryRuntime.registryUsernameEnvironmentVariable === undefined ? undefined
+    : process.env[registryRuntime.registryUsernameEnvironmentVariable];
+  const password = registryRuntime.registryPasswordEnvironmentVariable === undefined ? undefined
+    : process.env[registryRuntime.registryPasswordEnvironmentVariable];
+  if (!username || !password) throw new Error('KUBERNETES_FIXTURE_LIVE_REGISTRY_CREDENTIALS_REQUIRED');
+  registryCredentials.registryUsername = username;
+  registryCredentials.registryPassword = password;
+}
+await verifyContainerManifest({ maximumManifestBytes: 4 * 1024 * 1024, ...registryCredentials },
 new URL(target.origin), selectedImage.repository, selectedImage.digest, AbortSignal.timeout(30_000));
 const repositoryName = selectedImage.repository;
 const digest = selectedImage.digest;
@@ -96,7 +105,7 @@ try {
   const liveRunRoot = path.dirname(generatedWorkspace.artifactRoot);
   const liveArtifactRoot = `${generatedWorkspace.artifactRoot}-suite5-artifacts`;
   const liveObservabilityRoot = `${generatedWorkspace.artifactRoot}-suite5-observability`;
-  const kubernetes = new KubernetesFixtureCapabilityInvoker({ workspaceRoot: liveRunRoot,
+  const kubernetes = new KubernetesFixtureCapabilityInvoker({ shortCommandTimeoutMs: 15000, commandOutputManifestMultiplier: 2, diagnosticCodeUnits: 4096, manifest: { maximumNodes: 100000, maximumDepth: 64, maximumAliases: 1000, maximumFlattenVisits: 100000, maximumFlattenPending: 100000 }, runnerSubject: 'kubeclaw' + '/agent-buster', credentialReaderSubject: 'kubeclaw' + '/agent-nova',  processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, workspaceRoot: liveRunRoot,
     kubectlExecutable: '/usr/local/bin/kubectl',
     controllerNamespace: 'kubeclaw', leaseApiGroup: 'kubeclaw.forgestack.ai', leaseApiVersion: 'v1alpha1',
     allowedNamespacePrefixes: ['test'], allowedRegistryPrefixes: [`${registryHost}/${repositoryName}`],
@@ -109,11 +118,12 @@ try {
   const capabilities = new CompositeTestProviderCapabilityInvoker(new Map<string, TestProviderCapabilityInvoker>([
     ['command.execute', direct], ['kubernetes.fixture', kubernetes],
   ]));
-  const runner = new TestPlanRunner({ plan, registry, workspaceRoot: generatedWorkspace.artifactRoot,
+  const runner = new TestPlanRunner({
+    executionPolicy: { ...runnerExecutionPolicy, provider: { ...runnerExecutionPolicy.provider, cleanupTimeoutMs: 180_000 } }, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: generatedWorkspace.artifactRoot,
     repositoryRoot: generatedWorkspace.worktreePath,
     artifactRoot: liveArtifactRoot, observabilityRoot: liveObservabilityRoot, maximumConcurrency: 2,
     grants: new Map([['checked-manifest', ['command.execute']], ['kubernetes-deployment', ['kubernetes.fixture']]]),
-    capabilityInvoker: capabilities, cleanupTimeoutMs: 180_000 });
+    capabilityInvoker: capabilities });
   const result = await runner.run();
   assert.deepEqual(result.nodes.map((node) => node.outcome), ['passed', 'passed'], JSON.stringify(result));
   assert.deepEqual(result.cleanupErrors, []);

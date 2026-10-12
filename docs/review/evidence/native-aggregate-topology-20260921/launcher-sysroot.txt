@@ -1,0 +1,19 @@
+✖ compiled original launcher refuses ordinary filesystems and cannot execute the requested program (346.47899ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 508.905682
+
+✖ failing tests:
+
+test at tests/verification/reliability/worker-native-launcher.test.mts:10:1
+✖ compiled original launcher refuses ordinary filesystems and cannot execute the requested program (346.47899ms)
+  Error: WORKER_NATIVE_LAUNCHER_NOT_TRUSTED
+      at requireNativeWorkerLauncher (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/worker/core/worker/native-supervisor-authority.ts:19:13)
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/worker-native-launcher.test.mts:17:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

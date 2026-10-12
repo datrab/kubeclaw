@@ -1,0 +1,33 @@
+{
+  "status": "materialization-authorized-no-boot",
+  "files": [
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/child-preload.mjs",
+      "sha256": "3d2d5f0e09fc63c9c66bcaac38c659ce7b508c8ef259d9a86bf6efb3da12088f"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/guest-diagnostic.mjs",
+      "sha256": "1e5043ec1fc64b7ddc6d8634270b20a284e0a3fafa9383896e95ec1b00a4c454"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/guest-init.sh",
+      "sha256": "6a8c80c8ab7acf97ed4395dfaa76f625c9a93d9ba55a595f1fe3a4132c9faa65"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/launch-approved.py",
+      "sha256": "59d99be19ba5a83a06f62408a828cc194cd6b28fe70acc16223482a02e37ce8d"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/materialize.py",
+      "sha256": "1f212f2c66ff853f10a55dece50351f6a1116bf736ac633512d7269171013b45"
+    },
+    {
+      "path": "docs/review/evidence/native-vm-startup-storage-proposal-20260921/prepare-images.py",
+      "sha256": "f633784a524396e58a57071b7f8ae94e802e056aac7cf640868ecb1b94fa6409"
+    },
+    {
+      "path": "docs/review/remediation/implementation/native-vm-startup-storage-proposal-20260921.md",
+      "sha256": "60a6d1d883765bf5ec34ff261adc9fc8ac6e20d82c31e839b277e65f90ab7406"
+    }
+  ]
+}

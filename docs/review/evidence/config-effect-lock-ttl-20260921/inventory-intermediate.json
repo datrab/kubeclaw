@@ -1,0 +1,957 @@
+{
+  "rows": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "sha256": "c68af77b9afa7d1f52caad68c3a083cd8b9555c9fb2401ef14c2071a63aecc58"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+      "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/README.md",
+      "sha256": "747cf98d6bfc8040238f18482ad9c3e7ef5175f6419e6051ecf1842fc5131894"
+    },
+    {
+      "path": "skills/common/plugins/agent-observability/tests/live-function.test.ts",
+      "sha256": "c0dfc4de79849e724f90626b5819b1cf2082141d4ee31eecd62c053d07fcf8ff"
+    },
+    {
+      "path": "skills/common/plugins/notification-observer/tests/live-function.test.ts",
+      "sha256": "b282c65e95c3f3aac2e884621e7f75f58beb4c8aafd54541e8979c22343fcb60"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+      "sha256": "18a322f33e35f5e88a1421139dedda92c9cbebceb9871f527b0da8f8bfe5a077"
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+      "sha256": "94236bcdf8a08d67bbb7fbaba785d0d03d46f7f6f86846d28b805ae15047b3f9"
+    },
+    {
+      "path": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
+      "sha256": "0adfb9e673b3c2d66dfb76fd2886732701ae34031214d6fc37224e6812da5e07"
+    },
+    {
+      "path": "skills/nova/core/effects/coordinator.ts",
+      "sha256": "a3ab7918016cfbe5ba3f0f1f4d9f3bd30c96298b6ba2bd4a390e6f54c73366f6"
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "sha256": "30332f9d2d360b32a13e6f2795f83c90297346eb892b4d9346d5e61ed9d60d5b"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+    },
+    {
+      "path": "skills/nova/core/src/index.ts",
+      "sha256": "2cd478afa23772e88241245bbab2f9f5bcd86fb75e216250a7a6364c19bac9b8"
+    },
+    {
+      "path": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+      "sha256": "272268fd60cdaa459ce2edb9bf5f77387d901450b45d75f45cde0ccdce383e03"
+    },
+    {
+      "path": "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
+      "sha256": "3ccc99dc4d52e1483de3256338d0753326e2e9a4fba2fa1a52943de516d2f19f"
+    },
+    {
+      "path": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+      "sha256": "e44759720e880cc8b3b63348f80422be38fb2852a8ccb155fbb852bc0a48b014"
+    },
+    {
+      "path": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
+      "sha256": "e45ab9c111f408b27166d86d59154b8f25b17830eb67c1b927e862a8c1729bb0"
+    },
+    {
+      "path": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+      "sha256": "299d952f3e7d857d5cda8de9a26cc43f3878915f8ea587680c58c38eaa761b26"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/tests/live-function.test.ts",
+      "sha256": "201c8c7dbc5754184be4c69c795d7f1ea32ff82345f37c88521dd2a79dd4aa62"
+    },
+    {
+      "path": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+      "sha256": "13ccae41a9d10b740a55d103fdf7deea45df597c91e949682d06652c413c7034"
+    },
+    {
+      "path": "skills/nova/plugins/lint/tests/live-function.test.ts",
+      "sha256": "0b591b57b98379b29be99177f9a655185b6cdef2d64f9166abeffba7b5629c08"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
+      "sha256": "cde73b99098167be3ab186969ca3a8a7b901a1f2d1f210f024bd1f000a6a86ab"
+    },
+    {
+      "path": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+      "sha256": "9fbc900913cdebd86ea447193f3dedb6ddab231321279df6263be910496c7197"
+    },
+    {
+      "path": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+      "sha256": "52124826a08e9dd7c5a6337203b0549fc590723f5ec6659b96fe848f29354407"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/live-function.test.ts",
+      "sha256": "181ede16e4cadd8c8dc7af730dc2408e5337eef6f6f01cc2357086dd824a4a2d"
+    },
+    {
+      "path": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+      "sha256": "9cb2789e42560f95948b0714fd5ee0fe92d21db8946b8b08432c04330850abb8"
+    },
+    {
+      "path": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+      "sha256": "31184df6adbd40d072cc4ebd24cdb80c434e287369105aa0f82fe1b52e3012e8"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+      "sha256": "febed63b5f36e32f6d28f76351d37574e7c7b6efb72a30710cce694455216692"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+      "sha256": "e96fac732e24d41dbbe46d782f9e870cae01b11a029e57f6e378fe5137b2021b"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "sha256": "62c639f1542af0e1cac65b9655b931a17fc412328f264ef7c77b196821295c37"
+    },
+    {
+      "path": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+      "sha256": "fd14b3e4cc3baf23506b92517f90fec10f9f9a9ed53294d5e3b53d80f96c66c7"
+    },
+    {
+      "path": "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+      "sha256": "520689040abae71d8589f01c71022175da2ff732395bcbeb141d783e19245ec7"
+    },
+    {
+      "path": "tests/verification/contracts/check-plugin-system-v2-e2e.mjs",
+      "sha256": "388bbfc4ae7c2fec7f50ce5da3aa9c5263ae587a4863aa773847083fd59cf65f"
+    },
+    {
+      "path": "tests/verification/contracts/check-plugin-system-v2-engine.mjs",
+      "sha256": "2af8c77f01b16ffb92ca5c2f11c0d005c43b579933497fd65769060c65cdf41b"
+    },
+    {
+      "path": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+      "sha256": "80934b1758f8762576d6d9452e0e97105c430690a5f228f91d61d60ea75c2e03"
+    },
+    {
+      "path": "tests/verification/contracts/check-plugin-system-v2-live-crashes.mts",
+      "sha256": "b80a6d44c830cb66dec6d9d6254638c8fc84b3bdc1604723d8b615f3ba18693b"
+    },
+    {
+      "path": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+      "sha256": "f0b5d62669fa2cb9b881020bc27821f048c5d69c5b2e24d8824449a698705c37"
+    },
+    {
+      "path": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+      "sha256": "5d071a6eb984a61c08e87c9205243571916b7fb9999c1201cec03e2e15abc18d"
+    },
+    {
+      "path": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+      "sha256": "99738b9cf1161f814a29cd259595e18f37c7c878d3d2098300d8bb041662c2c7"
+    },
+    {
+      "path": "tests/verification/contracts/check-plugin-system-v2-resume.mjs",
+      "sha256": "907aba8c57d41c892c4940d6fc6dc5ccf298b94f13e0dec3bd73ad5e1b70a1ab"
+    },
+    {
+      "path": "tests/verification/contracts/check-project-compiler.mts",
+      "sha256": "f7ca10c400f05754cd345d5080a92f5f4ea2c365b2edf40193b06003382cfdd5"
+    },
+    {
+      "path": "tests/verification/contracts/quality-provider-runtime.mts",
+      "sha256": "b86f8d88598268b495e481e4f855a1676a5c731b44d4d2e64d8563961124cf9a"
+    },
+    {
+      "path": "tests/verification/e2e/run-v2-production-pipeline.mts",
+      "sha256": "fa593e946d4e82c57b4132b76a2d8b7924563f59a00b2b8de8156797ebc67cac"
+    },
+    {
+      "path": "tests/verification/e2e/scenario-proof.mts",
+      "sha256": "8ee99547aaab8b32dfe3ebad32747de3295f065ed91851505beb69b6e80aae23"
+    },
+    {
+      "path": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary-child.mjs",
+      "sha256": "e4e58ffe6de4958fc729320f5d2abb168c7e3866e9c1b613e677d6abb0a9a0c1"
+    },
+    {
+      "path": "tests/verification/historical-branch-acceptance/review-semantic-history-child.mjs",
+      "sha256": "b64bdb8109c087f0b6bd347f0b70cf555859bd42c80d489f613af1c4872f24b4"
+    },
+    {
+      "path": "tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs",
+      "sha256": "bb2517ece667b2a1e5f1e4043351976feaaaf8a413ecc17803c0bcbaa61fa4e9"
+    },
+    {
+      "path": "tests/verification/reliability/adapter-cleanup-scope.test.mts",
+      "sha256": "3f6e093188bf24c3ebba9ad72944fa01513954361c989dd558904b1969555408"
+    },
+    {
+      "path": "tests/verification/reliability/adapter-dependency-identity.test.mts",
+      "sha256": "92679837ef950a70ae0cb0384e801ab359d37d4a2b796a79d3d56e6d6f316570"
+    },
+    {
+      "path": "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+      "sha256": "ba27090a7e2510a195aaa673c38ee87cf155113999e1b38c6d6c96e7a36f8bd9"
+    },
+    {
+      "path": "tests/verification/reliability/admin-approval-fixture.mjs",
+      "sha256": "7e21b2ddad1ab6ffeafaeff2f3666a164bd5d5a310fc5171a221386d16fdcb4b"
+    },
+    {
+      "path": "tests/verification/reliability/admin-repair.test.mjs",
+      "sha256": "ed3762ba134c114017e6f2ea78e91472fd7dd02a6306ac32814dcf619557d6e5"
+    },
+    {
+      "path": "tests/verification/reliability/approval-source-fixture.mjs",
+      "sha256": "106f9648282509909d3a31d46ab777925b1b3b8ba7162f434d95dd569f9efabb"
+    },
+    {
+      "path": "tests/verification/reliability/attempt-projection-recovery.test.mjs",
+      "sha256": "039f4419d937614542bbf74088bbc5b4d02e0e0ed8952772050e08a3343aae1b"
+    },
+    {
+      "path": "tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs",
+      "sha256": "95cdccb5bb2bbde3e1aa886fc9529d12846527ad7a64a3720feaf7dd62bb9367"
+    },
+    {
+      "path": "tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs",
+      "sha256": "648b696e37ee073c9b7e6870c05efc2f0ba7eed6f80bfcdae5b2f6c68a33d0af"
+    },
+    {
+      "path": "tests/verification/reliability/discord-delivery-receipt.test.mts",
+      "sha256": "ed47d61e7393f84e8ec28b6413c9e12abcf7e8c653178e3dfc092704a94e2fc3"
+    },
+    {
+      "path": "tests/verification/reliability/effect-identity-version.test.mts",
+      "sha256": "97d0630024a3a6006be21be9b4be76ff1c7f280abb6e4a12bc0b05d5e9811079"
+    },
+    {
+      "path": "tests/verification/reliability/effect-lock-configuration.test.mjs",
+      "sha256": "d7d2995171f15611d787cae6d23f89701d9cabb2112353cef773d7d684cae87d"
+    },
+    {
+      "path": "tests/verification/reliability/effect-lock-lifetime.test.mts",
+      "sha256": "fd39048d5f658cf3c31e0e325d1e21342df287bcab8dac1f73c520186138b713"
+    },
+    {
+      "path": "tests/verification/reliability/external-effect-recovery.test.mts",
+      "sha256": "4a0d4b118348c00e88677152d41c34533d80dd4c14432105121d4b27635ef82e"
+    },
+    {
+      "path": "tests/verification/reliability/fixtures/forge-runtime.mts",
+      "sha256": "8f8847b9b1d6716ea2a3f5a760710509c39e36c0165bbcae90aa90a499d875e0"
+    },
+    {
+      "path": "tests/verification/reliability/fixtures/legacy-effects/README.md",
+      "sha256": "000e8e2e86b81cbddc85fb8f239146d75774f6a7e59928b377f69df56e67b384"
+    },
+    {
+      "path": "tests/verification/reliability/forge-lock-wait.test.mts",
+      "sha256": "b2edfcd7124588dedc918cc60e8a63f60a4b721265bb36eafbcb5451321363ee"
+    },
+    {
+      "path": "tests/verification/reliability/isolation-session.test.mjs",
+      "sha256": "1100bf776745c716e8ca729fdf1a9f778ffbdc50acbd9496d15f49d8c1b45e82"
+    },
+    {
+      "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "sha256": "8207a8065db7c0755ca3ef4d28559e2fe22e8e40c4edff58f815e30caf9f2bb5"
+    },
+    {
+      "path": "tests/verification/reliability/observer-recovery.test.mts",
+      "sha256": "cf72a16b4b5bb8747e1a2e0cc52f9bd4511f87ece49fd9cc5f62e8f748f2ccd4"
+    },
+    {
+      "path": "tests/verification/reliability/operator-delivery.test.mts",
+      "sha256": "00a53ef31995720da183e7091804d941f3dcf259de22e2f951deb4dcad15cef8"
+    },
+    {
+      "path": "tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+      "sha256": "c73601fa0f4fea13ac49dd7895425b89e51cd0418457d9665d4a56725bb50094"
+    },
+    {
+      "path": "tests/verification/reliability/prism-reader-fixture.mjs",
+      "sha256": "b19767987615299632b132da7d029fa91d3a5eed827a49489ed3d9bf1c9bdcfe"
+    },
+    {
+      "path": "tests/verification/reliability/redis-transport.test.mts",
+      "sha256": "f6bb8973dc19b48676cf3ee4eafd9ba12666f2f0f3c3136266a7c0c3320d190e"
+    },
+    {
+      "path": "tests/verification/reliability/repair-budget-fixture.mjs",
+      "sha256": "3d40021b3d9fa4902d76268d9e3b5e0e701bad3779380b1e561898651856b863"
+    },
+    {
+      "path": "tests/verification/reliability/report-identity-fixture.mjs",
+      "sha256": "739fcc88dc25f45eed492436462b715c135dedf84b6c241a3e014a4f9347d640"
+    },
+    {
+      "path": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+      "sha256": "208c37c7a34c84fc29430dcf20b53827475fe6b182b2dc3a46ce947e199a01a7"
+    },
+    {
+      "path": "tests/verification/reliability/review-cache-native-profile.test.mjs",
+      "sha256": "fbcd51b7496e5ce5587b5e7b5ff95dc4c9d7b77f6f03f7b4170227b4004913d5"
+    },
+    {
+      "path": "tests/verification/reliability/review-cache-storage-negative.test.mjs",
+      "sha256": "f2cd948aa87a3e05e7339d9f8ef136d6bebb6bbcaa53ef168776c1232661de00"
+    },
+    {
+      "path": "tests/verification/reliability/review-report-crash-independent.test.mjs",
+      "sha256": "629827a5166a35479ad7cb6e0741247c4935d8b27d8fa90627d82046867a7efb"
+    },
+    {
+      "path": "tests/verification/reliability/review-report-locale-child.mjs",
+      "sha256": "4609e79a6579b5d63f775b4bbc4b9d1d8ab42583c06200a7f66ce8e4779e49bc"
+    },
+    {
+      "path": "tests/verification/reliability/review-semantic-summary-child.mjs",
+      "sha256": "f8f7ef2ed538a83ca897ae67e4358b5e07baef13748e52aec4e4310031efe8f1"
+    },
+    {
+      "path": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+      "sha256": "90f70288cd10d97d7245ec96389f59152523eec154ad0b0e5f23ea7b38a6b266"
+    },
+    {
+      "path": "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs",
+      "sha256": "3c204f6aace8191834552d694d4091f2013c11faf6dfa885300a6b021afb1b32"
+    },
+    {
+      "path": "tests/verification/reliability/runtime-session-cleanup.test.mts",
+      "sha256": "374f5d4ffa1aefb39b0be497d1c6c8aa35f76f0b20bed57ded6bfd2757faf375"
+    },
+    {
+      "path": "tests/verification/reliability/wait-value-projection.test.mjs",
+      "sha256": "b5eee8e086156031ee4ccd0511a1aeb13775bb566501bbd55314467cc109d2d1"
+    },
+    {
+      "path": "scripts/tests/integration/repository-review-supervisor-start.mjs",
+      "sha256": "313005efd0676832fed1a2dc44557ffc418059feb6cf3e5b2a52cc5bbd8642f1"
+    },
+    {
+      "path": "scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
+      "sha256": "ab6ea4e9dd6f84bbfe99c93ff86d041ec82b6f0a9093c55d8caa84ae73972b00"
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "a20ebfae4106ae22d3c1e18182ffbd6981940b1c4cc474a9dc2bbf3c4e21930a"
+    }
+  ],
+  "calls": [
+    {
+      "file": "skills/common/plugins/agent-observability/tests/live-function.test.ts",
+      "line": 49,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/common/plugins/notification-observer/tests/live-function.test.ts",
+      "line": 81,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/common/plugins/operator-messaging/tests/live-function.test.ts",
+      "line": 168,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(effectJournal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+      "line": 274,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/common/plugins/runtime-dispatch/tests/live-function.test.ts",
+      "line": 398,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n      gatewayJournal,\n      undefined,\n      undefined,\n      new core.MemoryResourceLockManager(), 300_000,\n    )"
+    },
+    {
+      "file": "skills/common/plugins/transport-publisher/tests/live-function.test.ts",
+      "line": 165,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/nova/core/execution/engine-runtime.ts",
+      "line": 78,
+      "arguments": 5,
+      "source": "new EffectCoordinator(new FileEffectJournal(path.join(runRoot, 'effects.jsonl')), () => new Date(), {\n    requested: (request, executionMode) => append('effect.requested', request, { executionMode, capability: request.capability, operation: request.operation, resource: request.resource }),\n    accepted: (request, executionMode) => append('effect.accepted', request, { executionMode }),\n    completed: (request, receipt, executionMode) => append(receipt.status === 'completed' ? 'effect.completed' : 'effect.failed', request,\n      receipt.status === 'completed' ? { executionMode, adapter: receipt.adapter, result: auditResult(receipt.result ?? {}) } : { executionMode, adapter: receipt.adapter, error: receipt.error ?? {} }),\n  }, new FileResourceLockManager(path.join(platform.storageRoot, 'resource-locks')), platform.effectLockTtlMs)"
+    },
+    {
+      "file": "skills/nova/plugins/architecture-validator/tests/live-function.test.ts",
+      "line": 84,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/nova/plugins/blueprint-sync/tests/live-function.test.ts",
+      "line": 66,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/nova/plugins/buster-quality-gate/tests/live-function.test.ts",
+      "line": 117,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n      new core.FileEffectJournal(effectsPath),\n      undefined,\n      undefined,\n      new core.MemoryResourceLockManager(), 300_000,\n    )"
+    },
+    {
+      "file": "skills/nova/plugins/delivery-lint/tests/live-function.test.ts",
+      "line": 62,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${id}-effects.jsonl`)), undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+      "line": 87,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'reconcile-effects.jsonl')),undefined,undefined,new core.FileResourceLockManager(path.join(root,'reconcile-locks')), 300_000)"
+    },
+    {
+      "file": "skills/nova/plugins/human-approval/tests/live-function.test.ts",
+      "line": 115,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n      new core.FileEffectJournal(effectsPath),\n      undefined,\n      undefined,\n      new core.MemoryResourceLockManager(), 300_000,\n    )"
+    },
+    {
+      "file": "skills/nova/plugins/implementation-agent/tests/live-function.test.ts",
+      "line": 75,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(effectsPath), undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/nova/plugins/lint/tests/live-function.test.ts",
+      "line": 104,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${runId}-effects.jsonl`)), undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/nova/plugins/preflight-contract/tests/live-function.test.ts",
+      "line": 66,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, `${id}-effects.jsonl`)), undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/nova/plugins/project-summary/tests/live-function.test.ts",
+      "line": 32,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary,'effects.jsonl')),undefined,undefined,new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+      "line": 63,
+      "arguments": 5,
+      "source": "new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl')),undefined,undefined,new FileResourceLockManager(path.join(root,'locks')), 300_000)"
+    },
+    {
+      "file": "skills/nova/plugins/review/tests/live-function.test.ts",
+      "line": 267,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')), undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+      "line": 62,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')),\n  undefined, undefined, new core.MemoryResourceLockManager(), 300_000)"
+    },
+    {
+      "file": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+      "line": 73,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n    new core.FileEffectJournal(path.join(fixture.root, `${runId}-effects.jsonl`)),\n    undefined,\n    undefined,\n    new core.MemoryResourceLockManager(), 300_000,\n  )"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+      "line": 81,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n  journal,\n  () => new Date('2026-07-25T22:00:00Z'),\n  undefined,\n  new core.MemoryResourceLockManager(), 300_000,\n)"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+      "line": 114,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n  confidentialJournal,\n  () => new Date('2026-07-25T22:00:00Z'),\n  {\n    requested(request) { confidentialAudit.push(['requested', request]); },\n    accepted(request) { confidentialAudit.push(['accepted', request]); },\n    completed(request, receipt) { confidentialAudit.push(['completed', request, receipt]); },\n  },\n  new core.MemoryResourceLockManager(), 300_000,\n)"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+      "line": 159,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n  new core.MemoryEffectJournal(),\n  () => new Date('2026-07-25T22:00:00Z'),\n  {\n    requested(request) { confidentialFailureAudit.push(['requested', request]); },\n    accepted(request) { confidentialFailureAudit.push(['accepted', request]); },\n    completed(request, receipt) { confidentialFailureAudit.push(['completed', request, receipt]); },\n  },\n  new core.MemoryResourceLockManager(), 300_000,\n)"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+      "line": 244,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n    new core.MemoryEffectJournal(),\n    undefined,\n    undefined,\n    new core.MemoryResourceLockManager(), 300_000,\n  )"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+      "line": 287,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n    new core.MemoryEffectJournal(),\n    undefined,\n    undefined,\n    new core.MemoryResourceLockManager(), 300_000,\n  )"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+      "line": 348,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n    new core.MemoryEffectJournal(),\n    undefined,\n    undefined,\n    new core.MemoryResourceLockManager(), 300_000,\n  )"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+      "line": 409,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n    new core.MemoryEffectJournal(),\n    undefined,\n    undefined,\n    new core.MemoryResourceLockManager(), 300_000,\n  )"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+      "line": 460,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n    new core.MemoryEffectJournal(),\n    undefined,\n    undefined,\n    new core.MemoryResourceLockManager(), 300_000,\n  )"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
+      "line": 503,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n    new core.MemoryEffectJournal(),\n    undefined,\n    undefined,\n    new core.MemoryResourceLockManager(), 300_000,\n  )"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-e2e.mjs",
+      "line": 40,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n  new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')),\n  undefined,\n  undefined,\n  new core.MemoryResourceLockManager(), 300_000,\n)"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-live-crashes.mts",
+      "line": 264,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n        new core.MemoryEffectJournal(),\n        undefined,\n        undefined,\n        new core.MemoryResourceLockManager(), 300_000,\n      )"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+      "line": 134,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n  new core.FileEffectJournal(journalFile),\n  () => new Date('2026-07-28T00:00:00Z'),\n  undefined,\n  new core.FileResourceLockManager(path.join(root, 'locks')), 300_000,\n)"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+      "line": 141,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n  new core.FileEffectJournal(journalFile),\n  () => new Date('2026-07-28T00:01:00Z'),\n  undefined,\n  new core.FileResourceLockManager(path.join(root, 'locks')), 300_000,\n)"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+      "line": 158,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n  new core.FileEffectJournal(path.join(root, 'pre-dispatch-renewal-effects.jsonl')),\n  () => preDispatchNow,\n  {\n    requested() {},\n    accepted() { preDispatchNow = new Date('2026-07-28T01:00:00.900Z'); },\n    completed() {},\n  },\n  preDispatchLocks,\n  1_000,\n)"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+      "line": 228,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n  new core.MemoryEffectJournal(),\n  undefined,\n  undefined,\n  new core.MemoryResourceLockManager(), 300_000,\n)"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+      "line": 295,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n  interruptedJournal,\n  undefined,\n  undefined,\n  new core.MemoryResourceLockManager(), 300_000,\n)"
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
+      "line": 312,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n    unavailableReceiptJournal,\n    undefined,\n    undefined,\n    new core.MemoryResourceLockManager(), 300_000,\n  )"
+    },
+    {
+      "file": "tests/verification/contracts/quality-provider-runtime.mts",
+      "line": 137,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(\n      new core.FileEffectJournal(effectsPath),\n      undefined,\n      undefined,\n      new core.MemoryResourceLockManager(), 300_000,\n    )"
+    },
+    {
+      "file": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary-child.mjs",
+      "line": 84,
+      "arguments": 4,
+      "source": "new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, 'producer-locks')))"
+    },
+    {
+      "file": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary-child.mjs",
+      "line": 163,
+      "arguments": 4,
+      "source": "new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, `${phase}-locks`)))"
+    },
+    {
+      "file": "tests/verification/historical-branch-acceptance/review-semantic-history-child.mjs",
+      "line": 14,
+      "arguments": 4,
+      "source": "new EffectCoordinator(\n  new FileEffectJournal(path.join(root, `history-${phase}.jsonl`)),\n  undefined,\n  undefined,\n  new FileResourceLockManager(path.join(root, `history-${phase}-locks`)),\n)"
+    },
+    {
+      "file": "tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs",
+      "line": 69,
+      "arguments": 4,
+      "source": "new core.EffectCoordinator(effects, undefined, undefined, new core.MemoryResourceLockManager())"
+    },
+    {
+      "file": "tests/verification/reliability/adapter-cleanup-scope.test.mts",
+      "line": 72,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,\n          {requested(request){observed.push(request as unknown as Record<string,unknown>);},accepted(){},completed(){}},\n          new core.FileResourceLockManager(path.join(root,'locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/adapter-dependency-identity.test.mts",
+      "line": 55,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_PREFIX');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/adapter-dependency-identity.test.mts",
+      "line": 146,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(root,'effects.jsonl')),undefined,{requested(request){observed.push(request);},accepted(request){if(request.idempotencyKey===interruptKey)throw new Error('TEST_ACCEPTED_BEFORE_RESERVE');},completed(){}},new core.FileResourceLockManager(path.join(root,'locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs",
+      "line": 88,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(effects, undefined, audit, new core.FileResourceLockManager(path.join(root, 'cancel-locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs",
+      "line": 196,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, 'producer-locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs",
+      "line": 310,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, `${phase}-locks`)), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs",
+      "line": 465,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(effects, undefined, auditSink, new core.FileResourceLockManager(path.join(root, `durability-${target}-${mode}-${boundary}-replay-locks`)), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/discord-delivery-receipt.test.mts",
+      "line": 58,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl')), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/effect-identity-version.test.mts",
+      "line": 37,
+      "arguments": 5,
+      "source": "new EffectCoordinator(new FileEffectJournal(journalFile),undefined,undefined,new FileResourceLockManager(lockRoot), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/effect-lock-configuration.test.mjs",
+      "line": 53,
+      "arguments": 4,
+      "source": "new EffectCoordinator(untouched, undefined, undefined, untouched)"
+    },
+    {
+      "file": "tests/verification/reliability/effect-lock-configuration.test.mjs",
+      "line": 55,
+      "arguments": 5,
+      "source": "new EffectCoordinator(untouched, undefined, undefined, untouched, ttl)"
+    },
+    {
+      "file": "tests/verification/reliability/effect-lock-configuration.test.mjs",
+      "line": 58,
+      "arguments": 5,
+      "source": "new EffectCoordinator(untouched, undefined, undefined, untouched, ttl)"
+    },
+    {
+      "file": "tests/verification/reliability/effect-lock-lifetime.test.mts",
+      "line": 30,
+      "arguments": 5,
+      "source": "new EffectCoordinator(journal, undefined, undefined, locks, 1000)"
+    },
+    {
+      "file": "tests/verification/reliability/effect-lock-lifetime.test.mts",
+      "line": 79,
+      "arguments": 5,
+      "source": "new EffectCoordinator(journal, undefined, undefined, locks, 1000)"
+    },
+    {
+      "file": "tests/verification/reliability/fixtures/forge-runtime.mts",
+      "line": 92,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(journal, undefined, audit, locks, 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/forge-lock-wait.test.mts",
+      "line": 30,
+      "arguments": 5,
+      "source": "new EffectCoordinator(new FileEffectJournal(journalPath), undefined, undefined, locks, disposition === 'timeout' ? 40 : 1000)"
+    },
+    {
+      "file": "tests/verification/reliability/forge-lock-wait.test.mts",
+      "line": 81,
+      "arguments": 5,
+      "source": "new EffectCoordinator(journal, undefined, undefined, new FileResourceLockManager(path.join(temporary, 'locks')), 1000)"
+    },
+    {
+      "file": "tests/verification/reliability/operator-delivery.test.mts",
+      "line": 74,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl')), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/redis-transport.test.mts",
+      "line": 48,
+      "arguments": 5,
+      "source": "new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}.jsonl`)), undefined, undefined, locks, 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/redis-transport.test.mts",
+      "line": 55,
+      "arguments": 5,
+      "source": "new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}-second.jsonl`)), undefined, undefined, locks, 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+      "line": 75,
+      "arguments": 5,
+      "source": "new EffectCoordinator(journal,undefined,audit,new FileResourceLockManager(path.join(root,'locks')),lockTtlMs)"
+    },
+    {
+      "file": "tests/verification/reliability/review-cache-storage-negative.test.mjs",
+      "line": 17,
+      "arguments": 5,
+      "source": "new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl')),undefined,undefined,new FileResourceLockManager(path.join(root,'locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/review-report-crash-independent.test.mjs",
+      "line": 21,
+      "arguments": 5,
+      "source": "new EffectCoordinator(new FileEffectJournal(path.join(root,'effects.jsonl')),undefined,undefined,new FileResourceLockManager(path.join(root,'locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/review-report-locale-child.mjs",
+      "line": 21,
+      "arguments": 5,
+      "source": "new EffectCoordinator(new FileEffectJournal(file),undefined,undefined,new FileResourceLockManager(path.join(root,'locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/review-semantic-summary-child.mjs",
+      "line": 18,
+      "arguments": 5,
+      "source": "new EffectCoordinator(new FileEffectJournal(path.join(root, 'events.jsonl')), undefined, undefined,\n  new FileResourceLockManager(path.join(root, 'locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+      "line": 100,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(journal,undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks')),lockTtlMs)"
+    },
+    {
+      "file": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+      "line": 156,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(journalPath),undefined,audit,new core.FileResourceLockManager(path.join(root,'locks')),lockTtlMs)"
+    },
+    {
+      "file": "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs",
+      "line": 45,
+      "arguments": 5,
+      "source": "new EffectCoordinator(new FileEffectJournal(journalFile), undefined, undefined,\n    new FileResourceLockManager(path.join(root, 'locks')), 300_000)"
+    },
+    {
+      "file": "tests/verification/reliability/runtime-session-cleanup.test.mts",
+      "line": 102,
+      "arguments": 5,
+      "source": "new core.EffectCoordinator(new core.FileEffectJournal(journalPath),undefined,undefined,new core.FileResourceLockManager(path.join(root,'locks')), 300_000)"
+    }
+  ],
+  "platforms": [
+    {
+      "file": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+      "line": 70,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/fixtures/test-gate/buster-cli-profile.mjs",
+      "line": 13,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+      "line": 165,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "line": 82,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+      "line": 35,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-engine.mjs",
+      "line": 15,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+      "line": 68,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
+      "line": 168,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+      "line": 12,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/contracts/check-plugin-system-v2-resume.mjs",
+      "line": 13,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/contracts/check-project-compiler.mts",
+      "line": 134,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/e2e/run-v2-production-pipeline.mts",
+      "line": 439,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/e2e/scenario-proof.mts",
+      "line": 27,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/adapter-dependency-identity.test.mts",
+      "line": 46,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+      "line": 35,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/admin-approval-fixture.mjs",
+      "line": 26,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/admin-repair.test.mjs",
+      "line": 19,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/approval-source-fixture.mjs",
+      "line": 50,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/attempt-projection-recovery.test.mjs",
+      "line": 13,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/external-effect-recovery.test.mts",
+      "line": 59,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/isolation-session.test.mjs",
+      "line": 95,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/isolation-session.test.mjs",
+      "line": 106,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "line": 101,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/observer-recovery.test.mts",
+      "line": 42,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/operator-retention-authority-fixture.test.mjs",
+      "line": 43,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/prism-reader-fixture.mjs",
+      "line": 41,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/repair-budget-fixture.mjs",
+      "line": 33,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/report-identity-fixture.mjs",
+      "line": 42,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+      "line": 57,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/review-cache-native-profile.test.mjs",
+      "line": 16,
+      "hasTtl": true
+    },
+    {
+      "file": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+      "line": 29,
+      "hasTtl": true
+    },
+    {
+      "file": "scripts/tests/integration/repository-review-supervisor-start.mjs",
+      "line": 36,
+      "hasTtl": true
+    },
+    {
+      "file": "scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
+      "line": 15,
+      "hasTtl": true
+    }
+  ],
+  "templates": [
+    {
+      "file": "tests/verification/reliability/adapter-dependency-identity.test.mts",
+      "line": 74,
+      "source": "`import * as core from ${JSON.stringify(new URL('../../../skills/nova/core/src/index.ts',import.meta.url).href)};\n      import {prepareRuntime} from ${JSON.stringify(new URL('../../../skills/nova/core/execution/engine-runtime.ts',import.meta.url).href)};\n      const platform=${JSON.stringify(platform)},definition=${JSON.stringify(definition)};\n      const prepared=await prepareRuntime(platform,definition);\n      const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(platform.adapters)),shutdownTimeoutMs:1000,async emitDomainEvent(){},\n        effects:new core.EffectCoordinator(new core.FileEffectJournal(${JSON.stringify(path.join(root,'effects.jsonl'))}),undefined,undefined,new core.FileResourceLockManager(${JSON.stringify(path.join(root,'locks'))}),1000)});\n      await runtime.start();await runtime.invoke('runtime.dispatch',${JSON.stringify(crashAttempt)},'parent:crash',${JSON.stringify(crashRequest)},new AbortController().signal);`"
+    },
+    {
+      "file": "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+      "line": 46,
+      "source": "`import fs from 'node:fs';import path from 'node:path';import * as core from ${core};import {prepareRuntime} from ${engine};\n  const directory=process.argv[1],{platform,definition}=JSON.parse(fs.readFileSync(path.join(directory,'fixture.json'))),prepared=await prepareRuntime(platform,definition);\n  const runtime=new core.AdapterRuntime({granted:prepared.granted,activated:prepared.activated,configs:new Map(Object.entries(platform.adapters)),shutdownTimeoutMs:1000,\n    async emitDomainEvent(){throw new Error('UNEXPECTED_DOMAIN_EVENT');},effects:new core.EffectCoordinator(new core.FileEffectJournal(path.join(directory,'effects.jsonl')),undefined,undefined,new core.FileResourceLockManager(path.join(directory,'locks')),1000)});\n  await runtime.start();try{const result=await runtime.invoke('runtime.dispatch',{runId:'run:locale',stageId:'one',attemptId:'attempt:one',attemptNumber:1},'parent:one',{operation:'dispatch',resource:{type:'runtime.agent',canonicalId:'probe'},payload:{}},new AbortController().signal);process.stdout.write(JSON.stringify({locale:Intl.DateTimeFormat().resolvedOptions().locale,result}));}finally{await runtime.shutdown();}`"
+    }
+  ]
+}

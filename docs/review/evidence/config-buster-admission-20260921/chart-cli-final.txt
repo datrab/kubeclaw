@@ -1,0 +1,10 @@
+✔ actual Buster chart mounts both authored admission profiles and rejects retired ENV authors (1824.324925ms)
+✔ actual service CLI rejects inherited retired ENV before opening its parent channel (18407.847623ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21310.666008

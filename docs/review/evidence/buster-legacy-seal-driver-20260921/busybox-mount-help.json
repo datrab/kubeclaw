@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-test-vm-20260921/root/lib/ld-musl-x86_64.so.1",
+    "--library-path",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-test-vm-20260921/root/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-test-vm-20260921/root/usr/lib",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-test-vm-20260921/root/bin/busybox",
+    "mount",
+    "--help"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "BusyBox v1.37.0 (2026-01-10 15:38:28 UTC) multi-call binary.\n\nUsage: mount [OPTIONS] [-o OPT] DEVICE NODE\n\nMount a filesystem. Filesystem autodetection requires /proc.\n\n\t-a\t\tMount all filesystems in fstab\n\t-f\t\tDry run\n\t-i\t\tDon't run mount helper\n\t-v\t\tVerbose\n\t-r\t\tRead-only mount\n\t-t FSTYPE[,...]\tFilesystem type(s)\n\t-O OPT\t\tMount only filesystems with option OPT (-a only)\n-o OPT:\n\tloop\t\tIgnored (loop devices are autodetected)\n\t[a]sync\t\tWrites are [a]synchronous\n\t[no]atime\tDisable/enable updates to inode access times\n\t[no]diratime\tDisable/enable atime updates to directories\n\t[no]relatime\tDisable/enable atime updates relative to modification time\n\t[no]dev\t\t(Dis)allow use of special device files\n\t[no]exec\t(Dis)allow use of executable files\n\t[no]suid\t(Dis)allow set-user-id-root programs\n\t[r]shared\tConvert [recursively] to a shared subtree\n\t[r]slave\tConvert [recursively] to a slave subtree\n\t[r]private\tConvert [recursively] to a private subtree\n\t[un]bindable\tMake mount point [un]able to be bind mounted\n\t[r]bind\t\tBind a file or directory [recursively] to another location\n\tmove\t\tRelocate an existing mount point\n\tremount\t\tRemount a mounted filesystem, changing flags\n\tro\t\tSame as -r\n\nThere are filesystem-specific -o flags.\n",
+  "initialCheck": "literal rprivate lookup failed; help correctly uses [r]private notation",
+  "busyboxSha256": "01a989eb4d1d04b0d146c790ac536abd88f374ec74a2e110c58910b840d42045"
+}

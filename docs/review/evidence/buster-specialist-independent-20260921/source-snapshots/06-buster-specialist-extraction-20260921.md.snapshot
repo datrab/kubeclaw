@@ -1,0 +1,90 @@
+# Buster specialist result/report extraction
+
+Pre-edit criteria, 2026-09-21. This bounded first implementation slice of the
+[native integration design](buster-native-integration-seam-20260921.md) extracts
+provider-result validation and the complete report finalization phase. It does
+not introduce a native host, change ownership or budgets, or close B1/W1.
+
+| Case | Required observation |
+| --- | --- |
+| BS1 | Original runner calls the extracted provider-result boundary with unchanged JSON-size, schema, counts, provider-details, evidence and report checks, in their original order. Old inline bodies are removed. |
+| BS2 | Original finalization calls a Buster-owned function with explicit data and separate runtime dependencies; cancellation, direct-command exit-code shortcut, exact adapter identity, retained source, limits and report normalization retain existing behavior. |
+| BS3 | The operation's finalization data uses existing serializable contract values; no mutable runner instance, private field access, registry serialization, executable callback or invented native protocol is placed in those data values. Runtime dependencies remain explicitly separate. |
+| BS4 | Original provider/runner/report tests and engine typecheck execute; failures due to native prerequisites stay visible. Focused semantic tests cover serialized roundtrip data and actual result/fault behavior, with a meaningful negative control. |
+| BS-DOC | Documentation identifies the production callsites, extracted responsibility, real evidence and remaining full-operation/native boundaries. Fresh independent review required. |
+
+Provider execution, staging, evidence persistence, fixture lifecycle and V1
+runtime remain outside this extraction. Their current production use is not
+presented as an acceptable final fallback or native completion.
+
+## Implemented boundary
+
+`TestPlanRunner.#executeAttempt` calls `validateBusterProviderResult` immediately
+following provider execution, before its existing `freeze(structuredClone(...))`
+and evidence staging. `provider-result-validation.ts` owns the original ordered
+checks, including the Playwright details contract. It does not change acceptance
+rules or return a substitute provider result.
+
+The worker operation's `finalizeResult` delegates directly to
+`finalizeBusterReports` in `specialist-report-finalization.ts`. Its input contains
+the resolved node, validated provider result (or null), retained worker evidence,
+worker specialist result and cleanup timeout. Registry, adapter executor and
+AbortSignal are separate explicit runtime dependencies. There is no reconstructed
+runner, captured private field or serialized function. These are **internal typed
+inputs**, not a newly admitted or validated native wire protocol: caller admission
+and the existing provider/result contract checks still apply.
+
+The finalizer retains the exact existing adapter registration/package match,
+source selection, signal forwarding, per-adapter limits, shared 16 MiB report
+budget, direct-command modes and JUnit normalization. `ReportAdapterExecutor`
+remains re-exported from `runner.ts` for existing callers. The old inline
+validation/finalization/adapter-resolution bodies are removed. `canonical-value.ts`
+holds the original stable encoder once for both runner identities and adapter
+package matching; it intentionally does not substitute the stricter worker RFC
+8785 encoder, which would introduce unrelated acceptance changes.
+
+This is preparation, not process isolation. Provider loading/execution,
+capability dispatch, repository preparation, evidence staging/persistence,
+fixture retention, durable result ownership and the V1 executor still require
+the whole-operation cutover described in the native integration design. No
+B1–B5/W1–W5 acceptance criterion or resource budget is changed or closed here.
+
+## Verification and limits
+
+Evidence: `docs/review/evidence/buster-specialist-extraction-20260921/`.
+
+- `boundary-tests.txt`: 7 passing module tests using the real registry/resolver
+  and explicitly fake adapter execution. JSON-roundtripped data preserves report
+  outcome/count normalization, input immutability, retained-artifact binding,
+  exact package identity, all adapter limits, signal identity, early exits,
+  adapter errors, aggregate output limit, skipped-only blocking versus advisory
+  semantics, and custom-provider verdict preservation.
+- `mutant.txt`: the private-copy mutant removes adapter package binding; the
+  mismatched-package test fails because the fake adapter was executed. Reproduce
+  with `python3 docs/review/evidence/buster-specialist-extraction-20260921/run-mutant.py`.
+  Production sources and original tests are never rewritten by this probe.
+- `typecheck.txt`: Buster engine TypeScript check exits 0.
+- `lint-extracted.txt`: all new modules and the boundary test lint cleanly.
+  `lint.txt` and `lint-runner-before.txt` show the existing runner's 30 lint
+  errors both after extraction and in HEAD before extraction; this slice does
+  not claim the whole runner passes canonical lint.
+- `original-before.txt`: the three original runner/provider/JUnit contract test
+  modules failed before editing. `original-after.txt`: those three still fail;
+  two additionally run report-adapter originals also fail with an adapter child
+  `SIGSEGV`/incomplete JSON response. Runner timing outcome and provider outcome
+  assertions and the JUnit fixture's missing XML remain failures, not skipped
+  or accepted tests. These results do not establish native execution correctness.
+
+Commands (from repository root):
+
+```sh
+node --test skills/buster/engine/test-gates/tests/specialist-boundary.test.ts
+node node_modules/typescript/bin/tsc --noEmit -p skills/buster/engine/tsconfig.json
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/buster/engine/test-gates/canonical-value.ts skills/buster/engine/test-gates/provider-result-validation.ts skills/buster/engine/test-gates/specialist-report-finalization.ts skills/buster/engine/test-gates/tests/specialist-boundary.test.ts
+```
+
+The original-test reproduction command and exit statuses are recorded in
+`commands.txt`. The local proot executable binds provide this Alpine workspace's
+existing downloaded `flock`/`tar`; they are not a native resource-isolation test
+or a production runtime workaround. No host services, cgroups, deployments or
+external infrastructure were changed. Independent review remains required.

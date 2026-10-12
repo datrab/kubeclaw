@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: real kubernetes.fixture factory command consumes grace 50
+ok 1 - real kubernetes.fixture factory command consumes grace 50
+  ---
+  duration_ms: 589.305061
+  type: 'test'
+  ...
+# Subtest: real kubernetes.fixture factory command consumes grace 400
+ok 2 - real kubernetes.fixture factory command consumes grace 400
+  ---
+  duration_ms: 915.742338
+  type: 'test'
+  ...
+# Subtest: real kubernetes.exposure factory command consumes grace 50
+not ok 3 - real kubernetes.exposure factory command consumes grace 50
+  ---
+  duration_ms: 1.989061
+  type: 'test'
+  location: '/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-callers.test.mjs:49:47'
+  failureType: 'testCodeFailure'
+  error: 'SWARM_CONFIG_BUSTER_PROCESS_INPUT_INVALID'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:44:44)
+    validateBusterProcessInputSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:123:3)
+    new TailscaleExposureCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:81:32)
+    file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/capability-runtime.ts:52:36
+    add (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/capability-runtime.ts:41:21)
+    createBusterCapabilityRuntime (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/capability-runtime.ts:52:3)
+    TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-callers.test.mjs:54:21)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+  ...
+# Subtest: real kubernetes.exposure factory command consumes grace 400
+not ok 4 - real kubernetes.exposure factory command consumes grace 400
+  ---
+  duration_ms: 0.894373
+  type: 'test'
+  location: '/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-callers.test.mjs:49:47'
+  failureType: 'testCodeFailure'
+  error: 'SWARM_CONFIG_BUSTER_PROCESS_INPUT_INVALID'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    validateComponentSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts:44:44)
+    validateBusterProcessInputSettings (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/buster-execution.ts:123:3)
+    new TailscaleExposureCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:81:32)
+    file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/capability-runtime.ts:52:36
+    add (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/capability-runtime.ts:41:21)
+    createBusterCapabilityRuntime (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/capability-runtime.ts:52:3)
+    TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-process-input-callers.test.mjs:54:21)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 2
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4039.210918

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "features",
+    "tuning",
+    "overrides",
+    "operator"
+  ],
+  "properties": {
+    "_doc": {
+      "type": "string"
+    },
+    "profile": {
+      "const": "standard"
+    },
+    "features": {
+      "const": {
+        "observability": true,
+        "buster": true,
+        "discord_alerts": true
+      }
+    },
+    "tuning": {
+      "const": {
+        "safety_margins": "high",
+        "retention": "high",
+        "alerts": "rich",
+        "logs": "verbose",
+        "checks": "strict",
+        "determinism": "strict"
+      }
+    },
+    "overrides": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "operator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prism"
+      ],
+      "properties": {
+        "prism": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "worker",
+            "native"
+          ],
+          "properties": {
+            "worker": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maximumActiveRequests",
+                "maximumProbeRequests",
+                "maximumConnections",
+                "requestTimeoutMs",
+                "shutdownTimeoutMs",
+                "maximumInputBytes"
+              ],
+              "properties": {
+                "maximumActiveRequests": {
+                  "$ref": "#/$defs/positiveTimerInteger"
+                },
+                "maximumProbeRequests": {
+                  "$ref": "#/$defs/positiveTimerInteger"
+                },
+                "maximumConnections": {
+                  "$ref": "#/$defs/positiveTimerInteger"
+                },
+                "requestTimeoutMs": {
+                  "$ref": "#/$defs/positiveTimerInteger"
+                },
+                "shutdownTimeoutMs": {
+                  "$ref": "#/$defs/positiveTimerInteger"
+                },
+                "maximumInputBytes": {
+                  "$ref": "#/$defs/positiveTimerInteger"
+                }
+              }
+            },
+            "native": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "maximumResultBytes",
+                "dispatchTimeoutMs"
+              ],
+              "properties": {
+                "maximumResultBytes": {
+                  "$ref": "#/$defs/positiveTimerInteger"
+                },
+                "dispatchTimeoutMs": {
+                  "$ref": "#/$defs/positiveTimerInteger"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "positiveTimerInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    }
+  }
+}

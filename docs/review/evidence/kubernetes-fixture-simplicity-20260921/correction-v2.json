@@ -1,0 +1,7 @@
+{
+  "changed": [
+    "skills/buster/engine/test-gates/kubernetes-fixture-pods.ts"
+  ],
+  "exactCorrection": "remove four local export modifiers only",
+  "v1Preserved": true
+}

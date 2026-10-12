@@ -1,0 +1,8 @@
+[
+  {
+    "path": "docs/review/remediation/implementation/config-buster-runtime-security-20260924.md",
+    "beforeSha256": "eb9e26ac4a13726767d988062b24a25a85e9068046efc7fc6ba28d4ef61d2bd6",
+    "sha256": "7d56f74725a675785d1c9d47de7a7069b10369485ca2886f4e81e76c9e0e9b71",
+    "reason": "actual intermediate results and explicit stop-oracle scope decision"
+  }
+]

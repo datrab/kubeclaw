@@ -1,0 +1,30 @@
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (8889.682825ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (5306.930909ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (10607.253171ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (2097.608228ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (8103.724947ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (2880.536508ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (3735.916156ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (713.99074ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (2763.274469ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (2895.131912ms)
+✔ independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key (2708.118413ms)
+✔ independent original composed restart rejects prior session authority before recording and preserves fresh authorized intent (2821.626125ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 56426.086666

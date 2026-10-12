@@ -1,0 +1,15 @@
+{
+  "scope": "serialization boundary only; no filesystem admission or kernel claim",
+  "cases": 180,
+  "budget": 26272,
+  "largest": 26272,
+  "sourceIdentities": {
+    "skills/worker/core/worker/ownership-capacity.ts": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+    "skills/worker/core/worker/ownership-state.ts": "ef33d0452ca1c814430a4815d4bfa5fce85b8b2fa1217ccb171f6c942dc12f85",
+    "skills/worker/core/worker/ownership-children.ts": "cda8cec00dc6046b0204d72c7cdda342d3a23934a4c26d00129352dbc07535b1",
+    "contracts/pipeline-worker-core/v1/src/digest.ts": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780",
+    "contracts/pipeline-observability/v1/src/canonical-json.ts": "378c3ba35ca88e40527e3912dfc0f897e6d5cbdc1dfd40b3a825fbf1241e9177",
+    "skills/worker/core/worker/digest.ts": "d8c005287076f3ca2a6e84daf386c17ff77858ba5dc22cfebd3b9063d48ef402",
+    "skills/worker/core/worker/native-resource-observation.ts": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+  }
+}

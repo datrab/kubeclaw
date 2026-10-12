@@ -1,0 +1,177 @@
+{
+  "providers": [
+    {
+      "registration": "kubeclaw.api-flow@1",
+      "derivedCount": 6,
+      "recordedCount": 6,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 3
+    },
+    {
+      "registration": "kubeclaw.axe@1",
+      "derivedCount": 14,
+      "recordedCount": 14,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 5
+    },
+    {
+      "registration": "kubeclaw.container-build@1",
+      "derivedCount": 10,
+      "recordedCount": 10,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.coverage-budget@1",
+      "derivedCount": 2,
+      "recordedCount": 2,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.demo-auth-smoke@1",
+      "derivedCount": 10,
+      "recordedCount": 10,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.direct-command@1",
+      "derivedCount": 19,
+      "recordedCount": 19,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.http@1",
+      "derivedCount": 10,
+      "recordedCount": 10,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 4
+    },
+    {
+      "registration": "kubeclaw.kubernetes-fixture@1",
+      "derivedCount": 15,
+      "recordedCount": 15,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.lighthouse@1",
+      "derivedCount": 19,
+      "recordedCount": 19,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 4
+    },
+    {
+      "registration": "kubeclaw.openapi@1",
+      "derivedCount": 16,
+      "recordedCount": 16,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 3
+    },
+    {
+      "registration": "kubeclaw.playwright@1",
+      "derivedCount": 8,
+      "recordedCount": 8,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 1
+    },
+    {
+      "registration": "kubeclaw.security-headers@1",
+      "derivedCount": 23,
+      "recordedCount": 23,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.dependency-scan-trivy@1",
+      "derivedCount": 8,
+      "recordedCount": 8,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.image-scan-trivy@1",
+      "derivedCount": 7,
+      "recordedCount": 7,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.kubernetes-policy-security@1",
+      "derivedCount": 7,
+      "recordedCount": 7,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.kubernetes-runtime-security@1",
+      "derivedCount": 7,
+      "recordedCount": 7,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.size-budget@1",
+      "derivedCount": 11,
+      "recordedCount": 11,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.tailscale-exposure@1",
+      "derivedCount": 5,
+      "recordedCount": 5,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 0
+    },
+    {
+      "registration": "kubeclaw.visual@1",
+      "derivedCount": 14,
+      "recordedCount": 14,
+      "missing": [],
+      "extra": [],
+      "different": [],
+      "derivedDefaultCount": 2
+    }
+  ],
+  "derivedOccurrences": 211,
+  "defaults": 22
+}

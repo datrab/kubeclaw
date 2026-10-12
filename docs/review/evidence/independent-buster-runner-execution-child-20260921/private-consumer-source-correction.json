@@ -1,0 +1,16 @@
+{
+  "status": "private-only, unexecuted",
+  "files": [
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/next-consumers/tests/verification/contracts/buster-process-sampling.test.mjs",
+      "beforeSha256": "8b242a0318a4e9191142f7d9ab46928c22052d4bb89e5e2df53ce94864590ea1",
+      "afterSha256": "d4c68874cee198b85420bac65cda2964b59ca4064d5c2829947f7c98dd58dbfa"
+    },
+    {
+      "path": "docs/review/evidence/buster-runner-quality-20260921/next-consumers/tests/verification/contracts/buster-default-store-policy.test.mjs",
+      "beforeSha256": "ac653f25ca380a054cf77f2b708d3160f58ae1455ea58191f9de0f3fd28be97f",
+      "afterSha256": "c71296152b0d6974f7d42d5a9ae338807b587c21809656bd6d4d781d05722ff7"
+    }
+  ],
+  "review": "Both requested corrections are present. Suite after cleanup registered before tests, requiring separate serial module processes. Sampling still aborts and awaits actual runner in finally. High ingress asserts exact producerRecord decoder error and persisted quarantine reason. Source coherent for integration after current freeze; runtime feasibility remains unexecuted."
+}

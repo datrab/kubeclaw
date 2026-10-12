@@ -1,3 +1,4 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -38,7 +39,10 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
     maximumResultStoreBytes: 16 * 1024 * 1024, trustedSourceAuthority: 'nova:compaction', sourceAttestationPublicKey: publicKey };
   const storeRoot = path.join(temporary, 'original-state'); const runtimeRoot = path.join(temporary, 'runtime');
   const store = new FileBusterPlanJobStore(storeRoot, options);
-  const serviceFor = (jobStore: FileBusterPlanJobStore) => new BusterRemotePlanService({ store: jobStore, registry,
+  const serviceFor = (jobStore: FileBusterPlanJobStore) => new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    admission: { maximumActiveJobs: 2, maximumQueuedJobs: 16, maximumConcurrentAttempts: 64 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store: jobStore, registry,
     workerRevision: 'a'.repeat(40), runtimeRoot, tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set() });
   const runtimeFor = (service: BusterRemotePlanService) => new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token,
     maximumRequestBytes: 2 * 1024 * 1024, maximumResponseBytes: 1024 * 1024, maximumResultBytes: 1024 * 1024, shutdownTimeoutMs: 5000 });
@@ -196,7 +200,10 @@ test('manual compaction reclaims genuine completed-job metadata bytes, preservin
           } else {
             const registry = buildRegistry(discoverPackages({ installationRoots: [input.pluginRoot], trustPolicy: {
               trustedBuiltinRoots: [input.pluginRoot], allowedSourceDigests: new Map(), verifiedAttestations: new Map(), verifierId: 'fifo-test' } }));
-            const service = new BusterRemotePlanService({ store, registry, runtimeRoot: input.runtimeRoot, workerRevision: 'a'.repeat(40),
+            const service = new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    admission: { maximumActiveJobs: 2, maximumQueuedJobs: 16, maximumConcurrentAttempts: 64 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, store, registry, runtimeRoot: input.runtimeRoot, workerRevision: 'a'.repeat(40),
               tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1048576, allowedCapabilities: new Set() });
             const server = new BusterRemotePlanRuntime({ service, host: '127.0.0.1', port: 0, token: input.token,
               maximumRequestBytes: 2097152, maximumResponseBytes: 1048576, maximumResultBytes: 1048576, shutdownTimeoutMs: 5000 });

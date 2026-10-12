@@ -45,14 +45,14 @@ test('native Redis keeps target and provider streams distinct and deduplicates w
     const locks = new FileResourceLockManager(path.join(root, 'locks'));
     const receipts: any[] = [];
     for (const kind of ['publisher', 'telemetry'] as const) for (const target of ['pipeline.completed', 'pipeline_completed']) {
-      const effects = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}.jsonl`)), undefined, undefined, locks);
+      const effects = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}.jsonl`)), undefined, undefined, locks, 300_000);
       const input = { idempotencyKey: 'same-delivery-key', attempt, capability: kind === 'publisher' ? 'transport.publish' : 'telemetry.emit',
         operation: kind === 'publisher' ? 'publish' : 'append', resource: { type: kind === 'publisher' ? 'transport.target' : 'telemetry.event', canonicalId: target }, payload: { kind, target, content: 'Unicode 日本語 🐾' } };
       const adapter = kind === 'publisher' ? publisher : telemetry;
       const receipt = await effects.invoke(adapter, { ...owner, registrationId: kind }, input, signal);
       assert.equal(receipt.status, 'completed', JSON.stringify(receipt)); receipts.push(receipt.result);
       assert.deepEqual(await effects.invoke(adapter, { ...owner, registrationId: kind }, input, signal), receipt);
-      const restarted = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}-second.jsonl`)), undefined, undefined, locks);
+      const restarted = new EffectCoordinator(new FileEffectJournal(path.join(root, `${kind}-${target}-second.jsonl`)), undefined, undefined, locks, 300_000);
       const repeated = await restarted.invoke(adapter, { ...owner, registrationId: kind }, input, signal);
       assert.deepEqual(repeated.result, receipt.result, 'original adapter Lua deduplicates a real second send');
       const entries = command('XRANGE', receipt.result!.stream, '-', '+');

@@ -1,3 +1,4 @@
+import type { RetainedWaitResolver } from '@kubeclaw/plugin-sdk';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { runtimeDispatchProfileFields } from '@kubeclaw/plugin-sdk';
 import { validateContractValue } from '@kubeclaw/plugin-foundation/registry/schema';
@@ -13,6 +14,7 @@ import type { AdapterInvocationOwner } from './adapter-invocation-phase.ts';
 import { adapterOwner } from './adapter-support.ts';
 
 export interface AdapterRuntimeOptions {
+  readonly resolveRetainedWait?: RetainedWaitResolver;
   readonly granted: GrantedRegistry; readonly activated: ActivatedRegistry; readonly configs: ReadonlyMap<string, Readonly<Record<string, unknown>>>;
   readonly effects: EffectCoordinator; readonly shutdownTimeoutMs: number;
   readonly emitDomainEvent: (registration: RegistrationProvenance, type: string, identity: EventIdentity, payload: Readonly<Record<string, unknown>>) => Promise<void>;

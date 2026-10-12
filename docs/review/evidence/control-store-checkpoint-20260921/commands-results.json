@@ -1,0 +1,103 @@
+[
+  {
+    "name": "plugin-inventory-generate",
+    "argv": [
+      "node",
+      "scripts/plugin-system-inventory.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "inventory-generate",
+    "argv": [
+      "node",
+      "scripts/docs-inventory.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "references-generate",
+    "argv": [
+      "node",
+      "scripts/docs-generate.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "blueprint-generate",
+    "argv": [
+      "node",
+      "scripts/docs-blueprint-generate.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "generated-check",
+    "argv": [
+      "npm",
+      "run",
+      "docs:check:generated"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "blueprint-check",
+    "argv": [
+      "node",
+      "scripts/docs-blueprint-generate.mjs",
+      "--check"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "main",
+    "argv": [
+      "node",
+      "scripts/docs-check.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "references",
+    "argv": [
+      "node",
+      "scripts/docs-check-refs.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "coverage",
+    "argv": [
+      "node",
+      "scripts/docs-check-coverage.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "publication",
+    "argv": [
+      "node",
+      "scripts/docs-publication.mjs",
+      "check"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "register",
+    "argv": [
+      "node",
+      "scripts/review/remediation-register.mjs",
+      "--check"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "whitespace",
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0
+  }
+]

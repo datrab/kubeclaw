@@ -1,0 +1,38 @@
+{
+  "recordedAtUtc": "2026-10-12T08:23:40.339938+00:00",
+  "scope": "authorized documentation of user decisions; no implementation or finding reclassification",
+  "acceptedDecisions": [
+    "D18 architecture conditional on substantial simplification and scalability",
+    "D19 CONFIG, test refactoring, worker execution refactoring, 12 open findings"
+  ],
+  "documents": [
+    {
+      "path": "docs/review/remediation/implementation-order-20261012.md",
+      "sha256": "211694833663835feb6172f5af71e307aa936518d458e3a860898a96c1eeb007"
+    },
+    {
+      "path": "docs/review/remediation/decisions.md",
+      "sha256": "50eae1200e45658678d3b6d4cb39d8a31c903f0ba2b1de227cd3a5e06dc2b6b3"
+    },
+    {
+      "path": "docs/review/remediation/worker-execution-simplification-20261012.md",
+      "sha256": "fa2f41de2a0557992f8e3cd5a8df5d62e31c69c11982234c2319b96b0883d66c"
+    },
+    {
+      "path": "docs/review/remediation/assessment-20261012.md",
+      "sha256": "cb8af52a4e4607ddd5a58955ea09457c4d9bbadba33b382264c6b9f3918bb611"
+    },
+    {
+      "path": "docs/review/remediation/README.md",
+      "sha256": "1bb6f8638c51a9aa68b7d4036131b033828f853c45d2cc84f56b4ef77504840b"
+    }
+  ],
+  "checks": {
+    "register": "passed; consistency only",
+    "newDocumentLocalLinks": "all resolve",
+    "prior15SourceBindingChanges": [
+      "docs/review/remediation/decisions.md: authorized D18/D19 append only"
+    ]
+  },
+  "testRefactoringSpecification": "pending authorized outcome/reference from other session; no categories invented"
+}

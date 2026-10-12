@@ -1,3 +1,4 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -31,7 +32,8 @@ async function run(uses: string, config: Record<string, any>, files: Record<stri
   try {
     for (const name of ['workspace/repository', 'artifacts', 'observability']) fs.mkdirSync(path.join(root, name), { recursive: true });
     for (const [name, value] of Object.entries(files)) fs.writeFileSync(path.join(root, 'workspace/repository', name), JSON.stringify(value));
-    const result = await new TestPlanRunner({ plan, registry, workspaceRoot: path.join(root, 'workspace'),
+    const result = await new TestPlanRunner({
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 }, plan, registry, workspaceRoot: path.join(root, 'workspace'),
       repositoryRoot: path.join(root, 'workspace/repository'), artifactRoot: path.join(root, 'artifacts'),
       observabilityRoot: path.join(root, 'observability'), maximumConcurrency: 1,
       grants: new Map([['probe', ['network.http']]]), capabilityInvoker: new NetworkHttpCapabilityInvoker({

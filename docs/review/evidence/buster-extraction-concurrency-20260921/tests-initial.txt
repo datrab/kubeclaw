@@ -1,0 +1,12 @@
+✔ actual extraction rejects a same-input alias before reservation and captures caller input (93.691466ms)
+✔ different inputs reach the actual reservation boundary in parallel within authored capacity (7.063936ms)
+✔ actual extraction releases coordination after thrown reservation work (4.95503ms)
+✔ actual extraction releases coordination after aborted reservation work (5.71295ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1198.016492

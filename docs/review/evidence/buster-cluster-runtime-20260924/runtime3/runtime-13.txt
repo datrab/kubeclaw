@@ -1,0 +1,49 @@
+
+> verify:test-gate:tailscale-exposure-cutover
+> npm run verify:test-gate:tailscale-exposure-parity && node tests/verification/contracts/check-pipeline-tailscale-exposure-cutover.mts
+
+
+> verify:test-gate:tailscale-exposure-parity
+> npm run verify:test-gate:tailscale-exposure-implementation && node tests/verification/contracts/check-pipeline-tailscale-exposure-parity.mts
+
+
+> verify:test-gate:tailscale-exposure-implementation
+> npm run verify:test-gate:tailscale-exposure-baseline && npm run plugin-system:sandbox:build && npm test --prefix skills/buster/plugins/tailscale-exposure && npm test --prefix skills/buster/plugins/http && node tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts && npm run verify:test-gate:provider-registry && npx tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+
+
+> verify:test-gate:tailscale-exposure-baseline
+> node tests/verification/contracts/check-pipeline-tailscale-exposure-baseline.mjs
+
+{"ok":true,"suite":"tailscale-preview","successor":"kubeclaw.tailscale-exposure@1","items":38,"implementationProved":37,"productionPending":1}
+
+> plugin-system:sandbox:build
+> node scripts/build-plugin-sandbox.mjs
+
+
+> test
+> node tests/live-function.test.ts
+
+{"ok":true,"provider":"tailscale-exposure","contractValidation":true,"mocks":0,"emulators":0,"liveAcceptance":"verify:test-gate:tailscale-exposure-live"}
+
+> test
+> node ../../../../tests/verification/integration/http-provider-live.test.ts
+
+{"ok":true,"provider":"http","boundary":"real-local-http-server","syntheticResponses":0,"instrumentation":"body-cancel observes original fetch/reader and schedules abort after first real chunk"}
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+{"ok":true,"phase":"tailscale-exposure-implementation","providerKind":"fixture","typedLinks":true,"narrowCapability":true,"injectedExecutorVectors":true,"nativeCluster":false}
+
+> verify:test-gate:provider-registry
+> node tests/verification/contracts/check-pipeline-test-provider-registry.mts && tsc --noEmit -p skills/common/plugin-runtime/tsconfig.json
+
+{"ok":true,"packages":1,"testProviders":2,"snapshotDigest":"sha256:5f26ae9b6cdd8109e179c6e5a0739aaaf36d856618c19e02e2e8e44ff2429cf9"}
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+{"ok":true,"phase":"tailscale-exposure-implementation","providerKind":"fixture","typedLinks":true,"narrowCapability":true,"injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"phase":"tailscale-exposure-parity","items":38,"productionAcceptance":"pending-deployment-and-live-proof","injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"contract":"production-receipt-attestation","algorithm":"ed25519"}
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/swarm.schema.json resolves to /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+{"ok":true,"phase":"tailscale-exposure-implementation","providerKind":"fixture","typedLinks":true,"narrowCapability":true,"injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"phase":"tailscale-exposure-parity","items":38,"productionAcceptance":"pending-deployment-and-live-proof","injectedExecutorVectors":true,"nativeCluster":false}
+{"ok":true,"phase":"tailscale-exposure-source-cutover","authority":"replacement-only","productionAcceptance":"pending-deployment-and-live-proof","injectedExecutorVectors":true,"nativeCluster":false}

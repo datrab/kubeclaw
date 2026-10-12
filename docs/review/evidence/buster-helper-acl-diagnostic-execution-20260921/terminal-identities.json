@@ -1,0 +1,56 @@
+{
+  "finalMutableDisk": {
+    "path": "node_modules/.cache/buster-helper-acl-vm-20260921/guest-root.ext4",
+    "sha256": "a217013d3534522cf5b275101b3517f1e21b98867f1710516dbd847824fb07de"
+  },
+  "files": [
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/prepared-acl-diagnosis.mjs",
+      "sha256": "0c186105dd0cdbec37bad34342c4e71342f95056b5d03ef0ed090854a5d96af2"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/prepared-artifact-manifest.json",
+      "sha256": "acfff2de04a4e519f0c30990ff6cc7f387599e7e2b7c81fee682446dc7b32cac"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/prepared-baseline-author-source-identities.json",
+      "sha256": "6864e8e8251e907d3b73f59fd959f9080f476391b18ccfd0da0d79781d17e12e"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/prepared-baseline-snapshot-delta.json",
+      "sha256": "eaff07be5a92bf3a5e015fe68715af3a7619852f8562bc966a2e047f3b1b0799"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/prepared-credential-bridge.mjs",
+      "sha256": "9ae16f39ed1409c4593e799773159babe4098cd5bee6ac0c2dfce5d8f45eebb6"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/prepared-execvp-observer.c",
+      "sha256": "d1a951fa9142784894db9823fb3d625d0425f9f30acbeb6c7436b467c2be5252"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/prepared-guest-init.sh",
+      "sha256": "ad4bfe6df10148b57b1e44ab1c325ff25cc450730b70fdcc3009b21df9e087a4"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/prepared-identities.json",
+      "sha256": "0aa003003727669c707e0d42257c6b8a546120fdd30fa7d167dce8abbe80fddd"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/prepared-launch-command.json",
+      "sha256": "32ed87a36ed33337d965c48051eee3b685e0b55e165898c2ccc36cb9122d135d"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/summary-lines.txt",
+      "sha256": "0a31b7970608e852e134045bc7c1b497c29c40ef9e8208ebc2bf52175d2d331e"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/vm-console.txt",
+      "sha256": "a9af61083ef8579d755668e807c303e3c0c822e36d18f03eaa53efe46fbefda6"
+    },
+    {
+      "path": "docs/review/evidence/buster-helper-acl-diagnostic-execution-20260921/vm-result.json",
+      "sha256": "abf0d9581d7b2859eba247dfb90f37bcd1461619102570e4a980340d599eaa0e"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "scope": "private draft, not integrated or tested",
+  "mappingBodyPreserved": true,
+  "requiredLoopPreserved": true,
+  "publicRunnerExportPreserved": true,
+  "originalConsumerTests": [
+    "tests/verification/integration/direct-command-output-contract.test.mts",
+    "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+  ],
+  "requirements": [
+    "same output order and structured clone",
+    "same duplicate/schema/media-type/required errors",
+    "same failed-outcome optionality",
+    "complete original behavior checks, types and canonical lint before acceptance"
+  ]
+}

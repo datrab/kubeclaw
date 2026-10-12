@@ -26,6 +26,6 @@ await assert.rejects(() => instance.execute({ ...invocation, configuration: { va
 await assert.rejects(() => instance.execute({ ...invocation, inputs: [] }, {} as any), /KUBERNETES_FIXTURE_INPUT_REQUIRED/u);
 await assert.rejects(() => instance.cleanup({ ...invocation, inputs: [] }, {
   invoke: async () => ({ ok: false }),
-} as any), /KUBERNETES_FIXTURE_RELEASE_FAILED/u);
-await instance.cleanup({ ...invocation, inputs: [] }, { invoke: async () => ({ ok: true }) } as any);
+} as any, 'incomplete'), /KUBERNETES_FIXTURE_RELEASE_FAILED/u);
+await instance.cleanup({ ...invocation, inputs: [] }, { invoke: async () => ({ ok: true }) } as any, 'incomplete');
 console.log(JSON.stringify({ ok: true, provider: 'kubernetes-fixture', deterministicIdentity: true, mocks: 0 }));

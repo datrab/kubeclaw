@@ -1,0 +1,9 @@
+{
+  "status": "bounded source-only accepted for integration",
+  "manifestSha256": "597d8268f3d28512c67093bdefcf01ebf49e53a87c6ae1566c876f000e9a79b5",
+  "beforeSha256": "79b7db733f4cf1b4f55c1b6d8a660b4278069564ea6981605eaa30d9d5c50e08",
+  "afterSha256": "d54203f4be7980e0f3f1aa9270b9ea4d16bc37e56d077b73758aee87d5579aff",
+  "liveMatchesBefore": true,
+  "exactSingleReplacement": true,
+  "review": "Equality predicate and expected zero, all workload/profile/deadline/cleanup bytes unchanged. Message serializes existing plain close object, summary and already captured stderr. Applies to each physical high-profile assertion; no production effect or additional process/timer. Does not diagnose or erase prior high-profile failure. No runtime executed."
+}

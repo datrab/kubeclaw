@@ -1,0 +1,36 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "scope": "Read-only sufficiency review of new test lifetime helper; no execution or source changes",
+  "helperSha256": "021f3cf0f542c3de92befa39195c552ec2dad62e49fd2deb4cc4ec3287ac256d",
+  "decision": "Existing14capture+4service+7semantic mutants do not establish helper timeout/failure lifecycle; require a small isolated behavior gate",
+  "reason": [
+    "Existing test budgets are upper failure guards; passing tests do not trigger node:test timeout. Semantic policy mutants cause ordinary body assertions/errors, not necessarily delayed body cancellation, rejected shutdown or unconfirmed child disposal.",
+    "The helper is responsible for trustworthiness of test evidence. Its late completion and retained-file guarantees materially matter when tests fail; source review alone is insufficient for these new branches."
+  ],
+  "requiredGate": {
+    "execution": "Use actual nested node:test in a disposable subprocess so intentional failures/timeouts do not become skips or poison the parent suite. Outer test asserts exact expected failure diagnostics/exit, real filesystem state and event order. Bound watchdog owns only its own process tree and retains evidence on failure.",
+    "cases": [
+      {
+        "id": "OWN-TIMEOUT-CLEAN",
+        "behavior": "Deliberately timeout a real node:test while owner.invoke work and an actually spawned child are active; cancellation reaches body, registered runtime stop is awaited, and genuine child close occurs before root deletion. Hold cancellation completion/child exit via real IPC/file barrier so ordering is observable rather than inferred from elapsed time.",
+        "oracles": "Parent observes root still present while any body/stop/child remains unsettled; after release observes all settled and root removed. Expected node:test timeout remains reported as failure, never converted into success. No unhandled rejection or uncaught teardown exception."
+      },
+      {
+        "id": "OWN-STOP-FAILURE",
+        "behavior": "Registered runtime stop rejects while body is settling/rejecting; exercise immediate rejection observation and error propagation.",
+        "oracles": "Root retained with exact CLUSTER_TEST_FILES_RETAINED -> CLUSTER_TEST_SHUTDOWN_FAILED cause chain; body rejection remains reported; no unhandled rejection; outer harness explicitly settles/owns any child before cleanup."
+      },
+      {
+        "id": "OWN-DISPOSAL-TIMEOUT-LATE",
+        "behavior": "Actual child or body remains unsettled beyond the existing10000ms disposal deadline, then completes after failure is recorded.",
+        "oracles": "Root retained at disposal failure and remains retained after late completion; exact CLUSTER_TEST_DISPOSAL_UNCONFIRMED cause; no delayed rm and no unhandled rejection. Keep original helper timeout rather than injecting shorter production/test-helper constant; outer harness must release and observe real child close before its own cleanup."
+      }
+    ]
+  },
+  "notRequired": [
+    "Do not create mirror tests for every helper line, every scalar setting or every combination of start/stop.",
+    "No need to rerun unrelated heavy scopes merely to prove helper mechanics; execute bounded ownership gate plus actual CI2 positive/control suites after integration.",
+    "No claim about production process ownership follows from a test-helper lifecycle gate."
+  ],
+  "existingCoverageRetained": "Full14capture+4production routes and7semantic controls remain required; lifecycle gate supplements them and cannot replace CI2/RS2 behavior."
+}

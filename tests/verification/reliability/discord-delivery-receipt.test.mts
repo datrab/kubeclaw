@@ -55,7 +55,7 @@ async function scenario(mode: 'success' | 'lost' | 'invalid'): Promise<void> {
     ['kubeclaw.secret-resolver:secrets', { environment: { 'discord.webhook': environment } }],
   ]);
   const create = () => new core.AdapterRuntime({ granted, activated, configs,
-    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl')), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks'))),
+    effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(root, 'effects.jsonl')), undefined, undefined, new core.FileResourceLockManager(path.join(root, 'locks')), 300_000),
     shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   let runtime = create();
   const payload = { type: 'demo.credentials', summary: 'Demo username: preview\nDemo password: pipeline-generated-test-value' };

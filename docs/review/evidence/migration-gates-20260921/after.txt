@@ -1,0 +1,568 @@
+suite migration all check failed:
+- docs/architecture/pipeline-test-gate-unit-cutover-inventory.json: cutover proof failed: tests/verification/contracts/check-pipeline-phase10-vertical.mts
+node:fs:2862
+      const stats = binding.lstat(base, true, undefined, true /* throwIfNoEntry */);
+                            ^
+
+Error: ENOENT: no such file or directory, lstat '/usr/bin/tar'
+    at Object.realpathSync (node:fs:2862:29)
+    at new BusterRemotePlanService (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/remote-plan-service.ts:455:20)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-phase10-vertical.mts:85:19
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: '/usr/bin/tar'
+}
+
+Node.js v24.21.0
+- docs/architecture/pipeline-test-gate-manifest-lint-cutover-inventory.json: cutover proof failed: tests/verification/contracts/check-pipeline-manifest-lint-production.mts
+file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/lint/src/engine/policy-validation.ts:13
+  throw new LintPolicyError(`${field}: ${message}`);
+        ^
+
+LintPolicyError: policy project kubernetes schema_location: local schema directory does not exist: /opt/kubeclaw-kubernetes-schemas/v1.35.6-standalone-strict
+    at fail (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/lint/src/engine/policy-validation.ts:13:9)
+    at validateKubernetesPaths (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/lint/src/engine/policy-paths.ts:12:94)
+    at validatePolicyTargetPaths (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/lint/src/engine/policy-paths.ts:68:3)
+    at executeLintReport (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/plugins/lint/src/engine/index.ts:87:3)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-manifest-lint-production.mts:28:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  code: 'LINT_POLICY_INVALID'
+}
+
+Node.js v24.21.0
+- docs/architecture/pipeline-test-gate-size-budget-cutover-inventory.json: cutover proof failed: tests/verification/contracts/check-pipeline-size-budget-cutover.mts
+node:fs:2862
+      const stats = binding.lstat(base, true, undefined, true /* throwIfNoEntry */);
+                            ^
+
+Error: ENOENT: no such file or directory, lstat '/usr/bin/tar'
+    at Object.realpathSync (node:fs:2862:29)
+    at canonicalExecutable (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/direct-command-runtime.ts:13:21)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/direct-command-runtime.ts:77:21
+    at Array.map (<anonymous>)
+    at new DirectCommandCapabilityInvoker (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/direct-command-runtime.ts:75:60)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-size-budget-implementation.mts:63:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-size-budget-cutover.mts:34:1 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: '/usr/bin/tar'
+}
+
+Node.js v24.21.0
+- docs/architecture/pipeline-test-gate-size-budget-cutover-inventory.json: cutover proof failed: tests/verification/contracts/check-pipeline-size-budget-production.mts
+node:fs:2862
+      const stats = binding.lstat(base, true, undefined, true /* throwIfNoEntry */);
+                            ^
+
+Error: ENOENT: no such file or directory, lstat '/usr/bin/tar'
+    at Object.realpathSync (node:fs:2862:29)
+    at new BusterRemotePlanService (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/remote-plan-service.ts:455:20)
+    at makeService (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-size-budget-production.mts:48:29)
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-size-budget-production.mts:79:17
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: '/usr/bin/tar'
+}
+
+Node.js v24.21.0
+- docs/architecture/pipeline-test-gate-http-cutover-inventory.json: cutover proof failed: tests/verification/contracts/check-pipeline-http-cutover.mts
+{"ok":true,"contract":"production-receipt-attestation","algorithm":"ed25519"}
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"planId":"plan:http:live","runId":"run:http:live","attempts":[{"schemaVersion":"attempt-result.v1","planId":"plan:http:live","runId":"run:http:live","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"health","executionId":"plan:http:live:health","testIdentity":"test:8e1f0a502989cb365e44d6ae95b09062669bc2450f4658a72bd1b37614ac22b2","nodeKind":"test","attemptId":"attempt:e2d57106ea102af8d51524bbe8941fad81b9deabb8bd7828e37264033527e480","attemptNumber":1,"provider":{"packageId":"kubeclaw.http","packageVersion":"1.0.0","contentDigest":"sha256:92c8588cec754427a00d1d0963e0863302a8cd975e2574230daedb4c6182140b","registrationId":"request","contractId":"kubeclaw.http@1"},"mode":"blocking","executionState":"errored","outcome":null,"startedAt":"2026-09-21T06:17:42.888Z","completedAt":"2026-09-21T06:17:42.892Z","durationMs":4,"summary":"OBSERVABILITY_STORE_LOCK_FAILED:/tmp/kubeclaw-http-implementation-FjDmHe/observability/attempts/attempt-store.json:OBSERVABILITY_STORE_LOCKED:1:/usr/bin/flock: unrecognized option: timeout\nBusyBox v1.37.0 (2026-01-10 15:38:28 UTC) multi-call binary.\n\nUsage: flock [-sxun] FD | { FILE [-c] PROG ARGS }\n\n[Un]lock file descriptor, or lock FILE, run PROG\n\n\t-s\tShared lock\n\t-x\tExclusive lock (default)\n\t-u\tUnlock FD\n\t-n\tFail rather than wait","counts":{"total":0,"passed":0,"failed":0,"skipped":0},"findings":[],"metrics":[],"reports":[],"evidence":[],"outputs":[],"resources":{"cpuTimeMs":0,"maximumMemoryBytes":0,"logBytes":0,"artifactBytes":0},"exitCode":null,"signal":null,"providerDetails":null,"resultDigest":"sha256:0c00676069a9ac5630f67b38fb88c194f21ed83313b09e87ff000234a9d4c92c","receipt":{"receiptId":"receipt:987a2f3a7186cb21ca704443b3755fd9c7f43dd06e0895add436a5ffa30b7599","receiptDigest":"sha256:09d242b42482cd3ef0df9834c1a0789f2ddff20d30c825eade11a1f3a64f8bce"}}],"nodes":[{"schemaVersion":"node-result.v1","planId":"plan:http:live","runId":"run:http:live","moduleId":"app","gateId":null,"suiteInstanceId":null,"nodeId":"health","executionId":"plan:http:live:health","testIdentity":"test:8e1f0a502989cb365e44d6ae95b09062669bc2450f4658a72bd1b37614ac22b2","nodeKind":"test","mode":"blocking","state":"errored","outcome":null,"attemptIds":["attempt:e2d57106ea102af8d51524bbe8941fad81b9deabb8bd7828e37264033527e480"],"finalAttemptId":"attempt:e2d57106ea102af8d51524bbe8941fad81b9deabb8bd7828e37264033527e480","unstable":false,"skipReason":null,"resultDigest":"sha256:a01ba2a7386fbfcdd5e3905f148852cd035104e936249f47113f656c18d36942","receipt":{"receiptId":"receipt:753f38bbfe335be71b9d2efa425b8765f654b3c222699c936aebcb9a8602c116","receiptDigest":"sha256:b874fcff56705f67903df85c5714a24bd0a5968b56242f814e9122b9be20901a"}}],"cleanupErrors":[]}
+
+null !== 'passed'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-http-implementation.mts:65:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: 'passed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+- docs/architecture/pipeline-test-gate-tailscale-exposure-cutover-inventory.json: cutover proof failed: tests/verification/contracts/check-pipeline-tailscale-exposure-cutover.mts
+{"ok":true,"contract":"production-receipt-attestation","algorithm":"ed25519"}
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /self == oldSelf/u. Input:
+
+'{{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") -}}\n' +
+  'apiVersion: apiextensions.k8s.io/v1\n' +
+  'kind: CustomResourceDefinition\n' +
+  'metadata:\n' +
+  '  name: busternamespaceleases.{{ .Values.busterNamespaceBroker.leaseApiGroup }}\n' +
+  '  labels:\n' +
+  '    {{- include "kubeclaw.labels" . | nindent 4 }}\n' +
+  'spec:\n' +
+  '  group: {{ .Values.busterNamespaceBroker.leaseApiGroup }}\n' +
+  '  scope: Namespaced\n' +
+  '  names:\n' +
+  '    plural: busternamespaceleases\n' +
+  '    singular: busternamespacelease\n' +
+  '    kind: BusterNamespaceLease\n' +
+  '    shortNames:\n' +
+  '      - bnl\n' +
+  '  versions:\n' +
+  '    - name: {{ .Values.busterNamespaceBroker.leaseApiVersion }}\n' +
+  '      served: true\n' +
+  '      storage: true\n' +
+  '      subresources:\n' +
+  '        status: {}\n' +
+  '      additionalPrinterColumns:\n' +
+  '        - name: Phase\n' +
+  '          type: string\n' +
+  '          jsonPath: .status.phase\n' +
+  '        - name: Namespace\n' +
+  '          type: string\n' +
+  '          jsonPath: .status.namespaceName\n' +
+  '        - name: Cleanup\n' +
+  '          type: string\n' +
+  '          jsonPath: .spec.cleanupPolicy\n' +
+  '      schema:\n' +
+  '        openAPIV3Schema:\n' +
+  '          x-kubernetes-validations:\n' +
+  '            - rule: "!has(oldSelf.status) || !has(oldSelf.status.demoProduct) || (has(self.status) && has(self.status.demoProduct))"\n' +
+  '              message: "recorded human product decisions cannot be removed"\n' +
+  '          type: object\n' +
+  '          properties:\n' +
+  '            spec:\n' +
+  '              type: object\n' +
+  '              x-kubernetes-validations:\n' +
+  '                - rule: "self.namespaceName == oldSelf.namespaceName"\n' +
+  '                  message: "namespaceName is immutable"\n' +
+  '                - rule: "has(self.namespacePrefix) == has(oldSelf.namespacePrefix) && (!has(self.namespacePrefix) || self.namespacePrefix == oldSelf.namespacePrefix)"\n' +
+  '                  message: "namespacePrefix is immutable"\n' +
+  '                - rule: "has(self.runId) == has(oldSelf.runId) && (!has(self.runId) || self.runId == oldSelf.runId)"\n' +
+  '                  message: "runId is immutable"\n' +
+  '                - rule: "has(self.project) == has(oldSelf.project) && (!has(self.project) || self.project == oldSelf.project)"\n' +
+  '                  message: "project is immutable"\n' +
+  '                - rule: "has(self.access) == has(oldSelf.access) && (!has(self.access) || self.access == oldSelf.access)"\n' +
+  '                  message: "access is immutable"\n' +
+  '                - rule: "has(self.serviceName) == has(oldSelf.serviceName) && (!has(self.serviceName) || self.serviceName == oldSelf.serviceName)"\n' +
+  '                  message: "serviceName is immutable"\n' +
+  '                - rule: "has(self.servicePort) == has(oldSelf.servicePort) && (!has(self.servicePort) || self.servicePort == oldSelf.servicePort)"\n' +
+  '                  message: "servicePort is immutable"\n' +
+  '                - rule: "has(self.serviceTargetPort) == has(oldSelf.serviceTargetPort) && (!has(self.serviceTargetPort) || self.serviceTargetPort == oldSelf.serviceTargetPort)"\n' +
+  '                  message: "serviceTargetPort is immutable"\n' +
+  '                - rule: "has(self.verifiedImage) == has(oldSelf.verifiedImage) && (!has(self.verifiedImage) || self.verifiedImage == oldSelf.verifiedImage)"\n' +
+  '                  message: "verifiedImage is immutable"\n' +
+  '                - rule: "has(self.manifestDigest) == has(oldSelf.manifestDigest) && (!has(self.manifestDigest) || self.manifestDigest == oldSelf.manifestDigest)"\n' +
+  '                  message: "manifestDigest is immutable"\n' +
+  '                - rule: "has(self.cleanupPolicy) == has(oldSelf.cleanupPolicy) && (!has(self.cleanupPolicy) || self.cleanupPolicy == oldSelf.cleanupPolicy)"\n' +
+  '                  message: "cleanupPolicy is immutable"\n' +
+  '                - rule: "has(self.ttlSeconds) == has(oldSelf.ttlSeconds) && (!has(self.ttlSeconds) || self.ttlSeconds == oldSelf.ttlSeconds)"\n' +
+  '                  message: "ttlSeconds is immutable"\n' +
+  '                - rule: "has(self.secretsToCopy) == has(oldSelf.secretsToCopy) && (!has(self.secretsToCopy) || self.secretsToCopy == oldSelf.secretsToCopy)"\n' +
+  '                  message: "secretsToCopy is immutable"\n' +
+  '                - rule: "has(self.testCredentials) == has(oldSelf.testCredentials) && (!has(self.testCredentials) || self.testCredentials == oldSelf.testCredentials)"\n' +
+  '                  message: "testCredentials is immutable"\n' +
+  '              properties:\n' +
+  '                namespaceName:\n' +
+  '                  type: string\n' +
+  "                  pattern: '^[A-Za-z0-9]([A-Za-z0-9._-]*[A-Za-z0-9])?$'\n" +
+  '                namespacePrefix:\n' +
+  '                  type: string\n' +
+  '                  enum:\n' +
+  '                    {{- toYaml .Values.busterNamespaceBroker.allowedPrefixes | nindent 20 }}\n' +
+  '                runId:\n' +
+  '                  type: string\n' +
+  '                project:\n' +
+  '                  type: string\n' +
+  '                purpose:\n' +
+  '                  type: string\n' +
+  '                  enum: ["pretest", "gate", "final-preview"]\n' +
+  '                access:\n' +
+  '                  type: array\n' +
+  '                  minItems: 1\n' +
+  '                  maxItems: 8\n' +
+  '                  x-kubernetes-list-type: atomic\n' +
+  '                  items:\n' +
+  '                    type: object\n' +
+  '                    properties:\n' +
+  '                      subject:\n' +
+  '                        type: string\n' +
+  "                        pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?/[a-z0-9]([-a-z0-9]*[a-z0-9])?$'\n" +
+  '                      mode:\n' +
+  '                        type: string\n' +
+  '                        enum: ["deployer", "tester"]\n' +
+  '                    required: ["subject", "mode"]\n' +
+  '                serviceName:\n' +
+  '                  type: string\n' +
+  "                  pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'\n" +
+  '                servicePort:\n' +
+  '                  type: integer\n' +
+  '                  minimum: 1\n' +
+  '                  maximum: 65535\n' +
+  '                serviceTargetPort:\n' +
+  '                  type: integer\n' +
+  '                  minimum: 1\n' +
+  '                  maximum: 65535\n' +
+  '                verifiedImage:\n' +
+  '                  type: string\n' +
+  '                  maxLength: 2048\n' +
+  "                  pattern: '^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$'\n" +
+  '                manifestDigest:\n' +
+  '                  type: string\n' +
+  "                  pattern: '^sha256:[a-f0-9]{64}$'\n" +
+  '                cleanupPolicy:\n' +
+  '                  type: string\n' +
+  '                  enum: ["delete", "retain"]\n' +
+  '                ttlSeconds:\n' +
+  '                  type: integer\n' +
+  '                  minimum: 60\n' +
+  '                  maximum: {{ .Values.busterNamespaceBroker.maxTtlSeconds }}\n' +
+  '                secretsToCopy:\n' +
+  '                  type: array\n' +
+  '                  items:\n' +
+  '                    type: string\n' +
+  "                    pattern: '^[A-Za-z0-9._-]+$'\n" +
+  '                testCredentials:\n' +
+  '                  type: object\n' +
+  '                  x-kubernetes-validations:\n' +
+  `                    - rule: "self.mode != 'generate' || !has(self.keys) || (size(self.keys) == 2 && self.keys.exists(k, k == 'username') && self.keys.exists(k, k == 'password'))"\n` +
+  '                      message: "generated credentials can only use username and password keys"\n' +
+  `                    - rule: "self.mode != 'existing' || (has(self.keys) && size(self.keys) > 0)"\n` +
+  '                      message: "existing credentials require at least one key"\n' +
+  '                  properties:\n' +
+  '                    mode:\n' +
+  '                      type: string\n' +
+  '                      enum: ["generate", "existing"]\n' +
+  '                    secretName:\n' +
+  '                      type: string\n' +
+  "                      pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'\n" +
+  '                    readers:\n' +
+  '                      type: array\n' +
+  '                      minItems: 1\n' +
+  '                      maxItems: 8\n' +
+  '                      x-kubernetes-list-type: set\n' +
+  '                      items:\n' +
+  '                        type: string\n' +
+  "                        pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?/[a-z0-9]([-a-z0-9]*[a-z0-9])?$'\n" +
+  '                    keys:\n' +
+  '                      type: array\n' +
+  '                      maxItems: 16\n' +
+  '                      x-kubernetes-list-type: set\n' +
+  '                      items:\n' +
+  '                        type: string\n' +
+  "                        pattern: '^[A-Za-z0-9._-]+$'\n" +
+  '                  required: ["mode", "secretName", "readers"]\n' +
+  '                exposure:\n' +
+  '                  type: object\n' +
+  '                  properties:\n' +
+  '                    provider:\n' +
+  '                      type: string\n' +
+  '                      enum: ["off", "tailscale-ingress"]\n' +
+  '                    hostname:\n' +
+  '                      type: string\n' +
+  "                      pattern: '^[a-z0-9]([a-z0-9-]*[a-z0-9])?$'\n" +
+  '                    serviceName:\n' +
+  '                      type: string\n' +
+  '                    servicePort:\n' +
+  '                      type: integer\n' +
+  '                      minimum: 1\n' +
+  '                      maximum: 65535\n' +
+  '                    path:\n' +
+  '                      type: string\n' +
+  '                      maxLength: 1024\n' +
+  "                      pattern: '^/(?:[^/?#\\r\\n][^?#\\r\\n]*)?$'\n" +
+  '              required:\n' +
+  '                - namespaceName\n' +
+  '                - cleanupPolicy\n' +
+  '            status:\n' +
+  '              type: object\n' +
+  '              properties:\n' +
+  '                phase:\n' +
+  '                  type: string\n' +
+  '                namespaceName:\n' +
+  '                  type: string\n' +
+  '                createdAt:\n' +
+  '                  type: string\n' +
+  '                  format: date-time\n' +
+  '                internalUrl:\n' +
+  '                  type: string\n' +
+  '                  nullable: true\n' +
+  '                previewUrl:\n' +
+  '                  type: string\n' +
+  '                  nullable: true\n' +
+  '                exposurePhase:\n' +
+  '                  type: string\n' +
+  '                exposureOwner:\n' +
+  '                  type: string\n' +
+  '                exposureGeneration:\n' +
+  '                  type: integer\n' +
+  '                  format: int64\n' +
+  '                  minimum: 0\n' +
+  '                exposureHostname:\n' +
+  '                  type: string\n' +
+  '                  nullable: true\n' +
+  '                credentialsRef:\n' +
+  '                  type: string\n' +
+  '                  nullable: true\n' +
+  '                credentialsAvailable:\n' +
+  '                  type: boolean\n' +
+  '                exposureMutation:\n' +
+  '                  type: object\n' +
+  '                  nullable: true\n' +
+  '                  required: [id, startedAt]\n' +
+  '                  properties:\n' +
+  '                    id:\n' +
+  '                      type: string\n' +
+  "                      pattern: '^[a"... 14873 more characters
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts:36:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async node:internal/modules/esm/loader:647:26
+    at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-tailscale-exposure-parity.mts:23:1 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '{{- if and .Values.busterNamespaceBroker.enabled (eq .Values.agentRole "buster") -}}\n' +
+    'apiVersion: apiextensions.k8s.io/v1\n' +
+    'kind: CustomResourceDefinition\n' +
+    'metadata:\n' +
+    '  name: busternamespaceleases.{{ .Values.busterNamespaceBroker.leaseApiGroup }}\n' +
+    '  labels:\n' +
+    '    {{- include "kubeclaw.labels" . | nindent 4 }}\n' +
+    'spec:\n' +
+    '  group: {{ .Values.busterNamespaceBroker.leaseApiGroup }}\n' +
+    '  scope: Namespaced\n' +
+    '  names:\n' +
+    '    plural: busternamespaceleases\n' +
+    '    singular: busternamespacelease\n' +
+    '    kind: BusterNamespaceLease\n' +
+    '    shortNames:\n' +
+    '      - bnl\n' +
+    '  versions:\n' +
+    '    - name: {{ .Values.busterNamespaceBroker.leaseApiVersion }}\n' +
+    '      served: true\n' +
+    '      storage: true\n' +
+    '      subresources:\n' +
+    '        status: {}\n' +
+    '      additionalPrinterColumns:\n' +
+    '        - name: Phase\n' +
+    '          type: string\n' +
+    '          jsonPath: .status.phase\n' +
+    '        - name: Namespace\n' +
+    '          type: string\n' +
+    '          jsonPath: .status.namespaceName\n' +
+    '        - name: Cleanup\n' +
+    '          type: string\n' +
+    '          jsonPath: .spec.cleanupPolicy\n' +
+    '      schema:\n' +
+    '        openAPIV3Schema:\n' +
+    '          x-kubernetes-validations:\n' +
+    '            - rule: "!has(oldSelf.status) || !has(oldSelf.status.demoProduct) || (has(self.status) && has(self.status.demoProduct))"\n' +
+    '              message: "recorded human product decisions cannot be removed"\n' +
+    '          type: object\n' +
+    '          properties:\n' +
+    '            spec:\n' +
+    '              type: object\n' +
+    '              x-kubernetes-validations:\n' +
+    '                - rule: "self.namespaceName == oldSelf.namespaceName"\n' +
+    '                  message: "namespaceName is immutable"\n' +
+    '                - rule: "has(self.namespacePrefix) == has(oldSelf.namespacePrefix) && (!has(self.namespacePrefix) || self.namespacePrefix == oldSelf.namespacePrefix)"\n' +
+    '                  message: "namespacePrefix is immutable"\n' +
+    '                - rule: "has(self.runId) == has(oldSelf.runId) && (!has(self.runId) || self.runId == oldSelf.runId)"\n' +
+    '                  message: "runId is immutable"\n' +
+    '                - rule: "has(self.project) == has(oldSelf.project) && (!has(self.project) || self.project == oldSelf.project)"\n' +
+    '                  message: "project is immutable"\n' +
+    '                - rule: "has(self.access) == has(oldSelf.access) && (!has(self.access) || self.access == oldSelf.access)"\n' +
+    '                  message: "access is immutable"\n' +
+    '                - rule: "has(self.serviceName) == has(oldSelf.serviceName) && (!has(self.serviceName) || self.serviceName == oldSelf.serviceName)"\n' +
+    '                  message: "serviceName is immutable"\n' +
+    '                - rule: "has(self.servicePort) == has(oldSelf.servicePort) && (!has(self.servicePort) || self.servicePort == oldSelf.servicePort)"\n' +
+    '                  message: "servicePort is immutable"\n' +
+    '                - rule: "has(self.serviceTargetPort) == has(oldSelf.serviceTargetPort) && (!has(self.serviceTargetPort) || self.serviceTargetPort == oldSelf.serviceTargetPort)"\n' +
+    '                  message: "serviceTargetPort is immutable"\n' +
+    '                - rule: "has(self.verifiedImage) == has(oldSelf.verifiedImage) && (!has(self.verifiedImage) || self.verifiedImage == oldSelf.verifiedImage)"\n' +
+    '                  message: "verifiedImage is immutable"\n' +
+    '                - rule: "has(self.manifestDigest) == has(oldSelf.manifestDigest) && (!has(self.manifestDigest) || self.manifestDigest == oldSelf.manifestDigest)"\n' +
+    '                  message: "manifestDigest is immutable"\n' +
+    '                - rule: "has(self.cleanupPolicy) == has(oldSelf.cleanupPolicy) && (!has(self.cleanupPolicy) || self.cleanupPolicy == oldSelf.cleanupPolicy)"\n' +
+    '                  message: "cleanupPolicy is immutable"\n' +
+    '                - rule: "has(self.ttlSeconds) == has(oldSelf.ttlSeconds) && (!has(self.ttlSeconds) || self.ttlSeconds == oldSelf.ttlSeconds)"\n' +
+    '                  message: "ttlSeconds is immutable"\n' +
+    '                - rule: "has(self.secretsToCopy) == has(oldSelf.secretsToCopy) && (!has(self.secretsToCopy) || self.secretsToCopy == oldSelf.secretsToCopy)"\n' +
+    '                  message: "secretsToCopy is immutable"\n' +
+    '                - rule: "has(self.testCredentials) == has(oldSelf.testCredentials) && (!has(self.testCredentials) || self.testCredentials == oldSelf.testCredentials)"\n' +
+    '                  message: "testCredentials is immutable"\n' +
+    '              properties:\n' +
+    '                namespaceName:\n' +
+    '                  type: string\n' +
+    "                  pattern: '^[A-Za-z0-9]([A-Za-z0-9._-]*[A-Za-z0-9])?$'\n" +
+    '                namespacePrefix:\n' +
+    '                  type: string\n' +
+    '                  enum:\n' +
+    '                    {{- toYaml .Values.busterNamespaceBroker.allowedPrefixes | nindent 20 }}\n' +
+    '                runId:\n' +
+    '                  type: string\n' +
+    '                project:\n' +
+    '                  type: string\n' +
+    '                purpose:\n' +
+    '                  type: string\n' +
+    '                  enum: ["pretest", "gate", "final-preview"]\n' +
+    '                access:\n' +
+    '                  type: array\n' +
+    '                  minItems: 1\n' +
+    '                  maxItems: 8\n' +
+    '                  x-kubernetes-list-type: atomic\n' +
+    '                  items:\n' +
+    '                    type: object\n' +
+    '                    properties:\n' +
+    '                      subject:\n' +
+    '                        type: string\n' +
+    "                        pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?/[a-z0-9]([-a-z0-9]*[a-z0-9])?$'\n" +
+    '                      mode:\n' +
+    '                        type: string\n' +
+    '                        enum: ["deployer", "tester"]\n' +
+    '                    required: ["subject", "mode"]\n' +
+    '                serviceName:\n' +
+    '                  type: string\n' +
+    "                  pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'\n" +
+    '                servicePort:\n' +
+    '                  type: integer\n' +
+    '                  minimum: 1\n' +
+    '                  maximum: 65535\n' +
+    '                serviceTargetPort:\n' +
+    '                  type: integer\n' +
+    '                  minimum: 1\n' +
+    '                  maximum: 65535\n' +
+    '                verifiedImage:\n' +
+    '                  type: string\n' +
+    '                  maxLength: 2048\n' +
+    "                  pattern: '^[A-Za-z0-9.-]+(:[0-9]{1,5})?/[a-z0-9]+([._/-][a-z0-9]+)*@sha256:[a-f0-9]{64}$'\n" +
+    '                manifestDigest:\n' +
+    '                  type: string\n' +
+    "                  pattern: '^sha256:[a-f0-9]{64}$'\n" +
+    '                cleanupPolicy:\n' +
+    '                  type: string\n' +
+    '                  enum: ["delete", "retain"]\n' +
+    '                ttlSeconds:\n' +
+    '                  type: integer\n' +
+    '                  minimum: 60\n' +
+    '                  maximum: {{ .Values.busterNamespaceBroker.maxTtlSeconds }}\n' +
+    '                secretsToCopy:\n' +
+    '                  type: array\n' +
+    '                  items:\n' +
+    '                    type: string\n' +
+    "                    pattern: '^[A-Za-z0-9._-]+$'\n" +
+    '                testCredentials:\n' +
+    '                  type: object\n' +
+    '                  x-kubernetes-validations:\n' +
+    `                    - rule: "self.mode != 'generate' || !has(self.keys) || (size(self.keys) == 2 && self.keys.exists(k, k == 'username') && self.keys.exists(k, k == 'password'))"\n` +
+    '                      message: "generated credentials can only use username and password keys"\n' +
+    `                    - rule: "self.mode != 'existing' || (has(self.keys) && size(self.keys) > 0)"\n` +
+    '                      message: "existing credentials require at least one key"\n' +
+    '                  properties:\n' +
+    '                    mode:\n' +
+    '                      type: string\n' +
+    '                      enum: ["generate", "existing"]\n' +
+    '                    secretName:\n' +
+    '                      type: string\n' +
+    "                      pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?$'\n" +
+    '                    readers:\n' +
+    '                      type: array\n' +
+    '                      minItems: 1\n' +
+    '                      maxItems: 8\n' +
+    '                      x-kubernetes-list-type: set\n' +
+    '                      items:\n' +
+    '                        type: string\n' +
+    "                        pattern: '^[a-z0-9]([-a-z0-9]*[a-z0-9])?/[a-z0-9]([-a-z0-9]*[a-z0-9])?$'\n" +
+    '                    keys:\n' +
+    '                      type: array\n' +
+    '                      maxItems: 16\n' +
+    '                      x-kubernetes-list-type: set\n' +
+    '                      items:\n' +
+    '                        type: string\n' +
+    "                        pattern: '^[A-Za-z0-9._-]+$'\n" +
+    '                  required: ["mode", "secretName", "readers"]\n' +
+    '                exposure:\n' +
+    '                  type: object\n' +
+    '                  properties:\n' +
+    '                    provider:\n' +
+    '                      type: string\n' +
+    '                      enum: ["off", "tailscale-ingress"]\n' +
+    '                    hostname:\n' +
+    '                      type: string\n' +
+    "                      pattern: '^[a-z0-9]([a-z0-9-]*[a-z0-9])?$'\n" +
+    '                    serviceName:\n' +
+    '                      type: string\n' +
+    '                    servicePort:\n' +
+    '                      type: integer\n' +
+    '                      minimum: 1\n' +
+    '                      maximum: 65535\n' +
+    '                    path:\n' +
+    '                      type: string\n' +
+    '                      maxLength: 1024\n' +
+    "                      pattern: '^/(?:[^/?#\\r\\n][^?#\\r\\n]*)?$'\n" +
+    '              required:\n' +
+    '                - namespaceName\n' +
+    '                - cleanupPolicy\n' +
+    '            status:\n' +
+    '              type: object\n' +
+    '              properties:\n' +
+    '                phase:\n' +
+    '                  type: string\n' +
+    '                namespaceName:\n' +
+    '                  type: string\n' +
+    '                createdAt:\n' +
+    '                  type: string\n' +
+    '                  format: date-time\n' +
+    '                internalUrl:\n' +
+    '                  type: string\n' +
+    '                  nullable: true\n' +
+    '                previewUrl:\n' +
+    '                  type: string\n' +
+    '                  nullable: true\n' +
+    '                exposurePhase:\n' +
+    '                  type: string\n' +
+    '                exposureOwner:\n' +
+    '                  type: string\n' +
+    '                exposureGeneration:\n' +
+    '                  type: integer\n' +
+    '                  format: int64\n' +
+    '                  minimum: 0\n' +
+    '                exposureHostname:\n' +
+    '                  type: string\n' +
+    '                  nullable: true\n' +
+    '                credentialsRef:\n' +
+    '                  type: string\n' +
+    '                  nullable: true\n' +
+    '                credentialsAvailable:\n' +
+    '                  type: boolean\n' +
+    '                exposureMutation:\n' +
+    '                  type: object\n' +
+    '                  nullable: true\n' +
+    '                  required: [id, startedAt]\n' +
+    '                  properties:\n' +
+    '                    id:\n' +
+    '                      type: string\n' +
+    "                      pattern: '^[a"... 14873 more characters,
+  expected: /self == oldSelf/u,
+  operator: 'doesNotMatch',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

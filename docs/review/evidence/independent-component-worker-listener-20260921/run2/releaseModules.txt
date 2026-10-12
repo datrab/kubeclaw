@@ -1,0 +1,253 @@
+TAP version 13
+# walk.go:75: found symbolic link in path: /tmp/code-materialize-mOCmJc/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/code-materialize-mOCmJc/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/code-materialize-mOCmJc/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/code-materialize-mOCmJc/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/code-materialize-mOCmJc/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/code-materialize-mOCmJc/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/code-materialize-mOCmJc/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/code-materialize-mOCmJc/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/code-materialize-mOCmJc/charts/kubeclaw/files/config/swarm-components.schema.json resolves to /tmp/code-materialize-mOCmJc/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json. Contents of linked file included and used
+# walk.go:75: found symbolic link in path: /tmp/code-materialize-mOCmJc/charts/kubeclaw/files/config/swarm.schema.json resolves to /tmp/code-materialize-mOCmJc/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+# Subtest: deploy bundle fields decode folded URLs and preserve overlay credential selection
+ok 1 - deploy bundle fields decode folded URLs and preserve overlay credential selection
+  ---
+  duration_ms: 211.278384
+  type: 'test'
+  ...
+# Subtest: agent changes and manifest changes do not rebuild tools; embedded service code does
+ok 2 - agent changes and manifest changes do not rebuild tools; embedded service code does
+  ---
+  duration_ms: 1.113889
+  type: 'test'
+  ...
+# Subtest: code selection reuses images only across unchanged image inputs, including deleted inputs
+ok 3 - code selection reuses images only across unchanged image inputs, including deleted inputs
+  ---
+  duration_ms: 268.630518
+  type: 'test'
+  ...
+# Subtest: bundle selection rejects missing hashes, mutable URLs and wrong role archives
+ok 4 - bundle selection rejects missing hashes, mutable URLs and wrong role archives
+  ---
+  duration_ms: 0.675227
+  type: 'test'
+  ...
+# Subtest: push detector rebuilds an environment changed by an earlier unselected build
+ok 5 - push detector rebuilds an environment changed by an earlier unselected build
+  ---
+  duration_ms: 362.510145
+  type: 'test'
+  ...
+# Subtest: actual bootstrap checksum command rejects modified downloads before extraction
+ok 6 - actual bootstrap checksum command rejects modified downloads before extraction
+  ---
+  duration_ms: 16.727603
+  type: 'test'
+  ...
+# Subtest: rendered code updates retain image digests and require selected URL, role, hash and revision
+ok 7 - rendered code updates retain image digests and require selected URL, role, hash and revision
+  ---
+  duration_ms: 33.013544
+  type: 'test'
+  ...
+# Subtest: real materialization and Helm render enable pinned bundles for all three agents on retained images
+ok 8 - real materialization and Helm render enable pinned bundles for all three agents on retained images
+  ---
+  duration_ms: 4763.915516
+  type: 'test'
+  ...
+# Subtest: original deployment render entrypoints bind all roles, sidecars and bundles to the selected source
+ok 9 - original deployment render entrypoints bind all roles, sidecars and bundles to the selected source
+  ---
+  duration_ms: 19937.829158
+  type: 'test'
+  ...
+# Subtest: deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access
+ok 10 - deployment rejects missing receipts, source identity, mutable overrides and cross-source bundles before cluster access
+  ---
+  duration_ms: 8610.361505
+  type: 'test'
+  ...
+# Subtest: private operational overlays survive while replaced or removed runtime slots fail
+ok 11 - private operational overlays survive while replaced or removed runtime slots fail
+  ---
+  duration_ms: 9602.181284
+  type: 'test'
+  ...
+# Subtest: Prism and Ops reject image overrides even when another value could conceal them
+ok 12 - Prism and Ops reject image overrides even when another value could conceal them
+  ---
+  duration_ms: 15858.126724
+  type: 'test'
+  ...
+# Subtest: source configuration and materialized values are rechecked by actual deployment entrypoints
+ok 13 - source configuration and materialized values are rechecked by actual deployment entrypoints
+  ---
+  duration_ms: 4091.346284
+  type: 'test'
+  ...
+# Subtest: private bundle URL and authentication survive while the selected revision stays fixed
+ok 14 - private bundle URL and authentication survive while the selected revision stays fixed
+  ---
+  duration_ms: 5409.552131
+  type: 'test'
+  ...
+# Subtest: private extraEnv cannot shadow reserved runtime bundle controls
+ok 15 - private extraEnv cannot shadow reserved runtime bundle controls
+  ---
+  duration_ms: 15131.012469
+  type: 'test'
+  ...
+# Subtest: noncanonical alias and indirect controls cannot stand in for bundle consumers
+ok 16 - noncanonical alias and indirect controls cannot stand in for bundle consumers
+  ---
+  duration_ms: 10885.277607
+  type: 'test'
+  ...
+# Subtest: real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps
+ok 17 - real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps
+  ---
+  duration_ms: 15554.996018
+  type: 'test'
+  ...
+# Subtest: imperative ownership guard fails closed and permits only other namespaces
+ok 18 - imperative ownership guard fails closed and permits only other namespaces
+  ---
+  duration_ms: 0.725699
+  type: 'test'
+  ...
+# Subtest: committed bundle corruption, switched selection and hidden image changes fail before activation
+ok 19 - committed bundle corruption, switched selection and hidden image changes fail before activation
+  ---
+  duration_ms: 14194.795707
+  type: 'test'
+  ...
+# Subtest: activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint
+ok 20 - activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint
+  ---
+  duration_ms: 26033.82287
+  type: 'test'
+  ...
+# Subtest: root claim and retained workload tracking block imperative adoption after partial GitOps transitions
+ok 21 - root claim and retained workload tracking block imperative adoption after partial GitOps transitions
+  ---
+  duration_ms: 0.807401
+  type: 'test'
+  ...
+# Subtest: original runtime teardown commands stop before any Helm mutation when Argo owns the namespace
+ok 22 - original runtime teardown commands stop before any Helm mutation when Argo owns the namespace
+  ---
+  duration_ms: 589.632269
+  type: 'test'
+  ...
+# Subtest: Buster export requires the supplied native binding before publishing a bundle
+ok 23 - Buster export requires the supplied native binding before publishing a bundle
+  ---
+  duration_ms: 10198.906229
+  type: 'test'
+  ...
+# fatal: not a tree object
+# Subtest: unchanged release configuration survives unrelated later commits, but new chart or values cannot qualify old images
+ok 24 - unchanged release configuration survives unrelated later commits, but new chart or values cannot qualify old images
+  ---
+  duration_ms: 421.110495
+  type: 'test'
+  ...
+# Subtest: deleted, added, symlinked, and unavailable source configurations fail explicitly
+ok 25 - deleted, added, symlinked, and unavailable source configurations fail explicitly
+  ---
+  duration_ms: 199.99545
+  type: 'test'
+  ...
+# Subtest: ops chart has its own source binding, independent of runtime-only changes
+ok 26 - ops chart has its own source binding, independent of runtime-only changes
+  ---
+  duration_ms: 228.811826
+  type: 'test'
+  ...
+# Subtest: canonical aliases bind both target bytes to the image source commit, including schema outside charts
+ok 27 - canonical aliases bind both target bytes to the image source commit, including schema outside charts
+  ---
+  duration_ms: 3637.45175
+  type: 'test'
+  ...
+# Subtest: canonical alias cannot be retargeted or replaced with an identical regular copy
+ok 28 - canonical alias cannot be retargeted or replaced with an identical regular copy
+  ---
+  duration_ms: 5480.384422
+  type: 'test'
+  ...
+# Subtest: source commit cannot introduce arbitrary or retargeted aliases
+ok 29 - source commit cannot introduce arbitrary or retargeted aliases
+  ---
+  duration_ms: 435.623932
+  type: 'test'
+  ...
+# Subtest: canonical schema cannot escape through a directory symlink or leaf symlink
+ok 30 - canonical schema cannot escape through a directory symlink or leaf symlink
+  ---
+  duration_ms: 542.253843
+  type: 'test'
+  ...
+# file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:51
+#     if (source.length !== 1 || source[0].name !== canonical || source[0].mode === '120000') throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${canonical}`);
+#                                                                                                   ^
+# Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
+#     at sourceAliasTargets (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:51:99)
+#     at verifyReleaseConfiguration (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:87:19)
+#     at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/materialize-release.mjs:15:27
+#     at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+#     at async node:internal/modules/esm/loader:647:26
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+# Node.js v24.21.0
+# Subtest: release selection rejects missing, duplicate and cross-commit build receipts
+ok 31 - release selection rejects missing, duplicate and cross-commit build receipts
+  ---
+  duration_ms: 15.491702
+  type: 'test'
+  ...
+# Subtest: generated release values render actual Helm charts with immutable role and sidecar references
+not ok 32 - generated release values render actual Helm charts with immutable role and sidecar references
+  ---
+  duration_ms: 528.859427
+  type: 'test'
+  location: '/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/release-images.test.mjs:29:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Command failed: /usr/local/bin/node /home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/materialize-release.mjs
+    file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:51
+        if (source.length !== 1 || source[0].name !== canonical || source[0].mode === '120000') throw new Error(`RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: ${canonical}`);
+                                                                                                      ^
+    
+    Error: RELEASE_CONFIGURATION_SOURCE_FILE_INVALID: skills/common/plugin-runtime/foundation/config/swarm-components.schema.json
+        at sourceAliasTargets (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:51:99)
+        at verifyReleaseConfiguration (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:87:19)
+        at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/materialize-release.mjs:15:27
+        at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+        at async node:internal/modules/esm/loader:647:26
+        at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+    
+    Node.js v24.21.0
+    
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    sourceAliasTargets (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:51:99)
+    verifyReleaseConfiguration (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/release-configuration.mjs:87:19)
+    file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/updates/materialize-release.mjs:15:27
+    ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    async node:internal/modules/esm/loader:647:26
+    async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+    genericNodeError (node:internal/errors:986:15)
+    wrappedFn (node:internal/errors:540:14)
+    checkExecSyncError (node:child_process:942:11)
+    execFileSync (node:child_process:978:15)
+    TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/release-images.test.mjs:49:5)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 31
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 174395.484859

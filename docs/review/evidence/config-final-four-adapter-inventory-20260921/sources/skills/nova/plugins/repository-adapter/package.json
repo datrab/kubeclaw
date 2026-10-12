@@ -1,0 +1,12 @@
+{
+  "name": "@kubeclaw/plugin-repository-adapter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit -p tsconfig.json",
+    "test": "node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/path-safety.test.ts"
+  },
+  "dependencies": {
+    "@kubeclaw/plugin-sdk": "*"
+  }
+}

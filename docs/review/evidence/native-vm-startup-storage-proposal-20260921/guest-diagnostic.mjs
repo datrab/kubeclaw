@@ -1,0 +1,89 @@
+// Guest only. Source is frozen VM3; this driver is diagnostic instrumentation.
+import fs from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { spawn, execFileSync } from 'node:child_process';
+import { once } from 'node:events';
+import { pathToFileURL } from 'node:url';
+
+const manifest = JSON.parse(await fs.readFile('/diagnostics/repo-snapshot-manifest.json', 'utf8'));
+const expected = new Map(manifest.map(row => [row.path, row]));
+const results = [];
+const hash = async file => { const digest = createHash('sha256'); for await (const bytes of createReadStream(file)) digest.update(bytes); return digest.digest('hex'); };
+async function verify(root) {
+  let count = 0;
+  const pending = [root];
+  while (pending.length) {
+    const directory = pending.pop();
+    for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name); const relative = path.relative(root, file); const row = expected.get(relative);
+      if (!row) throw new Error(`Unexpected snapshot entry ${relative}`);
+      const stat = await fs.lstat(file); count++;
+      if (row.type === 'directory') { if (!stat.isDirectory()) throw new Error(relative); pending.push(file); }
+      else if (row.type === 'symlink') {
+        if (!stat.isSymbolicLink() || await fs.readlink(file) !== row.symlink) throw new Error(relative);
+        const target = await fs.realpath(file); if (!target.startsWith(root + '/')) throw new Error(`Escaping link ${relative}`);
+      } else if (!stat.isFile() || stat.size !== row.bytes || await hash(file) !== row.sha256) throw new Error(`Snapshot mismatch ${relative}`);
+    }
+  }
+  if (count !== expected.size) throw new Error('Missing snapshot entries');
+  console.log('SNAPSHOT_VERIFIED', root, count);
+}
+async function readiness(root, mode) {
+  const { prismNativeAttempt } = await import(pathToFileURL(path.join(root, 'skills/prism/engine/worker-envelope.ts')));
+  const { nativeResourcePolicy } = await import(pathToFileURL(path.join(root, 'skills/prism/tests/native/resource-policy.mts')));
+  const temporary = await fs.mkdtemp('/tmp/startup-diagnostic-');
+  const input = prismNativeAttempt('render', { artifactId: 'input:diagnostic', type: 'prism-engine-input', mediaType: 'application/json', contentDigest: `sha256:${'1'.repeat(64)}`, sizeBytes: 2, storageUrl: 'https://control.example/input' }, 'journal-diagnostic', nativeResourcePolicy);
+  const envelope = path.join(temporary, 'envelope.json'); await fs.writeFile(envelope, JSON.stringify(input));
+  const fixture = path.join(root, 'tests/fixtures', mode === 'supervisor' ? 'worker-ownership-supervisor.mjs' : 'worker-journal-writer.mjs');
+  const args = ['--import', '/diagnostics/child-preload.mjs', fixture, path.join(temporary, 'store'), ...(mode === 'supervisor' ? [] : [envelope, mode])];
+  const started = performance.now();
+  const child = spawn(process.execPath, args, { cwd: root, env: { ...process.env, NODE_TEST_CONTEXT: 'child-v8' }, detached: true, stdio: 'pipe' });
+  const exit = once(child, 'exit'); let stderrBytes = Buffer.alloc(0); let stdout = ''; let timer;
+  const expectedMarker = mode === 'supervisor' ? 'locked\n' : 'durable\n';
+  child.stderr.on('data', bytes => { stderrBytes = Buffer.concat([stderrBytes, bytes]).subarray(-131072); });
+  try {
+    const ready = await Promise.race([
+      new Promise(resolve => {
+        child.stdout.on('data', bytes => {
+          if (Buffer.byteLength(stdout) + bytes.byteLength > 16384) {
+            resolve({ invalidReadiness: 'stdout limit exceeded', expectedMarker }); return;
+          }
+          stdout += String(bytes);
+          if (stdout === expectedMarker) resolve({ stdout, expectedMarker, readinessMatched: true, elapsedMs: performance.now() - started });
+          else if (!expectedMarker.startsWith(stdout)) resolve({ stdout, expectedMarker, invalidReadiness: 'unexpected readiness bytes' });
+        });
+      }),
+      exit.then(([code, signal]) => ({ earlyExit: { code, signal } })),
+      new Promise(resolve => { timer = setTimeout(() => resolve({ deadline: mode === 'supervisor' ? 15000 : 20000 }), mode === 'supervisor' ? 15000 : 20000); }),
+    ]);
+    const record = { root, mode, stdout, expectedMarker, ...ready, stderr: stderrBytes.toString() }; results.push(record); console.log('READINESS_RESULT', JSON.stringify(record));
+  } finally {
+    clearTimeout(timer); try { process.kill(-child.pid, 'SIGKILL'); } catch (error) { if (error.code !== 'ESRCH') throw error; }
+    await exit; await fs.rm(temporary, { recursive: true, force: true });
+  }
+}
+async function originalTests(root) {
+  console.log('ORIGINAL_TESTS_START', root);
+  const child = spawn(process.execPath, ['--test', '--test-concurrency=1', 'tests/verification/reliability/worker-native-journal.test.mts', 'tests/verification/reliability/worker-ownership-store.test.mts'], { cwd: root, detached: true, stdio: 'inherit' });
+  const timer = setTimeout(() => { console.log('DIAGNOSTIC_ORIGINAL_PROCESS_WATCHDOG', root); try { process.kill(-child.pid, 'SIGKILL'); } catch {} }, 180000);
+  const [code, signal] = await once(child, 'exit'); clearTimeout(timer);
+  results.push({ root, originalTests: { code, signal } }); console.log('ORIGINAL_TESTS_EXIT', root, code, signal);
+}
+await verify('/repo');
+for (const mode of ['accepted', 'sealed', 'supervisor']) await readiness('/repo', mode);
+await originalTests('/repo');
+console.log('STAGING_START');
+await fs.cp('/repo', '/diagnostic-ext4', { recursive: true, dereference: false, verbatimSymlinks: true, errorOnExist: true, force: false });
+await verify('/diagnostic-ext4');
+execFileSync('/bin/mount', ['--bind', '/diagnostic-ext4', '/diagnostic-ext4']);
+execFileSync('/bin/mount', ['-o', 'remount,bind,ro', '/diagnostic-ext4']);
+console.log('STAGING_VERIFIED_READONLY');
+for (const mode of ['accepted', 'sealed', 'supervisor']) await readiness('/diagnostic-ext4', mode);
+await originalTests('/diagnostic-ext4');
+await verify('/repo'); await verify('/diagnostic-ext4');
+await fs.writeFile('/results/startup-storage.json', JSON.stringify(results, null, 2) + '\n');
+console.log('DIAGNOSTIC_COMPLETE', JSON.stringify(results));
+
+process.exitCode = results.some(row => row.originalTests ? row.originalTests.code !== 0 || row.originalTests.signal !== null : !row.readinessMatched) ? 1 : 0;

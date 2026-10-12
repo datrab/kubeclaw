@@ -16,6 +16,10 @@ All errors stop the current provider attempt. The runner stores the error summar
 | `BROWSER_LIGHTHOUSE_TIMEOUT_EXCEEDED` | Lighthouse exceeded its bounded deadline. | Fix the route or use an approved larger timeout. |
 | `BROWSER_LIGHTHOUSE_RESULT_BYTES_EXCEEDED` | The returned reports exceeded the operator byte limit. | Reduce routes/runs or adjust the operator limit. |
 | `BROWSER_LIGHTHOUSE_CANCELLED` | The runner cancelled the browser operation. | Inspect the parent cancellation or deadline. |
+| `BROWSER_LIGHTHOUSE_DEBUG_PORT_INVALID` | Chrome launch returned no positive integer debugging port. | Inspect the Chrome launcher result and pinned runtime; no audit can start from this result. |
+| `BROWSER_LIGHTHOUSE_LAUNCH_FAILED` | Chrome failed to launch. The diagnostic includes the original error and available browser output. | Inspect executable, dependencies and process limits; correct the cause before retrying. |
+| `BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_INVALID` | A captured DevTools network event, parameters or request object has an invalid shape, or its request URL is missing/non-string. | Preserve and inspect the network log and runtime version; malformed evidence cannot authorize an audit. Invalid URL string syntax instead raises a URL-parser error. |
+| `BROWSER_LIGHTHOUSE_NETWORK_EVIDENCE_MISSING` | No nonempty network log exists or no request to the intended target was observed. | Investigate target navigation and network recording; a report alone does not prove the authorized page was audited. |
 | `BROWSER_LIGHTHOUSE_EXECUTABLE_INVALID` | The configured Chrome file is absent or not executable. | Install Chrome and configure its absolute path. |
 | `BROWSER_LIGHTHOUSE_OPERATION_DENIED` | The provider requested an unsupported capability operation. | Use the `audit` operation. |
 | `BROWSER_LIGHTHOUSE_ORIGIN_INVALID` | An operator origin is not a valid bare HTTP origin. | Configure scheme, host, and optional port only. |

@@ -1,0 +1,16 @@
+secret empty PASS 0 uninstalls 0
+secret valid PASS 0 uninstalls 1
+secret valid-history PASS 0 uninstalls 1
+secret denied PASS 1 uninstalls 0
+secret corrupt PASS 1 uninstalls 0
+secret corrupt-latest PASS 1 uninstalls 0
+secret corrupt-older PASS 1 uninstalls 0
+secret wrong-decoded-identity PASS 1 uninstalls 0
+configmap empty PASS 0 uninstalls 0
+configmap valid PASS 0 uninstalls 1
+configmap valid-history PASS 0 uninstalls 1
+configmap denied PASS 1 uninstalls 0
+configmap corrupt PASS 1 uninstalls 0
+configmap corrupt-latest PASS 1 uninstalls 0
+configmap corrupt-older PASS 1 uninstalls 0
+configmap wrong-decoded-identity PASS 1 uninstalls 0

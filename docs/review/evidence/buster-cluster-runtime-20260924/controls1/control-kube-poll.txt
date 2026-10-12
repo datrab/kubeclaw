@@ -1,0 +1,35 @@
+CLUSTER_MUTATION_APPLIED {"mutation":"kube-poll","pid":37888,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts","beforeSha256":"b93b8ffe1b0af18614e20bb16899afe4378be86e748f667fc3b3ebdd77853fd9","afterSha256":"ca291df5a117fa33c5f1d7b2b867b6c21c1977454c220b362e422a929cc401c1","replacements":[{"from":"this.#settings.pollIntervalMs","to":"1000","count":3}],"replacedAnchors":3}
+✖ actual kubernetes.fixture polling cadence 50 (1010.998023ms)
+✖ actual kubernetes.fixture polling cadence 200 (1004.521216ms)
+✔ actual kubernetes.exposure polling cadence 50 (107.177538ms)
+✔ actual kubernetes.exposure polling cadence 200 (403.220935ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4717.517816
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-poll-consumers.test.mjs:12:33
+✖ actual kubernetes.fixture polling cadence 50 (1010.998023ms)
+  Error: KUBERNETES_FIXTURE_LEASE_TIMEOUT:Pending
+      at KubernetesFixtureReadiness.waitLease (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts:49:15)
+      at async #activate (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts:24:24)
+      at async KubernetesFixturePreparation.prepare (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts:64:20)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-poll-consumers.test.mjs:62:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/verification/contracts/buster-cluster-poll-consumers.test.mjs:12:33
+✖ actual kubernetes.fixture polling cadence 200 (1004.521216ms)
+  Error: KUBERNETES_FIXTURE_LEASE_TIMEOUT:Pending
+      at KubernetesFixtureReadiness.waitLease (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts:49:15)
+      at async #activate (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts:24:24)
+      at async KubernetesFixturePreparation.prepare (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts:64:20)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-poll-consumers.test.mjs:62:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

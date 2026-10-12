@@ -1,0 +1,34 @@
+{
+  "status": "frozen private ownership behavior gate; unexecuted; helper unchanged",
+  "files": [
+    {
+      "path": "package.json",
+      "beforeSha256": "f8196926199327a52aea2dd050a870f9d9952182989dd00099ec19b01f23baf0",
+      "afterSha256": "63322d00421a359d4c310e2e8a59ac888dd869dd800db715612a032aa7e3d517"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-ownership-reporter.mjs",
+      "beforeSha256": null,
+      "afterSha256": "c84e680ad414d79e2b23bbfcc9460692e8dc631ed461a883bde6cd89a1a5f8e7"
+    },
+    {
+      "path": "tests/fixtures/test-gate/cluster-ownership-scenario.mjs",
+      "beforeSha256": null,
+      "afterSha256": "341c79995904955505607f309ec697d8508b282e0557b1a2ef66ecc31fc9c473"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "e5b46f427753fab198524b84114fb40d8aa17574e62755415df9df0b4cb482be"
+    }
+  ],
+  "helperSha256": "021f3cf0f542c3de92befa39195c552ec2dad62e49fd2deb4cc4ec3287ac256d",
+  "requiredGate": "docs/review/evidence/independent-cluster-final-20260924/ci2-ownership-required-gate.json",
+  "command": "npm run verify:buster:cluster-ownership",
+  "outerTestNames": [
+    "genuine nested test lifetime OWN-TIMEOUT-CLEAN",
+    "genuine nested test lifetime OWN-STOP-FAILURE",
+    "genuine nested test lifetime OWN-DISPOSAL-TIMEOUT-LATE"
+  ],
+  "packageBaseline": "actual live after CI2 V2, lint V2 and RS2 V4 integration"
+}

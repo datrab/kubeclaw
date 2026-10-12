@@ -1,0 +1,6 @@
+{
+  "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+  "beforeSha256": "8bcd326786b45e9720c5bf3c95356c8bb1f9683aaf90681d4e7a0851a186b82e",
+  "afterSha256": "79c67271de4e528a9dc62d97522ea6484c9bb92dcdf67999266dfec57a7aaaf2",
+  "scope": "Four cohesive configuration validation helpers, same validation expressions/error order/returned values. No defaults or limits changed. Request defaults remain separate D17 work; no rule relaxation."
+}

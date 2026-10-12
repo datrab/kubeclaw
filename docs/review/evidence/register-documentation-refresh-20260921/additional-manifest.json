@@ -1,0 +1,15 @@
+{
+  "status": "private pending independent source review; no runtime or finding-status changes",
+  "files": [
+    {
+      "path": "docs/review/remediation/implementation/register-consistency-20260920.md",
+      "beforeSha256": "429777e9481d13ba79a59e7bbdbefd461474d3e435889f86f43f23394d944fd7",
+      "afterSha256": "aca98d130b8722dbc70757c52053a8c60768ed0caf3cf5d6aee1cc188d619167"
+    },
+    {
+      "path": "docs/review/remediation/register.json",
+      "beforeSha256": "cbd64533bd16c91928c21317b9d183969aff91c512cc32bcc7daf3102af95697",
+      "afterSha256": "906e861f7ed13c4052e10f637e325848df16491ff1d0889b45b513cf5e9e4adf"
+    }
+  ]
+}

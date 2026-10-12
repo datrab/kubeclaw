@@ -1,0 +1,122 @@
+[
+  {
+    "name": "required",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-component-layout-20260921/mutants/mutation-loader.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/config-component-bundle.test.mts"
+    ],
+    "exitCode": 1,
+    "seconds": 0.617,
+    "applied": true,
+    "anchorFailure": false
+  },
+  {
+    "name": "legacy",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-component-layout-20260921/mutants/mutation-loader.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/swarm-worker-config.test.mts"
+    ],
+    "exitCode": 1,
+    "seconds": 0.99,
+    "applied": true,
+    "anchorFailure": false
+  },
+  {
+    "name": "generation",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-component-layout-20260921/mutants/mutation-loader.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/config-component-generation.test.mjs"
+    ],
+    "exitCode": 1,
+    "seconds": 0.597,
+    "applied": true,
+    "anchorFailure": false
+  },
+  {
+    "name": "output",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-component-layout-20260921/mutants/mutation-loader.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/swarm-supervisor-consumers.test.mts"
+    ],
+    "exitCode": 1,
+    "seconds": 2.102,
+    "applied": true,
+    "anchorFailure": false
+  },
+  {
+    "name": "poll",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-component-layout-20260921/mutants/mutation-loader.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/swarm-supervisor-consumers.test.mts"
+    ],
+    "exitCode": 1,
+    "seconds": 1.9,
+    "applied": true,
+    "anchorFailure": false
+  },
+  {
+    "name": "close",
+    "command": [
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+      "-b",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/bin/tar:/usr/bin/tar!",
+      "/usr/local/bin/node",
+      "--import",
+      "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/config-component-layout-20260921/mutants/mutation-loader.mjs",
+      "--test",
+      "--test-concurrency=1",
+      "skills/prism/tests/swarm-supervisor-consumers.test.mts"
+    ],
+    "exitCode": 1,
+    "seconds": 1.4,
+    "applied": true,
+    "anchorFailure": false
+  }
+]

@@ -1,0 +1,35 @@
+✔ Core requires explicit valid drainTimeoutMs (15.865772ms)
+✖ Core requires explicit valid cancellationTimeoutMs (0.998706ms)
+✔ Core requires explicit valid replayLimit (0.570355ms)
+✔ real drain/cancellation 10/40 (80.229655ms)
+✔ real replay saturation/reclaim 1 (3.09409ms)
+✔ real drain/cancellation 40/10 (51.699684ms)
+✔ real replay saturation/reclaim 2 (2.067034ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 513.748595
+
+✖ failing tests:
+
+test at tests/verification/contracts/check-pipeline-worker-local-policy.mts:55:3
+✖ Core requires explicit valid cancellationTimeoutMs (0.998706ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: cancellationTimeoutMs=undefined
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-worker-local-policy.mts:59:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /WORKER_LOCAL_CANCELLATION_TIMEOUT_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }

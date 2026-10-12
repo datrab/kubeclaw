@@ -1,6 +1,17 @@
 #!/bin/sh
 set -eu
 
+if [ "${BUSTER_PLAN_CONFIG_ROOT+x}" = x ]; then
+  echo "BUSTER_PLAN_CONFIG_ROOT is retired; runtime configuration uses the fixed root-owned image namespace" >&2
+  exit 1
+fi
+# Capture a validated physical generation before the first runtime effect.
+SWARM_CONFIG="$(node /app/scripts/buster-cluster-preflight.mjs)"
+export SWARM_CONFIG
+runtime_config_root="$(node /usr/local/libexec/buster-runtime-config-root.mjs)"
+exec 9<>/run/kubeclaw-buster/lifetime.lock
+flock -n 9 || { echo "Buster runtime is already active" >&2; exit 1; }
+
 worker_token="${BUSTER_V2_TOKEN:?BUSTER_V2_TOKEN is required when SPIFFE transport is unavailable}"
 trusted_peer_spiffe_id="${BUSTER_TRUSTED_PEER_SPIFFE_ID:-}"
 unset BUSTER_V2_TOKEN
@@ -15,7 +26,8 @@ chmod 0600 "$registry_contract"
 node /app/scripts/registry-client-config.mjs "$registry_contract" buildkit "$registry_client_dir/buildkit.toml"
 node /app/scripts/registry-client-config.mjs "$registry_contract" runtime "$registry_client_dir/runtime.json"
 registry="$(node -e 'process.stdout.write(JSON.parse(require("node:fs").readFileSync(process.argv[1],"utf8")).registryReference)' "$registry_client_dir/runtime.json")"
-config="${HOME}/.config/buildkit/buildkitd.toml"
+config="$runtime_config_root/buildkit.toml"
+buildkit_log="$runtime_config_root/buildkit.log"
 mkdir -p "$(dirname "$address")" "$(dirname "$otel_socket")" "$state" "$(dirname "$config")"
 cp "$registry_client_dir/buildkit.toml" "$config"
 chown root:builder "$config"
@@ -31,10 +43,9 @@ setpriv \
   --otel-socket-path "$otel_socket" \
   --root "$state" \
   --oci-worker-no-process-sandbox \
-  >/tmp/buildkitd.log 2>&1 &
+  >"$buildkit_log" 2>&1 9>&- &
 buildkit_pid=$!
 worker_pid=""
-runtime_config_root="${BUSTER_PLAN_CONFIG_ROOT:-/tmp/buster-plan-config}"
 kube_service_account_root="${BUSTER_KUBERNETES_SERVICE_ACCOUNT_ROOT:-/var/run/buster-worker/kubernetes}"
 plan_state_dir="${BUSTER_PLAN_STATE_DIR:-/var/lib/buster-v2/plan-jobs}"
 plan_run_dir="${BUSTER_PLAN_RUN_DIR:-/var/lib/buster-v2/runs}"
@@ -54,7 +65,7 @@ attempt=0
 until buildctl --addr "$socket" debug workers >/dev/null 2>&1; do
   attempt=$((attempt + 1))
   if [ "$attempt" -ge 60 ]; then
-    cat /tmp/buildkitd.log >&2
+    cat "$buildkit_log" >&2
     exit 1
   fi
   sleep 1
@@ -107,21 +118,26 @@ setpriv \
   --init-groups \
   chmod 0660 "$address"
 
-# The supervisor retains only CHOWN/SETUID/SETGID/SETPCAP. Keep the pod fsGroup
+# The supervisor retains only CHOWN/KILL/SETUID/SETGID/SETPCAP. Keep the pod fsGroup
 # (1000) for projected credentials and add the socket group (1002) so its
 # BuildKit readiness checks can connect after the ownership transition above.
 # worker.ts clears all supplementary groups and capabilities before suite code.
 : "${BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY:?BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY is required}"
-mkdir -p "$runtime_config_root" "$plan_state_dir" "$plan_run_dir"
-# The supervisor intentionally lacks CAP_DAC_OVERRIDE and CAP_FOWNER. Keep the
-# generated-config directory owned by root until every file has been written;
-# otherwise handing the directory to builder here prevents the supervisor from
-# creating the kubeconfig and runtime JSON below. State and run directories are
-# handed off immediately because only the workers write to them. The plan
-# runtime runs as builder.
-chown -R root:root "$runtime_config_root"
+if [ "$plan_state_dir" != /var/lib/buster-v2/plan-jobs ] || [ "$plan_run_dir" != /var/lib/buster-v2/runs ]; then
+  echo 'Buster native state requires the fixed /var/lib/buster-v2 PVC namespace' >&2
+  exit 1
+fi
+if [ -n "${BUSTER_V2_STATE_DIR+x}${BUSTER_V2_RUN_DIR+x}" ]; then
+  echo 'BUSTER_V2_STATE_DIR/BUSTER_V2_RUN_DIR were replaced by the fixed Buster PVC namespace' >&2
+  exit 1
+fi
+node /usr/local/libexec/buster-state-root.mjs
+# The generated configuration remains root-owned for the full parent lifetime.
+# Its fixed ancestor and existing files were validated before acquiring the
+# startup lock; the service receives only group read/traverse access.
+chown root:root "$runtime_config_root"
 chmod 0750 "$runtime_config_root"
-chown -R builder:builder "$plan_state_dir" "$plan_run_dir"
+
 test -r "$kube_service_account_root/token"
 test -r "$kube_service_account_root/ca.crt"
 test -r "$kube_service_account_root/namespace"
@@ -152,7 +168,6 @@ current-context: buster
 EOF
 
 RUNTIME_CONFIG_ROOT="$runtime_config_root" REGISTRY_CLIENT_RUNTIME="$registry_client_dir/runtime.json" REGISTRY_REFERENCE="$registry" CONTROLLER_NAMESPACE="$kube_namespace" \
-  BUSTER_ALLOWED_SOURCE_SECRETS="${BUSTER_ALLOWED_SOURCE_SECRETS:-}" \
   BUSTER_NETWORK_HTTP_EXACT_ORIGINS="${BUSTER_NETWORK_HTTP_EXACT_ORIGINS:-}" \
   BUSTER_BROWSER_AXE_EXACT_ORIGINS="${BUSTER_BROWSER_AXE_EXACT_ORIGINS:-}" \
   BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET="${BUSTER_NETWORK_HTTP_ALLOW_WEBSOCKET:-false}" \
@@ -168,7 +183,7 @@ const exactHttpOrigins = (process.env.BUSTER_NETWORK_HTTP_EXACT_ORIGINS || '')
 const exactBrowserOrigins = (process.env.BUSTER_BROWSER_AXE_EXACT_ORIGINS || '')
   .split(',').map((value) => value.trim()).filter(Boolean);
 fs.writeFileSync(path.join(root, 'platform.json'), `${JSON.stringify({
-  schemaVersion: 'pipeline-platform.v2',
+  schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000,
   installationRoots: [plugins], trustedBuiltinRoots: [plugins],
   externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} },
   providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {},
@@ -187,13 +202,8 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
   runtimeRoot: process.env.BUSTER_V2_RUN_DIR,
   tarExecutable: '/usr/bin/tar',
   recordLimits: { maximumRecords: 10000, maximumBytes: 1073741824, maximumRecordBytes: 67108864 },
-  maximumArchiveBytes: Number(process.env.BUSTER_V2_MAX_ARCHIVE_BYTES || 67108864),
-  maximumActiveJobs: Number(process.env.BUSTER_V2_MAX_ACTIVE_JOBS || 2),
-  maximumQueuedJobs: Number(process.env.BUSTER_V2_MAX_QUEUED_JOBS || 16),
-  maximumConcurrentAttempts: Number(process.env.BUSTER_V2_MAX_CONCURRENT_ATTEMPTS || 64),
-  maximumExtractedBytes: Number(process.env.BUSTER_V2_MAX_EXTRACTED_BYTES || 536870912),
   maximumResultBytes: 67108864, maximumResultStoreBytes: 1073741824,
-  maximumRequestBytes: 100663296, maximumResponseBytes: 67108864,
+  maximumResponseBytes: 67108864,
   shutdownTimeoutMs: 15000,
   allowedCapabilities: ['command.execute', 'container.build', 'kubernetes.fixture', 'kubernetes.exposure', 'network.http', 'browser.axe', 'browser.lighthouse', 'browser.visual', 'browser.playwright', 'security.scan', 'kubernetes.runtime-security'],
   directCommand: {
@@ -217,7 +227,6 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     terminationGraceMs: 2000,
     allowSampledProcessLimit: true,
   },
-  dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
   containerBuild: {
     buildctlExecutable: '/usr/local/bin/buildctl', buildkitHost: process.env.BUILDKIT_HOST,
     ...JSON.parse(fs.readFileSync(process.env.REGISTRY_CLIENT_RUNTIME, 'utf8')),
@@ -225,24 +234,7 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     allowedBuildArguments: ['NODE_ENV'], maximumLogBytes: 8388608,
     maximumExecutionMs: 900000, maximumManifestBytes: 16777216,
   },
-  kubernetesFixture: {
-    kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace: process.env.CONTROLLER_NAMESPACE,
-    leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',
-    leaseApiVersion: process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1', allowedNamespacePrefixes: ['test'],
-    allowedRegistryPrefixes: [`${registry}/kubeclaw`],
-    allowedSecretReferences: (process.env.BUSTER_ALLOWED_SOURCE_SECRETS || '').split(',').filter(Boolean),
-    allowedStorageClasses: [], allowDefaultStorageClass: true,
-    maximumManifestBytes: 1048576,
-    maximumResources: 64, maximumPersistentVolumeClaimBytes: 10737418240,
-    maximumPersistentVolumeTotalBytes: 21474836480,
-    maximumRetentionSeconds: 604800, maximumExecutionMs: 900000, pollIntervalMs: 1000,
-  },
-  tailscaleExposure: {
-    kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace: process.env.CONTROLLER_NAMESPACE,
-    leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',
-    leaseApiVersion: process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1', allowedNamespacePrefixes: ['test'],
-    allowedHostSuffixes: ['.ts.net'], maximumExecutionMs: 900000, pollIntervalMs: 1000,
-  },
+  clusterBindings: { controllerNamespace: process.env.CONTROLLER_NAMESPACE },
   networkHttp: {
     registryHealth: true,
     allowedOrigins: exactHttpOrigins, allowedHostSuffixes: ['.svc.cluster.local', '.ts.net'], allowedPorts: [80, 443],
@@ -313,34 +305,18 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
       maximumDatabaseBytes: 8 * 1024 * 1024 * 1024,
     },
   },
-  kubernetesRuntimeSecurity: {
-    kubectlExecutable: '/usr/local/bin/kubectl',
-    controllerNamespace: process.env.CONTROLLER_NAMESPACE,
-    leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',
-    allowedNamespacePrefixes: ['test'],
-    maximumExecutionMs: 300000,
-    maximumOutputBytes: 16777216,
-    pollIntervalMs: 1000,
-    maximumObservationAgeMs: 10000,
-  },
 }, null, 2)}\n`);
 NODE
 rm -rf -- "$registry_client_dir"
 chmod 0640 "$runtime_config_root/platform.json" "$runtime_config_root/runtime.json" "$kubeconfig"
-chown -R builder:builder "$runtime_config_root"
+chown root:builder "$runtime_config_root" "$runtime_config_root/platform.json" "$runtime_config_root/runtime.json" "$kubeconfig"
 
 if [ -n "$trusted_peer_spiffe_id" ]; then
-  BUSTER_TRUSTED_PEER_SPIFFE_ID="$trusted_peer_spiffe_id" KUBECONFIG="$kubeconfig" setpriv \
-    --reuid=1000 \
-    --regid=1000 \
-    --groups 1000,1002 \
-    node /app/skills/buster/engine/remote-plan-cli.ts --config "$runtime_config_root/runtime.json" &
+  BUSTER_TRUSTED_PEER_SPIFFE_ID="$trusted_peer_spiffe_id" KUBECONFIG="$kubeconfig" \
+    node /app/skills/buster/engine/native-parent.ts 9>&- &
 else
-  BUSTER_V2_TOKEN="$worker_token" KUBECONFIG="$kubeconfig" setpriv \
-    --reuid=1000 \
-    --regid=1000 \
-    --groups 1000,1002 \
-    node /app/skills/buster/engine/remote-plan-cli.ts --config "$runtime_config_root/runtime.json" &
+  BUSTER_V2_TOKEN="$worker_token" KUBECONFIG="$kubeconfig" \
+    node /app/skills/buster/engine/native-parent.ts 9>&- &
 fi
 worker_pid=$!
 

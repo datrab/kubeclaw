@@ -1,0 +1,35 @@
+✔ real Loader confirmed-disposal recovery: signal failure false, retain (971.536838ms)
+✔ real Loader confirmed-disposal recovery: signal failure false, delete (607.596149ms)
+✔ real Loader confirmed-disposal recovery: signal failure true, retain (1019.774296ms)
+✔ real Loader confirmed-disposal recovery: signal failure true, delete (1035.240799ms)
+✔ real Loader retains cleanup and stop failures in current session (603.919132ms)
+✔ real Loader retains cleanup and stop failures in recovery session (798.644005ms)
+✖ overlapping real Loaded terminate calls account one confirmed session exactly once (677.760069ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6978.956839
+
+✖ failing tests:
+
+test at tests/verification/contracts/provider-disposal-recovery.test.mjs:121:1
+✖ overlapping real Loaded terminate calls account one confirmed session exactly once (677.760069ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(checked)
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-recovery.test.mjs:159:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

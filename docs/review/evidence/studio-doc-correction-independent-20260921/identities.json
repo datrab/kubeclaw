@@ -1,0 +1,184 @@
+{
+  "scope": "Studio doc correction before subsequent Buster admission config work",
+  "files": [
+    {
+      "path": "docs/operations/operator-configuration.md",
+      "sha256": "277ea7b137224ab5cbdac0cb749938a3510caccc50547ae2451352dc748c8a4d"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "sha256": "f6c148f6cbe1051b2f2aa222c8f0c4fd57458cfcc913dc8a5310d6f52cb5067a"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/README.md",
+      "sha256": "f03ae20c218b4901612340388f2e0af6c92842a40f699ab490af839b1fe2c900"
+    },
+    {
+      "path": "docs/review/remediation/implementation/config-studio-operator-doc-correction-20260921.md",
+      "sha256": "3a77f656e8be417954530507de14a77492826fa34880c7d2f61949611338f40a"
+    },
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "sha256": "377f836f98c8d346a41a9eff4cbe1488a0451038ead95e0f941c66fdcfe35fad"
+    },
+    {
+      "path": "skills/prism/server/studio-request.ts",
+      "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "e9e7fef5fec4931e317985b27b07cb7b9a8fd18a23752137a07c59a91ca42c2d"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+      "sha256": "aae0cc4633ff1462efbc103d0529e68bdb103907a6511e9e40e6139a3575e3ed"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm.config.json",
+      "sha256": "991e0c6dfd683b484bbc132c3e6e60c67abdf7c88e53959e9d08b7e4e60c20da"
+    },
+    {
+      "path": "charts/prism/templates/_swarm-config.tpl",
+      "sha256": "ecbc31f41295ba0f0a4f3001586985e92cc67abb4c4f60990618750678a808e0"
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "189fbbdc5755fb2e052a28a566410a9184297d0a1a2ed4adce24d19f3dc5f9c3"
+    },
+    {
+      "path": "scripts/check-built-runtime-image.sh",
+      "sha256": "0e5a5c3516bec7669e744208d80bf9727625346845a52eff69b1388230b690d0"
+    }
+  ],
+  "relativeLinksChecked": [
+    {
+      "source": "docs/operations/operator-configuration.md",
+      "target": "../../charts/kubeclaw/files/config/swarm.config.json"
+    },
+    {
+      "source": "docs/operations/operator-configuration.md",
+      "target": "../review/remediation/implementation/control-image-environment-20260921.md"
+    },
+    {
+      "source": "docs/operations/operator-configuration.md",
+      "target": "../review/remediation/implementation/config-control-policy-20260921.md"
+    },
+    {
+      "source": "docs/operations/operator-configuration.md",
+      "target": "../../skills/prism/tests/studio-config.test.mts"
+    },
+    {
+      "source": "docs/operations/operator-configuration.md",
+      "target": "../../skills/prism/tests/studio-canonical-image.mts"
+    },
+    {
+      "source": "docs/operations/operator-configuration.md",
+      "target": "../review/remediation/implementation/independent-studio-complete-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "independent-resource-policy-review-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "independent-studio-complete-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "config-input-limit-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "../../../../skills/prism/tests/worker-process-shutdown-native.mts"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "../../../operations/operator-configuration.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "../../../operations/prism-operator-guide.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "prism-native-test-quality-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "../../evidence/config-worker-20260920/runtime-tests.txt"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "../../evidence/config-worker-20260920/deployment-tests.txt"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "../../evidence/config-worker-20260920/types.txt"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "../../evidence/config-worker-behavior-20260920/tests.txt"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "../../evidence/config-worker-behavior-20260920/execution.json"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "../../evidence/config-worker-behavior-20260920/tailscale-cutover-direct.txt"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "../../evidence/config-worker-behavior-20260920/tailscale-cutover.txt"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "../../evidence/config-worker-behavior-20260920/e2e-profile-tests.txt"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "config-input-limit-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "config-result-dispatch-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "config-resource-policy-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "config-supervisor-numerics-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "config-supervisor-numerics-independent-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "config-control-policy-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "control-discovery-independent-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "config-control-listener-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "independent-control-listener-quality-20260921.md"
+    },
+    {
+      "source": "docs/review/remediation/implementation/config-inventory-20260920.md",
+      "target": "control-route-quality-20260921.md"
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/README.md",
+      "target": "../../../../../docs/operations/operator-configuration.md"
+    }
+  ],
+  "runtimeTestsExecuted": false
+}

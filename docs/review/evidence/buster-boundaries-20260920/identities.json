@@ -1,0 +1,31 @@
+{
+  "head": "cd9f235345f5fd8736a2ffe75d806288e4d538db",
+  "node": "v24.21.0",
+  "command": [
+    "/tmp/prism-native-tools/root/usr/bin/proot",
+    "-b",
+    "/tmp/prism-native-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "-b",
+    "/tmp/prism-native-tools/root/bin/tar:/usr/bin/tar!",
+    "node",
+    "--test",
+    "tests/verification/reliability/buster-terminal-workspace-native.test.mts",
+    "skills/buster/engine/test-gates/tests/terminal-workspace.test.ts",
+    "tests/verification/reliability/http-authority.test.mts",
+    "tests/verification/reliability/buster-fixture-control.test.mts",
+    "tests/verification/reliability/buster-fixture-journal.test.mts",
+    "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+  ],
+  "LD_LIBRARY_PATH": "/tmp/prism-native-tools/root/usr/lib:/tmp/prism-native-tools/root/lib",
+  "files": {
+    "skills/buster/engine/test-gates/terminal-workspace.ts": "60264e4f91904b49c57225184cc86233778c5c7146039bdd783bdb86ba71a9b1",
+    "skills/buster/engine/test-gates/capability-runtime.ts": "edb1cee25c2350a94c821cfe106b62f8eb0f30a57db42d5ceb09e920ee9b7ef8",
+    "skills/buster/engine/test-gates/remote-plan-service.ts": "ee9026f1eb58900fcf3c3124ec4df0c9f39c261c26c7488499327bf91633521a",
+    "tests/verification/reliability/buster-terminal-workspace-native.test.mts": "57872985a8be236d6d0006c5808a3344bbfaa97485fe68f2f5abaeecb1fe373d",
+    "tests/verification/reliability/http-authority.test.mts": "50b7bb580ae081d451efdf62a1445a2367200a3968b81a6856bcbb44a3a74cbd",
+    "docs/operations/observability-retention.md": "51b15f6c69d0ad48a6f9cbede5c5aa0b9f56065048740e3338ac1c0f626f9f57",
+    "docs/review/remediation/implementation/buster-native-cutover-20260920.md": "a3f1ad20732a1a4f5f7aac97ad6b9196b85689c3ab156c0325b8653097c03415",
+    "docs/review/remediation/implementation/buster-native-cases-20260920.md": "71ec4bb1089d937d0021397b9619396dfbbed09df3a1b960adfa0289a3c35d8f"
+  },
+  "packageLockSha256": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+}

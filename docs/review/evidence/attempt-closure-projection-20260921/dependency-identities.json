@@ -1,0 +1,42 @@
+[
+  {
+    "path": "scripts/observability-retirement/files.mjs",
+    "sha256": "ab00700014cae85cc33a162397f90f12502d16877648ceaf40aa27064a6fd38d"
+  },
+  {
+    "path": "scripts/observability-retirement/journals.mjs",
+    "sha256": "73db89833172db848b733e687d6f14d6a1a35799269097f97c0a2713b2292d30"
+  },
+  {
+    "path": "scripts/observability-retirement/stores.mjs",
+    "sha256": "982888f6ce9d33fa827b7285ffbe8f57c6f43a402ab9a9c87072b1d93ae7451e"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+    "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+    "sha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a"
+  },
+  {
+    "path": "skills/nova/core/execution/run-root.ts",
+    "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+  },
+  {
+    "path": "skills/nova/core/execution/run-mutation.ts",
+    "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+  },
+  {
+    "path": "skills/nova/core/state/file-mutex.ts",
+    "sha256": "d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c"
+  },
+  {
+    "path": "skills/nova/core/state/journal.ts",
+    "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+  },
+  {
+    "path": "skills/nova/core/observability/reconciler.ts",
+    "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71"
+  }
+]

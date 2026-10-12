@@ -1,0 +1,33 @@
+✔ two genuinely concurrent same-revision child reservations produce exactly one durable winner (69.952594ms)
+✔ finish during durable host reservation prevents creation and launch, retaining reserved child (82.283861ms)
+✖ finish during helper binding waits for CAS and refuses that helper plus queued helper (84.853737ms)
+✔ concurrent lease helpers serialize durable reservations without lost children (255.777071ms)
+✔ historical lease launch refuses before touching any scope method (21.364828ms)
+ℹ Error: Test "finish during helper binding waits for CAS and refuses that helper plus queued helper" at docs/review/evidence/native-topology-independent-20260921/probes.mts:72:1 generated asynchronous activity after the test ended. This activity created the error "AggregateError: WORKER_NATIVE_RECONCILIATION_RECORD_FAILED" and would have caused the test to fail, but instead triggered an unhandledRejection event.
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 999.903848
+
+✖ failing tests:
+
+test at docs/review/evidence/native-topology-independent-20260921/probes.mts:72:1
+✖ finish during helper binding waits for CAS and refuses that helper plus queued helper (84.853737ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Promise.all (index 0)
+      at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes.mts:81:83
+      at async modelProcesses (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes.mts:42:16)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /LAUNCH_FENCED/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

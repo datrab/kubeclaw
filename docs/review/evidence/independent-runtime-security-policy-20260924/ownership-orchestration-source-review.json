@@ -1,0 +1,27 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "Source approval for complete ownership baseline and two controls; no runtime evidence acceptance yet",
+  "hashes": {
+    "run-ownership.py": "107eca89612cb4aa1a3c28a67f2f8ebd7ede5a4492ff2d1530d78c8148fb42b6",
+    "ownership-control-specs.json": "522be5bff15eb0aeccd84fcbf60032880b76e65f4a7c7d17169f5102ddb558f4",
+    "mutate-ci2.mjs": "1461b7395b3972e5cf9abb38d8c8b94ecc2862954c5ccf462e9687d0dee5d800"
+  },
+  "checks": [
+    "Runner only renames/selects ownership phases/specs relative to reviewed CI2 service runner; same complete module, no filters, original guards/bindings/drift checks intact.",
+    "Both specs exactly preserve V2 original source/hash/replacement/oracle; actual current helper hash and each unique anchor verified.",
+    "Outer test explicitly passes ...process.env into nested node:test runner, and scenario passes process.env to held child. NODE_OPTIONS and selected mutation/spec/manifest environment therefore propagate to the actual helper-loading process.",
+    "Reviewed registerHooks mutation applies on actual helper URL import and logs PID+source identities. Outer test does not directly import helper, so top-level runner log alone cannot prove nested application.",
+    "Nested stderr is captured by outer test and written to retained root stderr.txt on failure. Intended control failures retain directories; final reviewer must retrieve/bind these artifacts and confirm hook application in the scenario worker plus intended filesystem assertion.",
+    "Even if an unrelated setup error produced expected top-level exit1, no acceptance without actual nested mutation evidence and exact failed oracle."
+  ],
+  "requiredRuntimeEvidence": [
+    "3 genuine baseline cases pass with no skipped/cancelled tests; nested intentional failures match required exact causes.",
+    "premature-root-removal fails held root-presence oracle, not setup/timeout/import.",
+    "late-inner-removal fails post-late-close retained-root oracle; nested source hook must be present.",
+    "Persist captured nested stderr/reporter/event artifacts in evidence before any cleanup, linking actual retained directories."
+  ],
+  "limits": [
+    "Source review only; no execution.",
+    "Actual test helper is mutated only by in-memory import hook; live file writes not authorized by these phases."
+  ]
+}

@@ -81,7 +81,7 @@ async function produce() {
   const activated = await core.activateRegistry(granted.snapshot, new Set(granted.grants.keys()));
   const effectsFile = path.join(root, 'producer-effects.jsonl');
   const effects = new core.FileEffectJournal(effectsFile);
-  const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([['kubeclaw.artifact-store:artifact-store', { artifactRoot }]]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, 'producer-locks'))), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
+  const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([['kubeclaw.artifact-store:artifact-store', { artifactRoot }]]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, 'producer-locks')), 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   try {
     const moduleCoverage = contractCoverage('module');
@@ -160,7 +160,7 @@ async function consume() {
   const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map([
     ['kubeclaw.artifact-store:artifact-store', { artifactRoot }],
     [evidenceId, { stateRoot: root, manifestStageId: 'project-summary', gateStageId: 'final-test' }],
-  ]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, `${phase}-locks`))), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
+  ]), effects: new core.EffectCoordinator(effects, undefined, undefined, new core.FileResourceLockManager(path.join(root, `${phase}-locks`)), 300_000), shutdownTimeoutMs: 1000, async emitDomainEvent() {} });
   await adapters.start();
   try {
     const ref = phase === 'consume-portable-en' ? producer.portableV2ReaderContractRef : producer.storedArtifactRef;

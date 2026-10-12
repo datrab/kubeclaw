@@ -1,0 +1,7 @@
+{
+  "status": "private regression proposal; unreviewed and unexecuted",
+  "path": "tests/verification/contracts/buster-process-input-policy.test.mjs",
+  "beforeSha256": "41fc956c9c1c15c83e829404b61ac2f6fb2455d54b4dc44804ec5a60ea125a80",
+  "afterSha256": "0ecc590dbd9903a765a6efa777545f1c5df3543a8b9c7235f2b9942a74c251ef",
+  "scope": "four narrow injected signal/observation error boundaries around genuine owned child processes; no kernel-permission or native-isolation acceptance"
+}

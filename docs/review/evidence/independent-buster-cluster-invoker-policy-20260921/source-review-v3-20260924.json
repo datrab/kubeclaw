@@ -1,0 +1,19 @@
+{
+  "date": "2026-09-24",
+  "decision": "bounded source acceptance for coordinated integration and verification; both V1 production blockers and V2 requested case gaps addressed",
+  "manifestSha256": "b4f201dad80db2cda873d3012ec984986b0a7e651b2802e8d37f12f1ac39bdc2",
+  "identityErrors": [],
+  "changedFromV2": [
+    "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+  ],
+  "cases": [
+    "Exposure capability uses actual capabilitySources exposure flag; omitted binding produces exact error and fresh store absence; identical profile plus namespace starts/stops real runtime",
+    "RuntimeSecurity capability supplies required original explicit budgets and prefix; omitted binding produces exact error and fresh store absence; identical profile plus namespace starts/stops real runtime"
+  ],
+  "preservation": "All V2 production bytes and prior test bodies/assertions/deadlines unchanged; one additive test module delta.",
+  "limits": [
+    "Source-only, no runtime/types/lint or live cluster execution",
+    "Start/stop cases prove planned factory construction, not invocation of kubectl or cluster acceptance",
+    "Full originals, fast checks, both charts and semantic controls remain unexecuted review gates; no full CONFIG/D17 closure"
+  ]
+}

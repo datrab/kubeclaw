@@ -1,0 +1,465 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "docs/review/evidence/config-buster-readiness-20260921/review-runner/tool-effects.mjs"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": false,
+    "name": "real-tool-effects",
+    "requiresSemanticMutationReview": false,
+    "seconds": 0.11441154300700873
+  },
+  {
+    "command": [
+      "/usr/local/bin/npm",
+      "run",
+      "verify:buster:readiness-config"
+    ],
+    "environmentDelta": {},
+    "exitCode": 2,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "planned-1",
+    "requiresSemanticMutationReview": false,
+    "seconds": 6.486514589050785
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-admission-config.test.mts",
+      "tests/verification/reliability/buster-admission-cli.test.mjs",
+      "tests/verification/deployment/buster-admission-render.test.mjs"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "planned-2",
+    "requiresSemanticMutationReview": false,
+    "seconds": 72.81220887508243
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "planned-3",
+    "requiresSemanticMutationReview": false,
+    "seconds": 2.0334009560756385
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": false,
+    "name": "planned-4",
+    "requiresSemanticMutationReview": false,
+    "seconds": 3.3701749480096623
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": false,
+    "name": "planned-5",
+    "requiresSemanticMutationReview": false,
+    "seconds": 5.023856464889832
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/deployment/check-deployment-truth.mjs"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": false,
+    "name": "planned-6",
+    "requiresSemanticMutationReview": false,
+    "seconds": 0.715105514973402
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/deployment/config-component-packaging.test.mjs"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": false,
+    "name": "planned-7",
+    "requiresSemanticMutationReview": false,
+    "seconds": 6.3750226410338655
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-container-build-production.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-check-pipeline-container-build-production",
+    "requiresSemanticMutationReview": false,
+    "seconds": 2.21388214698527
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-check-pipeline-e2e-remote-vertical",
+    "requiresSemanticMutationReview": false,
+    "seconds": 2.468480582931079
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-check-pipeline-lighthouse-remote-vertical",
+    "requiresSemanticMutationReview": false,
+    "seconds": 2.481820449931547
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-phase10-vertical.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-check-pipeline-phase10-vertical",
+    "requiresSemanticMutationReview": false,
+    "seconds": 2.470431064022705
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-phase8-vertical.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-check-pipeline-phase8-vertical",
+    "requiresSemanticMutationReview": false,
+    "seconds": 2.9284268270712346
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-phase9-vertical.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-check-pipeline-phase9-vertical",
+    "requiresSemanticMutationReview": false,
+    "seconds": 2.4685739959822968
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": false,
+    "name": "original-check-pipeline-remote-real-provider",
+    "requiresSemanticMutationReview": false,
+    "seconds": 14.484028307022527
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-security-remote-vertical.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-check-pipeline-security-remote-vertical",
+    "requiresSemanticMutationReview": false,
+    "seconds": 2.1474449100205675
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-size-budget-production.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-check-pipeline-size-budget-production",
+    "requiresSemanticMutationReview": false,
+    "seconds": 2.600290479953401
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-check-pipeline-visual-remote-vertical",
+    "requiresSemanticMutationReview": false,
+    "seconds": 1.8674607429420575
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-job-compaction.test.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-buster-job-compaction.test",
+    "requiresSemanticMutationReview": false,
+    "seconds": 2.0679028229787946
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-buster-shutdown-storage.test",
+    "requiresSemanticMutationReview": false,
+    "seconds": 3.21997638407629
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/coverage-remote.test.mts"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-coverage-remote.test",
+    "requiresSemanticMutationReview": false,
+    "seconds": 2.5815504119964316
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/nova-dispatch-projection.test.mjs"
+    ],
+    "environmentDelta": {},
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "original-nova-dispatch-projection.test",
+    "requiresSemanticMutationReview": false,
+    "seconds": 99.94821620301809
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/reliability/tsconfig.buster-readiness.json"
+    ],
+    "environmentDelta": {},
+    "exitCode": 2,
+    "expectedExitAndAssertionObserved": false,
+    "mutation": false,
+    "name": "types-1",
+    "requiresSemanticMutationReview": false,
+    "seconds": 6.804394426057115
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": false,
+    "name": "types-2",
+    "requiresSemanticMutationReview": false,
+    "seconds": 6.994102100026794
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/buster/engine/tsconfig.json"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": false,
+    "name": "types-3",
+    "requiresSemanticMutationReview": false,
+    "seconds": 6.591895466088317
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "skills/buster/engine/test-gates/production-config-values.ts",
+      "skills/buster/engine/test-gates/production.ts",
+      "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "tests/fixtures/test-gate/buster-admission.mts",
+      "tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "tests/fixtures/test-gate/buster-readiness-profile.mts",
+      "tests/verification/contracts/check-pipeline-container-build-production.mts",
+      "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+      "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "tests/verification/deployment/buster-readiness-config.test.mjs",
+      "tests/verification/deployment/buster-readiness.test.mts",
+      "tests/verification/reliability/buster-job-compaction.test.mts",
+      "tests/verification/reliability/buster-readiness-config.test.mts",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "tests/verification/reliability/coverage-remote.test.mts",
+      "tests/verification/reliability/nova-dispatch-projection.test.mjs"
+    ],
+    "environmentDelta": {},
+    "exitCode": 0,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": false,
+    "name": "canonical-lint",
+    "requiresSemanticMutationReview": false,
+    "seconds": 5.698196511017159
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--import",
+      "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "--test",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "environmentDelta": {
+      "BUSTER_READINESS_MUTATION": "restore-policy-default"
+    },
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": true,
+    "name": "mutant-restore-policy-default",
+    "requiresSemanticMutationReview": true,
+    "seconds": 4.823506082990207
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--import",
+      "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "--test",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "environmentDelta": {
+      "BUSTER_READINESS_MUTATION": "restore-field-defaults"
+    },
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": true,
+    "name": "mutant-restore-field-defaults",
+    "requiresSemanticMutationReview": true,
+    "seconds": 4.722344929003157
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--import",
+      "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "--test",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "environmentDelta": {
+      "BUSTER_READINESS_MUTATION": "ignore-execution"
+    },
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": true,
+    "name": "mutant-ignore-execution",
+    "requiresSemanticMutationReview": true,
+    "seconds": 6.904587558005005
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--import",
+      "./tests/fixtures/test-gate/buster-readiness-mutation.mjs",
+      "--test",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "environmentDelta": {
+      "BUSTER_READINESS_MUTATION": "ignore-output"
+    },
+    "exitCode": 1,
+    "expectedExitAndAssertionObserved": true,
+    "mutation": true,
+    "name": "mutant-ignore-output",
+    "requiresSemanticMutationReview": true,
+    "seconds": 5.123424725024961
+  }
+]

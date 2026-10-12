@@ -1,0 +1,26 @@
+{
+  "runtimeExecuted": false,
+  "recommendationOnly": true,
+  "files": [
+    {
+      "path": "docs/review/remediation/implementation/independent-runner-completion-scheduler-20260921.md",
+      "sha256": "24bbc4206fb04a6e3004432377e487b7707b2340d756574dd2ba98abc8ae3c66",
+      "snapshot": "decision-sources/docs/review/remediation/implementation/independent-runner-completion-scheduler-20260921.md"
+    },
+    {
+      "path": "skills/nova/core/observability/reconciler.ts",
+      "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+      "snapshot": "decision-sources/skills/nova/core/observability/reconciler.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-results.ts",
+      "sha256": "8eb29b312f6dc332a597294589a3b7089650868853688fc45012b7cf70cef18c",
+      "snapshot": "decision-sources/skills/common/plugin-runtime/foundation/observability/attempt-results.ts"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts",
+      "sha256": "9e5c0582733ba97abfa21ea41dd3964d38fc5d8a93443368c8aa12e07777bbe2",
+      "snapshot": "decision-sources/skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts"
+    }
+  ]
+}

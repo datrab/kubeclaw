@@ -1,0 +1,74 @@
+✖ Loaded current close timeout cannot start another child (1777.955255ms)
+✖ Loaded current drain timeout cannot start another child (31448.038432ms)
+✖ Loaded replacement close timeout cannot start another child (1802.650384ms)
+✖ Loaded replacement drain timeout cannot start another child (31411.794522ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 67416.315469
+
+✖ failing tests:
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded current close timeout cannot start another child (1777.955255ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:55:7)
+      at async instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:101:24) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded current drain timeout cannot start another child (31448.038432ms)
+  AssertionError [ERR_ASSERTION]: unconfirmed session must block every new recovery
+  
+  3 !== 2
+  
+      at instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:56:14)
+      at async instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:101:24) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded replacement close timeout cannot start another child (1802.650384ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:55:7)
+      at async instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:101:24) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:72:3
+✖ Loaded replacement drain timeout cannot start another child (31411.794522ms)
+  AssertionError [ERR_ASSERTION]: unconfirmed session must block every new recovery
+  
+  4 !== 3
+  
+      at instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:56:14)
+      at async instance.cleanup (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/provider-disposal-unconfirmed.test.mjs:101:24) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 4,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

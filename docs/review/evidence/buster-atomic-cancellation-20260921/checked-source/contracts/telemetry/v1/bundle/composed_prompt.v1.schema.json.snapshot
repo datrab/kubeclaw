@@ -1,0 +1,80 @@
+{
+  "$id": "composed_prompt.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "byte_length": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "completeness": {
+      "enum": [
+        "full",
+        "truncated",
+        "summarized",
+        "transformed",
+        "unavailable",
+        "reference_only"
+      ]
+    },
+    "correlation": {
+      "$ref": "../correlation_identity.schema.json"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "provider": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "composed_prompt.v1"
+    },
+    "sections": {
+      "minItems": 1,
+      "type": "array"
+    },
+    "sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "template_version": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "thinking": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "artifact_id",
+    "reference",
+    "template_version",
+    "sections",
+    "completeness",
+    "byte_length",
+    "sha256",
+    "correlation"
+  ],
+  "type": "object"
+}

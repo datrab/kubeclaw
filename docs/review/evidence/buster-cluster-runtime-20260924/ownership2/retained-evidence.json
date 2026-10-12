@@ -1,0 +1,20 @@
+[
+  {
+    "originalDirectory": "/tmp/cluster-ownership-gate-jFklBd",
+    "retainedAt": "docs/review/evidence/buster-cluster-runtime-20260924/ownership2/retained-evidence/cluster-ownership-gate-jFklBd",
+    "files": [
+      {
+        "path": "stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "reporter.jsonl",
+        "sha256": "b9b40dffba87ddb56d9b40e6d8b1057677ab91730c9ae6c09f5684aea0e2a038"
+      },
+      {
+        "path": "events.jsonl",
+        "sha256": "2b8d7b4ebe18745ffa452b77ca7ac4d0b11aef110c9ced2db273e529c456afa8"
+      }
+    ]
+  }
+]

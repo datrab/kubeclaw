@@ -1,0 +1,379 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /handle\.sync\(\)/. Input:
+
+"export { FileDurableBlobStore, type DurableBlobStore } from './durable-blobs.ts';\n" +
+  "import { readStoreRecords, withRetainedStoreFence } from './durable-record-dependency.ts';\n" +
+  'import {assertDurableRecordReplay, assertRetirementIntent, payloadDigest, ownerValid, existingRecord,\n' +
+  "  type DurableRecord, type DurableRecordState, type RecordRetirementIntent, type RecordRetirement} from './record-retirement.ts';\n" +
+  "export {assertDurableRecordReplay} from './record-retirement.ts';\n" +
+  "export type {DurableRecord, DurableRecordState, RecordRetirementIntent, RecordRetirement, RecordTombstone} from './record-retirement.ts';\n" +
+  'import path from "node:path";\n' +
+  'import { canonicalJson } from "@kubeclaw/pipeline-observability-contract";\n' +
+  'import {\n' +
+  '  readDurableState,\n' +
+  '  withDurableStoreLock,\n' +
+  '  writeDurableState,\n' +
+  '} from "./durable-delivery.ts";\n' +
+  '\n' +
+  'export interface DurableRecordLimits {\n' +
+  '  readonly maximumRecords: number;\n' +
+  '  readonly maximumBytes: number;\n' +
+  '  readonly maximumRecordBytes: number;\n' +
+  '}\n' +
+  '\n' +
+  'export interface DurableRecordStore {\n' +
+  '  append<T>(stream: string, idempotencyKey: string, payload: T, owner?: string): Promise<{\n' +
+  '    readonly appended: boolean;\n' +
+  '    readonly record: DurableRecord<T>;\n' +
+  '  }>;\n' +
+  '  transition<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string, payload: T): Promise<DurableRecord<T>>;\n' +
+  '  read<T>(stream: string): Promise<ReadonlyArray<DurableRecord<T>>>;\n' +
+  '}\n' +
+  '\n' +
+  'const EMPTY_STATE: DurableRecordState = {\n' +
+  '  schemaVersion: "pipeline-durable-record-store.v1",\n' +
+  '  records: [],\n' +
+  '};\n' +
+  'const IDENTITY = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$/;\n' +
+  'const DIGEST = /^sha256:[a-f0-9]{64}$/;\n' +
+  '\n' +
+  'function positiveInteger(value: number, code: string): void {\n' +
+  '  if (!Number.isSafeInteger(value) || value < 1) throw new Error(code);\n' +
+  '}\n' +
+  '\n' +
+  'function identity(value: string, code: string): void {\n' +
+  '  if (!IDENTITY.test(value)) throw new Error(code);\n' +
+  '}\n' +
+  '\n' +
+  '\n' +
+  'export class FileDurableRecordStore implements DurableRecordStore {\n' +
+  '  readonly #file: string;\n' +
+  '  readonly #limits: DurableRecordLimits;\n' +
+  '  #queue: Promise<unknown> = Promise.resolve();\n' +
+  '\n' +
+  '  constructor(root: string, limits: DurableRecordLimits) {\n' +
+  '    positiveInteger(limits.maximumRecords, "DURABLE_RECORD_LIMIT_INVALID");\n' +
+  '    positiveInteger(limits.maximumBytes, "DURABLE_RECORD_LIMIT_INVALID");\n' +
+  '    positiveInteger(limits.maximumRecordBytes, "DURABLE_RECORD_LIMIT_INVALID");\n' +
+  '    this.#file = path.join(path.resolve(root), "records", "store.json");\n' +
+  '    this.#limits = limits;\n' +
+  '  }\n' +
+  '\n' +
+  '  #serial<T>(operation: () => Promise<T>): Promise<T> {\n' +
+  '    const locked = () => withDurableStoreLock(this.#file, operation);\n' +
+  '    const result = this.#queue.then(locked, locked);\n' +
+  '    this.#queue = result.then(() => undefined, () => undefined);\n' +
+  '    return result;\n' +
+  '  }\n' +
+  '\n' +
+  '  async append<T>(stream: string, idempotencyKey: string, payload: T, owner?: string): Promise<{\n' +
+  '    readonly appended: boolean;\n' +
+  '    readonly record: DurableRecord<T>;\n' +
+  '  }> {\n' +
+  '    identity(stream, "DURABLE_RECORD_STREAM_INVALID");\n' +
+  '    identity(idempotencyKey, "DURABLE_RECORD_IDEMPOTENCY_KEY_INVALID");\n' +
+  '    if (owner !== undefined && !ownerValid(owner)) throw new Error("DURABLE_RECORD_OWNER_INVALID");\n' +
+  '    const snapshot = JSON.parse(canonicalJson(payload)) as T;\n' +
+  '    const digest = payloadDigest(snapshot);\n' +
+  '    if (Buffer.byteLength(canonicalJson(snapshot)) > this.#limits.maximumRecordBytes)\n' +
+  '      throw new Error("DURABLE_RECORD_SIZE_EXCEEDED");\n' +
+  '    return this.#serial(async () => {\n' +
+  '      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);\n' +
+  '      assertDurableRecordReplay(state);\n' +
+  '      const duplicate = existingRecord(state, stream, idempotencyKey, digest, snapshot, owner);\n' +
+  '      if (duplicate) return { appended: false, record: duplicate };\n' +
+  '      if (state.records.length >= this.#limits.maximumRecords)\n' +
+  '        throw new Error("DURABLE_RECORD_STORE_FULL");\n' +
+  '      const record: DurableRecord<T> = {\n' +
+  '        schemaVersion: owner === undefined ? "pipeline-durable-record.v1" : "pipeline-durable-record.v2",\n' +
+  '        ...(owner === undefined ? {} : { owner }),\n' +
+  '        stream,\n' +
+  '        sequence: state.records.filter((entry) => entry.stream === stream).length + (state.tombstones?.filter(entry => entry.stream === stream).length ?? 0) + 1,\n' +
+  '        idempotencyKey,\n' +
+  '        committedAt: new Date().toISOString(),\n' +
+  '        payloadDigest: digest,\n' +
+  '        payload: snapshot,\n' +
+  '      };\n' +
+  '      const candidate: DurableRecordState = owner === undefined ? { ...state, records: [...state.records, record] }\n' +
+  "        : { ...state, schemaVersion: 'pipeline-durable-record-store.v2', records: [...state.records, record], tombstones: state.tombstones ?? [], retirements: state.retirements ?? [] };\n" +
+  '      if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes)\n' +
+  '        throw new Error("DURABLE_RECORD_STORE_FULL");\n' +
+  '      await writeDurableState(this.#file, candidate);\n' +
+  '      return { appended: true, record: structuredClone(record) };\n' +
+  '    });\n' +
+  '  }\n' +
+  '\n' +
+  '  async read<T>(stream: string): Promise<ReadonlyArray<DurableRecord<T>>> {\n' +
+  '    return this.withRecords<T, ReadonlyArray<DurableRecord<T>>>(stream, async records => records);\n' +
+  '  }\n' +
+  '\n' +
+  "  /** Domain owners may inspect records while holding this store's writer fence.\n" +
+  '   * Never reenter this store from operation; acquire other stores in a fixed order. */\n' +
+  '  async withRecords<T, R>(stream: string, operation: (records: ReadonlyArray<DurableRecord<T>>) => Promise<R>): Promise<R> {\n' +
+  '    identity(stream, "DURABLE_RECORD_STREAM_INVALID");\n' +
+  '    return this.#serial(async () => operation(await readStoreRecords<T>(this.#file, this.#limits.maximumBytes, stream)));\n' +
+  '  }\n' +
+  '\n' +
+  '  async retirements(stream: string): Promise<readonly RecordRetirement[]> {\n' +
+  "    identity(stream, 'DURABLE_RECORD_STREAM_INVALID');\n" +
+  '    return this.#serial(async () => {\n' +
+  '      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);\n' +
+  '      return structuredClone((state.retirements ?? []).filter(entry => entry.intent.stream === stream));\n' +
+  '    });\n' +
+  '  }\n' +
+  '\n' +
+  '  /** Caller holds its domain fence; authorize runs again inside the real store writer fence. */\n' +
+  '  async retire(intentInput: RecordRetirementIntent, authorize: (records: readonly DurableRecord[]) => Promise<void>): Promise<RecordRetirement & { readonly newlyRetired: boolean; readonly releasedBytes: number }> {\n' +
+  '    const intent = JSON.parse(canonicalJson(intentInput)) as RecordRetirementIntent; assertRetirementIntent(intent);\n' +
+  '    const intentDigest = payloadDigest(intent);\n' +
+  '    return this.#serial(async () => {\n' +
+  '      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);\n' +
+  '      const previous = state.retirements?.find(item => item.intent.operationId === intent.operationId);\n' +
+  '      if (previous) {\n' +
+  "        if (previous.intentDigest !== intentDigest) throw new Error('DURABLE_RETIREMENT_CONFLICT');\n" +
+  '        await authorize([]);\n' +
+  '        return { ...structuredClone(previous), newlyRetired: false, releasedBytes: Number.parseInt(previous.releasedBytesHex,16) };\n' +
+  '      }\n' +
+  '      const selected = intent.records.map(item => {\n' +
+  '        const record = state.records.find(entry => entry.stream === intent.stream && entry.idempotencyKey === item.idempotencyKey);\n' +
+  "        if (!record || record.schemaVersion !== 'pipeline-durable-record.v2' || record.owner !== intent.owner\n" +
+  "          || record.payloadDigest !== item.payloadDigest) throw new Error('DURABLE_RETIREMENT_RECORD_CHANGED');\n" +
+  '        return record;\n' +
+  '      });\n' +
+  '      await authorize(structuredClone(selected));\n' +
+  '      const selectedIds = new Set(selected.map(record => record.idempotencyKey));\n' +
+  "      const retirement = { intent, intentDigest, releasedBytesHex: '0000000000000000' };\n" +
+  '      const candidate: DurableRecordState = {\n' +
+  "        schemaVersion: 'pipeline-durable-record-store.v2',\n" +
+  '        records: state.records.filter(record => record.stream !== intent.stream || !selectedIds.has(record.idempotencyKey)),\n' +
+  '        tombstones: [...state.tombstones ?? [], ...selected.map(record => {\n' +
+  '          const { payload: _payload, ...header } = record; return { ...header, retirementId: intent.operationId };\n' +
+  '        })], retirements: [...state.retirements ?? [], retirement],\n' +
+  '      };\n' +
+  '      const before = Buffer.byteLength(canonicalJson(state));\n' +
+  '      // Fixed-width hex avoids a self-referential decimal digit-count equation.\n' +
+  '      const releasedBytes = before - Buffer.byteLength(canonicalJson(candidate));\n' +
+  "      if (releasedBytes < 1) throw new Error('DURABLE_RETIREMENT_NO_SAVING');\n" +
+  "      retirement.releasedBytesHex = releasedBytes.toString(16).padStart(16,'0');\n" +
+  '      assertDurableRecordReplay(candidate);\n' +
+  "      if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes) throw new Error('DURABLE_RECORD_STORE_FULL');\n" +
+  '      await writeDurableState(this.#file, candidate);\n' +
+  '      return { ...structuredClone(retirement), newlyRetired: true, releasedBytes };\n' +
+  '    });\n' +
+  '  }\n' +
+  '\n' +
+  '  async transition<T>(\n' +
+  '    stream: string,\n' +
+  '    idempotencyKey: string,\n' +
+  '    expectedPayloadDigest: string,\n' +
+  '    payload: T,\n' +
+  '    authorize?: (records: ReadonlyArray<DurableRecord>) => void,\n' +
+  '  ): Promise<DurableRecord<T>> {\n' +
+  '    const { snapshot, digest } = this.#transitionCandidate(stream, idempotencyKey, expectedPayloadDigest, payload);\n' +
+  '    return this.#serial(() => this.#transitionLocked(stream, idempotencyKey, expectedPayloadDigest, snapshot, digest, authorize));\n' +
+  '  }\n' +
+  '\n' +
+  '  /** Hold the owner writer before its retained dependency writer through the\n' +
+  '   * original durable transition. Domain callers must use one fixed store order. */\n' +
+  '  async transitionWithRetainedStore<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string,\n' +
+  '    payload: T, retained: FileDurableRecordStore, retainedStream: string,\n' +
+  '    authorize: (records: ReadonlyArray<DurableRecord>, retainedRecords: ReadonlyArray<DurableRecord>) => void,\n' +
+  '  ): Promise<DurableRecord<T>> {\n' +
+  '    const { snapshot, digest } = this.#transitionCandidate(stream, idempotencyKey, expectedPayloadDigest, payload);\n' +
+  '    return this.#withRetainedStore(retained, retainedStream, retainedReco'... 3630 more characters
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugins/wait-store/tests/package-boundary.test.mjs:11:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: "export { FileDurableBlobStore, type DurableBlobStore } from './durable-blobs.ts';\n" +
+    "import { readStoreRecords, withRetainedStoreFence } from './durable-record-dependency.ts';\n" +
+    'import {assertDurableRecordReplay, assertRetirementIntent, payloadDigest, ownerValid, existingRecord,\n' +
+    "  type DurableRecord, type DurableRecordState, type RecordRetirementIntent, type RecordRetirement} from './record-retirement.ts';\n" +
+    "export {assertDurableRecordReplay} from './record-retirement.ts';\n" +
+    "export type {DurableRecord, DurableRecordState, RecordRetirementIntent, RecordRetirement, RecordTombstone} from './record-retirement.ts';\n" +
+    'import path from "node:path";\n' +
+    'import { canonicalJson } from "@kubeclaw/pipeline-observability-contract";\n' +
+    'import {\n' +
+    '  readDurableState,\n' +
+    '  withDurableStoreLock,\n' +
+    '  writeDurableState,\n' +
+    '} from "./durable-delivery.ts";\n' +
+    '\n' +
+    'export interface DurableRecordLimits {\n' +
+    '  readonly maximumRecords: number;\n' +
+    '  readonly maximumBytes: number;\n' +
+    '  readonly maximumRecordBytes: number;\n' +
+    '}\n' +
+    '\n' +
+    'export interface DurableRecordStore {\n' +
+    '  append<T>(stream: string, idempotencyKey: string, payload: T, owner?: string): Promise<{\n' +
+    '    readonly appended: boolean;\n' +
+    '    readonly record: DurableRecord<T>;\n' +
+    '  }>;\n' +
+    '  transition<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string, payload: T): Promise<DurableRecord<T>>;\n' +
+    '  read<T>(stream: string): Promise<ReadonlyArray<DurableRecord<T>>>;\n' +
+    '}\n' +
+    '\n' +
+    'const EMPTY_STATE: DurableRecordState = {\n' +
+    '  schemaVersion: "pipeline-durable-record-store.v1",\n' +
+    '  records: [],\n' +
+    '};\n' +
+    'const IDENTITY = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$/;\n' +
+    'const DIGEST = /^sha256:[a-f0-9]{64}$/;\n' +
+    '\n' +
+    'function positiveInteger(value: number, code: string): void {\n' +
+    '  if (!Number.isSafeInteger(value) || value < 1) throw new Error(code);\n' +
+    '}\n' +
+    '\n' +
+    'function identity(value: string, code: string): void {\n' +
+    '  if (!IDENTITY.test(value)) throw new Error(code);\n' +
+    '}\n' +
+    '\n' +
+    '\n' +
+    'export class FileDurableRecordStore implements DurableRecordStore {\n' +
+    '  readonly #file: string;\n' +
+    '  readonly #limits: DurableRecordLimits;\n' +
+    '  #queue: Promise<unknown> = Promise.resolve();\n' +
+    '\n' +
+    '  constructor(root: string, limits: DurableRecordLimits) {\n' +
+    '    positiveInteger(limits.maximumRecords, "DURABLE_RECORD_LIMIT_INVALID");\n' +
+    '    positiveInteger(limits.maximumBytes, "DURABLE_RECORD_LIMIT_INVALID");\n' +
+    '    positiveInteger(limits.maximumRecordBytes, "DURABLE_RECORD_LIMIT_INVALID");\n' +
+    '    this.#file = path.join(path.resolve(root), "records", "store.json");\n' +
+    '    this.#limits = limits;\n' +
+    '  }\n' +
+    '\n' +
+    '  #serial<T>(operation: () => Promise<T>): Promise<T> {\n' +
+    '    const locked = () => withDurableStoreLock(this.#file, operation);\n' +
+    '    const result = this.#queue.then(locked, locked);\n' +
+    '    this.#queue = result.then(() => undefined, () => undefined);\n' +
+    '    return result;\n' +
+    '  }\n' +
+    '\n' +
+    '  async append<T>(stream: string, idempotencyKey: string, payload: T, owner?: string): Promise<{\n' +
+    '    readonly appended: boolean;\n' +
+    '    readonly record: DurableRecord<T>;\n' +
+    '  }> {\n' +
+    '    identity(stream, "DURABLE_RECORD_STREAM_INVALID");\n' +
+    '    identity(idempotencyKey, "DURABLE_RECORD_IDEMPOTENCY_KEY_INVALID");\n' +
+    '    if (owner !== undefined && !ownerValid(owner)) throw new Error("DURABLE_RECORD_OWNER_INVALID");\n' +
+    '    const snapshot = JSON.parse(canonicalJson(payload)) as T;\n' +
+    '    const digest = payloadDigest(snapshot);\n' +
+    '    if (Buffer.byteLength(canonicalJson(snapshot)) > this.#limits.maximumRecordBytes)\n' +
+    '      throw new Error("DURABLE_RECORD_SIZE_EXCEEDED");\n' +
+    '    return this.#serial(async () => {\n' +
+    '      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes);\n' +
+    '      assertDurableRecordReplay(state);\n' +
+    '      const duplicate = existingRecord(state, stream, idempotencyKey, digest, snapshot, owner);\n' +
+    '      if (duplicate) return { appended: false, record: duplicate };\n' +
+    '      if (state.records.length >= this.#limits.maximumRecords)\n' +
+    '        throw new Error("DURABLE_RECORD_STORE_FULL");\n' +
+    '      const record: DurableRecord<T> = {\n' +
+    '        schemaVersion: owner === undefined ? "pipeline-durable-record.v1" : "pipeline-durable-record.v2",\n' +
+    '        ...(owner === undefined ? {} : { owner }),\n' +
+    '        stream,\n' +
+    '        sequence: state.records.filter((entry) => entry.stream === stream).length + (state.tombstones?.filter(entry => entry.stream === stream).length ?? 0) + 1,\n' +
+    '        idempotencyKey,\n' +
+    '        committedAt: new Date().toISOString(),\n' +
+    '        payloadDigest: digest,\n' +
+    '        payload: snapshot,\n' +
+    '      };\n' +
+    '      const candidate: DurableRecordState = owner === undefined ? { ...state, records: [...state.records, record] }\n' +
+    "        : { ...state, schemaVersion: 'pipeline-durable-record-store.v2', records: [...state.records, record], tombstones: state.tombstones ?? [], retirements: state.retirements ?? [] };\n" +
+    '      if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes)\n' +
+    '        throw new Error("DURABLE_RECORD_STORE_FULL");\n' +
+    '      await writeDurableState(this.#file, candidate);\n' +
+    '      return { appended: true, record: structuredClone(record) };\n' +
+    '    });\n' +
+    '  }\n' +
+    '\n' +
+    '  async read<T>(stream: string): Promise<ReadonlyArray<DurableRecord<T>>> {\n' +
+    '    return this.withRecords<T, ReadonlyArray<DurableRecord<T>>>(stream, async records => records);\n' +
+    '  }\n' +
+    '\n' +
+    "  /** Domain owners may inspect records while holding this store's writer fence.\n" +
+    '   * Never reenter this store from operation; acquire other stores in a fixed order. */\n' +
+    '  async withRecords<T, R>(stream: string, operation: (records: ReadonlyArray<DurableRecord<T>>) => Promise<R>): Promise<R> {\n' +
+    '    identity(stream, "DURABLE_RECORD_STREAM_INVALID");\n' +
+    '    return this.#serial(async () => operation(await readStoreRecords<T>(this.#file, this.#limits.maximumBytes, stream)));\n' +
+    '  }\n' +
+    '\n' +
+    '  async retirements(stream: string): Promise<readonly RecordRetirement[]> {\n' +
+    "    identity(stream, 'DURABLE_RECORD_STREAM_INVALID');\n" +
+    '    return this.#serial(async () => {\n' +
+    '      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);\n' +
+    '      return structuredClone((state.retirements ?? []).filter(entry => entry.intent.stream === stream));\n' +
+    '    });\n' +
+    '  }\n' +
+    '\n' +
+    '  /** Caller holds its domain fence; authorize runs again inside the real store writer fence. */\n' +
+    '  async retire(intentInput: RecordRetirementIntent, authorize: (records: readonly DurableRecord[]) => Promise<void>): Promise<RecordRetirement & { readonly newlyRetired: boolean; readonly releasedBytes: number }> {\n' +
+    '    const intent = JSON.parse(canonicalJson(intentInput)) as RecordRetirementIntent; assertRetirementIntent(intent);\n' +
+    '    const intentDigest = payloadDigest(intent);\n' +
+    '    return this.#serial(async () => {\n' +
+    '      const state = await readDurableState(this.#file, EMPTY_STATE, this.#limits.maximumBytes); assertDurableRecordReplay(state);\n' +
+    '      const previous = state.retirements?.find(item => item.intent.operationId === intent.operationId);\n' +
+    '      if (previous) {\n' +
+    "        if (previous.intentDigest !== intentDigest) throw new Error('DURABLE_RETIREMENT_CONFLICT');\n" +
+    '        await authorize([]);\n' +
+    '        return { ...structuredClone(previous), newlyRetired: false, releasedBytes: Number.parseInt(previous.releasedBytesHex,16) };\n' +
+    '      }\n' +
+    '      const selected = intent.records.map(item => {\n' +
+    '        const record = state.records.find(entry => entry.stream === intent.stream && entry.idempotencyKey === item.idempotencyKey);\n' +
+    "        if (!record || record.schemaVersion !== 'pipeline-durable-record.v2' || record.owner !== intent.owner\n" +
+    "          || record.payloadDigest !== item.payloadDigest) throw new Error('DURABLE_RETIREMENT_RECORD_CHANGED');\n" +
+    '        return record;\n' +
+    '      });\n' +
+    '      await authorize(structuredClone(selected));\n' +
+    '      const selectedIds = new Set(selected.map(record => record.idempotencyKey));\n' +
+    "      const retirement = { intent, intentDigest, releasedBytesHex: '0000000000000000' };\n" +
+    '      const candidate: DurableRecordState = {\n' +
+    "        schemaVersion: 'pipeline-durable-record-store.v2',\n" +
+    '        records: state.records.filter(record => record.stream !== intent.stream || !selectedIds.has(record.idempotencyKey)),\n' +
+    '        tombstones: [...state.tombstones ?? [], ...selected.map(record => {\n' +
+    '          const { payload: _payload, ...header } = record; return { ...header, retirementId: intent.operationId };\n' +
+    '        })], retirements: [...state.retirements ?? [], retirement],\n' +
+    '      };\n' +
+    '      const before = Buffer.byteLength(canonicalJson(state));\n' +
+    '      // Fixed-width hex avoids a self-referential decimal digit-count equation.\n' +
+    '      const releasedBytes = before - Buffer.byteLength(canonicalJson(candidate));\n' +
+    "      if (releasedBytes < 1) throw new Error('DURABLE_RETIREMENT_NO_SAVING');\n" +
+    "      retirement.releasedBytesHex = releasedBytes.toString(16).padStart(16,'0');\n" +
+    '      assertDurableRecordReplay(candidate);\n' +
+    "      if (Buffer.byteLength(canonicalJson(candidate)) > this.#limits.maximumBytes) throw new Error('DURABLE_RECORD_STORE_FULL');\n" +
+    '      await writeDurableState(this.#file, candidate);\n' +
+    '      return { ...structuredClone(retirement), newlyRetired: true, releasedBytes };\n' +
+    '    });\n' +
+    '  }\n' +
+    '\n' +
+    '  async transition<T>(\n' +
+    '    stream: string,\n' +
+    '    idempotencyKey: string,\n' +
+    '    expectedPayloadDigest: string,\n' +
+    '    payload: T,\n' +
+    '    authorize?: (records: ReadonlyArray<DurableRecord>) => void,\n' +
+    '  ): Promise<DurableRecord<T>> {\n' +
+    '    const { snapshot, digest } = this.#transitionCandidate(stream, idempotencyKey, expectedPayloadDigest, payload);\n' +
+    '    return this.#serial(() => this.#transitionLocked(stream, idempotencyKey, expectedPayloadDigest, snapshot, digest, authorize));\n' +
+    '  }\n' +
+    '\n' +
+    '  /** Hold the owner writer before its retained dependency writer through the\n' +
+    '   * original durable transition. Domain callers must use one fixed store order. */\n' +
+    '  async transitionWithRetainedStore<T>(stream: string, idempotencyKey: string, expectedPayloadDigest: string,\n' +
+    '    payload: T, retained: FileDurableRecordStore, retainedStream: string,\n' +
+    '    authorize: (records: ReadonlyArray<DurableRecord>, retainedRecords: ReadonlyArray<DurableRecord>) => void,\n' +
+    '  ): Promise<DurableRecord<T>> {\n' +
+    '    const { snapshot, digest } = this.#transitionCandidate(stream, idempotencyKey, expectedPayloadDigest, payload);\n' +
+    '    return this.#withRetainedStore(retained, retainedStream, retainedReco'... 3630 more characters,
+  expected: /handle\.sync\(\)/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

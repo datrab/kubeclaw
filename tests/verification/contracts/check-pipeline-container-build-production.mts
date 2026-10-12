@@ -1,3 +1,6 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
+// Preparation authority is modeled here; parser, extraction and durable service/store remain real.
+import { ModeledBusterRemotePlanService as BusterRemotePlanService, ModeledPreparedPlanJobStore as FileBusterPlanJobStore } from '../../fixtures/test-gate/modeled-preparation.mts';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -5,7 +8,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { buildRegistry, createProductionNovaTestGate, discoverPackages, resolveTestPlan } from '@kubeclaw/nova-core';
-import { BusterRemotePlanRuntime, BusterRemotePlanService, FileBusterPlanJobStore } from '@kubeclaw/buster-engine';
+import { BusterRemotePlanRuntime } from '@kubeclaw/buster-engine';
 
 const buildkitHost = process.env.CONTAINER_BUILD_BUILDKIT_HOST;
 const registryReference = process.env.CONTAINER_BUILD_REGISTRY_REFERENCE;
@@ -56,6 +59,8 @@ try {
       defaultConcurrencyLimit: 1, maximumConcurrencyLimits: { 'container-build': 1 } } });
 
   const makeService = () => new BusterRemotePlanService({
+    dependencyReadiness: { maximumExecutionMs: 1000, maximumOutputBytes: 65536 },
+    executionPolicy: runnerExecutionPolicy, workerLocalRuntime: { drainTimeoutMs: 300_000, cancellationTimeoutMs: 30_000, replayLimit: 65_536 },
     store: new FileBusterPlanJobStore(busterState, { recordLimits: records, maximumArchiveBytes: 16 * 1024 * 1024,
       maximumResultBytes: 16 * 1024 * 1024, maximumResultStoreBytes: 64 * 1024 * 1024,
       trustedSourceAuthority: 'nova:production', sourceAttestationPublicKey: publicKey }),

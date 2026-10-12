@@ -1,0 +1,28 @@
+[
+  {
+    "database": "db",
+    "originalMetadata": {
+      "Version": 2,
+      "NextUpdate": "2026-09-21T19:19:55.870895986Z",
+      "UpdatedAt": "2026-09-20T19:19:55.870896177Z",
+      "DownloadedAt": "0001-01-01T00:00:00Z"
+    },
+    "evaluatedAt": "2026-09-24T14:27:51.912736+00:00",
+    "ageHours": 91.13223384444446,
+    "maximumHours": 48,
+    "fresh": false
+  },
+  {
+    "database": "java-db",
+    "originalMetadata": {
+      "Version": 1,
+      "NextUpdate": "2026-09-22T01:01:52.688391023Z",
+      "UpdatedAt": "2026-09-19T01:01:52.688391724Z",
+      "DownloadedAt": "0001-01-01T00:00:00Z"
+    },
+    "evaluatedAt": "2026-09-24T14:27:51.912736+00:00",
+    "ageHours": 133.4331178736111,
+    "maximumHours": 168,
+    "fresh": true
+  }
+]

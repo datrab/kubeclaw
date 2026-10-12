@@ -1,0 +1,12 @@
+{
+  "verified": true,
+  "vmBooted": false,
+  "initialArtifacts": {
+    "node_modules/.cache/buster-helper-vm-20260921/root/usr/bin/qemu-system-x86_64": "d0c183817a3044bc38e104f88ef56ee235c5d91a9413cba7255c1c1751c31fc1",
+    "node_modules/.cache/buster-helper-vm-20260921/root/boot/vmlinuz-virt": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c",
+    "node_modules/.cache/buster-helper-vm-20260921/initrd.cpio.gz": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2",
+    "node_modules/.cache/buster-helper-vm-20260921/guest-root.ext4": "fa8897dc209e1cefcc69e18c4022b44bd7de586c454ed720cc24e15973f110f9",
+    "node_modules/.cache/buster-helper-vm-20260921/repo-snapshot-manifest.json": "ad55e2b1b8e8ae54b25d341212964e3fa2577ac0a7b7a8940993e6b84b6901b8"
+  },
+  "memoryCurrentAfterOwnCacheHints": "848887808"
+}

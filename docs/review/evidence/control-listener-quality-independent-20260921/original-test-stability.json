@@ -1,0 +1,30 @@
+[
+  {
+    "path": "skills/prism/tests/control.test.mts",
+    "unchangedSinceReviewStart": true
+  },
+  {
+    "path": "skills/prism/tests/control-generation-http.test.mts",
+    "unchangedSinceReviewStart": true
+  },
+  {
+    "path": "skills/prism/tests/control-product-composition.test.mts",
+    "unchangedSinceReviewStart": true
+  },
+  {
+    "path": "skills/prism/tests/control-product-independent.test.mts",
+    "unchangedSinceReviewStart": true
+  },
+  {
+    "path": "skills/prism/tests/control-decisions.test.mts",
+    "unchangedSinceReviewStart": true
+  },
+  {
+    "path": "skills/prism/tests/agent-job-http.test.mts",
+    "unchangedSinceReviewStart": true
+  },
+  {
+    "path": "skills/prism/tests/corpus.test.mts",
+    "unchangedSinceReviewStart": true
+  }
+]

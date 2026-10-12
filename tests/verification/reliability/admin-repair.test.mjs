@@ -16,7 +16,7 @@ const definition = { schemaVersion: 'pipeline-definition.v2', id: 'test:admin-tr
 ] };
 function platform(root) {
   const fixture = path.resolve('tests/fixtures/plugin-system-v2');
-  return { schemaVersion: 'pipeline-platform.v2', installationRoots: [fixture], trustedBuiltinRoots: [fixture],
+  return { schemaVersion: 'pipeline-platform.v2', effectLockTtlMs: 300_000, installationRoots: [fixture], trustedBuiltinRoots: [fixture],
     externalTrust: { allowedSourceDigests: {}, verifiedAttestations: {} }, providers: {}, grants: {}, adapters: {}, activeAdapters: [], observers: {},
     storageRoot: path.join(root, 'state'), shutdownTimeoutMs: 5000, orchestratorIssuerId: 'nova',
     administrativeDecisionIssuers: [{ type: 'administrator', id: 'admin:test' }] };

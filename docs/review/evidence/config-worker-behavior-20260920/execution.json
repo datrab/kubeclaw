@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "node",
+    "--test",
+    "skills/prism/tests/swarm-worker-behavior.test.mts",
+    "skills/prism/tests/worker-ingress-capacity.test.mts",
+    "skills/prism/tests/worker-shutdown-boundaries.test.mts"
+  ],
+  "startedAt": "2026-09-20T20:17:03.353950+00:00",
+  "finishedAt": "2026-09-20T20:17:34.902445+00:00",
+  "exitCode": 0,
+  "sourceSha256": {
+    "skills/prism/tests/swarm-worker-behavior.test.mts": "ef4c2a95c71674b9547d3e938425e69a64e132ac879d79763979fdbf7c841cba",
+    "skills/prism/tests/worker-ingress-capacity.test.mts": "bec028cb418e787bfbb730c9dc8a6a4ac663e91a66c5f19821a9290844a6320d",
+    "skills/prism/tests/worker-shutdown-boundaries.test.mts": "813148fc4b18aa94703ac4f1fd45511f956e8d192e1197c8c4f7c8d0f57c3e42",
+    "skills/prism/server/worker-config.ts": "09108493fdcdcb993c83375f04667a7a92b2dbaacdf02e11f4f3f549f8817194",
+    "skills/prism/server/worker-lifecycle.ts": "d166a6ec6fd21c6b28c5bbeb0a1494dd3b81c61bbae588846250347917f5318a",
+    "skills/common/plugin-runtime/foundation/config/swarm.ts": "1bafee4a2657035278c99bc4ebf44b16dd5997d95266f8bd3ee2b64a43cd6239",
+    "skills/common/plugin-runtime/foundation/config/swarm.schema.json": "21c5dbe20d5e636679005b10aea762b1c9a1bd8614dada0a5173858bcdf1b21e",
+    "charts/kubeclaw/files/config/swarm.config.json": "7e2ec0c437ab8a99e3ff0537a103447750a85cd238a53086915aed6040a5ed89"
+  },
+  "sourcesUnchangedDuringRun": true,
+  "scope": "Local original HTTP/TCP/pg lifecycle. No native worker, image or cluster proof."
+}

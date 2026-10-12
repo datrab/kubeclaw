@@ -1,0 +1,21 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"status":{"error":"ENOENT: no such file or directory, lstat '/lib/x86_64-linux-gnu'","jobId":"job:6557661115bab6d13c893ba22ea5b39234246f1939d13bc65151e347a6ae7482","requestDigest":"sha256:b89a8d0e8e54778a424d1c905679622749fd7bdcdeb55a5034db7fa7f0e080fe","result":null,"schemaVersion":"buster-plan-status.v1","state":"failed","submittedAt":"2026-08-12T16:00:00.000Z","updatedAt":"2026-09-21T18:56:07.713Z"},"decision":{"decisionDigest":"sha256:469794a4fb7380931bb2b593a7f71255ff398ddedd20f65d0d9cc8af7491a36d","jobId":"job:6557661115bab6d13c893ba22ea5b39234246f1939d13bc65151e347a6ae7482","nodes":[],"planId":"plan:phase8","resultDigest":null,"reviews":[],"runId":"run:phase8","schemaVersion":"test-gate-decision.v1","state":"execution_error"},"stageResult":{"schemaVersion":"stage-result.v2","outcome":"blocked","artifacts":[],"reason":{"code":"test_gate.execution_error","message":"The remote test gate did not complete safely.","details":{"jobId":"job:6557661115bab6d13c893ba22ea5b39234246f1939d13bc65151e347a6ae7482","planId":"plan:phase8","decisionDigest":"sha256:469794a4fb7380931bb2b593a7f71255ff398ddedd20f65d0d9cc8af7491a36d","failedNodes":[],"advisoryFailures":[]}}}}
++ actual - expected
+
++ 'failed'
+- 'completed'
+
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/check-pipeline-phase8-vertical.mts:113:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'failed',
+  expected: 'completed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

@@ -1,0 +1,245 @@
+{
+  "at": "2026-09-21T19:18:38.274095+00:00",
+  "runtimeExecuted": false,
+  "mixedPrivateDraftAndExplicitLiveDependencies": true,
+  "files": [
+    {
+      "logicalPath": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "fab3f9473ac2c7872dc338f8d8a144ad82815302db1621e69eaab725e5397a0e",
+      "snapshot": "sources/charts/kubeclaw/files/config/buster-engine.config.json"
+    },
+    {
+      "logicalPath": "charts/prism/templates/_swarm-bundle.tpl",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/charts/prism/templates/_swarm-bundle.tpl",
+      "sha256": "ab7b801b16ee4ef979cb2349857269f18892095ac5af979bbe700a284845335a",
+      "snapshot": "sources/charts/prism/templates/_swarm-bundle.tpl"
+    },
+    {
+      "logicalPath": "charts/prism/templates/_swarm-config.tpl",
+      "readFrom": "charts/prism/templates/_swarm-config.tpl",
+      "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a",
+      "snapshot": "sources/charts/prism/templates/_swarm-config.tpl"
+    },
+    {
+      "logicalPath": "docker/buster-runtime-entrypoint.sh",
+      "readFrom": "docker/buster-runtime-entrypoint.sh",
+      "sha256": "d2e81938db163ec92bd021a047f30aa5bec06549f01f15f794ff360ecec58820",
+      "snapshot": "sources/docker/buster-runtime-entrypoint.sh"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/production-config-values.ts",
+      "readFrom": "skills/buster/engine/test-gates/production-config-values.ts",
+      "sha256": "b18d1684d25bae992b70c9e99910dc36a3015dbcef0ea72a6c0ee19dfdc27792",
+      "snapshot": "sources/skills/buster/engine/test-gates/production-config-values.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/production.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/production.ts",
+      "sha256": "dd3b06c92a726cb2bcd68b61f8bc819e2b51101b10362bd043e92313f10fbc2a",
+      "snapshot": "sources/skills/buster/engine/test-gates/production.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/provider-child.mjs",
+      "readFrom": "skills/buster/engine/test-gates/provider-child.mjs",
+      "sha256": "62a88c6c23e47440b05c62ea55453ba5b973a10fafc23e157e82bbd9ae526320",
+      "snapshot": "sources/skills/buster/engine/test-gates/provider-child.mjs"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/provider-loader.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "d42011b960e18b2100774ebf387e2789264a771f2be6b31b4365ac537373b302",
+      "snapshot": "sources/skills/buster/engine/test-gates/provider-loader.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/provider-result-validation.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/provider-result-validation.ts",
+      "sha256": "7063bd5db3614ad76adf2fa3dbdb9b430b34f1ae772e1c9c4b29848766c7ffcc",
+      "snapshot": "sources/skills/buster/engine/test-gates/provider-result-validation.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "e375000b0e256497409276093ad5375c32285475c87a33d337bef3124be456b7",
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-plan-service.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "sha256": "8408e7530b69f97164e3dec096ae5108db9d95ae5e0ffcd45936efd44576dc3c",
+      "snapshot": "sources/skills/buster/engine/test-gates/remote-prepared-execution.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-envelope.ts",
+      "sha256": "3e166c56a1aa0c33e82d917cf7e5824f8188d7eed1757ea2a7aebf1810fbed20",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-attempt-envelope.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-attempt-evidence.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-evidence.ts",
+      "sha256": "2613dc8b3a3f252d4afa13415b17e6345de726e8ccb2115e7551615a4578e174",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-attempt-evidence.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-attempt-execution.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-execution.ts",
+      "sha256": "9012607f67aeb7abe5aa29ae6687ea1e43b091b3bea3c1b57b0ed9d01fa6c705",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-attempt-execution.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-attempt-preparation.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-preparation.ts",
+      "sha256": "b0f2a62cd1bd4179736bf2c9346a44bb946a1db28fdd661ad4ffee064814667d",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-attempt-preparation.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-attempt-result.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-attempt-result.ts",
+      "sha256": "9d8cfa063a73da1c7c90f861af13bd2b3303e7c999f925b660f9b065ab19a2f5",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-attempt-result.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-completion.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-completion.ts",
+      "sha256": "2281dc0ddf02338e1619f8710d10b42819a1641d5e850fd2c062f3f161e28c82",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-completion.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-fixtures.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-fixtures.ts",
+      "sha256": "76a8a08a8ac7facae99e88882cb704cb041452d3dc2963f226c9b3b3d884b917",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-fixtures.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-log-capture.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-log-capture.ts",
+      "sha256": "ad5e07e980881a18fc5b4d3b68d888caa80bd988478908b2dd54daf478e5a3d1",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-log-capture.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-managed-evidence.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-managed-evidence.ts",
+      "sha256": "6ba483ec81af52dce533911b5231b1cda3aa5c9825f244cd06156bab4c8b316c",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-managed-evidence.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-node.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-node.ts",
+      "sha256": "f8dee4f5340d84b8be053ab13b9fce925eafcfd7e6e3a1125029ca5929608851",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-node.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-paths.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-paths.ts",
+      "sha256": "f683bb15cf53a7bf2216ade88088aa3f2ab04ad3d41fab16871d9e071cdd9827",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-paths.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-plan-identity.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-plan-identity.ts",
+      "sha256": "48f11e7aa0670b51fc72c07315401208729d16a3090d7e6781ee00440fd74b70",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-plan-identity.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-provider-operation.ts",
+      "sha256": "331bfbfbf501192293154f2b237470374190365401630516e2e2f602ab1a022d",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-provider-operation.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-provider-state.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-provider-state.ts",
+      "sha256": "f599ef7ca3920c4a0d8425c8892465034db7db94c592f32c53d9b72778f00f17",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-provider-state.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-scheduler.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-scheduler.ts",
+      "sha256": "b18749b2b9b81eb8e0cbf824d61e4b96f117b0b00eebb502ceb6a7b788f62ce8",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-scheduler.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-setup.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-setup.ts",
+      "sha256": "ad0a216f45ecb0196ab96f1a653643f450748f9e61850691892104b1114a91c3",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-setup.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-types.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-types.ts",
+      "sha256": "b28e648f56ccf27cf8914891abb6afc470d00c56f01f5b7fdbfc71fc02c1eb1b",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-types.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-values.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-values.ts",
+      "sha256": "e0d381931d7e580113faaafb8ae05fa0e9431e15202a23b97bbc1fb974e27021",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-values.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner-worker-profile.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner-worker-profile.ts",
+      "sha256": "4e7cc1f1206047bf768b1826d979fc5384fe1edc7e3e4fa9bb71e24e5d31a648",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner-worker-profile.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/runner.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/runner.ts",
+      "sha256": "95c85b56a46c0f6d8efba412d0be7d9cfeba1fd579d8aa41c99ce06c13705513",
+      "snapshot": "sources/skills/buster/engine/test-gates/runner.ts"
+    },
+    {
+      "logicalPath": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/buster/engine/test-gates/specialist-report-finalization.ts",
+      "sha256": "2bc8ae28f2f2e9e65616681ba2e2b430b2d3378f6119f6bdc0b0aae5fd7b2d40",
+      "snapshot": "sources/skills/buster/engine/test-gates/specialist-report-finalization.ts"
+    },
+    {
+      "logicalPath": "skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/common/plugin-runtime/foundation/config/buster-execution.ts",
+      "sha256": "076cf80a40f30899eabebc0c838079fed1d76101d16d473b98af03fbc74d3fbc",
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/config/buster-execution.ts"
+    },
+    {
+      "logicalPath": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "readFrom": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "sha256": "8d31713e1a4ff4b14a9c98ee2616ee48dc0336a67a01e2ddec915a602f67fd09",
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts"
+    },
+    {
+      "logicalPath": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "sha256": "209bbde26a9954d8f1e41a79332ae1cbd1af69e87d5b52b80535127263738ee9",
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json"
+    },
+    {
+      "logicalPath": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "readFrom": "docs/review/evidence/buster-runner-quality-20260921/files/skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "sha256": "6eb99f6f053feee7debade1324f4044c2dd3820c5f51e6f081ebee406dff1700",
+      "snapshot": "sources/skills/common/plugin-runtime/foundation/config/swarm.ts"
+    }
+  ],
+  "chartAliases": [
+    {
+      "path": "charts/prism/templates/_swarm-bundle.tpl",
+      "linkText": "../../kubeclaw/templates/_swarm-config.tpl",
+      "resolved": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/templates/_swarm-config.tpl"
+    },
+    {
+      "path": "charts/prism/files/config/buster-engine.config.json",
+      "linkText": "../../../kubeclaw/files/config/buster-engine.config.json",
+      "resolved": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/charts/kubeclaw/files/config/buster-engine.config.json"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm-components.schema.json",
+      "linkText": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "resolved": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json"
+    },
+    {
+      "path": "charts/prism/files/config/swarm-components.schema.json",
+      "linkText": "../../../../skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+      "resolved": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/config/swarm-components.schema.json"
+    }
+  ]
+}

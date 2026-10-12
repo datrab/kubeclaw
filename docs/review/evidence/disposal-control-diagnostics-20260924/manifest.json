@@ -1,0 +1,17 @@
+{
+  "files": [
+    {
+      "path": "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+      "beforeSha256": "22eb659212d4bc2f5f43b6678b4608b15e703869cbfef6d77bcfce3fd154fae6",
+      "afterSha256": "2741d0de10e3089ec00cbb253ca11a690bf2d04770568827b58bcec389c9e2fe"
+    },
+    {
+      "path": "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs",
+      "beforeSha256": "a31ae99e4e61a71962b3017c1eaeca8227457a9891722d6616fbdcb05a062b13",
+      "afterSha256": "1e851db3516243325b8f800dc22c2d1b7dab4e38e75d4c879541ac461fe4d557"
+    }
+  ],
+  "reason": "Expose actual production-caught inner assertion and exact public resource comparison details for semantic control evidence; original behavioral expectations and deadlines retained.",
+  "independentReview": "pending",
+  "runtime": "pending"
+}

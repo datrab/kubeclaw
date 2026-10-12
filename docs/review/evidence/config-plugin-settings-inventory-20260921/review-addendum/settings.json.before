@@ -1,0 +1,391 @@
+{
+  "kind": "bounded source-derived schema field inventory; no runtime execution",
+  "rows": [
+    {
+      "plugin": "kubeclaw.wait-store",
+      "field": "root",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "filesystem path",
+      "consumer": "src/adapter.ts::activate -> FileDurableRecordStore",
+      "requirement": "root required; numeric values currently optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-wait-store.config.json",
+      "note": "manual retention repeats these defaults from historical snapshots; plugin root is not rebased by platform loader"
+    },
+    {
+      "plugin": "kubeclaw.wait-store",
+      "field": "maxEntryBytes",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 1048576,
+      "unit": "canonical durable payload bytes (whole store limit separately includes framing)",
+      "consumer": "src/adapter.ts::activate -> FileDurableRecordStore",
+      "requirement": "root required; numeric values currently optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-wait-store.config.json",
+      "note": "manual retention repeats these defaults from historical snapshots; plugin root is not rebased by platform loader"
+    },
+    {
+      "plugin": "kubeclaw.wait-store",
+      "field": "maximumRecords",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 100000,
+      "unit": "records",
+      "consumer": "src/adapter.ts::activate -> FileDurableRecordStore",
+      "requirement": "root required; numeric values currently optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-wait-store.config.json",
+      "note": "manual retention repeats these defaults from historical snapshots; plugin root is not rebased by platform loader"
+    },
+    {
+      "plugin": "kubeclaw.wait-store",
+      "field": "maximumStoreBytes",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 268435456,
+      "unit": "whole durable store bytes",
+      "consumer": "src/adapter.ts::activate -> FileDurableRecordStore",
+      "requirement": "root required; numeric values currently optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-wait-store.config.json",
+      "note": "manual retention repeats these defaults from historical snapshots; plugin root is not rebased by platform loader"
+    },
+    {
+      "plugin": "kubeclaw.telemetry-store",
+      "field": "root",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "filesystem path",
+      "consumer": "src/adapter.ts::activate -> telemetryProjection/FileDurableRecordStore",
+      "requirement": "root required; numeric values currently optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-telemetry-store.config.json",
+      "note": "not a physical filesystem quota"
+    },
+    {
+      "plugin": "kubeclaw.telemetry-store",
+      "field": "maxRecordBytes",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 1048576,
+      "unit": "canonical durable payload bytes (whole store limit separately includes framing)",
+      "consumer": "src/adapter.ts::activate -> telemetryProjection/FileDurableRecordStore",
+      "requirement": "root required; numeric values currently optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-telemetry-store.config.json",
+      "note": "not a physical filesystem quota"
+    },
+    {
+      "plugin": "kubeclaw.telemetry-store",
+      "field": "maximumRecords",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 100000,
+      "unit": "records",
+      "consumer": "src/adapter.ts::activate -> telemetryProjection/FileDurableRecordStore",
+      "requirement": "root required; numeric values currently optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-telemetry-store.config.json",
+      "note": "not a physical filesystem quota"
+    },
+    {
+      "plugin": "kubeclaw.telemetry-store",
+      "field": "maximumStoreBytes",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 268435456,
+      "unit": "whole durable store bytes",
+      "consumer": "src/adapter.ts::activate -> telemetryProjection/FileDurableRecordStore",
+      "requirement": "root required; numeric values currently optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-telemetry-store.config.json",
+      "note": "not a physical filesystem quota"
+    },
+    {
+      "plugin": "kubeclaw.operator-messaging",
+      "field": "deliveryRoot",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "filesystem path",
+      "consumer": "src/config.ts::parseConfig/parseTarget -> src/adapter.ts::activate/deliver/lookupReceipt",
+      "requirement": "required",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-operator-messaging.config.json",
+      "note": "targets is a required nonempty identity map; default numbers also occur in retirement authority"
+    },
+    {
+      "plugin": "kubeclaw.operator-messaging",
+      "field": "maximumDeliveryRecords",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 100000,
+      "unit": "records",
+      "consumer": "src/config.ts::parseConfig/parseTarget -> src/adapter.ts::activate/deliver/lookupReceipt",
+      "requirement": "optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-operator-messaging.config.json",
+      "note": "targets is a required nonempty identity map; default numbers also occur in retirement authority"
+    },
+    {
+      "plugin": "kubeclaw.operator-messaging",
+      "field": "maximumDeliveryBytes",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 268435456,
+      "unit": "whole durable store bytes",
+      "consumer": "src/config.ts::parseConfig/parseTarget -> src/adapter.ts::activate/deliver/lookupReceipt",
+      "requirement": "optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-operator-messaging.config.json",
+      "note": "targets is a required nonempty identity map; default numbers also occur in retirement authority"
+    },
+    {
+      "plugin": "kubeclaw.operator-messaging",
+      "field": "targets.*.endpoint",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "absolute HTTP(S) URL",
+      "consumer": "src/config.ts::parseConfig/parseTarget -> src/adapter.ts::activate/deliver/lookupReceipt",
+      "requirement": "required with tokenSecret in direct mode",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-operator-messaging.config.json",
+      "note": "targets is a required nonempty identity map; default numbers also occur in retirement authority"
+    },
+    {
+      "plugin": "kubeclaw.operator-messaging",
+      "field": "targets.*.tokenSecret",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "secret reference identity",
+      "consumer": "src/config.ts::parseConfig/parseTarget -> src/adapter.ts::activate/deliver/lookupReceipt",
+      "requirement": "required in direct mode",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-operator-messaging.config.json",
+      "note": "targets is a required nonempty identity map; default numbers also occur in retirement authority"
+    },
+    {
+      "plugin": "kubeclaw.operator-messaging",
+      "field": "targets.*.endpointOrigin",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "HTTP(S) origin",
+      "consumer": "src/config.ts::parseConfig/parseTarget -> src/adapter.ts::activate/deliver/lookupReceipt",
+      "requirement": "required with endpointSecret in confidential mode",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-operator-messaging.config.json",
+      "note": "targets is a required nonempty identity map; default numbers also occur in retirement authority"
+    },
+    {
+      "plugin": "kubeclaw.operator-messaging",
+      "field": "targets.*.endpointSecret",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "secret reference identity",
+      "consumer": "src/config.ts::parseConfig/parseTarget -> src/adapter.ts::activate/deliver/lookupReceipt",
+      "requirement": "required in confidential mode",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-operator-messaging.config.json",
+      "note": "targets is a required nonempty identity map; default numbers also occur in retirement authority"
+    },
+    {
+      "plugin": "kubeclaw.operator-messaging",
+      "field": "targets.*.receiptEndpoint",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "same-origin HTTP(S) URL",
+      "consumer": "src/config.ts::parseConfig/parseTarget -> src/adapter.ts::activate/deliver/lookupReceipt",
+      "requirement": "optional; absent disables receipt lookup",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-operator-messaging.config.json",
+      "note": "targets is a required nonempty identity map; default numbers also occur in retirement authority"
+    },
+    {
+      "plugin": "kubeclaw.operator-messaging",
+      "field": "targets.*.maxPayloadBytes",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 65536,
+      "unit": "UTF-8 serialized JSON bytes",
+      "consumer": "src/config.ts::parseConfig/parseTarget -> src/adapter.ts::activate/deliver/lookupReceipt",
+      "requirement": "optional,1..1048576",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-operator-messaging.config.json",
+      "note": "targets is a required nonempty identity map; default numbers also occur in retirement authority"
+    },
+    {
+      "plugin": "kubeclaw.operator-messaging",
+      "field": "targets.*.format",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": "json",
+      "unit": "enum json/discord_webhook",
+      "consumer": "src/config.ts::parseConfig/parseTarget -> src/adapter.ts::activate/deliver/lookupReceipt",
+      "requirement": "optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-operator-messaging.config.json",
+      "note": "targets is a required nonempty identity map; default numbers also occur in retirement authority"
+    },
+    {
+      "plugin": "kubeclaw.network-http",
+      "field": "allowedOrigins",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "HTTP(S) origin allowlist",
+      "consumer": "src/adapter.ts::parseConfig -> invoke/performRequest/responseBody",
+      "requirement": "required",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-network-http.config.json",
+      "note": "separate from calling registration grant allowedOrigins; both boundaries apply"
+    },
+    {
+      "plugin": "kubeclaw.network-http",
+      "field": "allowedMethods",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": [
+        "GET"
+      ],
+      "unit": "method allowlist",
+      "consumer": "src/adapter.ts::parseConfig -> invoke/performRequest/responseBody",
+      "requirement": "optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-network-http.config.json",
+      "note": "separate from calling registration grant allowedOrigins; both boundaries apply"
+    },
+    {
+      "plugin": "kubeclaw.network-http",
+      "field": "allowedHeaders",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": [
+        "accept",
+        "content-type",
+        "idempotency-key"
+      ],
+      "unit": "lowercase header allowlist",
+      "consumer": "src/adapter.ts::parseConfig -> invoke/performRequest/responseBody",
+      "requirement": "optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-network-http.config.json",
+      "note": "separate from calling registration grant allowedOrigins; both boundaries apply"
+    },
+    {
+      "plugin": "kubeclaw.network-http",
+      "field": "maxRequestBytes",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 1048576,
+      "unit": "UTF-8 serialized request body bytes",
+      "consumer": "src/adapter.ts::parseConfig -> invoke/performRequest/responseBody",
+      "requirement": "optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-network-http.config.json",
+      "note": "separate from calling registration grant allowedOrigins; both boundaries apply"
+    },
+    {
+      "plugin": "kubeclaw.network-http",
+      "field": "maxResponseBytes",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 1048576,
+      "unit": "decompressed response bytes",
+      "consumer": "src/adapter.ts::parseConfig -> invoke/performRequest/responseBody",
+      "requirement": "optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-network-http.config.json",
+      "note": "separate from calling registration grant allowedOrigins; both boundaries apply"
+    },
+    {
+      "plugin": "kubeclaw.network-http",
+      "field": "timeoutMs",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 30000,
+      "unit": "milliseconds",
+      "consumer": "src/adapter.ts::parseConfig -> invoke/performRequest/responseBody",
+      "requirement": "optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-network-http.config.json",
+      "note": "separate from calling registration grant allowedOrigins; both boundaries apply"
+    },
+    {
+      "plugin": "kubeclaw.secret-resolver",
+      "field": "environment.*",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "secret name to ENV-name mapping",
+      "consumer": "src/adapter.ts::activate/invoke",
+      "requirement": "mapping required",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-secret-resolver.config.json",
+      "note": "ENV contains external secret material, not a default; missing/empty secret rejected at invocation"
+    },
+    {
+      "plugin": "kubeclaw.notification-observer",
+      "field": "target",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "operator target identity",
+      "consumer": "src/observer.ts::observe/lifecycleNotification; deliverPreview only consumes target",
+      "requirement": "not schema-required; demanded by publish target() at runtime",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-notification-observer.config.json",
+      "note": "same schema reused by notifications and preview-delivery; each has its own configured object"
+    },
+    {
+      "plugin": "kubeclaw.notification-observer",
+      "field": "pipelineLabel",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": "KubeClaw Pipeline",
+      "unit": "presentation string <=256 JS code units",
+      "consumer": "src/observer.ts::observe/lifecycleNotification; deliverPreview only consumes target",
+      "requirement": "optional",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-notification-observer.config.json",
+      "note": "same schema reused by notifications and preview-delivery; each has its own configured object"
+    },
+    {
+      "plugin": "kubeclaw.notification-observer",
+      "field": "modelLabel",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "presentation string <=256 JS code units",
+      "consumer": "src/observer.ts::observe/lifecycleNotification; deliverPreview only consumes target",
+      "requirement": "optional; absent omits model field",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-notification-observer.config.json",
+      "note": "same schema reused by notifications and preview-delivery; each has its own configured object"
+    },
+    {
+      "plugin": "kubeclaw.notification-observer",
+      "field": "stageLabels",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "stage ID to display-label mapping",
+      "consumer": "src/observer.ts::observe/lifecycleNotification; deliverPreview only consumes target",
+      "requirement": "optional; absent/unmatched derives titleCase(stageId)",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-notification-observer.config.json",
+      "note": "same schema reused by notifications and preview-delivery; each has its own configured object"
+    },
+    {
+      "plugin": "kubeclaw.notification-observer",
+      "field": "maxMessageChars",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": 8192,
+      "unit": "JS string code units",
+      "consumer": "src/observer.ts::observe/lifecycleNotification; deliverPreview only consumes target",
+      "requirement": "optional,256..8192",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-notification-observer.config.json",
+      "note": "same schema reused by notifications and preview-delivery; each has its own configured object"
+    },
+    {
+      "plugin": "kubeclaw.notification-observer",
+      "field": "suppressEventTypes",
+      "currentAuthor": "selected pipeline-platform.v2 adapters/observers object; decoder supplies stated missing-value fallback",
+      "runtimeFallback": null,
+      "unit": "event identity allowlist for suppression",
+      "consumer": "src/observer.ts::observe/lifecycleNotification; deliverPreview only consumes target",
+      "requirement": "optional; absent suppresses none",
+      "proposedOwner": "charts/kubeclaw/files/config/plugin-notification-observer.config.json",
+      "note": "same schema reused by notifications and preview-delivery; each has its own configured object"
+    }
+  ],
+  "zeroFieldPlugin": "kubeclaw.telemetry-observer has a closed empty config schema; delivery policy resides in plugin.json",
+  "manifestOperationalPolicies": [
+    {
+      "registration": "kubeclaw.notification-observer:notifications",
+      "manifest": "skills/common/plugins/notification-observer/plugin.json",
+      "currentValues": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "consumer": "skills/nova/core/telemetry/observers.ts + observer-delivery.ts",
+      "proposedOwner": "plugin component file, registration-specific; requires explicit contract migration, no parallel manifest numeric author"
+    },
+    {
+      "registration": "kubeclaw.notification-observer:preview-delivery",
+      "manifest": "skills/common/plugins/notification-observer/plugin.json",
+      "currentValues": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "consumer": "skills/nova/core/telemetry/observers.ts + observer-delivery.ts",
+      "proposedOwner": "plugin component file, registration-specific; requires explicit contract migration, no parallel manifest numeric author"
+    },
+    {
+      "registration": "kubeclaw.telemetry-observer:telemetry",
+      "manifest": "skills/common/plugins/telemetry-observer/plugin.json",
+      "currentValues": {
+        "mode": "best_effort",
+        "maxAttempts": 5,
+        "backoffMs": 1000,
+        "timeoutMs": 10000
+      },
+      "consumer": "skills/nova/core/telemetry/observers.ts + observer-delivery.ts",
+      "proposedOwner": "plugin component file, registration-specific; requires explicit contract migration, no parallel manifest numeric author"
+    }
+  ]
+}

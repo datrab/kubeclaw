@@ -1,0 +1,20 @@
+✔ actual cooperative host gets bounded cancellation with no invented cleanup receipt (194.840879ms)
+✔ actual unresponsive host gets bounded cancellation with no invented cleanup receipt (492.880746ms)
+✔ missing or invalid control limits cannot create an unbounded channel (0.639657ms)
+✔ drain owns concurrent real launchers before readiness and permanently fences new starts (21.771169ms)
+✔ failed exec is reaped even when drain begins before the error event (2.398082ms)
+✔ completed real children need no further signals and empty drain also fences admission (74.02243ms)
+✔ control descriptor exists only for the explicitly requested host (4.007393ms)
+✔ invalid drain timeout cannot disable admission or overflow a Node timer (30.750849ms)
+✔ child reservations are durable, CAS-fenced, immutable after binding and charged to metadata quota (297.689678ms)
+✔ strict topology decoder rejects unknown fields, names, duplicates and mismatched child identity (45.976029ms)
+✔ v1 and v2 ownership decode explicitly as drain-only legacy leaves; child admission is forbidden (59.327913ms)
+✔ mountinfo parser requires hierarchical events on the actual covering mount (0.913013ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2684.791615

@@ -1,0 +1,254 @@
+[
+  {
+    "label": "before",
+    "exitCode": 1,
+    "messages": [
+      {
+        "ruleId": "discipline/no-top-level-mutable-state",
+        "severity": 2,
+        "message": "Module-level mutable state is forbidden; keep state inside an explicit owner.",
+        "line": 6,
+        "column": 1,
+        "messageId": "forbidden",
+        "endLine": 6,
+        "endColumn": 18
+      },
+      {
+        "ruleId": "discipline/no-top-level-mutable-state",
+        "severity": 2,
+        "message": "Module-level mutable state is forbidden; keep state inside an explicit owner.",
+        "line": 7,
+        "column": 1,
+        "messageId": "forbidden",
+        "endLine": 7,
+        "endColumn": 14
+      },
+      {
+        "ruleId": "discipline/no-top-level-mutable-state",
+        "severity": 2,
+        "message": "Module-level mutable state is forbidden; keep state inside an explicit owner.",
+        "line": 8,
+        "column": 1,
+        "messageId": "forbidden",
+        "endLine": 8,
+        "endColumn": 16
+      },
+      {
+        "ruleId": "discipline/no-top-level-mutable-state",
+        "severity": 2,
+        "message": "Module-level mutable state is forbidden; keep state inside an explicit owner.",
+        "line": 9,
+        "column": 1,
+        "messageId": "forbidden",
+        "endLine": 9,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "discipline/no-top-level-mutable-state",
+        "severity": 2,
+        "message": "Module-level mutable state is forbidden; keep state inside an explicit owner.",
+        "line": 11,
+        "column": 1,
+        "messageId": "forbidden",
+        "endLine": 11,
+        "endColumn": 52
+      },
+      {
+        "ruleId": "discipline/no-dynamic-module-loading",
+        "severity": 2,
+        "message": "Dynamic module loading is allowed only in a declared loader boundary.",
+        "line": 54,
+        "column": 24,
+        "messageId": "forbidden",
+        "endLine": 54,
+        "endColumn": 70
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 107,
+        "column": 1,
+        "messageId": "unexpected",
+        "endLine": 107,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 108,
+        "column": 1,
+        "messageId": "unexpected",
+        "endLine": 108,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 108,
+        "column": 16,
+        "messageId": "unexpected",
+        "endLine": 108,
+        "endColumn": 27
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 109,
+        "column": 1,
+        "messageId": "unexpected",
+        "endLine": 109,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 110,
+        "column": 1,
+        "messageId": "unexpected",
+        "endLine": 110,
+        "endColumn": 14
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 110,
+        "column": 17,
+        "messageId": "unexpected",
+        "endLine": 110,
+        "endColumn": 29
+      }
+    ]
+  },
+  {
+    "label": "after",
+    "exitCode": 1,
+    "messages": [
+      {
+        "ruleId": "discipline/no-top-level-mutable-state",
+        "severity": 2,
+        "message": "Module-level mutable state is forbidden; keep state inside an explicit owner.",
+        "line": 6,
+        "column": 1,
+        "messageId": "forbidden",
+        "endLine": 6,
+        "endColumn": 18
+      },
+      {
+        "ruleId": "discipline/no-top-level-mutable-state",
+        "severity": 2,
+        "message": "Module-level mutable state is forbidden; keep state inside an explicit owner.",
+        "line": 7,
+        "column": 1,
+        "messageId": "forbidden",
+        "endLine": 7,
+        "endColumn": 14
+      },
+      {
+        "ruleId": "discipline/no-top-level-mutable-state",
+        "severity": 2,
+        "message": "Module-level mutable state is forbidden; keep state inside an explicit owner.",
+        "line": 8,
+        "column": 1,
+        "messageId": "forbidden",
+        "endLine": 8,
+        "endColumn": 16
+      },
+      {
+        "ruleId": "discipline/no-top-level-mutable-state",
+        "severity": 2,
+        "message": "Module-level mutable state is forbidden; keep state inside an explicit owner.",
+        "line": 9,
+        "column": 1,
+        "messageId": "forbidden",
+        "endLine": 9,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "discipline/no-top-level-mutable-state",
+        "severity": 2,
+        "message": "Module-level mutable state is forbidden; keep state inside an explicit owner.",
+        "line": 14,
+        "column": 1,
+        "messageId": "forbidden",
+        "endLine": 14,
+        "endColumn": 52
+      },
+      {
+        "ruleId": "discipline/no-dynamic-module-loading",
+        "severity": 2,
+        "message": "Dynamic module loading is allowed only in a declared loader boundary.",
+        "line": 57,
+        "column": 24,
+        "messageId": "forbidden",
+        "endLine": 57,
+        "endColumn": 70
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 110,
+        "column": 1,
+        "messageId": "unexpected",
+        "endLine": 110,
+        "endColumn": 12
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 111,
+        "column": 1,
+        "messageId": "unexpected",
+        "endLine": 111,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 111,
+        "column": 16,
+        "messageId": "unexpected",
+        "endLine": 111,
+        "endColumn": 27
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 112,
+        "column": 1,
+        "messageId": "unexpected",
+        "endLine": 112,
+        "endColumn": 13
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 113,
+        "column": 1,
+        "messageId": "unexpected",
+        "endLine": 113,
+        "endColumn": 14
+      },
+      {
+        "ruleId": "no-console",
+        "severity": 2,
+        "message": "Unexpected console statement.",
+        "line": 113,
+        "column": 17,
+        "messageId": "unexpected",
+        "endLine": 113,
+        "endColumn": 29
+      }
+    ]
+  }
+]

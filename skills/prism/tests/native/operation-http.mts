@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { randomUUID } from 'node:crypto';
@@ -29,7 +30,7 @@ test('actual transport refusal preserves one durable V3 identity; SQL rejects re
   try {
     assert.equal((await database.query('SELECT current_user AS role')).rows[0].role, 'prism_runtime');
     const artifacts = new ContentAddressedArtifactStore(directory);
-    const config = loadControlServerConfig({ PRISM_WORKER_SECRET: 'local-native-dispatch-http',
+    const config = loadControlServerConfig({ SWARM_CONFIG: fileURLToPath(new URL('../../../../charts/kubeclaw/files/config/swarm.config.json', import.meta.url)), PRISM_WORKER_SECRET: 'local-native-dispatch-http',
       PRISM_WORKER_URL: `http://127.0.0.1:${address.port}`, PRISM_CONTROL_INTERNAL_URL: 'http://127.0.0.1:1',
       PRISM_SESSION_SECRET: 'local-session', PRISM_INGRESS_SECRET: 'local-ingress',
       PRISM_INGESTION_SECRET: 'local-ingestion', PRISM_DISPATCH_SECRET: 'local-dispatch' });

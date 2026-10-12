@@ -1,0 +1,18 @@
+✔ direct: actual optional phases require a complete claim reservation (61.718833ms)
+✔ runtime: actual optional phases require a complete claim reservation (3.120912ms)
+✔ real completion hooks and durable log finish successfully inside the reserved claim (80.996154ms)
+✔ direct: final claim fence rejects completion after a native blocking hook (562.09217ms)
+✔ runtime: final claim fence rejects completion after a native blocking hook (563.532688ms)
+✔ timed out log hook receives cancellation and settles before result, without a later write (210.647011ms)
+✔ uncooperative storage is reported unresolved rather than completed (159.361479ms)
+✔ original executor preserves each UTF-8 byte split and rejects malformed/incomplete byte logs (97.601425ms)
+✔ real Buster evidence I/O drains cancellation and does not publish a later artifact (24.528017ms)
+✔ stdout and stderr streaming decoders retain separate partial byte sequences (9.327542ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2110.721847

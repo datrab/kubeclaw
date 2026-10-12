@@ -1,0 +1,23 @@
+VM_BOOTED=1
+VM_PHASE=identity-preflight
+VM_IDENTITY_STATUS=0
+VM_PHASE=compile
+VM_COMPILE_STATUS=0
+VM_PHASE=typecheck
+VM_TYPECHECK_STATUS=0
+VM_PHASE=native
+ℹ tests 12
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+      Error: WORKER_NATIVE_LIMIT_INVALID
+VM_NATIVE_STATUS=1
+VM_PHASE=node-pools
+ℹ tests 35
+ℹ pass 30
+ℹ fail 1
+ℹ cancelled 4
+ℹ skipped 0
+VM_NATIVE_STATUS=1 VM_NODE_POOLS_STATUS=1
+VM_REVIEW_EXIT=1

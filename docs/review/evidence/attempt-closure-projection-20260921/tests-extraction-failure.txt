@@ -1,0 +1,93 @@
+✔ original disk quota releases one completion copy while all raw, ACK, result and evidence consumers replay exactly (2162.852756ms)
+✔ missing or changed original completion cannot appear as an empty successful raw tail (1880.427445ms)
+✔ run fence authority, evidence completion, operation identity and missing closure fail closed before mutation (2164.232138ms)
+✔ actual waiting continuation remains protected and old v1 admission reopens unchanged (2317.892584ms)
+✔ original attempt writer fence prevents cross-store retirement until holder is SIGKILLed (2372.203537ms)
+✔ actual process SIGKILL after commit reopens with original cursor and no reinsertion (2555.269483ms)
+✔ retirement rejects actual FIFO, final symlink and oversized evidence before bounded allocation or mutation (1884.45795ms)
+✖ real confirmed import and admission retirement do not release the remaining mixed-run result quota (1769.309689ms)
+✔ existing import journal is a full result checkpoint but not a replacement for the original completion and replay guards (1860.24853ms)
+ℹ {"checkpoint":"real NovaObservabilityReconciler import","resultBytesPresent":true,"completionIntentPresent":false,"sourceDeletion":"fails closed; original delivery remains pending","sourceRestored":"original duplicate ACK and already-imported result recover","overallFindingComplete":false}
+✖ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (1704.911689ms)
+✔ Attempt projection rejects stale CAS, run checkpoint and operation conflicts without touching the original state (2654.937191ms)
+✔ Attempt projection preserves an actual waiting run and refuses missing, corrupted or nonregular import authority (4524.415001ms)
+✔ Attempt original writer lock excludes retirement and a killed waiting operator leaves no partial projection (3165.909254ms)
+✔ Attempt SIGKILL after durable projection reopens with exact original result and no duplicate import or quota reinsertion (2826.14326ms)
+✔ closure projection frees actual resident quota and net bytes while all original consumers retain full identities (8112.801591ms)
+ℹ {"releasedClosures":1,"releasedBytes":130,"logicalClosures":2,"residentLimit":1}
+✔ read-only plan and actual CLI apply agree; finalization, changed intent and bounded metadata remain enforced (9099.758474ms)
+✔ no byte saving, stale store, source mismatch and run fence fail before mutation (3939.353279ms)
+✔ waiting run and absent result projection are not eligible; malformed references cannot yield successful reads or ACKs (7942.736333ms)
+✔ actual Attempt writer fence prevents closure retirement; killing waiting operator leaves original state (10610.979883ms)
+✔ actual SIGKILL at rename boundaries and after commit reopens complete state without double release (26197.025214ms)
+✔ independent review: projected replay survives a real later journal append but missing or corrupt referenced history cannot produce an ACK (3617.21064ms)
+✔ independent review: structurally valid rehashed foreign or unimported checkpoints cannot authorize projection (4988.121846ms)
+✔ independent review: reclaimed unreferenced evidence preserves the projected result and metadata quota still applies (3019.995167ms)
+✔ independent review: original run fence rejects a concurrent retirement and permits unchanged replay after owner release (3786.752178ms)
+✔ independent review: original synchronous journal reader does not time out while actual retirement awaits evidence IO (4692.002025ms)
+✔ fresh admission reads and duplicate ACK fail closed for persisted corruption (622.380962ms)
+✔ fresh attempt replay validates result, generation, evidence, intent and closure before recovery (1110.969226ms)
+✔ standalone closure producer binding preserves staged-evidence expiry and partial completeness (279.937103ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (5297.672928ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (6506.283612ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (4208.347646ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (2726.81514ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (1931.76158ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (2088.784896ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (2987.938099ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (1679.191173ms)
+✖ filesystem snapshot changes are explicit and the inspector never repairs them (6.057317ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (1.670973ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (5.506572ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (742.473307ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (5644.109518ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (724.265736ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (1911.092867ms)
+ℹ tests 43
+ℹ suites 0
+ℹ pass 40
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 163620.205602
+
+✖ failing tests:
+
+test at tests/verification/reliability/admission-retirement.test.mjs:118:1
+✖ real confirmed import and admission retirement do not release the remaining mixed-run result quota (1769.309689ms)
+  ReferenceError: budgetFixture is not defined
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/admission-retirement.test.mjs:124:19)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/admission-retirement.test.mjs:196:1
+✖ Attempt-v2 releases actual result quota while every original result, Admission, Clawdeck and import consumer reconstructs unchanged (1704.911689ms)
+  ReferenceError: budgetFixture is not defined
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/admission-retirement.test.mjs:199:17)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/verification/reliability/observability-retirement-plan.test.mjs:150:1
+✖ filesystem snapshot changes are explicit and the inspector never repairs them (6.057317ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(inventory.blockers.some(item => item.code === 'SNAPSHOT_CHANGED'))
+  
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/observability-retirement-plan.test.mjs:157:39)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

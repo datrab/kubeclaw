@@ -1,0 +1,104 @@
+--- docs/review/remediation/implementation/open-work-inventory-20260921.md
++++ docs/review/remediation/implementation/open-work-inventory-20260921.md
+@@ -57,53 +57,59 @@
+ 
+ ## Querschnitt und Grenzen
+ 
+-Für CONFIG liegt inzwischen die unabhängig geprüfte
+-[Worker-Core-Inventur mit LC-Abnahmekriterien](config-worker-local-runtime-inventory-20260921.md)
+-vor. Die drei Defaults für Drain, Abbruch und Replay-Kapazität sind inzwischen
+-auf die explizite Worker-Core-Datei umgestellt; Autorenprüfungen und unabhängige
+-Implementierungsabnahme sind noch nicht abgeschlossen. Replay gilt pro
++Für CONFIG sind die drei Worker-Core-Settings für Drain, Abbruch und Replay
++in der expliziten Worker-Core-Datei umgesetzt. Die
++[unabhängige LC-/PC-Prüfung](independent-config-worker-local-runtime-20260921.md)
++bestätigt LC1–LC5 funktional, einschließlich des normalen Produktionspfads und
++der tatsächlichen Replay-Profile 1/2 mit je zwei Jobs. Replay gilt pro
+ Runtime-Instanz; der aktuelle Buster-Runner verwendet deren Drain-Funktion nicht.
+-Diese Grenze bleibt auch nach der Konfigurationsumstellung bestehen.
++Die Prüfung behauptet weder eine neue Buster-Drain-Integration noch native
++Preparation, fertige Images oder einen vollständigen CONFIG-Abschluss.
+ 
+-Die Worker-Core-Regressionsprüfung hat außerdem eine
+-[gesicherte Lint-Vorher-Baseline](../../evidence/config-worker-local-runtime-20260921/lint-baseline/findings.json)
+-mit 32 bestehenden Verstößen sichtbar gemacht: 30 im Buster-Runner, einen in
+-Core `runAttempt` und einen im ursprünglichen Runner-Vertragstest. Diese
+-Qualitätsarbeit bleibt offen. Neue Verstöße werden in der Migration behoben;
+-das erlaubt weder einen grünen Gesamt-Lint-Nachweis noch das Verwerfen der
+-bestehenden Befunde. Eine spätere kohäsive Vereinfachung muss die vollständigen
+-Runner-/Core-Verhaltensprüfungen und ursprünglichen Fristen erhalten.
++Die [32er-Lint-Vorher-Baseline](../../evidence/config-worker-local-runtime-20260921/lint-baseline/findings.json)
++und der rote [LC-Lauf 9](../../evidence/config-worker-local-runtime-20260921/run9/results.json)
++bleiben historische Fehlbelege. Nach der identischen Core-Replayextraktion
++verblieben damals 31 Runner-/Testverstöße; die unabhängige LC-/PC-Runde meldete
++zusätzlich 12 Child-Verstöße. Diese Zahlen beschreiben nicht den heutigen
++geprüften Lintstand. Die später integrierte Runner-/Child-Zerlegung und
++Outputvalidierung sind im
++[unabhängigen Runner-/Execution-Review](independent-buster-runner-execution-child-20260921.md)
++mit vollständigen ursprünglichen Runner-/Real-Provider-Prüfungen sowie
++kanonischen Typ-/Lintprüfungen belegt. Der ursprüngliche Outputentwurf ist damit
++kein noch unintegrierter Arbeitsauftrag. Die ursprünglichen Assertions und
++Fristen sowie die fehlgeschlagenen Zwischenstände bleiben nachvollziehbar.
+ 
+-Die Core-Replaybereinigung ist inzwischen als identische private Methode
+-ausgegliedert. Der abgeschlossene [LC-Lauf 9](../../evidence/config-worker-local-runtime-20260921/run9/results.json)
+-bestätigt die ursprünglichen Core-, Deadline-, vollständigen Runner- und
+-Real-Provider-Prüfungen, die neue Policy-/Produktionsprüfung und beide Typprüfungen.
+-Der Gesamtlauf bleibt wegen 31 Lint-Verstößen fehlgeschlagen; der bisherige
+-Core-Komplexitätsverstoß ist entfallen. Die unabhängige Abnahme steht noch aus.
+-Für die Output-Prüfung liegt ein
+-[privater Runner-Entwurf](../../evidence/buster-runner-output-simplicity-20260921/change.patch)
+-vor: eine Implementierung im bestehenden Provider-Validierungsmodul, unveränderte
+-öffentliche Runner-API und identische Prüfungsreihenfolge. Die
+-[statische Nichtautorenprüfung](../../evidence/independent-buster-runner-output-simplicity-20260921/static-check.json)
+-bestätigt die erhaltenen Funktionskörper; Integration, ursprünglicher Outputvertrag,
+-vollständiger Runner, Typen und Lint bleiben dafür offen. Die historische
+-32er-Lint-Baseline ist kein aktueller Abschlusszähler.
++Der [unabhängige ProcessInput-Abschluss](independent-buster-process-input-implementation-20260921.md)
++belegt für seinen gebundenen späteren Stand erneut alle drei Typprüfungen,
++den vollständigen betroffenen kanonischen Lintumfang, die ursprünglichen
++Runner-/Real-Provider-/Reportmodule, 190/190 Maintained- und 649/649
++Komponentenfälle sowie acht erkannte Negativkontrollen. Das ist eine begrenzte
++lokale Abnahme, kein pauschaler Qualitätsnachweis für spätere Änderungen oder
++das gesamte Repository. Die vorherige CPU-High-Profilabweichung bleibt als
++ungeklärte Beobachtung erhalten; ihr späterer positiver Lauf erklärt die Ursache
++nicht. Historische Compaction-Verträge, externe Voraussetzungen, Native-/Image-
++und Live-Gates bleiben offen.
+ 
+-Der vollständige Runnerlauf hat außerdem einen echten
+-[Provider-Abbruchbefund](buster-provider-cancellation-20260921.md) aufgedeckt.
+-Der minimale SIGTERM-zu-Context-Fix wird innerhalb der offenen Buster-Integration
+-mit den ursprünglichen kooperativen und erzwungenen Prozessfällen geprüft.
+-PC1–PC3/PC-DOC und die unabhängige Abnahme bleiben bis zu deren Nachweisen offen.
++Der zuvor entdeckte
++[Provider-Abbruchbefund](buster-provider-cancellation-20260921.md) ist durch den
++SIGTERM-zu-Context-Fix funktional unabhängig geprüft: Der
++[LC-/PC-Bericht](independent-config-worker-local-runtime-20260921.md) belegt die
++ursprünglichen kooperativen und erzwungenen Prozessfälle, den wirksamen
++Handlerentfernungs-Mutanten und die nachgebundene PC-DOC-Korrektur. Sein damaliger
++Qualitätsvorbehalt wird nicht unterschlagen; die späteren begrenzten
++Runner-/Child-Typ-/Lintbelege stehen oben. Daraus folgt keine umfassende
++Buster-Besitz- oder historische Cleanup-Abnahme.
+ 
+-Die [Buster-Readiness-Kriterien](config-buster-readiness-20260921.md) erfassen
+-als nächsten Schnitt die zwei noch bestehenden Codefallbacks und den konkurrierenden
+-Entrypoint-Autor für Probezeit und Ausgabebytes. Die tatsächliche Verlagerung und
+-BR1–BR4/DOC sind noch offen; Readiness ist kein Nachweis für Build-Isolation.
+-Der private Umsetzungsentwurf ist für die beiden betroffenen Dateien gegen den
+-aktuellen LC-Stand [neu zusammengeführt](../../evidence/config-buster-readiness-20260921/lc-rebase/change.patch).
+-Die gemeinsame Übergabe von Buster- und Worker-Core-Settings bleibt erhalten;
+-Readiness wird daraus explizit validiert. Dieser Entwurf ist weder integriert
+-noch ausgeführt und verändert den Abnahmestatus nicht.
++Die [Buster-Readiness-Migration](independent-config-buster-readiness-implementation-20260921.md)
++ist integriert und unabhängig lokal geprüft. BR1–BR3 und die begrenzten
++DOC-Anforderungen bestehen; 16/16 Maintained-Fälle, beide Charts, echte
++Probezeit-/Ausgabeprofile und vier wirksame Mutanten sind belegt. Der Bericht
++weist bestandene lokale BR4-Regressions-, Typ-, Lint- und Packagingprüfungen aus,
++lässt aber die vollständige betroffene Originalabdeckung wegen historischer
++Compaction- und externer Vertikalvoraussetzungen offen. Die frühere Aussage,
++der LC-Rebase sei noch unintegriert und unausgeführt, beschreibt nur den damaligen
++Entwurfsstand. Readiness bleibt ausdrücklich kein Nachweis für echte
++BuildKit-Isolation, fertige Images oder Clusteraktivierung.
+ 
+ Die ergänzende [Artifact-/State-Plugin-Inventur](config-storage-plugin-inventory-20260921.md)
+ ist als begrenzter Quellenbefund unabhängig geprüft. Sie erfasst acht Schemafelder und den

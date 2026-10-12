@@ -1,0 +1,52 @@
+✔ corrupt existing object is never acknowledged or overwritten and failed pending is removed (57.421229ms)
+✔ put snapshots caller buffers before IO and retained IDs survive a new store instance (36.403508ms)
+✔ independent native writers atomically install identical content and leave no pending files (504.763642ms)
+✔ acknowledged native writer content remains readable after SIGKILL (196.08239ms)
+✔ actual FIFO objects reject without blocking get or existing-object put (169.316911ms)
+✔ direction selection rolls back on actual SQL insert failure and replays a committed response (5487.777999ms)
+✔ all feedback actions persist valid wire IDs, explicit retries deduplicate and fresh actions remain distinct (3141.310951ms)
+✔ failed rejection retains proposed state; stale and historical partial selections do not invent receipts (2814.453731ms)
+✔ wire preference IDs replay only exact owner and content while preserving internal UUIDs (2588.409349ms)
+✔ wire ID migration preserves legacy UUID/content and refuses ambiguous historical wire identities (4775.843138ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/preferences',
+  error: 'preference user does not match the session'
+}
+✔ PATH-T02-001 original HTTP event survives database/service restart and a fresh session into exact agent input and tool result (4887.899141ms)
+[prism-control] request failed {
+  method: 'POST',
+  path: '/v1/agent/design-sets',
+  error: 'stale design generation'
+}
+✔ PATH-T02-002 diagnostic: original stale tool callback makes no successor mutation, but running predecessor still blocks successor claim (2708.152959ms)
+✔ CC3 real Control service profile 1 selects history, artifact root and Studio URL (3143.922892ms)
+✔ CC3 real Control service profile 2 selects history, artifact root and Studio URL (2746.163398ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (4311.102891ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (680.353942ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (2690.469762ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (3101.969059ms)
+✔ original composed Control preserves disabled routes and rejects incomplete enabled startup before listen (3988.12263ms)
+✔ actual production listener rejects invalid opt-in configuration before listening (891.364396ms)
+✔ asynchronous authority key loading retains a single owned Control startup snapshot (2980.728095ms)
+✔ actual Control session and product wrapper persist original signed intent across service and SQL reopen without claiming controller success (3019.269027ms)
+✔ independent composed startup rejects a genuine wrong key type and disabled authority does not read its missing key (2800.913273ms)
+✔ independent original composed restart rejects prior session authority before recording and preserves fresh authorized intent (3386.971605ms)
+✔ Control configuration preserves production listener and original non-SPIFFE service defaults (4.449415ms)
+✔ Control trust configuration fails closed and keeps optional test-runner identity optional (1.689644ms)
+✔ Control service configuration is an owned startup snapshot, not mutable caller environment (1.840258ms)
+✔ Tailscale exchange requires the trusted ingress path (3.071639ms)
+✔ session signatures and expiry fail closed (0.445432ms)
+✔ Nova request to Prism baseline to visual provider plan (4306.267807ms)
+✔ publication rejects missing approval and stale edits reject conflicts (1.737555ms)
+✔ signed dispatch cannot select a personal subject without exact platform authorization (1.463868ms)
+✔ platform subject automatically selects its real persisted personal history in another project (4135.016126ms)
+✔ Control startup validates and freezes platform subject configuration (10.844219ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 75928.433572

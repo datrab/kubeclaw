@@ -1,0 +1,26 @@
+{
+  "name": "@kubeclaw/buster-engine",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./remote-plan-cli": "./remote-plan-cli.ts"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@kubeclaw/pipeline-observability-contract": "*",
+    "@kubeclaw/pipeline-test-gate-contract": "*",
+    "@kubeclaw/pipeline-worker-core-contract": "*",
+    "@kubeclaw/plugin-command-runner": "*",
+    "@kubeclaw/plugin-foundation": "*",
+    "@kubeclaw/plugin-sdk": "*",
+    "@kubeclaw/worker-core": "*",
+    "js-yaml": "^4.3.1",
+    "lighthouse": "13.4.1",
+    "playwright": "1.62.1",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
+    "ws": "^8.18.3",
+    "chrome-launcher": "1.2.1"
+  }
+}

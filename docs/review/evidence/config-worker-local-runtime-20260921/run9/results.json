@@ -1,0 +1,139 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-worker-local-runtime.mts"
+    ],
+    "exitCode": 0,
+    "name": "original-core",
+    "seconds": 0.41466114099603146
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "tests/verification/contracts/check-pipeline-worker-local-policy.mts"
+    ],
+    "exitCode": 0,
+    "name": "core-policy",
+    "seconds": 0.5650527200195938
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/verification/reliability/worker-deadline.test.mts"
+    ],
+    "exitCode": 0,
+    "name": "original-deadlines",
+    "seconds": 2.117910442990251
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts"
+    ],
+    "exitCode": 0,
+    "name": "original-runner",
+    "seconds": 98.45860491297208
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts"
+    ],
+    "exitCode": 0,
+    "name": "original-real-provider",
+    "seconds": 15.450995114981197
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+    ],
+    "exitCode": 0,
+    "name": "production-replay",
+    "seconds": 5.394202121067792
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tests/verification/contracts/tsconfig.worker-local-runtime.json"
+    ],
+    "exitCode": 0,
+    "name": "local-types",
+    "seconds": 7.849687923910096
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "skills/common/plugin-runtime/tsconfig.json"
+    ],
+    "exitCode": 0,
+    "name": "runtime-types",
+    "seconds": 6.153348963940516
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint.config.mjs",
+      "scripts/updates/release-configuration.mjs",
+      "skills/buster/engine/remote-plan-cli.ts",
+      "skills/buster/engine/test-gates/production.ts",
+      "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+      "skills/buster/engine/test-gates/runner.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "skills/common/plugin-runtime/foundation/config/swarm.ts",
+      "skills/worker/core/src/index.ts",
+      "skills/worker/core/worker/local-runtime.ts",
+      "tests/fixtures/config/swarm-bundle.mjs",
+      "tests/fixtures/test-gate/buster-admission.mts",
+      "tests/verification/contracts/check-pipeline-a11y-implementation.mts",
+      "tests/verification/contracts/check-pipeline-api-implementation.mts",
+      "tests/verification/contracts/check-pipeline-container-build-production.mts",
+      "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-http-implementation.mts",
+      "tests/verification/contracts/check-pipeline-http-live.mts",
+      "tests/verification/contracts/check-pipeline-http-parity.mts",
+      "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+      "tests/verification/contracts/check-pipeline-lighthouse-implementation.mts",
+      "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+      "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+      "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+      "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+      "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+      "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-size-budget-implementation.mts",
+      "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+      "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+      "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-policy.mts",
+      "tests/verification/contracts/check-pipeline-worker-local-runtime.mts",
+      "tests/verification/contracts/check-provider-semantics-remediation.mts",
+      "tests/verification/deployment/config-component-packaging.test.mjs",
+      "tests/verification/deployment/release-configuration.test.mjs",
+      "tests/verification/integration/direct-command-runner-artifacts.test.mts",
+      "tests/verification/reliability/buster-job-compaction.test.mts",
+      "tests/verification/reliability/buster-shutdown-storage.test.mts",
+      "tests/verification/reliability/coverage-remote.test.mts",
+      "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "tests/verification/reliability/worker-deadline.test.mts"
+    ],
+    "exitCode": 1,
+    "name": "canonical-lint",
+    "seconds": 6.6822281029308215
+  }
+]

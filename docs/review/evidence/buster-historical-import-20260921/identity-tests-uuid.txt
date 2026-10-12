@@ -1,0 +1,13 @@
+✔ historical descriptor accepts its exact shape and refuses JSON identity coercion (1.640402ms)
+✔ historical group receipt accepts its exact shape and refuses JSON identity coercion (0.805621ms)
+✔ immutable observation accepts its exact shape and refuses JSON identity coercion (0.930114ms)
+✔ immutable observation refuses nested coercion, inconsistent totals and insufficient caller limits (0.39795ms)
+✔ runtime observation has its own UUID-bound shape and cannot masquerade as plan evidence (0.326549ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 397.018358

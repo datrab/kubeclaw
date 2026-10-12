@@ -1,0 +1,30 @@
+✔ closure projection frees actual resident quota and net bytes while all original consumers retain full identities (4168.15376ms)
+ℹ {"releasedClosures":1,"releasedBytes":130,"logicalClosures":2,"residentLimit":1}
+✔ read-only plan and actual CLI apply agree; finalization, changed intent and bounded metadata remain enforced (4492.787021ms)
+✔ no byte saving, stale store, source mismatch and run fence fail before mutation (2681.578864ms)
+✔ waiting run and absent result projection are not eligible; malformed references cannot yield successful reads or ACKs (4852.611927ms)
+✔ actual Attempt writer fence prevents closure retirement; killing waiting operator leaves original state (3366.886475ms)
+✔ actual SIGKILL at rename boundaries and after commit reopens complete state without double release (9713.690033ms)
+✔ actual completed native Git pipeline produces a read-only inventory with original artifact references (1663.614221ms)
+✔ actual waiting run and replayable unfinished journal prefix are protected (2161.896506ms)
+✔ shared artifact references, missing blobs and uncertain effects block retirement (1695.425018ms)
+✔ original admission and attempt stores provide bounded identity and evidence inspection (1687.240398ms)
+✔ shared Buster job identities and uncertain terminal outcome remain protected (1733.296302ms)
+✔ partial tails, corrupt stores, symlinks and inventory limits fail without repair or payload leakage (1883.311037ms)
+✔ actual CLI emits only metadata and leaves the scope untouched (2371.508721ms)
+✔ scope cannot invent consumer acknowledgement or authorize project deletion (1571.725279ms)
+✔ filesystem snapshot changes are explicit and the inspector never repairs them (2.881794ms)
+✔ legacy roots promoted to scanned roots detect new files on final inventory (2.32686ms)
+✔ root and nested directory replacement by symlink invalidates the original inventory (5.771758ms)
+✔ original legacy resolver enforces planner byte limits before identity scanning (539.048972ms)
+✔ actual CLI identifies invalid scope and JSON causes without leaking input excerpts (3893.43366ms)
+✔ actual CLI preserves bounded legacy scan cause in report without printing journal secrets (510.347515ms)
+✔ retirement inventory validates original current and captured legacy snapshots with the shared Core codec (2066.548373ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 52518.760166

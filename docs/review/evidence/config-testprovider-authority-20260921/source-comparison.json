@@ -1,0 +1,16 @@
+{
+  "files": 284,
+  "drift": [],
+  "runtimeExecuted": false,
+  "selfReviewCorrections": [
+    "Coverage combine default is true unless explicitly false; first authored report snapshot retained.",
+    "Expanded named authority sources to all engine test-gate modules plus contract/example; initial209 manifest retained."
+  ],
+  "schemaCoverage": {
+    "manifests": 48,
+    "registrations": 19,
+    "topLevel": 116,
+    "expandedPropertyOccurrences": 211,
+    "defaultOccurrences": 22
+  }
+}

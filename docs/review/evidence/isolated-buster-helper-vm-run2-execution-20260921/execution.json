@@ -1,0 +1,13 @@
+{
+  "sessionId": 91300,
+  "qemuPid": 103191,
+  "wrapperExitCode": 0,
+  "cases": 7,
+  "passed": 7,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "priorLaunchRefusals": 3,
+  "limitsChanged": false,
+  "independentResultReview": "accepted: independent-buster-helper-vm-run2-20260921.md"
+}

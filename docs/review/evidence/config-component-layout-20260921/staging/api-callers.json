@@ -1,0 +1,417 @@
+[
+  {
+    "path": "skills/buster/engine/remote-plan-cli.ts",
+    "line": 5,
+    "source": "import { loadBusterSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/buster/engine/remote-plan-cli.ts",
+    "line": 21,
+    "source": "  const settings = loadBusterSettings(process.env);"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+    "line": 6,
+    "source": "import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-host.ts",
+    "line": 63,
+    "source": "  validateBusterPreparationSettings(association.settings);"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
+    "line": 3,
+    "source": "import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-cleanup-validation.ts",
+    "line": 16,
+    "source": "  const settings = validateBusterPreparationSettings(value.settings);"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+    "line": 5,
+    "source": "import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-historical-host.ts",
+    "line": 61,
+    "source": "  const settings = validateBusterPreparationSettings(values.settings);"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-host.ts",
+    "line": 8,
+    "source": "import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-host.ts",
+    "line": 39,
+    "source": "  const settings = validateBusterPreparationSettings(envelope.operation.values.settings);"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+    "line": 3,
+    "source": "import { validateBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-native-phase.ts",
+    "line": 16,
+    "source": "  const settings = validateBusterPreparationSettings(envelope.operation.values.settings);"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+    "line": 13,
+    "source": "import { loadBusterPreparationSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/preparation-supervisor.ts",
+    "line": 25,
+    "source": "  const settings = loadBusterPreparationSettings(process.env);"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "line": 1,
+    "source": "import { validateBusterAdmissionSettings, type BusterAdmissionSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "line": 68,
+    "source": "    const admission = validateBusterAdmissionSettings(options.admission);"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 114,
+    "source": "export function loadPrismSettings(environment: NodeJS.ProcessEnv): PrismSettings {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 155,
+    "source": "export function loadPrismWorkerSettings(environment: NodeJS.ProcessEnv): PrismWorkerSettings {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 156,
+    "source": "  return loadPrismSettings(environment).worker;"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 159,
+    "source": "export function prismWorkerSettingsFromConfig(value: unknown): PrismWorkerSettings {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 164,
+    "source": "export function loadBusterSettings(environment: NodeJS.ProcessEnv): BusterSettings {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 170,
+    "source": "  return busterSettingsFromConfig(JSON.parse(fs.readFileSync(file, 'utf8')));"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 173,
+    "source": "export function busterSettingsFromConfig(value: unknown): BusterSettings {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 174,
+    "source": "  const preparation = busterPreparationSettingsFromConfig(value);"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 175,
+    "source": "  const admission = validateBusterAdmissionSettings((value as SwarmConfig).operator.buster?.admission);"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 179,
+    "source": "export function validateBusterAdmissionSettings(value: unknown): BusterAdmissionSettings {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 187,
+    "source": "export function loadBusterPreparationSettings(environment: NodeJS.ProcessEnv): BusterPreparationSettings {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 188,
+    "source": "  return loadBusterSettings(environment).preparation;"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 191,
+    "source": "export function busterPreparationSettingsFromConfig(value: unknown): BusterPreparationSettings {"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 195,
+    "source": "  return validateBusterPreparationSettings(settings);"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "line": 199,
+    "source": "export function validateBusterPreparationSettings(value: unknown): BusterPreparationSettings {"
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "line": 3,
+    "source": "import { loadPrismSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "line": 11,
+    "source": "  return controlPolicy(loadPrismSettings(environment).control);"
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "line": 14,
+    "source": "function controlPolicy(settings: ReturnType<typeof loadPrismSettings>['control']): ControlConfig {"
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "line": 47,
+    "source": "  const { native: settings, control } = loadPrismSettings(environment);"
+  },
+  {
+    "path": "skills/prism/server/studio-config.ts",
+    "line": 2,
+    "source": "import { loadPrismSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/prism/server/studio-config.ts",
+    "line": 10,
+    "source": "  const settings = loadPrismSettings(environment).studio;"
+  },
+  {
+    "path": "skills/prism/server/worker-config.ts",
+    "line": 1,
+    "source": "import { loadPrismSettings, loadPrismWorkerSettings, type PrismWorkerSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/prism/server/worker-config.ts",
+    "line": 13,
+    "source": "  const snapshot = loadPrismSettings(environment);"
+  },
+  {
+    "path": "skills/prism/server/worker-config.ts",
+    "line": 22,
+    "source": "  return ingressLimits(loadPrismWorkerSettings(environment));"
+  },
+  {
+    "path": "skills/prism/tests/native/operation-journal.mts",
+    "line": 1,
+    "source": "import { loadPrismSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/prism/tests/native/operation-journal.mts",
+    "line": 57,
+    "source": "      const changedPolicy = loadPrismSettings({ SWARM_CONFIG: changedFile }).native.resourcePolicy;"
+  },
+  {
+    "path": "skills/prism/tests/native/resource-policy.mts",
+    "line": 3,
+    "source": "import { loadPrismSettings } from '../../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/prism/tests/native/resource-policy.mts",
+    "line": 4,
+    "source": "export const nativeResourcePolicy = loadPrismSettings({ SWARM_CONFIG:"
+  },
+  {
+    "path": "skills/prism/tests/swarm-control-policy.test.mts",
+    "line": 5,
+    "source": "import { loadPrismSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/prism/tests/swarm-control-policy.test.mts",
+    "line": 24,
+    "source": "  assert.throws(() => loadPrismSettings(env), /SWARM_CONFIG_INVALID/);"
+  },
+  {
+    "path": "skills/prism/tests/swarm-control-policy.test.mts",
+    "line": 34,
+    "source": "  const settings = loadPrismSettings(env), service = loadControlServerConfig({...credentials,...env});"
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "line": 8,
+    "source": "import { loadPrismWorkerSettings } from '../../common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "line": 60,
+    "source": "  assert.ok(!JSON.stringify(loadPrismWorkerSettings(env)).includes('sensitive'));"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-admission.mts",
+    "line": 9,
+    "source": "import { loadBusterSettings, type BusterAdmissionSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "tests/fixtures/test-gate/buster-admission.mts",
+    "line": 17,
+    "source": "  return { file, document, settings: loadBusterSettings({ SWARM_CONFIG: file }) };"
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "line": 40,
+    "source": "  busterPreparationSettingsFromConfig,"
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "line": 41,
+    "source": "  busterSettingsFromConfig,"
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "line": 42,
+    "source": "  validateBusterPreparationSettings,"
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "line": 50,
+    "source": "const canonicalSettings = busterPreparationSettingsFromConfig("
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "line": 88,
+    "source": "    this.#settings = validateBusterPreparationSettings({"
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "line": 98,
+    "source": "    this.#settings = validateBusterPreparationSettings({"
+  },
+  {
+    "path": "tests/fixtures/test-gate/modeled-preparation.mts",
+    "line": 258,
+    "source": "      admission: options.admission ?? busterSettingsFromConfig(JSON.parse(readFileSync("
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation.mts",
+    "line": 15,
+    "source": "import { loadBusterPreparationSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation.mts",
+    "line": 66,
+    "source": "  const settings = loadBusterPreparationSettings({ ...process.env, SWARM_CONFIG: requiredNativeInput('SWARM_CONFIG') });"
+  },
+  {
+    "path": "tests/fixtures/test-gate/native-preparation.mts",
+    "line": 91,
+    "source": "  const settings = loadBusterPreparationSettings({ ...process.env, SWARM_CONFIG: requiredNativeInput('SWARM_CONFIG') });"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "line": 15,
+    "source": "import { loadBusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+    "line": 24,
+    "source": "const settings = loadBusterSettings({ SWARM_CONFIG: path.resolve('charts/kubeclaw/files/config/swarm.config.json') });"
+  },
+  {
+    "path": "tests/verification/deployment/buster-admission-render.test.mjs",
+    "line": 9,
+    "source": "import { loadBusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "tests/verification/deployment/buster-admission-render.test.mjs",
+    "line": 39,
+    "source": "      assert.equal(loadBusterSettings({ SWARM_CONFIG: config }).admission.maximumQueuedJobs, maximumQueuedJobs);"
+  },
+  {
+    "path": "tests/verification/e2e/support/platform-config.ts",
+    "line": 1,
+    "source": "import { prismWorkerSettingsFromConfig } from '../../../../skills/common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "tests/verification/e2e/support/platform-config.ts",
+    "line": 166,
+    "source": "  prismWorkerSettingsFromConfig(rawConfig);"
+  },
+  {
+    "path": "tests/verification/reliability/buster-admission-config.test.mts",
+    "line": 6,
+    "source": "import { loadBusterSettings } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "tests/verification/reliability/buster-admission-config.test.mts",
+    "line": 19,
+    "source": "        assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);"
+  },
+  {
+    "path": "tests/verification/reliability/buster-admission-config.test.mts",
+    "line": 23,
+    "source": "      assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);"
+  },
+  {
+    "path": "tests/verification/reliability/buster-admission-config.test.mts",
+    "line": 28,
+    "source": "      assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file }), /SWARM_CONFIG_INVALID/);"
+  },
+  {
+    "path": "tests/verification/reliability/buster-admission-config.test.mts",
+    "line": 33,
+    "source": "        assert.throws(() => loadBusterSettings({ SWARM_CONFIG: file, [name]: value }), /SWARM_CONFIG_LEGACY_OVERRIDE/);"
+  },
+  {
+    "path": "tests/verification/reliability/buster-admission-config.test.mts",
+    "line": 40,
+    "source": "    assert.equal(loadBusterSettings({ SWARM_CONFIG: file }).admission.maximumActiveJobs, 7);"
+  },
+  {
+    "path": "tests/verification/reliability/buster-admission-config.test.mts",
+    "line": 57,
+    "source": "      assert.equal(loadBusterSettings({ SWARM_CONFIG: f.profile.file }).admission.maximumActiveJobs, 10);"
+  },
+  {
+    "path": "tests/verification/reliability/buster-extraction-concurrency.test.mts",
+    "line": 10,
+    "source": "import { busterPreparationSettingsFromConfig } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "tests/verification/reliability/buster-extraction-concurrency.test.mts",
+    "line": 18,
+    "source": "const settings = busterPreparationSettingsFromConfig(authored);"
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-identities.test.mts",
+    "line": 12,
+    "source": "import { busterPreparationSettingsFromConfig } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-identities.test.mts",
+    "line": 63,
+    "source": "  const settings = busterPreparationSettingsFromConfig(JSON.parse(readFileSync("
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-ledger.test.mts",
+    "line": 6,
+    "source": "import { busterPreparationSettingsFromConfig } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-ledger.test.mts",
+    "line": 12,
+    "source": "const settings = busterPreparationSettingsFromConfig(authored);"
+  },
+  {
+    "path": "tests/verification/reliability/buster-preparation-ledger.test.mts",
+    "line": 21,
+    "source": "  const policy = busterPreparationSettingsFromConfig(configured);"
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "line": 1,
+    "source": "import { busterSettingsFromConfig } from '../../../skills/common/plugin-runtime/foundation/config/swarm.ts';"
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "line": 63,
+    "source": "      tarExecutable: '/usr/bin/tar', maximumExtractedBytes: 1024 * 1024, allowedCapabilities: new Set(['command.execute']), admission: { ...busterSettingsFromConfig(JSON.parse(fs.readFileSync('charts/kubeclaw/files/config/swarm.config.json', 'utf8'))).admission, maximumActiveJobs: 1 } });"
+  }
+]

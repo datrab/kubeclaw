@@ -1,0 +1,7 @@
+{
+  "beforeTestSha256": "6d880282dea25ea6e559e9f05ca5d3bb25e34604fba0ad8705d5de50897aba99",
+  "afterTestSha256": "aafdff4ba0bb6952082e6899b5b4daa17d08a2ed0a3faab11dbe298d41b2a7bb",
+  "finding": "Fourth mutation deleted request.payload.attempt, which original reserveDelivery never stores on notification-delivery-request.v1; it was a no-op. Original terminal receipt carries attempt. Corrected mutation asserts that field exists, removes it from the actual terminal, recomputes digest and asserts each case differs from original. No production edit or expected-rejection removal.",
+  "source": "skills/common/plugins/operator-messaging/src/delivery-records.ts reserveDelivery and completeDelivery",
+  "rerun": "pending"
+}

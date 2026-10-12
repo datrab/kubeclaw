@@ -1,0 +1,37 @@
+[
+  {
+    "source": "skills/buster/engine/test-gates/runner.ts",
+    "snapshot": "00-runner.ts.snapshot",
+    "sha256": "dcb6721532a023c53dda13ab2c5ce4f3698bc441f97a9c7b9109666da458e91e"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/canonical-value.ts",
+    "snapshot": "01-canonical-value.ts.snapshot",
+    "sha256": "7158e326bb4b2622989af106ba49b664f90eccbe61df24a0d97e6400457c370e"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/provider-result-validation.ts",
+    "snapshot": "02-provider-result-validation.ts.snapshot",
+    "sha256": "1e5371e0528f03a73d1d24d8e0764d501d49c9d8c22d231315db5a3af5539631"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/specialist-report-finalization.ts",
+    "snapshot": "03-specialist-report-finalization.ts.snapshot",
+    "sha256": "1616da65ba5dc6dfef24af3b849f3a6aadbf4761d4dc0a31e866765f632cd812"
+  },
+  {
+    "source": "skills/buster/engine/test-gates/tests/specialist-boundary.test.ts",
+    "snapshot": "04-specialist-boundary.test.ts.snapshot",
+    "sha256": "b4180149b128763a832b957349fa325585a72e0e33e791e27af3b044119f0444"
+  },
+  {
+    "source": "docs/architecture/buster-v2-runtime.md",
+    "snapshot": "05-buster-v2-runtime.md.snapshot",
+    "sha256": "a1d31ebbb920cb94c6f38dd587511dd9b68267f0db32f903b08fdf5605297271"
+  },
+  {
+    "source": "docs/review/remediation/implementation/buster-specialist-extraction-20260921.md",
+    "snapshot": "06-buster-specialist-extraction-20260921.md.snapshot",
+    "sha256": "4426f62b0c0a9eadbec34144c406750712bc5cfe3013edc1fa3bb69820e84d59"
+  }
+]

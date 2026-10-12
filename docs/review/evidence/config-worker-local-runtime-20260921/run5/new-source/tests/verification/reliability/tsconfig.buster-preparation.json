@@ -1,0 +1,10 @@
+{
+  "extends": "../../../skills/buster/engine/tsconfig.json",
+  "include": [
+    "buster-preparation-identities.test.mts",
+    "buster-preparation-ledger.test.mts",
+    "buster-result-origin.test.mts",
+    "buster-prepared-store-cancellation.test.mts",
+    "buster-extraction-concurrency.test.mts"
+  ]
+}

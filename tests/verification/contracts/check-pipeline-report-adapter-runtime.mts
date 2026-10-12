@@ -1,3 +1,4 @@
+import { runnerExecutionPolicy } from '../../fixtures/test-gate/execution-policy.mts';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -114,9 +115,9 @@ const packages = discoverPackages({
 const registry = buildRegistry(packages);
 const reader = new FileReportArtifactReader([artifactRoot]);
 assert.throws(() => new FileReportArtifactReader([path.parse(artifactRoot).root]), /REPORT_ARTIFACT_ROOT_TOO_BROAD/u);
-assert.throws(() => new RegisteredReportAdapterRuntime(reader, path.parse(runtimeRoot).root),
+assert.throws(() => new RegisteredReportAdapterRuntime(reader, path.parse(runtimeRoot).root, runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput),
   /REPORT_ADAPTER_RUNTIME_ROOT_TOO_BROAD/u);
-const runtime = new RegisteredReportAdapterRuntime(reader, runtimeRoot);
+const runtime = new RegisteredReportAdapterRuntime(reader, runtimeRoot, runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput);
 assert.equal(fs.statSync(runtimeRoot).mode & 0o077, 0, 'runtime snapshots stay in an owner-private directory');
 
 const reportPath = path.join(artifactRoot, 'report.xml');
@@ -183,16 +184,27 @@ await assert.rejects(runtime.adapt(forbidden, artifact, limits), /REPORT_ADAPTER
 const slow = registry.reportAdapters.get('example.slow-report:junit');
 assert.ok(slow);
 await assert.rejects(runtime.adapt(slow, artifact, { ...limits, timeoutMs: 50 }), /REPORT_ADAPTER_TIMEOUT/u);
+assert.equal(fs.readdirSync(runtimeRoot).length, 0, 'deadline completion drains the adapter before removing its snapshot');
+const externalDeadline = new AbortController();
+const externalReason = new Error('REPORT_ADAPTER_TIMEOUT');
+const cancelledAdaptation = runtime.adapt(slow, artifact, limits, externalDeadline.signal);
+const cancelTimer = setTimeout(() => externalDeadline.abort(externalReason), 150);
+try {
+  await assert.rejects(cancelledAdaptation, error => error instanceof Error
+    && error.message === 'REPORT_ADAPTER_CANCELLED' && error.cause === externalReason,
+  'a caller reason with the same text remains caller cancellation, not the internal deadline');
+} finally { clearTimeout(cancelTimer); }
+assert.equal(fs.readdirSync(runtimeRoot).length, 0, 'caller cancellation also drains and removes the snapshot');
 const preparationRuntime = new RegisteredReportAdapterRuntime({
   read() {
     return new Promise(() => {});
   },
-}, path.join(workspace, 'preparation-runtime'));
+}, path.join(workspace, 'preparation-runtime'), runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput);
 await assert.rejects(preparationRuntime.adapt(valid, artifact, { ...limits, timeoutMs: 50 }),
   /REPORT_ADAPTER_TIMEOUT/u, 'the host deadline bounds a non-cooperative artifact reader');
 const dishonestReaderRuntime = new RegisteredReportAdapterRuntime({
   async read() { return Buffer.from('<different/>'); },
-}, path.join(workspace, 'dishonest-reader-runtime'));
+}, path.join(workspace, 'dishonest-reader-runtime'), runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput);
 await assert.rejects(dishonestReaderRuntime.adapt(valid, artifact, limits),
   /REPORT_ARTIFACT_DIGEST_MISMATCH/u, 'the host revalidates every storage driver result');
 
@@ -205,7 +217,7 @@ assert.equal(trusted.sourceArtifact.artifactId, artifact.artifactId);
 const raceController = new AbortController();
 const raceRuntime = new RegisteredReportAdapterRuntime({
   async read() { raceController.abort(new Error('cancelled during read')); return reportBytes; },
-}, path.join(workspace, 'race-runtime'));
+}, path.join(workspace, 'race-runtime'), runnerExecutionPolicy.reports, runnerExecutionPolicy.processInput);
 await assert.rejects(raceRuntime.adapt(valid, artifact, limits, raceController.signal), /cancelled during read/u);
 
 const overLimit = registry.reportAdapters.get('example.over-limit-report:junit');

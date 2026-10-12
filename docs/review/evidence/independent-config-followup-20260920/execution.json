@@ -1,0 +1,13 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "skills/prism/tests/swarm-worker-behavior.test.mts",
+    "skills/prism/tests/worker-ingress-capacity.test.mts",
+    "skills/prism/tests/worker-shutdown-boundaries.test.mts",
+    "skills/prism/tests/swarm-worker-config.test.mts",
+    "tests/verification/e2e/swarm-author-profile.test.mjs"
+  ],
+  "exitCode": 0,
+  "changedDuringRun": []
+}

@@ -1,0 +1,7 @@
+<command-line>: error: '_FORTIFY_SOURCE' redefined [-Werror]
+<built-in>: note: this is the location of the previous definition
+skills/worker/core/worker/native-worker-launcher.c:5:10: fatal error: linux/magic.h: No such file or directory
+    5 | #include <linux/magic.h>
+      |          ^~~~~~~~~~~~~~~
+compilation terminated.
+cc1: all warnings being treated as errors

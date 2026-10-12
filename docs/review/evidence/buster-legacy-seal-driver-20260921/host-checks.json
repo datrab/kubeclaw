@@ -1,0 +1,34 @@
+{
+  "uid": 1000,
+  "syntaxFiles": [
+    "tests/fixtures/test-gate/legacy-seal-guest.py",
+    "tests/fixtures/test-gate/legacy-seal-capabilities.py",
+    "scripts/buster-legacy-store-verify.py"
+  ],
+  "helpExit": 0,
+  "nonrootCommand": [
+    "python3",
+    "-I",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/legacy-seal-guest.py",
+    "--driver",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/legacy-seal-guest.py",
+    "--driver-sha256",
+    "8467a1269cc7d2f80c532eb78e72e9cf9d4985c976d00af8aff256a070cbface",
+    "--capability-child",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/fixtures/test-gate/legacy-seal-capabilities.py",
+    "--capability-child-sha256",
+    "3423e4dc08f62d4e9c4ff65fb43bf676e6b79bab44aedca30da0012ade52aed8",
+    "--verifier",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/buster-legacy-store-verify.py",
+    "--verifier-sha256",
+    "526590e00e663594e399028b17708fd4afecf595a4f776e6f5c00906a316962e",
+    "--ext4-device",
+    "/dev/vda",
+    "--second-ext4-device",
+    "/dev/vdb"
+  ],
+  "nonrootExit": 1,
+  "stdout": "",
+  "stderr": "RuntimeError: GUEST_ROOT_REQUIRED\n",
+  "privilegedExecuted": false
+}

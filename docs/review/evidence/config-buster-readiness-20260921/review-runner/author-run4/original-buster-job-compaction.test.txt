@@ -1,0 +1,26 @@
+✖ manual compaction reclaims genuine completed-job metadata bytes, preserving terminal HTTP replay (402.16323ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2453.902484
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-job-compaction.test.mts:20:1
+✖ manual compaction reclaims genuine completed-job metadata bytes, preserving terminal HTTP replay (402.16323ms)
+  Error [RemotePlanTransportError]: NOVA_REMOTE_PLAN_HTTP_400:Cannot read properties of undefined (reading 'stage')
+      at #request (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/test-gates/remote-dispatch.ts:148:13)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async pollRemote (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/test-gates/dispatch-operation.ts:43:31)
+      at async dispatchOperation (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/test-gates/dispatch-operation.ts:27:12)
+      at async NovaRemoteTestGate.execute (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/test-gates/remote-result-import.ts:268:22)
+      at async ProductionNovaTestGate.execute (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/nova/core/test-gates/production.ts:77:22)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-job-compaction.test.mts:62:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    retryable: false
+  }

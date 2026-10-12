@@ -1,0 +1,4 @@
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/deploy-api-errors-20260921/run-storage-mutants.py", line 26
+    source=source.replace(old,'    done <<<"$(printf '%s\\n' "$records" | tail -n 1)"')
+                                                         ^
+SyntaxError: unexpected character after line continuation character

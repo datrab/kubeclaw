@@ -1,0 +1,15 @@
+{
+  "reason": "Frozen review bytes are evidence snapshots, not current documentation pages. Only storage names changed; original source identity manifests and snapshot bytes are unchanged.",
+  "files": [
+    {
+      "previousStoragePath": "docs/review/evidence/independent-backup-20260920/new-files/docs/operations/prism-backup-retention.md",
+      "newStoragePath": "docs/review/evidence/independent-backup-20260920/new-files/docs/operations/prism-backup-retention.md.snapshot",
+      "sha256": "bd539c216d7f5053d12489b0727e334019e8b6eb8ba4c913f5905aaea1262d60"
+    },
+    {
+      "previousStoragePath": "docs/review/evidence/independent-backup-20260920/new-files/docs/review/remediation/implementation/prism-retirement-matrix-20260920.md",
+      "newStoragePath": "docs/review/evidence/independent-backup-20260920/new-files/docs/review/remediation/implementation/prism-retirement-matrix-20260920.md.snapshot",
+      "sha256": "55727d6bd3cf02390fc93910dd4beb801426961cea2e4a73e6d44771d22fba3f"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "observedAfterRefusal": true,
+  "timestamp": 1790001566.1606283,
+  "command": "python3 docs/review/evidence/buster-legacy-seal-vm-20260921/generation3/launch-smaller-as.py --verify-only",
+  "exitCode": 1,
+  "message": "Fixed host memory envelope unavailable; do not raise guest budget automatically.",
+  "vmBooted": false,
+  "memoryMax": "3221225472",
+  "memoryCurrent": "3057664000",
+  "chargedTerms": {
+    "anon": 653848576,
+    "kernel": 438288384,
+    "shmem": 0
+  },
+  "limitBytes": 805306368
+}

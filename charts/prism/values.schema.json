@@ -64,7 +64,8 @@
     "worker",
     "postgresql",
     "secrets",
-    "artifactStorage"
+    "artifactStorage",
+    "busterComponentFile"
   ],
   "properties": {
     "images": {
@@ -111,10 +112,6 @@
     "control": {
       "type": "object",
       "properties": {
-        "pipelinePreferenceSubject": {
-          "type": "string",
-          "pattern": "^$|^user-[a-f0-9]{24}$"
-        },
         "productDecisions": {
           "type": "object",
           "additionalProperties": false,
@@ -268,7 +265,6 @@
       "required": [
         "native",
         "replicas",
-        "shutdownTimeoutMs",
         "terminationGracePeriodSeconds"
       ],
       "properties": {
@@ -281,8 +277,7 @@
           "required": [
             "nodeName",
             "namespace",
-            "policyDigest",
-            "closeTimeoutMs"
+            "policyDigest"
           ],
           "properties": {
             "nodeName": {
@@ -296,18 +291,8 @@
             "policyDigest": {
               "type": "string",
               "pattern": "^[a-f0-9]{64}$"
-            },
-            "closeTimeoutMs": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 2147483647
             }
           }
-        },
-        "shutdownTimeoutMs": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 2147483647
         },
         "terminationGracePeriodSeconds": {
           "type": "integer",
@@ -525,6 +510,10 @@
           "maxLength": 128
         }
       }
+    },
+    "busterComponentFile": {
+      "type": "string",
+      "pattern": "^files/config/(profiles/)?buster-engine([.][a-z0-9-]+)?[.]config[.]json$"
     }
   },
   "additionalProperties": false

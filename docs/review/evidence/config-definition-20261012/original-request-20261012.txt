@@ -1,0 +1,226 @@
+Bitte führe den Auftrag zunächst als Bestandsaufnahme und gemeinsame Entscheidung mit mir fort. Beginne noch keine weitere Implementierung.
+Die bestehende Übergabe ist ein historischer Ausgangspunkt. Überprüfe den tatsächlichen aktuellen Stand im Repository und die vorhandenen Belege, bevor du ihre Aussagen übernimmst.
+Prüfe sämtliche ursprünglich angesprochenen 14 Punkte sowie Befundregister und Konfigurationszentralisierung – einschließlich der bisher als abgeschlossen eingeordneten Punkte. Stelle für jeden Punkt nachvollziehbar dar:
+•	Was war das ursprüngliche Problem oder Ziel?
+•	Besteht das Problem heute noch? Welche konkreten Quellen und Belege stützen die Einschätzung?
+•	Was ist bereits implementiert, integriert, getestet und unabhängig geprüft? Was liegt lediglich als Entwurf vor?
+•	Welche tatsächlichen Code-, Test-, Dokumentations- oder Live-Nachweislücken bleiben?
+•	Ist eine weitere Bearbeitung sinnvoll? Welchen konkreten Nutzen hätte sie, und welcher Aufwand oder welche zusätzliche Komplexität entstünde?
+•	Was empfiehlst du: unverändert beheben, Umfang vereinfachen/anpassen, zurückstellen oder ohne weitere Änderung schließen? Begründe die Empfehlung und kennzeichne Unsicherheiten.
+•	Welche klaren Abnahmekriterien wären bei einer Bearbeitung angemessen? Für jeden Punkt muss dazugehören, dass die relevante Dokumentation geprüft und bei Bedarf aktualisiert wird.
+Lass diese Bestandsaufnahme durch einen frischen Subagenten unabhängig anhand des Codes und der Originalbelege gegenprüfen. Statusmeldungen früherer Agents und bestandene Teiltests reichen nicht als Abschlussnachweis.
+Präsentiere mir anschließend eine übersichtliche Entscheidungsliste mit dem genauen aktuellen Stand und deiner Empfehlung pro Punkt. Besprich mit mir, welche Punkte wir tatsächlich bearbeiten, verändern, zurückstellen oder schließen. Offene Fragen und Zielkonflikte müssen vor der jeweiligen Behebung geklärt sein.
+Erst nach unserer ausdrücklichen Entscheidung über Umfang und Abnahmekriterien beginnt die Implementierung der freigegebenen Punkte. Schweigen oder eine frühere pauschale Implementierungsfreigabe gilt hierfür nicht als Zustimmung.
+Bis dahin sind lesende Untersuchungen, geeignete nicht destruktive Prüfungen und die Dokumentation der Bestandsaufnahme erlaubt. Keine neuen Behebungen integrieren, vorhandene Änderungen verwerfen oder Befunde ohne unsere Entscheidung als erledigt umklassifizieren.
+Halte unsere Entscheidungen, Begründungen, Abnahmekriterien und die daraus folgende Reihenfolge dauerhaft im Repository fest. Für die spätere Umsetzung gelten weiterhin: möglichst einfache Lösungen, korrekt entfernte Altpfade, echte Tests am konkreten Implementierungsstand, hochwertige Dokumentation und abschließende unabhängige Prüfung.
+
+
+
+Übergabe zur Fortsetzung – Stand 9. Oktober 2026
+Diese Übergabe ersetzt ältere Aussagen über „laufende“ September-Prüfungen. Sie dokumentiert den Arbeitsstand und die Fortsetzung, keine neue Gesamtabnahme. Historische Rohbelege bleiben unverändert.
+1. Auftrag und verbindliche Anforderungen
+Die ursprünglichen Befunde sowie REGISTER und CONFIG vollständig bearbeiten:
+1.	Prüfen, ob jeder Befund noch besteht und behoben werden soll.
+2.	Klare Abnahmekriterien pro Befund einhalten.
+3.	Möglichst einfache, nachvollziehbare Implementierung.
+4.	Ersetzte alte Pfade entfernen.
+5.	Funktion durch geeignete echte Tests am exakten Implementierungsstand beweisen.
+6.	Bei jedem Punkt die nötige Dokumentation aktualisieren.
+7.	Abschließende unabhängige Prüfung durch einen frischen Subagenten, der die betreffende Änderung nicht implementiert hat.
+CONFIG-Vorgabe: Konfigurationsdateien sind die einzige Autorität für konfigurierbare Einstellungen. Keine hardcodierten Ersatzwerte, konkurrierenden Konfigurationsquellen oder stillen Fallbacks. Zentrale, vollständige Konfiguration pro Plugin, Worker Core, Engine, Orchestrator Core usw.
+Verbindliche Grundlagen:
+•	Bewertung der Befunde
+•	Abnahmekriterien
+•	Entscheidungen einschließlich D17
+•	Maschinenlesbares Register
+Vorhandene Teilmigrationen bedeuten keinen globalen CONFIG-Abschluss.
+2. Repository und Ausführungsstand
+Repository:
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo
+Branch: main
+HEAD: cd9f235345f5fd8736a2ffe75d806288e4d538db
+Am Übergabetag enthielt der Arbeitsbaum 1237 geänderte oder unversionierte Einträge, noch vor den letzten Dokumentationsänderungen. Der HEAD allein beschreibt deshalb nicht den Implementierungsstand.
+Nichts zurücksetzen, bereinigen oder pauschal überschreiben. Für diese Übergabe wurde kein Commit, Push oder Deployment durchgeführt.
+Der gespeicherte Goal-Status steht auf blocked, nicht auf complete oder active. Diese Übergabe hat den Status nicht verändert. Der gespeicherte Status beweist keinen aktuellen fachlichen Blocker: Es gibt weiterhin ausführbare lokale Implementierungs- und Prüfaufgaben.
+Zu Beginn der Übergabe liefen keine alten Subagents. Die Prozessprüfung fand keine laufenden Security-, Ownership- oder CI2-Testjobs. Ein neuer, ausschließlich lesender Subagent prüfte die Übergabe. Alte Session-IDs dürfen nicht als laufende Arbeit behandelt werden.
+Keine Produktions-/Hoständerungen, Deployments oder destruktiven Ausfalltests ohne entsprechende Autorisierung. Lokale Abnahme und separate Live-Nachweise gemäß D12 getrennt halten. Übersprungene, abgebrochene oder nur vorbereitete Prüfungen zählen nicht als bestanden.
+3. Gesamtstand: 142 von 154 lokal verifiziert
+Die ursprünglichen 14 Punkte sind nicht alle erledigt.
+GitOps und SPIRE gelten lokal als geschlossen; separate Live-Gates bleiben erhalten. REGISTER ist als begrenztes Paket lokal unabhängig abgenommen.
+Zwölf Befunde bleiben unvollständig:
+Kennung	Registerstatus	Offener Arbeitsbereich
+PCR-BUSTER-ENGINE-001	in Bearbeitung	Attempt-/Capability-Ressourcenbudgets B1–B5
+PCR-BUSTER-ENGINE-004	implementiert, nicht vollständig verifiziert	Quell-/Arbeitsverzeichnisbesitz und dauerhafte Freigabe W1–W5
+PCR-OBS-002	implementiert, nicht vollständig verifiziert	Bestätigte Historie, Retention und Quoten R1–R4
+IFR-21-001	in Bearbeitung	Reproduzierbarkeit echter Runtime-Image-Builds
+IFR-29-001	offen	Operator-/Code-Konfiguration vollständig trennen
+IFR-04-001	in Bearbeitung	Tailscale, einschließlich separater echter Tailnet-Nachweise
+IFR-10-001	offen	BuildKit-Isolation
+IFR-01-001	offen	Bootstrap
+IFR-02-001	offen	Cilium
+IFR-16-001	offen	Storage, kombinierte Lastfälle
+IFR-26-001	in Bearbeitung	Vollständige anwendungskonsistente Wiederherstellung
+IFR-28-001	offen	Unabhängiger Management-/Recovery-Pfad
+Die Zahlen zählen historische Finding-Kennungen, nicht CONFIG-Unterpakete. Diese Kurzbeschreibungen ersetzen nicht die ursprünglichen Einzelkriterien. Zusätzlich geführte Integrationsbefunde müssen erhalten bleiben.
+4. Letzter tatsächlich ausgeführter Prüfstand
+Das zentrale Belegverzeichnis ist:
+R – Buster-Cluster-Laufzeitbelege
+Die folgenden Ergebnisse stammen aus September. Am 9. Oktober wurden diese umfangreichen Tests nicht erneut ausgeführt.
+Beleg innerhalb von R	Tatsächliches Ergebnis	Grenze / Restarbeit
+security-fast4/results.json	Fünf Typprüfungen, kanonisches Lint und Shellprüfung bestanden	Stand vor späteren Quelltest-/DOC-Änderungen
+security-runtime2/results.json	16 von 17 Befehlen bestanden, keine unerwartete Quellendrift	Gesamtprüfung fehlgeschlagen: verify:test-gate:security-cutover, Exit 1
+ci2-service2/	20/20 Capture-/Produktionsservice-Fälle	Unabhängig angenommen, gilt für die gebundene Generation
+ci2-service-controls1/	Acht Gegenproben unabhängig angenommen	Beabsichtigte Fehlerursachen geprüft; Exit 1 allein reicht nicht
+security-consumers2/	61/61 Consumer-Fälle	Ältere Generation; korrigierte Baseline ebenfalls in runtime2 bestanden
+security-controls1/	Acht von neun Kontrollen sauber angenommen	Neunte traf zusätzlich fremde Timeout-Fälle; Korrektur integriert, alle neun erneut prüfen
+security-runtime2 enthält außerdem:
+•	Drei bestandene Lifecycle-Fälle.
+•	61 bestandene RuntimeSecurity-Fälle.
+•	Die übrigen ursprünglichen Cluster-Prüfblöcke, darunter Cleanup, Scheduler, Execution-Konfiguration, Komponenten, Readiness und Tailscale.
+Die genaue Befehlsliste steht in den jeweiligen commands.json und results.json. Testzahlen verschiedener Generationen dürfen nicht zu einem neuen Gesamtlauf addiert werden.
+Ursache des fehlgeschlagenen Security-Blocks:
+Zunächst bestanden seine fünf echten Provider-/Scannerfälle, einschließlich echter Trivy-Datenbanken und Image-Scan. Anschließend verlangte ein veralteter Quelltest weiterhin den alten Docker-Downloadbefehl statt des bereits verwendeten Lock-Installers.
+Die nachfolgenden Remote-Vertical-, Go-Controller- und Paritäts-/Cutover-Prüfungen wurden dadurch nicht erreicht.
+Die Quelltestkorrektur wurde unabhängig geprüft und integriert. Sie verlangt jetzt den tatsächlichen Lock-Installer, beide Datenbanken und die Entfernung der alten Downloadpfade.
+Beleg innerhalb von R: integration-security-database-oracle/result.json.
+Die gesamte Security-Kette wurde danach noch nicht wiederholt. Die Quelltestassertion beweist außerdem keinen echten Image-Build.
+Lifecycle-Historie:
+•	Ownership1 scheiterte am geerbten NODE_TEST_CONTEXT.
+•	Ownership2 scheiterte an der Beobachtbarkeit gleichzeitiger Body-/Stopfehler.
+•	Die akzeptierte Korrektur isoliert einen echten Stopfehler nach erfolgreichem Body.
+•	Alle drei Fälle bestehen in runtime2.
+•	Die Darstellung gleichzeitiger Fehler ist damit ausdrücklich nicht bewiesen.
+•	Die beiden semantischen Kontrollen premature-root-removal und late-inner-removal wurden noch nicht ausgeführt.
+Zurückbehaltene Testverzeichnisse samt inneren stderr-/Reporterbelegen vor Bereinigung kopieren und hashen.
+Wichtige unabhängige Belege:
+•	CI2: 20 Fälle
+•	Acht Service-Gegenproben
+•	Security-Kontrollen: acht angenommen, eine offen
+•	Cluster-Poll-Korrektur und neun Kontrollen
+•	Cleanup-/Scheduler-Teilabnahme
+Die Cleanup-/Scheduler-Teilabnahme schließt ENGINE001, ENGINE004 oder Gesamt-CONFIG nicht ab.
+5. Exakte Integrationsgrenze
+Letztes tatsächlich getestetes kumulatives Manifest innerhalb von R:
+cumulative-consumer-stop-corrections.json — 84 Dateien.
+Danach wurden integriert:
+1.	integration-security-database-oracle/result.json — eine Quelltestdatei.
+2.	integration-doc-v2/result.json — fünf Dokumente.
+3.	Diese Übergabe samt Einstieglinks und aktualisierten Statusabsätzen in den beiden CONFIG-Implementierungsdokumenten.
+Die neuen Dokumentationsbytes sind nicht rückwirkend durch das frühere DOC-V2-Review abgenommen.
+Ein neues kumulatives Manifest nach diesen Änderungen ist noch nicht erstellt.
+Das alte Manifest darf auf dem aktuellen Arbeitsbaum nicht still akzeptiert oder überschrieben werden. Neue Datei- und Symlinkidentitäten, ursprüngliche Baselines und bewusst integrierte Änderungen müssen erhalten bleiben.
+integrate.py innerhalb von R validiert Manifest und Baselines vor Änderungen. Originalmanifeste und normalisierte Integrationsmanifeste getrennt archivieren.
+Unabhängiges DOC-V2-Review
+DOC V2 beschreibt korrekt, dass RuntimeSecurity synchrone Manifest-Lese-/Hasharbeit vor dem kubectl-/Poll-Timer ausführt. Unbegrenzte Manifestallokation und Produktionseigentum an noch schließenden Kindprozessen bleiben offen.
+Die veraltete Statusmeldung „17-command run in progress“ wurde durch 16/17, Wiederholung offen ersetzt. Die abschließende unabhängige DOC-/Gesamtabnahme fehlt weiterhin.
+6. Voraussetzungen für den nächsten Security-Lauf
+Vorbereitete Security-Testwerkzeuge
+Dort liegen echte Trivy-0.74.0-Artefakte, preparation-result.json, der unveränderte locked-cache und ein separat aufgelöster fresh-resolved-cache.
+Der Name „fresh“ ist historisch:
+•	Vulnerability UpdatedAt: 24. September 2026.
+•	Java UpdatedAt: 19. September 2026.
+•	Beide liegen am 9. Oktober außerhalb der unveränderten Fristen von 48 Stunden beziehungsweise sieben Tagen.
+Neue echte Datenbanken in einem neuen Belegverzeichnis beziehen, Herkunft prüfen und an den Testlauf binden. Keine Zeitstempel umschreiben, Fristen lockern oder alte Belege überschreiben.
+Go-Vorbereitung:
+Go 1.26.5 wurde privat heruntergeladen und entpackt. Im Werkzeugverzeichnis enthalten tooling/go und tooling/go-preparation:
+•	Das echte Binary.
+•	Prüfsummenbelege.
+•	Erfolgreiche Versions-, Umgebungs- und Modulproben.
+Ein abschließender source-after-/Vorbereitungsbericht fehlt. Vor Wiederverwendung Vollständigkeit, Prüfsummen und Ausführbarkeit prüfen.
+Das Vorhandensein der Toolchain ist kein bestandener Controller-Test. Das Projekt verwendet in go.mod Go 1.22; die vorbereitete Toolchain ist 1.26.5. Das beweist nicht das Controller-Dockerimage mit golang1.22. Keine künstliche go.sum erzeugen.
+Noch fehlende Quellenbindung des Runners:
+Der vorbereitete run-security-original.py innerhalb von R führt mit --phase security-original die unveränderte gesamte Security-Cutover-Kette aus. Er wurde noch nicht ausgeführt.
+Der geerbte Prüfplan deckt folgende Eingaben noch nicht ab:
+•	Go-Quellen im Verzeichnis cmd.
+•	go.mod.
+•	Gegebenenfalls go.sum.
+•	Go-SDK.
+Vor dem Lauf die Bindung ergänzen. Existierende Quellen und SDK vor und nach dem Lauf prüfen. Eine fehlende go.sum ausdrücklich als Abwesenheit prüfen; die vorhandene Erfassung über lstat kann keine fehlende Datei aufnehmen.
+GOTOOLCHAIN=local verwenden, mit eigenem frischem Buildcache. Die Runneränderung unabhängig prüfen. Download-/Buildcaches sind Ausgaben, keine unveränderlichen Quellen.
+Weitere vorbereitete Runner innerhalb von R:
+•	run-security-v2.py: neun Kontrollen über --phase ci2-controls.
+•	run-ownership.py: zwei Kontrollen über --phase ownership-controls.
+•	Spezifikationen: security-control-specs-lint-v2.json und ownership-control-specs.json.
+Argumente und Prüfplan vor dem Start aus dem jeweiligen Runner lesen. Alte absolute Sessionpfade nicht ungeprüft übernehmen.
+7. Private Entwürfe: nicht integriert, nicht abgeschlossen
+Security.scan
+Privater Scanner-Entwurf
+Enthält:
+•	Ursprüngliches Inventarmanifest und Zuständigkeitsentscheidungen.
+•	25 geänderte/neue Kandidatendateien unter private-v1/files.
+•	manifest-v1.json bindet nur das ursprüngliche 13-Felder-Inventar/Design.
+•	design-resolved-v3.md beschreibt die anschließende 14-Felder-Entscheidung.
+Kein abschließend geprüftes Implementierungs-/Laufzeitpaket nachgewiesen.
+Maßgebliche Registry-Designentscheidung
+Vierzehn erforderliche Felder im vollständigen settings.securityScan:
+Bereich	Felder
+Scanner	trivyExecutable, cacheDirectory
+Registry-Zugriff	allowedRegistryPrefixes, registryClientRepositoryPrefixes
+Ausführung	maximumExecutionMs, maximumOutputBytes, executableSearchPath
+Datenbanken	databasePolicy.maximumVulnerabilityAgeMs, maximumJavaAgeMs, maximumDatabaseBytes, maximumMetadataBytes
+Findings	findings.maximumTitleCodeUnits, maximumMessageCodeUnits, maximumResolutionCodeUnits
+Beide Profile müssen explizit sein; erforderliche Policy gilt auch bei deaktivierter Route.
+Designgrenzen:
+•	Keine private Registry-Domain erfinden.
+•	Volle Präfixe bleiben stabil.
+•	Explizite logische Repository-Grants folgen der gemeinsamen Registry-Bindung.
+•	Ein gemeinsamer optionaler registryClient-Deskriptor wird einmal validiert, mit Secrets aufgelöst und eingefroren.
+•	Diesen verwenden BuildKit, Scanner, Kubernetes-Origin und Registry-Health.
+•	Keine BuildKit-Pflicht für Scan-only.
+•	Kein anonymer Fallback bei ungültiger Bindung.
+•	Keine still übernommenen Docker-Credentials.
+•	Alte doppelte Konfigurationsquellen bereits bei Anwesenheit zurückweisen.
+Vor dem Einfrieren den Entwurf mit der aktuellen Quelltest-/DOC-Integration abgleichen. Ausgabe-Abbruchursache, asynchrones Child-Close und Speichergrenzen getrennt behandeln; keine unbelegte Gesamtbehebung behaupten.
+ENGINE004: Quellverzeichnis-Sicherheit
+Aktueller Audit
+Privater Teilentwurf
+Vorhanden sind sieben geänderte/neue Kandidaten und sechs Vorherdateien. Kein eingefrorenes Manifest, keine Tests/DOC oder erfolgreiche Laufzeitabnahme dieses Entwurfs nachgewiesen.
+Der Audit findet fehlende positive Löschberechtigung:
+•	Ein Attempt-Verzeichnis kann trotz fehlgeschlagenem Cleanup entfernt werden.
+•	Das Staging-finally kann noch aktive Arbeit überholen.
+Bestehende PreparationLedger-/Reconciliation-Funktionen wiederverwenden. Es wäre falsch zu behaupten, es gebe bisher überhaupt keine dauerhafte Bereinigung.
+Der begrenzte Fix muss tatsächliches Arbeitsende und positive Disposal-Bestätigung vor Löschung verlangen. Fehlende Autorität bedeutet: erhalten. Ein semantischer Cleanupfehler allein bedeutet jedoch nicht zwingend, dass noch Arbeit läuft.
+Es fehlen echte Stopfehler-, Spätabschluss- und Positivfälle, Dokumentation und frisches Review.
+Darüber hinaus bleiben offen:
+•	Published-source release.
+•	Dauerhafte Berechtigung zur Orphan-Bereinigung.
+•	Snapshot-Retry.
+•	Historische Replay-/Compaction-Nachweise.
+8. Weitere Restarbeiten
+Die vollständigen B1–B5-, W1–W5- und R1–R4-Kriterien bleiben verbindlich.
+Zusätzlich nicht abgeschlossen:
+•	Native VM Generation 6 scheiterte am Watchdog/Speicher. Ältere Host-/Gastresultate sind kein neuer Gesamtnachweis.
+•	75 Hosttests ersetzen keine offenen Gast-/Kerneltests.
+•	Zwei echte Runtime-Image-Builds.
+•	Browser-, Architektur- und Datenbanknachweise.
+•	Die zwölf oben aufgeführten ursprünglichen Befunde.
+•	Weitere CONFIG-Inventare für Adapter/Observer, Testprovider und Stages/JUnit.
+•	Foundation-/Common-Prozesslimits, Novalint und native Konstanten mit noch zu bewertenden beziehungsweise zu migrierenden Konfigurationsquellen.
+Aus fertigen Buster-Unterpaketen darf keine globale Freiheit von hardcodierten Fallbacks abgeleitet werden.
+9. Konkrete Reihenfolge für die neue Session
+1.	Grundlagen lesen und Arbeitsstand prüfen. Diese Übergabe, Register, Abnahmekriterien und Entscheidungen lesen. Arbeitsbaum und laufende Prozesse neu prüfen. Alte Agenten-/Session-IDs nicht als aktive Arbeit behandeln. Private Entwürfe sichern und mit dem aktuellen Quellstand vergleichen.
+2.	Neues exaktes kumulatives Manifest erstellen. Letztes getestetes Manifest, spätere Integrationen und Dokumentationsänderungen zusammenführen. Unbekannte Abweichungen untersuchen, nicht pauschal übernehmen.
+3.	Security-Testvoraussetzungen vervollständigen. Vollständige Go-Bindung ergänzen, Toolchain prüfen, echte frische Datenbanken separat vorbereiten. Runner und Eingaben unabhängig prüfen lassen.
+4.	Gesamte ursprüngliche Security-Cutover-Kette wiederholen. Die anderen 16 bereits bestandenen Blöcke nur bei relevanten neuen Änderungen oder ungeklärten Abhängigkeiten wiederholen. Keine verkürzte Ersatzkette als Originalnachweis ausgeben.
+5.	Offene Gegenproben durchführen. Neun korrigierte RuntimeSecurity-Kontrollen und zwei Lifecycle-Kontrollen. Mutation, beabsichtigte Assertion, saubere Baseline und Abwesenheit unbeabsichtigter Nebenausfälle unabhängig prüfen.
+6.	Begrenztes CONFIG-Paket abschließend prüfen. Veränderte Quelltest-/DOC-Dateien passend statisch prüfen. Ein frischer, nicht implementierender Agent prüft Rohbelege, ursprünglichen Umfang, Einfachheit, entfernte Altpfade und Dokumentation. Erst danach dieses Teilpaket abnehmen.
+7.	Private Entwürfe und übrige Befunde fortsetzen. Security.scan und ENGINE004 fertigstellen, einfrieren, prüfen und gezielt integrieren. Danach übrige Originalbefunde/CONFIG gemäß Kriterien bearbeiten. Jede endgültige Statusänderung braucht Belege und aktualisierte Dokumentation.
+Arbeitsregeln für Tests:
+•	Höchstens ein schwerer gebundener Testlauf gleichzeitig.
+•	Währenddessen keine gebundenen Produktions-/Testquellen, Runner oder Hooks ändern.
+•	Private Entwürfe außerhalb der Bindung sind möglich.
+•	Vorher-/Nachheridentitäten, Rohlogs, Schutzprüfungen, Drift und auch Fehlläufe erhalten.
+•	Erwarteter Fehlercode allein beweist keine wirksame Gegenprobe.
+Registerprüfung aus der Repositorywurzel:
+node scripts/review/remediation-register.mjs --check
+10. Prüfung dieser Übergabe
+Am 9. Oktober 2026 bestand die Registerprüfung: historische IDs, Integrationsbefunde, Status, Summen und Belegverweise sind konsistent. Das ist keine fachliche Neuabnahme.
+Ein frischer, ausschließlich lesender Subagent handoff_check prüfte separat:
+•	Laufresultate.
+•	Integrationsbelege.
+•	Private Entwürfe.
+•	Go-Vorbereitung.
+•	Anschließend die Übergabe gegen diese Artefakte.
+Er fand keine materielle falsche Abschlussaussage. Sein Hinweis auf uneinheitliche relative Pfade wurde korrigiert.
+Für diese Übergabe wurden keine neuen Produktions- oder Laufzeittests ausgeführt. Die Prüfung bestätigt den dokumentierten Übergabestand, nicht die ausstehenden Implementierungsabnahmen.
+

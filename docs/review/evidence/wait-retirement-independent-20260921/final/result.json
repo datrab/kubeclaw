@@ -1,0 +1,50 @@
+{
+  "sourceDrift": [],
+  "identityCount": 36626,
+  "results": [
+    {
+      "name": "original-wait-live",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "tests/live-function.test.ts"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugins/wait-store",
+      "exitCode": 0,
+      "seconds": 1.133253896026872
+    },
+    {
+      "name": "original-wait-boundary",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "tests/package-boundary.test.mjs"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugins/wait-store",
+      "exitCode": 0,
+      "seconds": 0.14884348900523037
+    },
+    {
+      "name": "original-operator-and-wait",
+      "command": [
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+        "-b",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+        "/usr/local/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/wait-retirement-independent-20260921/final/counterprobes.mjs",
+        "tests/verification/reliability/wait-resolver-audience.test.mjs",
+        "tests/verification/reliability/operator-request-projection.test.mjs",
+        "tests/verification/reliability/operator-projection-independent.test.mjs"
+      ],
+      "cwd": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo",
+      "exitCode": 1,
+      "seconds": 467.76495026098564
+    }
+  ]
+}

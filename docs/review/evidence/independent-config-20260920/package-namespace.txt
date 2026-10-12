@@ -1,0 +1,2 @@
+{"namespace":"default","configMap":"prism-swarm-config","settings":{"maximumActiveRequests":16,"maximumProbeRequests":4,"maximumConnections":128,"requestTimeoutMs":120000,"shutdownTimeoutMs":120000},"packageToRuntime":true}
+{"namespace":"review-isolated","configMap":"prism-swarm-config","settings":{"maximumActiveRequests":16,"maximumProbeRequests":4,"maximumConnections":128,"requestTimeoutMs":120000,"shutdownTimeoutMs":120000},"packageToRuntime":true}

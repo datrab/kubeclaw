@@ -1,0 +1,28 @@
+MUTATION_APPLIED: remove recovered source/header binding
+✖ recovered source reference remains bound to the originally accepted extraction header (61.909417ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 885.687812
+
+✖ failing tests:
+
+test at tests/verification/reliability/buster-preparation-identities.test.mts:62:1
+✖ recovered source reference remains bound to the originally accepted extraction header (61.909417ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/buster-preparation-identities.test.mts:78:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /LEDGER_INVALID/,
+    operator: 'throws',
+    diff: 'simple'
+  }

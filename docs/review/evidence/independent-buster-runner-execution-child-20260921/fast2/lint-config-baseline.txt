@@ -1,0 +1,22 @@
+{
+  "before": [
+    {
+      "ruleId": "discipline/filename-case",
+      "message": "Use a lowercase kebab-case filename."
+    },
+    {
+      "ruleId": "max-lines",
+      "message": "File has too many lines (323). Maximum allowed is 300."
+    }
+  ],
+  "current": [
+    {
+      "ruleId": "discipline/filename-case",
+      "message": "Use a lowercase kebab-case filename."
+    },
+    {
+      "ruleId": "max-lines",
+      "message": "File has too many lines (325). Maximum allowed is 300."
+    }
+  ]
+}

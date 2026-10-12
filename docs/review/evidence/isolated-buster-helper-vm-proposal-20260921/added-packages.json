@@ -1,0 +1,34 @@
+[
+  {
+    "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libcap-getcap-2.78-r0.apk",
+    "sha256": "649b1de7cc4932d538b9d3f8760f1520b8f18babffb8e996dd9680f3e55bff27"
+  },
+  {
+    "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libcap-ng-0.8.5-r2.apk",
+    "sha256": "feeb65b050ec75766057ce8f3e9611eef3c03d9eeed17d31a900ab900ed2bcf2"
+  },
+  {
+    "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libcap-setcap-2.78-r0.apk",
+    "sha256": "79db5bb2c75ae67f97cb8982c6f26d78fc16cc01a2cc560a1764db981c6cecc2"
+  },
+  {
+    "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libcap-utils-2.78-r0.apk",
+    "sha256": "fb2137ea57d70951e7f81733272a0926f2b906f97d395d3ad59ce4d5af3e0a1b"
+  },
+  {
+    "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libcap2-2.78-r0.apk",
+    "sha256": "42886a7b4bcde26347c712925c8dc7db202b6029ef9b8c7ee81577ab7bdd8fad"
+  },
+  {
+    "path": "node_modules/.cache/buster-helper-vm-20260921/packages/libeconf-0.8.3-r0.apk",
+    "sha256": "2a791c7957961f830cf31b04f35f814a63afcf633badc9052425ff1cf2f64380"
+  },
+  {
+    "path": "node_modules/.cache/buster-helper-vm-20260921/packages/musl-1.2.6-r2.apk",
+    "sha256": "573712e2f49c15bfc20a2699f204acdfc74c772722b15e7353d768057fae0e71"
+  },
+  {
+    "path": "node_modules/.cache/buster-helper-vm-20260921/packages/setpriv-2.42.3-r1.apk",
+    "sha256": "6a6290ca1f0fb61d0a47e15ed921dd44cb54cf15981c26923dcdf79095c7aff8"
+  }
+]

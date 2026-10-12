@@ -1,0 +1,21 @@
+# Tailscale Operator
+
+## Procedure
+
+Configure Tailscale only for services that require private ingress.
+
+## Verify
+
+Confirm the intended service has a reachable private endpoint and no unintended
+public exposure.
+
+## Troubleshooting
+
+Check operator health, service annotations, DNS, and NetworkPolicy.
+
+OAuth bootstrap distinguishes an absent Secret from an unavailable API by a
+successful exact-name Secret collection lookup. The operator credential therefore
+needs namespace Secret `list` permission, not only named `get`. An existing Secret
+is left untouched; lookup/validation or Secret-apply failure stops the installation.
+See [deployment observation failures](setup-flow.md#deployment-and-cleanup-observation-failures)
+for permissions, diagnostics, rerun behavior and the limits of local fixture tests.

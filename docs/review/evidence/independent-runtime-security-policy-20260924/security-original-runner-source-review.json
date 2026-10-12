@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/cluster_security_doc_review",
+  "decision": "accepted_for_source_use",
+  "hashes": {
+    "run-security-v3.py": "a63960a36f8aba9c4cd4efad4865811b8164de1b91892213afbe2c830b0b24b8",
+    "run-security-original.py": "0af5807855acd6221be6905bda7c0f343686e3969abdf2d05932da68211417b6"
+  },
+  "delta": [
+    "Adds security-original phase choice",
+    "Applies exact same genuine scanner/database identity verification and environment as runtime phase",
+    "Runs unchanged complete npm run verify:test-gate:security-cutover"
+  ],
+  "verified": [
+    "No test-name filtering, skips, command alteration, deadline alteration or assertion change",
+    "Complete original cutover transitively includes implementation/provider real scans, remote vertical, controller Go tests, provider registry, common types, documentation gates, parity checks and scaffold tests",
+    "Manifest identity checks, source/dependency before/after capture, source protection guards, tool mapping, raw logs, drift/protection failure verdict unchanged",
+    "Candidate runner itself included in bound extra sources",
+    "Python AST parses without executing runner"
+  ],
+  "limits": [
+    "Source review only; no execution result",
+    "Selective rerun justified only for reviewed isolated original-test Dockerfile oracle correction; other changes require impact reassessment",
+    "Original full-run failure remains archived; this delta must not be represented as a successful whole 17-command rerun",
+    "Launch only after current root heavy job is terminal"
+  ]
+}

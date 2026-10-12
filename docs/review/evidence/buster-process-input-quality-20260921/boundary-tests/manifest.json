@@ -1,0 +1,14 @@
+{
+  "status": "private unreviewed unexecuted",
+  "test": {
+    "path": "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
+    "beforeSha256": null,
+    "afterSha256": "bca95a7b027cd7ded0b8d4411d7f1db66f3705e89a099c5ee4d9446595546f3b"
+  },
+  "package": {
+    "path": "package.json",
+    "beforeSha256": "c655c39c9780b39d559d9ad817ca1de0e5ebbad35bbe70ffb2dca2289bfea883",
+    "afterSha256": "99ac01cb9b46bd2d2fe1475873a5b79f85be7a7d3359f94fcffb4375800e1f3f"
+  },
+  "scope": "actual canonical ESLint exact two adapter boundaries; adjacent path and env default remain blocking"
+}

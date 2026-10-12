@@ -1,0 +1,76 @@
+✔ two genuinely concurrent same-revision child reservations produce exactly one durable winner (75.522529ms)
+✔ finish during durable host reservation prevents creation and launch, retaining reserved child (84.625363ms)
+✔ finish during helper binding waits for CAS and refuses that helper plus queued helper (118.662027ms)
+✔ concurrent lease helpers serialize durable reservations without lost children (223.127081ms)
+✔ historical lease launch refuses before touching any scope method (24.323815ms)
+✖ fixed full child metadata store drains but retains ownership and failure without disposal (75.653623ms)
+✖ quiescing I/O failure drains without a receipt; recovery completes only after persistence is restored (61.52346ms)
+✖ a launcher drain failure still attempts the known subtree and retains failed ownership (87.180449ms)
+✔ unknown child identity still forbids subtree drain and deletion in the failure path (76.221428ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 6
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1256.344717
+
+✖ failing tests:
+
+test at docs/review/evidence/native-topology-independent-20260921/probes-final.mts:111:1
+✖ fixed full child metadata store drains but retains ownership and failure without disposal (75.653623ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes-final.mts:120:12
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async modelProcesses (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes-final.mts:42:16)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at docs/review/evidence/native-topology-independent-20260921/probes-final.mts:132:1
+✖ quiescing I/O failure drains without a receipt; recovery completes only after persistence is restored (61.52346ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(f.events.includes('drain'))
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes-final.mts:139:5
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async modelProcesses (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes-final.mts:42:16)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at docs/review/evidence/native-topology-independent-20260921/probes-final.mts:148:1
+✖ a launcher drain failure still attempts the known subtree and retains failed ownership (87.180449ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert(f.events.includes('drain'))
+  
+      at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes-final.mts:154:5
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async modelProcesses (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/native-topology-independent-20260921/probes-final.mts:42:16)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,25 @@
+2026-09-21 07:40:48.190 GMT [116753] LOG:  could not open directory "/usr/share/zoneinfo": No such file or directory
+2026-09-21 07:40:48.208 UTC [116753] LOG:  starting PostgreSQL 18.6 on x86_64-alpine-linux-musl, compiled by cc (Alpine 15.2.0) 15.2.0, 64-bit
+2026-09-21 07:40:48.208 UTC [116753] LOG:  listening on IPv4 address "127.0.0.1", port 33675
+2026-09-21 07:40:48.216 UTC [116753] LOG:  listening on Unix socket "/tmp/prism-operation-postgresql-juqih8c3/.s.PGSQL.33675"
+2026-09-21 07:40:48.292 UTC [116770] LOG:  database system was shut down at 2026-09-21 07:40:46 UTC
+2026-09-21 07:40:48.299 UTC [116753] LOG:  database system is ready to accept connections
+2026-09-21 07:40:54.895 UTC [116955] ERROR:  PRISM_NATIVE_OPERATION_IDENTITY_IMMUTABLE
+2026-09-21 07:40:54.895 UTC [116955] CONTEXT:  PL/pgSQL function guard_native_operation_identity() line 12 at RAISE
+2026-09-21 07:40:54.895 UTC [116955] STATEMENT:  UPDATE prism.engine_operation SET attempt_id='legacy-replacement' WHERE idempotency_key=$1
+2026-09-21 07:40:54.902 UTC [116956] ERROR:  PRISM_NATIVE_OPERATION_IDENTITY_IMMUTABLE
+2026-09-21 07:40:54.902 UTC [116956] CONTEXT:  PL/pgSQL function guard_native_operation_identity() line 12 at RAISE
+2026-09-21 07:40:54.902 UTC [116956] STATEMENT:  UPDATE prism.engine_operation SET attempt=NULL WHERE idempotency_key=$1
+2026-09-21 07:40:54.905 UTC [116959] ERROR:  PRISM_NATIVE_OPERATION_IDENTITY_IMMUTABLE
+2026-09-21 07:40:54.905 UTC [116959] CONTEXT:  PL/pgSQL function guard_native_operation_identity() line 12 at RAISE
+2026-09-21 07:40:54.905 UTC [116959] STATEMENT:  UPDATE prism.engine_operation SET idempotency_key='renamed' WHERE idempotency_key=$1
+2026-09-21 07:40:59.697 UTC [116954] ERROR:  PRISM_NATIVE_OPERATION_IDENTITY_IMMUTABLE
+2026-09-21 07:40:59.697 UTC [116954] CONTEXT:  PL/pgSQL function guard_native_operation_identity() line 12 at RAISE
+2026-09-21 07:40:59.697 UTC [116954] STATEMENT:  UPDATE prism.engine_operation SET result='{}'::jsonb WHERE idempotency_key=$1
+2026-09-21 07:41:00.389 UTC [116753] LOG:  received fast shutdown request
+2026-09-21 07:41:00.392 UTC [116753] LOG:  aborting any active transactions
+2026-09-21 07:41:00.395 UTC [116753] LOG:  background worker "logical replication launcher" (PID 116773) exited with exit code 1
+2026-09-21 07:41:00.396 UTC [116768] LOG:  shutting down
+2026-09-21 07:41:00.400 UTC [116768] LOG:  checkpoint starting: shutdown immediate
+2026-09-21 07:41:00.706 UTC [116768] LOG:  checkpoint complete: wrote 1041 buffers (6.4%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.105 s, sync=0.189 s, total=0.310 s; sync files=435, longest=0.070 s, average=0.001 s; distance=5553 kB, estimate=5553 kB; lsn=0/1CA6398, redo lsn=0/1CA6398
+2026-09-21 07:41:00.799 UTC [116753] LOG:  database system is shut down

@@ -1,0 +1,6 @@
+
+/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/attempt-completeness.ts
+  136:1  error  Async function 'evaluateStoredClosures' has too many lines (63). Maximum allowed is 60  max-lines-per-function
+
+✖ 1 problem (1 error, 0 warnings)
+

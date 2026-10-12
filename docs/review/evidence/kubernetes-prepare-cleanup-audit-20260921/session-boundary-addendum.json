@@ -1,0 +1,5 @@
+{
+  "path": "skills/buster/engine/test-gates/provider-loader.ts",
+  "sha256": "24ffa41ad944b28b7c40bfe5509548017623e488206f9f0db0005b8485fb3b84",
+  "finding": "IsolatedLoadedProvider.cleanup starts a new ProviderProcessSession with the original invocation when terminated. Provider-instance success flags cannot establish cleanup authority across this boundary. Original invocation does not carry the execution result; no new cleanup authority proposed by this source audit."
+}

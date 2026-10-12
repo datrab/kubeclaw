@@ -1,0 +1,30 @@
+CLUSTER_MUTATION_APPLIED {"mutation":"tail-output","pid":35988,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts","beforeSha256":"6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc","afterSha256":"4ac1dd32c1813bffad30b8810a04c1df09e399f0751e9004b4a82eb6304cf334","replacements":[{"from":"maxBuffer: this.#maximumCommandOutputBytes","to":"maxBuffer: 1048576","count":1}],"replacedAnchors":1}
+✔ real kubernetes.fixture output limit profile false (212.417294ms)
+✔ real kubernetes.fixture output limit profile true (38.671935ms)
+✖ real kubernetes.exposure output limit profile false (76.129558ms)
+✔ real kubernetes.exposure output limit profile true (43.100399ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2299.779813
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-output-consumers.test.mjs:53:38
+✖ real kubernetes.exposure output limit profile false (76.129558ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-output-consumers.test.mjs:79:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /OUTPUT_LIMIT/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

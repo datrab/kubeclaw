@@ -1,0 +1,170 @@
+[
+  {
+    "path": "skills/prism/server/control-server.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/control-context.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/control-http.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/session-routes.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/dispatch-route.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/agent-routes.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/project-routes.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/document-routes.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/direction-routes.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/engine-route.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/approval-route.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/baseline-route.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/corpus-routes.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/preference-routes.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/artifact-route.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/baseline-validation.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/baseline-archive.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/tests/control-listener.test.mts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/tests/control-server-config.test.mts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/tests/control-image-environment.test.mts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/tests/swarm-control-policy.test.mts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "stable": true
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/tests/control.test.mts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/tests/control-decisions.test.mts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/tests/control-product-composition.test.mts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/tests/control-product-independent.test.mts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/tests/control-generation-http.test.mts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/prism/server/control.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "stable": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "stable": true
+  },
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "stable": true
+  },
+  {
+    "path": "charts/prism/templates/_swarm-config.tpl",
+    "stable": true
+  },
+  {
+    "path": "charts/prism/templates/workloads.yaml",
+    "stable": true
+  },
+  {
+    "path": "charts/prism/templates/services.yaml",
+    "stable": true
+  },
+  {
+    "path": "charts/prism/templates/configmap-worker-trust.yaml",
+    "stable": true
+  },
+  {
+    "path": "charts/prism/templates/networkpolicy.yaml",
+    "stable": true
+  },
+  {
+    "path": "docker/Dockerfile.prism-control",
+    "stable": true
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-image.mjs",
+    "stable": true
+  },
+  {
+    "path": "scripts/check-built-runtime-image.sh",
+    "stable": true
+  },
+  {
+    "path": ".dockerignore",
+    "stable": true
+  }
+]

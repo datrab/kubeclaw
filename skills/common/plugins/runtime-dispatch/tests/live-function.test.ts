@@ -271,7 +271,7 @@ const adapters = new core.AdapterRuntime({
     }],
     ['kubeclaw.secret-resolver:secrets', { environment: { 'runtime.agent': environmentName } }],
   ]),
-  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager()),
+  effects: new core.EffectCoordinator(journal, undefined, undefined, new core.MemoryResourceLockManager(), 300_000),
   shutdownTimeoutMs: 1000,
   async emitDomainEvent() {},
 });
@@ -399,7 +399,7 @@ try {
       gatewayJournal,
       undefined,
       undefined,
-      new core.MemoryResourceLockManager(),
+      new core.MemoryResourceLockManager(), 300_000,
     ),
     shutdownTimeoutMs: 1000,
     async emitDomainEvent() {},

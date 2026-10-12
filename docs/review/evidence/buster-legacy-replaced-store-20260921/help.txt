@@ -1,0 +1,31 @@
+usage: legacy-seal-guest.py [-h] --verifier VERIFIER
+                            --capability-child CAPABILITY_CHILD
+                            --driver DRIVER --verifier-sha256 VERIFIER_SHA256
+                            --capability-child-sha256 CAPABILITY_CHILD_SHA256
+                            --driver-sha256 DRIVER_SHA256
+                            --ext4-device EXT4_DEVICE
+                            --second-ext4-device SECOND_EXT4_DEVICE
+                            --association-manifest ASSOCIATION_MANIFEST
+                            --association-manifest-sha256 ASSOCIATION_MANIFEST_SHA256
+                            [--case {complete,quota-exact,quota-byte-short,quota-entry-short,mutable-file,mutable-directory,plan-link,hardlink,device,fifo,bind-mount,different-device,tmpfs-root,extra-bounding,retained-extra,foreign-ancestor,writable-ancestor,missing-store,interrupted,mutation-denial,uid1000-read,runtime,runtime-plan-reject,runtime-links,runtime-link-fifo,namespace-stable,different-uuid,foreign-descendant,writable-descendant,replaced-store}]
+                            [--worker {mutation,read,extra,namespace}]
+                            [--tree TREE] [--supervised]
+
+Disposable-guest LIS1–10 driver; never invoke with host root privileges.
+
+options:
+  -h, --help            show this help message and exit
+  --verifier VERIFIER
+  --capability-child CAPABILITY_CHILD
+  --driver DRIVER
+  --verifier-sha256 VERIFIER_SHA256
+  --capability-child-sha256 CAPABILITY_CHILD_SHA256
+  --driver-sha256 DRIVER_SHA256
+  --ext4-device EXT4_DEVICE
+  --second-ext4-device SECOND_EXT4_DEVICE
+  --association-manifest ASSOCIATION_MANIFEST
+  --association-manifest-sha256 ASSOCIATION_MANIFEST_SHA256
+  --case {complete,quota-exact,quota-byte-short,quota-entry-short,mutable-file,mutable-directory,plan-link,hardlink,device,fifo,bind-mount,different-device,tmpfs-root,extra-bounding,retained-extra,foreign-ancestor,writable-ancestor,missing-store,interrupted,mutation-denial,uid1000-read,runtime,runtime-plan-reject,runtime-links,runtime-link-fifo,namespace-stable,different-uuid,foreign-descendant,writable-descendant,replaced-store}
+  --worker {mutation,read,extra,namespace}
+  --tree TREE
+  --supervised

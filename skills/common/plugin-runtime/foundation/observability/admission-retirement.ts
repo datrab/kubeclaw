@@ -6,7 +6,7 @@ import { canonicalJson, validatePipelineObservabilityContract, type AdmissionAck
 import { replayAssert, replayIdentity, replayObject } from './replay-validation.ts';
 import { scopedEvidenceId, type DurableAttemptStoreSnapshot, type DurableResultMetadata } from './durable-attempts.ts';
 import {createHash} from 'node:crypto';
-import {decodeAttemptState} from './attempt-projection.ts';
+import {decodeAttemptState,type PersistedAttempt} from './attempt-projection.ts';
 import type { AdmittedRecordView } from './durable-delivery.ts';
 
 /** A reference to an immutable, already committed completion, never a new archive. */
@@ -62,7 +62,7 @@ async function readRetirementBytes(file:string,maximumBytes:number):Promise<Buff
   return bytes;
 }
 async function readSource(s:AdmissionCompletionReference):Promise<DurableAttemptStoreSnapshot> {
-  const state=JSON.parse((await readRetirementBytes(s.file,s.maximumBytes)).toString()) as DurableAttemptStoreSnapshot;
+  const state=JSON.parse((await readRetirementBytes(s.file,s.maximumBytes)).toString()) as PersistedAttempt;
   return decodeAttemptState(state,path.dirname(s.file),{
     maximumEvidenceObjects:Number.MAX_SAFE_INTEGER,maximumEvidenceBytes:Number.MAX_SAFE_INTEGER,
     maximumEvidenceObjectBytes:Number.MAX_SAFE_INTEGER,maximumResults:Number.MAX_SAFE_INTEGER,

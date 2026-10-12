@@ -1,0 +1,354 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/lint-policy.json",
+    "matches": true
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-final-four-adapter-inventory-20260921.md",
+    "matches": true
+  },
+  {
+    "path": "scripts/tests/integration/repository-review-supervisor-start.mjs",
+    "matches": true
+  },
+  {
+    "path": "scripts/tests/integration/repository-review-supervisor-stop.test.mjs",
+    "matches": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/core/execution/adapters.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/core/execution/authorization.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/core/execution/engine-runtime.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/core/execution/engine-snapshots.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/core/state/read-run-evidence.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/README.md",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/package.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/plugin.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/src/binding.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/src/candidate.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/src/controller-client.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/src/delivery.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/src/protocol.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/demo-handoff/src/ready.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/README.md",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/package.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/plugin.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/adapter.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/candidate.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/architecture-tools.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/constants.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/discovery.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/evidence-file-partition.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/execution.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/finding-fingerprints.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/go-terraform-tools.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/go-tools.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/helm-render.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/index.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/kubeconform-tool.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/kubernetes-manifests.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/kubernetes-policy-pack.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/kubernetes-policy-tools.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/kubernetes-security-tools.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/lint-governance.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/linux-process-group.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/openapi-tool.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/output.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/parsers.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/paths.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/policy-paths.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/policy-patterns.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/policy-validation.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/policy-version.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/policy.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/process-termination.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/process.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/report-contract.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/report.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/terraform-tools.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/tool-registry-core.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/tool-registry-dependency-tools.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/tool-registry-language-tools.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/tool-registry-semgrep.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/tool-registry.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/engine/tool-summary.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/request.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/stage.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/support/optional-absence.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/lint/src/support/value-boundary.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/README.md",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/package.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/plugin.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/src/protocol.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/README.md",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/package.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/plugin.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/schemas/config.schema.json",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/src/adapter.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/src/revision-parsers.ts",
+    "matches": true
+  },
+  {
+    "path": "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+    "matches": true
+  }
+]

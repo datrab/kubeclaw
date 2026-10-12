@@ -1,0 +1,146 @@
+{
+  "totalEntries": 1374,
+  "reviewedRows": [
+    {
+      "source": "skills/prism/server/studio-config.ts",
+      "line": 9,
+      "name": "PORT",
+      "type": "environment string; parse at consumer",
+      "unit": "requires semantic review",
+      "default": "defaults.port",
+      "override": "retired environment author rejected",
+      "consumer": "skills/prism/server/studio-config.ts \u2192 studio.ts / studio-request.ts",
+      "classification": "operator setting; migrated, legacy key rejected; source/host review accepted, image gate open",
+      "canonicalSource": "operator.prism.studio.port",
+      "resolved": {
+        "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.studio.port",
+        "type": "integer 1..65535",
+        "unit": "TCP port",
+        "default": "no fallback; explicit authored value 8080",
+        "override": "none; SWARM_CONFIG selects the full validated startup document; retired environment and Helm keys rejected even when equal",
+        "consumers": [
+          "Studio listener"
+        ],
+        "evidence": "independent-studio-complete-20260921.md; independent-studio-doc-correction-20260921.md"
+      },
+      "resolutionRequired": "resolved for bounded Studio source/host slice; historical discovery fields retained; full CONFIG and actual image proof open"
+    },
+    {
+      "source": "skills/prism/server/studio-config.ts",
+      "line": 10,
+      "name": "PRISM_CONTROL_TIMEOUT_MS",
+      "type": "environment string; parse at consumer",
+      "unit": "milliseconds",
+      "default": "defaults.controlTimeoutMs",
+      "override": "retired environment author rejected",
+      "consumer": "skills/prism/server/studio-config.ts \u2192 studio.ts / studio-request.ts",
+      "classification": "operator setting; migrated, legacy key rejected; source/host review accepted, image gate open",
+      "canonicalSource": "operator.prism.studio.controlTimeoutMs",
+      "resolved": {
+        "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.studio.controlTimeoutMs",
+        "type": "integer 1..2147483647",
+        "unit": "milliseconds",
+        "default": "no fallback; explicit authored value 30000",
+        "override": "none; SWARM_CONFIG selects the full validated startup document; retired environment and Helm keys rejected even when equal",
+        "consumers": [
+          "Studio Control proxy"
+        ],
+        "evidence": "independent-studio-complete-20260921.md; independent-studio-doc-correction-20260921.md"
+      },
+      "resolutionRequired": "resolved for bounded Studio source/host slice; historical discovery fields retained; full CONFIG and actual image proof open"
+    },
+    {
+      "source": "skills/prism/server/studio-config.ts",
+      "line": 15,
+      "name": "STUDIO_ROOT",
+      "type": "environment string; parse at consumer",
+      "unit": "requires semantic review",
+      "default": "defaults.root",
+      "override": "environment; precedence unresolved",
+      "consumer": "skills/prism/server/studio-config.ts \u2192 studio.ts / studio-request.ts",
+      "classification": "installation asset path",
+      "resolved": {
+        "author": "installation environment STUDIO_ROOT",
+        "type": "filesystem path string",
+        "unit": "asset root",
+        "default": "module-relative ../dist-studio only when environment is undefined; canonical image explicitly authors /app/prism/skills/prism/dist-studio",
+        "override": "installation environment takes precedence via nullish coalescing; empty string is not replaced",
+        "consumers": [
+          "Studio static asset serving"
+        ],
+        "evidence": "skills/prism/server/studio-config.ts; docker/Dockerfile.prism-studio"
+      },
+      "resolutionRequired": "resolved for bounded Studio source/host slice; historical discovery fields retained; full CONFIG and actual image proof open"
+    },
+    {
+      "source": "skills/prism/server/studio-config.ts",
+      "line": 16,
+      "name": "PRISM_CONTROL_URL",
+      "type": "environment string; parse at consumer",
+      "unit": "requires semantic review",
+      "default": "defaults.control",
+      "override": "retired environment author rejected",
+      "consumer": "skills/prism/server/studio-config.ts \u2192 studio.ts / studio-request.ts",
+      "classification": "operator setting; migrated, legacy key rejected; source/host review accepted, image gate open",
+      "canonicalSource": "operator.prism.studio.controlUrl",
+      "resolved": {
+        "author": "charts/kubeclaw/files/config/swarm.config.json:operator.prism.studio.controlUrl",
+        "type": "HTTP(S) origin without credentials, nonroot path, query or fragment",
+        "unit": "origin URL",
+        "default": "no fallback; explicit authored value http://prism-control:8080",
+        "override": "none; SWARM_CONFIG selects the full validated startup document; retired environment and Helm keys rejected even when equal",
+        "consumers": [
+          "Studio Control proxy"
+        ],
+        "evidence": "independent-studio-complete-20260921.md; independent-studio-doc-correction-20260921.md"
+      },
+      "resolutionRequired": "resolved for bounded Studio source/host slice; historical discovery fields retained; full CONFIG and actual image proof open"
+    },
+    {
+      "source": "skills/prism/server/studio-config.ts",
+      "line": 17,
+      "name": "PRISM_INGRESS_SECRET",
+      "type": "environment string; parse at consumer",
+      "unit": "requires semantic review",
+      "default": "(redacted; classify reference versus secret value)",
+      "override": "environment; precedence unresolved",
+      "consumer": "skills/prism/server/studio-config.ts \u2192 studio.ts / studio-request.ts",
+      "classification": "external secret",
+      "resolved": {
+        "author": "external secret injection PRISM_INGRESS_SECRET",
+        "type": "secret string; value never inventoried",
+        "unit": "credential",
+        "default": "absent becomes empty; proxy rejects missing/empty credential with HTTP 503",
+        "override": "external environment only; no central operator setting",
+        "consumers": [
+          "Studio Control proxy authorization"
+        ],
+        "evidence": "skills/prism/server/studio-config.ts; skills/prism/server/studio-request.ts"
+      },
+      "resolutionRequired": "resolved for bounded Studio source/host slice; historical discovery fields retained; full CONFIG and actual image proof open"
+    }
+  ],
+  "historicalNamesLinesDefaultsUnchanged": true,
+  "files": [
+    {
+      "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+      "sha256": "c8e4be87f0719acd5f2fc892e679a96aa286a01fc02c8a926b089f63b8cdf800"
+    },
+    {
+      "path": "skills/prism/server/studio-config.ts",
+      "sha256": "377f836f98c8d346a41a9eff4cbe1488a0451038ead95e0f941c66fdcfe35fad"
+    },
+    {
+      "path": "skills/prism/server/studio-request.ts",
+      "sha256": "efca0f821ef3da9f441e9c6c5458a33d8c525f8e7db3a63aea1a8e7f37e93bbb"
+    },
+    {
+      "path": "docker/Dockerfile.prism-studio",
+      "sha256": "7236981dff3fd9008e1156d810041df3a5b8f00311362978912446e33a2bad0c"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm.config.json",
+      "sha256": "991e0c6dfd683b484bbc132c3e6e60c67abdf7c88e53959e9d08b7e4e60c20da"
+    }
+  ]
+}

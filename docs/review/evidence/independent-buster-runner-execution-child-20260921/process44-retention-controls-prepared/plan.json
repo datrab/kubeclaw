@@ -1,0 +1,36 @@
+{
+  "status": "prepared only; no execution before current full positive suite",
+  "cases": [
+    {
+      "name": "swallowed-signal-errors",
+      "spec": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-retention-controls-prepared/swallowed-signal-errors.json",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/verification/contracts/buster-process-input-policy.test.mjs"
+      ],
+      "requiredManualFailure": "failed timed KILL / final KILL: expected actual injected failure cause retained"
+    },
+    {
+      "name": "rejected-quality-v1",
+      "spec": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-retention-controls-prepared/rejected-quality-v1.json",
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/verification/contracts/buster-process-input-policy.test.mjs"
+      ],
+      "requiredManualFailure": "group observation failure survives a later close deadline: exact includesCause assertion"
+    }
+  ],
+  "targetSha256": "ff1279f5ca4af3364b0e04cf977803717b6884329f75b9c5461be3b5455797bd",
+  "testSha256": "0ecc590dbd9903a765a6efa777545f1c5df3543a8b9c7235f2b9942a74c251ef",
+  "requirements": [
+    "Outer full source/dependency/tool binding",
+    "PROCESS_RETENTION_CONTROL_SPEC selects exact prepared case",
+    "Require nonempty matching application log plus exact named TAP assertion, not module import/type error",
+    "No live production write; no deadline changes; retain all failures and cleanup observations",
+    "Rebind source identities after any authorized later delta before use"
+  ]
+}

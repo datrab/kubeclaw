@@ -1,3 +1,4 @@
+import {decodeClosures,encodeClosures,type ClosureReference,type ClosureProjections} from './closure-projection.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import {createHash,randomUUID} from 'node:crypto';
@@ -25,6 +26,11 @@ export interface PersistedAttemptV2 extends Omit<DurableAttemptStoreSnapshot,'sc
   schemaVersion:'durable-attempt-store.v2';
   results:(DurableResultMetadata|ProjectedResultMetadata)[];
 }
+export interface PersistedAttemptV3 extends Omit<PersistedAttemptV2,'schemaVersion'|'closures'> {
+  schemaVersion:'durable-attempt-store.v3';
+  closures:(DurableAttemptStoreSnapshot['closures'][number]|ClosureReference)[];
+}
+export type PersistedAttempt=DurableAttemptStoreSnapshot|PersistedAttemptV2|PersistedAttemptV3;
 interface ImportEntry {
   schemaVersion:string;
   decisionKey:string;
@@ -40,7 +46,7 @@ function removeUncommittedFile(file:string):void {
 }
 
 /** Existing store only: no await may split a journal-fenced validation/commit. */
-export function replaceAttemptProjectionSync(file:string,value:DurableAttemptStoreSnapshot|PersistedAttemptV2):void {
+export function replaceAttemptProjectionSync(file:string,value:PersistedAttempt):void {
   replayAssert(fs.realpathSync(file)===file&&fs.lstatSync(file).isFile(),'attempt-store-path');
   const directory=path.dirname(file),temporary=`${file}.${process.pid}.${randomUUID()}.tmp`;
   let renamed=false;
@@ -110,12 +116,12 @@ function offsets(bytes:Buffer):number[] {
 }
 
 /** All references share the canonical run journal: one bounded read and one chain validation. */
-export function decodeAttemptState(raw:DurableAttemptStoreSnapshot|PersistedAttemptV2,root:string,limits:DurableAttemptStoreLimits,
+export function decodeAttemptState(raw:PersistedAttempt,root:string,limits:DurableAttemptStoreLimits,
   readPrefix:(file:string,maximumBytes:number,prefixBytes:number)=>Buffer=readAttemptJournalPrefix,
-):{state:DurableAttemptStoreSnapshot;projections:AttemptProjections} {
-  if(raw.schemaVersion==='durable-attempt-store.v1') {assertAttemptReplay(raw,root,limits);return {state:raw,projections:new Map()};}
+):{state:DurableAttemptStoreSnapshot;projections:AttemptProjections;closureProjections:ClosureProjections} {
+  if(raw.schemaVersion==='durable-attempt-store.v1') {assertAttemptReplay(raw,root,limits);return {state:raw,projections:new Map(),closureProjections:new Map()};}
   replayObject(raw,['schemaVersion','evidence','results','closures'],'attempt-v2-envelope');
-  replayAssert(raw.schemaVersion==='durable-attempt-store.v2'&&Array.isArray(raw.results),'attempt-v2-version');
+  replayAssert(['durable-attempt-store.v2','durable-attempt-store.v3'].includes(raw.schemaVersion)&&Array.isArray(raw.results)&&Array.isArray(raw.closures),'attempt-v2-version');
   const projected=raw.results.filter((item):item is ProjectedResultMetadata=>Object.hasOwn(item,'resultReference'));
   replayAssert(projected.length>0,'attempt-v2-empty-projections');
   for(const item of projected)assertReference(item,root,limits.maximumMetadataBytes);
@@ -131,13 +137,14 @@ export function decodeAttemptState(raw:DurableAttemptStoreSnapshot|PersistedAtte
     const {resultReference:_,...metadata}=item;
     return {...metadata,result:resolveResult(item,record)};
   });
-  const state:DurableAttemptStoreSnapshot={...raw,schemaVersion:'durable-attempt-store.v1',results};
-  assertAttemptReplay(state,root,limits,projections.size);
-  return {state,projections};
+  const decoded=raw.schemaVersion==='durable-attempt-store.v3'?decodeClosures(raw.closures,projections):{closures:raw.closures,closureProjections:new Map()};
+  const state:DurableAttemptStoreSnapshot={...raw,schemaVersion:'durable-attempt-store.v1',results,closures:decoded.closures};
+  assertAttemptReplay(state,root,limits,projections.size,decoded.closureProjections.size);
+  return {state,projections,closureProjections:decoded.closureProjections};
 }
 
-export function encodeAttemptState(state:DurableAttemptStoreSnapshot,projections:AttemptProjections):DurableAttemptStoreSnapshot|PersistedAttemptV2 {
-  if(!projections.size)return state;
+export function encodeAttemptState(state:DurableAttemptStoreSnapshot,projections:AttemptProjections,closureProjections:ClosureProjections=new Map()):PersistedAttempt {
+  if(!projections.size){replayAssert(!closureProjections.size,'closure-result-projection-required');return state;}
   let found=0;
   const results=state.results.map(item=>{
     const projected=projections.get(attemptProjectionKey(item));if(!projected)return item;
@@ -146,6 +153,7 @@ export function encodeAttemptState(state:DurableAttemptStoreSnapshot,projections
     found++;return projected;
   });
   replayAssert(found===projections.size,'attempt-projection-removed');
+  if(closureProjections.size)return {...state,schemaVersion:'durable-attempt-store.v3',results,closures:encodeClosures(state.closures,closureProjections,projections)};
   return {...state,schemaVersion:'durable-attempt-store.v2',results};
 }
 

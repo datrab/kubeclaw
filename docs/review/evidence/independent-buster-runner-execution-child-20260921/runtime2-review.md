@@ -1,0 +1,7 @@
+# Runtime2 independent checkpoint
+
+Session 55285 ended 1; source drift empty. Three Types and full canonical lint passed. Original Discipline passed after the reviewer PATH prerequisite correction. Registry 5/5, full original Runner, RealProvider, policy/Child command, Components 565/565 and sampling 2/2 passed. Exact commands/results remain in runtime2/results.json. Unchanged passing Core/Deadline/Output/Delivery evidence remains Runtime1.
+
+New Store suite passed 1/20. Every one of the 19 failures is the same exact `assert(admission)` with actual undefined at configuredStores line48. The 1024 metadata rejection case passed. Root identified the missed source boundary: actual completion uses `admitAndRead`, which calls private admission logic directly and never invokes the test-hooked `admit`. No quota assertion downstream of this prerequisite was reached in those 19 tests.
+
+Reviewer erratum: the earlier source-coherent assessment in private-consumer-source-correction.json incorrectly treated the captured admission receiver as reachable. The delegation itself is real, but the chosen method is not the production completion entrypoint. This review miss is preserved explicitly; it is not reclassified as a production quota defect or a passing consumer proof. A narrow delegating hook on the actual admitAndRead method is required before these new tests can establish their intended behavior. No semantic mutants run yet; no complete acceptance.

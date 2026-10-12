@@ -4,7 +4,10 @@ export class ProviderCapabilities {
   readonly #controller = new AbortController();
   readonly #pending = new Map<string, { operation: Promise<void>; controller: AbortController }>();
   readonly #maximum: number;
-  constructor(maximum = 32) { this.#maximum = maximum; }
+  constructor(maximum: number) {
+    if (!Number.isSafeInteger(maximum) || maximum < 1) throw new Error('TEST_PROVIDER_CAPABILITY_LIMIT_INVALID');
+    this.#maximum = maximum;
+  }
   get pending(): number { return this.#pending.size; }
 
   handle(id: string, capability: string, request: TestProviderCapabilityRequest,
@@ -32,7 +35,8 @@ export class ProviderCapabilities {
 
   abort(reason: Error): void { this.#controller.abort(reason); }
 
-  async drain(timeoutMs = 1_000): Promise<void> {
+  async drain(timeoutMs: number): Promise<void> {
+    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 2147483647) throw new Error('TEST_PROVIDER_CAPABILITY_DRAIN_TIMEOUT_INVALID');
     let timer: NodeJS.Timeout | undefined;
     try {
       await Promise.race([

@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/runtime-registry-fix/files/skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+      "beforeSha256": "1ed5a6830981489b47f3ccbc873d51ccfd28024d52da19a06c250b2d1d3be1db",
+      "afterSha256": "24ad306968220642c2ef63d46b9a304404c30556ef91f535fd43a131196b0fa2"
+    },
+    {
+      "path": "tests/verification/contracts/buster-settings-registry.test.mjs",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/runtime-registry-fix/files/tests/verification/contracts/buster-settings-registry.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "6f813e9c30e020f3896e40161017432ca4022425cb0fab8410e1694b27cbdb96"
+    },
+    {
+      "path": "tests/verification/contracts/buster-default-store-policy.test.mjs",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/next-consumers/tests/verification/contracts/buster-default-store-policy.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "c71296152b0d6974f7d42d5a9ae338807b587c21809656bd6d4d781d05722ff7"
+    },
+    {
+      "path": "tests/verification/contracts/buster-process-sampling.test.mjs",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/next-consumers/tests/verification/contracts/buster-process-sampling.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "d4c68874cee198b85420bac65cda2964b59ca4064d5c2829947f7c98dd58dbfa"
+    },
+    {
+      "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+      "source": "docs/review/evidence/buster-runner-quality-20260921/runtime-registry-fix/files/tests/verification/deployment/prism-swarm-config.test.mjs",
+      "beforeSha256": "f3f9beff6c16ea0dbe1d969b3aa0f7f59fc2379aa19441596d813eb37a7439a4",
+      "afterSha256": "61963ed8b01ae75c5c1021510424abb6b108229019848fe99e9f10770d8958d1"
+    }
+  ]
+}

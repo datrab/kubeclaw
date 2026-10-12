@@ -1,0 +1,18 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "include": [
+    "../../../skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+    "../../../skills/buster/engine/test-gates/production.ts",
+    "check-pipeline-kubernetes-fixture-implementation.mts",
+    "check-pipeline-tailscale-exposure-implementation.mts",
+    "check-pipeline-kubernetes-fixture-live.mts",
+    "check-pipeline-tailscale-exposure-live.mts",
+    "check-pipeline-remote-runtime-config.mts",
+    "check-pipeline-security-implementation.mts",
+    "check-pipeline-worker-local-config.mts"
+  ],
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
+  }
+}

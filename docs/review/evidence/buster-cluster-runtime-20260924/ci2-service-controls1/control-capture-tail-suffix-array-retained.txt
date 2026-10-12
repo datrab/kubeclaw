@@ -1,0 +1,33 @@
+CI2_MUTATION_APPLIED {"mutation":"capture-tail-suffix-array-retained","pid":180398,"url":"file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts","beforeSha256":"6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc","afterSha256":"7a385070767c9ab9061b75179e92dd42ab0665eeb2e9ac74e56fd730b6955729","replacements":[{"from":"this.#suffixes = [...new Set(options.allowedHostSuffixes.map(suffix))];","to":"this.#suffixes = options.allowedHostSuffixes;","count":1}]}
+✔ captured file kubernetes.fixture namespace governs actual commands after mutation (1277.509745ms)
+✔ captured file kubernetes.fixture registry governs actual commands after mutation (1078.966617ms)
+✔ captured file kubernetes.fixture secret governs actual commands after mutation (1094.062541ms)
+✔ captured file kubernetes.fixture storage governs actual commands after mutation (1073.847732ms)
+✔ captured file kubernetes.fixture manifest governs actual commands after mutation (1066.201882ms)
+✔ captured file kubernetes.exposure namespace governs actual commands after mutation (566.280578ms)
+✔ captured file kubernetes.exposure host governs actual commands after mutation (804.570675ms)
+✔ captured caller kubernetes.fixture namespace governs actual commands after mutation (725.249692ms)
+✔ captured caller kubernetes.fixture registry governs actual commands after mutation (716.653407ms)
+✔ captured caller kubernetes.fixture secret governs actual commands after mutation (715.2138ms)
+✔ captured caller kubernetes.fixture storage governs actual commands after mutation (727.157202ms)
+✔ captured caller kubernetes.fixture manifest governs actual commands after mutation (720.062786ms)
+✔ captured caller kubernetes.exposure namespace governs actual commands after mutation (368.405877ms)
+✖ captured caller kubernetes.exposure host governs actual commands after mutation (439.73141ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13303.08071
+
+✖ failing tests:
+
+test at tests/verification/contracts/buster-cluster-capture.test.mjs:41:3
+✖ captured caller kubernetes.exposure host governs actual commands after mutation (439.73141ms)
+  Error: TAILSCALE_EXPOSURE_HOST_DENIED
+      at #publicURL (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:260:109)
+      at #prepare (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts:237:54)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/contracts/buster-cluster-capture.test.mjs:78:19

@@ -1,0 +1,62 @@
+{
+  "time": 1790000318.2835453,
+  "memoryCurrent": 2416054272,
+  "stats": {
+    "anon": 583483392,
+    "kernel": 409886720,
+    "shmem": 0,
+    "slab_reclaimable": 397053992,
+    "slab_unreclaimable": 1945224
+  },
+  "largestProcesses": [
+    {
+      "pid": 37,
+      "name": "codex",
+      "rssKiB": 427184
+    },
+    {
+      "pid": 253545,
+      "name": "MainThread",
+      "rssKiB": 304968
+    },
+    {
+      "pid": 30,
+      "name": "MainThread",
+      "rssKiB": 55468
+    },
+    {
+      "pid": 423,
+      "name": "codex-code-mode",
+      "rssKiB": 27412
+    },
+    {
+      "pid": 7,
+      "name": "python3",
+      "rssKiB": 11240
+    },
+    {
+      "pid": 253715,
+      "name": "python3",
+      "rssKiB": 9428
+    },
+    {
+      "pid": 253535,
+      "name": "sh",
+      "rssKiB": 1028
+    },
+    {
+      "pid": 253714,
+      "name": "sh",
+      "rssKiB": 996
+    },
+    {
+      "pid": 1,
+      "name": "tini",
+      "rssKiB": 540
+    }
+  ],
+  "precedingLaunchExit": 1,
+  "precedingLaunchMessage": "Fixed host memory envelope unavailable; do not raise guest budget automatically.",
+  "vmBooted": false,
+  "scope": "Measurements after refusal; not the exact prior decision sample."
+}

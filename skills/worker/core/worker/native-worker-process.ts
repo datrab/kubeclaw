@@ -69,7 +69,7 @@ export async function runNativeWorkerProcess(options: NativeWorkerProcessOptions
   const input = Buffer.from(options.input);
   const command = structuredClone(options.command);
   options.signal?.throwIfAborted();
-  const lease = await options.owner.allocate(options.identity, limits);
+  const lease = await options.owner.allocate(options.identity, { memoryBytes: limits.memoryBytes, tasks: limits.tasks });
   let child: ChildProcessWithoutNullStreams | undefined;
   try {
     options.signal?.throwIfAborted();

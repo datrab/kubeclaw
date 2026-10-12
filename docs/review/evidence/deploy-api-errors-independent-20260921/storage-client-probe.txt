@@ -1,0 +1,18 @@
+PASS secret empty 0 absent
+PASS secret valid 0 deployed
+PASS secret pending 0 pending-upgrade
+PASS secret denied 1 
+PASS secret corrupt-only 1 
+PASS secret corrupt-latest 1 
+PASS secret corrupt-old 1 
+PASS secret two-valid 0 deployed
+PASS secret wrong-decoded-name 1 
+PASS configmap empty 0 absent
+PASS configmap valid 0 deployed
+PASS configmap pending 0 pending-upgrade
+PASS configmap denied 1 
+PASS configmap corrupt-only 1 
+PASS configmap corrupt-latest 1 
+PASS configmap corrupt-old 1 
+PASS configmap two-valid 0 deployed
+PASS configmap wrong-decoded-name 1 

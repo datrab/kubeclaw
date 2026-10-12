@@ -1,0 +1,9 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "Approve additive V3 orchestration for execution; no runtime or current84-file source acceptance inferred",
+  "beforeSha256": "f8fe58dfac4c7cb239eb357f58e417f43c733091736b38f2b649ab82600a7bc0",
+  "afterSha256": "a63960a36f8aba9c4cd4efad4865811b8164de1b91892213afbe2c830b0b24b8",
+  "exactOnlyDelta": "Prepend complete npm run verify:buster:cluster-ownership before unchanged16-command runtime block.",
+  "preserved": "Exact rest of runner byte-for-byte: real scanner/database/tool/environment binding, source guard, expected exits, full original command lists, before/after drift and protection checks.",
+  "remaining": "Actual17-command results and exact integrated84-file binding require independent review; earlier failed runs remain evidence."
+}

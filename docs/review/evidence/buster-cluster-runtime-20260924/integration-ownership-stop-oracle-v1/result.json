@@ -1,0 +1,21 @@
+{
+  "manifest": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-runtime-20260924/ownership-stop-oracle-v1-integration-manifest.json",
+  "manifestSha256": "29da977450c67f746361733f178fea6bd56bd068cc7a174fec20aca1867de456",
+  "review": "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-runtime-security-policy-20260924/ownership-stop-oracle-v1-source-review.json",
+  "reviewSha256": "02032f4fd419916d6cdfbd3247e82115725afdd9fe4644379ff07a2b8d9198eb",
+  "status": "integrated; verification pending",
+  "files": [
+    {
+      "path": "tests/fixtures/test-gate/cluster-ownership-scenario.mjs",
+      "kind": "file",
+      "beforeSha256": "341c79995904955505607f309ec697d8508b282e0557b1a2ef66ecc31fc9c473",
+      "sha256": "2733291320e51f7a1a08521d2ebb39d632815ab614260a1360a6cc7d62b9768d"
+    },
+    {
+      "path": "tests/verification/contracts/buster-cluster-ownership.test.mjs",
+      "kind": "file",
+      "beforeSha256": "d71fb8decddcff431f4e67750516ad8886dad335cba63051d79fb1880149611d",
+      "sha256": "d71bfc2c3c468406deb05f0cf45582eff2786633e0570adfd336f3a36ba2f695"
+    }
+  ]
+}

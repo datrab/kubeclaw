@@ -1,0 +1,58 @@
+[
+  {
+    "candidateDetection": true,
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "exitCode": 1,
+    "name": "policy-default",
+    "requiresNamedFailureReview": true,
+    "seconds": 4.853447939036414
+  },
+  {
+    "candidateDetection": true,
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "exitCode": 1,
+    "name": "field-defaults",
+    "requiresNamedFailureReview": true,
+    "seconds": 4.925168860005215
+  },
+  {
+    "candidateDetection": true,
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "exitCode": 1,
+    "name": "ignore-execution",
+    "requiresNamedFailureReview": true,
+    "seconds": 6.526593265938573
+  },
+  {
+    "candidateDetection": true,
+    "command": [
+      "/usr/local/bin/node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/reliability/buster-readiness-consumer.test.mts"
+    ],
+    "exitCode": 1,
+    "name": "ignore-output",
+    "requiresNamedFailureReview": true,
+    "seconds": 5.446922473027371
+  }
+]

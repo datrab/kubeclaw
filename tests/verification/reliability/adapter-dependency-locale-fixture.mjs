@@ -32,7 +32,7 @@ function fixture(name,origin) {
   write('result.json',{$schema:'https://json-schema.org/draft/2020-12/schema',$ref:'https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult'});
   write('config.json',{type:'object',properties:{endpoint:{type:'string'}},required:['endpoint'],additionalProperties:false});
   const roots=[path.join(sourceRoot,'skills/common/plugins'),pluginRoot],adapter='test.locale-dependency:consumer';
-  const platform={schemaVersion:'pipeline-platform.v2',shutdownTimeoutMs:1000,administrativeDecisionIssuers:[],storageRoot:path.join(directory,'state'),installationRoots:roots,trustedBuiltinRoots:roots,
+  const platform={schemaVersion:'pipeline-platform.v2', effectLockTtlMs: 300_000,shutdownTimeoutMs:1000,administrativeDecisionIssuers:[],storageRoot:path.join(directory,'state'),installationRoots:roots,trustedBuiltinRoots:roots,
     externalTrust:{allowedSourceDigests:{},verifiedAttestations:{}},orchestratorIssuerId:'test:operator',activeAdapters:[],observers:{},
     providers:{'runtime.dispatch':adapter,'network.http':'kubeclaw.network-http:http'},
     grants:{'test.locale-dependency:stage':{'runtime.dispatch':{allowedAgents:['probe']}},[adapter]:{'network.http':{allowedOrigins:[origin]}}},

@@ -1,0 +1,72 @@
+{
+  "decision": "G1/G2/G3/G-DOC locally accepted for REGISTER bookkeeping deliverable",
+  "sources": [
+    {
+      "path": "docs/review/remediation/acceptance-20260920.md",
+      "sha256": "27942ef3c0f04c0b325d98f4cd2d0f70cd6060fef47d941d2e7bef3ec92b5cda"
+    },
+    {
+      "path": "docs/review/remediation/register.json",
+      "sha256": "906e861f7ed13c4052e10f637e325848df16491ff1d0889b45b513cf5e9e4adf"
+    },
+    {
+      "path": "docs/review/remediation/register.md",
+      "sha256": "7f44049163a17d250f61aff7d01435ff354cb8658dff7ea630b692993ed0fdfa"
+    },
+    {
+      "path": "docs/review/remediation/progress.md",
+      "sha256": "b5c7b9005c6be2cda96b5f52e0335bc710b7a461af74938d8d221a114b12b7eb"
+    },
+    {
+      "path": "docs/review/remediation/handoff.md",
+      "sha256": "92d54f37c376b78d64746e9dd6ea6b5e4542dd5c71e177dc8857525b3d86f6fb"
+    },
+    {
+      "path": "docs/review/remediation/README.md",
+      "sha256": "57be44d8996f1d4102f131e41825690335376d5112780b62fafd33f00df1255e"
+    },
+    {
+      "path": "docs/review/remediation/implementation/register-consistency-20260920.md",
+      "sha256": "aca98d130b8722dbc70757c52053a8c60768ed0caf3cf5d6aee1cc188d619167"
+    },
+    {
+      "path": "docs/review/remediation/implementation/open-work-inventory-20260921.md",
+      "sha256": "62725dd776d5aa407e9ca354184dfb07635080e3567d8b21882a65c15292ecea"
+    },
+    {
+      "path": "scripts/review/remediation-register.mjs",
+      "sha256": "3f04dd1da92874bd5d43d199fae6e103c967ac51f16ff1df9b1fd54ea5ebaf13"
+    },
+    {
+      "path": "scripts/review/remediation-identities.json",
+      "sha256": "2f6fbb58a790eab9a728f1f3378f89e56c4b91b17dcfbc41b2ab2288a886a3c1"
+    },
+    {
+      "path": "scripts/tests/remediation-register.test.mjs",
+      "sha256": "5f4e1bc1fd1001e62212f24cc5711c373221aa68bb8a81fd9690667124490253"
+    }
+  ],
+  "runtimeArtifacts": {
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-runtime2/results.json": "119d0311b666e3800abce65ce0dbcdade5d02cc0afdad5b8546af0b91cb32271",
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-runtime2/report-runtime-13.txt": "f455bd2d823a94a0e268c7f14d5b9bdfb03773ee72b90a9ca8b4dbeb487b743d",
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-runtime2/report-runtime-14.txt": "c5e201217130fbac5199a42c25b7bfc644c33dfb7d94c78ac87050107cc0403b",
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-runtime2/before.json": "e8c5390a404c7518e08eb91e9371d51fa7cff24b9bc444f09462b8386f7170fc",
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-runtime2/after.json": "1f3ce24f2d0890b807a5178d4dc8fc939e334bc7e109a5ba6e74f59ed1094970",
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-runtime2/register-documents-before.json": "5d3f1236bb62e7b0cd7e6b9345a99ccdc148251de20a9ab7b10c5b014150197d",
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-runtime2/register-documents-after.json": "7a8bd82742c8b75e5a9359c3c5c2f56b89e289168f3e2b79d1b02b793e0cae33",
+    "docs/review/evidence/independent-buster-runner-execution-child-20260921/process44-runtime2/unexpected-drift.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "historicalCount": 154,
+  "integrationCount": 5,
+  "counts": {
+    "verifiziert": 142,
+    "in Bearbeitung": 4,
+    "implementiert": 2,
+    "offen": 6
+  },
+  "supplementalDocuments": 583,
+  "supplementalDrift": [],
+  "historicalA1Exception": "not healed; first matrix followed initial generator design",
+  "noFindingStatusChanges": true,
+  "reviewerExecutedTests": false
+}

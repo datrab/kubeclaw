@@ -1,0 +1,39 @@
+{
+  "verifyOnlyExit": 0,
+  "vmBooted": false,
+  "originalLauncherMatchesPriorAudit": true,
+  "commandDelta": [
+    {
+      "index": 2,
+      "original": "buster-legacy-seal-review-20260921",
+      "variant": "buster-legacy-seal-smaller-as-20260921"
+    }
+  ],
+  "manifestFileCount": 18,
+  "identities": [
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/launch.py",
+      "sha256": "4c2500d666ee1922a3ce469db9ddeccbf6f2b30799d8e2e1f55a81e25725daf0"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/artifact-manifest.json",
+      "sha256": "b8b18805fdc85a8fb54294807ee652dab4d79a5ca2bd6f50890a40da4d334594"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/launch-command.json",
+      "sha256": "79332f28d5eda7f6e554e382d2fb72ecb92722d317eb83be5e8ae9b1c939b0e1"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/launch-smaller-as.py",
+      "sha256": "098fcddf299af664092e83cd05feafda744210f96bbc48b8fdd5ece5e0c5df4c"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/artifact-manifest-smaller-as.json",
+      "sha256": "4d2d072cb45d5d7d83544158355c9783db071950aac199c089e2c7eb2c36cfdb"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/launch-command-smaller-as.json",
+      "sha256": "6269947a9c1af04035e508285f19ea802cda7f70c0c1b2f5e230675c2151c332"
+    }
+  ]
+}

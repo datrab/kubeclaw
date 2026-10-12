@@ -1,0 +1,13 @@
+# Independent review of the fixed smaller-AS launcher implementation
+
+Accepted as a bounded implementation of the separately reviewed 768/1,792 MiB profile. Independent `--verify-only` exited zero and reported `verified: true`, `vmBooted: false`. No emulator or privileged action was executed. This accepts preparation, not allocation feasibility, guest tests or a launch decision.
+
+The original launcher matches its preceding audit hash. The variant changes only the paired constants and strict accounting validation, artifact-manifest selection, guest display name and separate output directory. Guest RAM, vCPU count, 64 MiB TCG cache, both guest-only disks, read-only export, disabled network, CPU/boot/overall watchdogs, log ceiling, 2.75 GiB stop and termination handling remain unchanged. The recorded QEMU command differs only in its name.
+
+`INITIAL_MEMORY_LIMIT` is exactly 805,306,368 bytes; `QEMU_AS_LIMIT` is exactly 1,879,048,192 bytes. Their asserted sum is 2,684,354,560 bytes. The unchanged full anon + kernel + shmem sum must be present, parseable and nonnegative. No reclaim credit, environment-selected budget, retry escalation or fallback exists. The actual Popen uses `preexec_fn=limits`, which sets both RLIMIT_AS soft and hard to the same smaller constant before exec.
+
+Source-extracted scalar/call checks passed exact boundary, one-byte-over rejection, incompatible larger-AS pairing rejection, and missing/negative/malformed observations. The source-extracted limits function was checked with a recording stand-in: both AS values and unchanged CPU/core values match. This is explicitly a code-path argument check, not an actual setrlimit syscall or QEMU proof.
+
+The real verify-only command checked the bound images, kernel/initrd, source manifest, guest preparation artifacts and full emulator/runtime identities, then exited before resource limits or Popen. The final measured memory.current was 2,163,847,168 bytes after the existing fixture-only cache hints. That number is an observation, not a future memory reservation. Exact hashes of both launchers/manifests/recorded commands and the independent verification log are retained in `docs/review/evidence/independent-vm-smaller-as-implementation-20260921`.
+
+The fixed variant keeps the limited additive safety argument described in the prior audit. It retains that audit's limitations: kernel/cache growth and concurrent-workspace behavior are not bounded by RLIMIT_AS; monitoring is reactive. QEMU may fail to map its existing guest/overhead within 1,792 MiB, and that must remain a recorded failure without larger limits or fewer cases. Original 512/2,048 refusals remain unchanged evidence.

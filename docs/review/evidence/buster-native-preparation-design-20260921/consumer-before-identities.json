@@ -1,0 +1,122 @@
+[
+  {
+    "path": "skills/buster/engine/src/index.ts",
+    "sha256": "51c35b9e5455f1c1d253c769f1f020c23b1d1a0fe8e3b30abe4158e43be09f6a",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/skills/buster/engine/src/index.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+    "sha256": "21b63692a2049718b49bcbdec03033642fc25d4e6206fa0330c753615ca036ff",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/skills/buster/engine/test-gates/remote-plan-http.ts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/result-reservation.test.mts",
+    "sha256": "29ebb15793d9c252652f7598f2241aa0fa2127510fa12870f8bbd5d105d7c58b",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/reliability/result-reservation.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-job-compaction.test.mts",
+    "sha256": "03da2914c8b40122833ba4056741125f7c08a8e7f618ef87407412264dded3fe",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/reliability/buster-job-compaction.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/buster-shutdown-storage.test.mts",
+    "sha256": "2f77035ecda79bbfd2a68b463757c74452df0ddf139646c361b00dfd72dd6575",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/reliability/buster-shutdown-storage.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/coverage-remote.test.mts",
+    "sha256": "c9f130b593b43956950de3d28a24a75f41af1b8ea91f1a0fa6a7064f8fe24d1d",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/reliability/coverage-remote.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+    "sha256": "e3b0daa6b91b430c4ae668809e26010182bf87afb1d1254ab44981742fd36aac",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/reliability/nova-dispatch-projection.test.mjs.snapshot"
+  },
+  {
+    "path": "tests/verification/reliability/nova-remote-faults.mts",
+    "sha256": "45833fcf648bd0a8e154b3b8cdea961bff0e0b0bf3c84411e3dc3a50dbed19cf",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/reliability/nova-remote-faults.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-visual-remote-vertical.mts",
+    "sha256": "e6358d7875454a2cc604039cf81be3e4139411002edd549f44794c4c400445ce",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-visual-remote-vertical.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-container-build-production.mts",
+    "sha256": "dd3f73a15e25416d9ea667762d4ec38a09a98b3a9497b724887d3abb037093c6",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-container-build-production.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+    "sha256": "e19e110923ce651414e7e2b46ca8c664874ec6e1dcdaeab2b1a4069f2fcd34e7",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-remote-plan-runtime.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-security-parity.mts",
+    "sha256": "0a9a3a7fd2a404bcef3d978898835241159a4a628b6e59f2ffbd03f7b10f1b99",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-security-parity.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase9-vertical.mts",
+    "sha256": "6701e8b26b7a78d38813e05634820f458321ac8800c03a0e7cc2ca71ee4bcd61",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-phase9-vertical.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-security-remote-vertical.mts",
+    "sha256": "fb911f0fc760afbef3d37d883dc4f3705fcdd4a319fe79bb3e137204787185b7",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-security-remote-vertical.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+    "sha256": "f8a7ffc4ea9aa7501d37ea1c67c87c44af81fe3c66a51029dbbf6e948d1a5585",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-phase8-vertical.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts",
+    "sha256": "9d549c69a8f4d3bff87abb731b68c735394e16ce5bbde446bb382e1cd08058ca",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-e2e-remote-vertical.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+    "sha256": "fb5b0bf78dfe2b19857906b89628b61dd033db4c8437dcc6fb87dc4a95d2cadf",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-remote-real-provider.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-size-budget-production.mts",
+    "sha256": "c126cf7baa7c549ec04cbb2d821ed4549f72626e540c093fb91651a36731833f",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-size-budget-production.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts",
+    "sha256": "301cda4fc846e56d500e7208618a38bdf88c9082bc204872436c0b5bc5bbd33e",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-lighthouse-remote-vertical.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+    "sha256": "67422b709de943dc44eef78e36a012db9c13580569ed2c206bb345a4e85d640b",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/tests/verification/contracts/check-pipeline-phase10-vertical.mts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "sha256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/skills/buster/engine/test-gates/production.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "ceffb9af61257ff386e30b758d7e4e0e3d3363ec089065db16402ffbae44daf0",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/skills/buster/engine/test-gates/remote-plan-service.ts.snapshot"
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+    "sha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/skills/buster/engine/test-gates/remote-plan-runtime.ts.snapshot"
+  },
+  {
+    "path": "scripts/compact-buster-job.mjs",
+    "sha256": "7fafc9820c513f40dd534261f0ea253ab0ebc1fabb5fde6df13933936650e826",
+    "snapshot": "docs/review/evidence/buster-native-preparation-design-20260921/consumer-before/scripts/compact-buster-job.mjs.snapshot"
+  }
+]

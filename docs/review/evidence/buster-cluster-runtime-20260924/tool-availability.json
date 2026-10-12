@@ -1,0 +1,43 @@
+[
+  {
+    "command": [
+      "node",
+      "--version"
+    ],
+    "executable": "/usr/local/bin/node",
+    "exitCode": 0,
+    "stdout": "v24.21.0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "helm",
+      "version",
+      "--short"
+    ],
+    "executable": "/usr/local/bin/helm",
+    "exitCode": 0,
+    "stdout": "v3.22.0+g144ca65\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "--version"
+    ],
+    "executable": "/usr/bin/git",
+    "exitCode": 0,
+    "stdout": "git version 2.54.0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "--version"
+    ],
+    "executable": "/usr/bin/python3",
+    "exitCode": 0,
+    "stdout": "Python 3.14.7\n",
+    "stderr": ""
+  }
+]

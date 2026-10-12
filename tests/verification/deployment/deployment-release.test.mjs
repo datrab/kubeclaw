@@ -5,6 +5,7 @@ import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { test } from 'node:test';
 import yaml from 'js-yaml';
+import { nativePoolPolicy } from '../../../scripts/native-worker-node-policy.mjs';
 
 const source = path.resolve(import.meta.dirname, '../../..');
 function fixture(run) {
@@ -12,15 +13,27 @@ function fixture(run) {
   const git = args => execFileSync('git', ['-C', root, ...args], { encoding: 'utf8' }).trim();
   const node = args => execFileSync(process.execPath, args, { cwd: root, encoding: 'utf8' });
   try {
-    for (const directory of ['charts', 'my-values', 'scripts']) fs.cpSync(path.join(source, directory), path.join(root, directory), { recursive: true });
+    for (const directory of ['charts', 'my-values', 'scripts']) fs.cpSync(path.join(source, directory), path.join(root, directory), { recursive: true, verbatimSymlinks: true });
+    for (const name of ['swarm.schema.json', 'swarm-components.schema.json']) {
+      const schema = `skills/common/plugin-runtime/foundation/config/${name}`;
+      fs.mkdirSync(path.dirname(path.join(root, schema)), { recursive: true });
+      fs.copyFileSync(path.join(source, schema), path.join(root, schema));
+    }
     fs.symlinkSync(path.join(source, 'node_modules'), path.join(root, 'node_modules'));
     const prismValuesFile = path.join(root, 'my-values/prism-values.yaml');
     const prismValues = yaml.load(fs.readFileSync(prismValuesFile, 'utf8'));
-    prismValues.worker.native = { ...prismValues.worker.native, nodeName: 'native-render-test', namespace: 'kubeclaw', policyDigest: 'a'.repeat(64) };
+    const policyFile = path.join(root, 'my-values/infra/native-worker-pools.yaml');
+    const policy = yaml.load(fs.readFileSync(policyFile, 'utf8'));
+    policy.nodeName = 'native-render-test';
+    policy.pools.buster.namespace = 'kubeclaw';
+    policy.pools.prism.namespace = 'kubeclaw';
+    fs.writeFileSync(policyFile, yaml.dump(policy));
+    prismValues.worker.native = { ...prismValues.worker.native, nodeName: policy.nodeName,
+      namespace: policy.pools.prism.namespace, policyDigest: nativePoolPolicy(policy, 'prism').policyDigest };
     fs.writeFileSync(prismValuesFile, yaml.dump(prismValues));
     const bin = path.join(root, 'bin'); fs.mkdirSync(bin);
     fs.writeFileSync(path.join(bin, 'kubectl'), '#!/bin/sh\necho unexpected cluster access >&2\nexit 99\n', { mode: 0o755 });
-    git(['init', '-q']); git(['add', 'charts', 'my-values']);
+    git(['init', '-q']); git(['add', 'charts', 'my-values', 'skills/common/plugin-runtime/foundation/config']);
     git(['-c', 'user.name=Deployment Test', '-c', 'user.email=deployment@example.invalid', 'commit', '-qm', 'Actual configuration fixture']);
     const commit = git(['rev-parse', 'HEAD']);
     fs.mkdirSync(path.join(root, 'releases'));
@@ -34,7 +47,9 @@ function fixture(run) {
     }
     fs.writeFileSync(path.join(root, 'no-cluster.yaml'), 'apiVersion: v1\nkind: Config\nclusters:\n- name: unavailable\n  cluster:\n    server: http://127.0.0.1:1\ncontexts:\n- name: unavailable\n  context:\n    cluster: unavailable\ncurrent-context: unavailable\n');
     const registryOverlay = path.join(root, 'registry.yaml');
-    fs.writeFileSync(registryOverlay, yaml.dump({ runtimeInfrastructure: { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } } }));
+    fs.writeFileSync(registryOverlay, yaml.dump({ runtimeInfrastructure: { registry: { endpoint: 'https://registry.example.test', transport: 'https', authSecretName: 'registry-test' } },
+      busterNative: { nodeName: policy.nodeName, namespace: policy.pools.buster.namespace,
+        policyDigest: nativePoolPolicy(policy, 'buster').policyDigest } }));
     const shell = (script, args, environment = {}) => spawnSync('bash', [path.join(root, 'scripts', script), ...args], {
       cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024,
       env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, KUBECONFIG: path.join(root, 'no-cluster.yaml'), CODE_BUNDLE_GITHUB_REPOSITORY: 'datrab/kubeclaw', BUSTER_VALUES_FILE: registryOverlay, ...environment },
@@ -85,7 +100,9 @@ test('private operational overlays survive while replaced or removed runtime slo
   fs.writeFileSync(overlay, 'replicaCount: 2\n');
   const docs = success(shell('deploy.sh', ['render', 'nova'], { NOVA_VALUES_FILE: overlay }));
   assert.equal(docs.find(doc => doc.kind === 'Deployment' && doc.metadata.name === 'agent-nova').spec.replicas, 2);
-  fs.writeFileSync(overlay, 'extraContainers: []\nruntimeInfrastructure:\n  registry:\n    endpoint: https://registry.example.test\n    transport: https\n    authSecretName: registry-test\n');
+  const busterOverlay = yaml.load(fs.readFileSync(path.join(root, 'registry.yaml'), 'utf8'));
+  busterOverlay.extraContainers = [];
+  fs.writeFileSync(overlay, yaml.dump(busterOverlay));
   failure(shell('deploy.sh', ['render', 'buster'], { BUSTER_VALUES_FILE: overlay }), /image slot changed or missing|requires exactly one extraContainers/);
   fs.writeFileSync(overlay, 'image:\n  digest: sha256:' + 'f'.repeat(64) + '\n');
   failure(shell('deploy.sh', ['render', 'nova'], { NOVA_VALUES_FILE: overlay }), /image slot changed or missing/);

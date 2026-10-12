@@ -1,0 +1,157 @@
+[
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "sha256": "fadea7ca86b4e95a57c66316ac9fce27c6b45925ef1e7a5fbe45fbfd8211ca53",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/00-swarm.config.json.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "08fb95a81317456d8ce7559ef805e943ccecb80a3c33a9910591ff983dc64dab",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/01-swarm.ts.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "sha256": "cf3878c6d437a77e0e57c834d3b176841cdedfee2140a016cd899e0a807b6b90",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/02-swarm.schema.json.snapshot"
+  },
+  {
+    "path": "skills/prism/config/native-worker.ts",
+    "sha256": "c2a0722a4a938830529d5f60ff5fb4533984a0f8e38c37c693be79c0674141a6",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/03-native-worker.ts.snapshot"
+  },
+  {
+    "path": "charts/prism/values.yaml",
+    "sha256": "60bdf1ce7f54bf22b443d3fe76342a8c9211106a800effa4f019256609d53a48",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/04-values.yaml.snapshot"
+  },
+  {
+    "path": "charts/prism/values.schema.json",
+    "sha256": "400d1399071ed7487728201e7e0573cc33de2339af8f08288a6612e7142fa2a8",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/05-values.schema.json.snapshot"
+  },
+  {
+    "path": "charts/prism/templates/_swarm-config.tpl",
+    "sha256": "b970d911ca47dad2f1f1e279d31c9c763ca7436ee9e0c8213e0ef21127989ddd",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/06-_swarm-config.tpl.snapshot"
+  },
+  {
+    "path": "charts/prism/templates/workloads.yaml",
+    "sha256": "b56ff401cf974f9601ad90624b8dd9930c9a2690495575547edaebd4110eacf9",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/07-workloads.yaml.snapshot"
+  },
+  {
+    "path": "skills/prism/tests/swarm-worker-config.test.mts",
+    "sha256": "67ca022a61121f0c55d335eddaca3de78c56755a2f4dbdd1dad0f838d95e2f66",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/08-swarm-worker-config.test.mts.snapshot"
+  },
+  {
+    "path": "skills/prism/tests/swarm-native-settings.test.mts",
+    "sha256": "28a94e0757755c8f43476277ac895a178f973e23fb0e8d2c40ed4a6fbf41f136",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/09-swarm-native-settings.test.mts.snapshot"
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-config.test.mts",
+    "sha256": "101745720ae655ea9b10cfd28770f13e9b9cc9722c3db63d933607239d002d8b",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/10-swarm-supervisor-config.test.mts.snapshot"
+  },
+  {
+    "path": "skills/prism/tests/swarm-supervisor-consumers.test.mts",
+    "sha256": "d350f535284a1917f8b4cfb1906ac3d367bf94c6d97ec648abe1d053b4b9d5d1",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/11-swarm-supervisor-consumers.test.mts.snapshot"
+  },
+  {
+    "path": "tests/verification/deployment/prism-swarm-config.test.mjs",
+    "sha256": "b1d02aae243017ef64bfbd58ce3f5f179942b58d45797ea4da0ee8755f4fbcbb",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/12-prism-swarm-config.test.mjs.snapshot"
+  },
+  {
+    "path": "tests/verification/deployment/prism-native-runtime.test.mjs",
+    "sha256": "17e9ade95b47c7d9d91708ed6a7b3cc94e1d90e5fc6f9d8c74ed4d5da81b568a",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/13-prism-native-runtime.test.mjs.snapshot"
+  },
+  {
+    "path": "docs/operations/operator-configuration.md",
+    "sha256": "1c836b0ee91d882f204a77726e6587252a32f8f8dad5742a8affaed7e5d8ab86",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/14-operator-configuration.md.snapshot"
+  },
+  {
+    "path": "docs/operations/prism-operator-guide.md",
+    "sha256": "a99d057236b398fd3924f2f3523bde4ea6c4dbdcd3ec847ca0f194d4d10f2be3",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/15-prism-operator-guide.md.snapshot"
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/README.md",
+    "sha256": "60811bf451041ce10fb28e1f1dbb954a96866e3f06d34b676c817b2cd21770f1",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/16-README.md.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.json",
+    "sha256": "8f747f91863f6636c5d2774d267d0fedf47eeba559d0e7377d91541e871bbca1",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/17-config-inventory-20260920.json.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-inventory-20260920.md",
+    "sha256": "99f611d3bed6967f6c826390dd337065a6f7248b1900a6d8edce42af00bfdc3a",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/18-config-inventory-20260920.md.snapshot"
+  },
+  {
+    "path": "skills/prism/server/worker.ts",
+    "sha256": "cfecfaa12715e48f923af86b69a6a7582024246d4df619be90e9270d95d96d5d",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/19-worker.ts.snapshot"
+  },
+  {
+    "path": "skills/prism/server/native-worker-execution.ts",
+    "sha256": "d87eb7d05cdc40f3eb353dba63236fa8c20a02adf1b70512c81944bb7cb71a56",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/20-native-worker-execution.ts.snapshot"
+  },
+  {
+    "path": "skills/prism/server/worker-config.ts",
+    "sha256": "249ea80da729fd1edcc149798ef343ba7e7f1e789528acedd540fabad4e9e337",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/21-worker-config.ts.snapshot"
+  },
+  {
+    "path": "skills/prism/server/control-config.ts",
+    "sha256": "58c27c7ab5b69dd586c033b4f41ae8f3f73b4909045a52f25906bba125b656cb",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/22-control-config.ts.snapshot"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-process.ts",
+    "sha256": "d43bc3ce05976d77579dbc624cae8be1d3209732b023124e3eb6f0a8fd9860da",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/23-native-worker-process.ts.snapshot"
+  },
+  {
+    "path": "skills/worker/core/worker/native-worker-ownership.ts",
+    "sha256": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/24-native-worker-ownership.ts.snapshot"
+  },
+  {
+    "path": "skills/worker/core/worker/native-attempt-journal.ts",
+    "sha256": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/25-native-attempt-journal.ts.snapshot"
+  },
+  {
+    "path": "skills/worker/core/worker/ownership-store.ts",
+    "sha256": "d784b4196a6103a0ad1e1eaa086640d89ea3205db74be0b0d569045183d20b79",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/26-ownership-store.ts.snapshot"
+  },
+  {
+    "path": "skills/worker/core/worker/native-output-spool.ts",
+    "sha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/27-native-output-spool.ts.snapshot"
+  },
+  {
+    "path": "skills/worker/core/worker/native-pool-policy.ts",
+    "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/28-native-pool-policy.ts.snapshot"
+  },
+  {
+    "path": "skills/worker/core/worker/native-runtime-identity.ts",
+    "sha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/29-native-runtime-identity.ts.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/config-supervisor-numerics-20260921.md",
+    "sha256": "514b523396dfe4786e5c47d3c012d95ec53e9e8e59ccb22abf367caf4cb8d91f",
+    "snapshot": "docs/review/evidence/config-supervisor-numerics-20260921/source/30-implementation.md.snapshot"
+  }
+]

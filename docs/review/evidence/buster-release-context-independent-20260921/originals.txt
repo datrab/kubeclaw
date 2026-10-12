@@ -1,0 +1,19 @@
+✔ real selected-release renderer exports immutable groups and bootstraps a committed app-of-apps (5744.898417ms)
+✔ imperative ownership guard fails closed and permits only other namespaces (0.676847ms)
+✔ committed bundle corruption, switched selection and hidden image changes fail before activation (4510.707348ms)
+✔ activation preflight requires Secrets, sole ownership, native binding and actual host preflight entrypoint (8679.235787ms)
+✔ root claim and retained workload tracking block imperative adoption after partial GitOps transitions (0.526874ms)
+✔ original runtime teardown commands stop before any Helm mutation when Argo owns the namespace (269.445608ms)
+✔ Buster export requires the supplied native binding before publishing a bundle (2292.237968ms)
+walk.go:75: found symbolic link in path: /tmp/release-helm-hdEJbM/charts/prism/files/config/swarm.config.json resolves to /tmp/release-helm-hdEJbM/charts/kubeclaw/files/config/swarm.config.json. Contents of linked file included and used
+walk.go:75: found symbolic link in path: /tmp/release-helm-hdEJbM/charts/prism/files/config/swarm.schema.json resolves to /tmp/release-helm-hdEJbM/skills/common/plugin-runtime/foundation/config/swarm.schema.json. Contents of linked file included and used
+✔ release selection rejects missing, duplicate and cross-commit build receipts (2.383112ms)
+✔ generated release values render actual Helm charts with immutable role and sidecar references (1320.225933ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23468.106326

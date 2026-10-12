@@ -1,0 +1,26 @@
+{
+  "fixtures": {
+    "deployment": {
+      "uses": "kubeclaw.kubernetes-fixture@1",
+      "config": {
+        "image": {
+          "reference": "registry-local.kubeclaw.svc.cluster.local:5001/apps/web@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "serviceName": "web",
+        "servicePort": 8080,
+        "namespacePrefix": "test",
+        "retention": { "mode": "delete", "seconds": 1800 },
+        "readinessTimeoutSeconds": 120,
+        "secretReferences": []
+      },
+      "inputs": {
+        "checked-manifest": {
+          "from": "checkedYaml",
+          "output": "artifact-1",
+          "mediaType": "application/vnd.kubeclaw.checked-kubernetes-yaml"
+        }
+      }
+    }
+  }
+}

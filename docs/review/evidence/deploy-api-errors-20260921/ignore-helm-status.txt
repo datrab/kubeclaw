@@ -1,0 +1,15 @@
+test_uninstall_entrypoint (deploy_tests.DeployObservations.test_uninstall_entrypoint) ... FAIL
+
+======================================================================
+FAIL: test_uninstall_entrypoint (deploy_tests.DeployObservations.test_uninstall_entrypoint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/deploy-api-errors.test.py", line 95, in test_uninstall_entrypoint
+    self.assertNotEqual(result.returncode,0); self.assertEqual(self.mutations(calls),[])
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0
+
+----------------------------------------------------------------------
+Ran 1 test in 0.877s
+
+FAILED (failures=1)

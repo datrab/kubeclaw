@@ -1,0 +1,195 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Prism agent egress must reach control with and without SPIFFE
+    at file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/deployment/check-deployment-truth.mjs:64:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '{{- $controlPort := (include "prism.swarmConfig" . | fromJson).operator.prism.control.port | int }}\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-default-deny }\n' +
+    'spec:\n' +
+    '  podSelector:\n' +
+    '    matchExpressions:\n' +
+    '      - key: app\n' +
+    '        operator: In\n' +
+    '        values: [prism-control, prism-studio, prism-worker, prism-ingestion, prism-postgresql, prism-migrate, prism-backup, prism-test-runner]\n' +
+    '  policyTypes: [Ingress, Egress]\n' +
+    '---\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-dns }\n' +
+    'spec:\n' +
+    '  podSelector:\n' +
+    '    matchExpressions:\n' +
+    '      - key: app\n' +
+    '        operator: In\n' +
+    '        values: [prism-control, prism-studio, prism-worker, prism-ingestion, prism-postgresql, prism-migrate, prism-backup, prism-test-runner]\n' +
+    '  policyTypes: [Egress]\n' +
+    '  egress: [{ to: [{ namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: kube-system } } }], ports: [{ protocol: UDP, port: 53 }, { protocol: TCP, port: 53 }] }]\n' +
+    '---\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-application-paths }\n' +
+    'spec:\n' +
+    '  podSelector: { matchLabels: { app: prism-control } }\n' +
+    '  policyTypes: [Ingress, Egress]\n' +
+    '  ingress:\n' +
+    '    - from: [{ podSelector: { matchLabels: { app: prism-studio } } }]\n' +
+    '      ports: [{ protocol: TCP, port: {{ $controlPort }} }]\n' +
+    '    - from: [{ podSelector: { matchLabels: { app: prism-test-runner } } }]\n' +
+    '      ports: [{ protocol: TCP, port: {{ ternary 8443 $controlPort .Values.workerTrust.spiffe.enabled }} }]\n' +
+    '    - from: [{ podSelector: { matchLabels: { app: prism-worker } } }]\n' +
+    '      ports: [{ protocol: TCP, port: {{ ternary 8443 $controlPort .Values.workerTrust.spiffe.enabled }} }]\n' +
+    '    - from: [{ podSelector: { matchLabels: { app: prism-control } } }]\n' +
+    '      ports: [{ protocol: TCP, port: {{ ternary 8443 $controlPort .Values.workerTrust.spiffe.enabled }} }]\n' +
+    '    - from:\n' +
+    '        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.workerTrust.spiffe.novaNamespace | quote }} } }\n' +
+    '          podSelector: { matchLabels: { app.kubernetes.io/component: nova } }\n' +
+    '      ports: [{ protocol: TCP, port: {{ ternary 8443 $controlPort .Values.workerTrust.spiffe.enabled }} }]\n' +
+    '    - from:\n' +
+    '        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.workerTrust.spiffe.agentNamespace | quote }} } }\n' +
+    '          podSelector: { matchLabels: { app.kubernetes.io/component: prism } }\n' +
+    '      ports: [{ protocol: TCP, port: {{ ternary 8443 $controlPort .Values.workerTrust.spiffe.enabled }} }]\n' +
+    '  egress:\n' +
+    '    - to: [{ podSelector: { matchLabels: { app: prism-worker } } }]\n' +
+    '      ports: [{ protocol: TCP, port: {{ ternary 8443 8080 .Values.workerTrust.spiffe.enabled }} }]\n' +
+    '    - to: [{ podSelector: { matchLabels: { app: prism-postgresql } } }]\n' +
+    '      ports: [{ protocol: TCP, port: 5432 }]\n' +
+    '    - to: [{ podSelector: { matchLabels: { app: prism-ingestion } } }]\n' +
+    '      ports: [{ protocol: TCP, port: 8080 }]\n' +
+    '    - to: [{ podSelector: { matchLabels: { app: prism-control } } }]\n' +
+    '      ports: [{ protocol: TCP, port: {{ ternary 8443 $controlPort .Values.workerTrust.spiffe.enabled }} }]\n' +
+    '    - to:\n' +
+    '        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.workerTrust.spiffe.agentNamespace | quote }} } }\n' +
+    '          podSelector: { matchLabels: { app.kubernetes.io/component: prism } }\n' +
+    '      ports: [{ protocol: TCP, port: 18082 }]\n' +
+    '---\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-studio-control }\n' +
+    'spec:\n' +
+    '  podSelector: { matchLabels: { app: prism-studio } }\n' +
+    '  policyTypes: [Egress]\n' +
+    '  egress:\n' +
+    '    - to: [{ podSelector: { matchLabels: { app: prism-control } } }]\n' +
+    '      ports: [{ protocol: TCP, port: {{ $controlPort }} }]\n' +
+    '---\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-worker-control }\n' +
+    'spec:\n' +
+    '  podSelector: { matchLabels: { app: prism-worker } }\n' +
+    '  policyTypes: [Ingress]\n' +
+    '  ingress:\n' +
+    '    - from: [{ podSelector: { matchLabels: { app: prism-control } } }]\n' +
+    '      ports: [{ protocol: TCP, port: {{ ternary 8443 8080 .Values.workerTrust.spiffe.enabled }} }]\n' +
+    '---\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-worker-egress }\n' +
+    'spec:\n' +
+    '  podSelector: { matchLabels: { app: prism-worker } }\n' +
+    '  policyTypes: [Egress]\n' +
+    '  egress:\n' +
+    '    - to: [{ podSelector: { matchLabels: { app: prism-postgresql } } }]\n' +
+    '      ports: [{ protocol: TCP, port: 5432 }]\n' +
+    '    - to: [{ podSelector: { matchLabels: { app: prism-control } } }]\n' +
+    '      ports: [{ protocol: TCP, port: {{ ternary 8443 $controlPort .Values.workerTrust.spiffe.enabled }} }]\n' +
+    '    - to: [{ namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: kube-system } } }]\n' +
+    '      ports: [{ protocol: UDP, port: 53 }, { protocol: TCP, port: 53 }]\n' +
+    '---\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-openclaw-agent }\n' +
+    'spec:\n' +
+    '  podSelector: { matchLabels: { app.kubernetes.io/component: prism } }\n' +
+    '  policyTypes: [Ingress, Egress]\n' +
+    '  ingress:\n' +
+    '    - from:\n' +
+    '        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.workerTrust.spiffe.novaNamespace | quote }} } }\n' +
+    '          podSelector: { matchLabels: { app.kubernetes.io/component: nova } }\n' +
+    '        - podSelector: { matchLabels: { app: prism-control } }\n' +
+    '        - podSelector: { matchLabels: { app: prism-test-runner } }\n' +
+    '      ports: [{ protocol: TCP, port: 18082 }]\n' +
+    '  egress:\n' +
+    '    - to: [{ podSelector: { matchLabels: { app: prism-control } } }]\n' +
+    '      ports: [{ protocol: TCP, port: {{ ternary 8443 $controlPort .Values.workerTrust.spiffe.enabled }} }]\n' +
+    '    - to:\n' +
+    '        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.workerTrust.spiffe.novaNamespace | quote }} } }\n' +
+    '          podSelector: { matchLabels: { app: litellm } }\n' +
+    '      ports: [{ protocol: TCP, port: 4000 }]\n' +
+    '    - to:\n' +
+    '        - ipBlock:\n' +
+    '            cidr: 0.0.0.0/0\n' +
+    '            except: [10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.168.0.0/16]\n' +
+    '      ports: [{ protocol: TCP, port: 443 }]\n' +
+    '    - to: [{ namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: kube-system } } }]\n' +
+    '      ports: [{ protocol: UDP, port: 53 }, { protocol: TCP, port: 53 }]\n' +
+    '---\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-studio-entry }\n' +
+    'spec:\n' +
+    '  podSelector: { matchLabels: { app: prism-studio } }\n' +
+    '  policyTypes: [Ingress]\n' +
+    '  ingress:\n' +
+    '    - from:\n' +
+    '        - namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: {{ .Values.tailscale.operatorNamespace | quote }} } }\n' +
+    '          podSelector: { matchLabels: { tailscale.com/managed: "true", tailscale.com/parent-resource: prism-studio, tailscale.com/parent-resource-ns: {{ .Release.Namespace | quote }} } }\n' +
+    '      ports: [{ protocol: TCP, port: {{ (include "prism.swarmConfig" . | fromJson).operator.prism.studio.port | int }} }]\n' +
+    '---\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-postgresql }\n' +
+    'spec:\n' +
+    '  podSelector: { matchLabels: { app: prism-postgresql } }\n' +
+    '  policyTypes: [Ingress]\n' +
+    '  ingress: [{ from: [{ podSelector: { matchExpressions: [{ key: app, operator: In, values: [prism-control, prism-worker, prism-backup, prism-migrate] }] } }], ports: [{ protocol: TCP, port: 5432 }] }]\n' +
+    '---\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-database-clients }\n' +
+    'spec:\n' +
+    '  podSelector: { matchExpressions: [{ key: app, operator: In, values: [prism-backup, prism-migrate] }] }\n' +
+    '  policyTypes: [Egress]\n' +
+    '  egress: [{ to: [{ podSelector: { matchLabels: { app: prism-postgresql } } }], ports: [{ protocol: TCP, port: 5432 }] }]\n' +
+    '{{- if .Values.ingestion.enabled }}\n' +
+    '---\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-ingestion }\n' +
+    'spec:\n' +
+    '  podSelector: { matchLabels: { app: prism-ingestion } }\n' +
+    '  policyTypes: [Ingress, Egress]\n' +
+    '  ingress: [{ from: [{ podSelector: { matchLabels: { app: prism-control } } }] }]\n' +
+    '  egress:\n' +
+    '    - to:\n' +
+    '        - ipBlock:\n' +
+    '            cidr: 0.0.0.0/0\n' +
+    '            except: [10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.168.0.0/16]\n' +
+    '      ports: [{ protocol: TCP, port: 443 }]\n' +
+    '{{- end }}\n' +
+    '---\n' +
+    'apiVersion: networking.k8s.io/v1\n' +
+    'kind: NetworkPolicy\n' +
+    'metadata: { name: prism-test-runner }\n' +
+    'spec:\n' +
+    '  podSelector: { matchLabels: { app: prism-test-runner } }\n' +
+    '  policyTypes: [Egress]\n' +
+    '  egress:\n' +
+    '    - to: [{ podSelector: { matchLabels: { app: prism-control } } }]\n' +
+    '      ports: [{ protocol: TCP, port: {{ ternary 8443 $controlPort .Values.workerTrust.spiffe.enabled }} }]\n' +
+    '    - to: [{ namespaceSelector: { matchLabels: { kubernetes.io/metadata.name: kube-system } } }]\n' +
+    '      ports: [{ protocol: UDP, port: 53 }, { protocol: TCP, port: 53 }]\n',
+  expected: /name:\s*prism-openclaw-agent[\s\S]*ternary 8443 8080 \.Values\.workerTrust\.spiffe\.enabled/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

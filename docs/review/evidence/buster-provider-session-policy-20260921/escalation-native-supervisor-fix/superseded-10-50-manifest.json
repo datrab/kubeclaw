@@ -1,0 +1,7 @@
+{
+  "status": "private-unexecuted",
+  "path": "tests/verification/contracts/buster-provider-session-policy.test.mjs",
+  "beforeSha256": "137c240536cb898c9a21e73c030abc95a6ab1174904e004229dedf7a4b187dd7",
+  "afterSha256": "e5fe1f5e3637b22feddf4eeb09b5028c7ecef08ffca7915c0b92275b3127a212",
+  "reason": "genuine native supervisor independently kills/reaps after approximately100ms; parent500msKILL was not guaranteed"
+}

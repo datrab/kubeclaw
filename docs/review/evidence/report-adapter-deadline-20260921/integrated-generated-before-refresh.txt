@@ -1,0 +1,9 @@
+
+> docs:check:generated
+> npm run plugin-system:inventory:check && npm run docs:inventory:check && npm run docs:generate:check
+
+
+> plugin-system:inventory:check
+> node scripts/plugin-system-inventory.mjs --check
+
+Plugin-system inventory is stale: docs/generated/inventory/plugin-system.json. Run: npm run plugin-system:inventory

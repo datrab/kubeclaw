@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-legacy-python-20260921/runtime/lib/ld-musl-x86_64.so.1",
+    "--library-path",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-legacy-python-20260921/runtime/usr/lib:/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-legacy-python-20260921/runtime/lib",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-legacy-python-20260921/runtime/usr/bin/python3",
+    "-I",
+    "-c",
+    "import sys,fcntl,ctypes,json; print(json.dumps({\"version\":sys.version,\"prefix\":sys.prefix,\"executable\":sys.executable,\"fcntl\":fcntl.__file__,\"ctypes\":ctypes.__file__}))"
+  ],
+  "exitCode": 0,
+  "stdout": "{\"version\": \"3.14.7 (main, Aug 15 2026, 07:18:27) [GCC 15.2.0]\", \"prefix\": \"/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-legacy-python-20260921/runtime/usr\", \"executable\": \"/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-legacy-python-20260921/runtime/usr/bin/python3\", \"fcntl\": \"/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-legacy-python-20260921/runtime/usr/lib/python3.14/lib-dynload/fcntl.cpython-314-x86_64-linux-musl.so\", \"ctypes\": \"/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/buster-legacy-python-20260921/runtime/usr/lib/python3.14/ctypes/__init__.py\"}\n",
+  "stderr": ""
+}

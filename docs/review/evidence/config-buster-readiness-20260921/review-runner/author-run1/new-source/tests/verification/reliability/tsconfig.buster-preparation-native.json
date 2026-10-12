@@ -1,0 +1,15 @@
+{
+  "extends": "../../../skills/buster/engine/tsconfig.json",
+  "include": [
+    "buster-preparation-native-live.mts",
+    "buster-preparation-native-recovery-live.mts",
+    "buster-preparation-native-source-live.mts",
+    "../../fixtures/test-gate/native-preparation-crash.mts",
+    "../../fixtures/test-gate/native-preparation-release-crash.mts",
+    "../../fixtures/test-gate/native-preparation-quota.mts",
+    "../../fixtures/test-gate/native-preparation-delete-barrier.mts",
+    "../../fixtures/test-gate/native-preparation-stage-write.mts",
+    "../../fixtures/test-gate/native-preparation-extract-write.mts",
+    "../../fixtures/test-gate/native-preparation-retained-descriptor.mts"
+  ]
+}

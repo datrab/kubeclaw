@@ -1,0 +1,5 @@
+Actual kubectl, local HTTP fixture returning generic API Status NotFound; no real cluster.
+exit=1
+stdout=
+stderr=E0921 06:55:11.278489   20561 memcache.go:287] "Unhandled Error" err="couldn't get resource list for v1: converting (v1.APIGroupList) to (v1.APIResourceList): unknown conversion"
+error: the server doesn't have a resource type "namespace"

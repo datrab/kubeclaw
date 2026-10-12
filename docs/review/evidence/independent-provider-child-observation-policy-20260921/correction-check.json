@@ -1,0 +1,15 @@
+{
+  "sourceHashes": [
+    {
+      "path": "skills/buster/engine/test-gates/provider-child.mjs",
+      "sha256": "62a88c6c23e47440b05c62ea55453ba5b973a10fafc23e157e82bbd9ae526320"
+    },
+    {
+      "path": "tests/verification/contracts/provider-child-session.test.mjs",
+      "sha256": "c355faab39ecbfd2dc488e5e91b98c8571c86e20183359d6da8503afe631a523"
+    }
+  ],
+  "originalTestPreserved": true,
+  "controlsSha256": "adc34696fe99c962d1f7be8261b3577cb843e978f47d8151d66ff296b74ed0e6",
+  "runtimeExecuted": false
+}

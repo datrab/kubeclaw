@@ -1,0 +1,26 @@
+docs reference check failed:
+- docs/review/evidence/independent-backup-20260920/new-files/docs/review/remediation/implementation/prism-retirement-matrix-20260920.md links to missing local path: pr6-prism-backup-groups.md
+- docs/review/evidence/independent-backup-20260920/new-files/docs/review/remediation/implementation/prism-retirement-matrix-20260920.md links to missing local path: ../../evidence/prism-retirement-20260920/
+- docs/review/evidence/independent-slices-20260920/new-files/docs/ops/cilium-networking.md links to missing local path: ../ROADMAP.md#near-term-sequence
+- docs/review/evidence/independent-slices-20260920/new-files/docs/ops/cilium-networking.md links to missing local path: ../operations/ax41-rollout.md
+- docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/acceptance-20260920.md links to missing local path: assessment-20260920.md
+- docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/acceptance-20260920.md links to missing local path: register.json
+- docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/acceptance-20260920.md links to missing local path: decisions.md
+- docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/acceptance-20260920.md links to missing local path: ../../ROADMAP.md
+- docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/implementation/buster-native-cutover-20260920.md links to missing local path: ../../../operations/observability-retention.md
+- docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: pr6-prism-native-local-closure.md
+- docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: pr6-gitops-closure.md
+- docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: pr6-redis-migration-closure.md
+- docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: pr6-prism-backup-groups.md
+- docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: ../../evidence/register-consistency-20260920/tests.txt
+- docs/review/evidence/independent-slices-20260920/new-files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: ../../evidence/register-consistency-20260920/check.txt
+- docs/review/evidence/independent-slices-20260920/r1-recheck/files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: pr6-prism-native-local-closure.md
+- docs/review/evidence/independent-slices-20260920/r1-recheck/files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: pr6-gitops-closure.md
+- docs/review/evidence/independent-slices-20260920/r1-recheck/files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: pr6-redis-migration-closure.md
+- docs/review/evidence/independent-slices-20260920/r1-recheck/files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: pr6-prism-backup-groups.md
+- docs/review/evidence/independent-slices-20260920/r1-recheck/files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: ../../evidence/register-consistency-20260920/r1-before.txt
+- docs/review/evidence/independent-slices-20260920/r1-recheck/files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: ../../evidence/register-consistency-20260920/r1-after.txt
+- docs/review/evidence/independent-slices-20260920/r1-recheck/files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: ../../evidence/register-consistency-20260920/tests.txt
+- docs/review/evidence/independent-slices-20260920/r1-recheck/files/docs/review/remediation/implementation/register-consistency-20260920.md links to missing local path: ../../evidence/register-consistency-20260920/check.txt
+
+Intentional exclusions: docs/archive/**, fenced code blocks, external URLs, globs, placeholders, and generated example data are not treated as source-path claims.

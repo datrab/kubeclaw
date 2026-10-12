@@ -1,0 +1,53 @@
+{
+  "artifactCount": 16,
+  "artifacts": [
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/guest-root.ext4",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/second.ext4",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/vmlinuz-virt",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/initrd.cpio.gz",
+    "node_modules/.cache/buster-legacy-seal-vm-20260921/repo-snapshot-manifest.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/guest-init.sh",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/prepare-images.py",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/prepare-runtime.py",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/runtime-binding.py",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/tool-runtime-identities.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/source-export-identities.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/guest-payload-identities.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/image-build.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/prepared-artifacts.json",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/launch.py",
+    "docs/review/evidence/buster-legacy-seal-vm-20260921/launch-command.json"
+  ],
+  "toolClosureEqual": true,
+  "payloadAndExportExact": true,
+  "originalThreeSourcesEqualIndependentInodes": true,
+  "initrdModules": [
+    "modules/virtio_blk.ko",
+    "modules/crc16.ko",
+    "modules/mbcache.ko",
+    "modules/jbd2.ko",
+    "modules/ext4.ko",
+    "modules/netfs.ko",
+    "modules/9pnet.ko",
+    "modules/9p.ko",
+    "modules/9pnet_virtio.ko",
+    "modules/rng-core.ko",
+    "modules/virtio-rng.ko"
+  ],
+  "readOnlyImageProbes": [
+    {
+      "disk": "guest-root.ext4",
+      "superblockUuid": "52e17eda-a354-4a1d-8a48-964e95a7a583",
+      "logicalBytes": 268435456
+    },
+    {
+      "disk": "second.ext4",
+      "superblockUuid": "a552bf07-54c2-46d5-b4d1-4846981b7067",
+      "logicalBytes": 16777216
+    }
+  ],
+  "diskInitInspection": "Unavailable: cached dumpe2fs/debugfs absent; mke2fs -d evidence and exact preimage manifest inspected, no mount performed.",
+  "concreteCommandExact": true,
+  "vmBooted": false,
+  "artifactManifestSha256": "b8b18805fdc85a8fb54294807ee652dab4d79a5ca2bd6f50890a40da4d334594"
+}

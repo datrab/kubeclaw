@@ -60,7 +60,7 @@ const adapters = new core.AdapterRuntime({ granted, activated, configs: new Map<
   ['kubeclaw.repository-adapter:repository', { repositoryRoot: project }],
   ['kubeclaw.artifact-store:artifact-store', { artifactRoot: artifacts }],
 ]), effects: new core.EffectCoordinator(new core.FileEffectJournal(path.join(temporary, 'effects.jsonl')),
-  undefined, undefined, new core.MemoryResourceLockManager()), shutdownTimeoutMs: 1000,
+  undefined, undefined, new core.MemoryResourceLockManager(), 300_000), shutdownTimeoutMs: 1000,
   async emitDomainEvent(event: unknown) { fs.appendFileSync(path.join(temporary, 'domain.jsonl'), `${JSON.stringify(event)}\n`); },
 });
 try {

@@ -1,0 +1,23 @@
+{
+  "integratedAt": "2026-09-21T20:58:11.264630+00:00",
+  "runtimeState": "75986 terminal/HOLD confirmed by owner",
+  "files": [
+    {
+      "path": "docs/review/remediation/README.md",
+      "sha256": "57be44d8996f1d4102f131e41825690335376d5112780b62fafd33f00df1255e"
+    },
+    {
+      "path": "docs/review/remediation/implementation/register-consistency-20260920.md",
+      "sha256": "aca98d130b8722dbc70757c52053a8c60768ed0caf3cf5d6aee1cc188d619167"
+    },
+    {
+      "path": "docs/review/remediation/register.json",
+      "sha256": "906e861f7ed13c4052e10f637e325848df16491ff1d0889b45b513cf5e9e4adf"
+    },
+    {
+      "path": "tests/verification/deployment/eslint-infrastructure-boundaries.test.mjs",
+      "sha256": "54bb3a32574fb06d835bd3ac04614c6cc18d2286949003dd5ea3b97f27dcf714"
+    }
+  ],
+  "verification": "source accepted; actual reruns pending"
+}

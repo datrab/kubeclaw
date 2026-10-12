@@ -1,0 +1,101 @@
+{
+  "status": "prepared-not-booted",
+  "files": [
+    {
+      "path": "node_modules/.cache/buster-legacy-seal-vm-20260921/guest-root.ext4",
+      "bytes": 268435456,
+      "mode": 420,
+      "sha256": "a37aa16ea13ce0c6b780199051ec75feffbdf4f39914852ded530a5431b0d02b"
+    },
+    {
+      "path": "node_modules/.cache/buster-legacy-seal-vm-20260921/second.ext4",
+      "bytes": 16777216,
+      "mode": 420,
+      "sha256": "160a27a486b77f43ab09209d34a3fc0073f73e0556a311fae895f87ab51aed72"
+    },
+    {
+      "path": "node_modules/.cache/buster-legacy-seal-vm-20260921/vmlinuz-virt",
+      "bytes": 12608512,
+      "mode": 420,
+      "sha256": "40f620bc8c93d952e57dd8dfc0f94fca1759d192a4fc4a260705d50ca378559c"
+    },
+    {
+      "path": "node_modules/.cache/buster-legacy-seal-vm-20260921/initrd.cpio.gz",
+      "bytes": 1899633,
+      "mode": 420,
+      "sha256": "fa72576e5ded5df7bf8cd8f6e8d285a430e287da930cb814a011b3c8e240eee2"
+    },
+    {
+      "path": "node_modules/.cache/buster-legacy-seal-vm-20260921/repo-snapshot-manifest.json",
+      "bytes": 1178,
+      "mode": 420,
+      "sha256": "bcdec57eaa21909e229058d39886c4d3eb38e69bf9e5d4030c869c48edbd6923"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/guest-init.sh",
+      "bytes": 971,
+      "mode": 420,
+      "sha256": "d554e25956ac6a28c96d2815704fb68d44131789bd420c33453943ca1544aae0"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/prepare-images.py",
+      "bytes": 5853,
+      "mode": 420,
+      "sha256": "ac254ab7ba57d2697d27dab236203ca7b64f77bdd0955dfb6afb1de85b5d351f"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/prepare-runtime.py",
+      "bytes": 5584,
+      "mode": 420,
+      "sha256": "e923f25ff4df6efe544744f9137e93a4512876e64d5bb8323b38be14c555dcbf"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/runtime-binding.py",
+      "bytes": 1560,
+      "mode": 420,
+      "sha256": "4f08c2420b9a1d8383c6904bdea0659c001b1e20e719c52f44546843c1927267"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/tool-runtime-identities.json",
+      "bytes": 895864,
+      "mode": 420,
+      "sha256": "1c316c8df68bcf86e4758d98cb3a0d76ddffcb0b65edc6ec02d1c99c3733e3ac"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/source-export-identities.json",
+      "bytes": 1070,
+      "mode": 420,
+      "sha256": "51b5148f701a886549d6bd0c331428d19aeb49e55ac3cae2d0362eeb79715ae1"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/guest-payload-identities.json",
+      "bytes": 283543,
+      "mode": 420,
+      "sha256": "40902813e18dc0f6c881e86adfc88491095acd26a4c04c4651593ff072e658d3"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/image-build.json",
+      "bytes": 1807,
+      "mode": 420,
+      "sha256": "99127290267a58cd388381be36c845c3855d043cf986afa683d49048f0dc5949"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/prepared-artifacts.json",
+      "bytes": 671,
+      "mode": 420,
+      "sha256": "b798c2612d0e15dc3befadde39393123a8ddf713dab01b79d254e43e9b90ced0"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/launch.py",
+      "bytes": 10916,
+      "mode": 420,
+      "sha256": "4c2500d666ee1922a3ce469db9ddeccbf6f2b30799d8e2e1f55a81e25725daf0"
+    },
+    {
+      "path": "docs/review/evidence/buster-legacy-seal-vm-20260921/launch-command.json",
+      "bytes": 2037,
+      "mode": 420,
+      "sha256": "79332f28d5eda7f6e554e382d2fb72ecb92722d317eb83be5e8ae9b1c939b0e1"
+    }
+  ]
+}

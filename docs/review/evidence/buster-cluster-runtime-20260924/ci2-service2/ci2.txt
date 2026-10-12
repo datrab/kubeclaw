@@ -1,0 +1,28 @@
+✔ captured file kubernetes.fixture namespace governs actual commands after mutation (1439.322122ms)
+✔ captured file kubernetes.fixture registry governs actual commands after mutation (1174.552883ms)
+✔ captured file kubernetes.fixture secret governs actual commands after mutation (1664.016881ms)
+✔ captured file kubernetes.fixture storage governs actual commands after mutation (1326.652595ms)
+✔ captured file kubernetes.fixture manifest governs actual commands after mutation (1187.602513ms)
+✔ captured file kubernetes.exposure namespace governs actual commands after mutation (615.33187ms)
+✔ captured file kubernetes.exposure host governs actual commands after mutation (802.090458ms)
+✔ captured caller kubernetes.fixture namespace governs actual commands after mutation (740.000949ms)
+✔ captured caller kubernetes.fixture registry governs actual commands after mutation (725.388232ms)
+✔ captured caller kubernetes.fixture secret governs actual commands after mutation (721.91691ms)
+✔ captured caller kubernetes.fixture storage governs actual commands after mutation (905.536766ms)
+✔ captured caller kubernetes.fixture manifest governs actual commands after mutation (718.024127ms)
+✔ captured caller kubernetes.exposure namespace governs actual commands after mutation (355.424979ms)
+✔ captured caller kubernetes.exposure host governs actual commands after mutation (600.960948ms)
+✔ production decoder/service/IPC first kubernetes.fixture, allowed and grant/route denied (1966.246159ms)
+✔ production decoder/service/IPC first kubernetes.exposure, allowed and grant/route denied (1300.450831ms)
+✔ production decoder/service/IPC first kubernetes.runtime-security, allowed and grant/route denied (1893.874305ms)
+✔ production decoder/service/IPC second kubernetes.fixture, allowed and grant/route denied (1505.490666ms)
+✔ production decoder/service/IPC second kubernetes.exposure, allowed and grant/route denied (1328.457654ms)
+✔ production decoder/service/IPC second kubernetes.runtime-security, allowed and grant/route denied (1707.167863ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27467.448721

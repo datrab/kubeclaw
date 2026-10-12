@@ -1,0 +1,2 @@
+gitops-release.test.mjs: all 6 original cases and 55 original assertion ASTs retained in order.
+release-images.test.mjs: all 2 original cases and 9 original assertion ASTs retained in order.

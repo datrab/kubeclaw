@@ -1,0 +1,170 @@
+# Registerkonsistenz: Implementierung und Prüfumfang
+
+## Pflichtfälle und zeitliche Einordnung
+
+Diese Matrix wurde nach dem ersten Generatorentwurf, vor dessen weiterer
+Implementierung und vor den Regressionstests festgehalten. Sie ist kein
+rückwirkender Nachweis einer vorab eingefrorenen Matrix für den ersten Entwurf.
+
+| Kriterium | Pflichtfälle | Nachweis |
+|---|---|---|
+| G1 | Alle 154 historischen und fünf zusätzlichen IDs erhalten; Originaltexte, fachliche Status und Implementierungsbelege unverändert; neue Integrationsbefunde separat | Identitätsinventar, Vergleich mit Git-Ausgangsstand, Generator-Idempotenz |
+| G2 | Je ID gleicher Status; Status-/Familiensummen; alle drei aktuellen Übersichten generiert; historische Checkpoints unverändert | echter Generator/Checker gegen Repository und isolierte Kopien |
+| G3 | Manipulierter Markdownstatus, fehlende historische ID, doppelte ID, fehlende Integrations-ID, falsche JSON-/Markdownsumme, fehlender Original-/Implementierungsbeleg; Generator darf keinen Status hochstufen | jede Manipulation einzeln muss scheitern; validierte Generierung und Zweitlauf müssen bestehen |
+| G-DOC | Autorenquelle, Statussemantik, Update-/Checkbefehl, Grenzen und alle betroffenen Übersichten dokumentiert | dieses Verfahren, generiertes Register, Fortschritt und Übergabe |
+
+## Einzelne Pflichtfälle und Belegzuordnung (Review R2)
+
+Diese Aufschlüsselung ist nachträglich entstanden. Sie schließt die fehlende
+Soll-/Ist-Zuordnung, nicht den oben genannten zeitlichen A1-Verstoß. Alle Fälle
+verwenden das vollständige aktuelle Register und feste Identitätsinventar als
+Vorzustand. `validateRegister` ist der echte Validator; `synchronize` ist derselbe
+Produktionspfad wie die CLI. Dateimutationen erfolgen in isolierten Kopien mit
+den tatsächlichen Gitobjekten und Belegdateien. Kein Resolver wird gemockt.
+
+| Fall-ID | Änderung / Eingabe | Pfad und erwartetes Ergebnis | Exakter Testname im Rohlog |
+|---|---|---|---|
+| G-01 | Unveränderte 154 historischen und 5 Integrationsbefunde | Validator und Check bestehen; aktuelle Darstellungen bytegleich | `all historical and integration identities and real evidence resolve; actual generated files match` |
+| G-02 | Letzten historischen Befund entfernen | Validator verwirft fehlende ID | `missing historical ID` |
+| G-03 | Erste ID durch FAKE ersetzen, Anzahl gleich | Validator verwirft fremde/fehlende ID | `substituted historical ID with unchanged total` |
+| G-04 | Zweite ID durch erste ersetzen | Validator verwirft Doppelung | `duplicate ID` |
+| G-05 | Letzten Integrationsbefund entfernen | Validator verwirft fehlende Integrations-ID | `missing integration ID` |
+| G-06 | Verifiziert-Zähler um eins erhöhen | Validator verwirft falsche Statussumme | `wrong status sum` |
+| G-07 | Pipeline-Familienzahl um eins erhöhen | Validator verwirft falsche Familiensumme | `wrong family sum` |
+| G-08 | Status durch done ersetzen | Validator verwirft unbekannten Status / dessen falsche Summe | `unknown status` |
+| G-09 | Originalberichtreferenz entfernen | Validator verwirft fehlenden Originalbeleg | `missing original evidence` |
+| G-10 | Implementierungsbelegliste leeren | Validator verwirft unbelegten nichtoffenen Befund | `missing implementation evidence` |
+| G-11 | Implementierungsbeleg auf fehlende lokale Datei setzen | Echter Dateizugriff scheitert | `missing evidence file` |
+| G-12 | Belegobjekt ohne report setzen | Validator verwirft fehlenden Belegverweis | `missing evidence object report` |
+| G-13 | Implementierungsbeleg mit Null-SHA setzen | Echtes git show scheitert | `unresolvable commit evidence` |
+| G-14 | Integrationsreport entfernen | Validator verwirft fehlenden Belegverweis | `missing integration evidence` |
+| G-15 | Einen Markdownstatus ändern | Check scheitert, repariert nichts | `status drift` |
+| G-16 | Eine Markdown-ID ersetzen | Check scheitert, repariert nichts | `missing Markdown ID` |
+| G-17 | Einen Markdown-Beleglink entfernen | Check scheitert, repariert nichts | `missing Markdown evidence` |
+| G-18 | Verifiziert-Zähler im Register-Markdown um eins erhöhen | Check scheitert, repariert nichts | `wrong register sum` |
+| G-19 | Aktuellen Verifiziert-Zähler in Progress um eins erhöhen | Check scheitert, repariert nichts | `wrong progress sum` |
+| G-20 | Aktuellen Verifiziert-Zähler in Handoff um eins erhöhen | Check scheitert, repariert nichts | `wrong handoff sum` |
+| G-21 | JSON-Zähler auf null, danach mehrfach generieren | Nur Zähler/Darstellungen korrigiert; alle Findings, Historien und Zweitlauf byte-/strukturgleich | `generation repairs only counters/views, preserves every finding and historical checkpoint, and is idempotent` |
+| G-22 | Historischen Befund vor Generierung entfernen | Generation scheitert ohne Markdownänderung | `malformed source prevents generation without touching generated files` |
+| G-23 | Offenem Befund vorhandenen Implementierungsbeleg geben | Renderfunktion lässt Status offen, zeigt Beleg an | `all individual source statuses are rendered, not inferred from available evidence` |
+
+G-R1-02 bis G-R1-04 unten ergänzen drei eigenständige Fälle; G-R1-01 entspricht
+G-01. Damit umfasst der aktuelle Lauf 26 Tests. Der Rohlog nennt für jeden Test
+Ergebnis und Dauer. G-01 misst keine fachliche Fehlerbehebung; G-21/G-23 beweisen
+insbesondere keine Berechtigung zu einer zukünftigen Statushochsetzung.
+
+## Pflegeverfahren
+
+### Ergänzende Pflichtfälle vor Korrektur von Reviewbefund R1
+
+Diese Erweiterung wird vor der R1-Codekorrektur festgehalten. Sie macht den
+ursprünglichen Entwurf nicht rückwirkend A1-konform. Gemeinsamer Vorzustand ist
+das vollständige aktuelle Register mit unveränderten IDs und Status. Ausgeführt
+wird jeweils der echte `validateRegister`-Pfad, einschließlich lokaler Gitobjekte.
+
+| Fall-ID | Eingabe | Erwartung | Belegzuordnung |
+|---|---|---|---|
+| G-R1-01 | Alle vorhandenen Originalbericht-URLs | Jeder Commit und Pfad liefert nichtleeren Inhalt; vollständiges Register besteht | Positivtest `all historical and integration identities and real evidence resolve; actual generated files match` |
+| G-R1-02 | `source_review` mit 40 Nullzeichen als SHA und `missing.md` | Gitauflösung schlägt fehl, Validierung weist Register ab | Regression `unresolvable original commit` |
+| G-R1-03 | `source_review` mit existierendem SHA, aber fehlendem Pfad | Gitauflösung schlägt fehl, Validierung weist Register ab | Regression `unresolvable original path` |
+| G-R1-04 | `--write` auf Register mit ungültigem Originalbeleg | Fehler vor sämtlichen Schreibvorgängen; alle vier Registerdateien bleiben bytegleich | Regression `unresolvable original prevents generation without touching any register files` |
+
+Die Regressionen werden zunächst gegen den fehlerhaften Stand ausgeführt und
+müssen genau diese Lücke erkennen. Anschließend folgt derselbe vollständige Lauf
+gegen die Korrektur. Fehl- und Erfolgslauf werden separat aufbewahrt.
+
+`docs/review/remediation/register.json` ist die Autorenquelle für Status,
+Einzelentscheidungen, Originalbelege, Implementierungsnachweise und Live-Grenzen.
+Die historischen Familienzahlen bleiben fest. `progress_counts`, das gesamte
+`register.md` und die markierten aktuellen Blöcke in `progress.md` und `handoff.md`
+werden daraus erzeugt:
+
+```sh
+node scripts/review/remediation-register.mjs --write
+node scripts/review/remediation-register.mjs --check
+node --test scripts/tests/remediation-register.test.mjs
+```
+
+Der Checkmodus ist Standard und verändert keine Datei. Schreiben validiert
+zuerst alle Einträge und erzeugt anschließend ausschließlich Darstellungen und
+Statuszähler; kein Findingstatus wird hergeleitet oder verändert. Historische
+Checkpoints außerhalb der Marker bleiben unangetastet. Neue Integrations-IDs
+werden ausdrücklich in JSON und im festen Identitätsinventar unter
+`scripts/review/remediation-identities.json` aufgenommen. Historische IDs dürfen
+nicht entfernt oder umbenannt werden. Das Inventar enthält keine zweite
+Statusquelle.
+
+`offen` bedeutet unbehandelt, `in Bearbeitung` laufende Umsetzung,
+`implementiert` teilweise beziehungsweise lokal unvollständig und `verifiziert`
+eine lokale Abschlussentscheidung nach D12. Live-Gates bleiben separat.
+Bei Statusänderungen müssen Entscheidung, betroffener Code und tatsächliche
+Prüfbelege je Finding fachlich geprüft werden. Ein gefundener Belegpfad beweist
+keine Fehlerbehebung. Der Konsistenzchecker prüft Struktur und Referenzauflösung;
+er bewertet weder Rohlogs noch historische Testergebnisse inhaltlich und ersetzt
+keine unabhängige Code-/Testprüfung. Er behauptet insbesondere keine heutige
+Neuverifikation der 141 bestehenden lokalen Abschlüsse.
+
+## Abgleich der vier alten Markdownabweichungen
+
+Das JSON bleibt maßgeblich; kein fachlicher Status wurde angehoben:
+
+| ID | Bisheriges Markdown | Unverändertes JSON | Vorhandene Entscheidung |
+|---|---|---|---|
+| PCR-PRISM-WORKER-002 | implementiert | verifiziert | [Prism-Abschluss](pr6-prism-native-local-closure.md) |
+| IFR-05-001 | offen | verifiziert | [GitOps-Abschluss](pr6-gitops-closure.md) |
+| IFR-11-001 | in Bearbeitung | verifiziert | [Redis-Abschluss](pr6-redis-migration-closure.md) |
+| IFR-26-001 | offen | in Bearbeitung | [Backup-Checkpoint](pr6-prism-backup-groups.md) |
+
+Der Abgleich erfolgte gegen `HEAD:docs/review/remediation/register.md` und
+unverändertes `register.json`. Der historische Prüfstand vom 2026-09-20 war 141/154 lokal verifiziert,
+13 unvollständig (2 implementiert, 3 in Bearbeitung, 8 offen); zusätzlich fünf
+Integrationsbefunde. Der Generator macht aus diesen bereits vorhandenen
+Einzelentscheidungen eine konsistente Darstellung, keine neue Freigabe.
+
+## Lokale Prüfung
+
+Nach Review R1: **26/26 bestanden, keine Skips**. Der vorher ausgeführte
+[Fehllauf](../../evidence/register-consistency-20260920/r1-before.txt) enthält
+23 bestandene und genau drei fehlgeschlagene neue Regressionen. Der
+[Korrekturlauf](../../evidence/register-consistency-20260920/r1-after.txt) enthält
+alle 26 bestandenen Fälle. Originalberichte laufen jetzt durch denselben
+Gitobjektresolver wie Implementierungsbelege; identische commitfeste Referenzen
+werden nur innerhalb eines Validatoraufrufs zwischengespeichert. Ein ungültiger
+Originalbericht verhindert die Generierung vor jedem Schreibvorgang.
+Die unabhängige Wiederholungsprüfung ist im verlinkten Reviewbericht belegt.
+
+Der Reviewer hat die R1-Korrektur inzwischen mit 26/26 und der alten Variante mit
+genau drei Fehlern bestätigt (siehe unabhängigen Bericht). Danach beanstandete
+der Repository-Linter die Komplexität der Validatorfunktion. Referenzauflösung
+und historische Pflichtfelder wurden in zwei kleine Funktionen extrahiert;
+Prüfregeln bleiben erhalten. Der [abschließende Lauf](../../evidence/register-consistency-20260920/r1-final-extracted.txt)
+besteht erneut mit 26/26; ESLint mit der Repositorykonfiguration besteht.
+Der [abschließende unabhängige Review](independent-slices-review-20260920.md)
+bindet inzwischen auch diesen Refactor an seine Bytes und bestätigt 26/26.
+
+`node --test scripts/tests/remediation-register.test.mjs`: **23/23 bestanden,
+keine Skips**. Die Negativkontrollen bearbeiten jeweils echte Eingabedaten bzw.
+Dateien; der normale Checker muss daran scheitern. Der erste Lauf hatte sieben
+Fehler, weil im temporären Testrepo der vorhandene historische `resume/`-
+Belegordner fehlte. Die Fixture wurde vervollständigt; Prüflogik und erwartete
+Fehler blieben unverändert. Positivtest, anschließend jede Mutation, und
+unveränderte Findings/Historien nach echter Generierung sind getrennt geprüft.
+
+`node scripts/review/remediation-register.mjs --check` bestanden.
+Rohausgaben: [Testlauf](../../evidence/register-consistency-20260920/tests.txt)
+und [Konsistenzcheck](../../evidence/register-consistency-20260920/check.txt).
+Commitfeste externe GitHub-Beleglinks werden ohne Netz über `git show SHA:Pfad`
+aufgelöst; ein Checkout braucht daher die referenzierten Gitobjekte. Ein flacher
+Checkout mit fehlenden Objekten scheitert sichtbar. Lokale Nachweise dürfen
+nichtleer befüllte Dateien oder historische Rohbelegverzeichnisse referenzieren.
+Das prüft Auflösbarkeit, keine Testsemantik.
+
+## Dokumentationsabschluss und Grenzen
+
+Geändert sind dieses Verfahren und die drei Register-/Fortschritts-/Übergabe-
+Darstellungen. Acceptance und Assessment bleiben unverändert. Historische
+Zähler bleiben ausdrücklich als historische Checkpoints erhalten.
+Keine Produktionsfunktion, kein Deployment und keine Live-Abnahme sind Teil
+von REGISTER. Die unabhängige technische Teilprüfung ist abgeschlossen; der
+zeitliche A1-Verstoß des ersten Entwurfs bleibt dokumentiert und wird durch
+diese Prüfung nicht rückwirkend aufgehoben.

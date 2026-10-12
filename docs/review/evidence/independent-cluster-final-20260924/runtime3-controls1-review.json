@@ -1,0 +1,976 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "executionOwner": "root; this is independent evidence review, not independently launched runtime",
+  "positiveDecision": "Fast5/tool-probe3/runtime3 accepted as bounded positive evidence at cumulative-prism-correction stand. CI2 proof gaps remain open.",
+  "runs": {
+    "fast5": {
+      "manifestFiles": 67,
+      "bindingErrors": [],
+      "results": [
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/typescript/bin/tsc",
+            "--noEmit",
+            "-p",
+            "skills/buster/engine/tsconfig.json"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "types-1",
+          "seconds": 6.251048955949955
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/typescript/bin/tsc",
+            "--noEmit",
+            "-p",
+            "skills/common/plugin-runtime/tsconfig.json"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "types-2",
+          "seconds": 6.202557438984513
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/typescript/bin/tsc",
+            "--noEmit",
+            "-p",
+            "skills/nova/tsconfig.json"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "types-3",
+          "seconds": 3.841444260906428
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/typescript/bin/tsc",
+            "--noEmit",
+            "-p",
+            "scripts/tsconfig.json"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "types-4",
+          "seconds": 6.904700075043365
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/typescript/bin/tsc",
+            "--noEmit",
+            "-p",
+            "tests/verification/contracts/tsconfig.buster-cluster-policy.json"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "types-5",
+          "seconds": 6.294552962994203
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "node_modules/eslint/bin/eslint.js",
+            "--config",
+            "charts/kubeclaw/files/config/eslint-config.mjs",
+            "charts/kubeclaw/files/config/eslint-config.mjs",
+            "scripts/buster-cluster-preflight.mjs",
+            "skills/buster/engine/test-gates/kubernetes-fixture-inspection.ts",
+            "skills/buster/engine/test-gates/kubernetes-fixture-manifest-files.ts",
+            "skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+            "skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+            "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+            "skills/buster/engine/test-gates/kubernetes-fixture-settings.ts",
+            "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+            "skills/buster/engine/test-gates/production-capability-sources.ts",
+            "skills/buster/engine/test-gates/production-cluster-options.ts",
+            "skills/buster/engine/test-gates/production-config-values.ts",
+            "skills/buster/engine/test-gates/production.ts",
+            "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+            "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts",
+            "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+            "skills/common/plugin-runtime/foundation/config/swarm.ts",
+            "tests/fixtures/test-gate/buster-cli-profile.mjs",
+            "tests/fixtures/test-gate/cluster-command.mjs",
+            "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+            "tests/verification/contracts/buster-cluster-manifest-consumers.test.mjs",
+            "tests/verification/contracts/buster-cluster-output-consumers.test.mjs",
+            "tests/verification/contracts/buster-cluster-poll-consumers.test.mjs",
+            "tests/verification/contracts/buster-cluster-timing-consumers.test.mjs",
+            "tests/verification/contracts/buster-process-input-callers.test.mjs",
+            "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+            "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts",
+            "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts",
+            "tests/verification/contracts/check-pipeline-kubernetes-fixture-live.mts",
+            "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+            "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts",
+            "tests/verification/contracts/check-pipeline-tailscale-exposure-live.mts",
+            "tests/verification/contracts/check-pipeline-worker-local-config.mts",
+            "tests/verification/deployment/buster-admission-render.test.mjs",
+            "tests/verification/deployment/buster-cluster-invoker-parity.test.mjs",
+            "tests/verification/deployment/buster-process-input-parity.test.mjs",
+            "tests/verification/deployment/buster-readiness-config.test.mjs",
+            "tests/verification/deployment/config-component-packaging.test.mjs",
+            "tests/verification/deployment/prism-swarm-config.test.mjs",
+            "tests/verification/reliability/buster-cluster-entrypoint.test.mjs",
+            "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+            "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+            "tests/verification/reliability/tailscale-generation.test.mjs",
+            "scripts/native-worker-node-policy.d.mts",
+            "scripts/registry-client-config.d.mts",
+            "skills/buster/engine/test-gates/tailscale-operation-policy.ts",
+            "tests/verification/e2e/registry-target.d.mts"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "canonical-lint",
+          "seconds": 6.900762564968318
+        },
+        {
+          "command": [
+            "sh",
+            "-n",
+            "docker/buster-runtime-entrypoint.sh"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "shell-syntax",
+          "seconds": 0.003944920026697218
+        }
+      ],
+      "unexpectedDrift": [],
+      "protection": {
+        "violationRecorded": false
+      },
+      "logs": {
+        "canonical-lint.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "shell-syntax.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "types-1.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "types-2.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "types-3.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "types-4.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "types-5.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        }
+      }
+    },
+    "tool-probe3": {
+      "manifestFiles": 67,
+      "bindingErrors": [],
+      "results": [
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/buster-cluster-runtime-20260924/tool-paths-probe.mjs"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "tool-probe",
+          "seconds": 0.2645871830172837
+        }
+      ],
+      "unexpectedDrift": [],
+      "protection": {
+        "violationRecorded": false
+      },
+      "logs": {
+        "tool-probe.txt": {
+          "sha256": "a27f48d898a313950d18d2cbe66607fac87c5413d5d78585a59403631afe11ea",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        }
+      }
+    },
+    "runtime3": {
+      "manifestFiles": 67,
+      "bindingErrors": [],
+      "results": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "verify:buster:cluster-policy"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-1",
+          "seconds": 51.56565977097489
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "--test",
+            "--test-concurrency=1",
+            "tests/verification/contracts/buster-process-input-callers.test.mjs",
+            "tests/verification/contracts/buster-report-policy-parity.test.mjs",
+            "tests/verification/deployment/buster-admission-render.test.mjs",
+            "tests/verification/deployment/buster-process-input-parity.test.mjs",
+            "tests/verification/deployment/buster-readiness-config.test.mjs",
+            "tests/verification/deployment/config-component-packaging.test.mjs",
+            "tests/verification/deployment/prism-swarm-config.test.mjs",
+            "tests/verification/reliability/demo-exposure-handoff.test.mjs",
+            "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+            "tests/verification/reliability/tailscale-generation.test.mjs"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-2",
+          "seconds": 65.39899173204321
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "tests/verification/contracts/check-pipeline-kubernetes-fixture-cutover.mts"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-3",
+          "seconds": 9.302203990984708
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "tests/verification/contracts/check-pipeline-kubernetes-fixture-implementation.mts"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-4",
+          "seconds": 2.017686040024273
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "tests/verification/contracts/check-pipeline-remote-runtime-config.mts"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-5",
+          "seconds": 5.273476646048948
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "tests/verification/contracts/check-pipeline-tailscale-exposure-implementation.mts"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-6",
+          "seconds": 1.1659996419912204
+        },
+        {
+          "command": [
+            "/usr/local/bin/node",
+            "tests/verification/contracts/check-pipeline-worker-local-config.mts"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-7",
+          "seconds": 5.274708281038329
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "verify:buster:kubernetes-cleanup"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-8",
+          "seconds": 29.98158283904195
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "verify:buster:scheduler-drain"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-9",
+          "seconds": 116.65927809698042
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "verify:buster:execution-config"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-10",
+          "seconds": 75.05313541297801
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "verify:config:components"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-11",
+          "seconds": 95.75862293806858
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "verify:buster:readiness-config"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-12",
+          "seconds": 18.862243636045605
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "verify:test-gate:tailscale-exposure-cutover"
+          ],
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "name": "runtime-13",
+          "seconds": 29.623619143967517
+        }
+      ],
+      "unexpectedDrift": [],
+      "protection": {
+        "violationRecorded": false
+      },
+      "logs": {
+        "runtime-1.txt": {
+          "sha256": "c128f672928b8587a29e1c9ab90072d9200a7f29137c225069050324f5314ee0",
+          "counts": {
+            "tests": [
+              44
+            ],
+            "pass": [
+              44
+            ],
+            "fail": [
+              0
+            ],
+            "cancelled": [
+              0
+            ],
+            "skipped": [
+              0
+            ],
+            "todo": [
+              0
+            ]
+          }
+        },
+        "runtime-10.txt": {
+          "sha256": "e2ea41035194cf7e35a114f27fe3b73c172ef64199260c3901487adca0c0905a",
+          "counts": {
+            "tests": [
+              193
+            ],
+            "pass": [
+              193
+            ],
+            "fail": [
+              0
+            ],
+            "cancelled": [
+              0
+            ],
+            "skipped": [
+              0
+            ],
+            "todo": [
+              0
+            ]
+          }
+        },
+        "runtime-11.txt": {
+          "sha256": "a03bce84a3bcc1f88043d7536a2a622d5df3ba4d5f27bfede5ba4289165235ac",
+          "counts": {
+            "tests": [
+              649
+            ],
+            "pass": [
+              649
+            ],
+            "fail": [
+              0
+            ],
+            "cancelled": [
+              0
+            ],
+            "skipped": [
+              0
+            ],
+            "todo": [
+              0
+            ]
+          }
+        },
+        "runtime-12.txt": {
+          "sha256": "398432dd9d8100b96a63bf93a61a6731fe8381cb8861023d362f7ca6b0738e6b",
+          "counts": {
+            "tests": [
+              16
+            ],
+            "pass": [
+              16
+            ],
+            "fail": [
+              0
+            ],
+            "cancelled": [
+              0
+            ],
+            "skipped": [
+              0
+            ],
+            "todo": [
+              0
+            ]
+          }
+        },
+        "runtime-13.txt": {
+          "sha256": "96c25296dfeda75b41d46d3951df84c570607370be1e3f6de62d429e2a0f7886",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "runtime-2.txt": {
+          "sha256": "f369689ba94a9970e9810f47455a415aa90ee7c9012ecf372006ffb119153d77",
+          "counts": {
+            "tests": [
+              376
+            ],
+            "pass": [
+              376
+            ],
+            "fail": [
+              0
+            ],
+            "cancelled": [
+              0
+            ],
+            "skipped": [
+              0
+            ],
+            "todo": [
+              0
+            ]
+          }
+        },
+        "runtime-3.txt": {
+          "sha256": "74f627f91f9a16277b8bb030372d6f70ced884a2741c0d83b8c7881136194ab0",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "runtime-4.txt": {
+          "sha256": "15db3588c998f7bd394b6f27dcb507e0588bbfe2787282d1e0894983259250f9",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "runtime-5.txt": {
+          "sha256": "7dc7517ae2ea1a1ba9577264af74303fbbbd2de31974e9a14f75b71d663bf1a1",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "runtime-6.txt": {
+          "sha256": "500a71126867a3c9bf29bc97e296390a68949786471c447bc119d6b889c8fb8e",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "runtime-7.txt": {
+          "sha256": "6655781fbc343aee136d4d931cdd2c43db9a36c6007c272a5da174f2eb93b46f",
+          "counts": {
+            "tests": [],
+            "pass": [],
+            "fail": [],
+            "cancelled": [],
+            "skipped": [],
+            "todo": []
+          }
+        },
+        "runtime-8.txt": {
+          "sha256": "0825c64a70fb41f82966eee462354f5fa9f26d6eebfad2e3a845940818c06bfe",
+          "counts": {
+            "tests": [
+              53
+            ],
+            "pass": [
+              53
+            ],
+            "fail": [
+              0
+            ],
+            "cancelled": [
+              0
+            ],
+            "skipped": [
+              0
+            ],
+            "todo": [
+              0
+            ]
+          }
+        },
+        "runtime-9.txt": {
+          "sha256": "2f4f92afb3a390d600456751469ad397adf0846e041c48619457b3c456b11ca5",
+          "counts": {
+            "tests": [
+              6
+            ],
+            "pass": [
+              6
+            ],
+            "fail": [
+              0
+            ],
+            "cancelled": [
+              0
+            ],
+            "skipped": [
+              0
+            ],
+            "todo": [
+              0
+            ]
+          }
+        }
+      }
+    }
+  },
+  "controls": [
+    {
+      "name": "kube-output",
+      "logSha256": "aa70748eba4911cf848b37a8bf33cc07af4cb99ccd6a26689532b89814c4cab3",
+      "hookApplications": [
+        {
+          "mutation": "kube-output",
+          "pid": 35942,
+          "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+          "beforeSha256": "d940cbaed6bf4f86cd1b03d3654b2483464d9e187caf04383a39398f283496fc",
+          "afterSha256": "f1e032ab7e71aff84f97cc3391630af6c2ac2195f94020a7817bfea6076b3152",
+          "replacements": [
+            {
+              "from": "this.#settings.maximumManifestBytes * this.#settings.commandOutputManifestMultiplier",
+              "to": "this.#settings.maximumManifestBytes * 2",
+              "count": 1
+            }
+          ],
+          "replacedAnchors": 1
+        }
+      ],
+      "decision": "intended semantic rejection observed",
+      "reason": "High allowed profile fails OUTPUT_LIMIT after fixed multiplier2; other profiles pass.",
+      "skipCancelTodo": {
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "tail-output",
+      "logSha256": "219ee3c0c934784754dd2f13e3240092eb13c89a05042033a493a0dfd51b9cca",
+      "hookApplications": [
+        {
+          "mutation": "tail-output",
+          "pid": 35988,
+          "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+          "beforeSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+          "afterSha256": "4ac1dd32c1813bffad30b8810a04c1df09e399f0751e9004b4a82eb6304cf334",
+          "replacements": [
+            {
+              "from": "maxBuffer: this.#maximumCommandOutputBytes",
+              "to": "maxBuffer: 1048576",
+              "count": 1
+            }
+          ],
+          "replacedAnchors": 1
+        }
+      ],
+      "decision": "intended semantic rejection observed",
+      "reason": "Low profile misses expected OUTPUT_LIMIT rejection after fixed1048576; others pass.",
+      "skipCancelTodo": {
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "kube-short",
+      "logSha256": "ca5327f1bc0d0fd97d7a5d3a97c630ab27bff0471979d4674ca650d0d88f44b5",
+      "hookApplications": [
+        {
+          "mutation": "kube-short",
+          "pid": 36053,
+          "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-preparation.ts",
+          "beforeSha256": "1f41112db44a5135ff7c8d7a575e87699a854278a9e792d248ee91673d06fbd0",
+          "afterSha256": "8af356f48b078a8a3da52f59dc515c7c3970d006d2ce171e753410fdfe37de1d",
+          "replacements": [
+            {
+              "from": "this.#settings.shortCommandTimeoutMs",
+              "to": "15000",
+              "count": 3
+            }
+          ],
+          "replacedAnchors": 3
+        }
+      ],
+      "decision": "intended semantic rejection observed",
+      "reason": "Low600ms profile gets RBAC_DENIED instead of TIMEOUT after fixed15000, proving child advanced beyond intended timeout; high/control route pass.",
+      "skipCancelTodo": {
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "tail-short",
+      "logSha256": "bd3562c7ed2859963615f092ce82d4f0d033d5c4c78c712986796833c7d4a1ef",
+      "hookApplications": [
+        {
+          "mutation": "tail-short",
+          "pid": 36120,
+          "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+          "beforeSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+          "afterSha256": "4a1333f4c8a5ba25e6858cdd130039841f52e7da301eff4cd0a6df0fbaad9749",
+          "replacements": [
+            {
+              "from": "signal, this.#shortCommandTimeoutMs)",
+              "to": "signal, 15000)",
+              "count": 3
+            },
+            {
+              "from": "null,signal,this.#shortCommandTimeoutMs)",
+              "to": "null,signal,15000)",
+              "count": 1
+            },
+            {
+              "from": "Math.min(this.#shortCommandTimeoutMs, this.#maximumExecutionMs)",
+              "to": "Math.min(15000, this.#maximumExecutionMs)",
+              "count": 1
+            }
+          ],
+          "replacedAnchors": 5
+        }
+      ],
+      "decision": "intended semantic rejection observed",
+      "reason": "Low600ms profile gets RBAC_DENIED instead of TIMEOUT after fixed15000; high/control route pass.",
+      "skipCancelTodo": {
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "diagnostic",
+      "logSha256": "1b82c72ca26c3958ed32a8805b11d106bbc82fb302d9a79e99689241df5e70e0",
+      "hookApplications": [
+        {
+          "mutation": "diagnostic",
+          "pid": 37355,
+          "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+          "beforeSha256": "d940cbaed6bf4f86cd1b03d3654b2483464d9e187caf04383a39398f283496fc",
+          "afterSha256": "9956017faea1cf04bc0c1b0c1bed6b3f02957d7884bf260b3c47464a62690df2",
+          "replacements": [
+            {
+              "from": "slice(0, maximumCodeUnits)",
+              "to": "slice(0, 4096)",
+              "count": 2
+            }
+          ],
+          "replacedAnchors": 2
+        }
+      ],
+      "decision": "intended semantic rejection observed",
+      "reason": "Both exact16/80 diagnostic assertions observe200 code units after fixed4096.",
+      "skipCancelTodo": {
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "kube-poll",
+      "logSha256": "d7c9b3d938542ed688445a933cdf9c6bdc594e52c6e4abb6c28c3b4f53e252b8",
+      "hookApplications": [
+        {
+          "mutation": "kube-poll",
+          "pid": 37888,
+          "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-fixture-readiness.ts",
+          "beforeSha256": "b93b8ffe1b0af18614e20bb16899afe4378be86e748f667fc3b3ebdd77853fd9",
+          "afterSha256": "ca291df5a117fa33c5f1d7b2b867b6c21c1977454c220b362e422a929cc401c1",
+          "replacements": [
+            {
+              "from": "this.#settings.pollIntervalMs",
+              "to": "1000",
+              "count": 3
+            }
+          ],
+          "replacedAnchors": 3
+        }
+      ],
+      "decision": "intended semantic rejection observed",
+      "reason": "Both50/200 profiles now hit operation LEASE_TIMEOUT after fixed1000 polling; intended successful readiness assertion fails. Not harness timeout.",
+      "skipCancelTodo": {
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "tail-poll",
+      "logSha256": "1b7d12d97e568740f69b349faf21498231033852585831fd1344a24b6b5d7f68",
+      "hookApplications": [
+        {
+          "mutation": "tail-poll",
+          "pid": 38137,
+          "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+          "beforeSha256": "6a15a085499aac578a2a131cc215200396b702eaba68f75281bd46c4cf7a33cc",
+          "afterSha256": "bdb62361fe734ce24a2337f108c204ec3c04b827cee3ae2f80347b64858c7e7f",
+          "replacements": [
+            {
+              "from": "Math.min(this.#pollIntervalMs,",
+              "to": "Math.min(1000,",
+              "count": 1
+            }
+          ],
+          "replacedAnchors": 1
+        }
+      ],
+      "decision": "correction required",
+      "reason": "Intended READINESS_TIMEOUT present but rollback fixture additionally throws TypeError reading absent metadata.annotations. Fix boundary and rerun for clean negative evidence.",
+      "skipCancelTodo": {
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "manifest-depth",
+      "logSha256": "7a3b9ba64b77be5487662e7ea85bae32df5819fea0850be5fb6b06ea463d07b3",
+      "hookApplications": [
+        {
+          "mutation": "manifest-depth",
+          "pid": 38172,
+          "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-manifest.ts",
+          "beforeSha256": "a86a248f1bd72e949a6d2cf63811f48fb1974e417954eea0e4a9f5f2a1a9e8df",
+          "afterSha256": "e51c3bbe2b6eea49dd4c5537cf3f5c58b680dd7e21ef4bf9616d141bc1bfcb1f",
+          "replacements": [
+            {
+              "from": "policy.maximumDepth",
+              "to": "64",
+              "count": 2
+            }
+          ],
+          "replacedAnchors": 2
+        }
+      ],
+      "decision": "intended semantic rejection observed",
+      "reason": "Missing expected COMPLEXITY_LIMIT exception on genuine parser input after fixed64.",
+      "skipCancelTodo": {
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    },
+    {
+      "name": "manifest-alias",
+      "logSha256": "bbdb8dc083e2439daeda9078726121187aa6b1dc28d2248c24b43338b4946f04",
+      "hookApplications": [
+        {
+          "mutation": "manifest-alias",
+          "pid": 38188,
+          "url": "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/buster/engine/test-gates/kubernetes-manifest.ts",
+          "beforeSha256": "a86a248f1bd72e949a6d2cf63811f48fb1974e417954eea0e4a9f5f2a1a9e8df",
+          "afterSha256": "925db9c4963ffda41ad42706baf1002027adef81694d1e7d4178bd8926ee708c",
+          "replacements": [
+            {
+              "from": "policy.maximumAliases",
+              "to": "1000",
+              "count": 1
+            }
+          ],
+          "replacedAnchors": 1
+        }
+      ],
+      "decision": "intended semantic rejection observed",
+      "reason": "Missing expected ALIAS_LIMIT exception on genuine YAML aliases after fixed1000.",
+      "skipCancelTodo": {
+        "skipped": [
+          "0"
+        ],
+        "cancelled": [
+          "0"
+        ],
+        "todo": [
+          "0"
+        ]
+      }
+    }
+  ],
+  "controlsFinalBinding": "Not accepted until root confirms terminal handle and final after/drift; individual completed raw logs reviewed here.",
+  "limitations": [
+    "No live/native acceptance.",
+    "No complete CONFIG or original finding closure.",
+    "Parser mutants target real parser primitive; do not prove full factory path.",
+    "Tail-poll requires cleanup of secondary test executor failure."
+  ]
+}

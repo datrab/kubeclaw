@@ -1,0 +1,11 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts"
+    ],
+    "exitCode": 0,
+    "name": "original-report-adapter",
+    "seconds": 2.969988801982254
+  }
+]

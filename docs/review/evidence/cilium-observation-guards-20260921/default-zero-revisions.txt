@@ -1,0 +1,33 @@
+test_cleanup_requires_observed_endpoint_revisions (guard_tests.Guards.test_cleanup_requires_observed_endpoint_revisions) ... 
+  test_cleanup_requires_observed_endpoint_revisions (guard_tests.Guards.test_cleanup_requires_observed_endpoint_revisions) (endpoints=[{'status': {'state': 'ready', 'policy': {'spec': {}, 'realized': {}}}}]) ... FAIL
+
+======================================================================
+FAIL: test_cleanup_requires_observed_endpoint_revisions (guard_tests.Guards.test_cleanup_requires_observed_endpoint_revisions) (endpoints=[{'status': {'state': 'ready', 'policy': {'spec': {}, 'realized': {}}}}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/cilium-observation-guards.test.py", line 127, in test_cleanup_requires_observed_endpoint_revisions
+    self.assertNotEqual(result.returncode, 0, result.stdout)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : Desired policy specs match and current agent endpoints are ready at their desired revisions.
+This does not replace unmanaged-pod checks, negative probes or the pipeline test.
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+Superseded static Kubernetes NetworkPolicy objects removed from namespace kubeclaw.
+Retained: kubeclaw-agents-ingress and legacy kubeclaw-default-deny. Repeat traffic tests now.
+
+
+----------------------------------------------------------------------
+Ran 1 test in 16.444s
+
+FAILED (failures=1)

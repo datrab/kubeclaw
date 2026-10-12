@@ -1,0 +1,6 @@
+{
+  "beforeErrors": 10,
+  "afterErrors": 10,
+  "sameRules": true,
+  "wholeMonolithLintPasses": false
+}

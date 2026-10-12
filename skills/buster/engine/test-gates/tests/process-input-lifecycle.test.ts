@@ -18,7 +18,7 @@ try {
     const dir = path.join(root, String(iteration)); fs.mkdirSync(dir);
     const code = `const fs=require('node:fs'),cp=require('node:child_process');const files=[];for(let i=0;i<3;i++){const f=${JSON.stringify(dir)}+'/'+i+'.json';files.push(f);cp.spawn(process.execPath,['-e',${JSON.stringify(childCode)},f],{stdio:'ignore'}).unref();}const timer=setInterval(()=>{if(files.every(f=>fs.existsSync(f))){clearInterval(timer);}},5);`;
     try {
-      const result = await runProcessInput(process.execPath, ['-e', code], { prefix: 'LIFETIME', timeoutMs: 2_000, maximumOutputBytes: 4096 });
+      const result = await runProcessInput(process.execPath, ['-e', code], { processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, prefix: 'LIFETIME', timeoutMs: 2_000, maximumOutputBytes: 4096 });
       assert.equal(result.code, 0, result.stderr.toString());
       const identities = [0, 1, 2].map((id) => JSON.parse(fs.readFileSync(path.join(dir, `${id}.json`), 'utf8')));
       assert.deepEqual(identities.filter(({ hostPid }) => running(hostPid)), [], `iteration ${iteration}: live descendants at settlement`);
@@ -35,7 +35,7 @@ try {
   const acknowledged = path.join(root, 'term-ack');
   const supervisor = `const fs=require('node:fs'),cp=require('node:child_process');const child=cp.spawn(process.execPath,['-e',${JSON.stringify(childCode)},${JSON.stringify(supervised)}],{detached:true,stdio:'ignore'});process.on('SIGTERM',()=>{child.once('close',()=>{fs.writeFileSync(${JSON.stringify(acknowledged)},'reaped');process.exit(0);});child.kill('SIGKILL');});setInterval(()=>{},1000);`;
   try {
-    await assert.rejects(runProcessInput(process.execPath, ['-e', supervisor], { prefix: 'LIFETIME', timeoutMs: 500, maximumOutputBytes: 4096 }), /LIFETIME_TIMEOUT/);
+    await assert.rejects(runProcessInput(process.execPath, ['-e', supervisor], { processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, prefix: 'LIFETIME', timeoutMs: 500, maximumOutputBytes: 4096 }), /LIFETIME_TIMEOUT/);
     assert.equal(fs.readFileSync(acknowledged, 'utf8'), 'reaped');
     assert.equal(running(JSON.parse(fs.readFileSync(supervised, 'utf8')).hostPid), false);
   } finally {
@@ -47,7 +47,7 @@ try {
   const code = `require('node:child_process').spawn(process.execPath,['-e',${JSON.stringify(childCode)},${JSON.stringify(identity)}],{detached:true,stdio:['ignore','inherit','inherit']}).unref();`;
   const started = Date.now();
   try {
-    await assert.rejects(runProcessInput(process.execPath, ['-e', code], { prefix: 'LIFETIME', timeoutMs: 100, maximumOutputBytes: 4096 }), /LIFETIME_CLEANUP_FAILED/);
+    await assert.rejects(runProcessInput(process.execPath, ['-e', code], { processInputPolicy: { cleanupTimeoutMs: 1500, terminationGraceMs: 250, acknowledgementPollMs: 10 }, prefix: 'LIFETIME', timeoutMs: 100, maximumOutputBytes: 4096 }), /LIFETIME_CLEANUP_FAILED/);
     assert.ok(Date.now() - started < 2_500, 'escaped pipe must not hold the caller indefinitely');
   } finally {
     if (fs.existsSync(identity)) { const { pid } = JSON.parse(fs.readFileSync(identity, 'utf8')); try { process.kill(pid, 'SIGKILL'); } catch { /* Already gone. */ } }

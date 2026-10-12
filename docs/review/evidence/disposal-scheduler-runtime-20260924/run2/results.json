@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint-config.mjs",
+      "tests/fixtures/test-gate/scheduler-drain.mjs"
+    ],
+    "exitCode": 0,
+    "name": "combined-runtime-1",
+    "seconds": 1.6169906820869073
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:buster:scheduler-drain"
+    ],
+    "exitCode": 0,
+    "name": "combined-runtime-2",
+    "seconds": 122.17886856000405
+  }
+]

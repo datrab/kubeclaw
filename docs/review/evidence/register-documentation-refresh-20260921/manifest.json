@@ -1,0 +1,6 @@
+{
+  "path": "docs/review/remediation/README.md",
+  "beforeSha256": "36cd1363120e157da3506ed6e84d4faf9459507940d64a83ec2a33fe3a247eee",
+  "afterSha256": "04f39517913a1eacae39794260a3f8a52c22e04ca01c1d827f2afc6f53f3c6be",
+  "scope": "Correct README contradiction with confirmed D12 and document actual maintained register CLI; no status or count change; private pending review"
+}

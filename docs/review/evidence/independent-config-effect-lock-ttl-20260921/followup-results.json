@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/proot",
+    "-b",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!",
+    "/usr/local/bin/node",
+    "--import",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-effect-lock-ttl-20260921/trace.mjs",
+    "--import",
+    "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/docs/review/evidence/independent-config-effect-lock-ttl-20260921/persisted-oracle.mjs",
+    "--test",
+    "--test-concurrency=1",
+    "tests/verification/reliability/effect-lock-configuration.test.mjs"
+  ],
+  "exitCode": 0,
+  "drift": []
+}

@@ -1,0 +1,20 @@
+--- a/charts/kubeclaw/files/config/eslint.config.mjs
++++ b/charts/kubeclaw/files/config/eslint.config.mjs
+@@ -24,6 +24,8 @@
+ ];
+ 
+ const CONSOLE_BOUNDARIES = [
++  // Provider subprocess entrypoint: loads the pinned provider and frames its console output as IPC.
++  'skills/buster/engine/test-gates/provider-child.mjs',
+   'scripts/**/*.mjs',
+   'skills/common/plugin-runtime/foundation/isolation/child.mjs',
+   'skills/nova/core/cli.ts',
+@@ -64,6 +66,8 @@
+ ];
+ 
+ const DYNAMIC_MODULE_BOUNDARIES = [
++  // Provider subprocess entrypoint: loads the pinned provider and frames its console output as IPC.
++  'skills/buster/engine/test-gates/provider-child.mjs',
+   'skills/nova/pipeline.ts',
+   'skills/common/plugin-runtime/foundation/isolation/child.mjs',
+   'skills/common/plugin-runtime/foundation/isolation/runner.ts',

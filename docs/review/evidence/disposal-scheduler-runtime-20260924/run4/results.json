@@ -1,0 +1,25 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "--config",
+      "charts/kubeclaw/files/config/eslint-config.mjs",
+      "tests/verification/contracts/provider-disposal-recovery.test.mjs",
+      "tests/verification/contracts/provider-disposal-unconfirmed.test.mjs"
+    ],
+    "exitCode": 0,
+    "name": "combined-runtime-1",
+    "seconds": 2.039315234986134
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify:buster:kubernetes-cleanup"
+    ],
+    "exitCode": 0,
+    "name": "combined-runtime-2",
+    "seconds": 36.261646201019175
+  }
+]

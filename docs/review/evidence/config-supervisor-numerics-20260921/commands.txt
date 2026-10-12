@@ -1,0 +1,34 @@
+Final targeted supervisor and original Helm suite:
+node --test skills/prism/tests/swarm-supervisor-config.test.mts tests/verification/deployment/prism-swarm-config.test.mjs
+
+Original affected runtime tests (210 cases at that run, before two later supervisor-only additions):
+node --test skills/prism/tests/swarm-worker-config.test.mts skills/prism/tests/swarm-native-settings.test.mts skills/prism/tests/swarm-resource-policy.test.mts skills/prism/tests/swarm-worker-behavior.test.mts skills/prism/tests/swarm-input-limit.test.mts skills/prism/tests/control-server-config.test.mts skills/prism/tests/swarm-supervisor-config.test.mts
+
+Original release delivery/materialization:
+node --test tests/verification/deployment/release-configuration.test.mjs tests/verification/deployment/code-release.test.mjs tests/verification/deployment/release-images.test.mjs tests/verification/deployment/runtime-inputs.test.mjs tests/verification/deployment/deployment-release.test.mjs
+
+Original Control and separate E2E:
+node --test skills/prism/tests/control*.test.mts
+node --test skills/prism/tests/control.test.mts skills/prism/tests/e2e.test.mts skills/prism/tests/control-server-config.test.mts
+
+Actual GNU flock filesystem persistence (Proot binding does not confer kernel privileges):
+LD_LIBRARY_PATH="$PWD/node_modules/.cache/native-host-tools/root/usr/lib:$PWD/node_modules/.cache/native-host-tools/root/lib" node_modules/.cache/native-host-tools/root/usr/bin/proot -b "$PWD/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!" /usr/local/bin/node --test skills/prism/tests/swarm-supervisor-consumers.test.mts skills/prism/tests/swarm-result-journal.test.mts
+LD_LIBRARY_PATH="$PWD/node_modules/.cache/native-host-tools/root/usr/lib:$PWD/node_modules/.cache/native-host-tools/root/lib" node_modules/.cache/native-host-tools/root/usr/bin/proot -b "$PWD/node_modules/.cache/native-host-tools/root/usr/bin/flock:/usr/bin/flock!" /usr/local/bin/node --test tests/verification/reliability/worker-native-journal.test.mts
+The first recorded combined journal run additionally named nonexistent tests/verification/reliability/native-attempt-journal.test.mjs; Node only ran its eight existing Prism cases. Correct original journal path was then run separately, as above.
+
+Actual NRI build and trust check (nonpassing root-owned-policy prerequisite):
+PATH="$PWD/node_modules/.cache/go-1.26.5/go/bin:$PATH" node --test tests/verification/deployment/prism-native-runtime.test.mjs
+
+Typecheck/lint:
+node node_modules/typescript/bin/tsc --noEmit -p skills/prism/tsconfig.json
+node node_modules/eslint/bin/eslint.js --config charts/kubeclaw/files/config/eslint.config.mjs skills/common/plugin-runtime/foundation/config/swarm.ts skills/prism/config/native-worker.ts skills/prism/tests/swarm-worker-config.test.mts skills/prism/tests/swarm-native-settings.test.mts skills/prism/tests/swarm-supervisor-config.test.mts skills/prism/tests/swarm-supervisor-consumers.test.mts tests/verification/deployment/prism-swarm-config.test.mjs tests/verification/deployment/prism-native-runtime.test.mjs
+node docs/review/evidence/config-supervisor-numerics-20260921/run-mutants.mjs
+
+Documentation:
+node scripts/docs-inventory.mjs
+node scripts/docs-generate.mjs
+node scripts/docs-inventory.mjs --check
+node scripts/docs-generate.mjs --check
+node scripts/docs-check.mjs
+node scripts/docs-check-refs.mjs
+node scripts/docs-publication.mjs check

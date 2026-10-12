@@ -1,0 +1,19 @@
+{
+  "id": "kubeclaw.repository-adapter",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [],
+  "observers": [],
+  "adapters": [
+    {
+      "id": "repository",
+      "module": "src/adapter.ts",
+      "export": "activate",
+      "providesCapabilities": [
+        "git.repository.read"
+      ],
+      "requiredCapabilities": [],
+      "configSchema": "schemas/config.schema.json"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+✔ closure projection frees actual resident quota and net bytes while all original consumers retain full identities (2884.994539ms)
+ℹ {"releasedClosures":1,"releasedBytes":130,"logicalClosures":2,"residentLimit":1}
+✔ read-only plan and actual CLI apply agree; finalization, changed intent and bounded metadata remain enforced (3558.731326ms)
+✔ no byte saving, stale store, source mismatch and run fence fail before mutation (2607.029981ms)
+✔ waiting run and absent result projection are not eligible; malformed references cannot yield successful reads or ACKs (6392.000533ms)
+✖ actual Attempt writer fence prevents closure retirement; killing waiting operator leaves original state (3462.289191ms)
+✔ actual SIGKILL at rename boundaries and after commit reopens complete state without double release (10233.24276ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29830.946325
+
+✖ failing tests:
+
+test at tests/verification/reliability/attempt-closure-projection.test.mjs:128:1
+✖ actual Attempt writer fence prevents closure retirement; killing waiting operator leaves original state (3462.289191ms)
+  Error: child 1/null: file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/[eval1]:1
+  import {withDurableStoreLock} from "file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts";await withDurableStoreLock(process.argv[1],async()=>{process.stdout.write('LOCKED
+                                                                                                                                                                                                                                                                            ^^^^^^^
+  
+  SyntaxError: Invalid or unexpected token
+      at compileSourceTextModule (node:internal/modules/esm/utils:319:16)
+      at ModuleLoader.createModuleWrap (node:internal/modules/esm/loader:209:12)
+      at ModuleLoader.eval (node:internal/modules/esm/loader:247:23)
+      at node:internal/process/execution:77:24
+      at asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:11)
+      at Object.runEntryPointWithESMLoader (node:internal/modules/run_main:123:19)
+      at evalModuleEntryPoint (node:internal/process/execution:76:47)
+      at node:internal/main/eval_string:37:3
+  
+  Node.js v24.21.0
+  
+      at ChildProcess.<anonymous> (file:///home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/tests/verification/reliability/attempt-closure-projection.test.mjs:123:66)
+      at ChildProcess.wrapper (node:events:639:12)
+      at ChildProcess.emit (node:events:514:28)
+      at ChildProcess._handle.onexit (node:internal/child_process:295:12)

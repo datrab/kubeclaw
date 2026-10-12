@@ -1,0 +1,12 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "verify:prism:native-worker"
+  ],
+  "returnCode": 1,
+  "elapsedSeconds": 35.03217271796893,
+  "runnerDeadlineSeconds": 35,
+  "terminatedOwnProcessGroupAfterDeadline": true,
+  "nativeHostConfigured": false
+}

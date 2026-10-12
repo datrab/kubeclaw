@@ -1,0 +1,32 @@
+[
+  {
+    "mutation": "legacy-authority",
+    "command": [
+      "node",
+      "--test",
+      "/tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts"
+    ],
+    "exitCode": 1,
+    "expected": "precise existing negative assertion fails; positive controls remain green"
+  },
+  {
+    "mutation": "connection-budget",
+    "command": [
+      "node",
+      "--test",
+      "/tmp/independent-config-negative-88xy6u3e/skills/prism/tests/swarm-worker-config.test.mts"
+    ],
+    "exitCode": 1,
+    "expected": "precise existing negative assertion fails; positive controls remain green"
+  },
+  {
+    "mutation": "missing-network-route",
+    "command": [
+      "node",
+      "--test",
+      "/tmp/independent-config-negative-88xy6u3e/http-authority.test.mts"
+    ],
+    "exitCode": 1,
+    "expected": "factory HTTP assertion fails, independent original lease control passes"
+  }
+]

@@ -1,0 +1,28 @@
+✔ default Runner-owned store enforces maximumEvidenceObjects=1 (819.931164ms)
+✔ default Runner-owned store enforces maximumEvidenceObjects=2 (178.047782ms)
+✔ default Runner-owned store enforces maximumEvidenceBytes=1 (176.240436ms)
+✔ default Runner-owned store enforces maximumEvidenceBytes=2 (174.189472ms)
+✔ default Runner-owned store enforces maximumEvidenceObjectBytes=1 (123.577054ms)
+✔ default Runner-owned store enforces maximumEvidenceObjectBytes=2 (146.023864ms)
+✔ default Runner-owned store reclaims selected orphan age 10 (187.435255ms)
+✔ default Runner-owned store reclaims selected orphan age 60000 (193.293596ms)
+✔ default Runner-owned admission retains bounded quarantine 1 (144.739642ms)
+✔ default Runner-owned admission retains bounded quarantine 2 (156.924116ms)
+✔ default Runner-owned admission enforces quarantine bytes 2 (137.71465ms)
+✔ default Runner-owned admission enforces quarantine bytes 10000 (132.367652ms)
+✔ default Runner-owned admission enforces ingress bytes 2048 (145.973673ms)
+✔ default Runner-owned admission enforces ingress bytes 8192 (155.92887ms)
+✔ default Runner completion consumes closure quota 1 (232.610913ms)
+✔ default Runner completion consumes closure quota 2 (303.749341ms)
+✔ default Runner completion consumes admission byte capacity 1025 (99.131782ms)
+✔ default Runner completion consumes admission byte capacity 1048576 (116.300226ms)
+✔ default Runner completion enforces metadata bytes 1024 (66.530329ms)
+✔ default Runner completion enforces metadata bytes 1048576 (125.195476ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8550.328086

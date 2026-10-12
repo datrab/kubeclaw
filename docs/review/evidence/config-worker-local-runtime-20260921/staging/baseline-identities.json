@@ -1,0 +1,134 @@
+[
+  {
+    "path": "skills/worker/core/worker/local-runtime.ts",
+    "sha256": "02876cafd08f35c84b67d3c8972e45167074c226c928c53a81b190bd67071435",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "skills/worker/core/src/index.ts",
+    "sha256": "d91104702b8b8071ed8e8e732a3a1a88a4528ba028236a90f3b1e8b54799b55d",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "skills/buster/engine/remote-plan-cli.ts",
+    "sha256": "f10d961a5d171f846d8f5d7dff11eb387ccbd36282c10c30d1b2b627fd2cfdfa",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "skills/buster/engine/test-gates/production.ts",
+    "sha256": "e9508ea7274873e803ac2c43faedbb3172469a551292a794f9b40db2caadd6ed",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+    "sha256": "9d2c6655c2eb411f3333cdf9d2b459970f10da44969318cc2eda3c26ed4c6660",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "skills/buster/engine/test-gates/remote-prepared-execution.ts",
+    "sha256": "c30fd160cb458232e68f27eaae24d9e622a85184f65ad8fbde3135cf14e3355d",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "skills/buster/engine/test-gates/runner.ts",
+    "sha256": "ab67c1300cdca9e173b4c9014df2381fe22b9bfe4d5f19bdc68dfd0bc2cf7b7e",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.ts",
+    "sha256": "484de1f0d6b7b7a4c069204495ddd31816e546b40ba41284a21c95cc51f6633e",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-bundle.ts",
+    "sha256": "a68d76958c5bbe28d145ab9a410cae3bf0be33cd87dedf2752824ced5666bcc9",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm.schema.json",
+    "sha256": "cc3ca68d2c90b3e2f36eecdbd43348f409cff5bf6cbbf33a230e6d19201870c4",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "skills/common/plugin-runtime/foundation/config/swarm-components.schema.json",
+    "sha256": "75b10b25550b0622948bd8334df660a5d526988a37abe29263e406dfddd688ae",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "charts/kubeclaw/files/config/swarm.config.json",
+    "sha256": "ab3ee0545ef7d04897523efcfe3a7c93acf036025e92a4142b044a530e0d0634",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+    "sha256": "1769fccb43906ac862216274e36c7d78574d977c736a49e3c4b199b1752cc29b",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "docker/Dockerfile.buster-runtime",
+    "sha256": "68846c882e9b0e20ebf83ccc20d753b2e8cde3ed7bb0714a3e47863a1a61d6f8",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "scripts/deploy.sh",
+    "sha256": "c491e53677694183566a30c182fe7d1595468bb3a8f3477bb248148819b0ad2f",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "scripts/updates/release-configuration.mjs",
+    "sha256": "a93ca420d8753a6958625d4196e85866adf2a4ee11acdbe3ca836bc270bc858b",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "tests/fixtures/config/swarm-bundle.mjs",
+    "sha256": "08cc278569ff299b04690e53d212ae9b44dccedbd3098a6bf3e594dc391f4e90",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "tests/verification/contracts/check-pipeline-worker-local-runtime.mts",
+    "sha256": "b451220e5a45cb77addcfc0dfb42ca048768b8b12e528de2f9c57d41e47027e9",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "tests/verification/reliability/worker-deadline.test.mts",
+    "sha256": "410108ac2048d3d9ab1e949a7e8f387e53d0eb17b95b42fe1d0abcb15a372163",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "tests/verification/deployment/config-component-packaging.test.mjs",
+    "sha256": "6d611cfbeaacdbb09b56aec3e458c6be37b924759a86803db9a8501820398166",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "tests/verification/deployment/release-configuration.test.mjs",
+    "sha256": "4824241284e36fd4e95cf0e601d0971771824703fbb50d4eccf66ef26493e3cc",
+    "mode": "0o644",
+    "sourceLink": null
+  },
+  {
+    "path": "docs/operations/operator-configuration.md",
+    "sha256": "f6bb72c4e10b2be71dbe7eb4e815a06774da6495493367d4c549b1fdf94a120b",
+    "mode": "0o644",
+    "sourceLink": null
+  }
+]

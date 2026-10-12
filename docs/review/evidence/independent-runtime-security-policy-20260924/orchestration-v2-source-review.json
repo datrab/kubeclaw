@@ -1,0 +1,25 @@
+{
+  "reviewer": "/root/cluster_final_independent_review",
+  "decision": "Source approval for coordinated execution only",
+  "hashes": {
+    "run-security-v2.py": "f8fe58dfac4c7cb239eb357f58e417f43c733091736b38f2b649ab82600a7bc0",
+    "run-ci2-service.py": "9b3e3fb1fbe556e4266f0b140ebd86c37946ec82952e1eae519015ebc29fb80a",
+    "security-control-specs-lint-v2.json": "738b70c643114287252dbf362aa608f83f54c2e7495004d51e1995af075ca5af",
+    "ci2-and-security-service-controls.json": "124884f3e9d9fb9b27521e5a4da44f13b54764ca678ac11ad30e623c9d412e37",
+    "mutate-ci2.mjs": "1461b7395b3972e5cf9abb38d8c8b94ecc2862954c5ccf462e9687d0dee5d800"
+  },
+  "checks": [
+    "Security runtime phase alone adds selected scanner/test-cache environment; preparation report, genuine scanner and four DB/metadata files are included in before/after binding. Scanner hash plus each database original size/digest checked before tests. No metadata rewrite or fake scanner introduced by runner.",
+    "Original behavior/governance gate prepended without narrowing remaining15 commands, assertions or deadlines. All prior source guards, type/lint stages and unexpected-drift checks retained.",
+    "Nine Security control normalizations exactly match lintV2 original specs.",
+    "CI2 service runner differs only in selected combined specs; first7 entries are byte-content equivalent to reviewed CI2V2 list and eighth preserves V4 service control source/hash/replacement/test/oracle.",
+    "Mutation hook is unchanged and validates source-manifest binding plus unique exact anchor before mutation.",
+    "Python source syntax parsed only; no runner or test invoked."
+  ],
+  "limits": [
+    "Exact final integrated source identities must satisfy runner assertions; current source HOLD respected.",
+    "Prepared scanner report is an input here, not independent claim of scan success/freshness at future execution. Actual original freshness/security tests remain authoritative.",
+    "No success from expected exit1 alone: independent raw semantic failure review still required.",
+    "Actual ownership gate and RS2 service evidence remain pending."
+  ]
+}

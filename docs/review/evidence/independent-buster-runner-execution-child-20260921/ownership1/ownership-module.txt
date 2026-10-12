@@ -1,0 +1,16 @@
+✔ signal failure still drains capability settlement after actual child close (159.122393ms)
+✔ actual close with nonsettling capability reports bounded drain failure (1047.040565ms)
+✔ withheld close notification retains termination bound without entering capability drain (1041.986015ms)
+✔ constructor observation error is retained for later initialize (11.180429ms)
+▶ aborted initialization rejects and a distinct healthy session completes real cleanup
+  ✔ already aborted context (9.69323ms)
+  ✔ healthy positive control (44.031729ms)
+✔ aborted initialization rejects and a distinct healthy session completes real cleanup (54.653983ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2801.703312

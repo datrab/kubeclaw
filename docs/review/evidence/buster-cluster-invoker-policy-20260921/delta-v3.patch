@@ -1,0 +1,33 @@
+--- a/tests/verification/contracts/check-pipeline-remote-runtime-config.mts
++++ b/tests/verification/contracts/check-pipeline-remote-runtime-config.mts
+@@ -209,6 +209,30 @@
+   assert.equal(clusterAddress.address, '127.0.0.1');
+   await clusterRuntime.stop();
+ 
++  // Each other real cluster route independently requires its namespace binding.
++  const remainingClusterRoutes = [
++    { capability: 'kubernetes.exposure', source: {} },
++    { capability: 'kubernetes.runtime-security', source: { kubernetesRuntimeSecurity: {
++      allowedNamespacePrefixes: ['test'], maximumExecutionMs: 5000,
++      maximumOutputBytes: 1048576, maximumObservationAgeMs: 5000, pollIntervalMs: 1000,
++    } } },
++  ];
++  for (const [index, route] of remainingClusterRoutes.entries()) {
++    const stateRoot = `./cluster-route-${index}-state`;
++    const configuration = { ...baseBuster, ...route.source, stateRoot,
++      allowedCapabilities: [route.capability] };
++    fs.writeFileSync(busterConfig, JSON.stringify(configuration));
++    assert.throws(clusterLoad, { message: 'BUSTER_REMOTE_CONFIG_INVALID:clusterBindings' });
++    assert.equal(fs.existsSync(path.join(temporary, stateRoot)), false,
++      `${route.capability}: missing binding must reject before store construction`);
++    fs.writeFileSync(busterConfig, JSON.stringify({ ...configuration,
++      clusterBindings: { controllerNamespace: 'kubeclaw' } }));
++    const configuredRoute = clusterLoad();
++    const routeAddress = await configuredRoute.start();
++    assert.equal(routeAddress.address, '127.0.0.1');
++    await configuredRoute.stop();
++  }
++
+   fs.writeFileSync(busterConfig, JSON.stringify({ ...baseBuster, host: '0.0.0.0' }));
+   assert.ok(loadProductionBusterRemotePlanRuntime(busterConfig,
+     { KUBECLAW_BUILD_REVISION: 'a'.repeat(40), [tokenName]: token, [sourcePublicKeyName]: sourceAttestationPublicKey }) instanceof BusterRemotePlanRuntime);

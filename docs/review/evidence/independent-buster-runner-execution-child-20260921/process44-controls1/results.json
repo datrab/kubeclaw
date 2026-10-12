@@ -1,0 +1,116 @@
+[
+  {
+    "name": "cleanupTimeoutMs",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-process-input-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "kind": "assertion",
+    "expectedMarker": "ERR_ASSERTION",
+    "candidateDetection": true,
+    "requiresNamedOracleReview": true
+  },
+  {
+    "name": "terminationGraceMs",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-process-input-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "kind": "assertion",
+    "expectedMarker": "ERR_ASSERTION",
+    "candidateDetection": true,
+    "requiresNamedOracleReview": true
+  },
+  {
+    "name": "acknowledgementPollMs",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-process-input-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "kind": "assertion",
+    "expectedMarker": "ERR_ASSERTION",
+    "candidateDetection": true,
+    "requiresNamedOracleReview": true
+  },
+  {
+    "name": "report-forwarding",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-report-runner-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "kind": "missing-policy",
+    "expectedMarker": "SWARM_CONFIG_BUSTER_PROCESS_INPUT_INVALID",
+    "candidateDetection": true,
+    "requiresNamedOracleReview": true
+  },
+  {
+    "name": "kubernetes-forwarding",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-process-input-callers.test.mjs"
+    ],
+    "exitCode": 1,
+    "kind": "missing-policy",
+    "expectedMarker": "SWARM_CONFIG_BUSTER_PROCESS_INPUT_INVALID",
+    "candidateDetection": true,
+    "requiresNamedOracleReview": true
+  },
+  {
+    "name": "tailscale-forwarding",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/verification/contracts/buster-process-input-callers.test.mjs"
+    ],
+    "exitCode": 1,
+    "kind": "missing-policy",
+    "expectedMarker": "SWARM_CONFIG_BUSTER_PROCESS_INPUT_INVALID",
+    "candidateDetection": true,
+    "requiresNamedOracleReview": true
+  },
+  {
+    "name": "swallowed-signal-errors",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "tests/verification/contracts/buster-process-input-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "candidateDetection": true,
+    "requiredManualFailure": "failed timed KILL / final KILL: expected actual injected failure cause retained"
+  },
+  {
+    "name": "rejected-quality-v1",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "tests/verification/contracts/buster-process-input-policy.test.mjs"
+    ],
+    "exitCode": 1,
+    "candidateDetection": true,
+    "requiredManualFailure": "group observation failure survives a later close deadline: exact includesCause assertion"
+  }
+]

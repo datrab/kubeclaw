@@ -1,0 +1,32 @@
+[
+  {
+    "path": "tests/fixtures/test-gate/legacy-seal-guest.py",
+    "sha256": "c614f05cb58f987d2e962d733724e366bf6cde760b39a3289c12c37cf833f611",
+    "snapshot": "docs/review/evidence/buster-legacy-replaced-store-20260921/source/tests__fixtures__test-gate__legacy-seal-guest.py.snapshot"
+  },
+  {
+    "path": "scripts/buster_legacy_stop_policy.py",
+    "sha256": "d88e4d8b6e9070ddd80be7ddf890cb5ce78efe394c969aac6ebc8f98e2983158",
+    "snapshot": "docs/review/evidence/buster-legacy-replaced-store-20260921/source/scripts__buster_legacy_stop_policy.py.snapshot"
+  },
+  {
+    "path": "scripts/buster_legacy_stop_files.py",
+    "sha256": "2c674ea367c0a45013893db18c4b0260f79ded257f9c08b8a6c46b8e004ed3b3",
+    "snapshot": "docs/review/evidence/buster-legacy-replaced-store-20260921/source/scripts__buster_legacy_stop_files.py.snapshot"
+  },
+  {
+    "path": "scripts/buster_legacy_stop_runtime.py",
+    "sha256": "da13076f4cb8ef08c5e9e393da89b9f06b3f4675195c61960bd377a004ac1ef2",
+    "snapshot": "docs/review/evidence/buster-legacy-replaced-store-20260921/source/scripts__buster_legacy_stop_runtime.py.snapshot"
+  },
+  {
+    "path": "scripts/buster_legacy_stop_transaction.py",
+    "sha256": "68cc8ac979694a40d5bc7aa1bfe04ddaab3350f2ba26beb29a16cbe81cea2eb4",
+    "snapshot": "docs/review/evidence/buster-legacy-replaced-store-20260921/source/scripts__buster_legacy_stop_transaction.py.snapshot"
+  },
+  {
+    "path": "docs/review/remediation/implementation/buster-legacy-replaced-store-20260921.md",
+    "sha256": "f23dc7250142abc141ea650ed843a9e1d6a938f5a4b909f4ce8e59ac59459b4b",
+    "snapshot": "docs/review/evidence/buster-legacy-replaced-store-20260921/source/docs__review__remediation__implementation__buster-legacy-replaced-store-20260921.md.snapshot"
+  }
+]

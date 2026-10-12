@@ -1,0 +1,14 @@
+import fs from 'node:fs';import crypto from 'node:crypto';import assert from 'node:assert/strict';import yaml from 'js-yaml';
+const root='docs/review/evidence/spire-current-audit-20260921/';
+const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const identities=fs.readFileSync('docs/review/evidence/spire-independent-20260921/reviewed-sha256.txt','utf8').trim().split('\n').map(l=>{const [sha256,path]=l.split('  ');assert.equal(hash(path),sha256);return {path,sha256};});
+assert.equal(hash(root+'rendered.yaml'),'27ae94f759a0a0a42cb00d1cc6ab0b9c3f4b9b31aee73e122f9ff9a13cc4d8f3');
+const ds=yaml.loadAll(fs.readFileSync(root+'rendered.yaml','utf8')).filter(Boolean);const get=(kind,name)=>ds.find(x=>x.kind===kind&&x.metadata.name===name);
+const s=JSON.parse(get('ConfigMap','spire-server').data['server.conf']);const a=JSON.parse(get('ConfigMap','spire-agent').data['agent.conf']);const sts=get('StatefulSet','spire-server');const da=get('DaemonSet','spire-agent');
+assert.equal(s.plugins.DataStore[0].sql.plugin_data.connection_string,'/run/spire/data/datastore.sqlite3');assert.equal(s.plugins.KeyManager[0].disk.plugin_data.keys_path,'/run/spire/data/keys.json');assert.equal(s.plugins.UpstreamAuthority,undefined);
+assert.equal(s.server.ca_ttl,'24h');assert.equal(s.server.default_x509_svid_ttl,'4h');assert.equal(s.server.agent_ttl,undefined);assert.equal(a.agent.availability_target,undefined);assert.equal(s.server.disable_jwt_svids,true);
+assert.equal(sts.spec.replicas,1);assert.deepEqual(sts.spec.volumeClaimTemplates[0].spec.accessModes,['ReadWriteOnce']);assert.equal(sts.spec.volumeClaimTemplates[0].spec.resources.requests.storage,'1Gi');assert.equal(sts.spec.volumeClaimTemplates[0].spec.storageClassName,undefined);
+const server=sts.spec.template.spec.containers.find(x=>x.name==='spire-server');assert.match(server.image,/:1\.15\.2$/);assert.ok(server.volumeMounts.some(x=>x.name==='spire-data'&&x.mountPath==='/run/spire/data'));
+assert.equal(server.securityContext.runAsUser ?? sts.spec.template.spec.securityContext.runAsUser,1000);assert.ok(da.spec.template.spec.volumes.some(x=>x.emptyDir));assert.ok(a.plugins.KeyManager[0].memory);assert.equal(da.spec.template.spec.hostNetwork,true);
+for(const p of ['charts/kubeclaw/templates/configmap-worker-trust.yaml','charts/prism/templates/configmap-worker-trust.yaml']){const t=fs.readFileSync(p,'utf8');assert.match(t,/require_client_certificate: true/);assert.match(t,/match_typed_subject_alt_names/);assert.match(t,/matcher: \{ exact:/);identities.push({path:p,sha256:hash(p)});}
+fs.writeFileSync(root+'result.json',JSON.stringify({historicalSixIdentitiesUnchanged:true,renderByteIdentical:true,effectiveConfigurationAssertions:'passed',currentPeerTemplateChecks:'passed (source only)',liveExecuted:false,identities},null,2)+'\n');

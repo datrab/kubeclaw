@@ -1,0 +1,21 @@
+test_oauth_entrypoint (deploy_tests.DeployObservations.test_oauth_entrypoint) ... FAIL
+
+======================================================================
+FAIL: test_oauth_entrypoint (deploy_tests.DeployObservations.test_oauth_entrypoint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/node/Documents/Codex/2026-09-20-hi-sind-die-offenen-issues-irgendwo/scripts/tests/deploy-api-errors.test.py", line 109, in test_oauth_entrypoint
+    self.assertNotEqual(result.returncode,0,result.stdout); self.assertEqual(self.mutations(calls),[])
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0 : 
+[0;34m═══════════════════════════════════════[0m
+[0;34m Infrastructure: Tailscale Kubernetes Operator[0m
+[0;34m═══════════════════════════════════════[0m
+[0;32m[✓][0m Using existing Tailscale OAuth secret: tailscale/operator-oauth
+[0;32m[✓][0m Tailscale operator deployed in namespace: tailscale
+
+
+----------------------------------------------------------------------
+Ran 1 test in 1.406s
+
+FAILED (failures=1)
