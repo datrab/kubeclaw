@@ -1104,11 +1104,32 @@ non-CSI PV, the approved `providerAssetId` supplies the external identity;
 for a CSI PV it must agree with the observed handle.
 
 ```bash
+# Empty stdout is API absence; a nonempty response must be the exact named object.
+probe_disposition_uid() {
+  node - "$PREFLIGHT_EVIDENCE_DIR/$1" "$2" "$3" "${4:-}" <<'NODE'
+const fs = require('node:fs');
+const [file, kind, name, namespace] = process.argv.slice(2);
+const bytes = fs.readFileSync(file, 'utf8');
+if (!bytes.trim()) process.exit(0);
+const object = JSON.parse(bytes);
+if (object?.apiVersion !== 'v1' || object?.kind !== kind || object.metadata?.name !== name
+  || (object.metadata.namespace ?? '') !== namespace
+  || typeof object.metadata.uid !== 'string' || !object.metadata.uid) {
+  throw new Error('PROBE_DISPOSITION_RESPONSE_INVALID');
+}
+process.stdout.write(object.metadata.uid);
+NODE
+}
 export PREFLIGHT_CLEANUP_CLEARANCE="<probe-cleanup-clearance-json>"
 if probe_capture "owner-approved cleanup recapture"; then :; else printf '%s\n' 'RETAIN_PROBE: capture incomplete' >&2; exit 1; fi
 test "$PROBE_CAPTURE_STATUS" = complete
 test -n "$PREFLIGHT_NAMESPACE_UID"
 test "$SNAPSHOT_NAMESPACE_UID" = "$PREFLIGHT_NAMESPACE_UID"
+if [[ -n $PREFLIGHT_PV_NAME ]]; then
+  test -n "$PREFLIGHT_PV_UID" || exit 1
+else
+  test -z "$PREFLIGHT_PV_UID" || exit 1
+fi
 test -s "$PREFLIGHT_CLEANUP_CLEARANCE" && test ! -L "$PREFLIGHT_CLEANUP_CLEARANCE"
 export PREFLIGHT_NAMESPACE_UID PREFLIGHT_PVC_UID PREFLIGHT_PV_UID PREFLIGHT_PROVIDER_ASSET_ID
 node - "$PREFLIGHT_CLEANUP_CLEARANCE" "$PREFLIGHT_EVIDENCE_DIR/namespace-delete-options.json" <<'NODE'
@@ -1136,18 +1157,29 @@ if probe_observe delete.stdout bound_kubectl delete --raw "/api/v1/namespaces/$P
   -f "$PREFLIGHT_EVIDENCE_DIR/namespace-delete-options.json"; then :; else exit 1; fi
 if probe_observe delete-wait.stdout bound_kubectl wait --for=delete "namespace/$PREFLIGHT_NAMESPACE" \
   --timeout=180s; then :; else exit 1; fi
-probe_snapshot namespace "$PREFLIGHT_NAMESPACE" namespace-after.json
-probe_field_equals namespace-after.json metadata.uid ''
+probe_snapshot namespace "$PREFLIGHT_NAMESPACE" namespace-after.json || exit 1
+AFTER_NAMESPACE_UID="$(probe_disposition_uid namespace-after.json Namespace "$PREFLIGHT_NAMESPACE")" || exit 1
+if [[ -n $AFTER_NAMESPACE_UID ]]; then
+  printf '%s\n' 'RETAIN_PROBE: namespace still present or replaced; owner reconciliation required' >&2
+  exit 1
+fi
 if [[ -n $PREFLIGHT_PV_NAME ]]; then
   for attempt in $(seq 1 60); do
-    probe_snapshot pv "$PREFLIGHT_PV_NAME" pv-after.json
-    AFTER_PV_UID="$(probe_field pv-after.json metadata.uid)" || exit 1
+    probe_snapshot pv "$PREFLIGHT_PV_NAME" pv-after.json || exit 1
+    AFTER_PV_UID="$(probe_disposition_uid pv-after.json PersistentVolume "$PREFLIGHT_PV_NAME")" || exit 1
     [[ -n $AFTER_PV_UID ]] || break
+    if [[ $AFTER_PV_UID != "$PREFLIGHT_PV_UID" ]]; then
+      printf '%s\n' 'RETAIN_PROBE: PV identity changed; owner reconciliation and restored exclusion required' >&2
+      exit 1
+    fi
     sleep 2
   done
-  probe_field_equals pv-after.json metadata.uid ''
+  if [[ -n $AFTER_PV_UID ]]; then
+    printf '%s\n' 'RETAIN_PROBE: recorded PV still present after polling; owner reconciliation required' >&2
+    exit 1
+  fi
 fi
-printf '%s\n' 'namespace-absent; recorded PV absent or no PV was bound; provider proof still required' \
+printf '%s\n' 'namespace absent in recorded read; recorded PV absent or no PV binding recorded; provider proof still required' \
   > "$PREFLIGHT_EVIDENCE_DIR/kubernetes-disposition.txt" || exit 1
 ```
 
@@ -1167,6 +1199,19 @@ exact exit and snapshots; let the named cluster/storage owner reconcile
 finalizers and provider operations before another write. The deletion body is
 created once; on a failed/uncertain delete, retain it and its receipt rather
 than rerunning this block as a fresh deletion attempt.
+
+Each nonempty post-delete PV observation must retain the original recorded UID.
+A replacement UID stops this block at its first observation, even if that
+replacement later disappears. Keep the original approval and all replacement
+stdout, stderr and exits. The cluster and storage owners must reconcile the
+identity violation and restore the exclusion before further action. Never
+change the recorded UID or treat later absence as reconciliation. A malformed
+or denied read, a present/replaced namespace, or exhausted original-PV polling
+also stops without a successful Kubernetes disposition record.
+
+The disposition file states only the recorded API observations. No recorded PV
+binding does not exclude an intermediate unseen binding or provider allocation.
+It cannot prove continuous absence or backing-asset deletion.
 
 After Kubernetes observations, the storage owner must run the approved exact
 provider lookup for `PREFLIGHT_PROVIDER_ASSET_ID`, or the recorded claim-based
