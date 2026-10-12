@@ -843,8 +843,8 @@ bind the exact request and verified external outcome, preserve append-only
 history and fencing, reject changed or duplicate identities, and pass an
 interruption/restart exercise without repeating an accepted effect. A terminal
 receipt alone is insufficient for the second error: Core also requires safe
-continuation of the interrupted external attempt. No such general procedure
-is implemented or execution-verified by this page.
+continuation of the interrupted external attempt. The current Core implements no such general procedure.
+This page establishes no execution verification of that procedure.
 
 > **Source evidence — effect recovery gate**
 >
@@ -1282,8 +1282,8 @@ completed publication, deployment, or remote job.
 **Why it was not selected:** Historical disposition is unknown. Today, that
 alternative would require proven external deduplication and safe continuation.
 **Cost:** A run can remain stopped after external reconciliation. The benefit
-is that uncertainty does not grant another mutation. The guard is implemented;
-a general receipt-import or external-continuation procedure is not implemented.
+is that uncertainty does not grant another mutation. Core implements the guard;
+Core does not implement a general receipt-import or external-continuation procedure.
 **Reconsider when:** An authenticated continuation binds verified remote state
 to the exact effect and passes the interruption, duplicate, and fencing checks
 listed in [Effect recovery stops](#effect-recovery-stops).

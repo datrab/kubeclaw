@@ -311,7 +311,7 @@ do not exclude replacement objects or competing edits.
    If the class is absent, ask the owner to resolve the actual provisioning
    authority. Never substitute today's default class for a captured volume.
 
-   An unbound selected claim (`volumeName` absent) is recorded with `-`. It has
+   The script records `-` for an unbound selected claim (`volumeName` absent). It has
    no PV patch and no PV wait, but the script still deletes the PVC by name.
    The owner must confirm that no allocation or provisioning is in progress
    and no binding will occur during the window. Stop on incomplete identity,
@@ -502,9 +502,9 @@ retirement, backend erasure, or restore result is established by this guide.
 
 > **Source evidence — bounded Qdrant retirement**
 >
-> **Claim:** The fixed selector captures claim name/UID/volumeName, prechecks the reference, removes release/access resources, then applies three reference tests plus `add Delete`, deletes PVCs by name, and waits for PVC/PV API deletion.
+> **Claim:** The script's fixed selector captures claim name/UID/volumeName. The script prechecks the reference and removes release/access resources. It then applies three reference tests plus `add Delete`, deletes PVCs by name, and waits for PVC/PV API deletion.
 >
-> **Implementation:** [Intent, context, tools, and temporary inventory](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L6-L18); [exact selection](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L20-L30); [precheck](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L35-L43); [release/resource removal](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L46-L55); [patch and waits](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L57-L77).
+> **Implementation:** [Intent, context, tools, and temporary inventory](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L6-L18). [Exact selection](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L20-L30). [Precheck](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L35-L43). [Release/resource removal](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L46-L55). [Patch and waits](https://github.com/datrab/kubeclaw/blob/51975b92ed5154b76c65793e55933b4d8659d05d/scripts/remove-qdrant.sh#L57-L77).
 >
 > **Contract or setting:** [The seven selected existing-PV receiving contracts](https://github.com/datrab/kubeclaw/blob/0403b262df2dba24747a19d1f8f42ef3334ef779/scripts/docs-kubernetes-pv-selected-receiver-contracts.mjs#L13-L29) explain the ordered patch, guard limits, and controller/backend boundary. These source expectations use Kubernetes v1.35.0, not a live compatibility claim. [The API server rejects malformed or failed JSON patches](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/staging/src/k8s.io/apiserver/pkg/endpoints/handlers/patch.go#L403-L417). [Deletion reconciliation is separate](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L1321-L1389), and [backend removal can precede finalizer failure](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/controller/volume/persistentvolume/pv_controller.go#L1495-L1540).
 >
@@ -563,7 +563,7 @@ record its separate code-bundle commit and run/attempt too. Code bundles are
 archives loaded by the agent; they are not container images.
 
 The current checkout has no `releases/runtime-images.json`. Stop runtime
-installation until a selection is accepted. The release maintainer performs
+installation until the release owner accepts a selection. The release maintainer performs
 this task in `github.com/datrab/kubeclaw`, or the explicitly approved repository
 whose receipts and image references the environment uses:
 
