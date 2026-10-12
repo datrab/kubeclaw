@@ -6910,7 +6910,7 @@
         "scripts/deploy.sh",
         "docs/generated/inventory/deploy-script.json"
       ],
-      "sourceVerification": "complete-assigned-source-fail-GNU-refresh-and-TLS-evidence",
+      "sourceVerification": "complete-assigned-source-partition-PASS-quality-and-final-acceptance-pending",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -6996,6 +6996,57 @@
           "revision": "5db94406d399934d06acb710cdead1fae0f4b2d6",
           "verdict": "PENDING",
           "scope": "Full three-page assigned role contribution only; no gate/package/live approval."
+        },
+        {
+          "agent": "/root/late_pv_identity_corrected_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-PASS",
+          "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+          "scope": "Complete installation, worker-trust and maintenance role partition; OPR-003/008 and A98-02/03/09/13 facets only. No package/global/live acceptance.",
+          "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-source-fresh/report.md",
+          "reportSha256": "91c323e34ab134d95389e4d14944ba4b6955c21d3c43aec13fc7c7cac16f55ef",
+          "manifestSha256": "55667e4a96727c780aaaa45a80d4ef28a562f94884a3e963886c49e077ee9153",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-source-fresh-root-seal.json",
+          "rootVerifiedArtifacts": 9026,
+          "rootVerifiedInputs": 63
+        },
+        {
+          "agent": "/root/late_pv_identity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-PASS",
+          "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+          "scope": "Complete installation, worker-trust and maintenance role partition; OPR-003/008 and A98-02/03/09/13 facets only. No package/global/live acceptance.",
+          "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "b15234417fdecf7e010666396905c8c1a6e741c4f03eea93aa5a55de70e9ba52",
+          "manifestSha256": "6643ff91b08dbb98b03d5eec7915c39b41bdfefbd19c6d2600a299e191a44fce",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-reader-fresh-root-seal.json",
+          "rootVerifiedArtifacts": 10294,
+          "rootVerifiedInputs": 657
+        },
+        {
+          "agent": "/root/late_pv_identity_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL-one-material-QF01",
+          "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+          "scope": "Full installation, worker-trust and maintenance Quality facet; publication/live excluded.",
+          "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh/REPORT.md",
+          "reportSha256": "c46605b6fc99c274b5eb7f4568924799b4ef6e975b08417ef324212324737f4b",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh-root-seal.json"
         }
       ],
       "openFindingIds": [
@@ -7011,10 +7062,12 @@
         "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-1",
         "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-READER-FRESH-2",
         "A98-20261012-GNU-COPY-F1",
-        "A98-20261012-TLS-RANGE-F2"
+        "A98-20261012-TLS-RANGE-F2",
+        "A98-20261012-LATE-PV-IDENTITY-F1",
+        "A98-20261012-PROBE-PULL-CLAIM-QF01"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L263",
-      "currentCandidateRevision": "5db94406d399934d06acb710cdead1fae0f4b2d6"
+      "currentCandidateRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f"
     },
     {
       "id": "OPR-004",
@@ -7430,7 +7483,7 @@
         "scripts/deploy.sh",
         "scripts/remove-qdrant.sh"
       ],
-      "sourceVerification": "complete-assigned-maintenance-source-pass-only",
+      "sourceVerification": "complete-assigned-source-partition-PASS-quality-and-final-acceptance-pending",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -7527,6 +7580,57 @@
           "revision": "5db94406d399934d06acb710cdead1fae0f4b2d6",
           "verdict": "PENDING",
           "scope": "Full three-page assigned role contribution only; no gate/package/live approval."
+        },
+        {
+          "agent": "/root/late_pv_identity_corrected_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-PASS",
+          "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+          "scope": "Complete installation, worker-trust and maintenance role partition; OPR-003/008 and A98-02/03/09/13 facets only. No package/global/live acceptance.",
+          "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-source-fresh/report.md",
+          "reportSha256": "91c323e34ab134d95389e4d14944ba4b6955c21d3c43aec13fc7c7cac16f55ef",
+          "manifestSha256": "55667e4a96727c780aaaa45a80d4ef28a562f94884a3e963886c49e077ee9153",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-source-fresh-root-seal.json",
+          "rootVerifiedArtifacts": 9026,
+          "rootVerifiedInputs": 63
+        },
+        {
+          "agent": "/root/late_pv_identity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-PASS",
+          "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+          "scope": "Complete installation, worker-trust and maintenance role partition; OPR-003/008 and A98-02/03/09/13 facets only. No package/global/live acceptance.",
+          "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "b15234417fdecf7e010666396905c8c1a6e741c4f03eea93aa5a55de70e9ba52",
+          "manifestSha256": "6643ff91b08dbb98b03d5eec7915c39b41bdfefbd19c6d2600a299e191a44fce",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-reader-fresh-root-seal.json",
+          "rootVerifiedArtifacts": 10294,
+          "rootVerifiedInputs": 657
+        },
+        {
+          "agent": "/root/late_pv_identity_complete_quality_fresh",
+          "role": "quality",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-FAIL-one-material-QF01",
+          "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+          "scope": "Full installation, worker-trust and maintenance Quality facet; publication/live excluded.",
+          "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh/REPORT.md",
+          "reportSha256": "c46605b6fc99c274b5eb7f4568924799b4ef6e975b08417ef324212324737f4b",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh-root-seal.json"
         }
       ],
       "openFindingIds": [
@@ -7534,7 +7638,7 @@
         "A98-QUALITY-REGISTRY-PREPARATION"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L268",
-      "currentCandidateRevision": "5db94406d399934d06acb710cdead1fae0f4b2d6"
+      "currentCandidateRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f"
     },
     {
       "id": "OPR-009",
@@ -19037,7 +19141,7 @@
     },
     {
       "id": "A98-20261012-GNU-COPY-F1",
-      "state": "complete-author-correction-committed-pending-independent-review",
+      "state": "corrected-independent-source-and-reader-facets-PASS",
       "catalogueIds": [
         "OPR-003"
       ],
@@ -19052,11 +19156,16 @@
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh-root-seal.json",
       "correctionCommit": "5db94406d399934d06acb710cdead1fae0f4b2d6",
       "authorSeal": "/home/node/Documents/Codex/a98-evidence/probe_gnu_copy_complete_correction_writer-root-seal.json",
-      "authorEvidence": "Exact complete helper family passed native GNU9.1 and BusyBox, original defect reproduced native GNU9.1; native GNU9.4/live still unexecuted."
+      "authorEvidence": "Exact complete helper family passed native GNU9.1 and BusyBox, original defect reproduced native GNU9.1; native GNU9.4/live still unexecuted.",
+      "currentReviews": [
+        "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-source-fresh/report.md",
+        "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-reader-fresh/REPORT.md"
+      ],
+      "acceptanceLimit": "Quality and package/global gates remain open; original historical FAIL unchanged."
     },
     {
       "id": "A98-20261012-TLS-RANGE-F2",
-      "state": "complete-author-correction-committed-pending-independent-review",
+      "state": "corrected-independent-source-and-reader-facets-PASS",
       "catalogueIds": [
         "OPR-003"
       ],
@@ -19070,7 +19179,50 @@
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/install-creating-identity-corrected-complete-source-fresh-root-seal.json",
       "correctionCommit": "5db94406d399934d06acb710cdead1fae0f4b2d6",
       "authorSeal": "/home/node/Documents/Codex/a98-evidence/probe_gnu_copy_complete_correction_writer-root-seal.json",
-      "authorEvidence": "Exact complete helper family passed native GNU9.1 and BusyBox, original defect reproduced native GNU9.1; native GNU9.4/live still unexecuted."
+      "authorEvidence": "Exact complete helper family passed native GNU9.1 and BusyBox, original defect reproduced native GNU9.1; native GNU9.4/live still unexecuted.",
+      "currentReviews": [
+        "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-source-fresh/report.md",
+        "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-reader-fresh/REPORT.md"
+      ],
+      "acceptanceLimit": "Quality and package/global gates remain open; original historical FAIL unchanged."
+    },
+    {
+      "id": "A98-20261012-LATE-PV-IDENTITY-F1",
+      "state": "corrected-independent-source-and-reader-facets-PASS",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-09",
+        "A98-13"
+      ],
+      "description": "Post-delete PV replacement could be polled until later absence and falsely complete disposition. Strict named-object validation and comparison to original PV UID now stop at first observed replacement.",
+      "owner": "/root/probe_identity_retention_recovered_writer",
+      "correctionCommit": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+      "historicalSourceReport": "/home/node/Documents/Codex/a98-evidence/probe-gnu-copy-corrected-complete-source-fresh/report.md",
+      "historicalReaderReport": "/home/node/Documents/Codex/a98-evidence/probe-gnu-copy-corrected-complete-reader-fresh/REPORT.md",
+      "currentReviews": [
+        "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-source-fresh/report.md",
+        "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-reader-fresh/REPORT.md"
+      ],
+      "acceptanceLimit": "Assigned Source/Reader facets only; no live provider, Quality or package acceptance."
+    },
+    {
+      "id": "A98-20261012-PROBE-PULL-CLAIM-QF01",
+      "state": "open-author-correction-pending",
+      "catalogueIds": [
+        "OPR-003"
+      ],
+      "acceptanceIds": [
+        "A98-02",
+        "A98-13"
+      ],
+      "description": "Install621-623 claims pull proof but probe990 IfNotPresent can execute cached image. Narrow selected-node execution/DNS/storage result; no new pull/registry/all-node assurance.",
+      "owner": "/root/probe_identity_retention_recovered_writer",
+      "reviewer": "/root/late_pv_identity_complete_quality_fresh",
+      "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh/REPORT.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh-root-seal.json"
     }
   ],
   "checks": [
@@ -20489,6 +20641,18 @@
       "candidateSourceCommit": "5db94406d399934d06acb710cdead1fae0f4b2d6",
       "evidence": "/home/node/Documents/Codex/a98-evidence/root-gnu-copy-and-tls-correction-gates/result.json",
       "acceptanceLimit": "Actual full trust static/contract/typecheck and task currentness/structural/mutation gates, no independent semantic/AP09.8/live acceptance."
+    },
+    {
+      "state": "observed-terminal-FAIL-root-full-selected-suite",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/root-integrated-annotation-yaml-static-custody-and-denial/result.json",
+      "tests": 268,
+      "passed": 266,
+      "failed": 2,
+      "skipped": 0,
+      "exitCode": 1,
+      "sourceAndPagesUnchanged": true,
+      "cause": "Reader-boundary diagnostic output selector stale; qualification-author correction in progress.",
+      "acceptanceLimit": "No full current PASS and no semantic/package acceptance."
     }
   ],
   "reviewAssignments": [
@@ -22824,10 +22988,11 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "active-complete-three-page-corrected-family",
+      "state": "terminal-complete-assigned-FAIL-one-late-PV-identity-finding",
       "sourceRevision": "5db94406d399934d06acb710cdead1fae0f4b2d6",
       "scope": "Full installation/trust/maintenance and adjacent prerequisite/evidence/retirement routes; entire repeated copying/provenance/control family, no global/live approval.",
-      "schedulingHistory": "Fresh independent identity; no prior author/Reader role."
+      "schedulingHistory": "Fresh independent identity; no prior author/Reader role.",
+      "supersedingCandidateRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f"
     },
     {
       "agent": "/root/probe_gnu_copy_corrected_complete_reader_fresh",
@@ -22837,17 +23002,69 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "active-complete-three-page-corrected-family",
+      "state": "terminal-complete-assigned-FAIL-one-late-PV-identity-finding",
       "sourceRevision": "5db94406d399934d06acb710cdead1fae0f4b2d6",
       "scope": "Full installation/trust/maintenance and adjacent prerequisite/evidence/retirement routes; entire repeated copying/provenance/control family, no global/live approval.",
-      "schedulingHistory": "Reader initial model-capacity failure before review; same requested Sol identity retry active without model switch."
+      "schedulingHistory": "Reader initial model-capacity failure before review; same requested Sol identity retry active without model switch.",
+      "supersedingCandidateRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f"
+    },
+    {
+      "agent": "/root/late_pv_identity_corrected_complete_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-PASS",
+      "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+      "scope": "Complete installation, worker-trust and maintenance role partition; OPR-003/008 and A98-02/03/09/13 facets only. No package/global/live acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-source-fresh/report.md",
+      "reportSha256": "91c323e34ab134d95389e4d14944ba4b6955c21d3c43aec13fc7c7cac16f55ef",
+      "manifestSha256": "55667e4a96727c780aaaa45a80d4ef28a562f94884a3e963886c49e077ee9153",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-source-fresh-root-seal.json",
+      "rootVerifiedArtifacts": 9026,
+      "rootVerifiedInputs": 63
+    },
+    {
+      "agent": "/root/late_pv_identity_corrected_complete_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-PASS",
+      "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+      "scope": "Complete installation, worker-trust and maintenance role partition; OPR-003/008 and A98-02/03/09/13 facets only. No package/global/live acceptance.",
+      "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-reader-fresh/REPORT.md",
+      "reportSha256": "b15234417fdecf7e010666396905c8c1a6e741c4f03eea93aa5a55de70e9ba52",
+      "manifestSha256": "6643ff91b08dbb98b03d5eec7915c39b41bdfefbd19c6d2600a299e191a44fce",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-reader-fresh-root-seal.json",
+      "rootVerifiedArtifacts": 10294,
+      "rootVerifiedInputs": 657
+    },
+    {
+      "agent": "/root/late_pv_identity_complete_quality_fresh",
+      "role": "quality",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-FAIL-one-material-QF01",
+      "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+      "scope": "Full installation, worker-trust and maintenance Quality facet; publication/live excluded.",
+      "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh/REPORT.md",
+      "reportSha256": "c46605b6fc99c274b5eb7f4568924799b4ef6e975b08417ef324212324737f4b",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh-root-seal.json"
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open: Source5db94406 GNU copy/TLS correction committed, full root gates0 and fresh distinct Source/Reader active; scanner metadata/lexical/Secret-copy full correction pending final freeze.",
+    "stage": "AP09.8 open: assigned Source/Reader PASS; complete QualityFAIL1 cached-image pull overclaim, author preparing correction; frozen tools new Root full11suite running.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Finish full Source/Reader on frozen corrected3pages and distinct Quality; finish scanner final native/unit/436/expanded receiving proof, resume semantic API integrator, root whole suite and fresh tool Source. Source-bound full generation/gates/mutations, required deployment evidence, Astra and remaining packages/parity/AP10/AP11 remain.",
+    "next": "Finish exact diagnostic qualification and Root full11-suite; fresh complete tool Source; source commit then pinned full generation/gates/mutations; full corrected operator-family reviews, required deployment evidence and Astra remain before AP09.8 closure.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -23882,9 +24099,7 @@
     },
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
-      "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "/root/probe_gnu_copy_corrected_complete_source_fresh",
-      "/root/probe_gnu_copy_corrected_complete_reader_fresh"
+      "/root/probe_identity_retention_recovered_writer"
     ],
     "currentNextSteps": [
       "Observe superseding callback/container/branch-custody scanner batch and full native/receiving replay.",
@@ -27082,16 +27297,30 @@
         "rootReceipt": "/home/node/Documents/Codex/a98-evidence/root-integrated-unknown-alias-class-output-and-trust/result.json",
         "acceptanceLimit": "Selected suite completed before newest status/pin edits; no independent semantic, mutation, publication or package acceptance."
       },
-      "documentationAuthorSeal": "/home/node/Documents/Codex/a98-evidence/probe_gnu_copy_complete_correction_writer-root-seal.json",
-      "documentationAuthorArtifacts": 17479,
+      "documentationAuthorSeal": "/home/node/Documents/Codex/a98-evidence/probe_late_pv_identity_complete_correction_writer-root-seal.json",
+      "documentationAuthorArtifacts": 6280,
       "authoredTaskMappingEvidence": "/home/node/Documents/Codex/a98-evidence/worker-trust-task-mapping-root-correction/result.json",
       "privateTaskRegistryCheck": "/home/node/Documents/Codex/a98-evidence/worker-trust-task-registry-private-validation/result.json",
       "privateTaskRegistryVerdict": "Generation/currentness PASS13 tasks, actual procedure check FAIL duplicate npm-ci literal; no published gate pass",
       "toolingCandidate": "Current in-progress lexical-binding correction; old b27/4f98/1674 test evidence historical only.",
-      "qualityReview": "Pending corrected independently Source-accepted candidates; no Quality/Astra waiver.",
+      "qualityReview": {
+        "agent": "/root/late_pv_identity_complete_quality_fresh",
+        "role": "quality",
+        "model": "gpt-6.1-sol",
+        "reasoningEffort": "medium",
+        "forkTurns": "none",
+        "freshContext": true,
+        "initialMode": "read-only",
+        "state": "terminal-complete-assigned-FAIL-one-material-QF01",
+        "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+        "scope": "Full installation, worker-trust and maintenance Quality facet; publication/live excluded.",
+        "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh/REPORT.md",
+        "reportSha256": "c46605b6fc99c274b5eb7f4568924799b4ef6e975b08417ef324212324737f4b",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-complete-quality-fresh-root-seal.json"
+      },
       "canonicalCommandAuthorSeal": "/home/node/Documents/Codex/a98-evidence/install-task-canonical-command-correction-writer-root-seal.json",
       "canonicalCommandAuthorArtifacts": 81,
-      "documentationSourceCommit": "5db94406d399934d06acb710cdead1fae0f4b2d6",
+      "documentationSourceCommit": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
       "taskGeneratedCommit": "2a3fe02c93c9aa996d6e84feae7cd862d319ec22",
       "toolingSourceReview": {
         "agent": "/root/unknown_alias_class_output_complete_source_fresh",
@@ -27111,23 +27340,79 @@
       "toolingCorrectionWriter": "/root/annotation_yaml_failclosed_complete_batch_writer",
       "protectedStaticSourceAndCapturedAuth": "F9/F10 open; root coordinates exclusive output owner after slot available",
       "freshDocumentationReviews": {
-        "source": "/root/probe_gnu_copy_corrected_complete_source_fresh",
-        "reader": "/root/probe_gnu_copy_corrected_complete_reader_fresh",
-        "quality": "Pending distinct fresh identity after complete Source/Reader correction checks."
+        "source": {
+          "agent": "/root/late_pv_identity_corrected_complete_source_fresh",
+          "role": "source",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-PASS",
+          "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+          "scope": "Complete installation, worker-trust and maintenance role partition; OPR-003/008 and A98-02/03/09/13 facets only. No package/global/live acceptance.",
+          "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-source-fresh/report.md",
+          "reportSha256": "91c323e34ab134d95389e4d14944ba4b6955c21d3c43aec13fc7c7cac16f55ef",
+          "manifestSha256": "55667e4a96727c780aaaa45a80d4ef28a562f94884a3e963886c49e077ee9153",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-source-fresh-root-seal.json",
+          "rootVerifiedArtifacts": 9026,
+          "rootVerifiedInputs": 63
+        },
+        "reader": {
+          "agent": "/root/late_pv_identity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "forkTurns": "none",
+          "freshContext": true,
+          "initialMode": "read-only",
+          "state": "terminal-complete-assigned-PASS",
+          "sourceRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+          "scope": "Complete installation, worker-trust and maintenance role partition; OPR-003/008 and A98-02/03/09/13 facets only. No package/global/live acceptance.",
+          "report": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "b15234417fdecf7e010666396905c8c1a6e741c4f03eea93aa5a55de70e9ba52",
+          "manifestSha256": "6643ff91b08dbb98b03d5eec7915c39b41bdfefbd19c6d2600a299e191a44fce",
+          "rootSeal": "/home/node/Documents/Codex/a98-evidence/late-pv-identity-corrected-complete-reader-fresh-root-seal.json",
+          "rootVerifiedArtifacts": 10294,
+          "rootVerifiedInputs": 657
+        }
       },
       "rootStaticSourceAndCapturedAuthCorrection": "/home/node/Documents/Codex/a98-evidence/static-source-codex-custody-root-correction/report.json",
       "rootStaticAndCapturedChecks": "11 selected capture controls PASS,12 protected historical-baseline controls PASS,27 production tests PASS before extra public-checkout control added; not fresh independent approval",
       "scannerCorrectionWriter": "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "scannerFreeze": "1674 WITHDRAWN: full replay78/78 historical PASS cannot qualify superseding lexical-binding correction. Owning-definition lexical namespaces need precise forwarder custody checks.",
+      "scannerFreeze": {
+        "sourceSha256": "4263f0e834ca8dd71e2be1cc3276306d0121f19c81fec9ceb06eb2fdee51c3db",
+        "testsSha256": "478f3ff5b7c5199c2d4d1bc3980cb81f836244011f983f75d2a510c59d7ac9d7",
+        "rootSeal": "/home/node/Documents/Codex/a98-evidence/callable-container-helper-custody-batch-writer-root-seal.json",
+        "rootVerifiedArtifacts": 459,
+        "actualReceivingDecisions": 113,
+        "positive": 18,
+        "negative": 95,
+        "unitTests": 57,
+        "opsTests": 9,
+        "environmentNames": 436,
+        "state": "author-full-proof-frozen-not-independent-acceptance"
+      },
       "qualificationIntegrator": "/root/superseding_lexical_source_qualification_integrator",
       "docCorrectionWriter": "/root/trust_denial_retirement_complete_batch_writer",
-      "lastCompleteDocReader": "FAIL2 fullcorrected Reader;71 verified artifacts. R1storage-lifetime exclusion andR2immutable failed-observation evidence. Corrected trust/signing/lifecycle/5retainedresource facetsPASS.",
-      "lastCompleteDocSource": "Terminal complete three-page Source FAIL2;3152 root-verified artifacts. Original creating-provenance/local-retention/negativeSVID/preservation facets pass; GNU repeated working-copy refresh and TLS timeout evidence range need full correction.",
-      "observedAt": "2026-10-12T05:54:01.833192+00:00",
+      "lastCompleteDocReader": "Complete current three-page Reader PASS;76 fresh native controls; Root10294 artifacts/657 captured inputs verified, including private tools. Historical5db complete FAIL1 remains.",
+      "lastCompleteDocSource": "Complete current three-page Source PASS; Root9026 artifacts/63 controlled inputs verified. Historical5db complete FAIL1 remains.",
+      "observedAt": "2026-10-12T07:28:17.371840+00:00",
       "fourPageCorrectionCommit": "a2abcd45b78b3ce2d54883f56295532b3601002e",
       "rootTrustAggregate": "Observed terminal0, Sources unchanged; static/contract/typecheck only.",
-      "qualificationState": "HOLD until superseding native/custody/full receiving qualification; no hash-only registry refresh.",
-      "rootFullNewIntegration": "Prepared but not started: wait for superseding scanner freeze and qualification. Historical241-test PASS is not current-candidate proof.",
+      "qualificationState": "Author candidate frozen; Root full11suite and fresh independent complete ToolSource pending.",
+      "rootFullNewIntegration": {
+        "receipt": "/home/node/Documents/Codex/a98-evidence/root-integrated-annotation-yaml-static-custody-and-denial/result.json",
+        "state": "observed-terminal-FAIL",
+        "exitCode": 1,
+        "tests": 268,
+        "passed": 266,
+        "failed": 2,
+        "skipped": 0,
+        "sourceAndPagesUnchanged": true,
+        "cause": "Stale diagnostic output selector for reader-boundary checker after committed source change; exact nonAPI Source qualification correction pending final freeze.",
+        "limit": "No current full-suite PASS; earlier241-test PASS historical only."
+      },
       "independentAcceptance": "AP09.8 not accepted; full gates and final Astra still required.",
       "currentOperatorTaskGate": {
         "command": "npm run docs:operator-tasks:check",
@@ -27142,7 +27427,7 @@
         "acceptanceLimit": "Generator currentness, task/procedure structural checks and isolated mutation controls, not independent semantic or AP09.8 acceptance."
       },
       "documentationBatchWriter": "/root/probe_identity_retention_recovered_writer",
-      "documentationBatchState": "Complete GNU-copy/TLS author correction committed/pushed; root current full trust/operator both0, Sources unchanged; new distinct fresh Source and Reader active.",
+      "documentationBatchState": "Late-PV strict disposition correction committed/pushed; complete independent Source and Reader PASS, Quality pending.",
       "currentRootGates": "/home/node/Documents/Codex/a98-evidence/root-gnu-copy-and-tls-correction-gates/result.json",
       "rootCurrentGateVerdict": "Observed both terminal0, eight pages and relevant sources unchanged; no live or semantic acceptance.",
       "remainingOperatorControlReview": "Complete five-page Source terminal FAIL3; no outstanding semantic scope placeholder. Required deployment receipts still missing.",
@@ -27152,7 +27437,7 @@
       "currentSourceProvisionalFindings": "Replaced provisional GNU/TLS by complete terminal FAIL2 and sealed findings.",
       "probeIdentityWriter": "/root/probe_identity_retention_recovered_writer",
       "probeIdentityWriterState": "Author final complete/frozen after native GNU9.1+BusyBox full family passes, no independent approval.",
-      "scannerState": "Latest owner-reported55/55 and real436 terminal0 are interim scope candidate; metadata owning-module/closure regression running, no superseding final freeze/replay proof yet.",
+      "scannerState": "Final source4263 frozen; native/full113 receiving proof terminal0; old1674 withdrawn, preserved historical.",
       "rawAuditSourceCommit": "37920d4f92dd95764c7df2c20748a5a0f59fb829",
       "rawAuditAuthorSeal": "/home/node/Documents/Codex/a98-evidence/raw-audit-entry-complete-family-writer-root-seal.json",
       "rawAuditAuthorArtifacts": 35,
@@ -27168,7 +27453,13 @@
       "busterVisualSourceCommit": "d147c1d729fa4a7ef518f37667b90299cde7aeee",
       "busterVisualAuthorSeal": "/home/node/Documents/Codex/a98-evidence/buster-visual-source-findings-complete-writer-root-seal.json",
       "busterVisualState": "Author corrected and Source committed; no shared generated output changed; full current generation then fresh independent Source/Reader/Quality required.",
-      "qualificationIntegratorState": "Pre-freeze audit sealed and author turn complete, API pair unchanged/HOLD; same author identity ready for followup after explicit scanner final freeze/full proof."
+      "qualificationIntegratorState": "Final frozen f9badd6b/cae72d66; Root1998 artifacts/869 inputs verified; bounded affected2/publication28/protected12/captured11/diagnostic9 PASS. Fresh Rootfull11suite session22876 PID252692 currently running.",
+      "rootFullNewReplay": {
+        "state": "running-confirmed-live-handle",
+        "session": 22876,
+        "pid": 252692,
+        "receiptDirectory": "/home/node/Documents/Codex/a98-evidence/root-integrated-reader-boundary-diagnostic-qualification"
+      }
     }
   }
 }
