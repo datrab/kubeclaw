@@ -7724,7 +7724,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -7754,7 +7754,12 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L261"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L261",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Canonical lifecycle routing and complete procedure/readability contract.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPR-002",
@@ -7778,8 +7783,10 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
+        "A98-01",
         "A98-02",
         "A98-03",
+        "A98-04",
         "A98-13"
       ],
       "packageGateCandidates": [
@@ -7798,7 +7805,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -7833,7 +7840,12 @@
         "A98-20261011-QUALITY-Q2",
         "A98-20261011-NEXT-INSTALLATION-EOF-PRISM-COMPLETE-SOURCE-FRESH-1"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L262"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L262",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Supported environment, authority, preflight and readiness prerequisites.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPR-003",
@@ -7856,9 +7868,11 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
+        "A98-01",
         "A98-02",
         "A98-03",
         "A98-04",
+        "A98-09",
         "A98-13"
       ],
       "packageGateCandidates": [
@@ -7877,7 +7891,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -8074,7 +8088,12 @@
         "A98-20261012-PROBE-PULL-CLAIM-QF01"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L263",
-      "currentCandidateRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f"
+      "currentCandidateRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Installation/preflight/health and disposable first-verification resource cleanup.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPR-004",
@@ -8100,9 +8119,11 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
+        "A98-01",
         "A98-02",
         "A98-04",
         "A98-05",
+        "A98-06",
         "A98-13"
       ],
       "packageGateCandidates": [
@@ -8121,7 +8142,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -8172,7 +8193,12 @@
         "A98-20261012-MATRIX-SRC-02",
         "A98-20261012-MATRIX-SRC-03"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L264"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L264",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Run admission, readiness/audit and full signal/restart/recovery safe-action procedures.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPR-005",
@@ -8198,6 +8224,7 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
+        "A98-01",
         "A98-02",
         "A98-05",
         "A98-13"
@@ -8218,7 +8245,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -8263,7 +8290,12 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L265"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L265",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Cancellation authority, committed effects and explicit unsupported operator route.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPR-006",
@@ -8286,6 +8318,7 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
+        "A98-01",
         "A98-02",
         "A98-06",
         "A98-13"
@@ -8306,7 +8339,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -8388,7 +8421,12 @@
         "A98-QUALITY-DIAGNOSE-EVIDENCE"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L266",
-      "evidenceState": "Current bounded reviewed facets linked; remaining whole requirement/gates/final Astra not accepted"
+      "evidenceState": "Current bounded reviewed facets linked; remaining whole requirement/gates/final Astra not accepted",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Canonical symptom-to-authority-to-safe-recovery procedure.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPR-007",
@@ -8412,6 +8450,7 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
+        "A98-01",
         "A98-02",
         "A98-07",
         "A98-13"
@@ -8432,7 +8471,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -8492,7 +8531,12 @@
         "A98-READER-BACKUP-GROUP"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L267",
-      "evidenceState": "Current bounded reviewed facets linked; remaining whole requirement/gates/final Astra not accepted"
+      "evidenceState": "Current bounded reviewed facets linked; remaining whole requirement/gates/final Astra not accepted",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Independent access and implemented/unverified backup/restore boundaries.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPR-008",
@@ -8517,6 +8561,7 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
+        "A98-01",
         "A98-02",
         "A98-08",
         "A98-09",
@@ -8538,7 +8583,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -8733,7 +8778,12 @@
         "A98-QUALITY-REGISTRY-PREPARATION"
       ],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L268",
-      "currentCandidateRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f"
+      "currentCandidateRevision": "5dfd56149f552dc099ae4528e7304344ebc1ef5f",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Upgrade/rollback/rotation and safe retirement with retained evidence.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPR-009",
@@ -8757,7 +8807,10 @@
       ],
       "acceptanceIds": [
         "A98-02",
+        "A98-04",
         "A98-06",
+        "A98-07",
+        "A98-09",
         "A98-13"
       ],
       "packageGateCandidates": [
@@ -8776,7 +8829,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -8808,7 +8861,12 @@
       "openFindingIds": [
         "A98-R2-SERVICE-BUDGET-RECORD"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L269"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L269",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Capacity/retention thresholds affect health, diagnosis, recoverable data and retirement; no separate capacity gate invented.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPR-010",
@@ -8924,7 +8982,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -8958,7 +9016,12 @@
         "A98-QUALITY-COMPILE-STARTUP",
         "A98-R2-PLUGIN-DEPENDENCY-TRUTH"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L271"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L271",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Plugin purpose/functions/actual configuration and operator-readable use.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPL-002",
@@ -8983,6 +9046,10 @@
       ],
       "acceptanceIds": [
         "A98-01",
+        "A98-02",
+        "A98-04",
+        "A98-10",
+        "A98-11",
         "A98-13"
       ],
       "packageGateCandidates": [
@@ -9001,7 +9068,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9034,7 +9101,12 @@
         "A98-READER-OBSERVER-REDIS",
         "A98-QUALITY-COMPILE-STARTUP"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L272"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L272",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Surface selection routes canonical procedures with exact effective configuration/readiness.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPL-003",
@@ -9060,6 +9132,8 @@
       "acceptanceIds": [
         "A98-02",
         "A98-04",
+        "A98-10",
+        "A98-11",
         "A98-13"
       ],
       "packageGateCandidates": [
@@ -9078,7 +9152,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9111,7 +9185,12 @@
         "A98-READER-OBSERVER-REDIS",
         "A98-QUALITY-COMPILE-STARTUP"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L273"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L273",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Activation and success observations versus installed/effective configuration.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPL-004",
@@ -9157,7 +9236,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9190,7 +9269,12 @@
         "A98-READER-OBSERVER-REDIS",
         "A98-QUALITY-COMPILE-STARTUP"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L274"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L274",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Plugin diagnosis/change/disable/replace/remove and remaining resources.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "OPL-005",
@@ -9215,6 +9299,8 @@
       ],
       "acceptanceIds": [
         "A98-02",
+        "A98-03",
+        "A98-06",
         "A98-10",
         "A98-11",
         "A98-13"
@@ -9235,7 +9321,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9269,7 +9355,12 @@
         "A98-QUALITY-COMPILE-STARTUP",
         "A98-R2-PLUGIN-DEPENDENCY-TRUTH"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L275"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L275",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Dependency/Secret authority, effective consumer and prerequisite/error procedure.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-001",
@@ -9292,7 +9383,8 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
-        "A98-10"
+        "A98-10",
+        "A98-11"
       ],
       "packageGateCandidates": [
         "A98-01",
@@ -9310,7 +9402,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9340,7 +9432,12 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L276"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L276",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Canonical recursive inventory and authored-to-runtime value route.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-002",
@@ -9383,7 +9480,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9428,7 +9525,12 @@
         "A98-PLATFORM-EXTERNAL-EXECUTION-BOUNDARY",
         "A98-PLATFORM-ROOT-GRANT-CONSTRAINTS"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L277"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L277",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Pipeline platform recursive schema/conditions/effective consumer.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-003",
@@ -9473,7 +9575,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9505,7 +9607,12 @@
       "openFindingIds": [
         "A98-QUALITY-DECISION-REASONS"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L278"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L278",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Nova project recursive schema/defaults/effective compiler consumer.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-004",
@@ -9548,7 +9655,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9580,7 +9687,12 @@
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L279"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L279",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Pipeline definition recursive schema and current runtime semantics.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-005",
@@ -9624,7 +9736,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9656,7 +9768,12 @@
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L280"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L280",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Selected pipeline control-file values and actual consumer.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-006",
@@ -9734,7 +9851,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9769,7 +9886,12 @@
         "A98-SOURCE-REGISTRY-DEFAULTS",
         "A98-R2-SCHEMA-EMPTY-AND-RUNTIME-LIMITS"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L282"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L282",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Plugin recursive configuration, registration and consumer/default precedence.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-008",
@@ -9814,7 +9936,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9846,7 +9968,12 @@
       "openFindingIds": [
         "A98-QUALITY-TEST-STATUS"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L283"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L283",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Worker profile/engine/role selected configuration and enforcement consumer.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-009",
@@ -9894,7 +10021,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -9949,7 +10076,12 @@
         "A98-API-UNKNOWN-VENDOR-SCHEMA-KEYWORD",
         "A98-20261012-LEXICAL-DIAGNOSTIC-S3"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L284"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L284",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Helm/GitOps recursive used configuration and required new-field sensitivity.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-010",
@@ -9997,7 +10129,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -10054,7 +10186,12 @@
         "A98-20261012-CANONICAL-REFLECTION-S2",
         "A98-20261012-CANONICAL-REFLECTION-S3"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L285"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L285",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Actual host/Prism/OpenClaw/Codex settings and swarm/environment mutation sensitivity.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-011",
@@ -10098,7 +10235,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -10164,7 +10301,12 @@
         "A98-20261012-CANONICAL-REFLECTION-S2",
         "A98-20261012-CANONICAL-REFLECTION-S3"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L286"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L286",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Environment/Secret reads, effective precedence and added-consumer mutation sensitivity.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-012",
@@ -10206,7 +10348,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -10236,7 +10378,12 @@
         }
       ],
       "openFindingIds": [],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L287"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L287",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Configured service/port/endpoint/ingress fields and actual effective receivers.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-013",
@@ -10262,6 +10409,7 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
+        "A98-10",
         "A98-11"
       ],
       "packageGateCandidates": [
@@ -10280,7 +10428,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -10364,7 +10512,12 @@
         "A98-20261012-CANONICAL-REFLECTION-S1",
         "A98-20261012-CANONICAL-REFLECTION-S2"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L288"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L288",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Complete effective-value precedence, empty/conflicting/invalid inputs and tests.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-014",
@@ -10390,8 +10543,11 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
+        "A98-02",
+        "A98-08",
         "A98-10",
-        "A98-11"
+        "A98-11",
+        "A98-13"
       ],
       "packageGateCandidates": [
         "A98-01",
@@ -10409,7 +10565,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -10459,7 +10615,12 @@
         "A98-QUALITY-TEST-STATUS",
         "A98-PLATFORM-TIMEOUT-PINNING-CLASS"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L289"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L289",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Configuration change procedure, activation/restart/new-run/data boundary and operator safe action.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-015",
@@ -10487,6 +10648,7 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
+        "A98-06",
         "A98-10",
         "A98-11"
       ],
@@ -10506,7 +10668,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -10570,7 +10732,12 @@
         "A98-20261012-CANONICAL-REFLECTION-S2",
         "A98-20261012-CANONICAL-REFLECTION-S3"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L290"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L290",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Configuration validator/error authority and safe diagnosis of effective invalid input.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-016",
@@ -10653,7 +10820,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -10687,7 +10854,12 @@
         "A98-QUALITY-DECISION-REASONS",
         "A98-R2-PUBLICATION-CORRUPTION-RECOVERY"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L292"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L292",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Coupled control/progress publication procedure, actual consumer and safe failure/repetition.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "CFG-018",
@@ -10713,6 +10885,8 @@
         "npm run docs:check:refs"
       ],
       "acceptanceIds": [
+        "A98-03",
+        "A98-08",
         "A98-10",
         "A98-11"
       ],
@@ -10732,7 +10906,7 @@
         "A98-13",
         "A98-14"
       ],
-      "acceptanceMappingState": "initial-scope-map-pending-independent-confirmation",
+      "acceptanceMappingState": "main-agent-semantic-mapping-pending-independent-validation",
       "requiredManualReview": [
         "source",
         "reader",
@@ -10787,7 +10961,12 @@
         "A98-20261012-CANONICAL-REFLECTION-S4",
         "A98-20261012-CANONICAL-REFLECTION-S5"
       ],
-      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L293"
+      "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L293",
+      "acceptanceMappingBasis": {
+        "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
+        "reason": "Actual supported configuration/compatibility limits for preflight and change.",
+        "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
+      }
     },
     {
       "id": "FLW-001",
@@ -25330,6 +25509,21 @@
       "rootSeal": "/home/node/Documents/Codex/a98-evidence/core-stable-complete-reader-fresh-root-seal.json",
       "verifiedArtifacts": 23,
       "verifiedInputs": 74
+    },
+    {
+      "agent": "/root/developer_handbook_complete_baseline_writer",
+      "role": "author",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "state": "active-complete-developer-baseline-author",
+      "scope": "DEV001-009 handbook and A91001/02/03/11 handbook facets plus preregistered READER-PLATFORM-02 desiredbehavior fixture; not full SDK/deepguide package or practical exercise approval.",
+      "exclusiveFiles": [
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/examples/platform-change-nova-lifecycle.json"
+      ],
+      "sourceRevision": "671234b056bf5f5f503e51e8db30f843e781ba6e"
     }
   ],
   "continuation": {
@@ -26387,7 +26581,8 @@
     "freshRuntimeBoundaryReviewState": "Source complete bounded PASS at30b with required execution still FAIL/open; separate Quality and Reader active. Private dependency correction author active; main tooling unchanged.",
     "activeAgents": [
       "/root/annotation_yaml_failclosed_complete_batch_writer",
-      "/root/superseding_lexical_source_qualification_integrator"
+      "/root/superseding_lexical_source_qualification_integrator",
+      "/root/developer_handbook_complete_baseline_writer"
     ],
     "currentNextSteps": [
       "Finish coherent S1-S3 scanner and S4-S5 API author batches in parallel; keep owned files exclusive.",
@@ -26407,6 +26602,35 @@
       ],
       "preparation": "/home/node/Documents/Codex/a98-evidence/root-required-deployment-readiness/registration-prerequisites-current.json",
       "limit": "No live target qualification or approval inferred from localhost templates, earlier API access or elapsed time."
+    },
+    "platformReaderPrerequisiteAudit": {
+      "capturedAt": "2026-10-12T09:45:06.953565+00:00",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/root-required-deployment-readiness/platform-reader-exercise-prerequisites-current.json",
+      "registeredPlatform01": "not-ready; named successful trace is conceptual and Redis fault trace contract-only, no observed same-revision chain.",
+      "registeredPlatform02": "not-ready; missing required lifecycle-change fixture and developerhandbook, independent author now prepares both.",
+      "boundary": "No participant exercise executed; current Core explanatory Reader PASS does not satisfy these practical tasks. No fake product execution or waived requirement."
+    },
+    "developerBaselineParallelAuthor": {
+      "agent": "/root/developer_handbook_complete_baseline_writer",
+      "role": "author",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "state": "active-complete-developer-baseline-author",
+      "scope": "DEV001-009 handbook and A91001/02/03/11 handbook facets plus preregistered READER-PLATFORM-02 desiredbehavior fixture; not full SDK/deepguide package or practical exercise approval.",
+      "exclusiveFiles": [
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/examples/platform-change-nova-lifecycle.json"
+      ],
+      "sourceRevision": "671234b056bf5f5f503e51e8db30f843e781ba6e"
+    },
+    "ap98IndividualGateMapping": {
+      "mappedRequirements": 30,
+      "gateRange": "A98-01 through A98-14",
+      "notCatalogueRequirement": "A98-12 journey pages remain explicit supplementaryScope, not silently omitted from package.",
+      "state": "authoritative criteria mapped by main agent; independent final scope validation pending",
+      "limits": "All requirements/gates remain not-accepted; cross-package and standard obligations continue."
     }
   },
   "productBoundaries": [
@@ -30016,6 +30240,24 @@
       "receivingFalseGreenCases": 9,
       "nativeNodeSecretOutputs": 16,
       "next": "Coherent disjoint parallel author corrections; Root277 preserved as execution only."
+    },
+    "developerBaselinePreparation": {
+      "author": {
+        "agent": "/root/developer_handbook_complete_baseline_writer",
+        "role": "author",
+        "model": "gpt-6.1-sol",
+        "reasoningEffort": "medium",
+        "forkTurns": "none",
+        "freshContext": true,
+        "state": "active-complete-developer-baseline-author",
+        "scope": "DEV001-009 handbook and A91001/02/03/11 handbook facets plus preregistered READER-PLATFORM-02 desiredbehavior fixture; not full SDK/deepguide package or practical exercise approval.",
+        "exclusiveFiles": [
+          "docs/site/extend/developer-handbook.md",
+          "docs/site/extend/examples/platform-change-nova-lifecycle.json"
+        ],
+        "sourceRevision": "671234b056bf5f5f503e51e8db30f843e781ba6e"
+      },
+      "limits": "Thematic author preparation permitted AP092-10; no AP099 acceptance before parity, no bulkparity/deletion, no persistent product changes. Shared navigation/classification ownedRoot and will integrate after complete stable batch."
     }
   }
 }
