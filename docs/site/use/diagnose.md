@@ -5,7 +5,7 @@ Audience: operator, incident responder
 Owner: platform operations
 Evidence: scripts/deploy.sh; skills/nova/core/telemetry/audit.ts
 Applies to: current runtime roles and durable pipeline state
-Last verified: 2026-10-11; local snippet and bounded process checks only; no live dependency failure result is available
+Last verified: 2026-10-12; local snippet and bounded process checks only; no live dependency failure result is available
 
 ## Objective
 
@@ -144,9 +144,9 @@ ownership or the original identities are unknown. Do not audit an active run
 to discover its identity; use the retained command output and the component's
 supported observation path while work continues.
 
-Audit is not read-only. [The audit reader opens FileJournal](https://github.com/datrab/kubeclaw/blob/1864cd8c9d82cafb2f259ac72bb8dfba67388882/skills/nova/core/telemetry/audit.ts#L14-L18).
-[Its constructor truncates an incomplete tail before parsing](https://github.com/datrab/kubeclaw/blob/1864cd8c9d82cafb2f259ac72bb8dfba67388882/skills/nova/core/state/journal.ts#L30-L77),
-and [its mutex creates the append-lock file](https://github.com/datrab/kubeclaw/blob/1864cd8c9d82cafb2f259ac72bb8dfba67388882/skills/nova/core/state/file-mutex.ts#L8-L21).
+Audit is not read-only. [The audit reader opens FileJournal](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/core/telemetry/audit.ts#L14-L18).
+[Its constructor truncates an incomplete tail before parsing](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/core/state/journal.ts#L30-L77),
+and [its mutex creates the append-lock file](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/core/state/file-mutex.ts#L8-L21).
 A later audit failure does not restore discarded bytes. Recovery and resume
 can open the same journals before rejecting a run or signal.
 
@@ -316,7 +316,7 @@ Use a separate authorized connectivity check.
 ## Controlled Dependency Failure Exercises
 
 The implementation links below were inspected at revision
-`c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`. Bash and Node.js 24 syntax checks
+`4d3068465a2e202d2d5073b77e9273c308497995`. Bash and Node.js 24 syntax checks
 passed for the published command blocks. Synthetic local data exercised the
 OAuth fingerprint and cleanup guards, backup-group comparison, and compact
 Git receipt projection. These checks do not execute any dependency outage or
@@ -368,12 +368,187 @@ so. Capture that status explicitly; `tee` can otherwise hide the status of the
 left-hand command in shells without `pipefail`. The examples below therefore
 write failure output to a file and record `$?` before displaying it.
 
+### Bind the Fault Window to Object Lifetimes
+
+A namespace name and a resource name can be reused. A UID identifies one
+object lifetime. Before each exercise, the platform owner must independently
+confirm the application and Prism namespace UIDs. For Tailscale, also confirm
+its operator namespace UID. Obtain these values from the installation inventory
+through the independent administration route, not from the lookup being tested.
+The owner must exclude namespace deletion or replacement, workload replacement,
+GitOps reconciliation, autoscaling, Secret rotation, and competing changes to
+the selected resources until restoration and cleanup finish. Record the owner,
+targets, exclusion method, and end of the window. If this condition cannot be
+established, stop before mutation. A verbal expectation or a final UID comparison
+does not establish it.
+
+Run these helpers in Bash with Node.js 24 and the selected kubectl. Access must
+include namespace and selected resource reads, JSON patches for the named
+StatefulSets, Service, Secret and Deployments, and create/delete for the one
+Cilium policy where used. Check the required verbs through
+[the selected-scope authority check](install.md#check-authority-for-the-selected-scope).
+The helper stores metadata only, including for Secrets. Keep the evidence files
+unchanged until the window closes. The selected workload must also keep each
+consumer Pod stable for fault exec: no eviction, restart, rollout, or replacement.
+Capture its Pod UID, container ID, and restart count before and after the check.
+A missing exec, changed consumer, or unrelated error cannot pass the fault check.
+
+```bash
+export EXPECTED_FAULT_NAMESPACE_UID="<independently-recorded-application-namespace-uid>"
+export EXPECTED_FAULT_PRISM_NAMESPACE_UID="<independently-recorded-prism-namespace-uid>"
+readonly EXPECTED_FAULT_NAMESPACE_UID EXPECTED_FAULT_PRISM_NAMESPACE_UID
+bind_fault_namespace() {
+  assert_cluster_binding || return 126
+  local namespace="$1" expected="$2" actual
+  test -n "$expected" || return 126
+  actual=$(kubectl get namespace "$namespace" -o jsonpath='{.metadata.uid}') || return 126
+  test "$actual" = "$expected" || return 126
+  test ! -e "$EVIDENCE_DIR/namespace-$namespace.uid" || return 126
+  printf '%s\n' "$expected" > "$EVIDENCE_DIR/namespace-$namespace.uid"
+}
+assert_fault_namespace() {
+  assert_cluster_binding || return 126
+  local namespace="$1" actual
+  test -s "$EVIDENCE_DIR/namespace-$namespace.uid" || return 126
+  actual=$(kubectl get namespace "$namespace" -o jsonpath='{.metadata.uid}') || return 126
+  test "$actual" = "$(cat "$EVIDENCE_DIR/namespace-$namespace.uid")" || return 126
+}
+fault_metadata() {
+  assert_fault_namespace "$1" || return 126
+  kubectl -n "$1" get "$2" -o json | node --input-type=module -e '
+let input = ""; for await (const chunk of process.stdin) input += chunk;
+const value = JSON.parse(input), m = value.metadata;
+if (!m?.uid || !m.resourceVersion || m.deletionTimestamp) process.exit(1);
+console.log(JSON.stringify({ name: m.name, namespace: m.namespace,
+  uid: m.uid, resourceVersion: m.resourceVersion,
+  templateAnnotations: value.spec?.template?.metadata?.annotations ?? {} }));
+'
+}
+freeze_fault_target() {
+  local key="$1" namespace="$2" resource="$3"
+  test ! -e "$EVIDENCE_DIR/$key-frozen.json" || return 126
+  fault_metadata "$namespace" "$resource" > "$EVIDENCE_DIR/$key-frozen.json"
+}
+assert_fault_target() {
+  local key="$1" namespace="$2" resource="$3"
+  fault_metadata "$namespace" "$resource" > "$EVIDENCE_DIR/$key-current.json" || return 126
+  node - "$EVIDENCE_DIR/$key-frozen.json" "$EVIDENCE_DIR/$key-current.json" <<'NODE'
+const fs = require('node:fs');
+const [before, current] = process.argv.slice(2).map(p => JSON.parse(fs.readFileSync(p, 'utf8')));
+if (before.uid !== current.uid || before.name !== current.name
+  || before.namespace !== current.namespace) throw new Error('selected resource lifetime changed; stop');
+NODE
+}
+patch_fault_target() {
+  local key="$1" namespace="$2" resource="$3" changes
+  changes=$(cat) || return 126
+  assert_fault_target "$key" "$namespace" "$resource" || return 126
+  printf '%s\n' "$changes" | node --input-type=module -e '
+import fs from "node:fs";
+let input = ""; for await (const chunk of process.stdin) input += chunk;
+const current = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+const changes = JSON.parse(input);
+if (!Array.isArray(changes) || !changes.length) process.exit(1);
+console.log(JSON.stringify([
+  { op: "test", path: "/metadata/uid", value: current.uid },
+  { op: "test", path: "/metadata/resourceVersion", value: current.resourceVersion },
+  ...changes
+]));
+' "$EVIDENCE_DIR/$key-current.json" | kubectl -n "$namespace" patch "$resource" \
+    --type=json --patch-file=/dev/stdin || return 126
+  assert_fault_target "$key" "$namespace" "$resource"
+}
+scale_fault_target() {
+  local key="$1" namespace="$2" resource="$3" replicas="$4"
+  [[ "$replicas" =~ ^[0-9]+$ ]] || return 126
+  printf '[{"op":"replace","path":"/spec/replicas","value":%s}]\n' "$replicas" \
+    | patch_fault_target "$key" "$namespace" "$resource"
+}
+restart_fault_target() {
+  local key="$1" namespace="$2" resource="$3"
+  assert_fault_target "$key" "$namespace" "$resource" || return 126
+  node --input-type=module -e '
+import fs from "node:fs";
+const m = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+console.log(JSON.stringify([
+  { op: "test", path: "/metadata/uid", value: m.uid },
+  { op: "test", path: "/metadata/resourceVersion", value: m.resourceVersion },
+  { op: "add", path: "/spec/template/metadata/annotations", value: {
+    ...m.templateAnnotations, "kubectl.kubernetes.io/restartedAt": new Date().toISOString()
+  } }
+]));
+' "$EVIDENCE_DIR/$key-current.json" | kubectl -n "$namespace" patch "$resource" \
+    --type=json --patch-file=/dev/stdin || return 126
+  assert_fault_target "$key" "$namespace" "$resource"
+}
+fault_consumer_identity() {
+  assert_fault_namespace "$1" || return 126
+  kubectl -n "$1" get pod "$2" -o json | node --input-type=module -e '
+let input = ""; for await (const chunk of process.stdin) input += chunk;
+const p = JSON.parse(input), name = process.argv[1];
+const c = p.spec?.containers?.find(c => c.name === name);
+const r = p.status?.containerStatuses?.find(c => c.name === name);
+if (!p.metadata?.uid || p.metadata.deletionTimestamp || !c || !r?.state?.running
+  || !r.containerID || !r.imageID) process.exit(1);
+console.log(JSON.stringify({ name: p.metadata.name, uid: p.metadata.uid,
+  owners: p.metadata.ownerReferences, container: name, image: c.image,
+  imageID: r.imageID, containerID: r.containerID, restarts: r.restartCount }));
+' "$3"
+}
+freeze_fault_consumer() {
+  local key="$1" namespace="$2" pod="$3" container="$4"
+  test ! -e "$EVIDENCE_DIR/$key-consumer.json" || return 126
+  fault_consumer_identity "$namespace" "$pod" "$container" > "$EVIDENCE_DIR/$key-consumer.json"
+}
+assert_fault_consumer() {
+  local key="$1" namespace="$2" pod="$3" container="$4" current
+  current=$(fault_consumer_identity "$namespace" "$pod" "$container") || return 126
+  test "$current" = "$(cat "$EVIDENCE_DIR/$key-consumer.json")" || return 126
+}
+fault_consumer_exec() {
+  local key="$1" namespace="$2" pod="$3" container="$4" status=0
+  shift 4
+  assert_fault_consumer "$key" "$namespace" "$pod" "$container" || return 126
+  kubectl -n "$namespace" exec "$pod" -c "$container" -- "$@" || status=$?
+  assert_fault_consumer "$key" "$namespace" "$pod" "$container" || return 126
+  return "$status"
+}
+bind_fault_namespace "$NAMESPACE" "$EXPECTED_FAULT_NAMESPACE_UID" || exit 126
+if [ "$PRISM_NAMESPACE" = "$NAMESPACE" ]; then
+  test "$EXPECTED_FAULT_PRISM_NAMESPACE_UID" = "$EXPECTED_FAULT_NAMESPACE_UID" || exit 126
+else
+  bind_fault_namespace "$PRISM_NAMESPACE" "$EXPECTED_FAULT_PRISM_NAMESPACE_UID" || exit 126
+fi
+```
+
+For every consumer name below, use the actual Pod and container from the
+independent administration record. Verify its controller owner references through
+the ReplicaSet to the selected Deployment UID before freezing it. These helpers
+do not discover that ownership for you. Record the read and stop for mismatch.
+The identity check permits a Running container that is no longer Ready, so the
+fault does not block the dependency observation at a readiness wait.
+JSON Patch tests bind the UID and current resource version to the same resource
+mutation. A conflict, missing target, or lost response stops the sequence.
+Read the same guarded object to determine whether its intended field changed;
+do not repeat an uncertain request without that observation. The tests do not
+atomically bind a namespace UID or a later Pod exec request. The owner's exclusion
+must cover those check/request intervals and controller actions. If it lapses,
+stop even when all UID checks match. Restore traps use the same guards and must
+stop on replacement; they never repair a new object with an old snapshot.
+Use the independent route and platform owner to contain that incident.
+
+The [Kubernetes update contract](https://kubernetes.io/docs/reference/using-api/api-concepts/#updates-to-existing-resources)
+explains patch and resource-version conflicts. The
+[JSON Patch test operation](https://www.rfc-editor.org/rfc/rfc6902#section-4.6)
+explains the atomic field comparisons. These guards apply only to the resources
+that these KubeClaw exercises select; they are not a general cluster fencing service.
+
 ### Redis Unavailable
 
-The [role health client bounds Redis connection and command waits](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/kubeclaw/templates/deployment.yaml#L797-L821),
-[uses `XADD` for the startup stream check](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/kubeclaw/templates/deployment.yaml#L825-L840),
-and [exits nonzero on a failed enabled check](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/charts/kubeclaw/templates/deployment.yaml#L903-L929).
-The [audit reader rebuilds hash-verified durable events from filesystem state](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/telemetry/audit.ts#L14-L27).
+The [role health client bounds Redis connection and command waits](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/deployment.yaml#L797-L821),
+[uses `XADD` for the startup stream check](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/deployment.yaml#L825-L840),
+and [exits nonzero on a failed enabled check](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/deployment.yaml#L903-L929).
+The [audit reader rebuilds hash-verified durable events from filesystem state](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/core/telemetry/audit.ts#L14-L27).
 These mechanisms explain why Redis availability and readable Nova lifecycle
 state are separate observations. The checks for this page did not execute a Redis outage.
 
@@ -383,7 +558,7 @@ Before the first audit in this exercise, complete
 retained start record whose Nova owner has exited. Verify its original
 `PLATFORM_FILE` and `SELECTED_RUN_ID`, stop new writes to that run and its
 owning adapter stores, and retain verified adapter copies. Keep these writers
-stopped through both audits. Do not interrupt an active pipeline to manufacture
+stopped through the baseline, fault-window, and recovery audits. Do not interrupt an active pipeline to manufacture
 a successful Redis exercise. If ownership or preservation cannot be established,
 stop before the fault. Role health checks are separate from run writers.
 
@@ -398,6 +573,10 @@ not assume one.
 assert_cluster_binding || exit 126
 ./scripts/deploy.sh smoke-agent nova
 ./scripts/deploy.sh smoke-agent buster
+export REDIS_CONSUMER_POD="<recorded-actual-nova-pod>"
+readonly REDIS_CONSUMER_POD
+freeze_fault_consumer redis "$NAMESPACE" "$REDIS_CONSUMER_POD" kubeclaw || exit 126
+freeze_fault_target redis "$NAMESPACE" statefulset/redis-master || exit 126
 kubectl -n "$NAMESPACE" get statefulset/redis-master \
   -o jsonpath='{.spec.replicas}' > "$EVIDENCE_DIR/redis-replicas.txt"
 grep -Eq '^[1-9][0-9]*$' "$EVIDENCE_DIR/redis-replicas.txt"
@@ -416,29 +595,54 @@ restore_redis() {
   assert_cluster_binding || return 126
   if [ "${redis_restore_pending:-0}" -eq 1 ]; then
     redis_replicas="$(cat "$EVIDENCE_DIR/redis-replicas.txt")"
-    kubectl -n "$NAMESPACE" scale statefulset/redis-master --replicas="$redis_replicas"
-    kubectl -n "$NAMESPACE" rollout status statefulset/redis-master --timeout=180s
-    ./scripts/deploy.sh smoke-agent nova
-    ./scripts/deploy.sh smoke-agent buster
+    scale_fault_target redis "$NAMESPACE" statefulset/redis-master "$redis_replicas" || return 126
+    kubectl -n "$NAMESPACE" rollout status statefulset/redis-master --timeout=180s || return 1
+    ./scripts/deploy.sh smoke-agent nova || return 1
+    ./scripts/deploy.sh smoke-agent buster || return 1
     kubectl -n "$NAMESPACE" exec deployment/agent-nova -c kubeclaw -- \
       node /runtime-config/kubeclaw-health.mjs startup
   fi
 }
 trap 'restore_redis' EXIT
 trap 'exit 130' HUP INT TERM
-kubectl -n "$NAMESPACE" scale statefulset/redis-master --replicas=0
+scale_fault_target redis "$NAMESPACE" statefulset/redis-master 0 || exit 126
 kubectl -n "$NAMESPACE" wait --for=delete pod -l app.kubernetes.io/name=redis \
   --timeout=120s
 set +e
-./scripts/deploy.sh smoke-agent nova > "$EVIDENCE_DIR/redis-fault.txt" 2>&1
+date -u +%Y-%m-%dT%H:%M:%SZ > "$EVIDENCE_DIR/redis-fault-start.txt"
+fault_consumer_exec redis "$NAMESPACE" "$REDIS_CONSUMER_POD" kubeclaw \
+  node /runtime-config/kubeclaw-health.mjs readiness \
+  > "$EVIDENCE_DIR/redis-fault.txt" 2>&1
 redis_fault_status=$?
 set -e
+printf '%s\n' "$redis_fault_status" > "$EVIDENCE_DIR/redis-fault.exit"
 test "$redis_fault_status" -ne 0
-sed -n '1,200p' "$EVIDENCE_DIR/redis-fault.txt"
+node - "$EVIDENCE_DIR/redis-fault.txt" <<'NODE'
+const fs = require('node:fs');
+const lines = fs.readFileSync(process.argv[2], 'utf8').trim().split('\n');
+const result = JSON.parse(lines.at(-1));
+const failures = result.failures;
+if (result.ok !== false || result.mode !== 'readiness' || result.agent !== 'nova'
+  || !Array.isArray(failures) || failures.length !== 1
+  || !/^redis ping: /u.test(failures[0])
+  || /NOAUTH|WRONGPASS|credential|password/iu.test(failures[0])
+  || !/ECONNREFUSED|ETIMEDOUT|timeout|timed out|connect|Connection is closed/iu.test(failures[0])) {
+  throw new Error('not an isolated Redis reachability failure; stop');
+}
+NODE
+preserve_run_state || exit 1
+printf '%s\n' "$RUN_CONTROL_OBSERVATION_ROOT" > "$EVIDENCE_DIR/redis-raw-during.txt" || exit 1
+npm --silent run pipeline -- --platform "$RUN_CONTROL_PLATFORM" --audit "$RUN_CONTROL_RUN_ID" \
+  > "$EVIDENCE_DIR/redis-nova-audit-during.json"
+date -u +%Y-%m-%dT%H:%M:%SZ > "$EVIDENCE_DIR/redis-fault-end.txt"
 ```
 
-Expected observation: the first Redis consumer reports a bounded connection or
-timeout failure while the Nova audit for the selected run remains readable.
+Expected observation: Nova's enabled health consumer reports only a Redis PING
+reachability failure. The direct readiness call does not wait for the Deployment
+to become Ready. A wrapper timeout, exec error, authentication failure, unrelated
+health failure, or missing JSON is a different result and stops this exercise.
+The selected Nova audit must remain readable inside the recorded Redis outage,
+after a new verified raw copy and with all its writers still stopped.
 Record journal state separately from the missing Redis projection. The safe
 decision is to stop only Redis-dependent adapters and observers. Do not reset
 Nova or Buster state, recreate an event, or loop the request.
@@ -469,13 +673,14 @@ printf '%s\n' "$RUN_CONTROL_OBSERVATION_ROOT" > "$EVIDENCE_DIR/redis-raw-after.t
 npm --silent run pipeline -- --platform "$RUN_CONTROL_PLATFORM" --audit "$RUN_CONTROL_RUN_ID" \
   > "$EVIDENCE_DIR/redis-nova-audit-after.json"
 node - "$EVIDENCE_DIR/redis-nova-audit-before.json" \
+  "$EVIDENCE_DIR/redis-nova-audit-during.json" \
   "$EVIDENCE_DIR/redis-nova-audit-after.json" "$SELECTED_RUN_ID" <<'NODE'
 const fs = require('node:fs');
-const [beforeFile, afterFile, runId] = process.argv.slice(2);
-const before = JSON.parse(fs.readFileSync(beforeFile, 'utf8'));
-const after = JSON.parse(fs.readFileSync(afterFile, 'utf8'));
-if (before.runId !== runId || after.runId !== runId || !before.journalHead || !after.journalHead) {
-  throw new Error('selected Nova audit was not readable before and after the Redis fault');
+const [beforeFile, duringFile, afterFile, runId] = process.argv.slice(2);
+const audits = [beforeFile, duringFile, afterFile].map(p => JSON.parse(fs.readFileSync(p, 'utf8')));
+if (audits.some(a => a.runId !== runId || !a.journalHead)
+  || audits.some(a => a.journalHead !== audits[0].journalHead)) {
+  throw new Error('stopped selected run was unreadable or changed across the Redis outage');
 }
 NODE
 kubectl -n "$NAMESPACE" get pvc -l app.kubernetes.io/name=redis \
@@ -497,23 +702,39 @@ PVC.
 ### Prism PostgreSQL Unavailable
 
 The [Prism smoke command probes Control, Worker, gateway, and the Prism
-database separately](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/deploy.sh#L1802-L1811).
-[Control readiness queries PostgreSQL](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/control-server.ts#L145-L149),
-and [the Worker bounds its private nonce-database connection and query waits](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/prism/server/worker-readiness.ts#L32-L50).
+database separately](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/scripts/deploy.sh#L1802-L1811).
+[Control readiness queries PostgreSQL](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/server/control-server.ts#L145-L149),
+and [the Worker bounds its private nonce-database connection and query waits](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/server/worker-readiness.ts#L32-L50).
 The [LiteLLM deployment consumes its own Secret configuration and database
-startup state](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/litellm-deployment.yaml#L32-L63).
+startup state](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/my-values/infra/litellm-deployment.yaml#L32-L63).
 These sources define the consumers checked here; the two live outage windows
 remain unexecuted for this page.
+
+The SQL observer uses the [Control database configuration](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/prism/templates/workloads.yaml#L98-L103)
+and the [selected Control image's Node dependencies](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/docker/Dockerfile.prism-control#L13-L18).
+Its five-second connection/query deadlines are operator observer limits, not
+the live Control pool's timeout. The [Control HTTP error response](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/server/control-server.ts#L923-L931)
+reports a failed readiness database query as status 422.
 
 This exercise targets Prism PostgreSQL only. Precondition: `prism-smoke` passes,
 LiteLLM and its separate `statefulset/postgresql` are ready, and no Prism write
 or database backup is in progress. Record the selected project and operation
-IDs before the fault.
+IDs before the fault. In Studio, select a project with no pending revision or
+design-round request. Record the project ID, document ID from the final URL,
+displayed title, revision, and one selected design value before the outage.
+Keep all project writers stopped. Do not use a session that will reconnect a
+pending mutation on opening Studio.
 
 ```bash
 assert_cluster_binding || exit 126
 ./scripts/deploy.sh prism-smoke
 kubectl -n "$NAMESPACE" rollout status statefulset/postgresql --timeout=120s
+export PRISM_DATABASE_CONSUMER_POD="<recorded-actual-prism-control-pod>"
+export PRISM_DATABASE_CONSUMER_CONTAINER="<recorded-control-container-name>"
+readonly PRISM_DATABASE_CONSUMER_POD PRISM_DATABASE_CONSUMER_CONTAINER
+freeze_fault_consumer prism-db "$PRISM_NAMESPACE" "$PRISM_DATABASE_CONSUMER_POD" \
+  "$PRISM_DATABASE_CONSUMER_CONTAINER" || exit 126
+freeze_fault_target prism-postgresql "$PRISM_NAMESPACE" statefulset/prism-postgresql || exit 126
 kubectl -n "$PRISM_NAMESPACE" get statefulset/prism-postgresql \
   -o jsonpath='{.spec.replicas}' > "$EVIDENCE_DIR/prism-postgresql-replicas.txt"
 grep -Eq '^[1-9][0-9]*$' "$EVIDENCE_DIR/prism-postgresql-replicas.txt"
@@ -526,30 +747,69 @@ restore_prism_postgresql() {
   assert_cluster_binding || return 126
   if [ "${prism_postgresql_restore_pending:-0}" -eq 1 ]; then
     prism_db_replicas="$(cat "$EVIDENCE_DIR/prism-postgresql-replicas.txt")"
-    kubectl -n "$PRISM_NAMESPACE" scale statefulset/prism-postgresql \
-      --replicas="$prism_db_replicas"
+    scale_fault_target prism-postgresql "$PRISM_NAMESPACE" statefulset/prism-postgresql "$prism_db_replicas" || return 126
     kubectl -n "$PRISM_NAMESPACE" rollout status statefulset/prism-postgresql \
-      --timeout=180s
-    ./scripts/deploy.sh prism-smoke
+      --timeout=180s || return 1
+    ./scripts/deploy.sh prism-smoke || return 1
     kubectl -n "$PRISM_NAMESPACE" exec statefulset/prism-postgresql -- \
       pg_isready -U postgres -d prism
   fi
 }
 trap 'restore_prism_postgresql' EXIT
 trap 'exit 130' HUP INT TERM
-kubectl -n "$PRISM_NAMESPACE" scale statefulset/prism-postgresql --replicas=0
+scale_fault_target prism-postgresql "$PRISM_NAMESPACE" statefulset/prism-postgresql 0 || exit 126
 kubectl -n "$PRISM_NAMESPACE" wait --for=delete pod -l app=prism-postgresql \
   --timeout=120s
 set +e
-./scripts/deploy.sh prism-smoke > "$EVIDENCE_DIR/prism-postgresql-fault.txt" 2>&1
-postgres_fault_status=$?
+date -u +%Y-%m-%dT%H:%M:%SZ > "$EVIDENCE_DIR/prism-postgresql-fault-start.txt"
+fault_consumer_exec prism-db "$PRISM_NAMESPACE" "$PRISM_DATABASE_CONSUMER_POD" \
+  "$PRISM_DATABASE_CONSUMER_CONTAINER" node --input-type=module -e '
+const r = await fetch("http://127.0.0.1:8080/ready", { signal: AbortSignal.timeout(10000) });
+console.log(JSON.stringify({ status: r.status, body: await r.text() }));
+if (r.ok) process.exit(1);
+' > "$EVIDENCE_DIR/prism-control-fault.json" 2> "$EVIDENCE_DIR/prism-control-fault.stderr"
+prism_control_observer_status=$?
+fault_consumer_exec prism-db "$PRISM_NAMESPACE" "$PRISM_DATABASE_CONSUMER_POD" \
+  "$PRISM_DATABASE_CONSUMER_CONTAINER" node --input-type=module -e '
+import pg from "pg";
+if (!process.env.DATABASE_URL) process.exit(2);
+const url = new URL(process.env.DATABASE_URL);
+if (url.hostname !== "prism-postgresql" || url.pathname !== "/prism") process.exit(2);
+const client = new pg.Client({ connectionString: process.env.DATABASE_URL,
+  connectionTimeoutMillis: 5000, statement_timeout: 5000 });
+try { await client.connect(); await client.query("SELECT 1"); process.exitCode = 1; }
+catch (error) {
+  const code = error?.code ?? "";
+  if (!["ECONNREFUSED", "ETIMEDOUT", "EHOSTUNREACH", "ENETUNREACH"].includes(code)
+    && !/connection timeout|timeout expired|timeout exceeded/iu.test(error?.message ?? "")) process.exitCode = 2;
+  else console.log(JSON.stringify({ observation: "prism-database-unreachable", host: url.hostname,
+    database: "prism", code, at: new Date().toISOString() }));
+} finally { await client.end(); }
+' > "$EVIDENCE_DIR/prism-postgresql-fault.json" 2> "$EVIDENCE_DIR/prism-postgresql-fault.stderr"
+prism_database_observer_status=$?
 set -e
-test "$postgres_fault_status" -ne 0
+printf '%s\n' "$prism_control_observer_status" > "$EVIDENCE_DIR/prism-control-fault.exit"
+printf '%s\n' "$prism_database_observer_status" > "$EVIDENCE_DIR/prism-postgresql-fault.exit"
+test "$prism_control_observer_status" -eq 0
+test "$prism_database_observer_status" -eq 0
+node - "$EVIDENCE_DIR/prism-control-fault.json" <<'NODE'
+const fs = require('node:fs');
+const result = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+if (result.status !== 422 || !/ECONNREFUSED|ETIMEDOUT|connect|connection timeout/iu.test(result.body)
+  || /password|authentication|role .* does not exist/iu.test(result.body)) {
+  throw new Error('Control failure was not the selected database reachability failure');
+}
+NODE
+date -u +%Y-%m-%dT%H:%M:%SZ > "$EVIDENCE_DIR/prism-postgresql-fault-end.txt"
 kubectl -n "$NAMESPACE" rollout status statefulset/postgresql --timeout=120s
 ```
 
-Expected observation: Control or Worker readiness and the direct Prism
-`pg_isready` check fail, while LiteLLM PostgreSQL remains ready. The safe
+Expected observation: the direct Control readiness request returns its database
+reachability error, and the bounded SQL client from the same consumer cannot
+connect to `prism-postgresql` database `prism`. The database Pod is absent, so
+exec into that StatefulSet cannot supply an in-window `pg_isready` result.
+LiteLLM PostgreSQL remains ready. Failed exec, missing client, wrong database,
+authentication, schema, or unclassified failure cannot pass this observation. The safe
 decision is to stop new Prism mutations and preserve Control operation,
 revision, and artifact identities. Do not fail over, restore, or point Prism at
 the LiteLLM database merely to make readiness green.
@@ -559,14 +819,31 @@ restore_prism_postgresql
 ```
 
 After the database check, use the maintained
-[Studio project read](prism-studio.md#step-2-open-studio-and-choose-the-project)
-to open the same project and confirm its revision and artifact digest. That
-application read is the recovery proof; `pg_isready` alone is not. The exercise
-creates no disposable database resource, so cleanup verifies that the original
-StatefulSet replica count and PVC identities are unchanged. Keep the rollback
-trap armed while performing that Studio read. After recording the matching
-project, revision, and artifact digest, compare the PVC identities and only
-then disarm it:
+[Studio project read](prism-studio.md#step-2-open-studio-and-choose-the-project).
+Open the recorded project and document. Compare the final URL's project and
+document IDs, displayed title and revision, and the recorded design value with
+the baseline. Record both reads with UTC times. A changed document, automatic
+round reconnect, or unreadable design stops application recovery. Do not edit,
+approve, or publish to make the comparison pass.
+
+This proves recovery of the retained design document through its application
+reader. Studio [loads the existing document](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/studio/app.tsx#L112-L147)
+and [displays its revision](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/studio/app.tsx#L531-L545).
+It does not display an existing artifact or bundle digest. The digest shown
+[after approval and publication](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/prism/studio/app.tsx#L366-L403)
+belongs to that new mutation. It cannot prove retention of an older artifact.
+If the incident also requires artifact integrity, retain its original object
+identity and digest from the original receipt. Stop that part of recovery:
+this Studio read supplies no matching retained-artifact digest lookup.
+The Prism artifact/runtime owner must supply a maintained authorized read that
+binds the original object and digest, verifies its existing bytes after recovery,
+and describes credential, retention, and cleanup boundaries before artifact
+recovery can close. No new publication can substitute for that read.
+
+The exercise creates no disposable database resource. Keep the rollback trap
+armed through the document comparison and original replica/PVC identity checks.
+After those supported checks pass, disarm it. Retain an artifact incident as
+open separately when its digest read is unavailable:
 
 ```bash
 assert_cluster_binding || exit 126
@@ -606,6 +883,7 @@ console.log(JSON.stringify({ model: b.model ?? "gemini-embedding-001", dimension
 }
 litellm_embedding_probe "database pre-fault probe" \
   | tee "$EVIDENCE_DIR/litellm-postgresql-before.json"
+freeze_fault_target litellm-postgresql "$NAMESPACE" statefulset/postgresql || exit 126
 kubectl -n "$NAMESPACE" get statefulset/postgresql \
   -o jsonpath='{.spec.replicas}' > "$EVIDENCE_DIR/litellm-postgresql-replicas.txt"
 grep -Eq '^[1-9][0-9]*$' "$EVIDENCE_DIR/litellm-postgresql-replicas.txt"
@@ -613,31 +891,36 @@ kubectl -n "$NAMESPACE" get pvc -l app.kubernetes.io/instance=postgresql \
   -o jsonpath='{range .items[*]}{.metadata.name}{" "}{.metadata.uid}{"\n"}{end}' \
   | sort > "$EVIDENCE_DIR/litellm-postgresql-pvc-before.txt"
 test -s "$EVIDENCE_DIR/litellm-postgresql-pvc-before.txt"
+freeze_fault_target litellm-db-consumer "$NAMESPACE" deployment/litellm || exit 126
 litellm_postgresql_restore_pending=1
 restore_litellm_postgresql() {
   assert_cluster_binding || return 126
   if [ "${litellm_postgresql_restore_pending:-0}" -eq 1 ]; then
     litellm_db_replicas="$(cat "$EVIDENCE_DIR/litellm-postgresql-replicas.txt")"
-    kubectl -n "$NAMESPACE" scale statefulset/postgresql \
-      --replicas="$litellm_db_replicas"
-    kubectl -n "$NAMESPACE" rollout status statefulset/postgresql --timeout=180s
-    kubectl -n "$NAMESPACE" rollout status deployment/litellm --timeout=180s
-    ./scripts/deploy.sh prism-smoke
+    scale_fault_target litellm-postgresql "$NAMESPACE" statefulset/postgresql "$litellm_db_replicas" || return 126
+    kubectl -n "$NAMESPACE" rollout status statefulset/postgresql --timeout=180s || return 1
+    kubectl -n "$NAMESPACE" rollout status deployment/litellm --timeout=180s || return 1
+    ./scripts/deploy.sh prism-smoke || return 1
     litellm_embedding_probe "database recovery probe"
   fi
 }
 trap 'restore_litellm_postgresql' EXIT
 trap 'exit 130' HUP INT TERM
-kubectl -n "$NAMESPACE" scale statefulset/postgresql --replicas=0
+scale_fault_target litellm-postgresql "$NAMESPACE" statefulset/postgresql 0 || exit 126
 kubectl -n "$NAMESPACE" wait --for=delete pod \
   -l app.kubernetes.io/instance=postgresql --timeout=120s
-kubectl -n "$NAMESPACE" rollout restart deployment/litellm
+litellm_db_fault_started_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+restart_fault_target litellm-db-consumer "$NAMESPACE" deployment/litellm || exit 126
 set +e
 kubectl -n "$NAMESPACE" rollout status deployment/litellm --timeout=90s \
   > "$EVIDENCE_DIR/litellm-postgresql-fault.txt" 2>&1
 litellm_postgresql_fault_status=$?
 set -e
+printf '%s\n' "$litellm_postgresql_fault_status" > "$EVIDENCE_DIR/litellm-postgresql-fault.exit"
 test "$litellm_postgresql_fault_status" -ne 0
+assert_fault_target litellm-db-consumer "$NAMESPACE" deployment/litellm || exit 126
+kubectl -n "$NAMESPACE" logs deployment/litellm --all-containers=true --timestamps \
+  --since-time="$litellm_db_fault_started_at" > "$EVIDENCE_DIR/litellm-postgresql-fault-logs.txt"
 ./scripts/deploy.sh prism-smoke
 restore_litellm_postgresql
 litellm_embedding_probe "database recovery evidence" \
@@ -651,17 +934,26 @@ litellm_postgresql_restore_pending=0
 trap - EXIT HUP INT TERM
 ```
 
+The failed rollout alone cannot identify database loss. In the recorded LiteLLM
+startup logs, require a PostgreSQL connection/refusal or timeout for its selected
+`postgresql` database endpoint inside this fault interval. Authentication,
+migration/schema, missing configuration, image pull, capacity, or an unrelated
+startup error is a different cause. If the runtime emits no retained error that
+identifies that endpoint, stop this ownership check and retain the actual logs
+for the LiteLLM/platform owners; do not infer the cause from nonzero status.
+Record the selected restarted Pod/container identity and startup error separately
+from the original Deployment UID. That Pod replacement is intended here.
 Pass this ownership check only when LiteLLM recovers, Prism stayed healthy, and
 both database PVC identities are unchanged. Never cross-restore or copy
 credentials between the two PostgreSQL releases.
 
 ### Registry Endpoint Unavailable During BuildKit Push
 
-The [deploy command selects the maintained Nova-to-Buster BuildKit proof](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/deploy.sh#L2036-L2042).
+The [deploy command selects the maintained Nova-to-Buster BuildKit proof](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/scripts/deploy.sh#L2036-L2042).
 That proof [requires completed remote work, matching imported evidence, and a
-digest-qualified image output](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/e2e/nova-buildkit-production-preflight.mts#L88-L109)
+digest-qualified image output](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L88-L109)
 before it [emits `registryPushVerified`, `manifestVerified`, and the immutable
-image receipt](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/e2e/nova-buildkit-production-preflight.mts#L117-L127).
+image receipt](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L117-L127).
 A `/v2/` response is only a reachability observation. It does not replace those
 assertions or a node pull. This live proof was not run for this page.
 
@@ -670,11 +962,24 @@ This lab-profile exercise requires the selected writable Service to be
 registry, use that registry owner's maintained deny-push policy and restore
 command; do not translate the lab Service mutation below to a credential or TLS
 bypass. Preflight must prove the full Nova-to-Buster build path first.
+The commands below are a bounded endpoint-denial rehearsal. The original
+BuildKit failure and recovery task remains blocked at the custody and image
+consumer boundaries described below. Read those limits before starting.
+If the healthy baseline fails or disconnects, stop before the Service mutation
+and follow the original-build uncertainty rule; do not retry it.
 
 ```bash
 assert_cluster_binding || exit 126
-./scripts/deploy.sh nova-buildkit-preflight
+registry_baseline_status=0
+./scripts/deploy.sh nova-buildkit-preflight \
+  > "$EVIDENCE_DIR/registry-buildkit-baseline.txt" 2>&1 || registry_baseline_status=$?
+printf '%s\n' "$registry_baseline_status" > "$EVIDENCE_DIR/registry-buildkit-baseline.exit"
+test "$registry_baseline_status" -eq 0 || exit 1
 kubectl auth can-i patch services -n "$NAMESPACE" | grep -qx yes
+freeze_fault_target registry-service "$NAMESPACE" service/registry-local || exit 126
+export REGISTRY_CONSUMER_POD="<recorded-actual-buster-pod>"
+readonly REGISTRY_CONSUMER_POD
+freeze_fault_consumer registry "$NAMESPACE" "$REGISTRY_CONSUMER_POD" kubeclaw || exit 126
 kubectl -n "$NAMESPACE" get service/registry-local -o json \
   > "$EVIDENCE_DIR/registry-service-before.json"
 kubectl -n "$NAMESPACE" get service/registry-local \
@@ -709,13 +1014,14 @@ registry_restore_pending=1
 restore_registry_selector() {
   assert_cluster_binding || return 126
   if [ "${registry_restore_pending:-0}" -eq 1 ]; then
+    assert_fault_target registry-service "$NAMESPACE" service/registry-local || return 126
     kubectl -n "$NAMESPACE" get service/registry-local \
       -o jsonpath='{.spec.selector}' \
       > "$EVIDENCE_DIR/registry-selector-rollback.json"
     if ! cmp -s "$EVIDENCE_DIR/registry-selector-before.json" \
       "$EVIDENCE_DIR/registry-selector-rollback.json"; then
-      kubectl -n "$NAMESPACE" patch service/registry-local --type=json \
-        --patch-file "$EVIDENCE_DIR/registry-selector-restore-patch.json"
+      patch_fault_target registry-service "$NAMESPACE" service/registry-local \
+        < "$EVIDENCE_DIR/registry-selector-restore-patch.json" || return 126
       kubectl -n "$NAMESPACE" get service/registry-local \
         -o jsonpath='{.spec.selector}' \
         > "$EVIDENCE_DIR/registry-selector-rollback.json"
@@ -731,8 +1037,8 @@ if (canonical(before) !== canonical(after)) process.exit(1);
 }
 trap 'restore_registry_selector' EXIT
 trap 'exit 130' HUP INT TERM
-kubectl -n "$NAMESPACE" patch service/registry-local --type=json \
-  -p='[{"op":"replace","path":"/spec/selector","value":{"kubeclaw-fault":"unavailable-during-buildkit-push"}}]'
+printf '%s\n' '[{"op":"replace","path":"/spec/selector","value":{"kubeclaw-fault":"unavailable-during-buildkit-push"}}]' \
+  | patch_fault_target registry-service "$NAMESPACE" service/registry-local || exit 126
 kubectl -n "$NAMESPACE" get service/registry-local \
   -o jsonpath='{.spec.selector}' \
   > "$EVIDENCE_DIR/registry-selector-fault.json"
@@ -756,30 +1062,74 @@ process.exit((value.subsets ?? []).some(item => (item.addresses ?? []).length > 
   sleep 2
 done
 test "$registry_endpoints_drained" -eq 1
-kubectl -n "$NAMESPACE" exec deployment/agent-buster -c kubeclaw -- node --input-type=module -e '
+fault_consumer_exec registry "$NAMESPACE" "$REGISTRY_CONSUMER_POD" kubeclaw node --input-type=module -e '
 const r = await fetch("http://registry-mirror:5000/v2/", { signal: AbortSignal.timeout(5000) });
 if (!r.ok) process.exit(1);
 '
-set +e
-./scripts/deploy.sh nova-buildkit-preflight \
-  > "$EVIDENCE_DIR/registry-buildkit-fault.txt" 2>&1
-registry_fault_status=$?
-set -e
-test "$registry_fault_status" -ne 0
+date -u +%Y-%m-%dT%H:%M:%SZ > "$EVIDENCE_DIR/registry-route-fault-start.txt"
+fault_consumer_exec registry "$NAMESPACE" "$REGISTRY_CONSUMER_POD" kubeclaw node --input-type=module -e '
+try {
+  const r = await fetch("http://registry-local:5001/v2/", { signal: AbortSignal.timeout(5000) });
+  console.error(`writable endpoint responded with HTTP ${r.status}; not endpoint denial`);
+  process.exitCode = 1;
+} catch (error) {
+  const code = error?.cause?.code ?? "";
+  if (error?.name !== "TimeoutError" && !["ECONNREFUSED", "ETIMEDOUT", "EHOSTUNREACH", "ENETUNREACH"].includes(code)) {
+    console.error(`unclassified route failure: ${code}`); process.exitCode = 1;
+  } else console.log(JSON.stringify({ endpoint: "registry-local:5001", operation: "GET /v2/",
+    classification: "writable-endpoint-unreachable", code, at: new Date().toISOString() }));
+}
+' > "$EVIDENCE_DIR/registry-route-fault.json" 2> "$EVIDENCE_DIR/registry-route-fault.stderr"
+date -u +%Y-%m-%dT%H:%M:%SZ > "$EVIDENCE_DIR/registry-route-fault-end.txt"
 ```
 
-Expected observation: the BuildKit attempt cannot push to the registered
-writable endpoint, while the mirror `/v2/` check still succeeds. Retain the
-intended image reference, expected digest if already known, BuildKit attempt,
-and registry error. The safe decision is to stop that build node and query the
-intended digest before another build. Never switch to a mutable tag, direct
-Docker Hub pull, anonymous production endpoint, or different registry.
+Expected observation for this narrow route check: the writable endpoint has no
+ready addresses and the Buster network observer reports a connection failure or
+its five-second deadline, while the mirror `/v2/` check succeeds. This is route
+evidence. It does not establish a BuildKit push failure, registry authorization,
+digest verification, a node pull, or application recovery.
 
-Restore the exact captured selector; do not assume the checked-in lab default is
-still the selected value. Keep the `EXIT` trap armed until the live selector is
-byte-for-byte equal as JSON to the captured object. Then run the complete proof
-again. Its receipt must show `registryPushVerified`, `manifestVerified`,
-imported evidence, and one digest-qualified image.
+**Original build custody boundary:** Stop before submitting a build while the
+endpoint is denied. The maintained preflight
+[creates a new UUID and source fixture](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L16-L49)
+and [uses a new idempotency key](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L65-L86)
+on every invocation. Its
+[finally block removes the temporary source and Nova state](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-buildkit-production-preflight.mts#L127-L129),
+also after failure. It supplies no operator custody/read operation for the
+original failed request, source, imported result, and possibly accepted push.
+The wrapper can also fail
+[during receipt signing after remote success](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/scripts/deploy.sh#L2010-L2033).
+A nonzero wrapper is therefore insufficient to classify registry denial or
+prove that no image was published. Do not run it again as a retry.
+
+For an existing failed or disconnected invocation, preserve its stdout, stderr,
+exit status and UTC interval, all original run/job/attempt/request identities
+and source/image digests that actually exist, and any signed or unsigned receipt.
+Keep absent identities marked unavailable. Do not invent a digest or recreate
+deleted state. Stop new build admission. The Buster provider, Nova runtime, and
+registry owners must reconcile that original job and registry transaction
+through an authorized original-identity read before another build is allowed.
+If no supported read is available, retain the uncertainty and escalate through
+[Lost Responses and Uncertain Effects](#lost-responses-and-uncertain-effects).
+Do not manually import a result or edit durable state.
+
+Before the required build-failure exercise can proceed, those owners must
+provide a maintained custody and reconciliation procedure that retains the
+original source, immutable plan/request/idempotency identities, attempt image
+reference, remote result and logs through failure and interruption. It must
+distinguish token/source/key/provider failures, BuildKit build or launch errors,
+an actual push network/authentication error, manifest verification, import,
+cleanup and signing failures. Require the original attempt's push-phase error
+for the denied writable endpoint inside the fault interval, alongside mirror
+health. Unrelated failures or missing logs leave that observation unproved.
+The procedure must query the intended original digest or original attempt tag
+through the registry owner's authorized read, verify any returned manifest
+against that request, and resolve its terminal outcome without changed input.
+This page has no supported original-state read to supply those steps today.
+
+Restore the captured selector using the guarded original Service. Keep the
+trap armed until selector comparison and endpoint checks pass. These restore
+the route only. Do not start another preflight from this recovery block:
 
 ```bash
 assert_cluster_binding || exit 126
@@ -810,25 +1160,39 @@ process.exit((value.subsets ?? []).some(item => (item.addresses ?? []).length > 
   sleep 2
 done
 test "$registry_endpoints_ready" -eq 1
-./scripts/deploy.sh nova-buildkit-preflight \
-  | tee "$EVIDENCE_DIR/registry-buildkit-recovery.txt"
 registry_restore_pending=0
 trap - EXIT HUP INT TERM
 ```
 
-Cleanup is the asserted restoration of the captured selector and deletion only
-of the preflight's disposable source workspace, which the maintained command
-owns. If the shell exits early, the trap attempts the same exact rollback; its
-failure is an incident requiring immediate manual restoration through the
+**Immutable-image recovery boundary:** The maintained build preflight verifies
+push, registry manifest, and import, then emits a digest-qualified receipt. It
+does not deploy that image onto a Kubernetes node or perform an application
+consumer probe. The required recovery remains open after route restoration.
+The platform and registry owners must provide a maintained digest-bound node
+pull and application reader procedure for the original retained image, including
+node/runtime trust and credentials, Pod/image identity, expected fixture content,
+owned test-resource UIDs, uncertain CREATE/exec handling, and guarded cleanup.
+Completion requires push and manifest verification for the original transaction,
+a node pull of that exact digest, a consumer response matching its retained
+source, and verified cleanup. A `/v2/` response or a later diagnostic image does
+not supply those results. A separately authorized new preflight creates different
+source bytes and image identity; label its receipt as a new diagnostic build.
+
+Cleanup here is the guarded restoration of the original Service selector.
+Keep baseline receipt and route observations. The maintained baseline preflight
+owns removal of its temporary workspace; that removal is not custody of an
+uncertain original failed build. If the shell exits early, the trap attempts
+the same guarded rollback. Its failure is an incident requiring immediate
+manual restoration through the
 independent administration route. Do not delete registry blobs or BuildKit
 cache as incident cleanup.
 
 ### Tailscale Authentication Rejected
 
 The [maintained fixture explicitly allocates a Kubernetes lease, creates its
-Tailscale exposure, and probes the new HTTP route](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/e2e/nova-tailscale-production-preflight.mts#L126-L145).
-Its [receipt assertions bind exposure, lease, namespace, and imported evidence](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/e2e/nova-tailscale-production-preflight.mts#L174-L204).
-The [deployment wrapper waits for both cluster objects to disappear](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/scripts/deploy.sh#L2552-L2578).
+Tailscale exposure, and probes the new HTTP route](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-tailscale-production-preflight.mts#L126-L145).
+Its [receipt assertions bind exposure, lease, namespace, and imported evidence](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/e2e/nova-tailscale-production-preflight.mts#L174-L204).
+The [deployment wrapper waits for both cluster objects to disappear](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/scripts/deploy.sh#L2552-L2578).
 These are functional route and cleanup checks; this page does not claim they
 ran against a Tailnet. The OAuth rejection check below classifies recorded
 operator output. It fails if that output lacks a recognizable rejection.
@@ -841,6 +1205,27 @@ new fixture route; inspecting an old route is not the intended fault.
 
 ```bash
 assert_cluster_binding || exit 126
+export EXPECTED_FAULT_TAILSCALE_NAMESPACE_UID="<independently-recorded-operator-namespace-uid>"
+readonly EXPECTED_FAULT_TAILSCALE_NAMESPACE_UID
+if [ "$TAILSCALE_OPERATOR_NAMESPACE" = "$NAMESPACE" ]; then
+  test "$EXPECTED_FAULT_TAILSCALE_NAMESPACE_UID" = "$EXPECTED_FAULT_NAMESPACE_UID" || exit 126
+elif [ "$TAILSCALE_OPERATOR_NAMESPACE" = "$PRISM_NAMESPACE" ]; then
+  test "$EXPECTED_FAULT_TAILSCALE_NAMESPACE_UID" = "$EXPECTED_FAULT_PRISM_NAMESPACE_UID" || exit 126
+else
+  bind_fault_namespace "$TAILSCALE_OPERATOR_NAMESPACE" "$EXPECTED_FAULT_TAILSCALE_NAMESPACE_UID" || exit 126
+fi
+freeze_fault_target tailscale-oauth "$TAILSCALE_OPERATOR_NAMESPACE" secret/operator-oauth || exit 126
+export TAILSCALE_OPERATOR_DEPLOYMENT="$(kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" get deployment \
+  -l app.kubernetes.io/instance=tailscale-operator -o json | node --input-type=module -e '
+let input = ""; for await (const chunk of process.stdin) input += chunk;
+const items = JSON.parse(input).items;
+if (items?.length !== 1 || !items[0].metadata?.name) process.exit(1);
+console.log(items[0].metadata.name);
+')"
+test -n "$TAILSCALE_OPERATOR_DEPLOYMENT"
+readonly TAILSCALE_OPERATOR_DEPLOYMENT
+freeze_fault_target tailscale-operator "$TAILSCALE_OPERATOR_NAMESPACE" \
+  "deployment/$TAILSCALE_OPERATOR_DEPLOYMENT" || exit 126
 test "$(stat -c '%a' "$TAILSCALE_OAUTH_ENV_FILE")" = 600
 ./scripts/deploy.sh nova-tailscale-preflight "$TAILSCALE_PROBE_IMAGE"
 kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" get deploy,pods -l \
@@ -901,18 +1286,28 @@ restore_tailscale_oauth() {
       wait "$tailscale_proxy_pid" 2>/dev/null || true
       tailscale_proxy_pid=""
     fi
+    assert_fault_target tailscale-oauth "$TAILSCALE_OPERATOR_NAMESPACE" secret/operator-oauth || return 126
+    assert_fault_target tailscale-operator "$TAILSCALE_OPERATOR_NAMESPACE" \
+      "deployment/$TAILSCALE_OPERATOR_DEPLOYMENT" || return 126
     tailscale_secret_fingerprints > "$EVIDENCE_DIR/tailscale-secret-fingerprints-restored.json"
     if ! cmp -s "$EVIDENCE_DIR/tailscale-authority-fingerprints.json" \
       "$EVIDENCE_DIR/tailscale-secret-fingerprints-restored.json"; then
       kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" create secret generic operator-oauth \
-        --from-env-file="$TAILSCALE_OAUTH_ENV_FILE" \
-        --dry-run=client -o yaml | kubectl apply -f -
-      kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" rollout restart deployment \
-        -l app.kubernetes.io/instance=tailscale-operator
+        --from-env-file="$TAILSCALE_OAUTH_ENV_FILE" --dry-run=client -o json \
+        | node --input-type=module -e '
+let input = ""; for await (const chunk of process.stdin) input += chunk;
+const secret = JSON.parse(input);
+console.log(JSON.stringify([{ op: "replace", path: "/data", value: secret.data }]));
+' | patch_fault_target tailscale-oauth "$TAILSCALE_OPERATOR_NAMESPACE" secret/operator-oauth || return 126
+      restart_fault_target tailscale-operator "$TAILSCALE_OPERATOR_NAMESPACE" \
+        "deployment/$TAILSCALE_OPERATOR_DEPLOYMENT" || return 126
     fi
-    kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" rollout status deployment \
-      -l app.kubernetes.io/instance=tailscale-operator --timeout=180s
-    kubectl get ingressclass tailscale
+    kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" rollout status \
+      "deployment/$TAILSCALE_OPERATOR_DEPLOYMENT" --timeout=180s || return 1
+    kubectl get ingressclass tailscale || return 1
+    assert_fault_target tailscale-oauth "$TAILSCALE_OPERATOR_NAMESPACE" secret/operator-oauth || return 126
+    assert_fault_target tailscale-operator "$TAILSCALE_OPERATOR_NAMESPACE" \
+      "deployment/$TAILSCALE_OPERATOR_DEPLOYMENT" || return 126
     tailscale_secret_fingerprints > "$EVIDENCE_DIR/tailscale-secret-fingerprints-restored.json"
     diff -u "$EVIDENCE_DIR/tailscale-authority-fingerprints.json" \
       "$EVIDENCE_DIR/tailscale-secret-fingerprints-restored.json"
@@ -920,12 +1315,14 @@ restore_tailscale_oauth() {
 }
 trap 'restore_tailscale_oauth' EXIT
 trap 'exit 130' HUP INT TERM
-kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" create secret generic operator-oauth \
-  --from-literal=client_id=invalid-acceptance-client \
-  --from-literal=client_secret=invalid-acceptance-secret \
-  --dry-run=client -o yaml | kubectl apply -f -
-kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" rollout restart deployment \
-  -l app.kubernetes.io/instance=tailscale-operator
+node --input-type=module -e '
+console.log(JSON.stringify([{ op: "replace", path: "/data", value: {
+  client_id: Buffer.from("invalid-acceptance-client").toString("base64"),
+  client_secret: Buffer.from("invalid-acceptance-secret").toString("base64")
+} }]));
+' | patch_fault_target tailscale-oauth "$TAILSCALE_OPERATOR_NAMESPACE" secret/operator-oauth || exit 126
+restart_fault_target tailscale-operator "$TAILSCALE_OPERATOR_NAMESPACE" \
+  "deployment/$TAILSCALE_OPERATOR_DEPLOYMENT" || exit 126
 kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" rollout status deployment \
   -l app.kubernetes.io/instance=tailscale-operator --timeout=180s || true
 tailscale_fault_started_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
@@ -994,10 +1391,14 @@ pipeline processing remain separate facts. The safe decision is to create no
 additional public Ingress, reuse no revoked credential, and avoid allocating a
 replacement lease while the first lease outcome is uncertain.
 
+The Secret patch and operator restart test their original UID and current
+resource version before changing either object. The selected operator Deployment
+must be the one recorded above; a multiple-Deployment selection stops this
+exercise. Namespace exclusion remains required through both restart rollouts.
 Restore the Secret from its external authority without printing its contents,
 restart the operator, then remove only the failed fixture recorded above. The
 cleanup uses Kubernetes UID and resource-version preconditions. The
-[controller requires its ownership labels to match the exact lease](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/cmd/buster-namespace-controller/main.go#L788-L806).
+[controller requires its ownership labels to match the exact lease](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/cmd/buster-namespace-controller/main.go#L788-L806).
 The snippet applies that boundary and refuses an unguarded deletion. It stops if a
 lease with the captured name has a different UID, or if the namespace does not
 carry all three ownership labels for that lease. It then waits for both exact
@@ -1149,9 +1550,9 @@ credential from shell history if the local shell records commands.
 ### LiteLLM Upstream Timeout
 
 The [deployed model route names `gemini-embedding-001` and its Vertex
-provider](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/litellm-config.yaml#L1-L11).
-The [deployment distinguishes liveliness and readiness probes](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/litellm-deployment.yaml#L47-L63).
-The [secured policy separates database egress from world egress](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/my-values/infra/network-policies.yaml#L248-L270).
+provider](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/my-values/infra/litellm-config.yaml#L1-L11).
+The [deployment distinguishes liveliness and readiness probes](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/my-values/infra/litellm-deployment.yaml#L47-L63).
+The [secured policy separates database egress from world egress](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/my-values/infra/network-policies.yaml#L248-L270).
 The direct HTTP probes below test the LiteLLM-to-Vertex route. They bypass the
 OpenClaw memory manager, even when they run inside `agent-nova`. Their
 70-second outer deadline and cause classification belong to the route observer.
@@ -1187,9 +1588,9 @@ LiteLLM `/v1` base URL. Its remote key is the `LITELLM_API_KEY` SecretRef.
 Init seeds `/home/node/.openclaw/openclaw.json` and synchronizes its managed
 memory settings on restart. It creates
 `/home/node/.openclaw/workspace/memory` on the workspace volume.
-[The rendered settings](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/configmap-gateway.yaml#L55-L75),
-[workspace and config initialization](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/deployment.yaml#L419-L438),
-and [managed memory synchronization](https://github.com/datrab/kubeclaw/blob/13bff0a18a64e74f2cbbaa1978e746fcdeff0c10/charts/kubeclaw/templates/deployment.yaml#L516-L524)
+[The rendered settings](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/configmap-gateway.yaml#L55-L75),
+[workspace and config initialization](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/deployment.yaml#L419-L438),
+and [managed memory synchronization](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/charts/kubeclaw/templates/deployment.yaml#L516-L524)
 define this bootstrap. Do not substitute an inline key or a different provider.
 
 The supported caller is the OpenClaw memory CLI for agent `main`, not a Nova
@@ -1201,7 +1602,8 @@ The status output identifies the actual workspace and database path. The source
 file below is synthetic input; it contains no project or session data.
 [CLI registration](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli.ts#L200-L246),
 [SecretRef resolution](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-runtime-common.ts#L57-L90),
-[manager acquisition and close](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-runtime-common.ts#L162-L224),
+[manager acquisition](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-runtime-common.ts#L162-L199) and
+[manager close](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-runtime-common.ts#L200-L218),
 and [SQLite and cache selection](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/src/agents/memory-search.ts#L296-L318)
 support this path. See [agent state and its backup boundary](../understand/data-and-state.md#complete-store-matrix).
 
@@ -1503,8 +1905,8 @@ Inspect the one entry for `main`. Its status must select the builtin backend (th
 The embedding probe must report `ok: true`. Disabled memory, another agent,
 a fallback provider, a gateway SecretRef error, or a failed vector probe stops
 this task. Exit zero alone is insufficient: status can report degraded state.
-[Deep status invokes the manager's embedding and vector probes and emits their
-results](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-status.runtime.ts#L161-L268).
+[Deep status invokes embedding and vector probes](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-status.runtime.ts#L161-L198) and
+[status JSON includes the probe results](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-status.runtime.ts#L247-L268).
 
 Create one new note, index it, and query its content. The generated file name
 is exclusive to this exercise. Retain its receipt for cleanup.
@@ -1541,7 +1943,8 @@ the new note tests new input. Retain the index output and provider request
 observations before the denial. The CLI may also write recall bookkeeping when
 dreaming is enabled; a search is not a promise of zero local writes.
 [Index outcomes and degraded-vector warnings](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-index-search.runtime.ts#L143-L190)
-and [query results and recall bookkeeping](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-index-search.runtime.ts#L193-L262)
+and [query execution](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-index-search.runtime.ts#L197-L237) and
+[recall bookkeeping and JSON results](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-index-search.runtime.ts#L238-L262)
 explain these checks.
 
 The 900-second index observer is a stop rule for this small test, not a bound
@@ -1612,12 +2015,40 @@ litellm_policy_restore_pending=1
 restore_litellm_policy() {
   assert_cluster_binding || return 126
   if [ "${litellm_policy_restore_pending:-0}" -eq 1 ]; then
-    kubectl -n "$NAMESPACE" delete ciliumnetworkpolicy \
-      acceptance-litellm-upstream-timeout --ignore-not-found --wait=true || return 1
+    assert_fault_namespace "$NAMESPACE" || return 126
+    test -s "$EVIDENCE_DIR/litellm-policy-created.json" || return 126
+    test -s "$EVIDENCE_DIR/litellm-policy-frozen.json" || return 126
     local remaining_policy
     remaining_policy=$(kubectl -n "$NAMESPACE" get ciliumnetworkpolicy \
-      acceptance-litellm-upstream-timeout --ignore-not-found -o name) || return 1
-    test -z "$remaining_policy" || return 1
+      acceptance-litellm-upstream-timeout --ignore-not-found -o name) || return 126
+    if [ -n "$remaining_policy" ]; then
+      assert_fault_target litellm-policy "$NAMESPACE" \
+        ciliumnetworkpolicy/acceptance-litellm-upstream-timeout || return 126
+      node --input-type=module -e '
+import fs from "node:fs";
+const m = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+console.log(JSON.stringify({ apiVersion: "v1", kind: "DeleteOptions",
+  preconditions: { uid: m.uid, resourceVersion: m.resourceVersion } }));
+' "$EVIDENCE_DIR/litellm-policy-current.json" | kubectl delete --raw \
+        "/apis/cilium.io/v2/namespaces/$NAMESPACE/ciliumnetworkpolicies/acceptance-litellm-upstream-timeout" \
+        -f - > "$EVIDENCE_DIR/litellm-policy-delete-response.json" || return 126
+    fi
+    # Absence is separate from DELETE acceptance. Never delete a replacement.
+    local attempt=0
+    while [ "$attempt" -lt 60 ]; do
+      remaining_policy=$(kubectl -n "$NAMESPACE" get ciliumnetworkpolicy \
+        acceptance-litellm-upstream-timeout --ignore-not-found -o json) || return 126
+      [ -z "$remaining_policy" ] && break
+      printf '%s\n' "$remaining_policy" | node --input-type=module -e '
+import fs from "node:fs";
+let input = ""; for await (const chunk of process.stdin) input += chunk;
+const original = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+if (JSON.parse(input).metadata?.uid !== original.uid) process.exit(1);
+' "$EVIDENCE_DIR/litellm-policy-frozen.json" || return 126
+      attempt=$((attempt + 1)); sleep 1
+    done
+    test -z "$remaining_policy" || return 126
+    printf '%s\n' 'original policy absent' > "$EVIDENCE_DIR/litellm-policy-cleanup.txt"
     owned_memory_exec node --input-type=module -e '
 const r = await fetch(`${process.env.LITELLM_URL}/v1/embeddings`, {
   method: "POST",
@@ -1633,7 +2064,8 @@ console.log(JSON.stringify({ model: b.model ?? "gemini-embedding-001", dimension
 }
 trap 'restore_litellm_policy' EXIT
 trap 'exit 130' HUP INT TERM
-kubectl create -f - <<EOF
+assert_fault_namespace "$NAMESPACE" || exit 126
+kubectl create -o json -f - > "$EVIDENCE_DIR/litellm-policy-created.json" <<EOF
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
@@ -1646,6 +2078,15 @@ spec:
   egressDeny:
     - toEntities: [world]
 EOF
+node - "$EVIDENCE_DIR/litellm-policy-created.json" "$EVIDENCE_DIR/litellm-policy-frozen.json" <<'NODE'
+const fs = require('node:fs');
+const value = JSON.parse(fs.readFileSync(process.argv[2], 'utf8')), m = value.metadata;
+if (value.apiVersion !== 'cilium.io/v2' || value.kind !== 'CiliumNetworkPolicy'
+  || m?.name !== 'acceptance-litellm-upstream-timeout' || m.namespace !== process.env.NAMESPACE
+  || !m.uid || !m.resourceVersion || m.deletionTimestamp) throw new Error('CREATE identity unavailable; stop');
+fs.writeFileSync(process.argv[3], JSON.stringify({ name: m.name, namespace: m.namespace,
+  uid: m.uid, resourceVersion: m.resourceVersion }) + '\n', { flag: 'wx', mode: 0o600 });
+NODE
 kubectl -n "$NAMESPACE" rollout status deployment/litellm --timeout=120s
 litellm_workload_ready > "$EVIDENCE_DIR/litellm-workload-ready-during-fault.json"
 litellm_readiness_probe > "$EVIDENCE_DIR/litellm-readiness-during-fault-before.json"
@@ -1705,6 +2146,18 @@ manager defines the client limits below. Route-probe logs do not measure those
 attempts. Keep the model-backed operation incomplete; never expose credentials
 or loop on the failure.
 
+The policy's successful CREATE response supplies its UID. A failed CREATE,
+lost response, missing frozen identity, or same-name replacement stops automatic
+cleanup; a later lookup cannot prove which CREATE was accepted. The platform
+owner must resolve that uncertainty through the independent administration route.
+Do not adopt or delete a later same-name object. The restore helper sends
+UID/resource-version DeleteOptions through
+[kubectl raw DELETE](https://github.com/kubernetes/kubectl/blob/v0.34.1/pkg/cmd/delete/delete.go#L297-L313),
+then separately waits for absence. A conflict or lost DELETE response requires
+guarded observation before any owner-authorized retry. Never fall back to ordinary
+name-only delete. These namespace checks still require the owner's exclusion
+through the interval between reads and requests.
+
 #### Observe the Actual Memory Consumer During the Fault
 
 Leave the named denial policy in place. Run the same memory query through the
@@ -1751,7 +2204,8 @@ or full-text fallback also cannot prove this fault. Record that outcome and
 stop; do not reinterpret it as successful semantic memory.
 [The error fields and preserved message](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-errors.ts#L15-L32),
 [the query retry invocation and wrapper](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-ops.ts#L610-L665),
-[the retry profiles and loop](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-policy.ts#L70-L173),
+[the retry profiles](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-policy.ts#L65-L82) and
+[the retry loop](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-embedding-policy.ts#L132-L172),
 and [search failure handling](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/cli-index-search.runtime.ts#L218-L238)
 support this mapping.
 
@@ -1765,7 +2219,8 @@ result. Source notes and existing index data remain available for recovery;
 provider availability, memory freshness, and semantic-vector state (similarity that uses a remotely produced embedding) must be
 checked separately. The manager can attempt fallback or return lexical results
 under other settings, which this task does not accept.
-[Search signal and fallback handling](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-search-orchestration.ts#L343-L419)
+[Search signal and fallback admission](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-search-orchestration.ts#L343-L380) and
+[fallback and lexical-result handling](https://github.com/openclaw/openclaw/blob/3a9d69db306cd7f081e06254cb89c4bcc14a7107/extensions/memory-core/src/memory/manager-search-orchestration.ts#L381-L427)
 explains this boundary. Keep the owning agent operation incomplete if it
 requires semantic recall. The platform operator repairs the route; the agent
 operation owner decides whether its original identity and deadline permit
@@ -1788,7 +2243,8 @@ ID cannot identify the original group. Do not remove the stop file to bypass
 this limit, kill other processes, or restart production to finish the exercise.
 Local process absence cannot prove that Vertex aborted an accepted request.
 
-Delete only the named denial policy, confirm its absence, and repeat the direct
+Delete only the policy UID captured from its successful CREATE response, confirm
+its absence, and repeat the direct
 HTTP embedding. This proves route recovery only. Then repeat the real memory
 reader. Gateway readiness or a direct vector alone is not consumer recovery.
 
@@ -1869,7 +2325,7 @@ bounded_memory_cli 210 search --agent main \
 > surviving descendant after direct-child close. These are operator-helper
 > checks, not OpenClaw consumer results. No target-image or live memory execution is established here.
 > **Revision:** OpenClaw `3a9d69db306cd7f081e06254cb89c4bcc14a7107`;
-> KubeClaw configuration `13bff0a18a64e74f2cbbaa1978e746fcdeff0c10`.
+> KubeClaw configuration `4d3068465a2e202d2d5073b77e9273c308497995`.
 > **Limit:** Syntax and source checks do not prove image compatibility, actual
 > request counts, timeout injection, or live end-consumer recovery.
 
@@ -1889,12 +2345,12 @@ pipeline resume.
 ### Git Revision Unavailable
 
 The [project compiler records the architecture ref and inserts mandatory
-source admission before sync](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/project/source.ts#L33-L65).
-The [subject reader resolves the declared ref without substituting HEAD](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/common/plugin-runtime/sdk/src/review-subject.ts#L50-L75).
+source admission before sync](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/project/source.ts#L33-L65).
+The [subject reader resolves the declared ref without substituting HEAD](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/common/plugin-runtime/sdk/src/review-subject.ts#L50-L75).
 The [source stage maps a read failure to `blocked` with
-`source_preflight.invalid`](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/plugins/preflight-contract/src/source-stage.ts#L20-L40).
+`source_preflight.invalid`](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/plugins/preflight-contract/src/source-stage.ts#L20-L40).
 The [source-prefix regression checks prevent downstream implementation after
-failed admission](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/tests/verification/reliability/project-source.test.mjs#L37-L53).
+failed admission](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/reliability/project-source.test.mjs#L37-L53).
 Those checks cover the source/Git prefix, not a full live Buster run. This
 unavailable-revision exercise and its later successful run are not recorded as
 executed here.
@@ -2146,8 +2602,8 @@ git -C "$PROJECT_REPOSITORY" merge-base --is-ancestor \
 ```
 
 The [coverage contract derives source revision, tree, archive digest, plan,
-and stage identity from the verified remote job](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/contracts/pipeline-test-gate/v1/src/coverage-result.ts#L17-L27).
-The [effect journal projection binds completed results to effect IDs](https://github.com/datrab/kubeclaw/blob/c8987b18b450bc27571d5037cb6ce3fb26e0cbd0/skills/nova/core/execution/engine-runtime.ts#L53-L82).
+and stage identity from the verified remote job](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/contracts/pipeline-test-gate/v1/src/coverage-result.ts#L17-L27).
+The [effect journal projection binds completed results to effect IDs](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/core/execution/engine-runtime.ts#L53-L82).
 That projection summarizes results larger than 16 KiB as
 `effect-result-summary.v1`. The snippet stops on such a summary. A summary's
 content digest does not prove the projected source receipt. The release/runtime

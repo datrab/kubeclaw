@@ -5,7 +5,7 @@ Audience: platform operator, database operator, incident responder
 Owner: platform operations and data owners
 Evidence: charts/prism/files/prism-backup.sh; scripts/postgresql-recovery.sh; docs/status/open-issues.json
 Applies to: current selected runtime and state formats
-Last verified: 2026-10-09; local group-identity and snippet guards only; no live restore result is available
+Last verified: 2026-10-12; local identity, selection, and snippet guards only; no live restore result is available
 
 ## Objective
 
@@ -42,7 +42,8 @@ shell for the whole recovery task. Every raw `kubectl`, Helm, or
 `KUBECONFIG`, `NAMESPACE`, and `PRISM_NAMESPACE`. The binding section
 validates and freezes both namespace names before any command here; every shown
 `<context>` must equal `EXPECTED_CONTEXT`. Run
-`assert_cluster_binding` immediately before each command block. Stop on any
+`recovery_assert_namespace` from [Bind Recovery Objects](#bind-recovery-objects)
+immediately before each cluster command block. Stop on any
 mismatch, leave media and targets unchanged, and follow the binding section's
 recovery; never fall back to the default kubeconfig.
 
@@ -59,11 +60,167 @@ commands, tool and source versions, group identity and checksums, encryption
 and credential authorities, isolated target identity, native and application
 results, measured loss/time, cutover, cleanup, and every failed attempt.
 
+## Bind Recovery Objects
+
+Use Bash, Python 3, and the selected `kubectl` on the independent
+administration machine. Keep `set -euo pipefail` and `umask 077` in the bound
+shell. Before a component Job, obtain its existing namespace UID from the
+platform owner independently of this kubeconfig. Set
+`EXPECTED_APPLICATION_NAMESPACE_UID` for LiteLLM and
+`EXPECTED_PRISM_NAMESPACE_UID` for Prism. Set only the scopes used in this
+incident. A shared namespace must have the same expected UID in both scopes.
+
+The platform owner must exclude namespace replacement and competing changes to
+these manual Jobs and their Pods until evidence and cleanup finish. A UID
+comparison alone does not exclude a later replacement. The cluster identity
+needs `get` on the named namespace and source CronJob, `create`, `get`, `watch`,
+and `delete` on Jobs, `list` and `get` on Pods, and `get` on `pods/log` in the
+selected namespace. The inventory blocks also need `list` on PVCs, CronJobs,
+Jobs and Events in their selected namespaces. Check each required permission through
+[Check authority for the selected scope](install.md#check-authority-for-the-selected-scope).
+The evidence owner must keep these private files unchanged through capture
+and cleanup. No component backup Pod supplies this administration identity.
+
+Define these helpers in the same shell. Their evidence directory is the new
+private directory created by the component procedure. A successful CREATE
+response establishes the Job UID; a later same-name lookup does not.
+
+```bash
+if [[ -n ${EXPECTED_APPLICATION_NAMESPACE_UID:-} ]]; then
+  readonly EXPECTED_APPLICATION_NAMESPACE_UID
+fi
+if [[ -n ${EXPECTED_PRISM_NAMESPACE_UID:-} ]]; then
+  readonly EXPECTED_PRISM_NAMESPACE_UID
+fi
+recovery_assert_namespace() {
+  local expected
+  assert_cluster_binding || return 126
+  if [[ $1 == "$NAMESPACE" ]]; then
+    if [[ $NAMESPACE == "$PRISM_NAMESPACE" && -n ${EXPECTED_APPLICATION_NAMESPACE_UID:-} && -n ${EXPECTED_PRISM_NAMESPACE_UID:-} ]]; then
+      test "$EXPECTED_APPLICATION_NAMESPACE_UID" = "$EXPECTED_PRISM_NAMESPACE_UID" || return 126
+    fi
+    if [[ $NAMESPACE == "$PRISM_NAMESPACE" ]]; then
+      expected=${EXPECTED_APPLICATION_NAMESPACE_UID:-${EXPECTED_PRISM_NAMESPACE_UID:?}}
+    else
+      expected=${EXPECTED_APPLICATION_NAMESPACE_UID:?}
+    fi
+  elif [[ $1 == "$PRISM_NAMESPACE" ]]; then
+    expected=${EXPECTED_PRISM_NAMESPACE_UID:?}
+  else
+    return 126
+  fi
+  test "$(kubectl --context "$EXPECTED_CONTEXT" get namespace "$1" \
+    -o jsonpath='{.metadata.uid}')" = "$expected"
+}
+recovery_create_job() {
+  local ns=$1 cron=$2 job=$3 evidence=$4
+  [[ ${#job} -le 63 && $job =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]] || return 1
+  test ! -e "$evidence/$job.create.json" || return 1
+  recovery_assert_namespace "$ns" || return 126
+  kubectl --context "$EXPECTED_CONTEXT" -n "$ns" create job \
+    --from="cronjob/$cron" "$job" -o json > "$evidence/$job.create.json" || return 1
+  python3 - "$evidence" "$ns" "$job" <<'PYTHON'
+import json, pathlib, sys
+root, ns, name = pathlib.Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+j = json.loads((root / (name + '.create.json')).read_text())
+m = j.get('metadata', {})
+if (j.get('kind') != 'Job' or m.get('namespace') != ns or
+    m.get('name') != name or not isinstance(m.get('uid'), str) or not m['uid']):
+    raise SystemExit('valid Job CREATE identity is required')
+(root / (name + '.uid')).write_text(m['uid'] + '\n')
+PYTHON
+}
+recovery_capture_job_logs() {
+  local ns=$1 job=$2 container=$3 evidence=$4 log=$5 deadline pod
+  recovery_assert_namespace "$ns" || return 126
+  deadline=$(python3 - "$evidence/$job.create.json" <<'PYTHON'
+import json, sys
+j = json.load(open(sys.argv[1]))
+deadline = j.get('spec', {}).get('activeDeadlineSeconds')
+if type(deadline) is not int or deadline <= 0:
+    raise SystemExit('positive Job deadline is required')
+print(deadline + 30)
+PYTHON
+  ) || return 1
+  kubectl --context "$EXPECTED_CONTEXT" -n "$ns" wait \
+    --for=condition=complete "job/$job" --timeout="${deadline}s" || return 1
+  kubectl --context "$EXPECTED_CONTEXT" -n "$ns" get pods \
+    -l "job-name=$job" -o json > "$evidence/$job.pods.json" || return 1
+  pod=$(python3 - "$evidence" "$ns" "$job" <<'PYTHON'
+import json, pathlib, sys
+root, ns, name = pathlib.Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+uid = (root / (name + '.uid')).read_text().strip()
+items = json.loads((root / (name + '.pods.json')).read_text()).get('items', [])
+if len(items) != 1: raise SystemExit('exactly one owned Pod is required')
+p = items[0]; m = p.get('metadata', {})
+if (m.get('namespace') != ns or not m.get('name') or not m.get('uid') or
+    p.get('status', {}).get('phase') != 'Succeeded' or
+    not any(o.get('kind') == 'Job' and o.get('uid') == uid and
+            o.get('controller') is True for o in m.get('ownerReferences', []))):
+    raise SystemExit('succeeded Pod with original Job ownership is required')
+(root / (name + '.pod-uid')).write_text(m['uid'] + '\n')
+print(m['name'])
+PYTHON
+  ) || return 1
+  test "$(kubectl --context "$EXPECTED_CONTEXT" -n "$ns" get job "$job" \
+    -o jsonpath='{.metadata.uid}')" = "$(cat "$evidence/$job.uid")" || return 1
+  test "$(kubectl --context "$EXPECTED_CONTEXT" -n "$ns" get pod "$pod" \
+    -o jsonpath='{.metadata.uid}')" = "$(cat "$evidence/$job.pod-uid")" || return 1
+  kubectl --context "$EXPECTED_CONTEXT" -n "$ns" logs "$pod" -c "$container" \
+    > "$evidence/$log"
+}
+recovery_delete_job() {
+  local ns=$1 job=$2 evidence=$3
+  recovery_assert_namespace "$ns" || return 126
+  python3 - "$evidence" "$job" <<'PYTHON'
+import json, pathlib, sys
+root, name = pathlib.Path(sys.argv[1]), sys.argv[2]
+uid = (root / (name + '.uid')).read_text().strip()
+if not uid: raise SystemExit('original creating UID is required')
+(root / (name + '.delete.json')).write_text(json.dumps({
+    'apiVersion': 'v1', 'kind': 'DeleteOptions',
+    'preconditions': {'uid': uid}, 'propagationPolicy': 'Foreground'}) + '\n')
+PYTHON
+  test "$?" -eq 0 || return 1
+  kubectl --context "$EXPECTED_CONTEXT" delete --raw \
+    "/apis/batch/v1/namespaces/$ns/jobs/$job" \
+    -f "$evidence/$job.delete.json" > "$evidence/$job.delete-response.json" || return 1
+  kubectl --context "$EXPECTED_CONTEXT" -n "$ns" wait \
+    --for=delete "job/$job" --timeout=120s || return 1
+  kubectl --context "$EXPECTED_CONTEXT" -n "$ns" get job "$job" \
+    --ignore-not-found -o name > "$evidence/$job.after.txt" || return 1
+  test ! -s "$evidence/$job.after.txt"
+}
+```
+
+Expected result: namespace checks pass; each successful CREATE returns the exact
+Job kind, name, namespace and nonempty UID. Failed or unreadable CREATE output
+means uncertain ownership. Retain the response and stop. Ask the platform owner
+to reconcile the API request and its audit record; do not adopt a UID from a
+later lookup, retry the same name, or delete the object.
+
+Cleanup sends the original Job UID as a server-side deletion precondition. It
+then waits at most 120 seconds and records a successful empty named read. A
+UID conflict, denied read, timeout, or present Job is a cleanup failure; retain
+the operation for owner reconciliation. This deletion removes the owned Job
+and its dependent Pods, so capture all required Pod evidence first. The
+[UID precondition protects object identity](https://kubernetes.io/docs/reference/kubernetes-api/definitions/delete-options-v1-meta/),
+but the owner exclusion still protects namespace identity and the evidence
+window. Never infer absence from a failed read. Log capture requires one
+succeeded Pod owned by the creating Job UID, checks both current UIDs, and
+reads that exact Pod and container. Its wait uses the returned Job deadline
+plus 30 seconds; it does not assume a default duration. A wait or capture
+failure stops acceptance. Retain the CREATE response, collect available
+status/events/logs read-only from those same identities, and let the owners
+diagnose before retry or cleanup.
+
 ## Supported Versions
 
 Use the [shared version rules](README.md#version-and-tool-boundary).
 A restore supports only a source, application, schema, backup format, and database-client combination that the component procedure declares compatible.
-If that declaration is absent, restore into an isolated target and stop before cutover until the data owner accepts the tested combination.
+If that declaration is absent, stop before restore. The component owner must
+supply a versioned compatibility test procedure for an isolated target and
+accept its results before authorizing restore or cutover.
 
 ## Prerequisites
 
@@ -144,7 +301,7 @@ Use the next six steps for routine backups.
 Run from the administration machine:
 
 ```bash
-assert_cluster_binding
+recovery_assert_namespace "$NAMESPACE"
 kubectl config current-context
 kubectl -n "$NAMESPACE" get pvc
 kubectl -n "$NAMESPACE" get cronjob,job
@@ -193,7 +350,7 @@ Check:
 
 ### 5. Copy to an Independent Destination
 
-Move or replicate the completed immutable group to a different failure domain.
+Copy or replicate the completed immutable group to a different failure domain.
 Do not move an incomplete staging directory.
 
 Verify checksums again at the destination.
@@ -210,7 +367,9 @@ Prism treats its database and immutable artifacts as one group.
 The backup script dumps the database first.
 It then copies the immutable artifact superset.
 
-This order is safe because artifact publication precedes database references.
+This order depends on durable immutable artifact publication before database
+references. The [artifact writer synchronizes bytes and their published path](https://github.com/datrab/kubeclaw/blob/8f10f6c8d1ae274efc1493cba739bec95fe833a1/skills/prism/storage/artifacts.ts#L43-L60),
+and the [backup contract requires publication before a database reference](https://github.com/datrab/kubeclaw/blob/8f10f6c8d1ae274efc1493cba739bec95fe833a1/charts/prism/files/prism-backup.sh#L82-L88).
 Administrative artifact deletion must not overlap the backup.
 
 The chart creates these scheduled resources:
@@ -221,15 +380,28 @@ The chart creates these scheduled resources:
 
 Each verification and database-proof invocation selects latest independently.
 Use [Prism Restore](#prism-restore) to compare observable group identities and
-recognize the unbound database-smoke limit. Inspect their last execution:
+recognize the unbound database-smoke limit. Inspect the three CronJob resources
+and retained labelled Pods. The chart puts `app=prism-backup` on Pod templates;
+it does not put that label on Jobs. This Pod observation can include both
+scheduled and manual attempts and does not establish the last completed Job:
 
 ```bash
-assert_cluster_binding
+recovery_assert_namespace "$PRISM_NAMESPACE"
 kubectl -n "$PRISM_NAMESPACE" get cronjob prism-backup prism-backup-verification prism-restore-proof
-kubectl -n "$PRISM_NAMESPACE" get jobs -l app=prism-backup --sort-by=.metadata.creationTimestamp
+kubectl -n "$PRISM_NAMESPACE" get pods -l app=prism-backup --sort-by=.metadata.creationTimestamp
 ```
 
-The backup and artifact PVCs survive Helm removal through keep policy.
+Expected observation: the three named CronJobs are returned. The Pod command
+returns retained Pods with that label, or succeeds with an empty list when no
+matching Pod is retained. An empty list does not prove that no scheduled Job
+ran. A missing CronJob, denied lookup, or other nonzero command exit is a
+failed observation: stop and retain the error before owner diagnosis. For
+manual Job acceptance, use the original CREATE UID and owned-Pod checks in
+[Prism Restore](#prism-restore), not this label alone.
+
+The [backup PVC](https://github.com/datrab/kubeclaw/blob/8f10f6c8d1ae274efc1493cba739bec95fe833a1/charts/prism/templates/jobs.yaml#L59-L74)
+and [artifact PVC](https://github.com/datrab/kubeclaw/blob/8f10f6c8d1ae274efc1493cba739bec95fe833a1/charts/prism/templates/workloads.yaml#L217-L229)
+carry Helm keep policy and Argo CD prune/delete exclusions.
 They remain in the same cluster failure domain until an operator copies them externally.
 
 > **Source evidence — Prism consistency group**
@@ -241,7 +413,11 @@ They remain in the same cluster failure domain until an operator copies them ext
 > [The database proof restores a temporary database and queries core tables](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/files/prism-backup.sh#L126-L153).
 >
 > **Contract or setting:** [The chart defines the backup and verification schedules and commands](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/templates/backup.yaml#L9-L47).
-> It also defines [Secret inputs and separate writable/read-only backup mounts](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/templates/backup.yaml#L52-L79).
+> It also defines [Secret inputs and volume mounts](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/templates/backup.yaml#L52-L79).
+> All three modes mount the backup PVC writable for the shared lock and
+> verification scratch files. Only `backup` mounts the artifact source, and
+> that source mount is read-only. `verify` receives no database credentials;
+> `backup` and `database-proof` receive the selected database Secret.
 >
 > **Test evidence:** [Capacity failures do not publish partial groups](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/prism-backup.test.mts#L73-L84).
 > [The rendered jobs preserve commands, database separation, and read-only artifact access](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/prism-backup.test.mts#L109-L125).
@@ -339,43 +515,18 @@ read its Pod identity/status and read its logs. Stop on any command failure;
 keep the fence and all previous media while the owners diagnose the failure.
 
 ```bash
-assert_cluster_binding || exit 126
+recovery_assert_namespace "$NAMESPACE" || exit 126
 set -euo pipefail
 umask 077
 test ! -e "$LITELLM_BACKUP_EVIDENCE"
 mkdir -m 0700 "$LITELLM_BACKUP_EVIDENCE"
-kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" create job \
-  --from=cronjob/litellm-postgresql-backup "$LITELLM_BACKUP_JOB"
-LITELLM_BACKUP_JOB_UID=$(kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" \
-  get job "$LITELLM_BACKUP_JOB" -o jsonpath='{.metadata.uid}')
+recovery_create_job "$NAMESPACE" litellm-postgresql-backup \
+  "$LITELLM_BACKUP_JOB" "$LITELLM_BACKUP_EVIDENCE"
+LITELLM_BACKUP_JOB_UID=$(cat "$LITELLM_BACKUP_EVIDENCE/$LITELLM_BACKUP_JOB.uid")
 test -n "$LITELLM_BACKUP_JOB_UID"
 printf '%s\n' "$LITELLM_BACKUP_JOB_UID" > "$LITELLM_BACKUP_EVIDENCE/job-uid.txt"
-kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" wait \
-  --for=condition=complete "job/$LITELLM_BACKUP_JOB" --timeout=1860s
-kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" get pods \
-  -l "job-name=$LITELLM_BACKUP_JOB" \
-  -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.uid}{"\t"}{.status.phase}{"\t"}{range .metadata.ownerReferences[*]}{.kind}{":"}{.uid}{":"}{.controller}{","}{end}{"\n"}{end}' \
-  > "$LITELLM_BACKUP_EVIDENCE/pods.tsv"
-LITELLM_BACKUP_POD=$(python3 - "$LITELLM_BACKUP_EVIDENCE" <<'PY'
-import pathlib, sys
-p = pathlib.Path(sys.argv[1])
-uid = (p/'job-uid.txt').read_text().strip()
-rows = (p/'pods.tsv').read_text().splitlines()
-if len(rows) != 1: raise SystemExit('exactly one Job Pod is required')
-name, pod_uid, phase, owners = rows[0].split('\t')
-if 'Job:' + uid + ':true' not in owners.split(','): raise SystemExit('Job ownership differs')
-if phase != 'Succeeded': raise SystemExit('Pod did not succeed')
-(p/'pod-uid.txt').write_text(pod_uid + '\n')
-print(name)
-PY
-)
-test "$(kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" get pod \
-  "$LITELLM_BACKUP_POD" -o jsonpath='{.metadata.uid}')" = \
-  "$(cat "$LITELLM_BACKUP_EVIDENCE/pod-uid.txt")"
-test "$(kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" get job \
-  "$LITELLM_BACKUP_JOB" -o jsonpath='{.metadata.uid}')" = "$LITELLM_BACKUP_JOB_UID"
-kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" logs \
-  "$LITELLM_BACKUP_POD" -c backup > "$LITELLM_BACKUP_EVIDENCE/backup.log"
+recovery_capture_job_logs "$NAMESPACE" "$LITELLM_BACKUP_JOB" backup \
+  "$LITELLM_BACKUP_EVIDENCE" backup.log
 LITELLM_BACKUP_GROUP=$(python3 - "$LITELLM_BACKUP_EVIDENCE/backup.log" <<'PY'
 import pathlib, re, sys
 paths = [s for s in pathlib.Path(sys.argv[1]).read_text().splitlines()
@@ -403,13 +554,16 @@ one completed `backup-*` directory. The storage owner must prevent any other
 process from publishing, editing or removing files there until verification
 and transfer finish. Do not point this procedure at the live backup PVC.
 
-Set `BACKUP_ROOT` to the absolute path of that private export root. Set
+Set and export `BACKUP_ROOT` as the absolute path of that private export root. Set
 `LITELLM_LOCAL_GROUP` to `"$BACKUP_ROOT/${LITELLM_BACKUP_GROUP##*/}"`.
 Set `LITELLM_RECOVERY_SCRIPT` to the absolute path of
 `scripts/postgresql-recovery.sh` from the recorded, approved repository revision;
 verify its SHA-256 against the owner's independent release record before use.
 The shell must receive these actual script inputs from the database and secret
-owners' private environment setup. Never source the copied `metadata.env` or
+owners' private environment setup. Export every required input in the table
+below before invoking the child verifier. Export `LITELLM_SALT_KEY` only when
+the original key authority supplies it; leave it unset when originally absent.
+Normal shell assignment alone does not pass a value to child Bash. Never source the copied `metadata.env` or
 print environment contents, credentials, master keys or salt keys.
 
 | Inputs | Required authority |
@@ -444,6 +598,11 @@ verifier:
 set -euo pipefail
 umask 077
 shopt -s nullglob dotglob
+export BACKUP_ROOT PGHOST PGDATABASE PGUSER BACKUP_EXPECTED_SERVER_VERSION
+export BACKUP_APPLICATION_IMAGE BACKUP_CREDENTIAL_AUTHORITY_REF LITELLM_MASTER_KEY
+export BACKUP_MAXIMUM_BYTES BACKUP_MAXIMUM_RETAINED_BYTES
+export BACKUP_MAXIMUM_AGE_SECONDS BACKUP_MAXIMUM_DURATION_SECONDS
+if [[ ${LITELLM_SALT_KEY+x} ]]; then export LITELLM_SALT_KEY; fi
 test "$(realpath -e -- "$BACKUP_ROOT")" = "$BACKUP_ROOT"
 test -d "$BACKUP_ROOT"
 exported_entries=("$BACKUP_ROOT"/*)
@@ -525,7 +684,10 @@ transfer the complete immutable group to encrypted independent storage with
 the storage owner's mechanism. Verify the same three hashes at the destination,
 using this exact group identity. If the destination can be read as a frozen
 private root with only that one group, repeat the offline check with its
-`BACKUP_ROOT` and `LITELLM_LOCAL_GROUP`, retaining the same owner inputs; otherwise require the storage owner's versioned verification
+`BACKUP_ROOT` and `LITELLM_LOCAL_GROUP`, retaining the same owner inputs.
+Set and export the destination `BACKUP_ROOT` before every repeated child
+invocation; recompute `LITELLM_LOCAL_GROUP` under that root. Repeat the complete
+block above, including its explicit exports. Otherwise require the storage owner's versioned verification
 procedure and receipt for all four objects. Record encryption/key authority,
 independent failure domain, exact destination object identities and retention.
 Stop before fence release or deletion if destination proof is missing.
@@ -534,16 +696,14 @@ Retain the Job/Pod UIDs, log, exact group and PVC identity, source database and
 server version, immutable application image/schema selection, owner input
 record, checksum/archive/tool results, credential-authority references and
 copy receipt. Follow the owners' verified fence-release procedure only after
-all local and destination checks pass. Then check that the Job still has the
-recorded UID and remove only that uniquely named manual Job:
+all local and destination checks pass. Then remove only that manual Job with
+its original CREATE UID:
 
 ```bash
-assert_cluster_binding || exit 126
+recovery_assert_namespace "$NAMESPACE" || exit 126
 set -euo pipefail
 umask 077
-test "$(kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" get job \
-  "$LITELLM_BACKUP_JOB" -o jsonpath='{.metadata.uid}')" = "$LITELLM_BACKUP_JOB_UID"
-kubectl --context "$EXPECTED_CONTEXT" -n "$NAMESPACE" delete job "$LITELLM_BACKUP_JOB"
+recovery_delete_job "$NAMESPACE" "$LITELLM_BACKUP_JOB" "$LITELLM_BACKUP_EVIDENCE"
 ```
 
 Confirm that this Job is absent after deletion. A cleanup failure remains an
@@ -571,8 +731,8 @@ credentials private. The harness creates roles and databases on those servers;
 it does not provision or start the servers
 ([external prerequisites](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L12-L19);
 [role and database creation](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L32-L41)).
-It proves schema, model/key rows, ownership, transactional failure, SQL
-authentication, and legacy/AES credential decryption
+The harness checks schema, model/key rows, ownership, transactional failure,
+SQL authentication, and legacy/AES credential decryption
 ([restore and data checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L111-L137)).
 It does not start the selected LiteLLM image, call LiteLLM readiness or model
 APIs, test valid and invalid API keys through LiteLLM, prove budgets, make a
@@ -614,30 +774,40 @@ verification actually checked. Start with the deployed Prism backup resources,
 healthy source database, available artifact and backup PVCs, enough capacity,
 and a private new `<evidence-dir>` outside those PVCs. Run in the bound
 administration shell. `<unique-id>` is a new lowercase DNS-label suffix for
-all three manual Job names. Do not reuse an existing Job. Normal immutable
+all three manual Job names. Each complete name must have at most 63 characters.
+Do not reuse an existing Job. Use the namespace, CREATE identity, Pod ownership,
+permissions and cleanup helpers in [Bind Recovery Objects](#bind-recovery-objects).
+The Prism owner must record the deployed immutable Control image, PostgreSQL
+server/client versions, backup-script revision, source database, PVC UIDs, and
+external credential authority before the first Job. Stop if that record or the
+verified administrative fence is missing. The storage owner must supply a
+versioned read-only access/export method for the exact logged group on the
+recorded backup PVC and an encrypted independent-copy method. These must
+preserve the database dump, metadata, both checksum manifests, and artifact
+bytes without symlinks or concurrent change. A completed Pod is not an access
+method for its PVC. This page creates no media-access Pod and supplies no
+generic storage transfer command. Stop before Job creation if either owned
+method is missing. Use Node.js for the log comparison below. Normal immutable
 artifact publication can continue; fence administrative deletion, restoration,
 migration, and key rotation for the window. A new concurrent backup can make
-verification select a different group; treat that mismatch as a stop.
+verification select a different group; treat that mismatch as a stop. Record
+the fence start time and keep it until media checks and owner-approved release.
 
 ```bash
-assert_cluster_binding
+recovery_assert_namespace "$PRISM_NAMESPACE"
 export PRISM_BACKUP_EVIDENCE_DIR="<new-evidence-dir>"
 test ! -e "$PRISM_BACKUP_EVIDENCE_DIR"
 mkdir -m 0700 "$PRISM_BACKUP_EVIDENCE_DIR"
-kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" create job \
-  --from=cronjob/prism-backup "prism-backup-manual-<unique-id>"
-kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" wait \
-  --for=condition=complete "job/prism-backup-manual-<unique-id>" --timeout=1860s
-kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" logs \
-  "job/prism-backup-manual-<unique-id>" > "$PRISM_BACKUP_EVIDENCE_DIR/backup.log"
-kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" create job \
-  --from=cronjob/prism-backup-verification "prism-verify-manual-<unique-id>"
-kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" wait \
-  --for=condition=complete "job/prism-verify-manual-<unique-id>" --timeout=1860s
-kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" logs \
-  "job/prism-verify-manual-<unique-id>" > "$PRISM_BACKUP_EVIDENCE_DIR/verify.log"
+recovery_create_job "$PRISM_NAMESPACE" prism-backup \
+  "prism-backup-manual-<unique-id>" "$PRISM_BACKUP_EVIDENCE_DIR"
+recovery_capture_job_logs "$PRISM_NAMESPACE" "prism-backup-manual-<unique-id>" backup \
+  "$PRISM_BACKUP_EVIDENCE_DIR" backup.log
+recovery_create_job "$PRISM_NAMESPACE" prism-backup-verification \
+  "prism-verify-manual-<unique-id>" "$PRISM_BACKUP_EVIDENCE_DIR"
+recovery_capture_job_logs "$PRISM_NAMESPACE" "prism-verify-manual-<unique-id>" verify \
+  "$PRISM_BACKUP_EVIDENCE_DIR" verify.log
 node - "$PRISM_BACKUP_EVIDENCE_DIR/backup.log" \
-  "$PRISM_BACKUP_EVIDENCE_DIR/verify.log" <<'NODE'
+  "$PRISM_BACKUP_EVIDENCE_DIR/verify.log" > "$PRISM_BACKUP_EVIDENCE_DIR/group-comparison.json" <<'NODE'
 const fs = require('node:fs');
 const paths = process.argv.slice(2).map(file => {
   const groups = fs.readFileSync(file, 'utf8').split(/\r?\n/u)
@@ -662,13 +832,11 @@ latest and can therefore check a different group.
 The available same-server database smoke test is a separate observation:
 
 ```bash
-assert_cluster_binding
-kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" create job \
-  --from=cronjob/prism-restore-proof "prism-proof-manual-<unique-id>"
-kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" wait \
-  --for=condition=complete "job/prism-proof-manual-<unique-id>" --timeout=1860s
-kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" logs \
-  "job/prism-proof-manual-<unique-id>" > "$PRISM_BACKUP_EVIDENCE_DIR/database-proof.log"
+recovery_assert_namespace "$PRISM_NAMESPACE"
+recovery_create_job "$PRISM_NAMESPACE" prism-restore-proof \
+  "prism-proof-manual-<unique-id>" "$PRISM_BACKUP_EVIDENCE_DIR"
+recovery_capture_job_logs "$PRISM_NAMESPACE" "prism-proof-manual-<unique-id>" database-proof \
+  "$PRISM_BACKUP_EVIDENCE_DIR" database-proof.log
 cat "$PRISM_BACKUP_EVIDENCE_DIR/database-proof.log"
 ```
 
@@ -681,26 +849,48 @@ first two logs match, do not attribute this smoke result to that group.
 Requested-group native restore proof is **NOT PROVEN** by these Jobs.
 Stop before external restore or cutover.
 
+The [selected capacity and schedule settings](https://github.com/datrab/kubeclaw/blob/8f10f6c8d1ae274efc1493cba739bec95fe833a1/charts/prism/values.yaml#L64-L73)
+limit a group, total retained bytes, and operation duration. Inspect the deployed
+values; these defaults do not establish an owner-approved RPO or retention
+period. The [publication path](https://github.com/datrab/kubeclaw/blob/8f10f6c8d1ae274efc1493cba739bec95fe833a1/charts/prism/files/prism-backup.sh#L74-L117)
+retains incomplete attempts and never expires completed groups automatically.
+A new group includes a UTC timestamp and random suffix; latest is lexical name
+order, not a requested consistency point. The lock is nonblocking: another
+active invocation can make a Job fail instead of wait. Do not remove old or
+incomplete media to make capacity pass without the storage owner's retained
+evidence and expiry procedure. The chart's successful/failed Job history limits
+remove Job history, not backup groups. Keep the independent encrypted copy and
+its owner-approved retention receipt separately.
+
 The Prism data owner and chart maintainer must supply an explicit group
 selection for verification and proof, expose that selected identity in the
 proof result, and test a newer group arriving between commands before this
 boundary can be removed. External recovery also requires the isolated database,
 artifact, application-reader, cutover, and rollback procedure below.
 
-Retain all three Job logs, Job and Pod UIDs, source/image versions, the observed
+Use the storage owner's method to copy the exact group named in both backup
+and verification logs. Recheck the three `SHA256SUMS` members and the complete
+`ARTIFACTS.sha256` index against actual artifact bytes at the independent
+destination. Retain the exact source PVC UID, group path, destination object
+identities, manifests, encryption/key authority and copy receipt. Stop on any
+missing member, changed bytes, identity mismatch or absent destination proof.
+Do not select latest again as a substitute for that group's transfer. Release
+the administrative fence only through the owner's verified procedure after
+these checks pass. After an aborted attempt, the owner must decide whether
+release is safe; retain previous media and failed evidence.
+
+Retain all attempted Job logs, CREATE responses, Job and Pod UIDs,
+source/image versions, the observed
 group identities, checksum manifests, external copy receipt, and separate
 integrity and unbound database-smoke results. After evidence capture, remove
-only the manual Jobs that were actually created:
+only the manual Jobs with valid retained CREATE responses. Omit the proof Job
+if that step was never attempted. Reconcile any uncertain CREATE first:
 
 ```bash
-assert_cluster_binding
-kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" delete job \
-  "prism-backup-manual-<unique-id>" "prism-verify-manual-<unique-id>" \
-  "prism-proof-manual-<unique-id>" --ignore-not-found --wait=true
+recovery_assert_namespace "$PRISM_NAMESPACE"
 for manual_job in "prism-backup-manual-<unique-id>" "prism-verify-manual-<unique-id>" \
   "prism-proof-manual-<unique-id>"; do
-  test -z "$(kubectl --context "$EXPECTED_CONTEXT" -n "$PRISM_NAMESPACE" get job \
-    "$manual_job" --ignore-not-found -o name)"
+  recovery_delete_job "$PRISM_NAMESPACE" "$manual_job" "$PRISM_BACKUP_EVIDENCE_DIR"
 done
 ```
 
