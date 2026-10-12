@@ -56,18 +56,39 @@ flowchart LR
     Journal --> Audit[Redacted audit projection]
 ```
 
-Text version: The compiler creates a fixed definition.
-The runtime resolves packages, registrations, grants, and providers.
-Nova writes both views into one run snapshot.
-The scheduler starts bounded attempts.
-Core records effects and results before it changes lifecycle state.
-Recovery and audit rebuild their views from durable records.
+Text version: The **Project input** enters the **Project compiler**.
+The **Project compiler** produces the **Fixed pipeline definition**.
+The **Fixed pipeline definition** determines the required **Registry and grant resolution**.
+This resolution selects packages, registrations, grants, and providers.
+The **Registry and grant resolution** supplies the **Atomic run snapshot**.
+Nova stores the fixed definition and runtime selections in that snapshot.
+The **Atomic run snapshot** supplies the admitted inputs for the **Scheduler loop**.
+The **Scheduler loop** starts a **Bounded stage attempt**.
+
+A **Bounded stage attempt** requests **Authorized effects**.
+The **Bounded stage attempt** also produces a **Typed stage result**.
+For durable **Authorized effects**, Core stores **Durable receipts**.
+The **Typed stage result** enters the **Lifecycle reducer**.
+**Durable receipts** constrain the **Lifecycle reducer** through the attempt's result.
+Core records the **Lifecycle reducer**'s decisions in the **Lifecycle journal**.
+The **Lifecycle journal** supplies state for the next **Scheduler loop** selection, including replay after interruption.
+The **Lifecycle journal** also supplies the **Redacted audit projection**.
+
+These arrows describe authority and information flow.
+Receipts affect lifecycle decisions through adapter responses and attempt results;
+the reducer does not directly read the receipt journal.
 
 > **Source evidence — control authority**
 >
 > [The runner validates the graph and stage inputs before it creates the scheduling loop](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/runner.ts#L40-L78).
 >
 > [The reducer owns all stage states and permitted lifecycle actions](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/lifecycle/reducer.ts#L9-L52).
+>
+> [AdapterRuntime checks receipt outcomes before it returns effect responses to an attempt](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/adapters.ts#L52-L66).
+> [The executor records the typed result before applying the reducer](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/stage-executor.ts#L31-L52).
+>
+> [The loop records decisions before its next scheduling selection](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
+> [Audit derives its redacted projection from journal records](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/telemetry/audit.ts#L13-L27).
 
 ## Authority and Invariants
 
@@ -1040,10 +1061,30 @@ It permits plain HTTP only for a loopback endpoint behind the expected local pro
 Transport retries only retryable status classes.
 Each response has a byte limit and schema validation.
 
-Dispatch handles uncertain transport state explicitly.
-If a request fails, Nova queries the remote job by identity.
-It persists the reconciled state before it returns the failure.
-A failure that also cannot persist reconciliation carries both causes.
+Dispatch first queries the original job ID.
+A 404 schedules submission of the stored job.
+A retryable transport failure returns to status polling under the same deadline.
+Other transport, response-validation, or identity errors propagate while the deadline remains active.
+This error branch writes no interruption record.
+
+Timeout or caller cancellation triggers cleanup only after dispatch validates the job.
+Validation marks the operation prepared before durable dispatch storage finishes.
+An interruption before validation skips cleanup.
+Nova uses a separate cleanup deadline to attempt cancellation of the same job first.
+It then polls that job's status until it observes `completed`, `failed`, or `cancelled`, or cleanup ends.
+The dispatcher defaults this cleanup window to 10 seconds.
+A cancellation request or 404 does not prove cancellation; a lost submission can arrive after a 404.
+If cleanup cannot establish a terminal state, Nova records `unknown`.
+
+Nova records the job ID, request digest, interruption reason, observed state, observation time, and last error in its interruption stream.
+Only this cleanup branch records an interruption before returning the timeout or cancellation error.
+If that record fails, the returned error retains both the interruption and persistence failures.
+Later result or evidence import failures do not enter this dispatch cleanup.
+
+For an unknown outcome or an error without reconciliation, stop new dispatch.
+Preserve the original job ID, request digest, stored job/archive, failed output, and any interruption record.
+Follow [Effect recovery stops](#effect-recovery-stops) before work that could repeat an accepted effect.
+An interruption record does not replace an effect receipt or grant continuation authority.
 
 One gate deadline covers dispatch, polling, result download, evidence download,
 and retry delays. Each operation receives only the remaining time. Expiry
@@ -1059,7 +1100,15 @@ deadline.
 >
 > [The secure endpoint rule rejects plaintext transport outside loopback](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/secure-endpoint.ts#L1-L14).
 >
-> [Dispatch operation reconciles remote state and preserves both operation and persistence failures](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/dispatch-operation.ts#L11-L82).
+> [Dispatch distinguishes active-deadline failures from prepared-operation interruption cleanup](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/dispatch-operation.ts#L18-L35).
+>
+> [Polling selects submission after 404 and retries only classified transport failures](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/dispatch-operation.ts#L37-L55).
+>
+> [Cleanup attempts cancellation, polls the same job, and records terminal or unknown state](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/dispatch-operation.ts#L56-L82).
+> [The dispatcher defaults cleanup to 10 seconds](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-dispatch.ts#L85-L90).
+>
+> [The store appends interruption outcomes separately from stored jobs](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-dispatch-store.ts#L59-L64).
+> [The caller shares its remaining deadline with dispatch and import without adding dispatch cleanup to import failures](https://github.com/datrab/kubeclaw/blob/4f089958db97a551f406c157d774bda143a38946/skills/nova/core/test-gates/remote-result-import.ts#L262-L277).
 
 ### Import result authority once
 
