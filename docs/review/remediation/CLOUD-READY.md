@@ -4,8 +4,10 @@ Aktueller Einstieg für die vom Auftraggeber am 12. Oktober 2026 verlangte
 Repositoryübergabe. Zielbranch: **`codex/cloud-config-handoff-20261012`**.
 Der Branch ist ein Arbeitsstand-Checkpoint auf Basis von
 `cd9f235345f5fd8736a2ffe75d806288e4d538db`, keine Implementierungsabnahme und kein
-Deploymentrelease. Remoteverfügbarkeit und Commit werden nach Push separat geprüft;
-ein Dateititel allein beweist keine Veröffentlichung.
+Deploymentrelease. Der Snapshot wurde tatsächlich nach GitHub gepusht und durch einen frischen
+GitHub-Clone bestätigt. Der geprüfte Source-/Belegstand ist Commit
+`56451fe3e0eb3e389b70e5c8ffad9e6a35ffad8b`; eine nachfolgende reine
+Dokumentationsfortschreibung hält die Remoteprüfung fest. [Remote-Nachweis](../evidence/cloud-readiness-20261012/remote-verification.json).
 
 ## In Codex Cloud fortsetzen
 
@@ -100,3 +102,7 @@ sie ist kein neuer Gesamtlauf aller historischen Tests.
 ## Tatsächlich ausgeführte Checkpointprüfung
 
 Der isolierte Checkout des Source-/Evidence-Checkpoints `0b6cd8dbcaa9df478f8f454cc4c6c24ecd747493` bestand Registercheck und alle 26 Registertests ohne Skips/Fehler. Das [Rohlaufresultat](../evidence/cloud-readiness-20261012/snapshot-verification.json) bindet Kommandos und Stand; der [unabhängige Bericht](independent-cloud-readiness-20261012.md) bestätigt alle 18.457 ausgewählten Inhaltsidentitäten/Symlinkziele, alle 21 Toolprovenienzdateien, die Cacheausschlüsse und unveränderten ursprünglichen Main-/Indexstand. Diese nachfolgende Dokumentationsfortschreibung ändert keinen Produktionscode. Zwei bereits vorher nicht auflösbare kurze Implementation-Commitangaben werden im Review als historisches Limit geführt, nicht still korrigiert. Keine fachliche Runtime-/Findingabnahme.
+
+## Bestätigte GitHub-Verfügbarkeit
+
+Der frische Clone direkt von GitHub lieferte den erwarteten Commit; alle 18.457 ausgewählten Inhaltsidentitäten/Symlinkziele stimmen erneut, und der Registercheck besteht im Remotecheckout. Upload des ersten vollständigen Checkpoints: etwa 39,07 MiB dank Gitkompression/Deduplizierung, trotz ca. 2,65 GB logischer Belegbytes. Rund 7,52 GB große Tool-/DB-/Cachebytes bleiben lokal erhalten und außerhalb Git. `main` bleibt unverändert. Die Remoteprüfung macht weder alte Securityläufe erneut bestanden noch neue CONFIG-/Runtimeimplementierung fertig.
