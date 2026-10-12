@@ -1,0 +1,86 @@
+{
+  "baseRevision": "0ed7480ee0aee25a61acaa6cca9d559d58a735ed",
+  "files": [
+    {
+      "path": "docs/generated/inventory/documentation-source-revision.json",
+      "bytes": 280,
+      "sha256": "fbc143bc45c4043e2a55e9e01b95f9beaf265fb46fc25439578f4bc1e6e7acff"
+    },
+    {
+      "path": "docs/generated/inventory/platform-surfaces.json",
+      "bytes": 510179,
+      "sha256": "f5f120715cfe635213d778493fb847a533aeb6c55f279c822ad96d040376d299"
+    },
+    {
+      "path": "docs/generated/inventory/workflows.json",
+      "bytes": 15604,
+      "sha256": "f268ba628fede7d1d5aa83ee157b1a398d9c915efb6cae5d504b04313529b7b8"
+    },
+    {
+      "path": "docs/site/reference/platform-surfaces-generated.md",
+      "bytes": 414451,
+      "sha256": "cde6db74c3cb21ccc7cffdf1bbecde2f1ee3578b1bb2a3a7b80b69f4979a9c7a"
+    },
+    {
+      "path": "docs/site/reference/project-pipeline-publication.md",
+      "bytes": 36934,
+      "sha256": "861d0fdc3d3b25d1592ea43d64d6ecab3b3e0d3ceca76d147a83e639d747bc7b"
+    },
+    {
+      "path": "docs/site/status/open-issues.md",
+      "bytes": 95887,
+      "sha256": "8e9855df2ec321cdd7d31e45c9ce3ec7d6805c3839e666eb3ec96115164c64bb"
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "bytes": 351245,
+      "sha256": "547109bfa0406e2c52889e92f82c2909c500ff016b91fff01d3ed9968a985034"
+    },
+    {
+      "path": "scripts/docs-api-output-role-classification.mjs",
+      "bytes": 117511,
+      "sha256": "413415949f2408eda0468752c973fd9bb6bddc7eaa00769d0779745ecd035200"
+    },
+    {
+      "path": "scripts/docs-api-producer-adapter-authorities.json",
+      "bytes": 2699859,
+      "sha256": "2a24100fbfdf53302492b93fc64da99f582ad9bd9641a416032682bd3b93bccd"
+    },
+    {
+      "path": "scripts/docs-api-product-scope.mjs",
+      "bytes": 70670,
+      "sha256": "886954fc291ad77c42a92c9130e711565c27e14d58ebe2a74f14e1e873668125"
+    },
+    {
+      "path": "scripts/docs-api-reference.mjs",
+      "bytes": 16035,
+      "sha256": "b77560a4563f2892b058c77d9cd677e7c596f5a80e5fdbdca6060e919a67715e"
+    },
+    {
+      "path": "scripts/docs-configuration-inventory.mjs",
+      "bytes": 877751,
+      "sha256": "39a37bf6fd28f136dc03f19993304bbf65d749e932658c12b5b8cfc2ca226386"
+    },
+    {
+      "path": "scripts/docs-runtime-consumer-contracts.mjs",
+      "bytes": 101535,
+      "sha256": "e92de825967a2d76f671145ab42e33a1367ed68e7a2c67427fc93ef86b6a0a6a"
+    },
+    {
+      "path": "scripts/tests/api-output-publication.test.mjs",
+      "bytes": 76323,
+      "sha256": "cea856f219385253d7ad4acc834e166217d1e7c3c2a4a68ba5376dfb2f884f82"
+    },
+    {
+      "path": "scripts/tests/ops-bootstrap-environment-contracts.test.mjs",
+      "bytes": 8038,
+      "sha256": "a73c1b8bdc43675d72f993a72d447c59200a6e6834e5c6580a8c84e0b74546dd"
+    },
+    {
+      "path": "scripts/tests/python-environment-discovery.test.mjs",
+      "bytes": 133357,
+      "sha256": "f61ed1f11ba6a3bf45c82e6f7db783164a5f7c1d33bc0ed9f80690661b6b7b41"
+    }
+  ],
+  "scope": "Exact preserved WIP bytes, no acceptance asserted."
+}
