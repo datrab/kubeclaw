@@ -8888,6 +8888,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [
@@ -10226,6 +10234,14 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 87,
           "verifiedInputs": 933
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "openFindingIds": [
@@ -10353,6 +10369,14 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 87,
           "verifiedInputs": 933
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "openFindingIds": [
@@ -10584,6 +10608,14 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 87,
           "verifiedInputs": 933
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "openFindingIds": [
@@ -10828,6 +10860,14 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 87,
           "verifiedInputs": 933
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "openFindingIds": [
@@ -11087,6 +11127,14 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 87,
           "verifiedInputs": 933
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "openFindingIds": [
@@ -11915,6 +11963,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [],
@@ -12018,6 +12074,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [
@@ -12126,6 +12190,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [
@@ -12233,6 +12305,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [],
@@ -12336,6 +12416,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [
@@ -12441,6 +12529,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [],
@@ -12544,6 +12640,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [],
@@ -12647,6 +12751,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [],
@@ -12750,6 +12862,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [],
@@ -13924,6 +14044,14 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 87,
           "verifiedInputs": 933
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "openFindingIds": [
@@ -14387,6 +14515,14 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 87,
           "verifiedInputs": 933
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "openFindingIds": [
@@ -16002,6 +16138,22 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [
@@ -16104,6 +16256,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [
@@ -16205,6 +16365,22 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [],
@@ -16304,6 +16480,22 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [
@@ -16405,6 +16597,22 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [],
@@ -16514,6 +16722,22 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [],
@@ -16605,6 +16829,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [],
@@ -16805,6 +17037,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [
@@ -16898,6 +17138,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "openFindingIds": [
@@ -17188,6 +17436,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "readerFixtureIds": [],
@@ -17295,6 +17551,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "readerFixtureIds": [
@@ -17373,6 +17637,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "readerFixtureIds": [
@@ -17418,6 +17690,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "readerFixtureIds": [
@@ -17514,6 +17794,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "readerFixtureIds": [],
@@ -17579,6 +17867,22 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "readerFixtureIds": [],
@@ -17682,6 +17986,22 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "readerFixtureIds": [],
@@ -17823,6 +18143,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "/root/capacity_corrected_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+          "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "readerFixtureIds": [
@@ -17883,6 +18211,14 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 87,
           "verifiedInputs": 933
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "readerFixtureIds": [],
@@ -18217,6 +18553,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "readerFixtureIds": [],
@@ -18293,6 +18637,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "readerFixtureIds": [],
@@ -18363,6 +18715,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "readerFixtureIds": [],
@@ -18510,6 +18870,14 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "c57a623e48cec19979681c63dd532d5acca7a144ab875840b5ac7b581ac20083",
           "scopeLimit": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
+        },
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
         }
       ],
       "readerFixtureIds": [
@@ -18597,6 +18965,14 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 87,
           "verifiedInputs": 933
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "readerFixtureIds": [],
@@ -18654,6 +19030,14 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 87,
           "verifiedInputs": 933
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "readerFixtureIds": [],
@@ -18820,6 +19204,14 @@
           "rootSeal": "/home/node/Documents/Codex/a98-evidence/known-reader-binding-complete-tool-source-fresh-root-seal.json",
           "verifiedArtifacts": 87,
           "verifiedInputs": 933
+        },
+        {
+          "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+          "role": "source",
+          "state": "terminal-complete-assigned-FAIL",
+          "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+          "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+          "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
         }
       ],
       "readerFixtureIds": [],
@@ -18864,7 +19256,16 @@
       "automaticFailure": "Erreichbarkeit wird nur über Volltextsuche oder einen globalen Dateibaum erreicht.",
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        }
+      ],
       "readerFixtureIds": [],
       "executionScenarioIds": []
     },
@@ -18953,7 +19354,16 @@
       "automaticFailure": "Nur Markdown-Links werden geprüft; gebaute Routen, Assets, Anchors oder Sourcebereiche bleiben ungeprüft.",
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        }
+      ],
       "readerFixtureIds": [],
       "executionScenarioIds": []
     },
@@ -19013,7 +19423,16 @@
       "automaticFailure": "Derselbe Autor nimmt sich selbst ab oder ein FAIL wird nur kommentiert.",
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        }
+      ],
       "readerFixtureIds": [],
       "executionScenarioIds": []
     },
@@ -19164,7 +19583,16 @@
       "automaticFailure": "„Alles grün“ verschweigt Skips, Produktlücken oder begrenzte Evidenzklassen.",
       "state": "not-accepted",
       "evidence": [],
-      "reviews": [],
+      "reviews": [
+        {
+          "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+          "role": "reader",
+          "state": "terminal-complete-assigned-PASS",
+          "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+          "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+          "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        }
+      ],
       "readerFixtureIds": [
         "READER-OPERATOR-02"
       ],
@@ -23564,6 +23992,76 @@
         "verifiedInputs": 109,
         "scope": "Complete current assigned page content quality facets only; no whole gates, practical execution or package/global approval."
       }
+    },
+    {
+      "id": "A98-20261012-NESTED-STDIN-SOURCE-IDENTITY",
+      "state": "open-under-coherent-complete-three-finding-author-correction",
+      "reportedBy": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+      "requirements": [
+        "CFG-015",
+        "CFG-018",
+        "REF-003"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14",
+        "A911-01",
+        "A911-02"
+      ],
+      "finding": "Actual acquisition AssertionError stack omits receiving workload identity.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+      "evidenceSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+      "evidenceBoundary": "Complete current independentFAIL3, all findings collected before onecoherentwriter assignment. Sixactualfalsegreens/twoadjacentnegative/fourbaseline-restored; source identity failureactual. No green285/287 ordocroleproof offsets."
+    },
+    {
+      "id": "A98-20261012-SUBSTITUTION-STDIN-CUSTODY",
+      "state": "open-under-coherent-complete-three-finding-author-correction",
+      "reportedBy": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+      "requirements": [
+        "CFG-010",
+        "CFG-011",
+        "CFG-015",
+        "CFG-018",
+        "REF-003",
+        "REF-012"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14",
+        "A911-01",
+        "A911-02"
+      ],
+      "finding": "Dollar/backtick recursive acquisition loses unresolvedStdin; two actualfalseGREEN436.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+      "evidenceSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+      "evidenceBoundary": "Complete current independentFAIL3, all findings collected before onecoherentwriter assignment. Sixactualfalsegreens/twoadjacentnegative/fourbaseline-restored; source identity failureactual. No green285/287 ordocroleproof offsets."
+    },
+    {
+      "id": "A98-20261012-COMPREHENSION-NAMED-CUSTODY",
+      "state": "open-under-coherent-complete-three-finding-author-correction",
+      "reportedBy": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+      "requirements": [
+        "CFG-010",
+        "CFG-011",
+        "CFG-013",
+        "CFG-015",
+        "CFG-018",
+        "REF-003",
+        "REF-012"
+      ],
+      "acceptanceIds": [
+        "A98-10",
+        "A98-11",
+        "A98-14",
+        "A911-01",
+        "A911-02"
+      ],
+      "finding": "Comprehension NamedExpr containing-scope reader/function/class/methodgetter binding disappears; four actualfalseGREEN436.",
+      "evidence": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+      "evidenceSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+      "evidenceBoundary": "Complete current independentFAIL3, all findings collected before onecoherentwriter assignment. Sixactualfalsegreens/twoadjacentnegative/fourbaseline-restored; source identity failureactual. No green285/287 ordocroleproof offsets."
     }
   ],
   "checks": [
@@ -27716,8 +28214,14 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
-      "state": "active",
-      "scope": "Full handbook+publicfixture content/task-route Reader and new nav; registered execution unawarded."
+      "state": "terminal-complete-assigned-PASS",
+      "scope": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded.",
+      "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+      "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+      "manifestSha256": "adce7371828917954a3bb6058e9954dcedfa4be145b18f978f0947609f8281e8",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh-root-seal.json",
+      "verifiedArtifacts": 12,
+      "verifiedInputs": 112
     },
     {
       "agent": "/root/capacity_corrected_complete_quality_fresh",
@@ -27744,15 +28248,52 @@
       "forkTurns": "none",
       "freshContext": true,
       "initialMode": "read-only",
+      "state": "terminal-complete-assigned-PASS",
+      "scope": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded.",
+      "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+      "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+      "manifestSha256": "d63f9032059641424f87991f006dc58085d00a24cc0a9cf6bf0c19fb4feac177",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh-root-seal.json",
+      "verifiedArtifacts": 12,
+      "verifiedInputs": 20
+    },
+    {
+      "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-FAIL",
+      "scope": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval.",
+      "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+      "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+      "manifestSha256": "210859a6cdd884d97bb121207d183ce36a67935276d40283ff6e7b56a19c1120",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh-root-seal.json",
+      "verifiedArtifacts": 61,
+      "verifiedInputs": 15
+    },
+    {
+      "agent": "/root/shell_comprehension_custody_complete_batch_writer",
+      "role": "author",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
       "state": "active",
-      "scope": "Whole corrected capacity and necessary declared reader-task contexts, no formal/live exercise."
+      "exclusiveFiles": [
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/tests/python-environment-discovery.test.mjs"
+      ],
+      "scope": "Allthree complete Source findings correctedjointly; usefulunsupportedboundaries sufficient, no genericPython/shellinterpreter."
     }
   ],
   "continuation": {
-    "stage": "AP09.8 open. Handbook/capacity complete Source/Quality content facets PASS; distinct fresh Reader reviews active. Current full11Root suite terminal287PASS43inputs unchanged. API semantic qualification finalcontrols running; actual21receivers/newwholeToolSource stillpending.",
+    "stage": "AP09.8 open. SourceDoc/Quality/staticReader handbook+capacity PASS andSourcecommit30824ccpushed. ToolSource fullFAIL3 (sixactualfalsegreens/oneSourceidentitygap); freshcoherentwriteractive. Root287 andactual21FAIL20/1 immutablehistory.",
     "baselineMutationSession": 17726,
     "baselineMutationLog": "/tmp/kubeclaw-a98-config-mutations.log",
-    "next": "Observe same Root71285 and API qualification controls to terminal; API author seal frees slot for originalscanner21actualreceivers supplement; capacity freshReader and independentwholeToolSource next. No global acceptance or parity/deletion yet.",
+    "next": "Finish coherent all3Source author corrections +targeted/native/owningfullsuite stableterminal; seal tofree slot for semanticAPIrecipe rebind, thenactualreceivers/currentintegratedtests andNEWfullfreshToolSource. No earlygeneration, parity,deletion orpackageclosure.",
     "environmentConstraints": [
       "Previously reported /tmp proof artifacts and native tool bindings are not assumed available after runtime resumption; revalidate required tools."
     ],
@@ -27765,9 +28306,7 @@
     "currentMutationLog": "/home/node/Documents/Codex/a98-evidence/config-mutations-7e413cf6-resumed.log",
     "currentMutationSnapshot": "7e413cf63e82fdc6104184a6be25f35420b15d80",
     "agents": [
-      "/root/superseding_lexical_source_qualification_integrator",
-      "/root/developer_handbook_integrated_complete_reader_fresh",
-      "/root/capacity_corrected_complete_reader_fresh"
+      "/root/shell_comprehension_custody_complete_batch_writer"
     ],
     "baselineMutationState": "terminal-pass-old-source-snapshot",
     "baselineMutationExitCode": 0,
@@ -32659,6 +33198,81 @@
       "verifiedArtifacts": 65,
       "verifiedInputs": 60,
       "scope": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+    },
+    "developer_handbook_integrated_complete_reader_fresh": {
+      "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-PASS",
+      "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
+      "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
+      "manifestSha256": "adce7371828917954a3bb6058e9954dcedfa4be145b18f978f0947609f8281e8",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh-root-seal.json",
+      "verifiedArtifacts": 12,
+      "verifiedInputs": 112,
+      "scope": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+    },
+    "capacity_corrected_complete_reader_fresh": {
+      "agent": "/root/capacity_corrected_complete_reader_fresh",
+      "role": "reader",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-PASS",
+      "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
+      "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
+      "manifestSha256": "d63f9032059641424f87991f006dc58085d00a24cc0a9cf6bf0c19fb4feac177",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh-root-seal.json",
+      "verifiedArtifacts": 12,
+      "verifiedInputs": 20,
+      "scope": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+    },
+    "wrapperNamedWriteActualReceiving": {
+      "at": "2026-10-12T11:48:14.083307+00:00",
+      "reportSha256": "fa09031e44921a8d894f33a248993d8f3218da3919f5dc8ea800e8dab44dd361",
+      "manifestSha256": "06b68f360ab3a02ddd74ee89865799c2afdcfd37181e43bf6a34623893c4cd17",
+      "verifiedArtifacts": 54,
+      "verifiedCurrentInputs": 10,
+      "originalSessionId": 77555,
+      "pid": 365763,
+      "exitCode": 1,
+      "decisions": 21,
+      "pass": 20,
+      "fail": 1,
+      "scope": "Correction-author actual whole receiving FAILED: unsupported nested stdin diagnostic lacks workload Source identity; no semantic/global approval",
+      "report": "/home/node/Documents/Codex/a98-evidence/absolute-nested-wrapper-named-write-receiving/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/absolute-nested-wrapper-named-write-receiving-root-seal.json"
+    },
+    "wrapperNamedWriteCompleteToolSource": {
+      "agent": "/root/wrapper_named_write_integrated_complete_tool_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-FAIL",
+      "scope": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval.",
+      "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
+      "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
+      "manifestSha256": "210859a6cdd884d97bb121207d183ce36a67935276d40283ff6e7b56a19c1120",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh-root-seal.json",
+      "verifiedArtifacts": 61,
+      "verifiedInputs": 15
+    },
+    "wrapperNamedWriteQualificationAuthor": {
+      "state": "complete-author-binding-proof-not-independent-approval",
+      "report": "/home/node/Documents/Codex/a98-evidence/absolute-nested-wrapper-named-write-source-qualification/report.md",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/absolute-nested-wrapper-named-write-source-qualification-root-seal.json",
+      "verifiedArtifacts": 34,
+      "verifiedInputs": 952,
+      "scope": "726f/da5713/4a4f/pub-libc930 sourcepair stable thenreviewedFAIL3; upcomingnewscanner invalidatescurrentqualification."
     }
   }
 }
