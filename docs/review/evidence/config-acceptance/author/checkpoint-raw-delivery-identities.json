@@ -1,0 +1,178 @@
+{
+  "status": "raw-evidence delivery checkpoint; not acceptance",
+  "parentCommit": "a8f007000eb5e40a06d8cbd6e6195479b6a2fb7e",
+  "indexInputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/.gitattributes",
+      "sha256": "57f66b0cb2f5f55dd5c119f21e46d37bc60fa4a8906009c41876d7777a4c08b2",
+      "bytes": 210
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/config-components-isolated-test-env.log",
+      "sha256": "843e1823d23998bebdd0077dcd4ad5d0c07ed86cf1f6263f9efeb184e6449041",
+      "bytes": 105752
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/config-components-uid1000.log",
+      "sha256": "c7cc0db781f153f2d68094140660ae9a7a6a5a6abbb94bec8f51a8e8a5e5ef5c",
+      "bytes": 51
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/config-components-writable-cache.log",
+      "sha256": "f99b49bbd419daf4ea631084d432d13a9c8bc7bac355064e12390c3fb00401c9",
+      "bytes": 113044
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/config-components.log",
+      "sha256": "9f023623d1f721100637b53c4575f9a22b96dff0470a3f4c9989adc65e99511e",
+      "bytes": 775
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/consolidation.log",
+      "sha256": "7f9a8eafc9262f3c63767aac08a8b3d85223b6496403c7fa6af37ba785351186",
+      "bytes": 63
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/matrix-strict-checkpoint.log",
+      "sha256": "d77b559f6283d09256050c35a581efa3ea09dfd7067a95424a1c6806ed94c621",
+      "bytes": 6027379
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/matrix-strict.log",
+      "sha256": "38aa854ba9f652078d3f777dfc48d970d479a769d359b23881232ea9d47f80d4",
+      "bytes": 1938955
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/matrix-structural.log",
+      "sha256": "7d60223b6cde066b7216877fd8256965aed011cfff59ac469155224d19c0c215",
+      "bytes": 181
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/npm-ci-development-dependencies.log",
+      "sha256": "22a97f7f14d2b6d7b212ef3a5d709255e07c0eeefdc68e34c613bdd4d89cec5c",
+      "bytes": 156
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/npm-ci-writable-cache.log",
+      "sha256": "11e8a794a022ce68e2f7e37ebded4047ac6ab3d85e92485040119d212888b620",
+      "bytes": 156
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/npm-ci.log",
+      "sha256": "1380384ab449389566b93bb3a974549ae385e2b3bcf938a88e63499124ed1d33",
+      "bytes": 8734
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/prism-source-read.log",
+      "sha256": "63ca9475ae493e5f889230a6a235468d2b8703186f633d3f1a58899b10db3578",
+      "bytes": 70675
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/register-check.log",
+      "sha256": "c5e201217130fbac5199a42c25b7bfc644c33dfb7d94c78ac87050107cc0403b",
+      "bytes": 121
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/source-boundary.log",
+      "sha256": "f571478f581396a891a651705a35f76814d641c80a375e067f8b016d89d7226c",
+      "bytes": 109
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/check.log",
+      "sha256": "f459ae094955982946179805679cf9b8fdc119c71b2de399ad6a661662e7d9cd",
+      "bytes": 1646
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/collection.log",
+      "sha256": "014cc4d9d7ee9dd165a9648d304ddf1e336ba037f6ff3491eb20337e3000c60b",
+      "bytes": 543
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/identity.log",
+      "sha256": "5f613cf597fa2314c7a1e4d29a9a720d56add5270add41868f107b9976058cbd",
+      "bytes": 804
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/source-read.log",
+      "sha256": "48c922a84b1c594491a14a455e9570d35d27370ec3ae154fcbec0349245dbb1f",
+      "bytes": 749108
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/worker-residual-candidates.log",
+      "sha256": "529d83400ced705d90815e4bcb19c8b1be1afa8e76796d9ce9442d56a3a3cf72",
+      "bytes": 46152
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/author-strict-raw.log",
+      "sha256": "fd068b84c3ec04acc38c5a45526efc4f31e9a7188422479005690f018b142cb3",
+      "bytes": 1939058
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/author-structural-raw.log",
+      "sha256": "d1d01ca5136dab4d746cecd9a25c57f69ae28d9eb5a04229f29dc9e382bc2248",
+      "bytes": 286
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/diff-check-raw.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/enumeration-raw.log",
+      "sha256": "9c471f719f3ce30a42cc91919cfc5fd934ffcfe747e7299ab48d7e2b9d66f2a8",
+      "bytes": 4640
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/logical-schemas-raw.log",
+      "sha256": "a52d05afc26898a7a3e312e29685468a06c54e6e8eab7bed8c1b7691f9a2c568",
+      "bytes": 6405
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/register-corrected-reproduction.log",
+      "sha256": "c5e201217130fbac5199a42c25b7bfc644c33dfb7d94c78ac87050107cc0403b",
+      "bytes": 121
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/register-reproduction.log",
+      "sha256": "dc0626f5ff3fed54a9a3c31257da9b4f4cb6d0e0ddd72002d1dfa72bcda06ee7",
+      "bytes": 810
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent/uid-negative-reproduction.log",
+      "sha256": "f8ff5172b7f6910fa1be292849165c90b17aaf315d16a9108cd1a45ff4fc7919",
+      "bytes": 1085
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/config-reader-search.log",
+      "sha256": "85540ce5848af9fa136ac252310276c3b38237831790987004708d66fe5d692d",
+      "bytes": 88738
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/env-cli-search.log",
+      "sha256": "d74f5d5d3e0a9f05b73169817e94a898186e51d0f12a44b25fde69e0e872da14",
+      "bytes": 9017
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/identity.log",
+      "sha256": "93489f109b5123037806a75e9660f8cd751e6b8af5da7811499542e901604118",
+      "bytes": 82
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/module-reader-search.log",
+      "sha256": "340da53262647c28a9782fbe810ea556a9b915c77bd468fe877f3fe8b63737ad",
+      "bytes": 8344
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/node-version.log",
+      "sha256": "f2ec568164f99546161909b0189b57bb5be3e80f8e2ccd8a51a4aed8c4055a04",
+      "bytes": 9
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/python-version.log",
+      "sha256": "cb64a3a0ddcaff0ce013ea3612beda0be4a4d3537087505bd8850d8f8476f4f8",
+      "bytes": 14
+    }
+  ],
+  "reason": "Root ignore rules exclude logs by default; raw outputs explicitly included, never replaced with PASS summaries. Raw whitespace retained via evidence-scoped attributes.",
+  "selfExclusion": "commit/tree identifies manifest bytes"
+}

@@ -1,0 +1,55 @@
+skills/nova/project/recovery.ts:2:import {readRunSnapshot,verifyPinnedGraph} from '@kubeclaw/nova-core/run-snapshots';
+skills/nova/project/recovery.ts:50:  verifyPinnedGraph(root,compiled.definition);
+skills/nova/project/coverage.ts:33:export function cumulativeStages(project: ObjectValue, modules: readonly ObjectValue[], sourceStageId: string,
+skills/nova/project/coverage.ts:44:  const execution = { maxAttempts: 2, maxRemediationCycles: 0, maxTechnicalRetries: 1, timeoutMs: 1_800_000 };
+skills/nova/project/demo.ts:36:  const execution={maxAttempts:2,maxRemediationCycles:0,maxTechnicalRetries:1,timeoutMs:120000};
+skills/nova/project/compiler.ts:3:import { cumulativeStages, projectCoverage, testConfiguration } from './coverage.ts';
+skills/nova/project/compiler.ts:48:function moduleStages(module: ObjectValue, context: ModuleContext): StageDefinition[] {
+skills/nova/project/compiler.ts:59:  const repairBudget = { categories, maximumOrchestratorOrders: 1 };
+skills/nova/project/compiler.ts:62:  const maxTechnicalRetries = 1;
+skills/nova/project/compiler.ts:64:  const execution = { maxAttempts: 1 + maximumOrders + maxTechnicalRetries,
+skills/nova/project/compiler.ts:65:    maxRemediationCycles: maximumOrders, maxTechnicalRetries, timeoutMs: 1_800_000 };
+skills/nova/project/compiler.ts:72:        commitMessage: `[forge:${module.id}] ${projectId}` } }, execution: { ...execution, repairBudget } });
+skills/nova/project/compiler.ts:184:    stages.push(...moduleStages(module, { projectId, runId, repository, workspaces, baseline, previousGate, sourceBinding: source.binding, reportArtifactEncoding, reviewSemanticMode }));
+skills/nova/project/compiler.ts:187:  stages.push(...cumulativeStages(project, ordered, `implement-${ordered.at(-1)!.id}`, reportArtifactEncoding,
+skills/nova/core/state/read-run-evidence.ts:177:    if (entry.type === 'attempt.created') {
+skills/nova/core/execution/engine-admin.ts:15:import { canonicalJson, deepFreeze, recordedPackageUpgrades, verifyPinnedGraph, verifyPinnedPackages } from './engine-snapshots.ts';
+skills/nova/core/execution/engine-admin.ts:46:    verifyPinnedPackages(this.#runRoot, this.#runtime, upgrades); const graph = verifyPinnedGraph(this.#runRoot, this.#definition);
+skills/nova/core/execution/engine-admin.ts:122:    const consumed = this.#hasEvent(context, 'attempt.created', context.decision.stageId); states.set(context.decision.stageId, { ...withoutPause, status: consumed ? 'blocked' : 'pending' });
+skills/nova/core/execution/stage-executor.ts:113:    this.#options.append('attempt.created', { runId, stageId: state.stageId, attemptId: runtime.attempt.attemptId }, { attempt: Object.freeze({
+skills/nova/core/execution/stage-executor.ts:118:    this.#options.append('attempt.dispatched', { runId, stageId: state.stageId, attemptId: runtime.attempt.attemptId });
+skills/nova/core/execution/engine-snapshots.ts:4:import { CURRENT_RUNTIME_DISPATCH_PROFILE, CURRENT_REVIEW_CACHE_PROFILE, parseRuntimeDispatchProfile, parseReviewCacheProfile, portableJson, type RuntimeDispatchProfile, type ReviewCacheProfile, type AdministrativeReopenDecision, type PipelineDefinition, type ResumeSignal } from '@kubeclaw/plugin-sdk';
+skills/nova/core/execution/engine-snapshots.ts:28:export function verifyPinnedPackages(runRoot: string, runtime: PreparedRuntime, upgrades: readonly PackageUpgrade[] = []): void {
+skills/nova/core/execution/engine-snapshots.ts:68:export function verifyPinnedGraph(runRoot: string, definition: PipelineDefinition): ExecutionGraphSnapshot {
+skills/nova/core/execution/engine-snapshots.ts:105:export function writeRunSnapshots(runRoot: string, graph: ExecutionGraphSnapshot, registry: Readonly<Record<string, unknown>>): void {
+skills/nova/core/execution/engine-snapshots.ts:107:  const unsigned = { schemaVersion: 'run-snapshot.v4' as const, graph, registry, runtimeDispatchProfile: CURRENT_RUNTIME_DISPATCH_PROFILE, reviewCacheProfile: CURRENT_REVIEW_CACHE_PROFILE };
+skills/nova/core/execution/pipeline-loop.ts:125:    this.#services.append('stage.started', { runId, stageId: definition.id }, { stageType: definition.type,
+skills/nova/core/execution/engine-run.ts:14:import { canonicalJson, deepFreeze, frozenRegistryRecord, graphSnapshot, readRunSnapshot, recordedPackageUpgrades, validateSignal, verifyPinnedGraph, verifyPinnedPackages, writeRunSnapshots } from './engine-snapshots.ts';
+skills/nova/core/execution/engine-run.ts:22:  const pinnedGraph = verifyPinnedGraph(context.runRoot, context.definition);
+skills/nova/core/execution/engine-run.ts:40:    fs.mkdirSync(runRoot, { recursive: true }); const graph = graphSnapshot(definition); writeRunSnapshots(runRoot, graph, frozenRegistryRecord(runtime, definition, graph));
+skills/nova/core/execution/engine-run.ts:61:    verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
+skills/nova/core/execution/engine-run.ts:87:    verifyPinnedPackages(runRoot, runtime, recordedPackageUpgrades(decisions.records().map(({ entry }) => entry))); verifyPinnedGraph(runRoot, definition);
+skills/nova/core/execution/graph-repair-budget.ts:4:  const limit = stage.execution.maxTechnicalRetries;
+skills/nova/core/execution/graph-repair-budget.ts:12:    if (stage.execution.maxTechnicalRetries !== undefined) technicalLimit(stage);
+skills/nova/core/execution/graph-repair-budget.ts:15:    const budget = owner?.execution.repairBudget;
+skills/nova/core/execution/graph-repair-budget.ts:26:function maximumRepairOrders(id: string, budget: NonNullable<StageDefinition['execution']['repairBudget']>): number {
+skills/nova/core/lifecycle/repair-budget.ts:49:  const policy = stages.find(stage => stage.id === pending.request.targetStageId)?.execution.repairBudget;
+skills/nova/core/lifecycle/repair-budget.ts:60:  const owner = requester.execution.repairBudget ? requester.id : requester.on?.request_fix;
+skills/nova/core/lifecycle/recovery-state.ts:127:  if (event.type === 'stage.started') return { ...current, status: 'running' };
+skills/nova/core/lifecycle/recovery-state.ts:158:  if (event.type === 'attempt.created') {
+skills/nova/core/lifecycle/reducer.ts:129:  if (definition.execution.maxTechnicalRetries !== undefined && ['retry', 'rate_limited'].includes(result.outcome)) {
+skills/nova/core/lifecycle/reducer.ts:132:    if (technicalRetriesUsed > definition.execution.maxTechnicalRetries) return { state: { ...attempted, status: 'blocked' }, action: { type: 'stop' } };
+skills/common/plugin-runtime/sdk/README.md:46:`CURRENT_REVIEW_CACHE_PROFILE` is generated from its separate canonical finite
+skills/common/plugin-runtime/sdk/src/review-cache-profile.ts:1:import { CURRENT_REVIEW_CACHE_PROFILE, type ReviewCacheProfile } from './generated/contracts.ts';
+skills/common/plugin-runtime/sdk/src/review-cache-profile.ts:4:const PROFILE_BYTES = portableJson(CURRENT_REVIEW_CACHE_PROFILE);
+skills/common/plugin-runtime/sdk/src/review-cache-profile.ts:9:  return CURRENT_REVIEW_CACHE_PROFILE;
+skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts:1:import { CURRENT_RUNTIME_DISPATCH_PROFILE, type RuntimeDispatchProfile } from './generated/contracts.ts';
+skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts:5:const PROFILE_BYTES = portableJson(CURRENT_RUNTIME_DISPATCH_PROFILE);
+skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts:10:  return CURRENT_RUNTIME_DISPATCH_PROFILE;
+skills/common/plugin-runtime/sdk/src/generated/contracts.ts:460:    maxTechnicalRetries?: number;
+skills/common/plugin-runtime/sdk/src/generated/contracts.ts:462:    repairBudget?: {
+skills/common/plugin-runtime/sdk/src/generated/contracts.ts:620:    | 'stage.started'
+skills/common/plugin-runtime/sdk/src/generated/contracts.ts:628:    | 'attempt.created'
+skills/common/plugin-runtime/sdk/src/generated/contracts.ts:629:    | 'attempt.dispatched'
+skills/common/plugin-runtime/sdk/src/generated/contracts.ts:698:export const CURRENT_RUNTIME_DISPATCH_PROFILE = Object.freeze({"schemaVersion":"runtime-dispatch-profile.v1","encoding":"json-utf16-v1"} as const);
+skills/common/plugin-runtime/sdk/src/generated/contracts.ts:699:export const CURRENT_REVIEW_CACHE_PROFILE = Object.freeze({"schemaVersion":"review-cache-profile.v1","recordVersion":"review-content-cache.v2","encoding":"json-utf16-v1"} as const);

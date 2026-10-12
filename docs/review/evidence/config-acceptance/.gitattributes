@@ -1,0 +1,5 @@
+# Preserve exact raw command/diff bytes, including empty output/trailing context.
+# Python/JS/JSON/Markdown remain subject to ordinary whitespace checks.
+*.patch -whitespace
+*.log -whitespace
+*.txt -whitespace

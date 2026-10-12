@@ -1,0 +1,156 @@
+{
+  "schemas": 273,
+  "logicalFields": 9537,
+  "exactMatched": 430,
+  "unresolvedReferences": [
+    {
+      "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "field": "modules[*].expectedCoverage",
+      "ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverage",
+      "reason": "ValueError"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "field": "modules[*].coverage",
+      "ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverageResult",
+      "reason": "ValueError"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "field": "final.expectedCoverage",
+      "ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverage",
+      "reason": "ValueError"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "field": "final.coverage",
+      "ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverageResult",
+      "reason": "ValueError"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "field": "$defs.coverage",
+      "ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverage",
+      "reason": "ValueError"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "field": "$defs.coverageResult",
+      "ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverageResult",
+      "reason": "ValueError"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "field": "$defs.module.expectedCoverage",
+      "ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverage",
+      "reason": "ValueError"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "field": "$defs.module.coverage",
+      "ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverageResult",
+      "reason": "ValueError"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "field": "$defs.final.expectedCoverage",
+      "ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverage",
+      "reason": "ValueError"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+      "field": "$defs.final.coverage",
+      "ref": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json#/$defs/gateCoverageResult",
+      "reason": "ValueError"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "field": "$defs.jsonValue[*][*]",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "field": "$defs.jsonValue[*]{*}",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "field": "$defs.jsonValue{*}[*]",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "field": "$defs.jsonValue{*}{*}",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "field": "$defs.jsonObject{*}[*]",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "field": "$defs.jsonObject{*}{*}",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "reason": "TypeError"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "field": "$defs.jsonValue[*][*]",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "field": "$defs.jsonValue[*]{*}",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "field": "$defs.jsonValue{*}[*]",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "field": "$defs.jsonValue{*}{*}",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "field": "$defs.jsonObject{*}[*]",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "field": "$defs.jsonObject{*}{*}",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "field": "$defs.workerInput.value[*]",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "field": "$defs.workerInput.value{*}",
+      "ref": "#/$defs/jsonValue",
+      "reason": "recursive-schema-needs-pattern-disposition"
+    }
+  ],
+  "unresolvedCount": 125
+}
