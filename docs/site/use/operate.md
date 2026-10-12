@@ -5,7 +5,7 @@ Audience: product operator, pipeline operator, Prism operator
 Owner: Nova Core and platform operations
 Evidence: skills/nova/project/cli.ts; skills/nova/core/cli.ts; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/nova/core/execution/engine-snapshots.ts; skills/nova/core/execution/engine-run.ts
 Applies to: pipeline-platform.v2 and current Prism deployment
-Last verified: 2026-09-21 schema validation; journal preservation and audit boundaries rechecked on 2026-10-11 at `929aadbad08b41e7a8504950f05dc0f526b706d6`; no live cluster result
+Last verified: 2026-09-21 schema validation; canonical journal preservation, resume, recovery, and retention boundaries rechecked on 2026-10-12 at `2025f36306636b2e0c2c426447bf137d0574e11f`; no live cluster result
 
 ## Objective
 
@@ -108,8 +108,8 @@ Complete [Validate Before Starting](#validate-before-starting),
 unknown run, changed graph/package digest, unresolved effect, stale or expired
 wait, issuer mismatch, or terminal run. Retain input digests, output, audit,
 wait and signal bytes, effects and receipts, failure, retry decision, and final
-state. Remove restricted temporary signal files after retaining their digest
-and decision record.
+state. Follow [Evidence to Retain](#evidence-to-retain) for protected raw copies
+and signal bytes; a digest alone does not authorize deletion.
 
 ## Before Each Operation
 
@@ -280,8 +280,10 @@ Do not reuse a prior terminal run identity.
 
 ## Inspect a Run
 
-Before the first audit, confirm that the run owner has exited and no new
-operation can write this run or its adapter stores. Stop if ownership is
+Before every audit, recovery, or resume command, confirm that the run owner
+has exited and no new operation can write this run or its adapter stores.
+Make a new verified capture for each command, including a retry or a deliberately
+wrong signal. Stop if ownership is
 unknown. Use the original platform path and run ID from the retained start
 command. Do not discover the run by auditing it first.
 
@@ -298,14 +300,20 @@ signal.
 and [append-lock creation](https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/state/file-mutex.ts#L8-L21)
 define these storage effects.
 
-Preserve the raw run directory before audit, recovery, or resume after an
-interruption. Also preserve the owning adapters' stores through their declared
+Preserve the raw run directory before every audit, recovery, or resume, whether
+or not the prior command ended cleanly. Also preserve the owning adapters'
+stores through their declared
 backup procedure while their writers are stopped. The copy must retain partial
 bytes, original signals, effects, snapshots, and lock files. Do not parse,
 truncate, or repair the source to make the copy pass.
 
-In Bash at the repository root, set these two values from the original command
-record. Define `preserve_run_state` in the same terminal. It uses the platform
+In Bash at the repository root, set the platform and run ID from the original
+command record. Set `RUN_CONTROL_EVIDENCE_ROOT` to an existing private durable
+directory selected by the incident audit owner, outside the run and adapter
+stores. The owner must confirm its capacity, access restrictions, retention
+period, and protection from automatic temporary-file removal before capture.
+Stop if that location or its retention authority is absent. Define
+`preserve_run_state` in the same terminal. It uses the platform
 loader and the actual run-root resolver without opening `FileJournal`. [The resolver](https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/execution/run-root.ts#L62-L75)
 selects the hashed or verified legacy directory. Each call makes a new restricted copy outside the run root and verifies all file
 bytes. Symlinks and special files require the owning store's backup procedure;
@@ -314,9 +322,13 @@ this command stops on them.
 ```bash
 export RUN_CONTROL_PLATFORM="<original-platform.json>"
 export RUN_CONTROL_RUN_ID="<original-run-id>"
+export RUN_CONTROL_EVIDENCE_ROOT="<absolute-private-durable-evidence-root>"
 preserve_run_state() {
   umask 077
-  export RUN_CONTROL_OBSERVATION_ROOT=$(mktemp -d "${TMPDIR:-/tmp}/nova-raw-state.XXXXXXXX")
+  local observation_root
+  test -n "${RUN_CONTROL_EVIDENCE_ROOT:-}" && test -d "$RUN_CONTROL_EVIDENCE_ROOT" || return 1
+  observation_root=$(mktemp -d "$RUN_CONTROL_EVIDENCE_ROOT/nova-raw-state.XXXXXXXX") || return 1
+  export RUN_CONTROL_OBSERVATION_ROOT="$observation_root"
   node --input-type=module <<'NODE'
 import fs from 'node:fs';
 import path from 'node:path';
@@ -359,7 +371,7 @@ preserve_run_state || exit 1
 
 The helper verifies the raw copy before it parses the copied journals. Even
 when a partial record causes parsing to fail, keep that directory and manifest.
-Require exit zero before ordinary audit. Comparison failure means the copy is
+Require exit zero before ordinary audit, recovery, or resume. Comparison failure means the copy is
 not a verified consistency point. Stop and establish the stopped writer state before making a new copy. Hash equality
 checks the copied bytes; it does not prove that every external effect completed.
 
@@ -411,7 +423,7 @@ npm run pipeline -- \
   --audit "$RUN_CONTROL_RUN_ID" \
   > "$RUN_CONTROL_OBSERVATION_ROOT/audit.stdout" \
   2> "$RUN_CONTROL_OBSERVATION_ROOT/audit.stderr" || audit_status=$?
-printf '%s\n' "$audit_status" > "$RUN_CONTROL_OBSERVATION_ROOT/audit.exit"
+printf '%s\n' "$audit_status" > "$RUN_CONTROL_OBSERVATION_ROOT/audit.exit" || exit 1
 test "$audit_status" -eq 0 || exit 1
 ```
 
@@ -428,8 +440,15 @@ Do not infer a terminal state from one plugin log.
 The CLI uses a typed resume-signal file.
 It does not provide a separate `approve` verb.
 
-Before creating a signal, read the active wait from durable evidence.
-Copy no identity from an earlier wait.
+Before creating a signal, complete [Inspect a Run](#inspect-a-run). Use the
+original platform, run ID, project or graph, package snapshot, storage root,
+and runtime configuration from the retained start record. Confirm stopped run
+and owning-adapter writers, preserve new verified raw run and adapter copies,
+and require strict parsing of the copied journals. Read the active wait from
+that preserved evidence. Stop on unknown ownership, changed identity, failed
+copy verification, incomplete records, or a journal chain error. Copy no
+identity from an earlier wait. There is no non-mutating live audit command
+that can replace these prerequisites.
 
 Read `waitId`, `signalType`,
 `authorizedIssuer`, `expiresAt`, and the payload requirements from the active
@@ -484,36 +503,98 @@ Apply these matching rules:
 - Build `payload` from that wait's request and plugin contract. Include the
   current source, decision, or repair digest when that contract requires it.
 
-Nova validates the closed envelope schema before it changes state. It rejects
-unknown fields, a stale or unknown wait, an expired wait, a mismatched type or
-issuer, and a signal issued before wait creation. After Nova records one signal
-for a wait, a different signal cannot resolve that wait again.
+Nova validates the closed envelope before recording the accepted signal and
+its durable `wait.resolved` transition. It rejects unknown fields, a stale or
+unknown wait, an expired wait, a mismatched type or issuer, and a signal issued
+before wait creation. After Nova records one signal for a wait, a different
+signal cannot resolve that wait again.
 
-Use an operator-controlled file with restricted permissions.
-Then resume a project run:
+Storage can change before those checks. [Resume opens the administrative and
+event journals before wait and signal validation](https://github.com/datrab/kubeclaw/blob/2025f36306636b2e0c2c426447bf137d0574e11f/skills/nova/core/execution/engine-run.ts#L81-L95),
+and [run ownership acquires durable lock state first](https://github.com/datrab/kubeclaw/blob/2025f36306636b2e0c2c426447bf137d0574e11f/skills/nova/core/execution/run-mutation.ts#L7-L16).
+Opening a journal can create an append lock or truncate an incomplete tail.
+A rejected envelope, wrong issuer, stale wait, or terminal run therefore does
+not prove that canonical files are unchanged. Preserve original raw bytes
+through [Inspect a Run](#inspect-a-run) before every submission.
+
+Use an operator-controlled signal file with restricted permissions. Before
+**each** submission below, including a retry, replay check, or wrong-signal
+check:
+
+1. Reconfirm the original platform and run ID, project or graph bytes, package
+   snapshot, storage root, and runtime configuration against the retained
+   start record. `<original-project.json>` and `<original-pipeline.json>` mean
+   those exact original inputs, not a new candidate.
+2. Confirm the prior run owner has exited. Stop new writes to the run and its
+   owning adapter stores. Unknown ownership stops the command; containment
+   alone does not prove that an external effect completed.
+3. Reconcile accepted external effects through their owning contracts. Stop
+   while any outcome is unknown or no supported continuation exists.
+4. Follow [Inspect a Run](#inspect-a-run) to make and verify a **new** complete
+   raw run copy and new owning-adapter copies through their declared backup
+   procedures, with writers stopped. Define its `preserve_run_state` helper
+   and evidence-root inputs in this Bash shell.
+5. Require successful strict parsing of every copied run journal. Retain raw
+   bytes and stop on a copy, identity, incomplete-record, sequence, or hash
+   failure. Do not use automatic tail truncation to make submission possible.
+6. Verify that the signal still names that active unexpired wait. Retain the
+   exact signal bytes, ID, issue time, and idempotency key. Submit one of the
+   following forms, using the same original identities.
+
+Project form:
 
 ```bash
+preserve_run_state || exit 1
+resume_status=0
 npm run pipeline -- \
-  --platform "<platform.json>" \
-  --project "<project.json>" \
-  --signal "<resume-signal.json>"
+  --platform "$RUN_CONTROL_PLATFORM" \
+  --project "<original-project.json>" \
+  --signal "<resume-signal.json>" \
+  > "$RUN_CONTROL_OBSERVATION_ROOT/resume.stdout" \
+  2> "$RUN_CONTROL_OBSERVATION_ROOT/resume.stderr" || resume_status=$?
+printf '%s\n' "$resume_status" > "$RUN_CONTROL_OBSERVATION_ROOT/resume.exit" || exit 1
 ```
 
-For an explicit graph, add its run identity:
+For an explicit graph, supply the original run identity:
 
 ```bash
+preserve_run_state || exit 1
+resume_status=0
 npm run pipeline -- \
-  --platform "<platform.json>" \
-  --pipeline "<pipeline.json>" \
-  --run-id "<run-id>" \
-  --signal "<resume-signal.json>"
+  --platform "$RUN_CONTROL_PLATFORM" \
+  --pipeline "<original-pipeline.json>" \
+  --run-id "$RUN_CONTROL_RUN_ID" \
+  --signal "<resume-signal.json>" \
+  > "$RUN_CONTROL_OBSERVATION_ROOT/resume.stdout" \
+  2> "$RUN_CONTROL_OBSERVATION_ROOT/resume.stderr" || resume_status=$?
+printf '%s\n' "$resume_status" > "$RUN_CONTROL_OBSERVATION_ROOT/resume.exit" || exit 1
 ```
 
-Expected observation: the journal records one matching resolution.
-The resumed stage receives a new attempt identity when execution continues.
+Expected observation: an accepted signal records one matching resolution, and
+continued execution gives the resumed stage a new attempt identity. Exit zero
+requires `succeeded`; a nonzero exit can contain a waiting, failed, blocked, or
+rejected result. Retain stdout, stderr, and the actual exit status before any
+follow-up. The command response alone does not prove adapter or external
+process quiescence. If the response or exit status was lost, retain partial
+output and record that result as `not observed`; do not invent an exit status.
+
+After **every** submission, including rejection or a lost response, confirm
+that the owner has exited and re-establish stopped run and adapter writers.
+If ownership is unknown, retain the previous capture and command output and
+stop; do not audit or submit again. Otherwise make new verified run and adapter
+copies through [Inspect a Run](#inspect-a-run), require strict copied-journal
+inspection, then capture its audit outputs and exit status. Keep the previous
+captures and compare the new journal head, original identities, actual wait
+transition, attempt budget, and external receipts with the submitted signal.
+Do not reuse the pre-submission copy for this later audit.
 
 Stop after an issuer mismatch, expired wait, digest mismatch, or stale signal.
 Do not edit the journal or change the signal identity to force acceptance.
+An exact retry needs the same bytes and key, a still-active wait, known effect
+outcomes, and the complete fresh preservation sequence above. A replay after
+resolution is stale or terminal and does not prove unchanged lock files.
+Any later incident-owner-authorized canonical tail repair must retain the
+verified original raw bytes and record the command and its actual changes.
 
 > **Source evidence — signal contract and replay rules**
 >
@@ -544,9 +625,12 @@ Do not edit the journal or change the signal identity to force acceptance.
 Recovery reopens durable state after a process interruption.
 It does not approve a wait or resolve an uncertain external result.
 
-Before any audit or recovery after interruption, stop new admission and
-confirm that the prior owner has exited. Follow [Inspect a Run](#inspect-a-run)
-to preserve and verify raw run bytes and the owning adapter stores first. Stop
+Before every audit or recovery attempt after interruption, including a retry,
+stop new admission, confirm that the prior owner has exited, and verify stopped
+owning-adapter writers. Follow [Inspect a Run](#inspect-a-run) to preserve and
+verify new raw run and adapter copies through their declared backup procedures.
+Define its `preserve_run_state` helper and evidence-root inputs in this Bash
+shell; require strict copied-journal parsing before the command. Stop
 on an incomplete or corrupt journal. Audit can truncate an incomplete tail;
 retain the original bytes before any permitted canonical repair. Confirm the
 original platform, graph or project, package snapshot, run ID, storage root,
@@ -554,22 +638,32 @@ and configuration. Retain the audit output only after this preservation step. Re
 external effect that lacks a terminal receipt. Stop while any outcome remains
 unknown.
 
-Project form:
+Project form, with the original project bytes:
 
 ```bash
+preserve_run_state || exit 1
+recovery_status=0
 npm run pipeline -- \
-  --platform "<platform.json>" \
-  --project "<project.json>" \
-  --recover "<run-id>"
+  --platform "$RUN_CONTROL_PLATFORM" \
+  --project "<original-project.json>" \
+  --recover "$RUN_CONTROL_RUN_ID" \
+  > "$RUN_CONTROL_OBSERVATION_ROOT/recovery.stdout" \
+  2> "$RUN_CONTROL_OBSERVATION_ROOT/recovery.stderr" || recovery_status=$?
+printf '%s\n' "$recovery_status" > "$RUN_CONTROL_OBSERVATION_ROOT/recovery.exit" || exit 1
 ```
 
 Explicit graph form:
 
 ```bash
+preserve_run_state || exit 1
+recovery_status=0
 npm run pipeline -- \
-  --platform "<platform.json>" \
-  --pipeline "<pipeline.json>" \
-  --recover "<run-id>"
+  --platform "$RUN_CONTROL_PLATFORM" \
+  --pipeline "<original-pipeline.json>" \
+  --recover "$RUN_CONTROL_RUN_ID" \
+  > "$RUN_CONTROL_OBSERVATION_ROOT/recovery.stdout" \
+  2> "$RUN_CONTROL_OBSERVATION_ROOT/recovery.stderr" || recovery_status=$?
+printf '%s\n' "$recovery_status" > "$RUN_CONTROL_OBSERVATION_ROOT/recovery.exit" || exit 1
 ```
 
 Recovery must use the original graph and package snapshot.
@@ -578,9 +672,36 @@ Start a new run when governed configuration must change.
 Expected observation: a permitted recovery writes one JSON result for the same
 run ID. Exit code zero requires terminal status `succeeded`; retain a nonzero
 result as a failed or blocked recovery, not as proof that restart completed.
-Run the audit command again and compare both audits. The final audit must retain
-the original graph and package identities, contain no unexplained duplicate
-effect, and agree with the returned terminal state.
+[Recovery opens journals and can reconcile observer state before returning](https://github.com/datrab/kubeclaw/blob/2025f36306636b2e0c2c426447bf137d0574e11f/skills/nova/core/execution/engine-run.ts#L56-L68).
+It can change journals, effects, observer state, and adapter stores, including
+before a failed or blocked return. The pre-recovery capture
+cannot prove the bytes that the next audit will open.
+
+After **every** recovery attempt, including failure, rejection, or a lost
+response:
+
+1. Retain the pre-command raw copies, available command stdout/stderr, and
+   actual exit status. Record a lost response or exit status as `not observed`.
+   Confirm that the run owner has exited and re-establish stopped run
+   and owning-adapter writers. Stop if ownership is unknown.
+2. Reconfirm the original run, platform, project or graph, package, storage,
+   and configuration identities. Make and verify new adapter-store copies
+   through their declared backup procedures, then call `preserve_run_state`
+   again through [Inspect a Run](#inspect-a-run). Require successful strict
+   parsing of every copied run journal. Keep rejected bytes and stop on failure.
+3. Only then run the audit block in [Inspect a Run](#inspect-a-run). It captures
+   stdout, stderr, and the actual exit status in this new observation directory.
+   Never reuse the pre-recovery copy or overwrite the earlier audit.
+4. Compare the before/after audits, original graph and package identities,
+   committed journal heads, external effects and receipts, and returned state.
+   A successful recovery needs a final audit that agrees with terminal
+   `succeeded` and contains no unexplained duplicate effect. A failed, waiting,
+   blocked, or uncertain result remains that result.
+
+Before any further recovery retry, repeat the original-identity, stopped-writer,
+new raw run/adapter copy, and strict-inspection prerequisites. Later authorized
+canonical tail repair retains the original bytes first and records its actual
+changes; it does not turn an uncertain external outcome into success.
 
 Use the exact failure before choosing the next action:
 
@@ -588,7 +709,7 @@ Use the exact failure before choosing the next action:
 | --- | --- | --- |
 | `RECOVERY_SIGNAL_REQUIRED:<wait-id>` | The run has an active wait; restart cannot invent its decision | Read the active wait and use [Approve or Resume a Wait](#approve-or-resume-a-wait) with one matching signal |
 | `RECOVERY_RUN_TERMINAL` | The durable run already ended as succeeded, failed, blocked, or cancelled | Do not recover it; retain the audit and start a new governed run only for new work |
-| `RECOVERY_COOLDOWN_NOT_DUE:<stage-id>:<time>` | A persisted retry time has not arrived | Do not bypass the clock; wait until the recorded time, then repeat the same recovery command |
+| `RECOVERY_COOLDOWN_NOT_DUE:<stage-id>:<time>` | A persisted retry time has not arrived | Do not bypass the clock; wait until the recorded time, then repeat the same recovery command with new stopped-writer raw run/adapter copies and strict inspection |
 | `RECOVERY_GRAPH_*`, `RECOVERY_PIPELINE_ID_MISMATCH`, or `PROJECT_RECOVERY_RUN_MISMATCH` | The supplied graph, project, or run does not match durable state | Restore the original input bytes; never edit the snapshot or reuse the run ID for a changed graph |
 | `RECOVERY_PINNED_PACKAGE_*`, `RECOVERY_PACKAGE_UPGRADE_*`, or `RECOVERY_REGISTRY_SNAPSHOT_INVALID` | Installed package identity differs from the recorded snapshot | Restore the recorded package set; use only the separate authorized package-upgrade procedure when its exact contract applies |
 | `RECOVERY_RUNTIME_CONFIGURATION_MISMATCH` or `RECOVERY_DEPENDENCY_IDENTITY_MISMATCH` | Runtime configuration or dependency identity changed | Restore the recorded runtime configuration and dependency set, or start a new governed run |
@@ -617,11 +738,14 @@ stored graph:
 | `PROJECT_RECOVERY_DELIVERY_MANIFEST_ENCODING_INVALID` | The stored summary selector shape or value is unsupported | Stop; restore the compatible project/package snapshot |
 | `PROJECT_DELIVERY_MANIFEST_ENCODING_INVALID` | A caller supplied a delivery-manifest mode outside the supported legacy/current pair | Correct the caller configuration before compilation; do not mutate an existing run |
 
-Recovery has no separate temporary runtime object to clean up. Preserve both
-audits, the unchanged command, output, exit status, effect queries and receipts,
-and the final decision. Remove only restricted temporary copies after retaining
-their digests. A completed final audit is the proof that restart/recovery ended
-at the intended durable state.
+Recovery has no separate temporary runtime object to clean up. Preserve all
+before/after raw run and adapter captures, manifests, partial or rejected tails,
+audits, exact commands, output, exit status, effect queries and receipts, repair
+changes, and the final decision under [Evidence to Retain](#evidence-to-retain).
+Do not delete a `nova-raw-state.*` observation directory because its digest was
+recorded or a later command passed. Only a successful recovery result plus the
+matching final audit and reconciled external receipts proves the intended
+recovery; containment or a completed audit alone does not prove success.
 
 ## Cancellation Boundary
 
@@ -633,11 +757,16 @@ That mechanism is not an external operator control surface.
 
 When urgent containment is necessary:
 
-1. Preserve run and process evidence.
+1. Preserve available command, process, and component observations through
+   supported paths. Do not audit while run or adapter writers remain active.
 2. Stop new admission through the owning service boundary.
 3. Use the approved incident process for workload containment.
 4. Reconcile every accepted external effect.
-5. Do not claim `cancelled` unless durable lifecycle evidence records it.
+5. After the owner has exited and run/adapter writers are stopped, complete
+   [Inspect a Run](#inspect-a-run) before audit or another run-control command.
+   Preserve new verified raw run/adapter copies and strictly inspect the copied
+   journals. Unknown ownership or rejected bytes stops this inspection path.
+6. Do not claim `cancelled` unless durable lifecycle evidence records it.
 
 This is an implementation limit, not a documentation shortcut.
 
@@ -683,13 +812,19 @@ Do not restart every role to hide one role-specific failure.
 
 ## Safe Retry Decision
 
+Every permitted audit, recovery, or signal retry must first repeat the
+original-identity, stopped run/adapter writer, new verified raw run/adapter copy,
+and strict copied-journal inspection steps in [Inspect a Run](#inspect-a-run).
+An earlier successful capture does not cover a later command's storage state.
+Stop if a required check or owning-store backup procedure is unavailable.
+
 | Condition | Next action |
 | --- | --- |
 | Command failed before durable request acceptance, with a verified complete journal and unchanged active authority | Correct the rejected input and review one submission |
 | Durable request exists with a terminal failure | Follow its declared retry or repair decision |
 | Request exists and provider outcome is absent | Inspect through a documented provider status operation; if the outcome remains uncertain, preserve evidence, stop, and escalate |
 | Provider completed but local response was lost | Use an exact provider-specific idempotent import operation only when its contract documents one; otherwise preserve evidence, stop, and escalate |
-| Wait remains active, unexpired, with complete history and no prior resolution | Review one matching authorized signal; preserve its exact bytes and identities for the same submission |
+| Wait remains active, unexpired, with complete history and no prior resolution | Follow [Approve or Resume a Wait](#approve-or-resume-a-wait), including new stopped-writer raw run/adapter copies and strict inspection before each submission; retain exact signal bytes and identities |
 | Wait expired or resolved, or signal identity conflicts | Stop; preserve raw state before audit. Do not issue a new signal identity to force acceptance |
 | Graph, package, or policy digest changed | Start a new governed run |
 | Terminal run | Do not recover or resume it |
@@ -707,12 +842,31 @@ resume, journal edit, or result import.
 - Platform, project, graph, and signal digests.
 - Complete command and nonsecret arguments.
 - Start output and run identity.
-- Restricted raw-state copies and file manifests made before audit or interrupted recovery.
+- New verified raw run and owning-adapter copies and manifests before every
+  audit, recovery, resume, retry, and wrong-signal check, and after each command
+  before the next audit. Keep rejected or partial bytes as evidence.
 - Audit output before and after recovery or signal handling, with any tail repair recorded.
 - Provider request, receipt, and reconciliation record.
 - Artifact identities and verified digests.
 - Prism decision and demo identity when applicable.
 - Unsupported-control finding when an operation stops at a missing surface.
+
+The incident audit owner must record each capture's durable location, access
+identity, retention period, and final-disposition authority. Retain complete
+raw run and adapter bytes, manifests, rejected tails, exact signal bytes,
+command records, and actual repair-change evidence for that period. A digest
+records integrity; it cannot replace the bytes. Keep these captures separate
+from disposable working copies. If evidence must move, use the audit owner's
+verified complete-copy procedure and retain its receipt; stop if byte
+preservation or retention cannot be proved.
+
+Only named disposable candidate files or redundant working signal copies may
+be removed after their prescribed retention and the owner's recorded
+final-disposition decision. First prove that the original signal bytes and
+all required evidence remain in the protected retained capture. Original raw
+observation directories and their contents require the audit owner's explicit
+final disposition after the retention period; ordinary run cleanup does not
+authorize their removal.
 
 ## Read Next
 
