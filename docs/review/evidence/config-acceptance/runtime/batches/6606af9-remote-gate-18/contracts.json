@@ -1,0 +1,573 @@
+{
+  "entries": [
+    {
+      "setting": "RT-2e15274b0c3fffc1",
+      "field": "endpoint",
+      "kind": "plan",
+      "schemaPointer": "#/properties/endpoint",
+      "classification": "operator-correlated-installation-dependency",
+      "current": "Required nonempty -> URL(http/https) at adapter activation; source parser accepts userinfo and nonloopback http then actual createProductionNovaTestGate assertSecureRemoteEndpoint later rejects both. SPIFFE helper checks only exact canonical hostname 127.0.0.1/localhost/[::1], not http scheme/explicit port; schema else requires literal http://loopback: prefix. URL canonicalization differs regex. No ENV/default.",
+      "targetDomain": "Explicit authorized secure Buster plan endpoint identity/provider contract, HTTPS without userinfo or local HTTP exact loopback for approved proxy mode, normalized endpoint and credentials/source-verifier/grants matched. SPIFFE schema/runtime path needs explicit owning compatible policy (source currently permits https/noport loopback at constructor); no narrowing silently reinterprets old source/profile. Real provider roster/proxy fixture unresolved.",
+      "effect": "Full A bearer and B genuine local SPIFFE same complete required native plan authorize correct provider; malformed scheme/userinfo/plaintext nonloopback/mode-host mismatch reject at proposed owning pre-effect boundary before confidential secrets/network/source build. Current exported security helper rejection is distinct from later actual productive factory path.",
+      "profiles": {
+        "A": {
+          "endpoint": "https://fixture.invalid/gate",
+          "authentication": "bearer",
+          "tokenSecret": "fixture.token-A",
+          "sourcePrivateKeySecret": "fixture.key-A",
+          "sourceAuthority": "fixture-authority-A",
+          "stateRoot": "/fixture/nova/gate-A",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-A"
+          ]
+        },
+        "B": {
+          "endpoint": "http://localhost:18080/gate",
+          "authentication": "spiffe-proxy",
+          "sourcePrivateKeySecret": "fixture.key-B",
+          "sourceAuthority": "fixture-authority-B",
+          "stateRoot": "/fixture/nova/gate-B",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-B"
+          ]
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.execute/run -> canonical repo/plan/coverage -> confidential secrets -> createProductionNovaTestGate -> source archive/attestation/remote dispatcher/importer/coverage",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-6ebb8efa65839981",
+      "field": "authentication",
+      "kind": "plan",
+      "schemaPointer": "#/properties/authentication",
+      "classification": "operator-transport-authentication-discriminant",
+      "current": "Schema exact enum bearer/spiffe-proxy required; adapter only exact spiffe-proxy chooses SPIFFE, all other/missing/null/unknown values fallback bearer if tokenSecret available. No ENV/default in schema; later HttpRemotePlanTransport constructor default bearer, bearer token >=32 chars, SPIFFE exact hostname.",
+      "targetDomain": "Exactly bearer or spiffe-proxy matched genuine authorized endpoint/provider, secret/grant mode and source attestation; unknown/missing/null must reject proposed owning validation BEFORE confidential secret reads. Conditional schema row is same field constraint, not a second author. Bearer requires approved token resolver; SPIFFE forbids token alias and actual authenticated proxy identity.",
+      "effect": "Genuine A bearer uses confidential token+key, B SPIFFE uses confidential signing key only; capture exact calls/authenticated endpoint identity. Unknown valid-looking mode cannot fallback bearer; SPIFFE token supplied rejected before secret lookup. No invoking secrets or HTTP in narrow controls.",
+      "profiles": {
+        "A": {
+          "endpoint": "https://fixture.invalid/gate",
+          "authentication": "bearer",
+          "tokenSecret": "fixture.token-A",
+          "sourcePrivateKeySecret": "fixture.key-A",
+          "sourceAuthority": "fixture-authority-A",
+          "stateRoot": "/fixture/nova/gate-A",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-A"
+          ]
+        },
+        "B": {
+          "endpoint": "http://localhost:18080/gate",
+          "authentication": "spiffe-proxy",
+          "sourcePrivateKeySecret": "fixture.key-B",
+          "sourceAuthority": "fixture-authority-B",
+          "stateRoot": "/fixture/nova/gate-B",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-B"
+          ]
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.execute/run -> canonical repo/plan/coverage -> confidential secrets -> createProductionNovaTestGate -> source archive/attestation/remote dispatcher/importer/coverage",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-e8df47351cb76dc9",
+      "field": "tokenSecret",
+      "kind": "plan",
+      "schemaPointer": "#/properties/tokenSecret",
+      "classification": "operator-confidential-credential-locator",
+      "current": "Nonempty string only, untrimmed and no bound source; bearer tokenSecret required but SPIFFE drops supplied tokenSecret while schema forbids it. sourcePrivateKeySecret always required. Actual execute invokeConfidential secrets.read/resolve at invocation, not activation; secret result nonempty, later bearer transport >=32; attestation cryptographic checks later archive path. Locators captured, content not frozen.",
+      "targetDomain": "Explicit registered secrets.read confidential resolver exact supported name and source-role grants. tokenSecret present ONLY bearer, actual token >=32 and matched genuine backend role; signing key actual valid expected source authority/verifier algorithm/provisioning/history. No inline secret/env expansion inferred, no fake local signing identity acceptance, captured locator not immutable contents. Rotation semantics/authoritative key fingerprints and role fixtures remain OPEN.",
+      "effect": "Real A credential resolution returns expected authenticated token/signing key matching backend verifier; B legitimate next-mode/profile locator rotates under approved source/role history. Missing/wrong grant/name/empty/short token/invalid or mismatched key denies before remote submission; retained A signed source/import verification never changes to latest B key. SPIFFE supplied token rejected even though current adapter ignores it.",
+      "profiles": {
+        "A": {
+          "endpoint": "https://fixture.invalid/gate",
+          "authentication": "bearer",
+          "tokenSecret": "fixture.token-A",
+          "sourcePrivateKeySecret": "fixture.key-A",
+          "sourceAuthority": "fixture-authority-A",
+          "stateRoot": "/fixture/nova/gate-A",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-A"
+          ]
+        },
+        "B": {
+          "endpoint": "http://localhost:18080/gate",
+          "authentication": "spiffe-proxy",
+          "sourcePrivateKeySecret": "fixture.key-B",
+          "sourceAuthority": "fixture-authority-B",
+          "stateRoot": "/fixture/nova/gate-B",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-B"
+          ]
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.execute/run -> canonical repo/plan/coverage -> confidential secrets -> createProductionNovaTestGate -> source archive/attestation/remote dispatcher/importer/coverage",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-a36927a478e7c2f6",
+      "field": "sourcePrivateKeySecret",
+      "kind": "plan",
+      "schemaPointer": "#/properties/sourcePrivateKeySecret",
+      "classification": "operator-confidential-credential-locator",
+      "current": "Nonempty string only, untrimmed and no bound source; bearer tokenSecret required but SPIFFE drops supplied tokenSecret while schema forbids it. sourcePrivateKeySecret always required. Actual execute invokeConfidential secrets.read/resolve at invocation, not activation; secret result nonempty, later bearer transport >=32; attestation cryptographic checks later archive path. Locators captured, content not frozen.",
+      "targetDomain": "Explicit registered secrets.read confidential resolver exact supported name and source-role grants. tokenSecret present ONLY bearer, actual token >=32 and matched genuine backend role; signing key actual valid expected source authority/verifier algorithm/provisioning/history. No inline secret/env expansion inferred, no fake local signing identity acceptance, captured locator not immutable contents. Rotation semantics/authoritative key fingerprints and role fixtures remain OPEN.",
+      "effect": "Real A credential resolution returns expected authenticated token/signing key matching backend verifier; B legitimate next-mode/profile locator rotates under approved source/role history. Missing/wrong grant/name/empty/short token/invalid or mismatched key denies before remote submission; retained A signed source/import verification never changes to latest B key. SPIFFE supplied token rejected even though current adapter ignores it.",
+      "profiles": {
+        "A": {
+          "endpoint": "https://fixture.invalid/gate",
+          "authentication": "bearer",
+          "tokenSecret": "fixture.token-A",
+          "sourcePrivateKeySecret": "fixture.key-A",
+          "sourceAuthority": "fixture-authority-A",
+          "stateRoot": "/fixture/nova/gate-A",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-A"
+          ]
+        },
+        "B": {
+          "endpoint": "http://localhost:18080/gate",
+          "authentication": "spiffe-proxy",
+          "sourcePrivateKeySecret": "fixture.key-B",
+          "sourceAuthority": "fixture-authority-B",
+          "stateRoot": "/fixture/nova/gate-B",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-B"
+          ]
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.execute/run -> canonical repo/plan/coverage -> confidential secrets -> createProductionNovaTestGate -> source archive/attestation/remote dispatcher/importer/coverage",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-1a85906afb523b43",
+      "field": "sourceAuthority",
+      "kind": "plan",
+      "schemaPointer": "#/properties/sourceAuthority",
+      "classification": "source-attestation-authority-dependency",
+      "current": "Nonempty raw string captured; ProductionNovaTestGate stores and passes creatorAuthority into buildBoundPlanSource while sourceAttestationPrivateKey builds source attestation. No registered authority membership proven by activation and no ENV/default. This is remote source authority, not report-reader replay issuer/SDK dispatch selector.",
+      "targetDomain": "Exact genuine provisioned source creator authority identity bound to original signing key and actual backend trusted-source verifier profile/role grants. No unrelated issuer alias/new closed parent ID or authority text-only proof. Historical snapshots/source digests/attestations/grants retain A identity; B next allowed source authority requires approved provisioning and compatibility.",
+      "effect": "Real signed source A authority/key accepted by correct backend bound plan and coverage; wrong existing authority/key pairing, forged/unknown authority, stale-source digest or grant rejects before native work/evidence import; successful text constructor is not trust establishment.",
+      "profiles": {
+        "A": {
+          "endpoint": "https://fixture.invalid/gate",
+          "authentication": "bearer",
+          "tokenSecret": "fixture.token-A",
+          "sourcePrivateKeySecret": "fixture.key-A",
+          "sourceAuthority": "fixture-authority-A",
+          "stateRoot": "/fixture/nova/gate-A",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-A"
+          ]
+        },
+        "B": {
+          "endpoint": "http://localhost:18080/gate",
+          "authentication": "spiffe-proxy",
+          "sourcePrivateKeySecret": "fixture.key-B",
+          "sourceAuthority": "fixture-authority-B",
+          "stateRoot": "/fixture/nova/gate-B",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-B"
+          ]
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.execute/run -> canonical repo/plan/coverage -> confidential secrets -> createProductionNovaTestGate -> source archive/attestation/remote dispatcher/importer/coverage",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-61e74f61fde6c7e4",
+      "field": "stateRoot",
+      "kind": "plan",
+      "schemaPointer": "#/properties/stateRoot",
+      "classification": "operator-correlated-installation-dependency",
+      "current": "Required nonempty string, path.resolve at activate accepts relative; captured normalized root not realpath/no-symlink verified by adapter. Later production factory only absolute check and constructs dispatch/import stores with source fixed quotas. No ENV/default.",
+      "targetDomain": "Exact existing authorized original Nova remote gate durable root (dispatch+imports), canonical installation locator with role/grants/storage capacity and retained job/source/result/evidence bindings. Plan/evidence share same generated locator from existing owner, no duplicate root authority or empty state switch to evade recovery/proof.",
+      "effect": "Full original job commit/dispatch/import/retry/recovery exact idempotency retained at A root; B new authorized next execution preserves A historical store, no overwriting/replay substitute. Relative/symlink/escaping/unauthorized/missing retention/storage quota rejects proposed owning pre-effect boundary.",
+      "profiles": {
+        "A": {
+          "endpoint": "https://fixture.invalid/gate",
+          "authentication": "bearer",
+          "tokenSecret": "fixture.token-A",
+          "sourcePrivateKeySecret": "fixture.key-A",
+          "sourceAuthority": "fixture-authority-A",
+          "stateRoot": "/fixture/nova/gate-A",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-A"
+          ]
+        },
+        "B": {
+          "endpoint": "http://localhost:18080/gate",
+          "authentication": "spiffe-proxy",
+          "sourcePrivateKeySecret": "fixture.key-B",
+          "sourceAuthority": "fixture-authority-B",
+          "stateRoot": "/fixture/nova/gate-B",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-B"
+          ]
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.execute/run -> canonical repo/plan/coverage -> confidential secrets -> createProductionNovaTestGate -> source archive/attestation/remote dispatcher/importer/coverage",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-c124a452f32b2547",
+      "field": "allowedRepositoryRoots",
+      "kind": "plan",
+      "schemaPointer": "#/properties/allowedRepositoryRoots",
+      "classification": "operator-canonical-repository-allowlist",
+      "current": "Array cast/map canonicalDirectory requires absolute string, fs.realpathSync and stat-directory at activation; follows symbolic directory links to target. Direct empty/duplicates accepted while schema minItems1 unique raw strings. Different raw aliases may canonicalize same root. No ENV/default. Invoke payload root same canonicalDirectory and separator subtree allowlist.",
+      "targetDomain": "Nonempty unique canonical existing owned directories, exact source/task/revision/grants and intended allowed subtree; reject canonical alias duplicates/symlink escapes/unauthorized roots under proposed owning policy before dispatch. Root paths platform-specific\u2014not arbitrary examples accepted deployment. items row same authoritative array member, not independent per-item author. Real source symlink/race/pinning archives and native task complete fixtures OPEN.",
+      "effect": "Actual same authorized repository canonical root/subtree allowed and exact source archive/revision/grants full required plan; sibling prefix root/unauthorized/symlink escape/raced source/duplicate canonical aliases reject with original source intact. A/B separate authorized repos/tasks, not evidence coverage trimming.",
+      "profiles": {
+        "A": {
+          "endpoint": "https://fixture.invalid/gate",
+          "authentication": "bearer",
+          "tokenSecret": "fixture.token-A",
+          "sourcePrivateKeySecret": "fixture.key-A",
+          "sourceAuthority": "fixture-authority-A",
+          "stateRoot": "/fixture/nova/gate-A",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-A"
+          ]
+        },
+        "B": {
+          "endpoint": "http://localhost:18080/gate",
+          "authentication": "spiffe-proxy",
+          "sourcePrivateKeySecret": "fixture.key-B",
+          "sourceAuthority": "fixture-authority-B",
+          "stateRoot": "/fixture/nova/gate-B",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-B"
+          ]
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.execute/run -> canonical repo/plan/coverage -> confidential secrets -> createProductionNovaTestGate -> source archive/attestation/remote dispatcher/importer/coverage",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-7632c25ab65059f4",
+      "field": "allowedRepositoryRoots[]",
+      "kind": "plan",
+      "schemaPointer": "#/properties/allowedRepositoryRoots/items",
+      "classification": "operator-canonical-repository-allowlist",
+      "current": "Array cast/map canonicalDirectory requires absolute string, fs.realpathSync and stat-directory at activation; follows symbolic directory links to target. Direct empty/duplicates accepted while schema minItems1 unique raw strings. Different raw aliases may canonicalize same root. No ENV/default. Invoke payload root same canonicalDirectory and separator subtree allowlist.",
+      "targetDomain": "Nonempty unique canonical existing owned directories, exact source/task/revision/grants and intended allowed subtree; reject canonical alias duplicates/symlink escapes/unauthorized roots under proposed owning policy before dispatch. Root paths platform-specific\u2014not arbitrary examples accepted deployment. items row same authoritative array member, not independent per-item author. Real source symlink/race/pinning archives and native task complete fixtures OPEN.",
+      "effect": "Actual same authorized repository canonical root/subtree allowed and exact source archive/revision/grants full required plan; sibling prefix root/unauthorized/symlink escape/raced source/duplicate canonical aliases reject with original source intact. A/B separate authorized repos/tasks, not evidence coverage trimming.",
+      "profiles": {
+        "A": {
+          "endpoint": "https://fixture.invalid/gate",
+          "authentication": "bearer",
+          "tokenSecret": "fixture.token-A",
+          "sourcePrivateKeySecret": "fixture.key-A",
+          "sourceAuthority": "fixture-authority-A",
+          "stateRoot": "/fixture/nova/gate-A",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-A"
+          ]
+        },
+        "B": {
+          "endpoint": "http://localhost:18080/gate",
+          "authentication": "spiffe-proxy",
+          "sourcePrivateKeySecret": "fixture.key-B",
+          "sourceAuthority": "fixture-authority-B",
+          "stateRoot": "/fixture/nova/gate-B",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-B"
+          ]
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.execute/run -> canonical repo/plan/coverage -> confidential secrets -> createProductionNovaTestGate -> source archive/attestation/remote dispatcher/importer/coverage",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-c3db9bc2b7065738",
+      "field": "authentication",
+      "kind": "plan",
+      "schemaPointer": "#/allOf/0/if/properties/authentication",
+      "classification": "operator-transport-authentication-discriminant",
+      "current": "Schema exact enum bearer/spiffe-proxy required; adapter only exact spiffe-proxy chooses SPIFFE, all other/missing/null/unknown values fallback bearer if tokenSecret available. No ENV/default in schema; later HttpRemotePlanTransport constructor default bearer, bearer token >=32 chars, SPIFFE exact hostname.",
+      "targetDomain": "Exactly bearer or spiffe-proxy matched genuine authorized endpoint/provider, secret/grant mode and source attestation; unknown/missing/null must reject proposed owning validation BEFORE confidential secret reads. Conditional schema row is same field constraint, not a second author. Bearer requires approved token resolver; SPIFFE forbids token alias and actual authenticated proxy identity.",
+      "effect": "Genuine A bearer uses confidential token+key, B SPIFFE uses confidential signing key only; capture exact calls/authenticated endpoint identity. Unknown valid-looking mode cannot fallback bearer; SPIFFE token supplied rejected before secret lookup. No invoking secrets or HTTP in narrow controls.",
+      "profiles": {
+        "A": {
+          "endpoint": "https://fixture.invalid/gate",
+          "authentication": "bearer",
+          "tokenSecret": "fixture.token-A",
+          "sourcePrivateKeySecret": "fixture.key-A",
+          "sourceAuthority": "fixture-authority-A",
+          "stateRoot": "/fixture/nova/gate-A",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-A"
+          ]
+        },
+        "B": {
+          "endpoint": "http://localhost:18080/gate",
+          "authentication": "spiffe-proxy",
+          "sourcePrivateKeySecret": "fixture.key-B",
+          "sourceAuthority": "fixture-authority-B",
+          "stateRoot": "/fixture/nova/gate-B",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-B"
+          ]
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.execute/run -> canonical repo/plan/coverage -> confidential secrets -> createProductionNovaTestGate -> source archive/attestation/remote dispatcher/importer/coverage",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-1bdf1b0c22b0c184",
+      "field": "tokenSecret",
+      "kind": "plan",
+      "schemaPointer": "#/allOf/0/then/properties/tokenSecret",
+      "classification": "operator-confidential-credential-locator",
+      "current": "Nonempty string only, untrimmed and no bound source; bearer tokenSecret required but SPIFFE drops supplied tokenSecret while schema forbids it. sourcePrivateKeySecret always required. Actual execute invokeConfidential secrets.read/resolve at invocation, not activation; secret result nonempty, later bearer transport >=32; attestation cryptographic checks later archive path. Locators captured, content not frozen.",
+      "targetDomain": "Explicit registered secrets.read confidential resolver exact supported name and source-role grants. tokenSecret present ONLY bearer, actual token >=32 and matched genuine backend role; signing key actual valid expected source authority/verifier algorithm/provisioning/history. No inline secret/env expansion inferred, no fake local signing identity acceptance, captured locator not immutable contents. Rotation semantics/authoritative key fingerprints and role fixtures remain OPEN.",
+      "effect": "Real A credential resolution returns expected authenticated token/signing key matching backend verifier; B legitimate next-mode/profile locator rotates under approved source/role history. Missing/wrong grant/name/empty/short token/invalid or mismatched key denies before remote submission; retained A signed source/import verification never changes to latest B key. SPIFFE supplied token rejected even though current adapter ignores it.",
+      "profiles": {
+        "A": {
+          "endpoint": "https://fixture.invalid/gate",
+          "authentication": "bearer",
+          "tokenSecret": "fixture.token-A",
+          "sourcePrivateKeySecret": "fixture.key-A",
+          "sourceAuthority": "fixture-authority-A",
+          "stateRoot": "/fixture/nova/gate-A",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-A"
+          ]
+        },
+        "B": {
+          "endpoint": "http://localhost:18080/gate",
+          "authentication": "spiffe-proxy",
+          "sourcePrivateKeySecret": "fixture.key-B",
+          "sourceAuthority": "fixture-authority-B",
+          "stateRoot": "/fixture/nova/gate-B",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-B"
+          ]
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.execute/run -> canonical repo/plan/coverage -> confidential secrets -> createProductionNovaTestGate -> source archive/attestation/remote dispatcher/importer/coverage",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-3f096cad21fa1e0a",
+      "field": "endpoint",
+      "kind": "plan",
+      "schemaPointer": "#/allOf/0/else/properties/endpoint",
+      "classification": "operator-correlated-installation-dependency",
+      "current": "Required nonempty -> URL(http/https) at adapter activation; source parser accepts userinfo and nonloopback http then actual createProductionNovaTestGate assertSecureRemoteEndpoint later rejects both. SPIFFE helper checks only exact canonical hostname 127.0.0.1/localhost/[::1], not http scheme/explicit port; schema else requires literal http://loopback: prefix. URL canonicalization differs regex. No ENV/default.",
+      "targetDomain": "Explicit authorized secure Buster plan endpoint identity/provider contract, HTTPS without userinfo or local HTTP exact loopback for approved proxy mode, normalized endpoint and credentials/source-verifier/grants matched. SPIFFE schema/runtime path needs explicit owning compatible policy (source currently permits https/noport loopback at constructor); no narrowing silently reinterprets old source/profile. Real provider roster/proxy fixture unresolved.",
+      "effect": "Full A bearer and B genuine local SPIFFE same complete required native plan authorize correct provider; malformed scheme/userinfo/plaintext nonloopback/mode-host mismatch reject at proposed owning pre-effect boundary before confidential secrets/network/source build. Current exported security helper rejection is distinct from later actual productive factory path.",
+      "profiles": {
+        "A": {
+          "endpoint": "https://fixture.invalid/gate",
+          "authentication": "bearer",
+          "tokenSecret": "fixture.token-A",
+          "sourcePrivateKeySecret": "fixture.key-A",
+          "sourceAuthority": "fixture-authority-A",
+          "stateRoot": "/fixture/nova/gate-A",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-A"
+          ]
+        },
+        "B": {
+          "endpoint": "http://localhost:18080/gate",
+          "authentication": "spiffe-proxy",
+          "sourcePrivateKeySecret": "fixture.key-B",
+          "sourceAuthority": "fixture-authority-B",
+          "stateRoot": "/fixture/nova/gate-B",
+          "allowedRepositoryRoots": [
+            "/fixture/repository-B"
+          ]
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "sha256": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.execute/run -> canonical repo/plan/coverage -> confidential secrets -> createProductionNovaTestGate -> source archive/attestation/remote dispatcher/importer/coverage",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-3595d6c01950c170",
+      "field": "stateRoot",
+      "kind": "evidence",
+      "schemaPointer": "#/properties/stateRoot",
+      "classification": "operator-correlated-installation-dependency",
+      "current": "Required nonempty <=2048 UTF16 source text, lexical absolute normalized root at activate; FileNovaGateImportStore root/imports constructors validate capacities without I/O. Invoke realpath(root)==root before artifact reads. Source imports share actual plan writer directory; no default/ENV. Primitive root captured.",
+      "targetDomain": "Exact canonical existing original remote gate state root/imports with authentic retained job/result/evidence, read authority and real storage owner. No new empty B root/alternate import backend interpreting original A; migration/retention/versioning must preserve full original bindings and proof.",
+      "effect": "Authentic completed import same root + exact job/run/gate/sourceRevision/decision/result hashes positively verifies; relative/non-normalized/symlink root, missing/wrong retained import or cross-root proof rejects at actual reader before demo evidence return.",
+      "profiles": {
+        "A": {
+          "stateRoot": "/fixture/nova/gate-A",
+          "manifestStageId": "summary:fixture-A",
+          "gateStageId": "gate:fixture-A"
+        },
+        "B": {
+          "stateRoot": "/fixture/nova/gate-B",
+          "manifestStageId": "summary:fixture-B",
+          "gateStageId": "gate:fixture-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.evidence/demo -> exact artifact/manifest/decision/coverage/readVerifiedResult/projectDemoEvidence",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-af44787955c47c38",
+      "field": "manifestStageId",
+      "kind": "evidence",
+      "schemaPointer": "#/properties/manifestStageId",
+      "classification": "derived-task-graph-producer-identity",
+      "current": "Required nonempty <=2048 UTF16 text at activation; invocation project repeatedly rereads context.config manifestStageId for artifact/manifest/coverage/import ownership. Public direct context retains caller object; actual normal loadPlatformConfig recursively freezes entire config, AdapterStarter validates and retains value. No claim productive normal config mutable; no ENV/default.",
+      "targetDomain": "Generated exact same frozen compiled graph manifest producer and gate stage identity + actual ArtifactRef producer/run/latest attempt/versioned final manifest/coverage/import binding; not second independently editable stage ID or prefix guess. Historical A IDs retain all source-proof/recovery lineage; B only distinct next permitted module graph under parent OPEN carrier.",
+      "effect": "Real manifest/gate ArtifactRef producer and final coverage/decision/import all agree exact graph IDs; same-shape wrong stage/attempt/run/revision/decision/result rejects at actual artifact-owner/manifest/coverage/import boundary. Stage ID B cannot be independent knob under same A history.",
+      "profiles": {
+        "A": {
+          "stateRoot": "/fixture/nova/gate-A",
+          "manifestStageId": "summary:fixture-A",
+          "gateStageId": "gate:fixture-A"
+        },
+        "B": {
+          "stateRoot": "/fixture/nova/gate-B",
+          "manifestStageId": "summary:fixture-B",
+          "gateStageId": "gate:fixture-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.evidence/demo -> exact artifact/manifest/decision/coverage/readVerifiedResult/projectDemoEvidence",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    },
+    {
+      "setting": "RT-1e81b0ff7d53468a",
+      "field": "gateStageId",
+      "kind": "evidence",
+      "schemaPointer": "#/properties/gateStageId",
+      "classification": "derived-task-graph-producer-identity",
+      "current": "Required nonempty <=2048 UTF16 text at activation; invocation project repeatedly rereads context.config gateStageId for artifact/manifest/coverage/import ownership. Public direct context retains caller object; actual normal loadPlatformConfig recursively freezes entire config, AdapterStarter validates and retains value. No claim productive normal config mutable; no ENV/default.",
+      "targetDomain": "Generated exact same frozen compiled graph manifest producer and gate stage identity + actual ArtifactRef producer/run/latest attempt/versioned final manifest/coverage/import binding; not second independently editable stage ID or prefix guess. Historical A IDs retain all source-proof/recovery lineage; B only distinct next permitted module graph under parent OPEN carrier.",
+      "effect": "Real manifest/gate ArtifactRef producer and final coverage/decision/import all agree exact graph IDs; same-shape wrong stage/attempt/run/revision/decision/result rejects at actual artifact-owner/manifest/coverage/import boundary. Stage ID B cannot be independent knob under same A history.",
+      "profiles": {
+        "A": {
+          "stateRoot": "/fixture/nova/gate-A",
+          "manifestStageId": "summary:fixture-A",
+          "gateStageId": "gate:fixture-A"
+        },
+        "B": {
+          "stateRoot": "/fixture/nova/gate-B",
+          "manifestStageId": "summary:fixture-B",
+          "gateStageId": "gate:fixture-B"
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "sha256": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe"
+      },
+      "productiveCaller": "Normal loadPlatformConfig deepFreeze -> engine prepareRuntime/objectMap -> AdapterStarter schema validation/activate -> AdapterRuntime selected test.plan.evidence/demo -> exact artifact/manifest/decision/coverage/readVerifiedResult/projectDemoEvidence",
+      "binding": "Current Nova v4 graph/config/package/grants pins and prepare/activate-before-lock ordering retained. Parent proposed first logical module carrier/D20 ownership/taskoperator partition/membership/metadataquota/legacy/crossreader OPEN; B next unstarted module only, A begun retains A all stages/attempts/repairs/recovery/cleanup. No SDK codec/model selector or new universal accepted IDs."
+    }
+  ],
+  "profiles": {
+    "plan": {
+      "A": {
+        "endpoint": "https://fixture.invalid/gate",
+        "authentication": "bearer",
+        "tokenSecret": "fixture.token-A",
+        "sourcePrivateKeySecret": "fixture.key-A",
+        "sourceAuthority": "fixture-authority-A",
+        "stateRoot": "/fixture/nova/gate-A",
+        "allowedRepositoryRoots": [
+          "/fixture/repository-A"
+        ]
+      },
+      "B": {
+        "endpoint": "http://localhost:18080/gate",
+        "authentication": "spiffe-proxy",
+        "sourcePrivateKeySecret": "fixture.key-B",
+        "sourceAuthority": "fixture-authority-B",
+        "stateRoot": "/fixture/nova/gate-B",
+        "allowedRepositoryRoots": [
+          "/fixture/repository-B"
+        ]
+      }
+    },
+    "evidence": {
+      "A": {
+        "stateRoot": "/fixture/nova/gate-A",
+        "manifestStageId": "summary:fixture-A",
+        "gateStageId": "gate:fixture-A"
+      },
+      "B": {
+        "stateRoot": "/fixture/nova/gate-B",
+        "manifestStageId": "summary:fixture-B",
+        "gateStageId": "gate:fixture-B"
+      }
+    },
+    "correlatedFixtures": "Labels fixture.invalid, credential names, authorities, stage IDs and roots are specification placeholders, NOT installed supported targets. Before future productive controls pin authentic registered providers/source-authority verifier+private-key provisioning/secret grants, exact canonical authorized repo/source archive/commit and original full plan nodes/native coverage/grants, API protocol/identity, original imported job/decision/results and versioned manifest refs/proofs. Full selected policy has fixed source limits recorded separately; no fabricated result or stub transport. A/B represent separate authorized executions; historical A import remains immutable; not independent replacement of issuer/root/stage under same history."
+  },
+  "productiveFixedPolicyOpen": {
+    "pollMilliseconds": 500,
+    "maximumResponseBytes": 67108864,
+    "maximumResultBytes": 67108864,
+    "maximumArchiveBytes": 67108864,
+    "maximumArchiveStoreBytes": 1073741824,
+    "maximumEvidenceBytes": 67108864,
+    "maximumEvidenceStoreBytes": 1073741824,
+    "recordLimits": {
+      "maximumRecords": 10000,
+      "maximumBytes": 1073741824,
+      "maximumRecordBytes": 67108864
+    },
+    "maximumConcurrencyPayload": 64,
+    "timeoutMsPayload": 7200000,
+    "evidenceArtifactMaxBytes": 8388608,
+    "status": "Actual productive literals need own existing/new field author/domain/correlated real quotas/cases; NOT closed by schema refinement. Import blob per-file and total each1GiB, importer per-job64MiB distinct."
+  }
+}

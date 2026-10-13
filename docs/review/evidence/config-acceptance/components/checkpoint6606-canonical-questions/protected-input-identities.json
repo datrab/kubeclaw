@@ -1,0 +1,634 @@
+{
+  "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-complete-owner-profiles.json",
+      "sha256": "96dfb283f4a9037500912ae42b5060b2366b57da544e4819ab85ffac8441a5d8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-prior-delivery-identities.json",
+      "sha256": "6e70b6444c82d6a76b77535b533502f47a2031de2a3987dcf93f7dc0dc9fe2e2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt2.log",
+      "sha256": "18be588b0e8b1d91653c9677c77793b40c8fe3c9cc6553de6f67bb93deea1482"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-bound-target-state.json",
+      "sha256": "655f7b6a28806b5a878853052a2471de49e81174fbd6b815bc247a07242edd5c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/overflow-full-current-control.mjs",
+      "sha256": "c14744cc25747fd87c15216d72aa0fc3a78d462a2225c986edbb3ce7d4397a88"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-binding.schema.json",
+      "sha256": "2c3b0e60d390bb6a1ec20e5b4600b2e9da6205508db93160872d58aa8e4cc9a9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/case-input-contracts.json",
+      "sha256": "b81bf31309808a3b6067c791dd9745a2c64acc1d7982d8b23787631fdeaa5e29"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-corrected-definitions.mjs",
+      "sha256": "3c44fe224c734f57772fbaa0146687eb52aa8d185fbd5efd46f34fb748a47592"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/README.md",
+      "sha256": "36499e7f8fc2487f0edef98a443e9283efb790911dc79096bf068f6a7539c840"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls.json",
+      "sha256": "870000516e551ec8f24b9d8a0b1a05f1d79ab26b420b7f3886cfa6d4a0b7150c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-handoffs.json",
+      "sha256": "291b303cd01f30f7239202341c48ee044c121d1e7d176e7f395b4df6cf7b5170"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-core-native-lock.schema.json",
+      "sha256": "d5b00706ae30c1189385390f42a9b3b4d76bb4753d5201d70a9b969be621a6b4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-serialization-bound-controls.json",
+      "sha256": "6db519fe83abf450d02c750efa7c662ff951f630dd85b393410f8dc7b90962bc"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-final.log",
+      "sha256": "89f1ab86a56bc72c11acbd4994d1bcb41d1d6ff0b2fee8f12d5a04923cca1708"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/negative-duplicate-case.fixture.json",
+      "sha256": "1cf99ce38d0c899968dcddb15df4187a8dbc2e063136acbf5f8232f06092482a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/define-provider-provenance.py",
+      "sha256": "fc9822ff142b8f82c8391f069d65be8420032cf9c63c0c40b17ca16275fb44ba"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+      "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls.json",
+      "sha256": "94dde585438b86f3e08304886b953c0e0d54594300481f387e36403eb612f554"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-definition-controls-attempt1.log",
+      "sha256": "fe839d4360fec66459c729b75ca6b725a719b7ddde85f1f321cb2544acd01e49"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-definition-controls-attempt2.log",
+      "sha256": "64ff020b646f094072fa636295c23d9127adb42b1693e0503e1cded9909dd4fd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes",
+      "sha256": "4b7787594928d92fd11386a9210a7322cd2d1d30bddcabb4611274f547272101"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-registered-store-lock-schemas.json",
+      "sha256": "3bbff705054497bcf6cee13b3448313db932954d3be50a5f3f5c41f476f2207a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-specimens.json",
+      "sha256": "69fec151a304efabdcc90e601933d3d3f906355e73f42c1cf1c575d81787b78e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/build-corrections.py",
+      "sha256": "e130acfb37bbc2b22878ef61c64e0e2e50790c4d0f46837fcff248b5236dbd54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-negative-empty-env-attempt1.log",
+      "sha256": "78bed30ccf3130f1816a8b38d534255badc6974bdc1fd67e67d4f5a9b3292c94"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-freeze-positive.log",
+      "sha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/safe-current-method-controls.json",
+      "sha256": "21975135632643a8333a5b1297e5a0e8c9539d184d7de5cc6c4ebe0f11d7d38d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/extend-fixture-definitions.py",
+      "sha256": "6320a6e2fa36b1ced5748d8763669630064ed04cb8d5fb560fb8faed7452440d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance.schema.json",
+      "sha256": "5478de721b33f2b8716c8e65a20ef03b033000a9ee12a0b2421723ac5d656344"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/serialization-envelope-contract.json",
+      "sha256": "f6a51283e5352b3d25c683d214a4fd8cdad2330e08277e5c5a4b48c25c050572"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-case-specs.json",
+      "sha256": "6a780cc922481322fe671cc9511a0fefbf403f167ed3b6b40444ab08053ec409"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-positive-attempt1.log",
+      "sha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/provider-provenance-contract.json",
+      "sha256": "43b34f676dacb4534381a20fefb02b3773c8649c72629860f3c2e6f8d47c621d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/remaining-obligations.json",
+      "sha256": "dea38f0b8105537c25a6fec72eed58f67ce2b022cfdd88857fd13f9460381d34"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/reserve-boundary-fixtures.json",
+      "sha256": "e1fb9bd749780fe2cd7bdf12e409bab8c12a9bdfcac50b9171b5c90d35682288"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+      "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-method-fixtures.json",
+      "sha256": "77cfd0a74b6e737236ce1e5ee260e8ff47dccd17d34c1481e71ac82390bfef22"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/tar-correlated-profiles.json",
+      "sha256": "8ea2f054ce6604e75b76d78b94ebf655af95724616ed6a790e70d5e21d6d3e49"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/safe-current-method-controls-attempt1.log",
+      "sha256": "72f79f655c0d881fbd07f33fc22e5d5c7257a159d49adcf6f07e150200f01267"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-additional-registered-lock.schema.json",
+      "sha256": "713498fdb28fdb503c2c07fc7e8d987d6478e916cf680541818d94922d5812c7"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/freeze-method-fixtures-attempt1.mjs.snapshot",
+      "sha256": "6027b4d05206bee4324bb9187b378a26f4d77d3e8a606656fb437d2b3984755b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/stable-material-correction-receipt.json",
+      "sha256": "b0f15920b3fd279fd25868d8f885bc0dade6b52adaeae4a165d77c6bbc7e81a1"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/overflow-full-current-control.json",
+      "sha256": "dec1eda934f50bad2c6c9f05169cceb0d18420edcef3001ae553332070aba43f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/build-corrections-syntax-attempt1.log",
+      "sha256": "710e359dc5b4012d28c18ec6f0653b9a08630d07822f6874c95d4bcfab32ddbb"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-pending-state.json",
+      "sha256": "4bcbc555fec72bec1dd15f963ba8da00d08642e14c37072ddb879fa4f635ee79"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt1.log",
+      "sha256": "18be588b0e8b1d91653c9677c77793b40c8fe3c9cc6553de6f67bb93deea1482"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-current-state.json",
+      "sha256": "640bf5263e53a85548176b9925400b27562f40c8e18944a01c8f4aa3ab095dd9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-negative-duplicate-case-attempt1.log",
+      "sha256": "dc13008dca5286c8b01a370b9545bf4e47c400defb42dbc20f13c7d0e576cb05"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-buster-component.schema.json",
+      "sha256": "fa051f8dacdda448303d5182374d7970b02e71a496bcd41d098cd1bfd58b028c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-normal-current-state.json",
+      "sha256": "27791c560ba315d9d64e78ea00f82aa18c4c353f38746466e39b8a025c2db411"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/build-corrections-syntax-attempt1.py.snapshot",
+      "sha256": "ccfb649bc894e6a45f2434a548820583dcd0bfc2eff3d578b7880e589402c266"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/historical-input-identities.json",
+      "sha256": "813f7e55c505a9bfd5c4f1cfe94ee78472520b06ef3a6afdda997934148ccdc9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-compacted-state.json",
+      "sha256": "e6fe093599557c1e1071ff00c6284830c16f8d5998065c04e3dcc6e497828ae7"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/correction-ledger.json",
+      "sha256": "3487fc35dd4cc9b930c5797e7928b12cb11b86e42a0a092f78c4d08181adfd8e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/validate-proposed-definitions.mjs",
+      "sha256": "816f564439857d769c070a7afcbea94375151b32a04b1fc54a501969f7b99580"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt2.receipt.json",
+      "sha256": "352562c04fa43e71ed5f2f59abd31861091e7e628de94b4bd3296dfefad847db"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/complete-profiles.json",
+      "sha256": "90e7e24d9862ef305a294c280bc8e3e5ccf768b2548a8ebe19f98dd829b5f7bb"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-gap-current-state.json",
+      "sha256": "7f896cc031b73df420deea14e4fd62a06ba1d99596f9e27e0994a64259315e8c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-restored-positive-attempt1.log",
+      "sha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-bound-target-state.json",
+      "sha256": "6a3c7b0286b2fe47997fff366f7f81ed03d64b6e38615b6a67a5912b7e25ef06"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-gap-bound-target-state.json",
+      "sha256": "3c49d23ed1caf396fb5b381a8b406135d3e6247fed92b62e54ebac9aff263c82"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/safe-current-method-controls-attempt2.log",
+      "sha256": "f1f97c474b44baf89cc37ee262216073d7d8a613a5be8ab20607e6e76b7e0a2d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-full-other-run-bound-target-state.json",
+      "sha256": "9abcbf37dd83415425de05bc199e632e32f472fb2f08be2b1ac531885ee75027"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-restored-positive-attempt2.log",
+      "sha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/integrity-final-positive.log",
+      "sha256": "343b28148dc4504487c70646e7de06f4ac4b9c017ea90038da1d3d155ed388ee"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-freeze.log",
+      "sha256": "89f1ab86a56bc72c11acbd4994d1bcb41d1d6ff0b2fee8f12d5a04923cca1708"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-method-fixtures.json",
+      "sha256": "d672235916533b74c9dbcc4733b2c3b630196d3036ce51ed5bc94b0ef053ab59"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/computed-environment-supersession.json",
+      "sha256": "f84fd8e8ccbecd868fa7355f6b8eb3e0b76b7f4c5cfdb7514165e728c981991c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-quarantine-bound-target-state.json",
+      "sha256": "d57c078efcf7ed50b7bf8fe003a8f9cb8f9c123f83eb8f69fc312c3da8913426"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-acknowledged-state.json",
+      "sha256": "d60220088241a334e56829da09f99ffb553fa730cb2fc8d1c6d1365ef8a1590b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt4.log",
+      "sha256": "b5eb7e3b5cd74299903ba8c981868d75571ef237af5e24d77981503f09da350c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls-attempt1.log",
+      "sha256": "e7be31b3b6da10d72e85000591fcdeb80b1cf8c01a46b6a46bab571d7fc28918"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/proposed-nova-platform.schema.json",
+      "sha256": "c7e358cb1688302961cc2fac61ca98e46feee2f06a1dbf48c114b6cbc8d9a847"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-corrected-definitions-attempt1.mjs.snapshot",
+      "sha256": "1fd054ed8d1f424fa733e7b94ae4a31ac79799f7abccc30701814466660aaa43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/freeze-method-fixtures.mjs",
+      "sha256": "d20cd8033feb4045199c73b61fa84a5998bb66e51dabe72bc555709c9430c929"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/finalize-corrections.py",
+      "sha256": "ed01887642767a39321e1b0872ecfea5c161289ffc10d97647a7aa525ddb2f25"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+      "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt1.receipt.json",
+      "sha256": "8543c67e188f6156104ae44705af09227f5d490ac8f1ce54f9180d4a42cac27a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-companion-definitions.mjs",
+      "sha256": "61f80bf1fca3af9517f24b069701e7cd572cd52cac11af4c02c99d254369ce63"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/check-icq-integrity.py",
+      "sha256": "91b27f113f2330ab0d4ab6bdffccaf1c42cf2b225b92fa454b5aee964df51bd2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-empty-bound-target-state.json",
+      "sha256": "07c5a0565325b940161a968460b17925cb15258c553ad51c5959ab0b5c75508c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/negative-empty-env-expansion.fixture.json",
+      "sha256": "c41004aa22a66574992923689e26d5c2fd6bb23aa4108aff0080afbc74a12811"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/admission-overflow-current-state.json",
+      "sha256": "63c5bd92bfb185d18b7cc8d0d8b77ff27f6c60d7984967b8485c1c48d3f990f6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt5.log",
+      "sha256": "89f1ab86a56bc72c11acbd4994d1bcb41d1d6ff0b2fee8f12d5a04923cca1708"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-method-fixtures.json",
+      "sha256": "eb15e1c3c0b0cdaac0b74e88a5e2c3d66af8184d752ec53a46b9ffa3f6921036"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls-freeze.log",
+      "sha256": "e7be31b3b6da10d72e85000591fcdeb80b1cf8c01a46b6a46bab571d7fc28918"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/corrected-definition-controls-attempt3.log",
+      "sha256": "b5eb7e3b5cd74299903ba8c981868d75571ef237af5e24d77981503f09da350c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/overflow-full-current-control-attempt1.log",
+      "sha256": "90e329995439cf31cbf9ecf8d380779a61fdca6c4372671ceede7bfd219941a3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/companion-definition-controls-final.log",
+      "sha256": "e7be31b3b6da10d72e85000591fcdeb80b1cf8c01a46b6a46bab571d7fc28918"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/immutable-owner-reference-specimens.json",
+      "sha256": "ce86318e766f933da38a83994b39e39f434ee13b00c24769b303bdfde24dc7c4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/PRISM-HANDOFF-TARGET-20261013.md",
+      "sha256": "ca84be429d093bdcffd19cec0ee9f233e719cc6363ad09659b900aef5dbc142f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/prism-handoff-target-contracts-20261013.json",
+      "sha256": "61fff54f52aec11efbff691db0ea2ca5c0215a80dcbe122d593c33532dd3b4b5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/author/prism-design-cardinality-proposal.json",
+      "sha256": "097b4b8b84214746be3e55810f58bd5f0798b7e486d531239f95f4ed80c6d1ff"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/native-host-target-case-specifications-20261013.json",
+      "sha256": "38fceb5362a5562d988a54f054279cde262727afc62ae685a4764b14df1ec14b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/native-provisioning-contracts-bce3f075.json",
+      "sha256": "ab4f6f4ee1b8d87e208770d9016cb7dceca5bafb3a4028781b9198387afb8433"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/buster-kubernetes-captured-injections-20261013.json",
+      "sha256": "a8b31a1c090152199a81248a397709d5071ea233184fb75642fb866c3d0689e9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/dls-authority-corrections-20261013.json",
+      "sha256": "8897b5bf3614a62804c738a6e06def2d4c52b7f2477a8bfa44dc4b5cfd092e5c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/crossauthor-inputs/docs/review/evidence/config-acceptance/delivery/buster-kube-capture-case-specification-20261013.json",
+      "sha256": "e1f8a70d6b76d2949e439cb498072e8b0b09724ff3242dd821a97b7bcd49d780"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-material-controls-attempt1.log",
+      "sha256": "750e00ffab0f7c3a17b19c18bc330851de5d7780bd7f81bdfcc5f9c8517f0f40"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/case-input-contracts.json",
+      "sha256": "52bae0f819b8702475080c107141877f3603b90c41970a9459e08c6695ccee08"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/README.md",
+      "sha256": "8c15f6a39f4fc3591da16f25f2727a4e1f9ec7952c523681b378ede66ff9eac0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/check-current-api-return.mjs",
+      "sha256": "6c9768da50529328d6a36d9094ff7c4fb4a50220b512db3e2ef5bb12ac118866"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json",
+      "sha256": "d85340699e5a5b4e4048c301d589d3038446490682f3c16bfeac7b128e6a6f28"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/current-api-return-controls-attempt1.log",
+      "sha256": "d0eb1ee007cd51a301aca4673e9d6922a0e3c63a24f5a86d146d188a4db300c8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/stable-material-correction-receipt.json",
+      "sha256": "27ad0c413a0ef8fb28af301634549fea76692c6fa68ad199dd719d43289798fe"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/correction-ledger.json",
+      "sha256": "578b78cec64cfd69cb3bc2a1bd0432ba588f01791ae4816a9c159ba93aaa3e7b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-owner-reference-specimens.json",
+      "sha256": "099c1c68e44a0931d854a4c4fd2e574450b1c63f5a8ebc310c0541f1488f5dfc"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/check-boundary-materials.mjs",
+      "sha256": "63598f018ffa15b4f11798dd8aa4aebb812d97442e6f6beea1fa7327b65df0ff"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/build-boundary-materials.py",
+      "sha256": "187cbb5a082b4c337efee29c0cde004c6b91f48177d6e947ca257f3103abf4aa"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-material-controls.json",
+      "sha256": "7de19599416c3acfd1530e69b4049959ba501dfb3e3a61a6ab2a84356f621d45"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/admission-method-fixtures.json",
+      "sha256": "888185a65f1baf15d99106d61d6ad5562874cb58c72c3bf1315a187d87a9f698"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/current-api-return-controls.json",
+      "sha256": "e46ee51380320c66dd4532c7074969cd06e9b2c7ac3b7fdac9c39c9c9446a51f"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/README.md.json",
+      "sha256": "59d9bcb0e96a86eaa86143b0732f272a5902037a4d965e6022a9e23891f9d5da"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/preserved-input-identities.json",
+      "sha256": "cb75b7cf23f62ad4a8f433c42f6ef5616bc594948b579365df9ecdec05a6a2e3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/duplicate-positive-original.json",
+      "sha256": "28bc43d9a21570e463aeacf4a4eac7eb2ee9d78bf71260ac7164c48d42e67ece"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-positive-original.json",
+      "sha256": "7fb6125679ecf0b400b58da3f0137818177d2e581e76b6b370f4258f4126f0dd"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-negative-original.json",
+      "sha256": "d1c94ca5c4b7f26f96d267d06daf10c18c50e6a0144b05b71d20ac25ced1e493"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/counter-overflow-positive-original.json",
+      "sha256": "4ef205998f19d4ef7623885adaad5a4bc4ed3d01c58e5cf1771d0400312a8013"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-negative-original.json",
+      "sha256": "8a4bb7b4c2271d9a4280e717c2ed59baf0c6c85860199baaceae10364a2f2ada"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-negative-original.json",
+      "sha256": "1d0b8f68c77fd1f8fa786d4ec786c749658d792f7d0dfa0b33ead4565c59be28"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/overflow-positive-original.json",
+      "sha256": "4260f6d01ef345481835bac5a0ad35cd9871f5141d5fa8b90a1bf90c44ee6c16"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/oversized-history-positive-original.json",
+      "sha256": "c215814d9ff4c2e5c6d0be784a9097a0861e3738729b5abf2d1f45a0e0959580"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admitAndRead-positive-original.json",
+      "sha256": "0ac6bda9b0ef1e8f876d7f26b975aff200661cea3f48993fc41a72189609ffb0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/recordGap-negative-original.json",
+      "sha256": "bbb6922707d7a5b2302e0a6de331f604dc5e0ead56e6f9ef2d533584745451a4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/quarantine-positive-original.json",
+      "sha256": "09460d174a29232aac137414cb8f3d0393d2504fb390c402c9b7eecb76799c4d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/normal-admit-positive-original.json",
+      "sha256": "22666cc88a25590b0ed0dfd394f89545a5be1c5b00abf2122f597ae5724ff322"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/manifests/gap-restoration-unproved-positive-original.json",
+      "sha256": "a5d864c2c2cc023d6e2cfeb21b5a2fd7e99adfbdfe719b4e4cf8a6c32fb1cfb5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-positive-prior.json",
+      "sha256": "9c1e7b00ae3fde46d5a68281122066a331fea92cfe879149bd961a485f9e82b9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-prior.json",
+      "sha256": "1460732c86063c2bf5cce72dabf36109b171e80f00c85360aa20e7c9083e637e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-candidate.json",
+      "sha256": "220965e3467e87e5c6f7b98a20018e1125ddfbdbcdca888fe7cf399bff9da37b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-candidate.json",
+      "sha256": "d013b261c1c588a2cd678df6ec35c2540830c9c35d7eaedcc48a85937c50a92b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-candidate.json",
+      "sha256": "9b13ba9e7be48cb3d6269d0c801491212f609a2434dd6d3c73661e28ef4f7330"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/gap-restoration-unproved-positive-prior.json",
+      "sha256": "9b13ba9e7be48cb3d6269d0c801491212f609a2434dd6d3c73661e28ef4f7330"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-prior.json",
+      "sha256": "a9248a57ef5877c31cd29527aadd9980ed93d7c9f595dafcfec9cf23f9738eb9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/duplicate-positive-candidate.json",
+      "sha256": "a9248a57ef5877c31cd29527aadd9980ed93d7c9f595dafcfec9cf23f9738eb9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-overflow-candidate.json",
+      "sha256": "fc6ffb646ad7b7317754eb870278fd228c18c28ebe81dc00de3282bc06055019"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-candidate.json",
+      "sha256": "f3155e2045e692f9c102957016e742b0aec098136fb95117516c22da928ce7f9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-positive-prior.json",
+      "sha256": "1129cc37e95ffec6ef0a3943d0bc0797d993b2739d45fe7c25fad73b9da290c8"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-negative-other-run-prior.json",
+      "sha256": "99753959507f8ec4fd40e23d3ae29af949573bcb423fbc1857ec9f0dc64e64ce"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-positive-prior.json",
+      "sha256": "fe21ed2dd211577b929d57bc6683f6ccd15a2ef6cf15e5dd3e6896a4b79a5d94"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-oversized-original.bytes",
+      "sha256": "ae4acf0d87d428546c118dc13df623d3191c9493d4ff1869965cccc00eb5710e"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-attempted-candidate.json",
+      "sha256": "6dc3e6e2db3ea56437a2517cd735a8bd0a4f6da8667cad35c517663237a3f950"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-positive-candidate.json",
+      "sha256": "cf8b0ae74e88652445634382e0c676614f87ff3bf4b9aaa1a10b42fd1b9cef3d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/quarantine-negative-prior.json",
+      "sha256": "e414f4c469453980ea9aa23b95d4e152edee5209b3f7c5dda14b1f5c447a6b9a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-candidate.json",
+      "sha256": "21d2be3dea74b915a4c505c212069a8cab2f1c96abf8b3ef0aa21cf0ca41106c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-prior.json",
+      "sha256": "65ddd966f56a2eac7af34a89e620fc43253eb070ea8ad68df653976a855de551"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-prior.json",
+      "sha256": "a8ec87b25a50a50352aabaafb667ed69e7a5c30425fd0aa614815de9b56f9cc4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/overflow-positive-prior.json",
+      "sha256": "c0e1ef388f03ca775a04086a37ccd42afc23a4bf2d8d958660d321b122f4193a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/counter-overflow-positive-prior.json",
+      "sha256": "e35b918f26f588a0c9596600b8153211486b216311511fa6113c64874527f759"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-attempted-candidate.json",
+      "sha256": "25621f0929f76566f4e3abc3eb966fb581cbdc6cca871e1ba77dbfa1a76c050d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-positive-prior.json",
+      "sha256": "6a3c832dce2d58f7210baca59da72e560ac4b7fa164168685afc586d876bc378"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/recordGap-negative-attempted-candidate.json",
+      "sha256": "02c6a91177b56b06e1a17d6d20b15547265c890fd5f7941583d7b55f42dacf5d"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admit-negative-attempted-candidate.json",
+      "sha256": "b7101f0f9c26a886347abbc7b30eb028cbe854482520e3ef9c534c9a5e6924ea"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/normal-admitAndRead-negative-prior.json",
+      "sha256": "db39ddec140ca93b29c069e934a3b50319372608f33f61d73bb01da523a39e94"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/core-adjustable-profiles.json",
+      "sha256": "e67b9a96ee0737e99b03a20f5887034f40802d7f4d6a1df7ff46e10932283f43"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/core-adjustable-target.schema.json",
+      "sha256": "695ea10b3c08a72f93098665e7d4a0b83947a5f436241adc0447c048aabfd1be"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/components/core-adjustability-current.md",
+      "sha256": "4cfcb52bff31787f70c8ede26377075b2db62bed708815ee15f74b475a1efa0a"
+    }
+  ],
+  "preservedExactly": true
+}

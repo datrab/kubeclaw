@@ -1,0 +1,18 @@
+{
+  "skills/nova/plugins/remote-test-gate/src/adapter.ts": "41ae631fac290f59931c6243280b4991278cd0b1659bc70dee4898c16ed33237",
+  "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts": "6afbc4274b2cbffa9fff2ed3c32deb9af3a381e7d3400e253fc3b871e139bffe",
+  "skills/nova/plugins/remote-test-gate/src/demo-evidence.ts": "28fc430c4e7840ae1dc0c76698981ebfe35ce08011032ed3380b19799ceb6a63",
+  "skills/nova/plugins/remote-test-gate/schemas/config.schema.json": "282ed6bdc8d07486e6e34b40cec822036a5cc851af4369e55f68ab7f146eef47",
+  "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json": "767de53403900e5b72e8f35bb6d238eed5a889b6cb9141fb18b1ce56aef8461d",
+  "skills/nova/plugins/remote-test-gate/plugin.json": "7c42888270bb814bfeb9c47b2bc1daa4a858e649890866c9abb0f6b3c4b8d35e",
+  "skills/nova/core/test-gates/secure-endpoint.ts": "788109a387b6dd67fad7e5695312198a6b65ca3c0bd43ce7deaf416a2d75ac5a",
+  "skills/nova/core/test-gates/production.ts": "886c5898b90473ac1f547a40136ed43de2e40bd556bb1acde025fcd95c2a0be1",
+  "skills/nova/core/test-gates/remote-dispatch.ts": "18bcaabddd476609a44a2447d847f19524a110d001847e07a4e11edb94a254c5",
+  "skills/nova/core/test-gates/remote-result-import.ts": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+  "skills/nova/core/test-gates/remote-dispatch-store.ts": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+  "skills/nova/core/execution/adapter-startup.ts": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+  "skills/nova/core/execution/engine-runtime.ts": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+  "skills/common/plugin-runtime/foundation/config/platform.ts": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e",
+  "skills/common/plugin-runtime/foundation/observability/durable-records.ts": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+  "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea"
+}

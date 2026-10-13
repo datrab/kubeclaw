@@ -1,0 +1,55 @@
+{
+  "ownershipCapacity": {
+    "id": "CMP-API-OWNERSHIP-TERMINAL-CAPACITY-REQUIRED-QUOTA",
+    "current": {
+      "default": "Number.MAX_SAFE_INTEGER",
+      "productiveCallers": [
+        {
+          "path": "skills/worker/core/worker/ownership-store.ts",
+          "line": 122,
+          "field": "this.#maximumBytes"
+        },
+        {
+          "path": "skills/worker/core/worker/ownership-store.ts",
+          "line": 189,
+          "field": "this.#maximumBytes"
+        }
+      ],
+      "latentPublicAPI": "omission returns332-byte empty worst future host envelope without a selected quota"
+    },
+    "target": {
+      "newOperatorSetting": false,
+      "parameter": "maximumBytes REQUIRED existing caller positive safeinteger; remove latent optional default; preserve current incremental serializer/framing/all-host-owners capacity proof",
+      "domain": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9007199254740991
+      },
+      "boundary": "omitted/invalid selectedcap reject WORKER_OWNERSHIP_CAPACITY_EXCEEDED BEFORE projection/allocation/effect; exact canonical terminal capacity > originalcap reject",
+      "callerOwnership": "same physical FileWorkerOwnershipStore original maximumBytes, exact outer Prism/Buster role owner; no global foundation/core capacity author",
+      "recovery": "same immutable original storecap; supplied currentB/differentowner cannot substitute originalA. Parentcarrier/taskpartition + authentic original role/store bindings stillopen"
+    },
+    "currentEvidence": {
+      "path": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/ownership-current-reader-attempt1.log",
+      "sha256": "4e2631663603519c98b413783476cab4e7a99299fcb376710f6dec15373024ab"
+    },
+    "actualBoundary": {
+      "validState": {
+        "schemaVersion": "worker-ownership-store.v3",
+        "hostIdentity": null,
+        "records": []
+      },
+      "canonicalCurrentStateBytes": 78,
+      "worstTerminalAccountingBytes": 332,
+      "positivePureAPIQuota": 332,
+      "adjacentNegativePureAPIQuota": 331,
+      "limits": "pure stateless consumer definition witness, NOT a complete deployed332-byte role store or targetcarrier proof"
+    },
+    "existingRoleFieldReferences": [
+      "CMP-prism-worker-supervisor.maximumOwnershipBytes",
+      "CMP-buster-engine-preparation.maximumOwnershipBytes"
+    ],
+    "unresolvedAliases": "Buster provider/native/fixture role outer instance and independently selected authenticoriginal manifests remain exact scope obligations, not samevaluealiases"
+  },
+  "notAcceptance": true
+}

@@ -42049,7 +42049,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42071,7 +42071,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-PORT-B",
@@ -42089,7 +42095,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42111,7 +42117,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP-A",
@@ -42129,7 +42141,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42151,7 +42163,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-GROUP-B",
@@ -42169,7 +42187,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42191,7 +42209,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION-A",
@@ -42209,7 +42233,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42231,7 +42255,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-LEASE-API-VERSION-B",
@@ -42249,7 +42279,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42271,7 +42301,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES-A",
@@ -42289,7 +42325,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42311,7 +42347,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-NAMESPACE-PREFIXES-B",
@@ -42329,7 +42371,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42351,7 +42393,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS-A",
@@ -42369,7 +42417,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42391,7 +42439,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-DEFAULT-TTL-SECONDS-B",
@@ -42409,7 +42463,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42431,7 +42485,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS-A",
@@ -42449,7 +42509,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42471,7 +42531,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-MAX-TTL-SECONDS-B",
@@ -42489,7 +42555,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42511,7 +42577,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT-A",
@@ -42529,7 +42601,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42551,7 +42623,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-SERVICE-ACCOUNT-B",
@@ -42569,7 +42647,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42591,7 +42669,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME-A",
@@ -42609,7 +42693,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42631,7 +42715,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-SECRET-ROLE-NAME-B",
@@ -42649,7 +42739,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42671,7 +42761,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME-A",
@@ -42689,7 +42785,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42711,7 +42807,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-DEPLOYER-ROLE-NAME-B",
@@ -42729,7 +42831,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42751,7 +42853,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME-A",
@@ -42769,7 +42877,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42791,7 +42899,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-TESTER-ROLE-NAME-B",
@@ -42809,7 +42923,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42831,7 +42945,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON-A",
@@ -42849,7 +42969,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42871,7 +42991,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-ACCESS-JSON-B",
@@ -42889,7 +43015,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42911,7 +43037,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE-A",
@@ -42929,7 +43061,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42951,7 +43083,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-KUBECLAW-NAMESPACE-B",
@@ -42969,7 +43107,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -42991,7 +43129,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS-A",
@@ -43009,7 +43153,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43031,7 +43175,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-CONTROLLER-POLL-MS-B",
@@ -43049,7 +43199,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43071,7 +43221,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST-A",
@@ -43089,7 +43245,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43111,7 +43267,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-KUBERNETES-SERVICE-HOST-B",
@@ -43129,7 +43291,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43151,7 +43313,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS-A",
@@ -43169,7 +43337,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43191,7 +43359,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-ALLOWED-SOURCE-SECRETS-B",
@@ -43209,7 +43383,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43231,7 +43405,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN-A",
@@ -43249,7 +43429,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43271,7 +43451,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-READY-LISTEN-B",
@@ -43289,7 +43475,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43311,7 +43497,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE-A",
@@ -43329,7 +43521,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43351,7 +43543,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-READY-AUDIENCE-B",
@@ -43369,7 +43567,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43391,7 +43589,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER-A",
@@ -43409,7 +43613,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43431,7 +43635,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-READY-PRODUCER-B",
@@ -43449,7 +43659,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43471,7 +43681,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT-A",
@@ -43489,7 +43705,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43511,7 +43727,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-CERT-B",
@@ -43529,7 +43751,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43551,7 +43773,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY-A",
@@ -43569,7 +43797,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43591,7 +43819,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-READY-TLS-KEY-B",
@@ -43609,7 +43843,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43631,7 +43865,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED-A",
@@ -43649,7 +43889,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43671,7 +43911,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ENABLED-B",
@@ -43689,7 +43935,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43711,7 +43957,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY-A",
@@ -43729,7 +43981,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43751,7 +44003,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-VERIFY-KEY-B",
@@ -43769,7 +44027,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43791,7 +44049,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE-A",
@@ -43809,7 +44073,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43831,7 +44095,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-AUDIENCE-B",
@@ -43849,7 +44119,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43871,7 +44141,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER-A",
@@ -43889,7 +44165,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43911,7 +44187,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-PRODUCER-B",
@@ -43929,7 +44211,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43951,7 +44233,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER-A",
@@ -43969,7 +44257,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -43991,7 +44279,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ISSUER-B",
@@ -44009,7 +44303,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44031,7 +44325,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON-A",
@@ -44049,7 +44349,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44071,7 +44371,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-BUSTER-PRODUCT-ACTORS-JSON-B",
@@ -44089,7 +44395,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44111,7 +44417,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS-A",
@@ -44129,7 +44441,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44151,7 +44463,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-HTTPCLIENTTIMEOUTSECONDS-B",
@@ -44169,7 +44487,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44191,7 +44509,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS-A",
@@ -44209,7 +44533,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44231,7 +44555,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYREFRESHSECONDS-B",
@@ -44249,7 +44579,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44271,7 +44601,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS-A",
@@ -44289,7 +44625,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44311,7 +44647,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYFUTURESKEWSECONDS-B",
@@ -44329,7 +44671,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44351,7 +44693,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS-A",
@@ -44369,7 +44717,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44391,7 +44739,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMFINDINGS-B",
@@ -44409,7 +44763,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44431,7 +44785,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES-A",
@@ -44449,7 +44809,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44471,7 +44831,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-RUNTIMESECURITYMAXIMUMSERIALIZEDBYTES-B",
@@ -44489,7 +44855,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44511,7 +44877,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS-A",
@@ -44529,7 +44901,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44551,7 +44923,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYREADHEADERTIMEOUTSECONDS-B",
@@ -44569,7 +44947,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44591,7 +44969,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS-A",
@@ -44609,7 +44993,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44631,7 +45015,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYREADTIMEOUTSECONDS-B",
@@ -44649,7 +45039,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44671,7 +45061,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS-A",
@@ -44689,7 +45085,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44711,7 +45107,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYWRITETIMEOUTSECONDS-B",
@@ -44729,7 +45131,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44751,7 +45153,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS-A",
@@ -44769,7 +45177,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44791,7 +45199,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYIDLETIMEOUTSECONDS-B",
@@ -44809,7 +45223,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44831,7 +45245,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES-A",
@@ -44849,7 +45269,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44871,7 +45291,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYMAXHEADERBYTES-B",
@@ -44889,7 +45315,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44911,7 +45337,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS-A",
@@ -44929,7 +45361,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44951,7 +45383,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYHANDLERTIMEOUTSECONDS-B",
@@ -44969,7 +45407,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -44991,7 +45429,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES-A",
@@ -45009,7 +45453,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -45031,7 +45475,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-READYMAXIMUMBODYBYTES-B",
@@ -45049,7 +45499,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -45071,7 +45521,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS-A",
@@ -45089,7 +45545,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -45111,7 +45567,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-PRODUCTHANDLERTIMEOUTSECONDS-B",
@@ -45129,7 +45591,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -45151,7 +45613,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES-A",
@@ -45169,7 +45637,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -45191,7 +45659,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-PRODUCTMAXIMUMBODYBYTES-B",
@@ -45209,7 +45683,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -45231,7 +45705,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS-A",
@@ -45249,7 +45729,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -45271,7 +45751,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-DEFAULTDEMORETENTIONSECONDS-B",
@@ -45289,7 +45775,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -45311,7 +45797,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS-A",
@@ -45329,7 +45821,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/A.json": "76ea70fd1039d046bc07329378f62b3064ecdd0da6c9f41d74ae06332deb9056",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -45351,7 +45843,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-OBS-DLV-NAMESPACE-CONTROLLER-MAXIMUMDEMORETENTIONSECONDS-B",
@@ -45369,7 +45867,7 @@
       "docs/review/evidence/config-acceptance/delivery/target-profile-coordinate-controls-20261013.json": "8a0f8e8c51d480a96af1b84ab97253e8e6de0a02ae1059e0d18ef3ab686ff59f",
       "docs/review/evidence/config-acceptance/delivery/check-target-profile-coordinates-20261013.py": "1a1f965a326eaef06e973ee6c1f867e5a07167ddca2922543e57abff17b5d72a",
       "docs/review/evidence/config-acceptance/delivery/controller-target-profiles-20261013/B.json": "8d6b5af95ac553bda4aa9b7ff445576fc6822234ef9a6d882b2c627ebce6dbdd",
-      "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
+      "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3"
     },
     "testDigests": {},
     "rawEvidencePath": [
@@ -45391,7 +45889,13 @@
       "firstBoundary": null
     },
     "reviewerConfirmation": "pending",
-    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects"
+    "acceptance": "NOT ACCEPTED; own primitive/type/coordinate/current pure constructor only, no native model/account/API/host/image/process effects",
+    "sourceIdentityRelocation": {
+      "originalPath": "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json",
+      "immutableCommittedInputPath": "docs/review/evidence/config-acceptance/delivery/snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json",
+      "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "meaning": "same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled"
+    }
   },
   {
     "id": "DLV-C0-DLS-INITIAL-COORD-DLV-PRISM-BACKUP-CONTROLLER-TIMEZONE-A",

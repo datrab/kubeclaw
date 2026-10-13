@@ -1,0 +1,1292 @@
+{
+  "scope": "C0 controller exact budget/caller/domain/epoch and deployment-path proposals; productive sources untouched, no native/host/API/image/Secret execution or acceptance",
+  "baseline": {
+    "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+    "tree": "47ce9b9c092dcd534eb55ddaebaab010e270a5af",
+    "preservation": "immutable committed original generator/profile/domain/spec bytes + exact changed generator patch; no entire unchanged fragment copies"
+  },
+  "newFields": [
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES",
+      "source": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+        "field": "apiResponseMaximumBytes",
+        "line": 1529,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "current": {
+        "valueOrDefault": null,
+        "precedence": "unbounded; no ENV/CLI/Chart key or limit reader"
+      },
+      "reader": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "line": 1529,
+        "operation": "kube -> io.ReadAll(resp.Body), success/error/out=nil all full-body materialization"
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "bytes",
+          "semantic": "C3 bounded limit+1 decoded entity bytes before error parsing/JSON/side-effect outcome; same cap for success/error/no-output calls; close response on every path; excess is typed uncertainty, not 404/clean/empty success"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new process bounded I/O/observer policy; R capture per existing lease/admission/cleanup attempt where original authority/deadline applies"
+      },
+      "authority": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "apiResponseMaximumBytes",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "profileValues": {
+        "A": 8388608,
+        "B": 16777216
+      },
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ]
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES",
+      "source": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+        "field": "apiRequestMaximumBytes",
+        "line": 1546,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "current": {
+        "valueOrDefault": null,
+        "precedence": "unbounded encoding; no ENV/CLI/Chart key"
+      },
+      "reader": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "line": 1546,
+        "operation": "requestPayload -> json.Marshal before NewRequest/Do"
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "bytes",
+          "semantic": "C3 bounded serialization/count before Do; TokenReview bearer and Secret mutation bytes never written/hash/logged; cap failure sends zero HTTP requests. Streaming or preflight size accounting needed to bound encoder allocation itself"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new process bounded I/O/observer policy; R capture per existing lease/admission/cleanup attempt where original authority/deadline applies"
+      },
+      "authority": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "apiRequestMaximumBytes",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "profileValues": {
+        "A": 4194304,
+        "B": 8388608
+      },
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ]
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES",
+      "source": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+        "field": "apiDiagnosticMaximumBytes",
+        "line": 1560,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "current": {
+        "valueOrDefault": null,
+        "precedence": "unbounded bytes and unsanitized upstream text; no distinct diagnostic policy"
+      },
+      "reader": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "line": 1560,
+        "operation": "kubeResponseError -> full raw body or parsed message -> apiError -> logJSON/status error"
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "bytes",
+          "semantic": "C3 redacted allowlisted diagnostic code plus status/context identity only; count UTF-8 output bytes, preserve typed statusCode and uncertainty; do not merely truncate possibly secret-bearing upstream text"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new process bounded I/O/observer policy; R capture per existing lease/admission/cleanup attempt where original authority/deadline applies"
+      },
+      "authority": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "apiDiagnosticMaximumBytes",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "profileValues": {
+        "A": 1024,
+        "B": 2048
+      },
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ]
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+      "source": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "field": "authorizationMaximumBytes",
+        "line": 99,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "current": {
+        "valueOrDefault": 16384,
+        "precedence": "literal len(authorization)>16384; Bearer prefix/token whitespace validation; no ENV/CLI"
+      },
+      "reader": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "line": 99,
+        "operation": "authenticateTransport used by Ready AND Product before TokenReview"
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 9007199254740991,
+          "unit": "bytes",
+          "semantic": "C3 required complete Authorization header bytes including seven-byte Bearer prefix; same native auth caller, not request-body or token-issuer grant policy"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new process bounded I/O/observer policy; R capture per existing lease/admission/cleanup attempt where original authority/deadline applies"
+      },
+      "authority": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "authorizationMaximumBytes",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "profileValues": {
+        "A": 16384,
+        "B": 8192
+      },
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ]
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+      "source": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+        "field": "namespaceDeletionTimeoutSeconds",
+        "line": 1473,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "current": {
+        "valueOrDefault": 120,
+        "precedence": "literal2minutes per invocation; pollInterval reused; each kube call can overrun remaining local deadline"
+      },
+      "reader": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "line": 1473,
+        "operation": "waitForNamespaceDeleted -> deadline created once per cleanup call -> kube GET until404/time.Sleep"
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "C3 original cleanup-attempt deadline captured once, min(original remaining, client timeout, caller context), cancellable wait; retry resumes persisted original attempt deadline or explicit new authorized attempt, never automatic now+budget renewal"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new process bounded I/O/observer policy; R capture per existing lease/admission/cleanup attempt where original authority/deadline applies"
+      },
+      "authority": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "namespaceDeletionTimeoutSeconds",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "profileValues": {
+        "A": 120,
+        "B": 180
+      },
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ]
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS",
+      "source": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "field": "readyObservationMaximumAgeSeconds",
+        "line": 238,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "current": {
+        "valueOrDefault": 300,
+        "precedence": "literal5minutes; distinct from Go runtimeSecurityRefreshAfter and CMP observationAge"
+      },
+      "reader": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "line": 238,
+        "operation": "commitDemoReady observation checked before AND after verifyReadySource; future timestamp rejects"
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "C3 Ready admission freshness window over request observation timestamp; captured admission policy/clock; requires 0<=now-observed<=limit at both checks, no future grace inferred"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new process bounded I/O/observer policy; R capture per existing lease/admission/cleanup attempt where original authority/deadline applies"
+      },
+      "authority": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "readyObservationMaximumAgeSeconds",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "profileValues": {
+        "A": 300,
+        "B": 180
+      },
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ]
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS",
+      "source": {
+        "path": "cmd/buster-namespace-controller/demo-product.go",
+        "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+        "field": "productDecisionMaximumValiditySeconds",
+        "line": 188,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "current": {
+        "valueOrDefault": 300,
+        "precedence": "literal5minutes; signed envelope validity not retention extension duration or Ready age"
+      },
+      "reader": {
+        "path": "cmd/buster-namespace-controller/demo-product.go",
+        "line": 188,
+        "operation": "verifyProduct issued/expires UTC -> expires>issued and signed validity duration<=5minutes; commitProduct current expiry separately"
+      },
+      "targetDomain": {
+        "domain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "C3 captured issuer epoch policy: strict canonical whole-second UTC, signed expires-issued>0<=limit, actual now inside interval at commit/replay as specified; changing latest value does not reinterpret stored signed admission/receipt"
+        },
+        "required": true,
+        "proposedOnly": true,
+        "activation": "S new process bounded I/O/observer policy; R capture per existing lease/admission/cleanup attempt where original authority/deadline applies"
+      },
+      "authority": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "productDecisionMaximumValiditySeconds",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "profileValues": {
+        "A": 300,
+        "B": 120
+      },
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ]
+    }
+  ],
+  "scopeDistinctions": [
+    {
+      "fields": [
+        "httpClientTimeoutSeconds",
+        "apiResponseMaximumBytes",
+        "apiRequestMaximumBytes",
+        "apiDiagnosticMaximumBytes"
+      ],
+      "current": "http.Client60s each Do incl response reading, not reconcile loop/lease lifetime; kube reads current token per request, CA roots once; unbounded request Marshal+ReadAll success/error even out=nil; default redirects enabled",
+      "proposal": "required limits before native action; typed request-limit zero requests; response limit+1 read with close; overlimit after mutating Do -> original mutation uncertain, must authoritative CAS/readback replay not false success/rollback; bounded redacted error retains apiError statusCode for404/409 only when complete trusted response outcome verified; reject redirects before rebind; response decoded entity vs Content-Length/compression separate",
+      "activation": "S request/observer resource budget may change for reads, never reissues authority or makes stored A mutation clean"
+    },
+    {
+      "fields": [
+        "runtimeSecurityMaximumFindings",
+        "runtimeSecurityMaximumSerializedBytes"
+      ],
+      "current": "sort by id -> compact JSON array count4096/bytes524288; overflow critical sentinel removes enough last entries; no bound on accumulating full findings or five complete API lists before truncation; long-id threshold256/prefix184 keeps :sha256:+64",
+      "proposal": "count>=1; compact array cap fits maximum omitted-counter decimal width plus sentinel/array punctuation measured by selected Go marshal; preserve total/omitted/digest sorting and critical last sentinel. This is not whole lease/managedFields/JSON indentation/API error body/physical memory budget; no numeric alias to CMP maximumOutputBytes. Supported max total from actual bounded input/native fixture, not a guessed invariant."
+    },
+    {
+      "fields": [
+        "BUSTER_CONTROLLER_POLL_MS",
+        "namespaceDeletionTimeoutSeconds",
+        "runtimeSecurityRefreshSeconds",
+        "runtimeSecurityFutureSkewSeconds"
+      ],
+      "current": "main reconcileAll is serial whole list then unconditional Sleep; five resource map order unspecified, per-request60s; no whole-loop context. deletion per-call120s loop may overshoot through kube60s and Sleep; Unavailable observation never refreshed by refreshDue, Observed older>=5s refresh, future>5s refresh",
+      "proposal": "explicit supported Go durations/cancellation, deletion original-attempt deadline constrains requests/waits; record unavailable/future/stale separately no false clean. No freshness theorem from poll alone: require measured selected fixture cycle/age relationship or timeout/unavailable; S observer changes do not reset lease deadline."
+    },
+    {
+      "fields": [
+        "readyReadHeaderTimeoutSeconds",
+        "readyReadTimeoutSeconds",
+        "readyWriteTimeoutSeconds",
+        "readyIdleTimeoutSeconds",
+        "readyMaxHeaderBytes",
+        "readyHandlerTimeoutSeconds",
+        "productHandlerTimeoutSeconds",
+        "readyMaximumBodyBytes",
+        "productMaximumBodyBytes",
+        "authorizationMaximumBytes"
+      ],
+      "current": "same TLS HTTP server fields5/20/20/30seconds20KiB headers, request contexts15s; Ready/Product authenticate FIRST then16KiB body reader. Context does not alone bound uncooperative Body Read; server ReadTimeout does. WriteTimeout socket deadline is not transaction rollback; encode errors ignored. TLS certificate/key loaded once, Product public key/actors configured once; TokenReview each request; API controller token reread, current client CA unchanged",
+      "proposal": "own type/time correlations readHeader<=read, authheader<=maxHeader, handler<=write; separately native TLS/time overhead and full header count. Do not claim handler+header/body totals fit write budget from scalar inequality alone; native slow TLS/header/body/response cases. Expired/disconnected caller after statusPatch -> outcome uncertain, original CAS+readback/replay, not fresh request/latest intent. Ready/Product auth branches, token age/issuer/grant separately validated."
+    },
+    {
+      "fields": [
+        "readyObservationMaximumAgeSeconds",
+        "productDecisionMaximumValiditySeconds",
+        "defaultDemoRetentionSeconds",
+        "maximumDemoRetentionSeconds",
+        "BUSTER_DEFAULT_TTL_SECONDS",
+        "BUSTER_MAX_TTL_SECONDS"
+      ],
+      "current": "Ready inputage<=300s/future rejection both before/after source verify; Product signed validinterval<=300s distinct current-now commit check; absent Ready retention604800, v1 implicit604800, v2 must explicit; floorMaxInt64/seconds9223372036 technical arithmetic and calendar1..9999; expiresAt validdemo overridesprocess TTL otherwise currentdefault/max+CreationTimestamp(now fallback)",
+      "proposal": "admission window, signed validity, task initial leaseTTL, Ready retention and Product extension distinct. Never map equal300s scopes or share operationaldefault with historical-v1 constant. Invalid committed readiness must quarantine, not latest TTL fallback. Exact createdAt/default/max/calendar authority captured per lease before effects; durationupper alone does not validate future calendar."
+    }
+  ],
+  "sharedPrimaryReadOnlyAliases": {
+    "shared.leaseApiGroup": {
+      "settingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+      "source": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "field": "/settings/clusterInvokers/shared/leaseApiGroup",
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+        "profileSources": {
+          "base": {
+            "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+            "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+          },
+          "runtime": {
+            "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+            "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+          }
+        }
+      },
+      "caseIds": [
+        "CMP-C1-VAL-buster-engine",
+        "CMP-C1-EFFECT-buster-engine",
+        "CMP-C1-DELIVERY",
+        "CMP-C1-MUT",
+        "CMP-C5-BIND",
+        "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiGroup"
+      ],
+      "mode": "typed read-only primary author alias; no delivery writer",
+      "selectedSourceValue": "kubeclaw.forgestack.ai"
+    },
+    "shared.leaseApiVersion": {
+      "settingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+      "source": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "field": "/settings/clusterInvokers/shared/leaseApiVersion",
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+        "profileSources": {
+          "base": {
+            "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+            "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+          },
+          "runtime": {
+            "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+            "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+          }
+        }
+      },
+      "caseIds": [
+        "CMP-C1-VAL-buster-engine",
+        "CMP-C1-EFFECT-buster-engine",
+        "CMP-C1-DELIVERY",
+        "CMP-C1-MUT",
+        "CMP-C5-BIND",
+        "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiVersion"
+      ],
+      "mode": "typed read-only primary author alias; no delivery writer",
+      "selectedSourceValue": "v1alpha1"
+    },
+    "runtimeSecurity.maximumOutputBytes": {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes",
+      "source": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "field": "/settings/clusterInvokers/runtimeSecurity/maximumOutputBytes",
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+        "profileSources": {
+          "base": {
+            "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+            "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+          },
+          "runtime": {
+            "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+            "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+          }
+        }
+      },
+      "caseIds": [
+        "CMP-C1-VAL-buster-engine",
+        "CMP-C1-EFFECT-buster-engine",
+        "CMP-C1-DELIVERY",
+        "CMP-C1-MUT",
+        "CMP-C5-BIND",
+        "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumOutputBytes"
+      ],
+      "mode": "typed read-only primary author alias; no delivery writer",
+      "selectedSourceValue": 16777216
+    },
+    "runtimeSecurity.maximumExecutionMs": {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs",
+      "source": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "field": "/settings/clusterInvokers/runtimeSecurity/maximumExecutionMs",
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+        "profileSources": {
+          "base": {
+            "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+            "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+          },
+          "runtime": {
+            "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+            "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+          }
+        }
+      },
+      "caseIds": [
+        "CMP-C1-VAL-buster-engine",
+        "CMP-C1-EFFECT-buster-engine",
+        "CMP-C1-DELIVERY",
+        "CMP-C1-MUT",
+        "CMP-C5-BIND",
+        "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumExecutionMs"
+      ],
+      "mode": "typed read-only primary author alias; no delivery writer",
+      "selectedSourceValue": 300000
+    },
+    "runtimeSecurity.pollIntervalMs": {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs",
+      "source": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "field": "/settings/clusterInvokers/runtimeSecurity/pollIntervalMs",
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+        "profileSources": {
+          "base": {
+            "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+            "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+          },
+          "runtime": {
+            "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+            "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+          }
+        }
+      },
+      "caseIds": [
+        "CMP-C1-VAL-buster-engine",
+        "CMP-C1-EFFECT-buster-engine",
+        "CMP-C1-DELIVERY",
+        "CMP-C1-MUT",
+        "CMP-C5-BIND",
+        "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.pollIntervalMs"
+      ],
+      "mode": "typed read-only primary author alias; no delivery writer",
+      "selectedSourceValue": 1000
+    },
+    "runtimeSecurity.maximumObservationAgeMs": {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs",
+      "source": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "field": "/settings/clusterInvokers/runtimeSecurity/maximumObservationAgeMs",
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+        "profileSources": {
+          "base": {
+            "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+            "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+          },
+          "runtime": {
+            "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+            "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+          }
+        }
+      },
+      "caseIds": [
+        "CMP-C1-VAL-buster-engine",
+        "CMP-C1-EFFECT-buster-engine",
+        "CMP-C1-DELIVERY",
+        "CMP-C1-MUT",
+        "CMP-C5-BIND",
+        "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumObservationAgeMs"
+      ],
+      "mode": "typed read-only primary author alias; no delivery writer",
+      "selectedSourceValue": 10000
+    },
+    "runtimeSecurity.maximumFutureSkewMs": {
+      "settingId": "CMP-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs",
+      "source": {
+        "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+        "field": "/settings/clusterInvokers/runtimeSecurity/maximumFutureSkewMs",
+        "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+        "profileSources": {
+          "base": {
+            "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+            "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+          },
+          "runtime": {
+            "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+            "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+          }
+        }
+      },
+      "caseIds": [
+        "CMP-C1-VAL-buster-engine",
+        "CMP-C1-EFFECT-buster-engine",
+        "CMP-C1-DELIVERY",
+        "CMP-C1-MUT",
+        "CMP-C5-BIND",
+        "CMP-C1-EFFECT-buster-engine-clusterInvokers.runtimeSecurity.maximumFutureSkewMs"
+      ],
+      "mode": "typed read-only primary author alias; no delivery writer",
+      "selectedSourceValue": 5000
+    }
+  },
+  "profiles": {
+    "A": {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/A.json",
+      "sha256": "f0f06e5ff1ae1fd60e95b5458fc18d1e9201c05c276120a95cc22637b0fc4d5f",
+      "scope": "complete proposed controller policy+typed read-only native/provider/CMP fixture declarations, not native valid/live grants or capacity proof"
+    },
+    "B": {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/B.json",
+      "sha256": "bbc6325e1a443ebe28319a1e9a6c666b01915fd5305a7e28485e0f1f298f6de9",
+      "scope": "complete proposed controller policy+typed read-only native/provider/CMP fixture declarations, not native valid/live grants or capacity proof"
+    }
+  },
+  "ownDefinitionSchema": {
+    "path": "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-definition-schema-6606af9-20261013.json",
+    "sha256": "e122724fea861ad5ce8751f6ed89778230c0a24631b097d967bf891d66642d8d",
+    "limit": "own exact proposal shape/types and correlation controls, not native Go/CRD schema validation or physical capacities"
+  },
+  "storedLeaseEpochProposal": {
+    "schemaVersion": "dlv-controller-policy-epoch.v1-proposal",
+    "physicalSeam": "BusterNamespaceLease.status.deliveryPolicyEpoch; proposed explicit structural CRD member/CEL immutability/RBAC writer discipline, absent today; materialized policy file is NOT itself persisted original binding",
+    "author": "same existing Chart deployment controller policy; lease gets typed read-only captured projection and authentic receipt, not editable task/controller index",
+    "firstCapture": "before ensureFinalizer/namespace/RBAC/credential/exposure/status business mutations and before new Ready/Product admission; CAS metadata.resourceVersion + UID/generation + initial immutable spec digest + original delivery policy digest/ref. Current ensureFinalizer happens before validateLeaseSpec and there is no epoch carrier.",
+    "requiredTuple": {
+      "schemaVersion": "dlv-controller-policy-epoch.v1",
+      "leaseIdentity": [
+        "lease API group/version/plural",
+        "controller namespaceUID",
+        "lease name/UID/generation",
+        "original CreationTimestamp UTC",
+        "initial immutable leaseSpecDigest plus initial fullSpecDigest; exposure/purpose changes separately CAS fenced"
+      ],
+      "authorIdentity": [
+        "immutable sourceRevision/config compiler/profile settings digest, never token/privatekey bytes",
+        "original authenticated deployment/build/OCI/Go/stdlib receipt references; parent originalModule/grant/cleanup carrier OPEN"
+      ],
+      "initialLeasePolicy": [
+        "explicit ttlSeconds if present else exact A default7200",
+        "A max86400 clamp and validation snapshot",
+        "persist original absolute deadline and calendar check",
+        "A namespace prefix/access/sourceSecret allowed selection/finalizer/Role names"
+      ],
+      "runtimeAuthority": [
+        "A canonical API origin/cluster identity/namespaceUID",
+        "A controller SA UID/Role/RBAC/TokenReview/secret-selector provider+grant receipt references, not arbitrary authored string assertions",
+        "CA trust set revision loaded once; rotating token provider identity/issuer/audience/revision validated within authorized original lineage",
+        "A Ready producer/audience TLS-provider, Product producer/audience/issuer/public-key/actor roster reference"
+      ],
+      "lifetimeState": [
+        "original namespace/resource UIDs/finalizers/credential selectors and exposure fences recorded when effects occur",
+        "Ready request exact raw requestDigest/readyAt/retention/schema-version/expiry/receipt preserved",
+        "Product decisions ordered receipt revision/previousExpiry/expiry and original issuer/key lineage",
+        "cleanup attempt original ID/start/deadline/UID-preconditions and mutation uncertainty"
+      ]
+    },
+    "writeOrdering": [
+      "strict policy+typed aliases+selected real image/tool/API/provider/grant prerequisites validated before listener/controller business effects",
+      "new source lease with no effects -> CAS epoch once, readback exact equality; CAS409 refetch sameUID/spec, return original if identical else conflict; missingreadback -> uncertain no namespace/RBAC effect",
+      "all later reconcile/admission/replay/cleanup resolve stored epoch and verify authentic allowed grant lineage, never latestdefault/max/access/issuer/API fallback",
+      "B new leases/admissions may select B; old A lease and original cleanup remain A-authorized, observational process budgets can fail unavailable but cannot extend deadline/authorize new effects",
+      "rotation uses explicitly authenticated original provider lineage and revocation readback; failed/unknown access rejects and preserves uncertainty, no bypass"
+    ],
+    "legacyMigration": {
+      "mode": "explicit C1 scoped maintenance migration before C3 policy changes; requires actual current API/CRD stored object backups/readback/operator grant; NOT run",
+      "inputs": [
+        "exact UID/RV/generation/CreationTimestamp/namespaceUID/finalizers/spec/status/readiness/product receipts",
+        "authentic archived original A profile/config/build/author/grant/provider identity at first provision; not currentB, filename, equal numeric default, latesttag or unverified original status expiry"
+      ],
+      "ordinaryLease": "recover authentic original default7200/max86400 or explicit task ttl plus originalmax from A receipt; validate timestamp/calendar; preserve original expiration, do not infer default from current process. Existing status.expiresAt alone is not authenticated policy provenance",
+      "readyV1": "historical schema-v1 absentretention fixed604800 only if validstoredReady UID/digest/readyAt/exactexpected expiry; persist v2 explicit604800 without changing requestDigest/readyAt/expiry/receipt/exposure owner. Current function shares operationaldefault; target separates historicalconst. Invalidready state quarantine no TTL fallback",
+      "readyV2": "exact stored explicitretention validated; preserve original expiry including signed Product receipt chain, no defaultB reinterpretation",
+      "missingOriginal": "POLICY_EPOCH_UNRECOVERABLE: deny provisioning/admission/destructive cleanup and mark controlled uncertainty; no fabricated A/G/currentwriter. Maintenance remediation separately requires authenticated original authority and reviewed plan, not inference fromnewprofile",
+      "concurrency": "CAS UID/RV/generation+ready/product/exposure state; verify exact readback; crash afterpersist before response replay oldepoch; conflictingstored digest refuses, no rollback overwrite; deletion preconditions actual original UID+RV"
+    },
+    "currentCRD": "newstatus.deliveryPolicyEpoch schema absent; current native CRD rejects/prunes/ignores according actual deployedAPI validation; no current persisted capability claimed",
+    "globalOpen": "universal parent originalModule/task-operator carrier/grant/cleanup schema and acceptance remain OPEN, explicitly no fabricated IDs or general alias; local per-lease proposal does not close parent contract"
+  },
+  "futureCases": [
+    {
+      "id": "DLV-CONTROLLER-RE-POSITIVE-A",
+      "inputs": {
+        "profile": {
+          "path": "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/A.json",
+          "sha256": "f0f06e5ff1ae1fd60e95b5458fc18d1e9201c05c276120a95cc22637b0fc4d5f",
+          "scope": "complete proposed controller policy+typed read-only native/provider/CMP fixture declarations, not native valid/live grants or capacity proof"
+        },
+        "priorState": "nonempty A originalepoch and a new A admission",
+        "nativeFixture": "measured full lease JSON stdout+stderr < readonly CMP max; array sentinel fits, all five API lists bounded"
+      },
+      "firstBoundary": "real strict loader then newController/kube/native handlers",
+      "oracle": "actual recorded policy fields/CA-provider/principal/API/lease-CAS outputs; zero wrong-writer ENV; no acceptance from schema parse",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-POSITIVE-B",
+      "inputs": {
+        "profile": {
+          "path": "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/B.json",
+          "sha256": "bbc6325e1a443ebe28319a1e9a6c666b01915fd5305a7e28485e0f1f298f6de9",
+          "scope": "complete proposed controller policy+typed read-only native/provider/CMP fixture declarations, not native valid/live grants or capacity proof"
+        },
+        "priorState": "nonempty A originalepoch and a new B admission",
+        "nativeFixture": "measured full lease JSON stdout+stderr < readonly CMP max; array sentinel fits, all five API lists bounded"
+      },
+      "firstBoundary": "real strict loader then newController/kube/native handlers",
+      "oracle": "actual recorded policy fields/CA-provider/principal/API/lease-CAS outputs; zero wrong-writer ENV; no acceptance from schema parse",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-RESPONSE-SUCCESS",
+      "inputs": {
+        "profile": "A",
+        "status": 200,
+        "bodyBytes": [
+          8388607,
+          8388608,
+          8388609
+        ],
+        "encoding": "chunked AND compression/unknownContentLength variants",
+        "out": "typed lease"
+      },
+      "firstBoundary": "kube body bound before JSON/error parsing",
+      "oracle": "<=bound complete bytes + typed result; bound+1 closes and API_RESPONSE_LIMIT; mutating Do uncertain not falsefailed/noeffect; no sensitive body logs",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-RESPONSE-ERROR",
+      "inputs": {
+        "profile": "A",
+        "status": 403,
+        "bodyBytes": [
+          8388607,
+          8388608,
+          8388609
+        ],
+        "encoding": "chunked AND compression/unknownContentLength variants",
+        "out": "typed lease"
+      },
+      "firstBoundary": "kube body bound before JSON/error parsing",
+      "oracle": "<=bound complete bytes + typed result; bound+1 closes and API_RESPONSE_LIMIT; mutating Do uncertain not falsefailed/noeffect; no sensitive body logs",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-RESPONSE-OUT-NIL",
+      "inputs": {
+        "profile": "A",
+        "status": 200,
+        "bodyBytes": [
+          8388607,
+          8388608,
+          8388609
+        ],
+        "encoding": "chunked AND compression/unknownContentLength variants",
+        "out": null
+      },
+      "firstBoundary": "kube body bound before JSON/error parsing",
+      "oracle": "<=bound complete bytes + typed result; bound+1 closes and API_RESPONSE_LIMIT; mutating Do uncertain not falsefailed/noeffect; no sensitive body logs",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-REQUEST-BOUND",
+      "inputs": {
+        "profile": "A",
+        "encodedBytes": [
+          4194303,
+          4194304,
+          4194305
+        ],
+        "object": "actual status patch and TokenReview payload synthetic private token memory-only"
+      },
+      "firstBoundary": "bounded request serializer before Do",
+      "oracle": "native limit+1 zero HTTP requests; <=bound sends exact bytes; allocation budget observer separate from encoded cap",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-DIAGNOSTIC-REDACTION",
+      "inputs": {
+        "profile": "A",
+        "status": [
+          403,
+          404,
+          409,
+          500
+        ],
+        "body": "synthetic token/private sentinel plus oversized/malformed/nonUTF8 Status.message"
+      },
+      "firstBoundary": "response body cap then redacted API error/status/log",
+      "oracle": "no sentinel bytes/hash in logs/status, bounded UTF8 diagnostic <=1024; complete404/409 typed status preserved; overlimit is not synthesized404/409",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-COMPACT-NOT-WHOLE",
+      "inputs": {
+        "profile": "A",
+        "findingsArrayBytes": 65536,
+        "nativeLease": "managedFields/metadata/prettyjson overhead and stderr measured; combined output CMP max and max+1"
+      },
+      "firstBoundary": "actual kubectl stdout+stderr collector",
+      "oracle": "array fits does not grant wholeoutput pass; full overflow KUBERNETES_RUNTIME_SECURITY_OUTPUT_LIMIT_EXCEEDED before JSON.parse, child abort preserved no false clean; source typed error already exists",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-SENTINEL-MIN",
+      "inputs": {
+        "profile": "A",
+        "maximumFindings": [
+          1,
+          0
+        ],
+        "arrayBudget": "exact selected Go marshal max-supported omittedtotal sentinel+[] then onebyte less"
+      },
+      "firstBoundary": "strict policy correlation before boundedRuntimeSecurityFindings",
+      "oracle": "valid cap keeps critical last sentinel and total-omitted=len-1/digest; short/count0 rejected before panic; runtime aggregate full findings buffer separate",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-MALFORMED-NUMERIC",
+      "inputs": {
+        "profile": "A",
+        "mutations": [
+          "TTL string7200",
+          "findingsBytes string65536",
+          "poll0",
+          "defaultTTL>max",
+          "seconds MaxInt64/time.Second+1",
+          "missing/unknown/old equal policyENV"
+        ]
+      },
+      "firstBoundary": "strict loader before token/CA/listener/API",
+      "oracle": "all malformedfields reject zero effects; exact prior faulty generic string targetdomain must not pass regression",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-CLEANUP-DEADLINE",
+      "inputs": {
+        "profile": "A",
+        "persistedAttempt": "t0 deadline t0+120s",
+        "APIResponses": "GET stalls59s then exists then404 after deadline",
+        "restartAt": "t0+119s",
+        "Bbudget": 180
+      },
+      "firstBoundary": "original attempt resume/cancel context/cancellable wait",
+      "oracle": "doesnot renew to now+180; GET/sleep boundedremaining, sameUID/attempt; timeout uncertainty nofinalizer removal until authoritative original namespace404",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-LOOP-FRESHNESS",
+      "inputs": {
+        "profiles": [
+          "A",
+          "B"
+        ],
+        "APILists": "five serial varied latency/map order",
+        "snapshotPhases": [
+          "Observed",
+          "Unavailable"
+        ],
+        "clientAges": "readonly CMP actualmaxAge/skew",
+        "request": "sameinvoker timeout payload0/negative/max"
+      },
+      "firstBoundary": "Go source refresh caller and actual CMP invoke loop separately",
+      "oracle": "source Unavailable no refresh logged as counterexample; overdue/future/absent/invalidaccounting -> notclean; no promisedcyclebound from3000ms poll; Bprocessobserver changes notlease expiry",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-AUTH-SCOPES",
+      "inputs": {
+        "profile": "A",
+        "AuthorizationBytes": [
+          16383,
+          16384,
+          16385
+        ],
+        "requestRoutes": [
+          "Ready",
+          "Product"
+        ],
+        "body": "valid and >16384 bytes",
+        "tokenReview": "authenticated wrongprincipal/audience and providerrotation"
+      },
+      "firstBoundary": "authenticateTransport BEFORE bodyread for both routes",
+      "oracle": "valid exactprincipal/audience; sourceauth cap shared notbody cap; oversized denies beforeTokenReview; malformed body still may trigger priorTokenReview, not zeroAPI overall",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-SLOW-TLS-BODY",
+      "inputs": {
+        "profile": "A",
+        "delays": "TLS/header/body/handler/response boundary justbefore/after each selecteddeadline",
+        "mutation": "PATCH committed but disconnect/context/write deadline before reply"
+      },
+      "firstBoundary": "selected Go net/http/TLS plus actualhandler/bodyreader",
+      "oracle": "observe each real socket/context boundary; no invented cumulative scalar theorem; committed-but-response-lost is uncertain, replay verifies original CAS not extra grant/newdeadline",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-READY-AGE",
+      "inputs": {
+        "profile": "A",
+        "now": "2030-01-01T00:10:00Z",
+        "observedOffsetsSeconds": [
+          -300,
+          -301,
+          1
+        ],
+        "sourceVerificationDelay": 1
+      },
+      "firstBoundary": "commitDemoReady pre/post verify",
+      "oracle": "exact<=300 before and after; secondcheck stale/expired returns source code, no input timestamp reset; retention separate",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-PRODUCT-VALIDITY",
+      "inputs": {
+        "profile": "A",
+        "signedIntervalsSeconds": [
+          0,
+          120,
+          300,
+          301
+        ],
+        "Bmax": 120,
+        "storedAReceipt": "previously accepted originalA 300s payload",
+        "replay": "same exact envelope vs changed decisionid/payload"
+      },
+      "firstBoundary": "verifyProduct/commitProduct/receipt replay",
+      "oracle": "strictUTC and originalissuer A captured; B cannot reinterpret originalA receipt/signature; newB300s denies. Actual storedreceipt lookup may occur before signature for replay: fixture records source order and target requires authenticated original lineage, no fake humanidentity",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-EPOCH-ABSENTTTL",
+      "inputs": {
+        "originalProfile": "A",
+        "nextProcess": "B",
+        "legacyMode": "absentTTL",
+        "legacyReceipt": "authentic immutable A config/build/grant/API ref",
+        "creation": "2030-01-01T00:00:00Z",
+        "originalDeadline": "exact A creation+originalclampedTTL or persisted Ready/Product chain"
+      },
+      "firstBoundary": "migration original epoch CAS then actualreconcile/expiry/cleanup",
+      "oracle": "readback UID/RV/spec/status epoch stable; Bnewadmission B but activeA prefix/access/max/default/sourceSecret/finalizer/issuer/deadline unchanged; ReadyV1 uses604800 despiteB1209600",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-EPOCH-EXPLICITTTL",
+      "inputs": {
+        "originalProfile": "A",
+        "nextProcess": "B",
+        "legacyMode": "explicitTTL",
+        "legacyReceipt": "authentic immutable A config/build/grant/API ref",
+        "creation": "2030-01-01T00:00:00Z",
+        "originalDeadline": "exact A creation+originalclampedTTL or persisted Ready/Product chain"
+      },
+      "firstBoundary": "migration original epoch CAS then actualreconcile/expiry/cleanup",
+      "oracle": "readback UID/RV/spec/status epoch stable; Bnewadmission B but activeA prefix/access/max/default/sourceSecret/finalizer/issuer/deadline unchanged; ReadyV1 uses604800 despiteB1209600",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-EPOCH-READYV1",
+      "inputs": {
+        "originalProfile": "A",
+        "nextProcess": "B",
+        "legacyMode": "readyV1",
+        "legacyReceipt": "authentic immutable A config/build/grant/API ref",
+        "creation": "2030-01-01T00:00:00Z",
+        "originalDeadline": "exact A creation+originalclampedTTL or persisted Ready/Product chain"
+      },
+      "firstBoundary": "migration original epoch CAS then actualreconcile/expiry/cleanup",
+      "oracle": "readback UID/RV/spec/status epoch stable; Bnewadmission B but activeA prefix/access/max/default/sourceSecret/finalizer/issuer/deadline unchanged; ReadyV1 uses604800 despiteB1209600",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-EPOCH-READYV2",
+      "inputs": {
+        "originalProfile": "A",
+        "nextProcess": "B",
+        "legacyMode": "readyV2",
+        "legacyReceipt": "authentic immutable A config/build/grant/API ref",
+        "creation": "2030-01-01T00:00:00Z",
+        "originalDeadline": "exact A creation+originalclampedTTL or persisted Ready/Product chain"
+      },
+      "firstBoundary": "migration original epoch CAS then actualreconcile/expiry/cleanup",
+      "oracle": "readback UID/RV/spec/status epoch stable; Bnewadmission B but activeA prefix/access/max/default/sourceSecret/finalizer/issuer/deadline unchanged; ReadyV1 uses604800 despiteB1209600",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-EPOCH-PRODUCTEXTENDED",
+      "inputs": {
+        "originalProfile": "A",
+        "nextProcess": "B",
+        "legacyMode": "productExtended",
+        "legacyReceipt": "authentic immutable A config/build/grant/API ref",
+        "creation": "2030-01-01T00:00:00Z",
+        "originalDeadline": "exact A creation+originalclampedTTL or persisted Ready/Product chain"
+      },
+      "firstBoundary": "migration original epoch CAS then actualreconcile/expiry/cleanup",
+      "oracle": "readback UID/RV/spec/status epoch stable; Bnewadmission B but activeA prefix/access/max/default/sourceSecret/finalizer/issuer/deadline unchanged; ReadyV1 uses604800 despiteB1209600",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-EPOCH-DELETING",
+      "inputs": {
+        "originalProfile": "A",
+        "nextProcess": "B",
+        "legacyMode": "deleting",
+        "legacyReceipt": "authentic immutable A config/build/grant/API ref",
+        "creation": "2030-01-01T00:00:00Z",
+        "originalDeadline": "exact A creation+originalclampedTTL or persisted Ready/Product chain"
+      },
+      "firstBoundary": "migration original epoch CAS then actualreconcile/expiry/cleanup",
+      "oracle": "readback UID/RV/spec/status epoch stable; Bnewadmission B but activeA prefix/access/max/default/sourceSecret/finalizer/issuer/deadline unchanged; ReadyV1 uses604800 despiteB1209600",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-MIGRATION-NO-ORIGINAL-RECEIPT",
+      "inputs": {
+        "original": "nonemptyAlease",
+        "fault": "no-original-receipt",
+        "newProfile": "B"
+      },
+      "firstBoundary": "epoch auth/CAS/readback before destructive/provision/admission effects",
+      "oracle": "sameUID exactretry returnsoriginalepoch only if verified; uncertain/unrecoverable/revoked denies; nevernow/defaultB/latestissuer/cleanupsuccess. No universal grant/cleanup alias invented",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-MIGRATION-INVALID-CREATEDAT",
+      "inputs": {
+        "original": "nonemptyAlease",
+        "fault": "invalid-createdAt",
+        "newProfile": "B"
+      },
+      "firstBoundary": "epoch auth/CAS/readback before destructive/provision/admission effects",
+      "oracle": "sameUID exactretry returnsoriginalepoch only if verified; uncertain/unrecoverable/revoked denies; nevernow/defaultB/latestissuer/cleanupsuccess. No universal grant/cleanup alias invented",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-MIGRATION-CORRUPT-READYDEADLINE",
+      "inputs": {
+        "original": "nonemptyAlease",
+        "fault": "corrupt-readydeadline",
+        "newProfile": "B"
+      },
+      "firstBoundary": "epoch auth/CAS/readback before destructive/provision/admission effects",
+      "oracle": "sameUID exactretry returnsoriginalepoch only if verified; uncertain/unrecoverable/revoked denies; nevernow/defaultB/latestissuer/cleanupsuccess. No universal grant/cleanup alias invented",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-MIGRATION-CHANGEDUID",
+      "inputs": {
+        "original": "nonemptyAlease",
+        "fault": "changedUID",
+        "newProfile": "B"
+      },
+      "firstBoundary": "epoch auth/CAS/readback before destructive/provision/admission effects",
+      "oracle": "sameUID exactretry returnsoriginalepoch only if verified; uncertain/unrecoverable/revoked denies; nevernow/defaultB/latestissuer/cleanupsuccess. No universal grant/cleanup alias invented",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-MIGRATION-CAS409",
+      "inputs": {
+        "original": "nonemptyAlease",
+        "fault": "CAS409",
+        "newProfile": "B"
+      },
+      "firstBoundary": "epoch auth/CAS/readback before destructive/provision/admission effects",
+      "oracle": "sameUID exactretry returnsoriginalepoch only if verified; uncertain/unrecoverable/revoked denies; nevernow/defaultB/latestissuer/cleanupsuccess. No universal grant/cleanup alias invented",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-MIGRATION-CRASH-AFTER-PATCH",
+      "inputs": {
+        "original": "nonemptyAlease",
+        "fault": "crash-after-patch",
+        "newProfile": "B"
+      },
+      "firstBoundary": "epoch auth/CAS/readback before destructive/provision/admission effects",
+      "oracle": "sameUID exactretry returnsoriginalepoch only if verified; uncertain/unrecoverable/revoked denies; nevernow/defaultB/latestissuer/cleanupsuccess. No universal grant/cleanup alias invented",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-MIGRATION-READBACK-UNAVAILABLE",
+      "inputs": {
+        "original": "nonemptyAlease",
+        "fault": "readback-unavailable",
+        "newProfile": "B"
+      },
+      "firstBoundary": "epoch auth/CAS/readback before destructive/provision/admission effects",
+      "oracle": "sameUID exactretry returnsoriginalepoch only if verified; uncertain/unrecoverable/revoked denies; nevernow/defaultB/latestissuer/cleanupsuccess. No universal grant/cleanup alias invented",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-MIGRATION-REVOKED-A-GRANT",
+      "inputs": {
+        "original": "nonemptyAlease",
+        "fault": "revoked-A-grant",
+        "newProfile": "B"
+      },
+      "firstBoundary": "epoch auth/CAS/readback before destructive/provision/admission effects",
+      "oracle": "sameUID exactretry returnsoriginalepoch only if verified; uncertain/unrecoverable/revoked denies; nevernow/defaultB/latestissuer/cleanupsuccess. No universal grant/cleanup alias invented",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-MIGRATION-LATEST-B-ONLY",
+      "inputs": {
+        "original": "nonemptyAlease",
+        "fault": "latest-B-only",
+        "newProfile": "B"
+      },
+      "firstBoundary": "epoch auth/CAS/readback before destructive/provision/admission effects",
+      "oracle": "sameUID exactretry returnsoriginalepoch only if verified; uncertain/unrecoverable/revoked denies; nevernow/defaultB/latestissuer/cleanupsuccess. No universal grant/cleanup alias invented",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    },
+    {
+      "id": "DLV-CONTROLLER-RE-SHARED-AUTHORITY",
+      "inputs": {
+        "profiles": [
+          "A",
+          "B"
+        ],
+        "mutations": [
+          "group different",
+          "version different",
+          "CMPmaxOutput writer under settings",
+          "equal numeric5 scope substitution"
+        ]
+      },
+      "firstBoundary": "readonly alias resolution and strictprofile before effects",
+      "oracle": "only exact sole CMP shared group/version/output/poll/age IDs, independent Go observer fields stayseparate; equalvalues cannot secondauthor",
+      "result": "not-run",
+      "prerequisites": "same exact authentic selected Go controller build, isolated HTTPS/API/CRD/TokenReview/TLS/provider fixture + original A receipts; no live/host proof, setup failure not semantic rejection"
+    }
+  ],
+  "futureInvocation": {
+    "argv": [
+      "env",
+      "CONFIG_ACCEPTANCE_CASE_ID=DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT",
+      "CONFIG_ACCEPTANCE_CONTROLLER_SPEC=docs/review/evidence/config-acceptance/delivery/controller-response-epoch-contracts-6606af9-20261013.json",
+      "node",
+      "--test",
+      "--test-name-pattern=^DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT$",
+      "tests/verification/config/delivery-controller-policy.test.mts"
+    ],
+    "environment": {
+      "controllerProfiles": "exact A/B files with SHA refs",
+      "requiredArtifactRoot": "isolated future test-owned output, no credential bytes/hash/log",
+      "nativeInvocation": [
+        "/app/buster-namespace-controller",
+        "--config",
+        "/etc/kubeclaw/buster-namespace-controller/policy.json"
+      ],
+      "unsupportedCurrent": "test harness and managedloader/schema/mount/configflag/epoch CRD are absent; future only after approval"
+    },
+    "result": "not-run"
+  },
+  "producerDeliveryTraces": [
+    {
+      "source": "versions.json",
+      "coordinates": [
+        "buildArgs.CONTROLLER_GO_BASE",
+        "buildArgs.CONTROLLER_RUNTIME_BASE"
+      ],
+      "class": "sole version author, generated Docker ARG aliases",
+      "reader": "scripts/versions.mjs deriveBuildArgs/global generated defaults -> docker/Dockerfile.namespace-controller; no per-image controller override today unless actualmanifest supplies",
+      "activation": "V imagebuild, not processM policy; OCI installed digest separately required"
+    },
+    {
+      "source": "docker/Dockerfile.namespace-controller",
+      "coordinates": [
+        "COPY go.mod",
+        "COPY cmd/buster-namespace-controller",
+        "CGO_ENABLED=0 GOOS=linux GOARCH=amd64",
+        "ENTRYPOINT /app/buster-namespace-controller",
+        "USER nonroot:nonroot"
+      ],
+      "class": "immutable build/input/ABI/entrypoint projections; amd64 hardcoded support not multiarch claim",
+      "reader": "actualGo build/noGo testcommand, runtimebinary distroless; policyFile schema/mount/argv currentlyabsent",
+      "activation": "new OCI artifact, verifyGo build-id/module/source/stdlib/architecture before businessentry; KUBECLAW_BUILD_REVISION workflowARG currently no ARG/ENV consumer in thisDockerfile"
+    },
+    {
+      "source": "scripts/check-built-runtime-image.sh",
+      "coordinates": [
+        "namespace-controller|archviewer|prism-ingestion branch"
+      ],
+      "class": "current image existence inspection only",
+      "reader": "docker image inspect; comment claims buildacceptancegates but controllerDockerfile onlygo build, no tests or nativeprotocolcase",
+      "activation": "inspect result NOT fieldpolicy/auth/lease/installedGo/nativeacceptance"
+    },
+    {
+      "source": ".github/workflows/role-images.yaml",
+      "coordinates": [
+        "inputs runtime-inputs",
+        "matrix namespace-controller",
+        "context .",
+        "Dockerfile namespace-controller",
+        "buildargs KUBECLAW_BUILD_REVISION",
+        "load true push false",
+        "check-built-runtime-image"
+      ],
+      "class": "current proof workflow/build context and declared imagecheck paths",
+      "reader": "runtime-inputs classification gates build; no explicitplatforms, DockerGOARCHamd64; exactsamebuiltimageinspection notfixture"
+    },
+    {
+      "source": ".github/workflows/build-images.yaml",
+      "coordinates": [
+        "detect inputdigest",
+        "matrix namespace-controller",
+        "push true OCI digestreceipt",
+        "source SHA ARG",
+        "artifactverification"
+      ],
+      "class": "currentCI release/image evidence producer",
+      "reader": "input filters cmd/go/docker/version image vsChart deployment; workflowname/policyfile changes may onlydeployment-filter but notimage; newproposal schema/materializer mustbe added exactsourceStage andtests afterapproval",
+      "activation": "selected immutable release receipts sourceRunId/attempt and release sourceconfigverification, notprofile/harness installed proof"
+    },
+    {
+      "source": "scripts/updates/runtime-inputs.mjs",
+      "coordinates": [
+        "isImageInput cmd/go/docker/versions",
+        "versions infrastructure excluded projection",
+        "isDeploymentInput charts/kubeclaw,my-values roles,scriptsupdates/build-images"
+      ],
+      "class": "source-derived CI change-selection policy, notauthor for controller numericlimits",
+      "reader": "git ls-tree exact selectedsource digest; manual/missingbefore triggers; runtime role image excludes manyagentTs intentionally bundle; controllercmd alwaysimageinput"
+    },
+    {
+      "source": "scripts/updates/materialize-release.mjs",
+      "coordinates": [
+        "runtime nova,buster,prism-agent,prism",
+        "my-values/<role>-values.yaml",
+        "controller image replaced only if existing nestedimage object",
+        "releases/values/buster.yaml immutablegenerated"
+      ],
+      "class": "actualsource config and read-only imageprojection seam; proposedChartprofiles notcurrentimplementedauthor",
+      "reader": "selectedcode/release verify config thensourcevalues; missingcontroller image invalues wouldskipbinding notguarantee generatedoverride; profilecompiler must produceflattenedcoherent imageobject"
+    },
+    {
+      "source": "scripts/deploy.sh",
+      "coordinates": [
+        "BUSTER_CONTROLLER_IMAGE_REPOSITORY before NAMESPACE_CONTROLLER_IMAGE_REPOSITORY",
+        "BUSTER_CONTROLLER_IMAGE_TAG before NAMESPACE_CONTROLLER_IMAGE_TAG",
+        "anytag rejects selecteddigest release",
+        "privatevalues/overridefile/--set-json resources/LiteLLM set",
+        "render_selected_role thennativepreflight androllout"
+      ],
+      "class": "actuallegacy competing inputs/current precedence; proposedstrictselectedprofile rejects evenequal legacywriters before Helm",
+      "reader": "append_image_override_file sets repo/tag; actualtagrejection before effect; repository stilloverridesgeneratedselection potentially leavingdigest; notnewversionauthor",
+      "activation": "H deployment service with originalactiveAcompatibility/migration; source script localhost ENVnotproof ofphysicalhostgrant"
+    },
+    {
+      "source": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "coordinates": [
+        "controller ENV TTL/poll/prefix/access/sourceSecrets",
+        "SA/RBAC/namespace/ReadyTLSSecret/Productpublictrust",
+        "automountServiceAccountToken true",
+        "controllerimage digest/tag choice"
+      ],
+      "class": "sole current deployment-owned knobs+typedreadOnly version/component/providers; no secondwriter",
+      "reader": "Helm templates -> Pod -> newController; constructorreadsnamespace/token/CA before policyloadercurrently nonexistent",
+      "activation": "fullflattenedproposed profile plusC3managedpolicyReadonlymount/--config/unknownlegacycheck mustbeimplemented, no currentconfigflag success"
+    }
+  ],
+  "sourceDigests": {
+    "cmd/buster-namespace-controller/main.go": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+    "cmd/buster-namespace-controller/demo-readiness.go": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+    "cmd/buster-namespace-controller/demo-readiness-lifecycle.go": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+    "cmd/buster-namespace-controller/demo-retention.go": "4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7",
+    "cmd/buster-namespace-controller/demo-product.go": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+    "cmd/buster-namespace-controller/demo-readiness-sources.go": "d1aca629a3c5c739e84a9116a95af6d0a0bbc7b0782cc0b0ee680a004f621628",
+    "cmd/buster-namespace-controller/rbac.go": "8269bc44ca1cfec92d5eefa4a9f6915cbd22f31ac6b3a91657829ddbe5542086",
+    "charts/kubeclaw/values.yaml": "e5bcd61acfd50636130f3d4ebbfb6377d14762ae7f9dac6c8da37caff70436b1",
+    "charts/kubeclaw/templates/buster-namespace-controller.yaml": "e003c7bf4eb938988391d9af0c955b2338cef29781e1d8e932bdcc753ee50d13",
+    "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+    "skills/buster/engine/test-gates/kubernetes-runtime-security.ts": "de1b0f70e5590eedf9cf01f68d797c34912a0778f0d2a91de2b475673573e004",
+    "skills/common/plugin-runtime/foundation/config/buster-cluster-invokers.ts": "00196a2592b3c32eaf156a74993e58a9aecfa361d577577184d2fd14f6d1f057",
+    "docker/Dockerfile.namespace-controller": "7d11f9ddce2ba3c5083645531a59b298a1996743306fbadb7f3b47819ab68384",
+    "go.mod": "cfc02fe76ba47aadcb622e3d6fc7acaba6358b8d5d8a950b7dc5d67bb2d5c91f",
+    "scripts/deploy.sh": "c90cc9c082b3adba89c458a9e28853afa77682a6c7066a7641c70aac749d0960",
+    "scripts/check-built-runtime-image.sh": "c508667b9d280ba10e4bacd04e2727ebc0830b8843d3c1acdc1e95e4a44e81d4",
+    "scripts/updates/runtime-inputs.mjs": "d846f387b74d9cd71cb7b4515eb99da238fb1ce54b072525a075ec0ed299232a",
+    "scripts/updates/materialize-release.mjs": "ad026a32e4e9cad21ab3f2f0e87fcafe6c5d563f5133191f70b4c5ef4c925475",
+    "scripts/updates/release-images.mjs": "6c9afb34ba328142af2b086985ceda3313e74a48fac1608dc2271d8f80e47bf5",
+    "scripts/updates/deployment-release.mjs": "b7c0d0f8ea9d1fc216817f5974b91b26b43578a59fc5e02aaeba04eaeb09ebc6",
+    ".github/workflows/build-images.yaml": "dafeb624d112a7c087057d6036ddf940012aafcdf346de08d7a9736867cdcedc",
+    ".github/workflows/role-images.yaml": "b2756f5eec9f1248e1eb9926113ac28a7614d2868f5fc9004678f75ecdff99d8",
+    "scripts/versions.mjs": "a236f2da59fe129fd6b966f67635d1dfbd6bc4699001706fe564503436bcfc00",
+    "versions.json": "40f0dc191f066bdc5011814247c4421d30b911ceaad2272c8f7895ec6b5c382d"
+  },
+  "remainingExactGaps": [
+    "parent universal originalModule/M/task-operator/grant/cleanup carrier notclosed; authentic originalA receipt andgrants requiredfor localepoch",
+    "actual selected Go compiler/stdlib/OCI/runtime/API/CRD/provider/SAUID/grants/physicalbudget/metadata/output measurements futurefixtureinputs, notnativeproof fromchosenfilenames",
+    "full chartsdeployment schema/root/sourceStage/compiler/materializer/CI/package/roles immutablebinding proposal remainsunimplemented/unreviewed; other279missingdomains remainexplicitbacklog",
+    "controller unbounded full inputlists/findings accumulation and concurrentserver/request aggregate memory notsolved byper-response/perarraycap; separate truthful futurememory/reservation inputpolicy question",
+    "nativeReady/Product response writer errors currentlyignored; proposalneeds realcommituncertainty/readback/replay observer\u2014not genericstatusPASS"
+  ]
+}

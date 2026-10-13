@@ -75,3 +75,6 @@ independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-a
 independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/frozen/skills/common/plugin-runtime/foundation/observability/durable-records.ts -whitespace
 independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-corrections-20261013/outbox-oversized-2049.bytes -whitespace
 independent-checkpoint6-integration-recheck/inputs/docs/review/evidence/config-acceptance/independent-core-r06-recheck-20261013/replay-root/docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/states/oversized-history-oversized-original.bytes -whitespace
+
+# Exact unchanged Helm-render observation; preserve original bytes.
+delivery/chart-topology-nova-A-6606af9-20261013-attempt1.yaml -whitespace

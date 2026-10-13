@@ -1,0 +1,340 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/check.mjs",
+  "node": "v24.21.0",
+  "results": [
+    {
+      "setting": "RT-8750f030bf25ecae",
+      "field": "storageRoot",
+      "A": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "B": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 2097152,
+        "maximumArtifactBytes": 2097152,
+        "maximumBundleBytes": 131072
+      },
+      "currentMissingRejected": {
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "currentNullRejected": {
+        "storageRoot": null,
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "owningUnknownRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536,
+        "unapprovedKnob": true
+      },
+      "directConstructorUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Actualexportedconfiguration constructor/ready/shutdown +owningschema only; no sourcefilesystem/readRunEvidence/genuineartifact/export/role/grant effect acceptance"
+    },
+    {
+      "setting": "RT-96698b5568aba94d",
+      "field": "orchestratorIssuerId",
+      "A": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "B": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 2097152,
+        "maximumArtifactBytes": 2097152,
+        "maximumBundleBytes": 131072
+      },
+      "currentMissingRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "currentNullRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": null,
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "owningUnknownRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536,
+        "unapprovedKnob": true
+      },
+      "directConstructorUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Actualexportedconfiguration constructor/ready/shutdown +owningschema only; no sourcefilesystem/readRunEvidence/genuineartifact/export/role/grant effect acceptance"
+    },
+    {
+      "setting": "RT-36accddb567c892f",
+      "field": "maximumJournalBytes",
+      "A": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "B": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 2097152,
+        "maximumArtifactBytes": 2097152,
+        "maximumBundleBytes": 131072
+      },
+      "currentMissingRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "currentNullRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": null,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "owningUnknownRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536,
+        "unapprovedKnob": true
+      },
+      "directConstructorUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Actualexportedconfiguration constructor/ready/shutdown +owningschema only; no sourcefilesystem/readRunEvidence/genuineartifact/export/role/grant effect acceptance"
+    },
+    {
+      "setting": "RT-81d42184c1081430",
+      "field": "maximumArtifactBytes",
+      "A": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "B": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 2097152,
+        "maximumArtifactBytes": 2097152,
+        "maximumBundleBytes": 131072
+      },
+      "currentMissingRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "currentNullRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": null,
+        "maximumBundleBytes": 65536
+      },
+      "owningUnknownRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536,
+        "unapprovedKnob": true
+      },
+      "directConstructorUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Actualexportedconfiguration constructor/ready/shutdown +owningschema only; no sourcefilesystem/readRunEvidence/genuineartifact/export/role/grant effect acceptance"
+    },
+    {
+      "setting": "RT-41d93665317a7d07",
+      "field": "maximumBundleBytes",
+      "A": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536
+      },
+      "B": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 2097152,
+        "maximumArtifactBytes": 2097152,
+        "maximumBundleBytes": 131072
+      },
+      "currentMissingRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576
+      },
+      "currentNullRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": null
+      },
+      "owningUnknownRejected": {
+        "storageRoot": "/fixture/nova/run-state-A",
+        "orchestratorIssuerId": "issuer:original-A",
+        "maximumJournalBytes": 1048576,
+        "maximumArtifactBytes": 1048576,
+        "maximumBundleBytes": 65536,
+        "unapprovedKnob": true
+      },
+      "directConstructorUnknownIgnored": true,
+      "result": "passed",
+      "scope": "Actualexportedconfiguration constructor/ready/shutdown +owningschema only; no sourcefilesystem/readRunEvidence/genuineartifact/export/role/grant effect acceptance"
+    }
+  ],
+  "passed": 5,
+  "failed": 0,
+  "controls": {
+    "actualConstructorEmptyStorageAllowed": true,
+    "owningEmptyStorageRejected": true,
+    "actualConstructorRelativeStorageAllowed": true,
+    "owningUnknownRejectedButDirectIgnored": true,
+    "actualReadRunEvidenceZeroBudgetRejectedBeforeFilesystem": true,
+    "selection": {
+      "runId": "run:fixture",
+      "journalHead": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "snapshotDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "sourceStageId": "impl:fixture",
+      "sourceRevision": "cccccccccccccccccccccccccccccccccccccccc",
+      "artifacts": [
+        {
+          "schemaVersion": "artifact-ref.v2",
+          "artifactId": "artifact:fixture",
+          "namespace": "kubeclaw.implementation-agent",
+          "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "mediaType": "application/json",
+          "sizeBytes": 42,
+          "producer": {
+            "runId": "run:fixture",
+            "stageId": "impl:fixture",
+            "attemptId": "attempt:fixture",
+            "attemptNumber": 1
+          }
+        }
+      ]
+    },
+    "fact": {
+      "evidenceId": "sha256:d76e1d9933ce1d87e1f893174508aa7948bb671b7b049c5b9d8ffdaad4a51c57",
+      "kind": "source",
+      "sourceRevision": "cccccccccccccccccccccccccccccccccccccccc"
+    },
+    "syntheticBundle": {
+      "schemaVersion": "report-source-bundle.v1",
+      "target": {
+        "runId": "run:fixture",
+        "journalHead": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "snapshotDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "sourceStageId": "impl:fixture",
+        "sourceRevision": "cccccccccccccccccccccccccccccccccccccccc"
+      },
+      "pipelineId": "pipeline:fixture",
+      "terminal": "run.succeeded",
+      "eventCount": 1,
+      "effectsHead": null,
+      "stages": [
+        {
+          "stageId": "impl:fixture",
+          "stageType": "kubeclaw.agent.implementation",
+          "status": "succeeded",
+          "attempts": 1
+        }
+      ],
+      "attempts": [],
+      "evidence": [
+        {
+          "evidenceId": "sha256:d76e1d9933ce1d87e1f893174508aa7948bb671b7b049c5b9d8ffdaad4a51c57",
+          "artifact": {
+            "schemaVersion": "artifact-ref.v2",
+            "artifactId": "artifact:fixture",
+            "namespace": "kubeclaw.implementation-agent",
+            "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "mediaType": "application/json",
+            "sizeBytes": 42,
+            "producer": {
+              "runId": "run:fixture",
+              "stageId": "impl:fixture",
+              "attemptId": "attempt:fixture",
+              "attemptNumber": 1
+            }
+          }
+        }
+      ],
+      "facts": [
+        {
+          "evidenceId": "sha256:d76e1d9933ce1d87e1f893174508aa7948bb671b7b049c5b9d8ffdaad4a51c57",
+          "kind": "source",
+          "sourceRevision": "cccccccccccccccccccccccccccccccccccccccc"
+        }
+      ],
+      "coverage": {
+        "selectedArtifacts": 1,
+        "totalCompletedArtifacts": 1,
+        "omittedArtifacts": [],
+        "omittedContentClasses": [
+          "raw-logs",
+          "checkpoint-only-artifacts",
+          "prompts",
+          "registry-configuration",
+          "effect-payloads",
+          "credentials",
+          "unstructured-agent-claims"
+        ],
+        "omissionEffect": "not-exported-in-this-bundle; original-records-retained"
+      },
+      "narrativeStatus": "draft-not-entailment-verified",
+      "digest": "sha256:faef2bd841c17992888646a59f20fa93310e82bfe62e44c3fe420d6529a9aecb"
+    },
+    "pureHelperScope": "Projection/ref/source facts are synthetic structural helper inputs, NOT verifiedrealrun/source/artifact/lifecycle proof; no aggregatebudget or realartifact acceptance inferred",
+    "capabilityCalls": 0
+  },
+  "sourceDigests": {
+    "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+    "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+    "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530",
+    "skills/nova/plugins/pipeline-review/plugin.json": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+    "skills/nova/core/state/read-run-evidence.ts": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+    "skills/nova/core/execution/engine-snapshots.ts": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+    "skills/nova/core/execution/engine-runtime.ts": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613",
+    "skills/nova/core/execution/adapter-startup.ts": "ec0ee03f9b740865da79e9ba558fc9447f0354ecd14b4e36eedc5320edac34f0",
+    "skills/nova/core/lifecycle/recovery.ts": "5095a92c809f1e19524687d44e227585edaf482a7024dfc41b72f264b28822c8"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/check.mjs": "e5d0bd2fc5d0084e0b72077d690b4b51d2e53eb08db13688300ee5ad81f180a2"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-report-reader-17/contracts.json": "d2959a5ffafcb9c10589ef57646694d1ea3bade9288c7107390ca1ec4d4fca8f",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "scope": "Actualcurrent constructor/schema/exportedpurehelpers andinvalidbudget earlyguard only; protectivecontexttrap0effects. No genuinerunfilesystem/artifact/readonlysource/export/authority/runtime/profile/budget/generation orphysicalAPI acceptance"
+}

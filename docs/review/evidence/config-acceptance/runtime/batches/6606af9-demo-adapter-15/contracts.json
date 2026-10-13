@@ -1,0 +1,437 @@
+{
+  "entries": [
+    {
+      "setting": "RT-3cb22c95b05b00aa",
+      "field": "candidateStageId",
+      "classification": "derived-task-graph-producer-identity-assertion",
+      "current": "Required text<=2048UTF16/no ASCIIcontrols; schema codepointmax differs. candidate/manifest/delivery IDs bind exact producer/run/namespace before reread/content/evidence; delivery/ready ID alsorequestattempt.stageId authorizesdeliver/commit. No independentlegalB underunchanged task; currentparser onlytext shape, graphmembership enforced later at realartifact/request boundary.",
+      "targetDomain": "Generate exactselected immutabletask/source graph stage identity fromsame compiler/CONFIG policy projection, not secondeditableoperatorknob. Requireactualstage membership/provider/schema/run+attempt+artifactowner compatibility; unknown producerrejectbeforebusinessmutations.",
+      "effect": "Fullsamegraphpositive exactexpectedproducer/attempt; actualdifferentproducer/samevalidtext negative reachescorresponding bind/assertRequest reject; no rename counts as independentF-EFFECT. Allstages originalmoduleA owner tuple remains, noglobalprefixmembership.",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+      },
+      "profiles": {
+        "A": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready.token",
+          "caPath": "/fixture/credentials/ready.ca.pem",
+          "stateRoot": "/fixture/state/demo-A",
+          "operatorTarget": "operators-a",
+          "timeoutMs": 1000
+        },
+        "B": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready-b.token",
+          "caPath": "/fixture/credentials/ready-b.ca.pem",
+          "stateRoot": "/fixture/state/demo-B",
+          "operatorTarget": "operators-b",
+          "timeoutMs": 2000
+        }
+      },
+      "productiveCaller": "Registry+AdapterStarter actualdemo activate->configuration->FileDurableRecordStore; AdapterRuntimeinvoke/receipt->assertRequest->bind/read/evidence/verifiedreceipt->commit/post/validateResponse->durableintents/receipts; exactrolegrants/signals/capturedsource differ fromspy substitute.",
+      "activation": "Actualconfigstrings/primitives copiedinto new localconfiguration atactivate; no credentialsfilebytes capture, no I/O duringconstructor. Nova prepare/activate beforepinnedgraph equality stillpresent. Parentfirstlogicalmodule/taskoperator/metadataquota/membership/legacy/crossreader carrierOPEN."
+    },
+    {
+      "setting": "RT-f51b077d37643917",
+      "field": "deliveryStageId",
+      "classification": "derived-task-graph-producer-identity-assertion",
+      "current": "Required text<=2048UTF16/no ASCIIcontrols; schema codepointmax differs. candidate/manifest/delivery IDs bind exact producer/run/namespace before reread/content/evidence; delivery/ready ID alsorequestattempt.stageId authorizesdeliver/commit. No independentlegalB underunchanged task; currentparser onlytext shape, graphmembership enforced later at realartifact/request boundary.",
+      "targetDomain": "Generate exactselected immutabletask/source graph stage identity fromsame compiler/CONFIG policy projection, not secondeditableoperatorknob. Requireactualstage membership/provider/schema/run+attempt+artifactowner compatibility; unknown producerrejectbeforebusinessmutations.",
+      "effect": "Fullsamegraphpositive exactexpectedproducer/attempt; actualdifferentproducer/samevalidtext negative reachescorresponding bind/assertRequest reject; no rename counts as independentF-EFFECT. Allstages originalmoduleA owner tuple remains, noglobalprefixmembership.",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+      },
+      "profiles": {
+        "A": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready.token",
+          "caPath": "/fixture/credentials/ready.ca.pem",
+          "stateRoot": "/fixture/state/demo-A",
+          "operatorTarget": "operators-a",
+          "timeoutMs": 1000
+        },
+        "B": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready-b.token",
+          "caPath": "/fixture/credentials/ready-b.ca.pem",
+          "stateRoot": "/fixture/state/demo-B",
+          "operatorTarget": "operators-b",
+          "timeoutMs": 2000
+        }
+      },
+      "productiveCaller": "Registry+AdapterStarter actualdemo activate->configuration->FileDurableRecordStore; AdapterRuntimeinvoke/receipt->assertRequest->bind/read/evidence/verifiedreceipt->commit/post/validateResponse->durableintents/receipts; exactrolegrants/signals/capturedsource differ fromspy substitute.",
+      "activation": "Actualconfigstrings/primitives copiedinto new localconfiguration atactivate; no credentialsfilebytes capture, no I/O duringconstructor. Nova prepare/activate beforepinnedgraph equality stillpresent. Parentfirstlogicalmodule/taskoperator/metadataquota/membership/legacy/crossreader carrierOPEN."
+    },
+    {
+      "setting": "RT-aae5792f4b11f246",
+      "field": "readyStageId",
+      "classification": "derived-task-graph-producer-identity-assertion",
+      "current": "Required text<=2048UTF16/no ASCIIcontrols; schema codepointmax differs. candidate/manifest/delivery IDs bind exact producer/run/namespace before reread/content/evidence; delivery/ready ID alsorequestattempt.stageId authorizesdeliver/commit. No independentlegalB underunchanged task; currentparser onlytext shape, graphmembership enforced later at realartifact/request boundary.",
+      "targetDomain": "Generate exactselected immutabletask/source graph stage identity fromsame compiler/CONFIG policy projection, not secondeditableoperatorknob. Requireactualstage membership/provider/schema/run+attempt+artifactowner compatibility; unknown producerrejectbeforebusinessmutations.",
+      "effect": "Fullsamegraphpositive exactexpectedproducer/attempt; actualdifferentproducer/samevalidtext negative reachescorresponding bind/assertRequest reject; no rename counts as independentF-EFFECT. Allstages originalmoduleA owner tuple remains, noglobalprefixmembership.",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+      },
+      "profiles": {
+        "A": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready.token",
+          "caPath": "/fixture/credentials/ready.ca.pem",
+          "stateRoot": "/fixture/state/demo-A",
+          "operatorTarget": "operators-a",
+          "timeoutMs": 1000
+        },
+        "B": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready-b.token",
+          "caPath": "/fixture/credentials/ready-b.ca.pem",
+          "stateRoot": "/fixture/state/demo-B",
+          "operatorTarget": "operators-b",
+          "timeoutMs": 2000
+        }
+      },
+      "productiveCaller": "Registry+AdapterStarter actualdemo activate->configuration->FileDurableRecordStore; AdapterRuntimeinvoke/receipt->assertRequest->bind/read/evidence/verifiedreceipt->commit/post/validateResponse->durableintents/receipts; exactrolegrants/signals/capturedsource differ fromspy substitute.",
+      "activation": "Actualconfigstrings/primitives copiedinto new localconfiguration atactivate; no credentialsfilebytes capture, no I/O duringconstructor. Nova prepare/activate beforepinnedgraph equality stillpresent. Parentfirstlogicalmodule/taskoperator/metadataquota/membership/legacy/crossreader carrierOPEN."
+    },
+    {
+      "setting": "RT-c24bc404702abdde",
+      "field": "manifestStageId",
+      "classification": "derived-task-graph-producer-identity-assertion",
+      "current": "Required text<=2048UTF16/no ASCIIcontrols; schema codepointmax differs. candidate/manifest/delivery IDs bind exact producer/run/namespace before reread/content/evidence; delivery/ready ID alsorequestattempt.stageId authorizesdeliver/commit. No independentlegalB underunchanged task; currentparser onlytext shape, graphmembership enforced later at realartifact/request boundary.",
+      "targetDomain": "Generate exactselected immutabletask/source graph stage identity fromsame compiler/CONFIG policy projection, not secondeditableoperatorknob. Requireactualstage membership/provider/schema/run+attempt+artifactowner compatibility; unknown producerrejectbeforebusinessmutations.",
+      "effect": "Fullsamegraphpositive exactexpectedproducer/attempt; actualdifferentproducer/samevalidtext negative reachescorresponding bind/assertRequest reject; no rename counts as independentF-EFFECT. Allstages originalmoduleA owner tuple remains, noglobalprefixmembership.",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+      },
+      "profiles": {
+        "A": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready.token",
+          "caPath": "/fixture/credentials/ready.ca.pem",
+          "stateRoot": "/fixture/state/demo-A",
+          "operatorTarget": "operators-a",
+          "timeoutMs": 1000
+        },
+        "B": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready-b.token",
+          "caPath": "/fixture/credentials/ready-b.ca.pem",
+          "stateRoot": "/fixture/state/demo-B",
+          "operatorTarget": "operators-b",
+          "timeoutMs": 2000
+        }
+      },
+      "productiveCaller": "Registry+AdapterStarter actualdemo activate->configuration->FileDurableRecordStore; AdapterRuntimeinvoke/receipt->assertRequest->bind/read/evidence/verifiedreceipt->commit/post/validateResponse->durableintents/receipts; exactrolegrants/signals/capturedsource differ fromspy substitute.",
+      "activation": "Actualconfigstrings/primitives copiedinto new localconfiguration atactivate; no credentialsfilebytes capture, no I/O duringconstructor. Nova prepare/activate beforepinnedgraph equality stillpresent. Parentfirstlogicalmodule/taskoperator/metadataquota/membership/legacy/crossreader carrierOPEN."
+    },
+    {
+      "setting": "RT-0ad5fcaf62f2d7c9",
+      "field": "endpoint",
+      "classification": "operator-deployment-policy",
+      "current": "Required text/URL normalizedhref exactlyinput, https only,/v1/demo-ready exactpathname,noquery/hash/userinfo. Capturedconfiguration strings atactivate. commitfirstPOST then onnonabortedfailure statusPOST; eachclientpost reopenscredentialfiles withsamecapturedlocators, status pathname+=/status; recoverypreviousintent usesstatusonly.",
+      "targetDomain": "Canonicalgenuine approved HTTPS controller endpoint with exactpath/TLSrole/signer/source/networkgrants; independentBonlyapprovedversionedbackend withsameboundsource/retainedintent/receipt semantics. No source ofmodel/runtime selectors.",
+      "effect": "Actualcommittransmits originaldurablebody toselected endpoint; firsterror usesstatus unlessaborted; repeated/recoveryoriginalbody sameexactidempotentintents statusonly. Unauthorized/wrongURL rejectsactivation beforestores; genuine localregistered realHTTPfixture future, no transport substitute.",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+      },
+      "profiles": {
+        "A": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready.token",
+          "caPath": "/fixture/credentials/ready.ca.pem",
+          "stateRoot": "/fixture/state/demo-A",
+          "operatorTarget": "operators-a",
+          "timeoutMs": 1000
+        },
+        "B": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready-b.token",
+          "caPath": "/fixture/credentials/ready-b.ca.pem",
+          "stateRoot": "/fixture/state/demo-B",
+          "operatorTarget": "operators-b",
+          "timeoutMs": 2000
+        }
+      },
+      "productiveCaller": "Registry+AdapterStarter actualdemo activate->configuration->FileDurableRecordStore; AdapterRuntimeinvoke/receipt->assertRequest->bind/read/evidence/verifiedreceipt->commit/post/validateResponse->durableintents/receipts; exactrolegrants/signals/capturedsource differ fromspy substitute.",
+      "activation": "Actualconfigstrings/primitives copiedinto new localconfiguration atactivate; no credentialsfilebytes capture, no I/O duringconstructor. Nova prepare/activate beforepinnedgraph equality stillpresent. Parentfirstlogicalmodule/taskoperator/metadataquota/membership/legacy/crossreader carrierOPEN."
+    },
+    {
+      "setting": "RT-743c93ef7d59622e",
+      "field": "tokenPath",
+      "classification": "operator-deployment-policy",
+      "current": "Required text<=2048UTF16, absolute path.normalize==input only; no activationrealpath/file/symlink/stat/inode validation. Clientfs.open readonly/nonblock follows symlinks (noNOFOLLOW); eachpost rereads actualfiles. CA max1MiB,token max16384bytes,nonemptytrimmedno whitespace/controls; credentialsnotcaptured frozenbytes byconfig.",
+      "targetDomain": "Capturedexistingrole-approvedlocator, filetype/bounds/content/TLS/trust/grants/source/rotation policy mustrealbind originalR/Mrole. Distinguish stablelocator vs rereadmutablecontents; cannotclaim deepfreeze or currentNOFOLLOW. ExistingDelivery role/credential generation authority crosshandoff, not new secret/plaintext author.",
+      "effect": "Actualboundedfilepositive exactcurrentrolebytes andsamepostTLS/body; wrongfile/overlimit/tokenformat rejectsbeforenetwork; symlink/rotation/materialidentity semantics explicitgenuineprerequisite. OriginalA credentialsource/role maintainedperapprovedpolicy whenB published, latestprofilecannotrerouteR.",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+      },
+      "profiles": {
+        "A": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready.token",
+          "caPath": "/fixture/credentials/ready.ca.pem",
+          "stateRoot": "/fixture/state/demo-A",
+          "operatorTarget": "operators-a",
+          "timeoutMs": 1000
+        },
+        "B": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready-b.token",
+          "caPath": "/fixture/credentials/ready-b.ca.pem",
+          "stateRoot": "/fixture/state/demo-B",
+          "operatorTarget": "operators-b",
+          "timeoutMs": 2000
+        }
+      },
+      "productiveCaller": "Registry+AdapterStarter actualdemo activate->configuration->FileDurableRecordStore; AdapterRuntimeinvoke/receipt->assertRequest->bind/read/evidence/verifiedreceipt->commit/post/validateResponse->durableintents/receipts; exactrolegrants/signals/capturedsource differ fromspy substitute.",
+      "activation": "Actualconfigstrings/primitives copiedinto new localconfiguration atactivate; no credentialsfilebytes capture, no I/O duringconstructor. Nova prepare/activate beforepinnedgraph equality stillpresent. Parentfirstlogicalmodule/taskoperator/metadataquota/membership/legacy/crossreader carrierOPEN."
+    },
+    {
+      "setting": "RT-fb9918b06d28dfd1",
+      "field": "caPath",
+      "classification": "operator-deployment-policy",
+      "current": "Required text<=2048UTF16, absolute path.normalize==input only; no activationrealpath/file/symlink/stat/inode validation. Clientfs.open readonly/nonblock follows symlinks (noNOFOLLOW); eachpost rereads actualfiles. CA max1MiB,token max16384bytes,nonemptytrimmedno whitespace/controls; credentialsnotcaptured frozenbytes byconfig.",
+      "targetDomain": "Capturedexistingrole-approvedlocator, filetype/bounds/content/TLS/trust/grants/source/rotation policy mustrealbind originalR/Mrole. Distinguish stablelocator vs rereadmutablecontents; cannotclaim deepfreeze or currentNOFOLLOW. ExistingDelivery role/credential generation authority crosshandoff, not new secret/plaintext author.",
+      "effect": "Actualboundedfilepositive exactcurrentrolebytes andsamepostTLS/body; wrongfile/overlimit/tokenformat rejectsbeforenetwork; symlink/rotation/materialidentity semantics explicitgenuineprerequisite. OriginalA credentialsource/role maintainedperapprovedpolicy whenB published, latestprofilecannotrerouteR.",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+      },
+      "profiles": {
+        "A": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready.token",
+          "caPath": "/fixture/credentials/ready.ca.pem",
+          "stateRoot": "/fixture/state/demo-A",
+          "operatorTarget": "operators-a",
+          "timeoutMs": 1000
+        },
+        "B": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready-b.token",
+          "caPath": "/fixture/credentials/ready-b.ca.pem",
+          "stateRoot": "/fixture/state/demo-B",
+          "operatorTarget": "operators-b",
+          "timeoutMs": 2000
+        }
+      },
+      "productiveCaller": "Registry+AdapterStarter actualdemo activate->configuration->FileDurableRecordStore; AdapterRuntimeinvoke/receipt->assertRequest->bind/read/evidence/verifiedreceipt->commit/post/validateResponse->durableintents/receipts; exactrolegrants/signals/capturedsource differ fromspy substitute.",
+      "activation": "Actualconfigstrings/primitives copiedinto new localconfiguration atactivate; no credentialsfilebytes capture, no I/O duringconstructor. Nova prepare/activate beforepinnedgraph equality stillpresent. Parentfirstlogicalmodule/taskoperator/metadataquota/membership/legacy/crossreader carrierOPEN."
+    },
+    {
+      "setting": "RT-e96bf541dc026a22",
+      "field": "stateRoot",
+      "classification": "operator-deployment-policy",
+      "current": "Requiredlexicallycanonicalabsolute<=2048UTF16; activation doesnot touchdisk in FileDurableRecordStoreconstructor. Storepaths.resolve(root)/records/store.json; actualfirstlock/read/write later;10000records/64MiBtotal/65536record literal limits separateproductivepolicies. Recordstorelimits boundencodedmetadata/failure; root not automaticallyauthorizedorhistoricallycompatible.",
+      "targetDomain": "Existingownedbackend root underrealfilesystemgrants/versionedactivation, originaldurableintents/receipts andsameauthor retained. Broot onlyapprovedmigration/backendinstance compatiblehistory; no empty-newroot to evade quota or lose pendingcontrollerintent.",
+      "effect": "OriginalA init/body/idempotency+receipts survivecancel/crash/retry/recovery statusread, conflictingsameid differentbody rejects. Unauthorized/orphaned/migratedroot rejects beforeeffects; genuineclosure/artifactmetadata/capacity prerequisites.",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+      },
+      "profiles": {
+        "A": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready.token",
+          "caPath": "/fixture/credentials/ready.ca.pem",
+          "stateRoot": "/fixture/state/demo-A",
+          "operatorTarget": "operators-a",
+          "timeoutMs": 1000
+        },
+        "B": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready-b.token",
+          "caPath": "/fixture/credentials/ready-b.ca.pem",
+          "stateRoot": "/fixture/state/demo-B",
+          "operatorTarget": "operators-b",
+          "timeoutMs": 2000
+        }
+      },
+      "productiveCaller": "Registry+AdapterStarter actualdemo activate->configuration->FileDurableRecordStore; AdapterRuntimeinvoke/receipt->assertRequest->bind/read/evidence/verifiedreceipt->commit/post/validateResponse->durableintents/receipts; exactrolegrants/signals/capturedsource differ fromspy substitute.",
+      "activation": "Actualconfigstrings/primitives copiedinto new localconfiguration atactivate; no credentialsfilebytes capture, no I/O duringconstructor. Nova prepare/activate beforepinnedgraph equality stillpresent. Parentfirstlogicalmodule/taskoperator/metadataquota/membership/legacy/crossreader carrierOPEN."
+    },
+    {
+      "setting": "RT-9546f9706a2afc7c",
+      "field": "operatorTarget",
+      "classification": "operator-deployment-policy",
+      "current": "target text<=128ASCII lowercase alnumstart then[a-z0-9._:-]; candidate.operatorTarget mustsamecapturedadaptertarget afterverifiedread beforepublication. Delivery identity hashes originalrun/candidatedigest/target; genuineauthoritativeoperatorreceipt mustmatchreturnedcompletion/payload; readybinds deliveryartifact tosame receipt. Compilercandidateinput target is currentdeclaredprojection, not freelydifferentsecondtarget.",
+      "targetDomain": "Sameexisting demo/operator route owner and target/grants/receipt/sourcepolicy, candidateprojectiongeneratedsameoriginalprofile. A/B genuineexistingroutes withactualrole enrollment, no unauthorizedtarget via taskinput.",
+      "effect": "deliver A publishesonlyoperators-a andretains sameid/payloadreceipt, B requiresgenuineneworiginalscope; candidatetargetmismatch rejectsbeforepublish. Repeated/recovery receiptlookup originalA notrepublication/latestB. No actualoperatorrequest sentnow.",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+      },
+      "profiles": {
+        "A": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready.token",
+          "caPath": "/fixture/credentials/ready.ca.pem",
+          "stateRoot": "/fixture/state/demo-A",
+          "operatorTarget": "operators-a",
+          "timeoutMs": 1000
+        },
+        "B": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready-b.token",
+          "caPath": "/fixture/credentials/ready-b.ca.pem",
+          "stateRoot": "/fixture/state/demo-B",
+          "operatorTarget": "operators-b",
+          "timeoutMs": 2000
+        }
+      },
+      "productiveCaller": "Registry+AdapterStarter actualdemo activate->configuration->FileDurableRecordStore; AdapterRuntimeinvoke/receipt->assertRequest->bind/read/evidence/verifiedreceipt->commit/post/validateResponse->durableintents/receipts; exactrolegrants/signals/capturedsource differ fromspy substitute.",
+      "activation": "Actualconfigstrings/primitives copiedinto new localconfiguration atactivate; no credentialsfilebytes capture, no I/O duringconstructor. Nova prepare/activate beforepinnedgraph equality stillpresent. Parentfirstlogicalmodule/taskoperator/metadataquota/membership/legacy/crossreader carrierOPEN."
+    },
+    {
+      "setting": "RT-c0f7186c20e14014",
+      "field": "timeoutMs",
+      "classification": "operator-deployment-policy",
+      "current": "RequiredNumber(value.timeoutMs) safeinteger100..60000; string1000 accepted directactivation while owninginteger schema rejects. Eachinvoke and receipt getsnewAbortSignal.timeout pluscaller/shutdown; withincommit firstPOST+fallbackstatus share oneouterdeadline, not renewed perclientPOST. Shutdown aborts, no forceddeletion/intentreset.",
+      "targetDomain": "Requiredinteger100..60000ms preservingcurrentsemanticguard, not physicalnetworkcapacity. Mustfitowningstage/lease/grants/backendtimebudgets; actualdeadline/cancellation before andduringfile/HTTP/receipt writes must retain originalintent andsourceidentity.",
+      "effect": "Actualgenuineoperation before1000/2000ms budget usesrespectivecontrollerwindow; cancel/timeout cannotcreatefallbackafterabort, unconfirmedintent retained; nextrecovery status usesoriginalbody; end-to-end actualcontroller/localHTTP fixture NOTRUN.",
+      "source": {
+        "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855"
+      },
+      "profiles": {
+        "A": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready.token",
+          "caPath": "/fixture/credentials/ready.ca.pem",
+          "stateRoot": "/fixture/state/demo-A",
+          "operatorTarget": "operators-a",
+          "timeoutMs": 1000
+        },
+        "B": {
+          "candidateStageId": "demo-candidate",
+          "deliveryStageId": "demo-delivery",
+          "readyStageId": "demo-ready",
+          "manifestStageId": "project-summary",
+          "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+          "tokenPath": "/fixture/credentials/ready-b.token",
+          "caPath": "/fixture/credentials/ready-b.ca.pem",
+          "stateRoot": "/fixture/state/demo-B",
+          "operatorTarget": "operators-b",
+          "timeoutMs": 2000
+        }
+      },
+      "productiveCaller": "Registry+AdapterStarter actualdemo activate->configuration->FileDurableRecordStore; AdapterRuntimeinvoke/receipt->assertRequest->bind/read/evidence/verifiedreceipt->commit/post/validateResponse->durableintents/receipts; exactrolegrants/signals/capturedsource differ fromspy substitute.",
+      "activation": "Actualconfigstrings/primitives copiedinto new localconfiguration atactivate; no credentialsfilebytes capture, no I/O duringconstructor. Nova prepare/activate beforepinnedgraph equality stillpresent. Parentfirstlogicalmodule/taskoperator/metadataquota/membership/legacy/crossreader carrierOPEN."
+    }
+  ],
+  "profiles": {
+    "A": {
+      "candidateStageId": "demo-candidate",
+      "deliveryStageId": "demo-delivery",
+      "readyStageId": "demo-ready",
+      "manifestStageId": "project-summary",
+      "endpoint": "https://ready.example.invalid/v1/demo-ready",
+      "tokenPath": "/fixture/credentials/ready.token",
+      "caPath": "/fixture/credentials/ready.ca.pem",
+      "stateRoot": "/fixture/state/demo-A",
+      "operatorTarget": "operators-a",
+      "timeoutMs": 1000
+    },
+    "B": {
+      "candidateStageId": "demo-candidate",
+      "deliveryStageId": "demo-delivery",
+      "readyStageId": "demo-ready",
+      "manifestStageId": "project-summary",
+      "endpoint": "https://ready-b.example.invalid/v1/demo-ready",
+      "tokenPath": "/fixture/credentials/ready-b.token",
+      "caPath": "/fixture/credentials/ready-b.ca.pem",
+      "stateRoot": "/fixture/state/demo-B",
+      "operatorTarget": "operators-b",
+      "timeoutMs": 2000
+    },
+    "sourceTaskIds": "A/B preserve same producerstageIDs, not independent CONFIG tuning; alternatetaskgraph onlychanges generatedassertions andmustactualmatch source/artifacts/attempt membership.",
+    "noPhysicalStand": "example.invalid/.fixture paths are structural only; genuine role TLS endpoint, boundedactualcredentials/source/lease/operatorreceipt/controller+durableintent fixture/grants prerequisite; no networkruns. Changingendpoint/credentials/backendroot requires realapproved versionedRactivation/grants+historycompatibility, not merelyB JSON."
+  },
+  "openProductivePolicies": [
+    "Recordstore10000/67108864/65536 andprotocolartifact8388608/clientreqresponse16384/token16384/CA1048576 are exactcurrentproductivebounds; existingowner domain/accounting/fullbefore-writecase/grant compatibility remainsOPEN, no guessed aliases/newglobalquota.",
+    "Actualmutablecredentials-file rereads at first/fallback/status and currentsymlinkfollow require source/grant/rotation ownership review; stablecapturedpaths are not frozen rolecontent.",
+    "ExistingRT-PROJECT-DEMO-RETENTIONSECONDS sourceproducer/durationtechnicalbound alreadylinked; no duplicateauthor or leasebudget inference."
+  ]
+}

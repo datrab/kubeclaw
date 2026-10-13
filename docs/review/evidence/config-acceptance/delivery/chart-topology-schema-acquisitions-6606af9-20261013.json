@@ -1,0 +1,57 @@
+{
+  "method": "read-only HTTPS exact already-frozen existing schema origin/commit, additive source acquisition; all failed raw bytes retained; no broad schema substitute",
+  "records": [
+    {
+      "repository": "yannh/kubernetes-json-schema",
+      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+      "path": "v1.34.11-standalone-strict/pod-v1.json",
+      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.34.11-standalone-strict/pod-v1.json",
+      "scope": "pinned schema definition only; sourceGo+actualAPI validation distinct",
+      "result": "failed",
+      "status": 404,
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "rawErrorPath": "docs/review/evidence/config-acceptance/delivery/chart-topology-schema-failed-acquisitions-6606af9-20261013/pod-v1.json.http-error",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "repository": "yannh/kubernetes-json-schema",
+      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+      "path": "v1.34.11-standalone-strict/service-v1.json",
+      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.34.11-standalone-strict/service-v1.json",
+      "scope": "pinned schema definition only; sourceGo+actualAPI validation distinct",
+      "result": "failed",
+      "status": 404,
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "rawErrorPath": "docs/review/evidence/config-acceptance/delivery/chart-topology-schema-failed-acquisitions-6606af9-20261013/service-v1.json.http-error",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "repository": "yannh/kubernetes-json-schema",
+      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+      "path": "v1.34.11-standalone-strict/serviceaccount-v1.json",
+      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.34.11-standalone-strict/serviceaccount-v1.json",
+      "scope": "pinned schema definition only; sourceGo+actualAPI validation distinct",
+      "result": "failed",
+      "status": 404,
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "rawErrorPath": "docs/review/evidence/config-acceptance/delivery/chart-topology-schema-failed-acquisitions-6606af9-20261013/serviceaccount-v1.json.http-error",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "repository": "yannh/kubernetes-json-schema",
+      "commit": "c8f4e61c63bc529749125ac566bccc6986e08d45",
+      "path": "v1.34.11-standalone-strict/deployment-apps-v1.json",
+      "url": "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/c8f4e61c63bc529749125ac566bccc6986e08d45/v1.34.11-standalone-strict/deployment-apps-v1.json",
+      "scope": "pinned schema definition only; sourceGo+actualAPI validation distinct",
+      "result": "failed",
+      "status": 404,
+      "bytes": 14,
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "rawErrorPath": "docs/review/evidence/config-acceptance/delivery/chart-topology-schema-failed-acquisitions-6606af9-20261013/deployment-apps-v1.json.http-error",
+      "error": "HTTP Error 404: Not Found"
+    }
+  ]
+}

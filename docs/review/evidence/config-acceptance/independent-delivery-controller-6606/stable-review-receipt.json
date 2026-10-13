@@ -1,0 +1,170 @@
+{
+  "scope": "stable independent bounded report/evidence identities; raw input identities are in input-freeze.json",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/README.md",
+      "sha256": "c68987bc3381161295b3549d965fa5259b0cc9619315c711afbdcaf407d769bd",
+      "bytes": 2337
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/check-controller-domain-response-6606af9-20261013.cjs",
+      "sha256": "e147aa3b5334e2df4e876e5e2011299b3ecc3757307a494d8668de03d25e348c",
+      "bytes": 8211
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/check-controller-epoch-serialization-6606af9-20261013.cjs",
+      "sha256": "5bda15a7490cb800e984aaaab475879b5f43408f3122cb0643c8f1750bebf030",
+      "bytes": 4019
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/check-review-witnesses-attempt1.cjs",
+      "sha256": "b85cbc46edcf2aa62a23d3ac8bc40c760d49fe36590f47abd01b800f9430f6b1",
+      "bytes": 5936
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/check-review-witnesses.cjs",
+      "sha256": "dd761d565f3f9b4de562c3dd34759951fddb23a406a3319b4637d13c2868f835",
+      "bytes": 5994
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-domain-response-controls-6606af9-20261013.json",
+      "sha256": "1bdc2d94f73112b75f3c0149dc64524eef7f4b8432ba659e29f80d2e46dcbd7f",
+      "bytes": 61940
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-epoch-serialization-controls-6606af9-20261013.json",
+      "sha256": "e4d95fbac104e66332061abb8c8bcd632de329dfbca294356f32599c56daac24",
+      "bytes": 9902
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-original-epoch-fixture-identities-6606af9-20261013.json",
+      "sha256": "2d02828c22abe9f38fc639e2c66974406d63ab07f2fa576009cf327d0fc17f2a",
+      "bytes": 2996
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-original-epoch-fixtures-6606af9-20261013/deleting.json",
+      "sha256": "4a9e5d7d09fb9951775dc6ae0579ca0ab31e8e702fc749d9363b7ee02a7385cf",
+      "bytes": 4517
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-original-epoch-fixtures-6606af9-20261013/ordinary-default.json",
+      "sha256": "47cfcb764abc4ab0dd84761e6c03e00f509ed973817ff8c2a36ad9e587fc3914",
+      "bytes": 4046
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-original-epoch-fixtures-6606af9-20261013/ordinary-explicit.json",
+      "sha256": "b85f6451aed326f9e41936d9e608afb2c9c79daa677b28dfeb16a2c4598d0d8d",
+      "bytes": 4037
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-original-epoch-fixtures-6606af9-20261013/product-extended.json",
+      "sha256": "785ff31d95acd77c9de3b0205667ce451c153d9f2a5575ae7e1048df72f2a31e",
+      "bytes": 4919
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-original-epoch-fixtures-6606af9-20261013/ready-v1.json",
+      "sha256": "76c282e2c6be811c48ee7acb8f35118457ccb62edcd70289a064ae3a5ce21127",
+      "bytes": 4443
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-original-epoch-fixtures-6606af9-20261013/ready-v2.json",
+      "sha256": "7047aa144f2ab4d2a12c76c98ab567879b18e064d6c9a5a55df8d8d664ce0f10",
+      "bytes": 4477
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-original-epoch-serialization-schema-6606af9-20261013.json",
+      "sha256": "4b9add8813f1071622dd085e854891ae626a9bce0d6945c12440f2c624095744",
+      "bytes": 7712
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-response-epoch-contracts-6606af9-20261013.json",
+      "sha256": "1765df65527f65f5a152e61a8466f52569bc5e17b77956bdaadb900b137c23cb",
+      "bytes": 78256
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-response-epoch-definition-schema-6606af9-20261013.json",
+      "sha256": "e122724fea861ad5ce8751f6ed89778230c0a24631b097d967bf891d66642d8d",
+      "bytes": 23928
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-response-epoch-profiles-6606af9-20261013/A.json",
+      "sha256": "dbaffde17d18c220c237216cfccdc335d33d572a0b9973b8bc8d0fd15ef61a4d",
+      "bytes": 14414
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-response-epoch-profiles-6606af9-20261013/B.json",
+      "sha256": "67f26310eb5a89cd4ec736d9a690a50dd0f50ac359e89b651a449aae9b0f3a94",
+      "bytes": 14417
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/controller-target-case-specifications-20261013.json",
+      "sha256": "7eec474f23d752071a56c80cef8a8c4de7b83a87140c2b8016450d15907af877",
+      "bytes": 332877
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/end-input-integrity.json",
+      "sha256": "6a46d43b3a38de5e75392b6175455e9c3df505d202331343120dd780f24f5b9e",
+      "bytes": 793
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/freeze.py",
+      "sha256": "0cb117d593bd77321a9285659446a735dd6d343805fea72cf40a1de689fe2ec8",
+      "bytes": 3374
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/independent-review.json",
+      "sha256": "5381ecdd17c9080cf5b7eccb6b0bc40d7a5b9b00c83916da14d1d128357ac476",
+      "bytes": 11598
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/independent-witnesses-attempt1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/independent-witnesses-attempt1.stderr.log",
+      "sha256": "3e54fd9024b921ac14bb3aeb5d9f7c3acc711b1ad6ab0ca9718820b8177d340d",
+      "bytes": 865
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/independent-witnesses-attempt2.log",
+      "sha256": "a02a69e0c7a51912ba7dcefd95a22123f0810c5ec27a7714b7d80c4ff5e75cd7",
+      "bytes": 70
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/independent-witnesses-attempt2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/independent-witnesses.json",
+      "sha256": "f21c99b6d7f204fcc33f637abee30ce2376643c9598b707b27ed6e9931c7df58",
+      "bytes": 4802
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/input-freeze.json",
+      "sha256": "fc2849c99a0adf97e8a5b7cfd829322506347ec7b05518f8d58150b4182c5e16",
+      "bytes": 31412
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/replayed-domain-controls.log",
+      "sha256": "702d5e063a2ed5b90d31ca099140fe0ff6dd2ee2f31eaa4c3ffc85f56d2a58f4",
+      "bytes": 58
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/replayed-epoch-controls.log",
+      "sha256": "6bfe554872672c708b9b1214741b9486e1a8997f0b405c764a9284f40c7c363d",
+      "bytes": 58
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/selected-input-integrity-attempt1.json",
+      "sha256": "91ec0e7a5513a28c1718a0ea0ba84baf0944fa4d0978666f7ee1c94f56e2f4d4",
+      "bytes": 3564
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/selected-input-integrity.json",
+      "sha256": "efd83efaa5581a075be150220da47fbc46b9947996418d03d1cabfa6ebfd17d5",
+      "bytes": 804
+    }
+  ]
+}

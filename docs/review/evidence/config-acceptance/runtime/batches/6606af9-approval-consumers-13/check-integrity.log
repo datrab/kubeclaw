@@ -1,0 +1,22 @@
+{
+  "status": "stable conditional approval consumer/source/domain definitions only; NOT ACCEPTED",
+  "rows": 1248,
+  "cases": 5863,
+  "caseResults": {
+    "not-run": 4411,
+    "passed": 1452
+  },
+  "schemaRowsRefined": 10,
+  "newNarrowCurrentDefinitionCases": 10,
+  "newFutureNotRunCases": 60,
+  "oldCaseBodiesUnchanged": 5793,
+  "immutableObservationReferenceOccurrences": 2239,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 51,
+  "remainingUntouchedOriginalSupplementalSourceTracedRows": 102,
+  "manualCandidatesThisBatch": 37,
+  "manualCandidatesCombined": 755,
+  "remainingUnreviewedCandidates": 3887,
+  "reviewedOpenCandidates": 136,
+  "remaining": "51 schema consumers,102 untouchedoriginal supplemental plus95 priorunaccepteddeclarations and all priorrefinedsemanticobligations. Human/architecture/Prism reference/text processingbounds remainexplicitOPEN. Sourcehelpers arenot signedissuer/waitoperator/nativebundle/grant effects. Parent typedfirstmodulecarrier/task-operator partition/quota/realmanifests/crossreaders OPEN; alloldA6/codec/context/sourcebinding constraints retained. Historical269map parentintegration/independentreview pending. No globalC0acceptance/implementationapproval."
+}

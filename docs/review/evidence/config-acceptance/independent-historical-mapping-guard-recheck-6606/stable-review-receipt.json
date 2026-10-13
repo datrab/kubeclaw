@@ -1,0 +1,205 @@
+{
+  "scope": "stable bounded independent recheck receipt; not root projection or global acceptance",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/README.md",
+      "sha256": "222ece7443dc3b5175b5524a6263aeab730f2925d3e5227a6774f385b227506c",
+      "bytes": 1107
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/author-guard-replay.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/author-guard-replay.stdout",
+      "sha256": "c4afb1bdab46d1d160004f9c8b65c02aec521ca200f8a1cb667463b55f6ce191",
+      "bytes": 3748
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/canonical-ids.json",
+      "sha256": "03c72dcedf09a68c312d2b9c3d4e8ecd52a0fdef24550518212d825b1c46493f",
+      "bytes": 373512
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/case-proposals-selected.json",
+      "sha256": "a53449048658fd316a779c2912bbb34073148c50bd988ee598fd264b4ed5f015",
+      "bytes": 3773758
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/check-independent-guards.py",
+      "sha256": "f7c121c61818fce9b5487750eb09dd50ce7919bf3dd443ebc1937a2e8a77bf04",
+      "bytes": 5208
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/closeout.py",
+      "sha256": "b6412694cee2fcf5121d2b110e5f46a42345e92c15e83d0bb6843dc326e11c43",
+      "bytes": 6638
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/config-acceptance-matrix-selected.json",
+      "sha256": "b9dc4ff7c436234dd9a8c5f4d69e2370d2ca0644c2a3b4b5d7546e1680290278",
+      "bytes": 600015
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/end-input-integrity.json",
+      "sha256": "471142852521bed7ccc00f7404decf71b34e9018425fc43f29fd64a740438ccd",
+      "bytes": 345
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/freeze.py",
+      "sha256": "a824edd11cff67efb1c369129168052940040b9361089137114c3579596ae000",
+      "bytes": 2884
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/independent-controls-attempt1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/independent-controls-attempt1.stdout",
+      "sha256": "4acc1c525f07b1997a784a465af07aa4c77972fcc6df1e66a71e3dd73228fad1",
+      "bytes": 117
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/independent-controls.json",
+      "sha256": "59378b086ef67d60252c27016f89d1fc3f138d00f5d11a058db6973ac6e5f16a",
+      "bytes": 9867
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/independent-review.json",
+      "sha256": "7ae8737db0e572df85ed2bd94ec0061eff5b18d23a03bce3c1cdb36fd8069815",
+      "bytes": 3643
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/input-freeze.json",
+      "sha256": "db70622d62d6d5b5749908a4d0f06ec6631b67ee2ed5b8a42e4cf2a57039ca1b",
+      "bytes": 481822
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/check-historical-mapping-guards.py",
+      "sha256": "6dfe885c87d22b59d72dd2975b922158d51e91fdf57a9de0bfcdd81fc1d782a6",
+      "bytes": 4399
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/check-historical-mapping-guards.py",
+      "sha256": "ea3f14bea66bbb627c8d5cd1afc5040f33f0aff93fed6f581365bbc60248fa43",
+      "bytes": 3752
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/historical-mapping-guard-preparation-6606.json",
+      "sha256": "c48aad79bb4ee75ff47d15215e769de9bbf973e9a64db2de4a8a8fbeadf04583",
+      "bytes": 2052
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/historical-mapping-guards-attempt1.log",
+      "sha256": "231ec3ef2ab26855fdb4847ef923e3f184de2033ecd2dc72d10ff7ae989cd2f1",
+      "bytes": 1927
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/historical-mapping-guards-attempt1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/historical-mapping-guards-attempt2.log",
+      "sha256": "231ec3ef2ab26855fdb4847ef923e3f184de2033ecd2dc72d10ff7ae989cd2f1",
+      "bytes": 1927
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/historical-mapping-guards-attempt2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-before-hmap-guard-01-6606/historical_mapping.py",
+      "sha256": "390f8c138c996a109de07b38fb79cc6270d08c439d773cb9aaa2e12d48511e5a",
+      "bytes": 6636
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-guard-preparation-6606.json",
+      "sha256": "c48aad79bb4ee75ff47d15215e769de9bbf973e9a64db2de4a8a8fbeadf04583",
+      "bytes": 2052
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt1.log",
+      "sha256": "231ec3ef2ab26855fdb4847ef923e3f184de2033ecd2dc72d10ff7ae989cd2f1",
+      "bytes": 1927
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt2.log",
+      "sha256": "231ec3ef2ab26855fdb4847ef923e3f184de2033ecd2dc72d10ff7ae989cd2f1",
+      "bytes": 1927
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt3.log",
+      "sha256": "c4afb1bdab46d1d160004f9c8b65c02aec521ca200f8a1cb667463b55f6ce191",
+      "bytes": 3748
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical-mapping-hmap-guard-01-correction-6606.json",
+      "sha256": "17876f132a2b2cc3e21b2234375465afe3208ce2e4fba426214b2bd3edb4ec05",
+      "bytes": 3875
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/author/historical_mapping.py",
+      "sha256": "b027cc75b7b789be6ef5069d0611d9c36a0ad21fff0a7d3e57ea75ff83b1f2e2",
+      "bytes": 7186
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/independent-historical-mapping-guard-6606/independent-review.json",
+      "sha256": "1a417863e4f6fe0c33960f78f6a9ff85ee23cc2c68ef197ebccfdfb34c8a1613",
+      "bytes": 6887
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/stable-independent-review-receipt.json",
+      "sha256": "b6f59adce3b44c68edc2268c89fe24b47411c1771cc4680daeeba9c71e7e2787",
+      "bytes": 4170
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/native-historical-successor-map.json",
+      "sha256": "1c0cf5830f0c91a0c3a5000831fb7be98ce278255a44050673491923e2ca9ad3",
+      "bytes": 1533647
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "sha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749",
+      "bytes": 9091
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+      "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+      "bytes": 15784
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inputs/skills/nova/plugins/review/src/repository-review-profile.ts",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b",
+      "bytes": 19954
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/inventory-fragment-selected.json",
+      "sha256": "371e81ce2efb1d1461d88f6b60bae54b298376d93596566980b5d2f224dc1790",
+      "bytes": 1945819
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/runtime-case-dispositions-selected.json",
+      "sha256": "c2dc863a45b903b23b5541274ecea31d4df697386d5d2b2e2e9004b512d7a3cc",
+      "bytes": 467844
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "architecture-validator": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agent"
+    ],
+    "properties": {
+      "agent": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?![\\s\\S]*[\\u0000-\\u001f\\u007f])\\S(?:[\\s\\S]*\\S)?$"
+      }
+    }
+  },
+  "buster-quality-gate": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "agent": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?![\\s\\S]*[\\u0000-\\u001f\\u007f])\\S(?:[\\s\\S]*\\S)?$"
+      },
+      "testAgentEnabled": {
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "required": [
+      "testAgentEnabled"
+    ],
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "testAgentEnabled": {
+              "const": true
+            }
+          },
+          "required": [
+            "testAgentEnabled"
+          ]
+        },
+        "then": {
+          "properties": {
+            "agent": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(?![\\s\\S]*[\\u0000-\\u001f\\u007f])\\S(?:[\\s\\S]*\\S)?$"
+            }
+          },
+          "required": [
+            "agent"
+          ]
+        }
+      }
+    ]
+  },
+  "case-study": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agent"
+    ],
+    "properties": {
+      "agent": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?![\\s\\S]*[\\u0000-\\u001f\\u007f])\\S(?:[\\s\\S]*\\S)?$"
+      }
+    }
+  },
+  "implementation-agent": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agent"
+    ],
+    "properties": {
+      "agent": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?![\\s\\S]*[\\u0000-\\u001f\\u007f])\\S(?:[\\s\\S]*\\S)?$"
+      }
+    }
+  },
+  "pipeline-review": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agent"
+    ],
+    "properties": {
+      "agent": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?![\\s\\S]*[\\u0000-\\u001f\\u007f])\\S(?:[\\s\\S]*\\S)?$"
+      }
+    }
+  },
+  "project-summary": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "deliveryManifestEncoding": {
+        "const": "delivery-manifest.utf16-v1"
+      }
+    },
+    "required": [
+      "deliveryManifestEncoding"
+    ]
+  }
+}

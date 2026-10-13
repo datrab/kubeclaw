@@ -1,0 +1,493 @@
+{
+  "command": "node docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/check.mjs",
+  "node": "v24.21.0",
+  "results": [
+    {
+      "setting": "RT-c0a779743e7384ba",
+      "field": "agent",
+      "registration": "kubeclaw.architecture-validator:architecture",
+      "currentCompleteA": {
+        "agent": "actual-captured-target-A"
+      },
+      "currentCompleteB": {
+        "agent": "actual-captured-target-B"
+      },
+      "currentNullRejected": {
+        "agent": null
+      },
+      "currentUnknownRejected": {
+        "agent": "actual-captured-target-A",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+        "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    },
+    {
+      "setting": "RT-ae11bf913a6050c6",
+      "field": "agentRole",
+      "registration": "kubeclaw.architecture-validator:architecture",
+      "currentCompleteA": {
+        "agent": "actual-captured-target-A",
+        "agentRole": "fixture-source-role-A"
+      },
+      "currentCompleteB": {
+        "agent": "actual-captured-target-B",
+        "agentRole": "fixture-source-role-B"
+      },
+      "currentNullRejected": {
+        "agent": "actual-captured-target-A",
+        "agentRole": null
+      },
+      "currentUnknownRejected": {
+        "agent": "actual-captured-target-A",
+        "agentRole": "fixture-source-role-A",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/architecture-validator/src/stage.ts",
+        "sha256": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    },
+    {
+      "setting": "RT-fc079b7fbe9926b7",
+      "field": "agent",
+      "registration": "kubeclaw.buster-quality-gate:quality",
+      "currentCompleteA": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": true
+      },
+      "currentCompleteB": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": false
+      },
+      "currentNullRejected": {
+        "agent": null,
+        "testAgentEnabled": true
+      },
+      "currentUnknownRejected": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": true,
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    },
+    {
+      "setting": "RT-078157b4efb99088",
+      "field": "agentRole",
+      "registration": "kubeclaw.buster-quality-gate:quality",
+      "currentCompleteA": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": true,
+        "agentRole": "fixture-source-role-A"
+      },
+      "currentCompleteB": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": false,
+        "agentRole": "fixture-source-role-B"
+      },
+      "currentNullRejected": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": true,
+        "agentRole": null
+      },
+      "currentUnknownRejected": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": true,
+        "agentRole": "fixture-source-role-A",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    },
+    {
+      "setting": "RT-28c93b05e095eb31",
+      "field": "testAgentEnabled",
+      "registration": "kubeclaw.buster-quality-gate:quality",
+      "currentCompleteA": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": true
+      },
+      "currentCompleteB": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": false
+      },
+      "currentNullRejected": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": null
+      },
+      "currentUnknownRejected": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": true,
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "sha256": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    },
+    {
+      "setting": "RT-8152550972f10185",
+      "field": "agent",
+      "registration": "kubeclaw.case-study:case-study",
+      "currentCompleteA": {
+        "agent": "actual-captured-target-A"
+      },
+      "currentCompleteB": {
+        "agent": "actual-captured-target-B"
+      },
+      "currentNullRejected": {
+        "agent": null
+      },
+      "currentUnknownRejected": {
+        "agent": "actual-captured-target-A",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/case-study/src/stage.ts",
+        "sha256": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    },
+    {
+      "setting": "RT-34cb107ae059df42",
+      "field": "agent",
+      "registration": "kubeclaw.implementation-agent:implementation",
+      "currentCompleteA": {
+        "agent": "actual-captured-target-A"
+      },
+      "currentCompleteB": {
+        "agent": "actual-captured-target-B"
+      },
+      "currentNullRejected": {
+        "agent": null
+      },
+      "currentUnknownRejected": {
+        "agent": "actual-captured-target-A",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    },
+    {
+      "setting": "RT-6442142673149854",
+      "field": "agentRole",
+      "registration": "kubeclaw.implementation-agent:implementation",
+      "currentCompleteA": {
+        "agent": "actual-captured-target-A",
+        "agentRole": "fixture-source-role-A"
+      },
+      "currentCompleteB": {
+        "agent": "actual-captured-target-B",
+        "agentRole": "fixture-source-role-B"
+      },
+      "currentNullRejected": {
+        "agent": "actual-captured-target-A",
+        "agentRole": null
+      },
+      "currentUnknownRejected": {
+        "agent": "actual-captured-target-A",
+        "agentRole": "fixture-source-role-A",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "sha256": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    },
+    {
+      "setting": "RT-2d37a257c3d7dd45",
+      "field": "agent",
+      "registration": "kubeclaw.pipeline-review:review",
+      "currentCompleteA": {
+        "agent": "actual-captured-target-A"
+      },
+      "currentCompleteB": {
+        "agent": "actual-captured-target-B"
+      },
+      "currentNullRejected": {
+        "agent": null
+      },
+      "currentUnknownRejected": {
+        "agent": "actual-captured-target-A",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    },
+    {
+      "setting": "RT-4c1a2b66cdab7e18",
+      "field": "agentRole",
+      "registration": "kubeclaw.pipeline-review:review",
+      "currentCompleteA": {
+        "agent": "actual-captured-target-A",
+        "agentRole": "fixture-source-role-A"
+      },
+      "currentCompleteB": {
+        "agent": "actual-captured-target-B",
+        "agentRole": "fixture-source-role-B"
+      },
+      "currentNullRejected": {
+        "agent": "actual-captured-target-A",
+        "agentRole": null
+      },
+      "currentUnknownRejected": {
+        "agent": "actual-captured-target-A",
+        "agentRole": "fixture-source-role-A",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "sha256": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    },
+    {
+      "setting": "RT-2b6e3bc13743e80c",
+      "field": "agentRole",
+      "registration": "kubeclaw.project-summary:summary",
+      "currentCompleteA": {
+        "agentRole": "fixture-source-role-A"
+      },
+      "currentCompleteB": {
+        "deliveryManifestEncoding": "delivery-manifest.utf16-v1",
+        "agentRole": "fixture-source-role-B"
+      },
+      "currentNullRejected": {
+        "agentRole": null
+      },
+      "currentUnknownRejected": {
+        "agentRole": "fixture-source-role-A",
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/project-summary/src/stage.ts",
+        "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    },
+    {
+      "setting": "RT-0086141ada6be298",
+      "field": "deliveryManifestEncoding",
+      "registration": "kubeclaw.project-summary:summary",
+      "currentCompleteA": {},
+      "currentCompleteB": {
+        "deliveryManifestEncoding": "delivery-manifest.utf16-v1"
+      },
+      "currentNullRejected": {
+        "deliveryManifestEncoding": null
+      },
+      "currentUnknownRejected": {
+        "unapprovedKnob": true
+      },
+      "source": {
+        "path": "skills/nova/plugins/project-summary/src/stage.ts",
+        "sha256": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee"
+      },
+      "result": "passed",
+      "scope": "Exactcurrentowning schema/source/agentRole businessreader absence only; configdigests stillmaybindunusedkey. Realstage/target/service/model/protocol/nativecoverage/encoding/artifacteffects notexecuted"
+    }
+  ],
+  "passed": 12,
+  "failed": 0,
+  "targetResults": [
+    {
+      "package": "architecture-validator",
+      "A": {
+        "agent": "actual-captured-target-A"
+      },
+      "B": {
+        "agent": "actual-captured-target-B"
+      },
+      "negative": {},
+      "roleRemoved": true,
+      "scope": "Strictcomplete proposednewprofile configschema only, realrole roster/source/grants/capturedgeneration/legacycompatibility notaccepted. Busterfalse cannottrimmandatorynativecoverage; summaryhistoricalabsence requiresseparatepinnedcompatdefinition."
+    },
+    {
+      "package": "buster-quality-gate",
+      "A": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": true
+      },
+      "B": {
+        "agent": "actual-captured-target-A",
+        "testAgentEnabled": false
+      },
+      "negative": {
+        "agent": "actual-captured-target-A"
+      },
+      "roleRemoved": true,
+      "scope": "Strictcomplete proposednewprofile configschema only, realrole roster/source/grants/capturedgeneration/legacycompatibility notaccepted. Busterfalse cannottrimmandatorynativecoverage; summaryhistoricalabsence requiresseparatepinnedcompatdefinition."
+    },
+    {
+      "package": "case-study",
+      "A": {
+        "agent": "actual-captured-target-A"
+      },
+      "B": {
+        "agent": "actual-captured-target-B"
+      },
+      "negative": {},
+      "roleRemoved": true,
+      "scope": "Strictcomplete proposednewprofile configschema only, realrole roster/source/grants/capturedgeneration/legacycompatibility notaccepted. Busterfalse cannottrimmandatorynativecoverage; summaryhistoricalabsence requiresseparatepinnedcompatdefinition."
+    },
+    {
+      "package": "implementation-agent",
+      "A": {
+        "agent": "actual-captured-target-A"
+      },
+      "B": {
+        "agent": "actual-captured-target-B"
+      },
+      "negative": {},
+      "roleRemoved": true,
+      "scope": "Strictcomplete proposednewprofile configschema only, realrole roster/source/grants/capturedgeneration/legacycompatibility notaccepted. Busterfalse cannottrimmandatorynativecoverage; summaryhistoricalabsence requiresseparatepinnedcompatdefinition."
+    },
+    {
+      "package": "pipeline-review",
+      "A": {
+        "agent": "actual-captured-target-A"
+      },
+      "B": {
+        "agent": "actual-captured-target-B"
+      },
+      "negative": {},
+      "roleRemoved": true,
+      "scope": "Strictcomplete proposednewprofile configschema only, realrole roster/source/grants/capturedgeneration/legacycompatibility notaccepted. Busterfalse cannottrimmandatorynativecoverage; summaryhistoricalabsence requiresseparatepinnedcompatdefinition."
+    },
+    {
+      "package": "project-summary",
+      "A": {
+        "deliveryManifestEncoding": "delivery-manifest.utf16-v1"
+      },
+      "B": {
+        "deliveryManifestEncoding": "delivery-manifest.utf16-v1"
+      },
+      "negative": {},
+      "roleRemoved": true,
+      "scope": "Strictcomplete proposednewprofile configschema only, realrole roster/source/grants/capturedgeneration/legacycompatibility notaccepted. Busterfalse cannottrimmandatorynativecoverage; summaryhistoricalabsence requiresseparatepinnedcompatdefinition."
+    }
+  ],
+  "controls": {
+    "actualEarlyConfigurationReaderNegatives": [
+      {
+        "package": "architecture-validator",
+        "actualEarlyAgentBlankRejected": true
+      },
+      {
+        "package": "implementation-agent",
+        "actualEarlyAgentBlankRejected": true
+      },
+      {
+        "package": "buster-quality-gate",
+        "actualEarlyAgentBlankRejected": true
+      },
+      {
+        "package": "case-study",
+        "actualEarlyAgentBlankRejected": true
+      },
+      {
+        "package": "pipeline-review",
+        "actualEarlyAgentBlankRejected": true
+      }
+    ],
+    "busterFalseDoesNotBypassMandatoryPlan": true,
+    "absentBusterFlagDefaultsTrue": true,
+    "capabilityCalls": 0,
+    "inputScope": "Intentionally incomplete tasks used ONLY to reach actualearlynegativeconfig/providerrequired guards; NOT fullreal task/registeredpositive/EFFECT acceptance. Protectivecontext trapzerocalls not fake dispatch."
+  },
+  "sourceDigests": {
+    "skills/nova/plugins/architecture-validator/package.json": "d933be9975abc5f69b08f2d8bb28480264cfa09e1d04e7f1206c1e69e663e3da",
+    "skills/nova/plugins/architecture-validator/plugin.json": "915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792",
+    "skills/nova/plugins/architecture-validator/tsconfig.json": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+    "skills/nova/plugins/architecture-validator/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+    "skills/nova/plugins/architecture-validator/schemas/input.schema.json": "105defd63fd5abe3baf1993b7477e13ef16010213ec5548051908433131f9d56",
+    "skills/nova/plugins/architecture-validator/schemas/config.schema.json": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+    "skills/nova/plugins/architecture-validator/src/output.ts": "8b6ee1fe1f98b019f0fda4eb52f4f3786863885f52c67f9db3e7d667416d93ea",
+    "skills/nova/plugins/architecture-validator/src/protocol.ts": "46c3f8894c19ac12c8ca5c35493ef47ace66a8d8092056e102d513c93f29b07a",
+    "skills/nova/plugins/architecture-validator/src/stage.ts": "1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc",
+    "skills/nova/plugins/implementation-agent/package.json": "a2b40ca7dd4f1e3007696ef03304f80e7c31e4e8ab5834393bf69d2ca3d698cb",
+    "skills/nova/plugins/implementation-agent/plugin.json": "fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9",
+    "skills/nova/plugins/implementation-agent/tsconfig.json": "14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472",
+    "skills/nova/plugins/implementation-agent/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+    "skills/nova/plugins/implementation-agent/schemas/input.schema.json": "f2c8f956678a98cce81e8d6bd41fa444588ceb1519a9ca7a7f5db509f9478d5c",
+    "skills/nova/plugins/implementation-agent/schemas/config.schema.json": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+    "skills/nova/plugins/implementation-agent/src/protocol.ts": "d1d2e0c5d82e37e3a3e51e89f1d002e1623a06fdcd0a4b9add816bf563b9cbe6",
+    "skills/nova/plugins/implementation-agent/src/workspace.ts": "14cdeb066a35cbb2564928ca8ff8f4fa5ce2bd95a36c3607bda011f9c0e79c34",
+    "skills/nova/plugins/implementation-agent/src/stage.ts": "4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870",
+    "skills/nova/plugins/implementation-agent/src/repair-evidence.ts": "0ba38e4004d0b9c3058fdce363611beeb6170ee3cb37424da599eb3757fa5c99",
+    "skills/nova/plugins/buster-quality-gate/package.json": "ce8877431dc40bc76b3f76156eebdf531ed92a00a6b5cb0c9eb16bb38f40f5b3",
+    "skills/nova/plugins/buster-quality-gate/plugin.json": "19b03b5c61f4b6decbf06a650a3824db02f61ba010939246a7d1bd35ae3e6966",
+    "skills/nova/plugins/buster-quality-gate/tsconfig.json": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+    "skills/nova/plugins/buster-quality-gate/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+    "skills/nova/plugins/buster-quality-gate/schemas/input.schema.json": "2d6fb0f0178d3b361d417a74303fe04c188a353114735e5809a8abd35fbd34f7",
+    "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json": "77f3bc2d1d9a25347219cbb5f11d8580e57390abee3936a6de044b6d5cea68c5",
+    "skills/nova/plugins/buster-quality-gate/src/protocol.ts": "9f85b213f272e143dbc7a9736666054941b4d21c231afdbfc07b8e539c907711",
+    "skills/nova/plugins/buster-quality-gate/src/stage.ts": "3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76",
+    "skills/nova/plugins/case-study/package.json": "4c8729dfdf523befdb7dfc2551ba543780d0171bb6d3998ac387a6d50e9668a5",
+    "skills/nova/plugins/case-study/plugin.json": "e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e",
+    "skills/nova/plugins/case-study/tsconfig.json": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+    "skills/nova/plugins/case-study/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+    "skills/nova/plugins/case-study/schemas/input.schema.json": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+    "skills/nova/plugins/case-study/schemas/config.schema.json": "4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895",
+    "skills/nova/plugins/case-study/src/protocol.ts": "3ff3c3dc70f2967d194896205cb1c7a2f7226d84de2a042f6c7bae46a25588c6",
+    "skills/nova/plugins/case-study/src/stage.ts": "a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9",
+    "skills/nova/plugins/pipeline-review/package.json": "1f587ae529db6a8c3ede69be6ca14651d989a80e884d111888469bd5b30da888",
+    "skills/nova/plugins/pipeline-review/plugin.json": "113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab",
+    "skills/nova/plugins/pipeline-review/tsconfig.json": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+    "skills/nova/plugins/pipeline-review/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+    "skills/nova/plugins/pipeline-review/schemas/input.schema.json": "57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b",
+    "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json": "905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530",
+    "skills/nova/plugins/pipeline-review/schemas/config.schema.json": "49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a",
+    "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c",
+    "skills/nova/plugins/pipeline-review/src/evidence-bundle.ts": "ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd",
+    "skills/nova/plugins/pipeline-review/src/protocol.ts": "df3e02fd4c7a13aa38ce93292a55da9cb6c712799e813cbe0c8a283fd769081f",
+    "skills/nova/plugins/pipeline-review/src/stage.ts": "e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a",
+    "skills/nova/plugins/project-summary/package.json": "5d55bac5f34dbb15dc796f54e09e4069e2b23b668461b12f5dcf6c3ee0508f8e",
+    "skills/nova/plugins/project-summary/plugin.json": "995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454",
+    "skills/nova/plugins/project-summary/tsconfig.json": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+    "skills/nova/plugins/project-summary/schemas/result.schema.json": "6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d",
+    "skills/nova/plugins/project-summary/schemas/input.schema.json": "451591d9b115aa5aae88c4a08301845316f1207cdd24ed9baf7639adc83439cf",
+    "skills/nova/plugins/project-summary/schemas/config.schema.json": "7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9",
+    "skills/nova/plugins/project-summary/src/summary.ts": "bb82063929e9100dd42c3dff541eca77be2cfa624f8b5fd8733e773acb7ce7c5",
+    "skills/nova/plugins/project-summary/src/review-semantics.ts": "a14a5e8039d481063d2439a8c1060ca414012f7ba55b73ee153d2317effc2104",
+    "skills/nova/plugins/project-summary/src/stage.ts": "b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee"
+  },
+  "testDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/check.mjs": "210f30e7cfcafb6a1d345d7ee47acd13a36671d83873ae1a9c2c2bb0f634a0fb"
+  },
+  "inputDigests": {
+    "docs/review/evidence/config-acceptance/runtime/batches/6606af9-agent-stage-config-16/contracts.json": "99c9f1b8fd2ff55e594833dc7cab7aec8abb19aeeffd15eaf0714c50d4b4e071",
+    "package-lock.json": "c7b124ab4de93c983eebfd13f859cd328b7e7a823fe7dc662f9b6e0cf0ed736b"
+  },
+  "scope": "Actualsource/owning schema/proposed strict profile definitions/earlyexportednegative readerguard only. Realstages/SDKdispatch/model/host/nativecoverage/evidence/encoding/source/grants/role/generation effects notaccepted"
+}

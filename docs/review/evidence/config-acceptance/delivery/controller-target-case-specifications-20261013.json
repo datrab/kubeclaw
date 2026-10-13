@@ -112,7 +112,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -122,9 +123,37 @@
       "targetDomain": {
         "domain": {
           "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "constFromAuthor": {
+            "settingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+            "source": {
+              "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+              "field": "/settings/clusterInvokers/shared/leaseApiGroup",
+              "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+              "profileSources": {
+                "base": {
+                  "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+                  "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+                },
+                "runtime": {
+                  "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+                  "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+                }
+              }
+            },
+            "caseIds": [
+              "CMP-C1-VAL-buster-engine",
+              "CMP-C1-EFFECT-buster-engine",
+              "CMP-C1-DELIVERY",
+              "CMP-C1-MUT",
+              "CMP-C5-BIND",
+              "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiGroup"
+            ],
+            "meaning": "existing sole CMP sharedlease author; controller ENV/CRD/RBAC/client are typedreadonly projections, no Delivery writer"
+          },
+          "currentlySourceRegisteredValues": [
+            "kubeclaw.forgestack.ai"
+          ],
+          "semantic": "only source-established coordinated leaseCRD/client/RBAC/finalizer protocol; unsupportedgroup/version targetrejectsbefore API effects, no fabricated secondregisteredprotocol. Explicit H compatiblemigration needed for newCMP selection."
         },
         "required": true,
         "proposedOnly": true,
@@ -265,7 +294,8 @@
         "unsupportedactualimage/Go/amd64/CA/CRD/API/RBAC/clock/provider fixture setup neversemanticnegativekill"
       ],
       "caseIds": [
-        "DLV-CASE-SHARED-LEASE-PROTOCOL"
+        "DLV-CASE-SHARED-LEASE-PROTOCOL",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -275,9 +305,37 @@
       "targetDomain": {
         "domain": {
           "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "constFromAuthor": {
+            "settingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiVersion",
+            "source": {
+              "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+              "field": "/settings/clusterInvokers/shared/leaseApiVersion",
+              "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+              "profileSources": {
+                "base": {
+                  "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+                  "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+                },
+                "runtime": {
+                  "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+                  "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+                }
+              }
+            },
+            "caseIds": [
+              "CMP-C1-VAL-buster-engine",
+              "CMP-C1-EFFECT-buster-engine",
+              "CMP-C1-DELIVERY",
+              "CMP-C1-MUT",
+              "CMP-C5-BIND",
+              "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiVersion"
+            ],
+            "meaning": "existing sole CMP sharedlease author; controller ENV/CRD/RBAC/client are typedreadonly projections, no Delivery writer"
+          },
+          "currentlySourceRegisteredValues": [
+            "v1alpha1"
+          ],
+          "semantic": "only source-established coordinated leaseCRD/client/RBAC/finalizer protocol; unsupportedgroup/version targetrejectsbefore API effects, no fabricated secondregisteredprotocol. Explicit H compatiblemigration needed for newCMP selection."
         },
         "required": true,
         "proposedOnly": true,
@@ -418,7 +476,8 @@
         "unsupportedactualimage/Go/amd64/CA/CRD/API/RBAC/clock/provider fixture setup neversemanticnegativekill"
       ],
       "caseIds": [
-        "DLV-CASE-SHARED-LEASE-PROTOCOL"
+        "DLV-CASE-SHARED-LEASE-PROTOCOL",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -427,10 +486,16 @@
       "field": "BUSTER_ALLOWED_NAMESPACE_PREFIXES",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 63,
+            "pattern": "^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+          },
+          "semantic": "targetcanonicalDNSlabelprefix and resulting actual namespace<=63 underexact source normalizeLeaseNamespaceName; sourceCSVacceptsrawprefixstrings and emptydefaults[test]. Broker controllerprefix scope NOT Corecapabilityprefix alias byequal text. Active A originalnamespace/ownership/cfg requiredfor cleanup despiteBprefixchanges."
         },
         "required": true,
         "proposedOnly": true,
@@ -552,7 +617,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -561,10 +627,11 @@
       "field": "BUSTER_DEFAULT_TTL_SECONDS",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "source startup envInt accepts malformedfallback/negative/durationoverflow; validateLeaseSpec taskTTL>=60 and above maxreject whileexpiresAt separatelyclampsandinvalidCreationTimestamp\u2192now. Targetrequireddefault<=max positive duration/calendar-safe; rejectdefaultfallback/currentnow-retarget for existing records. Preserve A actual original expiry, B newadmissions only."
         },
         "required": true,
         "proposedOnly": true,
@@ -686,7 +753,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -695,10 +763,11 @@
       "field": "BUSTER_MAX_TTL_SECONDS",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "source startup envInt accepts malformedfallback/negative/durationoverflow; validateLeaseSpec taskTTL>=60 and above maxreject whileexpiresAt separatelyclampsandinvalidCreationTimestamp\u2192now. Targetrequireddefault<=max positive duration/calendar-safe; rejectdefaultfallback/currentnow-retarget for existing records. Preserve A actual original expiry, B newadmissions only."
         },
         "required": true,
         "proposedOnly": true,
@@ -820,7 +889,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -932,7 +1002,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -1044,7 +1115,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -1156,7 +1228,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -1268,7 +1341,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -1277,10 +1351,35 @@
       "field": "BUSTER_ALLOWED_ACCESS_JSON",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "array",
+          "minItems": 1,
+          "uniqueSubjects": true,
+          "items": {
+            "type": "object",
+            "required": [
+              "subject",
+              "modes"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "subject": {
+                "type": "string",
+                "semantic": "exact source parseServiceAccountRef namespace/name: sanitizeDNSLabel(value)==value for bothnames; targetfullyqualified mandatoryno defaultnamespace"
+              },
+              "modes": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "tester",
+                    "deployer"
+                  ]
+                }
+              }
+            }
+          },
+          "semantic": "sourceJSON map unknown/duplicatefields and repeatsubjectmerge/emptymodes allowed; targetstrictduplicate/unknown/nonempty beforeeffect. Actual RoleBindings/TokenReview/provider/subject/namespaceUIDgrants separate, no permissionfromname."
         },
         "required": true,
         "proposedOnly": true,
@@ -1402,7 +1501,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -1500,7 +1600,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -1509,10 +1610,11 @@
       "field": "BUSTER_CONTROLLER_POLL_MS",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036854,
+          "unit": "ms",
+          "semantic": "exactcontrollerPollInterval ParseInt64 durationoverflowguard, native missingdefaults3000 sourcecounterexample. targetexplicitbefore loop; time.Sleep not businesslease/retrydeadline."
         },
         "required": true,
         "proposedOnly": true,
@@ -1620,7 +1722,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -1718,7 +1821,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -1727,10 +1831,13 @@
       "field": "BUSTER_ALLOWED_SOURCE_SECRETS",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "nativeDomain": "actual SecretDNSsubdomain<=253, target stricter than Go validSecretRefName ASCIIwordregex acceptinguppercase/dots/underscore, no APIexistence inferred"
+          },
+          "semantic": "[] explicitlypermits no sourceSecretcopies, validleastprivilege. Captureexact selectedcontroller namespace/sourceprovider/keys/readers/writers/grants for eachactual lease; no changedBallowlist reauthority retainedA."
         },
         "required": true,
         "proposedOnly": true,
@@ -1838,7 +1945,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -1957,7 +2065,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -2078,7 +2187,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -2240,7 +2350,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -2359,7 +2470,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -2478,7 +2590,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -2596,7 +2709,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -2715,7 +2829,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -2836,7 +2951,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -2998,7 +3114,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -3119,7 +3236,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -3245,7 +3363,8 @@
       ],
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -3254,10 +3373,11 @@
       "field": "httpClientTimeoutSeconds",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "Go time.Duration/int64ns bound, not Node timer cap. targetreadHeader<=readTimeout and handler<=writeTimeout; clientcontext vshttp.Timeout distinct. Serverrefresh/skew are distinctactualcallers from Coreclient age/skew, NO equalnumeric owneralias. Range/calendar/monotonicactualselectedGo/clock/source constraints checkedbefore effect."
         },
         "required": true,
         "proposedOnly": true,
@@ -3347,7 +3467,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -3356,10 +3477,11 @@
       "field": "runtimeSecurityRefreshSeconds",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "Go time.Duration/int64ns bound, not Node timer cap. targetreadHeader<=readTimeout and handler<=writeTimeout; clientcontext vshttp.Timeout distinct. Serverrefresh/skew are distinctactualcallers from Coreclient age/skew, NO equalnumeric owneralias. Range/calendar/monotonicactualselectedGo/clock/source constraints checkedbefore effect."
         },
         "required": true,
         "proposedOnly": true,
@@ -3449,7 +3571,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -3458,10 +3581,11 @@
       "field": "runtimeSecurityFutureSkewSeconds",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "Go time.Duration/int64ns bound, not Node timer cap. targetreadHeader<=readTimeout and handler<=writeTimeout; clientcontext vshttp.Timeout distinct. Serverrefresh/skew are distinctactualcallers from Coreclient age/skew, NO equalnumeric owneralias. Range/calendar/monotonicactualselectedGo/clock/source constraints checkedbefore effect."
         },
         "required": true,
         "proposedOnly": true,
@@ -3551,7 +3675,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -3560,10 +3685,11 @@
       "field": "runtimeSecurityMaximumFindings",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "count",
+          "semantic": "targetwithinactualselectedGo int/MaxBytesReader/httpreadlimit arithmetic and physicaldeclaredservicebuffer budget; MaxHeaderBytes nativeoverhead separate. Findings count>=1 and serializedarraycap>=actualGoJSONcriticaloverflow sentinel+array punctuation for maximum supportedtotal; too-small currentstyle would panic removing emptylast. Preservecriticalsentinel/total/omitted counters+digerst sortedIDs, neverfalseclean. Whole kubectl encodedlease/status/metadata mustfit actual CMP runtimeSecurity.maximumOutputBytes (distinctauthor/caller); metadata/prettyJSON overhead not inferred fromarraycap; oversize/unavailablefailclosed. No Storequota/capacity inferred."
         },
         "required": true,
         "proposedOnly": true,
@@ -3653,7 +3779,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -3662,10 +3789,11 @@
       "field": "runtimeSecurityMaximumSerializedBytes",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "bytes",
+          "semantic": "targetwithinactualselectedGo int/MaxBytesReader/httpreadlimit arithmetic and physicaldeclaredservicebuffer budget; MaxHeaderBytes nativeoverhead separate. Findings count>=1 and serializedarraycap>=actualGoJSONcriticaloverflow sentinel+array punctuation for maximum supportedtotal; too-small currentstyle would panic removing emptylast. Preservecriticalsentinel/total/omitted counters+digerst sortedIDs, neverfalseclean. Whole kubectl encodedlease/status/metadata mustfit actual CMP runtimeSecurity.maximumOutputBytes (distinctauthor/caller); metadata/prettyJSON overhead not inferred fromarraycap; oversize/unavailablefailclosed. No Storequota/capacity inferred."
         },
         "required": true,
         "proposedOnly": true,
@@ -3755,7 +3883,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -3764,10 +3893,11 @@
       "field": "readyReadHeaderTimeoutSeconds",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "Go time.Duration/int64ns bound, not Node timer cap. targetreadHeader<=readTimeout and handler<=writeTimeout; clientcontext vshttp.Timeout distinct. Serverrefresh/skew are distinctactualcallers from Coreclient age/skew, NO equalnumeric owneralias. Range/calendar/monotonicactualselectedGo/clock/source constraints checkedbefore effect."
         },
         "required": true,
         "proposedOnly": true,
@@ -3857,7 +3987,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -3866,10 +3997,11 @@
       "field": "readyReadTimeoutSeconds",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "Go time.Duration/int64ns bound, not Node timer cap. targetreadHeader<=readTimeout and handler<=writeTimeout; clientcontext vshttp.Timeout distinct. Serverrefresh/skew are distinctactualcallers from Coreclient age/skew, NO equalnumeric owneralias. Range/calendar/monotonicactualselectedGo/clock/source constraints checkedbefore effect."
         },
         "required": true,
         "proposedOnly": true,
@@ -3959,7 +4091,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -3968,10 +4101,11 @@
       "field": "readyWriteTimeoutSeconds",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "Go time.Duration/int64ns bound, not Node timer cap. targetreadHeader<=readTimeout and handler<=writeTimeout; clientcontext vshttp.Timeout distinct. Serverrefresh/skew are distinctactualcallers from Coreclient age/skew, NO equalnumeric owneralias. Range/calendar/monotonicactualselectedGo/clock/source constraints checkedbefore effect."
         },
         "required": true,
         "proposedOnly": true,
@@ -4061,7 +4195,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -4070,10 +4205,11 @@
       "field": "readyIdleTimeoutSeconds",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "Go time.Duration/int64ns bound, not Node timer cap. targetreadHeader<=readTimeout and handler<=writeTimeout; clientcontext vshttp.Timeout distinct. Serverrefresh/skew are distinctactualcallers from Coreclient age/skew, NO equalnumeric owneralias. Range/calendar/monotonicactualselectedGo/clock/source constraints checkedbefore effect."
         },
         "required": true,
         "proposedOnly": true,
@@ -4163,7 +4299,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -4172,10 +4309,11 @@
       "field": "readyMaxHeaderBytes",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "bytes",
+          "semantic": "targetwithinactualselectedGo int/MaxBytesReader/httpreadlimit arithmetic and physicaldeclaredservicebuffer budget; MaxHeaderBytes nativeoverhead separate. Findings count>=1 and serializedarraycap>=actualGoJSONcriticaloverflow sentinel+array punctuation for maximum supportedtotal; too-small currentstyle would panic removing emptylast. Preservecriticalsentinel/total/omitted counters+digerst sortedIDs, neverfalseclean. Whole kubectl encodedlease/status/metadata mustfit actual CMP runtimeSecurity.maximumOutputBytes (distinctauthor/caller); metadata/prettyJSON overhead not inferred fromarraycap; oversize/unavailablefailclosed. No Storequota/capacity inferred."
         },
         "required": true,
         "proposedOnly": true,
@@ -4265,7 +4403,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -4274,10 +4413,11 @@
       "field": "readyHandlerTimeoutSeconds",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "Go time.Duration/int64ns bound, not Node timer cap. targetreadHeader<=readTimeout and handler<=writeTimeout; clientcontext vshttp.Timeout distinct. Serverrefresh/skew are distinctactualcallers from Coreclient age/skew, NO equalnumeric owneralias. Range/calendar/monotonicactualselectedGo/clock/source constraints checkedbefore effect."
         },
         "required": true,
         "proposedOnly": true,
@@ -4367,7 +4507,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -4376,10 +4517,11 @@
       "field": "readyMaximumBodyBytes",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "bytes",
+          "semantic": "targetwithinactualselectedGo int/MaxBytesReader/httpreadlimit arithmetic and physicaldeclaredservicebuffer budget; MaxHeaderBytes nativeoverhead separate. Findings count>=1 and serializedarraycap>=actualGoJSONcriticaloverflow sentinel+array punctuation for maximum supportedtotal; too-small currentstyle would panic removing emptylast. Preservecriticalsentinel/total/omitted counters+digerst sortedIDs, neverfalseclean. Whole kubectl encodedlease/status/metadata mustfit actual CMP runtimeSecurity.maximumOutputBytes (distinctauthor/caller); metadata/prettyJSON overhead not inferred fromarraycap; oversize/unavailablefailclosed. No Storequota/capacity inferred."
         },
         "required": true,
         "proposedOnly": true,
@@ -4469,7 +4611,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -4478,10 +4621,11 @@
       "field": "productHandlerTimeoutSeconds",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "Go time.Duration/int64ns bound, not Node timer cap. targetreadHeader<=readTimeout and handler<=writeTimeout; clientcontext vshttp.Timeout distinct. Serverrefresh/skew are distinctactualcallers from Coreclient age/skew, NO equalnumeric owneralias. Range/calendar/monotonicactualselectedGo/clock/source constraints checkedbefore effect."
         },
         "required": true,
         "proposedOnly": true,
@@ -4571,7 +4715,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -4580,10 +4725,11 @@
       "field": "productMaximumBodyBytes",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "bytes",
+          "semantic": "targetwithinactualselectedGo int/MaxBytesReader/httpreadlimit arithmetic and physicaldeclaredservicebuffer budget; MaxHeaderBytes nativeoverhead separate. Findings count>=1 and serializedarraycap>=actualGoJSONcriticaloverflow sentinel+array punctuation for maximum supportedtotal; too-small currentstyle would panic removing emptylast. Preservecriticalsentinel/total/omitted counters+digerst sortedIDs, neverfalseclean. Whole kubectl encodedlease/status/metadata mustfit actual CMP runtimeSecurity.maximumOutputBytes (distinctauthor/caller); metadata/prettyJSON overhead not inferred fromarraycap; oversize/unavailablefailclosed. No Storequota/capacity inferred."
         },
         "required": true,
         "proposedOnly": true,
@@ -4673,7 +4819,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -4682,10 +4829,11 @@
       "field": "defaultDemoRetentionSeconds",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "newadmission absentrequest defaultoperatorpolicy; sourceparseDemoRetention + actual ready/expiresYear1..9999. Historicalschema demo-readiness.v1 absentretention means fixed604800 sourcecompat; NEVER applyBdefault tolegacyA. C1 migration persist explicit originalv2 retention before C3change; sourcecurrent constantshared legacy/default is counterexample."
         },
         "required": true,
         "proposedOnly": true,
@@ -4775,7 +4923,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     },
@@ -4784,10 +4933,10 @@
       "field": "maximumDemoRetentionSeconds",
       "targetDomain": {
         "domain": {
-          "type": "string",
-          "minLength": 1,
-          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
-          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+          "type": "integer",
+          "const": 9223372036,
+          "unit": "seconds",
+          "disposition": "technicalprotocol bound floorMaxInt64/time.Second, NOT editableoperationalmaximum; target defaultretention still adjustable"
         },
         "required": true,
         "proposedOnly": true,
@@ -4877,7 +5026,8 @@
       ],
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "priorState": "capturednonempty A actuallease/namespace/resourceUID/status/RV/source/provider/grants/expiry/issuer refs beforeB; parentuniversalclosed IDs pending explicitly"
     }
@@ -4908,7 +5058,7 @@
   },
   "remainingExactContracts": [
     "selected dynamic fulllease/metadata/kubectl prettyJSON wrapper size bound versus actual CMP runtimeSecurity.maximumOutputBytes; array512KiB is not wholeoutput cap and failure muststay unavailable/critical",
-    "current Go API successful/error HTTP response decoder/body is not bounded by findingsarray or Ready/Product MaxBytesReader; separate samecontroller policy/source field needed next scope",
-    "stored A lease/finalizer/access/TTL/namespace/provider/issuer epoch compatibility and old schema-v1 fixed604800 retention must be concretely encoded/migrated before B process; parent universal originalModule/grant/cleanup refs not approved"
+    "current Go API successful/error HTTP response decoder/body remains unbounded; concrete same-controller policy/response uncertainty/source fields now proposed in controller-response-epoch-contracts-6606af9-20261013.json, not implementation/native acceptance",
+    "complete controller-local serialized epoch and six lifecycle fixtures now defined in controller-original-epoch-fixture-identities-6606af9-20261013.json; authenticated originalA receipts/actual native CAS migration still prerequisites and parent universal originalModule/grant/cleanup refs not approved"
   ]
 }

@@ -1,0 +1,2120 @@
+SOURCE skills/nova/plugins/architecture-validator/package.json SHA256 d933be9975abc5f69b08f2d8bb28480264cfa09e1d04e7f1206c1e69e663e3da
+1: {
+2:   "name": "@kubeclaw/plugin-architecture-validator",
+3:   "private": true,
+4:   "type": "module",
+5:   "scripts": {
+6:     "build": "tsc --noEmit -p tsconfig.json",
+7:     "test": "node tests/protocol.unit.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+8:   },
+9:   "dependencies": {
+10:     "@kubeclaw/plugin-sdk": "*"
+11:   }
+12: }
+SOURCE skills/nova/plugins/architecture-validator/plugin.json SHA256 915926814bba76b52d9cce47961da67e43cf5ade85c077a417272023c5730792
+1: {
+2:   "id": "kubeclaw.architecture-validator",
+3:   "apiVersion": "pipeline-plugin-v2",
+4:   "packageVersion": "1.0.0",
+5:   "stages": [
+6:     {
+7:       "id": "architecture",
+8:       "type": "kubeclaw.validate.architecture",
+9:       "module": "src/stage.ts",
+10:       "export": "execute",
+11:       "requiredCapabilities": [
+12:         "runtime.dispatch",
+13:         "artifacts.write",
+14:         "git.repository.read",
+15:         "artifacts.read"
+16:       ],
+17:       "configSchema": "schemas/config.schema.json",
+18:       "inputSchema": "schemas/input.schema.json",
+19:       "resultSchema": "schemas/result.schema.json"
+20:     }
+21:   ],
+22:   "observers": [],
+23:   "adapters": []
+24: }
+SOURCE skills/nova/plugins/architecture-validator/tsconfig.json SHA256 e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b
+1: {
+2:   "extends": "../../../../tsconfig.base.json",
+3:   "compilerOptions": {
+4:     "rootDir": "src",
+5:     "exactOptionalPropertyTypes": true,
+6:     "noUncheckedIndexedAccess": true
+7:   },
+8:   "include": [
+9:     "src/**/*.ts"
+10:   ]
+11: }
+SOURCE skills/nova/plugins/architecture-validator/schemas/result.schema.json SHA256 6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","$ref":"https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult"}
+SOURCE skills/nova/plugins/architecture-validator/schemas/input.schema.json SHA256 105defd63fd5abe3baf1993b7477e13ef16010213ec5548051908433131f9d56
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "required": [
+6:     "task"
+7:   ],
+8:   "properties": {
+9:     "task": {
+10:       "type": "string",
+11:       "minLength": 1
+12:     },
+13:     "architecture": {
+14:       "type": "object",
+15:       "additionalProperties": true
+16:     },
+17:     "source": {
+18:       "type": "object",
+19:       "additionalProperties": false,
+20:       "required": [
+21:         "projectId",
+22:         "repositoryRoot",
+23:         "architectureRef",
+24:         "paths"
+25:       ],
+26:       "properties": {
+27:         "projectId": {
+28:           "type": "string",
+29:           "minLength": 1
+30:         },
+31:         "repositoryRoot": {
+32:           "type": "string",
+33:           "minLength": 1
+34:         },
+35:         "architectureRef": {
+36:           "type": "string",
+37:           "minLength": 1
+38:         },
+39:         "paths": {
+40:           "type": "array",
+41:           "minItems": 1,
+42:           "maxItems": 128,
+43:           "uniqueItems": true,
+44:           "items": {
+45:             "type": "string",
+46:             "minLength": 1
+47:           }
+48:         },
+49:         "identityEncoding": {
+50:           "const": "kubeclaw-json.utf16.v1"
+51:         }
+52:       }
+53:     },
+54:     "sourceBinding": {
+55:       "type": "object",
+56:       "additionalProperties": false,
+57:       "required": [
+58:         "stageId",
+59:         "inputDigest"
+60:       ],
+61:       "properties": {
+62:         "stageId": {
+63:           "type": "string",
+64:           "minLength": 1
+65:         },
+66:         "inputDigest": {
+67:           "type": "string",
+68:           "pattern": "^sha256:[a-f0-9]{64}$"
+69:         },
+70:         "reviewStageId": {
+71:           "type": "string",
+72:           "minLength": 1
+73:         },
+74:         "identityEncoding": {
+75:           "const": "kubeclaw-json.utf16.v1"
+76:         }
+77:       }
+78:     }
+79:   }
+80: }
+SOURCE skills/nova/plugins/architecture-validator/schemas/config.schema.json SHA256 49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["agent"],"properties":{"agent":{"type":"string","minLength":1},"agentRole":{"type":"string","minLength":1}}}
+SOURCE skills/nova/plugins/architecture-validator/src/output.ts SHA256 8b6ee1fe1f98b019f0fda4eb52f4f3786863885f52c67f9db3e7d667416d93ea
+1: export interface ArchitectureOutput {
+2:   readonly verdict: 'passed' | 'blocked';
+3:   readonly summary: string;
+4:   readonly findings: readonly ArchitectureFinding[];
+5:   readonly checkedFiles: readonly string[];
+6: }
+7: 
+8: interface ArchitectureFinding {
+9:   readonly id: string;
+10:   readonly severity: 'blocking' | 'error' | 'warn' | 'info';
+11:   readonly scope: 'domain_model' | 'integration_boundary';
+12:   readonly paths: readonly string[];
+13:   readonly explanation: string;
+14:   readonly remediation: string;
+15: }
+16: 
+17: function strings(value: unknown, label: string): readonly string[] {
+18:   if (!Array.isArray(value)) throw new Error(`${label} must be an array`);
+19:   return value.map((entry) => {
+20:     if (typeof entry !== 'string' || !entry.trim()) throw new Error(`${label} entries must be non-empty strings`);
+21:     return entry.trim();
+22:   });
+23: }
+24: 
+25: function nonEmpty(value: unknown, label: string, max = 8192): string {
+26:   if (typeof value !== 'string' || !value.trim() || value.length > max || /[\0\r]/u.test(value)) {
+27:     throw new Error(`${label} must be a non-empty safe string`);
+28:   }
+29:   return value.trim();
+30: }
+31: 
+32: function findings(value: unknown): readonly ArchitectureFinding[] {
+33:   if (!Array.isArray(value)) throw new Error('findings must be an array');
+34:   if (value.length > 128) throw new Error('findings exceeds the maximum item count');
+35:   return value.map((entry, index) => {
+36:     if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+37:       throw new Error(`findings[${index}] must be an object`);
+38:     }
+39:     const finding = entry as Record<string, unknown>;
+40:     const allowed = new Set(['id', 'severity', 'scope', 'paths', 'explanation', 'remediation']);
+41:     for (const key of Object.keys(finding)) {
+42:       if (!allowed.has(key)) throw new Error(`findings[${index}] contains unknown field: ${key}`);
+43:     }
+44:     if (!['blocking', 'error', 'warn', 'info'].includes(String(finding.severity))) {
+45:       throw new Error(`findings[${index}] severity is invalid`);
+46:     }
+47:     if (!['domain_model', 'integration_boundary'].includes(String(finding.scope))) {
+48:       throw new Error(`findings[${index}] scope is invalid`);
+49:     }
+50:     return {
+51:       id: nonEmpty(finding.id, `findings[${index}].id`, 256),
+52:       severity: finding.severity as ArchitectureFinding['severity'],
+53:       scope: finding.scope as ArchitectureFinding['scope'],
+54:       paths: strings(finding.paths, `findings[${index}].paths`),
+55:       explanation: nonEmpty(finding.explanation, `findings[${index}].explanation`),
+56:       remediation: nonEmpty(finding.remediation, `findings[${index}].remediation`),
+57:     };
+58:   });
+59: }
+60: 
+61: export function parseArchitectureOutput(response: Readonly<Record<string, unknown>>): ArchitectureOutput {
+62:   const raw = response.result;
+63:   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('architecture response result must be an object');
+64:   const value = raw as Record<string, unknown>;
+65:   const allowed = new Set(['verdict', 'summary', 'findings', 'checkedFiles']);
+66:   for (const key of Object.keys(value)) if (!allowed.has(key)) throw new Error(`architecture response contains unknown field: ${key}`);
+67:   if (!['passed', 'blocked'].includes(String(value.verdict))) throw new Error('architecture verdict is invalid');
+68:   if (typeof value.summary !== 'string' || !value.summary.trim()) throw new Error('architecture summary is required');
+69:   const output: ArchitectureOutput = {
+70:     verdict: value.verdict as ArchitectureOutput['verdict'],
+71:     summary: value.summary.trim(),
+72:     findings: findings(value.findings),
+73:     checkedFiles: strings(value.checkedFiles, 'checkedFiles'),
+74:   };
+75:   if (output.verdict === 'passed' && output.checkedFiles.length === 0) throw new Error('passed verdict requires checked files');
+76:   if (output.verdict === 'passed' && output.findings.some((finding) => finding.severity === 'blocking')) {
+77:     throw new Error('passed verdict contradicts blocking findings');
+78:   }
+79:   if (output.verdict === 'blocked' && !output.findings.some((finding) => finding.severity === 'blocking')) {
+80:     throw new Error('blocked verdict requires a blocking finding');
+81:   }
+82:   return output;
+83: }
+SOURCE skills/nova/plugins/architecture-validator/src/protocol.ts SHA256 46c3f8894c19ac12c8ca5c35493ef47ace66a8d8092056e102d513c93f29b07a
+1: import type { ReviewSource, ReviewSubject, SourceBinding } from '@kubeclaw/plugin-sdk';
+2: 
+3: export interface ArchitectureInput {
+4:   readonly task: string;
+5:   readonly architecture?: Readonly<Record<string, unknown>>;
+6:   readonly source?: ReviewSource;
+7:   readonly subject?: ReviewSubject;
+8:   readonly sourceBinding?: SourceBinding;
+9: }
+10: export function buildArchitectureRequest(agent: string, input: ArchitectureInput, guidance: unknown): Readonly<Record<string, unknown>> {
+11:   return Object.freeze({
+12:     protocol: 'kubeclaw.architecture-validation.v2',
+13:     agent,
+14:     task: [
+15:       '# KubeClaw architecture validation v2', input.task,
+16:       'Validate feasibility, component boundaries, dependency direction, deployment truth, and explicit requirements.',
+17:       'Judge only software architecture: domain models and integration boundaries. Generic graph validity, required-file presence, runtime configuration, and execution bookkeeping are validated by core and deterministic preflight stages.',
+18:       'Use passed when validation completed, including when advisory, error, warning, or informational findings require operator review. Use blocked only when a blocking constraint prevents the workflow from continuing. Never return request_fix.',
+19:       typeof guidance === 'string' && guidance.trim() ? guidance.trim() : 'No additional guidance.',
+20:       'Return raw JSON only: {"verdict":"passed|blocked","summary":"string","findings":[{"id":"string","severity":"blocking|error|warn|info","scope":"domain_model|integration_boundary","paths":["string"],"explanation":"string","remediation":"string"}],"checkedFiles":["string"]}.',
+21:       'Return only the agent-owned output object described by outputContract. Do not copy protocol, agent, task, architecture, or outputContract into the output.',
+22:     ].join('\n\n'),
+23:     architecture: input.architecture ?? {},
+24:     ...(input.subject ? { reviewSubject: input.subject } : {}),
+25:     outputContract: {
+26:       type: 'object',
+27:       additionalProperties: false,
+28:       required: ['verdict', 'summary', 'findings', 'checkedFiles'],
+29:       properties: {
+30:         verdict: { enum: ['passed', 'blocked'] },
+31:         summary: { type: 'string' },
+32:         findings: {
+33:           type: 'array',
+34:           items: {
+35:             type: 'object',
+36:             additionalProperties: false,
+37:             required: ['id', 'severity', 'scope', 'paths', 'explanation', 'remediation'],
+38:             properties: {
+39:               id: { type: 'string' },
+40:               severity: { enum: ['blocking', 'error', 'warn', 'info'] },
+41:               scope: { enum: ['domain_model', 'integration_boundary'] },
+42:               paths: { type: 'array', items: { type: 'string' } },
+43:               explanation: { type: 'string' },
+44:               remediation: { type: 'string' },
+45:             },
+46:           },
+47:         },
+48:         checkedFiles: { type: 'array', items: { type: 'string' } },
+49:       },
+50:     },
+51:   });
+52: }
+SOURCE skills/nova/plugins/architecture-validator/src/stage.ts SHA256 1d078730d6c276cba32fbdded3b289bff155638490e7a5d191750732e13565bc
+1: import { sourcePreflight, captureReviewSubject, verifyReviewSubject, type ArtifactRef, type PluginInvocationContext, type ReviewSubject, type StageResult } from '@kubeclaw/plugin-sdk';
+2: import { buildArchitectureRequest, type ArchitectureInput } from './protocol.ts';
+3: import { parseArchitectureOutput } from './output.ts';
+4: async function reviewedInput(input: ArchitectureInput, context: PluginInvocationContext): Promise<ArchitectureInput> {
+5:   if (input.sourceBinding) {
+6:     const bound = await sourcePreflight(input.sourceBinding, context);
+7:     return {...input,subject:bound.subject,architecture:bound.contract};
+8:   }
+9:   const subject = input.source ? await captureReviewSubject(input.source, {task:input.task,architecture:input.architecture ?? {}}, context) : undefined;
+10:   return {...input,...(subject ? {subject}:{})};
+11: }
+12: export async function execute(input: ArchitectureInput, context: PluginInvocationContext): Promise<StageResult> {
+13:   const agent = context.contract.config.agent;
+14:   if (typeof agent !== 'string' || !agent.trim()) throw new Error('architecture validator agent is not configured');
+15:   let output: ReturnType<typeof parseArchitectureOutput>;
+16:   let subject: ReviewSubject | undefined;
+17:   try {
+18:     input = await reviewedInput(input, context);
+19:     subject = input.subject;
+20:     if (subject) await verifyReviewSubject(subject, context);
+21:     output = parseArchitectureOutput(await context.invoke('runtime.dispatch', withRuntimeDispatchProfile({
+22:       operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent },
+23:       payload: buildArchitectureRequest(agent, { ...input, ...(subject ? { subject } : {}) }, context.contract.guidance?.helperPrompt),
+24:     }, context.contract.runtimeDispatchProfile)));
+25:     if (subject) {
+26:       if (subject.paths.some(file => !output.checkedFiles.includes(file))) throw new Error('REVIEW_SUBJECT_COVERAGE_MISSING');
+27:       await verifyReviewSubject(subject, context);
+28:     }
+29:   } catch (error) {
+30:     return {
+31:       schemaVersion: 'stage-result.v2', outcome: 'blocked',
+32:       reason: { code: 'architecture.invalid_output', message: error instanceof Error ? error.message : String(error) },
+33:       artifacts: [],
+34:     };
+35:   }
+36:   const report = await context.invoke('artifacts.write', {
+37:     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: 'architecture-validation' },
+38:     payload: { ...(subject?.identityEncoding ? {encoding:subject.identityEncoding} : {}), namespace: 'kubeclaw.architecture-validator', mediaType: 'application/json', value: { ...output, ...(subject ? { subject } : {}) } },
+39:   });
+40:   const artifacts = [report.artifact as ArtifactRef];
+41:   if (output.verdict === 'passed') {
+42:     return {
+43:       schemaVersion: 'stage-result.v2',
+44:       outcome: 'passed',
+45:       artifacts,
+46:       facts: {
+47:         'architecture.review': output.findings.length > 0 ? 'approval_required' : 'clean',
+48:       },
+49:     };
+50:   }
+51:   return {
+52:     schemaVersion: 'stage-result.v2', outcome: 'blocked',
+53:     reason: {
+54:       code: 'architecture.blocked',
+55:       message: output.summary, details: { findings: output.findings, checkedFiles: output.checkedFiles },
+56:     },
+57:     artifacts,
+58:   };
+59: }
+60: import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';
+SOURCE skills/nova/plugins/implementation-agent/package.json SHA256 a2b40ca7dd4f1e3007696ef03304f80e7c31e4e8ab5834393bf69d2ca3d698cb
+1: {
+2:   "name": "@kubeclaw/plugin-implementation-agent",
+3:   "private": true,
+4:   "type": "module",
+5:   "scripts": {
+6:     "build": "tsc --noEmit -p tsconfig.json",
+7:     "test": "node tests/protocol.test.ts && node tests/package-boundary.test.mjs && node tests/live-function.test.ts"
+8:   },
+9:   "dependencies": {
+10:     "@kubeclaw/plugin-sdk": "*"
+11:   }
+12: }
+SOURCE skills/nova/plugins/implementation-agent/plugin.json SHA256 fde7e60285cf1fd687b85e9ce2372b1aaa02d7bbf35bced1b8741c073493e5c9
+1: {
+2:   "id": "kubeclaw.implementation-agent",
+3:   "apiVersion": "pipeline-plugin-v2",
+4:   "packageVersion": "1.0.0",
+5:   "stages": [
+6:     {
+7:       "id": "implementation",
+8:       "type": "kubeclaw.agent.implementation",
+9:       "module": "src/stage.ts",
+10:       "export": "execute",
+11:       "requiredCapabilities": [
+12:         "runtime.dispatch",
+13:         "git.workspace.create",
+14:         "git.workspace.remove",
+15:         "git.commit",
+16:         "git.merge",
+17:         "artifacts.read",
+18:         "artifacts.write"
+19:       ],
+20:       "configSchema": "schemas/config.schema.json",
+21:       "inputSchema": "schemas/input.schema.json",
+22:       "resultSchema": "schemas/result.schema.json"
+23:     }
+24:   ],
+25:   "observers": [],
+26:   "adapters": []
+27: }
+SOURCE skills/nova/plugins/implementation-agent/tsconfig.json SHA256 14b157e19a12fc64deb926bf5abf286611c715f5a8475aa6408f037a5a09e472
+1: {
+2:   "extends": "../../../../tsconfig.base.json",
+3:   "compilerOptions": {
+4:     "rootDir": "src"
+5:   },
+6:   "include": [
+7:     "src/**/*.ts"
+8:   ]
+9: }
+SOURCE skills/nova/plugins/implementation-agent/schemas/result.schema.json SHA256 6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","$ref":"https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult"}
+SOURCE skills/nova/plugins/implementation-agent/schemas/input.schema.json SHA256 f2c8f956678a98cce81e8d6bd41fa444588ceb1519a9ca7a7f5db509f9478d5c
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "required": [
+6:     "runId",
+7:     "moduleId",
+8:     "attempt",
+9:     "task",
+10:     "headBefore"
+11:   ],
+12:   "properties": {
+13:     "runId": {
+14:       "type": "string",
+15:       "minLength": 1,
+16:       "maxLength": 128
+17:     },
+18:     "moduleId": {
+19:       "type": "string",
+20:       "minLength": 1,
+21:       "maxLength": 128
+22:     },
+23:     "attempt": {
+24:       "type": "integer",
+25:       "minimum": 1
+26:     },
+27:     "task": {
+28:       "type": "string",
+29:       "minLength": 1,
+30:       "maxLength": 32768
+31:     },
+32:     "headBefore": {
+33:       "type": "string",
+34:       "pattern": "^[0-9a-f]{40,64}$"
+35:     },
+36:     "workspace": {
+37:       "type": "object",
+38:       "additionalProperties": false,
+39:       "required": [
+40:         "repositoryRoot",
+41:         "workspacePath",
+42:         "branch",
+43:         "baseRef",
+44:         "mergeTarget",
+45:         "commitMessage"
+46:       ],
+47:       "properties": {
+48:         "repositoryRoot": {
+49:           "type": "string",
+50:           "minLength": 1,
+51:           "maxLength": 4096
+52:         },
+53:         "workspacePath": {
+54:           "type": "string",
+55:           "minLength": 1,
+56:           "maxLength": 4096
+57:         },
+58:         "branch": {
+59:           "type": "string",
+60:           "minLength": 1,
+61:           "maxLength": 320
+62:         },
+63:         "baseRef": {
+64:           "type": "string",
+65:           "minLength": 1,
+66:           "maxLength": 320
+67:         },
+68:         "mergeTarget": {
+69:           "type": "string",
+70:           "minLength": 1,
+71:           "maxLength": 4096
+72:         },
+73:         "commitMessage": {
+74:           "type": "string",
+75:           "minLength": 1,
+76:           "maxLength": 4096
+77:         }
+78:       }
+79:     },
+80:     "sourceBinding": {
+81:       "type": "object",
+82:       "additionalProperties": false,
+83:       "required": [
+84:         "stageId",
+85:         "inputDigest"
+86:       ],
+87:       "properties": {
+88:         "stageId": {
+89:           "type": "string",
+90:           "minLength": 1
+91:         },
+92:         "inputDigest": {
+93:           "type": "string",
+94:           "pattern": "^sha256:[a-f0-9]{64}$"
+95:         },
+96:         "reviewStageId": {
+97:           "type": "string",
+98:           "minLength": 1
+99:         },
+100:         "identityEncoding": {
+101:           "const": "kubeclaw-json.utf16.v1"
+102:         }
+103:       }
+104:     }
+105:   }
+106: }
+SOURCE skills/nova/plugins/implementation-agent/schemas/config.schema.json SHA256 49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["agent"],"properties":{"agent":{"type":"string","minLength":1},"agentRole":{"type":"string","minLength":1}}}
+SOURCE skills/nova/plugins/implementation-agent/src/protocol.ts SHA256 d1d2e0c5d82e37e3a3e51e89f1d002e1623a06fdcd0a4b9add816bf563b9cbe6
+1: import type { RuntimeWorkspaceReference, SourceBinding } from '@kubeclaw/plugin-sdk';
+2: export interface ImplementationInput {
+3:   readonly sourceBinding?: SourceBinding;
+4:   readonly runId: string;
+5:   readonly moduleId: string;
+6:   readonly attempt: number;
+7:   readonly task: string;
+8:   readonly headBefore: string;
+9:   readonly workspaceReference?: RuntimeWorkspaceReference;
+10:   readonly workspace?: {
+11:     readonly repositoryRoot: string;
+12:     readonly workspacePath: string;
+13:     readonly branch: string;
+14:     readonly baseRef: string;
+15:     readonly mergeTarget: string;
+16:     readonly commitMessage: string;
+17:   };
+18: }
+19: export interface ImplementationCompletion {
+20:   readonly status: 'ready_for_testing' | 'blocked';
+21:   readonly runId: string;
+22:   readonly moduleId: string;
+23:   readonly attempt: number;
+24:   readonly summary: string;
+25:   readonly changedPaths: readonly string[];
+26:   readonly checks: readonly { readonly name: string; readonly passed: boolean }[];
+27:   readonly session: {
+28:     readonly sessionId: string;
+29:     readonly startedAt: string;
+30:     readonly completedAt: string;
+31:     readonly transcriptDigest: string;
+32:     readonly handoffs: number;
+33:     readonly termination: 'completed' | 'blocked' | 'cancelled';
+34:   };
+35: }
+36: const text = (value: unknown, name: string, max = 32768): string => {
+37:   if (typeof value !== 'string' || value.length < 1 || value.length > max || /[\0\r]/u.test(value)) throw new Error(`${name} is invalid`);
+38:   return value;
+39: };
+40: export function buildRequest(agent: string, input: ImplementationInput, helperPrompt?: string): Readonly<Record<string, unknown>> {
+41:   return {
+42:     protocol: 'kubeclaw.implementation.v2', agent,
+43:     identity: { runId: input.runId, moduleId: input.moduleId, attempt: input.attempt },
+44:     headBefore: input.headBefore,
+45:     ...(input.workspaceReference ? { workspaceReference: input.workspaceReference } : {}),
+46:     task: [
+47:       input.task,
+48:       helperPrompt?.trim() || 'No additional implementation guidance was supplied.',
+49:       'Return only the agent-owned output object described by outputContract.',
+50:       'Do not copy protocol, agent, identity, headBefore, task, or outputContract into the output.',
+51:       'Runtime/core attach invocation identity and session evidence.',
+52:     ].join('\n\n'),
+53:     outputContract: {
+54:       type: 'object',
+55:       additionalProperties: false,
+56:       required: ['status', 'summary', 'changedPaths', 'checks'],
+57:       properties: {
+58:         status: { enum: ['ready_for_testing', 'blocked'] },
+59:         summary: { type: 'string' },
+60:         changedPaths: {
+61:           type: 'array',
+62:           description: 'Changed file paths relative to the Git repository root, never relative to a nested project or current working directory.',
+63:           items: { type: 'string' },
+64:         },
+65:         checks: {
+66:           type: 'array',
+67:           items: {
+68:             type: 'object',
+69:             additionalProperties: false,
+70:             required: ['name', 'passed'],
+71:             properties: { name: { type: 'string' }, passed: { type: 'boolean' } },
+72:           },
+73:         },
+74:       },
+75:     },
+76:   };
+77: }
+78: function parseChangedPaths(value: unknown): readonly string[] {
+79:   if (!Array.isArray(value) || value.length > 512) throw new Error('changedPaths is invalid');
+80:   return value.map((item) => {
+81:     const changedPath = text(item, 'changed path', 512);
+82:     if (changedPath.startsWith('/') || changedPath.split('/').includes('..')) {
+83:       throw new Error('changed path escapes the repository');
+84:     }
+85:     return changedPath;
+86:   });
+87: }
+88: 
+89: function parseChecks(value: unknown): readonly { readonly name: string; readonly passed: boolean }[] {
+90:   if (!Array.isArray(value) || value.length > 128) throw new Error('checks is invalid');
+91:   return value.map((item) => {
+92:     if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error('check is invalid');
+93:     const check = item as Record<string, unknown>;
+94:     if (Object.keys(check).some((key) => !['name', 'passed'].includes(key))
+95:       || typeof check.passed !== 'boolean') throw new Error('check is invalid');
+96:     return { name: text(check.name, 'check name', 256), passed: check.passed };
+97:   });
+98: }
+99: 
+100: function parseSession(value: unknown): ImplementationCompletion['session'] {
+101:   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('session evidence is invalid');
+102:   const source = value as Record<string, unknown>;
+103:   if (Object.keys(source).some((key) => !['sessionId', 'startedAt', 'completedAt', 'transcriptDigest', 'handoffs', 'termination'].includes(key))) {
+104:     throw new Error('session evidence has unknown fields');
+105:   }
+106:   const startedAt = text(source.startedAt, 'session startedAt', 64);
+107:   const completedAt = text(source.completedAt, 'session completedAt', 64);
+108:   if (!Number.isFinite(Date.parse(startedAt)) || !Number.isFinite(Date.parse(completedAt)) || Date.parse(completedAt) < Date.parse(startedAt)) throw new Error('session timestamps are invalid');
+109:   if (typeof source.transcriptDigest !== 'string' || !/^[a-f0-9]{64}$/u.test(source.transcriptDigest)) throw new Error('transcript digest is invalid');
+110:   if (!Number.isSafeInteger(source.handoffs) || Number(source.handoffs) < 0) throw new Error('session handoffs are invalid');
+111:   if (!['completed', 'blocked', 'cancelled'].includes(String(source.termination))) throw new Error('session termination is invalid');
+112:   return {
+113:     sessionId: text(source.sessionId, 'session id', 512), startedAt, completedAt,
+114:     transcriptDigest: source.transcriptDigest, handoffs: Number(source.handoffs),
+115:     termination: source.termination as 'completed' | 'blocked' | 'cancelled',
+116:   };
+117: }
+118: 
+119: function assertCompletionConsistency(
+120:   status: ImplementationCompletion['status'],
+121:   changedPaths: readonly string[],
+122:   checks: readonly { readonly passed: boolean }[],
+123:   session: ImplementationCompletion['session'],
+124: ): void {
+125:   if (status === 'ready_for_testing' && session.termination !== 'completed') throw new Error('ready completion requires a completed session');
+126:   if (status === 'blocked' && session.termination === 'completed') throw new Error('blocked completion contradicts session evidence');
+127:   if (status === 'ready_for_testing' && (changedPaths.length === 0 || checks.length === 0 || checks.some((check) => !check.passed))) throw new Error('ready completion requires changed paths and successful checks');
+128:   if (status === 'blocked' && (changedPaths.length > 0 || checks.some((check) => check.passed))) throw new Error('blocked completion contradicts implementation evidence');
+129: }
+130: export function parseCompletion(value: unknown, input: ImplementationInput): ImplementationCompletion {
+131:   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('completion must be an object');
+132:   const source = value as Record<string, unknown>;
+133:   const allowed = new Set(['status', 'summary', 'changedPaths', 'checks', 'session']);
+134:   if (Object.keys(source).some((key) => !allowed.has(key))) throw new Error('completion has unknown fields');
+135:   const status = source.status;
+136:   if (status !== 'ready_for_testing' && status !== 'blocked') throw new Error('completion status is invalid');
+137:   const changedPaths = parseChangedPaths(source.changedPaths);
+138:   const checks = parseChecks(source.checks);
+139:   const summary = text(source.summary, 'summary', 8192);
+140:   const session = parseSession(source.session);
+141:   assertCompletionConsistency(status, changedPaths, checks, session);
+142:   return { status, runId: input.runId, moduleId: input.moduleId, attempt: input.attempt, summary, changedPaths, checks, session };
+143: }
+SOURCE skills/nova/plugins/implementation-agent/src/workspace.ts SHA256 14cdeb066a35cbb2564928ca8ff8f4fa5ce2bd95a36c3607bda011f9c0e79c34
+1: import { runtimeWorkspaceGeneration, type AttemptIdentity } from '@kubeclaw/plugin-sdk';
+2: import type { ImplementationInput } from './protocol.ts';
+3: 
+4: export function attemptWorkspace(input: ImplementationInput, owner: AttemptIdentity): ImplementationInput {
+5:   if (!input.workspace) return input;
+6:   const generation = runtimeWorkspaceGeneration(owner, input.workspace);
+7:   return { ...input, workspace: { ...input.workspace,
+8:     workspacePath: `${input.workspace.workspacePath}-g-${generation}`,
+9:     branch: `${input.workspace.branch}-g-${generation}`,
+10:   } };
+11: }
+SOURCE skills/nova/plugins/implementation-agent/src/stage.ts SHA256 4f2057feef1fdd4c81bbb90ae203564cd0ab3922a9fd44b098a1a99558da4870
+1: import {PORTABLE_JSON_ENCODING} from '@kubeclaw/plugin-sdk';
+2: import { repairEvidence } from './repair-evidence.ts';
+3: import { approvedSource, parseRuntimeWorkspace, type RuntimeWorkspaceReference } from '@kubeclaw/plugin-sdk';
+4: import { attemptWorkspace } from './workspace.ts';
+5: import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
+6: import {
+7:   buildRequest,
+8:   parseCompletion,
+9:   type ImplementationCompletion,
+10:   type ImplementationInput,
+11: } from './protocol.ts';
+12: 
+13: async function createWorkspace(input: ImplementationInput, context: PluginInvocationContext, approval: Awaited<ReturnType<typeof approvedSource>>): Promise<RuntimeWorkspaceReference | undefined> {
+14:   if (!input.workspace) {
+15:     if (approval) throw new Error('SOURCE_APPROVAL_WORKSPACE_REQUIRED');
+16:     return undefined;
+17:   }
+18:   const created = await context.invoke('git.workspace.create', {
+19:     operation: 'create', resource: { type: 'git.repository', canonicalId: input.workspace.repositoryRoot },
+20:     payload: {
+21:       repositoryRoot: input.workspace.repositoryRoot, workspacePath: input.workspace.workspacePath,
+22:       branch: input.workspace.branch, baseRef: context.contract.guidance?.repairRequest ? 'HEAD' : input.workspace.baseRef,
+23:       ...(approval ? { approvedSource: approval } : {}),
+24:     },
+25:   });
+26:   if (typeof created.sourceRevision !== 'string' || !/^[a-f0-9]{40}$/u.test(created.sourceRevision)) throw new Error('IMPLEMENTATION_SOURCE_REVISION_INVALID');
+27:   const ref = parseRuntimeWorkspace(created.workspaceReference, context.contract.lease.attempt);
+28:   if (ref.repositoryRoot !== input.workspace.repositoryRoot || ref.workspacePath !== input.workspace.workspacePath
+29:     || ref.branch !== input.workspace.branch || ref.sourceRevision !== created.sourceRevision) throw new Error('IMPLEMENTATION_WORKSPACE_REFERENCE_MISMATCH');
+30:   return ref;
+31: }
+32: 
+33: async function dispatchImplementation(
+34:   agent: string, input: ImplementationInput, context: PluginInvocationContext, evidence: string | undefined,
+35: ): Promise<ImplementationCompletion> {
+36:   const response = await context.invoke('runtime.dispatch', withRuntimeDispatchProfile({
+37:     operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent },
+38:     payload: buildRequest(agent, input, [context.contract.guidance?.helperPrompt, evidence].filter(Boolean).join('\n\n')),
+39:   }, context.contract.runtimeDispatchProfile));
+40:   return parseCompletion(response.result, input);
+41: }
+42: 
+43: async function integrateWorkspace(
+44:   input: ImplementationInput, completion: ImplementationCompletion, context: PluginInvocationContext,
+45:   approval: Awaited<ReturnType<typeof approvedSource>>,
+46: ): Promise<string | undefined> {
+47:   if (!input.workspace || completion.status !== 'ready_for_testing') return undefined;
+48:   const committed = await context.invoke('git.commit', {
+49:     operation: 'commit', resource: { type: 'git.workspace', canonicalId: input.workspace.workspacePath },
+50:     payload: { paths: completion.changedPaths, message: input.workspace.commitMessage, workspaceReference: input.workspaceReference,
+51:       expectedParent: input.workspaceReference?.sourceRevision },
+52:   });
+53:   if (typeof committed.sourceRevision !== 'string' || !/^[a-f0-9]{40}$/u.test(committed.sourceRevision)) throw new Error('IMPLEMENTATION_SOURCE_REVISION_INVALID');
+54:   const merged = await context.invoke('git.merge', {
+55:     operation: 'merge', resource: { type: 'git.repository', canonicalId: input.workspace.mergeTarget },
+56:     payload: { sourceRef: input.workspace.branch, sourceRevision: committed.sourceRevision, workspaceReference: input.workspaceReference, ...(approval ? { approvedSource: approval } : {}) },
+57:   });
+58:   if (typeof merged.sourceRevision !== 'string' || !/^[a-f0-9]{40}$/u.test(merged.sourceRevision)) throw new Error('IMPLEMENTATION_SOURCE_REVISION_INVALID');
+59:   return merged.sourceRevision;
+60: }
+61: 
+62: async function removeWorkspace(input: ImplementationInput, context: PluginInvocationContext): Promise<void> {
+63:   if (!input.workspace) return;
+64:   await context.invoke('git.workspace.remove', {
+65:     operation: 'remove', resource: { type: 'git.repository', canonicalId: input.workspace.repositoryRoot },
+66:     payload: {
+67:       repositoryRoot: input.workspace.repositoryRoot, workspacePath: input.workspace.workspacePath,
+68:       branch: input.workspace.branch,
+69:       workspaceReference: input.workspaceReference,
+70:     },
+71:   });
+72: }
+73: 
+74: function blockedFailure(error: Error | undefined, input: ImplementationInput, retained: boolean): StageResult {
+75:   return { schemaVersion: 'stage-result.v2', outcome: 'blocked',
+76:     reason: { code: error?.message.startsWith('EFFECT_') ? 'implementation.effect_reconciliation_required' : 'implementation.invalid_completion',
+77:       message: error?.message ?? 'implementation completion missing',
+78:       ...(retained && input.workspace ? { details: { retainedWorkspace: input.workspace.workspacePath, branch: input.workspace.branch, headBefore: input.headBefore, workspaceReference: input.workspaceReference } } : {}) }, artifacts: [] };
+79: }
+80: 
+81: export async function execute(input: ImplementationInput, context: PluginInvocationContext): Promise<StageResult> {
+82:   input = { ...input, runId: context.contract.lease.attempt.runId, attempt: context.contract.lease.attempt.attemptNumber };
+83:   input = attemptWorkspace(input, context.contract.lease.attempt);
+84: 
+85:   const agent = context.contract.config.agent;
+86:   if (typeof agent !== 'string' || !agent.trim()) throw new Error('implementation agent is not configured');
+87:   let completion;
+88:   let workspaceCreated = false;
+89:   let workspaceIntegrated: string | undefined;
+90:   let workspaceFailure: Error | undefined;
+91:   let cleanupFailure: Error | undefined;
+92:   let subjectDigest: string | undefined;
+93:   try {
+94:     const evidence = await repairEvidence(context);
+95:     const approval = await approvedSource(context, input.sourceBinding);
+96:     subjectDigest = approval?.subject.digest;
+97:     const workspaceReference = await createWorkspace(input, context, approval);
+98:     workspaceCreated = workspaceReference !== undefined;
+99:     if (workspaceReference) input = { ...input, headBefore: workspaceReference.sourceRevision, workspaceReference };
+100:     completion = await dispatchImplementation(agent, input, context, evidence);
+101:     workspaceIntegrated = await integrateWorkspace(input, completion, context, approval);
+102:   } catch (error) {
+103:     workspaceFailure = error instanceof Error ? error : new Error(String(error));
+104:   } finally {
+105:     if (input.workspace && workspaceIntegrated) {
+106:       try {
+107:         await removeWorkspace(input, context);
+108:       } catch (error) {
+109:         const failure = error instanceof Error ? error : new Error(String(error));
+110:         cleanupFailure = failure;
+111:       }
+112:     }
+113:   }
+114:   if (workspaceFailure || !completion) return blockedFailure(workspaceFailure, input, workspaceCreated && !workspaceIntegrated);
+115:   return storeCompletion(input, completion, context, workspaceCreated, workspaceIntegrated, cleanupFailure, subjectDigest);
+116: }
+117: 
+118: async function storeCompletion(
+119:   input: ImplementationInput, completion: ImplementationCompletion, context: PluginInvocationContext,
+120:   workspaceCreated: boolean, workspaceIntegrated: string | undefined, cleanupFailure: Error | undefined,
+121:   subjectDigest?: string,
+122: ): Promise<StageResult> {
+123:   const stored = await context.invoke('artifacts.write', {
+124:     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: `implementation:${input.moduleId}:${input.attempt}` },
+125:     payload: { namespace: 'kubeclaw.implementation-agent', encoding: PORTABLE_JSON_ENCODING, mediaType: 'application/json', value: { ...completion, sourceRevision: workspaceIntegrated ?? null, headBefore: input.headBefore, ...(subjectDigest ? { subjectDigest } : {}),
+126:       ...(workspaceCreated && !workspaceIntegrated && input.workspace ? { retainedWorkspace: input.workspace.workspacePath, branch: input.workspace.branch, workspaceReference: input.workspaceReference } : {}) } },
+127:   });
+128:   const artifacts = [stored.artifact as ArtifactRef];
+129:   if (cleanupFailure) {
+130:     const cleanup = await context.invoke('artifacts.write', {
+131:       operation: 'put_json',
+132:       resource: { type: 'artifact.object', canonicalId: `implementation-cleanup:${input.moduleId}:${input.attempt}` },
+133:       payload: {
+134:         namespace: 'kubeclaw.implementation-agent',
+135:         mediaType: 'application/json',
+136:         value: {
+137:           schemaVersion: 'implementation-cleanup.v1',
+138:           status: 'failed',
+139:           message: cleanupFailure.message,
+140:           workspaceReference: input.workspaceReference,
+141:           sourceRevision: workspaceIntegrated,
+142:         },
+143:       },
+144:     });
+145:     artifacts.push(cleanup.artifact as ArtifactRef);
+146:   }
+147:   return completion.status === 'ready_for_testing'
+148:     ? { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts, ...(workspaceIntegrated ? { facts: { 'implementation.source_revision': workspaceIntegrated } } : {}) }
+149:     : { schemaVersion: 'stage-result.v2', outcome: 'blocked',
+150:         reason: { code: 'implementation.blocked', message: completion.summary }, artifacts };
+151: }
+152: import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';
+SOURCE skills/nova/plugins/implementation-agent/src/repair-evidence.ts SHA256 0ba38e4004d0b9c3058fdce363611beeb6170ee3cb37424da599eb3757fa5c99
+1: import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
+2: import { canonicalJson, sha256Text, type ArtifactRef, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+3: 
+4: const MAXIMUM_ARTIFACTS = 32;
+5: const MAXIMUM_BYTES = 256 * 1024;
+6: 
+7: /** Only core-issued repair requests may select evidence; never agent-supplied paths. */
+8: export async function repairEvidence(context: PluginInvocationContext): Promise<string | undefined> {
+9:   const request = context.contract.guidance?.repairRequest;
+10:   if (request === undefined) return undefined;
+11:   const value = request as Record<string, any>;
+12:   const attempt = context.contract.lease.attempt;
+13:   if (!value || value.schemaVersion !== 'repair-request.v1' || value.targetStageId !== attempt.stageId
+14:     || typeof value.requesterStageId !== 'string' || !Number.isSafeInteger(value.generation) || value.generation < 1
+15:     || value.requesterResult?.outcome !== 'request_fix' || !Array.isArray(value.requesterResult.artifacts)) {
+16:     throw new Error('REPAIR_EVIDENCE_REQUEST_INVALID');
+17:   }
+18:   const refs = value.requesterResult.artifacts as ArtifactRef[];
+19:   if (refs.length > MAXIMUM_ARTIFACTS) throw new Error('REPAIR_EVIDENCE_LIMIT_EXCEEDED');
+20:   let bytes = Buffer.byteLength(canonicalJson(request));
+21:   const seen = new Set<string>();
+22:   for (const ref of refs) {
+23:     if (ref.producer.runId !== attempt.runId || ref.producer.stageId !== value.requesterStageId
+24:       || ref.mediaType !== 'application/json' || !Number.isSafeInteger(ref.sizeBytes) || ref.sizeBytes < 0
+25:       || !/^sha256:[a-f0-9]{64}$/u.test(ref.digest)) throw new Error('REPAIR_EVIDENCE_REFERENCE_INVALID');
+26:     const key = `${ref.namespace}\0${ref.artifactId}\0${ref.digest}`;
+27:     if (seen.has(key)) throw new Error('REPAIR_EVIDENCE_REFERENCE_DUPLICATE');
+28:     seen.add(key); bytes += ref.sizeBytes;
+29:   }
+30:   if (bytes > MAXIMUM_BYTES) throw new Error('REPAIR_EVIDENCE_LIMIT_EXCEEDED');
+31:   const evidence: { artifact: ArtifactRef; content: unknown }[] = [];
+32:   for (const ref of refs) {
+33:     const response = await context.invoke('artifacts.read', {
+34:       operation: 'get_json_bytes', resource: { type: 'artifact.object', canonicalId: ref.artifactId },
+35:       payload: { namespace: ref.namespace, digest: ref.digest, reference: ref },
+36:     });
+37:     const content = verifiedArtifactJsonText(response, ref);
+38:     if (response.digest !== ref.digest || response.sizeBytes !== ref.sizeBytes
+39:       || Buffer.byteLength(content) !== ref.sizeBytes || sha256Text(content) !== ref.digest) {
+40:       throw new Error('REPAIR_EVIDENCE_CONTENT_INVALID');
+41:     }
+42:     evidence.push({ artifact: ref, content: response.value });
+43:   }
+44:   const serialized = canonicalJson({ request, evidence });
+45:   if (Buffer.byteLength(serialized) > MAXIMUM_BYTES) throw new Error('REPAIR_EVIDENCE_LIMIT_EXCEEDED');
+46:   return serialized;
+47: }
+SOURCE skills/nova/plugins/buster-quality-gate/package.json SHA256 ce8877431dc40bc76b3f76156eebdf531ed92a00a6b5cb0c9eb16bb38f40f5b3
+1: {
+2:   "name": "@kubeclaw/plugin-buster-quality-gate",
+3:   "private": true,
+4:   "type": "module",
+5:   "scripts": {
+6:     "build": "tsc --noEmit -p tsconfig.json",
+7:     "test": "node tests/protocol.test.ts && node tests/suite-first.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+8:   },
+9:   "dependencies": {
+10:     "@kubeclaw/plugin-sdk": "*",
+11:     "@kubeclaw/pipeline-test-gate-contract": "*"
+12:   }
+13: }
+SOURCE skills/nova/plugins/buster-quality-gate/plugin.json SHA256 19b03b5c61f4b6decbf06a650a3824db02f61ba010939246a7d1bd35ae3e6966
+1: {
+2:   "id": "kubeclaw.buster-quality-gate",
+3:   "apiVersion": "pipeline-plugin-v2",
+4:   "packageVersion": "1.0.0",
+5:   "stages": [
+6:     {
+7:       "id": "quality",
+8:       "type": "kubeclaw.test.quality-evaluation",
+9:       "module": "src/stage.ts",
+10:       "export": "execute",
+11:       "requiredCapabilities": [
+12:         "test.plan.execute",
+13:         "runtime.dispatch",
+14:         "artifacts.write",
+15:         "artifacts.read"
+16:       ],
+17:       "configSchema": "schemas/config.schema.json",
+18:       "inputSchema": "schemas/input.schema.json",
+19:       "resultSchema": "schemas/result.schema.json"
+20:     }
+21:   ],
+22:   "observers": [],
+23:   "adapters": []
+24: }
+SOURCE skills/nova/plugins/buster-quality-gate/tsconfig.json SHA256 e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b
+1: {
+2:   "extends": "../../../../tsconfig.base.json",
+3:   "compilerOptions": {
+4:     "rootDir": "src",
+5:     "exactOptionalPropertyTypes": true,
+6:     "noUncheckedIndexedAccess": true
+7:   },
+8:   "include": [
+9:     "src/**/*.ts"
+10:   ]
+11: }
+SOURCE skills/nova/plugins/buster-quality-gate/schemas/result.schema.json SHA256 6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","$ref":"https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult"}
+SOURCE skills/nova/plugins/buster-quality-gate/schemas/input.schema.json SHA256 2d6fb0f0178d3b361d417a74303fe04c188a353114735e5809a8abd35fbd34f7
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "required": [
+6:     "gateId",
+7:     "task",
+8:     "providerPlan"
+9:   ],
+10:   "properties": {
+11:     "gateId": {
+12:       "type": "string",
+13:       "minLength": 1,
+14:       "maxLength": 128
+15:     },
+16:     "task": {
+17:       "type": "string",
+18:       "minLength": 1,
+19:       "maxLength": 32768
+20:     },
+21:     "providerPlan": {
+22:       "$ref": "#/$defs/providerPlan"
+23:     },
+24:     "expectedCoverage": {
+25:       "type": "object"
+26:     }
+27:   },
+28:   "$defs": {
+29:     "providerPlan": {
+30:       "type": "object",
+31:       "additionalProperties": false,
+32:       "required": [
+33:         "repositoryRoot",
+34:         "repositoryId",
+35:         "plan",
+36:         "grants",
+37:         "maximumConcurrency",
+38:         "submittedAt",
+39:         "timeoutMs"
+40:       ],
+41:       "properties": {
+42:         "repositoryRoot": {
+43:           "type": "string",
+44:           "minLength": 1,
+45:           "maxLength": 4096
+46:         },
+47:         "repositoryId": {
+48:           "type": "string",
+49:           "minLength": 1,
+50:           "maxLength": 256
+51:         },
+52:         "plan": {
+53:           "type": "object"
+54:         },
+55:         "grants": {
+56:           "type": "object",
+57:           "additionalProperties": {
+58:             "type": "array",
+59:             "uniqueItems": true,
+60:             "items": {
+61:               "type": "string",
+62:               "minLength": 1
+63:             }
+64:           }
+65:         },
+66:         "maximumConcurrency": {
+67:           "type": "integer",
+68:           "minimum": 1,
+69:           "maximum": 64
+70:         },
+71:         "submittedAt": {
+72:           "type": "string",
+73:           "format": "date-time"
+74:         },
+75:         "timeoutMs": {
+76:           "type": "integer",
+77:           "minimum": 1,
+78:           "maximum": 7200000
+79:         },
+80:         "revision": {
+81:           "type": "string",
+82:           "pattern": "^[a-f0-9]{40}$"
+83:         },
+84:         "sourceStageId": {
+85:           "type": "string",
+86:           "minLength": 1
+87:         }
+88:       },
+89:       "oneOf": [
+90:         {
+91:           "properties": {
+92:             "revision": {
+93:               "type": "string",
+94:               "pattern": "^[a-f0-9]{40}$"
+95:             }
+96:           },
+97:           "required": [
+98:             "revision"
+99:           ]
+100:         },
+101:         {
+102:           "properties": {
+103:             "sourceStageId": {
+104:               "type": "string",
+105:               "minLength": 1
+106:             }
+107:           },
+108:           "required": [
+109:             "sourceStageId"
+110:           ]
+111:         }
+112:       ]
+113:     }
+114:   }
+115: }
+SOURCE skills/nova/plugins/buster-quality-gate/schemas/config.schema.json SHA256 77f3bc2d1d9a25347219cbb5f11d8580e57390abee3936a6de044b6d5cea68c5
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "properties": {
+6:     "agent": {
+7:       "type": "string",
+8:       "minLength": 1
+9:     },
+10:     "agentRole": {
+11:       "type": "string",
+12:       "minLength": 1
+13:     },
+14:     "testAgentEnabled": {
+15:       "type": "boolean",
+16:       "default": true
+17:     }
+18:   }
+19: }
+SOURCE skills/nova/plugins/buster-quality-gate/src/protocol.ts SHA256 9f85b213f272e143dbc7a9736666054941b4d21c231afdbfc07b8e539c907711
+1: import type { GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
+2: export interface ProviderPlanInput{readonly revision?:string;readonly sourceStageId?:string;readonly repositoryRoot:string;readonly repositoryId:string;readonly plan:Readonly<Record<string,unknown>>;readonly grants:Readonly<Record<string,readonly string[]>>;readonly maximumConcurrency:number;readonly submittedAt:string;readonly timeoutMs:number}
+3: export interface GateInput {
+4:  readonly expectedCoverage?: GateCoverageV1;
+5:  readonly gateId: string;
+6:  readonly task: string;
+7:  readonly providerPlan: ProviderPlanInput;
+8: }
+9: export interface JudgedGateInput {
+10:  readonly runId: string;
+11:  readonly gateId: string;
+12:  readonly attempt: number;
+13:  readonly task: string;
+14:  readonly suiteEvidence: readonly { readonly suite: string; readonly passed: boolean; readonly summary: string }[];
+15: }
+16: type GateOutcome='passed'|'request_fix'|'blocked';
+17: export interface GateVerdict{readonly outcome:GateOutcome;readonly runId:string;readonly gateId:string;readonly attempt:number;readonly summary:string;readonly failureClass:'none'|'test_failure'|'contract'|'configuration'|'infrastructure'|'rate_limit'|'timeout';readonly findings:readonly string[]}
+18: export function buildRequest(agent:string,input:JudgedGateInput):Readonly<Record<string,unknown>>{
+19:  const failureClasses=['none','test_failure','contract','configuration','infrastructure','rate_limit','timeout'];
+20:  return{protocol:'kubeclaw.buster-quality-gate.v2',agent,identity:{runId:input.runId,gateId:input.gateId,attempt:input.attempt},
+21:   task:[input.task,'Return only the agent-owned output object described by outputContract.','Do not copy protocol, agent, identity, task, suiteEvidence, allowedOutcomes, failureClasses, or outputContract into the output.','Runtime/core bind run, gate, and attempt identity.'].join('\n\n'),suiteEvidence:input.suiteEvidence,
+22:   allowedOutcomes:['passed','request_fix','blocked'],failureClasses,
+23:   outputContract:{type:'object',additionalProperties:false,required:['outcome','summary','failureClass','findings'],properties:{outcome:{enum:['passed','request_fix','blocked']},summary:{type:'string'},failureClass:{enum:failureClasses},findings:{type:'array',items:{type:'string'}}}}};
+24: }
+25: function verdictSource(value:unknown):Record<string,unknown>{
+26:  if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('gate verdict must be an object');
+27:  const source=value as Record<string,unknown>;
+28:  const outcomes=['passed','request_fix','blocked'];const classes=['none','test_failure','contract','configuration','infrastructure','rate_limit','timeout'];
+29:  if(Object.keys(source).some((key)=>!['outcome','summary','failureClass','findings'].includes(key)))throw new Error('gate verdict shape is invalid');
+30:  if(!outcomes.includes(String(source.outcome))||!classes.includes(String(source.failureClass)))throw new Error('gate verdict shape is invalid');
+31:  if(typeof source.summary!=='string'||!source.summary.trim()||source.summary.length>8192)throw new Error('gate summary is invalid');
+32:  if(!Array.isArray(source.findings)||source.findings.length>128||source.findings.some((item)=>typeof item!=='string'||!item.trim()||item.length>4096))throw new Error('gate findings are invalid');
+33:  return source;
+34: }
+35: function assertVerdictConsistency(source:Record<string,unknown>,input:JudgedGateInput):void{
+36:  const findings=source.findings as unknown[];
+37:  if(source.outcome==='passed'&&(source.failureClass!=='none'||findings.length>0||input.suiteEvidence.some((suite)=>!suite.passed)))throw new Error('passed verdict contradicts evidence');
+38:  if(source.outcome!=='passed'&&(source.failureClass==='none'||findings.length===0))throw new Error('non-passing verdict requires a failure class and findings');
+39: }
+40: export function parseVerdict(value:unknown,input:JudgedGateInput):GateVerdict{
+41:  const source=verdictSource(value);
+42:  assertVerdictConsistency(source,input);
+43:  return{outcome:source.outcome as GateOutcome,runId:input.runId,gateId:input.gateId,attempt:input.attempt,summary:source.summary as string,
+44:   failureClass:source.failureClass as GateVerdict['failureClass'],findings:source.findings as string[]};
+45: }
+SOURCE skills/nova/plugins/buster-quality-gate/src/stage.ts SHA256 3b58135f8f95a089a7776ca76152d51ae394627f13ce0da1f362c90ab7b1ea76
+1: import { assertCoveragePlan, assertCoverageExecution, type ResolvedTestPlanV1 } from '@kubeclaw/pipeline-test-gate-contract';
+2: import { resolveSourceRevision } from '@kubeclaw/plugin-sdk';
+3: import { parseGateDecision, gateDecisionEvidence, gateDecisionStageResult } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
+4: import type { ArtifactRef, PluginInvocationContext, StageResult } from '@kubeclaw/plugin-sdk';
+5: import { buildRequest, parseVerdict, type GateInput } from './protocol.ts';
+6: 
+7: function coveragePlan(input: GateInput): ResolvedTestPlanV1 {
+8:   const plan = input.providerPlan.plan as unknown as ResolvedTestPlanV1;
+9:   if (plan.coverage && !input.expectedCoverage) throw new Error('QUALITY_EXPECTED_COVERAGE_REQUIRED');
+10:   if (input.expectedCoverage) assertCoveragePlan(plan, input.expectedCoverage);
+11:   return plan;
+12: }
+13: 
+14: export async function execute(input: GateInput, context: PluginInvocationContext): Promise<StageResult> {
+15:   const agent = context.contract.config.agent;
+16:   const testAgentEnabled = context.contract.config.testAgentEnabled !== false;
+17:   if (testAgentEnabled && (typeof agent !== 'string' || !agent.trim())) throw new Error('quality evaluator agent is not configured');
+18:   // Only a verified remote import may supply gate evidence.
+19:   if (!input.providerPlan) throw new Error('QUALITY_PROVIDER_PLAN_REQUIRED');
+20:   const plan = coveragePlan(input);
+21:   const sourceRevision = await resolveSourceRevision(input.providerPlan, context);
+22:   const execution = await context.invoke('test.plan.execute', {
+23:     operation: 'run', resource: { type: 'test.resolved-plan', canonicalId: input.providerPlan.repositoryRoot },
+24:     payload: { ...input.providerPlan, revision: sourceRevision, gateId: input.gateId,
+25:       ...(input.expectedCoverage ? { expectedCoverage: input.expectedCoverage } : {}) },
+26:   });
+27:   const decision = parseGateDecision(execution);
+28:   if (decision.runId !== context.contract.lease.attempt.runId) throw new Error('QUALITY_GATE_RUN_MISMATCH');
+29:   if (input.expectedCoverage) assertCoverageExecution(plan, decision, input.expectedCoverage, sourceRevision, context.contract.lease.attempt.stageId);
+30:   const nativeResult = gateDecisionStageResult(decision);
+31:   const storedDecision = await context.invoke('artifacts.write', {
+32:     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: `buster-quality:${input.gateId}:decision:${context.contract.lease.attempt.attemptNumber}` },
+33:     payload: { namespace: 'kubeclaw.buster-quality-gate', mediaType: 'application/json', value: decision },
+34:   });
+35:   const artifacts = [storedDecision.artifact as ArtifactRef];
+36:   if (decision.state !== 'passed') return { ...nativeResult, artifacts };
+37:   if (!testAgentEnabled) {
+38:     const stored = await context.invoke('artifacts.write', {
+39:       operation: 'put_json', resource: { type: 'artifact.object', canonicalId: `buster-quality:${input.gateId}:${context.contract.lease.attempt.attemptNumber}` },
+40:       payload: { namespace: 'kubeclaw.buster-quality-gate', mediaType: 'application/json', value: {
+41:         testAgent: { enabled: false }, nativeOutcome: decision.state, sourceRevision, decisionDigest: decision.decisionDigest,
+42:       } },
+43:     });
+44:     return { ...nativeResult, artifacts: [...artifacts, stored.artifact as ArtifactRef] };
+45:   }
+46:   const judgedInput = {
+47:     gateId: input.gateId, task: input.task,
+48:     runId: context.contract.lease.attempt.runId, attempt: context.contract.lease.attempt.attemptNumber,
+49:     suiteEvidence: gateDecisionEvidence(decision),
+50:   };
+51:   // Invocation failures retain the core's external-effect reconciliation policy.
+52:   const response = await context.invoke('runtime.dispatch', withRuntimeDispatchProfile({
+53:     operation: 'dispatch', resource: { type: 'runtime.agent', canonicalId: agent as string },
+54:     payload: buildRequest(agent as string, judgedInput),
+55:   }, context.contract.runtimeDispatchProfile));
+56:   let verdict;
+57:   try { verdict = parseVerdict(response.result, judgedInput); }
+58:   catch (error) {
+59:     return { schemaVersion: 'stage-result.v2', outcome: 'blocked', artifacts,
+60:       reason: { code: 'buster_quality.invalid_verdict', message: error instanceof Error ? error.message : String(error) } };
+61:   }
+62:   const stored = await context.invoke('artifacts.write', {
+63:     operation: 'put_json', resource: { type: 'artifact.object', canonicalId: `buster-quality:${input.gateId}:${judgedInput.attempt}` },
+64:     payload: { namespace: 'kubeclaw.buster-quality-gate', mediaType: 'application/json', value: { testAgent: { enabled: true }, verdict, sourceRevision, decisionDigest: decision.decisionDigest, suiteEvidence: judgedInput.suiteEvidence } },
+65:   });
+66:   artifacts.push(stored.artifact as ArtifactRef);
+67:   if (verdict.outcome === 'passed') return { ...nativeResult, artifacts };
+68:   return { schemaVersion: 'stage-result.v2', outcome: verdict.outcome, artifacts,
+69:     reason: { code: `buster_quality.${verdict.failureClass}`, message: verdict.summary, details: { findings: verdict.findings, decisionDigest: decision.decisionDigest } } };
+70: }
+71: import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';
+SOURCE skills/nova/plugins/case-study/package.json SHA256 4c8729dfdf523befdb7dfc2551ba543780d0171bb6d3998ac387a6d50e9668a5
+1: {
+2:   "name": "@kubeclaw/plugin-case-study",
+3:   "private": true,
+4:   "type": "module",
+5:   "scripts": {
+6:     "build": "tsc --noEmit -p tsconfig.json",
+7:     "test": "node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+8:   },
+9:   "dependencies": {
+10:     "@kubeclaw/plugin-sdk": "*"
+11:   }
+12: }
+SOURCE skills/nova/plugins/case-study/plugin.json SHA256 e18697e96655c6b0fcf775de0a898a18821d7bd1c9e1960fdd150d18f9f68b8e
+1: {
+2:   "id": "kubeclaw.case-study",
+3:   "apiVersion": "pipeline-plugin-v2",
+4:   "packageVersion": "1.0.0",
+5:   "stages": [
+6:     {
+7:       "id": "case-study",
+8:       "type": "kubeclaw.report.case-study",
+9:       "module": "src/stage.ts",
+10:       "export": "execute",
+11:       "requiredCapabilities": [
+12:         "runtime.dispatch",
+13:         "artifacts.write",
+14:         "report.evidence.read"
+15:       ],
+16:       "configSchema": "schemas/config.schema.json",
+17:       "inputSchema": "schemas/input.schema.json",
+18:       "resultSchema": "schemas/result.schema.json"
+19:     }
+20:   ],
+21:   "observers": [],
+22:   "adapters": []
+23: }
+SOURCE skills/nova/plugins/case-study/tsconfig.json SHA256 e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b
+1: {
+2:   "extends": "../../../../tsconfig.base.json",
+3:   "compilerOptions": {
+4:     "rootDir": "src",
+5:     "exactOptionalPropertyTypes": true,
+6:     "noUncheckedIndexedAccess": true
+7:   },
+8:   "include": [
+9:     "src/**/*.ts"
+10:   ]
+11: }
+SOURCE skills/nova/plugins/case-study/schemas/result.schema.json SHA256 6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","$ref":"https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult"}
+SOURCE skills/nova/plugins/case-study/schemas/input.schema.json SHA256 57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "required": [
+6:     "task",
+7:     "source"
+8:   ],
+9:   "properties": {
+10:     "task": {
+11:       "type": "string",
+12:       "minLength": 1,
+13:       "maxLength": 32768
+14:     },
+15:     "source": {
+16:       "type": "object",
+17:       "additionalProperties": false,
+18:       "required": [
+19:         "runId",
+20:         "journalHead",
+21:         "snapshotDigest",
+22:         "sourceStageId",
+23:         "sourceRevision",
+24:         "artifacts"
+25:       ],
+26:       "properties": {
+27:         "runId": {
+28:           "type": "string",
+29:           "minLength": 1
+30:         },
+31:         "journalHead": {
+32:           "type": "string",
+33:           "pattern": "^sha256:[a-f0-9]{64}$"
+34:         },
+35:         "snapshotDigest": {
+36:           "type": "string",
+37:           "pattern": "^sha256:[a-f0-9]{64}$"
+38:         },
+39:         "sourceStageId": {
+40:           "type": "string",
+41:           "minLength": 1
+42:         },
+43:         "sourceRevision": {
+44:           "type": "string",
+45:           "pattern": "^([a-f0-9]{40}|[a-f0-9]{64})$"
+46:         },
+47:         "artifacts": {
+48:           "type": "array",
+49:           "minItems": 1,
+50:           "maxItems": 128,
+51:           "items": {
+52:             "$ref": "https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/artifactRef"
+53:           }
+54:         }
+55:       }
+56:     }
+57:   }
+58: }
+SOURCE skills/nova/plugins/case-study/schemas/config.schema.json SHA256 4632cc51357ffecdbd593cf1d1928a99b9cd4855b3763354f67261b62cc0c895
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["agent"],"properties":{"agent":{"type":"string","minLength":1}}}
+SOURCE skills/nova/plugins/case-study/src/protocol.ts SHA256 3ff3c3dc70f2967d194896205cb1c7a2f7226d84de2a042f6c7bae46a25588c6
+1: import { canonicalJson, sha256Text, type ArtifactRef, type AttemptIdentity } from '@kubeclaw/plugin-sdk';
+2: export interface ReportSource {
+3:   readonly runId: string; readonly journalHead: string; readonly snapshotDigest: string;
+4:   readonly sourceStageId: string; readonly sourceRevision: string; readonly artifacts: readonly ArtifactRef[];
+5: }
+6: export interface SourceBundle {
+7:   readonly schemaVersion: 'report-source-bundle.v1'; readonly digest: string;
+8:   readonly target: Omit<ReportSource, 'artifacts'>; readonly pipelineId: string;
+9:   readonly evidence: readonly { readonly evidenceId: string; readonly artifact: ArtifactRef }[];
+10:   readonly facts: readonly Readonly<Record<string, unknown>>[];
+11:   readonly [key: string]: unknown;
+12: }
+13: export function validateBundle(value: unknown, source: ReportSource): SourceBundle {
+14:   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('REPORT_BUNDLE_INVALID');
+15:   const bundle = value as SourceBundle; const { digest, ...unsigned } = bundle;
+16:   const { artifacts, ...target } = source;
+17:   if (bundle.schemaVersion !== 'report-source-bundle.v1' || digest !== sha256Text(canonicalJson(unsigned))
+18:     || canonicalJson(bundle.target) !== canonicalJson(target) || !Array.isArray(bundle.evidence)
+19:     || canonicalJson(bundle.evidence.map(item => item.artifact)) !== canonicalJson(artifacts)) throw new Error('REPORT_BUNDLE_BINDING_INVALID');
+20:   return bundle;
+21: }
+22: function citations(value: unknown, bundle: SourceBundle): readonly string[] {
+23:   if (!Array.isArray(value) || !value.length || value.length > 128 || new Set(value).size !== value.length
+24:     || value.some(id => typeof id !== 'string' || !bundle.evidence.some(item => item.evidenceId === id))) throw new Error('REPORT_CITATIONS_INVALID');
+25:   return value as string[];
+26: }
+27: export interface CaseStudyInput { readonly task:string; readonly source:ReportSource }
+28: export interface CaseStudy { readonly status:'generated'; readonly projectId:string; readonly runId:string; readonly markdown:string;
+29:   readonly execution:AttemptIdentity; readonly reportTarget:SourceBundle['target']; readonly evidenceStatus:'verified-source-bundle';
+30:   readonly narrativeStatus:'draft-not-entailment-verified'; readonly sourceBundle:SourceBundle; readonly evidenceIds:readonly string[] }
+31: export const requiredSections=['Context','Challenge','Approach','Implementation','Verification','Outcome'] as const;
+32: export function buildRequest(agent:string,input:CaseStudyInput,execution:AttemptIdentity,bundle:SourceBundle):Readonly<Record<string,unknown>>{
+33:   return {protocol:'kubeclaw.case-study.v4',agent,identity:execution,reportTarget:bundle.target,evidenceStatus:'verified-source-bundle',narrativeStatus:'draft-not-entailment-verified',
+34:     task:[input.task,'Return only the agent-owned output object described by outputContract.','Do not copy protocol, agent, identity, task, facts, requiredSections, groundingRules, or outputContract into the output.','Execution identity comes from the active Core lease. reportTarget identifies the requested project/run, which may be historical. SourceBundle contains verified structured source facts and explicit omissions. Cite supplied evidence IDs. Generated Markdown remains a draft, not proof of entailment or publication readiness.'].join('\n\n'),
+35:     sourceBundle:bundle,requiredSections,groundingRules:['Use only supplied source facts; include evidenceIds for sources cited in Markdown.','Do not invent metrics, quotes, dates, or outcomes. Each returned evidenceId must appear in Markdown as [evidence:ID].'],
+36:     outputContract:{type:'object',additionalProperties:false,required:['status','markdown','evidenceIds'],properties:{status:{const:'generated'},markdown:{type:'string'},evidenceIds:{type:'array',minItems:1,items:{type:'string'}}}}};
+37: }
+38: export function parseCaseStudy(value:unknown,input:CaseStudyInput,execution:AttemptIdentity,bundle:SourceBundle):CaseStudy{
+39:   if(!value||typeof value!=='object'||Array.isArray(value)) throw new Error('case study must be an object');
+40:   const source=value as Record<string,unknown>;
+41:   if(Object.keys(source).some((key)=>!['status','markdown','evidenceIds'].includes(key))||source.status!=='generated') throw new Error('case study shape is invalid');
+42:   if(typeof source.markdown!=='string'||source.markdown.length<1||source.markdown.length>131072||/[\0\r]/u.test(source.markdown)) throw new Error('case study Markdown is invalid');
+43:   let previous=-1;
+44:   for(const section of requiredSections){
+45:     const marker=`## ${section}`; const first=source.markdown.indexOf(marker);
+46:     if(first<0||first<=previous||source.markdown.indexOf(marker,first+1)>=0) throw new Error(`case study section ${section} is missing, duplicated, or out of order`);
+47:     previous=first;
+48:   }
+49:   const evidenceIds=citations(source.evidenceIds,bundle);
+50:   if(evidenceIds.some(id=>!String(source.markdown).includes(`[evidence:${id}]`)))throw new Error('REPORT_MARKDOWN_CITATION_MISSING');
+51:   return {status:'generated',projectId:bundle.pipelineId,runId:execution.runId,execution:{...execution},reportTarget:bundle.target,evidenceStatus:'verified-source-bundle',narrativeStatus:'draft-not-entailment-verified',sourceBundle:structuredClone(bundle),evidenceIds,markdown:source.markdown};
+52: }
+SOURCE skills/nova/plugins/case-study/src/stage.ts SHA256 a537e4028ddc30ea19ae7fa18e828c10745f08f14b0cf16e534ee8b42ea720b9
+1: import { canonicalJson, sha256Text, type AttemptIdentity } from '@kubeclaw/plugin-sdk';
+2: import type{ArtifactRef,PluginInvocationContext,StageResult}from'@kubeclaw/plugin-sdk';
+3: import{buildRequest,parseCaseStudy,validateBundle,type CaseStudyInput}from'./protocol.ts';
+4: export async function execute(input:CaseStudyInput,context:PluginInvocationContext):Promise<StageResult>{
+5:   const agent=context.contract.config.agent;if(typeof agent!=='string'||!agent.trim())throw new Error('case study agent is not configured');
+6:   const execution={...context.contract.lease.attempt};
+7:   let study;
+8:   try{const resolved=await context.invoke('report.evidence.read',{operation:'snapshot',resource:{type:'pipeline.run',canonicalId:input.source.runId},payload:{...input.source}});
+9:     const bundle=validateBundle(resolved.bundle,input.source);
+10:     const response=await context.invoke('runtime.dispatch',withRuntimeDispatchProfile({operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:buildRequest(agent,input,execution,bundle)},context.contract.runtimeDispatchProfile));
+11:     study=parseCaseStudy(response.result,input,execution,bundle);
+12:   }catch(error){return{schemaVersion:'stage-result.v2',outcome:'blocked',reason:{code:'case_study.invalid_output',message:error instanceof Error?error.message:String(error)},artifacts:[]};}
+13:   const artifactId=`case-study:${sha256Text(canonicalJson(execution)).slice(7)}`;
+14:   const stored=await context.invoke('artifacts.write',{operation:'put_json',resource:{type:'artifact.object',canonicalId:artifactId},
+15:     payload:{namespace:'kubeclaw.case-study',mediaType:'application/json',value:study}});
+16:   assertReportArtifact(stored.artifact,artifactId,study,execution);
+17:   return{schemaVersion:'stage-result.v2',outcome:'passed',artifacts:[stored.artifact as ArtifactRef]};
+18: }
+19: 
+20: /** Verify the original store response against the bytes and active producer being committed. */
+21: export function assertReportArtifact(value:unknown,artifactId:string,report:unknown,execution:AttemptIdentity):asserts value is ArtifactRef {
+22:   if(!value || typeof value!=='object')throw new Error('REPORT_ARTIFACT_INVALID');
+23:   const artifact=value as ArtifactRef;
+24:   const bytes=canonicalJson(report);
+25:   if(artifact.artifactId!==artifactId || artifact.namespace!=='kubeclaw.case-study' || artifact.mediaType!=='application/json'
+26:     || artifact.digest!==sha256Text(bytes) || artifact.sizeBytes!==Buffer.byteLength(bytes)
+27:     || canonicalJson(artifact.producer)!==canonicalJson(execution))throw new Error('REPORT_ARTIFACT_BINDING_MISMATCH');
+28: }
+29: import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';
+SOURCE skills/nova/plugins/pipeline-review/package.json SHA256 1f587ae529db6a8c3ede69be6ca14651d989a80e884d111888469bd5b30da888
+1: {
+2:   "name": "@kubeclaw/plugin-pipeline-review",
+3:   "private": true,
+4:   "type": "module",
+5:   "scripts": {
+6:     "build": "tsc --noEmit -p tsconfig.json",
+7:     "test": "node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+8:   },
+9:   "dependencies": {
+10:     "@kubeclaw/plugin-sdk": "*",
+11:     "@kubeclaw/nova-core": "*",
+12:     "@kubeclaw/pipeline-test-gate-contract": "*"
+13:   }
+14: }
+SOURCE skills/nova/plugins/pipeline-review/plugin.json SHA256 113fad3ba88ebc4db595fd411230d3288a28e8dfc99583e5495cf34da2483cab
+1: {
+2:   "id": "kubeclaw.pipeline-review",
+3:   "apiVersion": "pipeline-plugin-v2",
+4:   "packageVersion": "1.0.0",
+5:   "stages": [
+6:     {
+7:       "id": "review",
+8:       "type": "kubeclaw.report.pipeline-review",
+9:       "module": "src/stage.ts",
+10:       "export": "execute",
+11:       "requiredCapabilities": [
+12:         "runtime.dispatch",
+13:         "artifacts.write",
+14:         "report.evidence.read"
+15:       ],
+16:       "configSchema": "schemas/config.schema.json",
+17:       "inputSchema": "schemas/input.schema.json",
+18:       "resultSchema": "schemas/result.schema.json"
+19:     }
+20:   ],
+21:   "observers": [],
+22:   "adapters": [
+23:     {
+24:       "id": "evidence",
+25:       "module": "src/evidence-adapter.ts",
+26:       "export": "activate",
+27:       "providesCapabilities": [
+28:         "report.evidence.read"
+29:       ],
+30:       "requiredCapabilities": [
+31:         "artifacts.read"
+32:       ],
+33:       "configSchema": "schemas/evidence-config.schema.json"
+34:     }
+35:   ]
+36: }
+SOURCE skills/nova/plugins/pipeline-review/tsconfig.json SHA256 e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b
+1: {
+2:   "extends": "../../../../tsconfig.base.json",
+3:   "compilerOptions": {
+4:     "rootDir": "src",
+5:     "exactOptionalPropertyTypes": true,
+6:     "noUncheckedIndexedAccess": true
+7:   },
+8:   "include": [
+9:     "src/**/*.ts"
+10:   ]
+11: }
+SOURCE skills/nova/plugins/pipeline-review/schemas/result.schema.json SHA256 6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","$ref":"https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult"}
+SOURCE skills/nova/plugins/pipeline-review/schemas/input.schema.json SHA256 57b29f85dd70c0e69c90eed33563fde513533de0df258ab5f2b62c2ca693bd7b
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "required": [
+6:     "task",
+7:     "source"
+8:   ],
+9:   "properties": {
+10:     "task": {
+11:       "type": "string",
+12:       "minLength": 1,
+13:       "maxLength": 32768
+14:     },
+15:     "source": {
+16:       "type": "object",
+17:       "additionalProperties": false,
+18:       "required": [
+19:         "runId",
+20:         "journalHead",
+21:         "snapshotDigest",
+22:         "sourceStageId",
+23:         "sourceRevision",
+24:         "artifacts"
+25:       ],
+26:       "properties": {
+27:         "runId": {
+28:           "type": "string",
+29:           "minLength": 1
+30:         },
+31:         "journalHead": {
+32:           "type": "string",
+33:           "pattern": "^sha256:[a-f0-9]{64}$"
+34:         },
+35:         "snapshotDigest": {
+36:           "type": "string",
+37:           "pattern": "^sha256:[a-f0-9]{64}$"
+38:         },
+39:         "sourceStageId": {
+40:           "type": "string",
+41:           "minLength": 1
+42:         },
+43:         "sourceRevision": {
+44:           "type": "string",
+45:           "pattern": "^([a-f0-9]{40}|[a-f0-9]{64})$"
+46:         },
+47:         "artifacts": {
+48:           "type": "array",
+49:           "minItems": 1,
+50:           "maxItems": 128,
+51:           "items": {
+52:             "$ref": "https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/artifactRef"
+53:           }
+54:         }
+55:       }
+56:     }
+57:   }
+58: }
+SOURCE skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json SHA256 905fba3c46c2fbf13a617d385099dda9959302ab3414a67cc8f5d5c33502e530
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "required": [
+6:     "storageRoot",
+7:     "orchestratorIssuerId",
+8:     "maximumJournalBytes",
+9:     "maximumArtifactBytes",
+10:     "maximumBundleBytes"
+11:   ],
+12:   "properties": {
+13:     "storageRoot": {
+14:       "type": "string",
+15:       "minLength": 1
+16:     },
+17:     "orchestratorIssuerId": {
+18:       "type": "string",
+19:       "minLength": 1
+20:     },
+21:     "maximumJournalBytes": {
+22:       "type": "integer",
+23:       "minimum": 1
+24:     },
+25:     "maximumArtifactBytes": {
+26:       "type": "integer",
+27:       "minimum": 1
+28:     },
+29:     "maximumBundleBytes": {
+30:       "type": "integer",
+31:       "minimum": 1
+32:     }
+33:   }
+34: }
+SOURCE skills/nova/plugins/pipeline-review/schemas/config.schema.json SHA256 49b1391ff9c5076715c42cf37857f4a6ec6e5a90e7777ff9c94e0d664449981a
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["agent"],"properties":{"agent":{"type":"string","minLength":1},"agentRole":{"type":"string","minLength":1}}}
+SOURCE skills/nova/plugins/pipeline-review/src/evidence-adapter.ts SHA256 477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c
+1: import {verifiedArtifactJsonText} from '@kubeclaw/plugin-sdk';
+2: import { readRunEvidence } from '@kubeclaw/nova-core';
+3: import { canonicalJson, sha256Text, type AdapterActivationContext, type AdapterInstance, type AdapterInvocation, type ArtifactRef } from '@kubeclaw/plugin-sdk';
+4: import { assertEvidenceSelection, verifySelectedArtifacts, sourceFact, buildEvidenceBundle, type EvidenceSelection } from './evidence-bundle.ts';
+5: 
+6: async function readArtifact(context: AdapterActivationContext, invocation: AdapterInvocation, ref: ArtifactRef) {
+7:   const response = await context.invoke('artifacts.read', { operation: 'get_json_bytes', resource: { type: 'artifact.object', canonicalId: ref.artifactId }, payload: { namespace: ref.namespace, digest: ref.digest, reference: ref } }, { signal: invocation.signal });
+8:   const bytes = verifiedArtifactJsonText(response, ref);
+9:   if (canonicalJson(response.artifact) !== canonicalJson(ref) || response.digest !== ref.digest || sha256Text(bytes) !== ref.digest
+10:     || response.sizeBytes !== ref.sizeBytes || Buffer.byteLength(bytes) !== ref.sizeBytes) throw new Error('REPORT_ARTIFACT_INTEGRITY_INVALID');
+11:   return response.value;
+12: }
+13: function artifactBudget(ref: ArtifactRef, total: number, maximum: number): void {
+14:   if (ref.mediaType !== 'application/json' || !Number.isSafeInteger(total) || total > maximum) throw new Error('REPORT_ARTIFACT_BUDGET_EXCEEDED');
+15: }
+16: export function activate(context: AdapterActivationContext): AdapterInstance {
+17:   const storageRoot = context.config.storageRoot;
+18:   const orchestratorIssuerId = context.config.orchestratorIssuerId;
+19:   const maximumJournalBytes = context.config.maximumJournalBytes;
+20:   const maximumArtifactBytes = context.config.maximumArtifactBytes;
+21:   const maximumBundleBytes = context.config.maximumBundleBytes;
+22:   if (typeof storageRoot !== 'string' || typeof orchestratorIssuerId !== 'string' || !orchestratorIssuerId
+23:     || [maximumJournalBytes, maximumArtifactBytes, maximumBundleBytes].some(value => !Number.isSafeInteger(value) || Number(value) < 1)) throw new Error('REPORT_READER_CONFIG_INVALID');
+24:   let stopped = false;
+25:   async function invoke(invocation: AdapterInvocation) {
+26:     if (!invocation.confidential) invocation.fence.assertCurrent();
+27:     if (stopped || invocation.signal.aborted) throw new Error('REPORT_READER_CANCELLED');
+28:     const request = invocation.request;
+29:     if (request.capability !== 'report.evidence.read' || request.operation !== 'snapshot' || request.resource.type !== 'pipeline.run') throw new Error('REPORT_READER_OPERATION_INVALID');
+30:     const selection = structuredClone(request.payload) as unknown as EvidenceSelection;
+31:     assertEvidenceSelection(selection);
+32:     if (request.resource.canonicalId !== selection.runId) throw new Error('REPORT_READER_RUN_MISMATCH');
+33:     const options = { storageRoot: storageRoot as string, orchestratorIssuerId: orchestratorIssuerId as string, maximumBytes: Number(maximumJournalBytes) };
+34:     const projection = readRunEvidence(selection, options);
+35:     verifySelectedArtifacts(projection, selection);
+36:     let total = 0; const facts = [];
+37:     for (const ref of selection.artifacts) {
+38:       total += ref.sizeBytes;
+39:       artifactBudget(ref,total,Number(maximumArtifactBytes));
+40:       facts.push(sourceFact(ref, await readArtifact(context,invocation,ref), selection, projection));
+41:     }
+42:     if(canonicalJson(readRunEvidence(selection, options))!==canonicalJson(projection))throw new Error('REPORT_SOURCE_CHANGED');
+43:     if (invocation.signal.aborted || stopped) throw new Error('REPORT_READER_CANCELLED');
+44:     const bundle = buildEvidenceBundle(projection, selection, facts);
+45:     if (Buffer.byteLength(canonicalJson(bundle)) > Number(maximumBundleBytes)) throw new Error('REPORT_BUNDLE_BUDGET_EXCEEDED');
+46:     return { bundle };
+47:   }
+48:   return { async ready() {}, invoke, async shutdown() { stopped = true; } };
+49: }
+SOURCE skills/nova/plugins/pipeline-review/src/evidence-bundle.ts SHA256 ca3db15dbc1f008f690b79df3f4cb94143b924631b11711fb935f4ee3ccda7dd
+1: import { canonicalJson, sha256Text, type ArtifactRef } from '@kubeclaw/plugin-sdk';
+2: import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract';
+3: import type { RunEvidenceProjection, RunEvidenceSelection } from '@kubeclaw/nova-core';
+4: 
+5: export interface EvidenceSelection extends RunEvidenceSelection {
+6:   readonly sourceStageId: string;
+7:   readonly sourceRevision: string;
+8:   readonly artifacts: readonly ArtifactRef[];
+9: }
+10: export function assertEvidenceSelection(value: EvidenceSelection): void {
+11:   if (!value || Object.keys(value).sort().join(',') !== 'artifacts,journalHead,runId,snapshotDigest,sourceRevision,sourceStageId'
+12:     || typeof value.runId !== 'string' || !value.runId || typeof value.sourceStageId !== 'string' || !value.sourceStageId
+13:     || !/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/u.test(value.sourceRevision)
+14:     || !Array.isArray(value.artifacts) || !value.artifacts.length || value.artifacts.length > 128
+15:     || new Set(value.artifacts.map(ref => canonicalJson(ref))).size !== value.artifacts.length) throw new Error('REPORT_SOURCE_SELECTION_INVALID');
+16: }
+17: export function verifySelectedArtifacts(projection: RunEvidenceProjection, selection: EvidenceSelection): void {
+18:   for (const ref of selection.artifacts) {
+19:     if (!projection.artifacts.some(candidate => canonicalJson(candidate) === canonicalJson(ref))) throw new Error('REPORT_ARTIFACT_NOT_IN_RUN');
+20:     const stage = projection.stages.find(stage => stage.stageId === ref.producer.stageId);
+21:     if (!stage || ref.producer.attemptNumber !== stage.attempts) throw new Error('REPORT_ARTIFACT_STALE_ATTEMPT');
+22:   }
+23: }
+24: function record(value: unknown): Record<string, any> {
+25:   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('REPORT_SOURCE_CONTENT_INVALID');
+26:   return value as Record<string, any>;
+27: }
+28: function count(value: unknown): number {
+29:   if (!Number.isSafeInteger(value) || Number(value) < 0) throw new Error('REPORT_SOURCE_COUNT_INVALID');
+30:   return Number(value);
+31: }
+32: function testFact(ref: ArtifactRef, value: Record<string, any>, selection: EvidenceSelection, evidenceId: string) {
+33:     const decision = parseGateDecision(value);
+34:     if (decision.runId !== selection.runId || decision.coverage?.sourceRevision !== `git:${selection.sourceRevision}`
+35:       || decision.coverage.pipelineStageId !== ref.producer.stageId) throw new Error('REPORT_GATE_SOURCE_MISMATCH');
+36:     return { evidenceId, kind: 'tests', sourceRevision: selection.sourceRevision, state: decision.state,
+37:       nodes: decision.nodes.map(node => ({ nodeId: node.nodeId, effect: node.effect })),
+38:       coverage: decision.coverage.checks.map(check => ({ checkId: check.checkId, state: check.state })) };
+39: }
+40: export function sourceFact(ref: ArtifactRef, raw: unknown, selection: EvidenceSelection, projection: RunEvidenceProjection) {
+41:   const value = record(raw); const evidenceId = sha256Text(canonicalJson(ref));
+42:   const stage = projection.stages.find(stage => stage.stageId === ref.producer.stageId)!;
+43:   if (ref.namespace === 'kubeclaw.implementation-agent' && ref.producer.stageId === selection.sourceStageId
+44:     && stage.stageType === 'kubeclaw.agent.implementation') {
+45:     if (value.sourceRevision !== selection.sourceRevision || value.status !== 'ready_for_testing') throw new Error('REPORT_SOURCE_REVISION_MISMATCH');
+46:     return { evidenceId, kind: 'source', sourceRevision: selection.sourceRevision };
+47:   }
+48:   if (ref.namespace === 'kubeclaw.lint' && stage.stageType.startsWith('kubeclaw.lint.')) {
+49:     if (value.sourceRevision !== selection.sourceRevision) throw new Error('REPORT_SOURCE_REVISION_MISMATCH');
+50:     const summary = record(value.summary);
+51:     return { evidenceId, kind: 'lint', sourceRevision: selection.sourceRevision, toolsFailed: count(summary.tools_failed), blocking: count(summary.total_blocking) };
+52:   }
+53:   if (ref.namespace === 'kubeclaw.buster-quality-gate' && stage.stageType === 'kubeclaw.test.quality-evaluation' && ref.artifactId.includes(':decision:')) {
+54:     return testFact(ref, value, selection, evidenceId);
+55:   }
+56:   throw new Error('REPORT_SOURCE_KIND_UNSUPPORTED');
+57: }
+58: export function buildEvidenceBundle(projection: RunEvidenceProjection, selection: EvidenceSelection, facts: readonly ReturnType<typeof sourceFact>[]) {
+59:   if (facts.filter(fact => fact.kind === 'source').length !== 1) throw new Error('REPORT_SOURCE_ARTIFACT_REQUIRED');
+60:   const value = { schemaVersion: 'report-source-bundle.v1', target: { runId: selection.runId, journalHead: selection.journalHead,
+61:     snapshotDigest: selection.snapshotDigest, sourceStageId: selection.sourceStageId, sourceRevision: selection.sourceRevision },
+62:     pipelineId: projection.pipelineId, terminal: projection.terminal, eventCount: projection.eventCount, effectsHead:projection.effectsHead,
+63:     stages: projection.stages, attempts: projection.attempts, evidence: selection.artifacts.map(ref => ({ evidenceId: sha256Text(canonicalJson(ref)), artifact: ref })), facts,
+64:     coverage: { selectedArtifacts: selection.artifacts.length, totalCompletedArtifacts: projection.artifacts.length,
+65:       omittedArtifacts: projection.artifacts.filter(ref => !selection.artifacts.some(selected => canonicalJson(selected) === canonicalJson(ref)))
+66:         .map(ref => ({ artifact: ref, reason: 'not-selected' })),
+67:       omittedContentClasses: ['raw-logs', 'checkpoint-only-artifacts', 'prompts', 'registry-configuration', 'effect-payloads', 'credentials', 'unstructured-agent-claims'],
+68:       omissionEffect: 'not-exported-in-this-bundle; original-records-retained' }, narrativeStatus: 'draft-not-entailment-verified' };
+69:   return { ...value, digest: sha256Text(canonicalJson(value)) };
+70: }
+SOURCE skills/nova/plugins/pipeline-review/src/protocol.ts SHA256 df3e02fd4c7a13aa38ce93292a55da9cb6c712799e813cbe0c8a283fd769081f
+1: import { canonicalJson, sha256Text, type ArtifactRef, type AttemptIdentity } from '@kubeclaw/plugin-sdk';
+2: export interface ReportSource {
+3:   readonly runId: string; readonly journalHead: string; readonly snapshotDigest: string;
+4:   readonly sourceStageId: string; readonly sourceRevision: string; readonly artifacts: readonly ArtifactRef[];
+5: }
+6: export interface SourceBundle {
+7:   readonly schemaVersion: 'report-source-bundle.v1'; readonly digest: string;
+8:   readonly target: Omit<ReportSource, 'artifacts'>; readonly pipelineId: string;
+9:   readonly evidence: readonly { readonly evidenceId: string; readonly artifact: ArtifactRef }[];
+10:   readonly facts: readonly Readonly<Record<string, unknown>>[];
+11:   readonly [key: string]: unknown;
+12: }
+13: export function validateBundle(value: unknown, source: ReportSource): SourceBundle {
+14:   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('REPORT_BUNDLE_INVALID');
+15:   const bundle = value as SourceBundle; const { digest, ...unsigned } = bundle;
+16:   const { artifacts, ...target } = source;
+17:   if (bundle.schemaVersion !== 'report-source-bundle.v1' || digest !== sha256Text(canonicalJson(unsigned))
+18:     || canonicalJson(bundle.target) !== canonicalJson(target) || !Array.isArray(bundle.evidence)
+19:     || canonicalJson(bundle.evidence.map(item => item.artifact)) !== canonicalJson(artifacts)) throw new Error('REPORT_BUNDLE_BINDING_INVALID');
+20:   return bundle;
+21: }
+22: function citations(value: unknown, bundle: SourceBundle): readonly string[] {
+23:   if (!Array.isArray(value) || !value.length || value.length > 128 || new Set(value).size !== value.length
+24:     || value.some(id => typeof id !== 'string' || !bundle.evidence.some(item => item.evidenceId === id))) throw new Error('REPORT_CITATIONS_INVALID');
+25:   return value as string[];
+26: }
+27: export interface ReviewInput { readonly task: string; readonly source: ReportSource }
+28: export interface ReviewReport {
+29:   readonly status: 'reviewed'; readonly runId: string; readonly attempt: number; readonly summary: string;
+30:   readonly execution: AttemptIdentity; readonly reportTarget: SourceBundle['target'];
+31:   readonly evidenceStatus: 'verified-source-bundle'; readonly narrativeStatus: 'draft-not-entailment-verified'; readonly sourceBundle: SourceBundle;
+32:   readonly observations: readonly { readonly dimension: 'architecture'|'agents'|'prompts'|'tests'|'configuration'; readonly finding: string; readonly priority: 'low'|'medium'|'high'; readonly evidenceIds: readonly string[] }[];
+33: }
+34: const dimensions = ['architecture','agents','prompts','tests','configuration'] as const;
+35: export function buildRequest(agent: string, input: ReviewInput, execution: AttemptIdentity, bundle: SourceBundle): Readonly<Record<string, unknown>> {
+36:   return { protocol:'kubeclaw.pipeline-review.v4', agent, identity:execution, reportTarget:bundle.target, evidenceStatus:'verified-source-bundle', narrativeStatus:'draft-not-entailment-verified',
+37:     task:[input.task,'Return only the agent-owned output object described by outputContract.','Do not copy protocol, agent, identity, task, evidence, requiredDimensions, or outputContract into the output.','Execution identity comes from the active Core lease. SourceBundle contains verified historical structured facts and explicit omissions. Cite at least one supplied evidenceId for each observation. Narrative is a draft, not a proof of factual entailment or publication readiness.'].join('\n\n'),
+38:     sourceBundle:bundle, requiredDimensions:dimensions,
+39:     outputContract:{type:'object',additionalProperties:false,required:['status','summary','observations'],properties:{status:{const:'reviewed'},summary:{type:'string'},observations:{type:'array',items:{type:'object',additionalProperties:false,required:['dimension','finding','priority','evidenceIds'],properties:{dimension:{enum:dimensions},finding:{type:'string'},priority:{enum:['low','medium','high']},evidenceIds:{type:'array',minItems:1,items:{type:'string'}}}}}}} };
+40: }
+41: export function parseReport(value: unknown, input: ReviewInput, execution: AttemptIdentity, bundle: SourceBundle): ReviewReport {
+42:   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('review report must be an object');
+43:   const report=value as Record<string,unknown>;
+44:   if (Object.keys(report).some((key)=>!['status','summary','observations'].includes(key)) || report.status!=='reviewed') throw new Error('review report shape is invalid');
+45:   if (typeof report.summary!=='string'||!report.summary.trim()||report.summary.length>8192) throw new Error('review summary is invalid');
+46:   if (!Array.isArray(report.observations)||report.observations.length<dimensions.length||report.observations.length>128) throw new Error('review observations are invalid');
+47:   const observations=report.observations.map((value)=>{
+48:     if(!value||typeof value!=='object'||Array.isArray(value)) throw new Error('review observation is invalid');
+49:     const item=value as Record<string,unknown>;
+50:     if(Object.keys(item).some((key)=>!['dimension','finding','priority','evidenceIds'].includes(key))||
+51:       !dimensions.includes(item.dimension as typeof dimensions[number])||!['low','medium','high'].includes(String(item.priority))||
+52:       typeof item.finding!=='string'||!item.finding.trim()||item.finding.length>8192) throw new Error('review observation is invalid');
+53:     citations(item.evidenceIds,bundle);
+54:     return item as unknown as ReviewReport['observations'][number];
+55:   });
+56:   for(const dimension of dimensions) if(!observations.some((item)=>item.dimension===dimension)) throw new Error(`review is missing ${dimension}`);
+57:   return {status:'reviewed',runId:execution.runId,attempt:execution.attemptNumber,execution:{...execution},
+58:     reportTarget:bundle.target,evidenceStatus:'verified-source-bundle',narrativeStatus:'draft-not-entailment-verified',sourceBundle:structuredClone(bundle),summary:report.summary,observations};
+59: }
+SOURCE skills/nova/plugins/pipeline-review/src/stage.ts SHA256 e2951394c77a1f57f8538dc8586fb6f8b571a5b2050b87fec65f42260055d51a
+1: import { canonicalJson, sha256Text, type AttemptIdentity } from '@kubeclaw/plugin-sdk';
+2: import type { ArtifactRef,PluginInvocationContext,StageResult } from '@kubeclaw/plugin-sdk';
+3: import {buildRequest,parseReport,validateBundle,type ReviewInput} from './protocol.ts';
+4: export async function execute(input:ReviewInput,context:PluginInvocationContext):Promise<StageResult>{
+5:   const agent=context.contract.config.agent;
+6:   if(typeof agent!=='string'||!agent.trim()) throw new Error('pipeline review agent is not configured');
+7:   const execution={...context.contract.lease.attempt};
+8:   let report;
+9:   try{
+10:     const resolved=await context.invoke('report.evidence.read',{operation:'snapshot',resource:{type:'pipeline.run',canonicalId:input.source.runId},payload:{...input.source}});
+11:     const bundle=validateBundle(resolved.bundle,input.source);
+12:     const response=await context.invoke('runtime.dispatch',withRuntimeDispatchProfile({operation:'dispatch',resource:{type:'runtime.agent',canonicalId:agent},payload:buildRequest(agent,input,execution,bundle)},context.contract.runtimeDispatchProfile));
+13:     report=parseReport(response.result,input,execution,bundle);
+14:   }catch(error){
+15:     return {schemaVersion:'stage-result.v2',outcome:'blocked',reason:{code:'pipeline_review.invalid_report',message:error instanceof Error?error.message:String(error)},artifacts:[]};
+16:   }
+17:   const artifactId=`pipeline-review:${sha256Text(canonicalJson(execution)).slice(7)}`;
+18:   const stored=await context.invoke('artifacts.write',{operation:'put_json',resource:{type:'artifact.object',canonicalId:artifactId},
+19:     payload:{namespace:'kubeclaw.pipeline-review',mediaType:'application/json',value:report}});
+20:   assertReportArtifact(stored.artifact,artifactId,report,execution);
+21:   return {schemaVersion:'stage-result.v2',outcome:'passed',artifacts:[stored.artifact as ArtifactRef]};
+22: }
+23: 
+24: /** Verify the original store response against the bytes and active producer being committed. */
+25: export function assertReportArtifact(value:unknown,artifactId:string,report:unknown,execution:AttemptIdentity):asserts value is ArtifactRef {
+26:   if(!value || typeof value!=='object')throw new Error('REPORT_ARTIFACT_INVALID');
+27:   const artifact=value as ArtifactRef;
+28:   const bytes=canonicalJson(report);
+29:   if(artifact.artifactId!==artifactId || artifact.namespace!=='kubeclaw.pipeline-review' || artifact.mediaType!=='application/json'
+30:     || artifact.digest!==sha256Text(bytes) || artifact.sizeBytes!==Buffer.byteLength(bytes)
+31:     || canonicalJson(artifact.producer)!==canonicalJson(execution))throw new Error('REPORT_ARTIFACT_BINDING_MISMATCH');
+32: }
+33: import { withRuntimeDispatchProfile } from '@kubeclaw/plugin-sdk';
+SOURCE skills/nova/plugins/project-summary/package.json SHA256 5d55bac5f34dbb15dc796f54e09e4069e2b23b668461b12f5dcf6c3ee0508f8e
+1: {
+2:   "name": "@kubeclaw/plugin-project-summary",
+3:   "private": true,
+4:   "type": "module",
+5:   "scripts": {
+6:     "build": "tsc --noEmit -p tsconfig.json",
+7:     "test": "node ../../../../tests/verification/integration/project-summary.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs"
+8:   },
+9:   "dependencies": {
+10:     "@kubeclaw/delivery-manifest-contract": "*",
+11:     "@kubeclaw/plugin-sdk": "*",
+12:     "@kubeclaw/pipeline-test-gate-contract": "*"
+13:   }
+14: }
+SOURCE skills/nova/plugins/project-summary/plugin.json SHA256 995ddb9dec1c6ad6ea9e55c7ed667e560a045365fcc6e4721908bd86b63b0454
+1: {
+2:   "id": "kubeclaw.project-summary",
+3:   "apiVersion": "pipeline-plugin-v2",
+4:   "packageVersion": "1.0.0",
+5:   "stages": [
+6:     {
+7:       "id": "summary",
+8:       "type": "kubeclaw.report.project-summary",
+9:       "module": "src/stage.ts",
+10:       "export": "execute",
+11:       "requiredCapabilities": [
+12:         "artifacts.read",
+13:         "artifacts.write"
+14:       ],
+15:       "configSchema": "schemas/config.schema.json",
+16:       "inputSchema": "schemas/input.schema.json",
+17:       "resultSchema": "schemas/result.schema.json"
+18:     }
+19:   ],
+20:   "observers": [],
+21:   "adapters": []
+22: }
+SOURCE skills/nova/plugins/project-summary/tsconfig.json SHA256 e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b
+1: {
+2:   "extends": "../../../../tsconfig.base.json",
+3:   "compilerOptions": {
+4:     "rootDir": "src",
+5:     "exactOptionalPropertyTypes": true,
+6:     "noUncheckedIndexedAccess": true
+7:   },
+8:   "include": [
+9:     "src/**/*.ts"
+10:   ]
+11: }
+SOURCE skills/nova/plugins/project-summary/schemas/result.schema.json SHA256 6f0724b07d28e7599627452c02f7c6528acf74183bb03c8111ddbbdd4736a87d
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","$ref":"https://kubeclaw.dev/contracts/plugin-system/v2/plugin-system-v2.schema.json#/$defs/stageResult"}
+SOURCE skills/nova/plugins/project-summary/schemas/input.schema.json SHA256 451591d9b115aa5aae88c4a08301845316f1207cdd24ed9baf7639adc83439cf
+1: {
+2:   "$schema": "https://json-schema.org/draft/2020-12/schema",
+3:   "type": "object",
+4:   "additionalProperties": false,
+5:   "required": [
+6:     "projectId",
+7:     "modules",
+8:     "final"
+9:   ],
+10:   "properties": {
+11:     "projectId": {
+12:       "type": "string",
+13:       "minLength": 1,
+14:       "maxLength": 128
+15:     },
+16:     "modules": {
+17:       "type": "array",
+18:       "minItems": 1,
+19:       "maxItems": 128,
+20:       "items": {
+21:         "type": "object",
+22:         "additionalProperties": false,
+23:         "required": [
+24:           "sourceStageId",
+25:           "testStageId",
+26:           "moduleId",
+27:           "expectedCoverage"
+28:         ],
+29:         "properties": {
+30:           "sourceStageId": {
+31:             "type": "string",
+32:             "minLength": 1,
+33:             "maxLength": 128
+34:           },
+35:           "testStageId": {
+36:             "type": "string",
+37:             "minLength": 1,
+38:             "maxLength": 128
+39:           },
+40:           "moduleId": {
+41:             "type": "string",
+42:             "minLength": 1,
+43:             "maxLength": 128
+44:           },
+45:           "expectedCoverage": {
+46:             "type": "object"
+47:           }
+48:         }
+49:       }
+50:     },
+51:     "final": {
+52:       "type": "object",
+53:       "additionalProperties": false,
+54:       "dependentRequired": {
+55:         "reviewArtifactEncoding": ["reviewStageId"],
+56:         "reviewSemanticEncoding": ["reviewStageId"]
+57:       },
+58:       "required": [
+59:         "sourceStageId",
+60:         "lintStageId",
+61:         "testStageId",
+62:         "expectedCoverage"
+63:       ],
+64:       "properties": {
+65:         "sourceStageId": {
+66:           "type": "string",
+67:           "minLength": 1,
+68:           "maxLength": 128
+69:         },
+70:         "lintStageId": {
+71:           "type": "string",
+72:           "minLength": 1,
+73:           "maxLength": 128
+74:         },
+75:         "reviewStageId": {
+76:           "type": "string",
+77:           "minLength": 1,
+78:           "maxLength": 128
+79:         },
+80:         "reviewArtifactEncoding": {
+81:           "const": "kubeclaw-json.utf16.v1"
+82:         },
+83:         "reviewSemanticEncoding": {
+84:           "const": "review-semantics.utf16-v1"
+85:         },
+86:         "testStageId": {
+87:           "type": "string",
+88:           "minLength": 1,
+89:           "maxLength": 128
+90:         },
+91:         "expectedCoverage": {
+92:           "type": "object"
+93:         }
+94:       }
+95:     }
+96:   }
+97: }
+SOURCE skills/nova/plugins/project-summary/schemas/config.schema.json SHA256 7c1bf8023f80f2bd5c3727b97636c804cd2c8b801fbe71fd8374a6edd7049bd9
+1: {"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"properties":{"agentRole":{"type":"string","minLength":1},"deliveryManifestEncoding":{"const":"delivery-manifest.utf16-v1"}}}
+SOURCE skills/nova/plugins/project-summary/src/summary.ts SHA256 bb82063929e9100dd42c3dff541eca77be2cfa624f8b5fd8733e773acb7ce7c5
+1: import {verifiedArtifactJsonText, portableJson, PORTABLE_JSON_ENCODING} from '@kubeclaw/plugin-sdk';
+2: import { summaryReviewSemanticEncoding, summaryReviewBundleDigest,
+3:   type SummaryReviewSemanticEncoding } from './review-semantics.ts';
+4: import { assertCoverageDecision, coveragePassed, coverageReviewPrefixes, coverageReviewRequirements, validatePipelineTestGateContract, type GateCoverageV1 } from '@kubeclaw/pipeline-test-gate-contract';
+5: import { parseGateDecision } from '@kubeclaw/pipeline-test-gate-contract/gate-decision';
+6: import { canonicalJson, sha256Text, resolveSourceRevision, type ArtifactRef, type PluginInvocationContext } from '@kubeclaw/plugin-sdk';
+7: import { createDeliveryManifestV3, DELIVERY_MANIFEST_ENCODING,
+8:   type DeliveryManifestEncoding } from '@kubeclaw/delivery-manifest-contract';
+9: 
+10: export interface GateBinding {
+11:   readonly reviewSemanticEncoding?: SummaryReviewSemanticEncoding;
+12:   readonly reviewArtifactEncoding?: typeof PORTABLE_JSON_ENCODING;
+13:   readonly sourceStageId: string;
+14:   readonly lintStageId: string;
+15:   readonly reviewStageId?: string;
+16:   readonly expectedCoverage: GateCoverageV1;
+17:   readonly testStageId: string;
+18: }
+19: export interface SummaryInput {
+20:   readonly projectId: string;
+21:   readonly modules: readonly { readonly moduleId: string; readonly sourceStageId: string; readonly testStageId: string; readonly expectedCoverage: GateCoverageV1 }[];
+22:   readonly final: GateBinding;
+23: }
+24: 
+25: function validateCoverageInput(input: SummaryInput): void {
+26:   portableJson(input);
+27:   summaryReviewSemanticEncoding(input.final as unknown as Record<string, unknown>);
+28:   if (!input.projectId?.trim() || !Array.isArray(input.modules) || input.modules.length < 1
+29:     || input.modules.length > 128 || new Set(input.modules.map(module => module.moduleId)).size !== input.modules.length
+30:     || new Set(input.modules.map(module => module.sourceStageId)).size !== input.modules.length
+31:     || new Set(input.modules.map(module => module.testStageId)).size !== input.modules.length
+32:     || !input.modules.some(module => module.sourceStageId === input.final?.sourceStageId)) {
+33:     throw new Error('DELIVERY_INPUT_INVALID');
+34:   }
+35:   validatePipelineTestGateContract('gateCoverage', input.final.expectedCoverage);
+36:   if (input.final.expectedCoverage.kind !== 'cumulative' || input.final.expectedCoverage.projectId !== input.projectId) throw new Error('DELIVERY_CUMULATIVE_COVERAGE_REQUIRED');
+37:   const expectedModules = input.modules.map(module => {
+38:     validatePipelineTestGateContract('gateCoverage', module.expectedCoverage);
+39:     if (module.expectedCoverage.kind !== 'module' || module.expectedCoverage.modules[0]?.moduleId !== module.moduleId
+40:       || module.expectedCoverage.projectId !== input.projectId) throw new Error('DELIVERY_MODULE_COVERAGE_MISMATCH');
+41:     return module.expectedCoverage.modules[0]!;
+42:   }).sort((left, right) => left.moduleId < right.moduleId ? -1 : left.moduleId > right.moduleId ? 1 : 0);
+43:   if (canonicalJson(expectedModules) !== canonicalJson(input.final.expectedCoverage.modules)) throw new Error('DELIVERY_CUMULATIVE_MODULES_MISMATCH');
+44: }
+45: 
+46: type ReadEvidence = (stageId: string, namespace: string, select?: (ref: ArtifactRef) => boolean,
+47:   encoding?: typeof PORTABLE_JSON_ENCODING) => Promise<Record<string, any>>;
+48: type JsonArtifactRef = ArtifactRef & { readonly mediaType: 'application/json' };
+49: 
+50: function validateReviewCoverage(review: Record<string, any>, bundle: Record<string, any>,
+51:   bundleDigest: string, sourceRevision: string, policy: GateCoverageV1): void {
+52:   const coverageEvidence = Array.isArray(bundle.evidence) ? bundle.evidence.filter((item: any) => item.kind === 'gate-coverage') : [];
+53:   if (review.revision?.head !== sourceRevision || review.revision?.base !== policy.baseRevision
+54:     || canonicalJson(review.revision) !== canonicalJson(bundle.revisions)
+55:     || review.outcome !== 'passed' || review.bundleDigest !== bundleDigest
+56:     || coverageEvidence.length !== 1 || coverageEvidence[0].content !== canonicalJson(policy)
+57:     || canonicalJson(bundle.requirements) !== canonicalJson(coverageReviewRequirements(policy))
+58:     || canonicalJson(bundle.scope?.allowedPrefixes) !== canonicalJson(coverageReviewPrefixes(policy))) throw new Error('DELIVERY_FINAL_REVIEW_COVERAGE_MISMATCH');
+59: }
+60: 
+61: async function verifyFinalReview(input: SummaryInput, sourceRevision: string, read: ReadEvidence,
+62:   deliveryManifestEncoding?: DeliveryManifestEncoding): Promise<void> {
+63:   const semantic = summaryReviewSemanticEncoding(input.final as unknown as Record<string, unknown>);
+64:   const artifactEncoding = input.final.reviewArtifactEncoding;
+65:   if (input.final.reviewStageId) {
+66:     // Preserve the historical v2 semantic-mode implication. V3 carries the
+67:     // independently compiled outer-artifact expectation explicitly.
+68:     const encoding = deliveryManifestEncoding === undefined
+69:       ? (semantic === undefined ? undefined : PORTABLE_JSON_ENCODING)
+70:       : artifactEncoding;
+71:     const review = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-report:'), encoding);
+72:     const bundle = await read(input.final.reviewStageId, 'kubeclaw.review', ref => ref.artifactId.startsWith('review-bundle:'), encoding);
+73:     const bundleDigest = summaryReviewBundleDigest(review, bundle, semantic);
+74:     validateReviewCoverage(review, bundle, bundleDigest, sourceRevision, input.final.expectedCoverage);
+75:   }
+76: }
+77: 
+78: function validateReviewMode(input: SummaryInput, deliveryManifestEncoding?: DeliveryManifestEncoding): void {
+79:   const hasReview = input.final.reviewStageId !== undefined;
+80:   const hasArtifactEncoding = Object.hasOwn(input.final, 'reviewArtifactEncoding');
+81:   const hasSemanticEncoding = Object.hasOwn(input.final, 'reviewSemanticEncoding');
+82:   if (deliveryManifestEncoding === undefined) {
+83:     if (hasArtifactEncoding) throw new Error('DELIVERY_REVIEW_ARTIFACT_MODE_INVALID');
+84:     return;
+85:   }
+86:   if ((hasArtifactEncoding && (!hasReview || input.final.reviewArtifactEncoding !== PORTABLE_JSON_ENCODING))
+87:     || (hasSemanticEncoding && !hasArtifactEncoding)) throw new Error('DELIVERY_REVIEW_ARTIFACT_MODE_INVALID');
+88: }
+89: 
+90: function validateReadBytes(response: Record<string, any>, ref: ArtifactRef, bytes: string): void {
+91:   if (response.digest !== ref.digest || response.sizeBytes !== ref.sizeBytes || sha256Text(bytes) !== ref.digest
+92:     || Buffer.byteLength(bytes) !== ref.sizeBytes) throw new Error('DELIVERY_EVIDENCE_CORRUPT');
+93: }
+94: 
+95: function evidenceReader(context: PluginInvocationContext, evidence: JsonArtifactRef[]): ReadEvidence {
+96:   const runId = context.contract.lease.attempt.runId;
+97:   let totalBytes = 0;
+98:   async function read(stageId: string, namespace: string, select: (ref: ArtifactRef) => boolean = () => true,
+99:     encoding?: typeof PORTABLE_JSON_ENCODING) {
+100:     const candidates = context.contract.artifacts.filter(ref => ref.producer.runId === runId
+101:       && ref.producer.stageId === stageId && ref.namespace === namespace);
+102:     const attempt = Math.max(...candidates.map(ref => ref.producer.attemptNumber));
+103:     const latest = candidates.filter(ref => ref.producer.attemptNumber === attempt && select(ref));
+104:     if (latest.length !== 1) throw new Error(`DELIVERY_EVIDENCE_MISSING_OR_AMBIGUOUS:${stageId}`);
+105:     const ref = latest[0]!;
+106:     if (encoding !== undefined && ref.encoding !== encoding) throw new Error('DELIVERY_REVIEW_ARTIFACT_ENCODING_REQUIRED');
+107:     if (ref.mediaType !== 'application/json' || !Number.isSafeInteger(ref.sizeBytes) || ref.sizeBytes < 1
+108:       || (totalBytes += ref.sizeBytes) > 8 * 1024 * 1024) throw new Error('DELIVERY_EVIDENCE_LIMIT_EXCEEDED');
+109:     const response = await context.invoke('artifacts.read', { operation: 'get_json_bytes',
+110:       resource: { type: 'artifact.object', canonicalId: ref.artifactId }, payload: { namespace, digest: ref.digest, reference: ref } });
+111:     const bytes = verifiedArtifactJsonText(response, ref);
+112:     validateReadBytes(response, ref, bytes);
+113:     evidence.push(ref as JsonArtifactRef);
+114:     if (!response.value || typeof response.value !== 'object' || Array.isArray(response.value)) throw new Error('DELIVERY_EVIDENCE_INVALID');
+115:     return response.value as Record<string, any>;
+116:   }
+117:   return read;
+118: }
+119: 
+120: /** Delivery is derived from core-supplied, immutable evidence, never caller-owned counts. */
+121: export async function buildSummary(input: SummaryInput, context: PluginInvocationContext,
+122:   deliveryManifestEncoding?: DeliveryManifestEncoding) {
+123:   if (deliveryManifestEncoding !== undefined && deliveryManifestEncoding !== DELIVERY_MANIFEST_ENCODING) {
+124:     throw new Error('DELIVERY_MANIFEST_ENCODING_INVALID');
+125:   }
+126:   validateCoverageInput(input);
+127:   validateReviewMode(input, deliveryManifestEncoding);
+128:   const runId = context.contract.lease.attempt.runId;
+129:   const evidence: JsonArtifactRef[] = [];
+130:   const read = evidenceReader(context, evidence);
+131:   async function verify<T extends { readonly sourceStageId: string; readonly testStageId: string;
+132:     readonly expectedCoverage: GateCoverageV1 }>(binding: T) {
+133:     const revision = await resolveSourceRevision({ sourceStageId: binding.sourceStageId }, context);
+134:     await read(binding.sourceStageId, 'kubeclaw.implementation-agent', ref => ref.artifactId.startsWith('implementation:'));
+135:     const decision = parseGateDecision(await read(binding.testStageId, 'kubeclaw.buster-quality-gate', ref => ref.artifactId.includes(':decision:')));
+136:     const quality = await read(binding.testStageId, 'kubeclaw.buster-quality-gate', ref => !ref.artifactId.includes(':decision:'));
+137:     if (quality.sourceRevision !== revision) {
+138:       throw new Error(`DELIVERY_CANDIDATE_MISMATCH:${binding.sourceStageId}`);
+139:     }
+140:     assertCoverageDecision(decision, binding.expectedCoverage, revision, binding.testStageId);
+141:     const qualityPassed = quality.testAgent?.enabled === false ? quality.nativeOutcome === 'passed' : quality.verdict?.outcome === 'passed';
+142:     if (decision.state !== 'passed' || !coveragePassed(decision.coverage!) || decision.runId !== runId || !qualityPassed
+143:       || quality.decisionDigest !== decision.decisionDigest || typeof decision.resultDigest !== 'string'
+144:       || decision.coverage === undefined) throw new Error(`DELIVERY_GATE_NOT_PASSED:${binding.sourceStageId}`);
+145:     const { decisionDigest, resultDigest, coverage } = decision;
+146:     return { ...binding, sourceRevision: revision, decisionDigest, resultDigest, coverage };
+147:   }
+148:   const modules = [];
+149:   for (const module of input.modules) modules.push(await verify(module));
+150:   const final = await verify(input.final);
+151:   const lint = await read(input.final.lintStageId, 'kubeclaw.lint');
+152:   if (lint.sourceRevision !== final.sourceRevision) throw new Error('DELIVERY_FINAL_CANDIDATE_MISMATCH');
+153:   if (lint.summary?.tools_failed !== 0 || lint.summary?.total_blocking !== 0) throw new Error('DELIVERY_FINAL_GATE_NOT_PASSED');
+154:   await verifyFinalReview(input, final.sourceRevision, read, deliveryManifestEncoding);
+155:   const manifest = { schemaVersion: 'delivery-manifest.v2', projectId: input.projectId, runId,
+156:     sourceRevision: final.sourceRevision, modules, final, evidence };
+157:   if (deliveryManifestEncoding === undefined) return { ...manifest, digest: sha256Text(canonicalJson(manifest)) };
+158:   const { reviewStageId, reviewArtifactEncoding, reviewSemanticEncoding, ...finalBase } = final;
+159:   const v3Final = reviewStageId === undefined ? finalBase
+160:     : reviewArtifactEncoding === undefined ? { ...finalBase, reviewStageId }
+161:       : reviewSemanticEncoding === undefined ? { ...finalBase, reviewStageId, reviewArtifactEncoding }
+162:         : { ...finalBase, reviewStageId, reviewArtifactEncoding, reviewSemanticEncoding };
+163:   return createDeliveryManifestV3({ ...manifest, schemaVersion: 'delivery-manifest.v3', final: v3Final });
+164: }
+SOURCE skills/nova/plugins/project-summary/src/review-semantics.ts SHA256 a14a5e8039d481063d2439a8c1060ca414012f7ba55b73ee153d2317effc2104
+1: import { canonicalJson, portableJson, sha256Text } from '@kubeclaw/plugin-sdk';
+2: 
+3: /** Bounded cross-consumer mapping; no private Review package import. */
+4: export const SUMMARY_REVIEW_SEMANTIC_ENCODING = 'review-semantics.utf16-v1' as const;
+5: export type SummaryReviewSemanticEncoding = typeof SUMMARY_REVIEW_SEMANTIC_ENCODING;
+6: 
+7: export function summaryReviewSemanticEncoding(final: Readonly<Record<string, unknown>>): SummaryReviewSemanticEncoding | undefined {
+8:   portableJson(final);
+9:   if (!Object.hasOwn(final, 'reviewSemanticEncoding')) return undefined;
+10:   if (final.reviewSemanticEncoding !== SUMMARY_REVIEW_SEMANTIC_ENCODING || typeof final.reviewStageId !== 'string') {
+11:     throw new Error('DELIVERY_REVIEW_SEMANTIC_MODE_INVALID');
+12:   }
+13:   return SUMMARY_REVIEW_SEMANTIC_ENCODING;
+14: }
+15: 
+16: function record(value: unknown): Readonly<Record<string, unknown>> {
+17:   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('DELIVERY_REVIEW_SEMANTIC_PAIR_INVALID');
+18:   return value as Readonly<Record<string, unknown>>;
+19: }
+20: 
+21: function validateGovernor(report: Readonly<Record<string, unknown>>, governor: Readonly<Record<string, unknown>>,
+22:   serialize: typeof portableJson): void {
+23:   const baseline = record(governor.baseline), current = record(governor.current), revision = record(report.revision);
+24:   if (governor.baselineId !== sha256Text(serialize({ schemaVersion: governor.schemaVersion, baseline }))
+25:     || baseline.base !== revision.base || baseline.policyDigest !== report.policyDigest
+26:     || current.head !== revision.head || current.changedManifestDigest !== revision.changedManifestDigest) {
+27:     throw new Error('DELIVERY_REVIEW_GOVERNOR_IDENTITY_INVALID');
+28:   }
+29: }
+30: 
+31: export function summaryReviewBundleDigest(reportValue: unknown, bundleValue: unknown,
+32:   expected?: SummaryReviewSemanticEncoding): `sha256:${string}` {
+33:   if (expected !== undefined && expected !== SUMMARY_REVIEW_SEMANTIC_ENCODING) throw new Error('DELIVERY_REVIEW_SEMANTIC_MODE_INVALID');
+34:   portableJson(reportValue); portableJson(bundleValue);
+35:   const report = record(reportValue), bundle = record(bundleValue);
+36:   // The original Summary API accepted this exact unversioned pair. It is not
+37:   // an assertion that Review's actual producer emitted unversioned reports.
+38:   if (expected === undefined && !Object.hasOwn(report, 'schemaVersion') && !Object.hasOwn(bundle, 'schemaVersion')) {
+39:     return sha256Text(canonicalJson(bundle));
+40:   }
+41:   const portable = expected !== undefined;
+42:   const governor = record(report.governor);
+43:   if (bundle.schemaVersion !== (portable ? 'review-bundle.v2' : 'review-bundle.v1')
+44:     || report.schemaVersion !== (portable ? 'review-report.v3' : 'review-report.v2')
+45:     || governor.schemaVersion !== (portable ? 'review-governor.v2' : 'review-governor.v1')) {
+46:     throw new Error('DELIVERY_REVIEW_SEMANTIC_PAIR_INVALID');
+47:   }
+48:   const serialize = portable ? portableJson : canonicalJson;
+49:   validateGovernor(report, governor, serialize);
+50:   return sha256Text(serialize(bundle));
+51: }
+SOURCE skills/nova/plugins/project-summary/src/stage.ts SHA256 b16533ade1d6bbf08c53d3c31bbe7102f5b67b785b1f928524ca9879a99a4fee
+1: import {portableJson,type ArtifactRef,type PluginInvocationContext,type StageResult} from '@kubeclaw/plugin-sdk';
+2: import {DELIVERY_MANIFEST_ENCODING,type DeliveryManifestEncoding} from '@kubeclaw/delivery-manifest-contract';
+3: import {buildSummary,type SummaryInput} from './summary.ts';
+4: export async function execute(input:SummaryInput,context:PluginInvocationContext):Promise<StageResult>{
+5:   portableJson(context.contract.config);
+6:   const keys=Object.keys(context.contract.config);
+7:   if(keys.some(key=>!['agentRole','deliveryManifestEncoding'].includes(key)))throw new Error('DELIVERY_MANIFEST_CONFIG_INVALID');
+8:   const deliveryManifestEncoding:DeliveryManifestEncoding|undefined=Object.hasOwn(context.contract.config,'deliveryManifestEncoding')
+9:     ? context.contract.config.deliveryManifestEncoding as DeliveryManifestEncoding:undefined;
+10:   if(deliveryManifestEncoding!==undefined&&deliveryManifestEncoding!==DELIVERY_MANIFEST_ENCODING)throw new Error('DELIVERY_MANIFEST_CONFIG_INVALID');
+11:   let summary;
+12:   try{summary=await buildSummary(input,context,deliveryManifestEncoding);}catch(error){
+13:     return {schemaVersion:'stage-result.v2',outcome:'blocked',reason:{code:'project_summary.invalid_evidence',message:error instanceof Error?error.message:String(error)},artifacts:[]};
+14:   }
+15:   const stored=await context.invoke('artifacts.write',{operation:'put_json',resource:{type:'artifact.object',canonicalId:`project-summary:${summary.runId}`},
+16:     payload:{namespace:'kubeclaw.project-summary',mediaType:'application/json',value:summary,
+17:       ...(deliveryManifestEncoding===undefined?{}:{encoding:'kubeclaw-json.utf16.v1'})}});
+18:   return {schemaVersion:'stage-result.v2',outcome:'passed',artifacts:[stored.artifact as ArtifactRef]};
+19: }

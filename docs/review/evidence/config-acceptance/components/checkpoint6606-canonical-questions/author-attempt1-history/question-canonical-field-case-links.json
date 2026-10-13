@@ -1,0 +1,2906 @@
+{
+  "questions": [
+    {
+      "questionId": "CMP-SOURCE-FOUNDATION-FLOCK-WAIT",
+      "newCanonicalIds": [
+        "CMP-buster-engine-preparation.storeLockWaitSeconds",
+        "CMP-buster-engine-execution.stores.admission.lockWaitSeconds",
+        "CMP-buster-engine-execution.stores.attempts.lockWaitSeconds"
+      ],
+      "existingCanonicalIds": [],
+      "unresolvedAliases": [
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/0"
+          },
+          "source": {
+            "path": "skills/common/plugins/state-store/src/adapter.ts",
+            "line": 35,
+            "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+            "sourceText": "  const store = new FileDurableRecordStore(configured, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/1"
+          },
+          "source": {
+            "path": "skills/common/plugins/wait-store/src/adapter.ts",
+            "line": 207,
+            "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+            "sourceText": "  const store = new FileDurableRecordStore(root, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/2"
+          },
+          "source": {
+            "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+            "line": 14,
+            "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+            "sourceText": "  const store = new FileDurableRecordStore(root, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/3"
+          },
+          "source": {
+            "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+            "line": 69,
+            "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+            "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/4"
+          },
+          "source": {
+            "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+            "line": 197,
+            "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+            "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/5"
+          },
+          "source": {
+            "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+            "line": 168,
+            "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+            "sourceText": "  const records = new FileDurableRecordStore(configured, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/6"
+          },
+          "source": {
+            "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+            "line": 173,
+            "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+            "sourceText": "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/7"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+            "line": 104,
+            "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+            "sourceText": "  await withDurableStoreLock(pointer,async()=>{"
+          },
+          "ownerCompanion": "NovaPlatform",
+          "field": "soleentry selectedNova projectScaffold.lockWaitSeconds ->checkedgeneratedprojection->requiredpublishJsonPair policy argument",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/NovaPlatform"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/8"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+            "line": 48,
+            "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/9"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+            "line": 344,
+            "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+            "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/10"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+            "line": 458,
+            "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+            "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/11"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+            "line": 53,
+            "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+            "sourceText": "      withDurableStoreLock(this.file, async () => {"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/12"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+            "line": 60,
+            "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+            "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/13"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 32,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/14"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 35,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/15"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 51,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "      return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-2), 'lifetime'), async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/16"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 124,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/17"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 165,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/18"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 75,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).records));"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/19"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 82,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    await withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/20"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 98,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/21"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 104,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/22"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 134,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/23"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 179,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/24"
+          },
+          "source": {
+            "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+            "line": 45,
+            "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+            "sourceText": "  const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});"
+          },
+          "ownerCompanion": "DemoHandoff",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/DemoHandoff"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/25"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-result-import.ts",
+            "line": 100,
+            "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+            "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/26"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-result-import.ts",
+            "line": 103,
+            "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/27"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+            "line": 24,
+            "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+            "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/28"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+            "line": 25,
+            "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/29"
+          },
+          "source": {
+            "path": "skills/nova/core/observability/reconciler.ts",
+            "line": 384,
+            "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+            "sourceText": "    attemptStore: new FileDurableAttemptStore("
+          },
+          "ownerCompanion": "NovaPlatform",
+          "field": "existing selectedNova observability.admission.lockWaitSeconds; attemptstore getsproposed observability.attempts.lockWaitSeconds completecompanion",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/NovaPlatform"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/30"
+          },
+          "source": {
+            "path": "skills/nova/core/observability/reconciler.ts",
+            "line": 388,
+            "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+            "sourceText": "    admissionStore: new FileObservabilityAdmissionStore("
+          },
+          "ownerCompanion": "NovaPlatform",
+          "field": "existing selectedNova observability.admission.lockWaitSeconds; attemptstore getsproposed observability.attempts.lockWaitSeconds completecompanion",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/NovaPlatform"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/31"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 46,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/32"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 47,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/33"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 89,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/34"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 185,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/35"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 234,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/39"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+            "line": 31,
+            "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+            "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {"
+          },
+          "ownerCompanion": "PublicNativeFixture",
+          "field": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/PublicNativeFixture"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/40"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+            "line": 34,
+            "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);"
+          },
+          "ownerCompanion": "PublicNativeFixture",
+          "field": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/PublicNativeFixture"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/41"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+            "line": 125,
+            "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'phases', 'lifetime'), operation);"
+          },
+          "ownerCompanion": "PublicNativeFixture",
+          "field": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/PublicNativeFixture"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/42"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 71,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/43"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 72,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/44"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 93,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(prepared, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/45"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 155,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    await withDurableStoreLock(this.#admissionLock, () => this.#attachSource(captured));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/46"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 173,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/47"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 191,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock,"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/48"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 238,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/54"
+          },
+          "source": {
+            "path": "scripts/retire-wait-value.mjs",
+            "line": 94,
+            "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+            "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/55"
+          },
+          "source": {
+            "path": "scripts/retire-wait-value.mjs",
+            "line": 95,
+            "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+            "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/56"
+          },
+          "source": {
+            "path": "scripts/retire-telemetry.mjs",
+            "line": 49,
+            "sha256": "050d770035a702a33e487ae06c7903aee6333cdbdf1f1e44dd4b5fcf7503c456",
+            "sourceText": "    const store = new FileDurableRecordStore(scope.telemetryRoot,scope.storeLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/57"
+          },
+          "source": {
+            "path": "scripts/retire-operator-request.mjs",
+            "line": 65,
+            "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+            "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/58"
+          },
+          "source": {
+            "path": "scripts/retire-operator-request.mjs",
+            "line": 66,
+            "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+            "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/59"
+          },
+          "source": {
+            "path": "scripts/retire-admission.mjs",
+            "line": 53,
+            "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+            "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/60"
+          },
+          "source": {
+            "path": "scripts/retire-admission.mjs",
+            "line": 54,
+            "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+            "sourceText": "    const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/61"
+          },
+          "source": {
+            "path": "scripts/retire-attempt-result.mjs",
+            "line": 59,
+            "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+            "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        }
+      ],
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/0"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-ADMISSION-REASON-LIMITS",
+      "newCanonicalIds": [
+        "CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits",
+        "CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits"
+      ],
+      "existingCanonicalIds": [
+        "CMP-buster-engine-execution.stores.admission.maximumBytes"
+      ],
+      "unresolvedAliases": [
+        {
+          "owner": "Nova platform + each authentic retirement-original policy",
+          "field": {
+            "Buster": "existing buster-engine config settings.execution.stores.admission.reasonThresholdCodeUnits/reasonPrefixCodeUnits",
+            "Nova": "existing Nova PlatformConfig proposed observability.admission fields, NOT observers map",
+            "retirement": "CURRENT local operator command-supplied limits without verified immutable original-policy equality; TARGET original captured policy lookup and equality, no new command author/latest. See retirement-binding-contract.json."
+          },
+          "reason": "same original Nova/caller author extension; not Buster alias. Parent carrier/task partition and authentic legacy manifest/quota binding remain independently open.",
+          "definition": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+            "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+          }
+        }
+      ],
+      "caseIds": [
+        "QC-ADMISSION-REASON-LIMITS-VAL",
+        "QC-ADMISSION-REASON-LIMITS-FORMAT",
+        "QC-ADMISSION-REASON-LIMITS-HISTORY"
+      ],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/1"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-ADMISSION-METADATA-RESERVE",
+      "newCanonicalIds": [
+        "CMP-buster-engine-execution.stores.admission.metadataReserveBytes"
+      ],
+      "existingCanonicalIds": [
+        "CMP-buster-engine-execution.stores.admission.maximumBytes"
+      ],
+      "unresolvedAliases": [
+        {
+          "owner": "Nova platform + each authentic retirement-original policy",
+          "field": {
+            "Buster": "existing buster-engine config settings.execution.stores.admission.reasonThresholdCodeUnits/reasonPrefixCodeUnits",
+            "Nova": "existing Nova PlatformConfig proposed observability.admission fields, NOT observers map",
+            "retirement": "CURRENT local operator command-supplied limits without verified immutable original-policy equality; TARGET original captured policy lookup and equality, no new command author/latest. See retirement-binding-contract.json.",
+            "fields": "metadataReserveBytes alongside reason formatter in same admission author"
+          },
+          "reason": "same original Nova/caller author extension; not Buster alias. Parent carrier/task partition and authentic legacy manifest/quota binding remain independently open.",
+          "definition": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+            "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+          }
+        }
+      ],
+      "caseIds": [
+        "QC-ADMISSION-METADATA-RESERVE-VAL",
+        "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+        "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+      ],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/2"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-OUTBOX-UNBOUNDED-READ",
+      "newCanonicalIds": [
+        "CMP-API-OUTBOX-EXISTING-MAXIMUMBYTES-READBOUND"
+      ],
+      "existingCanonicalIds": [],
+      "unresolvedAliases": [],
+      "caseIds": [
+        "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+        "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+      ],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/3"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API",
+      "newCanonicalIds": [
+        "CMP-API-BLOB-EXISTING-TOTALBYTES-REQUIRED"
+      ],
+      "existingCanonicalIds": [],
+      "unresolvedAliases": [],
+      "caseIds": [
+        "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+        "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+      ],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/4"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC",
+      "newCanonicalIds": [
+        "CMP-buster-engine-preparation.tarDiagnosticCodeUnits"
+      ],
+      "existingCanonicalIds": [
+        "CMP-buster-engine-preparation.maximumTarStderrBytes"
+      ],
+      "unresolvedAliases": [],
+      "caseIds": [
+        "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+        "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+        "QC-BUSTER-TAR-DIAGNOSTIC-BIND"
+      ],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/5"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED",
+      "newCanonicalIds": [],
+      "existingCanonicalIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-TAREXECUTABLE"
+      ],
+      "unresolvedAliases": [],
+      "caseIds": [
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY"
+      ],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/6"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT",
+      "newCanonicalIds": [
+        "CMP-BUSTER-FIXTURE-QUANTITY-QUOTA-REPRESENTATION"
+      ],
+      "existingCanonicalIds": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes"
+      ],
+      "unresolvedAliases": [],
+      "caseIds": [
+        "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+        "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+      ],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/7"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS",
+      "newCanonicalIds": [
+        "CMP-BUSTER-PROVIDER-RESOURCE-MEASUREMENT-PROVENANCE"
+      ],
+      "existingCanonicalIds": [],
+      "unresolvedAliases": [],
+      "caseIds": [
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+      ],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/8"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY",
+      "newCanonicalIds": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumSecretReferenceEntries"
+      ],
+      "existingCanonicalIds": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences"
+      ],
+      "unresolvedAliases": [],
+      "caseIds": [
+        "QC-FIXTURE-SECRET-ENTRY-CAP-VAL",
+        "QC-FIXTURE-SECRET-ENTRY-CAP-BIND"
+      ],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/9"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-PRISM-DESIGN-CARDINALITY",
+      "newCanonicalIds": [],
+      "existingCanonicalIds": [],
+      "unresolvedAliases": [
+        {
+          "owner": "parent Prism",
+          "sourceHandoff": {
+            "primary": "AUTH-PRISM-DESIGN-CARDINALITY",
+            "owner": "parentPrism",
+            "status": "parentproposed2/3 and originalA3 preserved; boundedreviews notglobalbusiness/runtimeacceptance"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ],
+      "caseIds": [],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/10"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY",
+      "newCanonicalIds": [],
+      "existingCanonicalIds": [],
+      "unresolvedAliases": [
+        {
+          "owner": "parent Prism",
+          "sourceHandoff": {
+            "primary": "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY",
+            "deliveryAlias": "DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION",
+            "status": "OCI vs syntheticcode/currentnotinstalledproof; authentic provider physicalprerequisite; openPrismspoolquota remains explicit"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ],
+      "caseIds": [],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/11"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV",
+      "newCanonicalIds": [],
+      "existingCanonicalIds": [],
+      "unresolvedAliases": [
+        {
+          "owner": "delivery exact rolebinding",
+          "sourceHandoff": {
+            "primaryIds": [
+              "DLV-BUSTER-KUBERNETES-CAPTURE-PATH",
+              "DLV-BUSTER-KUBERNETES-CAPTURE-KUBECONFIG",
+              "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-HOST",
+              "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-PORT"
+            ],
+            "caseId": "DLV-CASE-BUSTER-KUBERNETES-RUNTIME-CAPTURE",
+            "owner": "delivery existingBuster role injections; originalModule cleanup/grant parenthandoff stillunsettled",
+            "status": "frozen exactproposed definition not selfaccepted"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ],
+      "caseIds": [],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/12"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    },
+    {
+      "questionId": "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE",
+      "newCanonicalIds": [],
+      "existingCanonicalIds": [],
+      "unresolvedAliases": [
+        {
+          "owner": "delivery exact rolebinding",
+          "sourceHandoff": {
+            "caseIds": [
+              "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+              "DLV-CASE-NATIVE-HOST-ACTIVATION",
+              "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+            ],
+            "periodPrimary": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+            "owner": "delivery hostpolicy/DLS exactrole; no equalvaluealias",
+            "status": "frozen proposed Hversion/poolmaintenance/render projections; authentic host observation futureprerequisite"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ],
+      "caseIds": [],
+      "definition": {
+        "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/question-definitions.json",
+        "sha256": "a10b12f7beb504d9bf0a0269007c72867175e457a9ce8699d6f4719866fe8b54",
+        "rfc6901Pointer": "/questions/13"
+      },
+      "status": "source-traced-proposed-awaits-independent-semantic-review"
+    }
+  ],
+  "canonicalFieldCaseLinks": {
+    "CMP-SOURCE-FOUNDATION-FLOCK-WAIT": {
+      "settingIds": [
+        "CMP-buster-engine-preparation.storeLockWaitSeconds",
+        "CMP-buster-engine-execution.stores.admission.lockWaitSeconds",
+        "CMP-buster-engine-execution.stores.attempts.lockWaitSeconds"
+      ],
+      "caseIds": [
+        "QC-FOUNDATION-FLOCK-WAIT-VAL",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY"
+      ],
+      "unresolvedAliases": [
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/0"
+          },
+          "source": {
+            "path": "skills/common/plugins/state-store/src/adapter.ts",
+            "line": 35,
+            "sha256": "1805e68a4d478af60df925fb6c38204344d53e17a8134fafdd47732263c473c7",
+            "sourceText": "  const store = new FileDurableRecordStore(configured, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/1"
+          },
+          "source": {
+            "path": "skills/common/plugins/wait-store/src/adapter.ts",
+            "line": 207,
+            "sha256": "9114197adde4307becd0d14548eef723804be8f051acef012abbcbf8c5b8b082",
+            "sourceText": "  const store = new FileDurableRecordStore(root, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/2"
+          },
+          "source": {
+            "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+            "line": 14,
+            "sha256": "f5a3ff64dce028471c800e9a5da01bcc3a405f26b1e68ccdd8e78cd54e00fb13",
+            "sourceText": "  const store = new FileDurableRecordStore(root, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/3"
+          },
+          "source": {
+            "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+            "line": 69,
+            "sha256": "a6d719a5e69b401a0696af9a74dcf358015cdc57bfa062cca0514c54410b3785",
+            "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/4"
+          },
+          "source": {
+            "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+            "line": 197,
+            "sha256": "017501aea38f59ede67adf7249ed0bfa9c2d16430b2c7acf6380944350f2cd31",
+            "sourceText": "  const records = new FileDurableRecordStore(config.deliveryRoot, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/5"
+          },
+          "source": {
+            "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+            "line": 168,
+            "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+            "sourceText": "  const records = new FileDurableRecordStore(configured, {"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/6"
+          },
+          "source": {
+            "path": "skills/common/plugins/artifact-store/src/adapter.ts",
+            "line": 173,
+            "sha256": "12fa6150089d49da0a9065de560fb53436dc46e3f10f15da0f3fe8b112a50154",
+            "sourceText": "  const blobs = new FileDurableBlobStore(configured, Number(maximum), Number(maximumStoreBytes));"
+          },
+          "ownerCompanion": "RegisteredStores",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/RegisteredStores"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/7"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+            "line": 104,
+            "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+            "sourceText": "  await withDurableStoreLock(pointer,async()=>{"
+          },
+          "ownerCompanion": "NovaPlatform",
+          "field": "soleentry selectedNova projectScaffold.lockWaitSeconds ->checkedgeneratedprojection->requiredpublishJsonPair policy argument",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/NovaPlatform"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/8"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-blobs.ts",
+            "line": 48,
+            "sha256": "5e1af13ee56ba905355f7f84e58b25d6a8ea5a1c7e77f5863a1a1ad18506c2ea",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'blob-budget'), () => this.#put(input));"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/9"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+            "line": 344,
+            "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+            "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/10"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+            "line": 458,
+            "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+            "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/11"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/attempt-state.ts",
+            "line": 53,
+            "sha256": "392ad6e2a590c964cc0d8cd1fe0c75237f240798e6d99ee2ed2b33da8047fdca",
+            "sourceText": "      withDurableStoreLock(this.file, async () => {"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/12"
+          },
+          "source": {
+            "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+            "line": 60,
+            "sha256": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+            "sourceText": "    const locked = () => withDurableStoreLock(this.#file, operation);"
+          },
+          "ownerCompanion": "ReusableCallerProjection",
+          "field": "requiredpassed lockWaitSeconds fromlisted concreteowner; no libraryfallback/sharedauthor",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/13"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 32,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/14"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 35,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), Math.max(limits.maximumInputBytes, limits.maximumResultBytes), limits.maximumTotalBytes);"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/15"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 51,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "      return await withDurableStoreLock(path.join(this.#root, 'fences', key.slice(-2), 'lifetime'), async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/16"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 124,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/17"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/native-attempt-journal.ts",
+            "line": 165,
+            "sha256": "4c63283eb753d9840c4a6fce4126404a86df2e33dc357166531550059a57acf5",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'admission', 'lifetime'), async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/18"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 75,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => structuredClone((await this.#read()).records));"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/19"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 82,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    await withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/20"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 98,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(path.join(path.dirname(this.#file), 'supervisor', 'lifetime'), operation);"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/21"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 104,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/22"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 134,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/23"
+          },
+          "source": {
+            "path": "skills/worker/core/worker/ownership-store.ts",
+            "line": 179,
+            "sha256": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+            "sourceText": "    return withDurableStoreLock(this.#file, async () => {"
+          },
+          "ownerCompanion": "CoreNative",
+          "field": "existing worker-core settings.runtime.native_store_lock_wait_seconds ->Core constructoroption lockWaitSeconds ->helper; actualPrism/Buster role projects selectedwholeCoreprofile",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/CoreNative"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/24"
+          },
+          "source": {
+            "path": "skills/nova/plugins/demo-handoff/src/adapter.ts",
+            "line": 45,
+            "sha256": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+            "sourceText": "  const records=new FileDurableRecordStore(config.stateRoot,{maximumRecords:10000,maximumBytes:64*1024**2,maximumRecordBytes:65536});"
+          },
+          "ownerCompanion": "DemoHandoff",
+          "field": "sameexisting registeredadapter config.storeLockWaitSeconds -> records/blob storeoptions; registration/schema projectionrequired",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/DemoHandoff"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/25"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-result-import.ts",
+            "line": 100,
+            "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+            "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/26"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-result-import.ts",
+            "line": 103,
+            "sha256": "ddb1e749086128083a295c15790a1e666a614000b4650055e3374c9bf7edcc81",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumEvidenceStoreBytes, options.maximumEvidenceStoreBytes);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/27"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+            "line": 24,
+            "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+            "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/28"
+          },
+          "source": {
+            "path": "skills/nova/core/test-gates/remote-dispatch-store.ts",
+            "line": 25,
+            "sha256": "634dc70de20d811672f69f70b58a6b620e578ae7c1188fe10afec46d90bca069",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(root, options.maximumArchiveBytes, options.maximumArchiveStoreBytes);"
+          },
+          "ownerCompanion": "NovaStandaloneGate+NovaRegisteredGate+NovaRegisteredEvidence",
+          "field": "sameexisting standalone Nova runtime storeLockWaitSeconds OR registeredremote-test-gate config.storeLockWaitSeconds fromactualoutercaller; options.lockWaitSeconds",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/29"
+          },
+          "source": {
+            "path": "skills/nova/core/observability/reconciler.ts",
+            "line": 384,
+            "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+            "sourceText": "    attemptStore: new FileDurableAttemptStore("
+          },
+          "ownerCompanion": "NovaPlatform",
+          "field": "existing selectedNova observability.admission.lockWaitSeconds; attemptstore getsproposed observability.attempts.lockWaitSeconds completecompanion",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/NovaPlatform"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/30"
+          },
+          "source": {
+            "path": "skills/nova/core/observability/reconciler.ts",
+            "line": 388,
+            "sha256": "61c65951f07d04e1767fdc3114a473183ed5b968ef8d68f665b4ec5d0661dd71",
+            "sourceText": "    admissionStore: new FileObservabilityAdmissionStore("
+          },
+          "ownerCompanion": "NovaPlatform",
+          "field": "existing selectedNova observability.admission.lockWaitSeconds; attemptstore getsproposed observability.attempts.lockWaitSeconds completecompanion",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/NovaPlatform"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/31"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 46,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    this.#records = new FileDurableRecordStore(root, options.recordLimits);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/32"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 47,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    this.#results = new FileDurableBlobStore(path.join(root, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/33"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 89,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/34"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 185,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/35"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/historical-plan-store.ts",
+            "line": 234,
+            "sha256": "87806c4a582a07d9ed749d973ca66e489d2b36ffd6ead0fbfa65e15502a74f8f",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/39"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+            "line": 31,
+            "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+            "sourceText": "    this.#records = new FileDurableRecordStore(path.join(this.#root, 'metadata'), {"
+          },
+          "ownerCompanion": "PublicNativeFixture",
+          "field": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/PublicNativeFixture"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/40"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+            "line": 34,
+            "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+            "sourceText": "    this.#blobs = new FileDurableBlobStore(path.join(this.#root, 'data'), limits.maximumBlobBytes, limits.maximumTotalBytes);"
+          },
+          "ownerCompanion": "PublicNativeFixture",
+          "field": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/PublicNativeFixture"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/41"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/native-fixture-journal.ts",
+            "line": 125,
+            "sha256": "4c5fb76cb5d6a9f28c76338ccefd39f7bbb17e7607bb90a998a5a146f43237a7",
+            "sourceText": "    return withDurableStoreLock(path.join(this.#root, 'phases', 'lifetime'), operation);"
+          },
+          "ownerCompanion": "PublicNativeFixture",
+          "field": "required publiclimits.lockWaitSeconds fromexternalownercaller; no inrepo outerconstructor",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/PublicNativeFixture"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/42"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 71,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    this.#records = new FileDurableRecordStore(writableRoot, options.recordLimits);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/43"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 72,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    this.#results = new FileDurableBlobStore(path.join(writableRoot, 'results'), options.maximumResultBytes, options.maximumResultStoreBytes);"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/44"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 93,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#accept(prepared, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/45"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 155,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    await withDurableStoreLock(this.#admissionLock, () => this.#attachSource(captured));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/46"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 173,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, async () => {"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/47"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 191,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock,"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/48"
+          },
+          "source": {
+            "path": "skills/buster/engine/test-gates/prepared-plan-store.ts",
+            "line": 238,
+            "sha256": "d9bbee538cd87a917f1c22ef7d89fb0bb313a73cd2fe096b7bc3390f19922067",
+            "sourceText": "    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));"
+          },
+          "ownerCompanion": "BusterPreparedJob",
+          "field": "sameexisting Buster runtime author storeLockWaitSeconds ->options.lockWaitSeconds; historicalcompact usescapturedstoreoptions",
+          "completeProfileReference": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/completeCompanions/BusterPreparedJob"
+          },
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/54"
+          },
+          "source": {
+            "path": "scripts/retire-wait-value.mjs",
+            "line": 94,
+            "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+            "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/55"
+          },
+          "source": {
+            "path": "scripts/retire-wait-value.mjs",
+            "line": 95,
+            "sha256": "7a62bff9b58dbb5d4dbb6af8cdd3b3b7b64b5cdc2b536f23ea0ba1c0bb489102",
+            "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/56"
+          },
+          "source": {
+            "path": "scripts/retire-telemetry.mjs",
+            "line": 49,
+            "sha256": "050d770035a702a33e487ae06c7903aee6333cdbdf1f1e44dd4b5fcf7503c456",
+            "sourceText": "    const store = new FileDurableRecordStore(scope.telemetryRoot,scope.storeLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/57"
+          },
+          "source": {
+            "path": "scripts/retire-operator-request.mjs",
+            "line": 65,
+            "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+            "sourceText": "    const waits = new FileDurableRecordStore(scope.intent.waitRoot, config.waitLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/58"
+          },
+          "source": {
+            "path": "scripts/retire-operator-request.mjs",
+            "line": 66,
+            "sha256": "8aebd618c02dc8a898db323b99f7a0dee0abb27c470dda59a9bd3d7cde01dc21",
+            "sourceText": "    const deliveries = new FileDurableRecordStore(scope.intent.deliveryRoot, config.deliveryLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/59"
+          },
+          "source": {
+            "path": "scripts/retire-admission.mjs",
+            "line": 53,
+            "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+            "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/60"
+          },
+          "source": {
+            "path": "scripts/retire-admission.mjs",
+            "line": 54,
+            "sha256": "ac31444b3acdad697ec7317773fda4dfad48b4ee3a22a4eb2d329e73c5d30d96",
+            "sourceText": "    const admission=new FileObservabilityAdmissionStore(scope.admissionRoot,scope.admissionLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        },
+        {
+          "callerCoordinate": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/lock-caller-contracts.json",
+            "sha256": "424f2937be0b1581237f320273a36c29b00c37573652a410867120e51a513a64",
+            "rfc6901Pointer": "/callerMatrix/61"
+          },
+          "source": {
+            "path": "scripts/retire-attempt-result.mjs",
+            "line": 59,
+            "sha256": "c84c13e778070012ca005b272f0bc0875b3a587e8623ddf5aee827f9b90ae61a",
+            "sourceText": "    const attempts=new FileDurableAttemptStore(scope.attemptRoot,scope.attemptLimits);"
+          },
+          "ownerCompanion": "RetirementOriginalPolicy",
+          "field": "originalcapturedscope.*Limits.lockWaitSeconds /storeOptions.lockWaitSeconds; noCLIquotaoverride",
+          "completeProfileReference": null,
+          "reason": "distinct existing outer caller author; runtime/parent/Delivery canonical per-field owner link unresolved. Core does not create or coalesce this author."
+        }
+      ],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-ADMISSION-REASON-LIMITS": {
+      "settingIds": [
+        "CMP-buster-engine-execution.stores.admission.reasonThresholdCodeUnits",
+        "CMP-buster-engine-execution.stores.admission.reasonPrefixCodeUnits",
+        "CMP-buster-engine-execution.stores.admission.maximumBytes"
+      ],
+      "caseIds": [
+        "QC-ADMISSION-REASON-LIMITS-VAL",
+        "QC-ADMISSION-REASON-LIMITS-FORMAT",
+        "QC-ADMISSION-REASON-LIMITS-HISTORY"
+      ],
+      "unresolvedAliases": [
+        {
+          "owner": "Nova platform + each authentic retirement-original policy",
+          "field": {
+            "Buster": "existing buster-engine config settings.execution.stores.admission.reasonThresholdCodeUnits/reasonPrefixCodeUnits",
+            "Nova": "existing Nova PlatformConfig proposed observability.admission fields, NOT observers map",
+            "retirement": "CURRENT local operator command-supplied limits without verified immutable original-policy equality; TARGET original captured policy lookup and equality, no new command author/latest. See retirement-binding-contract.json."
+          },
+          "reason": "same original Nova/caller author extension; not Buster alias. Parent carrier/task partition and authentic legacy manifest/quota binding remain independently open.",
+          "definition": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+            "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+          }
+        }
+      ],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-ADMISSION-METADATA-RESERVE": {
+      "settingIds": [
+        "CMP-buster-engine-execution.stores.admission.metadataReserveBytes",
+        "CMP-buster-engine-execution.stores.admission.maximumBytes"
+      ],
+      "caseIds": [
+        "QC-ADMISSION-METADATA-RESERVE-VAL",
+        "QC-ADMISSION-METADATA-RESERVE-OVERFLOW",
+        "QC-ADMISSION-METADATA-RESERVE-ALL-WRITES"
+      ],
+      "unresolvedAliases": [
+        {
+          "owner": "Nova platform + each authentic retirement-original policy",
+          "field": {
+            "Buster": "existing buster-engine config settings.execution.stores.admission.reasonThresholdCodeUnits/reasonPrefixCodeUnits",
+            "Nova": "existing Nova PlatformConfig proposed observability.admission fields, NOT observers map",
+            "retirement": "CURRENT local operator command-supplied limits without verified immutable original-policy equality; TARGET original captured policy lookup and equality, no new command author/latest. See retirement-binding-contract.json.",
+            "fields": "metadataReserveBytes alongside reason formatter in same admission author"
+          },
+          "reason": "same original Nova/caller author extension; not Buster alias. Parent carrier/task partition and authentic legacy manifest/quota binding remain independently open.",
+          "definition": {
+            "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+            "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+            "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+          }
+        }
+      ],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-OUTBOX-UNBOUNDED-READ": {
+      "settingIds": [
+        "CMP-API-OUTBOX-EXISTING-MAXIMUMBYTES-READBOUND"
+      ],
+      "caseIds": [
+        "QC-OUTBOX-UNBOUNDED-READ-FOUR-METHODS",
+        "QC-OUTBOX-UNBOUNDED-READ-REPLAY"
+      ],
+      "unresolvedAliases": [],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-LATENT-UNBOUNDED-BLOB-API": {
+      "settingIds": [
+        "CMP-API-BLOB-EXISTING-TOTALBYTES-REQUIRED"
+      ],
+      "caseIds": [
+        "QC-LATENT-UNBOUNDED-BLOB-API-API-AND-SEVEN",
+        "QC-LATENT-UNBOUNDED-BLOB-API-HISTORY"
+      ],
+      "unresolvedAliases": [],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-BUSTER-TAR-DIAGNOSTIC": {
+      "settingIds": [
+        "CMP-buster-engine-preparation.tarDiagnosticCodeUnits",
+        "CMP-buster-engine-preparation.maximumTarStderrBytes"
+      ],
+      "caseIds": [
+        "QC-BUSTER-TAR-DIAGNOSTIC-VAL",
+        "QC-BUSTER-TAR-DIAGNOSTIC-REAL-TAR",
+        "QC-BUSTER-TAR-DIAGNOSTIC-BIND"
+      ],
+      "unresolvedAliases": [],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-BUSTER-TAR-LOCATOR-UNUSED": {
+      "settingIds": [
+        "DLV-BUSTER-ENTRYPOINT-RUNTIME-TAREXECUTABLE"
+      ],
+      "caseIds": [
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-PAIRED-PROVISION",
+        "QC-BUSTER-TAR-LOCATOR-UNUSED-HISTORY"
+      ],
+      "unresolvedAliases": [],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-FIXTURE-STORAGE-EXPONENT": {
+      "settingIds": [
+        "CMP-BUSTER-FIXTURE-QUANTITY-QUOTA-REPRESENTATION",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeClaimBytes",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumPersistentVolumeTotalBytes"
+      ],
+      "caseIds": [
+        "QC-FIXTURE-STORAGE-EXPONENT-REPRESENTATION",
+        "QC-FIXTURE-STORAGE-EXPONENT-POLICY-BIND"
+      ],
+      "unresolvedAliases": [],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS": {
+      "settingIds": [
+        "CMP-BUSTER-PROVIDER-RESOURCE-MEASUREMENT-PROVENANCE"
+      ],
+      "caseIds": [
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-REAL-PROVENANCE",
+        "QC-BUSTER-PROVIDER-MEASUREMENT-FALLBACKS-RECOVERY-EVAL"
+      ],
+      "unresolvedAliases": [],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-FIXTURE-SECRET-REFERENCE-CARDINALITY": {
+      "settingIds": [
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.maximumSecretReferenceEntries",
+        "CMP-buster-engine-clusterInvokers.kubernetesFixture.allowedSecretReferences"
+      ],
+      "caseIds": [
+        "QC-FIXTURE-SECRET-ENTRY-CAP-VAL",
+        "QC-FIXTURE-SECRET-ENTRY-CAP-BIND"
+      ],
+      "unresolvedAliases": [],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-PRISM-DESIGN-CARDINALITY": {
+      "settingIds": [],
+      "caseIds": [],
+      "unresolvedAliases": [
+        {
+          "owner": "parent Prism",
+          "sourceHandoff": {
+            "primary": "AUTH-PRISM-DESIGN-CARDINALITY",
+            "owner": "parentPrism",
+            "status": "parentproposed2/3 and originalA3 preserved; boundedreviews notglobalbusiness/runtimeacceptance"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-PRISM-DEVELOPMENT-IDENTITY": {
+      "settingIds": [],
+      "caseIds": [],
+      "unresolvedAliases": [
+        {
+          "owner": "parent Prism",
+          "sourceHandoff": {
+            "primary": "AUTH-PRISM-ENGINE-DEVELOPMENT-IDENTITY",
+            "deliveryAlias": "DLV-NATIVE-PRISM-ENGINE-DIGEST-PROJECTION",
+            "status": "OCI vs syntheticcode/currentnotinstalledproof; authentic provider physicalprerequisite; openPrismspoolquota remains explicit"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-BUSTER-KUBE-CREDENTIAL-ENV": {
+      "settingIds": [],
+      "caseIds": [],
+      "unresolvedAliases": [
+        {
+          "owner": "delivery exact rolebinding",
+          "sourceHandoff": {
+            "primaryIds": [
+              "DLV-BUSTER-KUBERNETES-CAPTURE-PATH",
+              "DLV-BUSTER-KUBERNETES-CAPTURE-KUBECONFIG",
+              "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-HOST",
+              "DLV-BUSTER-KUBERNETES-CAPTURE-KUBERNETES-SERVICE-PORT"
+            ],
+            "caseId": "DLV-CASE-BUSTER-KUBERNETES-RUNTIME-CAPTURE",
+            "owner": "delivery existingBuster role injections; originalModule cleanup/grant parenthandoff stillunsettled",
+            "status": "frozen exactproposed definition not selfaccepted"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ],
+      "reviewerConfirmation": null
+    },
+    "CMP-SOURCE-GENERATED-HOST-SOURCE-PROVENANCE": {
+      "settingIds": [],
+      "caseIds": [],
+      "unresolvedAliases": [
+        {
+          "owner": "delivery exact rolebinding",
+          "sourceHandoff": {
+            "caseIds": [
+              "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+              "DLV-CASE-NATIVE-HOST-ACTIVATION",
+              "DLV-CASE-NATIVE-PROVISIONING-IDENTITY-CLOSURE"
+            ],
+            "periodPrimary": "CMP-WCORE-HOST-LIMITS-CPUPERIODMICROSECONDS",
+            "owner": "delivery hostpolicy/DLS exactrole; no equalvaluealias",
+            "status": "frozen proposed Hversion/poolmaintenance/render projections; authentic host observation futureprerequisite"
+          },
+          "priorSnapshot": "crossauthor-handoffs.json",
+          "reason": "explicit crossauthor per-field handoff; no source trace or prior bounded correction makes whole target/physical/runtime closure accepted"
+        }
+      ],
+      "reviewerConfirmation": null
+    }
+  },
+  "wholeSourceReview": null
+}

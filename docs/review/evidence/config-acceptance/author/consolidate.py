@@ -9,6 +9,8 @@ import json
 import pathlib
 import subprocess
 from observation_references import ObservationReferences
+from historical_mapping import load_reviewed as load_historical_mappings
+from historical_projection import attach as attach_historical_projection
 
 root = pathlib.Path.cwd()
 base = root / 'docs/review/evidence/config-acceptance'
@@ -55,6 +57,7 @@ definitions = {
     'F-EFFECT': 'Two full materially different profiles at each real consumer',
     'F-DELIVERY': 'Real author/materializer/CI/buildcontext/package/image closure',
     'F-BIND': 'Atomic publish, crash/retry/parallel/module/Eval stability',
+    'F-RECOVERY': 'Original-generation replay/recovery/retry/cleanup invariants; D20 and F-BIND, no counter/uncertainty reset or latest/default fallback',
     'F-MUT': 'Isolated semantic mutants killed at intended real boundary',
     'F-CODE': 'Coherent owner/dependency map, loaders/business/bindings separated',
     'IC0-001': 'Independent finding: omitted productive literal/template policies',
@@ -74,7 +77,9 @@ identity = {
     'method': 'fragment consolidation; no semantic approval inferred'
 }
 rows, gaps, sources, inputs, cases = [], [], {}, [], {}
-fragments = [('components','semantic-fragment.json'),('components','residual-fragment.json'),('runtime','inventory-fragment.json'),('delivery','inventory-fragment.json'),('author','main-fragment.json')]
+fragments = [('components','semantic-fragment.json'),('components','residual-fragment.json'),
+             ('components','checkpoint6606-canonical-questions/canonical-question-fragment.json'),
+             ('runtime','inventory-fragment.json'),('delivery','inventory-fragment.json'),('author','main-fragment.json')]
 for group, name in fragments:
     p = base/group/name
     if not p.exists():
@@ -276,6 +281,20 @@ if core_receipt_path.exists():
         'independentReview':'Named R06 contradictions independently resolved at bounded material definition scope; canonical field/consumer and global closure remain open.' if bounded_material_reviews else 'pending exact corrected material recheck; no author acceptance',
         'reviewerConfirmation':None,
         'limits':'Supplemental native definitions are not root field/consumer closure; real per-field links and whole C0 review remain required.'})
+question_links_path = base/'components/checkpoint6606-canonical-questions/question-canonical-field-case-links.json'
+if question_links_path.exists():
+    if digest(question_links_path) != '3cc4f63844170386a77647c8d43e3ff50f457351408931aa9b9320967fcf7ce2':
+        raise ValueError('CORE_CANONICAL_QUESTION_LINK_REVISION_REQUIRES_REVIEW')
+    question_links = load(question_links_path)
+    for package in supplemental_packages:
+        if package['id'] == 'CORE-ICQ-DEFINITION-CORRECTIONS-20261013':
+            if set(question_links['canonicalFieldCaseLinks']) != {q['id'] for q in package['questions']}:
+                raise ValueError('CORE_CANONICAL_QUESTION_SET_DRIFT')
+            package['canonicalFieldCaseLinks'] = question_links['canonicalFieldCaseLinks']
+            package['canonicalFieldCaseLinkSource'] = {'path':str(question_links_path.relative_to(root)),
+                'sha256':digest(question_links_path)}
+            package['canonicalFieldCaseLinkLimits'] = ('Bounded canonical definition mapping only; '
+                'all unresolved aliases retained; no whole-source, field-effect or global acceptance.')
 bounded_reviews = [bounded_review]
 nova_disposition_path = base/'author/nova-carrier-01-bounded-disposition-20261013.json'
 if nova_disposition_path.exists():
@@ -329,6 +348,26 @@ if runtime_case_path.exists():
         'nativeCaseCount':len(native_cases),
         'unlinkedNativeCaseCount':sum(link['canonicalCaseId'] is None for link in mapping),
         'matrixLocation':'nativeCasePackages', 'reviewerConfirmation':None})
+    historical_mappings = load_historical_mappings(root, native_cases,
+        load(base/'runtime/inventory-fragment.json')['rows'],
+        load(base/'runtime/runtime-case-dispositions.json')['cases'], set(cases))
+    historical_counts = attach_historical_projection(native_case_packages[-1],
+        list(cases.values()), historical_mappings)
+    native_case_references[-1].update(historical_counts)
+    native_case_packages[-1]['limits'] = ('Exact native bodies retained. Reviewed inactive historical '
+        'predecessors map one-to-many to existing active successors; no obsolete body is operative. '
+        'Direct unlinked count retains its original meaning. Field/domain/runtime and whole C0 '
+        'acceptance remain unreviewed; parent projection review is separate.')
+definition_observation_packages = []
+delivery_control_path = base/'delivery/c0-controller-material-correction-cases-6606-20261013.json'
+if delivery_control_path.exists():
+    definition_observation_packages.append({
+        'id':'DELIVERY-CONTROLLER-MATERIAL-PURE-OBSERVATIONS-6606',
+        'sourcePath':str(delivery_control_path.relative_to(root)),
+        'sourceSha256':digest(delivery_control_path),
+        'observations':load(delivery_control_path),
+        'reviewerConfirmation':None,
+        'limits':'Exact author pure definition controls only; not native behavior, field closure or global C0 acceptance. Raw pending review labels are preserved, not promoted.'})
 inventory = {'schemaVersion':1,'status':'in-progress-not-C0-accepted','identity':identity,
              'inputFragments':inputs,'rows':rows,'sources':list(sources.values()),'gaps':gaps,
              'boundedReviewDispositions':bounded_reviews,
@@ -341,6 +380,7 @@ inventory = {'schemaVersion':1,'status':'in-progress-not-C0-accepted','identity'
 matrix = {'schemaVersion':1,'status':'in-progress-not-approval-ready','identity':identity,
           'requirements':[{'id':k,'description':v,'source':'docs/review/remediation/independent-config-c0-core-domain-a07de567.md' if k.startswith('ICD-') else 'docs/review/remediation/independent-config-c0-9452d355.md' if k.startswith('IC0-') else 'docs/review/remediation/OPENCLAW-CONFIG-GOAL.md' if k.startswith(('C0-','F-')) else 'docs/review/remediation/acceptance-20260920.md' if k.startswith(('A','F')) else 'docs/review/remediation/decisions.md'} for k,v in definitions.items()],
           'cases':list(cases.values()),'nativeCasePackages':native_case_packages,
+          'definitionObservationPackages':definition_observation_packages,
           'acceptance':{k:'not-run' for k in ['C0-A','C0-B','C0-C','C0-D','C0-E']},
           'implementationAuthorization':None,
           'historicalEvidence':'docs/review/evidence/cloud-config-assessment-20261012/verification.json',

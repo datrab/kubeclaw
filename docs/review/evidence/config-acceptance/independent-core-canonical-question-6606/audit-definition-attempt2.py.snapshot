@@ -1,0 +1,70 @@
+from pathlib import Path
+import json,hashlib,tarfile,copy,collections,subprocess
+D=Path('docs/review/evidence/config-acceptance/independent-core-canonical-question-6606');B='docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/';frozen=json.loads((D/'frozen-input-identities.json').read_text());T=tarfile.open(D/'frozen-author-and-selected-inputs.tar.gz');payload={x.name:T.extractfile(x).read() for x in T.getmembers() if x.isfile()};raw=lambda p:payload[str(p)];jsonCache={};
+def load(p):
+ if p not in jsonCache:jsonCache[p]=json.loads(raw(p))
+ return jsonCache[p]
+H=lambda b:hashlib.sha256(b).hexdigest();ptr=lambda x,p:walk(x,p)
+def walk(x,p):
+ if p=='':return x
+ assert p.startswith('/'),p
+ for z in p[1:].split('/'):
+  z=z.replace('~1','/').replace('~0','~');x=x[int(z)]if isinstance(x,list)else x[z]
+ return x
+F=load(B+'canonical-question-fragment.json');Q=load(B+'question-canonical-field-case-links.json');R=load(B+'source-default-env-cli-projection.json');M=load(B+'source-marker-canonical-projection.json')['candidates'];S=load(B+'proposed-buster-canonical.schema.json');orig=load('docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/question-case-specs.json')['activeCases'];old=load('docs/review/evidence/config-acceptance/components/question-closure-bce3f075/question-case-specs.json')['activeCases'];baseline=load('docs/review/remediation/config-semantic-inventory.json');rows={r['id']:r for r in F['rows']};cases={c['id']:c for c in F['cases']};existing={r['id']:r for r in baseline['rows']};observations=[]
+def check(label,f):f();observations.append({'id':label,'result':'passed','scope':'independent frozen source/definition integrity, not behavioral acceptance'})
+def validate(f):
+ rb={r['id']:r for r in f['rows']};cb={c['id']:c for c in f['cases']};assert len(rb)==13==len(f['rows']);assert len(cb)==27==len(f['cases']);assert not set(rb)&set(existing)
+ for o in orig:assert cb[o['id']]['activeInputContract']==o and cb[o['id']]['requirementIds']==o['requirements']and cb[o['id']]['result']=='not-run'
+ for o in old:assert set(o['requirements'])<=set(cb[o['id']]['requirementIds'])
+ for r in f['rows']:
+  assert not r['c0Closed']and r['reviewerConfirmation']is None;assert H(raw(r['source']['path']))==r['source']['sha256'];assert set(r['caseIds'])<=set(cb)
+  for cid in r['caseIds']:assert r['id']in cb[cid]['settingIds']
+  if r['class']=='operator-setting':
+   sc=ptr(S,r['schema']['field']);assert sc['type']=='integer';source=r['profiles']['source'];p=load(source['path']);profiles=p['profiles']if'profiles'in p else p['BusterProfiles']
+   for profile in profiles:assert ptr(profile['author'],r['source']['field'])==r['profiles']['A/B'][profile['id']]
+ for c in f['cases']:assert set(c['settingIds'])<=set(rb)|set(existing);assert c['reviewerConfirmation']is None
+check('all13-fields-27-cases-original22-requirement-body-preservation',lambda:validate(F))
+for label,change in [('lost-original-case',lambda f:f['cases'].pop(0)),('lost-required-requirement',lambda f:f['cases'][0]['requirementIds'].clear()),('changed-original-oracle',lambda f:f['cases'][0]['activeInputContract']['oracle'].clear()),('false-acceptance',lambda f:f['rows'][0].update(c0Closed=True)),('second-owning-id',lambda f:f['rows'].append(copy.deepcopy(f['rows'][0])))]:
+ mutated=copy.deepcopy(F);change(mutated)
+ try:validate(mutated)
+ except AssertionError:observations.append({'id':'negative-'+label,'result':'passed','scope':'documentation negative, not F-MUT'})
+ else:raise AssertionError(label)
+check('restored-frozen-fields-cases',lambda:validate(F))
+qobs=[];assert len(Q['questions'])==14
+for q in Q['questions']:
+ assert q['questionId']in Q['canonicalFieldCaseLinks'];lk=Q['canonicalFieldCaseLinks'][q['questionId']];assert set(lk['settingIds'])==set(q['newCanonicalIds']+q['existingCanonicalIds']);assert lk['caseIds']==q['caseIds'];assert lk['unresolvedAliases']==q['unresolvedAliases']
+ for id in q['newCanonicalIds']:assert id in rows
+ for id in q['existingCanonicalIds']:assert id in existing
+ for alias in q['unresolvedAliases']:
+  s=alias.get('source');
+  if s and s.get('line')and s.get('sourceText'):assert raw(s['path']).decode().splitlines()[s['line']-1]==s['sourceText']
+  ref=alias.get('callerCoordinate')
+  if ref:assert ptr(load(ref['path']),ref['rfc6901Pointer'])is not None
+ qobs.append({'question':q['questionId'],'newFields':q['newCanonicalIds'],'existingFields':q['existingCanonicalIds'],'unresolvedAliases':len(q['unresolvedAliases']),'caseIDs':q['caseIds'],'disposition':'bounded own-field/source/case mapping supported; unresolved cross-owner inputs remain open, no field closure'})
+assert sum(x['unresolvedAliases']for x in qobs)==60;observations.append({'id':'all14-question-mappings-retain60-unresolved-aliases','result':'passed'})
+assert len(R['sources'])==173 and len(M)==1353
+for s in R['sources']:assert H(raw(s['path']))==s['sha256'];assert set(s['candidateIds'])=={m['id']for m in M if m['source']==s['path']}
+for m in M:
+ assert raw(m['source']).decode().splitlines()[m['line']-1]==m['exactText']
+ for r in m['immutableMemberSchemaReferences']:assert H(raw(r['path']))==r['sha256'];assert ptr(load(r['path']),r['rfc6901Pointer'])==r['memberDisposition']
+observations.append({'id':'173-exactsource-memberships1353-markers-including339-memberrefs','result':'passed','notSemanticClosure':True})
+P=load(B+'parameter-default-canonical-contracts.json')['members'];assert len(P)==50
+for p in P:assert H(raw(p['source']))==p['sourceSha256'];line=raw(p['source']).decode().splitlines()[p['line']-1];assert p['parameter']in line and p['initializer']in line;(set(p['canonicalIds'])<=set(existing)|set(rows))or (_ for _ in()).throw(AssertionError(p))
+observations.append({'id':'all50-default-source-members-preserved-classification-mechanism-inherited-or-explicit-open','result':'passed','notSemanticClosure':True})
+env=R['computedSixLiteralCallers'];assert len(env)==6
+for e in env:
+ r=e['reader'];assert raw(r['path']).decode().splitlines()[r['line']-1]==r['text'];assert "environment('"+e['name']+"')"in r['text']
+ for m in e['producer']['matches']:assert raw(e['producer']['path']).decode().splitlines()[m['line']-1]==m['text']
+observations.append({'id':'sixcomputedENV-exactreader-and-realproducer-notambient-writer','result':'passed'})
+for r in [R['defaultDefinitions'],R['CLIdefinitions']]:assert H(raw(r['path']))==r['sha256'];assert load(r['path'])is not None
+for h in load(B+'frozen-crossauthor-canonical-handoffs.json')['handoffs']:
+ ref=h['canonicalRowReference'];assert ptr(load(ref['path']),ref['rfc6901Pointer'])['id']==h['canonicalId'];assert h['noNewAuthor']
+observations.append({'id':'15frozen-crossauthor-handoffs-existing-row-not-reacceptance','result':'passed'})
+# Actual images source records: every exact line, not wholefile substring and not CRD installed claim.
+image=load(B+'runtime-security-image-wire-handoff.json')
+for key in ['actualProducer','wireDefinition','copyingController','actualCoreConsumer','distinctReadyStatus1024']:
+ s=image[key];assert H(raw(s['path']))==s['sha256']
+ for line in s['lines']:assert raw(s['path']).decode().splitlines()[line['line']-1]==line['text']
+observations.append({'id':'image2048-exactproducer-wire-Go-copy-Core-lines-versusReady1024','result':'passed','notInstalledOrPullableProof':True})
+(D/'independent-definition-observations.json').write_text(json.dumps({'scope':'fresh independent frozen Core canonical definition mapping/source audit only; no global C0, no Runtime self-review','observations':observations,'questionDispositions':qobs,'futureCaseResults':dict(collections.Counter(c['result']for c in F['cases'])),'noNewMaterialFindingAtBoundedMappedScope':True,'remainingSourceLinkObligations':808,'unresolvedCrossOwnerAliases':60},indent=2)+'\n');print(json.dumps({'passed':len(observations),'questions':14,'unresolvedAliases':60,'rows':13,'cases':27,'futureNOTRUN':25,'narrowCurrent':2,'wholeC0':False}))

@@ -1,0 +1,21 @@
+{
+  "controls": 58,
+  "result": "failed",
+  "failed": [
+    {
+      "id": "DLV-C0-DCTRL-CORRECTION-TEMPLATE-product-extended",
+      "result": "failed",
+      "observation": {
+        "mode": "product-extended",
+        "scope": "public fixedT0 structural template, NOT native-positive/generated-credential/authentic receipt fixture",
+        "unresolvedNativePrerequisites": [
+          "native generatedCredentials full proof + Secret bytes remain memory-only",
+          "actual namespace/SA/lease/ingress/secret UID/RV and authority receipts",
+          "source previewExposureSpec/previewIngress exact generated object + labels/digest",
+          "Product public key + raw signed envelope if applicable; no private key export",
+          "CAS current UID/resourceVersion and typed state proposal installed definition if applicable"
+        ]
+      }
+    }
+  ]
+}

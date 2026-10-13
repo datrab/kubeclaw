@@ -1,0 +1,10 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 2409,
+  "cases": 6726,
+  "errorCount": 1,
+  "errors": [
+    "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: inputProfile"
+  ]
+}

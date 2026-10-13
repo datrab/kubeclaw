@@ -18,4 +18,11 @@ failed=out/'snapshots/dls-chart-timezone-coordinate-attempt1/target-profile-coor
 for r in d['records']:
  if r['result']!='failed':continue
  result.append({'id':'DLV-C0-DLS-INITIAL-COORD-'+r['id'],'settingIds':[r['settingId']],'requirementIds':['C0-C'],'command':'python3 check-target-profile-coordinates-20261013.py (retained first failed source/profile descriptor control)','result':'failed','scope':'wrong ambient timezone mapped as authored coordinate/family; diagnostic collection failure, NOT semantic negative kill; corrected proposed backup.timeZone remains current Chart unsupported','sourceDigests':{rel(failed):sha(failed)},'testDigests':{},'rawEvidencePath':[rel(failed),rel(failed.parent/'target-profile-coordinate-controls-20261013-attempt1.stdout'),rel(failed.parent/'target-profile-coordinate-controls-20261013-attempt1.stderr')],'observation':r,'reviewerConfirmation':'pending','acceptance':'NOT ACCEPTED; historical failure retained'})
+# Historical coordinate observations keep their exact committed changed-input bytes, not the corrected current domain artifact.
+historical=out/'snapshots/controller-committed-changed-input-6606af9-20261013/controller-target-case-specifications-20261013.json'
+if historical.exists():
+ oldPath=rel(out/'controller-target-case-specifications-20261013.json');oldHash=sha(historical)
+ for record in result:
+  if record['sourceDigests'].get(oldPath)==oldHash:
+   del record['sourceDigests'][oldPath];record['sourceDigests'][rel(historical)]=oldHash;record['sourceIdentityRelocation']={'originalPath':oldPath,'immutableCommittedInputPath':rel(historical),'baselineCommit':'6606af9e590032f328f330ecb3d953b1eef027e3','meaning':'same exact historical bytes; coordinate PASS never implied valid domain; current corrected definition separately controlled'}
 f=out/'c0-dls-pure-definition-cases-20261013.json';f.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'actualPureObservations':len(result),'passed':sum(r['result']=='passed' for r in result),'failed':sum(r['result']=='failed' for r in result),'scope':'pure primitive/constructor/coordinate only; no runtime or independent acceptance'}))

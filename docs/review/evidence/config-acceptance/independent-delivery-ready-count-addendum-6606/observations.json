@@ -1,0 +1,199 @@
+{
+  "verdict": "DCTRL-RECHECK-DOC01 resolved at literal-only additive definition scope; no acceptance",
+  "records": [
+    {
+      "id": "literal24-source-extractor-template-exactorder",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "literalcount-only-and-all24-identity-obligation-links",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-retentionSeconds",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-namespace",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-schemaVersion",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-state",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-requestId",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-requestDigest",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-readyAt",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-expiresAt",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-runId",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-sourceRevision",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-candidateDigest",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-decisionDigest",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-resultDigest",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-leaseUID",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-immutableImage",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-manifestDigest",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-credentialDigest",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-secretUID",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-url",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-previousOwner",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-owner",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-exposureGeneration",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-exposureSpec",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "member-preserved-receipt",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "documentation-negative-omittedmember",
+      "result": "passed",
+      "scope": "reject contradiction, not F-MUT"
+    },
+    {
+      "id": "documentation-negative-weakenedrequesthash",
+      "result": "passed",
+      "scope": "reject contradiction, not F-MUT"
+    },
+    {
+      "id": "documentation-negative-changedoldbody",
+      "result": "passed",
+      "scope": "reject contradiction, not F-MUT"
+    },
+    {
+      "id": "documentation-negative-nativeacceptance",
+      "result": "passed",
+      "scope": "reject contradiction, not F-MUT"
+    },
+    {
+      "id": "restored-exact-addendum",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    },
+    {
+      "id": "twelvefuture-cases-notrun",
+      "result": "passed",
+      "scope": "independent source/JSON/hash/obligation conservation ONLY; not F-MUT/native/acceptance"
+    }
+  ],
+  "passed": 32,
+  "failed": 0,
+  "all24MemberIdentities": [
+    "retentionSeconds",
+    "namespace",
+    "schemaVersion",
+    "state",
+    "requestId",
+    "requestDigest",
+    "readyAt",
+    "expiresAt",
+    "runId",
+    "sourceRevision",
+    "candidateDigest",
+    "decisionDigest",
+    "resultDigest",
+    "leaseUID",
+    "immutableImage",
+    "manifestDigest",
+    "credentialDigest",
+    "secretUID",
+    "url",
+    "previousOwner",
+    "owner",
+    "exposureGeneration",
+    "exposureSpec",
+    "receipt"
+  ],
+  "sourceLine": 256,
+  "sourceSha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+  "originalOracle": "full native demoReadiness exact27 state fields, original request SHA and owner, retention604800 preserved; original readback/authenticated source proof",
+  "replacementOracle": "full native demoReadiness exact24 state fields, original request SHA and owner, retention604800 preserved; original readback/authenticated source proof",
+  "old15HashesUnchanged": true,
+  "priorReviewOldCorrectionRootRuntimeUnchanged": true
+}

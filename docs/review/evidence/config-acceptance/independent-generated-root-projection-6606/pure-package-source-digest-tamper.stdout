@@ -1,0 +1,10 @@
+{
+  "mode": "draft-structural",
+  "scope": "integrity only; independent semantic review remains mandatory",
+  "settings": 2409,
+  "cases": 6726,
+  "errorCount": 1,
+  "errors": [
+    "pure definition observation source: content drift docs/review/evidence/config-acceptance/delivery/c0-controller-material-correction-cases-6606-20261013.json"
+  ]
+}

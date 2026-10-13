@@ -1,0 +1,16 @@
+<anonymous_script>:1
+"kubeclaw.demo-product-decision.v1\x00"
+                                   ^
+
+SyntaxError: Bad escaped character in JSON at position 35 (line 1 column 36)
+    at JSON.parse (<anonymous>)
+    at Object.<anonymous> (/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/independent-delivery-controller-6606/check-review-witnesses.cjs:7:653)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.21.0

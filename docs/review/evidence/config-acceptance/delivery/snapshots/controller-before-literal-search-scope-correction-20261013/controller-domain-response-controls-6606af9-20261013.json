@@ -1,0 +1,1682 @@
+{
+  "scope": "actual own strict proposal schema/types/correlations/source-coordinate and immutable committed defect controls only; no native Go/CRD/API/TLS/Secret/image/host/business effect, no acceptance",
+  "records": [
+    {
+      "id": "DLV-C0-CONTROLLER-RE-POSITIVE-A",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "correlation": true,
+        "diagnostic": null,
+        "limit": "own exact proposed definition only; synthetic trustedrefs/declared buffers NOT actual native/provider/capacity proof"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-POSITIVE-B",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "correlation": true,
+        "diagnostic": null,
+        "limit": "own exact proposed definition only; synthetic trustedrefs/declared buffers NOT actual native/provider/capacity proof"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-KUBERNETES_SERVICE_PORT",
+      "result": "passed",
+      "observation": {
+        "field": "KUBERNETES_SERVICE_PORT",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "KUBERNETES_SERVICE_PORT",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 136,
+          "lineKind": "productive ENV read"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_LEASE_API_GROUP",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_LEASE_API_GROUP",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_LEASE_API_GROUP",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 141,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_LEASE_API_VERSION",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_LEASE_API_VERSION",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_LEASE_API_VERSION",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 142,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_ALLOWED_NAMESPACE_PREFIXES",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_ALLOWED_NAMESPACE_PREFIXES",
+        "targetDomainType": "array",
+        "profileType": "array",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_ALLOWED_NAMESPACE_PREFIXES",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 143,
+          "lineKind": "productive ENV read"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_DEFAULT_TTL_SECONDS",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_DEFAULT_TTL_SECONDS",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_DEFAULT_TTL_SECONDS",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 148,
+          "lineKind": "productive ENV read"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_MAX_TTL_SECONDS",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_MAX_TTL_SECONDS",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_MAX_TTL_SECONDS",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 149,
+          "lineKind": "productive ENV read"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_CONTROLLER_SERVICE_ACCOUNT",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_CONTROLLER_SERVICE_ACCOUNT",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_CONTROLLER_SERVICE_ACCOUNT",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 166,
+          "lineKind": "productive ENV read"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_SECRET_ROLE_NAME",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_SECRET_ROLE_NAME",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_SECRET_ROLE_NAME",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 167,
+          "lineKind": "productive ENV read"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_DEPLOYER_ROLE_NAME",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_DEPLOYER_ROLE_NAME",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_DEPLOYER_ROLE_NAME",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 168,
+          "lineKind": "productive ENV read"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_TESTER_ROLE_NAME",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_TESTER_ROLE_NAME",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_TESTER_ROLE_NAME",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 169,
+          "lineKind": "productive ENV read"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_ALLOWED_ACCESS_JSON",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_ALLOWED_ACCESS_JSON",
+        "targetDomainType": "array",
+        "profileType": "array",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_ALLOWED_ACCESS_JSON",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 172,
+          "lineKind": "productive ENV read"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-KUBECLAW_NAMESPACE",
+      "result": "passed",
+      "observation": {
+        "field": "KUBECLAW_NAMESPACE",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "KUBECLAW_NAMESPACE",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 133,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_CONTROLLER_POLL_MS",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_CONTROLLER_POLL_MS",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_CONTROLLER_POLL_MS",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 1885,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-KUBERNETES_SERVICE_HOST",
+      "result": "passed",
+      "observation": {
+        "field": "KUBERNETES_SERVICE_HOST",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "KUBERNETES_SERVICE_HOST",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 135,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_ALLOWED_SOURCE_SECRETS",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_ALLOWED_SOURCE_SECRETS",
+        "targetDomainType": "array",
+        "profileType": "array",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "field": "BUSTER_ALLOWED_SOURCE_SECRETS",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "line": 184,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_READY_LISTEN",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_READY_LISTEN",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "field": "BUSTER_READY_LISTEN",
+          "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+          "line": 18,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_READY_AUDIENCE",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_READY_AUDIENCE",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "field": "BUSTER_READY_AUDIENCE",
+          "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+          "line": 21,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_READY_PRODUCER",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_READY_PRODUCER",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "field": "BUSTER_READY_PRODUCER",
+          "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+          "line": 21,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_READY_TLS_CERT",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_READY_TLS_CERT",
+        "targetDomainType": "object",
+        "profileType": "object",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "field": "BUSTER_READY_TLS_CERT",
+          "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+          "line": 21,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_READY_TLS_KEY",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_READY_TLS_KEY",
+        "targetDomainType": "object",
+        "profileType": "object",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "field": "BUSTER_READY_TLS_KEY",
+          "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+          "line": 21,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_PRODUCT_ENABLED",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_PRODUCT_ENABLED",
+        "targetDomainType": "boolean",
+        "profileType": "boolean",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "field": "BUSTER_PRODUCT_ENABLED",
+          "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+          "line": 59,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_PRODUCT_VERIFY_KEY",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_PRODUCT_VERIFY_KEY",
+        "targetDomainType": "object",
+        "profileType": "object",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "field": "BUSTER_PRODUCT_VERIFY_KEY",
+          "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+          "line": 66,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_PRODUCT_AUDIENCE",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_PRODUCT_AUDIENCE",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "field": "BUSTER_PRODUCT_AUDIENCE",
+          "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+          "line": 68,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_PRODUCT_PRODUCER",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_PRODUCT_PRODUCER",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "field": "BUSTER_PRODUCT_PRODUCER",
+          "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+          "line": 68,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_PRODUCT_ISSUER",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_PRODUCT_ISSUER",
+        "targetDomainType": "string",
+        "profileType": "string",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "field": "BUSTER_PRODUCT_ISSUER",
+          "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+          "line": 68,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-BUSTER_PRODUCT_ACTORS_JSON",
+      "result": "passed",
+      "observation": {
+        "field": "BUSTER_PRODUCT_ACTORS_JSON",
+        "targetDomainType": "array",
+        "profileType": "array",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "field": "BUSTER_PRODUCT_ACTORS_JSON",
+          "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+          "line": 70,
+          "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-httpClientTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "field": "httpClientTimeoutSeconds",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "field": "httpClientTimeoutSeconds",
+          "line": 213,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-runtimeSecurityRefreshSeconds",
+      "result": "passed",
+      "observation": {
+        "field": "runtimeSecurityRefreshSeconds",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "field": "runtimeSecurityRefreshSeconds",
+          "line": 29,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-runtimeSecurityFutureSkewSeconds",
+      "result": "passed",
+      "observation": {
+        "field": "runtimeSecurityFutureSkewSeconds",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "field": "runtimeSecurityFutureSkewSeconds",
+          "line": 395,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-runtimeSecurityMaximumFindings",
+      "result": "passed",
+      "observation": {
+        "field": "runtimeSecurityMaximumFindings",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "field": "runtimeSecurityMaximumFindings",
+          "line": 421,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-runtimeSecurityMaximumSerializedBytes",
+      "result": "passed",
+      "observation": {
+        "field": "runtimeSecurityMaximumSerializedBytes",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "field": "runtimeSecurityMaximumSerializedBytes",
+          "line": 422,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-readyReadHeaderTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "field": "readyReadHeaderTimeoutSeconds",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+          "field": "readyReadHeaderTimeoutSeconds",
+          "line": 44,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-readyReadTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "field": "readyReadTimeoutSeconds",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+          "field": "readyReadTimeoutSeconds",
+          "line": 44,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-readyWriteTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "field": "readyWriteTimeoutSeconds",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+          "field": "readyWriteTimeoutSeconds",
+          "line": 44,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-readyIdleTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "field": "readyIdleTimeoutSeconds",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+          "field": "readyIdleTimeoutSeconds",
+          "line": 44,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-readyMaxHeaderBytes",
+      "result": "passed",
+      "observation": {
+        "field": "readyMaxHeaderBytes",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "sha256": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+          "field": "readyMaxHeaderBytes",
+          "line": 44,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-readyHandlerTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "field": "readyHandlerTimeoutSeconds",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness.go",
+          "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+          "field": "readyHandlerTimeoutSeconds",
+          "line": 137,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-readyMaximumBodyBytes",
+      "result": "passed",
+      "observation": {
+        "field": "readyMaximumBodyBytes",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness.go",
+          "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+          "field": "readyMaximumBodyBytes",
+          "line": 143,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-productHandlerTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "field": "productHandlerTimeoutSeconds",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+          "field": "productHandlerTimeoutSeconds",
+          "line": 339,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-productMaximumBodyBytes",
+      "result": "passed",
+      "observation": {
+        "field": "productMaximumBodyBytes",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+          "field": "productMaximumBodyBytes",
+          "line": 345,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-defaultDemoRetentionSeconds",
+      "result": "passed",
+      "observation": {
+        "field": "defaultDemoRetentionSeconds",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-retention.go",
+          "sha256": "4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7",
+          "field": "defaultDemoRetentionSeconds",
+          "line": 9,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DOMAIN-maximumDemoRetentionSeconds",
+      "result": "passed",
+      "observation": {
+        "field": "maximumDemoRetentionSeconds",
+        "targetDomainType": "integer",
+        "profileType": "integer",
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-retention.go",
+          "sha256": "4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7",
+          "field": "maximumDemoRetentionSeconds",
+          "line": 12,
+          "lineKind": "productive literal policy author"
+        }
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DETECT-COMMITTED-OVERWRITE-BUSTER_DEFAULT_TTL_SECONDS",
+      "result": "passed",
+      "observation": {
+        "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "oldDomain": {
+          "type": "string",
+          "minLength": 1,
+          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
+          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+        },
+        "correctedDomain": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 9223372036,
+          "unit": "seconds",
+          "semantic": "source startup envInt accepts malformedfallback/negative/durationoverflow; validateLeaseSpec taskTTL>=60 and above maxreject whileexpiresAt separatelyclampsandinvalidCreationTimestamp→now. Targetrequireddefault<=max positive duration/calendar-safe; rejectdefaultfallback/currentnow-retarget for existing records. Preserve A actual original expiry, B newadmissions only."
+        },
+        "meaning": "expected committed definition defect observed; not an accepted target domain or native negative kill"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DETECT-COMMITTED-OVERWRITE-runtimeSecurityMaximumSerializedBytes",
+      "result": "passed",
+      "observation": {
+        "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "oldDomain": {
+          "type": "string",
+          "minLength": 1,
+          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
+          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+        },
+        "correctedDomain": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "bytes",
+          "semantic": "targetwithinactualselectedGo int/MaxBytesReader/httpreadlimit arithmetic and physicaldeclaredservicebuffer budget; MaxHeaderBytes nativeoverhead separate. Findings count>=1 and serializedarraycap>=actualGoJSONcriticaloverflow sentinel+array punctuation for maximum supportedtotal; too-small currentstyle would panic removing emptylast. Preservecriticalsentinel/total/omitted counters+digerst sortedIDs, neverfalseclean. Whole kubectl encodedlease/status/metadata mustfit actual CMP runtimeSecurity.maximumOutputBytes (distinctauthor/caller); metadata/prettyJSON overhead not inferred fromarraycap; oversize/unavailablefailclosed. No Storequota/capacity inferred."
+        },
+        "meaning": "expected committed definition defect observed; not an accepted target domain or native negative kill"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DETECT-COMMITTED-OVERWRITE-BUSTER_ALLOWED_ACCESS_JSON",
+      "result": "passed",
+      "observation": {
+        "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "oldDomain": {
+          "type": "string",
+          "minLength": 1,
+          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
+          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+        },
+        "correctedDomain": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueSubjects": true,
+          "items": {
+            "type": "object",
+            "required": [
+              "subject",
+              "modes"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "subject": {
+                "type": "string",
+                "semantic": "exact source parseServiceAccountRef namespace/name: sanitizeDNSLabel(value)==value for bothnames; targetfullyqualified mandatoryno defaultnamespace"
+              },
+              "modes": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "tester",
+                    "deployer"
+                  ]
+                }
+              }
+            }
+          },
+          "semantic": "sourceJSON map unknown/duplicatefields and repeatsubjectmerge/emptymodes allowed; targetstrictduplicate/unknown/nonempty beforeeffect. Actual RoleBindings/TokenReview/provider/subject/namespaceUIDgrants separate, no permissionfromname."
+        },
+        "meaning": "expected committed definition defect observed; not an accepted target domain or native negative kill"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-DETECT-COMMITTED-OVERWRITE-BUSTER_LEASE_API_GROUP",
+      "result": "passed",
+      "observation": {
+        "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+        "oldDomain": {
+          "type": "string",
+          "minLength": 1,
+          "generatedFrom": "existing selectedcontroller deploy namespace/PodSA/Rolefullname/APIhost/CMPprotocol closure",
+          "semantic": "readonlysame actual sourceproducer/grants/originalAPI/role/namespace binding; sourceempty/defaultname/task metadata not separateoperator intent. Fixedprotocolcurrentgroup/version changesonlyexplicitHcompatible CRD/RBAC/client/storedlease/finalizer migration, neveruncoordinatedM."
+        },
+        "correctedDomain": {
+          "type": "string",
+          "constFromAuthor": {
+            "settingId": "CMP-buster-engine-clusterInvokers.shared.leaseApiGroup",
+            "source": {
+              "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+              "field": "/settings/clusterInvokers/shared/leaseApiGroup",
+              "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+              "profileSources": {
+                "base": {
+                  "source": "charts/kubeclaw/files/config/buster-engine.config.json",
+                  "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5"
+                },
+                "runtime": {
+                  "source": "charts/kubeclaw/files/config/profiles/buster-engine.runtime.config.json",
+                  "sha256": "177c4ba8a115dd296689b412bfaf453d3154bd780f43effd0f297e2cbe38899b"
+                }
+              }
+            },
+            "caseIds": [
+              "CMP-C1-VAL-buster-engine",
+              "CMP-C1-EFFECT-buster-engine",
+              "CMP-C1-DELIVERY",
+              "CMP-C1-MUT",
+              "CMP-C5-BIND",
+              "CMP-C1-EFFECT-buster-engine-clusterInvokers.shared.leaseApiGroup"
+            ],
+            "meaning": "existing sole CMP sharedlease author; controller ENV/CRD/RBAC/client are typedreadonly projections, no Delivery writer"
+          },
+          "currentlySourceRegisteredValues": [
+            "kubeclaw.forgestack.ai"
+          ],
+          "semantic": "only source-established coordinated leaseCRD/client/RBAC/finalizer protocol; unsupportedgroup/version targetrejectsbefore API effects, no fabricated secondregisteredprotocol. Explicit H compatiblemigration needed for newCMP selection."
+        },
+        "meaning": "expected committed definition defect observed; not an accepted target domain or native negative kill"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-BUSTER_DEFAULT_TTL_SECONDS",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/BUSTER_DEFAULT_TTL_SECONDS",
+            "schemaPath": "#/properties/settings/properties/BUSTER_DEFAULT_TTL_SECONDS/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-BUSTER_MAX_TTL_SECONDS",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/BUSTER_MAX_TTL_SECONDS",
+            "schemaPath": "#/properties/settings/properties/BUSTER_MAX_TTL_SECONDS/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-BUSTER_CONTROLLER_POLL_MS",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/BUSTER_CONTROLLER_POLL_MS",
+            "schemaPath": "#/properties/settings/properties/BUSTER_CONTROLLER_POLL_MS/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-httpClientTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/httpClientTimeoutSeconds",
+            "schemaPath": "#/properties/settings/properties/httpClientTimeoutSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-runtimeSecurityRefreshSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/runtimeSecurityRefreshSeconds",
+            "schemaPath": "#/properties/settings/properties/runtimeSecurityRefreshSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-runtimeSecurityFutureSkewSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/runtimeSecurityFutureSkewSeconds",
+            "schemaPath": "#/properties/settings/properties/runtimeSecurityFutureSkewSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-runtimeSecurityMaximumFindings",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/runtimeSecurityMaximumFindings",
+            "schemaPath": "#/properties/settings/properties/runtimeSecurityMaximumFindings/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-runtimeSecurityMaximumSerializedBytes",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/runtimeSecurityMaximumSerializedBytes",
+            "schemaPath": "#/properties/settings/properties/runtimeSecurityMaximumSerializedBytes/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-readyReadHeaderTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/readyReadHeaderTimeoutSeconds",
+            "schemaPath": "#/properties/settings/properties/readyReadHeaderTimeoutSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-readyReadTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/readyReadTimeoutSeconds",
+            "schemaPath": "#/properties/settings/properties/readyReadTimeoutSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-readyWriteTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/readyWriteTimeoutSeconds",
+            "schemaPath": "#/properties/settings/properties/readyWriteTimeoutSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-readyIdleTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/readyIdleTimeoutSeconds",
+            "schemaPath": "#/properties/settings/properties/readyIdleTimeoutSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-readyMaxHeaderBytes",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/readyMaxHeaderBytes",
+            "schemaPath": "#/properties/settings/properties/readyMaxHeaderBytes/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-readyHandlerTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/readyHandlerTimeoutSeconds",
+            "schemaPath": "#/properties/settings/properties/readyHandlerTimeoutSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-readyMaximumBodyBytes",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/readyMaximumBodyBytes",
+            "schemaPath": "#/properties/settings/properties/readyMaximumBodyBytes/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-productHandlerTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/productHandlerTimeoutSeconds",
+            "schemaPath": "#/properties/settings/properties/productHandlerTimeoutSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-productMaximumBodyBytes",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/productMaximumBodyBytes",
+            "schemaPath": "#/properties/settings/properties/productMaximumBodyBytes/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-defaultDemoRetentionSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/defaultDemoRetentionSeconds",
+            "schemaPath": "#/properties/settings/properties/defaultDemoRetentionSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-apiResponseMaximumBytes",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/apiResponseMaximumBytes",
+            "schemaPath": "#/properties/settings/properties/apiResponseMaximumBytes/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-apiRequestMaximumBytes",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/apiRequestMaximumBytes",
+            "schemaPath": "#/properties/settings/properties/apiRequestMaximumBytes/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-apiDiagnosticMaximumBytes",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/apiDiagnosticMaximumBytes",
+            "schemaPath": "#/properties/settings/properties/apiDiagnosticMaximumBytes/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-authorizationMaximumBytes",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/authorizationMaximumBytes",
+            "schemaPath": "#/properties/settings/properties/authorizationMaximumBytes/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-namespaceDeletionTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/namespaceDeletionTimeoutSeconds",
+            "schemaPath": "#/properties/settings/properties/namespaceDeletionTimeoutSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-readyObservationMaximumAgeSeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/readyObservationMaximumAgeSeconds",
+            "schemaPath": "#/properties/settings/properties/readyObservationMaximumAgeSeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-STRING-productDecisionMaximumValiditySeconds",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/productDecisionMaximumValiditySeconds",
+            "schemaPath": "#/properties/settings/properties/productDecisionMaximumValiditySeconds/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-ARRAY-PREFIX-AS-STRING",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/BUSTER_ALLOWED_NAMESPACE_PREFIXES",
+            "schemaPath": "#/properties/settings/properties/BUSTER_ALLOWED_NAMESPACE_PREFIXES/type",
+            "keyword": "type",
+            "params": {
+              "type": "array"
+            },
+            "message": "must be array"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-BOOL-AS-STRING",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings/BUSTER_PRODUCT_ENABLED",
+            "schemaPath": "#/properties/settings/properties/BUSTER_PRODUCT_ENABLED/type",
+            "keyword": "type",
+            "params": {
+              "type": "boolean"
+            },
+            "message": "must be boolean"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-GROUP-SECOND-WRITER",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/readonlyBindings/BUSTER_LEASE_API_GROUP",
+            "schemaPath": "#/properties/readonlyBindings/properties/BUSTER_LEASE_API_GROUP/const",
+            "keyword": "const",
+            "params": {
+              "allowedValue": "kubeclaw.forgestack.ai"
+            },
+            "message": "must be equal to constant"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-UNKNOWN-POLICY",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings",
+            "schemaPath": "#/properties/settings/additionalProperties",
+            "keyword": "additionalProperties",
+            "params": {
+              "additionalProperty": "extra"
+            },
+            "message": "must NOT have additional properties"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-MISSING-RESPONSE",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings",
+            "schemaPath": "#/properties/settings/required",
+            "keyword": "required",
+            "params": {
+              "missingProperty": "apiResponseMaximumBytes"
+            },
+            "message": "must have required property 'apiResponseMaximumBytes'"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-CMP-OUTPUT-SECOND-WRITER",
+      "result": "passed",
+      "observation": {
+        "schema": false,
+        "errors": [
+          {
+            "instancePath": "/settings",
+            "schemaPath": "#/properties/settings/additionalProperties",
+            "keyword": "additionalProperties",
+            "params": {
+              "additionalProperty": "maximumOutputBytes"
+            },
+            "message": "must NOT have additional properties"
+          }
+        ],
+        "correlations": null,
+        "diagnostic": null,
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-DEFAULT-ABOVE-MAX",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "correlations": false,
+        "diagnostic": "BUSTER_DEFAULT_TTL_SECONDS exceeds BUSTER_MAX_TTL_SECONDS",
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-AUTH-ABOVE-HEADERS",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "correlations": false,
+        "diagnostic": "authorizationMaximumBytes exceeds readyMaxHeaderBytes",
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-RESPONSE-DECLARED-BUFFER",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "correlations": false,
+        "diagnostic": "declared-buffer",
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-SENTINEL-TOO-SMALL",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "correlations": false,
+        "diagnostic": "overflow-sentinel",
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-SAME-PRODUCER",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "correlations": false,
+        "diagnostic": "same-producer",
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-UTF8-NATIVE-BYTES",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "correlations": false,
+        "diagnostic": "native-text-bytes",
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-REJECT-DUPLICATE-ACCESS",
+      "result": "passed",
+      "observation": {
+        "schema": true,
+        "errors": null,
+        "correlations": false,
+        "diagnostic": "duplicate-access-subject",
+        "scope": "own proposed declaration rejection only"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-EXACT-SOURCE-apiResponseMaximumBytes",
+      "result": "passed",
+      "observation": {
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "field": "apiResponseMaximumBytes",
+          "line": 1529,
+          "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+        },
+        "lineText": "\tresponseBody, err := io.ReadAll(resp.Body)",
+        "expectedToken": "io.ReadAll(resp.Body)"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-EXACT-SOURCE-apiRequestMaximumBytes",
+      "result": "passed",
+      "observation": {
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "field": "apiRequestMaximumBytes",
+          "line": 1546,
+          "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+        },
+        "lineText": "\tdata, err := json.Marshal(body)",
+        "expectedToken": "json.Marshal(body)"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-EXACT-SOURCE-apiDiagnosticMaximumBytes",
+      "result": "passed",
+      "observation": {
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "field": "apiDiagnosticMaximumBytes",
+          "line": 1560,
+          "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+        },
+        "lineText": "\t\tmessage = stringValue(parsed[\"message\"])",
+        "expectedToken": "parsed[\"message\"]"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-EXACT-SOURCE-authorizationMaximumBytes",
+      "result": "passed",
+      "observation": {
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness.go",
+          "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+          "field": "authorizationMaximumBytes",
+          "line": 102,
+          "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+        },
+        "lineText": "\tif cfg == nil || !strings.HasPrefix(authorization, \"Bearer \") || len(authorization) > 16384 {",
+        "expectedToken": "len(authorization) > 16384"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-EXACT-SOURCE-namespaceDeletionTimeoutSeconds",
+      "result": "passed",
+      "observation": {
+        "source": {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+          "field": "namespaceDeletionTimeoutSeconds",
+          "line": 1473,
+          "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+        },
+        "lineText": "\tdeadline := time.Now().Add(2 * time.Minute)",
+        "expectedToken": "2 * time.Minute"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-EXACT-SOURCE-readyObservationMaximumAgeSeconds",
+      "result": "passed",
+      "observation": {
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-readiness.go",
+          "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+          "field": "readyObservationMaximumAgeSeconds",
+          "line": 238,
+          "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+        },
+        "lineText": "\tif err != nil || observed.After(now) || now.Sub(observed) > 5*time.Minute {",
+        "expectedToken": "5*time.Minute"
+      }
+    },
+    {
+      "id": "DLV-C0-CONTROLLER-RE-EXACT-SOURCE-productDecisionMaximumValiditySeconds",
+      "result": "passed",
+      "observation": {
+        "source": {
+          "path": "cmd/buster-namespace-controller/demo-product.go",
+          "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+          "field": "productDecisionMaximumValiditySeconds",
+          "line": 188,
+          "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+        },
+        "lineText": "\tif ie != nil || ee != nil || !expires.After(issued) || expires.Sub(issued) > 5*time.Minute {",
+        "expectedToken": "5*time.Minute"
+      }
+    }
+  ],
+  "sourceDigests": {
+    "docs/review/evidence/config-acceptance/delivery/check-controller-domain-response-6606af9-20261013.cjs": "e147aa3b5334e2df4e876e5e2011299b3ecc3757307a494d8668de03d25e348c",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-contracts-6606af9-20261013.json": "87c81bf6297c4dcd0b0cd12696c03aa6fc7a4d36bbc0e323c964f18f9f5024ae",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-definition-schema-6606af9-20261013.json": "e122724fea861ad5ce8751f6ed89778230c0a24631b097d967bf891d66642d8d",
+    "docs/review/evidence/config-acceptance/delivery/controller-target-case-specifications-20261013.json": "7eec474f23d752071a56c80cef8a8c4de7b83a87140c2b8016450d15907af877",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/A.json": "dbaffde17d18c220c237216cfccdc335d33d572a0b9973b8bc8d0fd15ef61a4d",
+    "docs/review/evidence/config-acceptance/delivery/controller-response-epoch-profiles-6606af9-20261013/B.json": "67f26310eb5a89cd4ec736d9a690a50dd0f50ac359e89b651a449aae9b0f3a94"
+  },
+  "baselineCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "baselineBlobSha256": "96e0e892d2dfb2ddd777e5a867c187eebfb5a4c943fa4ffc1364efba9a2556d3",
+  "tools": {
+    "node": "v24.21.0",
+    "ajv": "8.20.0"
+  },
+  "result": "passed"
+}

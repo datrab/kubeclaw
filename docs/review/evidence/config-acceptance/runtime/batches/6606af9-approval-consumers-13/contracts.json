@@ -1,0 +1,318 @@
+{
+  "entries": [
+    {
+      "setting": "RT-68403831105f367c",
+      "field": "target",
+      "registration": "kubeclaw.human-approval:approval",
+      "classification": "operator-approval-policy",
+      "current": "parseApprovalConfig requires trimmednonempty<=1024UTF16 noNUL/CRLF, normalizesdirectwhitespace; owningschema forbidsedgewhitespace and length countsUnicodecodepoints. Pendingstage publishesoperator.request atcanonicaltarget; approved/rejectedguidance bypasspublication.",
+      "targetDomain": "Proposedrequiredcanonicalnonempty<=1024UTF16 noedgewhitespace/NUL/CRLF under existingoperator target binding/grants; real target routability and exactowner required. Not publicaddress/networkpermission or arbitrary secondauthor.",
+      "effect": "Pending fixedsummary A publishesalpha/B publishesbeta under correspondinggenuineownedtarget grants; samewait/originalgeneration retainsoriginaltarget. Unknown/unauthorizedtargetrejectbeforeeffects; directwhitespace/empty/configschema mismatches currentobservations distinct.",
+      "branchDormancy": "Approved/rejectedguidance parseconfig/issuer but returnsbeforewait/publication; pendingbranch uses allfields. Registry owning config validation and actualconsumer narrower semantics distinct.",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d"
+      },
+      "fullProfiles": {
+        "A": {
+          "target": "operator:alpha",
+          "issuerId": "operator:authorized-A",
+          "timeoutMinutes": 60
+        },
+        "B": {
+          "target": "operator:beta",
+          "issuerId": "operator:authorized-B",
+          "timeoutMinutes": 120
+        }
+      },
+      "productiveCaller": "Exact registered stage manifest -> StageExecutor actualcontract/config/guidance/lease; humanexecute parseApprovalInput/config/guidance -> signal.waitcreate -> validateCreatedWait -> operator.requestpublish; architectureapproval verifiedartifact/findings then executeApproval iffindings; Prism design architecture/artifact -> runtime.dispatch -> pendingwait+publish or approvedbaselinearchive+write. No native/provider actions now.",
+      "author": "Same existing originalrow targetauthor proposal retained; approval policy vs tasksummary/artifact/source/approvaldecision data explicit. Sole systementry/profile/owner-generation packaging and parentmodulecarrierOPEN; no newauthor."
+    },
+    {
+      "setting": "RT-cf7bff92d1482b21",
+      "field": "issuerId",
+      "registration": "kubeclaw.human-approval:approval",
+      "classification": "operator-approval-policy",
+      "current": "trimmednonempty<=1024UTF16 noNUL/CRLF; parseguidance operator+exactissuer normalized; waitresponse authorizedissuer mustmatch. Schema codepointlengthvsparser UTF16 discrepancy forastral. Inputsummary cannotoverrideissuer.",
+      "targetDomain": "Required canonical declared existingoperator issuer identity, <=1024UTF16 noedgewhitespace/NUL/CRLF; actual signedguidance/enrollment/grant provenance prerequisite. A/B distinctrealalreadyapproved identities; no generationchange authorizesB toresolveA wait.",
+      "effect": "A wait authorizedissuerA, B waitissuerB. Sameunsignedguidance B for A rejects; signedactualtrustedsourcepositive andwrongissuernegative; previousA wait retainA evenB published. Definition parser equality doesnot prove externalauthenticissuer.",
+      "branchDormancy": "Approved/rejectedguidance parseconfig/issuer but returnsbeforewait/publication; pendingbranch uses allfields. Registry owning config validation and actualconsumer narrower semantics distinct.",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d"
+      },
+      "fullProfiles": {
+        "A": {
+          "target": "operator:alpha",
+          "issuerId": "operator:authorized-A",
+          "timeoutMinutes": 60
+        },
+        "B": {
+          "target": "operator:beta",
+          "issuerId": "operator:authorized-B",
+          "timeoutMinutes": 120
+        }
+      },
+      "productiveCaller": "Exact registered stage manifest -> StageExecutor actualcontract/config/guidance/lease; humanexecute parseApprovalInput/config/guidance -> signal.waitcreate -> validateCreatedWait -> operator.requestpublish; architectureapproval verifiedartifact/findings then executeApproval iffindings; Prism design architecture/artifact -> runtime.dispatch -> pendingwait+publish or approvedbaselinearchive+write. No native/provider actions now.",
+      "author": "Same existing originalrow targetauthor proposal retained; approval policy vs tasksummary/artifact/source/approvaldecision data explicit. Sole systementry/profile/owner-generation packaging and parentmodulecarrierOPEN; no newauthor."
+    },
+    {
+      "setting": "RT-f2f586691b7aa7f9",
+      "field": "timeoutMinutes",
+      "registration": "kubeclaw.human-approval:approval",
+      "classification": "operator-approval-policy",
+      "current": "Nullishtimeout default60; actualparser integer1..525600; owning optionaldefault60 doesnot insert unlesscompilerchosen; null schema rejects but directparserdefaults. calculateApprovalExpiresAt acceptsDate arg/actualstage usesnewDate; nearDate max can overflow evenvalidminutes. Pendingbranch only; guidanceapproved/rejected bypasswaitdeadline.",
+      "targetDomain": "Proposedrequiredinteger1..525600minutes (currentexportedschema/parser selecteddomain, not physical timer capacity); calculate actualfinite supportedUTC expiry from capturedrealclock before durable wait effects. Reject Dateoverflow beforecreating/publishingrequest. Missing/nulltargetrejectratherthanfallback.",
+      "effect": "PendingA60/B120 exactexpiry delta 3600000/7200000 from actualcapturednow; createdwaitreturnedexpiry exactmatch. Wrongexpiryresponse rejects; nearDateinvalidclock/overflow definition negatives. ExistingA durablewait/repair/recovery keeps originalexpiresAt not recomputedB.",
+      "branchDormancy": "Approved/rejectedguidance parseconfig/issuer but returnsbeforewait/publication; pendingbranch uses allfields. Registry owning config validation and actualconsumer narrower semantics distinct.",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d"
+      },
+      "fullProfiles": {
+        "A": {
+          "target": "operator:alpha",
+          "issuerId": "operator:authorized-A",
+          "timeoutMinutes": 60
+        },
+        "B": {
+          "target": "operator:beta",
+          "issuerId": "operator:authorized-B",
+          "timeoutMinutes": 120
+        }
+      },
+      "productiveCaller": "Exact registered stage manifest -> StageExecutor actualcontract/config/guidance/lease; humanexecute parseApprovalInput/config/guidance -> signal.waitcreate -> validateCreatedWait -> operator.requestpublish; architectureapproval verifiedartifact/findings then executeApproval iffindings; Prism design architecture/artifact -> runtime.dispatch -> pendingwait+publish or approvedbaselinearchive+write. No native/provider actions now.",
+      "author": "Same existing originalrow targetauthor proposal retained; approval policy vs tasksummary/artifact/source/approvaldecision data explicit. Sole systementry/profile/owner-generation packaging and parentmodulecarrierOPEN; no newauthor."
+    },
+    {
+      "setting": "RT-4430b360df8ad6c0",
+      "field": "target",
+      "registration": "kubeclaw.human-approval:architecture-approval",
+      "classification": "operator-approval-policy",
+      "current": "parseApprovalConfig requires trimmednonempty<=1024UTF16 noNUL/CRLF, normalizesdirectwhitespace; owningschema forbidsedgewhitespace and length countsUnicodecodepoints. Pendingstage publishesoperator.request atcanonicaltarget; approved/rejectedguidance bypasspublication.",
+      "targetDomain": "Proposedrequiredcanonicalnonempty<=1024UTF16 noedgewhitespace/NUL/CRLF under existingoperator target binding/grants; real target routability and exactowner required. Not publicaddress/networkpermission or arbitrary secondauthor.",
+      "effect": "Pending fixedsummary A publishesalpha/B publishesbeta under correspondinggenuineownedtarget grants; samewait/originalgeneration retainsoriginaltarget. Unknown/unauthorizedtargetrejectbeforeeffects; directwhitespace/empty/configschema mismatches currentobservations distinct.",
+      "branchDormancy": "Architecture cleanreport branch bypasses executeApproval/config/guidance then optionalsubjectverify/artifactwrite; nonclean findings executeApproval requires sameconfig and approvedreason. Approved/rejectedguidance parseconfig/issuer but returnsbeforewait/publication; pendingbranch uses allfields. Registry owning config validation and actualconsumer narrower semantics distinct.",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d"
+      },
+      "fullProfiles": {
+        "A": {
+          "target": "operator:alpha",
+          "issuerId": "operator:authorized-A",
+          "timeoutMinutes": 60
+        },
+        "B": {
+          "target": "operator:beta",
+          "issuerId": "operator:authorized-B",
+          "timeoutMinutes": 120
+        }
+      },
+      "productiveCaller": "Exact registered stage manifest -> StageExecutor actualcontract/config/guidance/lease; humanexecute parseApprovalInput/config/guidance -> signal.waitcreate -> validateCreatedWait -> operator.requestpublish; architectureapproval verifiedartifact/findings then executeApproval iffindings; Prism design architecture/artifact -> runtime.dispatch -> pendingwait+publish or approvedbaselinearchive+write. No native/provider actions now.",
+      "author": "Same existing originalrow targetauthor proposal retained; approval policy vs tasksummary/artifact/source/approvaldecision data explicit. Sole systementry/profile/owner-generation packaging and parentmodulecarrierOPEN; no newauthor."
+    },
+    {
+      "setting": "RT-5649034e546463fd",
+      "field": "issuerId",
+      "registration": "kubeclaw.human-approval:architecture-approval",
+      "classification": "operator-approval-policy",
+      "current": "trimmednonempty<=1024UTF16 noNUL/CRLF; parseguidance operator+exactissuer normalized; waitresponse authorizedissuer mustmatch. Schema codepointlengthvsparser UTF16 discrepancy forastral. Inputsummary cannotoverrideissuer.",
+      "targetDomain": "Required canonical declared existingoperator issuer identity, <=1024UTF16 noedgewhitespace/NUL/CRLF; actual signedguidance/enrollment/grant provenance prerequisite. A/B distinctrealalreadyapproved identities; no generationchange authorizesB toresolveA wait.",
+      "effect": "A wait authorizedissuerA, B waitissuerB. Sameunsignedguidance B for A rejects; signedactualtrustedsourcepositive andwrongissuernegative; previousA wait retainA evenB published. Definition parser equality doesnot prove externalauthenticissuer.",
+      "branchDormancy": "Architecture cleanreport branch bypasses executeApproval/config/guidance then optionalsubjectverify/artifactwrite; nonclean findings executeApproval requires sameconfig and approvedreason. Approved/rejectedguidance parseconfig/issuer but returnsbeforewait/publication; pendingbranch uses allfields. Registry owning config validation and actualconsumer narrower semantics distinct.",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d"
+      },
+      "fullProfiles": {
+        "A": {
+          "target": "operator:alpha",
+          "issuerId": "operator:authorized-A",
+          "timeoutMinutes": 60
+        },
+        "B": {
+          "target": "operator:beta",
+          "issuerId": "operator:authorized-B",
+          "timeoutMinutes": 120
+        }
+      },
+      "productiveCaller": "Exact registered stage manifest -> StageExecutor actualcontract/config/guidance/lease; humanexecute parseApprovalInput/config/guidance -> signal.waitcreate -> validateCreatedWait -> operator.requestpublish; architectureapproval verifiedartifact/findings then executeApproval iffindings; Prism design architecture/artifact -> runtime.dispatch -> pendingwait+publish or approvedbaselinearchive+write. No native/provider actions now.",
+      "author": "Same existing originalrow targetauthor proposal retained; approval policy vs tasksummary/artifact/source/approvaldecision data explicit. Sole systementry/profile/owner-generation packaging and parentmodulecarrierOPEN; no newauthor."
+    },
+    {
+      "setting": "RT-aa5a4ccf3d9a7fdd",
+      "field": "timeoutMinutes",
+      "registration": "kubeclaw.human-approval:architecture-approval",
+      "classification": "operator-approval-policy",
+      "current": "Nullishtimeout default60; actualparser integer1..525600; owning optionaldefault60 doesnot insert unlesscompilerchosen; null schema rejects but directparserdefaults. calculateApprovalExpiresAt acceptsDate arg/actualstage usesnewDate; nearDate max can overflow evenvalidminutes. Pendingbranch only; guidanceapproved/rejected bypasswaitdeadline.",
+      "targetDomain": "Proposedrequiredinteger1..525600minutes (currentexportedschema/parser selecteddomain, not physical timer capacity); calculate actualfinite supportedUTC expiry from capturedrealclock before durable wait effects. Reject Dateoverflow beforecreating/publishingrequest. Missing/nulltargetrejectratherthanfallback.",
+      "effect": "PendingA60/B120 exactexpiry delta 3600000/7200000 from actualcapturednow; createdwaitreturnedexpiry exactmatch. Wrongexpiryresponse rejects; nearDateinvalidclock/overflow definition negatives. ExistingA durablewait/repair/recovery keeps originalexpiresAt not recomputedB.",
+      "branchDormancy": "Architecture cleanreport branch bypasses executeApproval/config/guidance then optionalsubjectverify/artifactwrite; nonclean findings executeApproval requires sameconfig and approvedreason. Approved/rejectedguidance parseconfig/issuer but returnsbeforewait/publication; pendingbranch uses allfields. Registry owning config validation and actualconsumer narrower semantics distinct.",
+      "source": {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d"
+      },
+      "fullProfiles": {
+        "A": {
+          "target": "operator:alpha",
+          "issuerId": "operator:authorized-A",
+          "timeoutMinutes": 60
+        },
+        "B": {
+          "target": "operator:beta",
+          "issuerId": "operator:authorized-B",
+          "timeoutMinutes": 120
+        }
+      },
+      "productiveCaller": "Exact registered stage manifest -> StageExecutor actualcontract/config/guidance/lease; humanexecute parseApprovalInput/config/guidance -> signal.waitcreate -> validateCreatedWait -> operator.requestpublish; architectureapproval verifiedartifact/findings then executeApproval iffindings; Prism design architecture/artifact -> runtime.dispatch -> pendingwait+publish or approvedbaselinearchive+write. No native/provider actions now.",
+      "author": "Same existing originalrow targetauthor proposal retained; approval policy vs tasksummary/artifact/source/approvaldecision data explicit. Sole systementry/profile/owner-generation packaging and parentmodulecarrierOPEN; no newauthor."
+    },
+    {
+      "setting": "RT-8e39db110874a9d6",
+      "field": "agent",
+      "registration": "kubeclaw.prism-design:design",
+      "classification": "implemented-capability-routing-identity-not-adjustable-knob",
+      "current": "Owning schema constprism, directconfig requires exactprism. Dispatchresource runtime.agent canonicalId=settings.agent, while runtimeDispatchProfile only encodes wirecontract. No independentlegalB sameimplementedstage; changingagent requires source/manifest/capability version, not profiletoggle.",
+      "targetDomain": "Retain constprism; unknownagent rejectatowningschema. Actualfrozen Rconfig.targets selects selectedtarget; not model or thinking inferredfromSDKcodec.",
+      "effect": "Validprism config only; wrongotheragent reject before genuine design dispatch. A/B retainprism and may changeapproval fields; no fakeagentF-EFFECT.",
+      "branchDormancy": "requiresDesignfalse returns passedbeforeconfig; approvedguidance validatesissuer but skipswait/target/timeout; pendingconfig used. Artifact/read/dispatch can occurbeforefutureexpiryvalidation, so proposed owning preeffectvalidator ordering must be concrete; no currentfullguardclaim.",
+      "source": {
+        "path": "skills/nova/plugins/prism-design/src/stage.ts",
+        "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88"
+      },
+      "fullProfiles": {
+        "A": {
+          "agent": "prism",
+          "target": "operator:alpha",
+          "issuerId": "operator:authorized-A",
+          "timeoutMinutes": 60
+        },
+        "B": {
+          "agent": "prism",
+          "target": "operator:beta",
+          "issuerId": "operator:authorized-B",
+          "timeoutMinutes": 120
+        }
+      },
+      "productiveCaller": "Exact registered stage manifest -> StageExecutor actualcontract/config/guidance/lease; humanexecute parseApprovalInput/config/guidance -> signal.waitcreate -> validateCreatedWait -> operator.requestpublish; architectureapproval verifiedartifact/findings then executeApproval iffindings; Prism design architecture/artifact -> runtime.dispatch -> pendingwait+publish or approvedbaselinearchive+write. No native/provider actions now.",
+      "author": "Same existing originalrow targetauthor proposal retained; approval policy vs tasksummary/artifact/source/approvaldecision data explicit. Sole systementry/profile/owner-generation packaging and parentmodulecarrierOPEN; no newauthor."
+    },
+    {
+      "setting": "RT-03fda24ef110ef33",
+      "field": "target",
+      "registration": "kubeclaw.prism-design:design",
+      "classification": "operator-approval-policy",
+      "current": "DirectPrism accepts anystring includingempty; owningschema minLength1 but no trim/controlbound. Pendingbranch sends operator.request resourceoperator.target canonicalId=settings.target; approvedbranch doesnot publish.",
+      "targetDomain": "Proposedrequiredcanonicalnonempty<=1024UTF16 noedgewhitespace/NUL/CRLF under existingoperator target binding/grants; real target routability and exactowner required. Not publicaddress/networkpermission or arbitrary secondauthor.",
+      "effect": "Pending fixedsummary A publishesalpha/B publishesbeta under correspondinggenuineownedtarget grants; samewait/originalgeneration retainsoriginaltarget. Unknown/unauthorizedtargetrejectbeforeeffects; directwhitespace/empty/configschema mismatches currentobservations distinct.",
+      "branchDormancy": "requiresDesignfalse returns passedbeforeconfig; approvedguidance validatesissuer but skipswait/target/timeout; pendingconfig used. Artifact/read/dispatch can occurbeforefutureexpiryvalidation, so proposed owning preeffectvalidator ordering must be concrete; no currentfullguardclaim.",
+      "source": {
+        "path": "skills/nova/plugins/prism-design/src/stage.ts",
+        "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88"
+      },
+      "fullProfiles": {
+        "A": {
+          "agent": "prism",
+          "target": "operator:alpha",
+          "issuerId": "operator:authorized-A",
+          "timeoutMinutes": 60
+        },
+        "B": {
+          "agent": "prism",
+          "target": "operator:beta",
+          "issuerId": "operator:authorized-B",
+          "timeoutMinutes": 120
+        }
+      },
+      "productiveCaller": "Exact registered stage manifest -> StageExecutor actualcontract/config/guidance/lease; humanexecute parseApprovalInput/config/guidance -> signal.waitcreate -> validateCreatedWait -> operator.requestpublish; architectureapproval verifiedartifact/findings then executeApproval iffindings; Prism design architecture/artifact -> runtime.dispatch -> pendingwait+publish or approvedbaselinearchive+write. No native/provider actions now.",
+      "author": "Same existing originalrow targetauthor proposal retained; approval policy vs tasksummary/artifact/source/approvaldecision data explicit. Sole systementry/profile/owner-generation packaging and parentmodulecarrierOPEN; no newauthor."
+    },
+    {
+      "setting": "RT-94d352d99db6b92d",
+      "field": "issuerId",
+      "registration": "kubeclaw.prism-design:design",
+      "classification": "operator-approval-policy",
+      "current": "Prism config onlytypesstring; owningminLength1. Guidance approved requires operator issuer.id exactsettingsissuer, architectureDigest andbundleDigest; pendingwait/publication authorizedIssuer repeats exactid. No generalizedremotesignatureclaim.",
+      "targetDomain": "Required canonical declared existingoperator issuer identity, <=1024UTF16 noedgewhitespace/NUL/CRLF; actual signedguidance/enrollment/grant provenance prerequisite. A/B distinctrealalreadyapproved identities; no generationchange authorizesB toresolveA wait.",
+      "effect": "A wait authorizedissuerA, B waitissuerB. Sameunsignedguidance B for A rejects; signedactualtrustedsourcepositive andwrongissuernegative; previousA wait retainA evenB published. Definition parser equality doesnot prove externalauthenticissuer.",
+      "branchDormancy": "requiresDesignfalse returns passedbeforeconfig; approvedguidance validatesissuer but skipswait/target/timeout; pendingconfig used. Artifact/read/dispatch can occurbeforefutureexpiryvalidation, so proposed owning preeffectvalidator ordering must be concrete; no currentfullguardclaim.",
+      "source": {
+        "path": "skills/nova/plugins/prism-design/src/stage.ts",
+        "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88"
+      },
+      "fullProfiles": {
+        "A": {
+          "agent": "prism",
+          "target": "operator:alpha",
+          "issuerId": "operator:authorized-A",
+          "timeoutMinutes": 60
+        },
+        "B": {
+          "agent": "prism",
+          "target": "operator:beta",
+          "issuerId": "operator:authorized-B",
+          "timeoutMinutes": 120
+        }
+      },
+      "productiveCaller": "Exact registered stage manifest -> StageExecutor actualcontract/config/guidance/lease; humanexecute parseApprovalInput/config/guidance -> signal.waitcreate -> validateCreatedWait -> operator.requestpublish; architectureapproval verifiedartifact/findings then executeApproval iffindings; Prism design architecture/artifact -> runtime.dispatch -> pendingwait+publish or approvedbaselinearchive+write. No native/provider actions now.",
+      "author": "Same existing originalrow targetauthor proposal retained; approval policy vs tasksummary/artifact/source/approvaldecision data explicit. Sole systementry/profile/owner-generation packaging and parentmodulecarrierOPEN; no newauthor."
+    },
+    {
+      "setting": "RT-afddbf26c06e75cf",
+      "field": "timeoutMinutes",
+      "registration": "kubeclaw.prism-design:design",
+      "classification": "operator-approval-policy",
+      "current": "Owning schema requiresinteger1..525600. DirectPrism config checkspositiveSafeinteger but no upperbound; pendingbranch Date.now()+minutes*60000 mayoverflow Date andcatch blocked; requiresDesignfalsebypassesconfig and approvedbranch neverusesdeadline.",
+      "targetDomain": "Proposedrequiredinteger1..525600minutes (currentexportedschema/parser selecteddomain, not physical timer capacity); calculate actualfinite supportedUTC expiry from capturedrealclock before durable wait effects. Reject Dateoverflow beforecreating/publishingrequest. Missing/nulltargetrejectratherthanfallback.",
+      "effect": "PendingA60/B120 exactexpiry delta 3600000/7200000 from actualcapturednow; createdwaitreturnedexpiry exactmatch. Wrongexpiryresponse rejects; nearDateinvalidclock/overflow definition negatives. ExistingA durablewait/repair/recovery keeps originalexpiresAt not recomputedB.",
+      "branchDormancy": "requiresDesignfalse returns passedbeforeconfig; approvedguidance validatesissuer but skipswait/target/timeout; pendingconfig used. Artifact/read/dispatch can occurbeforefutureexpiryvalidation, so proposed owning preeffectvalidator ordering must be concrete; no currentfullguardclaim.",
+      "source": {
+        "path": "skills/nova/plugins/prism-design/src/stage.ts",
+        "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88"
+      },
+      "fullProfiles": {
+        "A": {
+          "agent": "prism",
+          "target": "operator:alpha",
+          "issuerId": "operator:authorized-A",
+          "timeoutMinutes": 60
+        },
+        "B": {
+          "agent": "prism",
+          "target": "operator:beta",
+          "issuerId": "operator:authorized-B",
+          "timeoutMinutes": 120
+        }
+      },
+      "productiveCaller": "Exact registered stage manifest -> StageExecutor actualcontract/config/guidance/lease; humanexecute parseApprovalInput/config/guidance -> signal.waitcreate -> validateCreatedWait -> operator.requestpublish; architectureapproval verifiedartifact/findings then executeApproval iffindings; Prism design architecture/artifact -> runtime.dispatch -> pendingwait+publish or approvedbaselinearchive+write. No native/provider actions now.",
+      "author": "Same existing originalrow targetauthor proposal retained; approval policy vs tasksummary/artifact/source/approvaldecision data explicit. Sole systementry/profile/owner-generation packaging and parentmodulecarrierOPEN; no newauthor."
+    }
+  ],
+  "profiles": {
+    "humanA": {
+      "target": "operator:alpha",
+      "issuerId": "operator:authorized-A",
+      "timeoutMinutes": 60
+    },
+    "humanB": {
+      "target": "operator:beta",
+      "issuerId": "operator:authorized-B",
+      "timeoutMinutes": 120
+    },
+    "prismA": {
+      "agent": "prism",
+      "target": "operator:alpha",
+      "issuerId": "operator:authorized-A",
+      "timeoutMinutes": 60
+    },
+    "prismB": {
+      "agent": "prism",
+      "target": "operator:beta",
+      "issuerId": "operator:authorized-B",
+      "timeoutMinutes": 120
+    },
+    "genuineFixtures": "operator target alpha/beta and issuer A/B are synthetic structural inputs only; real existing operator target/store/grants/issuer signedguidance/wait source ownership/persisted matchedwait fixture required before behavioral acceptance. Architecture actual artifact exactproducer/run/latestattempt/contentdigest/subject/source proof; Prism actual verified architecture and genuine BaselineBundle/nativeprovider source needed. No fake reply/invocation substitution earns effect acceptance."
+  },
+  "bindingConstraint": "Current Nova v4registry config/package/grants+wholegraph exactpins and explicitadminupgrades; prepare/activate beforelock/equality. Parentfirstlogicalmodule completeversionedcarrier/taskoperatorpartition/quota/membership/view/legacy/crossreaderproposal unacceptedOPEN. StartedA allstages/attempts/recovery/cleanup retainA; nextunstartedmoduleB; no stageprefix/SDKselector/filename shortcut."
+}

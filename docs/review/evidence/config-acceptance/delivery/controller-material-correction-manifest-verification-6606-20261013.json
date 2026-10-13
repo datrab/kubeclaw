@@ -1,0 +1,14 @@
+{
+  "scope": "actual final full current file-container SHA verification, no semantic acceptance",
+  "manifest": {
+    "path": "docs/review/evidence/config-acceptance/delivery/controller-material-correction-current-artifact-manifest-6606-20261013.json",
+    "sha256": "73270becbf255f9e3c4ce552f4aa463361034d5b52c9853f863524bf2824961c"
+  },
+  "receipt": {
+    "path": "docs/review/evidence/config-acceptance/delivery/delivery-stable-controller-material-corrections-6606-20261013.json",
+    "sha256": "8759725799049f8fc3aa176003d9f0b1e338256c0292013f85528fa7a6d868f7"
+  },
+  "fileCount": 2064,
+  "errors": [],
+  "result": "passed"
+}

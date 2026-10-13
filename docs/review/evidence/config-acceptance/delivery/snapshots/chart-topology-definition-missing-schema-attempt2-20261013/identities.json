@@ -1,0 +1,8 @@
+{
+  "scope": "exact failed missing-exact-v1.34.11-strict-schema attempt before any fragment mutation; no permissive replacement",
+  "files": {
+    "chart-topology-storage-definition-6606af9-20261013-attempt2.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "chart-topology-storage-definition-6606af9-20261013-attempt2.stderr": "2e15b44eed83563a92db16e5e958e0b68ce8dbc4cdab60ea594a0c7bc7ff563c",
+    "define-chart-topology-storage-6606af9-20261013.py": "c243acb32df14ff2f2e17defd7d5038143e8e9b2f1b8e0bef47be591854a75d3"
+  }
+}

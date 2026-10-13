@@ -1,0 +1,54 @@
+{
+  "scope": "Additive archived Controller snapshot encoding/integrity qualification only; original report/freeze not rewritten",
+  "verdict": "ALL73_ORIGINAL_LOGICAL_INPUT_IDENTITIES_VERIFIED; FIVE_STORED_GZIP_HASH_DOMAINS_EXPLICITLY_QUALIFIED",
+  "globalC0Verdict": null,
+  "snapshotMutationFinding": null,
+  "preservedClaims": {
+    "originalFreezeSha256": "fc2849c99a0adf97e8a5b7cfd829322506347ec7b05518f8d58150b4182c5e16",
+    "originalReportSha256": "5381ecdd17c9080cf5b7eccb6b0bc40d7a5b9b00c83916da14d1d128357ac476",
+    "oldDiagnosticPreserved": "Parent diagnostic raw five mismatch observations are retained as compressed-container comparisons, not rewritten to imply payload corruption."
+  },
+  "cause": "Diagnostic compares stored compressed gzip container SHA to freeze original logical input SHA. Exactly five snapshots use lossless gzip; those are deliberately different hash domains. All five decode to exact advertised initial content bytes and lengths. No evidence of mutation of these snapshots.",
+  "byteDomains": {
+    "originalInputSHA": "SHA256 of original uncompressed logical input bytes, as produced by old freeze.py sha(sourcePath)",
+    "storedSnapshotSHA": "SHA256 of archived file bytes; identity encoding for68, gzip encoding for5. No original compressed-container digest was advertised in old freeze.",
+    "decodedSnapshotSHA": "SHA256 after explicitly lossless gzip decoding, verified equal original input SHA and byte length for all5. This report records both physical and logical hashes separately.",
+    "noFalseClaim": "We do NOT claim the73 stored-container hashes equal the73 original input hashes; only68 identity containers do. The five gzip containers are verified complete encodings of the exact initial logical content."
+  },
+  "integrityResults": {
+    "inputCount": 73,
+    "plainSnapshots": 68,
+    "gzipSnapshots": 5,
+    "decodedLogicalMatches": 73,
+    "decodedLogicalMismatches": 0,
+    "initialPrimaryLogicalMatches": 17,
+    "initialSourceLogicalMatches": 28,
+    "copiedReplayWorkingInputsMatches": 15,
+    "encodedSnapshotMutationDuringQualification": 0,
+    "metadataMutationDuringQualification": 0,
+    "controls": "10 negative controls (five corrupted gzip /five valid gzip with wrong logical payload) and one all73 restored positive; pure memory only.",
+    "preservation": "Exact current five compressed-container bytes and seven old metadata/diagnostic files copied into this additive directory. Old73 snapshot files, report/freeze/receipt/logs remain untouched. No recovery from guessed/latest/reconstructed data performed; the archived lossless encoded copies already contain exact initial input bytes."
+  },
+  "replayCauseAssessment": "Frozen copied control scripts write only their two generated reviewer control reports under __dirname, outside inputs/ snapshots; their static write destinations do not include the five flagged archive paths. All15 copied consumer input payloads, including scripts/profiles/fixtures/schemas/specifications, remain byte-identical to archived originals. No evidence that author pure controls altered frozen snapshots.",
+  "scopeImpact": {
+    "DCTRL01": "Original epoch contract/schema and complete-fixture scope plus source and stored fixture bytes remain verified initial logical inputs. Persistence/summary contradiction evidence unaffected by gzip storage.",
+    "DCTRL02": "Original timestampScope and exact raw hash/signature source/crypto witness inputs remain initial verified bytes; finding unaffected.",
+    "DCTRL03": "Original producer target/schema/correlation script and static parser sources remain verified initial bytes; finding unaffected.",
+    "currentAuthorCorrections": "No substantive verdict on newer Delivery definitions. Initial source/specimen findings remain bounded historical evidence and require independent material recheck after correction.",
+    "oldLiveDrift": "Prior end-input-integrity documented two shared live files changing outside original selected subset. That was live workspace drift, not archived snapshot drift.",
+    "currentLiveDrift": "This later qualification observes seven whole live author files differing from initial bytes. Current49 rows and6 canonical containers still exist but changed metadata is recorded in selected-scope-current-observations.json; do not carry old selected-stability claim forward as a current guarantee."
+  },
+  "evidence": [
+    "integrity-observations.json",
+    "selected-scope-current-observations.json",
+    "end-snapshot-integrity.json",
+    "check-integrity.py",
+    "check-integrity-attempt1.stdout",
+    "check-integrity-attempt1.stderr"
+  ],
+  "limits": [
+    "Encoding/storage qualification is not field, runtime, deployment, full C0 or material correction acceptance.",
+    "No author/old reviewer/Core/root/production/test edits; only new additive reviewer directory.",
+    "No native/controller/API/host/image/auth/model action, delegation or commit."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "baseline": {
+    "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+    "tree": "47ce9b9c092dcd534eb55ddaebaab010e270a5af"
+  },
+  "scope": "stable source/canonical author proposal batch; NOT independentsemanticreview, whole-source closure or global C0",
+  "intake": {
+    "fragment": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/canonical-question-fragment.json",
+    "questionLinkProjection": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/question-canonical-field-case-links.json",
+    "registration": "Parent must explicitly register; no root outputs mutated/generated"
+  },
+  "newRows": 13,
+  "operatorFields": 8,
+  "inheritedAPIRepresentationMeasurementContracts": 5,
+  "original22FutureCaseIDsAndRequirementsPreserved": true,
+  "futureCasesNotRun": 25,
+  "narrowCurrentCanonicalCases": 2,
+  "additionalCurrentImageWireControls": 4,
+  "sourceScope": {
+    "sources": 173,
+    "markers": 1353,
+    "exactAPISchemaReferences": 339,
+    "parameterDefaults": 50,
+    "computedPreparationEnvironmentLiteralCallers": 6,
+    "sourceLinkDetailObligations": 808,
+    "wholeSemanticClosure": false
+  },
+  "committedBaselineInputReferences": 193,
+  "protectedOriginalFiles": 157,
+  "allProtectedAndBaselineReferenceDrift": 0,
+  "controlObservations": {
+    "secretActualReader": 6,
+    "ownershipActualAPI": 4,
+    "imageSameFieldActualSource": 4,
+    "strictProposedOwnerSchema": 11,
+    "mappingIntegrity": 11
+  },
+  "remainingBacklog": "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/remaining-backlog.json",
+  "metadataReferenceAccounting": "Current maximumBytes bounds admission snapshot only. Authentic reference-store quota/grants/shape, physical/temp capacity and actuallegacy ownership remain unresolved; no accounting waiver/invented external store. Adding fields/off-file charges requires reproof/regenerated boundary originals beforeeffects.",
+  "noProductionTestOtherAuthorEdits": true,
+  "noCommit": true,
+  "noHostAPIModelImageActions": true,
+  "globalC0Accepted": false
+}

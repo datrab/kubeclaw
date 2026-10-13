@@ -1,0 +1,60 @@
+{
+  "scope": "C0 proposed definitions/source-derived preparation; NOT current implementation, native execution, authentication or acceptance",
+  "supersedes": {
+    "DCTRL-01": [
+      "old storedLifecycle cleanup outside typed status",
+      "old six native-complete characterization"
+    ],
+    "DCTRL-02": [
+      "old timestampScope identical offset while preserving hashes"
+    ],
+    "DCTRL-03": [
+      "old producer string-only schema"
+    ]
+  },
+  "physicalMembers": {
+    "immutable": "status.deliveryPolicyEpoch (C1/C3 required; absent current CRD)",
+    "mutable": "status.deliveryLifecycle (new exact own lifecycle-definition-schema; absent current CRD)",
+    "existingReady": "status.demoReadiness with all exact commitDemoReady state fields retained; no copy-author in lifecycle",
+    "existingProduct": "status.demoProduct.decisions exact commitProduct receipts, action required; lifecycle stores correlated digest only"
+  },
+  "canonicalEpochDigest": "sha256 of exact frozenOriginalEpochUTF8 bytes captured by immutable original-author receipt/blob reference. API typed-object key order is NOT the byte identity; decode original blob and compare all typed fields structurally on readback, but hash ONLY original captured bytes. Fixtures expose this public synthetic blob explicitly. Authenticated blob locator/receipt is future-required; no fallback reserialization under API order or latest profile",
+  "principal": {
+    "pattern": "^system:serviceaccount:(?=[^:]{1,63}:)[a-z0-9](?:[-a-z0-9]*[a-z0-9])?:(?=[^:]{1,253}$)[a-z0-9](?:[-a-z0-9]*[a-z0-9])?(?:\\.[a-z0-9](?:[-a-z0-9]*[a-z0-9])?)*$",
+    "namespace": "DNS1123 label length1..63",
+    "serviceAccount": "DNS1123 subdomain total1..253; no invented each-label63 cap",
+    "distinct": true,
+    "currentGo": "configureReady/configureProduct use readyName up to253 permits namespace dots; broader current syntax not proposed API-bound domain",
+    "authorization": "grammar never establishes actual UID, TokenReview audience, CA/provider or RBAC grants"
+  },
+  "timestampCorrection": {
+    "newSyntheticA": "capture T0 once before baseline; choose all time fields then resolve public UID/RV/proof + exact raw Ready bytes/hash + Product raw payload/domain signature/hash + receipt links; freeze them before admission/effects",
+    "retainedA": "NEVER shift observedAt/readyAt/expiry/issuedAt, reserialize, re-sign or recompute receipt hashes under B/latest; replay original exact bytes/receipt; expiry can reject new request while existing exact Product receipt replay precedes freshness",
+    "clockBoundary": "current time.Now direct; exact future boundary tests require explicit source clock seam implementation or measured pre-admission T0 receipt. No OS clock edits; no native PASS now"
+  },
+  "CASProtocol": [
+    "resolve original A authenticated epoch/authority BEFORE runtime preparation or any mutation; missing/unverifiable -> POLICY_EPOCH_UNRECOVERABLE no effect",
+    "GET original lease UID/RV and lifecycle; immutable epoch exact byte digest, lifecycle revision monotonic; no latest B fallback",
+    "PATCH /status metadata.resourceVersion baseRV with complete intended lifecycle transition and coupled Ready/Product+expiresAt atomically; UID checked before and after, namespace DELETE uses original UID+RV preconditions",
+    "GET readback exact epoch/lifecycle/operation ID/digest + all current native committed fields; actual returned newRV lives observer receipt, never guess baseRV+1 or self-reference newRV inside PATCH",
+    "before DELETE persist intent + readback original attempt/start/deadline/preconditions/grant; CAS conflict or readback/prune/transport uncertainty means no new delete/admission, reconcile same original operation",
+    "after DELETE lost response persist uncertain when possible; if uncertain PATCH failed restart reads intent and treats same operation as unresolved; never renew timeout or switch namespace/profile",
+    "restart lookup exact cluster/leaseUID/epochDigest + operationID and original namespaceUID; authoritative absence or different current namespaceUID proves old UID absent only with trusted read receipt; NEVER delete replacement UID. Recreated same-name namespace is not delete permission",
+    "confirmation persists same operationID, exact original namespaceUID, authenticated observer receipt and time under UID/RV CAS/readback; finalizer removal only after confirmation and original authority verification",
+    "Ready/Product admissions reject cleanup intent/uncertainty fence; atomic CAS changes lifecycle revision and existing native status; replay validates stored exact original request/payload receipt before attempting new operation"
+  ],
+  "recoveryErrors": [
+    "POLICY_EPOCH_UNRECOVERABLE",
+    "LIFECYCLE_EPOCH_MISMATCH",
+    "LIFECYCLE_VERSION_CONFLICT",
+    "LIFECYCLE_READBACK_UNCERTAIN",
+    "CLEANUP_ORIGINAL_UID_UNRESOLVED"
+  ],
+  "legacyV1": "historical demo-readiness.v1 keeps original 604800 fixed semantics, exact hash/receipt/readyAt/expiresAt. Current CRD CEL self.schemaVersion==oldSelf.schemaVersion forbids v1->v2 mutation; proposed typed epoch association preserves v1. Any schema-version rewrite requires explicit versioned CRD compatibility migration, not this proposal or current native PASS. Missing retention v2 fails closed, never current TTL fallback.",
+  "stillOpen": [
+    "full unbounded resource-list/findings accumulation and concurrent response memory budget",
+    "current installed CRD/API/Go/binary/OCI/CA/RBAC/actual native grants/provider/capacity",
+    "parent universal originalModule/carrier/grant/cleanup contract and actual compiler delivery bridge",
+    "v1.34.11 exact whole-document primary schemas missing404; chart49 draft preserved, no API acceptance"
+  ]
+}

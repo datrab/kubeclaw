@@ -454,7 +454,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -510,7 +511,8 @@
       "definitionDisposition": "source-traced, target proposal unaccepted",
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
-        "DLV-CASE-SHARED-LEASE-PROTOCOL"
+        "DLV-CASE-SHARED-LEASE-PROTOCOL",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -566,7 +568,8 @@
       "definitionDisposition": "source-traced, target proposal unaccepted",
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
-        "DLV-CASE-SHARED-LEASE-PROTOCOL"
+        "DLV-CASE-SHARED-LEASE-PROTOCOL",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -602,7 +605,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -638,7 +642,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -674,7 +679,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -699,7 +705,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -724,7 +731,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -749,7 +757,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -774,7 +783,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -810,7 +820,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -835,7 +846,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -871,7 +883,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -896,7 +909,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -932,7 +946,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -968,7 +983,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -1004,7 +1020,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -1062,7 +1079,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -1098,7 +1116,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -1134,7 +1153,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -1170,7 +1190,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -1206,7 +1227,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -1242,7 +1264,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -1300,7 +1323,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -1336,7 +1360,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -1372,7 +1397,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-MISSING-OLD-AUTHOR",
-        "DLV-CASE-ALTERNATE-PROFILES"
+        "DLV-CASE-ALTERNATE-PROFILES",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -12287,17 +12313,18 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existingselectedcomponent/deploymentowner samephysicalprofile; primarysharedclusterpolicy CMP-buster-engine and Core remain soleauthors; no independentgeneratedbinding policyauthor",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-GATEWAY",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-GATEWAY"
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -12313,23 +12340,24 @@
         "valuePath": "gateway.port"
       },
       "target": {
-        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings",
         "reference": "gateway.port",
         "physicalSchema": "charts/kubeclaw/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existingselectedcomponent/deploymentowner samephysicalprofile; primarysharedclusterpolicy CMP-buster-engine and Core remain soleauthors; no independentgeneratedbinding policyauthor",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-GATEWAY",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-GATEWAY"
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -12345,23 +12373,24 @@
         "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
       },
       "target": {
-        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings",
         "reference": "gateway.bridgePort",
         "physicalSchema": "charts/kubeclaw/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existingselectedcomponent/deploymentowner samephysicalprofile; primarysharedclusterpolicy CMP-buster-engine and Core remain soleauthors; no independentgeneratedbinding policyauthor",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-GATEWAY",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-GATEWAY"
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -12639,17 +12668,18 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-REPLICACOUNT"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-REPLICACOUNT",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -14202,23 +14232,24 @@
         "valuePath": "service.type"
       },
       "target": {
-        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings",
         "reference": "service.type",
         "physicalSchema": "charts/kubeclaw/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -14234,23 +14265,24 @@
         "lineKind": "unique YAML key author"
       },
       "target": {
-        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings",
         "reference": "service.gatewayPort",
         "physicalSchema": "charts/kubeclaw/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -14272,17 +14304,18 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -14304,17 +14337,18 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -14330,23 +14364,24 @@
         "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
       },
       "target": {
-        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings",
         "reference": "service.bridgePort",
         "physicalSchema": "charts/kubeclaw/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -14362,23 +14397,24 @@
         "lineKind": "unique YAML key author"
       },
       "target": {
-        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings",
         "reference": "service.nodePort",
         "physicalSchema": "charts/kubeclaw/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -14394,23 +14430,24 @@
         "lineKind": "unique YAML key author"
       },
       "target": {
-        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings",
         "reference": "service.bridgeNodePort",
         "physicalSchema": "charts/kubeclaw/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -14432,17 +14469,18 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -14464,15 +14502,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (kubeclaw) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-KUBERNETES-VOLUME-IDENTITY"
       ],
@@ -14592,15 +14631,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (kubeclaw) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-KUBERNETES-VOLUME-IDENTITY"
       ],
@@ -14848,17 +14888,18 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-RUNASROOT"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-RUNASROOT",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -15639,17 +15680,18 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SHUTDOWN"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SHUTDOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -15671,17 +15713,18 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SHUTDOWN"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SHUTDOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -15703,17 +15746,18 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SHUTDOWN"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SHUTDOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -15735,17 +15779,18 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICEACCOUNT"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICEACCOUNT",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -15767,17 +15812,18 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICEACCOUNT"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-SERVICEACCOUNT",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -17077,23 +17123,24 @@
         "valuePath": "nodeSelector"
       },
       "target": {
-        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings",
         "reference": "nodeSelector",
         "physicalSchema": "charts/kubeclaw/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existingselectedcomponent/deploymentowner samephysicalprofile; primarysharedclusterpolicy CMP-buster-engine and Core remain soleauthors; no independentgeneratedbinding policyauthor",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-NODESELECTOR",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-NODESELECTOR"
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -17109,23 +17156,24 @@
         "valuePath": "tolerations"
       },
       "target": {
-        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings",
         "reference": "tolerations",
         "physicalSchema": "charts/kubeclaw/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existingselectedcomponent/deploymentowner samephysicalprofile; primarysharedclusterpolicy CMP-buster-engine and Core remain soleauthors; no independentgeneratedbinding policyauthor",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-TOLERATIONS",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-TOLERATIONS"
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -17141,23 +17189,24 @@
         "valuePath": "podAnnotations"
       },
       "target": {
-        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings",
         "reference": "podAnnotations",
         "physicalSchema": "charts/kubeclaw/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existingselectedcomponent/deploymentowner samephysicalprofile; primarysharedclusterpolicy CMP-buster-engine and Core remain soleauthors; no independentgeneratedbinding policyauthor",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-PODANNOTATIONS",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-PODANNOTATIONS"
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -17179,17 +17228,18 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existingselectedcomponent/deploymentowner samephysicalprofile; primarysharedclusterpolicy CMP-buster-engine and Core remain soleauthors; no independentgeneratedbinding policyauthor",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAENV",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAENV"
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -17211,17 +17261,18 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existingselectedcomponent/deploymentowner samephysicalprofile; primarysharedclusterpolicy CMP-buster-engine and Core remain soleauthors; no independentgeneratedbinding policyauthor",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRACONTAINERS",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRACONTAINERS"
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -17403,17 +17454,18 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existingselectedcomponent/deploymentowner samephysicalprofile; primarysharedclusterpolicy CMP-buster-engine and Core remain soleauthors; no independentgeneratedbinding policyauthor",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAVOLUMES",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAVOLUMES"
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -17435,17 +17487,18 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existingselectedcomponent/deploymentowner samephysicalprofile; primarysharedclusterpolicy CMP-buster-engine and Core remain soleauthors; no independentgeneratedbinding policyauthor",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
+        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAVOLUMEMOUNTS",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-LAST-CHART-KUBECLAW-EXTRAVOLUMEMOUNTS"
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -17467,15 +17520,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (kubeclaw) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-KUBERNETES-VOLUME-IDENTITY"
       ],
@@ -17499,15 +17553,16 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (kubeclaw) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-KUBERNETES-VOLUME-IDENTITY"
       ],
@@ -17595,17 +17650,33 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema.",
+        "primaryAuthorAlias": {
+          "settingId": "DLV-NATIVE-HOST-NODENAME",
+          "source": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "nodeName",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": 17,
+            "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+          },
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "reason": "actual loadNativeNodePolicy/nativePoolPolicy sourceproducer; target readonly original hostauthor captured projection"
+        }
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNATIVE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNATIVE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -17627,17 +17698,32 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema.",
+        "primaryAuthorAlias": {
+          "settingId": "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+          "source": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.buster.namespace",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "reason": "actual loadNativeNodePolicy/nativePoolPolicy sourceproducer; target readonly original hostauthor captured projection"
+        }
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNATIVE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNATIVE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -17659,17 +17745,43 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema.",
+        "primaryAuthorAlias": {
+          "derivedFromAuthorIds": [
+            "DLV-NATIVE-HOST-SCHEMAVERSION",
+            "DLV-NATIVE-HOST-NODENAME",
+            "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
+            "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
+            "DLV-NATIVE-HOST-SYSTEMRESERVE-TASKS",
+            "DLV-NATIVE-HOST-KUBERNETESRESERVE-CPUMILLICORES",
+            "DLV-NATIVE-HOST-KUBERNETESRESERVE-MEMORYBYTES",
+            "DLV-NATIVE-HOST-KUBERNETESRESERVE-TASKS",
+            "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+            "DLV-NATIVE-HOST-POOLS-BUSTER-CPUMILLICORES",
+            "DLV-NATIVE-HOST-POOLS-BUSTER-MEMORYBYTES",
+            "DLV-NATIVE-HOST-POOLS-BUSTER-TASKS",
+            "DLV-NATIVE-HOST-POOLS-BUSTER-MAXIMUMACTIVESCOPES",
+            "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+            "DLV-NATIVE-HOST-POOLS-PRISM-CPUMILLICORES",
+            "DLV-NATIVE-HOST-POOLS-PRISM-MEMORYBYTES",
+            "DLV-NATIVE-HOST-POOLS-PRISM-TASKS",
+            "DLV-NATIVE-HOST-POOLS-PRISM-MAXIMUMACTIVESCOPES",
+            "DLV-NATIVE-HOST-RUNTIME-CONTAINERDVERSION"
+          ],
+          "producer": "scripts/native-worker-node-policy.mjs nativePoolPolicy JSON.stringify(validateNativeNodePolicy) -> sha256hex",
+          "reason": "whole legacycurrent hostpolicy hash includes declaredruntime.containerdVersion; target DLS001 soleversions alias +hostauthor typed projection compiler migration required, not arbitraryliteral digest"
+        }
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNATIVE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-KUBECLAW-BUSTERNATIVE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -18587,15 +18699,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (prism) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -18747,17 +18860,18 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-STUDIO"
+        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-STUDIO",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -18907,15 +19021,31 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "native-host selected policy \u2192 renderNativeWorkerNode prism-native-values.yaml immutable binding; no second Chart operator author",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema.",
+        "primaryAuthorAlias": {
+          "settingId": "DLV-NATIVE-HOST-NODENAME",
+          "source": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "nodeName",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": 17,
+            "lineKind": "first field-name occurrence; productive read evidence remains separately identified"
+          },
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "reason": "actual loadNativeNodePolicy/nativePoolPolicy sourceproducer; target readonly original hostauthor captured projection"
+        }
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -18939,15 +19069,30 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "native-host selected policy \u2192 renderNativeWorkerNode prism-native-values.yaml immutable binding; no second Chart operator author",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema.",
+        "primaryAuthorAlias": {
+          "settingId": "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+          "source": {
+            "path": "scripts/native-worker-node-policy.mjs",
+            "field": "pools.prism.namespace",
+            "sha256": "7986bb2f84676e74098092187514663594bd604096228064dafaecd7af278dc1",
+            "line": null
+          },
+          "caseIds": [
+            "DLV-CASE-NATIVE-HOST-VALIDATE-RENDER",
+            "DLV-CASE-NATIVE-HOST-ACTIVATION"
+          ],
+          "reason": "actual loadNativeNodePolicy/nativePoolPolicy sourceproducer; target readonly original hostauthor captured projection"
+        }
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -18971,15 +19116,41 @@
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "native-host selected policy \u2192 renderNativeWorkerNode prism-native-values.yaml immutable binding; no second Chart operator author",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema.",
+        "primaryAuthorAlias": {
+          "derivedFromAuthorIds": [
+            "DLV-NATIVE-HOST-SCHEMAVERSION",
+            "DLV-NATIVE-HOST-NODENAME",
+            "DLV-NATIVE-HOST-SYSTEMRESERVE-CPUMILLICORES",
+            "DLV-NATIVE-HOST-SYSTEMRESERVE-MEMORYBYTES",
+            "DLV-NATIVE-HOST-SYSTEMRESERVE-TASKS",
+            "DLV-NATIVE-HOST-KUBERNETESRESERVE-CPUMILLICORES",
+            "DLV-NATIVE-HOST-KUBERNETESRESERVE-MEMORYBYTES",
+            "DLV-NATIVE-HOST-KUBERNETESRESERVE-TASKS",
+            "DLV-NATIVE-HOST-POOLS-BUSTER-NAMESPACE",
+            "DLV-NATIVE-HOST-POOLS-BUSTER-CPUMILLICORES",
+            "DLV-NATIVE-HOST-POOLS-BUSTER-MEMORYBYTES",
+            "DLV-NATIVE-HOST-POOLS-BUSTER-TASKS",
+            "DLV-NATIVE-HOST-POOLS-BUSTER-MAXIMUMACTIVESCOPES",
+            "DLV-NATIVE-HOST-POOLS-PRISM-NAMESPACE",
+            "DLV-NATIVE-HOST-POOLS-PRISM-CPUMILLICORES",
+            "DLV-NATIVE-HOST-POOLS-PRISM-MEMORYBYTES",
+            "DLV-NATIVE-HOST-POOLS-PRISM-TASKS",
+            "DLV-NATIVE-HOST-POOLS-PRISM-MAXIMUMACTIVESCOPES",
+            "DLV-NATIVE-HOST-RUNTIME-CONTAINERDVERSION"
+          ],
+          "producer": "scripts/native-worker-node-policy.mjs nativePoolPolicy JSON.stringify(validateNativeNodePolicy) -> sha256hex",
+          "reason": "whole legacycurrent hostpolicy hash includes declaredruntime.containerdVersion; target DLS001 soleversions alias +hostauthor typed projection compiler migration required, not arbitraryliteral digest"
+        }
       },
       "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -19003,15 +19174,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (prism) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -19035,15 +19207,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (prism) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -19195,15 +19368,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (prism) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -19227,15 +19401,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (prism) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -19391,15 +19566,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (prism) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -19423,15 +19599,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (prism) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -19939,15 +20116,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (prism) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -19971,15 +20149,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (prism) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -20003,15 +20182,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (prism) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -20163,15 +20343,16 @@
         "classification": "deployment-policy",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "pipeline.config.json referenced deployment owner (prism) per instance/profile; Charts immutable projections only",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
       "class": "operator-setting",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
         "DLV-CASE-GENERATION-MOUNT",
         "DLV-CASE-PRISM-CHART-FIELD-DEFINITION"
       ],
@@ -20189,23 +20370,24 @@
         "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
       },
       "target": {
-        "author": "charts/prism/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/prism/values.yaml#/profiles/<selected>/settings",
         "reference": "tailscale.hostname",
         "physicalSchema": "charts/prism/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-TAILSCALE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-TAILSCALE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -20221,23 +20403,24 @@
         "lineKind": "YAML field path retained; repeated/inline key exact location expansion pending"
       },
       "target": {
-        "author": "charts/prism/values.yaml#/profiles/<selected>/readonlyBindings",
+        "author": "charts/prism/values.yaml#/profiles/<selected>/settings",
         "reference": "tailscale.operatorNamespace",
         "physicalSchema": "charts/prism/deployment-profiles.schema.json",
         "classification": "immutable-derived-alias",
         "physicalSeamStatus": "proposed C0 definition, not implemented or approved",
         "legacyTargetDescription": "existing selected component/deployment profile; C1 existing aliases only, C3 physical same-owner expansion for actualnewpolicy; no secondruntimeindex",
-        "projection": "scripts/updates/materialize-release.mjs proposed extension flattens validated selected complete settings plus resolved typed readonlyBindings into generated releases/values/<role>.yaml; CI/build/deploy callers must use same selected generation and source author digest"
+        "projection": "same existing deployment author for real transport/topology/lifecycle/applicationbackup fields; typed readonly real role/component/version/provider/host projections for carriers. Strict selectedgeneration/profile IR rejects legacy/equalwriters BEFORE Helm then before native actions; no second componentauthor/index. Current materializer does not implement these newprofiles/schema."
       },
-      "class": "generated-binding",
-      "proposalDomainPresent": false,
-      "definitionDisposition": "source-traced, exact target domain/fieldcase open",
-      "remainingDefinition": "exact target domain/full correlated profile/first-native-boundary and fieldcase/originalstate/oracle definition remains",
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CHART-ALTERNATE-PROFILE",
         "DLV-CASE-CHART-MISSING-UNKNOWN",
-        "DLV-CASE-GENERATION-MOUNT",
-        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-TAILSCALE"
+        "DLV-CASE-CHART-RESIDUAL-CHART-PRISM-TAILSCALE",
+        "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
+        "DLV-CASE-GENERATION-MOUNT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22434,7 +22617,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22459,7 +22643,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22484,7 +22669,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22509,7 +22695,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22534,7 +22721,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22559,7 +22747,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22584,7 +22773,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22609,7 +22799,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22634,7 +22825,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22659,7 +22851,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22684,7 +22877,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22709,7 +22903,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22734,7 +22929,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22759,7 +22955,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22784,7 +22981,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -22809,7 +23007,8 @@
       "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
       "caseIds": [
         "DLV-CASE-CONTROLLER-POLICY-VALIDATION",
-        "DLV-CASE-CONTROLLER-LEASE-RECOVERY"
+        "DLV-CASE-CONTROLLER-LEASE-RECOVERY",
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
       ],
       "acceptance": "NOT ACCEPTED"
     },
@@ -23602,6 +23801,174 @@
         "DLV-CASE-OPS-RESIDUAL-CLIENTS"
       ],
       "acceptance": "NOT ACCEPTED"
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-API-RESPONSE-MAXIMUM-BYTES",
+      "owner": "namespace-controller",
+      "source": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+        "field": "apiResponseMaximumBytes",
+        "line": 1529,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "target": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "apiResponseMaximumBytes",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ],
+      "acceptance": "NOT ACCEPTED"
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-API-REQUEST-MAXIMUM-BYTES",
+      "owner": "namespace-controller",
+      "source": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+        "field": "apiRequestMaximumBytes",
+        "line": 1546,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "target": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "apiRequestMaximumBytes",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ],
+      "acceptance": "NOT ACCEPTED"
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-API-DIAGNOSTIC-MAXIMUM-BYTES",
+      "owner": "namespace-controller",
+      "source": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+        "field": "apiDiagnosticMaximumBytes",
+        "line": 1560,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "target": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "apiDiagnosticMaximumBytes",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ],
+      "acceptance": "NOT ACCEPTED"
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-AUTHORIZATION-MAXIMUM-BYTES",
+      "owner": "namespace-controller",
+      "source": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "field": "authorizationMaximumBytes",
+        "line": 102,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "target": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "authorizationMaximumBytes",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ],
+      "acceptance": "NOT ACCEPTED"
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-NAMESPACE-DELETION-TIMEOUT-SECONDS",
+      "owner": "namespace-controller",
+      "source": {
+        "path": "cmd/buster-namespace-controller/main.go",
+        "sha256": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+        "field": "namespaceDeletionTimeoutSeconds",
+        "line": 1473,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "target": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "namespaceDeletionTimeoutSeconds",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ],
+      "acceptance": "NOT ACCEPTED"
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-READY-OBSERVATION-MAXIMUM-AGE-SECONDS",
+      "owner": "namespace-controller",
+      "source": {
+        "path": "cmd/buster-namespace-controller/demo-readiness.go",
+        "sha256": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+        "field": "readyObservationMaximumAgeSeconds",
+        "line": 238,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "target": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "readyObservationMaximumAgeSeconds",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ],
+      "acceptance": "NOT ACCEPTED"
+    },
+    {
+      "settingId": "DLV-NAMESPACE-CONTROLLER-PRODUCT-DECISION-MAXIMUM-VALIDITY-SECONDS",
+      "owner": "namespace-controller",
+      "source": {
+        "path": "cmd/buster-namespace-controller/demo-product.go",
+        "sha256": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+        "field": "productDecisionMaximumValiditySeconds",
+        "line": 188,
+        "lineKind": "exact productive missing-bound operation or literal; same controller policy C3 proposal"
+      },
+      "target": {
+        "author": "charts/kubeclaw/values.yaml#/profiles/<selected>/settings/busterNamespaceBroker/controller/policy",
+        "reference": "productDecisionMaximumValiditySeconds",
+        "projection": "same proposed existing deployment-owned controller policy managed file; current field/key/--config loader absent; no competing component writer"
+      },
+      "class": "operator-setting",
+      "proposalDomainPresent": true,
+      "definitionDisposition": "source-traced, target proposal unaccepted",
+      "remainingDefinition": "proposed domain/alias/profile/consumer scope/case specification needs material independent review; actual future effect fixture inputs distinct, not a required C0 runtime PASS",
+      "caseIds": [
+        "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT"
+      ],
+      "acceptance": "NOT ACCEPTED"
     }
   ],
   "missingTargetDomainByOwner": {
@@ -23611,8 +23978,8 @@
     "role-package-prism": 7,
     "role-package-buster": 7,
     "delivery": 6,
-    "chart-kubeclaw": 136,
-    "chart-prism": 51,
+    "chart-kubeclaw": 104,
+    "chart-prism": 34,
     "chart-ops-pod": 14,
     "chart-gitops": 8,
     "ops-deployer": 15,
@@ -23620,7 +23987,7 @@
   },
   "cases": {
     "allImplementationResults": {
-      "not-run": 202
+      "not-run": 204
     },
     "meaning": "future exact invocation/source/spec frozen; not actual runtime acceptance"
   },
@@ -23685,11 +24052,27 @@
     "meaning": "snapshotv4 wholegraph registry/pkg/grants/config/execution/input currentpins, FileJournal single append survives throw; no approved universal Mfirstcapture/taskoperator partition/owner/schema/quota/grant/cleanup aliases"
   },
   "additionalConcreteQuestions": [
-    "controllerfull API success/errorresponse body lacks separate responsebytepolicy; findingsarraycap is not whole encodedkubectl/metadata/stdout bound; actualCMPruntimeSecurity.maximumOutputBytes relationship and typedfailclosed observer",
-    "storedcontrollerLease policy/expiry/finalizer/access/namespace/grant/provider/publicissuer retention epoch migration, fixedhistoricalv1 604800seconds vs newdefault; cannotreselectLatest upon B",
+    "currentGo API success/error/outnil remains unbounded; exact proposed response/request/redacteddiagnostic policies, CMPcombinedstdout+stderr relation/overflow and mutationuncertainty are defined at controller-response-epoch-contracts-6606af9-20261013.json. Full list/findings accumulation/concurrency memory and authentic native fulloutput/capacity fixture prerequisites remain, no universal wholemap overhead guessed",
     "original module logical firstcapture/persistedonepreaction carrier before activation/import/firstinput unresolvedparent; SDKstage.started perstage/retry notlogicalM",
     "parent AUTH-PRISM-INPUT-SPOOL-QUOTA-DEFINITION remainsglobalgap; Pod/PVC/host/interfacebytecaps not storagegrant",
-    "exact rootpipeline selector syntax/physicalChartschema/materializer/profile/sourceStage/compiler/CI/buildcontext/package aliases/co-valid nativeprofile cases remain proposal/dependency questions, not establishedbyfilename"
+    "exact rootpipeline selector syntax/physicalChartschema/materializer/profile/sourceStage/compiler/CI/buildcontext/package aliases/co-valid nativeprofile cases remain proposal/dependency questions, not establishedbyfilename",
+    "Old six controller epoch wrappers are preserved public summaries/templates, not complete native fixtures. New DCTRL01/02/03 correction defines strict status.deliveryLifecycle alongside immutable epoch/current full native Ready/Product fields, ordered12NOTRUN native preparation recipes, no retained-history timestamp rebase, strict principal grammar. Actual native/authentic receipts/grants/CRD/CAS implementation and parent carrier remain OPEN; correction pending independent material recheck.",
+    "Old six controller epoch wrappers are preserved public summaries/templates, not complete native fixtures. New DCTRL01/02/03 correction defines strict status.deliveryLifecycle alongside immutable epoch/current full native Ready/Product fields, ordered12NOTRUN native preparation recipes, no retained-history timestamp rebase, strict principal grammar. Actual native/authentic receipts/grants/CRD/CAS implementation and parent carrier remain OPEN; correction pending independent material recheck.",
+    "Old six controller epoch wrappers are preserved public summaries/templates, not complete native fixtures. New DCTRL01/02/03 correction defines strict status.deliveryLifecycle alongside immutable epoch/current full native Ready/Product fields, ordered12NOTRUN native preparation recipes, no retained-history timestamp rebase, strict principal grammar. Actual native/authentic receipts/grants/CRD/CAS implementation and parent carrier remain OPEN; correction pending independent material recheck."
   ],
-  "DLS004": "ongoing, not bounded counts as closure; freeze is milestone only"
+  "DLS004": "ongoing, not bounded counts as closure; freeze is milestone only",
+  "controllerMaterialCorrection": {
+    "path": "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/correction-contracts.json",
+    "sha256": "0f5e665fc9147dff1c6c98583905459286324600f83325967fab44bc976c363f",
+    "nativeCases": {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/native-case-contracts.json",
+      "sha256": "a41ea5adcbe3d3857b9b05c657836c1eca55eb8a1b2232773566353e611e8f2c"
+    },
+    "review": "PENDING independent material recheck; pure controls not acceptance"
+  },
+  "pausedChart49Batch": {
+    "path": "docs/review/evidence/config-acceptance/delivery/chart-topology-storage-contracts-6606af9-20261013.json",
+    "sha256": "46848ca70af9e0a355314da9a3438447d0a7ad8944fb1ef0fc8019aa97d01d24",
+    "state": "unreviewed current definitions; correlated native host policyDigest/security projection preflight-positive inputs NOT yet resolved; only novaA current render+v1.35.6 strict schema definition observations; four v1.34.11 schema404attempts preserved, no wholedefinition skipPASS"
+  }
 }

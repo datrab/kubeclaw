@@ -1,0 +1,325 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "leaseIdentity",
+    "policyConfig",
+    "initialTTL",
+    "authoritySnapshot",
+    "runtimeAuthority"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "dlv-controller-policy-epoch.v1"
+    },
+    "leaseIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "apiGroup",
+        "apiVersion",
+        "plural",
+        "controllerNamespace",
+        "controllerNamespaceUID",
+        "name",
+        "uid",
+        "generation",
+        "originalCreationTimestamp",
+        "initialImmutableSpecDigest",
+        "initialFullSpecDigest"
+      ],
+      "properties": {
+        "apiGroup": {
+          "type": "string",
+          "minLength": 1
+        },
+        "apiVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plural": {
+          "type": "string",
+          "minLength": 1
+        },
+        "controllerNamespace": {
+          "type": "string",
+          "minLength": 1
+        },
+        "controllerNamespaceUID": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uid": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "originalCreationTimestamp": {
+          "type": "string",
+          "minLength": 1
+        },
+        "initialImmutableSpecDigest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "initialFullSpecDigest": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "policyConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceRevision",
+        "authorPointer",
+        "materializedPolicyRef",
+        "materializedPolicySha256",
+        "originalAuthorReceiptRef",
+        "originalBinaryReceiptRef",
+        "originalOCIReceiptRef"
+      ],
+      "properties": {
+        "sourceRevision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authorPointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "materializedPolicyRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "materializedPolicySha256": {
+          "type": "string",
+          "minLength": 1
+        },
+        "originalAuthorReceiptRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "originalBinaryReceiptRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "originalOCIReceiptRef": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "initialTTL": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "requestedSeconds",
+        "originalDefaultSeconds",
+        "originalMaximumSeconds",
+        "effectiveSeconds",
+        "initialExpiresAt"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requestedSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "originalDefaultSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "originalMaximumSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "effectiveSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "initialExpiresAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "authoritySnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "namespaceName",
+        "namespaceUID",
+        "allowedPrefix",
+        "access",
+        "sourceSecretSelectors",
+        "finalizer",
+        "secretRoleName",
+        "deployerRoleName",
+        "testerRoleName"
+      ],
+      "properties": {
+        "namespaceName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "namespaceUID": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allowedPrefix": {
+          "type": "string",
+          "minLength": 1
+        },
+        "access": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "subject",
+              "modes"
+            ],
+            "properties": {
+              "subject": {
+                "type": "string",
+                "minLength": 1
+              },
+              "modes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "sourceSecretSelectors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "finalizer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "secretRoleName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "deployerRoleName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "testerRoleName": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "runtimeAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "APIOrigin",
+        "clusterIdentityRef",
+        "controllerSAUID",
+        "apiGrantReceiptRef",
+        "CAProviderRef",
+        "tokenProviderRef",
+        "readyProducer",
+        "readyAudience",
+        "readyTLSProviderRef",
+        "productProducer",
+        "productAudience",
+        "productIssuer",
+        "productPublicTrustRef",
+        "productActors"
+      ],
+      "properties": {
+        "APIOrigin": {
+          "type": "string",
+          "minLength": 1
+        },
+        "clusterIdentityRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "controllerSAUID": {
+          "type": "string",
+          "minLength": 1
+        },
+        "apiGrantReceiptRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "CAProviderRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tokenProviderRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "readyProducer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "readyAudience": {
+          "type": "string",
+          "minLength": 1
+        },
+        "readyTLSProviderRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "productProducer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "productAudience": {
+          "type": "string",
+          "minLength": 1
+        },
+        "productIssuer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "productPublicTrustRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "productActors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "title": "Own exact epoch serialization proposal; NOT authenticated receipt or installed CRD schema"
+}

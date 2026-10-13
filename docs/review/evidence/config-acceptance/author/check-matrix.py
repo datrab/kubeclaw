@@ -9,6 +9,8 @@ import pathlib
 import sys
 import argparse
 from observation_references import ObservationReferences
+from historical_mapping import load_reviewed as load_historical_mappings
+from historical_projection import verify as verify_historical_projection
 
 root = pathlib.Path.cwd()
 remediation = root/'docs/review/remediation'
@@ -50,11 +52,54 @@ except (ValueError,KeyError,TypeError,OSError,json.JSONDecodeError) as error:
     reject(f'observation references: {error}')
 for entry in inventory.get('inputFragments',[]):
     identity(entry['path'],entry['sha256'],'fragment')
+canonical_question_fragment='docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/canonical-question-fragment.json'
+if (root/canonical_question_fragment).is_file():
+    expected_fragment=json.loads((root/canonical_question_fragment).read_text())
+    if not any(entry['path'] == canonical_question_fragment for entry in inventory.get('inputFragments',[])):
+        reject('Core canonical question fragment registration missing')
+    if not {row['id'] for row in expected_fragment['rows']}.issubset(row_ids) or not {case['id'] for case in expected_fragment['cases']}.issubset(case_ids):
+        reject('Core canonical question field/case projection omitted')
+    projected_rows={row['id']:row for row in inventory['rows']}
+    projected_cases={case['id']:case for case in matrix['cases']}
+    for original in expected_fragment['rows']:
+        expected={**original,'fragment':'components',
+            'class':original.get('class',original.get('classification')),
+            'requirementIds':original.get('requirementIds',original.get('requirements',[])),
+            'caseIds':original.get('caseIds',original.get('cases',[])),
+            'verifiedSourceEvidence':original.get('verifiedSourceEvidence',original.get('evidence',[])),
+            'semanticStatus':original.get('semanticStatus',original.get('status','unresolved')),
+            'reviewerConfirmation':None}
+        if projected_rows.get(original['id']) != expected:
+            reject(f"Core canonical row {original['id']}: normalized source body/requirement conservation drift")
+    for original in expected_fragment['cases']:
+        projected=projected_cases.get(original['id'],{})
+        for key,value in original.items():
+            if key not in projected or projected[key] != value:
+                reject(f"Core canonical case {original['id']}: source property/requirement conservation drift: {key}")
+        for target,source in {'inputProfile':'inputConfigProfile','command':'actualTestCommand',
+                              'result':'actualResult','sourceIdentity':'identities',
+                              'toolDependencyImageConfigIdentities':'identities'}.items():
+            if target not in original and source in original and projected.get(target) != original[source]:
+                reject(f"Core canonical case {original['id']}: normalized alias conservation drift: {target}")
+        expected_phase=original.get('phase','C0' if '-C0-' in original['id'] else 'implementation-proposal')
+        if projected.get('phase') != expected_phase or projected.get('reviewerConfirmation') is not None:
+            reject(f"Core canonical case {original['id']}: phase/review promotion drift")
+    if not any(package['id'] == 'CORE-ICQ-DEFINITION-CORRECTIONS-20261013' for package in inventory.get('supplementalDefinitionPackages',[])):
+        reject('Core canonical question supplemental package omitted')
 for package in inventory.get('supplementalDefinitionPackages',[]):
     identity(package['receipt'],package['receiptSha256'],'supplemental receipt')
     for path, expected in package['inputIdentities'].items():
         identity(path,expected,'supplemental definition input')
     questions=ids(package['questions'],'supplemental question')
+    link_source=package.get('canonicalFieldCaseLinkSource')
+    if package['id'] == 'CORE-ICQ-DEFINITION-CORRECTIONS-20261013' and (root/canonical_question_fragment).is_file():
+        if not link_source or link_source.get('path') != 'docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/question-canonical-field-case-links.json':
+            reject('Core canonical question required link source omitted/wrong')
+    if link_source:
+        identity(link_source['path'],link_source['sha256'],'Core canonical question links')
+        original_links=json.loads((root/link_source['path']).read_text())['canonicalFieldCaseLinks']
+        if package.get('canonicalFieldCaseLinks') != original_links or set(original_links) != questions:
+            reject('Core canonical question link/alias conservation drift')
     ids(package['caseSpecifications'],'supplemental case')
     baseline=package.get('caseRequirementBaseline')
     if not baseline:
@@ -82,6 +127,8 @@ for package in inventory.get('supplementalDefinitionPackages',[]):
         # neither a package count nor a bounded correction review supplies them.
         for question in package['questions']:
             links=package.get('canonicalFieldCaseLinks',{}).get(question['id'],{})
+            if links.get('unresolvedAliases'):
+                reject(f"supplemental {question['id']}: unresolved cross-owner aliases ({len(links['unresolvedAliases'])})")
             if not links.get('settingIds') or not links.get('caseIds'):
                 reject(f"supplemental {question['id']}: canonical field/case links incomplete")
             for setting in links.get('settingIds',[]):
@@ -91,6 +138,27 @@ for package in inventory.get('supplementalDefinitionPackages',[]):
                 if case_id not in case_ids:
                     reject(f"supplemental {question['id']}: dangling canonical case {case_id}")
 native_packages=matrix.get('nativeCasePackages',[])
+definition_packages=matrix.get('definitionObservationPackages',[])
+definition_ids=ids(definition_packages,'pure definition observation package')
+delivery_definition_source='docs/review/evidence/config-acceptance/delivery/c0-controller-material-correction-cases-6606-20261013.json'
+if (root/delivery_definition_source).is_file() and 'DELIVERY-CONTROLLER-MATERIAL-PURE-OBSERVATIONS-6606' not in definition_ids:
+    reject('required Delivery pure definition observation package missing')
+for package in definition_packages:
+    if package['id'] == 'DELIVERY-CONTROLLER-MATERIAL-PURE-OBSERVATIONS-6606' and package.get('sourcePath') != delivery_definition_source:
+        reject('Delivery pure definition observation source wrong')
+    identity(package['sourcePath'],package['sourceSha256'],'pure definition observation source')
+    original=json.loads((root/package['sourcePath']).read_text())
+    if original != package['observations']:
+        reject('pure definition observation body/scope/requirement conservation drift')
+    ids(package['observations'],'pure definition observation')
+    for observation in package['observations']:
+        if not set(observation.get('settingIds',[])).issubset(row_ids) or not set(observation.get('requirementIds',[])).issubset(requirement_ids):
+            reject('pure definition observation dangling setting/requirement')
+        for key in ['sourceDigests','specDigests','testDigests']:
+            for path,expected in observation.get(key,{}).items():
+                identity(path,expected,'pure definition '+key)
+    if not structural and not package.get('reviewerConfirmation'):
+        reject('pure definition observation package: independent bounded material review pending; no native/whole C0 acceptance')
 native_advertisements=inventory.get('nativeCasePackageReferences',[])
 if ids(native_packages,'native package') != ids(native_advertisements,'native package advertisement'):
     reject('native package presence differs between inventory and matrix')
@@ -125,6 +193,15 @@ for package in native_packages:
         reject(f"native {package['id']}: missing/duplicate native mapping")
     originals={case['id']:case for case in original}
     canonicals={case['id']:case for case in matrix['cases']}
+    if package['id'] == 'RUNTIME-NATIVE-CASE-SPECIFICATIONS':
+        try:
+            histories=load_historical_mappings(root, original,
+                json.loads((root/'docs/review/evidence/config-acceptance/runtime/inventory-fragment.json').read_text())['rows'],
+                json.loads((root/'docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json').read_text())['cases'],
+                set(canonicals))
+            verify_historical_projection(package,matrix['cases'],histories,advertised or {})
+        except (ValueError,KeyError,TypeError,OSError,json.JSONDecodeError) as error:
+            reject(f'native historical projection: {error}')
     for link in links:
         cid=link['nativeCaseId']
         required=originals[cid].get('requirements',[])
@@ -137,7 +214,7 @@ for package in native_packages:
             elif len([ref for ref in canonicals[canonical].get('nativeSpecificationReferences',[]) if ref.get('packageId') == package['id'] and ref.get('nativeCaseId') == cid and ref.get('sourcePath') == package['sourcePath'] and ref.get('sourceSha256') == package['sourceSha256']]) != 1:
                 reject(f'native {cid}: missing/duplicate/exact canonical specification reference')
         if not structural:
-            if canonical is None:
+            if canonical is None and 'historicalMapping' not in link:
                 reject(f'native {cid}: canonical field/case mapping unresolved')
             if not link.get('mappingReview'):
                 reject(f'native {cid}: no independent mapping/specification review')

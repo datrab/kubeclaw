@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/delivery/define-chart-topology-storage-6606af9-20261013.py", line 97, in <module>
+    r['targetDomain']=d;r['migrationAction']='C3 sameexisting owner required exact managed profile/schema/materializer/readonly typedreferences, precededby C1 existingoriginalstate/legacywriter/provenance migration; originalH/R/M/grant/cleanupparentcontracts remainOPEN';r['activationScope']['target']=i['activation'];r['status']='source-traced';r['caseIds']=sorted(set(r['caseIds']+[caseId]))
+                                                                                                                                                                                                                                                                               ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+TypeError: 'str' object does not support item assignment

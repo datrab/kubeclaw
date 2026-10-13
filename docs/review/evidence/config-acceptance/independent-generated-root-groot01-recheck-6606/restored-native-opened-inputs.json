@@ -1,0 +1,70 @@
+{
+  "scope": "exact actual checker first-open input hashes; no dependency stub",
+  "inputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/__pycache__/historical_mapping.cpython-311.pyc",
+      "sha256": "e2fab1117430578c3baee61e1834b535e9912b914876396899723a1c90008e9c",
+      "bytes": 10942
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/__pycache__/historical_projection.cpython-311.pyc",
+      "sha256": "760217d8146a0f4ab1b856f9b2e5a245f8e9ba3c7647e26b1d24fe94a30fcf7a",
+      "bytes": 7655
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-native-case-integration.py",
+      "sha256": "b7435c69cee3e10e9393b3db05d0a0d7a671ce34cb3e8e5883b2b9ef84ab41ca",
+      "bytes": 4013
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/independent-runtime-historical-links-6606/stable-independent-review-receipt.json",
+      "sha256": "b6f59adce3b44c68edc2268c89fe24b47411c1771cc4680daeeba9c71e7e2787",
+      "bytes": 4170
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/batches/6606af9-historical-case-links-12/native-historical-successor-map.json",
+      "sha256": "1c0cf5830f0c91a0c3a5000831fb7be98ce278255a44050673491923e2ca9ad3",
+      "bytes": 1533647
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/case-proposals.json",
+      "sha256": "51feea1a4ca73511668255dd0e328581fe18be04c6494a739496e7ca124fc28f",
+      "bytes": 63755114
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/inventory-fragment.json",
+      "sha256": "9619343edf808fffaadbff775932b0e4f808daba31ad194324b154df374a46c3",
+      "bytes": 21785300
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json",
+      "sha256": "a2b7134c8ff161fa89fdb008fb52907f1c818cdf246d2f4a7b6f760d52365c56",
+      "bytes": 5591163
+    },
+    {
+      "path": "docs/review/remediation/config-acceptance-matrix.json",
+      "sha256": "623462221f87371c23e0a0b8857a1c8563cd7dc6e1e76f457221b0ba63894a21",
+      "bytes": 99612476
+    },
+    {
+      "path": "docs/review/remediation/config-semantic-inventory.json",
+      "sha256": "b1af942080285f5c7d97c50f2b30bc14a1a0850ffb77908cb73fb3f8c9f6b36c",
+      "bytes": 37736297
+    },
+    {
+      "path": "docs/review/remediation/independent-runtime-historical-links-6606.md",
+      "sha256": "5a99aff9cac9a448d8b08429831165cc16aca569b3d17177bd43db131d9bd749",
+      "bytes": 9091
+    },
+    {
+      "path": "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+      "sha256": "7a623329ad85f73a56c2a8b19ce2b4e52b10b0a32b58d67b6e763ecb7f87d785",
+      "bytes": 15784
+    },
+    {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b",
+      "bytes": 19954
+    }
+  ]
+}

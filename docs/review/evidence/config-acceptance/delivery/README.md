@@ -400,3 +400,12 @@ and [DELIVERY-DLS-CORRECTIONS-20261013.md](DELIVERY-DLS-CORRECTIONS-20261013.md)
 All 825 rows remain unaccepted; exact missing-domain and proposal-review
 obligations are in the current per-field backlog. The prior bce3f075 receipt is
 historical, not the identity of this expanded frozen milestone.
+
+## Checkpoint 6606 controller response / original-epoch continuation
+
+See [DELIVERY-CONTROLLER-RESPONSE-EPOCH-6606AF9-20261013.md](DELIVERY-CONTROLLER-RESPONSE-EPOCH-6606AF9-20261013.md)
+and `delivery-stable-controller-milestone-6606af9-20261013.json`. The earlier
+825-row receipt is historical. Current 832 rows remain unaccepted, with exact
+553 proposal / 279 missing-domain obligations and 203 future cases not-run.
+Corrected field domains, seven new source-traced policies, six complete original
+epoch fixtures and 34 native future subcases are proposals, not native proof.

@@ -1,0 +1,25 @@
+{
+  "humanA": {
+    "target": "operator:alpha",
+    "issuerId": "operator:authorized-A",
+    "timeoutMinutes": 60
+  },
+  "humanB": {
+    "target": "operator:beta",
+    "issuerId": "operator:authorized-B",
+    "timeoutMinutes": 120
+  },
+  "prismA": {
+    "agent": "prism",
+    "target": "operator:alpha",
+    "issuerId": "operator:authorized-A",
+    "timeoutMinutes": 60
+  },
+  "prismB": {
+    "agent": "prism",
+    "target": "operator:beta",
+    "issuerId": "operator:authorized-B",
+    "timeoutMinutes": 120
+  },
+  "genuineFixtures": "operator target alpha/beta and issuer A/B are synthetic structural inputs only; real existing operator target/store/grants/issuer signedguidance/wait source ownership/persisted matchedwait fixture required before behavioral acceptance. Architecture actual artifact exactproducer/run/latestattempt/contentdigest/subject/source proof; Prism actual verified architecture and genuine BaselineBundle/nativeprovider source needed. No fake reply/invocation substitution earns effect acceptance."
+}

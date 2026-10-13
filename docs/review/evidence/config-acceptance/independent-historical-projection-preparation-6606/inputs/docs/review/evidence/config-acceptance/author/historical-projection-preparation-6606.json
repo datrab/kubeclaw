@@ -1,0 +1,56 @@
+{
+  "status": "parent projection implementation prepared; root regeneration and independent full projection review pending",
+  "currentInputs": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical_projection.py",
+      "sha256": "661fd8faa30069439139f8f0e421216d7898840fdcebfd608d4008495f60bdf0"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-historical-projection-guards.py",
+      "sha256": "93543c23dbd2420ea9b658b5086c02c1f764f7a193c3fbb730d067285715501c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/consolidate.py",
+      "sha256": "e112f40613da1a532526a2a4c8425545d473f39c8ce62365c4eba4bf80bcf66a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-matrix.py",
+      "sha256": "0436240e98f8468f686c4aa55a081baf824f71498ff1d0ae4d6194456124f81b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-native-case-integration.py",
+      "sha256": "b7435c69cee3e10e9393b3db05d0a0d7a671ce34cb3e8e5883b2b9ef84ab41ca"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-projection-guards-attempt1.log",
+      "sha256": "52a3bd4a08fad04237a688dd11c5f4b409022a6dea1a58fb61aaa63b2e2f72e2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-projection-guards-attempt1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "guardRecheck": {
+    "path": "docs/review/evidence/config-acceptance/independent-historical-mapping-guard-recheck-6606/independent-review.json",
+    "sha256": "7ae8737db0e572df85ed2bd94ec0061eff5b18d23a03bce3c1cdb36fd8069815",
+    "scope": "guard-only; does not cover new projection implementation"
+  },
+  "priorScripts": "docs/review/evidence/config-acceptance/author/checkpoint6-before-historical-projection-6606",
+  "controls": {
+    "negativeProjectionControls": 11,
+    "positiveControls": 2,
+    "testFixture": "unchanged checkpoint6 root plus exact selected current Runtime mapping inputs",
+    "rootOnDiskChanged": false
+  },
+  "countSemantics": {
+    "unlinkedNativeCaseCount": "unchanged direct-link None count; includes inactive history",
+    "historicallyMappedNativeCaseCount": "explicit inactive supersession mappings, never accepted cases",
+    "unresolvedNativeCaseCount": "no direct nor reviewed inactive link; mapping completeness only"
+  },
+  "limits": [
+    "Current published root remains checkpoint6 and is not yet regenerated with new checker expectations.",
+    "Full structural checker and actual generator must run after both Runtime and Delivery consolidated inputs are stable.",
+    "No row reviewer confirmation, whole package acceptance, case result, native body or implementation authorization promoted.",
+    "Strict gate still requires independent full mapping/specification review and whole native field/consumer acceptance."
+  ]
+}

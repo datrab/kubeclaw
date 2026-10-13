@@ -1,0 +1,44 @@
+{
+  "scope": "actual pure current ownership capacity API + literal caller projection proof; not kernel/store effects or future mandatory-parameter acceptance",
+  "node": "v24.21.0",
+  "identities": {
+    "skills/worker/core/worker/ownership-store.ts": "51c88ef050299cc54a2f6ea19ad64e0bfe528507f3a0dc8050f95ab4b3e46cf5",
+    "skills/worker/core/worker/ownership-capacity.ts": "4ff8bec1986def8a064b10e5e3ab1d1f3d6a4af0871ec5135f49903670aff309",
+    "/home/node/.openclaw/workspace/kubeclaw-config-c0/docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-ownership-current-reader.mjs": "9db9e3f33e974ee9fe85d2889b50234ee9ccdd0feac274df2c8c504e116e6c72"
+  },
+  "observations": [
+    {
+      "id": "current-default-latent-no-selected-quota",
+      "result": "passed",
+      "omittedArgumentReturnsBytes": 332,
+      "targetOmissionMustReject": true
+    },
+    {
+      "id": "exact-bound-positive-adjacent-negative",
+      "result": "passed",
+      "validState": {
+        "schemaVersion": "worker-ownership-store.v3",
+        "hostIdentity": null,
+        "records": []
+      },
+      "stateCanonicalBytes": 78,
+      "selectedPositiveCap": 332,
+      "adjacentNegativeCap": 331,
+      "stateUnchanged": true
+    },
+    {
+      "id": "current-numeric-negatives",
+      "result": "passed",
+      "invalidCaps": 6
+    },
+    {
+      "id": "both-productive-inner-callers-explicit-current-cap",
+      "result": "passed",
+      "callCount": 2,
+      "callerField": "this.#maximumBytes",
+      "limits": "separate real outer role quota authors still require authenticated original policy/instance binding"
+    }
+  ],
+  "passed": 4,
+  "failed": 0
+}

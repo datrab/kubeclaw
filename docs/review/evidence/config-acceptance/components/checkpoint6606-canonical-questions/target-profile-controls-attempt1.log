@@ -1,0 +1,56 @@
+{
+  "scope": "strict complete proposed owner schema definition controls ONLY; neither current CONFIG loader nor productive entrycap projection/secret lease effects proved",
+  "observations": [
+    {
+      "id": "complete-new-sameowner-A",
+      "result": "passed"
+    },
+    {
+      "id": "complete-new-sameowner-B",
+      "result": "passed"
+    },
+    {
+      "id": "negative-cap--1",
+      "result": "passed"
+    },
+    {
+      "id": "negative-cap-33",
+      "result": "passed"
+    },
+    {
+      "id": "negative-cap-1.5",
+      "result": "passed"
+    },
+    {
+      "id": "negative-cap-null",
+      "result": "passed"
+    },
+    {
+      "id": "required-selected-cap-no-default",
+      "result": "passed"
+    },
+    {
+      "id": "unknown-field-no-second-author",
+      "result": "passed"
+    },
+    {
+      "id": "supported-zero-no-requests-profile",
+      "result": "passed"
+    },
+    {
+      "id": "all-unrelated-baseline-fields-retained",
+      "result": "passed"
+    },
+    {
+      "id": "restored-complete-A-B",
+      "result": "passed"
+    }
+  ],
+  "passed": 11,
+  "failed": 0,
+  "identities": {
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/proposed-buster-canonical.schema.json": "20cccd80043579fdcb4c21f9c81000f1f1a6eb9b0815fbac85dd9382ab845c78",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/secret-entry-complete-profiles.json": "1e7f57b81f7705486fbb7744fa57008dae0f355fb883216c9e203d44bd47a1e6",
+    "docs/review/evidence/config-acceptance/components/checkpoint6606-canonical-questions/check-target-profiles.mjs": "8166424ba49f5f1ff96994f65b65a1ba1e8fe17198f1fbc8c3ddad291648d8af"
+  }
+}

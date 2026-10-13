@@ -1,0 +1,66 @@
+{
+  "scope": "stable authored material corrections+paused Chart49 evidence milestone, NOT ACCEPTED, no native/authentication/API/host/model/image actions/commit",
+  "baseline": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "baselineTree": "47ce9b9c092dcd534eb55ddaebaab010e270a5af",
+  "reviewBeingCorrected": {
+    "path": "docs/review/evidence/config-acceptance/independent-delivery-controller-6606/independent-review.json",
+    "sha256": "5381ecdd17c9080cf5b7eccb6b0bc40d7a5b9b00c83916da14d1d128357ac476",
+    "findings": [
+      "DCTRL-01",
+      "DCTRL-02",
+      "DCTRL-03"
+    ],
+    "status": "pending independent material recheck, not selfaccepted"
+  },
+  "primaryCorrectionArtifacts": {
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/README.md": "6db31b19b41934b4ef0f11ab4f6c566477972ba70ea2846e162491a2516e023c",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/correction-contracts.json": "0f5e665fc9147dff1c6c98583905459286324600f83325967fab44bc976c363f",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/lifecycle-definition-schema.json": "f81230dfcadccad98065d2a2fdbb1d1a83c073b1520b2167ea1f6b0369c25519",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/policy-definition-schema.json": "2041d1ddbab97a1922babf3c54e39cf77fdd854abaac5fb1f80288437f31a8c3",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/policy-A.json": "dbaffde17d18c220c237216cfccdc335d33d572a0b9973b8bc8d0fd15ef61a4d",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/policy-B.json": "67f26310eb5a89cd4ec736d9a690a50dd0f50ac359e89b651a449aae9b0f3a94",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/native-case-contracts.json": "a41ea5adcbe3d3857b9b05c657836c1eca55eb8a1b2232773566353e611e8f2c",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/actual-pure-controls.json": "0077ed5f1ca6c137b5319a96c8337503c3fda03bb44e357ac53b417dd541bd23",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/reviewed-input-preservation.json": "d4d76b0000aaab7b5a151059883f0381982342cec24e7f4d02e64cfd7f150685",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/current-consistency-and-freeze.json": "e7d140184afb2d430a92c5eb7ce1359023100ed1f090d8cd7460fca49da5ae79",
+    "docs/review/evidence/config-acceptance/delivery/controller-material-corrections-6606-20261013/current-integration.json": "2706e4ec5bf203f5f6448c5975065944f3d981742d123784b401919f22a6778c"
+  },
+  "currentBoundary": {
+    "docs/review/evidence/config-acceptance/delivery/inventory-fragment.json": "9d339998171fc352cda8199123ca3a0c2e0c41c2e0692084d2b1cc9c42e588a8",
+    "docs/review/evidence/config-acceptance/delivery/proposed-cases.json": "746fe7ed15c113da3d6e07613f4b9eace83275a493efb1f6df8c4bd7580c9d57",
+    "docs/review/evidence/config-acceptance/delivery/fragment-status.json": "a49539aec415978f8eb9c6ce9dc6d034a268e71a657f4009b6c192b4910d5102",
+    "docs/review/evidence/config-acceptance/delivery/open-row-backlog.json": "6fb5733195f7abaec5169b28ac3c81de2ae7f40e436241975d10349ffadeec35",
+    "docs/review/evidence/config-acceptance/delivery/delivery-specification-obligations-20261013.json": "ca538f4bd691a10f7020d7e0ca09d69944c576fded61d2d45c98a7046adfad0e",
+    "docs/review/evidence/config-acceptance/delivery/future-case-invocation-specifications-20261013.json": "adde1ed53196df4fefdff4f79c38f7935d5b6bb0174e3f0ff43995a50e010f1a",
+    "docs/review/evidence/config-acceptance/delivery/delivery-surface-dispositions.json": "933d81485c2ec1a2fdaa7e3a76fb1cbcc15e0db91969a8dedad41da4b5460dd4",
+    "docs/review/evidence/config-acceptance/delivery/semantic-closure-verification.json": "84ab18786bd87c34a46e7b6153f6b24073aa265e61969dcd377b8e5934a82811",
+    "docs/review/evidence/config-acceptance/delivery/c0-controller-material-correction-cases-6606-20261013.json": "03be1df591838cc150259c164bb0b940a5241bb4f9b72f93bd448910e9781b52"
+  },
+  "currentArtifactManifest": {
+    "path": "docs/review/evidence/config-acceptance/delivery/controller-material-correction-current-artifact-manifest-6606-20261013.json",
+    "sha256": "73270becbf255f9e3c4ce552f4aa463361034d5b52c9853f863524bf2824961c",
+    "files": 2064
+  },
+  "rows": 832,
+  "allRowsAcceptance": "NOT ACCEPTED",
+  "domainProposals": 602,
+  "domainsMissing": 230,
+  "canonicalFutureCases": 204,
+  "canonicalResults": "all NOTRUN",
+  "newPureControls": 105,
+  "existingFrozenControllerPureControls": 111,
+  "newNativeCorrectionSubcases": "12 NOTRUN within six existing canonical controller containers",
+  "oldInputPreservation": "all73 original decoded payload SHA+byte length verified,68plain5gzip; earlier raw-container mismatch diagnostics retained additively; reviewer files unchanged",
+  "newControlScope": "PURE own typed schema/field/correlation/calendar+nanosecond/byte-hash/memory-only throwaway crypto/source/preservation controls; no native/authentication/grants/module/capacity acceptance",
+  "pausedChart49": "unreviewed source/domain proposals preserved,8primary Go reader acquisitions,4exact v1.34.11 schema404raw bodies,one NovaA sourceHelm/v1.35.6 offline definition observation; other5profiles/current-native policyDigest/security correlations unfinished",
+  "remaining": [
+    "230 exact missing-domain rows per current backlog",
+    "602 domain proposal co-validity/material reviews; Chart49 remains draft",
+    "implementation/installed typed epoch+lifecycle/CRD/CAS/readback/role/compiler/CI bridge + authentic originalA native receipts/grants/provider/issuer/API/Go/binary/OCI identities",
+    "full resource-list/findings accumulation/concurrent response/handler memory budgets and actual full-output/CMP combined stdout+stderr relation capacity",
+    "parent universal originalModule/onepreaction carrier/grants/cleanup approved contract OPEN, no invented closed alias",
+    "v1.34.11 exact primary whole-document schema missing404, no permissive substitute/skipPASS"
+  ],
+  "authorMutationPause": "frozen at this receipt; no Delivery inventory/cases/surface/ledger changes until parent explicitly resumes",
+  "independentRuntimeReport": "immutable and untouched"
+}

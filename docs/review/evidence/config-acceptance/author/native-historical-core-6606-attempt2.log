@@ -1,0 +1,14 @@
+{
+  "scope": "exact native ID/requirements/specification projection only",
+  "scriptSha256": "b7435c69cee3e10e9393b3db05d0a0d7a671ce34cb3e8e5883b2b9ef84ab41ca",
+  "matrixSha256": "0d207986b2285540f9f7c1e18b6210826f9952d17a9ffe8549817a699146e427",
+  "nativeSha256": "51feea1a4ca73511668255dd0e328581fe18be04c6494a739496e7ca124fc28f",
+  "nativeCasesPreserved": 6201,
+  "canonicalLinks": 5932,
+  "unlinkedNativeObligations": 269,
+  "historicallyMappedNativeCases": 269,
+  "unresolvedNativeMappingObligations": 0,
+  "observationReferencesValidated": 2291,
+  "independentCanonicalAcceptance": false,
+  "globalC0Accepted": false
+}

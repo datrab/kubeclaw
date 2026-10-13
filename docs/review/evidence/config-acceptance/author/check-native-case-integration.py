@@ -2,6 +2,8 @@
 import hashlib
 import json
 from pathlib import Path
+from historical_mapping import load_reviewed as load_historical_mappings
+from historical_projection import verify as verify_historical_projection
 root = Path.cwd()
 source = root/'docs/review/evidence/config-acceptance/runtime/case-proposals.json'
 matrix_path = root/'docs/review/remediation/config-acceptance-matrix.json'
@@ -21,6 +23,10 @@ assert len(by_id) == len(native)
 links = package['canonicalCaseMapping']
 assert len(links) == len(native) and {link['nativeCaseId'] for link in links} == set(by_id)
 canonical = {case['id']:case for case in matrix['cases']}
+histories = load_historical_mappings(root, native,
+    json.loads((root/'docs/review/evidence/config-acceptance/runtime/inventory-fragment.json').read_text())['rows'],
+    json.loads((root/'docs/review/evidence/config-acceptance/runtime/runtime-case-dispositions.json').read_text())['cases'],set(canonical))
+verify_historical_projection(package,matrix['cases'],histories,advertised)
 for link in links:
     original = by_id[link['nativeCaseId']]
     assert link['requirementIds'] == original.get('requirements',[])
@@ -43,5 +49,7 @@ print(json.dumps({'scope':'exact native ID/requirements/specification projection
     'nativeSha256':package['sourceSha256'],'nativeCasesPreserved':len(native),
     'canonicalLinks':sum(link['canonicalCaseId'] is not None for link in links),
     'unlinkedNativeObligations':sum(link['canonicalCaseId'] is None for link in links),
+    'historicallyMappedNativeCases':advertised['historicallyMappedNativeCaseCount'],
+    'unresolvedNativeMappingObligations':advertised['unresolvedNativeCaseCount'],
     'observationReferencesValidated':matrix['immutableObservationReferences']['referenceOccurrencesValidated'],
     'independentCanonicalAcceptance':False,'globalC0Accepted':False},indent=2))

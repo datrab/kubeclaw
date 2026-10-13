@@ -1,8 +1,8 @@
 {
   "method": "static JSON/reference/SHA256 consistency checks; no production/test/package/cluster/host execution",
-  "verificationToolSha256": "2f342ee697258d4f178bf3b8e2b65c9a122142cd98743895db188336087768e6",
-  "settingRows": 825,
-  "caseSpecifications": 202,
+  "verificationToolSha256": "3aaeb78888ac229b619e6a362658b55e4cbc54f42636aa928ef509f0b4d376b0",
+  "settingRows": 832,
+  "caseSpecifications": 204,
   "issues": [],
   "consistencyResult": "passed",
   "c0Acceptance": "incomplete",
@@ -209,10 +209,12 @@
     "DLV-CASE-OPS-SUPERVISOR-POLICY",
     "DLV-CASE-GATEWAY-HEALTH-NATIVE-POLICY",
     "DLV-CASE-OPS-SERVICE-AUTH-NAMESPACE",
-    "DLV-CASE-CHART-KUBELET-PROBE-POLICY"
+    "DLV-CASE-CHART-KUBELET-PROBE-POLICY",
+    "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT",
+    "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS"
   ],
   "implementationResults": {
-    "not-run": 202
+    "not-run": 204
   },
   "requiredCaseHarnessGaps": [
     {
@@ -1222,6 +1224,16 @@
     },
     {
       "id": "DLV-CASE-CHART-KUBELET-PROBE-POLICY",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CONTROLLER-RESPONSE-EPOCH-CONTRACT",
+      "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
+      "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
+    },
+    {
+      "id": "DLV-CASE-CHART-TOPOLOGY-STORAGE-RECEIVERS",
       "commandReadiness": "exact frozen future invocation; harness implementation after approval, NOT runtime PASS or domain closure",
       "specificationStatus": "invocation/source/oracle references frozen; per-field missing target domain/profile/harness recipe remains explicit in spec remainingSpecificationFields"
     }

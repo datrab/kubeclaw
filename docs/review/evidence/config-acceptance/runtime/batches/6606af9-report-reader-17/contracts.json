@@ -1,0 +1,175 @@
+{
+  "entries": [
+    {
+      "setting": "RT-8750f030bf25ecae",
+      "field": "storageRoot",
+      "classification": "installation-locator-original-state-source",
+      "current": "Activation requiresonlytypeofstring, accepts empty/relative directly; owningminLength1 rejectsempty. readRunEvidence later requiresabsolute andNOFOLLOW regularfiles plus lstat no symlinkdirs, pinsinode/stat/digest/journal/effects andterminalcompletedrun. Capturedprimitiveatactivate, not currentmutablefilebytes; realgrants/history/source packaging separate.",
+      "targetDomain": "ExactexistingauthorizedoriginalNova state-root locator generatedfromsame run writer/owner, canonicalabsolute/no symlink root/parents andreadonlysourcegrants/retainedhistory. No arbitraryBroot/newemptybackend tofitbudget orloseevidence; originalroot immutabledependency/versionedmigration compatibility required.",
+      "effect": "AuthenticA completedsource+validheads/digest/refs positivelyread; wrongroot/relative/symlink/stalehead/digest/stat/changedfile rejects beforebundle export; B newgenuinepipeline ownedroot separatecontext not independentroot knob samehistory.",
+      "profiles": {
+        "A": {
+          "storageRoot": "/fixture/nova/run-state-A",
+          "orchestratorIssuerId": "issuer:original-A",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 65536
+        },
+        "B": {
+          "storageRoot": "/fixture/nova/run-state-A",
+          "orchestratorIssuerId": "issuer:original-A",
+          "maximumJournalBytes": 2097152,
+          "maximumArtifactBytes": 2097152,
+          "maximumBundleBytes": 131072
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c"
+      },
+      "productiveCaller": "ActualAdapterStarter -> activatecapturesfiveprimitives; AdapterRuntime report.evidence.read/snapshot -> assertEvidenceSelection/readRunEvidence originalrunfilesystem+recoverStageStates/verifySelectedArtifacts -> perrefartifactBudget/readArtifact/sourceFact -> secondreadRunEvidence equality -> buildEvidenceBundle/canonicalfullcap -> callerpipeline-review/case-study stage. No sourcebyte/effect projectionstub acceptance.",
+      "binding": "CurrentNova v4wholegraph/config/package/grants+exactsourcepinnedchecks/prelockactivation intact; parenttypedlogicalmodule/source/issuer/role/taskoperator/metadataquota/membership/view/legacy/crossreader carrier OPEN. Originalhistory/source fixedA neverlatestB substitute."
+    },
+    {
+      "setting": "RT-96698b5568aba94d",
+      "field": "orchestratorIssuerId",
+      "classification": "generated-original-writer-trust-identity-projection",
+      "current": "Activation nonemptystring no trimming/membership; passed toactualrecoverStageStates duringreadRunEvidence. Readerconfiguration argument is notdemonstrated verifiedoriginalwriter/issuer equality bythisadapter; actualexistingregistry/graph/config/pkg/grant pins retained. No sourceclaim allbindingsabsent.",
+      "targetDomain": "GeneratedsameauthenticoriginalNova run writer trust/issuer policy; readonlyprojection, no secondeditableevidence-adapter issuerauthor. Explicitoriginalprofile/header/source proof and historicalcompatibility beforeusingreplayauthority; unrelatedcurrent/latest issuercannot reinterpretretainedrun.",
+      "effect": "OriginalA exactconfiguredwriter/issuer+runrecords replaypositive; wrong validissuer against actualauthority-dependentrecords rejects/doesnotlaunder source; histories withnoissuer-dependentrecords cannotserveas meaningfulidentityeffect. Authenticwriterbinding prerequisite, no fakeheadercapture.",
+      "profiles": {
+        "A": {
+          "storageRoot": "/fixture/nova/run-state-A",
+          "orchestratorIssuerId": "issuer:original-A",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 65536
+        },
+        "B": {
+          "storageRoot": "/fixture/nova/run-state-A",
+          "orchestratorIssuerId": "issuer:original-A",
+          "maximumJournalBytes": 2097152,
+          "maximumArtifactBytes": 2097152,
+          "maximumBundleBytes": 131072
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c"
+      },
+      "productiveCaller": "ActualAdapterStarter -> activatecapturesfiveprimitives; AdapterRuntime report.evidence.read/snapshot -> assertEvidenceSelection/readRunEvidence originalrunfilesystem+recoverStageStates/verifySelectedArtifacts -> perrefartifactBudget/readArtifact/sourceFact -> secondreadRunEvidence equality -> buildEvidenceBundle/canonicalfullcap -> callerpipeline-review/case-study stage. No sourcebyte/effect projectionstub acceptance.",
+      "binding": "CurrentNova v4wholegraph/config/package/grants+exactsourcepinnedchecks/prelockactivation intact; parenttypedlogicalmodule/source/issuer/role/taskoperator/metadataquota/membership/view/legacy/crossreader carrier OPEN. Originalhistory/source fixedA neverlatestB substitute."
+    },
+    {
+      "setting": "RT-36accddb567c892f",
+      "field": "maximumJournalBytes",
+      "classification": "operator-evidence-processing-budget",
+      "current": "RequiredpositiveSafeinteger, nocode/default; readRunEvidence maximumBytes iscombinedevents+snapshot+effects rawbytes: eventsreadcapQ, snapshotcapQ-eventsbytes, effectscapQ-events-snapshot. NOFOLLOW/statstability/coordinatorMode/fullhead/source/effectreceipt checks. Not threeindependentQ budgets, not truncated/compacted read or physicalmemory guarantee.",
+      "targetDomain": "ProposedrequiredpositiveSafeinteger withactualcombinedoriginalfilebytes+readBuffer allocation/stat-safe/capturedruntime memory/grants/sourceformat feasibility beforeeffects. ExactQsum equality accepted andQsum-1 reject sameauthenticsource method; no guessed universalphysicalceiling or independentlysafe hugeMAXSAFE capacity.",
+      "effect": "Actualsame completedsource journal/snapshot/effects full rawbyte total underQ; combinedadjacentnegative rejectunchanged sourcehashes andno partialbundle/readcapreset. Current readBuffer includesoneextra byte so declaredBuffer/memory/storageconstraints explicit; originals retained nottrimmedforB.",
+      "profiles": {
+        "A": {
+          "storageRoot": "/fixture/nova/run-state-A",
+          "orchestratorIssuerId": "issuer:original-A",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 65536
+        },
+        "B": {
+          "storageRoot": "/fixture/nova/run-state-A",
+          "orchestratorIssuerId": "issuer:original-A",
+          "maximumJournalBytes": 2097152,
+          "maximumArtifactBytes": 2097152,
+          "maximumBundleBytes": 131072
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c"
+      },
+      "productiveCaller": "ActualAdapterStarter -> activatecapturesfiveprimitives; AdapterRuntime report.evidence.read/snapshot -> assertEvidenceSelection/readRunEvidence originalrunfilesystem+recoverStageStates/verifySelectedArtifacts -> perrefartifactBudget/readArtifact/sourceFact -> secondreadRunEvidence equality -> buildEvidenceBundle/canonicalfullcap -> callerpipeline-review/case-study stage. No sourcebyte/effect projectionstub acceptance.",
+      "binding": "CurrentNova v4wholegraph/config/package/grants+exactsourcepinnedchecks/prelockactivation intact; parenttypedlogicalmodule/source/issuer/role/taskoperator/metadataquota/membership/view/legacy/crossreader carrier OPEN. Originalhistory/source fixedA neverlatestB substitute."
+    },
+    {
+      "setting": "RT-81d42184c1081430",
+      "field": "maximumArtifactBytes",
+      "classification": "operator-evidence-processing-budget",
+      "current": "RequiredpositiveSafeinteger; sums selectedref.sizeBytes acrossALLselectedartifacts, checks safeinteger andcapbeforeeach artifacts.read; media JSON only. verifySelectedArtifacts exactrun/latestattempt, actualresponse/ref digest+size+encodedbytes verification; secondsourcejournalprojection equality beforebundle. NotperartifactQ andno old-evidence omission tofitB.",
+      "targetDomain": "RequiredpositiveSafeinteger aggregateactualselectedartifactserializedbytes withmatchingauthenticArtifactRefs/typedsource/lint/nativecoverage/evidence andrealreadBuffer/grants/outerencoding. Exactsum positive/sum-1 rejectsbeforeoverbudgetartifactread; unsafeaddition/negative/missing/wrongrefs boundedtypedsource guards.",
+      "effect": "Genuinefixedselectedrefs totalS A>=S andB>=S; negativeS-1 rejects sameconsumer withoutreadingoverbudgetnextartifact, originalsource/records/refs unchanged. No implicitselectionshrink; omissionsexplicitbundlemetadata andtaskmandatorycoverage remain.",
+      "profiles": {
+        "A": {
+          "storageRoot": "/fixture/nova/run-state-A",
+          "orchestratorIssuerId": "issuer:original-A",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 65536
+        },
+        "B": {
+          "storageRoot": "/fixture/nova/run-state-A",
+          "orchestratorIssuerId": "issuer:original-A",
+          "maximumJournalBytes": 2097152,
+          "maximumArtifactBytes": 2097152,
+          "maximumBundleBytes": 131072
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c"
+      },
+      "productiveCaller": "ActualAdapterStarter -> activatecapturesfiveprimitives; AdapterRuntime report.evidence.read/snapshot -> assertEvidenceSelection/readRunEvidence originalrunfilesystem+recoverStageStates/verifySelectedArtifacts -> perrefartifactBudget/readArtifact/sourceFact -> secondreadRunEvidence equality -> buildEvidenceBundle/canonicalfullcap -> callerpipeline-review/case-study stage. No sourcebyte/effect projectionstub acceptance.",
+      "binding": "CurrentNova v4wholegraph/config/package/grants+exactsourcepinnedchecks/prelockactivation intact; parenttypedlogicalmodule/source/issuer/role/taskoperator/metadataquota/membership/view/legacy/crossreader carrier OPEN. Originalhistory/source fixedA neverlatestB substitute."
+    },
+    {
+      "setting": "RT-41d93665317a7d07",
+      "field": "maximumBundleBytes",
+      "classification": "operator-evidence-processing-budget",
+      "current": "RequiredpositiveSafeinteger; actualfullcanonicalJson(bundle) UTF8 byteLength capafterverifiedsource+artifactreads andallfacts, beforereturn. Includes target/head/digest/artifactrefs/facts/stages/attempts/omitted-reference evidence metadata +bundle digest. Not rawartifactcap or preallocatedbudget/physicalcapacity proof.",
+      "targetDomain": "RequiredpositiveSafeinteger prospectivecompleteencodedbundle afterallmandatoryoriginalsource/evidence/omission metadata. Actualentirecanonicalbytes B+digest =b: exactb positive/b-1 rejectsnoexport. Operatorcannotclearhistory/facts/source/omissions/claims/grants tofitcap; genuinefixedquota/runtimeallocation proof required.",
+      "effect": "Realverifiedfullbundle canonicalb<=cap returnedwithdigest; b-1 rejects atREPORT_BUNDLE_BUDGET_EXCEEDED afterreadonlyverification butbeforeexport, sourcehashes retained. Sourcechangedbetweenreads rejects regardlessbudget. No rawreceipt/hash-only surrogate bundle acceptance.",
+      "profiles": {
+        "A": {
+          "storageRoot": "/fixture/nova/run-state-A",
+          "orchestratorIssuerId": "issuer:original-A",
+          "maximumJournalBytes": 1048576,
+          "maximumArtifactBytes": 1048576,
+          "maximumBundleBytes": 65536
+        },
+        "B": {
+          "storageRoot": "/fixture/nova/run-state-A",
+          "orchestratorIssuerId": "issuer:original-A",
+          "maximumJournalBytes": 2097152,
+          "maximumArtifactBytes": 2097152,
+          "maximumBundleBytes": 131072
+        }
+      },
+      "source": {
+        "path": "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "sha256": "477c0a5349d80816ab5af7dd06abbdeec3bf62ab94fe25ea88159d3f1b74293c"
+      },
+      "productiveCaller": "ActualAdapterStarter -> activatecapturesfiveprimitives; AdapterRuntime report.evidence.read/snapshot -> assertEvidenceSelection/readRunEvidence originalrunfilesystem+recoverStageStates/verifySelectedArtifacts -> perrefartifactBudget/readArtifact/sourceFact -> secondreadRunEvidence equality -> buildEvidenceBundle/canonicalfullcap -> callerpipeline-review/case-study stage. No sourcebyte/effect projectionstub acceptance.",
+      "binding": "CurrentNova v4wholegraph/config/package/grants+exactsourcepinnedchecks/prelockactivation intact; parenttypedlogicalmodule/source/issuer/role/taskoperator/metadataquota/membership/view/legacy/crossreader carrier OPEN. Originalhistory/source fixedA neverlatestB substitute."
+    }
+  ],
+  "profiles": {
+    "A": {
+      "storageRoot": "/fixture/nova/run-state-A",
+      "orchestratorIssuerId": "issuer:original-A",
+      "maximumJournalBytes": 1048576,
+      "maximumArtifactBytes": 1048576,
+      "maximumBundleBytes": 65536
+    },
+    "B": {
+      "storageRoot": "/fixture/nova/run-state-A",
+      "orchestratorIssuerId": "issuer:original-A",
+      "maximumJournalBytes": 2097152,
+      "maximumArtifactBytes": 2097152,
+      "maximumBundleBytes": 131072
+    },
+    "correlatedFixtures": "Authentic original completed coordinator-mode auditedrun, exactevents.jsonl+run-snapshot.json+effects.jsonl/head/digest/stats, realtypedsourceartifact plusrealrequiredlint/nativecoverage/evidence and selectedref latestattempt/run. Sourcefixture bytes mustbepinned before cases; A/B sameactualsource task andtypedbundle, no report source fabricated bytransportstub. Budgetpositives needactualsum andadjacentnegative sameowningmethod; remainNOTRUN prereq. StorageRoot/orchestrator identity have no independentB undersamehistory; deriveoriginalwriterrole, not secondeditableauthor."
+  },
+  "openBounds": [
+    "EvidenceSelection128selectedrefs sourceprocessing ceiling/retained omittedclasses, sourceFact supportedsource/lint/verifiednative decision closure/genuineoverlap andmandatorycoverage remainexplicit. No lexicalguard automaticclosure.",
+    "Actualorchestrator originalwriter projection requires source/header/role/authenticlegacy evidence, no newclosedparentID orallcurrentbindingsabsent claim."
+  ]
+}

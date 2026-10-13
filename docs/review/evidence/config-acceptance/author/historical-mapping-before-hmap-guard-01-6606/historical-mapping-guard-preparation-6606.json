@@ -1,0 +1,49 @@
+{
+  "status": "author guard preparation; independent review pending; no root projection",
+  "historicalCases": 269,
+  "existingSuccessors": 356,
+  "negativeDocumentationControls": 12,
+  "restoredPositiveControls": 2,
+  "productionOrTestEdits": false,
+  "rootMatrixChanged": false,
+  "globalC0Accepted": false,
+  "implementationCasesExecuted": false,
+  "identities": [
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical_mapping.py",
+      "sha256": "390f8c138c996a109de07b38fb79cc6270d08c439d773cb9aaa2e12d48511e5a",
+      "bytes": 6636
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/check-historical-mapping-guards.py",
+      "sha256": "ea3f14bea66bbb627c8d5cd1afc5040f33f0aff93fed6f581365bbc60248fa43",
+      "bytes": 3752
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt1.log",
+      "sha256": "231ec3ef2ab26855fdb4847ef923e3f184de2033ecd2dc72d10ff7ae989cd2f1",
+      "bytes": 1927
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt2.log",
+      "sha256": "231ec3ef2ab26855fdb4847ef923e3f184de2033ecd2dc72d10ff7ae989cd2f1",
+      "bytes": 1927
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/historical-mapping-guards-attempt2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "limits": [
+    "Guard does not yet participate in consolidate.py/check-matrix.py.",
+    "Existing root still advertises 269 unlinked historical cases.",
+    "Historical mapping review is bounded; no target domain, case behavior, field or whole C0 acceptance inferred.",
+    "Full parent root projection needs separate negative controls and independent material review."
+  ]
+}

@@ -29,6 +29,7 @@ if (out/'c0-kubernetes-boundary-cases.json').exists():definitionCases+=json.load
 if (out/'c0-buster-build-definition-cases.json').exists():definitionCases+=json.loads((out/'c0-buster-build-definition-cases.json').read_text())
 if (out/'c0-residual-definition-cases-bce3f075.json').exists():definitionCases+=json.loads((out/'c0-residual-definition-cases-bce3f075.json').read_text())
 if (out/'c0-dls-pure-definition-cases-20261013.json').exists():definitionCases+=json.loads((out/'c0-dls-pure-definition-cases-20261013.json').read_text())
+if (out/'c0-controller-definition-cases-6606af9-20261013.json').exists():definitionCases+=json.loads((out/'c0-controller-definition-cases-6606af9-20261013.json').read_text())
 for id,n in collections.Counter(c['id'] for c in definitionCases).items():
  if n>1:issues.append({'kind':'duplicate-definition-case','id':id,'count':n})
 for r in v['rows']:

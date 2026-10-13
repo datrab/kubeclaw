@@ -1,0 +1,43 @@
+{
+  "current": {
+    "inlineState": "no target immutable binding currently present; live current limits supplied by constructor/retirement command",
+    "sourceEvidence": "completionRetirementSource checks genuine storedAt/result/closure/record digest and required evidence bytes+digest; readSource keyed by source.file+source.maximumBytes, not original CONFIG proof",
+    "refsPhysical": "source metadata references a file/maximumBytes and real evidence URLs; these are not cryptographic CONFIG ownership or complete quota-accounting manifests"
+  },
+  "target": {
+    "inline": "strict fixed514ASCII binding object; persisted field growth525 under samewholecap; validated per-candidate beforeeffects",
+    "referencedPayload": "full author/profile/source/schema manifests MUST have original authentic same-owner metadata/storage grant/quota references and explicit physical/dedup/reservation accounting; content digest alone is not quota admission or authority",
+    "legacy": "legacy state lacks genuine original-config closure; no automatic latest capture, synthetic binding, migration shrink or unaccounted metadata path. Authenticated original source/grant/owner/history + accounted migration reservation required beforeeffect; otherwise block",
+    "externalOpen": "actual deployed authentic manifest store/quota/grants and parent universal SDK carrier/task partition remain open; synthetic reference fixtures prove definitions only"
+  },
+  "definitions": [
+    {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/serialization-envelope-contract.json",
+      "sha256": "f6a51283e5352b3d25c683d214a4fd8cdad2330e08277e5c5a4b48c25c050572"
+    },
+    {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "path": "docs/review/evidence/config-acceptance/components/icq-corrections-20261013/retirement-binding-contract.json",
+      "sha256": "d75046e7e3a78501033c28a60fa2f18d1b7afaa9b49728440291c0943d776ac4"
+    },
+    {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "path": "docs/review/evidence/config-acceptance/components/icq-r06-boundaries-20261013/boundary-owner-reference-specimens.json",
+      "sha256": "099c1c68e44a0931d854a4c4fd2e574450b1c63f5a8ebc310c0541f1488f5dfc"
+    }
+  ],
+  "realSource": [
+    {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "sha256": "134fa89160a8f7ddd309d482effc3d1db6ad3b0d559a2960fb9ab0fa0dfbcd12"
+    },
+    {
+      "commit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-retirement.ts",
+      "sha256": "669f438a9ebc092ac4b5334b030b574026981d8f5ae67b3a4eb70e2e38850327"
+    }
+  ],
+  "acceptance": false
+}

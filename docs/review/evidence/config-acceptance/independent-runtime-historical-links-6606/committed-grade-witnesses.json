@@ -1,0 +1,805 @@
+[
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.tokenizerEncoding",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": "o200k_base"
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXFILES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.componentBudget.maxFiles",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 60
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXBYTES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.componentBudget.maxBytes",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 400000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-COMPONENTBUDGET-MAXTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.componentBudget.maxTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 86000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXFILES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.boundaryBudget.maxFiles",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 400
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXBYTES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.boundaryBudget.maxBytes",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 900000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.boundaryBudget.maxTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 80000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXRELATIONS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.boundaryBudget.maxRelations",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 600
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-BOUNDARYBUDGET-MAXSLICES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.boundaryBudget.maxSlices",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 200
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXPRIMARYJOBS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxPrimaryJobs",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 75
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXCONTEXTEXPANSIONJOBS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxContextExpansionJobs",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 12
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXVERIFICATIONJOBS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxVerificationJobs",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 8
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXINPUTTOKENSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxInputTokensPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 120000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXCONTEXTTOKENSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxContextTokensPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 128000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXPROMPTBYTESPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxPromptBytesPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 900000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXINITIALINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxInitialInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 6500000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXCONTEXTEXPANSIONINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxContextExpansionInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 750000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXVERIFICATIONINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxVerificationInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 750000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXTOTALINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxTotalInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 8000000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXOUTPUTTOKENSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxOutputTokensPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 6000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXESTIMATEDCOSTUSD",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxEstimatedCostUsd",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 100
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXWALLTIMESECONDS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxWallTimeSeconds",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 3600
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-ESTIMATEDSECONDSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.estimatedSecondsPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 120
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-INPUTUSDPERMILLIONTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.inputUsdPerMillionTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 10
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-OUTPUTUSDPERMILLIONTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.outputUsdPerMillionTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 30
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-CONCURRENCY",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.concurrency",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 8
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXRETRIES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxRetries",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 1
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-MAXRETRYATTEMPTSPERPHASE",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.maxRetryAttemptsPerPhase",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 4
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-FAST-ENABLEDLENSES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.fast.enabledLenses",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": [
+      "contracts",
+      "security",
+      "lifecycle"
+    ]
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-TOKENIZERENCODING",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.tokenizerEncoding",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": "o200k_base"
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXFILES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.componentBudget.maxFiles",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 60
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXBYTES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.componentBudget.maxBytes",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 400000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-COMPONENTBUDGET-MAXTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.componentBudget.maxTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 86000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXFILES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.boundaryBudget.maxFiles",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 400
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXBYTES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.boundaryBudget.maxBytes",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 900000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.boundaryBudget.maxTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 80000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXRELATIONS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.boundaryBudget.maxRelations",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 600
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-BOUNDARYBUDGET-MAXSLICES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.boundaryBudget.maxSlices",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 200
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXPRIMARYJOBS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxPrimaryJobs",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 500
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTEXPANSIONJOBS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxContextExpansionJobs",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 100
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXVERIFICATIONJOBS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxVerificationJobs",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 100
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXINPUTTOKENSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxInputTokensPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 120000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTTOKENSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxContextTokensPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 128000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXPROMPTBYTESPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxPromptBytesPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 900000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXINITIALINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxInitialInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 25000000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXCONTEXTEXPANSIONINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxContextExpansionInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 50000000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXVERIFICATIONINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxVerificationInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 50000000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXTOTALINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxTotalInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 50000000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXOUTPUTTOKENSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxOutputTokensPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 6000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXESTIMATEDCOSTUSD",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxEstimatedCostUsd",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 650
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXWALLTIMESECONDS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxWallTimeSeconds",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 28800
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-ESTIMATEDSECONDSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.estimatedSecondsPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 120
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-INPUTUSDPERMILLIONTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.inputUsdPerMillionTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 10
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-OUTPUTUSDPERMILLIONTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.outputUsdPerMillionTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 30
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-CONCURRENCY",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.concurrency",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 10
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXRETRIES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxRetries",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 2
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-MAXRETRYATTEMPTSPERPHASE",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.maxRetryAttemptsPerPhase",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 20
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-STANDARD-ENABLEDLENSES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.standard.enabledLenses",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": [
+      "architecture",
+      "contracts",
+      "security",
+      "lifecycle",
+      "resilience",
+      "deployment",
+      "simplification"
+    ]
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-TOKENIZERENCODING",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.tokenizerEncoding",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": "o200k_base"
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXFILES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.componentBudget.maxFiles",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 30
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXBYTES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.componentBudget.maxBytes",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 220000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-COMPONENTBUDGET-MAXTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.componentBudget.maxTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 90000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXFILES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.boundaryBudget.maxFiles",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 100
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXBYTES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.boundaryBudget.maxBytes",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 480000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.boundaryBudget.maxTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 110000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXRELATIONS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.boundaryBudget.maxRelations",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 100
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-BOUNDARYBUDGET-MAXSLICES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.boundaryBudget.maxSlices",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 32
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXPRIMARYJOBS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxPrimaryJobs",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 2000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTEXPANSIONJOBS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxContextExpansionJobs",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 250
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXVERIFICATIONJOBS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxVerificationJobs",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 250
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXINPUTTOKENSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxInputTokensPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 120000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTTOKENSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxContextTokensPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 128000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXPROMPTBYTESPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxPromptBytesPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 900000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXINITIALINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxInitialInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 50000000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXCONTEXTEXPANSIONINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxContextExpansionInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 100000000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXVERIFICATIONINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxVerificationInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 100000000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXTOTALINPUTTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxTotalInputTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 100000000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXOUTPUTTOKENSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxOutputTokensPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 6000
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXESTIMATEDCOSTUSD",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxEstimatedCostUsd",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 1300
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXWALLTIMESECONDS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxWallTimeSeconds",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 86400
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-ESTIMATEDSECONDSPERJOB",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.estimatedSecondsPerJob",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 150
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-INPUTUSDPERMILLIONTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.inputUsdPerMillionTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 10
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-OUTPUTUSDPERMILLIONTOKENS",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.outputUsdPerMillionTokens",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 30
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-CONCURRENCY",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.concurrency",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 4
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXRETRIES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxRetries",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 2
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-MAXRETRYATTEMPTSPERPHASE",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.maxRetryAttemptsPerPhase",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": 40
+  },
+  {
+    "id": "RT-REPOSITORY-GRADE-DEEP-ENABLEDLENSES",
+    "source": {
+      "path": "skills/nova/plugins/review/src/repository-review-profile.ts",
+      "field": "DEFAULTS.deep.enabledLenses",
+      "sha256": "8fc972f409c3bbb307bf4af71cf65522bab613026b99cbc35a7f2e42cd58d67b"
+    },
+    "default": [
+      "architecture",
+      "contracts",
+      "security",
+      "lifecycle",
+      "resilience",
+      "deployment",
+      "simplification"
+    ]
+  }
+]

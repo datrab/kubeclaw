@@ -1,0 +1,38 @@
+{
+  "plan": {
+    "A": {
+      "endpoint": "https://fixture.invalid/gate",
+      "authentication": "bearer",
+      "tokenSecret": "fixture.token-A",
+      "sourcePrivateKeySecret": "fixture.key-A",
+      "sourceAuthority": "fixture-authority-A",
+      "stateRoot": "/fixture/nova/gate-A",
+      "allowedRepositoryRoots": [
+        "/fixture/repository-A"
+      ]
+    },
+    "B": {
+      "endpoint": "http://localhost:18080/gate",
+      "authentication": "spiffe-proxy",
+      "sourcePrivateKeySecret": "fixture.key-B",
+      "sourceAuthority": "fixture-authority-B",
+      "stateRoot": "/fixture/nova/gate-B",
+      "allowedRepositoryRoots": [
+        "/fixture/repository-B"
+      ]
+    }
+  },
+  "evidence": {
+    "A": {
+      "stateRoot": "/fixture/nova/gate-A",
+      "manifestStageId": "summary:fixture-A",
+      "gateStageId": "gate:fixture-A"
+    },
+    "B": {
+      "stateRoot": "/fixture/nova/gate-B",
+      "manifestStageId": "summary:fixture-B",
+      "gateStageId": "gate:fixture-B"
+    }
+  },
+  "correlatedFixtures": "Labels fixture.invalid, credential names, authorities, stage IDs and roots are specification placeholders, NOT installed supported targets. Before future productive controls pin authentic registered providers/source-authority verifier+private-key provisioning/secret grants, exact canonical authorized repo/source archive/commit and original full plan nodes/native coverage/grants, API protocol/identity, original imported job/decision/results and versioned manifest refs/proofs. Full selected policy has fixed source limits recorded separately; no fabricated result or stub transport. A/B represent separate authorized executions; historical A import remains immutable; not independent replacement of issuer/root/stage under same history."
+}

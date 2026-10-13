@@ -1,0 +1,20 @@
+{
+  "baseline": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "sourceDigests": {
+    "cmd/buster-namespace-controller/demo-readiness.go": "a0838b433b686307159055d07684657a87524f54e125de23bbe82895853fd34e",
+    "cmd/buster-namespace-controller/demo-readiness_test.go": "74749508416be24525cf5713fd771760517499d254dcfd064c4030b8bc4c6e42",
+    "cmd/buster-namespace-controller/demo-readiness-sources.go": "d1aca629a3c5c739e84a9116a95af6d0a0bbc7b0782cc0b0ee680a004f621628",
+    "cmd/buster-namespace-controller/demo-readiness-lifecycle.go": "6c79d6dd6d94ed7df8903c2d617eeec2574bb9789bf6ac2c0c34d6059a8c8ba2",
+    "cmd/buster-namespace-controller/demo-retention.go": "4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7",
+    "cmd/buster-namespace-controller/demo-product.go": "127c82f150c8277a931ae9fba701b7a1c6cc368d9e8290f9fb2082efd74cc49c",
+    "cmd/buster-namespace-controller/main.go": "c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624",
+    "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml": "2f869c74204c86676c5cfe852c99be803cf5a669ebae4c9758bc05e90f268d45",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/pkg/apis/core/validation/validation.go": "a9caab845cd895822bcdca6d3564022feb609a87a459c4e9c1a4e5fc7eebc80f",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/util/validation/validation.go": "5f4d8a4753853905faa387c0e8009a8d72900db24bb6b535de2eefcaeb30d8e2",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.35.6/staging/src/k8s.io/apimachinery/pkg/api/validation/generic.go": "2c59b38f0a3ba3f3d09ccd1ebf0114a2e0c6f6acaad81aa3c12f2a3a075b6b78",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/pkg/apis/core/validation/validation.go": "4b263eff73f9da9bbc288cef5052a20d599d57e15474ad91662a9c45b7a19aa1",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/util/validation/validation.go": "5c2a8c1bbe4916bcb0db626b5249ca83b7510b0e338978e6aab9bb8f6cd1a32f",
+    "docs/review/evidence/config-acceptance/delivery/pinned-kubernetes/v1.34.11/staging/src/k8s.io/apimachinery/pkg/api/validation/generic.go": "459f759b7f8f4938b5ac2f2b420c1dd0dcf808044ad167ad213bb71a55238eda"
+  },
+  "meaning": "source bytes, not executed/current installed identities"
+}

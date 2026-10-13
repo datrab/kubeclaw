@@ -1,0 +1,21 @@
+{
+  "skills/nova/plugins/demo-handoff/package.json": "0862144204d32c406fb2248b09dff87582d2a67234b2a05a8614d7393167dcf4",
+  "skills/nova/plugins/demo-handoff/plugin.json": "6603951e6a1eb1eef6a48d400a942ca153ec064d2ea67b0ec7f78b4f7e680d6e",
+  "skills/nova/plugins/demo-handoff/tsconfig.json": "e870b88d9f1d5090754667bb4214ee5f4ac6ed68b1460d655af0e37cb048959b",
+  "skills/nova/plugins/demo-handoff/schemas/candidate.schema.json": "20ef1065dadcf3236d091621eee86a81157f52dd9aca1b7f3535187aa09d3b13",
+  "skills/nova/plugins/demo-handoff/schemas/empty.schema.json": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803",
+  "skills/nova/plugins/demo-handoff/schemas/result.schema.json": "b7cf810d6de653ae98b1caf1ed6f77ec0940495ed1392bae577c55784f3b77e5",
+  "skills/nova/plugins/demo-handoff/schemas/delivery.schema.json": "0c23e4a13b585c3c1acde7410fed759f034c05f90b2202664bcac9dc5e1010c9",
+  "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json": "908e54cafb1d4edac6aeffe49ded47dc578f87e3d37952b247b7520aa4560fa4",
+  "skills/nova/plugins/demo-handoff/schemas/ready.schema.json": "5b61a49b5383f4d4c1b3227104e136ef0119383ec4c9d456658c20df136dcbb0",
+  "skills/nova/plugins/demo-handoff/src/delivery.ts": "a1dfb3d6fef144d5f11e3546039ba4a291c97ad4f5fcf7ee0279b83fdfadaff7",
+  "skills/nova/plugins/demo-handoff/src/controller-client.ts": "bee2a2f89be6489a9e26af5fd53193191057ec0c061497f2b7a0b49dbaebe315",
+  "skills/nova/plugins/demo-handoff/src/adapter.ts": "245bff96d5198426aa2bc73739fdc4976fb632b0a4737b923594efa052af0855",
+  "skills/nova/plugins/demo-handoff/src/ready.ts": "ae78a23722ab515d539b8ad4c0950ee8d487c5ff02a4b5f851f249f2026ffb82",
+  "skills/nova/plugins/demo-handoff/src/binding.ts": "6b7065fbfafb91cb4caf987c3f0391121515c9ff0e84d90039dae9948cf9ec91",
+  "skills/nova/plugins/demo-handoff/src/protocol.ts": "930ab14445250fa1e4aa6bf65839ac4987f3f34fa5f0cd071285f1efc1d56f58",
+  "skills/nova/plugins/demo-handoff/src/candidate.ts": "0706b62469c38751d1b22fdc0486e66915cda45077b315b144ef8a4ec641eff3",
+  "skills/nova/project/demo.ts": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566",
+  "skills/common/plugin-runtime/foundation/observability/durable-records.ts": "ab407b028f3a22c96a436c3bdf2a9dd7bfee3b36d301de919669d2d1bf25c553",
+  "cmd/buster-namespace-controller/demo-retention.go": "4a173d7f2012e8c9d58a0c2f93ceda77629bacac384e5f56fdbec9c459a7c2a7"
+}

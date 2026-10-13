@@ -1,0 +1,47 @@
+{
+  "scope": "new field-count addendum files only; frozen old inputs referenced unchanged, no root integration",
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/README.md",
+      "sha256": "727d9555562764ec26b2fe25782dc0b2d84f2e830bde2e2f075b949352aaed29",
+      "bytes": 1661
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/actual-pure-addendum-controls.json",
+      "sha256": "ccdf307e17fd90431b6bf0a00197620447951fac916ea345138f536cef75391c",
+      "bytes": 14443
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/controls.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/controls.stdout",
+      "sha256": "38bcfb84302c531529cb6e12cc23204ae02f8d42dd3ce215624b7e833ee0c86a",
+      "bytes": 189
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/define-and-check-addendum.py",
+      "sha256": "b30770d4ca7b892b8337c6160c7de26143f8ba1516eb3a096338d0d927f73c43",
+      "bytes": 6862
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/field-count-supersession.json",
+      "sha256": "9bd0e35ff5503825c1bf6fb56fc81126d3e90f1f6a807dde9dbc17401e3b00a4",
+      "bytes": 19546
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/freeze-addendum.py",
+      "sha256": "9e735ce26e96c59b68372a966b16fde9d181302fcb5140617c7a480b8c0550b2",
+      "bytes": 3188
+    }
+  ],
+  "excluded": [
+    "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/artifact-manifest.json",
+    "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/freeze.stderr",
+    "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/freeze.stdout",
+    "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/manifest-verification.json",
+    "docs/review/evidence/config-acceptance/delivery/controller-ready-v2-field-count-addendum-6606/stable-addendum-receipt.json"
+  ]
+}

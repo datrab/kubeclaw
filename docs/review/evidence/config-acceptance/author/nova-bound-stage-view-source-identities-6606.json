@@ -1,0 +1,51 @@
+{
+  "scope": "current source constraints and partial proposed generated-stage-view contract",
+  "sourceCommit": "6606af9e590032f328f330ecb3d953b1eef027e3",
+  "inputs": [
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+      "sha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67"
+    },
+    {
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db"
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+    },
+    {
+      "path": "skills/nova/core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+    },
+    {
+      "path": "skills/nova/project/source.ts",
+      "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+    },
+    {
+      "path": "skills/nova/project/coverage.ts",
+      "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+    },
+    {
+      "path": "skills/nova/project/demo.ts",
+      "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/author/NOVA-BOUND-STAGE-VIEW-PROPOSAL-6606.md",
+      "sha256": "82714e958c734795362d503702aca33dfa8002011b7b88c52f331c0fbcc6dd11"
+    }
+  ],
+  "verifiedRuntimeEffects": false,
+  "independentReview": "not-run",
+  "fullFieldPartition": "open",
+  "targetSchemaAndMigration": "open",
+  "originalCarrierLimits": "unchanged; C0 not accepted"
+}

@@ -941,3 +941,27 @@ Tailscale batch09:5 schema readers/current guarded projections and20 future case
 ## 2026-10-13 batch11 repository/lint bounded source milestone
 
 16 original consumer schema rows source-refined with actual parser/default/caller/domain distinctions;16 narrow current definition cases and64 future NOTRUN. Real local repositoryfile controls and exported pure lint request parser only, no Git/linttool/registeredstage effects.22 manual candidates;61 schema consumers,102 untouched original supplemental plus prior source-refined obligations,3924 unreviewed candidates+131 reviewed-open remain. See batches/bce3f075-repository-lint-11/summary.json. Parent Nova first-module typedcarrier proposal remains unaccepted/OPEN. No C0 acceptance; Core corrections/independent report and old cases/history preserved.
+
+## 2026-10-13 checkpoint6606 batch12/batch13 milestones
+
+Batch12 exact269 historical-native→alreadycanonicalactive successor mapping proposed; no oldbody reactivation/rootacceptance, parentintegration/recheckpending. Batch13 source-refines10 human/architecture/Prismapproval schema rows,10 narrowdefinitions+60 futureNOTRUN; actualpurehelpers only, conditionaldormancy/currentparser-schema mismatches explicit.51schemas/102 untouchedsupplemental+priorunaccepted declarations/refined obligations;3887unreviewed candidates+136reviewed-open remain. Committedbaselineblob/hash references, changedinputs+dirtypatch only. No globalC0 acceptance.
+
+## 2026-10-13 batch14 empty-config/retention source milestone
+
+10 emptyconfiguration representations source-refined without inventingknobs or declaring manifest/task/adapterpolicy absent. ExistingRT-PROJECT-DEMO-RETENTIONSECONDS compilerproducer crosslink corrected via preservedmaterial addendum;9223372036technicalduration bound distinct fromoperativebudget.11 narrowcases+40 futureNOTRUN;2250 refs;41consumer schemas/102untouchedsupplemental+priorunacceptedsemantics,3856candidateunreviewed+140reviewed-open remain. Activebatch contract is contracts-retention-producer-corrected.json; oldinputs/history retained. No globalC0 acceptance.
+
+## 2026-10-13 batch15 demo adapter source milestone
+
+10 fields actualconstructor/source/domain-refined; derivedstageproducer IDs notindependentoperator knobs; capturedcredentialpaths notfrozencontents, sourcepost rereads/followslinks.10 narrowdefinitions+60 futureNOTRUN,2260refs;31schemas/102untouchedsupplemental+priorunacceptedsemanticobligations,3832candidateunreviewed+145reviewed-open remain. Payload65536 vswholeencodedstore67108864 quotas distinct; no fakeHTTP/operator/controllereffects. No globalC0 acceptance.
+
+## 2026-10-13 batch16 stage configuration milestone
+
+12 originalschemas source-refined;5 acceptedunusedagentRole targetreject with no phantomreaders,5 actualcanonicaltarget locators distinctSDKwirecodec,conditionalqualityflag preservingmandatorynativecoverage,versionedmanifestencoding/pinnedhistory.12 narrowdefinitions+72 futureNOTRUN;2272refs;19consumerschemas/102untouchedsupplemental+priorunacceptedsemanticobligations,3809unreviewed+146reviewed-open candidates. Failedstrictschema attempt retained; no globalC0 acceptance.
+
+## 2026-10-13 batch17 readonly report reader milestone
+
+5 original schemas source-refined; actual combined journal, aggregate artifact and complete canonical bundle quotas remain distinct. Reader registry config pinning is retained; original writer issuer is distinct, no second authority or blanket missing-binding claim.5 narrow definitions+30 futureNOTRUN;2277 refs;14consumer schemas/102untouched supplemental+priorunacceptedsemantic obligations,3757unreviewed+150reviewed-open candidates. No genuine completed-run/store/stage effects or globalC0 acceptance.
+
+## 2026-10-13 batch18 remote plan/evidence milestone (stable pause)
+
+14 original schema nodes source-refined with real current parser/caller/conditional/member distinctions;14 narrow constructor/schema/helper definitions+84 futureNOTRUN.2291 immutable refs;original6103casebodies unchanged. Zero remaining original consumer-review markers is NOT semantic closure:102untouched supplemental+95priorunaccepted declarations/allrefineddomain/role/provider/source-key/coverage/import/manifest/quota/module obligations remain,3731unreviewed+155reviewed-open candidates. No secret/HTTP/native/import/manifest/stage effects, model call or physicalcapacity proof. Current platform recursive config freeze and currentv4pins retained; parentmodule proposal OPEN. Published Runtime matrices pause for parentconsolidation at batch18receipt.

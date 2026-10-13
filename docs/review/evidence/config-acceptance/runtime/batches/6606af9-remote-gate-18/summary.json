@@ -1,0 +1,22 @@
+{
+  "status": "stable14 remote source/schema/constructor/endpoint-helper definitions ONLY; NOT ACCEPTED",
+  "rows": 1248,
+  "cases": 6201,
+  "caseResults": {
+    "not-run": 4697,
+    "passed": 1504
+  },
+  "schemaRowsRefined": 14,
+  "newNarrowCurrentDefinitionCases": 14,
+  "newFutureNotRunCases": 84,
+  "oldCaseBodiesUnchanged": 6103,
+  "immutableObservationReferenceOccurrences": 2291,
+  "allC0ClosedFalse": true,
+  "remainingConsumerReviewRows": 0,
+  "remainingUntouchedOriginalSupplementalSourceTracedRows": 102,
+  "manualCandidatesThisBatch": 26,
+  "manualCandidatesCombined": 911,
+  "remainingUnreviewedCandidates": 3731,
+  "reviewedOpenCandidates": 155,
+  "remaining": "0 original consumer-review-required schema markers remain, but ALL refined field semantic/domain/genuine provider-role-grant-source-key/plan/native coverage/import/manifest/quota/metadata/fullcases remain unaccepted/open.102 untouched original supplemental+95 prior unaccepted declarations; candidate remainder exact below. Productive fixed remote poll/storage/artifact/payload limits still need owner/domain/cases. Parent first logical module carrier/membership/taskoperator/quota/legacy/crossreaders OPEN; no physical/API/effect/globalC0 acceptance."
+}

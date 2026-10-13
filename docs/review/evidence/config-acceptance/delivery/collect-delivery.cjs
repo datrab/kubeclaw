@@ -206,6 +206,12 @@ cp.execFileSync('python3',[path.join(out,'define-gateway-health-targets-20261013
 cp.execFileSync('python3',[path.join(out,'define-ops-service-targets-20261013.py')],{stdio:'inherit'});
 cp.execFileSync('python3',[path.join(out,'define-chart-probe-targets-20261013.py')],{stdio:'inherit'});
 cp.execFileSync('python3',[path.join(out,'define-controller-targets-20261013.py')],{stdio:'inherit'});
+cp.execFileSync('python3',[path.join(out,'define-controller-response-epoch-6606af9-20261013.py')],{stdio:'inherit'});
+cp.execFileSync('python3',[path.join(out,'define-controller-original-epoch-fixtures-6606af9-20261013.py')],{stdio:'inherit'});
+// Refresh only own pure definition observers before exporting their exact identities. No native controller execution.
+cp.execFileSync('node',[path.join(out,'check-controller-domain-response-6606af9-20261013.cjs')],{stdio:'inherit'});
+cp.execFileSync('node',[path.join(out,'check-controller-epoch-serialization-6606af9-20261013.cjs')],{stdio:'inherit'});
+cp.execFileSync('python3',[path.join(out,'link-controller-definition-evidence-6606af9-20261013.py')],{stdio:'inherit'});
 cp.execFileSync('python3',[path.join(out,'freeze-future-case-invocations-20261013.py')],{stdio:'inherit'});
 cp.execFileSync('python3',[path.join(out,'update-fragment-spec-status-20261013.py')],{stdio:'inherit'});
 const finalFragment=JSON.parse(fs.readFileSync(path.join(out,'inventory-fragment.json'),'utf8'));console.log(JSON.stringify({rows:finalFragment.rows.length,sources:finalFragment.sources.length,gaps:finalFragment.gaps.length,status:identity.status}));

@@ -1,0 +1,468 @@
+{
+  "scope": "Actual complete structural checker with actual ObservationReferences; private mutant fixtures only",
+  "negativeCount": 40,
+  "escapedCount": 0,
+  "controls": [
+    {
+      "id": "runtime-package-omitted",
+      "exit": 1,
+      "errorCount": 5934,
+      "errors": [
+        "native package presence differs between inventory and matrix",
+        "required productive Runtime native specification package missing/wrong source",
+        "case RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD: native reference package missing",
+        "case RT-351419f2c26e2696-NETWORK05-DEFINITION: native reference package missing",
+        "case RT-351419f2c26e2696-NETWORK05-CONTRACT: native reference package missing",
+        "case RT-351419f2c26e2696-NETWORK05-ALTERNATE: native reference package missing"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "734280ce83fe160c85dc046c7d9a478b235842add66f6f5a384ba7b0c96e9bfc"
+    },
+    {
+      "id": "runtime-package-and-advertisement-omitted",
+      "exit": 1,
+      "errorCount": 5933,
+      "errors": [
+        "required productive Runtime native specification package missing/wrong source",
+        "case RT-351419f2c26e2696-CURRENT-SCHEMA-FIELD: native reference package missing",
+        "case RT-351419f2c26e2696-NETWORK05-DEFINITION: native reference package missing",
+        "case RT-351419f2c26e2696-NETWORK05-CONTRACT: native reference package missing",
+        "case RT-351419f2c26e2696-NETWORK05-ALTERNATE: native reference package missing",
+        "case RT-351419f2c26e2696-NETWORK05-BINDING: native reference package missing"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "16c8ef1cf299a30e7f662dc18bb936b3866f7453d5f1d2e11885b4860f82731d",
+      "mutantMatrixSha256": "734280ce83fe160c85dc046c7d9a478b235842add66f6f5a384ba7b0c96e9bfc"
+    },
+    {
+      "id": "historical-mapping-omitted",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "native historical projection: HISTORICAL_MAPPING:projection historical set omission/addition"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "490da4d28b7b2903998a12e03e776b680532e1d7268039a91bdca58094928484"
+    },
+    {
+      "id": "historical-review-body-tamper",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "native historical projection: HISTORICAL_MAPPING:projection reviewed mapping drift: RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "526de2814ec1c647d5554dcaf0a3bfb36a8b8c1849ebc4d6aab2e3c9faf4aa33"
+    },
+    {
+      "id": "historical-reverse-omitted",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "native historical projection: HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-6f16c9b87b3bded5-REGISTRATION-ALTERNATE"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "3877d4a5f216b2ba764c2af0201255828fde979ea59b86b3e6c9db4b2a7db018"
+    },
+    {
+      "id": "historical-reverse-scope-promotion",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "native historical projection: HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-6f16c9b87b3bded5-REGISTRATION-ALTERNATE"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "06ea7fc9d1d817ec97c753a0fb34219c028fb42f4218c456c65111492fde2ef2"
+    },
+    {
+      "id": "historical-reverse-digest-tamper",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "native historical projection: HISTORICAL_MAPPING:projection missing/duplicate/changed reverse link: RT-6f16c9b87b3bded5-REGISTRATION-ALTERNATE"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "85dcda134efe8fa65a66a69bd35027aff2a1ec40be88a7a65b359578b6dd1f80"
+    },
+    {
+      "id": "historical-reverse-unknown-package",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "native historical projection: HISTORICAL_MAPPING:projection unknown historical package"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "6ea8bc33aac5f480ef9d6d4159af030a4491ab2aeff68dd5c2698a5ea36a61a6"
+    },
+    {
+      "id": "native-body-scope-tamper",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "native RUNTIME-NATIVE-CASE-SPECIFICATIONS: original specification/requirement loss"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "3e628eb51b6792bfc2d6e45b851d8f7ad16b08eca5576796082515fd27417ce8"
+    },
+    {
+      "id": "native-count-tamper",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "native historical projection: HISTORICAL_MAPPING:projection advertised count drift: historicallyMappedNativeCaseCount"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "07a4c04d2c2bd0763b84d49fd40cb0d1f636a08e1222032920cfe6c4f250ae1d",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "historical-predecessor-canonical-promotion",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "native historical projection: HISTORICAL_MAPPING:RT-REPOSITORY-GRADE-FAST-TOKENIZERENCODING-MISSING: obsolete case reactivation/acceptance"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "0cfc0143c7952b8da1fe0c3a8aaa4e1240f436a889afd166d18ff3a99754b770"
+    },
+    {
+      "id": "core-package-omission",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical question supplemental package omitted"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "dcd6242cc6ed70de5377fce2884b136f3e6f72cdfa44aa03393a316f792719bf",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "core-required-source-omission",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical question required link source omitted/wrong"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "8bd04dd27ed356d63c4e1ae6cbb47e773c8e3938fbb26650d738d5e01ebddf9a",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "core-alias-omission",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical question link/alias conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "901b4f57666dfd578d6f01f723c128453fcebb77043e3019642662b36281a385",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "core-question-omission",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical question link/alias conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "5cdcb695a8d4cc06be6b01fdc62e46d012249fa83fb5f1f62137b01c7570ddd2",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "core-13row-omission",
+      "exit": 1,
+      "errorCount": 5,
+      "errors": [
+        "Core canonical question field/case projection omitted",
+        "Core canonical row CMP-buster-engine-preparation.storeLockWaitSeconds: normalized source body/requirement conservation drift",
+        "QC-FOUNDATION-FLOCK-WAIT-VAL: dangling setting CMP-buster-engine-preparation.storeLockWaitSeconds",
+        "QC-FOUNDATION-FLOCK-WAIT-REAL-LOCK: dangling setting CMP-buster-engine-preparation.storeLockWaitSeconds",
+        "QC-FOUNDATION-FLOCK-WAIT-HISTORY: dangling setting CMP-buster-engine-preparation.storeLockWaitSeconds"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "7e737dddfedd27011547614b77e26a84e8c7c9d9c09035d8c8d317578265acf8",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "core-27case-omission",
+      "exit": 1,
+      "errorCount": 24,
+      "errors": [
+        "Core canonical question field/case projection omitted",
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: id",
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: settingIds",
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: requirementIds",
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: phase",
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: productiveCaller"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "30b5ff208561f539fe8ba9f568f7b77441a0f0a15a0fd2b56494dc15781c856c"
+    },
+    {
+      "id": "core-fragment-registration-omission",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical question fragment registration missing"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "83d91ee994534a7175a0b11f5934709d3eab6726caef6518cc6c6f3e5af880a9",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "pure-package-omission",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "required Delivery pure definition observation package missing"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "5292a941fdd010e73a6354f637d94051a8085264a0018507fcaecc1ac0dd8b98"
+    },
+    {
+      "id": "pure-observation-scope-promotion",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "pure definition observation body/scope/requirement conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "2a82d3737dbf10b946511af9c2d6abe09759cbaee8f2e5f5dc10dc682cd1057d"
+    },
+    {
+      "id": "pure-observation-result-promotion",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "pure definition observation body/scope/requirement conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "4259361cc932287c627d51fa501cf8a00fd513115253cbb6730d2ac0f16f792d"
+    },
+    {
+      "id": "pure-package-source-digest-tamper",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "pure definition observation source: content drift docs/review/evidence/config-acceptance/delivery/c0-controller-material-correction-cases-6606-20261013.json"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "a10e3795c0794e55b9e630948993156f0e7a13fc6a2dc1fb14c8f426ed4c5da9"
+    },
+    {
+      "id": "core-row-projection-scope-tamper",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical row CMP-buster-engine-preparation.storeLockWaitSeconds: normalized source body/requirement conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "6ce05b926644ac0e47d65987f2600cc2e94958b6501984ad89b3d7539849ed33",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "core-case-projection-priorstate-tamper",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: priorState"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "941c6a7a3c4cbbec1a26441adfe039fe3ed6e6230f7edc40973ce369feb84b77"
+    },
+    {
+      "id": "core-case-projection-requirement-loss",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: requirementIds"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "64bca4d867db6190e33b17573865173b83de71191af7ac09035ad79dea106a17"
+    },
+    {
+      "id": "core-row-source-provided-instanceScope-tamper",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical row CMP-buster-engine-preparation.storeLockWaitSeconds: normalized source body/requirement conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "d7e55394471e0af9b693b5ec358fbfa7546fab5897668f488f201a5d261a65af",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "core-row-source-field-coordinate-tamper",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical row CMP-buster-engine-preparation.storeLockWaitSeconds: normalized source body/requirement conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "67471f555f6cea20c694ad50b1014258e770e33851c0886b8f815b05e177017f",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "row-derived-fragment-drift",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical row CMP-buster-engine-preparation.storeLockWaitSeconds: normalized source body/requirement conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "36fdc1340324f24a457dca335891d12e3c2f37964ce42b6056c7633cf5e6d549",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "row-derived-evidence-drift",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical row CMP-buster-engine-preparation.storeLockWaitSeconds: normalized source body/requirement conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "79bea749bc9f6e7992f1f31a75af6aeb0217b3f45e78309f3178092a1a8e2f69",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "row-normalized-class-drift",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical row CMP-buster-engine-preparation.storeLockWaitSeconds: normalized source body/requirement conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "825913c3939ad4e7ac13ce32b45647db7166b3145e0c2a788f7b86046137cb5f",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "row-original-key-omission",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical row CMP-buster-engine-preparation.storeLockWaitSeconds: normalized source body/requirement conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "72878a71e003b825e135954a348d673bff0396f31641bfc71cf02063e809ddcd",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "row-derived-key-omission",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical row CMP-buster-engine-preparation.storeLockWaitSeconds: normalized source body/requirement conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "4cf1974261041119a72e8fa803540021e60ada8567adeb46f21aadc1f10ad4ee",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "case-original-key-omission",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: priorState"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "08f0be84ec452d46caec0a4d6ba257c4d5d4362f06aeac61a602e05f5ca3e873"
+    },
+    {
+      "id": "case-present-null-key-omission",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: reviewerConfirmation"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "dcdc16664692fc94eb8be693037c6ec36bd83f1de26260d7b19a5573b0231bd6"
+    },
+    {
+      "id": "case-nested-original-value-drift",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: sourceIdentity"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "8f181aab789b7933a9c49a14107f9a52f7e9d4fdcd701cf1f90d99a3702b2e44"
+    },
+    {
+      "id": "case-phase-promotion",
+      "exit": 1,
+      "errorCount": 2,
+      "errors": [
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: phase",
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: phase/review promotion drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "9b0a033d6c0fa2209f698f8868609f987aed00716a442dd4fa481e2a56f55378"
+    },
+    {
+      "id": "row-author-review-promotion",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical row CMP-buster-engine-preparation.storeLockWaitSeconds: normalized source body/requirement conservation drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "8e727c29d409f8a54b5b1f86215d99a9183332c608eff6259a16fb391227641d",
+      "mutantMatrixSha256": "3cb1c6bf7a9afbb2b78e2ae5a71e709cb9cc347cfe005fa522175db69f864f62"
+    },
+    {
+      "id": "case-author-review-promotion",
+      "exit": 1,
+      "errorCount": 2,
+      "errors": [
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: reviewerConfirmation",
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: phase/review promotion drift"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "554ee86417343279e9dd9fc1892b8988d1904d2c9bebdf326bc183142a629686"
+    },
+    {
+      "id": "case-command-drift",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: command"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "890bb209e1291196e94562666e62141d806842ed9d33ab470f7047e2076d98ea"
+    },
+    {
+      "id": "case-input-profile-drift",
+      "exit": 1,
+      "errorCount": 1,
+      "errors": [
+        "Core canonical case QC-FOUNDATION-FLOCK-WAIT-VAL: source property/requirement conservation drift: inputProfile"
+      ],
+      "result": "intended-rejection",
+      "mutantInventorySha256": "0dd9328143eeca64f9eab0221d7f93aa8cab7f2e5ffb3792986ebbeddb4ab0c5",
+      "mutantMatrixSha256": "06ac3b32bee4767c33addfdd10220bce7c0664db171a5423b0a06fb437ddf29b"
+    }
+  ]
+}

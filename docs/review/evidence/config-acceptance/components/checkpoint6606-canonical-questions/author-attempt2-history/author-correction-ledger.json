@@ -1,0 +1,7 @@
+{
+  "finding": "author mapping initial B tar witness1024 disagreed with unchanged complete B profile2048",
+  "before": "author-attempt1-history/canonical-question-fragment.json",
+  "correction": "B tar witness2048 exactly reuses verified complete profile; no retuning or original input change",
+  "controls": "subsequent mapping integrity checks require every own adjustable witness to match actual complete owner profile pointer",
+  "status": "author correction only; independent semantic review pending"
+}

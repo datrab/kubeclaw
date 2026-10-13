@@ -1,0 +1,30 @@
+{
+  "verdict": "no new actionable material finding at bounded frozen canonical mapping/definition scope; NOT wholeC0/rootprojection/implementation acceptance",
+  "rowsReviewed": 13,
+  "questionsReviewed": 14,
+  "futureCasesNotRun": 25,
+  "narrowCurrentCases": 2,
+  "independentDefinitionControls": 13,
+  "independentPureControls": 16,
+  "authorSafeReplayControls": {
+    "check-secret-current-reader.mjs": 6,
+    "check-ownership-current-reader.mjs": 4,
+    "check-image-wire-current.mjs": 4,
+    "check-target-profiles.mjs": 11
+  },
+  "unresolvedCrossOwnerAliases": 60,
+  "remainingExactSourceLinkObligations": 808,
+  "frozenPackageFiles": 72,
+  "frozenSourceReferenceFiles": 390,
+  "protectedCoreInputsUnchanged": 157,
+  "primarySourcesUnchanged": 173,
+  "RuntimePausedInputsUnchanged": 4,
+  "drift": {
+    "packageFiles": [],
+    "selectedSourceAndReferenceFiles": [],
+    "pausedRuntimeInputs": []
+  },
+  "wholeC0Accepted": false,
+  "rootProjectionReviewed": false,
+  "RuntimeSelfReviewed": false
+}
