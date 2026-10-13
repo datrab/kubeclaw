@@ -1,0 +1,643 @@
+{
+  "qualification": "Independent complete guard equality/one-step-invalid and composite profile definitions; source-guaranteed attribution, no native execution or requirement waiver",
+  "observations": [
+    {
+      "group": "minimumOpenFiles-relation",
+      "side": "A",
+      "selectedReportPolicy": {
+        "maximumAggregateResultBytes": 16777216,
+        "maximumSourceBytes": 67108864,
+        "maximumCases": 5000,
+        "maximumFindings": 5000,
+        "maximumCaseFindings": 100,
+        "maximumTimeoutMs": 300000,
+        "memoryBytes": 536870912,
+        "minimumCpuTimeMs": 1000,
+        "maximumOpenFiles": 64,
+        "minimumOpenFiles": 64,
+        "minimumHeapMiB": 16,
+        "heapFraction": 0.7,
+        "runtimeMemoryReserveBytes": 67108864
+      },
+      "schemaChecks": [
+        {
+          "owner": "prism-control",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-studio",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-worker",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-execution",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "buster-engine",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "worker-core",
+          "valid": true,
+          "errors": null
+        }
+      ],
+      "actual": {
+        "definitionResult": "accepted-current-whole-config-relation",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "e42389165f8a95781adfb09c6f964362328d90459fedb59517c19f459094fab4"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "attribution": "Real config relation guard only, not independent native effect",
+      "expectedReject": null,
+      "futureImplementationResults": "not-run"
+    },
+    {
+      "group": "minimumOpenFiles-relation",
+      "side": "B",
+      "selectedReportPolicy": {
+        "maximumAggregateResultBytes": 16777216,
+        "maximumSourceBytes": 67108864,
+        "maximumCases": 5000,
+        "maximumFindings": 5000,
+        "maximumCaseFindings": 100,
+        "maximumTimeoutMs": 300000,
+        "memoryBytes": 536870912,
+        "minimumCpuTimeMs": 1000,
+        "maximumOpenFiles": 64,
+        "minimumOpenFiles": 65,
+        "minimumHeapMiB": 16,
+        "heapFraction": 0.7,
+        "runtimeMemoryReserveBytes": 67108864
+      },
+      "schemaChecks": [
+        {
+          "owner": "prism-control",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-studio",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-worker",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-execution",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "buster-engine",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "worker-core",
+          "valid": true,
+          "errors": null
+        }
+      ],
+      "actual": {
+        "definitionResult": "rejected-current-whole-config-relation",
+        "error": "SWARM_CONFIG_BUSTER_REPORT_DESCRIPTOR_RANGE_INVALID"
+      },
+      "attribution": "Real config relation guard only, not independent native effect",
+      "expectedReject": "SWARM_CONFIG_BUSTER_REPORT_DESCRIPTOR_RANGE_INVALID",
+      "futureImplementationResults": "not-run"
+    },
+    {
+      "group": "reserve-memory-relation",
+      "side": "A",
+      "selectedReportPolicy": {
+        "maximumAggregateResultBytes": 16777216,
+        "maximumSourceBytes": 67108864,
+        "maximumCases": 5000,
+        "maximumFindings": 5000,
+        "maximumCaseFindings": 100,
+        "maximumTimeoutMs": 300000,
+        "memoryBytes": 301989888,
+        "minimumCpuTimeMs": 1000,
+        "maximumOpenFiles": 64,
+        "minimumOpenFiles": 16,
+        "minimumHeapMiB": 16,
+        "heapFraction": 0.7,
+        "runtimeMemoryReserveBytes": 67108864
+      },
+      "schemaChecks": [
+        {
+          "owner": "prism-control",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-studio",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-worker",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-execution",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "buster-engine",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "worker-core",
+          "valid": true,
+          "errors": null
+        }
+      ],
+      "actual": {
+        "definitionResult": "accepted-current-whole-config-relation",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "d1502b8d647a6564f9702afdf482356bf772e9e1f3b796f09ae767e81bfc07a0"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "attribution": "Real config relation guard only, not independent native effect",
+      "expectedReject": null,
+      "futureImplementationResults": "not-run"
+    },
+    {
+      "group": "reserve-memory-relation",
+      "side": "B",
+      "selectedReportPolicy": {
+        "maximumAggregateResultBytes": 16777216,
+        "maximumSourceBytes": 67108864,
+        "maximumCases": 5000,
+        "maximumFindings": 5000,
+        "maximumCaseFindings": 100,
+        "maximumTimeoutMs": 300000,
+        "memoryBytes": 301989887,
+        "minimumCpuTimeMs": 1000,
+        "maximumOpenFiles": 64,
+        "minimumOpenFiles": 16,
+        "minimumHeapMiB": 16,
+        "heapFraction": 0.7,
+        "runtimeMemoryReserveBytes": 67108864
+      },
+      "schemaChecks": [
+        {
+          "owner": "prism-control",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-studio",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-worker",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-execution",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "buster-engine",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "worker-core",
+          "valid": true,
+          "errors": null
+        }
+      ],
+      "actual": {
+        "definitionResult": "rejected-current-whole-config-relation",
+        "error": "SWARM_CONFIG_BUSTER_EXECUTION_REPORT_MEMORY_INVALID"
+      },
+      "attribution": "Real config relation guard only, not independent native effect",
+      "expectedReject": "SWARM_CONFIG_BUSTER_EXECUTION_REPORT_MEMORY_INVALID",
+      "futureImplementationResults": "not-run"
+    },
+    {
+      "group": "minimum-plus-maximum-group",
+      "side": "A",
+      "selectedReportPolicy": {
+        "maximumAggregateResultBytes": 16777216,
+        "maximumSourceBytes": 67108864,
+        "maximumCases": 5000,
+        "maximumFindings": 5000,
+        "maximumCaseFindings": 100,
+        "maximumTimeoutMs": 300000,
+        "memoryBytes": 536870912,
+        "minimumCpuTimeMs": 1000,
+        "maximumOpenFiles": 64,
+        "minimumOpenFiles": 16,
+        "minimumHeapMiB": 16,
+        "heapFraction": 0.7,
+        "runtimeMemoryReserveBytes": 67108864
+      },
+      "schemaChecks": [
+        {
+          "owner": "prism-control",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-studio",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-worker",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-execution",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "buster-engine",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "worker-core",
+          "valid": true,
+          "errors": null
+        }
+      ],
+      "actual": {
+        "definitionResult": "accepted-current-whole-config-relation",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "attribution": "Actual caller/native requested openFiles64/48 is maximumOpenFiles effect; minimum remains met, original minimum native requirement OPEN.",
+      "expectedReject": null,
+      "futureImplementationResults": "not-run"
+    },
+    {
+      "group": "minimum-plus-maximum-group",
+      "side": "B",
+      "selectedReportPolicy": {
+        "maximumAggregateResultBytes": 16777216,
+        "maximumSourceBytes": 67108864,
+        "maximumCases": 5000,
+        "maximumFindings": 5000,
+        "maximumCaseFindings": 100,
+        "maximumTimeoutMs": 300000,
+        "memoryBytes": 536870912,
+        "minimumCpuTimeMs": 1000,
+        "maximumOpenFiles": 48,
+        "minimumOpenFiles": 32,
+        "minimumHeapMiB": 16,
+        "heapFraction": 0.7,
+        "runtimeMemoryReserveBytes": 67108864
+      },
+      "schemaChecks": [
+        {
+          "owner": "prism-control",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-studio",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-worker",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-execution",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "buster-engine",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "worker-core",
+          "valid": true,
+          "errors": null
+        }
+      ],
+      "actual": {
+        "definitionResult": "accepted-current-whole-config-relation",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "9276358c11d6c93d437dbf7d701ebfe88bdad85e2e4fec3de20d372f1a91e759"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "attribution": "Actual caller/native requested openFiles64/48 is maximumOpenFiles effect; minimum remains met, original minimum native requirement OPEN.",
+      "expectedReject": null,
+      "futureImplementationResults": "not-run"
+    },
+    {
+      "group": "reserve-plus-memory-group",
+      "side": "A",
+      "selectedReportPolicy": {
+        "maximumAggregateResultBytes": 16777216,
+        "maximumSourceBytes": 67108864,
+        "maximumCases": 5000,
+        "maximumFindings": 5000,
+        "maximumCaseFindings": 100,
+        "maximumTimeoutMs": 300000,
+        "memoryBytes": 536870912,
+        "minimumCpuTimeMs": 1000,
+        "maximumOpenFiles": 64,
+        "minimumOpenFiles": 16,
+        "minimumHeapMiB": 16,
+        "heapFraction": 0.7,
+        "runtimeMemoryReserveBytes": 67108864
+      },
+      "schemaChecks": [
+        {
+          "owner": "prism-control",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-studio",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-worker",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-execution",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "buster-engine",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "worker-core",
+          "valid": true,
+          "errors": null
+        }
+      ],
+      "actual": {
+        "definitionResult": "accepted-current-whole-config-relation",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f1946f0e25739b034f0da8e7d66523b79b108282d2f509d427f7c5e3cc4fcfca"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "attribution": "Actual caller/native requested memory512/384MiB is memoryBytes effect; reserve guard remains met, original reserve native requirement OPEN.",
+      "expectedReject": null,
+      "futureImplementationResults": "not-run"
+    },
+    {
+      "group": "reserve-plus-memory-group",
+      "side": "B",
+      "selectedReportPolicy": {
+        "maximumAggregateResultBytes": 16777216,
+        "maximumSourceBytes": 67108864,
+        "maximumCases": 5000,
+        "maximumFindings": 5000,
+        "maximumCaseFindings": 100,
+        "maximumTimeoutMs": 300000,
+        "memoryBytes": 402653184,
+        "minimumCpuTimeMs": 1000,
+        "maximumOpenFiles": 64,
+        "minimumOpenFiles": 16,
+        "minimumHeapMiB": 16,
+        "heapFraction": 0.7,
+        "runtimeMemoryReserveBytes": 50331648
+      },
+      "schemaChecks": [
+        {
+          "owner": "prism-control",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-studio",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-worker",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "prism-execution",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "buster-engine",
+          "valid": true,
+          "errors": null
+        },
+        {
+          "owner": "worker-core",
+          "valid": true,
+          "errors": null
+        }
+      ],
+      "actual": {
+        "definitionResult": "accepted-current-whole-config-relation",
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "5660e105646dfaba48b6f461b4c7a8c6186758f1725db290ed4e771b15d54648"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "attribution": "Actual caller/native requested memory512/384MiB is memoryBytes effect; reserve guard remains met, original reserve native requirement OPEN.",
+      "expectedReject": null,
+      "futureImplementationResults": "not-run"
+    }
+  ]
+}

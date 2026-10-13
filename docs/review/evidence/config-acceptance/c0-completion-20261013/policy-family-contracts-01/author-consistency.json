@@ -1,0 +1,22 @@
+{
+  "scope": "Task-local JSON author consistency/identity observation only, not target schema/loader/render/native or C0 acceptance",
+  "observedCounts": {
+    "families": 4,
+    "completeProjectionFixtures": 10,
+    "finiteProposedControls": 26,
+    "inputIdentitiesUnchanged": 34,
+    "sourceLineWitnesses": 81,
+    "allFixturePairsUnrelatedFieldsEqual": 5
+  },
+  "schemaDefaultKeywords": 0,
+  "productiveOrNativeHarnessRuns": 0,
+  "implementationAuthorization": false,
+  "globalC0Accepted": false,
+  "currentObservedPolicyDefaults": {
+    "P1": "1000/2000/2000ms,proxy3s",
+    "P2": "min32,max512,entropy48bytes",
+    "P3": "default300000ms,max900000ms,default20,max50flows",
+    "P4": "500/500/50items,finite30000ms,aggregateunbounded"
+  },
+  "allProposedControlStatuses": "not-run"
+}

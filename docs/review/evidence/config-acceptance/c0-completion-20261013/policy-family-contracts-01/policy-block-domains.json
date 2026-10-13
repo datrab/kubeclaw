@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "scope": "PROPOSED C3 four policy blocks only, inserted into existing whole deployment profile schemas; not a new root loader, validator or operator author. Semantic cross-field relations are specified in contracts.json.",
+  "noDefaultKeywords": true,
+  "$defs": {
+    "P1": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "selfCheckTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 315576000000000,
+          "unit": "ms"
+        },
+        "requestTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 315576000000000,
+          "unit": "ms"
+        },
+        "streamIdleTimeoutMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 315576000000000,
+          "unit": "ms"
+        },
+        "proxyProbeTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647,
+          "unit": "s"
+        }
+      },
+      "required": [
+        "selfCheckTimeoutMs",
+        "requestTimeoutMs",
+        "streamIdleTimeoutMs",
+        "proxyProbeTimeoutSeconds"
+      ]
+    },
+    "P2": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "minimumBearerCharacters": {
+          "type": "integer",
+          "minimum": 32,
+          "maximum": 512,
+          "unit": "ASCII characters"
+        },
+        "maximumBearerCharacters": {
+          "type": "integer",
+          "minimum": 32,
+          "maximum": 512,
+          "unit": "ASCII characters"
+        },
+        "bearerTokenEntropyBytes": {
+          "type": "integer",
+          "minimum": 48,
+          "maximum": 384,
+          "unit": "random bytes before unpadded base64url encoding"
+        }
+      },
+      "required": [
+        "minimumBearerCharacters",
+        "maximumBearerCharacters",
+        "bearerTokenEntropyBytes"
+      ]
+    },
+    "P3": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "defaultWindowMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 900000,
+          "unit": "ms"
+        },
+        "maximumWindowMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 900000,
+          "unit": "ms"
+        },
+        "defaultFlowLimit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "unit": "flows"
+        },
+        "maximumFlowLimit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "unit": "flows"
+        }
+      },
+      "required": [
+        "defaultWindowMs",
+        "maximumWindowMs",
+        "defaultFlowLimit",
+        "maximumFlowLimit"
+      ]
+    },
+    "P4": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "defaultPageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "API list items"
+        },
+        "eventPageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "API list items"
+        },
+        "singlePageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "unit": "API list items"
+        },
+        "finiteCallDeadlineMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647,
+          "unit": "ms"
+        },
+        "aggregateScan": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "mode": {
+                  "const": "unbounded"
+                }
+              },
+              "required": [
+                "mode"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "mode": {
+                  "const": "bounded"
+                },
+                "maximumPages": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991,
+                  "unit": "successfully parsed list pages across the entire operation"
+                },
+                "maximumAttempts": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991,
+                  "unit": "GET transport invocations, including oversized retries"
+                },
+                "deadlineMs": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 2147483647,
+                  "unit": "elapsed monotonic ms from operation start"
+                }
+              },
+              "required": [
+                "mode",
+                "maximumPages",
+                "maximumAttempts",
+                "deadlineMs"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "defaultPageSize",
+        "eventPageSize",
+        "singlePageSize",
+        "finiteCallDeadlineMs",
+        "aggregateScan"
+      ]
+    }
+  }
+}

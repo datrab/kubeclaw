@@ -1,0 +1,33 @@
+{
+  "scope": "Deterministic local regular-file PAX gzip/tar definitions only; no extraction; all member names relative, no links/devices/host writes",
+  "archives": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/archives/entries-150001.tar.gz",
+      "bytes": 1431727,
+      "sha256": "480e3dd92e03ef87b658f324e778f5b9617b8c4f565f876073e979bdee062902"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/archives/expanded-402653185.tar.gz",
+      "bytes": 1757157,
+      "sha256": "e8472e772882bc85095c65d4f013e108ddbe09f466bc84a22bde3b762144cd04"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/archives/listing-long-name-810000.tar.gz",
+      "bytes": 5897,
+      "sha256": "1e3e528b53ce4c75a74e4b560603d8759d6eae0532c929e8280c2e5a5b552504"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/archives/archive-bytes-50335744-body.tar.gz",
+      "bytes": 50351267,
+      "sha256": "dadd6d625fab14a876b9fc3ec40d1deca8b615f4ed0da69745ee84b109ea7d14"
+    }
+  ],
+  "pythonRandomSeed": 229,
+  "gzipMtime": 0,
+  "sourceCaseIds": [
+    "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveEntries",
+    "CMP-C1-EFFECT-buster-engine-preparation.maximumExtractedBytes",
+    "CMP-C1-EFFECT-buster-engine-preparation.maximumListingLineBytes",
+    "CMP-C1-EFFECT-buster-engine-preparation.maximumArchiveBytes"
+  ]
+}

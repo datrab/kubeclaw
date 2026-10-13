@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "pipeline-component.v2",
+  "owner": "prism-execution",
+  "profiles": {
+    "guard-B": {
+      "settings": {
+        "resourcePolicy": {
+          "cpuTimeMs": 60000,
+          "memoryBytes": 8589934592,
+          "tasks": 2048
+        },
+        "maximumResultBytes": 67108864
+      }
+    }
+  }
+}

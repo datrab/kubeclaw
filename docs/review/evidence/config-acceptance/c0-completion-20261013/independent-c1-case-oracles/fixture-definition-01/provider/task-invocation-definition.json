@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "provider-invocation.v1",
+  "planId": "fixture:byte-plan",
+  "runId": "fixture:byte-run",
+  "moduleId": "fixture:byte-module",
+  "gateId": null,
+  "suiteInstanceId": null,
+  "nodeId": "fixture:playwright-byte",
+  "executionId": "fixture:playwright-byte-exec",
+  "testIdentity": "test:856954ba24c33a51da195730e7ed58e3f20b2c416fde1a9a536a33a7e0fb18ce",
+  "nodeKind": "test",
+  "attemptId": "fixture:byte-attempt",
+  "attemptNumber": 1,
+  "provider": {
+    "packageId": "kubeclaw.playwright",
+    "packageVersion": "1.0.0",
+    "contentDigest": "sha256:6a57e70b6e95041f7c09ca4f397d36a8414541f7e7b4de8a89e51c737fe6a7ef",
+    "registrationId": "kubeclaw.playwright:playwright",
+    "contractId": "kubeclaw.playwright@1"
+  },
+  "configuration": {
+    "schemaVersion": "provider-configuration.v1",
+    "contractId": "kubeclaw.playwright@1",
+    "schemaDigest": "sha256:82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977",
+    "values": {
+      "url": "http://fixture.invalid",
+      "projectDirectory": "skills/buster/plugins/playwright/tests/fixture",
+      "configFile": "playwright.config.ts",
+      "workers": 1,
+      "timeoutMs": 30000,
+      "minimumExecutedTests": 1,
+      "requiredTests": []
+    }
+  },
+  "inputs": [],
+  "evidence": {
+    "onPass": [
+      "log",
+      "test-report",
+      "screenshot",
+      "video",
+      "trace",
+      "test-artifact"
+    ],
+    "onFail": [
+      "log",
+      "test-report",
+      "screenshot",
+      "video",
+      "trace",
+      "test-artifact"
+    ],
+    "onError": [
+      "log"
+    ]
+  },
+  "grantedCapabilities": [],
+  "timeoutMs": 30000,
+  "limits": {
+    "cpuMillis": 30000,
+    "memoryBytes": 536870912,
+    "logBytes": 1048576,
+    "artifactBytes": 16777216,
+    "artifactFiles": 1,
+    "processes": 8
+  },
+  "workspace": {
+    "repository": "repository",
+    "scratch": "scratch",
+    "evidence": "evidence"
+  }
+}

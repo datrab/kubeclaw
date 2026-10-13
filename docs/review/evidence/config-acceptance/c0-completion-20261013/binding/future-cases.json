@@ -1,0 +1,2038 @@
+{
+  "status": "author-proposal-review-pending",
+  "cases": [
+    {
+      "id": "C5-COMPLETE-ORIGINAL-FIRST",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "engine-run.ts::recoverPipeline/resumePipeline",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Retained valid A; published B absent, malformed or incompatible",
+      "action": "Recover and resume original started group",
+      "expectedEffectOrRejectingBoundary": "No B read/parse/activation; original A digest and grants unchanged",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=ORIGINAL-FIRST tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-NEXT-MODULE",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "pipeline-loop.ts::#execute",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Two explicit groups; first already A; valid B differs only eligible M fields",
+      "action": "Publish B then start second group and repair/recheck first",
+      "expectedEffectOrRejectingBoundary": "First and all its repairs stay A; second B; original counters/grants/task unchanged",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=NEXT-MODULE tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-FIXED-EVAL",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "engine-run.ts::runNewPipeline + pipeline-loop.ts",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Explicit fixed A generation; current B valid but different",
+      "action": "Start both groups, retry and recover after B publish",
+      "expectedEffectOrRejectingBoundary": "Both accepted bindings A; no current publication selection",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=FIXED-EVAL tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-R-S-H-INCOMPATIBLE",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "engine-runtime.ts::prepareRuntime target validation split",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Unbound second group; B changes issuer/grants/store/endpoint/code foundation",
+      "action": "Attempt second-group binding",
+      "expectedEffectOrRejectingBoundary": "Reject before activation/observer/stage/effect, no fallback and no partial binding",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=R-S-H-INCOMPATIBLE tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-MEMBERSHIP",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "project/compiler.ts::compileProject + graph reader",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Duplicate/missing stage, mismatched graph digest or undeclared cross-group repair",
+      "action": "Compile/load target task graph and membership",
+      "expectedEffectOrRejectingBoundary": "Reject exact coverage/relationship mismatch before run snapshot publication",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=MEMBERSHIP tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-PRE-BIND-CRASH",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "engine-run.ts + FileJournal.transact target binding seam",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Unstarted group; closure/reservation durable but binding not appended",
+      "action": "SIGKILL at persisted prepare marker; restart without test mocks",
+      "expectedEffectOrRejectingBoundary": "No business effect; authentic reservation reconciles before safe fresh selection",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=PRE-BIND-CRASH tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-POST-BIND-CRASH",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "pipeline-loop.ts target binding before stage start",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "A binding fsynced; no stage.started yet",
+      "action": "SIGKILL after append marker; publish B; restart",
+      "expectedEffectOrRejectingBoundary": "Exactly one A binding, observer view replay idempotent; dispatch uses A",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=POST-BIND-CRASH tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-POST-DISPATCH-CRASH",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "stage-executor.ts + effect-recovery.ts",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "A binding and real external effect accepted; receipt incomplete",
+      "action": "Kill caller after provider acceptance then restart",
+      "expectedEffectOrRejectingBoundary": "Original effect reconciled; uncertain outcome blocks duplicate business action",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=POST-DISPATCH-CRASH tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-CONCURRENT-PUBLISH",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "run-mutation.ts + FileJournal.transact",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Concurrent processes accept same group while complete A/B publication races",
+      "action": "Start two real processes with persisted coordination barriers",
+      "expectedEffectOrRejectingBoundary": "One original complete binding; no mixed files or overwrite; loser resolves winner",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=CONCURRENT-PUBLISH tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-LEASE-LOSS",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "run-mutation.ts + binding async preparation",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Ownership revoked during real async closure preparation",
+      "action": "Revoke original lease and allow preparation to finish",
+      "expectedEffectOrRejectingBoundary": "No binding append/view/activation/effect after loss; TTL alone cannot steal work",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=LEASE-LOSS tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-JOURNAL-ACCOUNTING",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "state/journal.ts::appendSequenced/transact",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Complete envelope size at ceiling and one byte over incl hash/sequence/newline",
+      "action": "Accept boundary then attempt over-bound candidate under real original grant",
+      "expectedEffectOrRejectingBoundary": "Exact positive passes; over-bound rejects before append without increased limit",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=JOURNAL-ACCOUNTING tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-FIRST-DIRECTORY",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "state/journal.ts first publication",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "New events carrier has no previously durable directory entry",
+      "action": "Trace fsync and crash around file creation/dir durability",
+      "expectedEffectOrRejectingBoundary": "No view/dispatch before durable directory; file-only fsync mutant rejected",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=FIRST-DIRECTORY tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-OBSERVER-DELIVERY",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "engine-runtime.ts::serializedObserverDrainer",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Original required observer fails after A binding",
+      "action": "Trigger real observer delivery failure then restore and replay",
+      "expectedEffectOrRejectingBoundary": "A retained, dispatch blocked, replay once; optional outcome follows original policy",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=OBSERVER-DELIVERY tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-SECRET-REVISION",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "captured actual secret-provider reader",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Original secret revision revoked or unavailable; newer revision exists",
+      "action": "Recover original consumer",
+      "expectedEffectOrRejectingBoundary": "Explicit unavailable/revoked rejection; no latest substitution and no secret bytes in logs",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=SECRET-REVISION tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "live",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-PHYSICAL-STORE",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "original provider reservation/read/write/release boundary",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Shared store contains preexisting bytes, concurrent writers and deduplicated object",
+      "action": "Reserve/write temporary and final objects from two original owners",
+      "expectedEffectOrRejectingBoundary": "Logical/temp/final/metadata/inode counters exact; missing grant/capacity denies action",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=PHYSICAL-STORE tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "live",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-CLEANUP-REFERENCE",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "original store release and preparation cleanup readers",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "A owned original reference shares physical object with other owner; B published",
+      "action": "Retry original cleanup under A",
+      "expectedEffectOrRejectingBoundary": "Release only original refs/claim; other owner bytes survive; no B grants/deadlines",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=CLEANUP-REFERENCE tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-LEGACY",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "engine-snapshots.ts + engine-run.ts historical dispatch",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Real v1-v4 retained snapshots including pending and uncertain histories",
+      "action": "Replay completed and resume pending using captured original runtime",
+      "expectedEffectOrRejectingBoundary": "Hashes unchanged; no guessed M closure; missing original dependency blocks new work",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=LEGACY tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-ADMIN-UPGRADE",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "engine-snapshots.ts::recordedPackageUpgrades",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Explicit valid/invalid administrative upgrade decision versus ordinary B",
+      "action": "Run original upgrade checks and recover",
+      "expectedEffectOrRejectingBoundary": "Only original authorized decision can change code; B creates no override",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=ADMIN-UPGRADE tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    },
+    {
+      "id": "C5-COMPLETE-MUTATION",
+      "phase": "C5-implementation-proposal",
+      "requirementIds": [
+        "D20",
+        "F-BIND",
+        "F-AUTH",
+        "F-VAL",
+        "A2",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "productiveCaller": "same productive boundaries as ORIGINAL-FIRST and JOURNAL-ACCOUNTING",
+      "inputProfile": "Complete A/B owner profiles joined with exact original foundation and real store/provider fixture; no undeclared defaults.",
+      "priorState": "Isolated restored candidate; reintroduce latest lookup or skip accounted record bytes",
+      "action": "Run corresponding decisive existing target cases with semantic mutants",
+      "expectedEffectOrRejectingBoundary": "Intended case fails for semantic reason; restored baseline passes; tool failure not kill",
+      "observerMethod": "Read hash-verified original snapshots/journals and real provider receipts; record actual activation/dispatch/readback trace at the named boundary.",
+      "proposedCommand": "node --test --test-concurrency=1 --test-name-pattern=MUTATION tests/verification/reliability/config-module-binding.test.mjs",
+      "commandStatus": "Future harness to implement after approval; command not run and named file not claimed to exist.",
+      "sourceIdentities": [
+        {
+          "path": "skills/nova/project/compiler.ts",
+          "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+        },
+        {
+          "path": "skills/nova/project/source.ts",
+          "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+        },
+        {
+          "path": "skills/nova/project/coverage.ts",
+          "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+        },
+        {
+          "path": "skills/nova/project/demo.ts",
+          "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "sha256": "eca97e2a488bd31d597c0dd71cd9971beffc9a5dc94fad1dbccf8867aa8f4819"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "sha256": "96c8e5964977cc9287897a63db0f102ff915e9a2ebd3c3ca87ed47b7dde81613"
+        },
+        {
+          "path": "skills/nova/core/execution/engine-snapshots.ts",
+          "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+        },
+        {
+          "path": "skills/nova/core/execution/run-root.ts",
+          "sha256": "38ac1d4f579cbda7db66487edc274619e79d212f03e7f5a193a7c8a7168907b3"
+        },
+        {
+          "path": "skills/nova/core/execution/run-mutation.ts",
+          "sha256": "9acd2187077eca9fed18bb73b512cbda72aead9be9d92083438af5305cd7092d"
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+        },
+        {
+          "path": "skills/nova/core/state/journal.ts",
+          "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "sha256": "a6e1cd6578273e46d12d7cc042d5700e5146f3461e57beb6d52fe5ef2fe4985e"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+          "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+          "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+        }
+      ],
+      "testIdentity": null,
+      "testIdentityStatus": "Future implemented harness must be hashed at exact tested stand.",
+      "requiredIdentities": [
+        "sourceCommit",
+        "sourceTree",
+        "dirtyPatchAndInputs",
+        "testDigest",
+        "NodeVersion",
+        "toolVersions",
+        "realProviderAndRoleDigests",
+        "AAndBGenerationDigests",
+        "foundationDigest"
+      ],
+      "rawEvidencePath": null,
+      "result": "not-run",
+      "reviewerConfirmation": null,
+      "specificationStatus": "scenario-oracle-defined; exact field/profile/provider fixtures and implemented harness still required",
+      "scope": "local",
+      "reason": "Concrete proposed scenario/oracle; not implemented runtime or independent definition acceptance."
+    }
+  ]
+}

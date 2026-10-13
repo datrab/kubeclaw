@@ -1,0 +1,767 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kubeclaw:c0-proposal:config-binding:1:codec-correction-04",
+  "description": "C0 author proposal only; not installed SDK/runtime support.",
+  "$defs": {
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "encoding": {
+          "enum": [
+            "kubeclaw-json.utf16.v1",
+            "raw-bytes-v1"
+          ]
+        },
+        "schemaDigest": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "digest",
+        "bytes",
+        "encoding",
+        "schemaDigest"
+      ]
+    },
+    "schemaReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "registration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schemaObject": {
+          "$ref": "#/$defs/object"
+        }
+      },
+      "required": [
+        "owner",
+        "registration",
+        "schemaObject"
+      ]
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "registration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "enum": [
+            "S",
+            "H",
+            "R",
+            "M",
+            "J"
+          ]
+        },
+        "content": {
+          "$ref": "#/$defs/object"
+        },
+        "validationSchema": {
+          "$ref": "#/$defs/schemaReference"
+        }
+      },
+      "required": [
+        "owner",
+        "registration",
+        "instance",
+        "profile",
+        "scope",
+        "content",
+        "validationSchema"
+      ]
+    },
+    "secretReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "storeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "secretId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revisionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "accessPolicy": {
+          "$ref": "#/$defs/object"
+        }
+      },
+      "required": [
+        "storeId",
+        "secretId",
+        "revisionId",
+        "accessPolicy"
+      ]
+    },
+    "storeGrant": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "storeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "providerRegistration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "providerCode": {
+          "$ref": "#/$defs/object"
+        },
+        "volumeIdentity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "principal": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rootAuthority": {
+          "$ref": "#/$defs/object"
+        },
+        "capacityEvidence": {
+          "$ref": "#/$defs/object"
+        },
+        "writerSet": {
+          "$ref": "#/$defs/object"
+        },
+        "accountingPolicy": {
+          "$ref": "#/$defs/object"
+        },
+        "logicalBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "temporaryBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "retainedBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "metadataBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "inodes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "storeId",
+        "providerRegistration",
+        "providerCode",
+        "volumeIdentity",
+        "principal",
+        "rootAuthority",
+        "capacityEvidence",
+        "writerSet",
+        "accountingPolicy",
+        "logicalBytes",
+        "temporaryBytes",
+        "retainedBytes",
+        "metadataBytes",
+        "inodes"
+      ]
+    },
+    "stageMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "stageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stageType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "registration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "taskInput": {
+          "$ref": "#/$defs/object"
+        },
+        "partition": {
+          "$ref": "#/$defs/object"
+        }
+      },
+      "required": [
+        "stageId",
+        "stageType",
+        "owner",
+        "registration",
+        "instance",
+        "taskInput",
+        "partition"
+      ]
+    },
+    "repairRelation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sourceStage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetStage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "originalGroupId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "sourceStage",
+        "targetStage",
+        "originalGroupId"
+      ]
+    },
+    "group": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "foundation",
+            "implementation",
+            "integration",
+            "delivery",
+            "prism-order",
+            "buster-plan",
+            "preparation-cleanup",
+            "explicit"
+          ]
+        },
+        "stages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/stageMember"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "standaloneIntent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repairRelations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/repairRelation"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "groupId",
+        "kind",
+        "stages",
+        "standaloneIntent",
+        "repairRelations"
+      ]
+    },
+    "membership": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "config-membership.v1"
+        },
+        "runId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "taskGraph": {
+          "$ref": "#/$defs/object"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/group"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "runId",
+        "taskGraph",
+        "groups",
+        "digest"
+      ]
+    },
+    "foundation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "config-run-foundation.v1"
+        },
+        "runId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issuerId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "taskGraph": {
+          "$ref": "#/$defs/object"
+        },
+        "membership": {
+          "$ref": "#/$defs/object"
+        },
+        "fieldPartition": {
+          "$ref": "#/$defs/object"
+        },
+        "bootstrapAuthority": {
+          "$ref": "#/$defs/object"
+        },
+        "registry": {
+          "$ref": "#/$defs/object"
+        },
+        "packages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/object"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "delivery": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/object"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "grants": {
+          "$ref": "#/$defs/object"
+        },
+        "runProfiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/profile"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "storeGrants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/storeGrant"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "secretReferences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/secretReference"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "budgetPolicy": {
+          "$ref": "#/$defs/object"
+        },
+        "originalLedgerAuthority": {
+          "$ref": "#/$defs/object"
+        },
+        "observerPolicy": {
+          "$ref": "#/$defs/object"
+        },
+        "administrativePolicy": {
+          "$ref": "#/$defs/object"
+        },
+        "mode": {
+          "enum": [
+            "live-modules",
+            "fixed-eval"
+          ]
+        },
+        "fixedGeneration": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "runId",
+        "issuerId",
+        "taskGraph",
+        "membership",
+        "fieldPartition",
+        "bootstrapAuthority",
+        "registry",
+        "packages",
+        "delivery",
+        "grants",
+        "runProfiles",
+        "storeGrants",
+        "secretReferences",
+        "budgetPolicy",
+        "originalLedgerAuthority",
+        "observerPolicy",
+        "administrativePolicy",
+        "mode",
+        "fixedGeneration",
+        "digest"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "fixed-eval"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "fixedGeneration": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "fixedGeneration": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "consumerProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "stageId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "registration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "$ref": "#/$defs/profile"
+        },
+        "taskInput": {
+          "$ref": "#/$defs/object"
+        },
+        "effectiveConfig": {
+          "$ref": "#/$defs/object"
+        },
+        "effectiveExecution": {
+          "$ref": "#/$defs/object"
+        }
+      },
+      "required": [
+        "stageId",
+        "owner",
+        "registration",
+        "instance",
+        "profile",
+        "taskInput",
+        "effectiveConfig",
+        "effectiveExecution"
+      ]
+    },
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "code",
+            "delivery",
+            "grant",
+            "store",
+            "input",
+            "claim",
+            "deadline",
+            "effect",
+            "original-binding"
+          ]
+        },
+        "originalIdentity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content": {
+          "$ref": "#/$defs/object"
+        }
+      },
+      "required": [
+        "kind",
+        "originalIdentity",
+        "content"
+      ]
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "config-module-binding.v1"
+        },
+        "runId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "groupId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "foundation": {
+          "$ref": "#/$defs/object"
+        },
+        "membership": {
+          "$ref": "#/$defs/object"
+        },
+        "generation": {
+          "$ref": "#/$defs/object"
+        },
+        "profiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/profile"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "consumerProjections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/consumerProjection"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dependency"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "secretReferences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/secretReference"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "reservationReceipt": {
+          "$ref": "#/$defs/object"
+        },
+        "budgetLedgerAuthority": {
+          "$ref": "#/$defs/object"
+        },
+        "observerPolicy": {
+          "$ref": "#/$defs/object"
+        },
+        "mode": {
+          "enum": [
+            "live-modules",
+            "fixed-eval"
+          ]
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "runId",
+        "groupId",
+        "foundation",
+        "membership",
+        "generation",
+        "profiles",
+        "consumerProjections",
+        "dependencies",
+        "secretReferences",
+        "reservationReceipt",
+        "budgetLedgerAuthority",
+        "observerPolicy",
+        "mode",
+        "digest"
+      ]
+    },
+    "bindingEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "config-binding-event.v1"
+        },
+        "eventId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "type": {
+          "const": "module.binding.accepted"
+        },
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "runId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "groupId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "runId",
+            "groupId"
+          ]
+        },
+        "occurredAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "payload": {
+          "$ref": "#/$defs/binding"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "eventId",
+        "sequence",
+        "type",
+        "identity",
+        "occurredAt",
+        "payload"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/membership"
+    },
+    {
+      "$ref": "#/$defs/foundation"
+    },
+    {
+      "$ref": "#/$defs/binding"
+    },
+    {
+      "$ref": "#/$defs/bindingEvent"
+    }
+  ]
+}

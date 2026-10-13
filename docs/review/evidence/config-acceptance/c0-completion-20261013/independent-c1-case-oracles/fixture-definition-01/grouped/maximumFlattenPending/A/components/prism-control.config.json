@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "pipeline-component.v2",
+  "owner": "prism-control",
+  "profiles": {
+    "grouped-A": {
+      "settings": {
+        "pipelinePreferenceSubject": null,
+        "artifactRoot": "/var/lib/prism/artifacts",
+        "studioPublicUrl": "https://prism-studio",
+        "port": 8080,
+        "dispatchTimeoutMs": 900000
+      }
+    }
+  }
+}

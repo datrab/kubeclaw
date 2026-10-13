@@ -1,0 +1,371 @@
+{
+  "scope": "Actual pure js-yaml, productive bounded parser/flatten/security functions and config-only grouped profile checks; no future case result changed",
+  "fixtureSource": "tests/fixtures/test-gate/kubernetes-cleanup-fixture.mjs",
+  "fixtureAdaptation": "Existing manifest image repo app->kubeclaw/app to match complete owner repository policy under fixture registry.local; digest remains explicit fixture identity",
+  "observations": [
+    {
+      "label": "maximumNodes-original02-distinction",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/maximumNodes-original02-distinction.yaml",
+      "sha256": "d2636796baa87c8b6e0e6accc218b7022f88c03ece8028128560407aac46b3ed",
+      "bytes": 439145,
+      "parserOpenEvents": 75002,
+      "parserMaxDepth": 10,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "resources": 3,
+          "inspection": {
+            "resources": 3,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED: KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT"
+        }
+      },
+      "qualification": "Pure actual parser/flatten/manifest security inspection only. No kubectl/API/native effect; fixture image digest is test identity, not installed image."
+    },
+    {
+      "label": "maximumDepth-original02-distinction",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/maximumDepth-original02-distinction.yaml",
+      "sha256": "333449251503b695f3d2f4225515deeb7f568d5500144d07412931dbace5e91f",
+      "bytes": 1379,
+      "parserOpenEvents": 193,
+      "parserMaxDepth": 49,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "resources": 2,
+          "inspection": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_MANIFEST_PARSE_FAILED: KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT"
+        }
+      },
+      "qualification": "Pure actual parser/flatten/manifest security inspection only. No kubectl/API/native effect; fixture image digest is test identity, not installed image."
+    },
+    {
+      "label": "maximumAliases-original02-distinction",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/maximumAliases-original02-distinction.yaml",
+      "sha256": "bc055c70b442be0f7f53bcb48839b5f8cee8107114e62bb436a7e8c120ee0cdb",
+      "bytes": 17946,
+      "parserOpenEvents": 1569,
+      "parserMaxDepth": 10,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "resources": 2,
+          "inspection": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_MANIFEST_ALIAS_LIMIT"
+        }
+      },
+      "qualification": "Pure actual parser/flatten/manifest security inspection only. No kubectl/API/native effect; fixture image digest is test identity, not installed image."
+    },
+    {
+      "label": "maximumResources-original02-distinction",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/maximumResources-original02-distinction.yaml",
+      "sha256": "5930fd3714e5881324ffd9ff319046baa0579089362074e20ecb0c3a1a0eaf5c",
+      "bytes": 4807,
+      "parserOpenEvents": 678,
+      "parserMaxDepth": 13,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "resources": 49,
+          "inspection": {
+            "resources": 49,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_RESOURCE_COUNT_INVALID"
+        }
+      },
+      "qualification": "Pure actual parser/flatten/manifest security inspection only. No kubectl/API/native effect; fixture image digest is test identity, not installed image."
+    },
+    {
+      "label": "maximumFlattenVisits-original02-control",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/maximumFlattenVisits-original02-control.yaml",
+      "sha256": "3ea27e07c7e65c732b2055ee026289a0e5d150c5091265b5e5b584540b1ba4cb",
+      "bytes": 1487,
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "resources": 2,
+          "inspection": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "accepted-pure-source-definition",
+          "resources": 2,
+          "inspection": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        }
+      },
+      "qualification": "Pure actual parser/flatten/manifest security inspection only. No kubectl/API/native effect; fixture image digest is test identity, not installed image."
+    },
+    {
+      "label": "maximumFlattenVisits-supplemental-complete-pair",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/maximumFlattenVisits-supplemental-complete-pair.yaml",
+      "sha256": "3ea27e07c7e65c732b2055ee026289a0e5d150c5091265b5e5b584540b1ba4cb",
+      "bytes": 1487,
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "resources": 2,
+          "inspection": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT"
+        }
+      },
+      "qualification": "Pure actual parser/flatten/manifest security inspection only. No kubectl/API/native effect; fixture image digest is test identity, not installed image."
+    },
+    {
+      "label": "maximumFlattenPending-original02-control",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/maximumFlattenPending-original02-control.yaml",
+      "sha256": "3ea27e07c7e65c732b2055ee026289a0e5d150c5091265b5e5b584540b1ba4cb",
+      "bytes": 1487,
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "resources": 2,
+          "inspection": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "accepted-pure-source-definition",
+          "resources": 2,
+          "inspection": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        }
+      },
+      "qualification": "Pure actual parser/flatten/manifest security inspection only. No kubectl/API/native effect; fixture image digest is test identity, not installed image."
+    },
+    {
+      "label": "maximumFlattenPending-supplemental-complete-pair",
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-c1-case-oracles/fixture-definition-01/yaml/maximumFlattenPending-supplemental-complete-pair.yaml",
+      "sha256": "3ea27e07c7e65c732b2055ee026289a0e5d150c5091265b5e5b584540b1ba4cb",
+      "bytes": 1487,
+      "parserOpenEvents": 207,
+      "parserMaxDepth": 13,
+      "sides": {
+        "A": {
+          "definitionResult": "accepted-pure-source-definition",
+          "resources": 2,
+          "inspection": {
+            "resources": 2,
+            "workloads": 1,
+            "serviceTargetPort": 8080
+          }
+        },
+        "B": {
+          "definitionResult": "rejected-pure-source-definition",
+          "error": "KUBERNETES_FIXTURE_MANIFEST_COMPLEXITY_LIMIT"
+        }
+      },
+      "qualification": "Pure actual parser/flatten/manifest security inspection only. No kubectl/API/native effect; fixture image digest is test identity, not installed image."
+    }
+  ],
+  "groupedObservations": [
+    {
+      "field": "maximumFlattenVisits",
+      "side": "A",
+      "typedOwnerSchemaValid": true,
+      "schemaErrors": null,
+      "currentConfigLoader": {
+        "accepted": true,
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "9a2a55d73dbebb8e0debd5d8c7e2e3456fc7f7f090287f3760256b67cc67dd55"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "qualification": "Explicit separate complete group profile, not original02 replacement, no newv3 runtime activation"
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "B",
+      "typedOwnerSchemaValid": true,
+      "schemaErrors": null,
+      "currentConfigLoader": {
+        "accepted": true,
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "f38c87388f5844b971f6220ebc9de1e20e0b6fcc0419f22f948d8c99175fce71"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "qualification": "Explicit separate complete group profile, not original02 replacement, no newv3 runtime activation"
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "A",
+      "typedOwnerSchemaValid": true,
+      "schemaErrors": null,
+      "currentConfigLoader": {
+        "accepted": true,
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "8caf4e6175769402c15713da9cd1334a777a8d2a73d9c61cf880f52a96f92995"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "qualification": "Explicit separate complete group profile, not original02 replacement, no newv3 runtime activation"
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "B",
+      "typedOwnerSchemaValid": true,
+      "schemaErrors": null,
+      "currentConfigLoader": {
+        "accepted": true,
+        "files": [
+          {
+            "name": "swarm.config.json",
+            "sha256": "7abab7d47722cb3f5ab94187ba8225a437dde8d4e8f329f552fb60d54ed0766a"
+          },
+          {
+            "name": "prism-control.config.json",
+            "sha256": "5bcb341aff443a755504b0b583bfa1c367a80eb7642b7a15fd44527a218abd02"
+          },
+          {
+            "name": "prism-studio.config.json",
+            "sha256": "55634fb41d4d1ccb2a1a4bcff58c02e7a823a95388585251773c13cd71282d94"
+          },
+          {
+            "name": "prism-worker.config.json",
+            "sha256": "25b1932332c1fd6323eaedc4922a52e93680944774abcfa883df02c5274926eb"
+          },
+          {
+            "name": "prism-execution.config.json",
+            "sha256": "cf1ec2bce02c0528d1e5f32cbd6929d844adf7f1dfa48d527ef8d627033e3db8"
+          },
+          {
+            "name": "buster-engine.config.json",
+            "sha256": "d3a9e0211513029e5d516f060decbd5f971b9079f8ad883198c6b1959f156911"
+          },
+          {
+            "name": "worker-core.config.json",
+            "sha256": "e6547dd9a1a086f751de935790c70b4172c635ce8460e4901bcb7e21e6dea35f"
+          }
+        ]
+      },
+      "qualification": "Explicit separate complete group profile, not original02 replacement, no newv3 runtime activation"
+    }
+  ]
+}

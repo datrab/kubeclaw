@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "pipeline-component.v2",
+  "owner": "worker-core",
+  "profiles": {
+    "guard-A": {
+      "settings": {
+        "localRuntime": {
+          "drainTimeoutMs": 300000,
+          "cancellationTimeoutMs": 30000,
+          "replayLimit": 65536
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "providerInvocationSchemaAccepted": true,
+  "providerSpecificConfigSchemaAccepted": true,
+  "packageDigestComputedFromActualSource": "sha256:6a57e70b6e95041f7c09ca4f397d36a8414541f7e7b4de8a89e51c737fe6a7ef",
+  "configSchemaDigest": "sha256:82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977",
+  "actualConfigFileExists": true,
+  "groupedOwnerSchemaChecks": [
+    {
+      "field": "maximumFlattenVisits",
+      "side": "A",
+      "owner": "prism-control",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "A",
+      "owner": "prism-studio",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "A",
+      "owner": "prism-worker",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "A",
+      "owner": "prism-execution",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "A",
+      "owner": "buster-engine",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "A",
+      "owner": "worker-core",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "B",
+      "owner": "prism-control",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "B",
+      "owner": "prism-studio",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "B",
+      "owner": "prism-worker",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "B",
+      "owner": "prism-execution",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "B",
+      "owner": "buster-engine",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenVisits",
+      "side": "B",
+      "owner": "worker-core",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "A",
+      "owner": "prism-control",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "A",
+      "owner": "prism-studio",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "A",
+      "owner": "prism-worker",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "A",
+      "owner": "prism-execution",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "A",
+      "owner": "buster-engine",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "A",
+      "owner": "worker-core",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "B",
+      "owner": "prism-control",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "B",
+      "owner": "prism-studio",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "B",
+      "owner": "prism-worker",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "B",
+      "owner": "prism-execution",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "B",
+      "owner": "buster-engine",
+      "valid": true,
+      "errors": null
+    },
+    {
+      "field": "maximumFlattenPending",
+      "side": "B",
+      "owner": "worker-core",
+      "valid": true,
+      "errors": null
+    }
+  ],
+  "all24GroupedTypedOwnerSchemasAccept": true,
+  "qualification": "Data-only structural task definition grounded in actual package/config/test fixture source. EMPTY grantedCapabilities deliberately claims no authorization; no installed grant, endpoint, dispatch, signature, provider execute or causal production of1952failedbrowsercases. Existing small test project is NOT asserted to produce large generated report; causal browser workload remains missing."
+}
