@@ -1,0 +1,109 @@
+{
+  "reviewer": "/root/swarm_clause_review_19",
+  "scope": "twenty batch27 renderer clauses",
+  "files": [
+    {
+      "path": "charts/kubeclaw/files/config/buster-engine.config.json",
+      "sha256": "d43c96506287ade07e23a38bf3d24764e81c16a2ebe8e5bb8a347ac640a3aaa5",
+      "bytes": 5319,
+      "tracked": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-studio.config.json",
+      "sha256": "c38ba184a0dcbdd4b11c86f99eb39b2dd7c0ec72bd697fce7f7a1fa32f750fdb",
+      "bytes": 187,
+      "tracked": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/prism-worker.config.json",
+      "sha256": "6d263c2f1844e4bc117ec25504ccb9d6644a5272611de031a2027d5a55d7c834",
+      "bytes": 657,
+      "tracked": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm-components.schema.json",
+      "sha256": "51e7bc64a25fd6cc67d465ebe46bab170a6c9b7215423147ab3f15777dc58968",
+      "bytes": 41591,
+      "tracked": true
+    },
+    {
+      "path": "charts/kubeclaw/files/config/worker-core.config.json",
+      "sha256": "08a6c89490442803c2d4178608832fb0a8147be1a83bb6027a7a00f3d81dc615",
+      "bytes": 216,
+      "tracked": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/_swarm-config.tpl",
+      "sha256": "87230c626fee3ea8adf33dadb29db0672b86c60d736ec0b91db47c74f1d94472",
+      "bytes": 26278,
+      "tracked": true
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "sha256": "7ce3ac38ef57504e4daf3185cd1194c74b2029493db0bca1398866c75793f875",
+      "bytes": 1954,
+      "tracked": true
+    },
+    {
+      "path": "charts/prism/templates/_swarm-config.tpl",
+      "sha256": "e044387aa75a3f784ccd2a0d0f30d91f6e69b7e07e663ab2cc005417bff7265a",
+      "bytes": 2034,
+      "tracked": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+      "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad",
+      "bytes": 36482,
+      "tracked": false
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/README.md",
+      "sha256": "47083bcb8b9558359957e602af51082b7e520c26e5163cc5bc5bff5cd0748afc",
+      "bytes": 793,
+      "tracked": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/define.py",
+      "sha256": "2ffe8092003411251d57c7756933f7e1a68faf87f11674f5d59244add9be4b12",
+      "bytes": 9433,
+      "tracked": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/local-check.json",
+      "sha256": "7c6be65588c093fbf25c1ced13c9b2dcbdf8af9925afbb2b97e01a79cefdf96a",
+      "bytes": 135,
+      "tracked": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/package-manifest.json",
+      "sha256": "c53e14b5f5ef562b559fab9599224cde5043319f107bcfe56db3b1d1b6a3a4ad",
+      "bytes": 881,
+      "tracked": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-27/source-field-definitions.json",
+      "sha256": "485dbbf1fb718f8c8e6691059ea368b1fc1dbd23a298612841690d6acba41622",
+      "bytes": 114412,
+      "tracked": true
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/candidate-dispositions.json",
+      "sha256": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6",
+      "bytes": 1849332,
+      "tracked": false
+    },
+    {
+      "path": "docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b",
+      "bytes": 6788,
+      "tracked": true
+    },
+    {
+      "path": "docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127",
+      "bytes": 21857,
+      "tracked": true
+    }
+  ],
+  "patchSha256": "93c419fcc88e0c2296e51b829bb136d08ba694b2b6aaddda72159aee6dfec98d"
+}

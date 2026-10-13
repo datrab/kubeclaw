@@ -1,0 +1,29 @@
+{
+  "checks": 341,
+  "failed": [],
+  "adjacentRendererCap": {
+    "keys": [
+      "maximumRequestBytes",
+      "maximumArchiveBytes",
+      "maximumHeaderBytes",
+      "maximumInputBytes",
+      "maximumOutputBytes",
+      "maximumResultBytes"
+    ],
+    "rendererMaximum": 2147483647,
+    "rendererLines": [
+      "{{- range $key := list \"maximumRequestBytes\" \"maximumArchiveBytes\" \"maximumHeaderBytes\" \"maximumInputBytes\" \"maximumOutputBytes\" \"maximumResultBytes\" -}}",
+      "{{- if gt (index $b $key) (float64 2147483647) -}}{{- fail \"swarm Buster buffer limit invalid\" -}}{{- end -}}"
+    ],
+    "candidateId": "SRC-ea5d74692fd5fcdd",
+    "documentedSchemaMaximum": {
+      "maximumRequestBytes": 9007199254740991,
+      "maximumArchiveBytes": 9007199254740991,
+      "maximumHeaderBytes": 9007199254740991,
+      "maximumInputBytes": 9007199254740991,
+      "maximumOutputBytes": 9007199254740991,
+      "maximumResultBytes": 9007199254740991
+    },
+    "currentDomainAndRelations": "Each non-resourcePolicy preparation scalar must match its exact schema minimum/maximum and integer type; nested resourcePolicy validated separately"
+  }
+}

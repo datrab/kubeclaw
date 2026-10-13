@@ -1,0 +1,200 @@
+{
+  "files": [
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/README.md",
+      "sha256": "3efc22f1f53a8fd2b7dd30eebcc75731bfc7ed328578e0ae542986d2048ac6b7"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/attribution.json",
+      "sha256": "2954c8dcd43730cc6b350044c760f0f28d6603734c34a7d861eb45d9236e9026"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/changes.json",
+      "sha256": "5c181ac7e56269fedebbb520d593576f6a098045695d1672e73d7c6274fa3bea"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/check.py",
+      "sha256": "76819541692f14e7cb006b17d47804d0a2b84bc351ab9c520d70c643338fabcc"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/check.stdout",
+      "sha256": "fcc31d5a053f406176a783b102f41f678e627c5c95f5236dd162f34855bc4f33"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/checks.json",
+      "sha256": "fcc31d5a053f406176a783b102f41f678e627c5c95f5236dd162f34855bc4f33"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/diff.txt",
+      "sha256": "c215801073a3e20872fc924ba94c40c7c774175c0092c9a312bea0b610771348"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/frozen-checks.json",
+      "sha256": "6a5576e6a385b5531e570e857195288d405368c6db585d5d28efcc3bfa3f8110"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/head.txt",
+      "sha256": "69e3e0e2d61e3e2539e53993baf9aac6c31f710679a81c0dbf9f1110075f1136"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/charts/kubeclaw/templates/configmap-gateway.yaml",
+      "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+      "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/README.md",
+      "sha256": "9b461a3ce585d9f8dee51cd156e20017fa4dd0dc7b0a9f87fd27e5023683ce5c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/define.py",
+      "sha256": "c3a116a521c3608f2b3506aebcb91a2689177ff67211e11c5cfdb9ace25acde5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/local-check.json",
+      "sha256": "638eef9ccd3744785441b676352cefe1672d8ad58e27fc84a425a2d96935dfe3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/package-manifest.json",
+      "sha256": "9037bf6515b7ca3d05d119ad53dd6ecdd388a4d972f08407dc6aea5474f500d9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/source-field-definitions.json",
+      "sha256": "ceca12608b87de55c13cc428c8b5471cfb795b6d572bd740cf50586145e48603"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-30/README.md",
+      "sha256": "7415e5c642a3dc799eb3e76a47eb7e91013c672a5deaef82c360d8f2b49f23d4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-30/local-check.json",
+      "sha256": "040bd8e3d59826fcccf0a94a487f0ed87645a54e5f7ab6d39f18c58a64ce22b2"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-30/package-manifest.json",
+      "sha256": "8159fbbc1d3e1785d55e36181b33d504a5260d812a94c6aa9b5001510183b354"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-30/source-field-definitions.json",
+      "sha256": "c7bd3135ec6924c122733f31484e5919d8919b8411bb35f9ec2b8be0fedaeb45"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/candidate-dispositions.json",
+      "sha256": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/README.md",
+      "sha256": "0804cd2f16954556ef5fb2c7bcf4a362d01bebdc2d46c5e547b3712801c68837"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/check.py",
+      "sha256": "be00b5f26a3555ecc14e8bdc54fe7371c1774386c4c141ab7ff978eaa5ca1881"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/checks.json",
+      "sha256": "f7e1a94b7ad7f9e069761ca31c3471fac9ccd0cbdd56cf00ff008b33210e3013"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/diff.txt",
+      "sha256": "758035eefe957e6af30318d18914284651f5c8177fbd3158da93d67faf635384"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/findings.json",
+      "sha256": "c33f8736469c25e9ff1f17b8e40df67bfce3064ba3de4c24b1f05c19ee2bba63"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/head.txt",
+      "sha256": "69e3e0e2d61e3e2539e53993baf9aac6c31f710679a81c0dbf9f1110075f1136"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/charts/kubeclaw/templates/configmap-gateway.yaml",
+      "sha256": "cd0bbb0291e58a37155f54bc45eca2bad0107e7d6446f8450eede4f7378480b4"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "a4690cc041254716cb18003449d758c9083cf6feb4428f91001acc4ad79fe041"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-24/remaining-batches.json",
+      "sha256": "c0fc9f0996ecdecab945ba7c8b9810d3211e8c418631fddc03ed91a71c4fefad"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/README.md",
+      "sha256": "9b461a3ce585d9f8dee51cd156e20017fa4dd0dc7b0a9f87fd27e5023683ce5c"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/define.py",
+      "sha256": "c3a116a521c3608f2b3506aebcb91a2689177ff67211e11c5cfdb9ace25acde5"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/local-check.json",
+      "sha256": "638eef9ccd3744785441b676352cefe1672d8ad58e27fc84a425a2d96935dfe3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/package-manifest.json",
+      "sha256": "9037bf6515b7ca3d05d119ad53dd6ecdd388a4d972f08407dc6aea5474f500d9"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-29/source-field-definitions.json",
+      "sha256": "ceca12608b87de55c13cc428c8b5471cfb795b6d572bd740cf50586145e48603"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/candidate-dispositions.json",
+      "sha256": "2d5267f5a7b0bbc80fd2ba8cf680011e59d7cbdb262e36c7e0031765dc0a2ad6"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/inputs.json",
+      "sha256": "a629539a102f00a149724db1b6112a6e36e31788b52ea9bf5b65f94bcc5a6961"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/pins.json",
+      "sha256": "c50184ffe01c48ea77ff5c07899d638a8609ee4e9970e30e8465648ebc16353a"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/status.txt",
+      "sha256": "8082458e88eece4c29c12ec9309d6ac815f552ecba61d51418a8a96ad61a38d3"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-inventory-21/tree.txt",
+      "sha256": "f5e058206d7af0c64c60d858efa4a83fa032aa17346aee9cc89597d13d284d0b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/remediation/GOAL-START.md",
+      "sha256": "688334e1ccaa30fd9497e605ef0a9de1fb67fbeae51c4a312b15e15a12fa085b"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs/docs/review/remediation/OPENCLAW-CONFIG-GOAL.md",
+      "sha256": "fe9215a2674b95facef1d6fe0920eab2fa1f4830e765624692152a28b1731127"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/inputs.json",
+      "sha256": "ce1a6d48b5a1dc7aa5e2dd2b0b59dcd4a377f9885f5569e6f06671fb2ec06565"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/pins.json",
+      "sha256": "b08bd92991c3225706e17f0c4b568a4193ee9fc801087b22d419a08a647e5066"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/status.txt",
+      "sha256": "6feb49912240ee14a7a3aae35b3cd1d576f390011a70a62673a953ffc0e976ab"
+    },
+    {
+      "path": "docs/review/evidence/config-acceptance/c0-completion-20261013/independent-gateway-attribution-22/tree.txt",
+      "sha256": "f5e058206d7af0c64c60d858efa4a83fa032aa17346aee9cc89597d13d284d0b"
+    }
+  ]
+}

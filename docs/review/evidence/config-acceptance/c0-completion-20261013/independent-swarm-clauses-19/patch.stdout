@@ -1,0 +1,18 @@
+diff --git a/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json b/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
+index c7222b6c6..286dd4288 100644
+--- a/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
++++ b/docs/review/evidence/config-acceptance/c0-completion-20261013/WORK-STATE.json
+@@ -50,11 +50,11 @@
+     "implementationAuthorized": false
+   },
+   "lastPushedCheckpoint": {
+-    "commit": "263277b0014de5f056c019307c40dc83f0201ef5",
++    "commit": "ddd49add7eefd5fbbccac84360498a5ece8bae0a",
+     "pr": "https://github.com/datrab/kubeclaw/pull/18",
+     "pushed": true,
+     "productionOrExistingTestsChanged": false,
+-    "autoreview": "blocked: Codex CLI missing; raw failure retained"
++    "autoreview": "unavailable Codex CLI; no clean claim"
+   },
+   "checkpoint9Prepared": {
+     "baseCommit": "263277b0014de5f056c019307c40dc83f0201ef5",

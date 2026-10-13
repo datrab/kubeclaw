@@ -1,0 +1,147 @@
+[
+  {
+    "candidateId": "SRC-358b149942be8de8",
+    "sourceLine": 2,
+    "changedKeys": [
+      "currentStartupReaderRefs",
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-8276d5e9bebd9b0e",
+    "sourceLine": 67,
+    "changedKeys": [
+      "currentStartupReaderRefs",
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-899c6550decd7829",
+    "sourceLine": 84,
+    "changedKeys": [
+      "currentStartupReaderRefs",
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-2eff2e1f13d337ee",
+    "sourceLine": 85,
+    "changedKeys": [
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-baa92ddaf5e0df7a",
+    "sourceLine": 87,
+    "changedKeys": [
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-0ddf826ce39c0744",
+    "sourceLine": 88,
+    "changedKeys": [
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-0e870bc1ee1f3e73",
+    "sourceLine": 102,
+    "changedKeys": [
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-5891c2a4844a5e84",
+    "sourceLine": 157,
+    "changedKeys": [
+      "currentStartupReaderRefs",
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-7d41f864f0fae325",
+    "sourceLine": 190,
+    "changedKeys": [
+      "currentStartupReaderRefs",
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-f6b655d35e6d5252",
+    "sourceLine": 192,
+    "changedKeys": [
+      "currentStartupReaderRefs",
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-609b97bc96f148d5",
+    "sourceLine": 211,
+    "changedKeys": [
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-8657126aec54be67",
+    "sourceLine": 217,
+    "changedKeys": [
+      "currentStartupReaderRefs",
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-e6ff68b0dd441486",
+    "sourceLine": 240,
+    "changedKeys": [
+      "currentStartupReaderRefs",
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-99b45ac35968e69e",
+    "sourceLine": 246,
+    "changedKeys": [
+      "currentStartupReaderRefs",
+      "startupDeliveryRefs",
+      "persistentFileParseRef",
+      "additionalDeliveryProjectionRefs",
+      "startupFieldRefresh"
+    ]
+  },
+  {
+    "candidateId": "SRC-7997ec223487a03b",
+    "sourceLine": 278,
+    "changedKeys": [
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-546f89fd88ae86ab",
+    "sourceLine": 281,
+    "changedKeys": [
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-f30c51f9367277d4",
+    "sourceLine": 287,
+    "changedKeys": [
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-2de6abedf76cb061",
+    "sourceLine": 301,
+    "changedKeys": [
+      "startupDeliveryRefs"
+    ]
+  },
+  {
+    "candidateId": "SRC-bccf05d3a8b551d6",
+    "sourceLine": 323,
+    "changedKeys": [
+      "startupDeliveryRefs"
+    ]
+  }
+]
