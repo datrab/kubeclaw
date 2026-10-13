@@ -1,0 +1,1390 @@
+{
+  "scope": "Independent static source/body/queue/pin review of batch-31 only",
+  "command": "python3 docs/review/evidence/config-acceptance/c0-completion-20261013/independent-trust-readiness-23/check-inputs.py",
+  "expressionPinsChecked": 148,
+  "checks": [
+    {
+      "check": "24 unique original IDs; exhaustive exact four-source ledger and queue set",
+      "passed": true,
+      "ids": [
+        "SRC-b894dbdf69636bc2",
+        "SRC-b901a1947bd904b7",
+        "SRC-4c83335aa40e71ec",
+        "SRC-b632610caacc2ccc",
+        "SRC-54cc11a3a6557096",
+        "SRC-fb42a46ec49cebd4",
+        "SRC-4e689b0edf747666",
+        "SRC-4966cf4dc6e33239",
+        "SRC-2e4b4d469316023b",
+        "SRC-f2f4d9d329a7f86e",
+        "SRC-c947f4f8079cfe1a",
+        "SRC-91e76b0be42021f6",
+        "SRC-547e648425c947b8",
+        "SRC-7ea8f8235dbd60fd",
+        "SRC-57f67c1e31c9602b",
+        "SRC-47899f7dff8985ea",
+        "SRC-60b5286032daa883",
+        "SRC-10b93d6c7d1fdeed",
+        "SRC-e6bbd132507d33e1",
+        "SRC-bc6d7902cba6f0a9",
+        "SRC-a8eff87f55dc1535",
+        "SRC-ae042bfd054e3908",
+        "SRC-7650704121e82d78",
+        "SRC-69c19ec814a130dd"
+      ],
+      "ledgerCount": 24,
+      "queueCount": 24
+    },
+    {
+      "check": "queue digest pin",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-b894dbdf69636bc2",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-b894dbdf69636bc2",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b894dbdf69636bc2",
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "line": 16
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b894dbdf69636bc2",
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "line": 16
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b894dbdf69636bc2",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 22
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b894dbdf69636bc2",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 122
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b894dbdf69636bc2",
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "line": 12
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b894dbdf69636bc2",
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "line": 84
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b894dbdf69636bc2",
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "line": 87
+    },
+    {
+      "check": "no native/definition acceptance SRC-b894dbdf69636bc2",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-b901a1947bd904b7",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-b901a1947bd904b7",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b901a1947bd904b7",
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "line": 26
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b901a1947bd904b7",
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "line": 26
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b901a1947bd904b7",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 22
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b901a1947bd904b7",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 122
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b901a1947bd904b7",
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "line": 12
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b901a1947bd904b7",
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "line": 84
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b901a1947bd904b7",
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "line": 87
+    },
+    {
+      "check": "no native/definition acceptance SRC-b901a1947bd904b7",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-4c83335aa40e71ec",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-4c83335aa40e71ec",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4c83335aa40e71ec",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 1
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4c83335aa40e71ec",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 1
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4c83335aa40e71ec",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4c83335aa40e71ec",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 34
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4c83335aa40e71ec",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4c83335aa40e71ec",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1572
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4c83335aa40e71ec",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1650
+    },
+    {
+      "check": "no native/definition acceptance SRC-4c83335aa40e71ec",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-b632610caacc2ccc",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-b632610caacc2ccc",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b632610caacc2ccc",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 2
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b632610caacc2ccc",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 2
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b632610caacc2ccc",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b632610caacc2ccc",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 34
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b632610caacc2ccc",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b632610caacc2ccc",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1572
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b632610caacc2ccc",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1650
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b632610caacc2ccc",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 61
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-b632610caacc2ccc",
+      "path": "charts/kubeclaw/templates/serviceaccount.yaml",
+      "line": 5
+    },
+    {
+      "check": "no native/definition acceptance SRC-b632610caacc2ccc",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-54cc11a3a6557096",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-54cc11a3a6557096",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-54cc11a3a6557096",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 5
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-54cc11a3a6557096",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 5
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-54cc11a3a6557096",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-54cc11a3a6557096",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 34
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-54cc11a3a6557096",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-54cc11a3a6557096",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1572
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-54cc11a3a6557096",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1650
+    },
+    {
+      "check": "no native/definition acceptance SRC-54cc11a3a6557096",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-fb42a46ec49cebd4",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-fb42a46ec49cebd4",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-fb42a46ec49cebd4",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 17
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-fb42a46ec49cebd4",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 17
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-fb42a46ec49cebd4",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-fb42a46ec49cebd4",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 34
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-fb42a46ec49cebd4",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-fb42a46ec49cebd4",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1572
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-fb42a46ec49cebd4",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1650
+    },
+    {
+      "check": "no native/definition acceptance SRC-fb42a46ec49cebd4",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-4e689b0edf747666",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-4e689b0edf747666",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4e689b0edf747666",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 23
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4e689b0edf747666",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 23
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4e689b0edf747666",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4e689b0edf747666",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 34
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4e689b0edf747666",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4e689b0edf747666",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1572
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4e689b0edf747666",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1650
+    },
+    {
+      "check": "no native/definition acceptance SRC-4e689b0edf747666",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-4966cf4dc6e33239",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-4966cf4dc6e33239",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4966cf4dc6e33239",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 35
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4966cf4dc6e33239",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 35
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4966cf4dc6e33239",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4966cf4dc6e33239",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 34
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4966cf4dc6e33239",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4966cf4dc6e33239",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1572
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-4966cf4dc6e33239",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1650
+    },
+    {
+      "check": "no native/definition acceptance SRC-4966cf4dc6e33239",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-2e4b4d469316023b",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-2e4b4d469316023b",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-2e4b4d469316023b",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 84
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-2e4b4d469316023b",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 84
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-2e4b4d469316023b",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-2e4b4d469316023b",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 34
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-2e4b4d469316023b",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-2e4b4d469316023b",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1572
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-2e4b4d469316023b",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1650
+    },
+    {
+      "check": "no native/definition acceptance SRC-2e4b4d469316023b",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-f2f4d9d329a7f86e",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-f2f4d9d329a7f86e",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-f2f4d9d329a7f86e",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 128
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-f2f4d9d329a7f86e",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 128
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-f2f4d9d329a7f86e",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-f2f4d9d329a7f86e",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 34
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-f2f4d9d329a7f86e",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-f2f4d9d329a7f86e",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1572
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-f2f4d9d329a7f86e",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1650
+    },
+    {
+      "check": "no native/definition acceptance SRC-f2f4d9d329a7f86e",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-c947f4f8079cfe1a",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-c947f4f8079cfe1a",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-c947f4f8079cfe1a",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 129
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-c947f4f8079cfe1a",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 129
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-c947f4f8079cfe1a",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-c947f4f8079cfe1a",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 34
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-c947f4f8079cfe1a",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-c947f4f8079cfe1a",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1572
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-c947f4f8079cfe1a",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1650
+    },
+    {
+      "check": "no native/definition acceptance SRC-c947f4f8079cfe1a",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-91e76b0be42021f6",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-91e76b0be42021f6",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-91e76b0be42021f6",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 165
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-91e76b0be42021f6",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 165
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-91e76b0be42021f6",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-91e76b0be42021f6",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 34
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-91e76b0be42021f6",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-91e76b0be42021f6",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1572
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-91e76b0be42021f6",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1650
+    },
+    {
+      "check": "no native/definition acceptance SRC-91e76b0be42021f6",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-547e648425c947b8",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-547e648425c947b8",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-547e648425c947b8",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 175
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-547e648425c947b8",
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "line": 175
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-547e648425c947b8",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-547e648425c947b8",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 34
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-547e648425c947b8",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1542
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-547e648425c947b8",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1572
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-547e648425c947b8",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "line": 1650
+    },
+    {
+      "check": "no native/definition acceptance SRC-547e648425c947b8",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-7ea8f8235dbd60fd",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-7ea8f8235dbd60fd",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7ea8f8235dbd60fd",
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "line": 16
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7ea8f8235dbd60fd",
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "line": 16
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7ea8f8235dbd60fd",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 14
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7ea8f8235dbd60fd",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 140
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7ea8f8235dbd60fd",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 63
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7ea8f8235dbd60fd",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 175
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7ea8f8235dbd60fd",
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "line": 12
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7ea8f8235dbd60fd",
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "line": 84
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7ea8f8235dbd60fd",
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "line": 87
+    },
+    {
+      "check": "no native/definition acceptance SRC-7ea8f8235dbd60fd",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-57f67c1e31c9602b",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-57f67c1e31c9602b",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-57f67c1e31c9602b",
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "line": 26
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-57f67c1e31c9602b",
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "line": 26
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-57f67c1e31c9602b",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 14
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-57f67c1e31c9602b",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 140
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-57f67c1e31c9602b",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 63
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-57f67c1e31c9602b",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 175
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-57f67c1e31c9602b",
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "line": 12
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-57f67c1e31c9602b",
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "line": 84
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-57f67c1e31c9602b",
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "line": 87
+    },
+    {
+      "check": "no native/definition acceptance SRC-57f67c1e31c9602b",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-47899f7dff8985ea",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-47899f7dff8985ea",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-47899f7dff8985ea",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 2
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-47899f7dff8985ea",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 2
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-47899f7dff8985ea",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 168
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-47899f7dff8985ea",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 186
+    },
+    {
+      "check": "no native/definition acceptance SRC-47899f7dff8985ea",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-60b5286032daa883",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-60b5286032daa883",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-60b5286032daa883",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 3
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-60b5286032daa883",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 3
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-60b5286032daa883",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 168
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-60b5286032daa883",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 186
+    },
+    {
+      "check": "no native/definition acceptance SRC-60b5286032daa883",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-10b93d6c7d1fdeed",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-10b93d6c7d1fdeed",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-10b93d6c7d1fdeed",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 32
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-10b93d6c7d1fdeed",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 32
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-10b93d6c7d1fdeed",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 168
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-10b93d6c7d1fdeed",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 186
+    },
+    {
+      "check": "no native/definition acceptance SRC-10b93d6c7d1fdeed",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-e6bbd132507d33e1",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-e6bbd132507d33e1",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-e6bbd132507d33e1",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 36
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-e6bbd132507d33e1",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 36
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-e6bbd132507d33e1",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 168
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-e6bbd132507d33e1",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 186
+    },
+    {
+      "check": "no native/definition acceptance SRC-e6bbd132507d33e1",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-bc6d7902cba6f0a9",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-bc6d7902cba6f0a9",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-bc6d7902cba6f0a9",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 67
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-bc6d7902cba6f0a9",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 67
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-bc6d7902cba6f0a9",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 168
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-bc6d7902cba6f0a9",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 186
+    },
+    {
+      "check": "no native/definition acceptance SRC-bc6d7902cba6f0a9",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-a8eff87f55dc1535",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-a8eff87f55dc1535",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-a8eff87f55dc1535",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 129
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-a8eff87f55dc1535",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 129
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-a8eff87f55dc1535",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 168
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-a8eff87f55dc1535",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 186
+    },
+    {
+      "check": "no native/definition acceptance SRC-a8eff87f55dc1535",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-ae042bfd054e3908",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-ae042bfd054e3908",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-ae042bfd054e3908",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 179
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-ae042bfd054e3908",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 179
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-ae042bfd054e3908",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 168
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-ae042bfd054e3908",
+      "path": "charts/prism/templates/workloads.yaml",
+      "line": 186
+    },
+    {
+      "check": "no native/definition acceptance SRC-ae042bfd054e3908",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-7650704121e82d78",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-7650704121e82d78",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7650704121e82d78",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 220
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7650704121e82d78",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 220
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7650704121e82d78",
+      "path": "scripts/deploy.sh",
+      "line": 1951
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7650704121e82d78",
+      "path": "scripts/deploy.sh",
+      "line": 1977
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-7650704121e82d78",
+      "path": "scripts/deploy.sh",
+      "line": 1979
+    },
+    {
+      "check": "no native/definition acceptance SRC-7650704121e82d78",
+      "passed": true
+    },
+    {
+      "check": "original full candidate body SRC-69c19ec814a130dd",
+      "passed": false
+    },
+    {
+      "check": "original source digest SRC-69c19ec814a130dd",
+      "passed": true
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-69c19ec814a130dd",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 257
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-69c19ec814a130dd",
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "line": 257
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-69c19ec814a130dd",
+      "path": "scripts/deploy.sh",
+      "line": 1951
+    },
+    {
+      "check": "expression/digest pin",
+      "passed": true,
+      "candidateId": "SRC-69c19ec814a130dd",
+      "path": "scripts/deploy.sh",
+      "line": 1977
+    },
+    {
+      "check": "no native/definition acceptance SRC-69c19ec814a130dd",
+      "passed": true
+    },
+    {
+      "check": "manifest pin docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-31/README.md",
+      "passed": true
+    },
+    {
+      "check": "manifest pin docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-31/define.py",
+      "passed": true
+    },
+    {
+      "check": "manifest pin docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-31/local-check.json",
+      "passed": true
+    },
+    {
+      "check": "manifest pin docs/review/evidence/config-acceptance/c0-completion-20261013/delivery/batch-31/source-field-definitions.json",
+      "passed": true
+    },
+    {
+      "check": "global acceptance remains false/null",
+      "passed": true
+    }
+  ],
+  "allPassed": false,
+  "runtimeResult": "not-run",
+  "globalC0Accepted": false
+}
